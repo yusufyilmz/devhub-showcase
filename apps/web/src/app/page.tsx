@@ -1,41 +1,23 @@
-'use client'
-
-import { ServerResponse } from '@/types/api'
-import { Project } from '@prisma/client'
-import { siteCopy } from '@shared/content'
 import { ProjectsSection, CVSection } from '@shared/ui/components'
-import { useNotification } from '@shared/ui/hooks'
-import { fetcher } from '@shared/utils'
-import { useEffect } from 'react'
-import useSWR from 'swr'
-
-const { errors } = siteCopy.notifications
+import { db } from '@/lib/db'
+import { cache } from 'react'
 
 export const experimental_ppr = true
 
-export default function Home() {
-  const { setError } = useNotification()
-  const {
-    data: projects,
-    error,
-    isLoading
-  } = useSWR<ServerResponse<Project[]>>(`/api/projects`, fetcher, {
-    onError: () => setError(errors.fetchProjectError)
-  })
+export const getProjects = cache(async () => {
+  const posts = await db.project.findMany()
+  
 
-  useEffect(() => {
-    if (error) {
-      setError(errors.fetchProjectError)
-    }
-  }, [error, setError])
+  return posts
+})
+
+export default async function Home() {
+  const projects = await getProjects()
 
   return (
     <>
       <section className="w-full" id="projects">
-        <ProjectsSection
-          projects={projects?.success ? projects.data : []}
-          isLoading={isLoading}
-        />
+        <ProjectsSection projects={projects} />
       </section>
       <section className="w-full py-16 bg-main-light" id="cv">
         <CVSection />

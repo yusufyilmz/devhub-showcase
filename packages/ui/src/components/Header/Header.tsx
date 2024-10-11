@@ -1,4 +1,3 @@
-import { ProjectButton } from '../buttons/ProjectButton'
 import { siteCopy } from '@shared/content'
 
 export const Header: React.FC = () => {
@@ -10,7 +9,6 @@ export const Header: React.FC = () => {
       <p className="text-lg text-main-gray mb-10">
         {siteCopy.header.description}
       </p>
-      <ProjectButton title={siteCopy.header.buttonText} />
     </header>
   )
 }

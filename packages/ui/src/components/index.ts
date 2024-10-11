@@ -8,4 +8,6 @@ export * from './NotFoundPage'
 export * from './Sidebar'
 export * from './Project'
 export * from './IFramePreview'
+export * from './ThemeProvider'
 export * from './buttons'
+

@@ -5,6 +5,8 @@ import { header } from './header'
 import { footer } from './footer'
 import { cvSection } from './cv'
 import { navbar } from './navbar'
+import { notFoundPage } from './notFoundPage'
+import { errorPage } from './errorPage'
 
 export const siteCopy = {
   project,
@@ -13,5 +15,7 @@ export const siteCopy = {
   header,
   footer,
   cvSection,
-  navbar
+  navbar,
+  notFoundPage,
+  errorPage
 }

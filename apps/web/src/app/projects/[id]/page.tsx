@@ -10,9 +10,10 @@ import { Prisma, Project } from '@prisma/client'
 import { apiClient, fetcher } from '@shared/utils'
 import { ServerResponse } from '@/types/api'
 import { HttpStatusCode } from 'axios'
+
 import { ProjectForm } from '@shared/ui/components'
 
-interface UpdateProjectPageProps {
+interface PageProps {
   params: {
     projectId: string
   }
@@ -21,9 +22,7 @@ interface UpdateProjectPageProps {
 const { errors, success } = siteCopy.notifications
 const { cta } = siteCopy
 
-export const UpdateProjectPage: React.FC<UpdateProjectPageProps> = ({
-  params
-}) => {
+export default function UpdateProjectPage({ params }: PageProps) {
   const { setError, setSuccess } = useNotification()
   const router = useRouter()
 
@@ -39,7 +38,8 @@ export const UpdateProjectPage: React.FC<UpdateProjectPageProps> = ({
     if (error || !projectResponse || projectResponse.error) {
       setError(errors.fetchProjectError)
     }
-  }, [error, projectResponse, setError])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error, projectResponse])
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -80,5 +80,3 @@ export const UpdateProjectPage: React.FC<UpdateProjectPageProps> = ({
     </div>
   )
 }
-
-export default UpdateProjectPage

@@ -8,7 +8,7 @@
     "./utils": "./src/utils/index.ts",
     "./hooks": "./src/hooks/index.ts",
     "./components": "./src/components/index.ts",
-    "./themes": "./src/themes/index.ts",
+    "./theme": "./src/theme/index.ts",
     "./globals.css": "./src/globals.css"
   },
   "scripts": {

@@ -1,26 +1,21 @@
-'use client'
-
-import { Button } from '@mui/material'
-import { useRouter } from 'next/navigation'
+import { HomeButton } from '../buttons/HomeButton'
+import { siteCopy } from '@shared/content'
+import { Typography } from '@mui/material'
+import { GoBackButton } from '../buttons/GoBackButton'
 
 export const ErrorPage = () => {
-  const router = useRouter()
-
   return (
-    <div className="flex-col h-screen bg-gray-200 flex justify-center items-center">
-      <h1 className="text-4xl font-bold mb-4">Internal Server Error</h1>
-      <p className="text-lg text-gray-600 mb-6">
-        Something went wrong. Please try again later.
-      </p>
-
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => router.push('/')}
-        sx={{ backgroundColor: '#1f1f1f', color: '#ffffff' }}
-      >
-        Go Home
-      </Button>
+    <div className="flex flex-col gap-4 justify-center items-center w-p h-[calc(100vh-540px)]">
+      <Typography variant="h4" color="primary">
+        {siteCopy.errorPage.title}
+      </Typography>
+      <Typography variant="body1" color="textSecondary">
+        {siteCopy.errorPage.message}
+      </Typography>
+      <div className="flex gap-4 mb-4">
+        <GoBackButton />
+        <HomeButton />
+      </div>
     </div>
   )
 }

@@ -1,3 +1,5 @@
+'use client'
+
 import { Button, TextField } from '@mui/material'
 import { Prisma, Project } from '@prisma/client'
 import { useState, useEffect } from 'react'

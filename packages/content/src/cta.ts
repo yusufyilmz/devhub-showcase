@@ -3,5 +3,8 @@ export const cta = {
   addProject: 'Add Project',
   updateProject: 'Update Project',
   submitting: 'Submitting...',
-  loading: 'Loading...'
+  loading: 'Loading...',
+  home: 'Go Home',
+  goBack: 'Go Back',
+  goHome: 'Go Home'
 }
