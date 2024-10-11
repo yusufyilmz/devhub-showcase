@@ -1,8 +1,9 @@
 'use client'
 
 import { ProjectItem } from './ProjectItem'
-import { Project } from '@prisma/client'
 import { ProjectItemSkeleton } from './ProjectItemSkeleton'
+import { Grid2, Typography } from '@mui/material'
+import { Project } from '@prisma/client'
 
 interface ProjectsSectionProps {
   projects: Project[]
@@ -11,22 +12,43 @@ interface ProjectsSectionProps {
 
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   projects,
-  isLoading
+  isLoading,
 }) => {
   const skeletonCount = 4
 
   return (
-    <div className="max-w-6xl mx-auto text-center">
+    <div className="text-center">
       <h2 className="text-4xl font-bold mb-12 text-black">My Projects</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-14">
+      <Grid2 container spacing={4} className='w-full'>
         {isLoading
           ? Array.from({ length: skeletonCount }).map((_, index) => (
-              <ProjectItemSkeleton key={index} />
+              <Grid2
+                key={index}
+                size={6}
+              >
+                <ProjectItemSkeleton />
+              </Grid2>
             ))
-          : projects?.map(project => (
-              <ProjectItem key={project.id} project={project} />
-            ))}
-      </div>
+          : projects.length > 0
+          ? projects.map((project) => (
+              <Grid2
+                key={project.id}
+                size={6}
+              >
+                <ProjectItem project={project} />
+              </Grid2>
+            ))
+          : (
+            <Typography
+              variant="h6"
+              component="p"
+              className="text-gray-600"
+              sx={{ mt: 4, width: '100%' }}
+            >
+              No projects found.
+            </Typography>
+          )}
+      </Grid2>
     </div>
   )
 }

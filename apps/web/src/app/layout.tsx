@@ -19,12 +19,10 @@ export default function RootLayout({
           <div className="px-page-px bg-main-black text-main-white">
             <Header />
           </div>
-          <div className="px-page-px min-h-screen  text-main-black  bg-gradient-to-b to-main-gray from-main-white">
-            <main className="flex flex-col  justify-center items-center py-16">
-              {children}
-            </main>
-          </div>
-          <div className="px-page-px bg-main-black text-main-white">
+          <main className="px-page-px w-full min-h-screen  text-main-black  bg-gradient-to-b to-main-gray from-main-white flex flex-col  justify-center items-center py-16">
+            {children}
+          </main>
+          <div className="w-full px-page-px bg-main-black text-main-white">
             <Footer />
           </div>
         </NotificationProvider>

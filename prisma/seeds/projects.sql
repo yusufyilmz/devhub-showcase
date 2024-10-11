@@ -1,6 +1,6 @@
-DELETE FROM "portfolio"."projects";
+DELETE FROM "devhub"."projects";
 
-INSERT INTO "portfolio"."projects" 
+INSERT INTO "devhub"."projects" 
   (id, title, description, link, role, skills, "created_at", "updated_at") 
 VALUES
   (

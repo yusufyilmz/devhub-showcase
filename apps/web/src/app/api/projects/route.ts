@@ -29,6 +29,7 @@ const getAllProjects = async (_req: NextRequest): Promise<NextResponse> => {
     const project = await projectService.getAllProjects()
     return NextResponse.json({ success: true, data: project }, { status: 200 })
   } catch (error) {
+    console.log(error)
     return errorHandling(error)
   }
 }

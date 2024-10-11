@@ -18,7 +18,7 @@ cd devhub-showcase
 
 This Turborepo includes the following apps and packages:
 
-### Apps and Packages
+2. Install dependencies
 
 	1. web: A Next.js app that serves as the portfolio.
 	2. @shared/ui: A shared React component library using Material UI and Tailwind CSS, shared across the app.
@@ -27,7 +27,7 @@ This Turborepo includes the following apps and packages:
 
 Each package/app is 100% TypeScript.
 
-### Utilities
+3. Set up the database
 
 This Turborepo has some additional tools already set up for you:
 
@@ -37,7 +37,8 @@ This Turborepo has some additional tools already set up for you:
 
 #### Build
 
-To build all apps and packages, run the following command:
+yarn prisma migrate dev --name init
+yarn prisma db seed
 
 ```
 yarn build
@@ -45,7 +46,7 @@ yarn build
 
 #### Develop
 
-To develop all apps and packages, run the following command:
+Your project will be available at http://localhost:3000.
 
 ```
 yarn dev
@@ -59,7 +60,6 @@ By default, Turborepo will cache locally. To enable Remote Caching, you will nee
 
 ```
 npx turbo login
-```
 
 This will authenticate the Turborepo CLI with your Vercel account.
 
@@ -67,11 +67,12 @@ Next, link your Turborepo to your Remote Cache by running the following command 
 
 ```
 npx turbo link
-```
 
 #### Useful Links
 
-Learn more about the power of Turborepo:
+	•	Turborepo Documentation
+	•	Next.js Documentation
+	•	Prisma Documentation
 
 	•	Tasks
 	•	Caching

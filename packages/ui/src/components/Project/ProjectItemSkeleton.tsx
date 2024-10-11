@@ -2,7 +2,7 @@ import { Skeleton } from '@mui/material'
 
 export const ProjectItemSkeleton: React.FC = () => {
   return (
-    <div className="border p-6 rounded-lg shadow-lg bg-backgroundColor-card h-[700px] max-w-3xl w-[30vw]">
+    <div className="border p-6 rounded-lg shadow-lg bg-backgroundColor-card h-[700px] max-w-3xl">
       <Skeleton variant="text" width="100%" height={40} />
 
       <Skeleton variant="text" width="100%" height={20} className="my-4" />

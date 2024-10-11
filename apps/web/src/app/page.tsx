@@ -28,16 +28,16 @@ export default function Home() {
   }, [error, setError])
 
   return (
-    <div className="min-h-screen text-main-white">
-      <section id="projects">
+    <>
+      <section className='w-full' id="projects">
         <ProjectsSection
           projects={projects?.success ? projects.data : []}
           isLoading={isLoading}
         />
       </section>
-      <section id="cv" className="py-16 bg-main-light">
+      <section className='w-full py-16 bg-main-light' id="cv">
         <CVSection />
       </section>
-    </div>
+    </>
   )
 }
