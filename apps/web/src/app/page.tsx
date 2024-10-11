@@ -6,7 +6,6 @@ export const experimental_ppr = true
 
 export const getProjects = cache(async () => {
   const posts = await db.project.findMany()
-  
 
   return posts
 })

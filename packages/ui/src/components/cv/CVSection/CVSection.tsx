@@ -1,5 +1,5 @@
 import { siteCopy } from '@shared/content'
-import { DownloadCVButton } from '../buttons/DownloadCVButton'
+import { DownloadCVButton } from '../../ui/buttons/DownloadCVButton'
 
 export const CVSection: React.FC = () => {
   return (

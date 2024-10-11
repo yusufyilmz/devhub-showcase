@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material'
 import { siteCopy } from '@shared/content'
-import { GoBackButton } from '../buttons/GoBackButton'
-import { HomeButton } from '../buttons/HomeButton'
+import { GoBackButton } from '../../ui/buttons/GoBackButton'
+import { HomeButton } from '../../ui/buttons/HomeButton'
 
 export const NotFoundPage = () => {
   return (

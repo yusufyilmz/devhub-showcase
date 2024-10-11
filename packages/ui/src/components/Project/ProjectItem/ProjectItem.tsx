@@ -1,9 +1,9 @@
 'use client'
 
 import { Project } from '@prisma/client'
-import { IFramePreview } from '../IFramePreview'
+import { IFramePreview } from '../../ui/IFramePreview'
 import { Chip, Typography, Card, CardContent } from '@mui/material'
-import { ProjectTitle } from '../buttons/ProjectTitle'
+import { ProjectTitle } from '../../ui/buttons/ProjectTitle'
 
 interface ProjectItemProps {
   project: Project

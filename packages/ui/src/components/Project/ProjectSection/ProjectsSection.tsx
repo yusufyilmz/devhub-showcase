@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
-import { ProjectItem } from './ProjectItem'
-import { ProjectItemSkeleton } from './ProjectItemSkeleton'
+import { ProjectItem } from '../ProjectItem'
+import { ProjectItemSkeleton } from '../ProjectItemSkeleton'
 import { Grid2 } from '@mui/material'
 import { Project } from '@prisma/client'
 

@@ -1,7 +1,7 @@
-import { HomeButton } from '../buttons/HomeButton'
+import { HomeButton } from '../../ui/buttons/HomeButton'
 import { siteCopy } from '@shared/content'
 import { Typography } from '@mui/material'
-import { GoBackButton } from '../buttons/GoBackButton'
+import { GoBackButton } from '../../ui/buttons/GoBackButton'
 
 export const ErrorPage = () => {
   return (
