@@ -1,0 +1,1 @@
+export { IFramePreview } from './IFramePreview'
