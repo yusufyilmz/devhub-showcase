@@ -11,6 +11,8 @@ import useSWR from 'swr'
 
 const { errors } = siteCopy.notifications
 
+export const experimental_ppr = true
+
 export default function Home() {
   const { setError } = useNotification()
   const {
@@ -29,13 +31,13 @@ export default function Home() {
 
   return (
     <>
-      <section className='w-full' id="projects">
+      <section className="w-full" id="projects">
         <ProjectsSection
           projects={projects?.success ? projects.data : []}
           isLoading={isLoading}
         />
       </section>
-      <section className='w-full py-16 bg-main-light' id="cv">
+      <section className="w-full py-16 bg-main-light" id="cv">
         <CVSection />
       </section>
     </>

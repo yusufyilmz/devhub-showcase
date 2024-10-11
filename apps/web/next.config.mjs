@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
-import path from 'path'
-
-export default {
-  webpack: config => {
-    return config
+const nextConfig = {
+  experimental: {
+    ppr: 'incremental'
   }
 }
+
+export default nextConfig

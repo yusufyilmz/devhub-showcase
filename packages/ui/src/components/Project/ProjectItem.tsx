@@ -1,5 +1,3 @@
-'use client'
-
 import { Project } from '@prisma/client'
 import { IFramePreview } from '../IFramePreview'
 import { Chip, Typography, Card, CardContent } from '@mui/material'
