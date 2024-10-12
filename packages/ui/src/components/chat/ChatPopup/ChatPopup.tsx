@@ -7,16 +7,19 @@ import { ChatInput } from '../ChatInput'
 import CloseIcon from '@mui/icons-material/Close'
 import { Button } from '@mui/material'
 import { siteCopy } from '@shared/content'
+import { TypingIndicator } from '../TypingIndicator'
 
 interface ChatPopupProps {
   messages: ChatMessage[]
+  isTyping?: boolean
   // eslint-disable-next-line no-unused-vars
   handleSendMessage: (input: string) => void
 }
 
 export const ChatPopup: React.FC<ChatPopupProps> = ({
   messages,
-  handleSendMessage
+  handleSendMessage,
+  isTyping
 }) => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -47,7 +50,18 @@ export const ChatPopup: React.FC<ChatPopupProps> = ({
           </button>
           <div className="flex flex-col h-full">
             <ChatMessageBox messages={messages} />
-            <ChatInput handleSendMessage={handleSendMessage} />
+            {isTyping && <TypingIndicator />}
+            {isTyping && (
+              <div className="typing-indicator">
+                <div className="dot"></div>
+                <div className="dot"></div>
+                <div className="dot"></div>
+              </div>
+            )}
+            <ChatInput
+              handleSendMessage={handleSendMessage}
+              botIsTyping={isTyping}
+            />
           </div>
         </div>
       )}

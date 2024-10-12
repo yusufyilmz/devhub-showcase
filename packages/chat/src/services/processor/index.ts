@@ -11,12 +11,7 @@ import { ClassifierService } from '../classifier/index'
 import { ChatGPTService } from '../gpt/index'
 import { ERROR_MESSAGE_ANSWER } from '../constants/errors'
 import { formatAllCV, formatters } from '../formatter/index'
-import {
-  CVCategory,
-  CVModel,
-  CVModelValue,
-  MessageWithoutModel
-} from '../../types'
+import { CVCategory, CVModel, CVModelValue } from '../../types'
 
 export class MessageProcessor {
   classifier: ClassifierService

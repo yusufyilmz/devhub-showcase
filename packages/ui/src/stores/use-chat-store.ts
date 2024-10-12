@@ -4,14 +4,19 @@ import { CHAT_STORAGE_NAME } from '../constants/stores'
 import { ChatMessage } from '@shared/lib'
 import { WELCOME_MESSAGE } from '@shared/chat'
 
-interface ChatState {
+export type ChatState = {
   messages: ChatMessage[]
+}
+
+type ChatActions = ChatState & {
   // eslint-disable-next-line no-unused-vars
   addMessage: (message: ChatMessage) => void
   resetChat: () => void
 }
 
-export const useChatStore = create<ChatState>()(
+type ChatStore = ChatState & ChatActions
+
+export const chatStore = create<ChatStore>()(
   persist(
     set => ({
       messages: [

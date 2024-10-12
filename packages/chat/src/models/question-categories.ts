@@ -1,4 +1,8 @@
-import { GREETING_MESSAGE, UNKNOWN_MESSAGE, UNRELATED_MESSAGE } from '../messages/system'
+import {
+  GREETING_MESSAGE,
+  UNKNOWN_MESSAGE,
+  UNRELATED_MESSAGE
+} from '../messages/system'
 import { CVCategory, QuestionCategory } from '../types/cv'
 import { CV_MODEL } from './cv-model'
 

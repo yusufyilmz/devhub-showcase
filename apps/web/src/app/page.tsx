@@ -1,8 +1,7 @@
-import { ProjectsSection, CVSection, Chat } from '@shared/ui/components'
+import { ProjectsSection, CVSection } from '@shared/ui/components'
 import type { Project } from '@prisma/client'
+import Chat from '@/app/chat'
 import { db } from '@/lib/db'
-
-// export const experimental_ppr = true
 
 export const getProjects = async (): Promise<Project[]> => {
   const posts = await db.project.findMany()

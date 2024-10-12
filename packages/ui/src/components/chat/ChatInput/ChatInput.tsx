@@ -7,19 +7,23 @@ import { siteCopy } from '@shared/content'
 type ChatInputProps = {
   // eslint-disable-next-line no-unused-vars
   handleSendMessage: (input: string) => void
+  botIsTyping?: boolean
 }
 
-export const ChatInput: React.FC<ChatInputProps> = ({ handleSendMessage }) => {
+export const ChatInput: React.FC<ChatInputProps> = ({
+  handleSendMessage,
+  botIsTyping
+}) => {
   const [input, setInput] = useState('')
 
   const handleSendButtonClick = () => {
-    if (!input) return
+    if (!input || botIsTyping) return
     handleSendMessage(input)
     setInput('')
   }
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === 'Enter' && !e.shiftKey) {
+    if (e.code === 'Enter' && !e.shiftKey && input !== '' && !botIsTyping) {
       e.preventDefault()
       handleSendMessage(input)
       setInput('')
@@ -27,7 +31,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ handleSendMessage }) => {
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === 'Enter' && !e.shiftKey) {
+    if (e.code === 'Enter' && !e.shiftKey && input !== '') {
       setInput(input.replace(/\n$/, ''))
       e.preventDefault()
     }

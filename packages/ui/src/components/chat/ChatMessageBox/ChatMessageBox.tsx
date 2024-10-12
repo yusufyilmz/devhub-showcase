@@ -6,9 +6,13 @@ import { useRef, useEffect } from 'react'
 
 interface ChatMessageBoxProps {
   messages: ChatMessage[]
+  botIsTyping?: boolean
 }
 
-export const ChatMessageBox: React.FC<ChatMessageBoxProps> = ({ messages }) => {
+export const ChatMessageBox: React.FC<ChatMessageBoxProps> = ({
+  messages,
+  botIsTyping
+}) => {
   const chatListRef = useRef<HTMLDivElement>(null)
 
   const handleScrollToBottom = () => {
@@ -17,10 +21,10 @@ export const ChatMessageBox: React.FC<ChatMessageBoxProps> = ({ messages }) => {
     }
   }
 
-  useEffect(() => handleScrollToBottom(), [messages])
+  useEffect(() => handleScrollToBottom(), [messages, botIsTyping])
 
   return (
-    <div className="h-full overflow-y-scroll mb-4 p-4" ref={chatListRef}>
+    <div className="h-full overflow-y-scroll mb-4 p-2" ref={chatListRef}>
       {messages.map((msg, idx) => (
         <div
           key={idx}

@@ -27,6 +27,7 @@ module.exports = {
     'prettier',
     'eslint:recommended',
     "turbo",
+    "eslint-config-prettier"
   ],
   parserOptions: {
     project,

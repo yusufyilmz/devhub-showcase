@@ -1,5 +1,5 @@
 export const navbar = {
-  projects: 'Projects',
+  projects: 'PROJECTS',
   cv: 'CV',
   chat: 'CHAT'
 }

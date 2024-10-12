@@ -12,9 +12,6 @@ export const Navbar: React.FC = () => {
           <Button variant="text" color="secondary" href="#cv">
             {siteCopy.navbar.cv}
           </Button>
-          <Button variant="text" color="secondary" href="/projects">
-            {siteCopy.navbar.chat}
-          </Button>
         </div>
       </div>
     </nav>

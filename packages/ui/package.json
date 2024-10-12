@@ -9,6 +9,7 @@
     "./hooks": "./src/hooks/index.ts",
     "./components": "./src/components/index.ts",
     "./theme": "./src/theme/index.ts",
+    "./stores": "./src/stores/index.ts",
     "./globals.css": "./src/globals.css"
   },
   "scripts": {

@@ -29,7 +29,6 @@
     "axios": "^1.7.7",
     "eslint-import-resolver-typescript": "^3.6.3",
     "next": "^15.0.0-canary.183",
-    "node-fetch": "^3.3.2",
     "openai": "^4.67.3",
     "pino": "^9.4.0",
     "prisma": "^5.20.0",
@@ -38,7 +37,8 @@
     "react-icons": "^5.3.0",
     "swr": "^2.2.5",
     "uuid": "^10.0.0",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
     "@shared/typescript-config": "*",
@@ -56,8 +56,5 @@
   },
   "engines": {
     "node": "20.13.1"
-  },
-  "resolutions": {
-    "node-fetch": "3.3.2"
   }
 }

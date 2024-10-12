@@ -5,7 +5,7 @@ module.exports = {
     '@next/next/no-html-link-for-pages': 'off'
   },
   parserOptions: {
-    ...parserOptions,
-    project: tsconfig
+    project: './tsconfig.json',
+    tsconfigRootDir: __dirname
   }
 }

@@ -10,7 +10,16 @@ const project = resolve(process.cwd(), "tsconfig.json");
 
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
-  extends: ["eslint:recommended", "prettier", "turbo"],
+  extends: [
+    "eslint:recommended", 
+    "prettier",
+    "turbo",
+    "plugin:@typescript-eslint/recommended", 
+    "plugin:@typescript-eslint/eslint-recommended", 
+    "plugin:react/recommended",
+    "eslint-config-prettier",
+    "eslint-config-turbo"
+  ],
   plugins: ["only-warn"],
   globals: {
     React: true,
@@ -19,6 +28,7 @@ module.exports = {
   env: {
     browser: true,
   },
+  plugins: ["only-warn"],
   settings: {
     "import/resolver": {
       typescript: {
@@ -34,4 +44,8 @@ module.exports = {
   overrides: [
     { files: ["*.js?(x)", "*.ts?(x)"] },
   ],
+  rules: {
+    "import/no-default-export": "off",
+    "import/no-named-as-default": "off",
+  },
 };

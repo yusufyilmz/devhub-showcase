@@ -21,6 +21,7 @@
     ],
     "paths": {
       "@/components/*": ["./src/components/*"],
+      "@/app/*": ["./src/app/*"],
       "@/middleware/*": ["./src/lib/middleware/*"],
       "@/validation/*": ["./src/lib/validation/*"],
       "@/types/*": ["./src/lib/types/*"],
