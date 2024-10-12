@@ -5,29 +5,34 @@ import { useNotification } from '@shared/ui/hooks'
 import { useState } from 'react'
 import { siteCopy } from '@shared/content'
 import { useRouter } from 'next/navigation'
-import { Prisma } from '@prisma/client'
-import { apiClient } from '@shared/utils'
-import { HttpStatusCode } from 'axios'
+import type { Prisma, Project } from '@prisma/client'
+import { apiClient } from '@shared/lib'
+import type { ServerResponse } from '@shared/lib'
 import { ProjectForm } from '@shared/ui/components'
 
 const { errors, success } = siteCopy.notifications
 
-export default function AddProjectPage() {
+export default function AddProjectPage(): JSX.Element {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { setSuccess, setError } = useNotification()
-  const { replace } = useRouter()
+  const router = useRouter()
 
-  const handleSubmit = async (formData: Prisma.ProjectUpdateInput) => {
+  const handleSubmit = async (
+    formData: Prisma.ProjectUpdateInput
+  ): Promise<void> => {
     setIsSubmitting(true)
     try {
-      const res = await apiClient.post('/api/projects', {
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
+      const res = await apiClient.post<ServerResponse<Project>>(
+        '/api/projects',
+        {
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        }
+      )
 
-      if (res.status === HttpStatusCode.Ok && res.data.success) {
+      if (res.status === 200 && res.data.success) {
         setSuccess(success.projectAdded)
-        replace('/projects')
+        router.replace('/projects')
       } else {
         setError(errors.projectAddFailed)
       }
@@ -40,14 +45,16 @@ export default function AddProjectPage() {
 
   return (
     <div className="container mx-auto p-4">
-      <Typography variant="h4" className="mb-6">
+      <Typography className="mb-6" variant="h4">
         {siteCopy.cta.addProject}
       </Typography>
 
       <ProjectForm
-        onSubmit={handleSubmit}
-        isSubmitting={isSubmitting}
         action={isSubmitting ? 'Adding...' : 'Add Project'}
+        isSubmitting={isSubmitting}
+        onSubmit={formData => {
+          void handleSubmit(formData)
+        }}
       />
     </div>
   )

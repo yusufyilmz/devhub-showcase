@@ -1,8 +1,9 @@
-import { addProjectSchema } from '@/validation/schema/project'
-import { ProjectService } from '@/services/project'
-import { errorHandling, ValidationError } from '@shared/utils'
+import { errorHandling, ValidationError } from '@shared/lib'
 import { siteCopy } from '@shared/content'
-import { NextRequest, NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
+import { ProjectService } from '@/services/project'
+import { addProjectSchema } from '@/validation/schema/project'
 
 const projectService = new ProjectService()
 
@@ -23,13 +24,11 @@ const createProject = async (req: NextRequest): Promise<NextResponse> => {
   }
 }
 
-//eslint-disable-next-line
 const getAllProjects = async (_req: NextRequest): Promise<NextResponse> => {
   try {
     const project = await projectService.getAllProjects()
     return NextResponse.json({ success: true, data: project }, { status: 200 })
   } catch (error) {
-    console.log(error)
     return errorHandling(error)
   }
 }

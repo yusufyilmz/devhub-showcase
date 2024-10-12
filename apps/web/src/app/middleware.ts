@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
-import { v4 as uuidv4 } from 'uuid'
+import { v4 } from 'uuid'
 import logger from '@/logger'
 
-export function middleware(req: Request) {
-  const correlationId = req.headers.get('x-correlation-id') || uuidv4()
+export function middleware(req: Request): NextResponse {
+  const correlationId = req.headers.get('x-correlation-id') || v4()
 
   try {
     logger.info({

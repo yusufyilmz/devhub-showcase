@@ -7,6 +7,7 @@ import { cvSection } from './cv'
 import { navbar } from './navbar'
 import { notFoundPage } from './notFoundPage'
 import { errorPage } from './errorPage'
+import { chat } from './chat'
 
 export const siteCopy = {
   project,
@@ -17,5 +18,6 @@ export const siteCopy = {
   cvSection,
   navbar,
   notFoundPage,
-  errorPage
+  errorPage,
+  chat
 }

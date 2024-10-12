@@ -1,20 +1,23 @@
-import { ProjectsSection, CVSection } from '@shared/ui/components'
+import { ProjectsSection, CVSection, Chat } from '@shared/ui/components'
+import type { Project } from '@prisma/client'
 import { db } from '@/lib/db'
-import { cache } from 'react'
 
-export const experimental_ppr = true
+// export const experimental_ppr = true
 
-export const getProjects = cache(async () => {
+export const getProjects = async (): Promise<Project[]> => {
   const posts = await db.project.findMany()
 
   return posts
-})
+}
 
-export default async function Home() {
+export default async function Home(): Promise<JSX.Element> {
   const projects = await getProjects()
 
   return (
     <>
+      <section id="chat">
+        <Chat />
+      </section>
       <section className="w-full" id="projects">
         <ProjectsSection projects={projects} />
       </section>

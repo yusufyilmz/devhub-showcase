@@ -4,7 +4,7 @@
   "main": "src/index.ts",
   "scripts": {
     "lint": "eslint . --max-warnings 0",
-    "lint:fix": "eslint . --ext js,jsx,ts,tsx  --fix",
+    "lint:fix": "eslint --fix",
     "types:check": "tsc --noEmit --pretty",
     "format": "prettier --write ."
   },
@@ -12,6 +12,6 @@
   "devDependencies": {
     "@shared/eslint-config": "*",
     "@shared/typescript-config": "*",
-    "typescript": "^4.0.0"
+    "typescript": "^5.6.3"
   }
 }

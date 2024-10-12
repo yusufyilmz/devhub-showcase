@@ -1,5 +1,6 @@
-import pino, { Logger, LoggerOptions } from 'pino'
-import os from 'os'
+import os from 'node:os'
+import type { Logger, LoggerOptions } from 'pino'
+import pino from 'pino'
 
 export const createLogger = (hostname: string): Logger => {
   const options: LoggerOptions = {

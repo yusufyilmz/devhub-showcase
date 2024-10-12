@@ -1,0 +1,10 @@
+{
+  "extends": "@shared/typescript-config/build.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "module": "CommonJS",
+    "declaration": true
+  },
+  "include": ["src/**/*"]
+}

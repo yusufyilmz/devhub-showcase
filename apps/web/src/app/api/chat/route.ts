@@ -1,23 +1,27 @@
-// /app/api/chat/route.ts
-import { NextResponse } from 'next/server'
-import { Configuration, OpenAIApi } from 'openai'
+import { MessageProcessor } from '@shared/chat'
+import { z } from 'zod'
+import { errorHandling, ValidationError } from '@shared/lib'
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY
+const messageProcessor = new MessageProcessor()
+
+const userChatMessageSchema = z.object({
+  userMessage: z.string()
 })
 
-const openai = new OpenAIApi(configuration)
+export const POST = async (req: Request): Promise<Response> => {
+  try {
+    const parsedResult = userChatMessageSchema.safeParse(await req.json())
 
-export async function POST(req: Request) {
-  const { userMessage } = await req.json()
+    if (!parsedResult.success) {
+      throw new ValidationError('Invalid user message')
+    }
 
-  const completion = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo',
-    messages: [{ role: 'user', content: userMessage }],
-    max_tokens: 150
-  })
+    const botReply = await messageProcessor.processUserMessage(
+      parsedResult.data.userMessage
+    )
 
-  const botReply = completion.data.choices[0].message?.content
-
-  return NextResponse.json({ botReply })
+    return Response.json({ success: true, data: botReply })
+  } catch (error) {
+    return errorHandling(error)
+  }
 }

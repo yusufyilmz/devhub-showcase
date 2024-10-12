@@ -1,14 +1,15 @@
-import { Prisma, PrismaClient } from '@prisma/client'
-import { NotFoundError } from '@shared/utils'
+import type { Prisma, Project } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
+import { NotFoundError } from '@shared/lib'
 
 export class ProjectService {
   constructor(private readonly prisma: PrismaClient = new PrismaClient()) {}
 
-  async getAllProjects() {
+  async getAllProjects(): Promise<Project[]> {
     return this.prisma.project.findMany()
   }
 
-  async getProjectById(id: string) {
+  async getProjectById(id: string): Promise<Project> {
     const project = await this.prisma.project.findUnique({
       where: { id }
     })
@@ -20,33 +21,28 @@ export class ProjectService {
     return project
   }
 
-  async createProject(data: Prisma.ProjectCreateInput) {
+  async createProject(data: Prisma.ProjectCreateInput): Promise<Project> {
     return this.prisma.project.create({
       data
     })
   }
 
-  async updateProject(id: string, data: Prisma.ProjectUpdateInput) {
+  async updateProject(
+    id: string,
+    data: Prisma.ProjectUpdateInput
+  ): Promise<Project> {
     const project = await this.prisma.project.update({
       where: { id },
       data
     })
 
-    if (!project) {
-      throw new NotFoundError(`Project with id ${id} not found`)
-    }
-
     return project
   }
 
-  async deleteProject(id: string) {
+  async deleteProject(id: string): Promise<Project> {
     const project = await this.prisma.project.delete({
       where: { id }
     })
-
-    if (!project) {
-      throw new NotFoundError(`Project with id ${id} not found`)
-    }
 
     return project
   }

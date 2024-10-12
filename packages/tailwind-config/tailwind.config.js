@@ -29,11 +29,12 @@ module.exports = {
                     primary: '#000000',
                     gray: '#A3AAAE',
                     light: '#FFFFFF',
-                    card: '#F5F5F7',
+                    card: '#FAFAFA',
                     button: '#0071E3',
                     buttonHover: '#005BB5',
                     success: '#28CD41',
                     danger: '#FF3B30',
+                    messageBox: '#f3f3f3',
                 },
                 textColor: {
                     primary: '#000000',
@@ -49,8 +50,9 @@ module.exports = {
                     success: '#28CD41',
                     danger: '#FF3B30',
                 },
+            
             },
         },
-        plugins: [],
+        plugins: [require('@tailwindcss/typography')]
     }
 }

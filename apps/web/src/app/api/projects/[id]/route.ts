@@ -1,9 +1,10 @@
 import { z } from 'zod'
-import { ProjectService } from '@/services/project'
-import { errorHandling, NotFoundError, ValidationError } from '@shared/utils'
+import { errorHandling, ValidationError } from '@shared/lib'
 import { siteCopy } from '@shared/content'
+import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 import { updateProjectSchema } from '@/validation/schema/project'
-import { NextRequest, NextResponse } from 'next/server'
+import { ProjectService } from '@/services/project'
 
 const projectService = new ProjectService()
 
@@ -11,7 +12,7 @@ const idSchema = z.string().uuid()
 
 const { errors } = siteCopy.notifications
 
-export const GET = async (req: NextRequest) => {
+export const GET = async (req: NextRequest): Promise<NextResponse> => {
   try {
     const id = req.nextUrl.searchParams.get('id')
     const parsedId = idSchema.safeParse(id)
@@ -21,9 +22,6 @@ export const GET = async (req: NextRequest) => {
     }
 
     const project = await projectService.getProjectById(parsedId.data)
-    if (!project) {
-      throw new NotFoundError(errors.projectNotFound)
-    }
 
     return NextResponse.json(project, { status: 200 })
   } catch (error) {
@@ -31,7 +29,7 @@ export const GET = async (req: NextRequest) => {
   }
 }
 
-const updateProjectById = async (req: NextRequest) => {
+const updateProjectById = async (req: NextRequest): Promise<NextResponse> => {
   try {
     const id = req.nextUrl.searchParams.get('id')
     const parsedId = idSchema.safeParse(id)
@@ -49,9 +47,6 @@ const updateProjectById = async (req: NextRequest) => {
       parsedId.data,
       parsedResult.data
     )
-    if (!updatedProject) {
-      throw new NotFoundError(errors.projectNotFound)
-    }
 
     return NextResponse.json(
       { success: true, data: updatedProject },
@@ -62,7 +57,7 @@ const updateProjectById = async (req: NextRequest) => {
   }
 }
 
-const deleteProjectById = async (req: NextRequest) => {
+const deleteProjectById = async (req: NextRequest): Promise<NextResponse> => {
   try {
     const id = req.nextUrl.searchParams.get('id')
 
@@ -72,7 +67,7 @@ const deleteProjectById = async (req: NextRequest) => {
       throw new ValidationError(errors.invalidId)
     }
 
-    const project = projectService.deleteProject(parsedId.data)
+    const project = await projectService.deleteProject(parsedId.data)
     return NextResponse.json(project, { status: 204 })
   } catch (error) {
     return errorHandling(error)

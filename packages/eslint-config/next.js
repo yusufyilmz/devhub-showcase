@@ -1,15 +1,36 @@
-const { resolve } = require("node:path");
-
-const project = resolve(process.cwd(), "tsconfig.json");
-
-/** @type {import("eslint").Linter.Config} */
+const { resolve } = require('node:path');
+ 
+const project = resolve(process.cwd(), 'tsconfig.json');
+ 
+/*
+ * This is a custom ESLint configuration for use with
+ * Next.js apps.
+ *
+ * This config extends the Vercel Engineering Style Guide.
+ * For more information, see https://github.com/vercel/style-guide
+ *
+ */
+ 
 module.exports = {
   extends: [
-    "eslint:recommended",
-    "prettier",
-    require.resolve("@vercel/style-guide/eslint/next"),
+    "next/typescript",
+    ...[
+      require.resolve('@vercel/style-guide/eslint/node'),
+      require.resolve('@vercel/style-guide/eslint/typescript'),
+      require.resolve('@vercel/style-guide/eslint/browser'),
+      require.resolve('@vercel/style-guide/eslint/react'),
+      require.resolve('@vercel/style-guide/eslint/next'),
+      // Turborepo custom eslint configuration configures the following rules:
+      //  - https://github.com/vercel/turborepo/blob/main/packages/eslint-plugin-turbo/docs/rules/no-undeclared-env-vars.md
+      'eslint-config-turbo',
+    ].map(require.resolve),
+    'prettier',
+    'eslint:recommended',
     "turbo",
   ],
+  parserOptions: {
+    project,
+  },
   globals: {
     React: true,
     JSX: true,
@@ -20,16 +41,17 @@ module.exports = {
   },
   plugins: ["only-warn"],
   settings: {
-    "import/resolver": {
+    'import/resolver': {
       typescript: {
         project,
       },
     },
   },
-  ignorePatterns: [
-    // Ignore dotfiles
-    ".*.js",
-    "node_modules/",
-  ],
+  ignorePatterns: ['node_modules/', 'dist/', ".*.js"],
+  // add rules configurations here
   overrides: [{ files: ["*.js?(x)", "*.ts?(x)"] }],
+  rules: {
+    'import/no-default-export': 'off',
+    "import/no-named-as-default": "off",
+  },
 };

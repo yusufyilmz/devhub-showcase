@@ -1,0 +1,9 @@
+{
+  "extends": "@shared/typescript-config/build.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "jsx": "react-jsx"
+  },
+  "include": ["src/**/*"]
+}

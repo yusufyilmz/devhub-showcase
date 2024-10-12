@@ -6,11 +6,9 @@ import { useRouter } from 'next/navigation'
 import { Typography } from '@mui/material'
 import { useNotification } from '@shared/ui/hooks'
 import { siteCopy } from '@shared/content'
-import { Prisma, Project } from '@prisma/client'
-import { apiClient, fetcher } from '@shared/utils'
-import { ServerResponse } from '@/types/api'
-import { HttpStatusCode } from 'axios'
-
+import type { Prisma, Project } from '@prisma/client'
+import type { ServerResponse } from '@shared/lib'
+import { apiClient, fetcher } from '@shared/lib'
 import { ProjectForm } from '@shared/ui/components'
 
 interface PageProps {
@@ -22,43 +20,49 @@ interface PageProps {
 const { errors, success } = siteCopy.notifications
 const { cta } = siteCopy
 
-export default function UpdateProjectPage({ params }: PageProps) {
+export default function UpdateProjectPage({ params }: PageProps): JSX.Element {
   const { setError, setSuccess } = useNotification()
   const router = useRouter()
 
-  const { data: projectResponse, error } = useSWR<ServerResponse<Project>>(
+  const { data: projectResponse } = useSWR<ServerResponse<Project>>(
     `/api/projects/${params.projectId}`,
     fetcher,
     {
-      onError: () => setError(errors.fetchProjectError)
+      onError: () => {
+        setError(errors.fetchProjectError)
+      }
     }
   )
 
   useEffect(() => {
-    if (error || !projectResponse || projectResponse.error) {
+    if (projectResponse?.error) {
       setError(errors.fetchProjectError)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error, projectResponse])
+  }, [projectResponse, setError])
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = async (formData: Prisma.ProjectUpdateInput) => {
+  const handleSubmit = async (
+    formData: Prisma.ProjectUpdateInput
+  ): Promise<void> => {
     setIsSubmitting(true)
 
     try {
-      const res = await apiClient.put(`/api/projects/${params.projectId}`, {
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
+      const res = await apiClient.put<ServerResponse<Project>>(
+        `/api/projects/${params.projectId}`,
+        {
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        }
+      )
 
-      if (res.status === HttpStatusCode.Ok && res.data.success) {
+      if (res.status === 200 && res.data.success) {
         setSuccess(success.projectUpdated)
         router.push('/projects')
       } else {
         setError(errors.updateProjectError)
       }
-    } catch (error) {
+    } catch {
       setError(errors.updateProjectError)
     } finally {
       setIsSubmitting(false)
@@ -67,15 +71,17 @@ export default function UpdateProjectPage({ params }: PageProps) {
 
   return (
     <div className="container mx-auto p-4">
-      <Typography variant="h4" className="mb-6">
+      <Typography className="mb-6" variant="h4">
         {cta.updateProject}
       </Typography>
 
       <ProjectForm
-        onSubmit={handleSubmit}
-        isSubmitting={isSubmitting}
-        initialData={projectResponse?.data ?? undefined}
         action={isSubmitting ? 'Updating...' : 'Update Project'}
+        initialData={projectResponse?.data ?? undefined}
+        isSubmitting={isSubmitting}
+        onSubmit={formData => {
+          void handleSubmit(formData)
+        }}
       />
     </div>
   )
