@@ -2,8 +2,7 @@ Here’s the modified README for your devhub-showcase repository, following the 
 
 # DevHub Showcase
 
-This is Yusuf’s DevHub Showcase, a portfolio application built using Next.js, React, Typescript, Prisma, PostgreSQL, Material UI, and Tailwind CSS. It includes public project showcases, a CV page, and an interactive AI chat app.
-It will be updated
+This is Yusuf’s DevHub Showcase, a portfolio application built using Next.js, React, Typescript, Prisma, PostgreSQL, Material UI, ChatGPT and Tailwind CSS. It includes public project showcases, a CV page, and an interactive AI chat bot app that is written by using the chat GPT and with NLP techniques for classification.
 
 ## Using this repository
 
