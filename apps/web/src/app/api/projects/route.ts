@@ -1,5 +1,5 @@
 import { errorHandling, ValidationError } from '@shared/lib'
-import { siteCopy } from '@shared/content'
+import { copy } from '@shared/content'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { ProjectService } from '@/services/project'
@@ -7,7 +7,7 @@ import { addProjectSchema } from '@/validation/schema/project'
 
 const projectService = new ProjectService()
 
-const { errors } = siteCopy.notifications
+const { errors } = copy.notifications
 
 const createProject = async (req: NextRequest): Promise<NextResponse> => {
   try {

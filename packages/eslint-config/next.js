@@ -49,10 +49,18 @@ module.exports = {
     },
   },
   ignorePatterns: ['node_modules/', 'dist/', ".*.js"],
-  // add rules configurations here
-  overrides: [{ files: ["*.js?(x)", "*.ts?(x)"] }],
   rules: {
     'import/no-default-export': 'off',
     "import/no-named-as-default": "off",
+    'react/prop-types': 'off',
   },
+  overrides: [
+    { files: ["*.js?(x)", "*.ts?(x)"] },
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        'react/prop-types': 'off',
+      },
+    },
+  ]
 };

@@ -2,7 +2,7 @@
 
 import { Button } from '@mui/material'
 import { useRouter } from 'next/navigation'
-import { siteCopy } from '@shared/content'
+import { copy } from '@shared/content'
 
 export const GoBackButton = () => {
   const router = useRouter()
@@ -14,7 +14,7 @@ export const GoBackButton = () => {
       onClick={() => router.back()}
       className="rounded-lg"
     >
-      {siteCopy.cta.goBack}
+      {copy.cta.goBack}
     </Button>
   )
 }

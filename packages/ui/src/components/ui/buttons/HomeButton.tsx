@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@mui/material'
-import { siteCopy } from '@shared/content'
+import { copy } from '@shared/content'
 import { useRouter } from 'next/navigation'
 
 export const HomeButton = () => {
@@ -14,7 +14,7 @@ export const HomeButton = () => {
       className="rounded-lg"
       onClick={() => replace('/')}
     >
-      {siteCopy.cta.home}
+      {copy.cta.home}
     </Button>
   )
 }

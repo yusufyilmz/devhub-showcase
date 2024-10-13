@@ -1,15 +1,16 @@
-import { project } from './project'
-import { notifications } from './notifications'
-import { cta } from './cta'
-import { header } from './header'
-import { footer } from './footer'
-import { cvSection } from './cv'
-import { navbar } from './navbar'
-import { notFoundPage } from './notFoundPage'
-import { errorPage } from './errorPage'
-import { chat } from './chat'
+import { project } from './site-copy/project'
+import { notifications } from './site-copy/notifications'
+import { cta } from './site-copy/cta'
+import { header } from './site-copy/header'
+import { footer } from './site-copy/footer'
+import { cvSection } from './site-copy/cv'
+import { navbar } from './site-copy/navbar'
+import { notFoundPage } from './site-copy/notFoundPage'
+import { errorPage } from './site-copy/errorPage'
+import { chatMessages } from './chat-messages'
+import { chat } from './site-copy/chat'
 
-export const siteCopy = {
+export const copy = {
   project,
   notifications,
   cta,
@@ -19,5 +20,6 @@ export const siteCopy = {
   navbar,
   notFoundPage,
   errorPage,
+  chatMessages,
   chat
 }

@@ -5,7 +5,7 @@ import { ChatRole } from '@shared/lib'
 import { useStore } from 'zustand'
 import { ChatPopup } from '@shared/ui/components'
 import { useState } from 'react'
-import { FAILURE_MESSAGE } from '@shared/chat'
+import { copy } from '@shared/content'
 import { handleSendMessageAction } from './actions'
 
 export default function ChatContainer(): JSX.Element {
@@ -29,7 +29,7 @@ export default function ChatContainer(): JSX.Element {
 
       addMessage(serverResponse)
     } catch {
-      addMessage(FAILURE_MESSAGE)
+      addMessage(copy.chatMessages.failureMessage)
     } finally {
       setIsTyping(false)
     }

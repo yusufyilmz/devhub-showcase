@@ -1,10 +1,6 @@
-import {
-  GREETING_MESSAGE,
-  UNKNOWN_MESSAGE,
-  UNRELATED_MESSAGE
-} from '../messages/system'
 import { CVCategory, QuestionCategory } from '../types/cv'
 import { CV_MODEL } from './cv-model'
+import { copy } from '@shared/content'
 
 export const QUESTION_CATEGORIES: Record<CVCategory, QuestionCategory> = {
   [CVCategory.Skills]: {
@@ -159,7 +155,7 @@ export const QUESTION_CATEGORIES: Record<CVCategory, QuestionCategory> = {
   [CVCategory.Greetings]: {
     category: CVCategory.Greetings,
     weight: 1,
-    model: GREETING_MESSAGE,
+    model: copy.chatMessages.greetingMessage,
     keywords: [
       { word: 'hello', weight: 3 },
       { word: 'hi', weight: 2 },
@@ -186,7 +182,7 @@ export const QUESTION_CATEGORIES: Record<CVCategory, QuestionCategory> = {
       { word: 'food', weight: 5 },
       { word: 'favorite', weight: 5 }
     ],
-    model: UNRELATED_MESSAGE
+    model: copy.chatMessages.outOfTopicMessage
   },
   [CVCategory.Languages]: {
     category: CVCategory.Languages,
@@ -303,7 +299,7 @@ export const QUESTION_CATEGORIES: Record<CVCategory, QuestionCategory> = {
   },
   [CVCategory.Unknown]: {
     category: CVCategory.Unknown,
-    model: UNKNOWN_MESSAGE,
+    model: copy.chatMessages.unknownMessage,
     keywords: []
   },
   [CVCategory.Certificates]: {

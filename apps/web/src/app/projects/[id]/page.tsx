@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Typography } from '@mui/material'
 import { useNotification } from '@shared/ui/hooks'
-import { siteCopy } from '@shared/content'
+import { copy } from '@shared/content'
 import type { Prisma, Project } from '@prisma/client'
 import type { ServerResponse } from '@shared/lib'
 import { apiClient, fetcher } from '@shared/lib'
@@ -17,8 +17,8 @@ interface PageProps {
   }
 }
 
-const { errors, success } = siteCopy.notifications
-const { cta } = siteCopy
+const { errors, success } = copy.notifications
+const { cta } = copy
 
 export default function UpdateProjectPage({ params }: PageProps): JSX.Element {
   const { setError, setSuccess } = useNotification()

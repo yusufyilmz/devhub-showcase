@@ -6,7 +6,7 @@ import { ChatMessage } from '@shared/lib'
 import { ChatInput } from '../ChatInput'
 import CloseIcon from '@mui/icons-material/Close'
 import { Button } from '@mui/material'
-import { siteCopy } from '@shared/content'
+import { copy } from '@shared/content'
 import { TypingIndicator } from '../TypingIndicator'
 
 interface ChatPopupProps {
@@ -36,7 +36,7 @@ export const ChatPopup: React.FC<ChatPopupProps> = ({
           className="rounded-lg shadow-2xl relative transition-all duration-300 ease-in-out focus:outline-none transform hover:scale-200"
           onClick={toggleChat}
         >
-          {siteCopy.chat.placeholder}
+          {copy.chat.placeholder}
         </Button>
       )}
 

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Button from '@mui/material/Button'
-import { siteCopy } from '@shared/content'
+import { copy } from '@shared/content'
 
 type ChatInputProps = {
   // eslint-disable-next-line no-unused-vars
@@ -46,7 +46,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         onKeyUp={handleKeyUp}
         onKeyDown={handleKeyDown}
         className="flex-grow p-2 border rounded-lg"
-        placeholder={siteCopy.chat.placeholder}
+        placeholder={copy.chat.placeholder}
       />
       <Button
         type="submit"

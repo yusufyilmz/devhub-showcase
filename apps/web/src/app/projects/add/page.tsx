@@ -3,14 +3,14 @@
 import { Typography } from '@mui/material'
 import { useNotification } from '@shared/ui/hooks'
 import { useState } from 'react'
-import { siteCopy } from '@shared/content'
+import { copy } from '@shared/content'
 import { useRouter } from 'next/navigation'
 import type { Prisma, Project } from '@prisma/client'
 import { apiClient } from '@shared/lib'
 import type { ServerResponse } from '@shared/lib'
 import { ProjectForm } from '@shared/ui/components'
 
-const { errors, success } = siteCopy.notifications
+const { errors, success } = copy.notifications
 
 export default function AddProjectPage(): JSX.Element {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -46,7 +46,7 @@ export default function AddProjectPage(): JSX.Element {
   return (
     <div className="container mx-auto p-4">
       <Typography className="mb-6" variant="h4">
-        {siteCopy.cta.addProject}
+        {copy.cta.addProject}
       </Typography>
 
       <ProjectForm

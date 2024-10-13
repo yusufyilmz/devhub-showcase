@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { errorHandling, ValidationError } from '@shared/lib'
-import { siteCopy } from '@shared/content'
+import { copy } from '@shared/content'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { updateProjectSchema } from '@/validation/schema/project'
@@ -10,9 +10,9 @@ const projectService = new ProjectService()
 
 const idSchema = z.string().uuid()
 
-const { errors } = siteCopy.notifications
+const { errors } = copy.notifications
 
-export const GET = async (req: NextRequest): Promise<NextResponse> => {
+const getProjectById = async (req: NextRequest): Promise<NextResponse> => {
   try {
     const id = req.nextUrl.searchParams.get('id')
     const parsedId = idSchema.safeParse(id)
@@ -74,5 +74,6 @@ const deleteProjectById = async (req: NextRequest): Promise<NextResponse> => {
   }
 }
 
+export const GET = getProjectById
 export const PUT = updateProjectById
 export const DELETE = deleteProjectById

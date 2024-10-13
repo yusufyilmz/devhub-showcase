@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { CHAT_STORAGE_NAME } from '../constants/stores'
 import { ChatMessage } from '@shared/lib'
-import { WELCOME_MESSAGE } from '@shared/chat'
+import { copy } from '@shared/content'
 
 export type ChatState = {
   messages: ChatMessage[]
@@ -21,7 +21,7 @@ export const chatStore = create<ChatStore>()(
     set => ({
       messages: [
         {
-          ...WELCOME_MESSAGE,
+          ...copy.chatMessages.welcomeMessage,
           timestamp: Date.now()
         }
       ],
@@ -35,7 +35,7 @@ export const chatStore = create<ChatStore>()(
         set({
           messages: [
             {
-              ...WELCOME_MESSAGE
+              ...copy.chatMessages.welcomeMessage,
             }
           ]
         })

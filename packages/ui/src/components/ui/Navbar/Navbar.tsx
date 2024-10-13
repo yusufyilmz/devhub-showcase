@@ -1,5 +1,5 @@
 import { Button } from '@mui/material'
-import { siteCopy } from '@shared/content'
+import { copy } from '@shared/content'
 
 export const Navbar: React.FC = () => {
   return (
@@ -7,10 +7,10 @@ export const Navbar: React.FC = () => {
       <div className="container mx-auto">
         <div className="space-x-4">
           <Button variant="text" color="secondary" href="#projects">
-            {siteCopy.navbar.projects}
+            {copy.navbar.projects}
           </Button>
           <Button variant="text" color="secondary" href="#cv">
-            {siteCopy.navbar.cv}
+            {copy.navbar.cv}
           </Button>
         </div>
       </div>
