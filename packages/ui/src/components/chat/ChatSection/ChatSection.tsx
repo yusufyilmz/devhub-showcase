@@ -1,9 +1,9 @@
 'use client'
 
-import { chatStore } from '@shared/ui/stores'
+import { chatStore } from '../../../stores'
 import { ChatMessage, ChatRole } from '@shared/lib'
 import { useStore } from 'zustand'
-import { ChatPopup } from '@shared/ui/components'
+import { ChatPopup } from '../ChatPopup'
 import { useState } from 'react'
 import { copy } from '@shared/content'
 
