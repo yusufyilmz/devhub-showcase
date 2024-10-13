@@ -1,0 +1,77 @@
+name: CI and Deploy Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Use your Node version
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: yarn install
+
+      # Step 4: Set up Prisma and PostgreSQL
+      - name: Set DATABASE_URL environment variable
+        run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+
+      # Step 5: Run Prisma migrations
+      - name: Run Prisma migrations
+        run: |
+          yarn prisma migrate deploy
+          yarn prisma db push
+
+      # Step 6: Run tests
+      # - name: Run tests
+      #  run: yarn test
+
+      # Step 7: Build the project
+      - name: Build
+        run: yarn build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 8: Checkout the code again in deploy job
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 9: Install Vercel CLI
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      # Step 10: Set environment variables in Vercel
+      - name: Set Vercel environment variables
+        run: |
+          vercel env add DATABASE_URL "${{ secrets.DATABASE_URL }}"
+          vercel env add OPENAI_API_KEY "${{ secrets.OPENAI_API_KEY }}"
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      # Step 11: Deploy to Vercel
+      - name: Deploy to Vercel
+        run: vercel --prod
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
