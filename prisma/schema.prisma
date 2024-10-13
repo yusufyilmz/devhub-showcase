@@ -7,17 +7,28 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Company {
+  id       String   @id @default(cuid())
+  name     String
+  logoUrl  String?
+  url      String
+  projects Project[]
+
+  @@map("companies")
+}
+
 model Project {
-  id String @id @default(cuid())
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
   title       String
   description String
   link        String
   role        String
-  skills      String[] @default([])
+  skills      String[]  @default([])
+  public      Boolean   @default(false)
+  companyId   String?   // Foreign key to the company
+  company     Company?  @relation(fields: [companyId], references: [id])
 
   @@map("projects")
 }

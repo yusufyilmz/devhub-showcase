@@ -1,7 +1,13 @@
+-- Delete all existing projects
 DELETE FROM "devhub"."projects";
 
+-- Add a company: Toptal
+INSERT INTO "devhub"."companies" (id, name, "logoUrl", "url") 
+VALUES ('d1f8c0e4-0e8d-4114-b3eb-89e6472823c1', 'Toptal', '', 'https://www.toptal.com');
+
+-- Add projects and associate them with Toptal (companyId: 'd1f8c0e4-0e8d-4114-b3eb-89e6472823c1')
 INSERT INTO "devhub"."projects" 
-  (id, title, description, link, role, skills, "created_at", "updated_at") 
+  (id, title, description, link, role, skills, "created_at", "updated_at", "companyId", "public") 
 VALUES
   (
     'c2f50d08-626f-4779-9d49-cfcc077150c7',
@@ -11,7 +17,9 @@ VALUES
     'Fullstack Developer', 
     ARRAY['React', 'Typescript', 'Next.js', 'JavaScript', 'HTML', 'CSS'], 
     NOW(), 
-    NOW()
+    NOW(),
+    'd1f8c0e4-0e8d-4114-b3eb-89e6472823c1',  -- Toptal companyId
+    true
   ),
   
   (
@@ -22,7 +30,9 @@ VALUES
     'Frontend Developer', 
     ARRAY['React', 'Typescript', 'Next.js', 'JavaScript', 'HTML', 'CSS'], 
     NOW(), 
-    NOW()
+    NOW(),
+    'd1f8c0e4-0e8d-4114-b3eb-89e6472823c1',  -- Toptal companyId
+    true
   ),
   
   (
@@ -33,7 +43,9 @@ VALUES
     'Backend Developer', 
     ARRAY['React', 'Typescript', 'Next.js', 'JavaScript', 'HTML', 'CSS'], 
     NOW(), 
-    NOW()
+    NOW(),
+    'd1f8c0e4-0e8d-4114-b3eb-89e6472823c1',  -- Toptal companyId
+    true
   ),
   
   (
@@ -44,7 +56,9 @@ VALUES
     'Frontend Developer', 
     ARRAY['React', 'Typescript', 'Next.js', 'JavaScript', 'HTML', 'CSS'], 
     NOW(), 
-    NOW()
+    NOW(),
+    'd1f8c0e4-0e8d-4114-b3eb-89e6472823c1',  -- Toptal companyId
+    true
   ),
   
   (
@@ -55,6 +69,7 @@ VALUES
     'Fullstack Developer', 
     ARRAY['React', 'Typescript', 'Next.js', 'JavaScript', 'HTML', 'CSS'], 
     NOW(), 
-    NOW()
+    NOW(),
+    'd1f8c0e4-0e8d-4114-b3eb-89e6472823c1',  -- Toptal companyId
+    true
   );
-  
