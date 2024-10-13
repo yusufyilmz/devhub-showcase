@@ -1,28 +1,36 @@
-import { ProjectsSection, CVSection } from '@shared/ui/components'
-import type { Project } from '@prisma/client'
-import Chat from '@/app/chat'
+import {
+  ProjectsSection,
+  CVSection,
+  CompanySection,
+  ChatSection
+} from '@shared/ui/components'
+import type { Company, Project } from '@prisma/client'
+import { Box } from '@mui/material'
+import { handleSendMessageAction } from './actions'
 import { db } from '@/lib/db'
 
-export const getProjects = async (): Promise<Project[]> => {
-  const posts = await db.project.findMany()
+export const getProjectsAndCompanies = async (): Promise<{
+  projects: Project[]
+  companies: Company[]
+}> => {
+  const projects = await db.project.findMany()
+  const companies = await db.company.findMany()
 
-  return posts
+  return {
+    projects,
+    companies
+  }
 }
 
 export default async function Home(): Promise<JSX.Element> {
-  const projects = await getProjects()
+  const { projects, companies } = await getProjectsAndCompanies()
 
   return (
-    <>
-      <section id="chat">
-        <Chat />
-      </section>
-      <section className="w-full" id="projects">
-        <ProjectsSection projects={projects} />
-      </section>
-      <section className="w-full py-16 bg-main-light" id="cv">
-        <CVSection />
-      </section>
-    </>
+    <Box sx={{ flexDirection: 'column', display: 'flex', gap: 8 }}>
+      <ProjectsSection projects={projects} />
+      <CompanySection companies={companies} />
+      <CVSection />
+      <ChatSection handleSendMessage={handleSendMessageAction} />
+    </Box>
   )
 }

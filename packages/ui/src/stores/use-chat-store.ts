@@ -35,7 +35,7 @@ export const chatStore = create<ChatStore>()(
         set({
           messages: [
             {
-              ...copy.chatMessages.welcomeMessage,
+              ...copy.chatMessages.welcomeMessage
             }
           ]
         })

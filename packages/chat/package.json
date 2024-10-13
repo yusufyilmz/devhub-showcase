@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "scripts": {
+    "clean": "npx rimraf dist",
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint . --ext js,jsx,ts,tsx",
     "lint:fix": "eslint . --ext js,jsx,ts,tsx --fix",
@@ -12,11 +13,13 @@
   "dependencies": {
     "compromise": "^14.14.2",
     "esm": "^3.2.25",
-    "openai": "^4.67.3"
+    "openai": "^4.67.3",
+    "@shared/content": "*",
+    "@shared/lib": "*"
   },
   "devDependencies": {
     "@shared/eslint-config": "*",
-    "@shared/lib": "*",
+    "@shared/typescript-config": "*",
     "eslint": "^8",
     "typescript": "^5.6.3"
   }

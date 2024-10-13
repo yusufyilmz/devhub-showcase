@@ -6,6 +6,9 @@ export const Navbar: React.FC = () => {
     <nav className="p-4 shadow-lg bg-backgroundColor-primary">
       <div className="container mx-auto">
         <div className="space-x-4">
+          <Button variant="text" color="secondary" href="#companies">
+            {copy.navbar.companies}
+          </Button>
           <Button variant="text" color="secondary" href="#projects">
             {copy.navbar.projects}
           </Button>

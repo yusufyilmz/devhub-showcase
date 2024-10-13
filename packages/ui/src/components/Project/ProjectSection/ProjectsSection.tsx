@@ -12,17 +12,19 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   projects
 }) => {
   return (
-    <div className="text-center">
-      <h2 className="text-4xl font-bold mb-12">My Projects</h2>
-      <Grid2 container alignItems="stretch" spacing={4} className="w-full">
-        <Suspense fallback={<ProjectItemSkeleton />}>
-          {projects.map(project => (
-            <Grid2 key={project.id} size={{ md: 6, sm: 12, xl: 4 }}>
-              <ProjectItem project={project} />
-            </Grid2>
-          ))}
-        </Suspense>
-      </Grid2>
-    </div>
+    <section className="w-full" id="projects">
+      <div className="text-center">
+        <h2 className="text-4xl font-bold mb-12">My Projects</h2>
+        <Grid2 container alignItems="stretch" spacing={4} className="w-full">
+          <Suspense fallback={<ProjectItemSkeleton />}>
+            {projects.map(project => (
+              <Grid2 key={project.id} size={{ md: 6, sm: 12, xl: 4 }}>
+                <ProjectItem project={project} />
+              </Grid2>
+            ))}
+          </Suspense>
+        </Grid2>
+      </div>
+    </section>
   )
 }

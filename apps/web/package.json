@@ -21,7 +21,6 @@
     "@prisma/client": "^5.20.0",
     "@shared/chat": "*",
     "@shared/content": "*",
-    "@shared/eslint-config": "*",
     "@shared/lib": "*",
     "@shared/ui": "*",
     "async_hooks": "^1.0.0",
@@ -42,6 +41,8 @@
   },
   "devDependencies": {
     "@shared/typescript-config": "*",
+    "@shared/eslint-config": "*",
+    "@shared/tailwindcss": "*",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

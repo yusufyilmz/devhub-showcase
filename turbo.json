@@ -46,6 +46,11 @@
       "dependsOn": [
         "^lint:fix"
       ]
+    }, 
+    "clean": {
+      "dependsOn": [
+        "^clean"
+      ]
     }
   }
 }

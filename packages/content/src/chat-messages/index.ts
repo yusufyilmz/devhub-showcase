@@ -40,10 +40,10 @@ export const unknownMessage: ChatMessage = {
 }
 
 export const chatMessages = {
-    welcomeMessage: welcomeMessage,
-    failureMessage: failureMessage,
-    goodbyeMessage: goodbyeMessage,
-    outOfTopicMessage: outOfTopicMessage,
-    greetingMessage: greetingMessage,
-    unknownMessage
+  welcomeMessage: welcomeMessage,
+  failureMessage: failureMessage,
+  goodbyeMessage: goodbyeMessage,
+  outOfTopicMessage: outOfTopicMessage,
+  greetingMessage: greetingMessage,
+  unknownMessage
 }

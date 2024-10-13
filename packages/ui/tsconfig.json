@@ -1,6 +1,7 @@
 {
   "extends": "@shared/typescript-config/react-library.json",
   "compilerOptions": {
+    "rootDir": "src",
     "baseUrl": ".",
     "outDir": "dist"
   },

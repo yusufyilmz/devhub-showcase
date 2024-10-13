@@ -1,19 +1,24 @@
 'use client'
 
 import { chatStore } from '@shared/ui/stores'
-import { ChatRole } from '@shared/lib'
+import { ChatMessage, ChatRole } from '@shared/lib'
 import { useStore } from 'zustand'
 import { ChatPopup } from '@shared/ui/components'
 import { useState } from 'react'
 import { copy } from '@shared/content'
-import { handleSendMessageAction } from './actions'
 
-export default function ChatContainer(): JSX.Element {
+type ChatSectionProps = {
+  handleSendMessage: (input: ChatMessage) => Promise<ChatMessage>
+}
+
+export const ChatSection: React.FC<ChatSectionProps> = ({
+  handleSendMessage
+}): JSX.Element => {
   const messages = useStore(chatStore, state => state.messages)
   const addMessage = useStore(chatStore, state => state.addMessage)
   const [isTyping, setIsTyping] = useState(true)
 
-  const handleSendMessage = async (input: string): Promise<void> => {
+  const handleSendMessageAction = async (input: string): Promise<void> => {
     if (!input || isTyping) return
 
     setIsTyping(true)
@@ -25,9 +30,9 @@ export default function ChatContainer(): JSX.Element {
     addMessage(newMessage)
 
     try {
-      const serverResponse = await handleSendMessageAction(newMessage)
+      const response = await handleSendMessage(newMessage)
 
-      addMessage(serverResponse)
+      addMessage(response)
     } catch {
       addMessage(copy.chatMessages.failureMessage)
     } finally {
@@ -36,14 +41,16 @@ export default function ChatContainer(): JSX.Element {
   }
 
   return (
-    <div className="p-4">
-      <ChatPopup
-        handleSendMessage={input => {
-          void handleSendMessage(input)
-        }}
-        isTyping={isTyping}
-        messages={messages}
-      />
-    </div>
+    <section id="chat">
+      <div className="p-4">
+        <ChatPopup
+          handleSendMessage={input => {
+            void handleSendMessageAction(input)
+          }}
+          isTyping={isTyping}
+          messages={messages}
+        />
+      </div>
+    </section>
   )
 }

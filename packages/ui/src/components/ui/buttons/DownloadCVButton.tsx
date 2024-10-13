@@ -3,7 +3,7 @@ export const DownloadCVButton: React.FC = () => {
     <a
       href="/cv.pdf"
       download="Yusuf_Yilmaz_CV.pdf"
-      className="inline-block bg-button-dark text-white hover:bg-gray-800 px-6 py-3 rounded-lg shadow transition"
+      className="w-full inline-block bg-button-dark text-white hover:bg-gray-800 px-6 py-3 rounded-lg shadow transition"
     >
       Download CV
     </a>
