@@ -2,33 +2,43 @@ import {
   ProjectsSection,
   CVSection,
   CompanySection,
-  ChatSection
+  ChatSection,
+  EducationsSection
 } from '@shared/ui/components'
-import type { Company, Project } from '@prisma/client'
+import type { Education, Project } from '@prisma/client'
 import { Box } from '@mui/material'
+import type { CompanyWithProjects } from '@shared/lib'
+import { CompanyWithProjectsArgs } from '@shared/lib'
 import { db } from '@/lib/db'
 import { handleSendMessageAction } from './actions'
 
-export const getProjectsAndCompanies = async (): Promise<{
+export const getPageResources = async (): Promise<{
   projects: Project[]
-  companies: Company[]
+  companies: CompanyWithProjects[]
+  educations: Education[]
 }> => {
   const projects = await db.project.findMany()
-  const companies = await db.company.findMany()
+  const educations = await db.education.findMany()
+  const companies = await db.company.findMany(CompanyWithProjectsArgs)
 
   return {
     projects,
-    companies
+    companies,
+    educations
   }
 }
 
 export default async function Home(): Promise<JSX.Element> {
-  const { projects, companies } = await getProjectsAndCompanies()
+  const { projects, companies, educations } = await getPageResources()
 
   return (
-    <Box sx={{ flexDirection: 'column', display: 'flex', gap: 8 }}>
-      <ProjectsSection projects={projects} />
+    <Box
+      className="max-w-[100vw]"
+      sx={{ flexDirection: 'column', display: 'flex', gap: 8 }}
+    >
       <CompanySection companies={companies} />
+      <EducationsSection educations={educations} />
+      <ProjectsSection projects={projects} />
       <CVSection />
       <ChatSection handleSendMessage={handleSendMessageAction} />
     </Box>

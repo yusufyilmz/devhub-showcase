@@ -1,14 +1,14 @@
-import { Grid } from '@mui/material'
-import { Company } from '@prisma/client'
 import { CompanyItem } from '../CompanyItem/CompanyItem'
+import { CompanyWithProjects } from '@shared/lib'
+import { ScrollableContainer } from '../../ui/ScrollableContainer/ScrollableContainer'
 
 interface CompanyListProps {
-  companies: (Company & { projects?: { id: string; title: string }[] })[]
+  companies: CompanyWithProjects[]
 }
 
 export const CompanyList: React.FC<CompanyListProps> = ({ companies }) => {
   return (
-    <Grid container spacing={3} className="company-section">
+    <ScrollableContainer>
       {companies.map(company => (
         <CompanyItem
           key={company.id}
@@ -16,6 +16,6 @@ export const CompanyList: React.FC<CompanyListProps> = ({ companies }) => {
           projects={company.projects}
         />
       ))}
-    </Grid>
+    </ScrollableContainer>
   )
 }

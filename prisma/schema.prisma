@@ -8,27 +8,44 @@ generator client {
 }
 
 model Company {
-  id       String   @id @default(cuid())
-  name     String
-  logoUrl  String?
-  url      String
-  projects Project[]
+  id         String    @id @default(cuid())
+  name       String
+  url        String
+  role       String
+  startedAt  DateTime  @map("started_at")
+  finishedAt DateTime? @map("finished_at")
+  projects   Project[]
 
   @@map("companies")
 }
 
 model Project {
-  id          String    @id @default(cuid())
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
   title       String
   description String
   link        String
   role        String
-  skills      String[]  @default([])
-  public      Boolean   @default(false)
-  companyId   String?   // Foreign key to the company
-  company     Company?  @relation(fields: [companyId], references: [id])
+  skills      String[] @default([])
+  public      Boolean  @default(false)
+  companyId   String?
+  company     Company? @relation(fields: [companyId], references: [id])
 
   @@map("projects")
+}
+
+model Education {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  institution  String
+  degree       String
+  fieldOfStudy String   @map("field_of_study")
+  startedAt    DateTime @map("started_at")
+  finishedAt   DateTime @map("finished_at")
+  description  String?
+
+  @@map("educations")
 }

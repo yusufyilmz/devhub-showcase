@@ -215,7 +215,7 @@ export const CV_MODEL: CVModel = {
     {
       position: 'Senior Fullstack Engineer',
       company: 'Toptal',
-      years: 'October 2021 – Present',
+      years: 'October 2021 – October 2024',
       description:
         'Developed the TAG / Assets Generator using Next.js and React to automate interviews and create success stories via Dify.AI. Built tools for Google Ads management and migrated 10-20 legacy websites to Next.js.'
     },

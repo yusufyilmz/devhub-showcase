@@ -39,15 +39,14 @@ The project is set up as a **monorepo** using `Turborepo` to manage the differen
 The AI chat is built using a combination of NLP (Natural Language Processing) and OpenAI’s API. The process works as follows:
 
 1. **Classification using NLP**: User input is first classified using the `compromise` NLP library. The classification determines the intent of the message (e.g., greeting, question about skills, unrelated message, etc.).
-   
 2. **Response Logic**:
+
    - For certain categories like greetings or unrelated queries, predefined responses are triggered automatically.
    - For more complex questions (e.g., about work experience or skills), the query is sent to the OpenAI API with relevant context about my CV or projects.
 
 3. **Dynamic Responses**: Depending on the classification, either a predefined message is shown, or the response is dynamically generated from OpenAI’s model based on the category of the question.
 
 This system ensures efficient responses for both casual interactions and more detailed inquiries about my professional background.
-
 
 ## Getting Started
 
@@ -65,27 +64,27 @@ Ensure that you have the following installed:
 
 1. Clone the repository:
 
-    ```bash
-    git clone https://github.com/yusufyilmz/devhub-showcase.git
-    ```
+   ```bash
+   git clone https://github.com/yusufyilmz/devhub-showcase.git
+   ```
 
 2. Navigate into the project directory:
 
-    ```bash
-    cd devhub-showcase
-    ```
+   ```bash
+   cd devhub-showcase
+   ```
 
 3. Install dependencies using `yarn`:
 
-    ```bash
-    yarn install
-    ```
+   ```bash
+   yarn install
+   ```
 
 4. Set up the database by running the Prisma migration:
 
-    ```bash
-    yarn prisma migrate dev
-    ```
+   ```bash
+   yarn prisma migrate dev
+   ```
 
 ### Development
 

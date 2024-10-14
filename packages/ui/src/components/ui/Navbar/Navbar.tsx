@@ -9,6 +9,9 @@ export const Navbar: React.FC = () => {
           <Button variant="text" color="secondary" href="#companies">
             {copy.navbar.companies}
           </Button>
+          <Button variant="text" color="secondary" href="#education">
+            {copy.navbar.education}
+          </Button>
           <Button variant="text" color="secondary" href="#projects">
             {copy.navbar.projects}
           </Button>

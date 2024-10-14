@@ -19,6 +19,7 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.3",
     "@mui/material": "^6.1.3",
+    "@mui/styles": "^6.1.3",
     "@prisma/client": "^5.20.0",
     "@shared/chat": "*",
     "@shared/content": "*",

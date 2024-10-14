@@ -1,8 +1,7 @@
-import { Suspense } from 'react'
 import { ProjectItem } from '../ProjectItem'
-import { ProjectItemSkeleton } from '../ProjectItemSkeleton'
 import { Grid2 } from '@mui/material'
 import { Project } from '@prisma/client'
+import { PageHeader } from '../../ui/PageHeader'
 
 interface ProjectsSectionProps {
   projects: Project[]
@@ -12,17 +11,24 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   projects
 }) => {
   return (
-    <section className="w-full" id="projects">
+    <section className="w-full px-page-px" id="projects">
       <div className="text-center">
-        <h2 className="text-4xl font-bold mb-12">My Projects</h2>
-        <Grid2 container alignItems="stretch" spacing={4} className="w-full">
-          <Suspense fallback={<ProjectItemSkeleton />}>
-            {projects.map(project => (
-              <Grid2 key={project.id} size={{ md: 6, sm: 12, xl: 4 }}>
-                <ProjectItem project={project} />
-              </Grid2>
-            ))}
-          </Suspense>
+        <PageHeader
+          title="Projects & Contributions"
+          subtitle="Notable Work and Open-Source Contributions"
+        />
+        <Grid2
+          container
+          alignItems="stretch"
+          spacing={4}
+          className="w-full"
+          alignContent="stretch"
+        >
+          {projects.map(project => (
+            <Grid2 key={project.id} size={{ md: 6, sm: 12, xl: 6 }}>
+              <ProjectItem project={project} />
+            </Grid2>
+          ))}
         </Grid2>
       </div>
     </section>

@@ -12,7 +12,8 @@ export const failureMessage: ChatMessage = {
   role: ChatRole.System,
   timestamp: Date.now(),
   title: 'Oops!',
-  content: 'Sorry, I am having trouble processing your message! Could you try again or ask me something else.'
+  content:
+    'Sorry, I am having trouble processing your message! Could you try again or ask me something else.'
 }
 
 export const processErrorMessage: ChatMessage = {
@@ -39,7 +40,8 @@ export const outOfTopicMessage: ChatMessage = {
 export const greetingMessage: ChatMessage = {
   role: ChatRole.System,
   timestamp: Date.now(),
-  content: 'Hey there! Tell me what you’d like to know, and I’ll be happy to help.'
+  content:
+    'Hey there! Tell me what you’d like to know, and I’ll be happy to help.'
 }
 
 export const unknownMessage: ChatMessage = {

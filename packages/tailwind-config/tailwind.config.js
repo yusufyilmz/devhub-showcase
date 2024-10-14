@@ -10,6 +10,7 @@ module.exports = {
             },
             padding: {
                 'page-px': '15%',
+                'page-px-sm': '5%',
             },
             colors: {
                 main: {
@@ -38,6 +39,8 @@ module.exports = {
                 },
                 textColor: {
                     primary: '#000000',
+                    secondary: '#555555',
+                    // #555555
                     gray: '#A3AAAE',
                     light: '#FFFFFF',
                     buttonText: '#FFFFFF',

@@ -26,14 +26,16 @@ export const IFramePreview: React.FC<IFramePreviewProps> = ({ url }) => {
 
   const IFrame = useMemo(() => {
     return url ? (
-      <iframe
-        src={url ?? null}
-        title="Website Preview"
-        className={`w-full h-[600px] transition-opacity duration-500 opacity-100`}
-        sandbox="allow-same-origin"
-        onLoad={handleLoad}
-        onError={handleError}
-      />
+      <div className="h-[600px] overflow-y-auto">
+        <iframe
+          src={url ?? null}
+          title="Website Preview"
+          className="w-[100vw] h-[100vh] transition-opacity duration-500 opacity-100 pointer-events-none"
+          sandbox="allow-same-origin"
+          onLoad={handleLoad}
+          onError={handleError}
+        />
+      </div>
     ) : null
   }, [url])
 

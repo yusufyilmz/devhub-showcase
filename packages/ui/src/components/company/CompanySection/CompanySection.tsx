@@ -1,17 +1,21 @@
-import { Company } from '@prisma/client'
+import { PageHeader } from '../../ui/PageHeader'
 import { CompanyList } from '../CompanyList'
+import { CompanyWithProjects } from '@shared/lib'
 
 interface CompanySectionProps {
-  companies: Company[]
+  companies: CompanyWithProjects[]
 }
 
 export const CompanySection: React.FC<CompanySectionProps> = ({
   companies
 }) => {
   return (
-    <section className="w-full" id="companies">
+    <section className="w-full px-page-px-sm" id="companies">
       <div className="text-center">
-        <h2 className="text-4xl font-bold mb-12">My Companies</h2>
+        <PageHeader
+          title="Professional Experience"
+          subtitle="Roles and Companies I've Worked With"
+        />
         <CompanyList companies={companies} />
       </div>
     </section>

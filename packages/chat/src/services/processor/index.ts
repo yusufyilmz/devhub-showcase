@@ -36,7 +36,10 @@ export class MessageProcessor {
       // Step 1: Do message classification with the NLP classification model
       const messageClassification = this.classifier.classify(userMessage)
 
-      this.logger.info({ category: messageClassification.category }, 'Message classified.')
+      this.logger.info(
+        { category: messageClassification.category },
+        'Message classified.'
+      )
 
       // Step 2: if result is a casual question or greeting, return a casual response
       if (
