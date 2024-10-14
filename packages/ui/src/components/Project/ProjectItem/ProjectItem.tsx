@@ -2,7 +2,6 @@
 
 import { IFramePreview } from '../../ui/IFramePreview'
 import { Chip, Typography, Card, CardContent, Link } from '@mui/material'
-import { ProjectTitle } from '../../ui/buttons/ProjectTitle'
 import { ProjectWithCompany } from '@shared/lib/types'
 
 interface ProjectItemProps {
@@ -11,18 +10,33 @@ interface ProjectItemProps {
 
 export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
   return (
-    <Card className="bg-backgroundColor-card flex flex-col h-full rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 cursor-pointer">
-      <CardContent className="text-left">
+    <Card className="bg-backgroundColor-card h-full flex flex-col justify-between rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105">
+      <CardContent className="flex gap-4 flex-col text-left">
         {project?.link && (
           <div className="relative">
             <IFramePreview url={project.link} />
           </div>
         )}
 
-        <div className="p-4 flex flex-col gap-4">
-          <ProjectTitle title={project.title} link={project.link ?? ''} />
-          <Typography variant="body2" align="left" className="text-gray-600">
+        <div className="p-4 flex flex-col gap-3">
+          <Typography
+            variant="h5"
+            align="left"
+            className="font-semibold text-main-black text-2xl"
+          >
+            {project.title}
+          </Typography>
+          <h4 className="text-lg font-semibold text-textColor-secondary">
             {project.role}
+          </h4>
+
+          <Typography
+            variant="body2"
+            align="left"
+            color="textSecondary"
+            className="text-gray-700 font-light"
+          >
+            {project?.description}
           </Typography>
           <div className="flex flex-wrap gap-2">
             {project.skills.map((skill, index) => (
@@ -33,30 +47,23 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
               />
             ))}
           </div>
-
-          <Typography
-            variant="body2"
-            align="left"
-            color="textSecondary"
-            className="text-gray-700"
-          >
-            {project?.description}
-          </Typography>
-          {project.company && (
-            <Typography
-              variant="h6"
-              align="center"
-              className="text-main-black mt-6"
-            >
-              <small>
-                <i>This project is owned by </i>
-              </small>
-              <Link href={project.company.url} target="_blank">
-                <b>{project.company?.name.toUpperCase()}</b>
-              </Link>
-            </Typography>
-          )}
         </div>
+      </CardContent>
+      <CardContent>
+        {project.company && (
+          <Typography
+            variant="h5"
+            align="center"
+            className="text-sm text-main-black mt-6"
+          >
+            <small>
+              <i>This project is owned by </i>
+            </small>
+            <Link href={project.company.url} target="_blank">
+              <b>{project.company?.name.toUpperCase()}</b>
+            </Link>
+          </Typography>
+        )}
       </CardContent>
     </Card>
   )

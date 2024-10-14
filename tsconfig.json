@@ -11,6 +11,7 @@
     "references": [
       { "path": "./packages/ui" },
       { "path": "./packages/content" },
+      { "path": "./packages/chat" },
       { "path": "./packages/lib" },
       { "path": "./apps/web" }
     ]

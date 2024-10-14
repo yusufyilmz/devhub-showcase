@@ -7,7 +7,7 @@
     "dev:clean": "yarn clean & next dev | pino-pretty",
     "dev": "next dev | pino-pretty",
     "prebuild": "yarn prisma generate",
-    "build": "next build",
+    "build": "yarn prebuild && next build",
     "start": "next start",
     "lint": "eslint . --ext js,jsx,ts,tsx",
     "lint:fix": "eslint . --ext js,jsx,ts,tsx --fix",

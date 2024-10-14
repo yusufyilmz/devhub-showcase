@@ -14,7 +14,7 @@ export const ReferralItem: React.FC<{
   referral: Referral
 }> = ({ referral }) => {
   return (
-    <Card className="bg-backgroundColor-card rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 company-card p-6 border mb-6 min-w-[20vw]">
+    <Card className="bg-backgroundColor-card flex flex-col justify-around h-full rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 referral card p-6">
       {referral.feedback && <Comment comment={referral.feedback} />}
       {referral.recommendation && <Comment comment={referral.recommendation} />}
       <div className="mt-4">

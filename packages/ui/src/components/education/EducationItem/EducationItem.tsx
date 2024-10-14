@@ -15,7 +15,7 @@ export const EducationItem: React.FC<EducationProps> = ({ education }) => {
         rel="noopener noreferrer"
       >
         <CardContent>
-          <h6 className="text-xl font-semibold">{education.institution}</h6>
+          <h5 className="text-xl font-semibold">{education.institution}</h5>
           <p className="font-normal text-sm italic text-textColor-secondary">
             {education.degree} in {education.fieldOfStudy}
           </p>
