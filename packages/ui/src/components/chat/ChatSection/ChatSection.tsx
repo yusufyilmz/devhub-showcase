@@ -1,10 +1,10 @@
 'use client'
 
-import { chatStore } from '../../../stores'
+import { chatStore, useChatMessages } from '../../../stores'
 import { ChatMessage, ChatMessageType, ChatRole } from '@shared/lib/types'
 import { useStore } from 'zustand'
 import { ChatPopup } from '../ChatPopup'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { copy } from '@shared/content'
 
 type ChatSectionProps = {
@@ -22,25 +22,16 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
   className
 }): JSX.Element => {
   const sessionId = useStore(chatStore, state => state.sessionId)
-  const getMessages = useStore(chatStore, state => state.getMessages)
   const addMessage = useStore(chatStore, state => state.addMessage)
+  const messages = useChatMessages(type)
   const [isTyping, setIsTyping] = useState(false)
-
-  useEffect(() => {
-    if (getMessages(type).length === 0) {
-      addMessage({
-        ...copy.chatMessages.welcomeMessage[type],
-        timestamp: Date.now()
-      })
-    }
-  }, [type])
 
   const handleSendMessageAction = async (input: string): Promise<void> => {
     if (!input || isTyping) return
 
     setIsTyping(true)
 
-    const lastMessage = getMessages(type)
+    const lastMessage = messages
       .filter(message => message.type === type)
       .pop()
 
@@ -75,7 +66,6 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
             void handleSendMessageAction(input)
           }}
           isTyping={isTyping}
-          messages={getMessages(type)}
         />
       </div>
     </section>

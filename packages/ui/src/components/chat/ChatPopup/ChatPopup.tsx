@@ -2,17 +2,16 @@
 
 import { useEffect, useState } from 'react'
 import { ChatMessageBox } from '../ChatMessageBox'
-import { ChatMessage, ChatMessageType } from '@shared/lib/types'
+import type { ChatMessageType } from '@shared/lib/types'
 import { ChatInput } from '../ChatInput'
 import CloseIcon from '@mui/icons-material/Close'
 import { Button } from '@mui/material'
 import { copy } from '@shared/content'
 import { TypingIndicator } from '../TypingIndicator'
 import { useStore } from 'zustand'
-import { chatStore } from '../../../stores'
+import { chatStore, useChatMessages } from '../../../stores'
 
 interface ChatPopupProps {
-  messages: ChatMessage[]
   type: ChatMessageType
   isTyping?: boolean
   className?: string
@@ -21,7 +20,6 @@ interface ChatPopupProps {
 }
 
 export const ChatPopup: React.FC<ChatPopupProps> = ({
-  messages,
   handleSendMessage,
   isTyping,
   type,
@@ -30,19 +28,19 @@ export const ChatPopup: React.FC<ChatPopupProps> = ({
   const resetChat = useStore(chatStore, state => state.resetChat)
   const [isOpen, setIsOpen] = useState(false)
   const [isChatFinished, setIsChatFinished] = useState(false)
-
+  const messages = useChatMessages(type)
   const toggleChat = () => {
     setIsOpen(!isOpen)
+
+    isChatFinished && resetChat(type)
   }
 
   useEffect(() => {
-    console.log(messages[messages.length - 1])
     if (
       messages.length > 1 &&
       messages[messages.length - 1]?.category === 'end'
     ) {
       setIsChatFinished(true)
-      resetChat(type)
     }
   }, [messages])
 
@@ -70,7 +68,7 @@ export const ChatPopup: React.FC<ChatPopupProps> = ({
             <CloseIcon className="h-4 w-4" />
           </button>
           <div className="flex flex-col h-full">
-            <ChatMessageBox messages={messages} />
+            <ChatMessageBox type={type} botIsTyping={isTyping} />
             {isTyping && <TypingIndicator />}
             <ChatInput
               type={type}

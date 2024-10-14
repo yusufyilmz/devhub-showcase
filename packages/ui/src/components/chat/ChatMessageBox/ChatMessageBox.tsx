@@ -1,18 +1,21 @@
 'use client'
 
-import { ChatMessage, ChatRole } from '@shared/lib/types'
+import { ChatMessageType, ChatRole } from '@shared/lib/types'
 import { ChatMessageItem } from '../ChatMessageItem'
 import { useRef, useEffect } from 'react'
+import { useChatMessages } from '../../../stores'
 
 interface ChatMessageBoxProps {
-  messages: ChatMessage[]
   botIsTyping?: boolean
+  type: ChatMessageType
 }
 
 export const ChatMessageBox: React.FC<ChatMessageBoxProps> = ({
-  messages,
-  botIsTyping
+  botIsTyping,
+  type
 }) => {
+  const messages = useChatMessages(type)
+
   const chatListRef = useRef<HTMLDivElement>(null)
 
   const handleScrollToBottom = () => {
