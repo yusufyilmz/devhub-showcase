@@ -35,7 +35,7 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
   }
 
   return (
-    <Grid className="relative w-full px-10 py-2 align ">
+    <Grid className="relative w-full px-10 align ">
       {showLeftArrow && (
         <button
           onClick={scrollLeft}

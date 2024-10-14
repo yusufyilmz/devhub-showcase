@@ -20,17 +20,18 @@ type ChatActions = ChatState & {
 
 type ChatStore = ChatState & ChatActions
 
-
 export const chatStore = create<ChatStore>()(
   persist(
-    (set,) => ({
+    set => ({
       sessionId: uuidv4(),
-      referralMessages: [{
-        ...copy.chatMessages.welcomeMessage.referral,
-      }],
+      referralMessages: [
+        {
+          ...copy.chatMessages.welcomeMessage.referral
+        }
+      ],
       chatMessages: [
         {
-          ...copy.chatMessages.welcomeMessage.cv,
+          ...copy.chatMessages.welcomeMessage.cv
         }
       ],
       messages: [],
@@ -38,39 +39,39 @@ export const chatStore = create<ChatStore>()(
         set(state =>
           message.type === 'referral'
             ? {
-              referralMessages: [
-                ...state.referralMessages,
-                {
-                  ...message
-                }
-              ]
-            }
+                referralMessages: [
+                  ...state.referralMessages,
+                  {
+                    ...message
+                  }
+                ]
+              }
             : {
-              chatMessages: [
-                ...state.chatMessages,
-                {
-                  ...message
-                }
-              ]
-            }
+                chatMessages: [
+                  ...state.chatMessages,
+                  {
+                    ...message
+                  }
+                ]
+              }
         ),
       resetChat: (type: ChatMessageType) => {
         set(
           type === 'referral'
             ? {
-              referralMessages: [
-                {
-                  ...copy.chatMessages.welcomeMessage.referral,
-                }
-              ]
-            }
+                referralMessages: [
+                  {
+                    ...copy.chatMessages.welcomeMessage.referral
+                  }
+                ]
+              }
             : {
-              chatMessages: [
-                {
-                  ...copy.chatMessages.welcomeMessage.cv,
-                }
-              ]
-            }
+                chatMessages: [
+                  {
+                    ...copy.chatMessages.welcomeMessage.cv
+                  }
+                ]
+              }
         )
       }
     }),
@@ -80,4 +81,10 @@ export const chatStore = create<ChatStore>()(
   )
 )
 
-export const useChatMessages = (type: string) => useStore(chatStore, type === 'referral' ? state => state.referralMessages : state => state.chatMessages)
+export const useChatMessages = (type: string) =>
+  useStore(
+    chatStore,
+    type === 'referral'
+      ? state => state.referralMessages
+      : state => state.chatMessages
+  )

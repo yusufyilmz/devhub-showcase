@@ -1,20 +1,22 @@
 'use client'
 
-import { Button } from '@mui/material';
-import { useState } from 'react';
-import { copy } from '@shared/content';
+import { Button, IconButton } from '@mui/material'
+import { useState } from 'react'
+import { copy } from '@shared/content'
+import { AboutSection } from '../../about/AboutSection'
+import InfoIcon from '@mui/icons-material/Info'
 
 export const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+    setIsOpen(!isOpen)
+  }
 
   return (
     <nav className="md:px-page-px p-4 shadow-lg bg-main-black text-main-white">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-xl font-semibold">{copy.header.pageHeaderTitle}</div>
+        <div className="text-xl font-semibold">{copy.header.logoTitle}</div>
         <div className="lg:hidden">
           <button
             className="text-gray-800 focus:outline-none"
@@ -31,12 +33,14 @@ export const Navbar: React.FC = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+                d={isOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
               />
             </svg>
           </button>
         </div>
-        <div className={`lg:flex space-x-4 ${isOpen ? "block" : "hidden"} lg:block`}>
+        <div
+          className={`lg:flex space-x-4 ${isOpen ? 'block' : 'hidden'} lg:block`}
+        >
           <Button variant="text" color="secondary" href="#companies">
             {copy.navbar.companies}
           </Button>
@@ -53,7 +57,19 @@ export const Navbar: React.FC = () => {
             {copy.navbar.cv}
           </Button>
         </div>
+
+        <div className="hidden lg:flex items-center">
+          <IconButton
+            className="hidden"
+            color="inherit"
+            aria-label="About"
+            onClick={toggleMenu}
+          >
+            <InfoIcon />
+          </IconButton>
+          <AboutSection />
+        </div>
       </div>
     </nav>
-  );
-};
+  )
+}

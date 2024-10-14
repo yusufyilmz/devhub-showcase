@@ -25,7 +25,7 @@ model Project {
   updatedAt   DateTime @updatedAt @map("updated_at")
   title       String
   description String
-  link        String
+  link        String?
   role        String
   skills      String[] @default([])
   public      Boolean  @default(false)

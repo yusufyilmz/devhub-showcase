@@ -11,7 +11,7 @@ interface ProjectItemProps {
 
 export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
   return (
-    <Card className="bg-backgroundColor-card rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 cursor-pointer">
+    <Card className="bg-backgroundColor-card flex flex-col h-full rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 cursor-pointer">
       <CardContent className="text-left">
         {project?.link && (
           <div className="relative">
@@ -20,7 +20,7 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
         )}
 
         <div className="p-4 flex flex-col gap-4">
-          <ProjectTitle title={project.title} link={project.link} />
+          <ProjectTitle title={project.title} link={project.link ?? ''} />
           <Typography variant="body2" align="left" className="text-gray-600">
             {project.role}
           </Typography>

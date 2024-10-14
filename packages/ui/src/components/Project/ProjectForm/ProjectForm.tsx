@@ -25,7 +25,10 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
   })
 
   useEffect(() => {
-    setFormData(initialData)
+    setFormData({
+      ...initialData,
+      link: initialData.link ?? ''
+    })
   }, [initialData])
 
   const handleChange = (

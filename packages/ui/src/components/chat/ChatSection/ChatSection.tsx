@@ -31,9 +31,7 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
 
     setIsTyping(true)
 
-    const lastMessage = messages
-      .filter(message => message.type === type)
-      .pop()
+    const lastMessage = messages.filter(message => message.type === type).pop()
 
     const newMessage = {
       role: ChatRole.User,

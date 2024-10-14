@@ -1,18 +1,14 @@
 import { Card, CardContent, Typography } from '@mui/material'
-import { Company } from '@prisma/client'
+import { CompanyWithProjects } from '@shared/lib/types'
 import Link from 'next/link'
 
 type CompanyProps = {
-  company: Company
-  projects?: { id: string; title: string }[]
+  company: CompanyWithProjects
 }
 
-export const CompanyItem: React.FC<CompanyProps> = ({
-  company,
-  projects = []
-}) => {
+export const CompanyItem: React.FC<CompanyProps> = ({ company }) => {
   return (
-    <Card className="bg-backgroundColor-card rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 company-card p-6 border mb-6 min-w-[20vw] ">
+    <Card className="min-w-96 flex flex-col h-full  bg-backgroundColor-card rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 company-card border">
       <Link href={company.url} target="_blank" rel="noopener noreferrer">
         <CardContent>
           <h3 className="text-2xl font-bold text-textColor-primary hover:underline">
@@ -32,9 +28,9 @@ export const CompanyItem: React.FC<CompanyProps> = ({
 
       <CardContent>
         <div className="mt-4">
-          {projects.length > 0 ? (
+          {company?.projects.length > 0 ? (
             <ul className="project-list mt-4 space-y-2">
-              {projects.map(project => (
+              {company.projects.map(project => (
                 <li key={project.id}>
                   <a href="#" className="text-blue-500 hover:underline">
                     {project.title}

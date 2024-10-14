@@ -3,7 +3,7 @@ import { ChatMessage, ChatRole, ReferralMessage } from '@shared/lib/types'
 export const cvWelcomeMessage: ChatMessage = {
   role: ChatRole.System,
   timestamp: Date.now(),
-  title: "Welcome to Yusuf’s DevHub Chat Assistant",
+  title: 'Welcome to Yusuf’s DevHub Chat Assistant',
   category: 'greeting',
   type: 'cv',
   content:
@@ -13,7 +13,7 @@ export const cvWelcomeMessage: ChatMessage = {
 export const referralWelcomeMessage: ReferralMessage = {
   role: ChatRole.System,
   timestamp: Date.now(),
-  title: "Welcome to Yusuf’s Referral Chat Assistant",
+  title: 'Welcome to Yusuf’s Referral Chat Assistant',
   content: `Hello! Thank you for taking the time to provide feedback. Your insights will be incredibly helpful in showcasing Yusuf’s experience. Please share your thoughts on working with Yusuf—whether it’s about his projects, teamwork, or any other aspects of your collaboration.`,
   type: 'referral',
   category: 'greeting'
@@ -33,7 +33,8 @@ export const failureMessage: ChatMessage = {
   timestamp: Date.now(),
   category: 'error',
   title: 'Oops!',
-  content: 'Sorry! I had trouble processing your request. Could you try again or ask something else?'
+  content:
+    'Sorry! I had trouble processing your request. Could you try again or ask something else?'
 }
 
 export const processErrorMessage: ChatMessage = {
@@ -42,7 +43,8 @@ export const processErrorMessage: ChatMessage = {
   timestamp: Date.now(),
   category: 'error',
   title: 'Oops!',
-  content: 'I didn’t quite understand that. Could you rephrase it or ask a different question?'
+  content:
+    'I didn’t quite understand that. Could you rephrase it or ask a different question?'
 }
 
 export const goodbyeMessage: ChatMessage = {
@@ -67,7 +69,8 @@ export const greetingMessage: ChatMessage = {
   role: ChatRole.System,
   timestamp: Date.now(),
   category: 'greeting',
-  content: 'Hi there! What would you like to know about Yusuf Yılmaz? I’m here to help!'
+  content:
+    'Hi there! What would you like to know about Yusuf Yılmaz? I’m here to help!'
 }
 
 export const unknownMessage: ChatMessage = {

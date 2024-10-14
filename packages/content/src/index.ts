@@ -9,6 +9,7 @@ import { notFoundPage } from './site-copy/notFoundPage'
 import { errorPage } from './site-copy/errorPage'
 import { chatMessages } from './chat-messages'
 import { chat } from './site-copy/chat'
+import { aboutSection } from './site-copy/about'
 
 export const copy = {
   project,
@@ -21,5 +22,6 @@ export const copy = {
   notFoundPage,
   errorPage,
   chatMessages,
-  chat
+  chat,
+  aboutSection
 }

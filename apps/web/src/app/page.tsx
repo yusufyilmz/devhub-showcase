@@ -9,10 +9,7 @@ import {
 import type { Education, Referral } from '@prisma/client'
 import { Box } from '@mui/material'
 import type { CompanyWithProjects, ProjectWithCompany } from '@shared/lib/types'
-import {
-  CompanyWithProjectsArgs,
-  ProjectWithCompanyArgs
-} from '@shared/lib/types'
+import { ProjectWithCompanyArgs } from '@shared/lib/types'
 import type { Redirect } from 'next'
 import { db } from '@/lib/db'
 import logger from '@/lib/log'
@@ -33,8 +30,14 @@ export const getPageResources = async (): Promise<
 > => {
   try {
     const projects = await db.project.findMany(ProjectWithCompanyArgs)
+
     const educations = await db.education.findMany()
-    const companies = await db.company.findMany(CompanyWithProjectsArgs)
+    const companies = await db.company.findMany({
+      include: {
+        projects: true
+      }
+    })
+
     const referrals = await db.referral.findMany({
       where: {
         recommendation: {
@@ -78,8 +81,8 @@ export default async function Home(): Promise<JSX.Element> {
         sx={{ flexDirection: 'column', display: 'flex', gap: 8 }}
       >
         <CompanySection companies={companies} />
-        <EducationsSection educations={educations} />
         <ProjectsSection projects={projects} />
+        <EducationsSection educations={educations} />
         <ReferralSection referrals={referrals} />
         <CVSection />
       </Box>
