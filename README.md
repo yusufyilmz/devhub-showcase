@@ -118,9 +118,9 @@ OPENAI_API_KEY=your_openai_api_key
 
 This project is deployed using Vercel. To deploy:
 
-	1.	Connect the repository to Vercel.
-	2.	Set the necessary environment variables in Vercel’s dashboard.
-	3.	Push changes to the main branch, and Vercel will automatically deploy the latest version.
+1. Connect the repository to Vercel.
+2. Set the necessary environment variables in Vercel’s dashboard.
+3. Push changes to the main branch, and Vercel will automatically deploy the latest version.
 
 ### Contributions
 
