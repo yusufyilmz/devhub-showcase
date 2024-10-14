@@ -1,22 +1,28 @@
 import type { CVModel } from '../types/cv.js'
 
 export const CV_MODEL: CVModel = {
-  name: 'Yusuf Yilmaz',
-  nationality: 'Turkey',
-  location: 'Barcelona, Spain',
+  personalInformation: {
+    fullName: 'Yusuf Yilmaz',
+    birthDate: 'February 07, 1989',
+    age: '35',
+    nationality: 'Turkish',
+    location: 'Barcelona, Spain'
+  },
   contact: {
     phone: '+34639464069',
     email: 'yilmazyu@gmail.com',
     github: 'github.com/yusufyilmz',
     linkedin: 'https://www.linkedin.com/in/yusuf-yilmaz-01543752/'
   },
-  summary:
-    'Highly experienced Senior Software Engineer with over 12 years in the industry, specializing in React, Next.js, Redux, Node.js, TypeScript, JavaScript, CSS, and .NET. Proven expertise in building scalable and high-performance web applications with a track record of success in telecommunications, information technology, and software engineering.',
+  overview: {
+    summary:
+      'Highly skilled and dedicated Senior Software Engineer with over 12 years of experience. Specialized in building scalable, high-performance applications using modern web technologies such as React, Next.js, Node.js, and TypeScript. Extensive background in leading projects, mentoring teams, and solving complex challenges in industries like telecommunications and IT. Passionate about continuous learning, innovation, and improving processes to deliver efficient and impactful solutions.'
+  },
   skills: {
     frontend: [
       { technology: 'reactjs', yearsOfExperience: '2024' },
       { technology: 'nextjs', yearsOfExperience: '2024' },
-      { technology: 'typeccript', yearsOfExperience: '2024' },
+      { technology: 'typecript', yearsOfExperience: '2024' },
       {
         technology: 'javaScript',
         yearsOfExperience: '2024'
@@ -256,7 +262,7 @@ export const CV_MODEL: CVModel = {
       proficiency: 'Limited Working'
     }
   ],
-  certificates: [
+  certifications: [
     {
       name: 'AWS Certificate Course',
       date: '09.2021',
@@ -318,7 +324,84 @@ export const CV_MODEL: CVModel = {
     {
       title: 'WebChat Migration to React',
       description:
-        "Developed and led the migration of Turkcell's WebChat platform from legacy systems to a modern React-based architecture in just one week. This platform, which handled over 600,000 daily interactions, saw significant improvements in scalability and performance due to the successful transition."
+        'Successfully migrated Turkcell’s high-traffic WebChat platform from legacy systems to a modern React-based solution in one week, boosting scalability and performance, This platform, which handled over 600,000 daily interactions, saw significant improvements in scalability and performance due to the successful transition.'
+    }
+  ],
+  character: {
+    strengths: [
+      'Problem-solving and ability to break down complex challenges',
+      'Leadership in project management and migrations',
+      'Strong communication and teamwork skills',
+      'Deep expertise in modern web frameworks like React and Next.js'
+    ],
+    weaknesses: [
+      'Tendency to focus too much on details in pursuit of perfection',
+      'Sometimes overcommitting due to excitement about new technologies'
+    ],
+    leadership: {
+      philosophy:
+        'I believe in leading by example, providing clear guidance, and empowering my team to take ownership of their work. I focus on building a collaborative environment and maintaining open communication.',
+      examples: [
+        'Led the migration of Turkcell’s WebChat to React, coordinating across teams and delivering in record time.',
+        'Mentored junior engineers at Toptal, helping them grow in their roles and improving team performance.'
+      ]
+    },
+    teamwork: {
+      philosophy:
+        'I value open communication, mutual respect, and a shared sense of responsibility within teams. I’m a firm believer in leveraging each team member’s strengths to achieve the best results.',
+      examples: [
+        'Worked closely with cross-functional teams during the development of Google Ads tools at Toptal, ensuring seamless integration across systems.',
+        'Collaborated with game engineers at Scopely to automate mobile testing workflows, improving overall efficiency.'
+      ]
+    },
+    motivation: {
+      shortTerm:
+        'To continue mastering new technologies and leading impactful projects in modern web frameworks.',
+      longTerm:
+        'To become a technology leader, mentoring teams and influencing the direction of major software projects.'
+    },
+    communicationStyle:
+      'I value clarity and openness, ensuring effective collaboration within teams.',
+    problemSolvingPhilosophy:
+      'I focus on root causes, break down complex problems, and use data-driven decisions.',
+    adaptability:
+      'I quickly adapt to new tools and frameworks, staying updated with industry trends.',
+    innovation:
+      'I constantly seek to improve processes, integrate new technologies, and deliver innovative solutions.',
+    problemSolvingApproach:
+      'I approach problems by analyzing the root cause, breaking the problem into smaller tasks, and iterating through solutions with data-driven decisions. I always seek to improve efficiency and performance in the systems I work with.',
+    workEthic: {
+      punctuality:
+        'I consistently meet deadlines and ensure tasks are completed on time.',
+      dedication:
+        'I am committed to delivering high-quality work and am flexible to put in extra hours when necessary to meet deadlines or project goals.',
+      continuousLearning:
+        'I’m always learning new skills and keeping up with the latest technology trends to improve my work.'
+    },
+    resilience:
+      'I stay calm and solution-focused under pressure, learning from failures and quickly adapting.',
+    attentionToDetail:
+      'While focusing on details, I also ensure they align with the overall project goals.',
+    careerGoals: {
+      shortTerm:
+        'To continue leading projects in modern web frameworks and develop scalable, high-performance applications.',
+      longTerm:
+        'To become a technology leader or architect, shaping the direction of large-scale software projects and mentoring other engineers.'
+    }
+  },
+  workPreferences: {
+    remote:
+      'I prefer remote work for its flexibility and productivity benefits.',
+    office: 'I am not currently interested in full-time office work.',
+    hybrid:
+      'I am open to hybrid work models that balance in-person and remote work.'
+  },
+  technicalChallenges: [
+    {
+      challenge:
+        'Scaling a real-time chat platform to handle 600,000+ daily interactions at Turkcell.',
+      solution:
+        'Refactored the system using React and Node.js, implementing Redux for state management and improving server performance with PostgreSQL optimizations.'
     }
   ]
 }

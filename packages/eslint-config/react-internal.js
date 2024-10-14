@@ -35,6 +35,9 @@ module.exports = {
         project,
       },
     },
+    react: {
+      version: 'detect'
+    }
   },
   ignorePatterns: [
     ".*.js",

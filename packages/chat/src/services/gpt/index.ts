@@ -2,13 +2,16 @@ import type { ChatMessage } from '@shared/lib'
 import { ChatRole } from '@shared/lib'
 import OpenAI from 'openai'
 import { summarizeQuestions } from '../summarizer/index'
+import { Logger } from 'pino'
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY ?? ''
 
 export class ChatGPTService {
-  constructor(
-    private readonly openai: OpenAI = new OpenAI({ apiKey: OPENAI_API_KEY })
-  ) {}
+  openai: OpenAI
+
+  constructor(private readonly logger: Logger) {
+    this.openai = new OpenAI({ apiKey: OPENAI_API_KEY })
+  }
 
   async generateResponse(
     message: string,
@@ -36,7 +39,7 @@ export class ChatGPTService {
 
       return responseMessage
     } catch (error) {
-      console.error(error)
+      this.logger.error(error)
 
       throw error
     }

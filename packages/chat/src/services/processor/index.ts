@@ -9,18 +9,20 @@ import {
 } from '../../models/gpt-prompt'
 import { ClassifierService } from '../classifier/index'
 import { ChatGPTService } from '../gpt/index'
-import { ERROR_MESSAGE_ANSWER } from '../constants/errors'
 import { formatAllCV, formatters } from '../formatter/index'
-import { CVCategory, CVModel, CVModelValue } from '../../types'
+import { CVModel, CVModelValue } from '../../types'
+import { Logger } from 'pino'
+import { copy } from '@shared/content'
 
 export class MessageProcessor {
   classifier: ClassifierService
   gptService: ChatGPTService
+  logger: Logger
 
-  constructor() {
-    // private readonly gptService = new ChatGPTService() // private readonly classifier = new ClassifierService(),
-    this.classifier = new ClassifierService()
-    this.gptService = new ChatGPTService()
+  constructor(logger: Logger) {
+    this.logger = logger
+    this.classifier = new ClassifierService(logger)
+    this.gptService = new ChatGPTService(logger)
   }
 
   /**
@@ -29,15 +31,17 @@ export class MessageProcessor {
    */
   public async processUserMessage(userMessage: string): Promise<ChatMessage> {
     try {
-      console.log('User message:', userMessage)
+      this.logger.info('User message:', userMessage)
 
       // Step 1: Do message classification with the NLP classification model
       const messageClassification = this.classifier.classify(userMessage)
 
+      this.logger.info('Message classified as', messageClassification)
+
       // Step 2: if result is a casual question or greeting, return a casual response
       if (
-        messageClassification?.category === CVCategory.OutOfTopic ||
-        messageClassification?.category === CVCategory.Greetings
+        messageClassification?.category === 'outOfTopic' ||
+        messageClassification?.category === 'greeting'
       ) {
         return {
           role: ChatRole.Assistant,
@@ -46,11 +50,9 @@ export class MessageProcessor {
         }
       }
 
-      console.log('User message:', messageClassification)
-
       let promptWithModel: string
 
-      if (messageClassification?.category === CVCategory.Unknown) {
+      if (messageClassification?.category === 'unknown') {
         // Step 3: if result is a unknown question send all the data to GPT for a response
         const formattedModel = formatAllCV(CV_MODEL)
         promptWithModel = GPT_PROMPT_TEMPLATE_COMPLETE.replace(
@@ -70,25 +72,25 @@ export class MessageProcessor {
         ).replace(CATEGORY_PROMPT_DATA_KEY, formattedModel)
       }
 
-      console.log('Prompt with model:', promptWithModel)
       // Step 5: send the user message with the prompt and model data to GPT for a response
 
-      // const gptResponse = await this.gptService.generateResponse(
-      //   userMessage,
-      //   promptWithModel
-      // )
+      const gptResponse = await this.gptService.generateResponse(
+        userMessage,
+        promptWithModel
+      )
+
+      this.logger.info('GPT response:', gptResponse)
 
       return {
         role: ChatRole.Assistant,
-        content: 'gptResponse',
+        content: gptResponse,
         timestamp: Date.now()
       }
     } catch (error) {
-      console.error('Error processing user message:', error)
+      this.logger.error('Error processing user message:', error)
       // Step 6: If an error occurs, return a default error message
       return {
-        role: ChatRole.Assistant,
-        content: ERROR_MESSAGE_ANSWER,
+        ...copy.chatMessages.processErrorMessage,
         timestamp: Date.now()
       }
     }

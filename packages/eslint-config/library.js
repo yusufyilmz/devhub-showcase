@@ -31,6 +31,9 @@ module.exports = {
         project,
       },
     },
+    react: {
+      version: 'detect'
+    }
   },
   parserOptions: {
     ecmaFeatures: {

@@ -3,8 +3,9 @@
 import type { ChatMessage } from '@shared/lib'
 import { MessageProcessor } from '@shared/chat'
 import { copy } from '@shared/content'
+import logger from '@/lib/log'
 
-const messageProcessor = new MessageProcessor()
+const messageProcessor = new MessageProcessor(logger)
 
 export async function handleSendMessageAction(
   message: ChatMessage

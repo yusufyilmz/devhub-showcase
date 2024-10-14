@@ -73,25 +73,82 @@ export interface Skills {
   performance_optimization: Skill[]
 }
 
-type Name = string
-type Nationality = string
-type Location = string
-type Summary = string
+type Summary = {
+  summary: string
+}
+
+export type PersonalInformation = {
+  nationality: string
+  location: string
+  fullName: string
+  birthDate: string
+  age: string
+}
+
+export type TechnicalChallenge = {
+  challenge: string
+  solution: string
+}
 
 export type CVModel = {
-  name: Name
-  nationality: Nationality
-  location: Location
-  summary: Summary
+  personalInformation: PersonalInformation
+  overview: Summary
   contact: ContactInfo
   skills: Skills
   projects: Project[]
   education: Education[]
   experience: Experience[]
   languages: Language[]
-  certificates: Certificate[]
+  certifications: Certificate[]
   references: Reference[]
   achievements: Achievement[]
+  character: Character
+  technicalChallenges: TechnicalChallenge[]
+  workPreferences: {
+    remote: string
+    office: string
+    hybrid: string
+  }
+}
+
+export interface Character {
+  strengths: string[]
+  weaknesses: string[]
+  leadership: {
+    philosophy: string
+
+    examples: string[]
+  }
+  teamwork: {
+    philosophy: string
+
+    examples: string[]
+  }
+  motivation: {
+    shortTerm: string
+
+    longTerm: string
+  }
+  communicationStyle: string
+
+  problemSolvingPhilosophy: string
+
+  adaptability: string
+
+  innovation: string
+
+  problemSolvingApproach: string
+  workEthic: {
+    punctuality: string
+    dedication: string
+    continuousLearning: string
+  }
+  resilience: string
+  attentionToDetail: string
+  careerGoals: {
+    shortTerm: string
+    longTerm: string
+  }
 }
 
 export type CVModelKey = keyof CVModel
@@ -107,33 +164,22 @@ export type CVModelValue =
   | Achievement[]
   | ContactInfo
   | MessageWithoutModel
-  | Name
-  | Nationality
   | Location
   | Summary
+  | PersonalInformation
 
-export enum CVCategory {
-  Projects = 'projects',
-  Experience = 'experience',
-  Skills = 'skills',
-  Education = 'education',
-  ContactInformation = 'contact',
-  Greetings = 'greetings',
-  OutOfTopic = 'outOfTopic',
-  Languages = 'languages',
-  Unknown = 'unknown',
-  Certificates = 'certificates',
-  References = 'references',
-  Achievement = 'achievements'
-}
+export type QuestionCategoryType =
+  | keyof CVModel
+  | 'unknown'
+  | 'greeting'
+  | 'outOfTopic'
 
 export type MessageWithoutModel = {
   message: string
 }
 
 export type QuestionCategory = {
-  category: CVCategory
+  category: QuestionCategoryType
   keywords: { word: string; weight?: number }[]
   model: CVModel[keyof CVModel] | ChatMessage
-  weight?: number
 }

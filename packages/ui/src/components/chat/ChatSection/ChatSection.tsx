@@ -16,7 +16,7 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
 }): JSX.Element => {
   const messages = useStore(chatStore, state => state.messages)
   const addMessage = useStore(chatStore, state => state.addMessage)
-  const [isTyping, setIsTyping] = useState(true)
+  const [isTyping, setIsTyping] = useState(false)
 
   const handleSendMessageAction = async (input: string): Promise<void> => {
     if (!input || isTyping) return

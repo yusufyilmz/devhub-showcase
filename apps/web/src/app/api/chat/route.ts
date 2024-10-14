@@ -1,8 +1,9 @@
 import { MessageProcessor } from '@shared/chat'
 import { z } from 'zod'
 import { errorHandling, ValidationError } from '@shared/lib'
+import logger from '@/lib/log'
 
-const messageProcessor = new MessageProcessor()
+const messageProcessor = new MessageProcessor(logger)
 
 const userChatMessageSchema = z.object({
   userMessage: z.string()

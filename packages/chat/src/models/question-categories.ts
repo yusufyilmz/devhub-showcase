@@ -1,10 +1,13 @@
-import { CVCategory, QuestionCategory } from '../types/cv'
+import { QuestionCategoryType, QuestionCategory } from '../types/cv'
 import { CV_MODEL } from './cv-model'
 import { copy } from '@shared/content'
 
-export const QUESTION_CATEGORIES: Record<CVCategory, QuestionCategory> = {
-  [CVCategory.Skills]: {
-    category: CVCategory.Skills,
+export const QUESTION_CATEGORIES: Record<
+  QuestionCategoryType,
+  QuestionCategory
+> = {
+  skills: {
+    category: 'skills',
     model: CV_MODEL.skills,
     keywords: [
       { word: 'skills', weight: 3 },
@@ -43,9 +46,8 @@ export const QUESTION_CATEGORIES: Record<CVCategory, QuestionCategory> = {
         .map(word => ({ word, weight: 3 }))
     ]
   },
-  [CVCategory.Experience]: {
-    category: CVCategory.Experience,
-    weight: 1,
+  experience: {
+    category: 'experience',
     model: CV_MODEL.experience,
     keywords: [
       { word: 'experience', weight: 3 },
@@ -73,10 +75,8 @@ export const QUESTION_CATEGORIES: Record<CVCategory, QuestionCategory> = {
         .map(word => ({ word, weight: 1 }))
     ]
   },
-  [CVCategory.Projects]: {
-    category: CVCategory.Projects,
-    weight: 1,
-
+  projects: {
+    category: 'projects',
     model: CV_MODEL.projects,
     keywords: [
       { word: 'projects', weight: 3 },
@@ -103,8 +103,8 @@ export const QUESTION_CATEGORIES: Record<CVCategory, QuestionCategory> = {
         .map(word => ({ word, weight: 1 }))
     ]
   },
-  [CVCategory.Education]: {
-    category: CVCategory.Education,
+  education: {
+    category: 'education',
     model: CV_MODEL.education,
     keywords: [
       { word: 'education', weight: 3 },
@@ -131,9 +131,8 @@ export const QUESTION_CATEGORIES: Record<CVCategory, QuestionCategory> = {
         .map(word => ({ word, weight: 1 }))
     ]
   },
-  [CVCategory.ContactInformation]: {
-    category: CVCategory.ContactInformation,
-    weight: 1,
+  contact: {
+    category: 'contact',
     model: CV_MODEL.contact,
     keywords: [
       { word: 'contact', weight: 3 },
@@ -152,9 +151,8 @@ export const QUESTION_CATEGORIES: Record<CVCategory, QuestionCategory> = {
       { word: 'talk', weight: 2 }
     ]
   },
-  [CVCategory.Greetings]: {
-    category: CVCategory.Greetings,
-    weight: 1,
+  greeting: {
+    category: 'greeting',
     model: copy.chatMessages.greetingMessage,
     keywords: [
       { word: 'hello', weight: 3 },
@@ -170,8 +168,8 @@ export const QUESTION_CATEGORIES: Record<CVCategory, QuestionCategory> = {
       { word: 'talk later', weight: 2 }
     ]
   },
-  [CVCategory.OutOfTopic]: {
-    category: CVCategory.OutOfTopic,
+  outOfTopic: {
+    category: 'outOfTopic',
     keywords: [
       { word: 'weather', weight: 5 },
       { word: 'random', weight: 5 },
@@ -184,240 +182,272 @@ export const QUESTION_CATEGORIES: Record<CVCategory, QuestionCategory> = {
     ],
     model: copy.chatMessages.outOfTopicMessage
   },
-  [CVCategory.Languages]: {
-    category: CVCategory.Languages,
-    weight: 1,
+  languages: {
+    category: 'languages',
     model: CV_MODEL.languages,
     keywords: [
-      {
-        word: 'languages',
-        weight: 2
-      },
-      {
-        word: 'proficiency',
-        weight: 3
-      },
-      {
-        word: 'spoken',
-        weight: 2
-      },
-      {
-        word: 'written',
-        weight: 2
-      },
-      {
-        word: 'fluency',
-        weight: 3
-      },
-      {
-        word: 'communication',
-        weight: 2
-      },
-      {
-        word: 'skills',
-        weight: 2
-      },
-      {
-        word: 'multilingual',
-        weight: 3
-      },
-      {
-        word: 'foreign',
-        weight: 2
-      },
-      {
-        word: 'language',
-        weight: 2
-      },
-      {
-        word: 'proficient',
-        weight: 3
-      },
-      {
-        word: 'bilingual',
-        weight: 2
-      },
-      {
-        word: 'native',
-        weight: 2
-      },
-      {
-        word: 'second',
-        weight: 3
-      },
-      {
-        word: 'mother tongue',
-        weight: 2
-      },
-      {
-        word: 'fluent',
-        weight: 2
-      },
-      {
-        word: 'speak',
-        weight: 3
-      },
-      {
-        word: 'English',
-        weight: 5
-      },
-      {
-        word: 'Spanish',
-        weight: 5
-      },
-      {
-        word: 'Turkish',
-        weight: 5
-      }
+      { word: 'languages', weight: 2 },
+      { word: 'proficiency', weight: 3 },
+      { word: 'spoken', weight: 2 },
+      { word: 'written', weight: 2 },
+      { word: 'fluency', weight: 3 },
+      { word: 'communication', weight: 2 },
+      { word: 'multilingual', weight: 3 },
+      { word: 'foreign', weight: 2 },
+      { word: 'language', weight: 2 },
+      { word: 'proficient', weight: 3 },
+      { word: 'bilingual', weight: 2 },
+      { word: 'native', weight: 2 },
+      { word: 'mother tongue', weight: 2 },
+      { word: 'fluent', weight: 2 },
+      { word: 'speak', weight: 3 },
+      { word: 'English', weight: 5 },
+      { word: 'Spanish', weight: 5 },
+      { word: 'Turkish', weight: 5 }
     ]
   },
-  [CVCategory.References]: {
-    category: CVCategory.References,
+  references: {
+    category: 'references',
     model: CV_MODEL.references,
     keywords: [
-      {
-        word: 'references',
-        weight: 2
-      },
-      {
-        word: 'recommendations',
-        weight: 3
-      },
-      {
-        word: 'colleagues',
-        weight: 2
-      },
-      {
-        word: 'clients',
-        weight: 2
-      },
-      {
-        word: 'supervisors',
-        weight: 3
-      }
+      { word: 'references', weight: 2 },
+      { word: 'recommendations', weight: 3 },
+      { word: 'colleagues', weight: 2 },
+      { word: 'clients', weight: 2 },
+      { word: 'supervisors', weight: 3 }
     ]
   },
-  [CVCategory.Unknown]: {
-    category: CVCategory.Unknown,
+  unknown: {
+    category: 'unknown',
     model: copy.chatMessages.unknownMessage,
     keywords: []
   },
-  [CVCategory.Certificates]: {
-    category: CVCategory.Certificates,
-    model: CV_MODEL.certificates,
+  certifications: {
+    category: 'certifications',
+    model: CV_MODEL.certifications,
+    keywords: [
+      { word: 'certificates', weight: 2 },
+      { word: 'certifications', weight: 3 },
+      { word: 'awards', weight: 2 },
+      { word: 'courses', weight: 2 },
+      { word: 'training', weight: 3 }
+    ]
+  },
+  achievements: {
+    category: 'achievements',
+    model: CV_MODEL.achievements,
+    keywords: [
+      { word: 'achievements', weight: 2 },
+      { word: 'accomplishments', weight: 3 },
+      { word: 'successes', weight: 2 },
+      { word: 'milestones', weight: 2 },
+      { word: 'goals', weight: 3 }
+    ]
+  },
+  personalInformation: {
+    category: 'personalInformation',
+    model: CV_MODEL.personalInformation,
+    keywords: [
+      { word: 'personal', weight: 3 },
+      { word: 'information', weight: 2 },
+      { word: 'details', weight: 2 },
+      { word: 'about', weight: 3 },
+      { word: 'me', weight: 2 },
+      { word: 'myself', weight: 2 },
+      { word: 'background', weight: 3 },
+      { word: 'profile', weight: 2 },
+      { word: 'summary', weight: 2 },
+      { word: 'overview', weight: 2 },
+      { word: 'character', weight: 3 },
+      { word: 'traits', weight: 2 },
+      { word: 'personality', weight: 2 },
+      { word: 'skills', weight: 3 },
+      { word: 'preferences', weight: 2 },
+      { word: 'work', weight: 2 },
+      { word: 'challenges', weight: 3 },
+      { word: 'technical', weight: 2 },
+      { word: 'work', weight: 2 },
+      { word: 'preferences', weight: 2 }
+    ]
+  },
+  overview: {
+    category: 'overview',
+    model: CV_MODEL.overview,
     keywords: [
       {
-        word: 'certificates',
-        weight: 2
-      },
-      {
-        word: 'certifications',
+        word: 'overview',
         weight: 3
       },
       {
-        word: 'awards',
+        word: 'summary',
         weight: 2
       },
       {
-        word: 'courses',
+        word: 'introduction',
         weight: 2
       },
       {
-        word: 'training',
+        word: 'about',
+        weight: 3
+      },
+      {
+        word: 'me',
+        weight: 1
+      },
+      {
+        word: 'myself',
+        weight: 1
+      },
+      {
+        word: 'background',
+        weight: 3
+      },
+      {
+        word: 'profile',
+        weight: 2
+      },
+      {
+        word: 'summary',
+        weight: 2
+      }
+    ]
+  },
+  character: {
+    category: 'character',
+    model: CV_MODEL.character,
+    keywords: [
+      {
+        word: 'character',
+        weight: 3
+      },
+      {
+        word: 'traits',
+        weight: 2
+      },
+      {
+        word: 'personality',
+        weight: 2
+      },
+      {
+        word: 'strengths',
+        weight: 3
+      },
+      {
+        word: 'weaknesses',
+        weight: 2
+      },
+      {
+        word: 'leadership',
+        weight: 3
+      },
+      {
+        word: 'teamwork',
+        weight: 2
+      },
+      {
+        word: 'motivation',
+        weight: 2
+      },
+      {
+        word: 'communication',
         weight: 3
       }
     ]
   },
-  [CVCategory.Achievement]: {
-    category: CVCategory.Achievement,
-    model: CV_MODEL.achievements,
+  technicalChallenges: {
+    model: CV_MODEL.technicalChallenges,
+    category: 'personalInformation',
     keywords: [
       {
-        word: 'achievements',
-        weight: 2
-      },
-      {
-        word: 'accomplishments',
+        word: 'technical',
         weight: 3
       },
       {
-        word: 'successes',
+        word: 'challenges',
         weight: 2
       },
       {
-        word: 'milestones',
+        word: 'problems',
         weight: 2
       },
       {
-        word: 'goals',
+        word: 'solutions',
+        weight: 3
+      },
+      {
+        word: 'issues',
+        weight: 2
+      },
+      {
+        word: 'troubleshooting',
+        weight: 2
+      },
+      {
+        word: 'debugging',
+        weight: 2
+      },
+      {
+        word: 'fixing',
+        weight: 2
+      },
+      {
+        word: 'errors',
+        weight: 2
+      },
+      {
+        word: 'bugs',
+        weight: 2
+      },
+      {
+        word: 'improvements',
+        weight: 2
+      },
+      {
+        word: 'optimization',
+        weight: 2
+      },
+      {
+        word: 'performance',
+        weight: 2
+      },
+      {
+        word: 'scalability',
+        weight: 2
+      },
+      {
+        word: 'security',
+        weight: 2
+      },
+      {
+        word: 'best practices',
+        weight: 2
+      }
+    ]
+  },
+  workPreferences: {
+    category: 'workPreferences',
+    model: CV_MODEL.workPreferences,
+    keywords: [
+      {
+        word: 'work',
+        weight: 3
+      },
+      {
+        word: 'preferences',
+        weight: 2
+      },
+      {
+        word: 'remote',
+        weight: 3
+      },
+      {
+        word: 'office',
+        weight: 3
+      },
+      {
+        word: 'hybrid',
         weight: 3
       }
     ]
   }
 }
-
-// type CVCategory = 'Skills' | 'Experience' | 'Projects' | 'Education' | 'Contact Information' | 'Unknown';
-
-// Define question categories with keywords and weights
-
-// "commonQuestions": [
-//   {
-//     "question": "What are your key skills?",
-//     "answer": "My key skills include React, Next.js, Node.js, TypeScript, PostgreSQL, Prisma, Docker, and CI/CD tools like GitHub Actions."
-//   },
-//   {
-//     "question": "Can you describe a project you've worked on?",
-//     "answer": "I developed the TAG/Assets Generator for Toptal, automating success story creation using AI. It saved countless hours by creating personalized stories and allowing users to easily modify and publish them."
-//   },
-//   {
-//     "question": "What was your role at Toptal?",
-//     "answer": "As a Senior Frontend Engineer, I led several projects, including the migration of legacy tools to Next.js, the development of Google Ads utilities, and the creation of the TAG/Assets Generator."
-//   },
-//   {
-//     "question": "What are your interests outside of work?",
-//     "answer": "I'm particularly interested in AI, automation, and improving web performance. I also enjoy exploring UI/UX design trends."
-//   },
-//   {
-//     "question": "How do you handle large-scale projects?",
-//     "answer": "I prioritize modular architecture and scalable technologies. By using microservices and tools like Docker and Kubernetes, I ensure projects can grow without sacrificing performance."
-//   },
-//   {
-//     "question": "What is your approach to managing time and priorities?",
-//     "answer": "I utilize Agile methodologies like Scrum and Kanban to manage time and priorities effectively. Breaking down tasks into smaller, manageable units and maintaining clear communication with stakeholders ensures successful project delivery."
-//   },
-//   {
-//     "question": "How do you stay updated with the latest technology trends?",
-//     "answer": "I regularly follow tech blogs, attend webinars, and complete courses to stay up to date. I also actively contribute to projects that implement cutting-edge technologies."
-//   },
-//   {
-//     "question": "What technologies are you most excited about?",
-//     "answer": "I'm excited about AI/ML, serverless architecture, and microservices. Technologies like Dify.AI, server-side rendering, and containerization with Docker and Kubernetes also excite me because of their impact on scalability and performance."
-//   },
-//   {
-//     "question": "Can you describe a challenge you faced during a project?",
-//     "answer": "In one of my projects at Toptal, migrating legacy systems to modern technologies like Next.js while maintaining existing functionality was a challenge. We overcame it by using an iterative migration approach, ensuring minimal downtime and a seamless transition."
-//   },
-//   {
-//     "question": "What motivates you as a software engineer?",
-//     "answer": "I am motivated by solving complex problems, improving system performance, and seeing the positive impact of my work on users. The opportunity to innovate and work with cutting-edge technologies also keeps me motivated."
-//   },
-//   {
-//     "question": "What is your approach to mentoring junior developers?",
-//     "answer": "I focus on providing clear guidance, sharing my knowledge, and offering hands-on assistance when needed. I encourage juniors to solve problems independently while providing support and helping them improve their coding and problem-solving skills."
-//   },
-//   {
-//     "question": "What are your long-term career goals?",
-//     "answer": "I aim to continue evolving as a full-stack developer while taking on more leadership responsibilities, mentoring others, and contributing to impactful, large-scale projects. I'm also interested in deepening my expertise in AI and machine learning technologies."
-//   },
-//   {
-//     "question": "How do you ensure code quality in your projects?",
-//     "answer": "I maintain code quality through automated testing (unit and integration tests), code reviews, and following industry best practices like DRY and SOLID principles. I also use CI/CD pipelines to ensure smooth code deployment."
-//   },
-//   {
-//     "question": "Can you describe your experience working with cloud platforms?",
-//     "answer": "I have extensive experience with AWS, particularly with services like Lambda and S3. I also have worked on deploying microservices using Kubernetes and Docker, optimizing for scalability and performance."
-//   },
-//   {
-//     "question": "What do you enjoy the most about software development?",
-//     "answer": "I enjoy the problem-solving aspect of software development and the ability to create solutions that have a real-world impact. I also enjoy learning new technologies and applying them to enhance the performance and scalability of applications."
-//   }

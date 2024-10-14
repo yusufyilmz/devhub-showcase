@@ -15,6 +15,14 @@ export const failureMessage: ChatMessage = {
   content: 'Sorry, I am having trouble processing your request!'
 }
 
+export const processErrorMessage: ChatMessage = {
+  role: ChatRole.System,
+  timestamp: Date.now(),
+  title: 'Oops!',
+  content:
+    'Sorry, I couldn’t process that. Could you try asking in a different way?'
+}
+
 export const goodbyeMessage: ChatMessage = {
   role: ChatRole.System,
   timestamp: Date.now(),
@@ -45,5 +53,6 @@ export const chatMessages = {
   goodbyeMessage: goodbyeMessage,
   outOfTopicMessage: outOfTopicMessage,
   greetingMessage: greetingMessage,
-  unknownMessage
+  unknownMessage,
+  processErrorMessage
 }

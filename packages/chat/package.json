@@ -15,7 +15,8 @@
     "esm": "^3.2.25",
     "openai": "^4.67.3",
     "@shared/content": "*",
-    "@shared/lib": "*"
+    "@shared/lib": "*",
+    "pino": "^9.4.0"
   },
   "devDependencies": {
     "@shared/eslint-config": "*",

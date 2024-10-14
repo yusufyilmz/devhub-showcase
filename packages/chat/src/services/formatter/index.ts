@@ -3,12 +3,10 @@ import type { CVModel, CVModelKey, CVModelValue, Skill } from '../../types'
 export const formatters: {
   [K in keyof CVModel]: (data: CVModel[K]) => string
 } = {
-  name: name => `Name: ${name}`,
-  nationality: nationality => `Nationality: ${nationality}`,
-  location: location => `Location: ${location}`,
+  personalInformation: personalInfo =>
+    `Personal Information:\nNationality: ${personalInfo.nationality} \nLocation: ${personalInfo.location} \nFull Name: ${personalInfo.fullName} \nBirth Date: ${personalInfo.birthDate} \nAge: ${personalInfo.age}`,
   contact: contact =>
     `Contact Info:\nPhone: ${contact}\nEmail: ${contact.email}\nGitHub: ${contact.github}\nLinkedIn: ${contact.linkedin}`,
-  summary: summary => `Summary: ${summary}`,
   skills: skills => {
     const formatSkills = (skillSet: Skill[]) =>
       skillSet
@@ -57,7 +55,7 @@ export const formatters: {
     `Languages:\n${languages
       .map(lang => `${lang.language} (${lang.proficiency})`)
       .join('\n')}`,
-  certificates: certificates =>
+  certifications: certificates =>
     `Certificates:\n${certificates
       .map(cert => `${cert.name} (${cert.date})\nHours: ${cert.hours}`)
       .join('\n')}`,
@@ -71,7 +69,56 @@ export const formatters: {
   achievements: achievements =>
     `Achievements:\n${achievements
       .map(ach => `${ach.title}\nDescription: ${ach.description}`)
-      .join('\n')}`
+      .join('\n')}`,
+  character: character => `
+    Strengths:
+    ${character.strengths.join(', ')}
+  
+    Weaknesses:
+    ${character.weaknesses.join(', ')}
+  
+    Leadership:
+    Philosophy: ${character.leadership.philosophy}
+    Examples: ${character.leadership.examples.join('; ')}
+  
+    Teamwork:
+    Philosophy: ${character.teamwork.philosophy}
+    Examples: ${character.teamwork.examples.join('; ')}
+  
+    Motivation:
+    Short Term: ${character.motivation.shortTerm}
+    Long Term: ${character.motivation.longTerm}
+  
+    Communication Style: ${character.communicationStyle}
+    Problem-Solving Philosophy: ${character.problemSolvingPhilosophy}
+    Adaptability: ${character.adaptability}
+    Innovation: ${character.innovation}
+    Problem-Solving Approach: ${character.problemSolvingApproach}
+  
+    Work Ethic:
+    Punctuality: ${character.workEthic.punctuality}
+    Dedication: ${character.workEthic.dedication}
+    Continuous Learning: ${character.workEthic.continuousLearning}
+    
+    Resilience: ${character.resilience}
+    Attention to Detail: ${character.attentionToDetail}
+    Career Goals:
+    Short Term: ${character.careerGoals.shortTerm}
+    Long Term: ${character.careerGoals.longTerm}
+    `,
+  workPreferences: workPreferences => `
+    Remote Work Preference: ${workPreferences.remote}
+    Office Work Preference: ${workPreferences.office}
+    Hybrid Work Preference: ${workPreferences.hybrid}
+    `,
+  technicalChallenges: technicalChallenges =>
+    technicalChallenges
+      .map(
+        challenge =>
+          `Challenge: ${challenge.challenge}\nSolution: ${challenge.solution}\n`
+      )
+      .join('\n'),
+  overview: overview => `Overview:\n${overview.summary}`
 }
 
 export const formatAllCV = (cv: CVModel) => {
