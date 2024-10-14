@@ -248,11 +248,8 @@ export const QUESTION_CATEGORIES: Record<
     category: 'personalInformation',
     model: CV_MODEL.personalInformation,
     keywords: [
-      { word: 'personal', weight: 3 },
-      { word: 'information', weight: 2 },
-      { word: 'details', weight: 2 },
-      { word: 'about', weight: 3 },
-      { word: 'me', weight: 2 },
+      { word: 'personal information', weight: 3 },
+      { word: 'about me', weight: 3 },
       { word: 'myself', weight: 2 },
       { word: 'background', weight: 3 },
       { word: 'profile', weight: 2 },
@@ -279,24 +276,12 @@ export const QUESTION_CATEGORIES: Record<
         weight: 3
       },
       {
-        word: 'summary',
-        weight: 2
-      },
-      {
         word: 'introduction',
         weight: 2
       },
       {
         word: 'about',
         weight: 3
-      },
-      {
-        word: 'me',
-        weight: 1
-      },
-      {
-        word: 'myself',
-        weight: 1
       },
       {
         word: 'background',

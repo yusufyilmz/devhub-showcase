@@ -4,7 +4,7 @@ import { QuestionCategory } from '../../types/cv'
 import { Logger } from 'pino'
 
 export class ClassifierService {
-  constructor(private readonly logger: Logger) {}
+  constructor(private readonly logger: Logger) { }
 
   extractNounsAndAdjectives = (text: string) => {
     const doc = nlp(text)
@@ -27,17 +27,16 @@ export class ClassifierService {
         userInput.toLowerCase()
       )
 
-      console.log('Important words:', filteredUserInput)
+      this.logger.debug({ filteredUserInput }, 'Important words extracted from user input')
 
       for (const questionCategory of Object.values(QUESTION_CATEGORIES)) {
-        let totalWeight = 0
-        for (const keywordObj of questionCategory.keywords) {
-          if (keywordObj.weight) {
-            if (filteredUserInput.includes(keywordObj.word)) {
-              totalWeight += keywordObj.weight
-            }
+        const totalWeight = questionCategory.keywords.reduce((acc, categoryKeyword) => {
+          if (filteredUserInput.includes(categoryKeyword.word)) {
+            this.logger.debug({ categoryKeyword }, 'Matching keyword for category');
+            return acc + categoryKeyword.weight;
           }
-        }
+          return acc;
+        }, 0);
 
         if (totalWeight > (bestMatch.weight ?? 0)) {
           bestMatch = {
@@ -49,7 +48,7 @@ export class ClassifierService {
         }
       }
     } catch (error) {
-      this.logger.error('Error classifying question:', error)
+      this.logger.error({ error }, 'Error classifying question')
     }
 
     return bestMatch

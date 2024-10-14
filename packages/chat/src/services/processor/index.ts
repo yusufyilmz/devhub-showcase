@@ -31,12 +31,12 @@ export class MessageProcessor {
    */
   public async processUserMessage(userMessage: string): Promise<ChatMessage> {
     try {
-      this.logger.info('User message:', userMessage)
+      this.logger.info({ userMessage }, 'User message received.')
 
       // Step 1: Do message classification with the NLP classification model
       const messageClassification = this.classifier.classify(userMessage)
 
-      this.logger.info('Message classified as', messageClassification)
+      this.logger.info({ category: messageClassification.category }, 'Message classified.')
 
       // Step 2: if result is a casual question or greeting, return a casual response
       if (
@@ -79,7 +79,7 @@ export class MessageProcessor {
         promptWithModel
       )
 
-      this.logger.info('GPT response:', gptResponse)
+      this.logger.info({ gptResponse }, 'GPT response:')
 
       return {
         role: ChatRole.Assistant,
@@ -87,7 +87,7 @@ export class MessageProcessor {
         timestamp: Date.now()
       }
     } catch (error) {
-      this.logger.error('Error processing user message:', error)
+      this.logger.error({ error }, 'Error processing user message')
       // Step 6: If an error occurs, return a default error message
       return {
         ...copy.chatMessages.processErrorMessage,

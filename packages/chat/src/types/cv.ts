@@ -180,6 +180,6 @@ export type MessageWithoutModel = {
 
 export type QuestionCategory = {
   category: QuestionCategoryType
-  keywords: { word: string; weight?: number }[]
+  keywords: { word: string; weight: number }[]
   model: CVModel[keyof CVModel] | ChatMessage
 }
