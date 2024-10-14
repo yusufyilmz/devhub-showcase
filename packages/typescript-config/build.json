@@ -1,18 +1,20 @@
 {
     "compilerOptions": {
         "outDir": "./dist",
-        "rootDir": "./src",
         "target": "ES6",
         "module": "CommonJS",
         "declaration": true,
         "sourceMap": true,
-        "moduleResolution": "node", 
-        "esModuleInterop": true, 
-        "skipLibCheck": true, 
-        "allowSyntheticDefaultImports": true, 
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true,
         "jsx": "react-jsx"
     },
     "include": [
         "src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
     ]
 }

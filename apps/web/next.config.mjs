@@ -1,11 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // experimental: {
-  //   ppr: 'incremental'
-  // },
   bundlePagesRouterDependencies: true,
-  // Opt specific packages out of bundling for both App and Pages Router:
-  serverExternalPackages: ['openai']
+  serverExternalPackages: ['openai'],
+  reactStrictMode: true,
 }
 
 export default nextConfig

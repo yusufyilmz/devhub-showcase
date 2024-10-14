@@ -8,7 +8,7 @@
     "lint": "turbo lint",
     "create-package": "turbo gen create-package",
     "create-component": "turbo gen create-component",
-    "format": "turbo run format --parallel",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint:fix": "turbo run lint:fix",
     "types:check": "turbo run types:check --parallel",
     "db:seed": "prisma db seed",

@@ -19,10 +19,10 @@ This Turborepo includes the following apps and packages:
 
 2. Install dependencies
 
-	1. web: A Next.js app that serves as the portfolio.
-	2. @shared/ui: A shared React component library using Material UI and Tailwind CSS, shared across the app.
-	3. @shared/eslint-config: eslint configurations (includes eslint-config-next and eslint-config-prettier).
-	4. @shared/typescript-config: tsconfig.jsons used throughout the monorepo.
+   1. web: A Next.js app that serves as the portfolio.
+   2. @shared/ui: A shared React component library using Material UI and Tailwind CSS, shared across the app.
+   3. @shared/eslint-config: eslint configurations (includes eslint-config-next and eslint-config-prettier).
+   4. @shared/typescript-config: tsconfig.jsons used throughout the monorepo.
 
 Each package/app is 100% TypeScript.
 
@@ -30,9 +30,9 @@ Each package/app is 100% TypeScript.
 
 This Turborepo has some additional tools already set up for you:
 
-	•	TypeScript for static type checking.
-	•	ESLint for code linting.
-	•	Prettier for code formatting.
+    •	TypeScript for static type checking.
+    •	ESLint for code linting.
+    •	Prettier for code formatting.
 
 #### Build
 
@@ -65,19 +65,20 @@ This will authenticate the Turborepo CLI with your Vercel account.
 Next, link your Turborepo to your Remote Cache by running the following command from the root of your repository:
 
 ```
+
 npx turbo link
 
 #### Useful Links
 
-	•	Turborepo Documentation
-	•	Next.js Documentation
-	•	Prisma Documentation
+    •	Turborepo Documentation
+    •	Next.js Documentation
+    •	Prisma Documentation
 
-	•	Tasks
-	•	Caching
-	•	Remote Caching
-	•	Filtering
-	•	Configuration Options
-	•	CLI Usage
+    •	Tasks
+    •	Caching
+    •	Remote Caching
+    •	Filtering
+    •	Configuration Options
+    •	CLI Usage
 
 This format keeps the structure clean and informative. Let me know if you need further adjustments!
