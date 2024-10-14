@@ -10,17 +10,13 @@
         "$TURBO_DEFAULT$",
         ".env*"
       ],
-      "outputs": [
-        "packages/ui/dist/**",
-        "packages/lib/dist/**",
-        "app/web/.next/**",
-        "!app/web/.next/cache/**"
-      ],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
       "env": [
         "NODE_ENV",
         "LOG_LEVEL",
         "APPLICATION_NAME",
-        "OPENAI_API_KEY"
+        "OPENAI_API_KEY",
+        "DATABASE_URL"
       ]
     },
     "lint": {

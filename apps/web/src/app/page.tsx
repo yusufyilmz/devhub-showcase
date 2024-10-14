@@ -6,8 +6,8 @@ import {
 } from '@shared/ui/components'
 import type { Company, Project } from '@prisma/client'
 import { Box } from '@mui/material'
-import { handleSendMessageAction } from './actions'
 import { db } from '@/lib/db'
+import { handleSendMessageAction } from './actions'
 
 export const getProjectsAndCompanies = async (): Promise<{
   projects: Project[]

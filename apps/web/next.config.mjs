@@ -2,7 +2,7 @@
 const nextConfig = {
   bundlePagesRouterDependencies: true,
   serverExternalPackages: ['openai'],
-  reactStrictMode: true,
+  reactStrictMode: true
 }
 
 export default nextConfig

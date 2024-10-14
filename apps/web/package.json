@@ -7,7 +7,7 @@
     "dev:clean": "yarn clean & next dev",
     "dev": "next dev",
     "prebuild": "yarn prisma generate",
-    "build": "yarn prebuild && next build --output public",
+    "build": "yarn prebuild && next build",
     "start": "next start",
     "lint": "eslint . --ext js,jsx,ts,tsx",
     "lint:fix": "eslint . --ext js,jsx,ts,tsx --fix",
