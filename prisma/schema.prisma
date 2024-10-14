@@ -40,8 +40,8 @@ model Education {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  institution  String
-  institutionLink  String @map("institution_link")
+  institution     String
+  institutionLink String @map("institution_link")
 
   degree       String
   fieldOfStudy String   @map("field_of_study")
@@ -50,4 +50,20 @@ model Education {
   description  String?
 
   @@map("educations")
+}
+
+model Referral {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name           String?
+  relationship   String?
+  feedback       String?
+  recommendation String?
+  contactInfo    String? @map("contact_info")
+
+  sessionId String @unique @map("session_id")
+
+  @@map("referrals")
 }

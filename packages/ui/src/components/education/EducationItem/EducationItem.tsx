@@ -8,7 +8,7 @@ type EducationProps = {
 
 export const EducationItem: React.FC<EducationProps> = ({ education }) => {
   return (
-    <Card className="w-8/12 education-card p-2 bg-backgroundColor-card rounded-lg shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+    <Card className="w-8/12 education-card p-2 bg-backgroundColor-card rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 cursor-pointer">
       <Link
         href={education.institutionLink}
         target="_blank"

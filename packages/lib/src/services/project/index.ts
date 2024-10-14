@@ -1,6 +1,6 @@
 import type { Prisma, Project } from '@prisma/client'
 import { PrismaClient } from '@prisma/client'
-import { NotFoundError } from '@shared/lib'
+import { NotFoundError } from '../../errors'
 
 export class ProjectService {
   constructor(private readonly prisma: PrismaClient = new PrismaClient()) {}

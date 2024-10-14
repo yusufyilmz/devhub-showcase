@@ -3,7 +3,7 @@
 import { IFramePreview } from '../../ui/IFramePreview'
 import { Chip, Typography, Card, CardContent, Link } from '@mui/material'
 import { ProjectTitle } from '../../ui/buttons/ProjectTitle'
-import { ProjectWithCompany } from '@shared/lib'
+import { ProjectWithCompany } from '@shared/lib/types'
 
 interface ProjectItemProps {
   project: ProjectWithCompany
@@ -11,7 +11,7 @@ interface ProjectItemProps {
 
 export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
   return (
-    <Card className="bg-backgroundColor-card rounded-xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+    <Card className="bg-backgroundColor-card rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 cursor-pointer">
       <CardContent className="text-left">
         {project?.link && (
           <div className="relative">
@@ -49,7 +49,7 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
               className="text-main-black mt-6"
             >
               <small>
-                <i>belongs to </i>
+                <i>This project is owned by </i>
               </small>
               <Link href={project.company.url} target="_blank">
                 <b>{project.company?.name.toUpperCase()}</b>

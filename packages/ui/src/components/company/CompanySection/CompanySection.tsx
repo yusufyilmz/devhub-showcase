@@ -1,6 +1,6 @@
 import { PageHeader } from '../../ui/PageHeader'
 import { CompanyList } from '../CompanyList'
-import { CompanyWithProjects } from '@shared/lib'
+import { CompanyWithProjects } from '@shared/lib/types'
 
 interface CompanySectionProps {
   companies: CompanyWithProjects[]

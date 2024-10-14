@@ -1,7 +1,7 @@
 'use client'
 
 import { Box, Typography } from '@mui/material'
-import { ChatMessage } from '@shared/lib'
+import { ChatMessage } from '@shared/lib/types'
 import { formatTimestamp } from './utils'
 
 export const ChatMessageItem: React.FC<{ message: ChatMessage }> = ({

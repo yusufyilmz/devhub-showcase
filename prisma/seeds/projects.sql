@@ -4,6 +4,8 @@ DELETE FROM "projects";
 -- Delete all existing companies and education
 DELETE FROM "companies";
 DELETE FROM "educations";
+DELETE FROM "referrals";
+
 
 -- Add companies
 INSERT INTO "companies" (id, name, url, role, started_at, finished_at) VALUES 
@@ -32,3 +34,12 @@ VALUES
   ('fe08d102-909c-4028-bf21-53d2913f227f', 'HTML Shell', 'HTML Shell provides a customizable HTML boilerplate...', 'https://htmlshell.com', 'Frontend Developer', ARRAY['React', 'Typescript', 'Next.js', 'JavaScript', 'HTML', 'CSS'], NOW(), NOW(), 'd1f8c0e4-0e8d-4114-b3eb-89e6472823c1', true),
   
   ('fe08d102-909c-0028-bf21-53d2998f227f', 'Keycode Tool', 'The Keycode Tool allows developers to quickly identify JavaScript key codes...', 'https://keycode.info', 'Fullstack Developer', ARRAY['React', 'Typescript', 'Next.js', 'JavaScript', 'HTML', 'CSS'], NOW(), NOW(), 'd1f8c0e4-0e8d-4114-b3eb-89e6472823c1', true);
+
+
+
+
+INSERT INTO referrals (id, created_at, updated_at,  name, relationship, feedback, recommendation, contact_info, session_id)
+VALUES 
+('e1f8c0e4-0e8d-4114-b3eb-89e647282399', NOW(), NOW(), 'John Doe', 'Turcell, product manager', 'Yusuf demonstrated excellent leadership, managing a complex project that resulted in a 30% increase in productivity. He consistently delivered high-quality work.', 'I highly recommend Yusuf for any position requiring a full-stack engineer with strong leadership and technical skills', 'john.doe@example.com', 'unique-session-id-1'),
+('e1f8c0e4-0e8d-4114-b3eb-89e647282395', NOW(), NOW(), 'Jane Smith', 'Collaborated with Yusuf on an open-source project', 'Yusuf’s expertise in React and TypeScript significantly enhanced the quality of the project. His contributions were essential to meeting tight deadlines.', 'Yusuf is an outstanding developer, and I would strongly recommend him for any team needing a proactive and skilled full-stack developer.', 'jane.smith@example.com', 'unique-session-id-2'),
+('e1f8c0e4-0e8d-4114-b3eb-89e647282394', NOW(), NOW(), 'Michael Lee', 'Worked with Yusuf at StartupXYZ as a CTO', 'Yusuf led the migration of our platform to a more scalable architecture, increasing performance by 40%. His problem-solving skills are unmatched.', 'Yusuf is a great asset to any company looking for a dedicated and highly skilled full-stack developer.', 'michael.lee@startupxyz.com', 'unique-session-id-3');

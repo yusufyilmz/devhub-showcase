@@ -2,7 +2,7 @@ import { copy } from '@shared/content'
 
 export const Header: React.FC = () => {
   return (
-    <header className="text-center py-12">
+    <header className="px-page-px bg-main-black text-main-white text-center py-12">
       <h1 className="text-5xl font-bold text-main-white mb-6">
         {copy.header.title}
       </h1>

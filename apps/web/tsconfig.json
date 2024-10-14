@@ -25,7 +25,6 @@
       "@/middleware/*": ["./src/lib/middleware/*"],
       "@/validation/*": ["./src/lib/validation/*"],
       "@/types/*": ["./src/lib/types/*"],
-      "@/services/*": ["./src/lib/services/*"],
       "@/lib/*": ["./src/lib/*"],
       "@/logger": ["./src/lib/log/index.ts"],
       "@/theme/*": ["./src/theme"],

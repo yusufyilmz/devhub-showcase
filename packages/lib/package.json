@@ -2,6 +2,13 @@
   "name": "@shared/lib",
   "version": "0.0.0",
   "main": "src/index.ts",
+  "exports": {
+      "./utils": "./src/utils/index.ts",
+      "./services": "./src/services/index.ts",
+      "./types": "./src/types/index.ts",
+      "./errors": "./src/errors/index.ts",
+      "./constants": "./src/constants/index.ts"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint . --ext js,jsx,ts,tsx",
@@ -17,6 +24,7 @@
     "@shared/typescript-config": "*",
     "eslint": "^8",
     "typescript": "^5.6.3",
-    "@prisma/client": "5.20.0"
+    "@prisma/client": "5.20.0",
+    "pino": "^9.4.0"
   }
 }

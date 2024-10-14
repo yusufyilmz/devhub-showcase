@@ -1,4 +1,4 @@
-import { ChatMessage } from '@shared/lib'
+import { ChatMessage, CVCategoryType } from '@shared/lib/types'
 
 export interface Skill {
   technology: string
@@ -168,18 +168,12 @@ export type CVModelValue =
   | Summary
   | PersonalInformation
 
-export type QuestionCategoryType =
-  | keyof CVModel
-  | 'unknown'
-  | 'greeting'
-  | 'outOfTopic'
-
 export type MessageWithoutModel = {
   message: string
 }
 
 export type QuestionCategory = {
-  category: QuestionCategoryType
+  category: CVCategoryType
   keywords: { word: string; weight: number }[]
   model: CVModel[keyof CVModel] | ChatMessage
 }

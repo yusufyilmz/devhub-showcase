@@ -1,6 +1,6 @@
 'use client'
 
-import { ChatMessage, ChatRole } from '@shared/lib'
+import { ChatMessage, ChatRole } from '@shared/lib/types'
 import { ChatMessageItem } from '../ChatMessageItem'
 import { useRef, useEffect } from 'react'
 

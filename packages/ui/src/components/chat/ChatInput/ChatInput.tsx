@@ -3,27 +3,38 @@
 import { useState } from 'react'
 import Button from '@mui/material/Button'
 import { copy } from '@shared/content'
+import { ChatMessageType } from '@shared/lib/types'
 
 type ChatInputProps = {
   // eslint-disable-next-line no-unused-vars
   handleSendMessage: (input: string) => void
   botIsTyping?: boolean
+  chatFinished?: boolean
+  type: ChatMessageType
 }
 
 export const ChatInput: React.FC<ChatInputProps> = ({
   handleSendMessage,
-  botIsTyping
+  botIsTyping,
+  type,
+  chatFinished
 }) => {
   const [input, setInput] = useState('')
 
   const handleSendButtonClick = () => {
-    if (!input || botIsTyping) return
+    if (!input || botIsTyping || chatFinished) return
     handleSendMessage(input)
     setInput('')
   }
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === 'Enter' && !e.shiftKey && input !== '' && !botIsTyping) {
+    if (
+      e.code === 'Enter' &&
+      !e.shiftKey &&
+      input !== '' &&
+      !botIsTyping &&
+      !chatFinished
+    ) {
       e.preventDefault()
       handleSendMessage(input)
       setInput('')
@@ -31,7 +42,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === 'Enter' && !e.shiftKey && input !== '') {
+    if (e.code === 'Enter' && !e.shiftKey && input !== '' && !chatFinished) {
       setInput(input.replace(/\n$/, ''))
       e.preventDefault()
     }
@@ -42,13 +53,15 @@ export const ChatInput: React.FC<ChatInputProps> = ({
       <input
         type="text"
         value={input}
+        disabled={chatFinished}
         onChange={e => setInput(e.target.value)}
         onKeyUp={handleKeyUp}
         onKeyDown={handleKeyDown}
         className="flex-grow p-2 border rounded-lg"
-        placeholder={copy.chat.placeholder}
+        placeholder={copy.chat[chatFinished ? 'end' : type].placeholder}
       />
       <Button
+        disabled={botIsTyping || chatFinished}
         type="submit"
         variant="contained"
         onClick={handleSendButtonClick}

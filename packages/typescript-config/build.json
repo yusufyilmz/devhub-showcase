@@ -2,10 +2,10 @@
     "compilerOptions": {
         "outDir": "./dist",
         "target": "ES6",
-        "module": "CommonJS",
+        "module": "esnext",
         "declaration": true,
         "sourceMap": true,
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "esModuleInterop": true,
         "skipLibCheck": true,
         "allowSyntheticDefaultImports": true,

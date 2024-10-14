@@ -13,9 +13,9 @@
     "types:check": "turbo run types:check --parallel",
     "db:seed": "prisma db seed",
     "db:dev:migrate": "prisma migrate dev && prisma generate",
-    "db:deploy": "prisma migrate deploy && prisma db push && prisma generate",
+    "db:deploy": "yarn prisma migrate deploy && yarn prisma db push",
     "db:push": "prisma db push",
-    "deploy": "yarn db:deploy && yarn build"
+    "deploy": "turbo deploy"
   },
   "devDependencies": {
     "@turbo/gen": "^2.1.3",

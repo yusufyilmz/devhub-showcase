@@ -14,18 +14,12 @@ export default function RootLayout({
         <ThemeProvider>
           <CssBaseline />
           <NotificationProvider>
-            <div className="px-page-px bg-main-black text-main-white">
-              <Navbar />
-            </div>
-            <div className="px-page-px bg-main-black text-main-white">
-              <Header />
-            </div>
+            <Navbar />
+            <Header />
             <main className="w-full text-main-black  bg-gradient-to-b to-main-gray from-main-white flex flex-col justify-center items-center pt-16">
               {children}
             </main>
-            <div className="w-full px-page-px bg-main-black text-main-white">
-              <Footer />
-            </div>
+            <Footer />
           </NotificationProvider>
         </ThemeProvider>
       </body>

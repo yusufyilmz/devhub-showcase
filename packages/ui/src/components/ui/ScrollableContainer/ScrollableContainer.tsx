@@ -1,5 +1,6 @@
 'use client'
 
+import { Grid } from '@mui/material'
 import { useRef, useState } from 'react'
 
 interface ScrollableContainerProps {
@@ -34,7 +35,7 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
   }
 
   return (
-    <div className="relative w-full">
+    <Grid className="relative w-full px-10 py-2 align ">
       {showLeftArrow && (
         <button
           onClick={scrollLeft}
@@ -58,6 +59,6 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
           ▶
         </button>
       )}
-    </div>
+    </Grid>
   )
 }

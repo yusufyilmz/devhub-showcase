@@ -12,7 +12,7 @@ export const CompanyItem: React.FC<CompanyProps> = ({
   projects = []
 }) => {
   return (
-    <Card className="bg-backgroundColor-card rounded-xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl company-card p-6 border mb-6 min-w-[20vw] ">
+    <Card className="bg-backgroundColor-card rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 company-card p-6 border mb-6 min-w-[20vw] ">
       <Link href={company.url} target="_blank" rel="noopener noreferrer">
         <CardContent>
           <h3 className="text-2xl font-bold text-textColor-primary hover:underline">

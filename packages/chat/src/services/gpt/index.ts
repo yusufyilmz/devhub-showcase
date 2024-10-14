@@ -1,5 +1,5 @@
-import type { ChatMessage } from '@shared/lib'
-import { ChatRole } from '@shared/lib'
+import type { ChatMessage } from '@shared/lib/types'
+import { ChatRole } from '@shared/lib/types'
 import OpenAI from 'openai'
 import { summarizeQuestions } from '../summarizer/index'
 import { Logger } from 'pino'
@@ -19,11 +19,16 @@ export class ChatGPTService {
     sessionMessages: ChatMessage[] = []
   ): Promise<string> {
     try {
-      const messages: ChatMessage[] = [
+      const messages = [
         { role: ChatRole.System, content: systemMessage },
-        { role: ChatRole.User, content: summarizeQuestions(sessionMessages) },
+        sessionMessages.length
+          ? {
+              role: ChatRole.User,
+              content: summarizeQuestions(sessionMessages)
+            }
+          : undefined,
         { role: ChatRole.User, content: message }
-      ]
+      ].filter(Boolean) as ChatMessage[]
 
       const response = await this.openai.chat.completions.create({
         model: 'gpt-3.5-turbo',

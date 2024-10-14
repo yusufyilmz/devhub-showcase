@@ -1,5 +1,5 @@
-import type { ChatMessage } from '@shared/lib'
-import { ChatRole } from '@shared/lib'
+import type { ChatMessage } from '@shared/lib/types'
+import { ChatRole } from '@shared/lib/types'
 
 export function summarizeMessages(messages: ChatMessage[]): string {
   return messages

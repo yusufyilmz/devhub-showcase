@@ -1,5 +1,5 @@
-import type { ChatMessage } from '@shared/lib'
-import { ChatRole } from '@shared/lib'
+import type { ChatMessage } from '@shared/lib/types'
+import { ChatRole } from '@shared/lib/types'
 import { CV_MODEL } from '../../models/cv-model'
 import {
   CATEGORY_PROMPT_CATEGORY_KEY,
@@ -13,49 +13,68 @@ import { formatAllCV, formatters } from '../formatter/index'
 import { CVModel, CVModelValue } from '../../types'
 import { Logger } from 'pino'
 import { copy } from '@shared/content'
+import { ReferralService } from '../referral'
 
 export class MessageProcessor {
   classifier: ClassifierService
   gptService: ChatGPTService
   logger: Logger
+  referralService: ReferralService
 
   constructor(logger: Logger) {
     this.logger = logger
     this.classifier = new ClassifierService(logger)
     this.gptService = new ChatGPTService(logger)
+    this.referralService = new ReferralService(logger)
   }
 
   /**
    * Handles sending a message and processing it through casual response checks,
    * classification, and fallback to GPT.
    */
-  public async processUserMessage(userMessage: string): Promise<ChatMessage> {
+  public async processUserMessage(
+    userMessage: ChatMessage
+  ): Promise<ChatMessage> {
     try {
       this.logger.info({ userMessage }, 'User message received.')
 
+      if (userMessage.type === 'referral') {
+        return this.referralService.createReferralMessage(userMessage)
+      }
+
       // Step 1: Do message classification with the NLP classification model
-      const messageClassification = this.classifier.classify(userMessage)
+      const classifiedMessage = this.classifier.classify(userMessage.content)
 
       this.logger.info(
-        { category: messageClassification.category },
+        { category: classifiedMessage.category },
         'Message classified.'
       )
 
       // Step 2: if result is a casual question or greeting, return a casual response
       if (
-        messageClassification?.category === 'outOfTopic' ||
-        messageClassification?.category === 'greeting'
+        classifiedMessage?.category === 'outOfTopic' ||
+        classifiedMessage?.category === 'greeting' ||
+        classifiedMessage?.category === 'simpleResponse' ||
+        classifiedMessage?.category === 'end'
       ) {
         return {
           role: ChatRole.Assistant,
-          content: (messageClassification.model as ChatMessage).content,
-          timestamp: Date.now()
+          content: (classifiedMessage.model as ChatMessage).content,
+          timestamp: Date.now(),
+          category: classifiedMessage.category,
+          type: userMessage.type
         }
       }
 
       let promptWithModel: string
+      if (classifiedMessage?.category === 'unknown') {
+        if (!this.classifier.isMeaningfulInput(userMessage.content)) {
+          return {
+            ...copy.chatMessages.notMeaningfulMessage,
+            timestamp: Date.now()
+          }
+        }
 
-      if (messageClassification?.category === 'unknown') {
         // Step 3: if result is a unknown question send all the data to GPT for a response
         const formattedModel = formatAllCV(CV_MODEL)
         promptWithModel = GPT_PROMPT_TEMPLATE_COMPLETE.replace(
@@ -66,19 +85,19 @@ export class MessageProcessor {
         // Step 3: format the model data and send it to GPT for a response
 
         const formattedModel = formatters[
-          messageClassification.category as keyof typeof CV_MODEL
-        ](messageClassification.model as CVModel[keyof CVModelValue])
+          classifiedMessage.category as keyof typeof CV_MODEL
+        ](classifiedMessage.model as CVModel[keyof CVModelValue])
 
         promptWithModel = GPT_PROMPT_TEMPLATE_WITH_CATEGORY.replace(
           CATEGORY_PROMPT_CATEGORY_KEY,
-          messageClassification.category
+          classifiedMessage.category
         ).replace(CATEGORY_PROMPT_DATA_KEY, formattedModel)
       }
 
       // Step 5: send the user message with the prompt and model data to GPT for a response
 
       const gptResponse = await this.gptService.generateResponse(
-        userMessage,
+        userMessage.content,
         promptWithModel
       )
 
@@ -87,7 +106,9 @@ export class MessageProcessor {
       return {
         role: ChatRole.Assistant,
         content: gptResponse,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        type: userMessage.type,
+        category: classifiedMessage.category
       }
     } catch (error) {
       this.logger.error({ error }, 'Error processing user message')

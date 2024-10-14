@@ -19,6 +19,20 @@
         "DATABASE_URL"
       ]
     },
+    "deploy": {
+      "dependsOn": ["build", "^deploy"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*"
+      ],
+      "env": [
+        "NODE_ENV",
+        "LOG_LEVEL",
+        "APPLICATION_NAME",
+        "OPENAI_API_KEY",
+        "DATABASE_URL"
+      ]
+    },
     "lint": {
       "dependsOn": [
         "^lint"

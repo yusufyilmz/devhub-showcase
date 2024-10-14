@@ -26,7 +26,7 @@ export const IFramePreview: React.FC<IFramePreviewProps> = ({ url }) => {
 
   const IFrame = useMemo(() => {
     return url ? (
-      <div className="h-[600px] overflow-y-auto">
+      <div className="h-[50vh] overflow-y-auto">
         <iframe
           src={url ?? null}
           title="Website Preview"

@@ -6,6 +6,24 @@ import { Logger } from 'pino'
 export class ClassifierService {
   constructor(private readonly logger: Logger) {}
 
+  isMeaningfulInput(userInput: string): boolean {
+    if (!userInput || userInput.trim().length < 5) {
+      return false
+    }
+
+    const doc = nlp(userInput)
+
+    const sentences = doc.sentences()
+    if (sentences.length === 0) {
+      return false
+    }
+
+    const hasNouns = doc.nouns().out('array').length > 0
+    const hasVerbs = doc.verbs().out('array').length > 0
+
+    return hasNouns && hasVerbs
+  }
+
   extractNounsAndAdjectives = (text: string) => {
     const doc = nlp(text)
 

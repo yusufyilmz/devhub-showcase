@@ -1,11 +1,9 @@
-import { QuestionCategoryType, QuestionCategory } from '../types/cv'
+import { CVCategoryType } from '@shared/lib/types'
+import { QuestionCategory } from '../types/cv'
 import { CV_MODEL } from './cv-model'
 import { copy } from '@shared/content'
 
-export const QUESTION_CATEGORIES: Record<
-  QuestionCategoryType,
-  QuestionCategory
-> = {
+export const QUESTION_CATEGORIES: Record<CVCategoryType, QuestionCategory> = {
   skills: {
     category: 'skills',
     model: CV_MODEL.skills,
@@ -161,11 +159,7 @@ export const QUESTION_CATEGORIES: Record<
       { word: 'greetings', weight: 3 },
       { word: 'good morning', weight: 2 },
       { word: 'good evening', weight: 2 },
-      { word: "what's up", weight: 3 },
-      { word: 'bye', weight: 2 },
-      { word: 'goodbye', weight: 3 },
-      { word: 'see you', weight: 2 },
-      { word: 'talk later', weight: 2 }
+      { word: "what's up", weight: 3 }
     ]
   },
   outOfTopic: {
@@ -434,5 +428,95 @@ export const QUESTION_CATEGORIES: Record<
         weight: 3
       }
     ]
+  },
+  simpleResponse: {
+    category: 'simpleResponse',
+    keywords: [
+      {
+        word: 'yes',
+        weight: 1
+      },
+      {
+        word: 'no',
+        weight: 1
+      },
+      {
+        word: 'ok',
+        weight: 1
+      },
+      {
+        word: 'maybe',
+        weight: 1
+      },
+      {
+        word: 'sure',
+        weight: 1
+      },
+      {
+        word: 'of course',
+        weight: 1
+      },
+      {
+        word: 'absolutely',
+        weight: 1
+      },
+      {
+        word: 'definitely',
+        weight: 1
+      },
+      {
+        word: 'not really',
+        weight: 1
+      },
+      {
+        word: 'not sure',
+        weight: 1
+      },
+      {
+        word: 'not really',
+        weight: 1
+      },
+      {
+        word: 'not at all',
+        weight: 1
+      },
+      {
+        word: 'not exactly',
+        weight: 1
+      }
+    ],
+    model: copy.chatMessages.simpleResponseMessage
+  },
+  end: {
+    category: 'end',
+    keywords: [
+      {
+        word: 'goodbye',
+        weight: 3
+      },
+      {
+        word: 'bye',
+        weight: 3
+      },
+      {
+        word: 'see you',
+        weight: 3
+      },
+      {
+        word: 'talk later',
+        weight: 3
+      }
+    ],
+    model: copy.chatMessages.goodbyeMessage
+  },
+  error: {
+    category: 'error',
+    keywords: [],
+    model: copy.chatMessages.processErrorMessage
+  },
+  notMeaningful: {
+    category: 'notMeaningful',
+    keywords: [],
+    model: copy.chatMessages.notMeaningfulMessage
   }
 }
