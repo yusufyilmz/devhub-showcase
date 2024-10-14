@@ -26,9 +26,13 @@ This is a portfolio application designed to showcase public projects, profession
 
 The project is set up as a **monorepo** using `Turborepo` to manage the different packages:
 
-- `/app`: Contains the frontend application using `Next.js` and `React`.
+- `/app/web`: Contains the frontend application using `Next.js` and `React`.
 - `/packages/lib`: Shared utilities, constants, and types.
 - `/packages/ui`: Shared UI components and theming.
+- `/packages/content`: Shared sitecopy and messages.
+- `/packages/eslint-config`: Shared eslint configs
+- `/packages/typescript-config`: Shared typescript configs.
+- `/packages/tailwindcss-config`: Shared typescript configs.
 
 ## AI Chat Feature
 
@@ -102,7 +106,7 @@ Environment Variables
 
 The project requires the following environment variables to be configured in a .env file:
 
-```
+```bash
 DATABASE_URL=your_postgresql_database_url
 OPENAI_API_KEY=your_openai_api_key
 ```
