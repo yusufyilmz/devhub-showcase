@@ -1,12 +1,12 @@
 -- Delete all existing projects
-DELETE FROM "devhub"."projects";
+DELETE FROM "projects";
 
 -- Add a company: Toptal
-INSERT INTO "devhub"."companies" (id, name, "logoUrl", "url") 
+INSERT INTO "companies" (id, name, "logoUrl", "url") 
 VALUES ('d1f8c0e4-0e8d-4114-b3eb-89e6472823c1', 'Toptal', '', 'https://www.toptal.com');
 
 -- Add projects and associate them with Toptal (companyId: 'd1f8c0e4-0e8d-4114-b3eb-89e6472823c1')
-INSERT INTO "devhub"."projects" 
+INSERT INTO "projects" 
   (id, title, description, link, role, skills, "created_at", "updated_at", "companyId", "public") 
 VALUES
   (
