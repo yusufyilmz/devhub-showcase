@@ -93,6 +93,7 @@ To run the application in development mode:
 
 ```bash
 yarn dev
+```
 
 This will start the Next.js development server, and you can access the application at http://localhost:3000.
 
@@ -100,9 +101,11 @@ This will start the Next.js development server, and you can access the applicati
 
 To create a production build of the application:
 
+```bash
 yarn build
+```
 
-Environment Variables
+### Environment Variables
 
 The project requires the following environment variables to be configured in a .env file:
 
