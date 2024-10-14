@@ -1,4 +1,3 @@
-import { Box, Grid, Grid2 } from '@mui/material'
 import { Education } from '@prisma/client'
 import { PageHeader } from '../../ui/PageHeader'
 import { EducationItem } from '../EducationItem/EducationItem'
@@ -11,7 +10,7 @@ export const EducationsSection: React.FC<EducationsSectionProps> = ({
   educations
 }) => {
   return (
-    <section className="w-full px-page-px" id="educations">
+    <section className="w-full px-page-px" id="education">
       <div className="text-center">
         <PageHeader
           title="Education & Credentials"

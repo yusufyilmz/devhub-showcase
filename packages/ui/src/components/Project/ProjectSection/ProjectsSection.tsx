@@ -1,10 +1,10 @@
 import { ProjectItem } from '../ProjectItem'
 import { Grid2 } from '@mui/material'
-import { Project } from '@prisma/client'
 import { PageHeader } from '../../ui/PageHeader'
+import { ProjectWithCompany } from '@shared/lib'
 
 interface ProjectsSectionProps {
-  projects: Project[]
+  projects: ProjectWithCompany[]
 }
 
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({

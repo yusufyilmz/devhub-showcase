@@ -5,26 +5,36 @@ import {
   ChatSection,
   EducationsSection
 } from '@shared/ui/components'
-import type { Education, Project } from '@prisma/client'
+import type { Education } from '@prisma/client'
 import { Box } from '@mui/material'
-import type { CompanyWithProjects } from '@shared/lib'
-import { CompanyWithProjectsArgs } from '@shared/lib'
+import type { CompanyWithProjects, ProjectWithCompany } from '@shared/lib'
+import { CompanyWithProjectsArgs, ProjectWithCompanyArgs } from '@shared/lib'
 import { db } from '@/lib/db'
+import logger from '@/lib/log'
 import { handleSendMessageAction } from './actions'
 
 export const getPageResources = async (): Promise<{
-  projects: Project[]
+  projects: ProjectWithCompany[]
   companies: CompanyWithProjects[]
   educations: Education[]
 }> => {
-  const projects = await db.project.findMany()
-  const educations = await db.education.findMany()
-  const companies = await db.company.findMany(CompanyWithProjectsArgs)
+  try {
+    const projects = await db.project.findMany(ProjectWithCompanyArgs)
+    const educations = await db.education.findMany()
+    const companies = await db.company.findMany(CompanyWithProjectsArgs)
 
-  return {
-    projects,
-    companies,
-    educations
+    return {
+      projects,
+      companies,
+      educations
+    }
+  } catch (error) {
+    logger.error(
+      { message: (error as Error).message, stack: (error as Error).stack },
+      'Error fetching page resources'
+    )
+
+    throw error
   }
 }
 

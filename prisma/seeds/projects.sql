@@ -15,10 +15,10 @@ INSERT INTO "companies" (id, name, url, role, started_at, finished_at) VALUES
 
 -- Add education
 -- Add education entries with explicit createdAt and updatedAt values
-INSERT INTO "educations" (id, created_at, updated_at, institution, degree, field_of_study, started_at, finished_at, description) 
+INSERT INTO "educations" (id, created_at, updated_at, institution, degree, field_of_study, started_at, finished_at, description, institution_link) 
 VALUES 
-('e1f8c0e4-0e8d-4114-b3eb-89e6472823c1', NOW(), NOW(), 'Boğaziçi University', 'Master of Science', 'Software Engineering', '2013-09-01', '2016-06-01', 'Focused on software engineering principles, including software design, architecture, and development.'),
-('e2f8c0e4-0e8d-4114-b3eb-89e6472823c2', NOW(), NOW(), 'Istanbul Technical University', 'Bachelor of Science', 'Control and Computer Engineering', '2007-09-01', '2012-06-01', 'Specialized in computer engineering and control systems.');
+('e1f8c0e4-0e8d-4114-b3eb-89e6472823c1', NOW(), NOW(), 'Boğaziçi University', 'Master of Science', 'Software Engineering', '2013-09-01', '2016-06-01', 'Focused on software engineering principles, including software design, architecture, and development.', 'https://bogazici.edu.tr/en_us'),
+('e2f8c0e4-0e8d-4114-b3eb-89e6472823c2', NOW(), NOW(), 'Istanbul Technical University', 'Bachelor of Science', 'Control and Computer Engineering', '2007-09-01', '2012-06-01', 'Specialized in computer engineering and control systems.', 'https://www.itu.edu.tr/en');
 -- Add projects and associate them with Toptal (companyId: 'd1f8c0e4-0e8d-4114-b3eb-89e6472823c1')
 INSERT INTO "projects" 
   (id, title, description, link, role, skills, "created_at", "updated_at", "companyId", "public") 

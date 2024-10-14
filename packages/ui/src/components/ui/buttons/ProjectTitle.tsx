@@ -13,7 +13,7 @@ export const ProjectTitle = ({
     variant="h5"
     component="h3"
     align="left"
-    className="font-semibold text-main-black mb-2 text-2xl hover:underline"
+    className="font-semibold text-main-black text-2xl hover:underline"
     onClick={() => window.open(link)}
   >
     {title}
