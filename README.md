@@ -1,84 +1,126 @@
-Here’s the modified README for your devhub-showcase repository, following the format you requested:
+Here’s the full detailed README file in the string format you requested:
 
 # DevHub Showcase
 
-This is Yusuf’s DevHub Showcase, a portfolio application built using Next.js, React, Typescript, Prisma, PostgreSQL, Material UI, ChatGPT and Tailwind CSS. It includes public project showcases, a CV page, and an interactive AI chat bot app that is written by using the chat GPT and with NLP techniques for classification.
+This is a portfolio application designed to showcase public projects, professional experience, and an interactive AI chat feature for users to learn more about the developer. The app is built using `Next.js`, `React`, `Typescript`, `Prisma`, `PostgreSQL`, and `Tailwind CSS`.
 
-## Using this repository
+## Features
 
-Run the following command to clone the repository:
+- **Portfolio Showcase**: A section displaying public projects the developer has worked on.
+- **Interactive AI Chat**: Uses OpenAI’s API to allow users to ask questions and learn more about the developer's experiences and skills.
+- **CV Page**: Displays the developer's professional resume, highlighting their education, experience, and skills.
+- **Dark/Light Theme Toggle**: Allows users to switch between themes.
+- **Responsive Design**: Fully responsive and optimized for all devices.
 
-```
-git clone https://github.com/yusufyilmz/devhub-showcase.git
-cd devhub-showcase
-```
+## Tech Stack
 
-## What’s inside?
+- `Next.js`: For server-side rendering and optimized routing.
+- `React`: Frontend framework for building user interfaces.
+- `Typescript`: Strongly typed language ensuring safer and more reliable code.
+- `Prisma`: ORM used to interact with the PostgreSQL database.
+- `PostgreSQL`: Database used for storing project information, user data, and more.
+- `Tailwind CSS`: Utility-first CSS framework for fast styling.
+- `Vercel`: Hosting and deployment platform for serverless functions and static sites.
 
-This Turborepo includes the following apps and packages:
+## Project Structure
 
-2. Install dependencies
+The project is set up as a **monorepo** using `Turborepo` to manage the different packages:
 
-   1. web: A Next.js app that serves as the portfolio.
-   2. @shared/ui: A shared React component library using Material UI and Tailwind CSS, shared across the app.
-   3. @shared/eslint-config: eslint configurations (includes eslint-config-next and eslint-config-prettier).
-   4. @shared/typescript-config: tsconfig.jsons used throughout the monorepo.
+- `/app`: Contains the frontend application using `Next.js` and `React`.
+- `/packages/lib`: Shared utilities, constants, and types.
+- `/packages/ui`: Shared UI components and theming.
 
-Each package/app is 100% TypeScript.
+## AI Chat Feature
 
-3. Set up the database
+The AI chat is built using a combination of NLP (Natural Language Processing) and OpenAI’s API. The process works as follows:
 
-This Turborepo has some additional tools already set up for you:
+1. **Classification using NLP**: User input is first classified using the `compromise` NLP library. The classification determines the intent of the message (e.g., greeting, question about skills, unrelated message, etc.).
+   
+2. **Response Logic**:
+   - For certain categories like greetings or unrelated queries, predefined responses are triggered automatically.
+   - For more complex questions (e.g., about work experience or skills), the query is sent to the OpenAI API with relevant context about my CV or projects.
 
-    •	TypeScript for static type checking.
-    •	ESLint for code linting.
-    •	Prettier for code formatting.
+3. **Dynamic Responses**: Depending on the classification, either a predefined message is shown, or the response is dynamically generated from OpenAI’s model based on the category of the question.
 
-#### Build
+This system ensures efficient responses for both casual interactions and more detailed inquiries about my professional background.
 
-yarn prisma migrate dev --name init
-yarn prisma db seed
 
-```
-yarn build
-```
+## Getting Started
 
-#### Develop
+To get started with the project, follow these steps:
 
-Your project will be available at http://localhost:3000.
+### Prerequisites
 
-```
+Ensure that you have the following installed:
+
+- `Node.js` (v16 or later)
+- `Yarn` package manager
+- `PostgreSQL` (local or cloud database)
+
+### Installation
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/yusufyilmz/devhub-showcase.git
+    ```
+
+2. Navigate into the project directory:
+
+    ```bash
+    cd devhub-showcase
+    ```
+
+3. Install dependencies using `yarn`:
+
+    ```bash
+    yarn install
+    ```
+
+4. Set up the database by running the Prisma migration:
+
+    ```bash
+    yarn prisma migrate dev
+    ```
+
+### Development
+
+To run the application in development mode:
+
+```bash
 yarn dev
-```
 
-#### Remote Caching
+This will start the Next.js development server, and you can access the application at http://localhost:3000.
 
-Turborepo can use a technique known as Remote Caching to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+### Build
 
-By default, Turborepo will cache locally. To enable Remote Caching, you will need an account with Vercel. If you don’t have an account, you can create one, then enter the following commands:
+To create a production build of the application:
 
-```
-npx turbo login
+yarn build
 
-This will authenticate the Turborepo CLI with your Vercel account.
+Environment Variables
 
-Next, link your Turborepo to your Remote Cache by running the following command from the root of your repository:
+The project requires the following environment variables to be configured in a .env file:
 
 ```
+DATABASE_URL=your_postgresql_database_url
+OPENAI_API_KEY=your_openai_api_key
+```
 
-npx turbo link
+### Deployment
 
-#### Useful Links
+This project is deployed using Vercel. To deploy:
 
-    •	Turborepo Documentation
-    •	Next.js Documentation
-    •	Prisma Documentation
+	1.	Connect the repository to Vercel.
+	2.	Set the necessary environment variables in Vercel’s dashboard.
+	3.	Push changes to the main branch, and Vercel will automatically deploy the latest version.
 
-    •	Tasks
-    •	Caching
-    •	Remote Caching
-    •	Filtering
-    •	Configuration Options
-    •	CLI Usage
+### Contributions
 
-This format keeps the structure clean and informative. Let me know if you need further adjustments!
+Feel free to submit pull requests or create issues for any bugs or suggestions!
+
+### License
+
+This project is licensed under the MIT License.
+
+You can copy and paste this into your project's `README.md`. It includes explanations of the tech stack, features, project setup, and instructions for running the project locally or in production. Let me know if you'd like any changes!
