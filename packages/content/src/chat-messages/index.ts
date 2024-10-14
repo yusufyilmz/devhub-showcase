@@ -12,7 +12,7 @@ export const failureMessage: ChatMessage = {
   role: ChatRole.System,
   timestamp: Date.now(),
   title: 'Oops!',
-  content: 'Sorry, I am having trouble processing your request!'
+  content: 'Sorry, I am having trouble processing your message! Could you try again or ask me something else.'
 }
 
 export const processErrorMessage: ChatMessage = {
@@ -20,7 +20,7 @@ export const processErrorMessage: ChatMessage = {
   timestamp: Date.now(),
   title: 'Oops!',
   content:
-    'Sorry, I couldn’t process that. Could you try asking in a different way?'
+    'Sorry, I couldn’t understand that. Could you try asking in a different way?'
 }
 
 export const goodbyeMessage: ChatMessage = {
@@ -33,13 +33,13 @@ export const goodbyeMessage: ChatMessage = {
 export const outOfTopicMessage: ChatMessage = {
   role: ChatRole.System,
   timestamp: Date.now(),
-  content: `Sorry, I am here to help you about Yusuf's CV. Please ask me a question related to my CV.`
+  content: `I’m here to help you with questions related to my CV. Please feel free to ask me anything about my experience, skills, or projects.`
 }
 
 export const greetingMessage: ChatMessage = {
   role: ChatRole.System,
   timestamp: Date.now(),
-  content: 'Hey there! How can I help you today'
+  content: 'Hey there! Tell me what you’d like to know, and I’ll be happy to help.'
 }
 
 export const unknownMessage: ChatMessage = {
