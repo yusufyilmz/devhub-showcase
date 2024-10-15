@@ -29,20 +29,20 @@ export const CompanyItem: React.FC<CompanyProps> = ({ company }) => {
         </CardContent>
       </Link>
       <CardContent className='mx-auto pt-0'>
-        <Accordion className='border-0 shadow-none bg-backgroundColor-card' >
+        <Accordion className='bg-backgroundColor-card' >
           <AccordionSummary
-            className=' bg-backgroundColor-card w-32 mx-auto'
+            className=' bg-backgroundColor-card mx-auto'
             expandIcon={<ArrowDropDownIcon />}
             aria-controls="panel2-content"
             id="panel2-header"
           >
-            <Typography className='border-none m-0 p-0'>Projects</Typography>
+            <Typography className='m-0 p-0'>Projects</Typography>
           </AccordionSummary>
-          <AccordionDetails className='bg-backgroundColor-card p-0'>
-            <ul className="project-list mt-4 space-y-2">
+          <AccordionDetails className=''>
+            <ul className="bg-backgroundColor-card project-list mt-4 space-y-2">
               {company.projects.map(project => (
                 <li key={project.id}>
-                  <a href="#" className="text-blue-500 hover:underline">
+                  <a href={`#${project.id}`} className="text-blue-500 hover:underline">
                     {project.title}
                   </a>
                 </li>

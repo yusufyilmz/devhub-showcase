@@ -110,16 +110,16 @@ INSERT INTO
     "companyId"
   )
 VALUES
-  -- Toptal projects
+  -- Updated projects with detailed descriptions
   (
     gen_random_uuid(),
     now(),
     now(),
-    'TAG / Assets Generator',
-    'A success story generator that automates interviews and generates personalized success stories.',
+    'Automated Story Generator',
+    'A tool designed to automate the generation of customized success stories by utilizing AI to process user input and generate personalized narratives. I was responsible for the full-stack development, handling both frontend (React, Next.js) and backend (Node.js, Prisma, PostgreSQL) components, along with implementing the queue system for processing requests using bullMQ and Redis.',
     null,
     'Senior Fullstack Engineer',
-    '{"React", "Next.js", "Prisma", "Tailwind", "SCSS", "Dify.AI", "Node.js", "PostgreSQL", "bullMQ", "Redis"}',
+    '{"React", "Next.js", "Prisma", "Tailwind", "SCSS", "AI", "Node.js", "PostgreSQL", "bullMQ", "Redis"}',
     false,
     'd1f8c0e4-0e8d-4114-b3eb-89e6472823c1'
   ),
@@ -127,11 +127,11 @@ VALUES
     gen_random_uuid(),
     now(),
     now(),
-    'Public Page Alerts',
-    'Tool for monitoring public pages and creating jira ticket based on content king errors.',
+    'Content Monitoring Tool',
+    'A system for monitoring public content and generating alerts based on specific conditions. Integrated with a task management system to create tickets for any issues found. I was involved in full-stack development, ensuring proper data flow from the frontend to the backend while working with APIs for content analysis and task management.',
     null,
     'Senior Fullstack Engineer',
-    '{"React", "Typescript", "SCSS", "Next.js", "Prisma", "PostgreSQL", "Content King API", "Jira API", "bullMQ", "Redis"}',
+    '{"React", "Typescript", "SCSS", "Next.js", "Prisma", "PostgreSQL", "Content Monitoring API", "Task Management API", "bullMQ", "Redis"}',
     false,
     'd1f8c0e4-0e8d-4114-b3eb-89e6472823c1'
   ),
@@ -139,8 +139,8 @@ VALUES
     gen_random_uuid(),
     now(),
     now(),
-    'Negative Keywords Generator',
-    'Tool to automate the generation of negative keywords for google ads campaign for SEO team.',
+    'Keyword Generation Tool',
+    'A tool that automates the generation of negative keywords for advertising campaigns, improving SEO performance. I was responsible for full-stack development, creating a user-friendly frontend with React and integrating with Google Ads API to dynamically generate keywords and manage campaigns.',
     null,
     'Senior Fullstack Engineer',
     '{"React", "Next.js", "Typescript", "SCSS", "Prisma", "PostgreSQL", "Google Ads API", "bullMQ", "Redis"}',
@@ -151,8 +151,8 @@ VALUES
     gen_random_uuid(),
     now(),
     now(),
-    'SEM Alerts',
-    'Developed SEM alerts using custom filters generated via a React query builder. The project also involved implementing an ETL pipeline to fetch and process data from BigQuery on a daily basis, ensuring timely and accurate alerts for Google Ads performance and other metrics.',
+    'Performance Alerts System',
+    'Developed an alert system to monitor performance metrics and generate notifications based on custom filters. Implemented a data pipeline to process data from BigQuery, ensuring accurate and timely alerts. My role involved full-stack development, focusing on both the frontend interface and backend data handling, using technologies like ETL and Google Cloud services.',
     null,
     'Senior Fullstack Engineer',
     '{"React", "Next.js", "Typescript", "Prisma", "SCSS", "PostgreSQL", "Google Ads API", "BigQuery", "ETL", "Avro", "Google Cloud Storage"}',
@@ -163,8 +163,8 @@ VALUES
     gen_random_uuid(),
     now(),
     now(),
-    'Positive Keywords Generator',
-    'Tool for automating the creation of positive keywords for google ads campaign for SEO team.',
+    'Keyword Optimization Tool',
+    'A tool for automating the generation and optimization of positive keywords for advertising campaigns. I contributed to the frontend development, focusing on creating a responsive UI and integrating it with backend services that interact with the Google Ads API for seamless campaign management.',
     '',
     'Frontend Developer',
     '{"React", "Typescript", "Next.js", "Prisma", "SCSS", "PostgreSQL", "Google Ads API", "bullMQ", "Redis"}',
@@ -175,8 +175,8 @@ VALUES
     gen_random_uuid(),
     now(),
     now(),
-    'Dynamic Content Manager',
-    'Automated system for managing and updating dynamic content on pages.',
+    'Dynamic Content Management System',
+    'An automated system designed to manage and update dynamic content on various web pages. I was responsible for the full-stack development, including integrating with content APIs, creating a responsive frontend, and building the backend for processing content updates in real time using Kafka.js and Redis.',
     null,
     'Senior Full Stack Developer',
     '{"React", "Typescript", "Next.js", "Prisma", "SCSS", "PostgreSQL", "Google Ads API", "bullMQ", "Redis", "Kafka.js"}',
@@ -187,8 +187,8 @@ VALUES
     gen_random_uuid(),
     now(),
     now(),
-    'Assets Review Tool',
-    'Tool for reviewing and managing media assets used in campaigns.',
+    'Media Assets Review Tool',
+    'A tool for reviewing and managing media assets used in marketing campaigns. My role involved full-stack development, including building the frontend for asset review and management, as well as developing the backend integration with the advertising API and media storage.',
     null,
     'Senior Full Stack Developer',
     '{"React", "Typescript", "Next.js", "Prisma", "SCSS", "PostgreSQL", "Google Ads API", "bullMQ", "Redis"}',
@@ -200,7 +200,7 @@ VALUES
     now(),
     now(),
     'JavaScript Minifier',
-    'Tool to minify JavaScript code. Public tool.',
+    'A public tool for minifying JavaScript code, used by developers to compress and optimize their scripts. I developed the frontend interface using React and Next.js, ensuring a simple and intuitive user experience.',
     'https://www.toptal.com/developers/javascript-minifier',
     'Senior Frontend Developer',
     '{"React", "Typescript", "Next.js", "SCSS", "Redis"}',
@@ -212,7 +212,7 @@ VALUES
     now(),
     now(),
     'CSS Minifier',
-    'Tool to minify CSS code. Public tool.',
+    'A public tool for minifying CSS code, helping developers compress and optimize stylesheets. I worked on the frontend using React and Next.js to ensure smooth functionality and user-friendly interaction.',
     'https://www.toptal.com/developers/cssminifier',
     'Senior Frontend Developer',
     '{"React", "Typescript", "Next.js", "SCSS", "Redis"}',
@@ -224,7 +224,7 @@ VALUES
     now(),
     now(),
     'HTML Minifier',
-    'Tool to minify HTML code. Public tool.',
+    'A public tool for minifying HTML code, used to compress HTML files for improved performance. I was responsible for building the frontend using React and Next.js.',
     'https://www.toptal.com/developers/html-minifier',
     'Senior Frontend Developer',
     '{"React", "Typescript", "Next.js", "SCSS", "Redis"}',
@@ -236,7 +236,7 @@ VALUES
     now(),
     now(),
     'HTMLShell',
-    'HTML tool for generating code snippets. Public tool.',
+    'A public tool that generates HTML code snippets. I developed the frontend using React and Next.js, ensuring a user-friendly experience for developers needing to generate HTML quickly.',
     'https://www.toptal.com/developers/htmlshell',
     'Senior Frontend Developer',
     '{"React", "Typescript", "Next.js", "SCSS", "Redis"}',
@@ -248,7 +248,7 @@ VALUES
     now(),
     now(),
     'Keycode Tool',
-    'Tool for developers to test and find keycodes for keyboard events. Public tool.',
+    'A public tool for developers to test and find keycodes for keyboard events. I built the frontend using React and Next.js, providing an easy-to-use interface for testing keycodes.',
     'https://www.toptal.com/developers/keycode',
     'Senior Frontend Developer',
     '{"React", "Typescript", "Next.js", "SCSS", "Redis"}',
@@ -260,13 +260,14 @@ VALUES
     now(),
     now(),
     'Hastebin',
-    'Public tool for sharing code snippets.',
+    'A public tool for sharing code snippets. I contributed to the full-stack development, focusing on building a responsive frontend with React and Next.js and ensuring proper backend integration for storing and retrieving code snippets.',
     'https://www.toptal.com/developers/hastebin',
     'Senior Full Stack Developer',
     '{"React", "Typescript", "Next.js", "SCSS", "Redis"}',
     true,
     'd1f8c0e4-0e8d-4114-b3eb-89e6472823c1'
   );
+  
 
 -- Insert projects for Turkcell
 INSERT INTO
@@ -331,6 +332,69 @@ VALUES
     false,
     'c2f8c0e4-0e8d-4114-b3eb-89e6472823c4'
   );
+-- Insert projects for Turkcell
+INSERT INTO
+  projects (
+    id,
+    created_at,
+    updated_at,
+    title,
+    description,
+    link,
+    role,
+    skills,
+    public,
+    "companyId"
+  )
+VALUES
+  (
+    gen_random_uuid(),
+    now(),
+    now(),
+    'Real-Time Communication Platform',
+    'Led the development of a real-time chat platform, designed to handle high traffic for customer interactions.',
+    null,
+    'Lead Engineer',
+    '{"React", "Node.js", "WebSockets", "Redux", "JavaScript", "HTML", "CSS"}',
+    false,
+    'c2f8c0e4-0e8d-4114-b3eb-89e6472823c4'
+  ),
+  (
+    gen_random_uuid(),
+    now(),
+    now(),
+    'Multi-Channel Chat Gateway',
+    'Designed and implemented a chat gateway that supported multiple channels for customer service interactions.',
+    null,
+    'Lead Engineer',
+    '{".NET", ".NET Core", "REST APIs", "WebSockets", "Genesis Framework", "AIML"}',
+    false,
+    'c2f8c0e4-0e8d-4114-b3eb-89e6472823c4'
+  ),
+  (
+    gen_random_uuid(),
+    now(),
+    now(),
+    'Customer Service Tools',
+    'Developed various backend services and tools to improve customer service chat platforms, focusing on integration and management systems.',
+    null,
+    'Backend Developer',
+    '{"Node.js", "C#", "REST APIs"}',
+    false,
+    'c2f8c0e4-0e8d-4114-b3eb-89e6472823c4'
+  ),
+  (
+    gen_random_uuid(),
+    now(),
+    now(),
+    'Configuration Management System',
+    'Developed a system for managing configurations used in customer service operations.',
+    null,
+    'Backend Developer',
+    '{"C#", "SQL", "MS SQL Server"}',
+    false,
+    'c2f8c0e4-0e8d-4114-b3eb-89e6472823c4'
+  );
 
 -- Insert project for Marfeel
 INSERT INTO
@@ -351,8 +415,8 @@ VALUES
     gen_random_uuid(),
     now(),
     now(),
-    'Web Product Conversion to React',
-    'Converted existing Marfeel web products to React and developed CLI tools.',
+    'Web Product Migration to Modern Framework',
+    'Led the conversion of existing web products to a modern framework, improving performance and maintainability.',
     null,
     'Frontend Developer',
     '{"React", "CLI Tools", "JavaScript"}',
@@ -379,8 +443,8 @@ VALUES
     gen_random_uuid(),
     now(),
     now(),
-    'Text-to-Speech System',
-    'Developed Text-to-Speech (TTS) features at Sestek.',
+    'Text-to-Speech Features',
+    'Developed key features for a text-to-speech system, integrating with multiple platforms.',
     null,
     'Software Engineer',
     '{"TTS", "C++", "C#", "Objective-C"}',
@@ -391,8 +455,8 @@ VALUES
     gen_random_uuid(),
     now(),
     now(),
-    'Speech Recognition System',
-    'Worked on Speech Recognition (SR) features for customer interactions.',
+    'Speech Recognition Features',
+    'Worked on developing speech recognition features aimed at enhancing customer interactions.',
     null,
     'Software Engineer',
     '{"SR", "C#", "C++", "Objective-C"}',
@@ -419,14 +483,16 @@ VALUES
     gen_random_uuid(),
     now(),
     now(),
-    'Web Automation Tool for Game Engineers',
-    'Developed web automation tools and handled frontend/backend development.',
+    'Automation Tools for Engineering Teams',
+    'Developed automation tools for engineering teams to streamline frontend and backend development processes.',
     null,
     'Full Stack Developer',
     '{"React", ".NET", "C#", "JavaScript", "Typescript", "HTML", "CSS", "AWS", "Amazon S3", "Amazon Device Farm"}',
     false,
     'a2f8c0e4-0e8d-4114-b3eb-89e6472823c2'
   );
+
+-- referrals that i get from people
 
 INSERT INTO
   referrals (

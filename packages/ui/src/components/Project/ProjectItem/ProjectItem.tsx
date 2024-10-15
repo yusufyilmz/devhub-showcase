@@ -4,15 +4,29 @@ import { IFramePreview } from '../../ui/IFramePreview'
 import { Chip, Typography, Card, CardContent, Link } from '@mui/material'
 import { ProjectWithCompany } from '@shared/lib/types'
 import Divider from '@mui/material/Divider';
-
+import { useRef, useEffect } from 'react';
 
 interface ProjectItemProps {
   project: ProjectWithCompany
 }
 
 export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const id = window.location.hash?.substring(1);
+
+    if (id) {
+      const element = document.getElementById(id);
+      if (element && cardRef.current) {
+        cardRef.current?.focus()
+      }
+    }
+  }, []);
+
+
   return (
-    <Card className="bg-backgroundColor-card flex flex-col justify-around h-full rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 referral card p-6 min-w-96">
+    <Card ref={cardRef} tabIndex={-1} id={project.id} className="focus:outline-none focus:ring-4 focus:ring-blue-400 focus:border-blue-500 focus:ring-opacity-50 hover:shadow-lg bg-backgroundColor-card flex flex-col justify-around h-full rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 referral card p-6 min-w-96">
       <CardContent className="flex gap-4 flex-col text-left">
         {project?.link && (
           <div className="relative">
