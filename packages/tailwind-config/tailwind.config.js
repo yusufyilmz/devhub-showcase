@@ -31,6 +31,7 @@ module.exports = {
                     gray: '#A3AAAE',
                     light: '#FFFFFF',
                     card: '#FAFAFA',
+                    chat: '#FAFAFA',
                     button: '#0071E3',
                     buttonHover: '#005BB5',
                     success: '#28CD41',

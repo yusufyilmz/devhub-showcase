@@ -58,7 +58,7 @@ export const ChatPopup: React.FC<ChatPopupProps> = ({
       )}
 
       {isOpen && (
-        <div className="w-full h-[32rem] bg-backgroundColor-card rounded-lg shadow-2xl p-6 relative transition-all duration-300 ease-in-out">
+        <div className="w-full h-[32rem] bg-backgroundColor-chat rounded-lg shadow-2xl p-6 relative transition-all duration-300 ease-in-out">
           <button
             onClick={() => {
               toggleChat()

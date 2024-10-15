@@ -39,7 +39,7 @@ export const CompanyItem: React.FC<CompanyProps> = ({ company }) => {
             <Typography className='m-0 p-0'>Projects</Typography>
           </AccordionSummary>
           <AccordionDetails className=''>
-            <ul className="bg-backgroundColor-card project-list mt-4 space-y-2">
+            <ul className="project-list mt-4 space-y-2">
               {company.projects.map(project => (
                 <li key={project.id}>
                   <a href={`#${project.id}`} className="text-blue-500 hover:underline">
