@@ -12,7 +12,7 @@ interface ProjectItemProps {
 
 export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
   return (
-    <Card className="bg-backgroundColor-card h-full flex flex-col justify-between rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105">
+    <Card className="bg-backgroundColor-card flex flex-col justify-around h-full rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 referral card p-6 min-w-96">
       <CardContent className="flex gap-4 flex-col text-left">
         {project?.link && (
           <div className="relative">

@@ -46,7 +46,7 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
         </button>
       )}
       <div
-        className="w-full gap-8 no-scrollbar flex flex-row overflow-x-auto scrollbar-hide whitespace-nowrap max-w-full"
+        className="w-full gap-8 no-scrollbar flex flex-row overflow-x-auto scrollbar-hide whitespace-nowrap p-4 max-w-full"
         ref={scrollContainerRef}
         onScroll={handleScroll}
       >

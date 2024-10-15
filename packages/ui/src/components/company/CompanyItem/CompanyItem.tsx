@@ -10,7 +10,7 @@ type CompanyProps = {
 
 export const CompanyItem: React.FC<CompanyProps> = ({ company }) => {
   return (
-    <Card className="min-w-96 flex flex-col h-full align-middle  bg-backgroundColor-card rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 company-card border">
+    <Card className="max-w-80 md:min-w-96 flex flex-col h-full align-middle  bg-backgroundColor-card rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 company-card border">
       <Link href={company.url} target="_blank" rel="noopener noreferrer">
         <CardContent className='pt-4 pb-0 flex flex-col gap-2'>
           <h3 className="text-2xl font-bold text-textColor-primary hover:underline">
