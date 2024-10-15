@@ -19,7 +19,6 @@ export const CompanyList: React.FC<CompanyListProps> = ({ companies }) => {
           sm={6}
           md={4}
           lg={3}
-          alignItems={'stretch'}
         >
           <CompanyItem company={company} />
         </Grid>
