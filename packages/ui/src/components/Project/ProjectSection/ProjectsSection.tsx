@@ -36,7 +36,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   const notPublicProjects = projects.filter(project => !project.public)
 
   return (
-    <section className="w-full px-page-px" id="projects">
+    <section className="w-full px-page-px-sm md:px-page-px" id="projects">
       <div className="text-center">
         <PageHeader
           title="Projects & Contributions"

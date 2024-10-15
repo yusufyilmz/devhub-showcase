@@ -1,6 +1,8 @@
-import { Card, CardContent, Typography } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Card, CardContent, Typography } from '@mui/material'
 import { CompanyWithProjects } from '@shared/lib/types'
 import Link from 'next/link'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import Divider from '@mui/material/Divider';
 
 type CompanyProps = {
   company: CompanyWithProjects
@@ -8,27 +10,35 @@ type CompanyProps = {
 
 export const CompanyItem: React.FC<CompanyProps> = ({ company }) => {
   return (
-    <Card className="min-w-96 flex flex-col h-full  bg-backgroundColor-card rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 company-card border">
+    <Card className="min-w-96 flex flex-col h-full align-middle  bg-backgroundColor-card rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 company-card border">
       <Link href={company.url} target="_blank" rel="noopener noreferrer">
-        <CardContent>
+        <CardContent className='pt-4 pb-0 flex flex-col gap-2'>
           <h3 className="text-2xl font-bold text-textColor-primary hover:underline">
             {company.name}
           </h3>
+          <Divider />
+          <h4 className="text-lg font-semibold text-textColor-secondary">
+            {company.role}
+          </h4>
+          <p className="text-xs font-light pb-0 text-textColor-secondary mt-2">
+            {new Date(company.startedAt).toLocaleDateString()} -{' '}
+            {company.finishedAt
+              ? new Date(company.finishedAt).toLocaleDateString()
+              : 'Present'}
+          </p>
         </CardContent>
-        <h4 className="text-lg font-semibold text-textColor-secondary">
-          {company.role}
-        </h4>
-        <p className="text-xs font-light text-textColor-secondary mt-2">
-          {new Date(company.startedAt).toLocaleDateString()} -{' '}
-          {company.finishedAt
-            ? new Date(company.finishedAt).toLocaleDateString()
-            : 'Present'}
-        </p>
       </Link>
-
-      <CardContent>
-        <div className="mt-4">
-          {company?.projects.length > 0 ? (
+      <CardContent className='mx-auto pt-0'>
+        <Accordion className='border-0 shadow-none bg-backgroundColor-card' >
+          <AccordionSummary
+            className=' bg-backgroundColor-card w-32 mx-auto'
+            expandIcon={<ArrowDropDownIcon />}
+            aria-controls="panel2-content"
+            id="panel2-header"
+          >
+            <Typography className='border-none m-0 p-0'>Projects</Typography>
+          </AccordionSummary>
+          <AccordionDetails className='bg-backgroundColor-card p-0'>
             <ul className="project-list mt-4 space-y-2">
               {company.projects.map(project => (
                 <li key={project.id}>
@@ -38,13 +48,13 @@ export const CompanyItem: React.FC<CompanyProps> = ({ company }) => {
                 </li>
               ))}
             </ul>
-          ) : (
-            <Typography variant="body2" className="text-gray-500">
-              No projects available.
-            </Typography>
-          )}
-        </div>
+          </AccordionDetails>
+        </Accordion>
       </CardContent>
     </Card>
   )
 }
+
+<Typography variant="body2" className="text-gray-500">
+  No projects available.
+</Typography>

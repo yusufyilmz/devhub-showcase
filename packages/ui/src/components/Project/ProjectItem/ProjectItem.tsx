@@ -3,6 +3,8 @@
 import { IFramePreview } from '../../ui/IFramePreview'
 import { Chip, Typography, Card, CardContent, Link } from '@mui/material'
 import { ProjectWithCompany } from '@shared/lib/types'
+import Divider from '@mui/material/Divider';
+
 
 interface ProjectItemProps {
   project: ProjectWithCompany
@@ -15,9 +17,9 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
         {project?.link && (
           <div className="relative">
             <IFramePreview url={project.link} />
+            <Divider />
           </div>
         )}
-
         <div className="p-4 flex flex-col gap-3">
           <Typography
             variant="h5"
@@ -29,7 +31,7 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
           <h4 className="text-lg font-semibold text-textColor-secondary">
             {project.role}
           </h4>
-
+          <Divider />
           <Typography
             variant="body2"
             align="left"

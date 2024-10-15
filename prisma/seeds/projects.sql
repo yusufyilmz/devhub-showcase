@@ -178,7 +178,7 @@ VALUES
     'Dynamic Content Manager',
     'Automated system for managing and updating dynamic content on pages.',
     null,
-     'Senior Full Stack Developer',
+    'Senior Full Stack Developer',
     '{"React", "Typescript", "Next.js", "Prisma", "SCSS", "PostgreSQL", "Google Ads API", "bullMQ", "Redis", "Kafka.js"}',
     false,
     'd1f8c0e4-0e8d-4114-b3eb-89e6472823c1'
@@ -445,32 +445,10 @@ VALUES
     'e1f8c0e4-0e8d-4114-b3eb-89e647282399',
     NOW(),
     NOW(),
-    'Example Referrer 1',
-    'Turcell, product manager',
-    'Yusuf demonstrated excellent leadership, managing a complex project that resulted in a 30% increase in productivity. He consistently delivered high-quality work.',
-    'I highly recommend Yusuf for any position requiring a full-stack engineer with strong leadership and technical skills',
+    'Marcelo Carneiro',
+    'Toptal, Team manager',
+    'I had the pleasure of working with Yusuf at Toptal, where he made a significant impact as a Senior Full-Stack Engineer. He is an incredibly fast developer, consistently delivering results with impressive speed and precision. Yusuf was always proactive in creating solutions, and bringing ideas to the table. His execution was top-notch, ensuring that his innovative concepts were implemented effectively. He maintained active communication with everyone on the engineering and design teams, which streamlined collaboration and ensured that all aspects of product implementation were aligned.',
+    'Yusuf would be a fantastic asset to any team, combining speed, proactivity, and a collaborative spirit to deliver exceptional results',
     'john.doe@example.com',
     'unique-session-id-1'
-  ),
-  (
-    'e1f8c0e4-0e8d-4114-b3eb-89e647282395',
-    NOW(),
-    NOW(),
-    'Example Referrer 1',
-    'Collaborated with Yusuf on an open-source project',
-    'Yusuf’s expertise in React and TypeScript significantly enhanced the quality of the project. His contributions were essential to meeting tight deadlines.',
-    'Yusuf is an outstanding developer, and I would strongly recommend him for any team needing a proactive and skilled full-stack developer.',
-    'jane.smith@example.com',
-    'unique-session-id-2'
-  ),
-  (
-    'e1f8c0e4-0e8d-4114-b3eb-89e647282394',
-    NOW(),
-    NOW(),
-    'Example Referrer 3',
-    'Worked with Yusuf at StartupXYZ as a CTO',
-    'Yusuf led the migration of our platform to a more scalable architecture, increasing performance by 40%. His problem-solving skills are unmatched.',
-    'Yusuf is a great asset to any company looking for a dedicated and highly skilled full-stack developer.',
-    'michael.lee@startupxyz.com',
-    'unique-session-id-3'
   );

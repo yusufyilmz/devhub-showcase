@@ -10,7 +10,7 @@ export const EducationsSection: React.FC<EducationsSectionProps> = ({
   educations
 }) => {
   return (
-    <section className="w-full px-page-px" id="education">
+    <section className="w-full px-page-px-sm md:px-page-px" id="education">
       <div className="text-center">
         <PageHeader
           title="Education & Credentials"

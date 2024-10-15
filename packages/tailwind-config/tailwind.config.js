@@ -10,7 +10,7 @@ module.exports = {
             },
             padding: {
                 'page-px': '15%',
-                'page-px-sm': '2%',
+                'page-px-sm': '5%',
             },
             colors: {
                 main: {

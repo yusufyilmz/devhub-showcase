@@ -1,10 +1,30 @@
 'use client'
 
-import { Button, IconButton } from '@mui/material'
+import { Box, Button, Drawer } from '@mui/material'
 import { useState } from 'react'
 import { copy } from '@shared/content'
 import { AboutSection } from '../../about/AboutSection'
-import InfoIcon from '@mui/icons-material/Info'
+
+
+const MenuItems = () => (
+  <>
+    <Button variant="text" color="secondary" href="#companies">
+      {copy.navbar.companies}
+    </Button>
+    <Button variant="text" color="secondary" href="#education">
+      {copy.navbar.education}
+    </Button>
+    <Button variant="text" color="secondary" href="#projects">
+      {copy.navbar.projects}
+    </Button>
+    <Button variant="text" color="secondary" href="#referrals">
+      {copy.navbar.referrals}
+    </Button>
+    <Button variant="text" color="secondary" href="#cv">
+      {copy.navbar.cv}
+    </Button>
+  </>
+)
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -39,34 +59,16 @@ export const Navbar: React.FC = () => {
           </button>
         </div>
         <div
-          className={`lg:flex space-x-4 ${isOpen ? 'block' : 'hidden'} lg:block`}
+          className={`lg:flex space-x-4 hidden md:block`}
         >
-          <Button variant="text" color="secondary" href="#companies">
-            {copy.navbar.companies}
-          </Button>
-          <Button variant="text" color="secondary" href="#education">
-            {copy.navbar.education}
-          </Button>
-          <Button variant="text" color="secondary" href="#projects">
-            {copy.navbar.projects}
-          </Button>
-          <Button variant="text" color="secondary" href="#referrals">
-            {copy.navbar.referrals}
-          </Button>
-          <Button variant="text" color="secondary" href="#cv">
-            {copy.navbar.cv}
-          </Button>
+          <MenuItems />
         </div>
-
+        <Drawer anchor='right' open={isOpen} onClose={toggleMenu}>
+          <Box className='bg-main-black h-full flex flex-col justify-start py-4 px-2 align-middle' role="presentation" >
+            <MenuItems />
+          </Box>
+        </Drawer>
         <div className="hidden lg:flex items-center">
-          <IconButton
-            className="hidden"
-            color="inherit"
-            aria-label="About"
-            onClick={toggleMenu}
-          >
-            <InfoIcon />
-          </IconButton>
           <AboutSection />
         </div>
       </div>
