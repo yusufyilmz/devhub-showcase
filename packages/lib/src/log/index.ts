@@ -2,7 +2,7 @@ import os from 'node:os'
 import type { Logger, LoggerOptions } from 'pino'
 import pino from 'pino'
 
-export const createLogger = (hostname: string): Logger => {
+const createLogger = (hostname: string): Logger => {
   const options: LoggerOptions = {
     base: {
       pid: process.pid,
@@ -19,4 +19,6 @@ export const createLogger = (hostname: string): Logger => {
   return pino(options)
 }
 
-export default createLogger(os.hostname())
+const logger = createLogger(os.hostname())
+
+export { logger }

@@ -38,7 +38,6 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
     <Grid className="relative w-full align scrollbar-hide overflow-hidden">
       {showLeftArrow && (
         <button
-
           onClick={scrollLeft}
           className="absolute z-10 left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
         >
@@ -46,7 +45,7 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
         </button>
       )}
       <div
-        className="w-full gap-8 no-scrollbar flex flex-row overflow-x-auto scrollbar-hide whitespace-nowrap p-4 max-w-full"
+        className="w-full gap-8 no-scrollbar flex flex-row justify-start overflow-x-auto scrollbar-hide whitespace-nowrap p-4 max-w-full"
         ref={scrollContainerRef}
         onScroll={handleScroll}
       >

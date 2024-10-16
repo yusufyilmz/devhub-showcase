@@ -16,16 +16,18 @@ export const ReferralItem: React.FC<{
   return (
     <Card className="max-w-sm md:max-w-xl bg-backgroundColor-card flex flex-col justify-around h-full rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 referral card p-6">
       <CardContent>
-      {referral.feedback && <Comment comment={referral.feedback} />}
-      {referral.recommendation && <Comment comment={referral.recommendation} />}
-      <div className="mt-4">
-        <h3 className="text-xl font-semibold text-gray-900">
-          {referral.name || 'Anonymous'}
-        </h3>
-        <p className="text-sm text-gray-600 font-light">
-          {referral.relationship || 'No relationship provided'}
-        </p>
-      </div>
+        {referral.feedback && <Comment comment={referral.feedback} />}
+        {referral.recommendation && (
+          <Comment comment={referral.recommendation} />
+        )}
+        <div className="mt-4">
+          <h3 className="text-xl font-semibold text-gray-900">
+            {referral.name || 'Anonymous'}
+          </h3>
+          <p className="text-sm text-gray-600 font-light">
+            {referral.relationship || 'No relationship provided'}
+          </p>
+        </div>
       </CardContent>
     </Card>
   )

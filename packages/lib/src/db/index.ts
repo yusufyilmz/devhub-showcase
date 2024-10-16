@@ -1,7 +1,9 @@
 import { PrismaClient } from '@prisma/client'
 
+export type DbClient = PrismaClient
+
 const globalForPrisma = globalThis as unknown as {
-  db: PrismaClient | undefined
+  db: DbClient | undefined
 }
 
 const db = globalForPrisma.db ?? new PrismaClient()

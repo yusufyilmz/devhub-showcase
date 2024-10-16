@@ -18,19 +18,7 @@
       {
         "name": "next"
       }
-    ],
-    "paths": {
-      "@/components/*": ["./src/components/*"],
-      "@/app/*": ["./src/app/*"],
-      "@/middleware/*": ["./src/lib/middleware/*"],
-      "@/validation/*": ["./src/lib/validation/*"],
-      "@/types/*": ["./src/lib/types/*"],
-      "@/lib/*": ["./src/lib/*"],
-      "@/logger": ["./src/lib/log/index.ts"],
-      "@/theme/*": ["./src/theme"],
-      "@/hooks/*": ["./src/hooks/*"],
-      "@/stores/*": ["./src/lib/stores/*"]
-    }
+    ]
   },
   "include": [
     "next-env.d.ts",

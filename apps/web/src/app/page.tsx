@@ -1,26 +1,17 @@
 import {
   ProjectsSection,
+  ExperienceSection,
   CVSection,
-  CompanySection,
   ChatSection,
   EducationsSection,
   ReferralSection
 } from '@shared/ui/components'
-import type { Education, Referral } from '@prisma/client'
 import { Box } from '@mui/material'
-import type { CompanyWithProjects, ProjectWithCompany } from '@shared/lib/types'
-import { ProjectWithCompanyArgs } from '@shared/lib/types'
+import type { PageResources } from '@shared/lib/types'
 import type { Redirect } from 'next'
-import { db } from '@/lib/db'
-import logger from '@/lib/log'
+import { ResourceManager } from '@shared/lib/services'
+import { logger } from '@shared/lib/logger'
 import { handleSendMessageAction } from './actions'
-
-interface PageResources {
-  projects: ProjectWithCompany[]
-  companies: CompanyWithProjects[]
-  educations: Education[]
-  referrals: Referral[]
-}
 
 export const getPageResources = async (): Promise<
   | PageResources
@@ -29,32 +20,9 @@ export const getPageResources = async (): Promise<
     }
 > => {
   try {
-    const projects = await db.project.findMany(ProjectWithCompanyArgs)
+    const resources = await new ResourceManager(logger).getAllResources()
 
-    const educations = await db.education.findMany()
-    const companies = await db.company.findMany({
-      include: {
-        projects: true
-      }
-    })
-
-    const referrals = await db.referral.findMany({
-      where: {
-        recommendation: {
-          not: null
-        },
-        name: {
-          not: null
-        }
-      }
-    })
-
-    return {
-      projects,
-      companies,
-      educations,
-      referrals
-    }
+    return resources
   } catch (error) {
     logger.error(
       { message: (error as Error).message, stack: (error as Error).stack },
@@ -71,7 +39,7 @@ export const getPageResources = async (): Promise<
 }
 
 export default async function Home(): Promise<JSX.Element> {
-  const { companies, projects, educations, referrals } =
+  const { experiences, projects, educations, referrals } =
     (await getPageResources()) as PageResources
 
   return (
@@ -80,7 +48,7 @@ export default async function Home(): Promise<JSX.Element> {
         className="max-w-[100vw]"
         sx={{ flexDirection: 'column', display: 'flex', gap: 8 }}
       >
-        <CompanySection companies={companies} />
+        <ExperienceSection experiences={experiences} />
         <ProjectsSection projects={projects} />
         <EducationsSection educations={educations} />
         <ReferralSection referrals={referrals} />

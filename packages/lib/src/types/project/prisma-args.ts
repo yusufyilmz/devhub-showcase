@@ -1,13 +1,39 @@
 import { Prisma } from '@prisma/client'
 
-export const ProjectWithCompanyArgs =
+export const ProjectWithCompanyAndSkillsArgs =
   Prisma.validator<Prisma.ProjectDefaultArgs>()({
     include: {
       company: {
         select: {
           name: true,
-          url: true,
+          link: true,
           id: true
+        }
+      },
+      skills: {
+        select: {
+          name: true
+        }
+      }
+    }
+  })
+
+export const ProjectForGptModelArgs =
+  Prisma.validator<Prisma.ProjectDefaultArgs>()({
+    select: {
+      title: true,
+      description: true,
+      link: true,
+      role: true,
+      company: {
+        select: {
+          name: true,
+          link: true
+        }
+      },
+      skills: {
+        select: {
+          name: true
         }
       }
     }

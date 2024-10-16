@@ -1,10 +1,10 @@
 import { ProjectItem } from '../ProjectItem'
 import { Grid2 } from '@mui/material'
 import { PageHeader } from '../../ui/PageHeader'
-import { ProjectWithCompany } from '@shared/lib/types'
+import { ProjectWithCompanyAndSkills } from '@shared/lib/types'
 
 interface ProjectsSectionProps {
-  projects: ProjectWithCompany[]
+  projects: ProjectWithCompanyAndSkills[]
 }
 
 const ProjectList = ({ projects }: ProjectsSectionProps) => {

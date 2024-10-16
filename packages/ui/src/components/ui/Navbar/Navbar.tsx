@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { copy } from '@shared/content'
 import { AboutSection } from '../../about/AboutSection'
 
-
 const MenuItems = () => (
   <>
     <Button variant="text" color="secondary" href="#companies">
@@ -58,13 +57,14 @@ export const Navbar: React.FC = () => {
             </svg>
           </button>
         </div>
-        <div
-          className={`lg:flex space-x-4 hidden md:block`}
-        >
+        <div className={`lg:flex space-x-4 hidden md:block`}>
           <MenuItems />
         </div>
-        <Drawer anchor='right' open={isOpen} onClose={toggleMenu}>
-          <Box className='bg-main-black h-full flex flex-col justify-start py-4 px-2 align-middle' role="presentation" >
+        <Drawer anchor="right" open={isOpen} onClose={toggleMenu}>
+          <Box
+            className="bg-main-black h-full flex flex-col justify-start py-4 px-2 align-middle"
+            role="presentation"
+          >
             <MenuItems />
           </Box>
         </Drawer>

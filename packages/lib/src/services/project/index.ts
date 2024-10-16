@@ -1,49 +1,68 @@
-import type { Prisma, Project } from '@prisma/client'
-import { PrismaClient } from '@prisma/client'
-import { NotFoundError } from '../../errors'
+import {
+  ProjectForGptModelArgs,
+  ProjectWithCompanyAndSkills,
+  ProjectWithCompanyAndSkillsArgs,
+  Project
+} from '../../types/project'
+import { projectFormatter } from '../formatter'
+import { DbClient, db } from '../../db'
 
 export class ProjectService {
-  constructor(private readonly prisma: PrismaClient = new PrismaClient()) {}
+  constructor(private readonly dbClient: DbClient = db) {}
 
   async getAllProjects(): Promise<Project[]> {
-    return this.prisma.project.findMany()
+    return this.dbClient.project.findMany()
   }
 
-  async getProjectById(id: string): Promise<Project> {
-    const project = await this.prisma.project.findUnique({
-      where: { id }
-    })
-
-    if (!project) {
-      throw new NotFoundError(`Project with id ${id} not found`)
-    }
-
-    return project
-  }
-
-  async createProject(data: Prisma.ProjectCreateInput): Promise<Project> {
-    return this.prisma.project.create({
-      data
+  async getAllProjectsWithCompanies(): Promise<ProjectWithCompanyAndSkills[]> {
+    return this.dbClient.project.findMany({
+      ...ProjectWithCompanyAndSkillsArgs
     })
   }
 
-  async updateProject(
-    id: string,
-    data: Prisma.ProjectUpdateInput
-  ): Promise<Project> {
-    const project = await this.prisma.project.update({
-      where: { id },
-      data
+  async createGPTModal(): Promise<string> {
+    const experiences = await this.dbClient.project.findMany({
+      ...ProjectForGptModelArgs
     })
 
-    return project
+    return projectFormatter(experiences)
   }
 
-  async deleteProject(id: string): Promise<Project> {
-    const project = await this.prisma.project.delete({
-      where: { id }
-    })
+  // async getProjectById(id: string): Promise<Project> {
+  //   const project = await this.prisma.project.findUnique({
+  //     where: { id }
+  //   })
 
-    return project
-  }
+  //   if (!project) {
+  //     throw new NotFoundError(`Project with id ${id} not found`)
+  //   }
+
+  //   return project
+  // }
+
+  // async createProject(data: Prisma.ProjectCreateInput): Promise<Project> {
+  //   return this.prisma.project.create({
+  //     data
+  //   })
+  // }
+
+  // async updateProject(
+  //   id: string,
+  //   data: Prisma.ProjectUpdateInput
+  // ): Promise<Project> {
+  //   const project = await this.prisma.project.update({
+  //     where: { id },
+  //     data
+  //   })
+
+  //   return project
+  // }
+
+  // async deleteProject(id: string): Promise<Project> {
+  //   const project = await this.prisma.project.delete({
+  //     where: { id }
+  //   })
+
+  //   return project
+  // }
 }

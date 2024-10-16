@@ -7,32 +7,69 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Skill {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name           String?
+  experienceYear String? @map("experience_year")
+  type           String
+
+  projects Project[]
+
+  @@map("skills")
+}
+
 model Company {
-  id         String    @id @default(cuid())
-  name       String
-  url        String
-  role       String
-  startedAt  DateTime  @map("started_at")
-  finishedAt DateTime? @map("finished_at")
-  projects   Project[]
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name String
+  link String
+
+  experiences Experience[]
+  projects    Project[]
 
   @@map("companies")
 }
 
 model Project {
-  id          String   @id @default(cuid())
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
   title       String
   description String
   link        String?
   role        String
-  skills      String[] @default([])
-  public      Boolean  @default(false)
-  companyId   String?
-  company     Company? @relation(fields: [companyId], references: [id])
+
+  public    Boolean  @default(false)
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id])
+
+  skills       Skill[]
+  Experience   Experience? @relation(fields: [experienceId], references: [id])
+  experienceId String?
 
   @@map("projects")
+}
+
+model Experience {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  role       String
+  startedAt  DateTime  @map("started_at")
+  finishedAt DateTime? @map("finished_at")
+  projects   Project[]
+
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id])
+
+  @@map("experiences")
 }
 
 model Education {
@@ -47,6 +84,7 @@ model Education {
   fieldOfStudy String   @map("field_of_study")
   startedAt    DateTime @map("started_at")
   finishedAt   DateTime @map("finished_at")
+  gpa          String?
   description  String?
 
   @@map("educations")
@@ -66,4 +104,60 @@ model Referral {
   sessionId String @unique @map("session_id")
 
   @@map("referrals")
+}
+
+model Language {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name        String?
+  proficiency String?
+
+  @@map("languages")
+}
+
+model Certification {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name  String?
+  date  DateTime
+  hours String?
+
+  @@map("certifications")
+}
+
+model Achievements {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  title       String?
+  description String?
+
+  @@map("achievements")
+}
+
+model Challenges {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  problem  String?
+  solution String?
+
+  @@map("challenges")
+}
+
+model Characteristic {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name    String?
+  details String?
+
+  @@map("characteristics")
 }

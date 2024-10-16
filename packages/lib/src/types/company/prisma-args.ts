@@ -12,3 +12,16 @@ export const CompanyWithProjectsArgs =
       }
     }
   })
+
+export const CompanyForGptModelArgs =
+  Prisma.validator<Prisma.CompanyDefaultArgs>()({
+    select: {
+      name: true,
+      link: true,
+      projects: {
+        select: {
+          title: true
+        }
+      }
+    }
+  })

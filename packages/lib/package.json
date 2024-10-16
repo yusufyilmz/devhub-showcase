@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "main": "src/index.ts",
   "exports": {
-      "./utils": "./src/utils/index.ts",
-      "./services": "./src/services/index.ts",
-      "./types": "./src/types/index.ts",
-      "./errors": "./src/errors/index.ts",
-      "./constants": "./src/constants/index.ts"
+    "./utils": "./src/utils/index.ts",
+    "./services": "./src/services/index.ts",
+    "./types": "./src/types/index.ts",
+    "./errors": "./src/errors/index.ts",
+    "./constants": "./src/constants/index.ts",
+    "./logger": "./src/log/index.ts"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",

@@ -1,11 +1,11 @@
 'use server'
 
-import type { ChatMessage } from '@shared/lib/types'
 import { ReferralService } from '@shared/lib/services'
 import { isCategoryReferralCategory } from '@shared/lib/utils'
+import { logger } from '@shared/lib/logger'
 import { MessageProcessor } from '@shared/chat'
 import { copy } from '@shared/content'
-import logger from '@/lib/log'
+import type { ChatMessage } from '@shared/lib/types'
 
 const messageProcessor = new MessageProcessor(logger)
 const referralService = new ReferralService(logger)
@@ -18,7 +18,7 @@ export async function handleSendMessageAction(
 
   try {
     if (isCategoryReferralCategory(message.category)) {
-      await referralService.saveReferralAnswer(
+      await referralService.saveReferral(
         message.category,
         message.content,
         sessionId

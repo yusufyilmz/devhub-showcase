@@ -16,10 +16,7 @@ export const ReferralSection: React.FC<{
 
       <ScrollableContainer>
         {referrals.map(referral => (
-          <Grid
-            key={referral.id}
-            item
-          >
+          <Grid key={referral.id} item>
             <ReferralItem referral={referral} />
           </Grid>
         ))}

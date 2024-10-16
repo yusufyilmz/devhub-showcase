@@ -1,13 +1,28 @@
-import { PrismaClient } from '@prisma/client'
 import type { Logger } from 'pino'
+import { DbClient, db } from '../../db'
+import { ReferralForGptModelArgs } from '../../types/referral/prisma-args'
+import { referralFormatter } from '../formatter'
+import { Referral } from '../../types'
 
 export class ReferralService {
   constructor(
     private logger: Logger,
-    private readonly prisma: PrismaClient = new PrismaClient()
+    private readonly dbClient: DbClient = db
   ) {}
 
-  saveReferralAnswer = async (
+  async getAllReferrals(): Promise<Referral[]> {
+    return this.dbClient.referral.findMany()
+  }
+
+  async createGPTModal(): Promise<string> {
+    const experiences = await this.dbClient.referral.findMany({
+      ...ReferralForGptModelArgs
+    })
+
+    return referralFormatter(experiences)
+  }
+
+  saveReferral = async (
     category: string,
     answer: string,
     sessionId: string
@@ -17,7 +32,7 @@ export class ReferralService {
     try {
       logger.debug('Saving referral answer')
 
-      const response = await this.prisma.referral.upsert({
+      const response = await this.dbClient.referral.upsert({
         where: { sessionId },
         update: {
           [category]: answer
