@@ -14,13 +14,6 @@ export class ResourceManager {
     private readonly referralService = new ReferralService(this.logger)
   ) {}
 
-  // async createGPTModel(): Promise<string> {
-  //     const companies = await this.companyService.createGPTModal();
-  //     const projects = await this.projectService.createGPTModal();
-
-  //     return companies + projects;
-  // }
-
   async getAllResources(): Promise<PageResources> {
     const projects = await this.projectService.getAllProjectsWithCompanies()
     const experiences =

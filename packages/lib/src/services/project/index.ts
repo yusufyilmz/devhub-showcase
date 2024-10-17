@@ -27,42 +27,4 @@ export class ProjectService {
 
     return projectFormatter(experiences)
   }
-
-  // async getProjectById(id: string): Promise<Project> {
-  //   const project = await this.prisma.project.findUnique({
-  //     where: { id }
-  //   })
-
-  //   if (!project) {
-  //     throw new NotFoundError(`Project with id ${id} not found`)
-  //   }
-
-  //   return project
-  // }
-
-  // async createProject(data: Prisma.ProjectCreateInput): Promise<Project> {
-  //   return this.prisma.project.create({
-  //     data
-  //   })
-  // }
-
-  // async updateProject(
-  //   id: string,
-  //   data: Prisma.ProjectUpdateInput
-  // ): Promise<Project> {
-  //   const project = await this.prisma.project.update({
-  //     where: { id },
-  //     data
-  //   })
-
-  //   return project
-  // }
-
-  // async deleteProject(id: string): Promise<Project> {
-  //   const project = await this.prisma.project.delete({
-  //     where: { id }
-  //   })
-
-  //   return project
-  // }
 }

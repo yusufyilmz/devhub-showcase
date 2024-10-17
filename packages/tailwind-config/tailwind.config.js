@@ -41,7 +41,6 @@ module.exports = {
                 textColor: {
                     primary: '#000000',
                     secondary: '#555555',
-                    // #555555
                     gray: '#A3AAAE',
                     light: '#FFFFFF',
                     buttonText: '#FFFFFF',
