@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client'
 
-export const ExperienceForGptModelArgs =
+export const ExperienceForCvModelArgs =
   Prisma.validator<Prisma.ExperienceDefaultArgs>()({
     select: {
       startedAt: true,

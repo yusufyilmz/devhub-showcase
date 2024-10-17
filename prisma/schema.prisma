@@ -129,7 +129,7 @@ model Certification {
   @@map("certifications")
 }
 
-model Achievements {
+model Achievement {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -140,7 +140,7 @@ model Achievements {
   @@map("achievements")
 }
 
-model Challenges {
+model Challenge {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

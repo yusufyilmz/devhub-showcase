@@ -16,7 +16,8 @@
         "LOG_LEVEL",
         "APPLICATION_NAME",
         "OPENAI_API_KEY",
-        "DATABASE_URL"
+        "DATABASE_URL",
+        "REDIS_URL"
       ]
     },
     "deploy": {
@@ -30,7 +31,8 @@
         "LOG_LEVEL",
         "APPLICATION_NAME",
         "OPENAI_API_KEY",
-        "DATABASE_URL"
+        "DATABASE_URL",
+        "REDIS_URL"
       ]
     },
     "lint": {

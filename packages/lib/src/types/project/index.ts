@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client'
 import {
-  ProjectForGptModelArgs,
+  ProjectForCvModelArgs,
   ProjectWithCompanyAndSkillsArgs
 } from './prisma-args'
 
@@ -12,6 +12,6 @@ export type ProjectWithCompanyAndSkills = Prisma.ProjectGetPayload<
   typeof ProjectWithCompanyAndSkillsArgs
 >
 
-export type ProjectForGptModel = Prisma.ProjectGetPayload<
-  typeof ProjectForGptModelArgs
+export type ProjectForCvModel = Prisma.ProjectGetPayload<
+  typeof ProjectForCvModelArgs
 >

@@ -11,11 +11,12 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "compromise": "^14.14.2",
-    "esm": "^3.2.25",
-    "openai": "^4.67.3",
     "@shared/content": "*",
     "@shared/lib": "*",
+    "compromise": "^14.14.2",
+    "esm": "^3.2.25",
+    "ioredis": "^5.4.1",
+    "openai": "^4.67.3",
     "pino": "^9.4.0"
   },
   "devDependencies": {

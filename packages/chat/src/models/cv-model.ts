@@ -396,7 +396,7 @@ export const CV_MODEL: CVModel = {
     hybrid:
       'I am open to hybrid work models that balance in-person and remote work.'
   },
-  technicalChallenges: [
+  challenges: [
     {
       challenge:
         'Scaling a real-time chat platform to handle 600,000+ daily interactions at Turkcell.',

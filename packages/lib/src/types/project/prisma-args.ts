@@ -18,7 +18,7 @@ export const ProjectWithCompanyAndSkillsArgs =
     }
   })
 
-export const ProjectForGptModelArgs =
+export const ProjectForCvModelArgs =
   Prisma.validator<Prisma.ProjectDefaultArgs>()({
     select: {
       title: true,

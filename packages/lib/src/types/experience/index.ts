@@ -1,13 +1,13 @@
 import { Prisma } from '@prisma/client'
 import {
-  ExperienceForGptModelArgs,
+  ExperienceForCvModelArgs,
   ExperienceWithCompanyProjectAndSkillsArgs
 } from './prisma-args'
 
 export type { Experience } from '@prisma/client'
 
-export type ExperienceForGptModel = Prisma.ExperienceGetPayload<
-  typeof ExperienceForGptModelArgs
+export type ExperienceForCvModel = Prisma.ExperienceGetPayload<
+  typeof ExperienceForCvModelArgs
 >
 
 export type ExperienceWithCompanyProjectAndSkills = Prisma.ExperienceGetPayload<

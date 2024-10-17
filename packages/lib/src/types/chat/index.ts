@@ -28,6 +28,19 @@ export const validReferralCategories: ReferralQuestionCategory[] = [
 ]
 
 export type CVCategoryType =
+  | 'skills'
+  | 'projects'
+  | 'education'
+  | 'experience'
+  | 'languages'
+  | 'certifications'
+  | 'referrals'
+  | 'achievements'
+  | 'characteristic'
+  | 'challenges'
+  | 'workPreferences'
+
+export type ChatCategoryType =
   | 'greeting'
   | 'end'
   | 'error'
@@ -39,21 +52,12 @@ export type CVCategoryType =
   | 'personalInformation'
   | 'overview'
   | 'contact'
-  | 'skills'
-  | 'projects'
-  | 'education'
-  | 'experience'
-  | 'languages'
-  | 'certifications'
-  | 'references'
-  | 'achievements'
-  | 'character'
-  | 'technicalChallenges'
-  | 'workPreferences'
+  | CVCategoryType
 
+  
 export type CVChatMessage = ChatMessageCommonFields & {
   type: 'cv'
-  category: CVCategoryType
+  category: ChatCategoryType
 }
 
 export type ReferralMessage = ChatMessageCommonFields & {

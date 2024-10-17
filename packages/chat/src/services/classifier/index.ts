@@ -1,6 +1,6 @@
 import nlp from 'compromise'
-import { QUESTION_CATEGORIES } from '../../models/question-categories'
-import { QuestionCategory } from '../../types/cv'
+import { CHAT_CATEGORIES } from '../../models/chat-categories'
+import { ChatCategory } from '../../types/cv'
 import { Logger } from 'pino'
 
 export class ClassifierService {
@@ -32,11 +32,11 @@ export class ClassifierService {
       .text()
   }
 
-  classify = (userInput: string): QuestionCategory => {
-    let bestMatch: QuestionCategory & {
+  classify = (userInput: string): ChatCategory => {
+    let bestMatch: ChatCategory & {
       weight: number
     } = {
-      ...QUESTION_CATEGORIES.unknown,
+      ...CHAT_CATEGORIES.unknown,
       weight: 0
     }
 
@@ -50,10 +50,10 @@ export class ClassifierService {
         'Important words extracted from user input'
       )
 
-      for (const questionCategory of Object.values(QUESTION_CATEGORIES)) {
+      for (const questionCategory of Object.values(CHAT_CATEGORIES)) {
         const totalWeight = questionCategory.keywords.reduce(
           (acc, categoryKeyword) => {
-            if (filteredUserInput.includes(categoryKeyword.word)) {
+            if (filteredUserInput.split(' ').includes(categoryKeyword.word)) {
               this.logger.debug(
                 { categoryKeyword },
                 'Matching keyword for category'

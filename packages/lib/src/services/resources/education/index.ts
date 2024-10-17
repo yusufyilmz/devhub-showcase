@@ -1,7 +1,7 @@
-import { db, DbClient } from '../../db'
-import type { Education } from '../../types/education'
-import { EducationForGptModelArgs } from '../../types/education/prisma-args'
-import { educationFormatter } from '../formatter'
+import { db, DbClient } from '../../../db'
+import type { Education } from '../../../types/education'
+import { EducationForCvModelArgs } from '../../../types/education/prisma-args'
+import { educationFormatter } from '../../formatter'
 
 export class EducationService {
   constructor(private readonly dbClient: DbClient = db) {}
@@ -12,7 +12,7 @@ export class EducationService {
 
   async createGPTModal(): Promise<string> {
     const educations = await this.dbClient.education.findMany({
-      ...EducationForGptModelArgs
+      ...EducationForCvModelArgs
     })
 
     return educationFormatter(educations)

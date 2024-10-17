@@ -111,8 +111,8 @@ export const formatters: {
     Office Work Preference: ${workPreferences.office}
     Hybrid Work Preference: ${workPreferences.hybrid}
     `,
-  technicalChallenges: technicalChallenges =>
-    technicalChallenges
+  challenges: challenges =>
+    challenges
       .map(
         challenge =>
           `Challenge: ${challenge.challenge}\nSolution: ${challenge.solution}\n`

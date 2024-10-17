@@ -1,12 +1,12 @@
-import { db, DbClient } from '../../db'
+import { db, DbClient } from '../../../db'
 import {
-  ExperienceForGptModel,
+  ExperienceForCvModel,
   ExperienceWithCompanyProjectAndSkills
-} from '../../types/experience'
+} from '../../../types/experience'
 import {
-  ExperienceForGptModelArgs,
+  ExperienceForCvModelArgs,
   ExperienceWithCompanyProjectAndSkillsArgs
-} from '../../types/experience/prisma-args'
+} from '../../../types/experience/prisma-args'
 
 export class ExperienceService {
   constructor(private readonly dbClient: DbClient = db) {}
@@ -21,7 +21,7 @@ export class ExperienceService {
 
   async createGPTModal(): Promise<string> {
     const experiences = await this.dbClient.experience.findMany(
-      ExperienceForGptModelArgs
+      ExperienceForCvModelArgs
     )
 
     return experienceFormatter(experiences)
@@ -29,7 +29,7 @@ export class ExperienceService {
 }
 
 export const experienceFormatter = (
-  experiences: ExperienceForGptModel[]
+  experiences: ExperienceForCvModel[]
 ): string => {
   return experiences
     .map(

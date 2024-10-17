@@ -1,12 +1,11 @@
-import type { Logger } from 'pino'
-import { DbClient, db } from '../../db'
-import { ReferralForGptModelArgs } from '../../types/referral/prisma-args'
-import { referralFormatter } from '../formatter'
-import { Referral } from '../../types'
+import { DbClient, db } from '../../../db'
+import { ReferralForCvModelArgs } from '../../../types/referral/prisma-args'
+import { referralFormatter } from '../../formatter'
+import { Referral } from '../../../types'
+import { logger } from '../../../log'
 
 export class ReferralService {
   constructor(
-    private logger: Logger,
     private readonly dbClient: DbClient = db
   ) {}
 
@@ -16,7 +15,7 @@ export class ReferralService {
 
   async createGPTModal(): Promise<string> {
     const experiences = await this.dbClient.referral.findMany({
-      ...ReferralForGptModelArgs
+      ...ReferralForCvModelArgs
     })
 
     return referralFormatter(experiences)
@@ -27,10 +26,10 @@ export class ReferralService {
     answer: string,
     sessionId: string
   ): Promise<void> => {
-    const logger = this.logger.child({ category, answer, sessionId })
+    const log = logger.child({ category, answer, sessionId })
 
     try {
-      logger.debug('Saving referral answer')
+      log.debug('Saving referral answer')
 
       const response = await this.dbClient.referral.upsert({
         where: { sessionId },
@@ -43,9 +42,9 @@ export class ReferralService {
         }
       })
 
-      logger.debug({ response }, 'Referral answer saved')
+      log.debug({ response }, 'Referral answer saved')
     } catch (error) {
-      logger.error({ error }, 'Error saving referral answer')
+      log.error({ error }, 'Error saving referral answer')
     }
   }
 }

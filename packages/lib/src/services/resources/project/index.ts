@@ -1,11 +1,11 @@
 import {
-  ProjectForGptModelArgs,
+  ProjectForCvModelArgs,
   ProjectWithCompanyAndSkills,
   ProjectWithCompanyAndSkillsArgs,
   Project
-} from '../../types/project'
-import { projectFormatter } from '../formatter'
-import { DbClient, db } from '../../db'
+} from '../../../types/project'
+import { projectFormatter } from '../../formatter'
+import { DbClient, db } from '../../../db'
 
 export class ProjectService {
   constructor(private readonly dbClient: DbClient = db) {}
@@ -22,7 +22,7 @@ export class ProjectService {
 
   async createGPTModal(): Promise<string> {
     const experiences = await this.dbClient.project.findMany({
-      ...ProjectForGptModelArgs
+      ...ProjectForCvModelArgs
     })
 
     return projectFormatter(experiences)

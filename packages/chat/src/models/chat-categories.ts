@@ -1,9 +1,9 @@
-import { CVCategoryType } from '@shared/lib/types'
-import { QuestionCategory } from '../types/cv'
+import { ChatCategoryType } from '@shared/lib/types'
+import { ChatCategory } from '../types/cv'
 import { CV_MODEL } from './cv-model'
 import { copy } from '@shared/content'
 
-export const QUESTION_CATEGORIES: Record<CVCategoryType, QuestionCategory> = {
+export const CHAT_CATEGORIES: Record<ChatCategoryType, ChatCategory> = {
   skills: {
     category: 'skills',
     model: CV_MODEL.skills,
@@ -200,8 +200,8 @@ export const QUESTION_CATEGORIES: Record<CVCategoryType, QuestionCategory> = {
       { word: 'Turkish', weight: 5 }
     ]
   },
-  references: {
-    category: 'references',
+  referrals: {
+    category: 'referrals',
     model: CV_MODEL.references,
     keywords: [
       { word: 'references', weight: 2 },
@@ -274,10 +274,6 @@ export const QUESTION_CATEGORIES: Record<CVCategoryType, QuestionCategory> = {
         weight: 2
       },
       {
-        word: 'about',
-        weight: 3
-      },
-      {
         word: 'background',
         weight: 3
       },
@@ -291,8 +287,8 @@ export const QUESTION_CATEGORIES: Record<CVCategoryType, QuestionCategory> = {
       }
     ]
   },
-  character: {
-    category: 'character',
+  characteristic: {
+    category: 'characteristic',
     model: CV_MODEL.character,
     keywords: [
       {
@@ -333,8 +329,8 @@ export const QUESTION_CATEGORIES: Record<CVCategoryType, QuestionCategory> = {
       }
     ]
   },
-  technicalChallenges: {
-    model: CV_MODEL.technicalChallenges,
+  challenges: {
+    model: CV_MODEL.challenges,
     category: 'personalInformation',
     keywords: [
       {

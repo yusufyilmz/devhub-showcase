@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client'
 
-export const ReferralForGptModelArgs =
+export const ReferralForCvModelArgs =
   Prisma.validator<Prisma.ReferralDefaultArgs>()({
     select: {
       name: true,

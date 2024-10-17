@@ -1,13 +1,19 @@
 import {
-  CompanyForGptModel,
-  EducationForGptModel,
-  ProjectForGptModel,
-  ReferralForGptModel
+  CompanyForCvModel,
+  EducationForCvModel,
+  LanguageForCvModel,
+  ProjectForCvModel,
+  ReferralForCvModel
 } from '../../types'
-import { ExperienceForGptModel } from '../../types/experience'
+import { AchievementForCvModel } from '../../types/achievement'
+import { CertificationForCvModel } from '../../types/certification'
+import { ChallengeForCvModel } from '../../types/challenge'
+import { CharacteristicForCvModel } from '../../types/characteristic'
+import { ExperienceForCvModel } from '../../types/experience'
+import { SkillForCvModel } from '../../types/skill'
 
 export const educationFormatter = (
-  educations: EducationForGptModel[]
+  educations: EducationForCvModel[]
 ): string => {
   return educations
     .map(
@@ -20,7 +26,7 @@ export const educationFormatter = (
     .join('\n')
 }
 
-export const referralFormatter = (referrals: ReferralForGptModel[]): string => {
+export const referralFormatter = (referrals: ReferralForCvModel[]): string => {
   return referrals
     .map(
       referral =>
@@ -33,7 +39,7 @@ export const referralFormatter = (referrals: ReferralForGptModel[]): string => {
 }
 
 export const experienceFormatter = (
-  experiences: ExperienceForGptModel[]
+  experiences: ExperienceForCvModel[]
 ): string => {
   return experiences
     .map(
@@ -43,7 +49,7 @@ export const experienceFormatter = (
     .join('\n')
 }
 
-export const projectFormatter = (projects: ProjectForGptModel[]): string => {
+export const projectFormatter = (projects: ProjectForCvModel[]): string => {
   return projects
     .map(
       project =>
@@ -52,8 +58,71 @@ export const projectFormatter = (projects: ProjectForGptModel[]): string => {
     .join('\n')
 }
 
-export const companyFormatter = (companies: CompanyForGptModel[]): string => {
+export const companyFormatter = (companies: CompanyForCvModel[]): string => {
   return companies
     .map(company => `Company: ${company.name}, Link: ${company.link}`)
     .join('\n')
+}
+
+export function achievementFormatter(
+  achievements: AchievementForCvModel[]
+): string {
+  return achievements
+    .map(
+      achievement =>
+        `Title: ${achievement.title}\nDescription: ${achievement.description}`
+    )
+    .join('\n\n')
+}
+
+export function certificationFormatter(
+  certificates: CertificationForCvModel[]
+): string {
+  return certificates
+    .map(
+      certificate =>
+        `Certificate Name: ${certificate.name}\nDate: ${certificate.date.toLocaleDateString()}\nHours: ${certificate.hours}`
+    )
+    .join('\n\n')
+}
+
+export function characteristicFormatter(
+  characteristics: CharacteristicForCvModel[]
+): string {
+  return characteristics
+    .map(
+      characteristic =>
+        `Characteristic: ${characteristic.name}\nDetails: ${characteristic.details}`
+    )
+    .join('\n\n')
+}
+
+export function challengeFormatter(
+  challenges: ChallengeForCvModel[]
+): string {
+  return challenges
+    .map(
+      challenge =>
+        `Problem: ${challenge.problem}\nSolution: ${challenge.solution}`
+    )
+    .join('\n\n')
+}
+
+export function skillFormatter(skills: SkillForCvModel[]): string {
+  return skills
+    .map(
+      (skill) =>
+        `Skill: ${skill.name}\nExperience: ${skill.experienceYear || 'N/A'}\nType: ${skill.type}`
+    )
+    .join("\n\n");
+}
+
+
+export function languageFormatter(languages: LanguageForCvModel[]): string {
+  return languages
+    .map(
+      (language) =>
+        `Language: ${language.name}\nProficiency: ${language.proficiency || 'N/A'}`
+    )
+    .join("\n\n");
 }

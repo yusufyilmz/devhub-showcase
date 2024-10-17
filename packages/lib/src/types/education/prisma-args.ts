@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client'
 
-export const EducationForGptModelArgs =
+export const EducationForCvModelArgs =
   Prisma.validator<Prisma.EducationDefaultArgs>()({
     select: {
       institution: true,
