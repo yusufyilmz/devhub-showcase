@@ -1,8 +1,36 @@
-export const navbar = {
-  projects: 'PROJECTS',
-  companies: 'COMPANIES',
-  education: 'EDUCATION',
-  referrals: 'REFERRALS',
-  cv: 'CV',
-  chat: 'CHAT'
+export const navbar: Record<
+  string,
+  {
+    title: string
+    id: string
+  }
+> = {
+  experience: {
+    title: 'EXPERIENCES',
+    id: '#experiences'
+  },
+  projects: {
+    title: 'PROJECTS',
+    id: '#projects'
+  },
+  education: {
+    title: 'EDUCATION',
+    id: '#education'
+  },
+  referrals: {
+    title: 'REFERRALS',
+    id: '#referrals'
+  },
+  cv: {
+    title: 'CV',
+    id: '#cv'
+  },
+  chat: {
+    title: 'CHAT',
+    id: '#cv-chat'
+  },
+  referralChat: {
+    title: 'REFERRAL CHAT',
+    id: '#referral-chat'
+  }
 }

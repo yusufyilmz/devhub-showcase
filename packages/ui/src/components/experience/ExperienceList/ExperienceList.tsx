@@ -11,7 +11,7 @@ export const ExperienceList: React.FC<ExperienceListProps> = ({
   experiences
 }) => {
   return (
-    <ScrollableContainer>
+    <ScrollableContainer category="experience">
       {experiences.map(experience => (
         <Grid
           sx={{ py: 2 }}

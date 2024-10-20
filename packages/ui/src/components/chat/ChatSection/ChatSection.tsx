@@ -1,7 +1,7 @@
 'use client'
 
 import { chatStore, useChatMessages } from '../../../stores'
-import { ChatMessage, ChatMessageType, ChatRole } from '@shared/lib/types'
+import { ChatMessage, ChatType, ChatRole } from '@shared/lib/types'
 import { useStore } from 'zustand'
 import { ChatPopup } from '../ChatPopup'
 import { useState } from 'react'
@@ -12,7 +12,7 @@ type ChatSectionProps = {
     input: ChatMessage,
     sessionId: string
   ) => Promise<ChatMessage>
-  type: ChatMessageType
+  type: ChatType
   className?: string
 }
 
@@ -55,17 +55,13 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
   }
 
   return (
-    <section id="chat">
-      <div className="p-4">
-        <ChatPopup
-          className={className}
-          type={type}
-          handleSendMessage={input => {
-            void handleSendMessageAction(input)
-          }}
-          isTyping={isTyping}
-        />
-      </div>
-    </section>
+    <ChatPopup
+      className={className}
+      type={type}
+      handleSendMessage={input => {
+        void handleSendMessageAction(input)
+      }}
+      isTyping={isTyping}
+    />
   )
 }

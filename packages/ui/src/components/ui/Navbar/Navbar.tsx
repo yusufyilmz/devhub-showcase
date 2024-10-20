@@ -7,21 +7,17 @@ import { AboutSection } from '../../about/AboutSection'
 
 const MenuItems = () => (
   <>
-    <Button variant="text" color="secondary" href="#companies">
-      {copy.navbar.companies}
-    </Button>
-    <Button variant="text" color="secondary" href="#education">
-      {copy.navbar.education}
-    </Button>
-    <Button variant="text" color="secondary" href="#projects">
-      {copy.navbar.projects}
-    </Button>
-    <Button variant="text" color="secondary" href="#referrals">
-      {copy.navbar.referrals}
-    </Button>
-    <Button variant="text" color="secondary" href="#cv">
-      {copy.navbar.cv}
-    </Button>
+    {' '}
+    {Object.keys(copy.navbar).map(key => (
+      <Button
+        key={key}
+        variant="text"
+        color="secondary"
+        href={copy.navbar[key]?.id}
+      >
+        {copy.navbar[key]?.title}
+      </Button>
+    ))}
   </>
 )
 

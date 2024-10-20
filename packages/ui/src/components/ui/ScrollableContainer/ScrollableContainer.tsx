@@ -1,29 +1,41 @@
 'use client'
 
-import { Grid } from '@mui/material'
-import { useRef, useState } from 'react'
+import { Grid, IconButton } from '@mui/material'
+import { CVCategoryType } from '@shared/lib/types'
+import { useEffect, useRef, useState } from 'react'
+import { CARD_IDS } from '../../../constants/cards'
+import { ArrowForward, ArrowBack } from '@mui/icons-material'
 
 interface ScrollableContainerProps {
   children: React.ReactNode
+  category: CVCategoryType
 }
 
 export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
-  children
+  children,
+  category
 }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [showLeftArrow, setShowLeftArrow] = useState(false)
   const [showRightArrow, setShowRightArrow] = useState(true)
+  const [containerHeight, setContainerHeight] = useState(0)
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -300, behavior: 'smooth' })
+      const offset =
+        (document.getElementById(CARD_IDS[category])?.offsetWidth ?? 300) + 32
+      scrollContainerRef.current.scrollBy({ left: -offset, behavior: 'smooth' })
       handleScroll()
     }
   }
 
   const scrollRight = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 300, behavior: 'smooth' })
+      const offset =
+        (document.getElementById(CARD_IDS[category])?.offsetWidth ?? 300) + 32
+
+      console.log(offset)
+      scrollContainerRef.current.scrollBy({ left: offset, behavior: 'smooth' })
       handleScroll()
     }
   }
@@ -34,15 +46,23 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
     setShowRightArrow(scrollLeft + clientWidth < scrollWidth)
   }
 
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      setContainerHeight(scrollContainerRef.current.clientHeight)
+    }
+  }, [children])
+
   return (
-    <Grid className="relative w-full align scrollbar-hide overflow-hidden">
+    <Grid className="relative flex align-top scrollbar-hide overflow-hidden">
       {showLeftArrow && (
-        <button
-          onClick={scrollLeft}
-          className="absolute z-10 left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
+        <div
+          style={{ top: `${containerHeight / 2}px` }}
+          className="absolute z-10 left-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
         >
-          ◀
-        </button>
+          <IconButton size="small" onClick={scrollLeft}>
+            <ArrowBack />
+          </IconButton>
+        </div>
       )}
       <div
         className="w-full gap-8 no-scrollbar flex flex-row justify-start overflow-x-auto scrollbar-hide whitespace-nowrap p-4 max-w-full"
@@ -52,12 +72,14 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
         {children}
       </div>
       {showRightArrow && (
-        <button
-          onClick={scrollRight}
-          className="absolute z-10 right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
+        <div
+          style={{ top: `${containerHeight / 2}px` }}
+          className="absolute z-10 right-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
         >
-          ▶
-        </button>
+          <IconButton size="small" onClick={scrollRight}>
+            <ArrowForward />
+          </IconButton>
+        </div>
       )}
     </Grid>
   )

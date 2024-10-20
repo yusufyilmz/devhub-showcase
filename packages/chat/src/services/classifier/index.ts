@@ -1,6 +1,6 @@
 import nlp from 'compromise'
 import { QUESTION_CATEGORIES } from '../../models/question-categories'
-import { QuestionCategory } from '../../types/cv'
+import { ChatCategory } from '../../types/cv'
 import { Logger } from 'pino'
 
 export class ClassifierService {
@@ -32,8 +32,8 @@ export class ClassifierService {
       .text()
   }
 
-  classify = (userInput: string): QuestionCategory => {
-    let bestMatch: QuestionCategory & {
+  classify = (userInput: string): ChatCategory => {
+    let bestMatch: ChatCategory & {
       weight: number
     } = {
       ...QUESTION_CATEGORIES.unknown,

@@ -1,16 +1,17 @@
 'use client'
 
 import { useState } from 'react'
-import Button from '@mui/material/Button'
 import { copy } from '@shared/content'
-import { ChatMessageType } from '@shared/lib/types'
+import { ChatType } from '@shared/lib/types'
+import { Send } from '@mui/icons-material'
+import { IconButton } from '@mui/material'
 
 type ChatInputProps = {
   // eslint-disable-next-line no-unused-vars
   handleSendMessage: (input: string) => void
   botIsTyping?: boolean
   chatFinished?: boolean
-  type: ChatMessageType
+  type: ChatType
 }
 
 export const ChatInput: React.FC<ChatInputProps> = ({
@@ -60,15 +61,14 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         className="flex-grow p-2 border rounded-lg"
         placeholder={copy.chat[chatFinished ? 'end' : type].placeholder}
       />
-      <Button
+      <IconButton
         disabled={botIsTyping || chatFinished}
         type="submit"
-        variant="contained"
         onClick={handleSendButtonClick}
-        className="px-4 py-2 bg-main-black text-main-white rounded-lg hover:bg-main-blue-dark"
+        className="px-4 py-2 bg-main-black text-main-white rounded-lg hover:bg-gray-600"
       >
-        Send
-      </Button>
+        <Send />
+      </IconButton>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { create, useStore } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { CHAT_STORAGE_NAME } from '../constants/stores'
-import { ChatMessage, ChatMessageType } from '@shared/lib/types'
+import { ChatMessage, ChatType } from '@shared/lib/types'
 import { v4 as uuidv4 } from 'uuid'
 import { copy } from '@shared/content'
 
@@ -15,7 +15,7 @@ export type ChatState = {
 type ChatActions = ChatState & {
   // eslint-disable-next-line no-unused-vars
   addMessage: (message: ChatMessage) => void
-  resetChat: (type: ChatMessageType) => void
+  resetChat: (type: ChatType) => void
 }
 
 type ChatStore = ChatState & ChatActions
@@ -55,7 +55,7 @@ export const chatStore = create<ChatStore>()(
                 ]
               }
         ),
-      resetChat: (type: ChatMessageType) => {
+      resetChat: (type: ChatType) => {
         set(
           type === 'referral'
             ? {

@@ -29,14 +29,14 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
       ref={cardRef}
       tabIndex={-1}
       id={project.id}
-      className="focus:outline-none focus:ring-4 focus:ring-blue-400 focus:border-blue-500 focus:ring-opacity-50 hover:shadow-lg bg-backgroundColor-card flex flex-col justify-around h-full rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 referral card p-6 min-w-96"
+      className="max-w-[calc(100vw/3)] focus:outline-none focus:ring-4 focus:ring-blue-400 focus:border-blue-500 focus:ring-opacity-50 hover:shadow-lg bg-backgroundColor-card flex flex-col justify-around h-full rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 referral card p-6 min-w-96"
     >
       <CardContent className="flex gap-4 flex-col text-left">
         {project?.link && (
-          <div className="relative">
+          <>
             <IFramePreview url={project.link} />
             <Divider />
-          </div>
+          </>
         )}
         <div className="p-4 flex flex-col gap-3">
           <Typography

@@ -1,9 +1,9 @@
-import { CVCategoryType } from '@shared/lib/types'
-import { QuestionCategory } from '../types/cv'
+import { ChatCategoryType } from '@shared/lib/types'
+import { ChatCategory } from '../types/cv'
 import { CV_MODEL } from './cv-model'
 import { copy } from '@shared/content'
 
-export const QUESTION_CATEGORIES: Record<CVCategoryType, QuestionCategory> = {
+export const QUESTION_CATEGORIES: Record<ChatCategoryType, ChatCategory> = {
   skills: {
     category: 'skills',
     model: CV_MODEL.skills,
@@ -200,11 +200,11 @@ export const QUESTION_CATEGORIES: Record<CVCategoryType, QuestionCategory> = {
       { word: 'Turkish', weight: 5 }
     ]
   },
-  references: {
-    category: 'references',
-    model: CV_MODEL.references,
+  referrals: {
+    category: 'referrals',
+    model: CV_MODEL.referrals,
     keywords: [
-      { word: 'references', weight: 2 },
+      { word: 'referrals', weight: 2 },
       { word: 'recommendations', weight: 3 },
       { word: 'colleagues', weight: 2 },
       { word: 'clients', weight: 2 },
@@ -249,16 +249,16 @@ export const QUESTION_CATEGORIES: Record<CVCategoryType, QuestionCategory> = {
       { word: 'profile', weight: 2 },
       { word: 'summary', weight: 2 },
       { word: 'overview', weight: 2 },
-      { word: 'character', weight: 3 },
+      { word: 'characteristic', weight: 3 },
       { word: 'traits', weight: 2 },
       { word: 'personality', weight: 2 },
       { word: 'skills', weight: 3 },
-      { word: 'preferences', weight: 2 },
+      { word: 'preferrals', weight: 2 },
       { word: 'work', weight: 2 },
       { word: 'challenges', weight: 3 },
       { word: 'technical', weight: 2 },
       { word: 'work', weight: 2 },
-      { word: 'preferences', weight: 2 }
+      { word: 'preferrals', weight: 2 }
     ]
   },
   overview: {
@@ -291,12 +291,12 @@ export const QUESTION_CATEGORIES: Record<CVCategoryType, QuestionCategory> = {
       }
     ]
   },
-  character: {
-    category: 'character',
-    model: CV_MODEL.character,
+  characteristic: {
+    category: 'characteristic',
+    model: CV_MODEL.characteristic,
     keywords: [
       {
-        word: 'character',
+        word: 'characteristic',
         weight: 3
       },
       {
@@ -412,7 +412,7 @@ export const QUESTION_CATEGORIES: Record<CVCategoryType, QuestionCategory> = {
         weight: 3
       },
       {
-        word: 'preferences',
+        word: 'preferrals',
         weight: 2
       },
       {

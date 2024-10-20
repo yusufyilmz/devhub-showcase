@@ -289,7 +289,7 @@ export const CV_MODEL: CVModel = {
       hours: '36 Hours'
     }
   ],
-  references: [
+  referrals: [
     {
       name: 'Nazmi Soner Özçoban',
       position: 'Senior Solution Architect at Turkcell Global Bilgi',
@@ -327,7 +327,7 @@ export const CV_MODEL: CVModel = {
         'Successfully migrated Turkcell’s high-traffic WebChat platform from legacy systems to a modern React-based solution in one week, boosting scalability and performance, This platform, which handled over 600,000 daily interactions, saw significant improvements in scalability and performance due to the successful transition.'
     }
   ],
-  character: {
+  characteristic: {
     strengths: [
       'Problem-solving and ability to break down complex challenges',
       'Leadership in project management and migrations',

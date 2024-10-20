@@ -1,13 +1,13 @@
 'use client'
 
-import { ChatMessageType, ChatRole } from '@shared/lib/types'
+import { ChatType, ChatRole } from '@shared/lib/types'
 import { ChatMessageItem } from '../ChatMessageItem'
 import { useRef, useEffect } from 'react'
 import { useChatMessages } from '../../../stores'
 
 interface ChatMessageBoxProps {
   botIsTyping?: boolean
-  type: ChatMessageType
+  type: ChatType
 }
 
 export const ChatMessageBox: React.FC<ChatMessageBoxProps> = ({
@@ -27,7 +27,7 @@ export const ChatMessageBox: React.FC<ChatMessageBoxProps> = ({
   useEffect(() => handleScrollToBottom(), [messages, botIsTyping])
 
   return (
-    <div className="h-full overflow-y-scroll mb-4 p-2" ref={chatListRef}>
+    <div className="flex-1 overflow-y-auto p-4 space-y-2" ref={chatListRef}>
       {messages.map((msg, idx) => (
         <div
           key={idx}
