@@ -59,7 +59,7 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
           style={{ top: `${containerHeight / 2}px` }}
           className="absolute z-10 left-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
         >
-          <IconButton size='small' onClick={scrollLeft}>
+          <IconButton size="small" onClick={scrollLeft}>
             <ArrowBack />
           </IconButton>
         </div>
@@ -76,10 +76,11 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
           style={{ top: `${containerHeight / 2}px` }}
           className="absolute z-10 right-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
         >
-          <IconButton size='small' onClick={scrollRight}>
+          <IconButton size="small" onClick={scrollRight}>
             <ArrowForward />
           </IconButton>
         </div>
       )}
-    </Grid>)
+    </Grid>
+  )
 }

@@ -32,7 +32,9 @@ export const ChatPopup: React.FC<ChatPopupProps> = ({
   const toggleChat = () => {
     setIsOpen(!isOpen)
 
-    isChatFinished && resetChat(type)
+    if (isChatFinished) {
+      resetChat(type)
+    }
   }
   useEffect(() => {
     if (
@@ -45,7 +47,7 @@ export const ChatPopup: React.FC<ChatPopupProps> = ({
 
   useEffect(() => {
     const handleHashChange = () => {
-      if (window.location.hash === '#chat') {
+      if (window.location.hash === `#${type}-chat`) {
         setIsOpen(true)
       } else {
         setIsOpen(false)

@@ -27,7 +27,7 @@ export const navbar: Record<
   },
   chat: {
     title: 'CHAT',
-    id: '#chat'
+    id: '#cv-chat'
   },
   referralChat: {
     title: 'REFERRAL CHAT',

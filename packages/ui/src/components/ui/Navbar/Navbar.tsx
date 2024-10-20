@@ -9,7 +9,12 @@ const MenuItems = () => (
   <>
     {' '}
     {Object.keys(copy.navbar).map(key => (
-      <Button key={key} variant="text" color="secondary" href={`#${key}`}>
+      <Button
+        key={key}
+        variant="text"
+        color="secondary"
+        href={copy.navbar[key]?.id}
+      >
         {copy.navbar[key]?.title}
       </Button>
     ))}
