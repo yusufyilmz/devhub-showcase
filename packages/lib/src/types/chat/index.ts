@@ -1,6 +1,6 @@
 import { ChatRole } from './roles'
 
-export type ChatMessageType = 'referral' | 'cv'
+export type ChatType = 'referral' | 'cv'
 
 export type ChatMessageCommonFields = {
   role: ChatRole
@@ -27,7 +27,7 @@ export const validReferralCategories: ReferralQuestionCategory[] = [
   'contactInfo'
 ]
 
-export type CVCategoryType =
+export type ChatCategoryType =
   | 'greeting'
   | 'end'
   | 'error'
@@ -45,15 +45,27 @@ export type CVCategoryType =
   | 'experience'
   | 'languages'
   | 'certifications'
-  | 'references'
+  | 'referrals'
   | 'achievements'
-  | 'character'
+  | 'characteristic'
   | 'technicalChallenges'
   | 'workPreferences'
 
+export type CVCategoryType =
+  | 'contact'
+  | 'skills'
+  | 'projects'
+  | 'education'
+  | 'experience'
+  | 'languages'
+  | 'certifications'
+  | 'referrals'
+  | 'achievements'
+  | 'characteristic'
+
 export type CVChatMessage = ChatMessageCommonFields & {
   type: 'cv'
-  category: CVCategoryType
+  category: ChatCategoryType
 }
 
 export type ReferralMessage = ChatMessageCommonFields & {

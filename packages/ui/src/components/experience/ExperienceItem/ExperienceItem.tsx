@@ -11,19 +11,21 @@ import { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
 import Link from 'next/link'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import Divider from '@mui/material/Divider'
+import { CARD_IDS } from '../../../constants/cards'
 
 type ExperienceProps = {
   experience: ExperienceWithCompanyProjectAndSkills
 }
 
-export const ExperienceItem: React.FC<ExperienceProps> = ({
-  experience: experience
-}) => {
+export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
   const skills = experience.projects.flatMap(project => project.skills)
   const uniqueSkills = new Set(skills.map(skill => skill.name))
 
   return (
-    <Card className="max-w-80 md:min-w-96 align-middle  bg-backgroundColor-card rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 experience-card border">
+    <Card
+      id={CARD_IDS.experience}
+      className="min-w-80 md:min-w-96 align-middle  bg-backgroundColor-card rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 experience-card border"
+    >
       <Link
         href={experience.company?.link ?? ''}
         target="_blank"

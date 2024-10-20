@@ -59,7 +59,7 @@ export const formatters: {
     `Certificates:\n${certificates
       .map(cert => `${cert.name} (${cert.date})\nHours: ${cert.hours}`)
       .join('\n')}`,
-  references: references =>
+  referrals: references =>
     `References:\n${references
       .map(
         ref =>
@@ -70,41 +70,41 @@ export const formatters: {
     `Achievements:\n${achievements
       .map(ach => `${ach.title}\nDescription: ${ach.description}`)
       .join('\n')}`,
-  character: character => `
+  characteristic: characteristic => `
     Strengths:
-    ${character.strengths.join(', ')}
+    ${characteristic.strengths.join(', ')}
   
     Weaknesses:
-    ${character.weaknesses.join(', ')}
+    ${characteristic.weaknesses.join(', ')}
   
     Leadership:
-    Philosophy: ${character.leadership.philosophy}
-    Examples: ${character.leadership.examples.join('; ')}
+    Philosophy: ${characteristic.leadership.philosophy}
+    Examples: ${characteristic.leadership.examples.join('; ')}
   
     Teamwork:
-    Philosophy: ${character.teamwork.philosophy}
-    Examples: ${character.teamwork.examples.join('; ')}
+    Philosophy: ${characteristic.teamwork.philosophy}
+    Examples: ${characteristic.teamwork.examples.join('; ')}
   
     Motivation:
-    Short Term: ${character.motivation.shortTerm}
-    Long Term: ${character.motivation.longTerm}
+    Short Term: ${characteristic.motivation.shortTerm}
+    Long Term: ${characteristic.motivation.longTerm}
   
-    Communication Style: ${character.communicationStyle}
-    Problem-Solving Philosophy: ${character.problemSolvingPhilosophy}
-    Adaptability: ${character.adaptability}
-    Innovation: ${character.innovation}
-    Problem-Solving Approach: ${character.problemSolvingApproach}
+    Communication Style: ${characteristic.communicationStyle}
+    Problem-Solving Philosophy: ${characteristic.problemSolvingPhilosophy}
+    Adaptability: ${characteristic.adaptability}
+    Innovation: ${characteristic.innovation}
+    Problem-Solving Approach: ${characteristic.problemSolvingApproach}
   
     Work Ethic:
-    Punctuality: ${character.workEthic.punctuality}
-    Dedication: ${character.workEthic.dedication}
-    Continuous Learning: ${character.workEthic.continuousLearning}
+    Punctuality: ${characteristic.workEthic.punctuality}
+    Dedication: ${characteristic.workEthic.dedication}
+    Continuous Learning: ${characteristic.workEthic.continuousLearning}
     
-    Resilience: ${character.resilience}
-    Attention to Detail: ${character.attentionToDetail}
+    Resilience: ${characteristic.resilience}
+    Attention to Detail: ${characteristic.attentionToDetail}
     Career Goals:
-    Short Term: ${character.careerGoals.shortTerm}
-    Long Term: ${character.careerGoals.longTerm}
+    Short Term: ${characteristic.careerGoals.shortTerm}
+    Long Term: ${characteristic.careerGoals.longTerm}
     `,
   workPreferences: workPreferences => `
     Remote Work Preference: ${workPreferences.remote}

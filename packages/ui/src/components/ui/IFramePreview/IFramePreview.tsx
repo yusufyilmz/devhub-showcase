@@ -26,11 +26,9 @@ export const IFramePreview: React.FC<IFramePreviewProps> = ({ url }) => {
 
   const IFrame = useMemo(() => {
     return url ? (
-      <div
-        className="h-[50vh] overflow-y-auto"
-        onClick={() => window.open(url)}
-      >
+      <div className="overflow-y-auto" onClick={() => window.open(url)}>
         <iframe
+          id="iframe"
           src={url ?? null}
           title="Website Preview"
           className="w-[100vw] h-[100vh] transition-opacity duration-500 opacity-100 pointer-events-none"

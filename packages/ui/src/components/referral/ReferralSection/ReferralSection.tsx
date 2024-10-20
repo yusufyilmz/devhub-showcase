@@ -14,7 +14,7 @@ export const ReferralSection: React.FC<{
         subtitle="Feedback and Recommendations from Colleagues and Clients"
       />
 
-      <ScrollableContainer>
+      <ScrollableContainer category="referrals">
         {referrals.map(referral => (
           <Grid key={referral.id} item>
             <ReferralItem referral={referral} />
