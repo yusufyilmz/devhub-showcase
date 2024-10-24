@@ -17,3 +17,7 @@
 #iframe {
     zoom: 0.3;
 }
+
+.card-base {
+    @apply max-w-[calc(100vw/3)] hover:border-main-black hover:ring-4 hover:ring-opacity-50 hover:ring-main-black focus:outline-none focus:ring-4 focus:ring-black focus:border-black focus:ring-opacity-50 hover:shadow-lg bg-backgroundColor-card flex flex-col justify-around h-full rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105;
+}

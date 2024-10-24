@@ -65,6 +65,7 @@ DECLARE
   cSharpSkillId UUID := gen_random_uuid();
   cPlusPlusSkillId UUID := gen_random_uuid();
   objectiveCSkillId UUID := gen_random_uuid();
+  referralId UUID := gen_random_uuid();
 
 BEGIN
 
@@ -197,7 +198,7 @@ INSERT INTO
   )
 VALUES
   (
-    'e1f8c0e4-0e8d-4114-b3eb-89e647282399',
+    referralId,
     NOW(),
     NOW(),
     'Marcelo Carneiro',
@@ -206,6 +207,24 @@ VALUES
     'Yusuf would be a fantastic asset to any team, combining speed, proactivity, and a collaborative spirit to deliver exceptional results.',
     'john.doe@example.com',
     'unique-session-id-1'
+  );
+
+-- Insert referrals
+INSERT INTO
+  "reviews" (
+    id,
+    created_at,
+    updated_at,
+    state,
+    referral_id
+  )
+VALUES
+  (
+    'e1f8c0e4-0e8d-4114-b3eb-89e647282399',
+    NOW(),
+    NOW(),
+    'PENDING',
+    referralId
   );
 
 -- Insert skills

@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@mui/material'
+import { Card, CardActions, CardContent } from '@mui/material'
 import { Referral } from '@prisma/client'
 
 const Comment = ({ comment }: { comment: string }) => (
@@ -11,10 +11,14 @@ const Comment = ({ comment }: { comment: string }) => (
 )
 
 export const ReferralItem: React.FC<{
-  referral: Referral
-}> = ({ referral }) => {
+  referral: Pick<
+    Referral,
+    'name' | 'feedback' | 'recommendation' | 'relationship'
+  >
+  children?: React.ReactElement
+}> = ({ referral, children }) => {
   return (
-    <Card className="max-w-sm md:max-w-xl bg-backgroundColor-card flex flex-col justify-around h-full rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 referral card p-6">
+    <Card className="max-w-sm md:max-w-xl card-base referral-card p-6">
       <CardContent>
         {referral.feedback && <Comment comment={referral.feedback} />}
         {referral.recommendation && (
@@ -29,6 +33,7 @@ export const ReferralItem: React.FC<{
           </p>
         </div>
       </CardContent>
+      <CardActions>{children}</CardActions>
     </Card>
   )
 }

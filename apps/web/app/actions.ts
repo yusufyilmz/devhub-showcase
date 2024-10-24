@@ -1,14 +1,19 @@
 'use server'
 
-import { ReferralService } from '@shared/lib/services'
+import { ReferralService, ReviewService } from '@shared/lib/services'
 import { isCategoryReferralCategory } from '@shared/lib/utils'
 import { logger } from '@shared/lib/logger'
 import { MessageProcessor } from '@shared/chat'
 import { copy } from '@shared/content'
-import type { ChatMessage } from '@shared/lib/types'
+import {
+  ReviewState,
+  type ChatMessage,
+  type ReviewWithReferrals
+} from '@shared/lib/types'
 
 const messageProcessor = new MessageProcessor(logger)
 const referralService = new ReferralService(logger)
+const reviewService = new ReviewService(logger)
 
 export async function handleSendMessageAction(
   message: ChatMessage,
@@ -23,6 +28,12 @@ export async function handleSendMessageAction(
         message.content,
         sessionId
       )
+
+      await referralService.getApprovedReferrals(
+        message.category,
+        message.content,
+        sessionId
+      )
     }
 
     const botReply = await messageProcessor.processUserMessage(message)
@@ -30,5 +41,39 @@ export async function handleSendMessageAction(
     return botReply
   } catch (error) {
     return copy.chatMessages.failureMessage
+  }
+}
+
+export async function handleSubmitReferralAction(
+  message: ChatMessage,
+  sessionId: string
+): Promise<any> {
+  if (!message.content) return copy.chatMessages.failureMessage
+
+  try {
+    await referralService.saveReferral(
+      message.category,
+      message.content,
+      sessionId
+    )
+  } catch (error) {
+    return copy.chatMessages.failureMessage
+  }
+}
+
+export async function handleSubmitReviewAction(
+  referralId: string
+): Promise<ReviewWithReferrals | undefined> {
+  try {
+    const review = await reviewService.updateReview(
+      referralId,
+      ReviewState.APPROVED
+    )
+
+    return review
+  } catch (error) {
+    logger.error({ error }, 'Error on review')
+
+    return undefined
   }
 }

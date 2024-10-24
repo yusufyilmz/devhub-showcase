@@ -19,7 +19,7 @@ export class ResourceManager {
     const experiences =
       await this.experienceService.getAllExperiencesWithCompanyProjectAndSkills()
     const educations = await this.educationService.getAllEducations()
-    const referrals = await this.referralService.getAllReferrals()
+    const referrals = await this.referralService.getApprovedReferrals()
 
     return {
       projects,

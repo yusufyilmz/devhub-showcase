@@ -14,7 +14,7 @@ export const referralWelcomeMessage: ReferralMessage = {
   role: ChatRole.System,
   timestamp: Date.now(),
   title: 'Welcome to Yusuf’s Referral Chat Assistant',
-  content: `Hello! Thank you for taking the time to provide feedback. Your insights will be incredibly helpful in showcasing Yusuf’s experience. Please share your thoughts on working with Yusuf—whether it’s about his projects, teamwork, or any other aspects of your collaboration.`,
+  content: `Hello! Thank you for taking the time to provide feedback. Your insights will be incredibly helpful in showcasing Yusuf’s experience. Please share your thoughts on working with Yusuf—whether it’s about his projects, teamwork, or any other aspects of your collaboration. `,
   type: 'referral',
   category: 'greeting'
 }

@@ -24,7 +24,7 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
   return (
     <Card
       id={CARD_IDS.experience}
-      className="min-w-80 md:min-w-96 align-middle  bg-backgroundColor-card rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 experience-card border"
+      className="min-w-80 md:min-w-96 card-base experience-card"
     >
       <Link
         href={experience.company?.link ?? ''}
@@ -47,7 +47,7 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
           </p>
         </CardContent>
       </Link>
-      <CardContent className="mx-auto pt-0">
+      <CardContent className="w-full mx-auto pt-0">
         <Accordion className="bg-backgroundColor-card">
           <AccordionSummary
             className=" bg-backgroundColor-card mx-auto"
@@ -73,7 +73,7 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
           </AccordionDetails>
         </Accordion>
       </CardContent>
-      <CardContent className="mx-auto pt-0">
+      <CardContent className="w-full mx-auto pt-0">
         <Accordion className="bg-backgroundColor-card">
           <AccordionSummary
             className=" bg-backgroundColor-card mx-auto"

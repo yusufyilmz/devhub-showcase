@@ -1,10 +1,10 @@
 'use client'
 
-import { chatStore, useChatMessages } from '../../../stores'
+import { chatStore, useAddMessage, useChatMessages } from '../../../stores'
 import { ChatMessage, ChatType, ChatRole } from '@shared/lib/types'
 import { useStore } from 'zustand'
 import { ChatPopup } from '../ChatPopup'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { copy } from '@shared/content'
 
 type ChatSectionProps = {
@@ -22,9 +22,34 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
   className
 }): JSX.Element => {
   const sessionId = useStore(chatStore, state => state.sessionId)
-  const addMessage = useStore(chatStore, state => state.addMessage)
+  const referralMessages = useStore(chatStore, state => state.referralMessages)
+
+  console.log({ sessionId })
+  console.log({ referralMessages })
+
+  const addMessage = useAddMessage()
   const messages = useChatMessages(type)
   const [isTyping, setIsTyping] = useState(false)
+
+  const sendMessage = async (message: ChatMessage): Promise<void> => {
+    try {
+      const response = await handleSendMessage(message, sessionId)
+
+      addMessage(response)
+    } catch {
+      addMessage(copy.chatMessages.failureMessage)
+    } finally {
+      setIsTyping(false)
+    }
+  }
+
+  useEffect(() => {
+    console.log(messages)
+    // if (type === 'cv') return
+    // if (type === 'referral' && messages.length === 1) {
+    //   void sendMessage(copy.chatMessages.welcomeMessage[type])
+    // }
+  }, [messages])
 
   const handleSendMessageAction = async (input: string): Promise<void> => {
     if (!input || isTyping) return
@@ -43,15 +68,7 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
 
     addMessage(newMessage)
 
-    try {
-      const response = await handleSendMessage(newMessage, sessionId)
-
-      addMessage(response)
-    } catch {
-      addMessage(copy.chatMessages.failureMessage)
-    } finally {
-      setIsTyping(false)
-    }
+    sendMessage(newMessage)
   }
 
   return (

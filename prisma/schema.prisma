@@ -44,11 +44,10 @@ model Project {
   description String
   link        String?
   role        String
+  public      Boolean @default(false)
 
-  public    Boolean  @default(false)
-  companyId String?
-  company   Company? @relation(fields: [companyId], references: [id])
-
+  companyId    String?
+  company      Company?    @relation(fields: [companyId], references: [id])
   skills       Skill[]
   Experience   Experience? @relation(fields: [experienceId], references: [id])
   experienceId String?
@@ -64,10 +63,10 @@ model Experience {
   role       String
   startedAt  DateTime  @map("started_at")
   finishedAt DateTime? @map("finished_at")
-  projects   Project[]
 
+  projects  Project[]
   companyId String?
-  company   Company? @relation(fields: [companyId], references: [id])
+  company   Company?  @relation(fields: [companyId], references: [id])
 
   @@map("experiences")
 }
@@ -102,6 +101,8 @@ model Referral {
   contactInfo    String? @map("contact_info")
 
   sessionId String @unique @map("session_id")
+
+  review Review?
 
   @@map("referrals")
 }
@@ -160,4 +161,23 @@ model Characteristic {
   details String?
 
   @@map("characteristics")
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  comment String?
+  state   ReviewState @default(PENDING) // State of the review
+
+  referral   Referral? @relation(fields: [referralId], references: [id])
+  referralId String    @unique @map("referral_id")
+
+  @@map("reviews")
+}
+
+enum ReviewState {
+  PENDING
+  APPROVED
 }

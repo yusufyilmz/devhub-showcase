@@ -88,3 +88,6 @@ export const useChatMessages = (type: string) =>
       ? state => state.referralMessages
       : state => state.chatMessages
   )
+
+export const useAddMessage = () =>
+  useStore(chatStore, state => state.addMessage)

@@ -3,6 +3,8 @@
 import { Box, Button, Drawer } from '@mui/material'
 import { useState } from 'react'
 import { copy } from '@shared/content'
+import { useRouter } from 'next/navigation'
+
 import { AboutSection } from '../../about/AboutSection'
 
 const MenuItems = () => (
@@ -23,15 +25,25 @@ const MenuItems = () => (
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter()
 
   const toggleMenu = () => {
     setIsOpen(!isOpen)
   }
 
+  const handleClickToLogo = () => {
+    router.push('/')
+  }
+
   return (
     <nav className="md:px-page-px p-4 shadow-lg bg-main-black text-main-white">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-xl font-semibold">{copy.header.logoTitle}</div>
+        <Box
+          className="text-xl font-semibold cursor-pointer"
+          onClick={handleClickToLogo}
+        >
+          {copy.header.logoTitle}
+        </Box>
         <div className="lg:hidden">
           <button
             className="text-gray-800 focus:outline-none"
