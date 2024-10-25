@@ -4,6 +4,10 @@ Here’s the full detailed README file in the string format you requested:
 
 This is a portfolio application designed to showcase public projects, professional experience, and an interactive AI chat feature for users to learn more about the developer. The app is built using `Next.js`, `React`, `Typescript`, `Prisma`, `PostgreSQL`, and `Tailwind CSS`.
 
+## Website
+
+https://devhub-showcase.vercel.app/
+
 ## Features
 
 - **Portfolio Showcase**: A section displaying public projects the developer has worked on.
