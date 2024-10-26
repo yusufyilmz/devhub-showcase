@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "prod:run": "yarn build && yarn start",
     "clean": "rimraf .next",
     "dev:clean": "yarn clean & next dev | pino-pretty",
     "dev": "next dev | pino-pretty",
@@ -13,16 +14,17 @@
     "lint:fix": "eslint . --ext js,jsx,ts,tsx --fix",
     "types:check": "tsc --noEmit --pretty",
     "format": "prettier --write .",
-    "db:deploy": "yarn prisma migrate deploy && yarn prisma db push && yarn prisma db seed",
-    "deploy": "yarn prebuild && yarn build"
+    "deploy": "yarn prebuild && yarn build",
+    "db:dev:migrate": "yarn prisma migrate dev && yarn prisma generate",
+    "db:deploy": "yarn prisma migrate deploy && yarn prisma db push"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.3",
-    "@mui/material": "^6.1.3",
-    "@mui/styles": "^6.1.3",
     "@mui/lab": "^6.0.0-beta.13",
+    "@mui/material": "^6.1.5",
+    "@mui/styles": "^6.1.3",
     "@prisma/client": "^5.20.0",
     "@shared/chat": "*",
     "@shared/content": "*",
@@ -47,7 +49,7 @@
   },
   "devDependencies": {
     "@shared/eslint-config": "*",
-    "@shared/tailwindcss": "*",
+    "@shared/tailwind-config": "*",
     "@shared/typescript-config": "*",
     "@types/node": "^20",
     "@types/react": "^18",
@@ -57,7 +59,7 @@
     "eslint": "^8",
     "globals": "^15.11.0",
     "postcss": "^8.4.47",
-    "tailwindcss": "^3.4.13",
+    "tailwindcss": "^3.4.14",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
   },

@@ -19,7 +19,7 @@ export const SkillSection: React.FC<{ skills: Record<string, Skill[]> }> = ({
       <Box className="flex h-full pl-40">
         <List className="overflow-y-auto top-16 no-scrollbar w-full">
           {Object.entries(skills).map(([category, skills]) => (
-            <ListItem key={category}>
+            <ListItem key={category} className='mb-8'>
               <SkillCategoryItem name={category} skills={skills} />
             </ListItem>
           ))}

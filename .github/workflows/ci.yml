@@ -34,8 +34,8 @@ jobs:
       # Step 5: Run Prisma migrations
       - name: Run Prisma migrations
         run: |
-          yarn turbo run prisma:migrate --filter=web
-          yarn turbo run prisma:push --filter=web
+          yarn turbo run db:deploy --filter=web
+          yarn turbo run db:push --filter=web
 
       # Step 6: Run tests (optional)
       # - name: Run tests

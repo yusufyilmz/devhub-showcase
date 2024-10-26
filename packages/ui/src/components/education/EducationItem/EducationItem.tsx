@@ -34,7 +34,7 @@ export const EducationItem: React.FC<EducationProps> = ({ education }) => {
         <TimelineConnector />
       </TimelineSeparator>
       <TimelineContent>
-        <Card className="section-card">
+        <Card className="section-card ml-4">
           <Link
             href={education.institutionLink}
             target="_blank"

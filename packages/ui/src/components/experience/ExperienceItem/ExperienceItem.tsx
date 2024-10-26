@@ -50,7 +50,11 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
         <TimelineConnector />
       </TimelineSeparator>
       <TimelineContent>
-        <Card id={CARD_IDS.experience} className="section-card experience-card">
+        <Card
+          variant="elevation"
+          id={CARD_IDS.experience}
+          className="section-card experience-card ml-4"
+        >
           <Link
             href={experience.company?.link ?? ''}
             target="_blank"
@@ -87,7 +91,7 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
             <Accordion className="bg-transparent">
               <AccordionSummary
                 className="bg-transparent border-textColor-light  mx-auto"
-                expandIcon={<ArrowDropDownIcon />}
+                expandIcon={<ArrowDropDownIcon className="text-textColor-light animate-bounce"  />}
                 aria-controls="panel2-content"
                 id="panel2-header"
               >
@@ -117,14 +121,4 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
       </TimelineContent>
     </TimelineItem>
   )
-
-  // return (
-  //   <Card id={CARD_IDS.experience} className="section-card experience-card">
-
-  //     {/* <CardContent className="mx-auto pt-0">
-
-  //     </CardContent> */}
-
-  //   </Card>
-  // )
 }

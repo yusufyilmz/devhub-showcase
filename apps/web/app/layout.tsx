@@ -1,7 +1,7 @@
 import '@shared/ui/globals.css'
 import { NotificationProvider } from '@shared/ui/context'
 import { Header, ThemeProvider } from '@shared/ui/components'
-import { CssBaseline } from '@mui/material'
+import { CssBaseline, StyledEngineProvider } from '@mui/material'
 import { Poppins } from 'next/font/google'
 
 const inter = Poppins({
@@ -18,13 +18,15 @@ export default function RootLayout({
   return (
     <html className={inter.className} lang="en">
       <body>
-        <ThemeProvider>
-          <CssBaseline />
-          <NotificationProvider>
-            <Header />
-            {children}
-          </NotificationProvider>
-        </ThemeProvider>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider>
+            <CssBaseline />
+            <NotificationProvider>
+              <Header />
+              {children}
+            </NotificationProvider>
+          </ThemeProvider>
+        </StyledEngineProvider>
       </body>
     </html>
   )

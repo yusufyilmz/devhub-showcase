@@ -7,7 +7,6 @@ html {
     -webkit-font-smoothing: antialiased;
 }
 
-
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }
@@ -25,5 +24,5 @@ html {
 }
 
 .section-card {
-    @apply w-full p-4 bg-main-dark hover:bg-main-dark-hover focus:outline-none hover:shadow-lg flex flex-col justify-around h-full rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105;
+    @apply w-full p-4 bg-main-primary hover:bg-main-dark-hover focus:outline-none hover:shadow-lg flex flex-col justify-around h-full rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105;
 }

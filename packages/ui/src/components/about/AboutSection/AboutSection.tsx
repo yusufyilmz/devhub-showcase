@@ -21,7 +21,7 @@ export const AboutSection = () => {
 
   return (
     <div>
-      <IconButton color="inherit" onClick={handleClick}>
+      <IconButton className='text-textColor-lightSlate' onClick={handleClick}>
         <InfoIcon />
       </IconButton>
 

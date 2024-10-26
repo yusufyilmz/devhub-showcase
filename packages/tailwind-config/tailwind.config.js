@@ -1,8 +1,4 @@
 module.exports = {
-    content: [
-        "../../packages/ui/src/components/**/*.{js,ts,jsx,tsx}",
-        "../../apps/web/app/**/*.{js,ts,jsx,tsx}"
-    ],
     theme: {
         extend: {
             margin: {
@@ -47,7 +43,8 @@ module.exports = {
                     blue: '#57cbff',
                 },
                 button: {
-                    primary: 'rgba(45,212,191,0.1)'
+                    primary: 'rgba(45,212,191,0.1)',
+                    light: '#e6f1ff'
                 },
                 backgroundColor: {
                     primary: '#010D1A',

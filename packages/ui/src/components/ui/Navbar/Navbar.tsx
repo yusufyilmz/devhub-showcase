@@ -31,7 +31,6 @@ export const Navbar: React.FC = () => {
   return (
     <nav className="p-4 bg-main-primary">
       <div className="container mx-auto flex justify-between items-center">
-        {/* <div className="text-xl font-semibold">{copy.header.logoTitle}</div> */}
         <div className="lg:hidden">
           <button
             className="text-gray-800 focus:outline-none"
@@ -58,7 +57,7 @@ export const Navbar: React.FC = () => {
         </div>
         <Drawer anchor="right" open={isOpen} onClose={toggleMenu}>
           <Box
-            className="bg-main-primary h-full flex flex-col justify-start py-4 px-2 align-middle"
+            className="bg-main-light-slate h-full flex flex-col justify-start py-4 px-2 align-middle"
             role="presentation"
           >
             <MenuItems />

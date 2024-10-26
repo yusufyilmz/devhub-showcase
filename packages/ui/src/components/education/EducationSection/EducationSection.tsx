@@ -4,6 +4,7 @@ import { Section } from '../../ui/Section'
 import { copy } from '@shared/content'
 import Timeline from '@mui/lab/Timeline'
 import { timelineItemClasses } from '@mui/lab/TimelineItem'
+import { Box } from '@mui/material'
 
 interface EducationsSectionProps {
   educations: Education[]
@@ -16,6 +17,8 @@ export const EducationsSection: React.FC<EducationsSectionProps> = ({
 }) => {
   return (
     <Section className="my-32" sectionId={id} title={title} subtitle={subtitle}>
+        <Box>
+
       <Timeline
         sx={{
           [`& .${timelineItemClasses.root}:before`]: {
@@ -25,10 +28,12 @@ export const EducationsSection: React.FC<EducationsSectionProps> = ({
         }}
         className="overflow-y-auto no-scrollbar w-full mt-32"
       >
-        {educations.map(education => (
-          <EducationItem key={education.id} education={education} />
-        ))}
+          {educations.map(education => (
+            <EducationItem key={education.id} education={education} />
+          ))}
       </Timeline>
+      </Box>
+
     </Section>
   )
 }

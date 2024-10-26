@@ -13,7 +13,7 @@ export const AboutMeSection: React.FC = () => {
         maxWidth="md"
         className=" h-full py-12 flex justify-center items-center"
       >
-        <Paper elevation={3} className="bg-main-dark p-8 rounded-2xl shadow-lg">
+        <Paper elevation={3} className="bg-main-primary p-8 rounded-2xl shadow-lg">
           <Box className="space-y-4 text-lg leading-relaxed  ">
             <Typography className="text-main-slate">
               In 2012, I took my first steps into software development, driven

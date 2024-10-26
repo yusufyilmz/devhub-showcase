@@ -66,7 +66,7 @@ export const ChatPopup: React.FC<ChatPopupProps> = ({
       {!isOpen && (
         <Button
           variant="contained"
-          className="bg-button-primary rounded-lg shadow-2xl relative transition-all duration-300 ease-in-out focus:outline-none transform hover:scale-200"
+          className="bg-button-primary text-textColor-light rounded-lg shadow-2xl relative transition-all duration-300 ease-in-out focus:outline-none transform hover:scale-200"
           onClick={toggleChat}
         >
           {copy.chat[type]?.placeholder}
