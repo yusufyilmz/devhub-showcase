@@ -3,7 +3,7 @@
 import { Box, Button, Drawer } from '@mui/material'
 import { useState } from 'react'
 import { copy } from '@shared/content'
-import { AboutSection } from '../../about/AboutSection'
+
 
 const MenuItems = () => (
   <>
@@ -29,7 +29,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav className="p-4 bg-main-primary">
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="container flex justify-center items-center">
         <div className="md:hidden">
           <button
             className="text-gray-800 focus:outline-none"
@@ -56,15 +56,12 @@ export const Navbar: React.FC = () => {
         </div>
         <Drawer anchor="right" open={isOpen} onClose={toggleMenu}>
           <Box
-            className="bg-main-light-slate h-full flex flex-col justify-start py-4 px-2 align-middle"
+            className="bg-main-dark h-full flex flex-col justify-start py-4 px-2 align-middle"
             role="presentation"
           >
             <MenuItems />
           </Box>
         </Drawer>
-        <div className="hidden lg:flex items-center">
-          <AboutSection />
-        </div>
       </div>
     </nav>
   )

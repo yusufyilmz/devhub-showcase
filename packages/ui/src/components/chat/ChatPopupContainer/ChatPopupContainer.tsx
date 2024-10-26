@@ -71,7 +71,7 @@ export const ChatPopupContainer: React.FC<ChatPopupProps> = ({
   }, [messages])
 
   return (
-    <div className="fixed bottom-0 right-4 z-50">
+    <div className="fixed bottom-0 right-4 z-[250]">
       <div className="w-full bottom-0 h-[32rem] bg-backgroundColor-chat rounded-lg shadow-2xl p-6 relative transition-all duration-300 ease-in-out">
         <IconButton
           onClick={() => {

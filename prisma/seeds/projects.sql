@@ -1,6 +1,4 @@
-DO $$ 
-DECLARE 
--- Define variables for companies
+DO $$ DECLARE -- Define variables for companies
 toptalCompanyId UUID := gen_random_uuid();
 
 scopelyCompanyId UUID := gen_random_uuid();
@@ -21,6 +19,8 @@ marfeelExperienceId UUID := gen_random_uuid();
 turkcellExperienceId UUID := gen_random_uuid();
 
 sestekExperienceId UUID := gen_random_uuid();
+
+devhubshowcaseprojectid UUID := gen_random_uuid();
 
 -- Define variables for educations
 bogaziciEducationId UUID := gen_random_uuid();
@@ -115,7 +115,112 @@ cPlusPlusSkillId UUID := gen_random_uuid();
 
 objectiveCSkillId UUID := gen_random_uuid();
 
+-- Additional skills
+javascriptSkillId UUID := gen_random_uuid();
+
+reduxSagaSkillId UUID := gen_random_uuid();
+
+contextApiSkillId UUID := gen_random_uuid();
+
+html5SkillId UUID := gen_random_uuid();
+
+cssSkillId UUID := gen_random_uuid();
+
+reactNativeSkillId UUID := gen_random_uuid();
+
+tailwindCssSkillId UUID := gen_random_uuid();
+
+expressJsSkillId UUID := gen_random_uuid();
+
+dotNetCoreSkillId UUID := gen_random_uuid();
+
+pythonSkillId UUID := gen_random_uuid();
+
+javaSkillId UUID := gen_random_uuid();
+
+entityFrameworkSkillId UUID := gen_random_uuid();
+
+genesysFrameworkSkillId UUID := gen_random_uuid();
+
+unityFrameworkSkillId UUID := gen_random_uuid();
+
+botFrameworkSkillId UUID := gen_random_uuid();
+
+materialUiSkillId UUID := gen_random_uuid();
+
+githubActionsSkillId UUID := gen_random_uuid();
+
+swiftSkillId UUID := gen_random_uuid();
+
+chatGptSkillId UUID := gen_random_uuid();
+
+difyAiSkillId UUID := gen_random_uuid();
+
+playwrightSkillId UUID := gen_random_uuid();
+
+testingLibrarySkillId UUID := gen_random_uuid();
+
+jestSkillId UUID := gen_random_uuid();
+
+mochaSkillId UUID := gen_random_uuid();
+
+enzymeSkillId UUID := gen_random_uuid();
+
+cypressSkillId UUID := gen_random_uuid();
+
+happoSkillId UUID := gen_random_uuid();
+
+sinonSkillId UUID := gen_random_uuid();
+
+chaiSkillId UUID := gen_random_uuid();
+
+reactTestRendererSkillId UUID := gen_random_uuid();
+
+nunitSkillId UUID := gen_random_uuid();
+
+githubSkillId UUID := gen_random_uuid();
+
+tfsSkillId UUID := gen_random_uuid();
+
+jenkinsSkillId UUID := gen_random_uuid();
+
+visualStudioSkillId UUID := gen_random_uuid();
+
+vsCodeSkillId UUID := gen_random_uuid();
+
+dockerSkillId UUID := gen_random_uuid();
+
+spinnakerSkillId UUID := gen_random_uuid();
+
+awsSkillId UUID := gen_random_uuid();
+
+awsS3SkillId UUID := gen_random_uuid();
+
+awsLambdaSkillId UUID := gen_random_uuid();
+
+msSqlSkillId UUID := gen_random_uuid();
+
+mySqlSkillId UUID := gen_random_uuid();
+
+mongoDbSkillId UUID := gen_random_uuid();
+
+oracleSkillId UUID := gen_random_uuid();
+
+restSkillId UUID := gen_random_uuid();
+
+soaSkillId UUID := gen_random_uuid();
+
+soapSkillId UUID := gen_random_uuid();
+
+googleCloudSkillId UUID := gen_random_uuid();
+
+kubernetesSkillId UUID := gen_random_uuid();
+
+
 BEGIN
+DELETE FROM
+  "_ProjectToSkill";
+
 DELETE FROM
   "projects";
 
@@ -400,7 +505,7 @@ VALUES
     toptalCompanyId,
     toptalExperienceId
   ),
-    -- Css3 Maker
+  -- Css3 Maker
   (
     css3MakerProjectId,
     NOW(),
@@ -426,7 +531,6 @@ VALUES
     toptalCompanyId,
     toptalExperienceId
   ),
-
   -- HTMLShell
   (
     htmlShellProjectId,
@@ -466,7 +570,7 @@ VALUES
     toptalCompanyId,
     toptalExperienceId
   ),
-    -- CSS Minifier
+  -- CSS Minifier
   (
     cssMinifierProjectId,
     NOW(),
@@ -567,6 +671,19 @@ VALUES
     FALSE,
     sestekCompanyId,
     sestekExperienceId
+  ),
+  -- Freelance Projects
+  (
+    devhubShowcaseProjectId,
+    NOW(),
+    NOW(),
+    'Yusuf`s Devhub Showcase',
+    'DevHub Showcase is a comprehensive portfolio platform designed to present your professional journey, skills, and projects. It highlights your technical expertise across frontend, backend, database, and data pipeline skills while showcasing detailed experience in modern frameworks like React, Next.js, and Node.js, as well as cloud services, DevOps tools, and testing practices. Visitors can interact through built-in chat features to ask questions or leave referrals, allowing for an engaging and interactive experience that provides insights into your work and accomplishments.',
+    NULL,
+    'Fullstack Engineer',
+    FALSE,
+    sestekCompanyId,
+    sestekExperienceId
   );
 
 -- Insert referrals
@@ -597,98 +714,473 @@ VALUES
 
 -- Insert skills
 INSERT INTO
-  "skills" (id, created_at, updated_at, name, type)
+  "skills" (
+    id,
+    created_at,
+    updated_at,
+    name,
+    experience_year,
+    type
+  )
 VALUES
-  (reactSkillId, NOW(), NOW(), 'React', 'frontend'),
+  -- Frontend Skills
+  (
+    javascriptSkillId,
+    NOW(),
+    NOW(),
+    'JavaScript',
+    '8+ yrs',
+    'frontend'
+  ),
+  (
+    reactSkillId,
+    NOW(),
+    NOW(),
+    'React',
+    '8+ yrs',
+    'frontend'
+  ),
   (
     nextJsSkillId,
     NOW(),
     NOW(),
     'Next.js',
+    '6+ yrs',
     'frontend'
-  ),
-  (prismaSkillId, NOW(), NOW(), 'Prisma', 'backend'),
-  (
-    nodeJsSkillId,
-    NOW(),
-    NOW(),
-    'Node.js',
-    'backend'
   ),
   (
     typescriptSkillId,
     NOW(),
     NOW(),
     'TypeScript',
+    '6+ yrs',
     'frontend'
   ),
-  (scssSkillId, NOW(), NOW(), 'SCSS', 'frontend'),
   (
-    postgresqlSkillId,
+    reduxSkillId,
     NOW(),
     NOW(),
-    'PostgreSQL',
+    'Redux',
+    '4+ yrs',
+    'frontend'
+  ),
+  (
+    reduxSagaSkillId,
+    NOW(),
+    NOW(),
+    'Redux Saga',
+    '2+ yrs',
+    'frontend'
+  ),
+  (
+    contextApiSkillId,
+    NOW(),
+    NOW(),
+    'Context API',
+    '6+ yrs',
+    'frontend'
+  ),
+  (
+    html5SkillId,
+    NOW(),
+    NOW(),
+    'HTML5',
+    '8+ yrs',
+    'frontend'
+  ),
+  (
+    cssSkillId,
+    NOW(),
+    NOW(),
+    'CSS',
+    '8+ yrs',
+    'frontend'
+  ),
+  (
+    scssSkillId,
+    NOW(),
+    NOW(),
+    'SCSS',
+    '6+ yrs',
+    'frontend'
+  ),
+  (
+    reactNativeSkillId,
+    NOW(),
+    NOW(),
+    'React Native',
+    '1+ yrs',
+    'frontend'
+  ),
+  (
+    tailwindCssSkillId,
+    NOW(),
+    NOW(),
+    'Tailwind CSS',
+    '2+ yrs',
+    'frontend'
+  ),
+  -- Backend Skills
+  (
+    nodeJsSkillId,
+    NOW(),
+    NOW(),
+    'Node.js',
+    '6+ yrs',
+    'backend'
+  ),
+  (
+    prismaSkillId,
+    NOW(),
+    NOW(),
+    'Prisma',
+    '4+ yrs',
+    'backend'
+  ),
+  (
+    expressJsSkillId,
+    NOW(),
+    NOW(),
+    'Express.js',
+    '6+ yrs',
+    'backend'
+  ),
+  (
+    dotNetSkillId,
+    NOW(),
+    NOW(),
+    '.NET',
+    '6+ yrs',
+    'backend'
+  ),
+  (
+    dotNetCoreSkillId,
+    NOW(),
+    NOW(),
+    '.NET Core',
+    '6+ yrs',
+    'backend'
+  ),
+  (
+    cSharpSkillId,
+    NOW(),
+    NOW(),
+    'C#',
+    '6+ yrs',
+    'backend'
+  ),
+  (
+    pythonSkillId,
+    NOW(),
+    NOW(),
+    'Python',
+    '2+ yrs',
+    'backend'
+  ),
+  (
+    javaSkillId,
+    NOW(),
+    NOW(),
+    'Java',
+    '2+ yrs',
+    'backend'
+  ),
+  (
+    unityFrameworkSkillId,
+    NOW(),
+    NOW(),
+    'Unity Framework',
+    '1+ yrs',
+    'backend'
+  ),
+  (
+    objectiveCSkillId,
+    NOW(),
+    NOW(),
+    'Objective-C',
+    '1+ yrs',
+    'backend'
+  ),
+  (
+    swiftSkillId,
+    NOW(),
+    NOW(),
+    'Swift',
+    '2+ yrs',
+    'backend'
+  ),
+  (
+    redisSkillId,
+    NOW(),
+    NOW(),
+    'Redis',
+    '4+ yrs',
     'database'
   ),
-  (aiSkillId, NOW(), NOW(), 'AI', 'backend'),
-  (bullMqSkillId, NOW(), NOW(), 'bullMQ', 'backend'),
-  (redisSkillId, NOW(), NOW(), 'Redis', 'backend'),
+  (
+    bullMqSkillId,
+    NOW(),
+    NOW(),
+    'BullMQ',
+    '3+ yrs',
+    'queue'
+  ),
   (
     googleAdsApiSkillId,
     NOW(),
     NOW(),
     'Google Ads API',
+    '2+ yrs',
     'api'
+  ),
+  (
+    websocketSkillId,
+    NOW(),
+    NOW(),
+    'Websocket',
+    '2+ yrs',
+    'api'
+  ),
+  (
+    restApiSkillId,
+    NOW(),
+    NOW(),
+    'REST API',
+    '6+ yrs',
+    'api'
+  ),
+  (soaSkillId, NOW(), NOW(), 'SOA', '2+ yrs', 'api'),
+  (
+    genesysFrameworkSkillId,
+    NOW(),
+    NOW(),
+    'Genesys Framework',
+    '1+ yrs',
+    'api'
+  ),
+  (
+    botFrameworkSkillId,
+    NOW(),
+    NOW(),
+    'Bot Framework',
+    '1+ yrs',
+    'api'
+  ),
+  (
+    entityFrameworkSkillId,
+    NOW(),
+    NOW(),
+    'Entity Framework',
+    '2+ yrs',
+    'database'
+  ),
+  (
+    cPlusPlusSkillId,
+    NOW(),
+    NOW(),
+    'C++',
+    '2+ yrs',
+    'backend'
+  ),
+  -- Data Pipeline
+  (
+    bigQuerySkillId,
+    NOW(),
+    NOW(),
+    'BigQuery',
+    '2+ yrs',
+    'cloud'
   ),
   (
     kafkaJsSkillId,
     NOW(),
     NOW(),
     'Kafka.js',
-    'backend'
+    '3+ yrs',
+    'data pipeline'
   ),
   (
-    bigQuerySkillId,
+    etlSkillId,
     NOW(),
     NOW(),
-    'BigQuery',
-    'data'
+    'ETL',
+    '2+ yrs',
+    'data pipeline'
   ),
-  (etlSkillId, NOW(), NOW(), 'ETL', 'data pipeline'),
+  -- Web Service Development
   (
-    websocketSkillId,
+    restSkillId,
     NOW(),
     NOW(),
-    'WebSockets',
-    'backend'
+    'REST',
+    '10+ yrs',
+    'web service'
   ),
-  (reduxSkillId, NOW(), NOW(), 'Redux', 'frontend'),
-  (dotNetSkillId, NOW(), NOW(), '.NET', 'backend'),
-  (restApiSkillId, NOW(), NOW(), 'REST APIs', 'api'),
-  (cSharpSkillId, NOW(), NOW(), 'C#', 'backend'),
-  (cPlusPlusSkillId, NOW(), NOW(), 'C++', 'backend'),
   (
-    objectiveCSkillId,
+    soapSkillId,
     NOW(),
     NOW(),
-    'Objective-C',
-    'backend'
+    'SOAP',
+    '4+ yrs',
+    'web service'
+  ),
+  -- Testing
+  (
+    jestSkillId,
+    NOW(),
+    NOW(),
+    'Jest',
+    '6+ yrs',
+    'test'
+  ),
+  (
+    mochaSkillId,
+    NOW(),
+    NOW(),
+    'Mocha',
+    '2+ yrs',
+    'test'
+  ),
+  (
+    cypressSkillId,
+    NOW(),
+    NOW(),
+    'Cypress',
+    '3+ yrs',
+    'test'
+  ),
+  (
+    playwrightSkillId,
+    NOW(),
+    NOW(),
+    'Playwright',
+    '3+ yrs',
+    'test'
+  ),
+  (
+    nunitSkillId,
+    NOW(),
+    NOW(),
+    'NUnit',
+    '1+ yrs',
+    'test'
+  ),
+  -- Platform and Tools
+  (
+    githubSkillId,
+    NOW(),
+    NOW(),
+    'GitHub',
+    '4+ yrs',
+    'platform'
+  ),
+  (
+    dockerSkillId,
+    NOW(),
+    NOW(),
+    'Docker',
+    '3+ yrs',
+    'cloud'
+  ),
+  (
+    awsSkillId,
+    NOW(),
+    NOW(),
+    'AWS',
+    '2+ yrs',
+    'cloud'
+  ),
+  -- ai
+  (aiSkillId, NOW(), NOW(), 'AI', '2+ yrs', 'ai'),
+  (
+    difyAiSkillId,
+    NOW(),
+    NOW(),
+    'Dify.AI',
+    '2+ yrs',
+    'ai'
+  ),
+  (
+    chatGptSkillId,
+    NOW(),
+    NOW(),
+    'ChatGPT',
+    '2+ yrs',
+    'ai'
+  ),
+  -- Database Development
+  (
+    mySqlSkillId,
+    NOW(),
+    NOW(),
+    'MySQL',
+    '2+ yrs',
+    'database'
+  ),
+  (
+    postgresqlSkillId,
+    NOW(),
+    NOW(),
+    'PostgreSQL',
+    '4+ yrs',
+    'database'
+  ),
+  (
+    msSqlSkillId,
+    NOW(),
+    NOW(),
+    'MSSSQL',
+    '4+ yrs',
+    'database'
+  ),
+  (
+    googleCloudSkillId,
+    NOW(),
+    NOW(),
+    'Google Cloud',
+    '4+ yrs',
+    'cloud'
+  ),
+  (
+    kubernetesSkillId,
+    NOW(),
+    NOW(),
+    'Kubernetes',
+    '3+ yrs',
+    'cloud'
+  ),
+  (
+    mongoDbSkillId,
+    NOW(),
+    NOW(),
+    'MongoDB',
+    '1+ yrs',
+    'database'
   );
 
+-- Link projects to skills
+-- Assuming all UUID variables are defined at the top with actual UUID values
+-- e.g., reactSkillId UUID := gen_random_uuid();
 -- Link projects to skills
 INSERT INTO
   "_ProjectToSkill" ("A", "B")
 VALUES
-  -- Linking skills to Automated Story Generator
+  -- Automated Story Generator
   (assetsGeneratorProjectId, reactSkillId),
   (assetsGeneratorProjectId, nextJsSkillId),
   (assetsGeneratorProjectId, prismaSkillId),
   (assetsGeneratorProjectId, nodeJsSkillId),
   (assetsGeneratorProjectId, postgresqlSkillId),
   (assetsGeneratorProjectId, aiSkillId),
+  (assetsGeneratorProjectId, difyAiSkillId),
   (assetsGeneratorProjectId, bullMqSkillId),
   (assetsGeneratorProjectId, redisSkillId),
-  -- Linking skills to Content Monitoring Tool
+  (assetsGeneratorProjectId, googleCloudSkillId),
+  (assetsGeneratorProjectId, kubernetesSkillId),
+
+  
+  -- Content Monitoring Tool
+  (contentMonitoringToolProjectId, kubernetesSkillId),
   (contentMonitoringToolProjectId, reactSkillId),
   (
     contentMonitoringToolProjectId,
@@ -698,28 +1190,54 @@ VALUES
   (contentMonitoringToolProjectId, prismaSkillId),
   (
     contentMonitoringToolProjectId,
+    nodeJsSkillId
+  ),
+  (
+    contentMonitoringToolProjectId,
     postgresqlSkillId
   ),
   (contentMonitoringToolProjectId, bullMqSkillId),
   (contentMonitoringToolProjectId, redisSkillId),
-  -- Linking skills to Keyword Generation Tool
+  -- Keyword Generation Tool
+  (nkKeywordGenerationProjectId, kubernetesSkillId),
   (nkKeywordGenerationProjectId, reactSkillId),
   (nkKeywordGenerationProjectId, nextJsSkillId),
   (nkKeywordGenerationProjectId, typescriptSkillId),
   (nkKeywordGenerationProjectId, prismaSkillId),
   (nkKeywordGenerationProjectId, postgresqlSkillId),
+  -- (
+  --   nkKeywordGenerationProjectId,
+  --   githubActionsSkillId
+  -- ),
+  (
+    nkKeywordGenerationProjectId,
+    nodeJsSkillId
+  ),
   (
     nkKeywordGenerationProjectId,
     googleAdsApiSkillId
   ),
+   (
+    nkKeywordGenerationProjectId,
+    googleCloudSkillId
+  ),
   (nkKeywordGenerationProjectId, bullMqSkillId),
   (nkKeywordGenerationProjectId, redisSkillId),
-  -- Linking skills to Keyword Generation Tool
+  -- Keyword Optimization Tool
+  (pkKeywordOptimizationToolProjectId, kubernetesSkillId),
   (pkKeywordOptimizationToolProjectId, reactSkillId),
   (
     pkKeywordOptimizationToolProjectId,
     nextJsSkillId
   ),
+  (
+    pkKeywordOptimizationToolProjectId,
+    nodeJsSkillId
+  ),
+  -- (
+  --   pkKeywordOptimizationToolProjectId,
+  --   githubActionsSkillId
+  -- ),
   (
     pkKeywordOptimizationToolProjectId,
     typescriptSkillId
@@ -738,19 +1256,37 @@ VALUES
   ),
   (
     pkKeywordOptimizationToolProjectId,
+    googleCloudSkillId
+  ),
+  (
+    pkKeywordOptimizationToolProjectId,
     bullMqSkillId
   ),
   (pkKeywordOptimizationToolProjectId, redisSkillId),
-  -- Linking skills to Performance Alerts System
+  -- Performance Alerts System
+  (performanceAlertsProjectId, kubernetesSkillId),
   (performanceAlertsProjectId, reactSkillId),
   (performanceAlertsProjectId, nextJsSkillId),
   (performanceAlertsProjectId, typescriptSkillId),
   (performanceAlertsProjectId, prismaSkillId),
   (performanceAlertsProjectId, postgresqlSkillId),
   (performanceAlertsProjectId, bigQuerySkillId),
+  (performanceAlertsProjectId, googleCloudSkillId),
   (performanceAlertsProjectId, etlSkillId),
+  (
+    performanceAlertsProjectId,
+    nodeJsSkillId
+  ),
+  -- (
+  --   performanceAlertsProjectId,
+  --   githubActionsSkillId
+  -- ),
+  -- Dynamic Content Management System
+  (dynamicContentManagementProjectId, kubernetesSkillId),
   (dynamicContentManagementProjectId, reactSkillId),
   (dynamicContentManagementProjectId, nextJsSkillId),
+  (dynamicContentManagementProjectId, googleCloudSkillId),
+
   (
     dynamicContentManagementProjectId,
     typescriptSkillId
@@ -762,19 +1298,29 @@ VALUES
   ),
   (
     dynamicContentManagementProjectId,
+    nodeJsSkillId
+  ),
+  (
+    dynamicContentManagementProjectId,
     kafkaJsSkillId
   ),
   (dynamicContentManagementProjectId, bullMqSkillId),
   (dynamicContentManagementProjectId, redisSkillId),
+  -- Media Assets Review Tool
+  (mediaAssetsReviewProjectId, kubernetesSkillId),
   (mediaAssetsReviewProjectId, reactSkillId),
   (mediaAssetsReviewProjectId, typescriptSkillId),
   (mediaAssetsReviewProjectId, nextJsSkillId),
   (mediaAssetsReviewProjectId, prismaSkillId),
   (mediaAssetsReviewProjectId, postgresqlSkillId),
   (mediaAssetsReviewProjectId, googleAdsApiSkillId),
+  (mediaAssetsReviewProjectId, googleCloudSkillId),
   (mediaAssetsReviewProjectId, redisSkillId),
-  -- Linking skills to Dynamic Content Management System
-    -- css3 maker
+  (
+    mediaAssetsReviewProjectId,
+    nodeJsSkillId
+  ),
+  -- CSS3 Maker
   (css3MakerProjectId, reactSkillId),
   (css3MakerProjectId, typescriptSkillId),
   (css3MakerProjectId, nextJsSkillId),
@@ -814,30 +1360,65 @@ VALUES
   (hastebinProjectId, typescriptSkillId),
   (hastebinProjectId, nextJsSkillId),
   (hastebinProjectId, scssSkillId),
+  (hastebinProjectId, nodeJsSkillId),
   (hastebinProjectId, redisSkillId),
-  -- Linking Scopely Project
+  -- Automation Tools at Scopely
   (automationToolsProjectId, reactSkillId),
   (automationToolsProjectId, typescriptSkillId),
   (automationToolsProjectId, nodeJsSkillId),
   (automationToolsProjectId, redisSkillId),
-  -- Linking Turkcell Projects
+  (automationToolsProjectId, dotNetCoreSkillId),
+  (automationToolsProjectId, dotNetSkillId),
+  (automationToolsProjectId, cSharpSkillId),
+  (automationToolsProjectId, nunitSkillId),
+  -- Turkcell WebChat
   (webChatProjectId, reactSkillId),
   (webChatProjectId, nodeJsSkillId),
   (webChatProjectId, websocketSkillId),
   (webChatProjectId, reduxSkillId),
+  (webChatProjectId, restApiSkillId),
+  (webChatProjectId, cssSkillId),
+  (webChatProjectId, html5SkillId),
+  -- Turkcell Chat Gateway
   (chatGatewayProjectId, dotNetSkillId),
   (chatGatewayProjectId, restApiSkillId),
   (chatGatewayProjectId, websocketSkillId),
-  -- Linking SESTEK Projects
+  (chatGatewayProjectId, cSharpSkillId),
+  (chatGatewayProjectId, msSqlSkillId),
+  (chatGatewayProjectId, entityFrameworkSkillId),
+  (chatGatewayProjectId, genesysFrameworkSkillId),
+  (chatGatewayProjectId, unityFrameworkSkillId),
+  (chatGatewayProjectId, botFrameworkSkillId),
+  -- SESTEK Text-to-Speech
   (textToSpeechProjectId, cSharpSkillId),
   (textToSpeechProjectId, cPlusPlusSkillId),
   (textToSpeechProjectId, objectiveCSkillId),
+  -- SESTEK Speech Recognition
   (speechRecognitionProjectId, cSharpSkillId),
   (speechRecognitionProjectId, cPlusPlusSkillId),
   (speechRecognitionProjectId, objectiveCSkillId),
-  -- Linking Marfeel Project
+  -- Marfeel Web Product Migration
   (webProductMigrationProjectId, reactSkillId),
   (webProductMigrationProjectId, scssSkillId),
-  (webProductMigrationProjectId, typescriptSkillId);
+  (webProductMigrationProjectId, cssSkillId),
+  (webProductMigrationProjectId, html5SkillId),
+  (webProductMigrationProjectId, javascriptSkillId),
+  (webProductMigrationProjectId, typescriptSkillId),
+  -- DEVHUB SHOWCASE Product Migration
+  (devhubShowcaseProjectId, reactSkillId),
+  (devhubShowcaseProjectId, nextJsSkillId),
+  (devhubShowcaseProjectId, typescriptSkillId),
+  (devhubShowcaseProjectId, nodeJsSkillId),
+  (devhubShowcaseProjectId, prismaSkillId),
+  (devhubShowcaseProjectId, postgresqlSkillId),
+  (devhubShowcaseProjectId, tailwindCssSkillId),
+  -- Tailwind CSS
+  (devhubShowcaseProjectId, dockerSkillId),
+  -- Docker
+  (devhubShowcaseProjectId, redisSkillId),
+  (devhubShowcaseProjectId, awsSkillId),
+  -- AWS
+  (devhubShowcaseProjectId, cssSkillId);
 
+-- HTML
 END $$;

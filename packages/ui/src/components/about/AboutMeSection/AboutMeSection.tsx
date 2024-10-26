@@ -3,6 +3,7 @@ import { Box, Typography, Container, Paper } from '@mui/material'
 import { Section } from '../../ui/Section'
 
 import { copy } from '@shared/content'
+import { SocialLinks } from '../SocialLinks'
 
 const { id, title, subtitle } = copy.header.sections.aboutMe
 
@@ -11,7 +12,7 @@ export const AboutMeSection: React.FC = () => {
     <Section className="mt-32" sectionId={id} title={title} subtitle={subtitle}>
       <Container
         maxWidth="md"
-        className=" h-full py-12 flex justify-center items-center md:pl-40"
+        className="h-full py-12 flex justify-center items-center flex-col"
       >
         <Paper
           elevation={3}
@@ -40,6 +41,7 @@ export const AboutMeSection: React.FC = () => {
             </Typography>
           </Box>
         </Paper>
+        <SocialLinks />
       </Container>
     </Section>
   )

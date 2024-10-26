@@ -7,7 +7,8 @@ import {
   SummarySection,
   ScrollButton,
   SkillSection,
-  AboutMeSection
+  AboutMeSection,
+  AboutSection
 } from '@shared/ui/components'
 import { Box, Divider } from '@mui/material'
 import type { PageResources } from '@shared/lib/types'
@@ -57,6 +58,7 @@ export default async function Home(): Promise<JSX.Element> {
 
   return (
     <>
+      <AboutSection />
       <main className="w-full bg-main-primary  flex flex-col justify-center items-center">
         <Box className="max-w-[100vw] flex flex-col gap-2">
           <SummarySection />

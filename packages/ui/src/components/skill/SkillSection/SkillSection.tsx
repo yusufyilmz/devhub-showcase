@@ -11,15 +11,15 @@ export const SkillSection: React.FC<{ skills: Record<string, Skill[]> }> = ({
 }) => {
   return (
     <Section
-      className="py-8 mt-32"
+      className="mt-8"
       sectionId={skillProps.id}
       title={skillProps.title}
       subtitle={skillProps.subtitle}
     >
       <Box className="flex h-full md:pl-40">
-        <List className="overflow-y-auto mt-2 no-scrollbar w-full">
+        <List className="overflow-y-auto mt-2 no-scrollbar w-full mb-10">
           {Object.entries(skills).map(([category, skills]) => (
-            <ListItem key={category} className="mb-2 pl-0 md:pl-4">
+            <ListItem key={category} className="pl-0 md:pl-4">
               <SkillCategoryItem name={category} skills={skills} />
             </ListItem>
           ))}

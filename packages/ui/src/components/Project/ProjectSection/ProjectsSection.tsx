@@ -38,7 +38,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   }, [projects])
 
   return (
-    <Section className="mt-32" sectionId={id} title={title} subtitle={subtitle}>
+    <Section className="mt-8" sectionId={id} title={title} subtitle={subtitle}>
       {ProjectList}
     </Section>
   )

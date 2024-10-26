@@ -20,11 +20,10 @@ export const AboutSection = () => {
   const id = open ? 'about-popover' : undefined
 
   return (
-    <div>
-      <IconButton className="text-textColor-lightSlate" onClick={handleClick}>
+    <>
+      <IconButton color='primary' className="fixed top-4 right-4 z-50" onClick={handleClick}>
         <InfoIcon />
       </IconButton>
-
       <Popover
         id={id}
         open={open}
@@ -41,7 +40,7 @@ export const AboutSection = () => {
       >
         <section
           id="about-development"
-          style={{ padding: '16px', maxWidth: '500px' }}
+          className='max-w-[500px] p-4'
         >
           <Typography variant="h5" gutterBottom>
             {copy.aboutSection.title}
@@ -65,6 +64,6 @@ export const AboutSection = () => {
           </Typography>
         </section>
       </Popover>
-    </div>
+    </>
   )
 }

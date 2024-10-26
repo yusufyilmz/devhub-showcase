@@ -48,6 +48,8 @@ export const ScrollButton: React.FC<ScrollButtonProps> = ({ sectionIds }) => {
     }
   }, [sectionIds])
 
+  if (currentIndex === sectionIds.length - 1) return null
+
   return (
     <Box className="fixed bottom-4 inset-x-0 flex justify-center animate-bounce">
       <button

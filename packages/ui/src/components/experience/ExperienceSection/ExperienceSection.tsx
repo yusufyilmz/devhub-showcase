@@ -14,7 +14,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({
   experiences
 }) => (
   <Section sectionId={id} title={title} subtitle={subtitle}>
-    <Box>
+    <Box className='mt-8'>
       <ExperienceList experiences={experiences} />
     </Box>
   </Section>
