@@ -23,9 +23,9 @@ jobs:
         with:
           node-version: '20.17.0' # Use your Node version
 
-      # Step 3: Install dependencies
+      # Step 3: Install dependencies with Turborepo
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       # Step 4: Set up Prisma and PostgreSQL
       - name: Set DATABASE_URL environment variable
@@ -34,16 +34,16 @@ jobs:
       # Step 5: Run Prisma migrations
       - name: Run Prisma migrations
         run: |
-          yarn prisma migrate deploy
-          yarn prisma db push
+          yarn turbo run prisma:migrate --filter=web
+          yarn turbo run prisma:push --filter=web
 
-      # Step 6: Run tests
+      # Step 6: Run tests (optional)
       # - name: Run tests
-      #  run: yarn test
+      #   run: yarn turbo run test
 
-      # Step 7: Build the project
-      - name: Build
-        run: yarn build
+      # Step 7: Build the project with Turborepo
+      - name: Build with Turborepo
+        run: yarn turbo run build --filter=web...
 
   deploy:
     needs: build
