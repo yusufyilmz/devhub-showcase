@@ -19,7 +19,7 @@ export const ExperienceList: React.FC<ExperienceListProps> = ({
           padding: 0
         }
       }}
-      className="overflow-y-auto no-scrollbar w-full mt-32"
+      className="overflow-y-auto no-scrollbar w-full"
     >
       {experiences.map(experience => (
         <ExperienceItem key={experience.id} experience={experience} />

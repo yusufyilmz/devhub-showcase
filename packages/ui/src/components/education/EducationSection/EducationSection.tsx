@@ -17,23 +17,21 @@ export const EducationsSection: React.FC<EducationsSectionProps> = ({
 }) => {
   return (
     <Section className="my-32" sectionId={id} title={title} subtitle={subtitle}>
-        <Box>
-
-      <Timeline
-        sx={{
-          [`& .${timelineItemClasses.root}:before`]: {
-            flex: 0,
-            padding: 0
-          }
-        }}
-        className="overflow-y-auto no-scrollbar w-full mt-32"
-      >
+      <Box className="flex items-center">
+        <Timeline
+          sx={{
+            [`& .${timelineItemClasses.root}:before`]: {
+              flex: 0,
+              padding: 0
+            }
+          }}
+          className="overflow-y-auto no-scrollbar w-full"
+        >
           {educations.map(education => (
             <EducationItem key={education.id} education={education} />
           ))}
-      </Timeline>
+        </Timeline>
       </Box>
-
     </Section>
   )
 }

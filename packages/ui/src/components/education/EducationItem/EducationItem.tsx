@@ -16,13 +16,13 @@ type EducationProps = {
 
 export const EducationItem: React.FC<EducationProps> = ({ education }) => {
   return (
-    <TimelineItem className="w-full mt-8">
+    <TimelineItem className="w-full mt-8 max">
       <TimelineOppositeContent
         sx={{ m: 'auto 0' }}
         align="right"
         variant="body2"
         color="text.secondary"
-        className="w-full max-w-48"
+        className="w-full max-w-12 md:max-w-48"
       >
         <Typography className="text-xs font-light pb-0 text-textColor-secondary mt-2">
           {formatDateRange(education.startedAt, education.finishedAt)}
@@ -34,7 +34,7 @@ export const EducationItem: React.FC<EducationProps> = ({ education }) => {
         <TimelineConnector />
       </TimelineSeparator>
       <TimelineContent>
-        <Card className="section-card ml-4">
+        <Card className="section-card education-card ml-0 md:ml-4">
           <Link
             href={education.institutionLink}
             target="_blank"

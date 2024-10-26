@@ -25,10 +25,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
     }
 
     return (
-      <Box className="flex h-full pl-40 no-scrollbar">
-        <List className="overflow-y-auto top-16 no-scrollbar w-full">
+      <Box className="flex h-full md:pl-40 no-scrollbar">
+        <List className="overflow-y-auto mt-2 md:mt-8 no-scrollbar w-full">
           {projectList.map(project => (
-            <ListItem key={project.id} className='mb-8'>
+            <ListItem key={project.id} className="mb-8 pl-0 md:pl-4">
               <ProjectItem project={project} />
             </ListItem>
           ))}

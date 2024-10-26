@@ -5,7 +5,7 @@ import { GoBackButton } from '../../ui/buttons/GoBackButton'
 
 export const ErrorPage = () => {
   return (
-    <div className="flex flex-col gap-4 justify-center items-center w-p h-[calc(100vh-540px)]">
+    <div className="bg-main-primary flex flex-col gap-4 justify-center items-center w-p h-[calc(100vh-4rem)]">
       <Typography variant="h4" color="primary">
         {copy.errorPage.title}
       </Typography>

@@ -5,24 +5,34 @@
 body,
 html {
     -webkit-font-smoothing: antialiased;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    /* Hide scrollbar for Webkit browsers */
+    ::-webkit-scrollbar {
+        display: none;
+    }
 }
 
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
+/* Class to hide scrollbar across different browsers */
 .no-scrollbar {
-    -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    /* Hide scrollbar for Webkit browsers */
+    ::-webkit-scrollbar {
+        display: none;
+    }
 }
 
+/* iFrame styling */
 #iframe {
     zoom: 0.3;
 }
 
+/* Card styling for sections */
 .section-card {
-    @apply w-full p-4 bg-main-primary hover:bg-main-dark-hover focus:outline-none hover:shadow-lg flex flex-col justify-around h-full rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105;
+    @apply w-full p-4 bg-main-primary hover:bg-main-dark-hover focus:outline-none
+    hover:shadow-lg flex flex-col justify-around h-full rounded-xl shadow-md
+    overflow-hidden transform transition-all duration-300 hover:scale-105;
 }

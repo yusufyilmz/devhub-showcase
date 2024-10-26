@@ -7,7 +7,6 @@ import { Send } from '@mui/icons-material'
 import { IconButton } from '@mui/material'
 
 type ChatInputProps = {
-  // eslint-disable-next-line no-unused-vars
   handleSendMessage: (input: string) => void
   botIsTyping?: boolean
   chatFinished?: boolean

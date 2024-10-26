@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+import Box from '@mui/material/Box'
 
 type ScrollButtonProps = {
   sectionIds: string[]
@@ -48,12 +49,14 @@ export const ScrollButton: React.FC<ScrollButtonProps> = ({ sectionIds }) => {
   }, [sectionIds])
 
   return (
-    <button
-      onClick={scrollToNextSection}
-      className="fixed bottom-4 left-1/2 transform -translate-x-1/2 flex items-center justify-center px-6 py-3 rounded-full bg-button-primary text-white transition duration-300 hover:scale-105"
-      aria-label="Scroll to next section"
-    >
-      <ArrowDownwardIcon className="animate-bounce" />
-    </button>
+    <Box className="fixed bottom-4 inset-x-0 flex justify-center animate-bounce">
+      <button
+        onClick={scrollToNextSection}
+        className="flex items-center justify-center w-12 px-6 py-3 rounded-full bg-button-primary text-white transition duration-300 hover:scale-105"
+        aria-label="Scroll to next section"
+      >
+        <ArrowDownwardIcon />
+      </button>
+    </Box>
   )
 }

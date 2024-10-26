@@ -1,67 +1,67 @@
 'use client'
 
-import { chatStore, useChatMessages } from '../../../stores'
-import { ChatMessage, ChatType, ChatRole } from '@shared/lib/types'
+import { chatStore } from '../../../stores'
+import { ChatMessage, ChatType } from '@shared/lib/types'
 import { useStore } from 'zustand'
-import { ChatPopup } from '../ChatPopup'
+import { ChatPopupContainer } from '../ChatPopupContainer'
 import { useState } from 'react'
-import { copy } from '@shared/content'
+import { Box, IconButton } from '@mui/material'
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer'
+import RecommendIcon from '@mui/icons-material/Recommend'
 
 type ChatSectionProps = {
   handleSendMessage: (
     input: ChatMessage,
     sessionId: string
   ) => Promise<ChatMessage>
-  type: ChatType
-  className?: string
 }
 
 export const ChatSection: React.FC<ChatSectionProps> = ({
-  handleSendMessage,
-  type,
-  className
+  handleSendMessage
 }): JSX.Element => {
-  const sessionId = useStore(chatStore, state => state.sessionId)
-  const addMessage = useStore(chatStore, state => state.addMessage)
-  const messages = useChatMessages(type)
-  const [isTyping, setIsTyping] = useState(false)
+  const [type, setType] = useState<ChatType>('cv')
+  const [isOpen, setIsOpen] = useState(false)
+  const resetChat = useStore(chatStore, state => state.resetChat)
 
-  const handleSendMessageAction = async (input: string): Promise<void> => {
-    if (!input || isTyping) return
+  const closeChat = (chatFinished: boolean) => {
+    setIsOpen(!isOpen)
 
-    setIsTyping(true)
-
-    const lastMessage = messages.filter(message => message.type === type).pop()
-
-    const newMessage = {
-      role: ChatRole.User,
-      content: input,
-      timestamp: Date.now(),
-      type,
-      category: lastMessage?.category
-    } as ChatMessage
-
-    addMessage(newMessage)
-
-    try {
-      const response = await handleSendMessage(newMessage, sessionId)
-
-      addMessage(response)
-    } catch {
-      addMessage(copy.chatMessages.failureMessage)
-    } finally {
-      setIsTyping(false)
+    if (chatFinished) {
+      resetChat(type)
     }
   }
 
   return (
-    <ChatPopup
-      className={className}
-      type={type}
-      handleSendMessage={input => {
-        void handleSendMessageAction(input)
-      }}
-      isTyping={isTyping}
-    />
+    <>
+      <Box className="fixed bottom-4 right-4 flex flex-col space-y-2 z-[200]">
+        <IconButton
+          color="primary"
+          aria-label={'CV Chat'}
+          onClick={() => {
+            setType('cv')
+            setIsOpen(!isOpen)
+          }}
+        >
+          <QuestionAnswerIcon />
+        </IconButton>
+        <IconButton
+          color="primary"
+          aria-label={'Referral Chat'}
+          onClick={() => {
+            setType('referral')
+            setIsOpen(!isOpen)
+          }}
+        >
+          <RecommendIcon />
+        </IconButton>
+      </Box>
+      {isOpen && (
+        <ChatPopupContainer
+          type={type}
+          handleSendMessage={handleSendMessage}
+          closeChat={closeChat}
+        />
+      )}
+    </>
   )
 }

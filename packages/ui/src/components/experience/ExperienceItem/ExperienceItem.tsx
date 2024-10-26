@@ -38,7 +38,7 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
         align="right"
         variant="body2"
         color="text.secondary"
-        className="w-full max-w-48"
+        className="w-full max-w-12 md:max-w-48"
       >
         <Typography className="text-xs font-light pb-0 text-textColor-secondary mt-2">
           {formatDateRange(experience.startedAt, experience.finishedAt)}
@@ -53,7 +53,7 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
         <Card
           variant="elevation"
           id={CARD_IDS.experience}
-          className="section-card experience-card ml-4"
+          className="section-card experience-card ml-1 md:ml-4"
         >
           <Link
             href={experience.company?.link ?? ''}
@@ -91,7 +91,9 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
             <Accordion className="bg-transparent">
               <AccordionSummary
                 className="bg-transparent border-textColor-light  mx-auto"
-                expandIcon={<ArrowDropDownIcon className="text-textColor-light animate-bounce"  />}
+                expandIcon={
+                  <ArrowDropDownIcon className="text-textColor-light animate-bounce" />
+                }
                 aria-controls="panel2-content"
                 id="panel2-header"
               >

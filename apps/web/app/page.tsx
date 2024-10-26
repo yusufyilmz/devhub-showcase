@@ -69,23 +69,8 @@ export default async function Home(): Promise<JSX.Element> {
           <ReferralSection referrals={referrals} />
         </Box>
       </main>
-      <footer className="sticky bottom-0 h-0">
-        <Box className="w-[100vw] flex items-center justify-between px-4">
-          <ChatSection
-            className="fixed bottom-0 right-4 z-50"
-            handleSendMessage={handleSendMessageAction}
-            key="cv-chat"
-            type="cv"
-          />
-          <ScrollButton sectionIds={sections} />
-          <ChatSection
-            className="fixed bottom-0 left-4 z-50"
-            handleSendMessage={handleSendMessageAction}
-            key="referral-chat"
-            type="referral"
-          />
-        </Box>
-      </footer>
+      <ScrollButton sectionIds={sections} />
+      <ChatSection handleSendMessage={handleSendMessageAction} />
     </>
   )
 }

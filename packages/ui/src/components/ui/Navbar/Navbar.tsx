@@ -7,7 +7,6 @@ import { AboutSection } from '../../about/AboutSection'
 
 const MenuItems = () => (
   <>
-    {' '}
     {Object.keys(copy.navbar).map(key => (
       <Button
         key={key}
@@ -31,7 +30,7 @@ export const Navbar: React.FC = () => {
   return (
     <nav className="p-4 bg-main-primary">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="lg:hidden">
+        <div className="md:hidden">
           <button
             className="text-gray-800 focus:outline-none"
             onClick={toggleMenu}
@@ -52,7 +51,7 @@ export const Navbar: React.FC = () => {
             </svg>
           </button>
         </div>
-        <div className={`lg:flex space-x-4 hidden md:block`}>
+        <div className={`space-x-4 hidden md:block`}>
           <MenuItems />
         </div>
         <Drawer anchor="right" open={isOpen} onClose={toggleMenu}>

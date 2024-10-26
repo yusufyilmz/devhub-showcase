@@ -11,9 +11,12 @@ export const AboutMeSection: React.FC = () => {
     <Section className="mt-32" sectionId={id} title={title} subtitle={subtitle}>
       <Container
         maxWidth="md"
-        className=" h-full py-12 flex justify-center items-center"
+        className=" h-full py-12 flex justify-center items-center md:pl-40"
       >
-        <Paper elevation={3} className="bg-main-primary p-8 rounded-2xl shadow-lg">
+        <Paper
+          elevation={3}
+          className="bg-main-primary p-8 rounded-2xl shadow-lg"
+        >
           <Box className="space-y-4 text-lg leading-relaxed  ">
             <Typography className="text-main-slate">
               In 2012, I took my first steps into software development, driven
