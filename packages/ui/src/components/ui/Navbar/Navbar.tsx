@@ -29,7 +29,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav className="p-4 bg-main-primary">
-      <div className="container flex justify-center items-center">
+      <div className="container flex justify-start md:justify-center items-center">
         <div className="md:hidden">
           <button
             className="text-gray-800 focus:outline-none"

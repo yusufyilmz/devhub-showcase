@@ -21,7 +21,7 @@ export const AboutSection = () => {
 
   return (
     <>
-      <IconButton color='primary' className="fixed top-4 right-4 z-50" onClick={handleClick}>
+      <IconButton color='primary' className="fixed top-0 md:top-2 right-0 p-16 z-50" onClick={handleClick}>
         <InfoIcon />
       </IconButton>
       <Popover
