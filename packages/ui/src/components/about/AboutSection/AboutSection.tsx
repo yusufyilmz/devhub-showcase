@@ -1,6 +1,6 @@
 'use client'
 
-import { Popover, Typography, IconButton, List, ListItem } from '@mui/material'
+import { Popover, Typography, IconButton, List, ListItem, Box } from '@mui/material'
 import InfoIcon from '@mui/icons-material/Info'
 import { useState } from 'react'
 import { copy } from '@shared/content'
@@ -20,8 +20,8 @@ export const AboutSection = () => {
   const id = open ? 'about-popover' : undefined
 
   return (
-    <>
-      <IconButton color='primary' className="fixed top-0 md:top-2 right-0 p-16 z-50" onClick={handleClick}>
+    <Box className="fixed top-0 right-0 p-4 z-50">
+      <IconButton color='primary' onClick={handleClick}>
         <InfoIcon />
       </IconButton>
       <Popover
@@ -64,6 +64,6 @@ export const AboutSection = () => {
           </Typography>
         </section>
       </Popover>
-    </>
+    </Box>
   )
 }

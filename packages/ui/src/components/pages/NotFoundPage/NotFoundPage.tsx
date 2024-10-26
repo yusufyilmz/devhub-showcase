@@ -12,7 +12,6 @@ export const NotFoundPage = () => {
       <Typography variant="body1" color="textSecondary">
         {copy.notFoundPage.message}
       </Typography>
-
       <div className="flex gap-4 mb-4">
         <GoBackButton />
         <HomeButton />

@@ -58,7 +58,6 @@ export default async function Home(): Promise<JSX.Element> {
 
   return (
     <>
-      <AboutSection />
       <main className="w-full bg-main-primary  flex flex-col justify-center items-center">
         <Box className="max-w-[100vw] flex flex-col gap-2">
           <SummarySection />
@@ -71,6 +70,7 @@ export default async function Home(): Promise<JSX.Element> {
           <ReferralSection referrals={referrals} />
         </Box>
       </main>
+      <AboutSection />
       <ScrollButton sectionIds={sections} />
       <ChatSection handleSendMessage={handleSendMessageAction} />
     </>
