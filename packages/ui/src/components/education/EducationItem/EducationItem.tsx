@@ -1,7 +1,14 @@
-import { Card, CardContent } from '@mui/material'
-import { Education } from '@prisma/client'
+import { Card, CardContent, Typography } from '@mui/material'
+import { Education } from '@shared/lib/types'
 import Link from 'next/link'
 import Divider from '@mui/material/Divider'
+import TimelineItem from '@mui/lab/TimelineItem'
+import TimelineConnector from '@mui/lab/TimelineConnector'
+import TimelineContent from '@mui/lab/TimelineContent'
+import TimelineDot from '@mui/lab/TimelineDot'
+import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent'
+import TimelineSeparator from '@mui/lab/TimelineSeparator'
+import { formatDateRange } from '@shared/lib/utils'
 
 type EducationProps = {
   education: Education
@@ -9,29 +16,53 @@ type EducationProps = {
 
 export const EducationItem: React.FC<EducationProps> = ({ education }) => {
   return (
-    <Card className="w-8/12 education-card p-2 bg-backgroundColor-card rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 cursor-pointer">
-      <Link
-        href={education.institutionLink}
-        target="_blank"
-        rel="noopener noreferrer"
+    <TimelineItem className="w-full mt-8">
+      <TimelineOppositeContent
+        sx={{ m: 'auto 0' }}
+        align="right"
+        variant="body2"
+        color="text.secondary"
+        className="w-full max-w-48"
       >
-        <CardContent className="flex flex-col gap-1">
-          <h5 className="text-xl font-semibold">{education.institution}</h5>
-          <p className="font-normal text-sm italic text-textColor-secondary">
-            {education.degree} in {education.fieldOfStudy}
-          </p>
-          <Divider />
-          <p className="font-extralight text-xs mt-4">
-            {education.description}
-          </p>
-          <p className="text-xs font-extralight text-textColor-secondary mt-2">
-            {new Date(education.startedAt).toLocaleDateString()} -{' '}
-            {education.finishedAt
-              ? new Date(education.finishedAt).toLocaleDateString()
-              : 'Present'}
-          </p>
-        </CardContent>
-      </Link>
-    </Card>
+        <Typography className="text-xs font-light pb-0 text-textColor-secondary mt-2">
+          {formatDateRange(education.startedAt, education.finishedAt)}
+        </Typography>
+      </TimelineOppositeContent>
+      <TimelineSeparator>
+        <TimelineConnector />
+        <TimelineDot></TimelineDot>
+        <TimelineConnector />
+      </TimelineSeparator>
+      <TimelineContent>
+        <Card className="section-card">
+          <Link
+            href={education.institutionLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <CardContent className="flex flex-col gap-1">
+              <Typography
+                variant="h5"
+                align="left"
+                className="font-semibold text-main-white text-2xl"
+              >
+                {education.institution}
+              </Typography>
+              <Typography
+                variant="h4"
+                align="left"
+                className="text-lg font-semibold text-textColor-secondary mb-3"
+              >
+                {education.degree} in {education.fieldOfStudy}
+              </Typography>
+              <Divider className="bg-main-light-slate mb-6 mt-0" />
+              <p className="font-extralight text-sm text-textColor-lightSlate">
+                {education.description}
+              </p>
+            </CardContent>
+          </Link>
+        </Card>
+      </TimelineContent>
+    </TimelineItem>
   )
 }

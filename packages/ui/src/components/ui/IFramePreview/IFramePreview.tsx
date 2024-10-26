@@ -31,7 +31,7 @@ export const IFramePreview: React.FC<IFramePreviewProps> = ({ url }) => {
           id="iframe"
           src={url ?? null}
           title="Website Preview"
-          className="w-[100vw] h-[100vh] transition-opacity duration-500 opacity-100 pointer-events-none"
+          className="w-full h-[100vh] transition-opacity duration-500 opacity-100 pointer-events-none"
           sandbox="allow-same-origin"
           onLoad={handleLoad}
           onError={handleError}

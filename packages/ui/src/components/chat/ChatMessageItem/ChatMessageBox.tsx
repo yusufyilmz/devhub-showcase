@@ -14,8 +14,8 @@ export const ChatMessageItem: React.FC<{ message: ChatMessage }> = ({
       <Box
         className={`max-w-xs p-3 rounded-lg shadow-md ${
           message.role === 'user'
-            ? 'bg-main-black text-white'
-            : 'bg-backgroundColor-messageBox text-main-black'
+            ? 'bg-main-primary text-white'
+            : 'bg-backgroundColor-messageBox text-main-dark'
         } ${message.role === 'user' ? 'rounded-tr-none' : 'rounded-tl-none'}`}
         style={{
           wordBreak: 'break-word',

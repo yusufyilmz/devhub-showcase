@@ -12,7 +12,7 @@ const MenuItems = () => (
       <Button
         key={key}
         variant="text"
-        color="secondary"
+        className="text-main-white whitespace-pre"
         href={copy.navbar[key]?.id}
       >
         {copy.navbar[key]?.title}
@@ -29,9 +29,9 @@ export const Navbar: React.FC = () => {
   }
 
   return (
-    <nav className="md:px-page-px p-4 shadow-lg bg-main-black text-main-white">
+    <nav className="p-4 bg-main-primary">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-xl font-semibold">{copy.header.logoTitle}</div>
+        {/* <div className="text-xl font-semibold">{copy.header.logoTitle}</div> */}
         <div className="lg:hidden">
           <button
             className="text-gray-800 focus:outline-none"
@@ -58,7 +58,7 @@ export const Navbar: React.FC = () => {
         </div>
         <Drawer anchor="right" open={isOpen} onClose={toggleMenu}>
           <Box
-            className="bg-main-black h-full flex flex-col justify-start py-4 px-2 align-middle"
+            className="bg-main-primary h-full flex flex-col justify-start py-4 px-2 align-middle"
             role="presentation"
           >
             <MenuItems />

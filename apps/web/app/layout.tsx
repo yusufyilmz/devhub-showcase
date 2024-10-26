@@ -1,7 +1,14 @@
 import '@shared/ui/globals.css'
 import { NotificationProvider } from '@shared/ui/context'
-import { Footer, Header, Navbar, ThemeProvider } from '@shared/ui/components'
+import { Header, ThemeProvider } from '@shared/ui/components'
 import { CssBaseline } from '@mui/material'
+import { Poppins } from 'next/font/google'
+
+const inter = Poppins({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: '400'
+})
 
 export default function RootLayout({
   children
@@ -9,17 +16,13 @@ export default function RootLayout({
   children: React.ReactNode
 }): JSX.Element {
   return (
-    <html lang="en">
+    <html className={inter.className} lang="en">
       <body>
         <ThemeProvider>
           <CssBaseline />
           <NotificationProvider>
-            <Navbar />
             <Header />
-            <main className="w-full text-main-black  bg-gradient-to-b to-main-gray from-main-white flex flex-col justify-center items-center pt-16">
-              {children}
-            </main>
-            <Footer />
+            {children}
           </NotificationProvider>
         </ThemeProvider>
       </body>

@@ -30,6 +30,7 @@ export const ExperienceWithCompanyProjectAndSkillsArgs =
       startedAt: true,
       finishedAt: true,
       role: true,
+      description: true,
       company: {
         select: {
           name: true,

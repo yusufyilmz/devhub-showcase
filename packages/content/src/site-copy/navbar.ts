@@ -15,11 +15,15 @@ export const navbar: Record<
   },
   education: {
     title: 'EDUCATION',
-    id: '#education'
+    id: '#educations'
   },
   referrals: {
     title: 'REFERRALS',
     id: '#referrals'
+  },
+  skills: {
+    title: 'SKILLS',
+    id: '#skills'
   },
   cv: {
     title: 'CV',
@@ -30,7 +34,7 @@ export const navbar: Record<
     id: '#cv-chat'
   },
   referralChat: {
-    title: 'REFERRAL CHAT',
+    title: 'REF CHAT',
     id: '#referral-chat'
   }
 }

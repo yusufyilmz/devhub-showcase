@@ -1,12 +1,12 @@
 'use client'
 
 import { Button, TextField } from '@mui/material'
-import { Prisma, Project } from '@prisma/client'
+import { ProjectUpdateInput, Project } from '@shared/lib/types'
 import { useState, useEffect } from 'react'
 
 interface ProjectFormProps {
   // eslint-disable-next-line no-unused-vars
-  onSubmit: (_e: Prisma.ProjectUpdateInput) => void
+  onSubmit: (_e: ProjectUpdateInput) => void
   isSubmitting: boolean
   initialData?: Project
   action: string

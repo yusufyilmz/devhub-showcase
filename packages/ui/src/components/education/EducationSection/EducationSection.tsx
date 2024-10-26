@@ -1,27 +1,34 @@
-import { Education } from '@prisma/client'
-import { PageHeader } from '../../ui/PageHeader'
+import { Education } from '@shared/lib/types'
 import { EducationItem } from '../EducationItem/EducationItem'
+import { Section } from '../../ui/Section'
+import { copy } from '@shared/content'
+import Timeline from '@mui/lab/Timeline'
+import { timelineItemClasses } from '@mui/lab/TimelineItem'
 
 interface EducationsSectionProps {
   educations: Education[]
 }
 
+const { id, title, subtitle } = copy.header.sections.educations
+
 export const EducationsSection: React.FC<EducationsSectionProps> = ({
   educations
 }) => {
   return (
-    <section className="w-full px-page-px-sm md:px-page-px" id="education">
-      <div className="text-center">
-        <PageHeader
-          title="Education & Credentials"
-          subtitle="Academic Background and Achievements"
-        />
-        <div className="w-full gap-8 flex flex-row">
-          {educations.map(education => (
-            <EducationItem key={education.id} education={education} />
-          ))}
-        </div>
-      </div>
-    </section>
+    <Section className="my-32" sectionId={id} title={title} subtitle={subtitle}>
+      <Timeline
+        sx={{
+          [`& .${timelineItemClasses.root}:before`]: {
+            flex: 0,
+            padding: 0
+          }
+        }}
+        className="overflow-y-auto no-scrollbar w-full mt-32"
+      >
+        {educations.map(education => (
+          <EducationItem key={education.id} education={education} />
+        ))}
+      </Timeline>
+    </Section>
   )
 }
