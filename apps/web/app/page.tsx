@@ -6,7 +6,8 @@ import {
   ReferralSection,
   SummarySection,
   ScrollButton,
-  SkillSection
+  SkillSection,
+  AboutMeSection
 } from '@shared/ui/components'
 import { Box, Divider } from '@mui/material'
 import type { PageResources } from '@shared/lib/types'
@@ -17,6 +18,7 @@ import { handleSendMessageAction } from './actions'
 
 const sections = [
   'summary',
+  'aboutMe',
   'experiences',
   'projects',
   'skills',
@@ -55,9 +57,10 @@ export default async function Home(): Promise<JSX.Element> {
 
   return (
     <>
-      <main className="w-full bg-main-primary flex flex-col justify-center items-center">
+      <main className="w-full bg-main-primary  flex flex-col justify-center items-center">
         <Box className="max-w-[100vw] flex flex-col gap-2">
           <SummarySection />
+          <AboutMeSection />
           <ExperienceSection experiences={experiences} />
           <Divider />
           <ProjectsSection projects={projects} />

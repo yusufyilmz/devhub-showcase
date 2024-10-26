@@ -33,9 +33,7 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
       className="section-card referral-card"
     >
       <CardContent className="flex gap-4 flex-col text-left">
-        {project?.link && (
-            <IFramePreview url={project.link} />
-        )}
+        {project?.link && <IFramePreview url={project.link} />}
         <div className="flex flex-col gap-3">
           <Typography
             variant="h5"

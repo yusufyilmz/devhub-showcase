@@ -51,6 +51,11 @@ export const header = {
       id: 'skills',
       title: 'Skills',
       subtitle: 'A Summary of My Technical Skills and Proficiency'
+    },
+    aboutMe: {
+      id: 'aboutMe',
+      title: 'About Me',
+      subtitle: 'A Brief Introduction to My Background and Interests'
     }
   }
 }

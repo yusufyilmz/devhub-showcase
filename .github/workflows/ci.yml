@@ -63,6 +63,8 @@ jobs:
         run: |
           vercel env add DATABASE_URL "${{ secrets.DATABASE_URL }}"
           vercel env add OPENAI_API_KEY "${{ secrets.OPENAI_API_KEY }}"
+          vercel env add APPLICATION_NAME "devhub-showcase" # Static value
+          vercel env add LOG_LEVEL "debug"                  # Static value
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}

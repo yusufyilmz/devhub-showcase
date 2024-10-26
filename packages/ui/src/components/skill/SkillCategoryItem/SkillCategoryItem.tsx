@@ -1,7 +1,7 @@
 import { Card, CardContent, Divider, Typography } from '@mui/material'
 import { Skill } from '@shared/lib/types'
 import { SkillItem } from '../SkillItem/SkillItem'
-import { capitalizeFirstLetter } from '@shared/lib/utils';
+import { capitalizeFirstLetter } from '@shared/lib/utils'
 
 export const SkillCategoryItem: React.FC<{ name: string; skills: Skill[] }> = ({
   name,
