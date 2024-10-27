@@ -3,6 +3,7 @@
 import { Box, Button, Drawer } from '@mui/material'
 import { useState } from 'react'
 import { copy } from '@shared/content'
+import { AboutSection } from '../../about/AboutSection'
 
 
 const MenuItems = () => (
@@ -29,7 +30,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav className="p-4 bg-main-primary">
-      <div className="container flex justify-start md:justify-center items-center">
+      <div className="container flex justify-between md:justify-center items-center">
         <div className="md:hidden">
           <button
             className="text-gray-800 focus:outline-none"
@@ -51,6 +52,7 @@ export const Navbar: React.FC = () => {
             </svg>
           </button>
         </div>
+        <AboutSection />
         <div className={`space-x-4 hidden md:block`}>
           <MenuItems />
         </div>
@@ -61,7 +63,9 @@ export const Navbar: React.FC = () => {
           >
             <MenuItems />
           </Box>
+
         </Drawer>
+
       </div>
     </nav>
   )

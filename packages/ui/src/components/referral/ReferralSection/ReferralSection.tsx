@@ -17,7 +17,7 @@ export const ReferralSection: React.FC<{
       subtitle={subtitle}
     >
       <Box className="md:pl-40 flex items-center h-full">
-        <List className="overflow-y-auto no-scrollbar w-full">
+        <List className="overflow-y-auto no-scrollbar w-full mt-32 md:mt-0">
           {referrals.map(referral => (
             <ListItem key={referral.id}>
               <ReferralItem referral={referral} />

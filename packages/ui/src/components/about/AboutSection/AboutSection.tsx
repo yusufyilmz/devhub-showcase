@@ -4,6 +4,8 @@ import { Popover, Typography, IconButton, List, ListItem, Box } from '@mui/mater
 import InfoIcon from '@mui/icons-material/Info'
 import { useState } from 'react'
 import { copy } from '@shared/content'
+import CloseIcon from '@mui/icons-material/Close'
+
 
 export const AboutSection = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -20,7 +22,7 @@ export const AboutSection = () => {
   const id = open ? 'about-popover' : undefined
 
   return (
-    <Box className="fixed top-0 right-0 p-4 z-50">
+    <Box className="-mt-1">
       <IconButton color='primary' onClick={handleClick}>
         <InfoIcon />
       </IconButton>
@@ -42,6 +44,15 @@ export const AboutSection = () => {
           id="about-development"
           className='max-w-[500px] p-4'
         >
+          <IconButton
+            onClick={() => {
+              handleClose()
+            }}
+            className="absolute top-2 right-2 text-gray-500 focus:outline-none"
+          >
+            <CloseIcon className="h-4 w-4" />
+          </IconButton>
+
           <Typography variant="h5" gutterBottom>
             {copy.aboutSection.title}
           </Typography>

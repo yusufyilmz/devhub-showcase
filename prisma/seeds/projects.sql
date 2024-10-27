@@ -317,20 +317,18 @@ VALUES
     '2021-09-01',
     scopelyCompanyId,
     'Development for frontend and backend for Web automatıon tool that is used by game engıneers to create mobıle devıce tests on amazon devıce farm and see results and reports according to these tests.
-Development for Unity part of the project.
-Converted the tool to micro frontend architecture.'
+Development for Unity part of the project. Converted the automation tool to micro frontend architecture.'
   ),
   (
     marfeelExperienceId,
     NOW(),
     NOW(),
-    'Senior Full Stack Developer',
+    'Senior Frontend Engineer',
     '2019-10-01',
     '2020-09-01',
     marfeelCompanyId,
     'Converted existing web products to React and created CLI tools for media providers.
-Developed automatic, generated Playgrounds for providers.
-Implemented Server-Side Rendering (SSR) for React components.'
+Developed automatic, generated Playgrounds for providers. Implemented Server-Side Rendering (SSR) for React components.'
   ),
   (
     turkcellExperienceId,

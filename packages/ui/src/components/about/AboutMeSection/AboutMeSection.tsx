@@ -1,9 +1,10 @@
-import { Box, Typography, Container, Paper } from '@mui/material'
+import { Box, Typography, Container, Paper, Button } from '@mui/material'
 
 import { Section } from '../../ui/Section'
 
 import { copy } from '@shared/content'
 import { SocialLinks } from '../SocialLinks'
+import { PictureAsPdf as PdfIcon } from '@mui/icons-material';
 
 const { id, title, subtitle } = copy.header.sections.aboutMe
 
@@ -12,7 +13,7 @@ export const AboutMeSection: React.FC = () => {
     <Section className="mt-32" sectionId={id} title={title} subtitle={subtitle}>
       <Container
         maxWidth="md"
-        className="h-full py-12 flex justify-center items-center flex-col"
+        className="h-full py-12 flex justify-center items-center flex-col mt-8"
       >
         <Paper
           elevation={3}
@@ -39,6 +40,16 @@ export const AboutMeSection: React.FC = () => {
               When I'm not coding, you'll find me exploring the latest tech
               trends, hitting the gym, or spending time with friends.
             </Typography>
+            <Button
+              variant='text'
+              href="/cv.pdf"
+              target="_blank"
+              endIcon={<PdfIcon />}
+              rel="noopener noreferrer"
+              className="-ml-6 w-full inline-block text-white px-6 py-3 rounded-lg shadow transition"
+            >
+              View my Resume
+            </Button>
           </Box>
         </Paper>
         <SocialLinks />

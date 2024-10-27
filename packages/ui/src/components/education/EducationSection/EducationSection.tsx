@@ -16,7 +16,7 @@ export const EducationsSection: React.FC<EducationsSectionProps> = ({
   educations
 }) => {
   return (
-    <Section className="my-32" sectionId={id} title={title} subtitle={subtitle}>
+    <Section sectionId={id} title={title} subtitle={subtitle}>
       <Box className="flex items-center">
         <Timeline
           sx={{
@@ -25,7 +25,7 @@ export const EducationsSection: React.FC<EducationsSectionProps> = ({
               padding: 0
             }
           }}
-          className="overflow-y-auto no-scrollbar w-full"
+          className="overflow-y-auto no-scrollbar w-full mt-32 md:mt-0"
         >
           {educations.map(education => (
             <EducationItem key={education.id} education={education} />

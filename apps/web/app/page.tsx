@@ -70,7 +70,6 @@ export default async function Home(): Promise<JSX.Element> {
           <ReferralSection referrals={referrals} />
         </Box>
       </main>
-      <AboutSection />
       <ScrollButton sectionIds={sections} />
       <ChatSection handleSendMessage={handleSendMessageAction} />
     </>
