@@ -25,9 +25,5 @@ export const navbar: Record<
   skills: {
     title: 'SKILLS',
     id: '#skills'
-  },
-  cv: {
-    title: 'CV',
-    id: '#cv'
   }
 }

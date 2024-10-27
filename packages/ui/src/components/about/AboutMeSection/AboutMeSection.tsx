@@ -10,10 +10,10 @@ const { id, title, subtitle } = copy.header.sections.aboutMe
 
 export const AboutMeSection: React.FC = () => {
   return (
-    <Section className="mt-32" sectionId={id} title={title} subtitle={subtitle}>
+    <Section sectionId={id} title={title} subtitle={subtitle}>
       <Container
         maxWidth="md"
-        className="h-full py-12 flex justify-center items-center flex-col mt-24 md:mt-8"
+        className="h-full flex md:pt-32 justify-start items-center flex-col"
       >
         <Paper
           elevation={3}
