@@ -21,35 +21,35 @@ export const AboutMeSection: React.FC = () => {
         >
           <Box className="space-y-4 text-lg leading-relaxed  ">
             <Typography className="text-main-slate">
-              In 2012, I took my first steps into software development, driven
-              by a passion to create impactful, user-centered applications. Over
-              the years, I’ve had the opportunity to build software across
-              industries, including telecom, IT, and high-growth startups. My
-              career has been marked by diverse projects that have deepened my
-              expertise, from developing tools for telecom giants to leading
-              initiatives at a digital product powerhouse.
+              In 2012, I started my journey in software development, driven by a
+              passion for building practical, user-focused applications. Over
+              the years, I’ve worked across industries like telecom, IT, and
+              startups, tackling real-world challenges. One highlight was at
+              Turkcell, where I developed a React-based WebChat app and
+              multichannel chat gateway that handled over 600,000 customer
+              interactions daily. That experience taught me a lot about creating
+              scalable, reliable systems that perform well under high traffic.
             </Typography>
             <Typography className="text-main-slate">
-              Today, my primary focus is on delivering high-performance,
-              scalable, and high-quality web experiences. As a full-stack
-              engineer, I thrive at the intersection of design and
-              functionality, creating applications that are as enjoyable to use
-              as they are robust behind the scenes. One of my recent projects,
-              an AI-powered success story generator, exemplifies my commitment
-              to innovation, combining AI and user-friendly interfaces to
-              support global teams with practical, scalable solutions.
+              I’ve also created tools for automating Google Ads management, a
+              Slack messaging system for cross-team communication, and an ETL
+              composer for processing SEM alerts data in BigQuery when i work at
+              Toptal. More recently, I worked on an AI-powered success story
+              generator that personalizes talent stories, combining AI with a
+              user-friendly interface to make content creation faster and more
+              impactful. These projects reflect my focus on efficiency,
+              scalability, and finding solutions that fit real needs.
             </Typography>
             <Typography className="text-main-slate">
-              This portfolio app is another project I’m incredibly proud of.
-              Developed using the latest technologies like Next.js, React,
-              TypeScript, and Tailwind CSS, it integrates interactive features
-              powered by ChatGPT and NLP classification, providing a
-              personalized AI-driven experience for visitors to learn more about
-              my work and skills. Every detail in this app reflects the
-              knowledge and experience I’ve gained, from seamless UI design to
-              efficient backend solutions. It stands as a testament to my
-              commitment to building applications that bring real value to
-              users.
+              This portfolio app is something I’m proud to share. It showcases
+              my work using Next.js, React, Node.js, TypeScript, and Tailwind
+              CSS, along with NLP-based classification to enhance the
+              ChatGPT-powered bot, making it more responsive in answering
+              questions about my skills and experience. You can explore my
+              projects, learn about my background, and even leave a referral or
+              feedback through the app’s referral bot. Every part of this app,
+              from the UI to the backend, represents my hands-on approach and
+              dedication to building practical, well-rounded applications.
             </Typography>
             <Typography className="text-main-slate">
               Outside of work, I’m always exploring the latest tech trends,

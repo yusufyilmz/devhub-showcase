@@ -62,10 +62,10 @@ model Experience {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   role        String
-  description String
   startedAt   DateTime  @map("started_at")
   finishedAt  DateTime? @map("finished_at")
   projects    Project[]
+  achievements String[]
 
   companyId String?
   company   Company? @relation(fields: [companyId], references: [id])

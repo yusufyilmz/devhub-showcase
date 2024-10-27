@@ -70,15 +70,20 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
             </CardContent>
           </Link>
           <Divider className="bg-main-light-slate mb-6 mt-0" />
-
           <CardContent className="pt-0">
-            <Typography
-              variant="body2"
-              align="left"
-              className="text-textColor-lightSlate font-light"
-            >
-              {experience.description}
-            </Typography>
+            <Box component="ul" sx={{ listStyleType: 'disc', ml: 3, mt: 1 }}>
+              {experience.achievements.map((achievement, idx) => (
+                <Typography
+                  key={idx}
+                  component="li"
+                  variant="body2"
+                  color="text.primary"
+                  className="text-textColor-lightSlate font-light"
+                >
+                  {achievement}
+                </Typography>
+              ))}
+            </Box>
           </CardContent>
           <CardContent className="pt-0">
             <div className="flex justify-start flex-wrap gap-2">
