@@ -1,8 +1,4 @@
-import {
-  ChatCategoryType,
-  ChatMessage,
-  CVCategoryType
-} from '@shared/lib/types'
+import { ChatCategoryType, ChatMessage } from '@shared/lib/types'
 
 export interface Skill {
   technology: string

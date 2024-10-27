@@ -1,9 +1,17 @@
 'use client'
 
-import { Popover, Typography, IconButton, List, ListItem } from '@mui/material'
+import {
+  Popover,
+  Typography,
+  IconButton,
+  List,
+  ListItem,
+  Box
+} from '@mui/material'
 import InfoIcon from '@mui/icons-material/Info'
 import { useState } from 'react'
 import { copy } from '@shared/content'
+import CloseIcon from '@mui/icons-material/Close'
 
 export const AboutSection = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -20,11 +28,10 @@ export const AboutSection = () => {
   const id = open ? 'about-popover' : undefined
 
   return (
-    <div>
-      <IconButton color="inherit" onClick={handleClick}>
+    <Box className="-mt-1">
+      <IconButton className="icon-button" color="primary" onClick={handleClick}>
         <InfoIcon />
       </IconButton>
-
       <Popover
         id={id}
         open={open}
@@ -39,10 +46,16 @@ export const AboutSection = () => {
           horizontal: 'center'
         }}
       >
-        <section
-          id="about-development"
-          style={{ padding: '16px', maxWidth: '500px' }}
-        >
+        <section id="about-development" className="max-w-[500px] p-4">
+          <IconButton
+            onClick={() => {
+              handleClose()
+            }}
+            className="icon-button absolute top-2 right-2 text-gray-500 focus:outline-none"
+          >
+            <CloseIcon className="h-4 w-4" />
+          </IconButton>
+
           <Typography variant="h5" gutterBottom>
             {copy.aboutSection.title}
           </Typography>
@@ -65,6 +78,6 @@ export const AboutSection = () => {
           </Typography>
         </section>
       </Popover>
-    </div>
+    </Box>
   )
 }

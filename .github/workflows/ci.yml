@@ -21,11 +21,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Use your Node version
+          node-version: '20.17.0' # Use your Node version
 
-      # Step 3: Install dependencies
+      # Step 3: Install dependencies with Turborepo
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       # Step 4: Set up Prisma and PostgreSQL
       - name: Set DATABASE_URL environment variable
@@ -34,16 +34,16 @@ jobs:
       # Step 5: Run Prisma migrations
       - name: Run Prisma migrations
         run: |
-          yarn prisma migrate deploy
-          yarn prisma db push
+          yarn turbo run db:deploy --filter=web
+          yarn turbo run db:push --filter=web
 
-      # Step 6: Run tests
+      # Step 6: Run tests (optional)
       # - name: Run tests
-      #  run: yarn test
+      #   run: yarn turbo run test
 
-      # Step 7: Build the project
-      - name: Build
-        run: yarn build
+      # Step 7: Build the project with Turborepo
+      - name: Build with Turborepo
+        run: yarn turbo run build --filter=web...
 
   deploy:
     needs: build
@@ -63,6 +63,8 @@ jobs:
         run: |
           vercel env add DATABASE_URL "${{ secrets.DATABASE_URL }}"
           vercel env add OPENAI_API_KEY "${{ secrets.OPENAI_API_KEY }}"
+          vercel env add APPLICATION_NAME "devhub-showcase" # Static value
+          vercel env add LOG_LEVEL "debug"                  # Static value
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}

@@ -3,6 +3,7 @@ export const navbar: Record<
   {
     title: string
     id: string
+    description?: string
   }
 > = {
   experience: {
@@ -15,22 +16,14 @@ export const navbar: Record<
   },
   education: {
     title: 'EDUCATION',
-    id: '#education'
+    id: '#educations'
   },
   referrals: {
     title: 'REFERRALS',
     id: '#referrals'
   },
-  cv: {
-    title: 'CV',
-    id: '#cv'
-  },
-  chat: {
-    title: 'CHAT',
-    id: '#cv-chat'
-  },
-  referralChat: {
-    title: 'REFERRAL CHAT',
-    id: '#referral-chat'
+  skills: {
+    title: 'SKILLS',
+    id: '#skills'
   }
 }

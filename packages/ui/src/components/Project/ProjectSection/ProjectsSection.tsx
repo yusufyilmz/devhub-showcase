@@ -1,75 +1,45 @@
 import { ProjectItem } from '../ProjectItem'
-import { Grid2 } from '@mui/material'
-import { PageHeader } from '../../ui/PageHeader'
+import { Box, List, ListItem } from '@mui/material'
+import { Section } from '../../ui/Section'
+
 import { ProjectWithCompanyAndSkills } from '@shared/lib/types'
 import { useMemo } from 'react'
+import { copy } from '@shared/content'
 
 interface ProjectsSectionProps {
   projects: ProjectWithCompanyAndSkills[]
 }
 
+const { id, title, subtitle } = copy.header.sections.projects
+
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   projects
 }) => {
-  const PublicProjectList = useMemo(() => {
-    const publicProjects = projects.filter(project => project.public)
-
-    if (publicProjects.length === 0) {
-      return <p>No public projects available at the moment.</p>
-    }
-
-    return (
-      <Grid2
-        container
-        alignItems="stretch"
-        spacing={4}
-        className="w-full"
-        alignContent="stretch"
-      >
-        {publicProjects.map(project => (
-          <Grid2 key={project.id} size={{ md: 6, sm: 12, xl: 6 }}>
-            <ProjectItem project={project} />
-          </Grid2>
-        ))}
-      </Grid2>
-    )
-  }, [projects])
-
   const ProjectList = useMemo(() => {
-    const notPublicProjects = projects.filter(project => !project.public)
+    const projectList = projects.sort((a, b) =>
+      b.public && !a.public ? -1 : 1
+    )
 
-    if (notPublicProjects.length === 0) {
+    if (projectList.length === 0) {
       return <p>No projects available at the moment.</p>
     }
 
     return (
-      <Grid2
-        container
-        alignItems="stretch"
-        spacing={4}
-        className="w-full"
-        alignContent="stretch"
-      >
-        {notPublicProjects.map(project => (
-          <Grid2 key={project.id} size={{ md: 6, sm: 12, xl: 6 }}>
-            <ProjectItem project={project} />
-          </Grid2>
-        ))}
-      </Grid2>
+      <Box className="flex h-full md:pl-40 no-scrollbar">
+        <List className="overflow-y-auto mt-2 md:mt-8 no-scrollbar w-full">
+          {projectList.map(project => (
+            <ListItem key={project.id} className="mb-8 pl-0 md:pl-4">
+              <ProjectItem project={project} />
+            </ListItem>
+          ))}
+        </List>
+      </Box>
     )
   }, [projects])
 
   return (
-    <section className="w-full px-page-px-sm md:px-page-px" id="projects">
-      <div className="text-center">
-        <PageHeader
-          title="Projects & Contributions"
-          subtitle="Notable Work and Open-Source Contributions"
-        />
-        {ProjectList}
-        <h2 className="text-xl py-8 font-bold my-4">Public Projects</h2>
-        {PublicProjectList}
-      </div>
-    </section>
+    <Section className="mt-8" sectionId={id} title={title} subtitle={subtitle}>
+      {ProjectList}
+    </Section>
   )
 }

@@ -1,0 +1,1 @@
+export { SkillCategoryItem } from './SkillCategoryItem'

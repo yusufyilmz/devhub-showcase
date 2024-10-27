@@ -61,6 +61,29 @@
       "dependsOn": [
         "^clean"
       ]
+    },
+    "db:deploy": {
+      "dependsOn": [
+        "^db:deploy"
+      ]
+    },
+    "db:push": {
+      "dependsOn": [
+        "^db:push"
+      ]
+    },
+    "start": {
+      "dependsOn": [
+        "^start",
+        "build"
+      ],
+      "env": [
+        "NODE_ENV",
+        "LOG_LEVEL",
+        "APPLICATION_NAME",
+        "OPENAI_API_KEY",
+        "DATABASE_URL"
+      ]
     }
   }
 }
