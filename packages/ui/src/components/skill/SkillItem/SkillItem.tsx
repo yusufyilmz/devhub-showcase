@@ -1,6 +1,9 @@
 import Chip from '@mui/material/Chip'
 
-export const SkillItem: React.FC<{ name: string; experienceYear?: string }> = ({ name, experienceYear }) => {
+export const SkillItem: React.FC<{ name: string; experienceYear?: string }> = ({
+  name,
+  experienceYear
+}) => {
   return (
     <Chip
       label={`${name}${experienceYear ? ` (${experienceYear})` : ''}`}

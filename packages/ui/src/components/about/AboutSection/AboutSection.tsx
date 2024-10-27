@@ -1,11 +1,17 @@
 'use client'
 
-import { Popover, Typography, IconButton, List, ListItem, Box } from '@mui/material'
+import {
+  Popover,
+  Typography,
+  IconButton,
+  List,
+  ListItem,
+  Box
+} from '@mui/material'
 import InfoIcon from '@mui/icons-material/Info'
 import { useState } from 'react'
 import { copy } from '@shared/content'
 import CloseIcon from '@mui/icons-material/Close'
-
 
 export const AboutSection = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -23,7 +29,7 @@ export const AboutSection = () => {
 
   return (
     <Box className="-mt-1">
-      <IconButton color='primary' onClick={handleClick}>
+      <IconButton color="primary" onClick={handleClick}>
         <InfoIcon />
       </IconButton>
       <Popover
@@ -40,10 +46,7 @@ export const AboutSection = () => {
           horizontal: 'center'
         }}
       >
-        <section
-          id="about-development"
-          className='max-w-[500px] p-4'
-        >
+        <section id="about-development" className="max-w-[500px] p-4">
           <IconButton
             onClick={() => {
               handleClose()

@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { copy } from '@shared/content'
 import { AboutSection } from '../../about/AboutSection'
 
-
 const MenuItems = () => (
   <>
     {Object.keys(copy.navbar).map(key => (
@@ -63,9 +62,7 @@ export const Navbar: React.FC = () => {
           >
             <MenuItems />
           </Box>
-
         </Drawer>
-
       </div>
     </nav>
   )

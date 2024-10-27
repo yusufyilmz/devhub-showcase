@@ -8,7 +8,6 @@ import {
   ScrollButton,
   SkillSection,
   AboutMeSection,
-  AboutSection
 } from '@shared/ui/components'
 import { Box, Divider } from '@mui/material'
 import type { PageResources } from '@shared/lib/types'

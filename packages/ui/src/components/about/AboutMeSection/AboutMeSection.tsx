@@ -4,7 +4,7 @@ import { Section } from '../../ui/Section'
 
 import { copy } from '@shared/content'
 import { SocialLinks } from '../SocialLinks'
-import { PictureAsPdf as PdfIcon } from '@mui/icons-material';
+import { PictureAsPdf as PdfIcon } from '@mui/icons-material'
 
 const { id, title, subtitle } = copy.header.sections.aboutMe
 
@@ -41,7 +41,7 @@ export const AboutMeSection: React.FC = () => {
               trends, hitting the gym, or spending time with friends.
             </Typography>
             <Button
-              variant='text'
+              variant="text"
               href="/cv.pdf"
               target="_blank"
               endIcon={<PdfIcon />}

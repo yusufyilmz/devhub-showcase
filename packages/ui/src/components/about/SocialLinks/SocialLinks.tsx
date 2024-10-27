@@ -18,7 +18,7 @@ export const SocialLinks = () => {
           <LinkedInIcon fontSize="large" />
         </IconButton>
       </Tooltip>
-      
+
       <Tooltip title="Email" arrow>
         <IconButton
           color="primary"
@@ -29,7 +29,7 @@ export const SocialLinks = () => {
           <EmailIcon fontSize="large" />
         </IconButton>
       </Tooltip>
-      
+
       <Tooltip title="GitHub" arrow>
         <IconButton
           color="primary"
@@ -40,7 +40,7 @@ export const SocialLinks = () => {
           <GitHubIcon fontSize="large" />
         </IconButton>
       </Tooltip>
-      
+
       <Tooltip title="Instagram" arrow>
         <IconButton
           color="primary"
@@ -52,10 +52,7 @@ export const SocialLinks = () => {
         </IconButton>
       </Tooltip>
       <Tooltip title="Phone" arrow>
-        <IconButton
-          color="primary"
-          href="tel:+34639464069"
-        >
+        <IconButton color="primary" href="tel:+34639464069">
           <PhoneIcon fontSize="large" />
         </IconButton>
       </Tooltip>
