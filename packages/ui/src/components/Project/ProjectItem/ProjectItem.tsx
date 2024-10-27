@@ -30,7 +30,7 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
       ref={cardRef}
       tabIndex={-1}
       id={project.id}
-      className="section-card referral-card"
+      className="parallax section-card referral-card"
     >
       <CardContent className="flex gap-4 flex-col text-left">
         {project?.link && <IFramePreview url={project.link} />}

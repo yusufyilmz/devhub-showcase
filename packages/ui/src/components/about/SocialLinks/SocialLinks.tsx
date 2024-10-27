@@ -10,6 +10,7 @@ export const SocialLinks = () => {
     <Box display="flex" justifyContent="center" gap={2} mt={4}>
       <Tooltip title="LinkedIn" arrow>
         <IconButton
+          className="icon-button"
           color="primary"
           href="https://www.linkedin.com/in/yusuf-yilmaz-01543752"
           target="_blank"
@@ -25,6 +26,7 @@ export const SocialLinks = () => {
           href="mailto:yilmazyu@gmail.com"
           target="_blank"
           rel="noopener noreferrer"
+          className="icon-button"
         >
           <EmailIcon fontSize="large" />
         </IconButton>
@@ -36,6 +38,7 @@ export const SocialLinks = () => {
           href="https://github.com/yusufyilmz"
           target="_blank"
           rel="noopener noreferrer"
+          className="icon-button"
         >
           <GitHubIcon fontSize="large" />
         </IconButton>
@@ -47,12 +50,17 @@ export const SocialLinks = () => {
           href="https://www.instagram.com/yusufyilmz"
           target="_blank"
           rel="noopener noreferrer"
+          className="icon-button"
         >
           <InstagramIcon fontSize="large" />
         </IconButton>
       </Tooltip>
       <Tooltip title="Phone" arrow>
-        <IconButton color="primary" href="tel:+34639464069">
+        <IconButton
+          color="primary"
+          className="icon-button"
+          href="tel:+34639464069"
+        >
           <PhoneIcon fontSize="large" />
         </IconButton>
       </Tooltip>

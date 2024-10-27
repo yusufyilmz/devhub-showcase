@@ -17,7 +17,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 }) => {
   const ProjectList = useMemo(() => {
     const projectList = projects.sort((a, b) =>
-      a.public && !b.public ? -1 : 1
+      b.public && !a.public ? -1 : 1
     )
 
     if (projectList.length === 0) {

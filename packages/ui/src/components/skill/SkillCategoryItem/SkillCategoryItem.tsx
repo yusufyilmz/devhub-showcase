@@ -18,7 +18,7 @@ export const SkillCategoryItem: React.FC<{ name: string; skills: Skill[] }> = ({
           {capitalizeFirstLetter(name)}
         </Typography>
         <Divider className="bg-main-light-slate mb-6 mt-0" />
-        <div className="flex flex-wrap gap-2">
+        <div className="flex justify-start flex-wrap gap-2">
           {skills.map((skill, index) =>
             skill?.name ? (
               <SkillItem

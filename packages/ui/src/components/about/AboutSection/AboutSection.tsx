@@ -29,7 +29,7 @@ export const AboutSection = () => {
 
   return (
     <Box className="-mt-1">
-      <IconButton color="primary" onClick={handleClick}>
+      <IconButton className="icon-button" color="primary" onClick={handleClick}>
         <InfoIcon />
       </IconButton>
       <Popover
@@ -51,7 +51,7 @@ export const AboutSection = () => {
             onClick={() => {
               handleClose()
             }}
-            className="absolute top-2 right-2 text-gray-500 focus:outline-none"
+            className="icon-button absolute top-2 right-2 text-gray-500 focus:outline-none"
           >
             <CloseIcon className="h-4 w-4" />
           </IconButton>

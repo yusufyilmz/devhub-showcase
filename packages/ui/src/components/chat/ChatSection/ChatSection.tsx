@@ -35,6 +35,7 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
     <>
       <Box className="fixed bottom-4 right-4 flex flex-col space-y-2 z-[200]">
         <IconButton
+          className="icon-button"
           size="large"
           color="primary"
           aria-label={'CV Chat'}
@@ -46,6 +47,7 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
           <QuestionAnswerIcon fontSize="large" />
         </IconButton>
         <IconButton
+          className="icon-button"
           color="primary"
           aria-label={'Referral Chat'}
           onClick={() => {

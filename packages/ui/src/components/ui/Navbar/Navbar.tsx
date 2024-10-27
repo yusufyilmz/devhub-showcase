@@ -1,9 +1,10 @@
 'use client'
 
-import { Box, Button, Drawer } from '@mui/material'
+import { Box, Button, Drawer, IconButton } from '@mui/material'
 import { useState } from 'react'
 import { copy } from '@shared/content'
 import { AboutSection } from '../../about/AboutSection'
+import MenuIcon from '@mui/icons-material/Menu'
 
 const MenuItems = () => (
   <>
@@ -30,27 +31,14 @@ export const Navbar: React.FC = () => {
   return (
     <nav className="p-4 bg-main-primary">
       <div className="container flex justify-between md:justify-center items-center">
-        <div className="md:hidden">
-          <button
-            className="text-gray-800 focus:outline-none"
-            onClick={toggleMenu}
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d={isOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
-              />
-            </svg>
-          </button>
-        </div>
+        <IconButton
+          onClick={toggleMenu}
+          color="inherit"
+          aria-label="open menu"
+          className="hover:scale-105 text-textColor-light  transition-transform md:hidden"
+        >
+          <MenuIcon fontSize="large" />
+        </IconButton>
         <AboutSection />
         <div className={`space-x-4 hidden md:block`}>
           <MenuItems />

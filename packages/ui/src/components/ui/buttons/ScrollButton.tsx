@@ -54,7 +54,7 @@ export const ScrollButton: React.FC<ScrollButtonProps> = ({ sectionIds }) => {
     <Box className="fixed bottom-4 inset-x-0 flex justify-center animate-bounce">
       <button
         onClick={scrollToNextSection}
-        className="flex items-center justify-center w-12 px-6 py-3 rounded-full bg-button-primary text-white transition duration-300 hover:scale-105"
+        className="icon-button flex items-center justify-center w-12 px-6 py-3 rounded-full bg-button-primary text-white transition duration-300 hover:scale-105"
         aria-label="Scroll to next section"
       >
         <ArrowDownwardIcon />

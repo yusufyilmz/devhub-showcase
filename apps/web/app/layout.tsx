@@ -1,6 +1,11 @@
 import '@shared/ui/globals.css'
 import { NotificationProvider } from '@shared/ui/context'
-import { Footer, Header, ThemeProvider } from '@shared/ui/components'
+import {
+  Footer,
+  Header,
+  MouseCircle,
+  ThemeProvider
+} from '@shared/ui/components'
 import { CssBaseline, StyledEngineProvider } from '@mui/material'
 import { Poppins } from 'next/font/google'
 
@@ -22,6 +27,7 @@ export default function RootLayout({
           <ThemeProvider>
             <CssBaseline />
             <NotificationProvider>
+              <MouseCircle />
               <Header />
               {children}
               <Footer />
