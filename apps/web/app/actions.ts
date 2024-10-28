@@ -1,7 +1,7 @@
 'use server'
 
 import { ReferralService } from '@shared/lib/services'
-import { isCategoryReferralCategory } from '@shared/lib/utils'
+import { checkRateLimit, isCategoryReferralCategory } from '@shared/lib/utils'
 import { logger } from '@shared/lib/logger'
 import { MessageProcessor } from '@shared/chat'
 import { copy } from '@shared/content'
@@ -17,6 +17,10 @@ export async function handleSendMessageAction(
   if (!message.content) return copy.chatMessages.failureMessage
 
   try {
+    if (checkRateLimit(sessionId)) {
+      throw copy.notifications.errors.tooManyRequests
+    }
+
     if (isCategoryReferralCategory(message.category)) {
       await referralService.saveReferral(
         message.category,
@@ -29,6 +33,7 @@ export async function handleSendMessageAction(
 
     return botReply
   } catch (error) {
+    logger.error({ error }, 'Failed to process message')
     return copy.chatMessages.failureMessage
   }
 }
