@@ -11,6 +11,7 @@ export const notifications = {
     projectAddError: 'An error occurred while adding the project.',
     validationError: 'An error occurred on validating api parameters.',
     projectNotFound: 'Project not found.',
-    invalidId: 'Invalid Project ID.'
+    invalidId: 'Invalid Project ID.',
+    tooManyRequests: 'Too many requests. Please try again later.',
   }
 }
