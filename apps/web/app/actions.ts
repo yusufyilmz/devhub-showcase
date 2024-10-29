@@ -18,7 +18,7 @@ export async function handleSendMessageAction(
 
   try {
     if (checkRateLimit(sessionId)) {
-      throw copy.notifications.errors.tooManyRequests
+      throw new Error(copy.notifications.errors.tooManyRequests)
     }
 
     if (isCategoryReferralCategory(message.category)) {

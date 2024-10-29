@@ -231,9 +231,6 @@ DELETE FROM
   "educations";
 
 DELETE FROM
-  "referrals";
-
-DELETE FROM
   "skills";
 
 DELETE FROM
@@ -695,32 +692,6 @@ VALUES
     FALSE,
     sestekCompanyId,
     sestekExperienceId
-  );
-
--- Insert referrals
-INSERT INTO
-  "referrals" (
-    id,
-    created_at,
-    updated_at,
-    name,
-    relationship,
-    feedback,
-    recommendation,
-    contact_info,
-    session_id
-  )
-VALUES
-  (
-    'e1f8c0e4-0e8d-4114-b3eb-89e647282399',
-    NOW(),
-    NOW(),
-    'Marcelo Carneiro',
-    'Toptal, Team manager',
-    'I had the pleasure of working with Yusuf at Toptal, where he made a significant impact as a Senior Full-Stack Engineer. He is an incredibly fast developer, consistently delivering results with impressive speed and precision. Yusuf was always proactive in creating solutions, and bringing ideas to the table. His execution was top-notch, ensuring that his innovative concepts were implemented effectively.',
-    'Yusuf would be a fantastic asset to any team, combining speed, proactivity, and a collaborative spirit to deliver exceptional results.',
-    'john.doe@example.com',
-    'unique-session-id-1'
   );
 
 -- Insert skills

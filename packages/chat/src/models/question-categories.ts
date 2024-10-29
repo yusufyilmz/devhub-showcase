@@ -172,7 +172,7 @@ export const QUESTION_CATEGORIES: Record<ChatCategoryType, ChatCategory> = {
       { word: 'fun', weight: 5 },
       { word: 'hobby', weight: 5 },
       { word: 'movie', weight: 5 },
-      { word: 'food', weight: 5 },
+      { word: 'food', weight: 5 }
     ],
     model: copy.chatMessages.outOfTopicMessage
   },
