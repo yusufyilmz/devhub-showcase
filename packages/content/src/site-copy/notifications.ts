@@ -12,6 +12,6 @@ export const notifications = {
     validationError: 'An error occurred on validating api parameters.',
     projectNotFound: 'Project not found.',
     invalidId: 'Invalid Project ID.',
-    tooManyRequests: 'Too many requests. Please try again later.',
+    tooManyRequests: 'Too many requests. Please try again later.'
   }
 }

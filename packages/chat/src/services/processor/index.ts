@@ -50,7 +50,6 @@ export class MessageProcessor {
         'Message classified.'
       )
 
-
       // Step 2: if result is a casual question or greeting, return a casual response
       if (
         classifiedMessage?.category === 'outOfTopic' ||

@@ -21,7 +21,7 @@ export class ClassifierService {
     const hasNouns = doc.nouns().out('array').length > 0
     const hasVerbs = doc.verbs().out('array').length > 0
 
-    return hasNouns && hasVerbs
+    return hasNouns || hasVerbs
   }
 
   extractNounsAndAdjectives = (text: string) => {

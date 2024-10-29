@@ -18,10 +18,7 @@ export const Section: React.FC<PropsWithChildren<SectionProps>> = ({
 }) => {
   return (
     <>
-      <Divider
-        className="border-main-slate"
-        sx={{ borderWidth: '0.01rem'  }}
-      />
+      <Divider className="border-main-slate" sx={{ borderWidth: '0.01rem' }} />
       <section
         id={sectionId}
         className={`${className} mb-16 relative opacity-0 translate-y-8 transition-all duration-700 animate-fade-in-on-scroll parallax w-full flex flex-col items-center justify-start `}

@@ -52,6 +52,7 @@ export const QUESTION_CATEGORIES: Record<ChatCategoryType, ChatCategory> = {
       { word: 'career', weight: 3 },
       { word: 'work', weight: 2 },
       { word: 'role', weight: 2 },
+      { word: 'job', weight: 3 },
       { word: 'background', weight: 3 },
       { word: 'positions', weight: 2 },
       { word: 'employment', weight: 2 },
@@ -172,7 +173,6 @@ export const QUESTION_CATEGORIES: Record<ChatCategoryType, ChatCategory> = {
       { word: 'hobby', weight: 5 },
       { word: 'movie', weight: 5 },
       { word: 'food', weight: 5 },
-      { word: 'favorite', weight: 5 }
     ],
     model: copy.chatMessages.outOfTopicMessage
   },
