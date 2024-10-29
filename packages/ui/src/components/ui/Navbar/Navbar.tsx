@@ -3,7 +3,7 @@
 import { Box, Button, Drawer, IconButton } from '@mui/material'
 import { useState } from 'react'
 import { copy } from '@shared/content'
-import { AboutSection } from '../../about/AboutSection'
+import { AboutSection } from '../../sections/about/AboutSection'
 import MenuIcon from '@mui/icons-material/Menu'
 
 const MenuItems = () => (

@@ -18,19 +18,16 @@ export const Section: React.FC<PropsWithChildren<SectionProps>> = ({
 }) => {
   return (
     <>
-      <Divider
-        className="border-main-slate"
-        sx={{ borderWidth: '0.01rem', mt: 32 }}
-      />
+      <Divider className="border-main-slate" sx={{ borderWidth: '0.01rem' }} />
       <section
         id={sectionId}
-        className={`${className} opacity-0 translate-y-8 transition-all duration-700 animate-fade-in-on-scroll parallax md:h-section relative w-full flex flex-col items-center justify-start overflow-hidden `}
+        className={`${className} mb-16 relative opacity-0 translate-y-8 transition-all duration-700 animate-fade-in-on-scroll parallax w-full flex flex-col items-center justify-start overflow-hidden md:overflow-visible `}
       >
         <Box className="flex flex-col gap-12 h-full md:flex-row w-full px-4">
-          <Box className="sticky top-24 md:h-full flex flex-col items-center justify-start md:justify-center w-[100vw] md:w-[30vw] text-center max-w-[90vw]">
+          <Box className="sticky md:my-96 top-24 md:top-[calc(50vh)] md:h-full flex flex-col items-center justify-start md:justify-center w-[100vw] md:w-[30vw] text-center max-w-[90vw]">
             <PageHeader title={title} subtitle={subtitle} />
           </Box>
-          <Box className="overflow-y-auto h-full w-[100vw] md:w-[50vw] pl-1 md:pl-4 flex mt-20">
+          <Box className="overflow-y-auto h-full mt-16  w-[100vw] md:w-[50vw] pl-1 md:pl-4 flex">
             {children}
           </Box>
         </Box>

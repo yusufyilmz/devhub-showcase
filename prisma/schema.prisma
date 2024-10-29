@@ -84,7 +84,7 @@ model Education {
   degree       String
   fieldOfStudy String   @map("field_of_study")
   startedAt    DateTime @map("started_at")
-  finishedAt   DateTime @map("finished_at")
+  finishedAt   DateTime? @map("finished_at")
   gpa          String?
   description  String?
 

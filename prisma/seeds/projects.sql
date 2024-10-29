@@ -231,9 +231,6 @@ DELETE FROM
   "educations";
 
 DELETE FROM
-  "referrals";
-
-DELETE FROM
   "skills";
 
 DELETE FROM
@@ -301,7 +298,7 @@ VALUES
     '2021-10-01',
     '2024-10-01',
     toptalCompanyId,
-    ARRAY['Developed the Assets Generator using Next.js to automate interviews and create success stories via AI, generating personalized success stories with an interface for modifying, fixing, and publishing stories.',
+    ARRAY ['Developed the Assets Generator using Next.js to automate interviews and create success stories via AI, generating personalized success stories with an interface for modifying, fixing, and publishing stories.',
       'Created 8 tools for automating  Google Ads management, including positive/negative keyword generation, asset reviews, and dynamic content management from scratch by getting parts in all phases, Planning, Design, Development, Testing, Deployment.',
       'Migrated around 10 legacy websites (e.g., JavaScript Minifier, Html shell, Hastebin, css3maker) to Next.js, improving performance and responsiveness and design.',
       'Created centralized Slack service for handling Slack messages across multiple applications. This system streamlined communication processes by managing message requests in one place, improving efficiency and reducing complexity for users interacting with multiple platforms.',
@@ -316,7 +313,7 @@ VALUES
     '2020-10-01',
     '2021-09-01',
     scopelyCompanyId,
-    ARRAY['Development for frontend and backend for Web automation tool that is used by game engineers to create mobile device tests on amazon device farm and see results and reports according to these tests.',
+    ARRAY ['Development for frontend and backend for Web automation tool that is used by game engineers to create mobile device tests on amazon device farm and see results and reports according to these tests.',
      'Development for Unity part of the project.',
      'Converted the automation tool to micro frontend architecture.']
   ),
@@ -328,7 +325,7 @@ VALUES
     '2019-10-01',
     '2020-09-01',
     marfeelCompanyId,
-    ARRAY['Converted existing web products to React and created CLI tools for media providers.',
+    ARRAY ['Converted existing web products to React and created CLI tools for media providers.',
       'Developed automatic, generated Playgrounds for providers. Implemented Server-Side Rendering (SSR) for React components.']
   ),
   (
@@ -339,7 +336,7 @@ VALUES
     '2015-04-01',
     '2019-10-01',
     turkcellCompanyId,
-    ARRAY['Led the development of WebChat, Chat Gateway, Bot Info, Integration service, Chat and Phonex Configuration Manager, Transaction Manager, Opera, Phonex, IWS and other customer service tools for Turkcell, handling over 600,000 daily interactions.',
+    ARRAY ['Led the development of WebChat, Chat Gateway, Bot Info, Integration service, Chat and Phonex Configuration Manager, Transaction Manager, Opera, Phonex, IWS and other customer service tools for Turkcell, handling over 600,000 daily interactions.',
      'Converted WebChat to React and Redux within two weeks, significantly improving scalability.',
      'Designed and implemented a multichannel chat gateway, integrating over 20 clients into a unified architecture.',
      'Mentoring Junior team members',
@@ -353,7 +350,7 @@ VALUES
     '2012-11-01',
     '2015-04-01',
     sestekCompanyId,
-    ARRAY['Developed core components for text-to-speech (TTS) and speech recognition (SR) systems.',
+    ARRAY ['Developed core components for text-to-speech (TTS) and speech recognition (SR) systems.',
       'Designed and implemented web services using C++, C#, WCF, and built mobile applications with Swift and Objective-C.']
   );
 
@@ -372,6 +369,18 @@ INSERT INTO
     description
   )
 VALUES
+  (
+    gen_random_uuid(),
+    NOW(),
+    NOW(),
+    'Ozyegin University',
+    'https://ozyegin.edu.tr/en',
+    'PhD',
+    'Computer Science and Artificial Intelligence',
+    '2018-06-01',
+    NULL,
+    'Focused on advanced topics in Artificial Intelligence, Machine Learning, and Computational Science, with research in predictive models and AI-driven solutions.'
+  ),
   (
     bogaziciEducationId,
     NOW(),
@@ -683,32 +692,6 @@ VALUES
     FALSE,
     sestekCompanyId,
     sestekExperienceId
-  );
-
--- Insert referrals
-INSERT INTO
-  "referrals" (
-    id,
-    created_at,
-    updated_at,
-    name,
-    relationship,
-    feedback,
-    recommendation,
-    contact_info,
-    session_id
-  )
-VALUES
-  (
-    'e1f8c0e4-0e8d-4114-b3eb-89e647282399',
-    NOW(),
-    NOW(),
-    'Marcelo Carneiro',
-    'Toptal, Team manager',
-    'I had the pleasure of working with Yusuf at Toptal, where he made a significant impact as a Senior Full-Stack Engineer. He is an incredibly fast developer, consistently delivering results with impressive speed and precision. Yusuf was always proactive in creating solutions, and bringing ideas to the table. His execution was top-notch, ensuring that his innovative concepts were implemented effectively.',
-    'Yusuf would be a fantastic asset to any team, combining speed, proactivity, and a collaborative spirit to deliver exceptional results.',
-    'john.doe@example.com',
-    'unique-session-id-1'
   );
 
 -- Insert skills

@@ -8,9 +8,7 @@ export function formatDateRange(startDate: Date, endDate: Date | null) {
 
   const formattedStartDate = formatter.format(start)
 
-  const formattedEndDate = endDate
-    ? formatter.format(new Date(endDate))
-    : 'Present'
+  const formattedEndDate = endDate ? formatter.format(new Date(endDate)) : '--'
 
   return `${formattedStartDate} - ${formattedEndDate}`
 }
