@@ -43,18 +43,6 @@ export const SocialLinks = () => {
           <GitHubIcon fontSize="large" />
         </IconButton>
       </Tooltip>
-
-      <Tooltip title="Instagram" arrow>
-        <IconButton
-          color="primary"
-          href="https://www.instagram.com/yusufyilmz"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="icon-button"
-        >
-          <InstagramIcon fontSize="large" />
-        </IconButton>
-      </Tooltip>
       <Tooltip title="Phone" arrow>
         <IconButton
           color="primary"

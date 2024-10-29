@@ -25,7 +25,7 @@ export const EducationsSection: React.FC<EducationsSectionProps> = ({
               padding: 0
             }
           }}
-          className="overflow-y-auto no-scrollbar w-full mt-32 md:mt-0"
+          className="overflow-y-auto no-scrollbar w-full mt-32 md:mt-0 mb-0"
         >
           {educations.map(education => (
             <EducationItem key={education.id} education={education} />
