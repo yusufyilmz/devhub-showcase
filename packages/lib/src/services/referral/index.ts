@@ -14,9 +14,18 @@ export class ReferralService {
   async getApprovedReferrals(): Promise<Referral[]> {
     return this.dbClient.referral.findMany({
       where: {
-        review: {
-          state: ReviewState.APPROVED
-        }
+        OR: [
+          {
+            review: {
+              state: ReviewState.APPROVED
+            }
+          },
+          {
+            review: {
+              is: null
+            }
+          }
+        ]
       }
     })
   }
