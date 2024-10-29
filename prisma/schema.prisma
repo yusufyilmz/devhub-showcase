@@ -60,9 +60,10 @@ model Experience {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  role       String
-  startedAt  DateTime  @map("started_at")
-  finishedAt DateTime? @map("finished_at")
+  role         String
+  startedAt    DateTime  @map("started_at")
+  finishedAt   DateTime? @map("finished_at")
+  achievements String[]
 
   projects  Project[]
   companyId String?
@@ -80,9 +81,9 @@ model Education {
   institutionLink String @map("institution_link")
 
   degree       String
-  fieldOfStudy String   @map("field_of_study")
-  startedAt    DateTime @map("started_at")
-  finishedAt   DateTime @map("finished_at")
+  fieldOfStudy String    @map("field_of_study")
+  startedAt    DateTime  @map("started_at")
+  finishedAt   DateTime? @map("finished_at")
   gpa          String?
   description  String?
 

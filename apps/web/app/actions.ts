@@ -1,7 +1,7 @@
 'use server'
 
 import { ReferralService, ReviewService } from '@shared/lib/services'
-import { isCategoryReferralCategory } from '@shared/lib/utils'
+import { checkRateLimit, isCategoryReferralCategory } from '@shared/lib/utils'
 import { logger } from '@shared/lib/logger'
 import { MessageProcessor } from '@shared/chat'
 import { copy } from '@shared/content'
@@ -22,14 +22,12 @@ export async function handleSendMessageAction(
   if (!message.content) return copy.chatMessages.failureMessage
 
   try {
+    if (checkRateLimit(sessionId)) {
+      throw new Error(copy.notifications.errors.tooManyRequests)
+    }
+
     if (isCategoryReferralCategory(message.category)) {
       await referralService.saveReferral(
-        message.category,
-        message.content,
-        sessionId
-      )
-
-      await referralService.getApprovedReferrals(
         message.category,
         message.content,
         sessionId
@@ -40,6 +38,7 @@ export async function handleSendMessageAction(
 
     return botReply
   } catch (error) {
+    logger.error({ error }, 'Failed to process message')
     return copy.chatMessages.failureMessage
   }
 }
@@ -65,9 +64,8 @@ export async function handleSubmitReviewAction(
   referralId: string
 ): Promise<ReviewWithReferrals | undefined> {
   try {
-    const review = await reviewService.updateReview(
-      referralId,
-      ReviewState.APPROVED
+    const review = await reviewService.approveReview(
+      referralId
     )
 
     return review

@@ -50,6 +50,22 @@ export class ReferralService {
         }
       })
 
+
+      const review = await this.dbClient.review.findUnique({
+        where: {
+          referralId: response.id
+        }
+      })
+
+      if(!review) {
+        await this.dbClient.review.create({
+          data: {
+            referralId: response.id,
+            state: ReviewState.PENDING
+          }
+        })
+      }
+
       logger.debug({ response }, 'Referral answer saved')
     } catch (error) {
       logger.error({ error }, 'Error saving referral answer')

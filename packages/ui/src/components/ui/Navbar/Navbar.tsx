@@ -1,20 +1,18 @@
 'use client'
 
-import { Box, Button, Drawer } from '@mui/material'
+import { Box, Button, Drawer, IconButton } from '@mui/material'
 import { useState } from 'react'
 import { copy } from '@shared/content'
-import { useRouter } from 'next/navigation'
-
-import { AboutSection } from '../../about/AboutSection'
+import { AboutSection } from '../../sections/about/AboutSection'
+import MenuIcon from '@mui/icons-material/Menu'
 
 const MenuItems = () => (
   <>
-    {' '}
     {Object.keys(copy.navbar).map(key => (
       <Button
         key={key}
         variant="text"
-        color="secondary"
+        className="text-main-white whitespace-pre"
         href={copy.navbar[key]?.id}
       >
         {copy.navbar[key]?.title}
@@ -25,60 +23,35 @@ const MenuItems = () => (
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const router = useRouter()
 
   const toggleMenu = () => {
     setIsOpen(!isOpen)
   }
 
-  const handleClickToLogo = () => {
-    router.push('/')
-  }
 
   return (
-    <nav className="md:px-page-px p-4 shadow-lg bg-main-black text-main-white">
-      <div className="container mx-auto flex justify-between items-center">
-        <Box
-          className="text-xl font-semibold cursor-pointer"
-          onClick={handleClickToLogo}
+    <nav className="p-4 bg-main-primary">
+      <div className="container flex justify-between md:justify-center items-center">
+        <IconButton
+          onClick={toggleMenu}
+          color="inherit"
+          aria-label="open menu"
+          className="hover:scale-105 text-textColor-light  transition-transform md:hidden"
         >
-          {copy.header.logoTitle}
-        </Box>
-        <div className="lg:hidden">
-          <button
-            className="text-gray-800 focus:outline-none"
-            onClick={toggleMenu}
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d={isOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
-              />
-            </svg>
-          </button>
-        </div>
-        <div className={`lg:flex space-x-4 hidden md:block`}>
+          <MenuIcon fontSize="large" />
+        </IconButton>
+        <AboutSection />
+        <div className={`space-x-4 hidden md:block`}>
           <MenuItems />
         </div>
         <Drawer anchor="right" open={isOpen} onClose={toggleMenu}>
           <Box
-            className="bg-main-black h-full flex flex-col justify-start py-4 px-2 align-middle"
+            className="bg-main-dark h-full flex flex-col justify-start py-4 px-2 align-middle"
             role="presentation"
           >
             <MenuItems />
           </Box>
         </Drawer>
-        <div className="hidden lg:flex items-center">
-          <AboutSection />
-        </div>
       </div>
     </nav>
   )

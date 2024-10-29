@@ -2,22 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
+body,
+html {
+    -webkit-font-smoothing: antialiased;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+
+    /* Hide scrollbar for Webkit browsers */
+    ::-webkit-scrollbar {
+        display: none;
+    }
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
+/* Class to hide scrollbar across different browsers */
 .no-scrollbar {
     -ms-overflow-style: none;
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
+
+    /* Hide scrollbar for Webkit browsers */
+    ::-webkit-scrollbar {
+        display: none;
+    }
 }
 
+/* iFrame styling */
 #iframe {
     zoom: 0.3;
 }
 
-.card-base {
-    @apply max-w-[calc(100vw/3)] hover:border-main-black hover:ring-4 hover:ring-opacity-50 hover:ring-main-black focus:outline-none focus:ring-4 focus:ring-black focus:border-black focus:ring-opacity-50 hover:shadow-lg bg-backgroundColor-card flex flex-col justify-around h-full rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105;
+.section-card {
+    @apply w-full p-4 bg-main-primary hover:bg-main-dark-hover focus:outline-none 
+           hover:shadow-lg flex flex-col justify-around h-full rounded-xl shadow-md 
+           overflow-hidden transform transition-all duration-300 hover:scale-105 
+           border border-transparent hover:border-main-light; /* Add a subtle border effect */
+}
+
+.section-card::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-main-primary/0 via-main-primary/10 to-main-light/0 
+           rounded-xl transition-opacity duration-300;
+    opacity: 0;
+}
+
+.section-card:hover::before {
+    opacity: 1;
+}
+
+.section-card:hover {
+    @apply shadow-xl scale-[1.05] transition-shadow duration-300; /* Add a larger shadow and scale effect */
+}
+
+.section-card-text {
+    @apply text-main-light text-opacity-90; /* Softer text color to match the aesthetic */
+}
+
+.parallax {
+    @apply bg-cover bg-fixed bg-center;
+    /* Ensures image stays in place */
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-on-scroll {
+    opacity: 1;
+    transform: translateY(0);
+    animation: fade-in 0.7s ease-out forwards;
+}
+
+.chip-shine-effect {
+    @apply transform hover:scale-105 border-main-blue hover:shadow-lg hover:shadow-blue-400/50 transition-shadow duration-300 relative overflow-hidden;
+}
+
+.icon-button {
+    @apply transition-transform duration-300 hover:scale-110
 }

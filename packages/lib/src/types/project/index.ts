@@ -6,6 +6,8 @@ import {
 
 export type { Project } from '@prisma/client'
 
+export type ProjectUpdateInput = Prisma.ProjectUpdateInput
+
 export * from './prisma-args'
 
 export type ProjectWithCompanyAndSkills = Prisma.ProjectGetPayload<

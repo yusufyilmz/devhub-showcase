@@ -1,6 +1,6 @@
 import { Logger } from 'pino'
 import { db, DbClient } from '../../db'
-import { Review, ReviewState, ReviewWithReferrals } from '../../types/review'
+import { ReviewState, ReviewWithReferrals } from '../../types/review'
 import { ReviewWithReferralsArgs } from '../../types/review/prisma-args'
 
 export class ReviewService {
@@ -23,16 +23,15 @@ export class ReviewService {
     })
   }
 
-  async updateReview(
-    id: string,
-    reviewState: ReviewState
+  async approveReview(
+    id: string
   ): Promise<ReviewWithReferrals> {
     return this.dbClient.review.update({
       where: {
         id
       },
       data: {
-        state: reviewState
+        state: ReviewState.APPROVED
       },
       ...ReviewWithReferralsArgs
     })

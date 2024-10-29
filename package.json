@@ -2,6 +2,7 @@
   "name": "freelance-projects",
   "private": true,
   "scripts": {
+    "start": "turbo run start",
     "clean": "turbo run clean",
     "build": "turbo build",
     "dev": "turbo dev",
@@ -14,7 +15,7 @@
     "db:seed": "prisma db seed",
     "db:dev:migrate": "prisma migrate dev && prisma generate",
     "db:deploy": "yarn prisma migrate deploy && yarn prisma db push",
-    "db:push": "prisma db push",
+    "db:push": "turbo run db:push",
     "deploy": "turbo deploy"
   },
   "devDependencies": {
