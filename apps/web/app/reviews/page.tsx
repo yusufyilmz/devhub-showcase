@@ -1,4 +1,3 @@
-import { Box } from '@mui/material'
 import type { Redirect } from 'next'
 import { ReviewService } from '@shared/lib/services'
 import type { ReviewWithReferrals } from '@shared/lib/types'
@@ -36,14 +35,11 @@ export default async function ReviewsPage(): Promise<JSX.Element> {
   const pendingReviews = (await getPageResources()) as ReviewWithReferrals[]
 
   return (
-    <Box
-      className="max-w-[100vw] min-h-svh"
-      sx={{ flexDirection: 'column', display: 'flex', gap: 8 }}
-    >
+    <main className="w-full h-[calc(100vh-8rem)] bg-main-primary  flex flex-col justify-center items-center">
       <ReviewSection
-        handleApprove={handleSubmitReviewAction}
+        handleReview={handleSubmitReviewAction}
         reviews={pendingReviews}
       />
-    </Box>
+    </main>
   )
 }

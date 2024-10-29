@@ -5,15 +5,15 @@ import { checkRateLimit, isCategoryReferralCategory } from '@shared/lib/utils'
 import { logger } from '@shared/lib/logger'
 import { MessageProcessor } from '@shared/chat'
 import { copy } from '@shared/content'
-import {
+import type {
   ReviewState,
-  type ChatMessage,
-  type ReviewWithReferrals
+  ChatMessage,
+  ReviewWithReferrals
 } from '@shared/lib/types'
 
 const messageProcessor = new MessageProcessor(logger)
-const referralService = new ReferralService(logger)
 const reviewService = new ReviewService(logger)
+const referralService = new ReferralService(logger)
 
 export async function handleSendMessageAction(
   message: ChatMessage,
@@ -43,30 +43,12 @@ export async function handleSendMessageAction(
   }
 }
 
-export async function handleSubmitReferralAction(
-  message: ChatMessage,
-  sessionId: string
-): Promise<any> {
-  if (!message.content) return copy.chatMessages.failureMessage
-
-  try {
-    await referralService.saveReferral(
-      message.category,
-      message.content,
-      sessionId
-    )
-  } catch (error) {
-    return copy.chatMessages.failureMessage
-  }
-}
-
 export async function handleSubmitReviewAction(
-  referralId: string
+  referralId: string,
+  reviewState: ReviewState
 ): Promise<ReviewWithReferrals | undefined> {
   try {
-    const review = await reviewService.approveReview(
-      referralId
-    )
+    const review = await reviewService.updateReview(referralId, reviewState)
 
     return review
   } catch (error) {

@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "ReviewState" AS ENUM ('PENDING', 'APPROVED');
+CREATE TYPE "ReviewState" AS ENUM ('PENDING', 'APPROVED', 'REJECTED');
 
 -- CreateTable
 CREATE TABLE "reviews" (

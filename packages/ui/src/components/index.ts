@@ -20,4 +20,3 @@ export * from './sections/skill/SkillSection'
 export * from './sections/about/AboutSection'
 export * from './ui/MouseCircle/MouseCircle'
 export * from './sections/review/ReviewSection'
-

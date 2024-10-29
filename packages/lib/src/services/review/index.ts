@@ -23,15 +23,16 @@ export class ReviewService {
     })
   }
 
-  async approveReview(
-    id: string
+  async updateReview(
+    id: string,
+    state: ReviewState
   ): Promise<ReviewWithReferrals> {
     return this.dbClient.review.update({
       where: {
         id
       },
       data: {
-        state: ReviewState.APPROVED
+        state
       },
       ...ReviewWithReferralsArgs
     })

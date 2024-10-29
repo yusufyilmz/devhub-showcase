@@ -28,7 +28,6 @@ export const Navbar: React.FC = () => {
     setIsOpen(!isOpen)
   }
 
-
   return (
     <nav className="p-4 bg-main-primary">
       <div className="container flex justify-between md:justify-center items-center">

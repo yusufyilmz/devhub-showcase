@@ -181,4 +181,5 @@ model Review {
 enum ReviewState {
   PENDING
   APPROVED
+  REJECTED
 }

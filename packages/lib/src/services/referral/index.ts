@@ -50,17 +50,25 @@ export class ReferralService {
         }
       })
 
-
       const review = await this.dbClient.review.findUnique({
         where: {
           referralId: response.id
         }
       })
 
-      if(!review) {
+      if (!review) {
         await this.dbClient.review.create({
           data: {
             referralId: response.id,
+            state: ReviewState.PENDING
+          }
+        })
+      } else if (review.state === ReviewState.REJECTED) {
+        await this.dbClient.review.update({
+          where: {
+            referralId: response.id
+          },
+          data: {
             state: ReviewState.PENDING
           }
         })

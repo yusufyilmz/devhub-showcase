@@ -1,40 +1,47 @@
-'use client'
-
-import { Box, Typography, Grid } from '@mui/material'
-import { ReviewWithReferrals } from '@shared/lib/types'
+import { Typography, Grid } from '@mui/material'
+import { ReviewState, ReviewWithReferrals } from '@shared/lib/types'
 import { ReferralItem } from '../../referral/ReferralItem'
 import { ReviewButton } from '../ReviewButton/ReviewButton'
 
 type ReviewSectionProps = {
   reviews: ReviewWithReferrals[]
-  handleApprove: (reviewId: string) => Promise<ReviewWithReferrals | undefined>
+  handleReview: (
+    reviewId: string,
+    status: ReviewState
+  ) => Promise<ReviewWithReferrals | undefined>
 }
 
 export const ReviewSection: React.FC<ReviewSectionProps> = ({
   reviews,
-  handleApprove
+  handleReview
 }) => {
   return (
-    <Box
-      className="max-w-[100vw]"
-      sx={{ flexDirection: 'column', display: 'flex', gap: 8 }}
+    <section
+      className={`px-[5%] mb-16 relative opacity-0 translate-y-8 transition-all duration-700 animate-fade-in-on-scroll parallax w-full flex flex-col items-center justify-start `}
     >
-      <Typography variant="h2">Pending Reviews</Typography>
-      <Grid container spacing={2}>
+      <Typography color="primary" variant="h2" className="mb-8 text-center">
+        Pending Reviews
+      </Typography>
+      <Grid
+        container
+        rowSpacing={4}
+        columnSpacing={{ xs: 1, sm: 2, md: 6 }}
+        className="overflow-y-auto no-scrollbar w-full mt-32 md:mt-0 p"
+      >
         {reviews.map(review => {
           if (!review.referral || !review.referral.name) {
             return null
           }
 
           return (
-            <Grid key={review.id}>
-              <ReferralItem referral={review.referral}>
-                <ReviewButton handleApprove={handleApprove} id={review.id} />
+            <Grid item md={6} key={review.id}>
+              <ReferralItem key={review.id} referral={review.referral}>
+                <ReviewButton handleReview={handleReview} id={review.id} />
               </ReferralItem>
             </Grid>
           )
         })}
       </Grid>
-    </Box>
+    </section>
   )
 }

@@ -18,7 +18,7 @@ export const ReferralItem: React.FC<{
   children?: React.ReactElement
 }> = ({ referral, children }) => {
   return (
-    <Card className="section-card referral-card">
+    <Card className="section-card referral-card min-w-[40vw]">
       <CardContent>
         {referral.feedback && <Comment comment={referral.feedback} />}
         {referral.recommendation && (
