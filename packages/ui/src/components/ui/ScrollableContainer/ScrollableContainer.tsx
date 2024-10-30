@@ -34,7 +34,6 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
       const offset =
         (document.getElementById(CARD_IDS[category])?.offsetWidth ?? 300) + 32
 
-      console.log(offset)
       scrollContainerRef.current.scrollBy({ left: offset, behavior: 'smooth' })
       handleScroll()
     }
@@ -59,7 +58,11 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
           style={{ top: `${containerHeight / 2}px` }}
           className="absolute z-10 left-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
         >
-          <IconButton size="small" onClick={scrollLeft}>
+          <IconButton
+            aria-label="Scroll left"
+            size="small"
+            onClick={scrollLeft}
+          >
             <ArrowBack />
           </IconButton>
         </div>
@@ -76,7 +79,11 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
           style={{ top: `${containerHeight / 2}px` }}
           className="absolute z-10 right-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
         >
-          <IconButton size="small" onClick={scrollRight}>
+          <IconButton
+            aria-label="Scroll right"
+            size="small"
+            onClick={scrollRight}
+          >
             <ArrowForward />
           </IconButton>
         </div>

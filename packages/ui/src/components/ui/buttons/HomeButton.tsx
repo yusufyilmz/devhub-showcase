@@ -9,6 +9,7 @@ export const HomeButton = () => {
 
   return (
     <Button
+      aria-label="Go to home"
       variant="contained"
       color="primary"
       className="rounded-lg"

@@ -61,6 +61,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         placeholder={copy.chat[chatFinished ? 'end' : type].placeholder}
       />
       <IconButton
+        aria-label="Send message"
         disabled={botIsTyping || chatFinished}
         type="submit"
         onClick={handleSendButtonClick}

@@ -3,6 +3,7 @@ import { DbClient, db } from '../../db'
 import { ReferralForGptModelArgs } from '../../types/referral/prisma-args'
 import { referralFormatter } from '../formatter'
 import { Referral } from '../../types'
+import { ReviewState } from '@prisma/client'
 
 export class ReferralService {
   constructor(
@@ -10,8 +11,23 @@ export class ReferralService {
     private readonly dbClient: DbClient = db
   ) {}
 
-  async getAllReferrals(): Promise<Referral[]> {
-    return this.dbClient.referral.findMany()
+  async getApprovedReferrals(): Promise<Referral[]> {
+    return this.dbClient.referral.findMany({
+      where: {
+        OR: [
+          {
+            review: {
+              state: ReviewState.APPROVED
+            }
+          },
+          {
+            review: {
+              is: null
+            }
+          }
+        ]
+      }
+    })
   }
 
   async createGPTModal(): Promise<string> {
@@ -42,6 +58,30 @@ export class ReferralService {
           [category]: answer
         }
       })
+
+      const review = await this.dbClient.review.findUnique({
+        where: {
+          referralId: response.id
+        }
+      })
+
+      if (!review) {
+        await this.dbClient.review.create({
+          data: {
+            referralId: response.id,
+            state: ReviewState.PENDING
+          }
+        })
+      } else if (review.state === ReviewState.REJECTED) {
+        await this.dbClient.review.update({
+          where: {
+            referralId: response.id
+          },
+          data: {
+            state: ReviewState.PENDING
+          }
+        })
+      }
 
       logger.debug({ response }, 'Referral answer saved')
     } catch (error) {

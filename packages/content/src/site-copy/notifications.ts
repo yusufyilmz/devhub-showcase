@@ -1,7 +1,11 @@
 export const notifications = {
   success: {
     projectAdded: 'Project added successfully!',
-    projectUpdated: 'Project updated successfully!'
+    projectUpdated: 'Project updated successfully!',
+    referralApproved: (name: string) =>
+      `Referral of '${name}' approved successfully`,
+    referralRejected: (name: string) =>
+      `Referral of '${name}' rejected successfully`
   },
   errors: {
     fetchProjectError: 'Failed to fetch project details. Please try again.',
@@ -12,6 +16,7 @@ export const notifications = {
     validationError: 'An error occurred on validating api parameters.',
     projectNotFound: 'Project not found.',
     invalidId: 'Invalid Project ID.',
+    referralApproveError: 'An error occurred on approving the review.',
     tooManyRequests: 'Too many requests. Please try again later.'
   }
 }

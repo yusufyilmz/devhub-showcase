@@ -17,16 +17,16 @@ type CompanyProps = {
 
 export const CompanyItem: React.FC<CompanyProps> = ({ company }) => {
   return (
-    <Card className="max-w-80 md:min-w-96 align-middle  bg-backgroundColor-card rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 company-card border">
+    <Card className="max-w-80 md:min-w-96 align-middle company-card card-base">
       <Link href={company.link} target="_blank" rel="noopener noreferrer">
-        <CardContent className="pt-4 pb-0 flex flex-col gap-2">
+        <CardContent className="w-full pt-4 pb-0 flex flex-col gap-2">
           <h3 className="text-2xl font-bold text-textColor-primary hover:underline">
             {company.name}
           </h3>
           <Divider />
         </CardContent>
       </Link>
-      <CardContent className="mx-auto pt-0">
+      <CardContent className="w-full mx-auto pt-0">
         <Accordion className="bg-backgroundColor-card">
           <AccordionSummary
             className=" bg-backgroundColor-card mx-auto"
@@ -55,6 +55,3 @@ export const CompanyItem: React.FC<CompanyProps> = ({ company }) => {
     </Card>
   )
 }
-;<Typography variant="body2" className="text-gray-500">
-  No projects available.
-</Typography>

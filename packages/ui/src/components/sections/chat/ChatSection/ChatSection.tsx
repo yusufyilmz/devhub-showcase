@@ -38,7 +38,7 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
           className="icon-button"
           size="large"
           color="primary"
-          aria-label={'CV Chat'}
+          aria-label={'Resume Chat'}
           onClick={() => {
             setType('cv')
             setIsOpen(!isOpen)

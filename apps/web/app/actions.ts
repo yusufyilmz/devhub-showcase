@@ -1,13 +1,18 @@
 'use server'
 
-import { ReferralService } from '@shared/lib/services'
+import { ReferralService, ReviewService } from '@shared/lib/services'
 import { checkRateLimit, isCategoryReferralCategory } from '@shared/lib/utils'
 import { logger } from '@shared/lib/logger'
 import { MessageProcessor } from '@shared/chat'
 import { copy } from '@shared/content'
-import type { ChatMessage } from '@shared/lib/types'
+import type {
+  ReviewState,
+  ChatMessage,
+  ReviewWithReferrals
+} from '@shared/lib/types'
 
 const messageProcessor = new MessageProcessor(logger)
+const reviewService = new ReviewService(logger)
 const referralService = new ReferralService(logger)
 
 export async function handleSendMessageAction(
@@ -35,5 +40,20 @@ export async function handleSendMessageAction(
   } catch (error) {
     logger.error({ error }, 'Failed to process message')
     return copy.chatMessages.failureMessage
+  }
+}
+
+export async function handleSubmitReviewAction(
+  referralId: string,
+  reviewState: ReviewState
+): Promise<ReviewWithReferrals | undefined> {
+  try {
+    const review = await reviewService.updateReview(referralId, reviewState)
+
+    return review
+  } catch (error) {
+    logger.error({ error }, 'Error on review')
+
+    return undefined
   }
 }

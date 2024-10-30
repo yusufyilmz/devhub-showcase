@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@mui/material'
+import { Card, CardActions, CardContent } from '@mui/material'
 import { Referral } from '@shared/lib/types'
 
 const Comment = ({ comment }: { comment: string }) => (
@@ -11,10 +11,14 @@ const Comment = ({ comment }: { comment: string }) => (
 )
 
 export const ReferralItem: React.FC<{
-  referral: Referral
-}> = ({ referral }) => {
+  referral: Pick<
+    Referral,
+    'name' | 'feedback' | 'recommendation' | 'relationship'
+  >
+  children?: React.ReactElement
+}> = ({ referral, children }) => {
   return (
-    <Card className="section-card referral-card">
+    <Card className="section-card referral-card min-w-[40vw]">
       <CardContent>
         {referral.feedback && <Comment comment={referral.feedback} />}
         {referral.recommendation && (
@@ -29,6 +33,7 @@ export const ReferralItem: React.FC<{
           </p>
         </div>
       </CardContent>
+      <CardActions>{children}</CardActions>
     </Card>
   )
 }

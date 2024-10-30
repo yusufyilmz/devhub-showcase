@@ -9,6 +9,7 @@ export const GoBackButton = () => {
 
   return (
     <Button
+      aria-label="Go back"
       variant="contained"
       color="primary"
       onClick={() => router.back()}
