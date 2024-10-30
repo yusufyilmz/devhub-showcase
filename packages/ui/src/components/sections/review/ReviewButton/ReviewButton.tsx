@@ -40,7 +40,6 @@ export const ReviewButton = ({
 
       router.refresh()
     } catch (e) {
-      console.log(e)
       setError(copy.notifications.errors.referralApproveError)
     }
   }
