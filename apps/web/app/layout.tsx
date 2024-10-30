@@ -8,12 +8,19 @@ import {
 } from '@shared/ui/components'
 import { CssBaseline, StyledEngineProvider } from '@mui/material'
 import { Poppins } from 'next/font/google'
+import type { Metadata } from 'next'
 
 const inter = Poppins({
   subsets: ['latin'],
   display: 'swap',
   weight: '400'
 })
+
+export const metadata: Metadata = {
+  title: "Yusuf's devhub showcase",
+  description:
+    'Explore my portfolio, professional experience, and AI-powered chat to learn more about my skills and projects'
+}
 
 export default function RootLayout({
   children

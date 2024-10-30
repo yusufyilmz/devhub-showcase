@@ -7,7 +7,11 @@ export const AddProjectButton = () => {
   const { push } = useRouter()
 
   return (
-    <Button variant="contained" onClick={() => push('/projects/add')}>
+    <Button
+      aria-label="Add project"
+      variant="contained"
+      onClick={() => push('/projects/add')}
+    >
       Add Project
     </Button>
   )

@@ -55,6 +55,3 @@ export const CompanyItem: React.FC<CompanyProps> = ({ company }) => {
     </Card>
   )
 }
-;<Typography variant="body2" className="text-gray-500">
-  No projects available.
-</Typography>

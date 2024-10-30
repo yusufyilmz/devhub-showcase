@@ -26,13 +26,19 @@ export const ReviewButton = ({
         throw new Error('Error approving referral')
       }
 
-      setInfo(
-        copy.notifications.success.referralApproved(
-          createdReferral.referral?.name ?? ''
-        )
-      )
+      let notifier
 
-      router.replace('/reviews')
+      if (status === ReviewState.APPROVED) {
+        notifier = copy.notifications.success.referralApproved
+      } else if (status === ReviewState.REJECTED) {
+        notifier = copy.notifications.success.referralRejected
+      }
+
+      if (notifier) {
+        setInfo(notifier(createdReferral.referral?.name ?? ''))
+      }
+
+      router.refresh()
     } catch (e) {
       console.log(e)
       setError(copy.notifications.errors.referralApproveError)
@@ -42,6 +48,7 @@ export const ReviewButton = ({
   return (
     <Box className="flex w-full gap-4">
       <Button
+        aria-label="Reject"
         fullWidth
         color="primary"
         variant="contained"
@@ -51,6 +58,7 @@ export const ReviewButton = ({
       </Button>
       <Button
         fullWidth
+        aria-label="Approve"
         color="primary"
         variant="contained"
         onClick={() => onReview(id, ReviewState.APPROVED)}

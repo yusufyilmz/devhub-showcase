@@ -58,6 +58,7 @@ export const AboutMeSection: React.FC = () => {
             </Typography>
             <Box className="flex justify-center">
               <Button
+                aria-label="View my Resume"
                 variant="text"
                 href="/cv.pdf"
                 target="_blank"

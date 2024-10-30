@@ -3,7 +3,9 @@ export const notifications = {
     projectAdded: 'Project added successfully!',
     projectUpdated: 'Project updated successfully!',
     referralApproved: (name: string) =>
-      `Referral of '${name}' approved successfully`
+      `Referral of '${name}' approved successfully`,
+    referralRejected: (name: string) =>
+      `Referral of '${name}' rejected successfully`
   },
   errors: {
     fetchProjectError: 'Failed to fetch project details. Please try again.',

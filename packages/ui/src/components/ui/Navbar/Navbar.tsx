@@ -10,6 +10,7 @@ const MenuItems = () => (
   <>
     {Object.keys(copy.navbar).map(key => (
       <Button
+        aria-label={copy.navbar[key]?.title}
         key={key}
         variant="text"
         className="text-main-white whitespace-pre"
@@ -32,9 +33,9 @@ export const Navbar: React.FC = () => {
     <nav className="p-4 bg-main-primary">
       <div className="container flex justify-between md:justify-center items-center">
         <IconButton
+          aria-label="Menu"
           onClick={toggleMenu}
           color="inherit"
-          aria-label="open menu"
           className="hover:scale-105 text-textColor-light  transition-transform md:hidden"
         >
           <MenuIcon fontSize="large" />

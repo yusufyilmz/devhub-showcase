@@ -81,6 +81,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
         className="mb-4"
       />
       <Button
+        aria-label={action}
         type="submit"
         variant="contained"
         color="primary"
