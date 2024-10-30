@@ -42,7 +42,7 @@ export const EducationItem: React.FC<EducationProps> = ({ education }) => {
           >
             <CardContent className="flex flex-col gap-1">
               <Typography
-                variant="h5"
+                variant="h3"
                 align="left"
                 className="font-semibold text-main-white text-2xl"
               >

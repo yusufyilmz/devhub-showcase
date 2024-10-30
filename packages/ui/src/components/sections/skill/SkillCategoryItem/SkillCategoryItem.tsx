@@ -11,7 +11,7 @@ export const SkillCategoryItem: React.FC<{ name: string; skills: Skill[] }> = ({
     <Card className="section-card">
       <CardContent className="flex flex-col">
         <Typography
-          variant="h5"
+          variant="h3"
           align="left"
           className="font-semibold text-main-white mb-3 text-2xl"
         >

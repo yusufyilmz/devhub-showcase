@@ -36,7 +36,7 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
         {project?.link && <IFramePreview url={project.link} />}
         <div className="flex flex-col gap-3">
           <Typography
-            variant="h5"
+            variant="h3"
             align="left"
             className="font-semibold text-main-white text-2xl"
           >
@@ -69,7 +69,7 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
       <CardContent>
         {project.company && (
           <Typography
-            variant="h5"
+            variant="h4"
             align="center"
             className="text-sm mt-6 text-textColor-slate"
           >
