@@ -4,7 +4,7 @@ import { copy } from '@shared/content'
 export class RateLimiter {
   constructor(
     private readonly cacheClient: RedisCacheClient = new RedisCacheClient(),
-    private readonly limit: number = 2,
+    private readonly limit: number = 10,
     private readonly windowSeconds: number = 60
   ) {
     this.cacheClient = cacheClient
