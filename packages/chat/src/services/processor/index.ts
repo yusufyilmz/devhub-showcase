@@ -12,8 +12,8 @@ import { ChatGPTService } from '../gpt/index'
 import { formatAllCV, formatters } from '../formatter/index'
 import { CVModel, CVModelValue } from '../../types'
 import { Logger } from 'pino'
-import { copy } from '@shared/content'
 import { ReferralService } from '../referral'
+import { notMeaningfulMessage, processErrorMessage } from '../../messages'
 
 export class MessageProcessor {
   classifier: ClassifierService
@@ -70,7 +70,7 @@ export class MessageProcessor {
       if (classifiedMessage?.category === 'unknown') {
         if (!this.classifier.isMeaningfulInput(userMessage.content)) {
           return {
-            ...copy.chatMessages.notMeaningfulMessage,
+            ...notMeaningfulMessage,
             timestamp: Date.now()
           }
         }
@@ -114,7 +114,7 @@ export class MessageProcessor {
       this.logger.error({ error }, 'Error processing user message')
       // Step 6: If an error occurs, return a default error message
       return {
-        ...copy.chatMessages.processErrorMessage,
+        ...processErrorMessage,
         timestamp: Date.now()
       }
     }

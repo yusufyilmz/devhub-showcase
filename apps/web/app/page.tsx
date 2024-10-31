@@ -14,17 +14,12 @@ import type { PageResources } from '@shared/lib/types'
 import type { Redirect } from 'next'
 import { ResourceManager } from '@shared/lib/services'
 import { logger } from '@shared/lib/logger'
+import { copy } from '@shared/content'
 import { handleSendMessageAction } from './actions'
 
-const sections = [
-  'summary',
-  'aboutMe',
-  'experiences',
-  'projects',
-  'skills',
-  'educations',
-  'referrals'
-]
+const sections = Object.values(copy.navbar).map(
+  ({ id }) => id.split('#')[1]
+) as string[]
 
 export const getPageResources = async (): Promise<
   | PageResources

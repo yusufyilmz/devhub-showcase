@@ -7,14 +7,6 @@ export const theme = createTheme({
     }
   },
   components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: '8px',
-          padding: '8px 16px'
-        }
-      }
-    },
     MuiAppBar: {
       styleOverrides: {
         root: {

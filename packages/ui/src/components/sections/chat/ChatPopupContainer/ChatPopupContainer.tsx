@@ -6,9 +6,9 @@ import { ChatMessage, ChatRole, type ChatType } from '@shared/lib/types'
 import { ChatInput } from '../ChatInput'
 import CloseIcon from '@mui/icons-material/Close'
 import { IconButton } from '@mui/material'
-import { copy } from '@shared/content'
 import { TypingIndicator } from '../TypingIndicator'
 import { useStore } from 'zustand'
+import { failureMessage } from '@shared/chat'
 import { chatStore, useChatMessages } from '../../../../stores'
 
 interface ChatPopupProps {
@@ -54,8 +54,20 @@ export const ChatPopupContainer: React.FC<ChatPopupProps> = ({
       const response = await handleSendMessage(newMessage, sessionId)
 
       addMessage(response)
-    } catch {
-      addMessage(copy.chatMessages.failureMessage)
+    } catch (e) {
+      const error = e as Error
+      const message = (
+        error?.message
+          ? {
+              role: ChatRole.System,
+              content: error?.message,
+              timestamp: Date.now(),
+              type
+            }
+          : failureMessage
+      ) as ChatMessage
+
+      addMessage(message)
     } finally {
       setIsTyping(false)
     }

@@ -17,7 +17,7 @@ export const ScrollButton: React.FC<ScrollButtonProps> = ({ sectionIds }) => {
     if (nextIndex < sectionIds.length && sectionIds[nextIndex]) {
       const nextSection = document.getElementById(sectionIds[nextIndex])
       if (nextSection) {
-        nextSection.scrollIntoView({ behavior: 'smooth' })
+        nextSection.scrollIntoView({ behavior: 'instant' })
         setCurrentIndex(nextIndex)
       }
     }

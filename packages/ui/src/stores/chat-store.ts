@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware'
 import { CHAT_STORAGE_NAME } from '../constants/stores'
 import { ChatMessage, ChatType } from '@shared/lib/types'
 import { v4 as uuidv4 } from 'uuid'
-import { copy } from '@shared/content'
+import { cvWelcomeMessage, referralWelcomeMessage } from '@shared/chat'
 
 export type ChatState = {
   chatMessages: ChatMessage[]
@@ -26,12 +26,12 @@ export const chatStore = create<ChatStore>()(
       sessionId: uuidv4(),
       referralMessages: [
         {
-          ...copy.chatMessages.welcomeMessage.referral
+          ...referralWelcomeMessage
         }
       ],
       chatMessages: [
         {
-          ...copy.chatMessages.welcomeMessage.cv
+          ...cvWelcomeMessage
         }
       ],
       messages: [],
@@ -61,14 +61,14 @@ export const chatStore = create<ChatStore>()(
             ? {
                 referralMessages: [
                   {
-                    ...copy.chatMessages.welcomeMessage.referral
+                    ...referralWelcomeMessage
                   }
                 ]
               }
             : {
                 chatMessages: [
                   {
-                    ...copy.chatMessages.welcomeMessage.cv
+                    ...cvWelcomeMessage
                   }
                 ]
               }

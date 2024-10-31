@@ -1,7 +1,15 @@
 import { ChatCategoryType } from '@shared/lib/types'
 import { ChatCategory } from '../types/cv'
 import { CV_MODEL } from './cv-model'
-import { copy } from '@shared/content'
+import {
+  greetingMessage,
+  outOfTopicMessage,
+  unknownMessage,
+  simpleResponseMessage,
+  goodbyeMessage,
+  processErrorMessage,
+  notMeaningfulMessage
+} from '../messages'
 
 export const QUESTION_CATEGORIES: Record<ChatCategoryType, ChatCategory> = {
   skills: {
@@ -152,7 +160,7 @@ export const QUESTION_CATEGORIES: Record<ChatCategoryType, ChatCategory> = {
   },
   greeting: {
     category: 'greeting',
-    model: copy.chatMessages.greetingMessage,
+    model: greetingMessage,
     keywords: [
       { word: 'hello', weight: 3 },
       { word: 'hi', weight: 2 },
@@ -174,7 +182,7 @@ export const QUESTION_CATEGORIES: Record<ChatCategoryType, ChatCategory> = {
       { word: 'movie', weight: 5 },
       { word: 'food', weight: 5 }
     ],
-    model: copy.chatMessages.outOfTopicMessage
+    model: outOfTopicMessage
   },
   languages: {
     category: 'languages',
@@ -213,7 +221,7 @@ export const QUESTION_CATEGORIES: Record<ChatCategoryType, ChatCategory> = {
   },
   unknown: {
     category: 'unknown',
-    model: copy.chatMessages.unknownMessage,
+    model: unknownMessage,
     keywords: []
   },
   certifications: {
@@ -485,7 +493,7 @@ export const QUESTION_CATEGORIES: Record<ChatCategoryType, ChatCategory> = {
         weight: 1
       }
     ],
-    model: copy.chatMessages.simpleResponseMessage
+    model: simpleResponseMessage
   },
   end: {
     category: 'end',
@@ -507,16 +515,16 @@ export const QUESTION_CATEGORIES: Record<ChatCategoryType, ChatCategory> = {
         weight: 3
       }
     ],
-    model: copy.chatMessages.goodbyeMessage
+    model: goodbyeMessage
   },
   error: {
     category: 'error',
     keywords: [],
-    model: copy.chatMessages.processErrorMessage
+    model: processErrorMessage
   },
   notMeaningful: {
     category: 'notMeaningful',
     keywords: [],
-    model: copy.chatMessages.notMeaningfulMessage
+    model: notMeaningfulMessage
   }
 }

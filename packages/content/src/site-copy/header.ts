@@ -53,7 +53,7 @@ export const header = {
       subtitle: 'A Summary of My Technical Skills and Proficiency'
     },
     aboutMe: {
-      id: 'aboutMe',
+      id: 'about-me',
       title: 'About Me',
       subtitle: 'A Brief Introduction to My Background and Interests'
     }

@@ -6,6 +6,10 @@ export const navbar: Record<
     description?: string
   }
 > = {
+  aboutMe: {
+    title: 'ABOUT ME',
+    id: '#about-me'
+  },
   experience: {
     title: 'EXPERIENCES',
     id: '#experiences'
@@ -14,6 +18,10 @@ export const navbar: Record<
     title: 'PROJECTS',
     id: '#projects'
   },
+  skills: {
+    title: 'SKILLS',
+    id: '#skills'
+  },
   education: {
     title: 'EDUCATION',
     id: '#educations'
@@ -21,9 +29,5 @@ export const navbar: Record<
   referrals: {
     title: 'REFERRALS',
     id: '#referrals'
-  },
-  skills: {
-    title: 'SKILLS',
-    id: '#skills'
   }
 }
