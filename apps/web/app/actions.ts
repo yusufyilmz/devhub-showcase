@@ -1,10 +1,13 @@
 'use server'
 
-import { ReferralService, ReviewService } from '@shared/lib/services'
-import { checkRateLimit, isCategoryReferralCategory } from '@shared/lib/utils'
+import {
+  RateLimiter,
+  ReferralService,
+  ReviewService
+} from '@shared/lib/services'
+import { isCategoryReferralCategory } from '@shared/lib/utils'
 import { logger } from '@shared/lib/logger'
-import { MessageProcessor } from '@shared/chat'
-import { copy } from '@shared/content'
+import { failureMessage, MessageProcessor } from '@shared/chat'
 import type {
   ReviewState,
   ChatMessage,
@@ -14,17 +17,16 @@ import type {
 const messageProcessor = new MessageProcessor(logger)
 const reviewService = new ReviewService(logger)
 const referralService = new ReferralService(logger)
+const rateLimiter = new RateLimiter()
 
 export async function handleSendMessageAction(
   message: ChatMessage,
   sessionId: string
 ): Promise<ChatMessage> {
-  if (!message.content) return copy.chatMessages.failureMessage
+  if (!message.content) return failureMessage
 
   try {
-    if (checkRateLimit(sessionId)) {
-      throw new Error(copy.notifications.errors.tooManyRequests)
-    }
+    await rateLimiter.isAllowed(sessionId)
 
     if (isCategoryReferralCategory(message.category)) {
       await referralService.saveReferral(
@@ -39,7 +41,8 @@ export async function handleSendMessageAction(
     return botReply
   } catch (error) {
     logger.error({ error }, 'Failed to process message')
-    return copy.chatMessages.failureMessage
+
+    throw error
   }
 }
 

@@ -5,8 +5,8 @@ import {
   validReferralCategories
 } from '@shared/lib/types'
 import { REFERRAL_MODAL } from '../../models/referral-modal'
-import { copy } from '@shared/content'
 import { Logger } from 'pino'
+import { failureMessage, referralFinishMessage } from '../../messages'
 
 export class ReferralService {
   constructor(private readonly logger: Logger) {}
@@ -26,7 +26,7 @@ export class ReferralService {
       const nextCategory = this.getNextReferralQuestion(userMessage.category)
 
       if (!nextCategory) {
-        return copy.chatMessages.referralGoodbyeMessage
+        return referralFinishMessage
       }
 
       return {
@@ -39,7 +39,7 @@ export class ReferralService {
     } catch (error) {
       this.logger.info({ error }, 'Error processing user message.')
       return {
-        ...copy.chatMessages.failureMessage,
+        ...failureMessage,
         type: 'referral',
         category: 'error'
       }

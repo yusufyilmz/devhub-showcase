@@ -30,29 +30,27 @@ export const Navbar: React.FC = () => {
   }
 
   return (
-    <nav className="p-4 bg-main-primary">
-      <div className="container flex justify-between md:justify-center items-center">
-        <IconButton
-          aria-label="Menu"
-          onClick={toggleMenu}
-          color="inherit"
-          className="hover:scale-105 text-textColor-light  transition-transform md:hidden"
-        >
-          <MenuIcon fontSize="large" />
-        </IconButton>
-        <AboutSection />
-        <div className={`space-x-4 hidden md:block`}>
-          <MenuItems />
-        </div>
-        <Drawer anchor="right" open={isOpen} onClose={toggleMenu}>
-          <Box
-            className="bg-main-dark h-full flex flex-col justify-start py-4 px-2 align-middle"
-            role="presentation"
-          >
-            <MenuItems />
-          </Box>
-        </Drawer>
+    <nav className="container flex justify-between md:justify-center items-center p-4 bg-main-primary">
+      <IconButton
+        aria-label="Menu"
+        onClick={toggleMenu}
+        color="inherit"
+        className="hover:scale-105 text-textColor-light transition-transform md:hidden"
+      >
+        <MenuIcon fontSize="large" />
+      </IconButton>
+      <AboutSection />
+      <div className={`hidden md:block`}>
+        <MenuItems />
       </div>
+      <Drawer anchor="right" open={isOpen} onClose={toggleMenu}>
+        <Box
+          className="bg-main-dark h-full flex flex-col justify-start py-4 px-2 align-middle"
+          role="presentation"
+        >
+          <MenuItems />
+        </Box>
+      </Drawer>
     </nav>
   )
 }
