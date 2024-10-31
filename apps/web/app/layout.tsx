@@ -9,6 +9,7 @@ import {
 import { CssBaseline, StyledEngineProvider } from '@mui/material'
 import { Poppins } from 'next/font/google'
 import type { Metadata } from 'next'
+import { copy } from '@shared/content'
 
 const inter = Poppins({
   subsets: ['latin'],
@@ -16,11 +17,7 @@ const inter = Poppins({
   weight: '400'
 })
 
-export const metadata: Metadata = {
-  title: "Yusuf's devhub showcase",
-  description:
-    'Explore my portfolio, professional experience, and AI-powered chat to learn more about my skills and projects'
-}
+export const metadata: Metadata = copy.metadata
 
 export default function RootLayout({
   children
@@ -29,6 +26,14 @@ export default function RootLayout({
 }): JSX.Element {
   return (
     <html className={inter.className} lang="en">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(copy.structuredData)
+          }}
+          type="application/ld+json"
+        />
+      </head>
       <body>
         <StyledEngineProvider injectFirst>
           <ThemeProvider>

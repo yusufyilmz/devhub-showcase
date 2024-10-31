@@ -10,6 +10,8 @@ import { errorPage } from './site-copy/errorPage'
 import { chatMessages } from './chat-messages'
 import { chat } from './site-copy/chat'
 import { aboutSection } from './site-copy/about'
+import { metadata } from './site-copy/meta-data'
+import { structuredData } from './site-copy/structured-data'
 
 export const copy = {
   project,
@@ -23,5 +25,7 @@ export const copy = {
   errorPage,
   chatMessages,
   chat,
-  aboutSection
+  aboutSection,
+  metadata,
+  structuredData
 }
