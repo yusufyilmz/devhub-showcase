@@ -54,15 +54,19 @@ export const ChatPopupContainer: React.FC<ChatPopupProps> = ({
       const response = await handleSendMessage(newMessage, sessionId)
 
       addMessage(response)
-    } catch(e) {
+    } catch (e) {
       const error = e as Error
-      const message = (error?.message ? {
-        role: ChatRole.System,
-        content: error?.message,
-        timestamp: Date.now(),
-        type
-      } : failureMessage) as ChatMessage
-  
+      const message = (
+        error?.message
+          ? {
+              role: ChatRole.System,
+              content: error?.message,
+              timestamp: Date.now(),
+              type
+            }
+          : failureMessage
+      ) as ChatMessage
+
       addMessage(message)
     } finally {
       setIsTyping(false)
