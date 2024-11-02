@@ -5,11 +5,11 @@ import {
   Card,
   CardBody,
   Typography,
-  ArrowDownwardIcon
-} from '@shared/ui/components'
+  ArrowDownwardIcon,
+  Divider
+} from '../../../../components'
 import { CompanyWithProjects } from '@shared/lib/types'
 import Link from 'next/link'
-import { Divider } from '@shared/ui/components'
 
 type CompanyProps = {
   company: CompanyWithProjects

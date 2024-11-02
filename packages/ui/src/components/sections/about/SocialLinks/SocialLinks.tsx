@@ -5,7 +5,7 @@ import {
   EmailIcon,
   GitHubIcon,
   PhoneIcon
-} from '@shared/ui/components'
+} from '../../../../components'
 
 export const SocialLinks = () => {
   return (

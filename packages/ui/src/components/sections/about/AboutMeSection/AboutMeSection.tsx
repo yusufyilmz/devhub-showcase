@@ -1,4 +1,4 @@
-import { Typography, Button, Section, PdfIcon } from '@shared/ui/components'
+import { Typography, Button, Section, PdfIcon } from '../../../../components'
 import { copy } from '@shared/content'
 import { SocialLinks } from '../SocialLinks'
 

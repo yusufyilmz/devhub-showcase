@@ -1,6 +1,6 @@
 import { Referral } from '@shared/lib/types'
 import { ReferralItem } from '../ReferralItem'
-import { Section, List, ListItem } from '@shared/ui/components'
+import { Section, List, ListItem } from '../../../../components'
 import { copy } from '@shared/content'
 
 const { id, title, subtitle } = copy.header.sections.referrals

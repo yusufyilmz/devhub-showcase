@@ -8,11 +8,11 @@ import {
   TimelineBody,
   TimelineConnector,
   TimelineHeader,
-  TimelineIcon
-} from '@shared/ui/components'
+  TimelineIcon,
+  Divider
+} from '../../../../components'
 
-import { Divider } from '@shared/ui/components'
-import { CARD_IDS } from '@shared/ui/constants'
+import { CARD_IDS } from '../../../../constants'
 import { SkillItem } from '../../skill/SkillItem/SkillItem'
 import { formatDateRange } from '@shared/lib/utils'
 import { ProjectList } from '../../project/ProjectList/ProjectList'

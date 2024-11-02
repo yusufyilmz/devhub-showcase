@@ -8,10 +8,10 @@ import {
   TimelineBody,
   TimelineConnector,
   TimelineHeader,
-  TimelineIcon
-} from '@shared/ui/components'
+  TimelineIcon,
+  TimelineItem
+} from '../../../../components'
 import { formatDateRange } from '@shared/lib/utils'
-import { TimelineItem } from '@shared/ui/components'
 
 type EducationProps = {
   education: Education

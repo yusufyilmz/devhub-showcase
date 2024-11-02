@@ -1,5 +1,5 @@
-import { Divider } from '@shared/ui/components'
-import React, { PropsWithChildren } from 'react'
+import { Divider } from '../../../components'
+import { PropsWithChildren } from 'react'
 import { PageHeader } from '../PageHeader'
 
 type SectionProps = {

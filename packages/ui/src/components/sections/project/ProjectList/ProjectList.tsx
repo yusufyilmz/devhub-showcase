@@ -8,7 +8,7 @@ import {
   Typography,
   ExternalLinkIcon,
   ArrowDownwardIcon
-} from '@shared/ui/components'
+} from '../../../../components'
 
 type ProjectListProps = {
   projects: { id: string; title: string }[]

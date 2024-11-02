@@ -1,7 +1,5 @@
-// import { useMemo } from 'react'
-
 import { ProjectItem } from '../ProjectItem'
-import { Section, List, ListItem } from '@shared/ui/components'
+import { Section, List, ListItem } from '../../../../components'
 
 import { ProjectWithCompanyAndSkills } from '@shared/lib/types'
 import { copy } from '@shared/content'

@@ -2,7 +2,7 @@
 
 import { ProjectUpdateInput, Project } from '@shared/lib/types'
 import { useState, useEffect } from 'react'
-import { Button, TextField } from '@shared/ui/components'
+import { Button, TextField } from '../../../../components'
 
 interface ProjectFormProps {
   // eslint-disable-next-line no-unused-vars

@@ -3,7 +3,7 @@
 import { CVCategoryType } from '@shared/lib/types'
 import { useEffect, useRef, useState } from 'react'
 import { CARD_IDS } from '../../../constants/cards'
-import { ArrowForwardIcon, ArrowBackIcon } from '@shared/ui/components'
+import { ArrowForwardIcon, ArrowBackIcon } from '../../../components'
 import { IconButton } from '../IconButton'
 
 interface ScrollableContainerProps {

@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react'
 import { ChatMessageBox } from '../ChatMessageBox'
 import { ChatMessage, ChatRole, type ChatType } from '@shared/lib/types'
 import { ChatInput } from '../ChatInput'
-import { IconButton, CloseIcon } from '@shared/ui/components'
-import { chatStore, useChatMessages } from '@shared/ui/stores'
+import { IconButton, CloseIcon } from '../../../../components'
+import { chatStore, useChatMessages } from '../../../../stores'
 import { TypingIndicator } from '../TypingIndicator'
 import { useStore } from 'zustand'
-import { failureMessage } from '@shared/chat'
+import { failureMessage } from '../../../../constants'
 
 interface ChatPopupProps {
   type: ChatType

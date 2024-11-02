@@ -1,5 +1,5 @@
 import { copy } from '@shared/content'
-import { Section, List, ListItem } from '@shared/ui/components'
+import { Section, List, ListItem } from '../../../../components'
 import { SkillCategoryItem } from '../SkillCategoryItem'
 import { Skill } from '@shared/lib/types'
 

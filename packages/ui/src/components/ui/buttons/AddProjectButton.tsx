@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@shared/ui/components'
+import { Button } from '../../../components'
 import { useRouter } from 'next/navigation'
 
 export const AddProjectButton = () => {

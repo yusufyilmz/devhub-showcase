@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { ArrowDownwardIcon, IconButton } from '@shared/ui/components'
+import { ArrowDownwardIcon, IconButton } from '../../../components'
 
 type ScrollButtonProps = {
   sectionIds: string[]

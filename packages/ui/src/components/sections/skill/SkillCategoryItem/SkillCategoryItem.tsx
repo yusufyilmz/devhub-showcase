@@ -1,4 +1,4 @@
-import { Card, CardBody, Divider, Typography } from '@shared/ui/components'
+import { Card, CardBody, Divider, Typography } from '../../../../components'
 import { Skill } from '@shared/lib/types'
 import { SkillItem } from '../SkillItem/SkillItem'
 import { capitalizeFirstLetter } from '@shared/lib/utils'

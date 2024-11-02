@@ -1,4 +1,4 @@
-import { Card, CardBody } from '@shared/ui/components'
+import { Card, CardBody } from '../../../../components'
 import { Referral } from '@shared/lib/types'
 
 const Comment = ({ comment }: { comment: string }) => (

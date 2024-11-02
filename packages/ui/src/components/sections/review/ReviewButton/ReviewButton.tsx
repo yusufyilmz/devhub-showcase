@@ -1,9 +1,9 @@
 'use client'
 
-import { Button } from '@shared/ui/components'
+import { Button } from '../../../../components'
 import { copy } from '@shared/content'
 import { ReviewState, ReviewWithReferrals } from '@shared/lib/types'
-import { useNotification } from '@shared/ui/hooks'
+import { useNotification } from '../../../../hooks'
 import { useRouter } from 'next/navigation'
 
 export const ReviewButton = ({

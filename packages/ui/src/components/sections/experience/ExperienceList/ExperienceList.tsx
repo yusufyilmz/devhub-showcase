@@ -1,7 +1,7 @@
 import { ExperienceItem } from '../ExperienceItem/ExperienceItem'
 import { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
 
-import { Timeline } from '@shared/ui/components'
+import { Timeline } from '../../../../components'
 
 interface ExperienceListProps {
   experiences: ExperienceWithCompanyProjectAndSkills[]

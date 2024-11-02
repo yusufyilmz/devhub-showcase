@@ -5,7 +5,7 @@ import { ChatMessage, ChatType } from '@shared/lib/types'
 import { useStore } from 'zustand'
 import { ChatPopupContainer } from '../ChatPopupContainer'
 import { useState } from 'react'
-import { IconButton, ChatIcon, ReferralIcon } from '@shared/ui/components'
+import { IconButton, ChatIcon, ReferralIcon } from '../../../../components'
 
 type ChatSectionProps = {
   handleSendMessage: (

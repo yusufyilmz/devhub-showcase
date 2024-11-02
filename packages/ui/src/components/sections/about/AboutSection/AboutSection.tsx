@@ -11,7 +11,7 @@ import {
   InfoIcon,
   List,
   ListItem
-} from '@shared/ui/components'
+} from '../../../../components'
 
 export function AboutSection() {
   const [openPopover, setOpenPopover] = useState(false)

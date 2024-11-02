@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@shared/ui/components'
+import { Button } from '../../../components'
 import { copy } from '@shared/content'
 import { useRouter } from 'next/navigation'
 

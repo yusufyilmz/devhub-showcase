@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
 'use client'
 
 import { createContext, useCallback, useState, useContext } from 'react'
-import { Alert, Typography, AlertProps } from '@shared/ui/components'
+import { Alert, Typography, AlertProps } from '../components'
 
 export interface NotificationContextProps {
   setError: (message: string) => void

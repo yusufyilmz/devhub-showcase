@@ -1,7 +1,7 @@
 import { Education } from '@shared/lib/types'
 import { EducationItem } from '../EducationItem/EducationItem'
 import { copy } from '@shared/content'
-import { Timeline, Section } from '@shared/ui/components'
+import { Timeline, Section } from '../../../../components'
 
 interface EducationsSectionProps {
   educations: Education[]

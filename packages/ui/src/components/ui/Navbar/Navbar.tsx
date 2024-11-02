@@ -2,22 +2,24 @@
 
 import { useState } from 'react'
 import { copy } from '@shared/content'
-import { IconButton, Button, Drawer, MenuIcon } from '@shared/ui/components'
+import { IconButton, Button, Drawer, MenuIcon } from '../../../components'
 import { AboutSection } from '../../sections/about/AboutSection'
 
 const MenuItems = () => (
   <>
-    {Object.keys(copy.navbar).filter((x) => x !== 'summary').map(key => (
-      <Button
-        aria-label={copy.navbar[key]?.title}
-        key={key}
-        variant="text"
-        className="text-main-white border-none whitespace-pre"
-        href={copy.navbar[key]?.id}
-      >
-        {copy.navbar[key]?.title}
-      </Button>
-    ))}
+    {Object.keys(copy.navbar)
+      .filter(x => x !== 'summary')
+      .map(key => (
+        <Button
+          aria-label={copy.navbar[key]?.title}
+          key={key}
+          variant="text"
+          className="text-main-white border-none whitespace-pre"
+          href={copy.navbar[key]?.id}
+        >
+          {copy.navbar[key]?.title}
+        </Button>
+      ))}
   </>
 )
 

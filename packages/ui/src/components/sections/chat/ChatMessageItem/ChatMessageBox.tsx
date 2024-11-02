@@ -1,6 +1,6 @@
 'use client'
 
-import { Typography } from '@shared/ui/components'
+import { Typography } from '../../../../components'
 import { ChatMessage } from '@shared/lib/types'
 import { formatTimestamp } from './utils'
 

@@ -1,5 +1,5 @@
 import { copy } from '@shared/content'
-import { GoBackButton, HomeButton, Typography } from '@shared/ui/components'
+import { GoBackButton, HomeButton, Typography } from '../../../components'
 
 export const NotFoundPage = () => {
   return (

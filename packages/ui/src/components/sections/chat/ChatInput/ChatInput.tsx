@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { copy } from '@shared/content'
 import { ChatType } from '@shared/lib/types'
-import { IconButton, SendIcon } from '@shared/ui/components'
+import { IconButton, SendIcon } from '../../../../components'
 
 type ChatInputProps = {
   handleSendMessage: (input: string) => void

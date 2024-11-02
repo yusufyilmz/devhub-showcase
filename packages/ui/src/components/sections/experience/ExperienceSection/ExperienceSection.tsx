@@ -1,6 +1,6 @@
 import { ExperienceList } from '../ExperienceList'
 import { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
-import { Section } from '@shared/ui/components'
+import { Section } from '../../../../components'
 import { copy } from '@shared/content'
 
 interface ExperienceSectionProps {

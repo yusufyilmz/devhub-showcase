@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 import { ProjectWithCompanyAndSkills } from '@shared/lib/types'
 import { SkillItem } from '../../skill/SkillItem/SkillItem'
-import { Typography, Divider, CardBody, Card } from '@shared/ui/components'
+import { Typography, Divider, CardBody, Card } from '../../../../components'
 
 interface ProjectItemProps {
   project: ProjectWithCompanyAndSkills

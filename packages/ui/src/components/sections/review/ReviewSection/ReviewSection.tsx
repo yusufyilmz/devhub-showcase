@@ -1,4 +1,4 @@
-import { Typography } from '@shared/ui/components'
+import { Typography } from '../../../../components'
 import { ReviewState, ReviewWithReferrals } from '@shared/lib/types'
 import { ReferralItem } from '../../referral/ReferralItem'
 import { ReviewButton } from '../ReviewButton/ReviewButton'
