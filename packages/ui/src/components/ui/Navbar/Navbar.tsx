@@ -7,7 +7,7 @@ import { AboutSection } from '../../sections/about/AboutSection'
 
 const MenuItems = () => (
   <>
-    {Object.keys(copy.navbar).map(key => (
+    {Object.keys(copy.navbar).filter((x) => x !== 'summary').map(key => (
       <Button
         aria-label={copy.navbar[key]?.title}
         key={key}
