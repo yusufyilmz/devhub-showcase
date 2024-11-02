@@ -1,10 +1,9 @@
 'use client'
 
-import { Box, Button, Drawer, IconButton } from '@mui/material'
 import { useState } from 'react'
 import { copy } from '@shared/content'
+import { IconButton, Button, Drawer, MenuIcon } from '@shared/ui/components'
 import { AboutSection } from '../../sections/about/AboutSection'
-import MenuIcon from '@mui/icons-material/Menu'
 
 const MenuItems = () => (
   <>
@@ -13,7 +12,7 @@ const MenuItems = () => (
         aria-label={copy.navbar[key]?.title}
         key={key}
         variant="text"
-        className="text-main-white whitespace-pre"
+        className="text-main-white border-none whitespace-pre"
         href={copy.navbar[key]?.id}
       >
         {copy.navbar[key]?.title}
@@ -30,12 +29,12 @@ export const Navbar: React.FC = () => {
   }
 
   return (
-    <nav className="container flex justify-between md:justify-center items-center p-4 bg-main-primary">
+    <nav className="flex justify-between md:justify-center items-center p-4 bg-transparent">
       <IconButton
         aria-label="Menu"
         onClick={toggleMenu}
-        color="inherit"
-        className="hover:scale-105 text-textColor-light transition-transform md:hidden"
+        variant="text"
+        className="hover:scale-105 text-main-lightest-slate transition-transform md:hidden"
       >
         <MenuIcon fontSize="large" />
       </IconButton>
@@ -43,13 +42,13 @@ export const Navbar: React.FC = () => {
       <div className={`hidden md:block`}>
         <MenuItems />
       </div>
-      <Drawer anchor="right" open={isOpen} onClose={toggleMenu}>
-        <Box
-          className="bg-main-dark h-full flex flex-col justify-start py-4 px-2 align-middle"
+      <Drawer placement="right" open={isOpen} onClose={toggleMenu}>
+        <div
+          className="bg-main-dark h-full flex flex-col justify-start p-4 align-middle"
           role="presentation"
         >
           <MenuItems />
-        </Box>
+        </div>
       </Drawer>
     </nav>
   )

@@ -267,7 +267,7 @@ VALUES
     NOW(),
     NOW(),
     'Turkcell',
-    'https://turkcell.com'
+    'https://www.turkcell.com.tr'
   ),
   (
     sestekCompanyId,
@@ -415,6 +415,7 @@ INSERT INTO
     title,
     description,
     link,
+    image_url,
     role,
     public,
     "companyId",
@@ -430,6 +431,7 @@ VALUES
     'Automated Story Generator',
     'A tool designed to automate the generation of customized success stories by utilizing AI to process user input and generate personalized narratives. I was responsible for the full-stack development, handling both frontend (React, Next.js) and backend (Node.js, Prisma, PostgreSQL) components, along with implementing the queue system for processing requests using bullMQ and Redis.',
     NULL,
+    NULL,
     'Senior Fullstack Engineer',
     FALSE,
     toptalCompanyId,
@@ -442,6 +444,7 @@ VALUES
     NOW(),
     'Content Monitoring Tool',
     'A system for monitoring public content and generating alerts based on specific conditions. Integrated with a task management system to create tickets for any issues found. I was involved in full-stack development, ensuring proper data flow from the frontend to the backend while working with APIs for content analysis and task management.',
+    NULL,
     NULL,
     'Senior Fullstack Engineer',
     FALSE,
@@ -456,6 +459,7 @@ VALUES
     'Negative Keyword Generation Tool',
     'A tool that automates the generation of negative keywords for advertising campaigns, improving SEO performance. I was responsible for full-stack development, creating a user-friendly frontend with React and integrating with Google Ads API to dynamically generate keywords and manage campaigns.',
     NULL,
+    NULL,
     'Senior Fullstack Engineer',
     FALSE,
     toptalCompanyId,
@@ -468,6 +472,7 @@ VALUES
     NOW(),
     'Performance Alerts System',
     'An automated system designed to manage and update dynamic content on various web pages. I was responsible for the full-stack development, including integrating with content APIs, creating a responsive frontend, and building the backend for processing content updates in real time using Kafka.js and Redis.',
+    NULL,
     NULL,
     'Senior Fullstack Engineer',
     FALSE,
@@ -482,6 +487,7 @@ VALUES
     'Positive Keyword Optimization Tool',
     'A tool for automating the generation and optimization of positive keywords for advertising campaigns. I contributed to the frontend development, focusing on creating a responsive UI and integrating it with backend services that interact with the Google Ads API for seamless campaign management.',
     NULL,
+    NULL,
     'Frontend Developer',
     FALSE,
     toptalCompanyId,
@@ -494,6 +500,7 @@ VALUES
     NOW(),
     'Dynamic Content Management System',
     'An automated system designed to manage and update dynamic content on various web pages. I was responsible for the full-stack development, including integrating with content APIs, creating a responsive frontend, and building the backend for processing content updates in real time using Kafka.js and Redis.',
+    NULL,
     NULL,
     'Senior Fullstack Engineer',
     FALSE,
@@ -508,6 +515,7 @@ VALUES
     'Media Assets Review Tool',
     'A tool for reviewing and managing media assets used in marketing campaigns. My role involved full-stack development, including building the frontend for asset review and management, as well as developing the backend integration with the advertising API and media storage.',
     NULL,
+    NULL,
     'Senior Fullstack Engineer',
     FALSE,
     toptalCompanyId,
@@ -521,6 +529,7 @@ VALUES
     'CSS3 Maker',
     'A public tool designed to simplify the creation of CSS3 styles, providing a range of customizations and previews for web developers. With CSS3 Maker, users can generate CSS code for various effects, such as gradients, transforms, transitions, and animations, helping streamline development workflows and enhance styling options with minimal effort.',
     'https://www.toptal.com/developers/css3maker',
+    '/projects/css3maker.png',
     'Senior Frontend Developer',
     TRUE,
     toptalCompanyId,
@@ -534,6 +543,7 @@ VALUES
     'JavaScript Minifier',
     'A public tool for minifying JavaScript code, used by developers to compress and optimize their scripts. I developed the frontend interface using React and Next.js, ensuring a simple and intuitive user experience.',
     'https://www.toptal.com/developers/javascript-minifier',
+    '/projects/jsminifier.png',
     'Senior Frontend Developer',
     TRUE,
     toptalCompanyId,
@@ -547,6 +557,7 @@ VALUES
     'HTMLShell',
     'A public tool that generates HTML code snippets. I developed the frontend using React and Next.js, ensuring a user-friendly experience for developers needing to generate HTML quickly.',
     'https://www.toptal.com/developers/htmlshell',
+    '/projects/htmlshell.png',
     'Senior Frontend Developer',
     TRUE,
     toptalCompanyId,
@@ -559,7 +570,8 @@ VALUES
     NOW(),
     'Keycode Tool',
     'A public tool for developers to test and find keycodes for keyboard events. I built the frontend using React and Next.js, providing an easy-to-use interface for testing keycodes.',
-    'https://www.toptal.com/developers/keycode/a',
+    'https://www.toptal.com/developers/keycode',
+    '/projects/keycode.png',
     'Senior Frontend Developer',
     TRUE,
     toptalCompanyId,
@@ -572,7 +584,8 @@ VALUES
     NOW(),
     'Hastebin',
     'A public tool for sharing code snippets. I contributed to the full-stack development, focusing on building a responsive frontend with React and Next.js and ensuring proper backend integration for storing and retrieving code snippets.',
-    'https://hastebin.com/share/donicodecu.bash',
+    'https://www.toptal.com/developers/hastebin',
+    '/projects/hastebin.png',
     'Senior Full Stack Developer',
     TRUE,
     toptalCompanyId,
@@ -586,6 +599,7 @@ VALUES
     'CSS Minifier',
     'A public tool for minifying CSS code, helping developers compress and optimize stylesheets. I worked on the frontend using React and Next.js to ensure smooth functionality and user-friendly interaction.',
     'https://www.toptal.com/developers/cssminifier',
+    '/projects/cssminifier.png',
     'Senior Frontend Developer',
     TRUE,
     toptalCompanyId,
@@ -599,6 +613,7 @@ VALUES
     'HTML Minifier',
     'A public tool for minifying HTML code, used to compress HTML files for improved performance. I was responsible for building the frontend using React and Next.js.',
     'https://www.toptal.com/developers/html-minifier',
+    '/projects/htmlminifier.png',
     'Senior Frontend Developer',
     TRUE,
     toptalCompanyId,
@@ -611,6 +626,7 @@ VALUES
     NOW(),
     'Automation Tools for Engineering Teams',
     'Developed automation tools for engineering teams to streamline frontend and backend development processes.',
+    NULL,
     NULL,
     'Senior Software Engineer',
     FALSE,
@@ -625,6 +641,7 @@ VALUES
     'Web Product Migration to Modern Framework',
     'Led the conversion of existing web products to a modern framework, improving performance and maintainability.',
     NULL,
+    NULL,
     'Senior Full Stack Developer',
     FALSE,
     marfeelCompanyId,
@@ -638,6 +655,7 @@ VALUES
     'WebChat',
     'Developed a real-time WebChat platform for Turkcell for customers to talk customer service, supporting high traffic.',
     NULL,
+    NULL,
     'Senior Software Engineer',
     FALSE,
     turkcellCompanyId,
@@ -649,6 +667,7 @@ VALUES
     NOW(),
     'Chat Gateway',
     'Designed and implemented a multi-channel chat gateway for customer services chat platforms.',
+    NULL,
     NULL,
     'Senior Software Engineer',
     FALSE,
@@ -663,6 +682,7 @@ VALUES
     'Text-to-Speech Features',
     'Developed key features for a text-to-speech system, integrating with multiple platforms.',
     NULL,
+    NULL,
     'Software Engineer',
     FALSE,
     sestekCompanyId,
@@ -674,6 +694,7 @@ VALUES
     NOW(),
     'Speech Recognition Features',
     'Worked on developing speech recognition features aimed at enhancing customer interactions.',
+    NULL,
     NULL,
     'Software Engineer',
     FALSE,
@@ -687,6 +708,7 @@ VALUES
     NOW(),
     'Yusuf`s Devhub Showcase',
     'DevHub Showcase is a comprehensive portfolio platform designed to present your professional journey, skills, and projects. It highlights your technical expertise across frontend, backend, database, and data pipeline skills while showcasing detailed experience in modern frameworks like React, Next.js, and Node.js, as well as cloud services, DevOps tools, and testing practices. Visitors can interact through built-in chat features to ask questions or leave referrals, allowing for an engaging and interactive experience that provides insights into your work and accomplishments.',
+    NULL,
     NULL,
     'Fullstack Engineer',
     FALSE,
@@ -1410,6 +1432,36 @@ VALUES
   (devhubShowcaseProjectId, awsSkillId),
   -- AWS
   (devhubShowcaseProjectId, cssSkillId);
+
+
+
+
+-- Insert referrals
+INSERT INTO
+  "referrals" (
+    id,
+    created_at,
+    updated_at,
+    name,
+    relationship,
+    feedback,
+    recommendation,
+    contact_info,
+    session_id
+  )
+VALUES
+  (
+    'e1f8c0e4-0e8d-4114-b3eb-89e647282399',
+    NOW(),
+    NOW(),
+    'Marcelo Carneiro',
+    'Toptal, Team manager',
+    'I had the pleasure of working with Yusuf at Toptal, where he made a significant impact as a Senior Full-Stack Engineer. He is an incredibly fast developer, consistently delivering results with impressive speed and precision. Yusuf was always proactive in creating solutions, and bringing ideas to the table. His execution was top-notch, ensuring that his innovative concepts were implemented effectively.',
+    'Yusuf would be a fantastic asset to any team, combining speed, proactivity, and a collaborative spirit to deliver exceptional results.',
+    'john.doe@example.com',
+    'unique-session-id-1'
+  );
+
 
 -- HTML
 END $$;

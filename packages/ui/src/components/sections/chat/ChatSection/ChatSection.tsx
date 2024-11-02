@@ -5,9 +5,7 @@ import { ChatMessage, ChatType } from '@shared/lib/types'
 import { useStore } from 'zustand'
 import { ChatPopupContainer } from '../ChatPopupContainer'
 import { useState } from 'react'
-import { Box, IconButton } from '@mui/material'
-import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer'
-import RecommendIcon from '@mui/icons-material/Recommend'
+import { IconButton, ChatIcon, ReferralIcon } from '@shared/ui/components'
 
 type ChatSectionProps = {
   handleSendMessage: (
@@ -33,31 +31,30 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
 
   return (
     <>
-      <Box className="fixed bottom-4 right-4 flex flex-col z-[200]">
+      <div className="fixed bottom-4 right-4 flex flex-col gap-4 z-[200]">
         <IconButton
+          variant="text"
           className="icon-button"
-          size="large"
-          color="primary"
           aria-label={'Resume Chat'}
           onClick={() => {
             setType('cv')
             setIsOpen(!isOpen)
           }}
         >
-          <QuestionAnswerIcon fontSize="large" />
+          <ChatIcon fontSize="xlarge" />
         </IconButton>
         <IconButton
+          variant="text"
           className="icon-button"
-          color="primary"
           aria-label={'Referral Chat'}
           onClick={() => {
             setType('referral')
             setIsOpen(!isOpen)
           }}
         >
-          <RecommendIcon fontSize="large" />
+          <ReferralIcon fontSize="xlarge" />
         </IconButton>
-      </Box>
+      </div>
       {isOpen && (
         <ChatPopupContainer
           type={type}

@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@mui/material'
+import { Button } from '@shared/ui/components'
 import { useRouter } from 'next/navigation'
 import { copy } from '@shared/content'
 
@@ -10,8 +10,7 @@ export const GoBackButton = () => {
   return (
     <Button
       aria-label="Go back"
-      variant="contained"
-      color="primary"
+      variant="outlined"
       onClick={() => router.back()}
       className="rounded-lg"
     >

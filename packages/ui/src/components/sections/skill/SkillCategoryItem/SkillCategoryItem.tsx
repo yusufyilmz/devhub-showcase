@@ -1,4 +1,4 @@
-import { Card, CardContent, Divider, Typography } from '@mui/material'
+import { Card, CardBody, Divider, Typography } from '@shared/ui/components'
 import { Skill } from '@shared/lib/types'
 import { SkillItem } from '../SkillItem/SkillItem'
 import { capitalizeFirstLetter } from '@shared/lib/utils'
@@ -9,11 +9,10 @@ export const SkillCategoryItem: React.FC<{ name: string; skills: Skill[] }> = ({
 }) => {
   return (
     <Card className="section-card">
-      <CardContent className="flex flex-col">
+      <CardBody className="flex flex-col">
         <Typography
           variant="h3"
-          align="left"
-          className="font-semibold text-main-white mb-3 text-2xl"
+          className="text-left font-semibold text-main-white mb-3 text-2xl"
         >
           {capitalizeFirstLetter(name)}
         </Typography>
@@ -29,7 +28,7 @@ export const SkillCategoryItem: React.FC<{ name: string; skills: Skill[] }> = ({
             ) : null
           )}
         </div>
-      </CardContent>
+      </CardBody>
     </Card>
   )
 }

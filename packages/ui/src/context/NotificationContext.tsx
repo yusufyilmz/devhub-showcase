@@ -2,12 +2,21 @@
 'use client'
 
 import { createContext, useCallback, useState, useContext } from 'react'
-import { Snackbar, Alert } from '@mui/material'
+import { Alert, Typography, AlertProps } from '@shared/ui/components'
 
 export interface NotificationContextProps {
   setError: (message: string) => void
   setSuccess: (message: string) => void
   setInfo: (message: string) => void
+}
+
+type AlertTypes = 'success' | 'error' | 'warning' | 'info'
+
+const COLORS: Record<AlertTypes, AlertProps['color']> = {
+  error: 'red',
+  success: 'green',
+  warning: 'yellow',
+  info: 'blue'
 }
 
 export const NotificationContext = createContext<
@@ -19,7 +28,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [notification, setNotification] = useState({
     message: '',
-    severity: 'success' as 'success' | 'error' | 'warning' | 'info',
+    severity: 'success' as AlertTypes,
     open: false
   })
 
@@ -42,15 +51,21 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <NotificationContext.Provider value={{ setError, setSuccess, setInfo }}>
       {children}
-      <Snackbar
-        open={notification.open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity={notification.severity}>
-          {notification.message}
+      {notification.open && (
+        <Alert
+          color={COLORS[notification.severity]}
+          className="fixed bottom-4 left-1/2 transform -translate-x-1/2 max-w-xs shadow-lg"
+          onClose={handleClose}
+          animate={{
+            mount: { opacity: 1, y: 0 },
+            unmount: { opacity: 0, y: 50 }
+          }}
+        >
+          <Typography variant="small" className="text-white">
+            {notification.message}
+          </Typography>
         </Alert>
-      </Snackbar>
+      )}
     </NotificationContext.Provider>
   )
 }

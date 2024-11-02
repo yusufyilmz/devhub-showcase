@@ -1,6 +1,6 @@
 'use client'
 
-import Button from '@mui/material/Button'
+import { Button } from '@shared/ui/components'
 import { useRouter } from 'next/navigation'
 
 export const AddProjectButton = () => {

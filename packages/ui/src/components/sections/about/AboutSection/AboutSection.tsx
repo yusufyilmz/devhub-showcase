@@ -1,89 +1,62 @@
 'use client'
 
-import {
-  Popover,
-  Typography,
-  IconButton,
-  List,
-  ListItem,
-  Box
-} from '@mui/material'
-import InfoIcon from '@mui/icons-material/Info'
 import { useState } from 'react'
 import { copy } from '@shared/content'
-import CloseIcon from '@mui/icons-material/Close'
+import {
+  Popover,
+  PopoverHandler,
+  PopoverContent,
+  Typography,
+  IconButton,
+  InfoIcon,
+  List,
+  ListItem
+} from '@shared/ui/components'
 
-export const AboutSection = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+export function AboutSection() {
+  const [openPopover, setOpenPopover] = useState(false)
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget)
+  const triggers = {
+    onMouseEnter: () => setOpenPopover(true),
+    onMouseLeave: () => setOpenPopover(false)
   }
-
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
-
-  const open = Boolean(anchorEl)
-  const id = open ? 'about-popover' : undefined
 
   return (
-    <Box className="-mt-1">
-      <IconButton
-        aria-label="About project"
-        className="icon-button"
-        color="primary"
-        onClick={handleClick}
+    <Popover open={openPopover} handler={setOpenPopover}>
+      <PopoverHandler {...triggers}>
+        <IconButton
+          aria-label="About project"
+          variant="text"
+          className={`icon-button`}
+        >
+          <InfoIcon />
+        </IconButton>
+      </PopoverHandler>
+      <PopoverContent
+        {...triggers}
+        className="z-50 w-full md:max-w-[32rem] max-h-[90vh] overflow-y-auto m-2"
       >
-        <InfoIcon />
-      </IconButton>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center'
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center'
-        }}
-      >
-        <section id="about-development" className="max-w-[500px] p-4">
-          <IconButton
-            onClick={() => {
-              handleClose()
-            }}
-            aria-label="Close"
-            className="icon-button absolute top-2 right-2 text-gray-500 focus:outline-none"
-          >
-            <CloseIcon className="h-4 w-4" />
-          </IconButton>
-
-          <Typography variant="h5" gutterBottom>
+        <div className="p-2">
+          <Typography variant="h5" className="mb-2">
             {copy.aboutSection.title}
           </Typography>
-          <Typography variant="body1" paragraph>
+          <Typography variant="paragraph" className="mb-4">
             {copy.aboutSection.description}
           </Typography>
-
-          <List>
+          <List className="border-none shadow-none">
             {copy.aboutSection.technologies.map((tech, index) => (
-              <ListItem key={index}>
-                <Typography variant="body2">
+              <ListItem key={index} className="py-0 my-4">
+                <Typography variant="small">
                   <strong>{tech.name}:</strong> {tech.details}
                 </Typography>
               </ListItem>
             ))}
           </List>
-
-          <Typography variant="body1" paragraph>
+          <Typography variant="paragraph" className="mt-4">
             {copy.aboutSection.conclusion}
           </Typography>
-        </section>
-      </Popover>
-    </Box>
+        </div>
+      </PopoverContent>
+    </Popover>
   )
 }

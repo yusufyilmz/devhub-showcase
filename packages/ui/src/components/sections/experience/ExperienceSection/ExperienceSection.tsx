@@ -1,8 +1,7 @@
 import { ExperienceList } from '../ExperienceList'
 import { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
-import { Section } from '../../../ui/Section'
+import { Section } from '@shared/ui/components'
 import { copy } from '@shared/content'
-import { Box } from '@mui/material'
 
 interface ExperienceSectionProps {
   experiences: ExperienceWithCompanyProjectAndSkills[]
@@ -14,8 +13,8 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({
   experiences
 }) => (
   <Section sectionId={id} title={title} subtitle={subtitle}>
-    <Box className="mt-8">
+    <div className="mt-8">
       <ExperienceList experiences={experiences} />
-    </Box>
+    </div>
   </Section>
 )

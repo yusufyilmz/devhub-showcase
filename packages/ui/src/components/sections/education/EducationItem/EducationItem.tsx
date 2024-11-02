@@ -1,14 +1,17 @@
-import { Card, CardContent, Typography } from '@mui/material'
 import { Education } from '@shared/lib/types'
 import Link from 'next/link'
-import Divider from '@mui/material/Divider'
-import TimelineItem from '@mui/lab/TimelineItem'
-import TimelineConnector from '@mui/lab/TimelineConnector'
-import TimelineContent from '@mui/lab/TimelineContent'
-import TimelineDot from '@mui/lab/TimelineDot'
-import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent'
-import TimelineSeparator from '@mui/lab/TimelineSeparator'
+import {
+  Divider,
+  Card,
+  CardBody,
+  Typography,
+  TimelineBody,
+  TimelineConnector,
+  TimelineHeader,
+  TimelineIcon
+} from '@shared/ui/components'
 import { formatDateRange } from '@shared/lib/utils'
+import { TimelineItem } from '@shared/ui/components'
 
 type EducationProps = {
   education: Education
@@ -16,42 +19,31 @@ type EducationProps = {
 
 export const EducationItem: React.FC<EducationProps> = ({ education }) => {
   return (
-    <TimelineItem className="w-full mt-8 max">
-      <TimelineOppositeContent
-        sx={{ m: 'auto 0' }}
-        align="right"
-        variant="body2"
-        color="text.secondary"
-        className="w-full max-w-12 md:max-w-48"
-      >
-        <Typography className="text-xs font-light pb-0 text-textColor-secondary mt-2">
+    <TimelineItem className="w-full">
+      <TimelineConnector color="white" />
+      <TimelineHeader className="h-4">
+        <TimelineIcon color="white" />
+        <Typography className="text-xs font-light pb-0 text-main-light-slate mt-2">
           {formatDateRange(education.startedAt, education.finishedAt)}
         </Typography>
-      </TimelineOppositeContent>
-      <TimelineSeparator>
-        <TimelineConnector />
-        <TimelineDot></TimelineDot>
-        <TimelineConnector />
-      </TimelineSeparator>
-      <TimelineContent>
-        <Card className="section-card education-card ml-0 md:ml-4">
+      </TimelineHeader>
+      <TimelineBody className="ml-0 mr-4 my-8 md:mx-8">
+        <Card className="section-card education-card w-full">
           <Link
             href={education.institutionLink}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <CardContent className="flex flex-col gap-1">
+            <CardBody className="flex flex-col gap-1">
               <Typography
                 variant="h3"
-                align="left"
-                className="font-semibold text-main-white text-2xl"
+                className="font-semibold text-main-white text-2xl text-left"
               >
                 {education.institution}
               </Typography>
               <Typography
                 variant="h4"
-                align="left"
-                className="text-lg font-semibold text-textColor-secondary mb-3"
+                className="text-lg font-semibold text-textColor-secondary mb-3 text-left"
               >
                 {education.degree} in {education.fieldOfStudy}
               </Typography>
@@ -59,10 +51,10 @@ export const EducationItem: React.FC<EducationProps> = ({ education }) => {
               <p className="font-extralight text-sm text-textColor-lightSlate">
                 {education.description}
               </p>
-            </CardContent>
+            </CardBody>
           </Link>
         </Card>
-      </TimelineContent>
+      </TimelineBody>
     </TimelineItem>
   )
 }

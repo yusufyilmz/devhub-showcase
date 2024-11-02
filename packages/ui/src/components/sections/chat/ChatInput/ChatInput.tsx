@@ -3,8 +3,7 @@
 import { useState } from 'react'
 import { copy } from '@shared/content'
 import { ChatType } from '@shared/lib/types'
-import { Send } from '@mui/icons-material'
-import { IconButton } from '@mui/material'
+import { IconButton, SendIcon } from '@shared/ui/components'
 
 type ChatInputProps = {
   handleSendMessage: (input: string) => void
@@ -67,7 +66,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         onClick={handleSendButtonClick}
         className="icon-button px-4 py-2 bg-main-primary text-main-white rounded-lg hover:bg-gray-600 disabled:bg-gray-700 disabled:text-main-white"
       >
-        <Send />
+        <SendIcon />
       </IconButton>
     </div>
   )

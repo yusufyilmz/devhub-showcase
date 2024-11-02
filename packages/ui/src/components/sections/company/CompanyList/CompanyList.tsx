@@ -1,7 +1,6 @@
 import { CompanyItem } from '../CompanyItem/CompanyItem'
 import { CompanyWithProjects } from '@shared/lib/types'
 import { ScrollableContainer } from '../../../ui/ScrollableContainer/ScrollableContainer'
-import { Grid } from '@mui/material'
 
 interface CompanyListProps {
   companies: CompanyWithProjects[]
@@ -11,9 +10,12 @@ export const CompanyList: React.FC<CompanyListProps> = ({ companies }) => {
   return (
     <ScrollableContainer category="experience">
       {companies.map(company => (
-        <Grid sx={{ py: 2 }} key={company.id} item xs={12} sm={6} md={4} lg={3}>
+        <div
+          className="py-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+          key={company.id}
+        >
           <CompanyItem company={company} />
-        </Grid>
+        </div>
       ))}
     </ScrollableContainer>
   )

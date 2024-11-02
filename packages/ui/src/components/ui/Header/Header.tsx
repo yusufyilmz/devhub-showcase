@@ -2,7 +2,7 @@ import { Navbar } from '../Navbar'
 
 export const Header: React.FC = () => {
   return (
-    <header className="sticky md:px-page-px bg-main-primary text-center top-0 h-16 z-50">
+    <header className="sticky top-0 z-40 bg-main-primary border-none shadow-none">
       <Navbar />
     </header>
   )

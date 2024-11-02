@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Typography } from '@mui/material'
+import { Typography } from '@shared/ui/components'
 import { ChatMessage } from '@shared/lib/types'
 import { formatTimestamp } from './utils'
 
@@ -8,10 +8,10 @@ export const ChatMessageItem: React.FC<{ message: ChatMessage }> = ({
   message
 }) => {
   return (
-    <Box
+    <div
       className={`mb-4 flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
     >
-      <Box
+      <div
         className={`max-w-xs p-3 rounded-lg shadow-md ${
           message.role === 'user'
             ? 'bg-main-primary text-white'
@@ -24,7 +24,7 @@ export const ChatMessageItem: React.FC<{ message: ChatMessage }> = ({
       >
         {message.title && (
           <Typography
-            variant="subtitle2"
+            variant="lead"
             className="font-semibold mb-1"
             style={{ color: message.role === 'user' ? '#FFF' : '#333' }}
           >
@@ -32,17 +32,17 @@ export const ChatMessageItem: React.FC<{ message: ChatMessage }> = ({
           </Typography>
         )}
         <Typography
-          variant="body2"
+          variant="paragraph"
           className="whitespace-pre-wrap"
           style={{ lineHeight: '1.5' }}
         >
           {message.content}
         </Typography>
 
-        <Typography variant="caption" className="text-gray-500 mt-1">
+        <Typography variant="small" className="text-gray-500 mt-1">
           {message.timestamp ? formatTimestamp(message.timestamp) : ''}
         </Typography>
-      </Box>
-    </Box>
+      </div>
+    </div>
   )
 }

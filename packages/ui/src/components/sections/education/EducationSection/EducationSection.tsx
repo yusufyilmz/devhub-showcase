@@ -1,10 +1,7 @@
 import { Education } from '@shared/lib/types'
 import { EducationItem } from '../EducationItem/EducationItem'
-import { Section } from '../../../ui/Section'
 import { copy } from '@shared/content'
-import Timeline from '@mui/lab/Timeline'
-import { timelineItemClasses } from '@mui/lab/TimelineItem'
-import { Box } from '@mui/material'
+import { Timeline, Section } from '@shared/ui/components'
 
 interface EducationsSectionProps {
   educations: Education[]
@@ -13,25 +10,17 @@ interface EducationsSectionProps {
 const { id, title, subtitle } = copy.header.sections.educations
 
 export const EducationsSection: React.FC<EducationsSectionProps> = ({
-  educations
+  educations = []
 }) => {
   return (
     <Section sectionId={id} title={title} subtitle={subtitle}>
-      <Box className="flex items-center md:min-h-[calc(100vh-4rem)]">
-        <Timeline
-          sx={{
-            [`& .${timelineItemClasses.root}:before`]: {
-              flex: 0,
-              padding: 0
-            }
-          }}
-          className="overflow-y-auto no-scrollbar w-full"
-        >
+      <div className="flex items-center md:min-h-[calc(100vh-4rem)]">
+        <Timeline className="overflow-y-auto no-scrollbar w-full">
           {educations.map(education => (
             <EducationItem key={education.id} education={education} />
           ))}
         </Timeline>
-      </Box>
+      </div>
     </Section>
   )
 }
