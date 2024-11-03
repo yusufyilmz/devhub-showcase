@@ -1,3 +1,4 @@
+import React from 'react'
 import { Referral } from '@shared/lib/types'
 import { ReferralItem } from '../ReferralItem'
 import { Section, List, ListItem } from '../../../../components'
@@ -7,7 +8,7 @@ const { id, title, subtitle } = copy.header.sections.referrals
 
 export const ReferralSection: React.FC<{
   referrals: Referral[]
-}> = ({ referrals }): JSX.Element => {
+}> = ({ referrals }) => {
   return (
     <Section
       className="top-32 bottom-32 mb-32"

@@ -1,7 +1,5 @@
 'use client'
 
 export {
-  Popover,
-  PopoverHandler,
-  PopoverContent
-} from '@material-tailwind/react'
+  Popover
+} from '@mui/material'

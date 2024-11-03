@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { copy } from '@shared/content'
 
 export const Footer: React.FC = () => {

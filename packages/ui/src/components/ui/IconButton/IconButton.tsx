@@ -1,8 +1,35 @@
-'use client'
+import React from 'react'
 
-import { IconButton } from '.'
+type IconButtonProps = {
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void
+  color?: string
+  size?: string
+  className?: string
+  children: React.ReactNode
+  ariaLabel?: string
+} & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-export { IconButton } from '@material-tailwind/react'
+export const IconButton: React.FC<IconButtonProps> = ({
+  onClick,
+  color = 'text-gray-600',
+  size = 'w-6 h-6',
+  className = '',
+  children,
+  ariaLabel,
+  ...props
+}) => {
+  return (
+    <button
+      onClick={onClick}
+      className={`p-2 rounded-full focus:outline-none ${color} ${className}`}
+      aria-label={ariaLabel}
+      type="button"
+      {...props}
+    >
+      <div className={size}>{children}</div>
+    </button>
+  )
+}
 
 type IconButtonWithLinkProps = {
   href: string
@@ -19,11 +46,7 @@ export const IconButtonWithLink: React.FC<IconButtonWithLinkProps> = ({
 }) => {
   return (
     <a href={href} target="_blank" rel="noopener noreferrer">
-      <IconButton
-        variant="text"
-        aria-label={label}
-        className={`icon-button ${className}`}
-      >
+      <IconButton aria-label={label} className={`icon-button ${className}`}>
         {children}
       </IconButton>
     </a>

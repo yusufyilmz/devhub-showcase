@@ -1,3 +1,4 @@
+import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -47,7 +48,7 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
           </Typography>
           <Divider className="bg-main-light-slate mb-6 mt-0" />
           <Typography
-            variant="small"
+            variant="overline"
             className="text-textColor-lightSlate font-light"
           >
             {project?.description}

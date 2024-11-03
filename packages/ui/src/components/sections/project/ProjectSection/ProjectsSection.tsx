@@ -1,3 +1,4 @@
+import React from 'react'
 import { ProjectItem } from '../ProjectItem'
 import { Section, List, ListItem } from '../../../../components'
 
@@ -21,7 +22,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           className="overflow-y-auto mt-2 md:mt-8 no-scrollbar w-full"
         >
           {projects.map(project => (
-            <ListItem key={project.id} className="pl-0 md:pl-4">
+            <ListItem key={project.id} className="pl-0 md:pl-4 py-8">
               <ProjectItem project={project} />
             </ListItem>
           ))}

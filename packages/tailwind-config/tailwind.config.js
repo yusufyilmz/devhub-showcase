@@ -1,6 +1,20 @@
 module.exports = {
     theme: {
         extend: {
+            keyframes: {
+                mount: {
+                    '0%': { transform: 'scale(0.9)' },
+                    '100%': { transform: 'scale(1)' }
+                },
+                unmount: {
+                    '0%': { transform: 'scale(1)' },
+                    '100%': { transform: 'scale(0.9)' }
+                },
+            },
+            animation: {
+                mount: 'mount 0.3s ease-out forwards',
+                unmount: 'unmount 0.3s ease-in forwards'
+            },
             margin: {
                 'page-mx': '15%',
             },

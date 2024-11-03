@@ -1,3 +1,4 @@
+import React from 'react'
 import { Education } from '@shared/lib/types'
 import Link from 'next/link'
 import {
@@ -6,7 +7,6 @@ import {
   CardBody,
   Typography,
   TimelineBody,
-  TimelineConnector,
   TimelineHeader,
   TimelineIcon,
   TimelineItem
@@ -19,15 +19,14 @@ type EducationProps = {
 
 export const EducationItem: React.FC<EducationProps> = ({ education }) => {
   return (
-    <TimelineItem className="w-full">
-      <TimelineConnector color="white" />
-      <TimelineHeader className="h-4">
-        <TimelineIcon color="white" />
-        <Typography className="text-xs font-light pb-0 text-main-light-slate mt-2">
+    <TimelineItem>
+      <TimelineHeader>
+        <TimelineIcon />
+        <Typography className="text-xs font-light text-main-light-slate mt-2">
           {formatDateRange(education.startedAt, education.finishedAt)}
         </Typography>
       </TimelineHeader>
-      <TimelineBody className="ml-0 mr-4 my-8 md:mx-8">
+      <TimelineBody>
         <Card className="section-card education-card w-full">
           <Link
             href={education.institutionLink}
@@ -45,12 +44,17 @@ export const EducationItem: React.FC<EducationProps> = ({ education }) => {
                 variant="h4"
                 className="text-lg font-semibold text-textColor-secondary mb-3 text-left"
               >
-                {education.degree} in {education.fieldOfStudy}
+                <>
+                  {education.degree} in {education.fieldOfStudy}
+                </>
               </Typography>
               <Divider className="bg-main-light-slate mb-6 mt-0" />
-              <p className="font-extralight text-sm text-textColor-lightSlate">
+              <Typography
+                variant="overline"
+                className="font-extralight text-sm text-textColor-lightSlate"
+              >
                 {education.description}
-              </p>
+              </Typography>
             </CardBody>
           </Link>
         </Card>

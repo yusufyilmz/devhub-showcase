@@ -1,3 +1,3 @@
 'use client'
 
-export { Spinner } from '@material-tailwind/react'
+export { CircularProgress as Spinner } from '@mui/material'

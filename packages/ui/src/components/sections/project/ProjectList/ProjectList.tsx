@@ -1,6 +1,4 @@
-'use client'
-
-import { useState } from 'react'
+import React from 'react'
 import {
   Accordion,
   AccordionHeader,
@@ -14,28 +12,13 @@ type ProjectListProps = {
   projects: { id: string; title: string }[]
 }
 
-const CUSTOM_ANIMATION = {
-  mount: { scale: 1 },
-  unmount: { scale: 0.9 }
-}
-
 export const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
-  const [open, setOpen] = useState(false)
-
-  const handleOpen = () => {
-    setOpen(!open)
-  }
-
   return (
-    <Accordion
-      animate={CUSTOM_ANIMATION}
-      icon={
-        <ArrowDownwardIcon className="text-textColor-light animate-bounce mt-2" />
-      }
-      open={open}
-    >
+    <Accordion className="animate-mount animate-unmount">
       <AccordionHeader
-        onClick={handleOpen}
+        expandIcon={
+          <ArrowDownwardIcon className="text-textColor-light animate-bounce mt-2" />
+        }
         className="bg-transparent border-textColor-light  mx-auto"
         aria-controls="panel2-content"
         id="panel2-header"

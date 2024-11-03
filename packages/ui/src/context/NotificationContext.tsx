@@ -1,7 +1,8 @@
 'use client'
 
+import React from 'react'
 import { createContext, useCallback, useState, useContext } from 'react'
-import { Alert, Typography, AlertProps } from '../components'
+import { Alert, Typography } from '../components'
 
 export interface NotificationContextProps {
   setError: (message: string) => void
@@ -10,13 +11,6 @@ export interface NotificationContextProps {
 }
 
 type AlertTypes = 'success' | 'error' | 'warning' | 'info'
-
-const COLORS: Record<AlertTypes, AlertProps['color']> = {
-  error: 'red',
-  success: 'green',
-  warning: 'yellow',
-  info: 'blue'
-}
 
 export const NotificationContext = createContext<
   NotificationContextProps | undefined
@@ -52,15 +46,11 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
       {children}
       {notification.open && (
         <Alert
-          color={COLORS[notification.severity]}
+          color={notification.severity}
           className="fixed bottom-4 left-1/2 transform -translate-x-1/2 max-w-xs shadow-lg"
           onClose={handleClose}
-          animate={{
-            mount: { opacity: 1, y: 0 },
-            unmount: { opacity: 0, y: 50 }
-          }}
         >
-          <Typography variant="small" className="text-white">
+          <Typography variant="body2" className="text-white">
             {notification.message}
           </Typography>
         </Alert>

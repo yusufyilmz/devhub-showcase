@@ -1,3 +1,4 @@
+import React from 'react'
 import { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
 import Link from 'next/link'
 import {
@@ -6,10 +7,11 @@ import {
   CardBody,
   TimelineItem,
   TimelineBody,
-  TimelineConnector,
-  TimelineHeader,
   TimelineIcon,
-  Divider
+  TimelineHeader,
+  Divider,
+  List,
+  ListItem
 } from '../../../../components'
 
 import { CARD_IDS } from '../../../../constants'
@@ -27,10 +29,9 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
 
   return (
     <TimelineItem className="w-full">
-      <TimelineConnector color="white" />
       <TimelineHeader className="h-4">
-        <TimelineIcon color="white" />
-        <Typography className="text-xs font-light pb-0 text-textColor-lightSlate mt-2">
+        <TimelineIcon />
+        <Typography className="text-xs font-light pb-0 text-main-light-slate mt-2">
           {formatDateRange(experience.startedAt, experience.finishedAt)}
         </Typography>
       </TimelineHeader>
@@ -51,18 +52,18 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
           </CardBody>
           <Divider className="bg-main-light-slate" />
           <CardBody className="pt-0 mt-6">
-            <ul>
+            <List className="list-disc list-inside text-main-white">
               {experience.achievements.map((achievement, idx) => (
-                <li key={idx}>
+                <ListItem key={idx}>
                   <Typography
-                    variant="paragraph"
+                    variant="overline"
                     className="text-textColor-lightSlate font-light"
                   >
                     {achievement}
                   </Typography>
-                </li>
+                </ListItem>
               ))}
-            </ul>
+            </List>
           </CardBody>
           <CardBody className="pt-0">
             <div className="flex justify-start flex-wrap gap-2">

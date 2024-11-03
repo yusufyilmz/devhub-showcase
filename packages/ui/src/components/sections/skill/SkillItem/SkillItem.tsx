@@ -1,3 +1,5 @@
+import React from 'react'
+
 export const SkillItem: React.FC<{ name: string; experienceYear?: string }> = ({
   name,
   experienceYear

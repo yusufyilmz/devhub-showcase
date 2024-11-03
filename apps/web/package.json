@@ -19,7 +19,9 @@
     "db:deploy": "yarn prisma migrate deploy && yarn prisma db push"
   },
   "dependencies": {
-    "@material-tailwind/react": "^2.1.10",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.6",
     "@prisma/client": "^5.21.1",
     "@shared/chat": "*",
     "@shared/content": "*",
@@ -47,8 +49,8 @@
     "@shared/tailwind-config": "*",
     "@shared/typescript-config": "*",
     "@types/node": "^20",
-    "@types/react": "18.2.42",
-    "@types/react-dom": "^18",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^8",

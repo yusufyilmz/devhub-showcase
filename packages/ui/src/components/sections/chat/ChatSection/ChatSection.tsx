@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { chatStore } from '../../../../stores'
 import { ChatMessage, ChatType } from '@shared/lib/types'
 import { useStore } from 'zustand'
@@ -16,7 +17,7 @@ type ChatSectionProps = {
 
 export const ChatSection: React.FC<ChatSectionProps> = ({
   handleSendMessage
-}): JSX.Element => {
+}) => {
   const [type, setType] = useState<ChatType>('cv')
   const [isOpen, setIsOpen] = useState(false)
   const resetChat = useStore(chatStore, state => state.resetChat)
@@ -33,7 +34,6 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
     <>
       <div className="fixed bottom-4 right-4 flex flex-col gap-4 z-[200]">
         <IconButton
-          variant="text"
           className="icon-button"
           aria-label={'Resume Chat'}
           onClick={() => {
@@ -44,7 +44,6 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
           <ChatIcon fontSize="xlarge" />
         </IconButton>
         <IconButton
-          variant="text"
           className="icon-button"
           aria-label={'Referral Chat'}
           onClick={() => {

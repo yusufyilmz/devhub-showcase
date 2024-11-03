@@ -1,3 +1,3 @@
 'use client'
 
-export { Drawer } from '@material-tailwind/react'
+export { Drawer } from '@mui/material'

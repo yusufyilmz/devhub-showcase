@@ -1,3 +1,4 @@
+import React from 'react'
 import { Typography, Button, Section, PdfIcon } from '../../../../components'
 import { copy } from '@shared/content'
 import { SocialLinks } from '../SocialLinks'

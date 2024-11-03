@@ -1,3 +1,3 @@
 'use client'
 
-export { Tooltip } from '@material-tailwind/react'
+export { Tooltip } from '@mui/material'

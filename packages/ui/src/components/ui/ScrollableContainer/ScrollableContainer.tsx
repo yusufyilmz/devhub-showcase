@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { CVCategoryType } from '@shared/lib/types'
 import { useEffect, useRef, useState } from 'react'
 import { CARD_IDS } from '../../../constants/cards'

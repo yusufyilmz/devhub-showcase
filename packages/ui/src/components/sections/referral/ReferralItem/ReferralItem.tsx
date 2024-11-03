@@ -1,3 +1,4 @@
+import React from 'react'
 import { Card, CardBody } from '../../../../components'
 import { Referral } from '@shared/lib/types'
 

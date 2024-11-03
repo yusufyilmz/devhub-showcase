@@ -1,3 +1,4 @@
+import React from 'react'
 import { Education } from '@shared/lib/types'
 import { EducationItem } from '../EducationItem/EducationItem'
 import { copy } from '@shared/content'
@@ -15,7 +16,7 @@ export const EducationsSection: React.FC<EducationsSectionProps> = ({
   return (
     <Section sectionId={id} title={title} subtitle={subtitle}>
       <div className="flex items-center md:min-h-[calc(100vh-4rem)]">
-        <Timeline className="overflow-y-auto no-scrollbar w-full">
+        <Timeline>
           {educations.map(education => (
             <EducationItem key={education.id} education={education} />
           ))}

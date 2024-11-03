@@ -1,6 +1,7 @@
+import React from 'react'
 import { copy } from '@shared/content'
 
-export const SummarySection: React.FC = (): JSX.Element => {
+export const SummarySection: React.FC = () => {
   return (
     <section
       className="w-full flex h-section flex-col items-center justify-between px-0 text-center py-4 fade -mt-16"

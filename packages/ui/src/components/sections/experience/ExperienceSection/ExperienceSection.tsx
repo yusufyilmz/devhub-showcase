@@ -1,3 +1,4 @@
+import React from 'react'
 import { ExperienceList } from '../ExperienceList'
 import { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
 import { Section } from '../../../../components'

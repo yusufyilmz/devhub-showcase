@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { useEffect, useState } from 'react'
 import { ChatMessageBox } from '../ChatMessageBox'
 import { ChatMessage, ChatRole, type ChatType } from '@shared/lib/types'
@@ -85,7 +86,6 @@ export const ChatPopupContainer: React.FC<ChatPopupProps> = ({
     <div className="fixed  bottom-0 right-0 md:right-4 z-[250]">
       <div className="w-[100vw] h-[100vh] md:w-full md:h-[32rem] bottom-0 bg-backgroundColor-chat md:rounded-lg shadow-2xl p-6 relative transition-all duration-300 ease-in-out">
         <IconButton
-          variant="text"
           aria-label="Close chat"
           onClick={() => {
             closeChat(isChatFinished)

@@ -1,1 +1,1 @@
-export * from './ChatMessageBox'
+export * from './ChatMessageItem'

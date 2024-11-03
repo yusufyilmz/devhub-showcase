@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 
 interface ListItemProps {
   children: ReactNode
@@ -6,15 +6,15 @@ interface ListItemProps {
   className?: string
 }
 
-export const ListItem = ({
+export const ListItem: React.FC<ListItemProps> = ({
   children,
   onClick,
   className = '',
   ...props
-}: ListItemProps) => {
+}) => {
   return (
     <li
-      className={`px-4 py-8 cursor-pointer transition duration-200 ${className}`}
+      className={`p-2 cursor-pointer transition duration-200 ${className}`}
       onClick={onClick}
       {...props}
     >

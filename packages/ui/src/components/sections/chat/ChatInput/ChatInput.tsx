@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { copy } from '@shared/content'
 import { ChatType } from '@shared/lib/types'
 import { IconButton, SendIcon } from '../../../../components'

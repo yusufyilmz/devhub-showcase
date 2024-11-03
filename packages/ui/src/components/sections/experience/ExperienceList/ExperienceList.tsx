@@ -1,3 +1,4 @@
+import React from 'react'
 import { ExperienceItem } from '../ExperienceItem/ExperienceItem'
 import { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
 
@@ -11,7 +12,7 @@ export const ExperienceList: React.FC<ExperienceListProps> = ({
   experiences = []
 }) => {
   return (
-    <Timeline className="overflow-y-auto no-scrollbar w-full pb-16">
+    <Timeline className="w-full">
       {experiences.map(experience => (
         <ExperienceItem key={experience.id} experience={experience} />
       ))}

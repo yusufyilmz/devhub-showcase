@@ -2,6 +2,6 @@
 
 export {
   Accordion,
-  AccordionBody,
-  AccordionHeader
-} from '@material-tailwind/react'
+  AccordionSummary as AccordionHeader,
+  AccordionDetails as AccordionBody
+} from '@mui/material'

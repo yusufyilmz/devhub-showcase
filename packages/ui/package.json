@@ -7,7 +7,6 @@
     "./context": "./src/context/index.ts",
     "./utils": "./src/utils/index.ts",
     "./hooks": "./src/hooks/index.ts",
-    "./constants": "./src/constants/index.ts",
     "./components": "./src/components/index.ts",
     "./theme": "./src/theme/index.ts",
     "./stores": "./src/stores/index.ts",
@@ -29,7 +28,7 @@
     "@turbo/gen": "^1.12.4",
     "@types/eslint": "^8.56.5",
     "@types/node": "^20.11.24",
-    "@types/react": "18.2.42",
+    "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.4.20",
@@ -38,7 +37,9 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
-    "@material-tailwind/react": "^2.1.10",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.6",
     "@shared/content": "*",
     "@shared/lib": "*",
     "eslint": "^8",

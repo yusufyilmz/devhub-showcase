@@ -1,6 +1,7 @@
 'use client'
 
-import { Typography } from '../../../../components'
+import React from 'react'
+import { Typography } from '../../../ui/Typography'
 import { ChatMessage } from '@shared/lib/types'
 import { formatTimestamp } from './utils'
 
@@ -24,22 +25,20 @@ export const ChatMessageItem: React.FC<{ message: ChatMessage }> = ({
       >
         {message.title && (
           <Typography
-            variant="lead"
-            className="font-semibold mb-1"
-            style={{ color: message.role === 'user' ? '#FFF' : '#333' }}
+            variant="caption"
+            className={`font-semibold mb-1 ${message.role === 'user' ? 'text-white' : 'text-gray-800'}`}
           >
             {message.title}
           </Typography>
         )}
         <Typography
-          variant="paragraph"
-          className="whitespace-pre-wrap"
-          style={{ lineHeight: '1.5' }}
+          variant="body1"
+          className="whitespace-pre-wrap leading-relaxed"
         >
           {message.content}
         </Typography>
 
-        <Typography variant="small" className="text-gray-500 mt-1">
+        <Typography variant="body2" className="text-gray-500 mt-1">
           {message.timestamp ? formatTimestamp(message.timestamp) : ''}
         </Typography>
       </div>

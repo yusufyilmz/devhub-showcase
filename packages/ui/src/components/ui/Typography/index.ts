@@ -1,3 +1,1 @@
-'use client'
-
-export { Typography } from '@material-tailwind/react'
+export { Typography } from './Typography'

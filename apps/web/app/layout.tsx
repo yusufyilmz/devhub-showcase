@@ -4,6 +4,7 @@ import { Footer, Header, MouseCircle } from '@shared/ui/components'
 import type { Metadata } from 'next'
 import { copy } from '@shared/content'
 import localFont from 'next/font/local'
+import { StyledEngineProvider } from '@mui/material'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -37,13 +38,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {' '}
-        <NotificationProvider>
-          <MouseCircle />
-          <Header />
-          {children}
-          <Footer />
-        </NotificationProvider>
+        <StyledEngineProvider injectFirst>
+          <NotificationProvider>
+            <MouseCircle />
+            <Header />
+            {children}
+            <Footer />
+          </NotificationProvider>
+        </StyledEngineProvider>
       </body>
     </html>
   )

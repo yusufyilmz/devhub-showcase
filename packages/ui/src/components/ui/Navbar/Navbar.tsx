@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { useState } from 'react'
 import { copy } from '@shared/content'
 import { IconButton, Button, Drawer, MenuIcon } from '../../../components'
@@ -35,7 +36,6 @@ export const Navbar: React.FC = () => {
       <IconButton
         aria-label="Menu"
         onClick={toggleMenu}
-        variant="text"
         className="hover:scale-105 text-main-lightest-slate transition-transform md:hidden"
       >
         <MenuIcon fontSize="large" />
@@ -44,7 +44,7 @@ export const Navbar: React.FC = () => {
       <div className={`hidden md:block`}>
         <MenuItems />
       </div>
-      <Drawer placement="right" open={isOpen} onClose={toggleMenu}>
+      <Drawer anchor="right" open={isOpen} onClose={toggleMenu}>
         <div
           className="bg-main-dark h-full flex flex-col justify-start p-4 align-middle"
           role="presentation"

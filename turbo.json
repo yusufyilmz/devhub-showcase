@@ -54,6 +54,9 @@
         "^types:check"
       ]
     },
+    "@shared/ui#build": {
+      "cache": false
+    },
     "lint:fix": {
       "dependsOn": [
         "^lint:fix"

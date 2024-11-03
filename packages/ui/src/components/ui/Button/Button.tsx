@@ -1,3 +1,5 @@
+import React from 'react'
+
 interface ButtonProps {
   children: React.ReactNode
   variant?:
@@ -19,7 +21,7 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({
   children,
-  variant = 'contained', // Default to contained
+  variant = 'contained',
   onClick,
   fullWidth = false,
   className = '',
@@ -31,7 +33,6 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   const baseStyles = `px-4 py-2 rounded-md font-semibold focus:outline-none transition ease-in-out duration-300`
 
-  // Variants based on the selected option
   const variants = {
     contained: `bg-main-primary hover:bg-backgroundColor-buttonHover text-textColor-white`,
     text: `bg-transparent text-main-lightSlate hover:bg-main-dark-hover`,

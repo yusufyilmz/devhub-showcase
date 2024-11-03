@@ -1,3 +1,4 @@
+import React from 'react'
 import { Typography } from '../../../../components'
 import { ReviewState, ReviewWithReferrals } from '@shared/lib/types'
 import { ReferralItem } from '../../referral/ReferralItem'

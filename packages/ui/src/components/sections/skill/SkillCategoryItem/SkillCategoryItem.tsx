@@ -1,3 +1,4 @@
+import React from 'react'
 import { Card, CardBody, Divider, Typography } from '../../../../components'
 import { Skill } from '@shared/lib/types'
 import { SkillItem } from '../SkillItem/SkillItem'
