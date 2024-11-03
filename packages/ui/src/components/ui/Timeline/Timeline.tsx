@@ -36,7 +36,7 @@ export const Timeline: React.FC<TimelineProps> = ({
 }) => {
   return (
     <ol
-      className={`relative border-l border-gray-200 dark:border-gray-700 pl-6 ${className}`}
+      className={`relative border-l border-gray-200 dark:border-gray-700 pl-3 md:pl-6 ${className}`}
     >
       {children}
     </ol>

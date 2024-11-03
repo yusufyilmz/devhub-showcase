@@ -36,10 +36,14 @@ html {
 }
 
 .section-card {
-  @apply w-full p-4 bg-main-primary hover:bg-main-dark-hover focus:outline-none 
-           hover:shadow-lg flex flex-col justify-around h-full rounded-xl shadow-md 
-           overflow-hidden transform transition-all duration-300 hover:scale-105 
-           border border-transparent hover:border-main-light; /* Add a subtle border effect */
+  @apply w-full p-4 md:p-4 bg-main-primary hover:bg-main-dark-hover focus:outline-none 
+         hover:shadow-lg flex flex-col justify-around h-full rounded-xl shadow-md 
+         overflow-hidden transform transition-all duration-300 border border-transparent hover:border-main-light; 
+
+  & > * {
+    pointer-events: auto; /* Enable pointer events for child elements */
+  }
+
 }
 
 .section-card::before {
@@ -54,7 +58,7 @@ html {
 }
 
 .section-card:hover {
-  @apply shadow-xl scale-[1.05] transition-shadow duration-300; /* Add a larger shadow and scale effect */
+  @apply shadow-xl scale-[1.05] transition-shadow pointer-events-none duration-300; /* Add a larger shadow and scale effect */
 }
 
 .section-card-text {

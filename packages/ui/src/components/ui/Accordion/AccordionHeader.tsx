@@ -20,13 +20,13 @@ export const AccordionHeader: React.FC<AccordionHeaderProps> = ({
     <Button
       onClick={onClick}
       variant="text"
-      className={`flex items-center flex-row justify-between w-full p-5 font-medium text-main-white border-b border-main-light-slate ${className}`}
+      className={`flex items-center flex-row justify-between w-full font-medium text-main-white border-b border-main-light-slate ${className}`}
       aria-expanded={isOpen}
-      ari-label="accordion header"
+      aria-label="accordion header"
     >
       {children}
       <span
-        className={`transform transition-transform ${isOpen ? 'rotate-180' : ''}`}
+        className={`transform transition-transform ${isOpen ? 'rotate-180 -translate-y-2' : ''}`}
       >
         {expandIcon}
       </span>

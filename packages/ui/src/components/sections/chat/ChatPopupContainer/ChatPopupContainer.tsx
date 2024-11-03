@@ -92,7 +92,7 @@ export const ChatPopupContainer: React.FC<ChatPopupProps> = ({
           }}
           className="icon-button absolute top-2 right-2"
         >
-          <CloseIcon fontSize="small" className='text-main-secondary' />
+          <CloseIcon fontSize="small" className="text-main-secondary" />
         </IconButton>
         <div className="flex flex-col h-full  transition-all duration-700 transform scale-100">
           <ChatMessageBox type={type} botIsTyping={isTyping} />

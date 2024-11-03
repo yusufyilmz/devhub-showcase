@@ -14,7 +14,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
         ref={ref}
         tabIndex={tabIndex}
         id={id}
-        className={`bg-white rounded-lg shadow-md overflow-hidden w-[90%] ${className}`}
+        className={`bg-white rounded-lg shadow-md overflow-hidden w-full md:w-[90%] ${className}`}
         {...props}
       >
         {children}

@@ -35,20 +35,25 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
           {formatDateRange(experience.startedAt, experience.finishedAt)}
         </Typography>
       </TimelineHeader>
-      <TimelineBody className="ml-0 mr-4 my-8 md:mx-8">
+      <TimelineBody className="ml-0 mr-0 my-8 md:mx-8">
         <Card
           id={CARD_IDS.experience}
-          className="section-card experience-card group p-0"
+          className="section-card experience-card group p-0 md:px-4 flex flex-col gap-4 md:gap-0"
         >
-          <CardBody className="pt-4 pb-0 flex flex-col gap-2">
-            <Link href={experience.company?.link ?? ''} target="_blank">
-              <Typography
-                variant="h3"
-                className="text-2xl font-bold text-textColor-light group-hover:underline group-hover:text-main-blue"
+          <CardBody className="pb-0 flex flex-col gap-2">
+            <Typography
+              variant="h3"
+              className="text-2xl font-bold text-textColor-light group-hover:underline group-hover:text-main-blue"
+            >
+              <Link
+                href={experience.company?.link ?? '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="focus:outline-none focus:ring-2 focus:ring-main-blue"
               >
                 {experience.company?.name}
-              </Typography>
-            </Link>
+              </Link>
+            </Typography>
             <Typography
               variant="h4"
               className="font-semibold text-textColor-secondary"
@@ -56,8 +61,9 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
               {experience.role}
             </Typography>
           </CardBody>
+
           <Divider className="bg-main-light-slate" />
-          <CardBody className="pt-0 mt-6">
+          <CardBody className="pt-0">
             <List className="list-disc list-inside text-main-white">
               {experience.achievements.map((achievement, idx) => (
                 <ListItem key={idx}>

@@ -27,12 +27,12 @@ export const EducationItem: React.FC<EducationProps> = ({ education }) => {
         </Typography>
       </TimelineHeader>
       <TimelineBody className="ml-0 mr-4 my-8 md:mx-8">
-        <Card className="section-card education-card w-full">
-          <Link
-            href={education.institutionLink}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+        <Link
+          href={education.institutionLink ?? '#'}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Card className="section-card education-card w-full">
             <CardBody className="flex flex-col gap-1">
               <Typography
                 variant="h3"
@@ -57,8 +57,8 @@ export const EducationItem: React.FC<EducationProps> = ({ education }) => {
                 {education.description}
               </Typography>
             </CardBody>
-          </Link>
-        </Card>
+          </Card>
+        </Link>
       </TimelineBody>
     </TimelineItem>
   )

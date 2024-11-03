@@ -8,7 +8,7 @@ interface CardBodyProps {
 
 export function CardBody({ title, children, className }: CardBodyProps) {
   return (
-    <div className={`p-4 ${className}`}>
+    <div className={`p-0 md:p-4 ${className}`}>
       {title && <h2 className="text-xl font-semibold mb-2">{title}</h2>}
       {children}
     </div>

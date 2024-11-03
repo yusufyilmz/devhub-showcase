@@ -22,19 +22,17 @@ export const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
   }
 
   return (
-    <Accordion className="animate-mount animate-unmount">
+    <Accordion className="animate-mount">
       <AccordionHeader
         isOpen={isOpen}
         onClick={toggleOpen}
         expandIcon={
-          <ArrowDownwardIcon className="text-textColor-light animate-bounce mt-2" />
+          <ArrowDownwardIcon className="text-textColor-light animate-bounce ml-2 mr-1" />
         }
-        className="bg-transparent border-textColor-light  mx-auto"
+        className="bg-transparent border-textColor-light mx-auto"
         aria-controls="panel2-content"
       >
-        <Typography className="text-textColor-light m-0 p-0">
-          Projects
-        </Typography>
+        <Typography className="text-textColor-light">Projects</Typography>
       </AccordionHeader>
       <AccordionBody isOpen={isOpen}>
         <div className="flex flex-col gap-2">
