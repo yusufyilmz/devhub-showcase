@@ -3,8 +3,8 @@ import React from 'react'
 type FontSize = 'small' | 'medium' | 'large' | 'xlarge'
 
 interface IconProps {
-  d?: string // SVG path data, always a string
-  className?: string // Optional class name for additional styling
+  d?: string
+  className?: string
   fontSize?: FontSize
 }
 
@@ -53,7 +53,7 @@ const icons = {
   referral:
     'M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2m6 9.8a.9.9 0 0 1-.1.5l-2.1 4.9a1.34 1.34 0 0 1-1.3.8H9a2 2 0 0 1-2-2v-5a1.28 1.28 0 0 1 .4-1L12 5l.69.69a1.08 1.08 0 0 1 .3.7v.2L12.41 10H17a1 1 0 0 1 1 1z',
   externalLink:
-    'M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5"',
+    'M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5',
   menu: 'M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z',
   arrowBack: 'M20 11H7.83l5.88-5.88L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z',
   arrowForward: 'M4 11h12.17l-5.88-5.88L12 4l8 8-8 8-1.41-1.41L16.17 13H4v-2z',

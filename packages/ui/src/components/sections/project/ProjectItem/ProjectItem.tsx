@@ -42,7 +42,7 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
 
           <Typography
             variant="h4"
-            className="text-lg font-semibold text-textColor-secondary"
+            className="font-semibold text-textColor-secondary"
           >
             {project.role}
           </Typography>
@@ -64,18 +64,17 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
       <CardBody>
         {project.company && (
           <Typography
-            variant="h4"
-            className="tex-left text-sm mt-6 text-textColor-slate"
+            variant="caption"
+            className="tex-left text-sm mt-6 text-textColor-slate italic"
           >
-            <small>
-              <i>Project and all rights reserved by </i>
-            </small>
+            Project and all rights reserved by
             <Link
               href={project.company.link}
-              className="text-textColor-slate"
+              className="text-textColor-slate font-bold"
               target="_blank"
             >
-              <b>{project.company?.name.toUpperCase()}</b>
+              {' '}
+              {project.company?.name.toUpperCase()}
             </Link>
           </Typography>
         )}

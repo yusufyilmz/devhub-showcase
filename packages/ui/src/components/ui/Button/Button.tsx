@@ -1,6 +1,6 @@
 import React from 'react'
 
-interface ButtonProps {
+type ButtonProps = {
   children: React.ReactNode
   variant?:
     | 'contained'
@@ -17,7 +17,8 @@ interface ButtonProps {
   rel?: string
   endIcon?: React.ReactNode
   disabled?: boolean
-}
+} & (React.ButtonHTMLAttributes<HTMLButtonElement> &
+  React.AnchorHTMLAttributes<HTMLAnchorElement>)
 
 const Button: React.FC<ButtonProps> = ({
   children,
@@ -29,7 +30,8 @@ const Button: React.FC<ButtonProps> = ({
   target,
   rel,
   endIcon,
-  disabled
+  disabled,
+  ...props
 }) => {
   const baseStyles = `px-4 py-2 rounded-md font-semibold focus:outline-none transition ease-in-out duration-300`
 
@@ -55,9 +57,9 @@ const Button: React.FC<ButtonProps> = ({
       target={target}
       rel={rel}
       disabled={disabled}
-      aria-label="View my Resume"
+      {...props}
     >
-      <span>{children}</span>
+      <>{children}</>
       {endIcon && <span className="ml-2">{endIcon}</span>}
     </Component>
   )

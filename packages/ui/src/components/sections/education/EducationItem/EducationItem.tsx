@@ -36,18 +36,19 @@ export const EducationItem: React.FC<EducationProps> = ({ education }) => {
             <CardBody className="flex flex-col gap-1">
               <Typography
                 variant="h3"
-                className="font-semibold text-main-white text-2xl text-left"
+                className="font-semibold text-main-white text-left"
               >
                 {education.institution}
               </Typography>
               <Typography
                 variant="h4"
-                className="text-lg font-semibold text-textColor-secondary mb-3 text-left"
+                className="font-semibold text-textColor-secondary mb-3 text-left"
               >
                 <>
                   {education.degree} in {education.fieldOfStudy}
                 </>
               </Typography>
+
               <Divider className="bg-main-light-slate mb-6 mt-0" />
               <Typography
                 variant="overline"

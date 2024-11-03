@@ -42,13 +42,19 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
         >
           <CardBody className="pt-4 pb-0 flex flex-col gap-2">
             <Link href={experience.company?.link ?? ''} target="_blank">
-              <h3 className="text-2xl font-bold text-textColor-light group-hover:underline group-hover:text-main-blue">
+              <Typography
+                variant="h3"
+                className="text-2xl font-bold text-textColor-light group-hover:underline group-hover:text-main-blue"
+              >
                 {experience.company?.name}
-              </h3>
+              </Typography>
             </Link>
-            <h4 className="text-lg font-semibold text-textColor-secondary">
+            <Typography
+              variant="h4"
+              className="font-semibold text-textColor-secondary"
+            >
               {experience.role}
-            </h4>
+            </Typography>
           </CardBody>
           <Divider className="bg-main-light-slate" />
           <CardBody className="pt-0 mt-6">
@@ -72,7 +78,7 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
               )}
             </div>
           </CardBody>
-          <CardBody className="pt-0">
+          <CardBody className="pt-0 pl-0">
             <ProjectList projects={experience.projects} />
           </CardBody>
         </Card>

@@ -14,11 +14,14 @@ type Variant =
   | 'caption'
   | 'overline'
 
+type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl'
+
 type TypographyProps = {
   variant?: Variant
+  size?: Size
   className?: string
   component?: keyof JSX.IntrinsicElements
-  children: React.ReactNode // Ensure children can accept ReactNode
+  children: React.ReactNode
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -39,6 +42,7 @@ const variantMapping: { [key in Variant]: keyof JSX.IntrinsicElements } = {
 
 export const Typography: React.FC<TypographyProps> = ({
   variant = 'body1',
+  size,
   children,
   className = '',
   component,
@@ -62,8 +66,23 @@ export const Typography: React.FC<TypographyProps> = ({
     overline: 'text-xs uppercase tracking-wide font-light'
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const sizeClasses: { [key in Size]: string } = {
+    xs: 'text-xs',
+    sm: 'text-sm',
+    md: 'text-base',
+    lg: 'text-lg',
+    xl: 'text-xl',
+    '2xl': 'text-2xl',
+    '3xl': 'text-3xl',
+    '4xl': 'text-4xl',
+    '5xl': 'text-5xl'
+  }
+
+  const appliedSizeClass = size ? sizeClasses[size] : variantClasses[variant]
+
   return (
-    <Component {...props} className={`${variantClasses[variant]} ${className}`}>
+    <Component {...props} className={`${appliedSizeClass} ${className}`}>
       {children}
     </Component>
   )

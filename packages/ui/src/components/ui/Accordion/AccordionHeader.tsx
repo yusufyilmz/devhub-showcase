@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react'
+import { Button } from '../Button'
 
 type AccordionHeaderProps = {
   isOpen: boolean
@@ -16,11 +17,12 @@ export const AccordionHeader: React.FC<AccordionHeaderProps> = ({
   className
 }) => {
   return (
-    <button
-      type="button"
+    <Button
       onClick={onClick}
-      className={`flex items-center justify-between w-full p-5 font-medium text-main-white border-b border-main-light-slate ${className}`}
+      variant="text"
+      className={`flex items-center flex-row justify-between w-full p-5 font-medium text-main-white border-b border-main-light-slate ${className}`}
       aria-expanded={isOpen}
+      ari-label='accordion header'
     >
       {children}
       <span
@@ -28,6 +30,6 @@ export const AccordionHeader: React.FC<AccordionHeaderProps> = ({
       >
         {expandIcon}
       </span>
-    </button>
+    </Button>
   )
 }
