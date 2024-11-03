@@ -90,9 +90,9 @@ export const ChatPopupContainer: React.FC<ChatPopupProps> = ({
           onClick={() => {
             closeChat(isChatFinished)
           }}
-          className="icon-button absolute top-2 right-2 text-main-dark"
+          className="icon-button absolute top-2 right-2"
         >
-          <CloseIcon className="h-4 w-4" />
+          <CloseIcon fontSize="small" className='text-main-secondary' />
         </IconButton>
         <div className="flex flex-col h-full  transition-all duration-700 transform scale-100">
           <ChatMessageBox type={type} botIsTyping={isTyping} />

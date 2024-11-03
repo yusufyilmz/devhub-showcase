@@ -22,7 +22,7 @@ export const AccordionHeader: React.FC<AccordionHeaderProps> = ({
       variant="text"
       className={`flex items-center flex-row justify-between w-full p-5 font-medium text-main-white border-b border-main-light-slate ${className}`}
       aria-expanded={isOpen}
-      ari-label='accordion header'
+      ari-label="accordion header"
     >
       {children}
       <span
