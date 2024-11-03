@@ -1,14 +1,16 @@
-/* eslint-disable no-unused-vars */
 'use client'
 
+import React from 'react'
 import { createContext, useCallback, useState, useContext } from 'react'
-import { Snackbar, Alert } from '@mui/material'
+import { Alert, Typography } from '../components'
 
 export interface NotificationContextProps {
   setError: (message: string) => void
   setSuccess: (message: string) => void
   setInfo: (message: string) => void
 }
+
+type AlertTypes = 'success' | 'error' | 'warning' | 'info'
 
 export const NotificationContext = createContext<
   NotificationContextProps | undefined
@@ -19,7 +21,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [notification, setNotification] = useState({
     message: '',
-    severity: 'success' as 'success' | 'error' | 'warning' | 'info',
+    severity: 'success' as AlertTypes,
     open: false
   })
 
@@ -42,15 +44,17 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <NotificationContext.Provider value={{ setError, setSuccess, setInfo }}>
       {children}
-      <Snackbar
-        open={notification.open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity={notification.severity}>
-          {notification.message}
+      {notification.open && (
+        <Alert
+          color={notification.severity}
+          className="fixed bottom-4 left-1/2 transform -translate-x-1/2 max-w-xs shadow-lg"
+          onClose={handleClose}
+        >
+          <Typography variant="body2" className="text-white">
+            {notification.message}
+          </Typography>
         </Alert>
-      </Snackbar>
+      )}
     </NotificationContext.Provider>
   )
 }

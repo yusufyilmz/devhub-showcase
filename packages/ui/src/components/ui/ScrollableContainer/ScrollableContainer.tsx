@@ -1,10 +1,11 @@
 'use client'
 
-import { Grid, IconButton } from '@mui/material'
+import React from 'react'
 import { CVCategoryType } from '@shared/lib/types'
 import { useEffect, useRef, useState } from 'react'
 import { CARD_IDS } from '../../../constants/cards'
-import { ArrowForward, ArrowBack } from '@mui/icons-material'
+import { ArrowForwardIcon, ArrowBackIcon } from '../../../components'
+import { IconButton } from '../IconButton'
 
 interface ScrollableContainerProps {
   children: React.ReactNode
@@ -52,18 +53,14 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
   }, [children])
 
   return (
-    <Grid className="relative flex align-top scrollbar-hide overflow-hidden">
+    <div className="relative flex align-top scrollbar-hide overflow-hidden">
       {showLeftArrow && (
         <div
           style={{ top: `${containerHeight / 2}px` }}
           className="absolute z-10 left-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
         >
-          <IconButton
-            aria-label="Scroll left"
-            size="small"
-            onClick={scrollLeft}
-          >
-            <ArrowBack />
+          <IconButton aria-label="Scroll left" onClick={scrollLeft}>
+            <ArrowBackIcon />
           </IconButton>
         </div>
       )}
@@ -79,15 +76,11 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
           style={{ top: `${containerHeight / 2}px` }}
           className="absolute z-10 right-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
         >
-          <IconButton
-            aria-label="Scroll right"
-            size="small"
-            onClick={scrollRight}
-          >
-            <ArrowForward />
+          <IconButton aria-label="Scroll right" onClick={scrollRight}>
+            <ArrowForwardIcon />
           </IconButton>
         </div>
       )}
-    </Grid>
+    </div>
   )
 }

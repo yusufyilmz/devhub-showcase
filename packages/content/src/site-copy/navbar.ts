@@ -6,6 +6,10 @@ export const navbar: Record<
     description?: string
   }
 > = {
+  summary: {
+    title: 'SUMMARY',
+    id: '#summary'
+  },
   aboutMe: {
     title: 'ABOUT ME',
     id: '#about-me'

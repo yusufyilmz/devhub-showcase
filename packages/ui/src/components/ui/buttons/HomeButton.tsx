@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@mui/material'
+import { Button } from '../../../components'
 import { copy } from '@shared/content'
 import { useRouter } from 'next/navigation'
 
@@ -10,8 +10,7 @@ export const HomeButton = () => {
   return (
     <Button
       aria-label="Go to home"
-      variant="contained"
-      color="primary"
+      variant="outlined"
       className="rounded-lg"
       onClick={() => replace('/')}
     >

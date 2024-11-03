@@ -9,7 +9,6 @@ import {
   SkillSection,
   AboutMeSection
 } from '@shared/ui/components'
-import { Box, Divider } from '@mui/material'
 import type { PageResources } from '@shared/lib/types'
 import type { Redirect } from 'next'
 import { ResourceManager } from '@shared/lib/services'
@@ -52,17 +51,16 @@ export default async function Home(): Promise<JSX.Element> {
 
   return (
     <>
-      <main className="w-full bg-main-primary  flex flex-col justify-center items-center">
-        <Box className="max-w-[100vw] flex flex-col gap-2">
+      <main className="w-full bg-main-primary  flex flex-col justify-center items-center mt-16">
+        <div className="max-w-[100vw] flex flex-col gap-2">
           <SummarySection />
           <AboutMeSection />
           <ExperienceSection experiences={experiences} />
-          <Divider />
           <ProjectsSection projects={projects} />
           <SkillSection skills={skills} />
           <EducationsSection educations={educations} />
           <ReferralSection referrals={referrals} />
-        </Box>
+        </div>
       </main>
       <ScrollButton sectionIds={sections} />
       <ChatSection handleSendMessage={handleSendMessageAction} />

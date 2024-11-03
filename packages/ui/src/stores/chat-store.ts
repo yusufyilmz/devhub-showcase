@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware'
 import { CHAT_STORAGE_NAME } from '../constants/stores'
 import { ChatMessage, ChatType } from '@shared/lib/types'
 import { v4 as uuidv4 } from 'uuid'
-import { cvWelcomeMessage, referralWelcomeMessage } from '@shared/chat'
+import { cvWelcomeMessage, referralWelcomeMessage } from '../constants'
 
 export type ChatState = {
   chatMessages: ChatMessage[]

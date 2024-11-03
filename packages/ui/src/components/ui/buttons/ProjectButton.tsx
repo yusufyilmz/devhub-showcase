@@ -1,4 +1,4 @@
-import { Link } from '@mui/material'
+import Link from 'next/link'
 
 export const ProjectButton = ({
   title,
@@ -9,7 +9,6 @@ export const ProjectButton = ({
 }) => {
   return (
     <Link
-      underline="none"
       href="#projects"
       className={`inline-block px-6 py-3 rounded-lg shadow transition ${
         dark

@@ -1,13 +1,14 @@
-import { Card, CardActions, CardContent } from '@mui/material'
+import React from 'react'
+import { Card, CardBody } from '../../../../components'
 import { Referral } from '@shared/lib/types'
 
 const Comment = ({ comment }: { comment: string }) => (
-  <blockquote className="relative border-l-4 border-blue-500 italic text-textColor-lightSlate p-4  whitespace-pre-wrap">
+  <div className="relative border-l-4 border-blue-500 italic text-textColor-lightSlate p-4  whitespace-pre-wrap">
     <span className="font-serif absolute top-0 left-0 text-6xl text-gray-300 -mt-4 ml-2">
       “
     </span>
     {comment}
-  </blockquote>
+  </div>
 )
 
 export const ReferralItem: React.FC<{
@@ -19,7 +20,7 @@ export const ReferralItem: React.FC<{
 }> = ({ referral, children }) => {
   return (
     <Card className="section-card referral-card min-w-[40vw]">
-      <CardContent>
+      <CardBody>
         {referral.feedback && <Comment comment={referral.feedback} />}
         {referral.recommendation && (
           <Comment comment={referral.recommendation} />
@@ -32,8 +33,8 @@ export const ReferralItem: React.FC<{
             {referral.relationship || 'No relationship provided'}
           </p>
         </div>
-      </CardContent>
-      <CardActions>{children}</CardActions>
+      </CardBody>
+      {children}
     </Card>
   )
 }

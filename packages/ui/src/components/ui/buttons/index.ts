@@ -1,2 +1,3 @@
 export { AddProjectButton } from './AddProjectButton'
-export { ScrollButton } from './ScrollButton'
+export { GoBackButton } from './GoBackButton'
+export { HomeButton } from './HomeButton'

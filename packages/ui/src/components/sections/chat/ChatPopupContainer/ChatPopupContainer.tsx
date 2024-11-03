@@ -1,15 +1,15 @@
 'use client'
 
+import React from 'react'
 import { useEffect, useState } from 'react'
 import { ChatMessageBox } from '../ChatMessageBox'
 import { ChatMessage, ChatRole, type ChatType } from '@shared/lib/types'
 import { ChatInput } from '../ChatInput'
-import CloseIcon from '@mui/icons-material/Close'
-import { IconButton } from '@mui/material'
+import { IconButton, CloseIcon } from '../../../../components'
+import { chatStore, useChatMessages } from '../../../../stores'
 import { TypingIndicator } from '../TypingIndicator'
 import { useStore } from 'zustand'
-import { failureMessage } from '@shared/chat'
-import { chatStore, useChatMessages } from '../../../../stores'
+import { failureMessage } from '../../../../constants'
 
 interface ChatPopupProps {
   type: ChatType
@@ -90,9 +90,9 @@ export const ChatPopupContainer: React.FC<ChatPopupProps> = ({
           onClick={() => {
             closeChat(isChatFinished)
           }}
-          className="icon-button absolute top-2 right-2 text-gray-500 focus:outline-none"
+          className="icon-button absolute top-2 right-2"
         >
-          <CloseIcon className="h-4 w-4" />
+          <CloseIcon fontSize="small" className='text-main-secondary' />
         </IconButton>
         <div className="flex flex-col h-full  transition-all duration-700 transform scale-100">
           <ChatMessageBox type={type} botIsTyping={isTyping} />

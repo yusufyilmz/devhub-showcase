@@ -1,3 +1,5 @@
+import React from 'react'
+
 export const TypingIndicator: React.FC = () => {
   return (
     <div className="flex items-center mb-3 px-2">

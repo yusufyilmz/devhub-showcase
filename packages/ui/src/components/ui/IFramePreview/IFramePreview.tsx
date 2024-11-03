@@ -1,7 +1,9 @@
 'use client'
 
-import { CircularProgress, Link } from '@mui/material'
+import React from 'react'
+import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
+import { Spinner } from '../Spinner'
 
 interface IFramePreviewProps {
   url: string
@@ -44,7 +46,7 @@ export const IFramePreview: React.FC<IFramePreviewProps> = ({ url }) => {
     <div className="border rounded-lg shadow-lg overflow-hidden cursor-pointer relative">
       {loading && !error && (
         <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-50">
-          <CircularProgress />
+          <Spinner />
         </div>
       )}
       {!error ? (

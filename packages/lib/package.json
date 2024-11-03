@@ -11,6 +11,7 @@
     "./logger": "./src/log/index.ts"
   },
   "scripts": {
+    "clean": "npx rimraf dist",
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint . --ext js,jsx,ts,tsx",
     "lint:fix": "eslint . --ext js,jsx,ts,tsx --fix",
@@ -27,7 +28,7 @@
     "@shared/typescript-config": "*",
     "eslint": "^8",
     "typescript": "^5.6.3",
-    "@prisma/client": "5.20.0",
+    "@prisma/client": "^5.21.1",
     "pino": "^9.4.0"
   }
 }

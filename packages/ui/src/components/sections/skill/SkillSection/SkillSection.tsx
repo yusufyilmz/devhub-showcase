@@ -1,13 +1,13 @@
+import React from 'react'
 import { copy } from '@shared/content'
-import { Section } from '../../../ui/Section'
+import { Section, List, ListItem } from '../../../../components'
 import { SkillCategoryItem } from '../SkillCategoryItem'
 import { Skill } from '@shared/lib/types'
-import { Box, List, ListItem } from '@mui/material'
 
 const { skills: skillProps } = copy.header.sections
 
 export const SkillSection: React.FC<{ skills: Record<string, Skill[]> }> = ({
-  skills
+  skills = []
 }) => {
   return (
     <Section
@@ -16,15 +16,15 @@ export const SkillSection: React.FC<{ skills: Record<string, Skill[]> }> = ({
       title={skillProps.title}
       subtitle={skillProps.subtitle}
     >
-      <Box className="flex h-full md:pl-40">
+      <div className="flex h-full">
         <List className="overflow-y-auto mt-2 no-scrollbar w-full mb-10">
           {Object.entries(skills).map(([category, skills]) => (
-            <ListItem key={category} className="pl-0 md:pl-4">
+            <ListItem key={category} className="pl-0 md:pl-4 py-4">
               <SkillCategoryItem name={category} skills={skills} />
             </ListItem>
           ))}
         </List>
-      </Box>
+      </div>
     </Section>
   )
 }

@@ -1,27 +1,23 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Card,
-  CardContent,
-  Typography
-} from '@mui/material'
+import React from 'react'
 import { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
 import Link from 'next/link'
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
-import ExternalLink from '@mui/icons-material/Link'
+import {
+  Card,
+  Typography,
+  CardBody,
+  TimelineItem,
+  TimelineBody,
+  TimelineIcon,
+  TimelineHeader,
+  Divider,
+  List,
+  ListItem
+} from '../../../../components'
 
-import Divider from '@mui/material/Divider'
-import { CARD_IDS } from '../../../../constants/cards'
+import { CARD_IDS } from '../../../../constants'
 import { SkillItem } from '../../skill/SkillItem/SkillItem'
-import TimelineItem from '@mui/lab/TimelineItem'
-import TimelineSeparator from '@mui/lab/TimelineSeparator'
-import TimelineConnector from '@mui/lab/TimelineConnector'
-import TimelineDot from '@mui/lab/TimelineDot'
-import TimelineContent from '@mui/lab/TimelineContent'
-import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent'
 import { formatDateRange } from '@shared/lib/utils'
+import { ProjectList } from '../../project/ProjectList/ProjectList'
 
 type ExperienceProps = {
   experience: ExperienceWithCompanyProjectAndSkills
@@ -32,100 +28,61 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
   const uniqueSkills = new Set(skills.map(skill => skill.name))
 
   return (
-    <TimelineItem className="w-full mt-8">
-      <TimelineOppositeContent
-        sx={{ m: 'auto 0' }}
-        align="right"
-        variant="body2"
-        color="text.secondary"
-        className="w-full max-w-12 md:max-w-48"
-      >
-        <Typography className="text-xs font-light pb-0 text-textColor-secondary mt-2">
+    <TimelineItem className="w-full">
+      <TimelineHeader className="h-4">
+        <TimelineIcon />
+        <Typography className="text-xs font-light pb-0 text-main-light-slate mt-2">
           {formatDateRange(experience.startedAt, experience.finishedAt)}
         </Typography>
-      </TimelineOppositeContent>
-      <TimelineSeparator>
-        <TimelineConnector />
-        <TimelineDot></TimelineDot>
-        <TimelineConnector />
-      </TimelineSeparator>
-      <TimelineContent>
+      </TimelineHeader>
+      <TimelineBody className="ml-0 mr-4 my-8 md:mx-8">
         <Card
-          variant="elevation"
           id={CARD_IDS.experience}
-          className="section-card experience-card ml-1 md:ml-4"
+          className="section-card experience-card group p-0"
         >
-          <Link
-            href={experience.company?.link ?? ''}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <CardContent className="pt-4 pb-0 flex flex-col gap-2">
-              <h3 className="text-2xl font-bold text-textColor-light hover:underline">
+          <CardBody className="pt-4 pb-0 flex flex-col gap-2">
+            <Link href={experience.company?.link ?? ''} target="_blank">
+              <Typography
+                variant="h3"
+                className="text-2xl font-bold text-textColor-light group-hover:underline group-hover:text-main-blue"
+              >
                 {experience.company?.name}
-              </h3>
-              <h4 className="text-lg font-semibold text-textColor-secondary">
-                {experience.role}
-              </h4>
-            </CardContent>
-          </Link>
-          <Divider className="bg-main-light-slate mb-6 mt-0" />
-          <CardContent className="pt-0">
-            <Box component="ul" sx={{ listStyleType: 'disc', ml: 3, mt: 1 }}>
+              </Typography>
+            </Link>
+            <Typography
+              variant="h4"
+              className="font-semibold text-textColor-secondary"
+            >
+              {experience.role}
+            </Typography>
+          </CardBody>
+          <Divider className="bg-main-light-slate" />
+          <CardBody className="pt-0 mt-6">
+            <List className="list-disc list-inside text-main-white">
               {experience.achievements.map((achievement, idx) => (
-                <Typography
-                  key={idx}
-                  component="li"
-                  variant="body2"
-                  color="text.primary"
-                  className="text-textColor-lightSlate font-light"
-                >
-                  {achievement}
-                </Typography>
+                <ListItem key={idx}>
+                  <Typography
+                    variant="overline"
+                    className="text-textColor-lightSlate font-light"
+                  >
+                    {achievement}
+                  </Typography>
+                </ListItem>
               ))}
-            </Box>
-          </CardContent>
-          <CardContent className="pt-0">
+            </List>
+          </CardBody>
+          <CardBody className="pt-0">
             <div className="flex justify-start flex-wrap gap-2">
               {[...uniqueSkills].map(
                 skill => skill && <SkillItem key={skill} name={skill} />
               )}
             </div>
-          </CardContent>
-          <CardContent className="pt-0">
-            <Accordion className="bg-transparent">
-              <AccordionSummary
-                className="bg-transparent border-textColor-light  mx-auto"
-                expandIcon={
-                  <ArrowDropDownIcon className="text-textColor-light animate-bounce mt-2" />
-                }
-                aria-controls="panel2-content"
-                id="panel2-header"
-              >
-                <Typography className="text-textColor-light m-0 p-0">
-                  Projects
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails className="">
-                <Box className="flex flex-col gap-2">
-                  {experience.projects.map((project, index) => (
-                    <a
-                      key={index}
-                      href={`#${project.id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-sm text-textColor-lightSlate hover:underline hover:text-button-primary transition-colors duration-200"
-                    >
-                      <ExternalLink className="w-4 h-4 text-button-primary" />
-                      <span>{project.title}</span>
-                    </a>
-                  ))}
-                </Box>
-              </AccordionDetails>
-            </Accordion>
-          </CardContent>
+          </CardBody>
+          <CardBody className="pt-0 pl-0">
+            <ProjectList projects={experience.projects} />
+          </CardBody>
         </Card>
-      </TimelineContent>
+      </TimelineBody>
     </TimelineItem>
   )
 }

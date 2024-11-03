@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { DownloadCVButton } from '../../../ui/buttons/DownloadCVButton'
 
 export const CVSection: React.FC = () => {

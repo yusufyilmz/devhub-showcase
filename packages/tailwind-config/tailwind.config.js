@@ -1,6 +1,20 @@
 module.exports = {
     theme: {
         extend: {
+            keyframes: {
+                mount: {
+                    '0%': { transform: 'scale(0.9)' },
+                    '100%': { transform: 'scale(1)' }
+                },
+                unmount: {
+                    '0%': { transform: 'scale(1)' },
+                    '100%': { transform: 'scale(0.9)' }
+                },
+            },
+            animation: {
+                mount: 'mount 0.3s ease-out forwards',
+                unmount: 'unmount 0.3s ease-in forwards'
+            },
             margin: {
                 'page-mx': '15%',
             },
@@ -12,21 +26,10 @@ module.exports = {
                 'page-px-sm': '5%',
             },
             colors: {
-                textColor: {
-                    primary: '#010D1A',
-                    secondary: '#495670',
-                    slate: '#8892b0',
-                    light: '#E2E8F0',
-                    lightSlate: '#a8b2d1',
-                    white: '#e6f1ff',
-                    green: '#64ffda',
-                    pink: '#f57dff',
-                    link: '#57cbff',
-                    error: '#FF3B30',
-                },
                 main: {
                     dark: '#020c1b',
                     primary: '#010D1A',
+                    secondary: '#495670',
                     'dark-light': '#132033',
                     light: '#112240',
                     'dark-hover': 'rgba(26, 42, 58, 0.2)',
@@ -41,6 +44,18 @@ module.exports = {
                     greenTint: 'rgba(100, 255, 218, 0.1)',
                     pink: '#f57dff',
                     blue: '#57cbff',
+                },
+                textColor: {
+                    primary: '#010D1A',
+                    secondary: '#495670',
+                    slate: '#8892b0',
+                    light: '#E2E8F0',
+                    lightSlate: '#a8b2d1',
+                    white: '#e6f1ff',
+                    green: '#64ffda',
+                    pink: '#f57dff',
+                    link: '#57cbff',
+                    error: '#FF3B30',
                 },
                 button: {
                     primary: 'rgba(45,212,191,0.1)',
@@ -61,7 +76,6 @@ module.exports = {
                     danger: '#FF3B30',
                     messageBox: '#f3f3f3',
                 },
-
                 borderColor: {
                     gray: '#a8b2d1',
                     button: '#57cbff',

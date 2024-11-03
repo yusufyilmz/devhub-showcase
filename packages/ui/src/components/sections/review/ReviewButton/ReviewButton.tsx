@@ -1,9 +1,9 @@
 'use client'
 
-import { Box, Button } from '@mui/material'
+import { Button } from '../../../../components'
 import { copy } from '@shared/content'
 import { ReviewState, ReviewWithReferrals } from '@shared/lib/types'
-import { useNotification } from '@shared/ui/hooks'
+import { useNotification } from '../../../../hooks'
 import { useRouter } from 'next/navigation'
 
 export const ReviewButton = ({
@@ -45,12 +45,11 @@ export const ReviewButton = ({
   }
 
   return (
-    <Box className="flex w-full gap-4">
+    <div className="flex w-full gap-4">
       <Button
         aria-label="Reject"
         fullWidth
-        color="primary"
-        variant="contained"
+        variant="outlined"
         onClick={() => onReview(id, ReviewState.REJECTED)}
       >
         Reject
@@ -58,12 +57,11 @@ export const ReviewButton = ({
       <Button
         fullWidth
         aria-label="Approve"
-        color="primary"
-        variant="contained"
+        variant="outlined"
         onClick={() => onReview(id, ReviewState.APPROVED)}
       >
         Approve
       </Button>
-    </Box>
+    </div>
   )
 }

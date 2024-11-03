@@ -1,8 +1,9 @@
 'use client'
 
-import { Button, TextField } from '@mui/material'
+import React from 'react'
 import { ProjectUpdateInput, Project } from '@shared/lib/types'
 import { useState, useEffect } from 'react'
+import { Button, TextField } from '../../../../components'
 
 interface ProjectFormProps {
   // eslint-disable-next-line no-unused-vars
@@ -57,7 +58,6 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
         value={formData.title}
         onChange={handleChange}
         required
-        fullWidth
         className="mb-4"
       />
       <TextField
@@ -66,8 +66,6 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
         value={formData.description}
         onChange={handleChange}
         required
-        fullWidth
-        multiline
         rows={4}
         className="mb-4"
       />
@@ -77,14 +75,11 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
         value={formData.link}
         onChange={handleChange}
         required
-        fullWidth
         className="mb-4"
       />
       <Button
         aria-label={action}
-        type="submit"
         variant="contained"
-        color="primary"
         fullWidth
         disabled={isSubmitting}
       >

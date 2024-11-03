@@ -22,7 +22,7 @@ export const MouseCircle = () => {
         transform: 'translate(-50%, -50%)',
         zIndex: 50
       }}
-      className="w-0 h-0 pointer-events-none shadow-[0_0_20px_10px_rgba(30,144,255,0.4)]"
+      className="w-0 h-0 pointer-events-none shadow-[0_0_100px_50px_rgba(30,144,255,0.4)]"
     ></div>
   )
 }
