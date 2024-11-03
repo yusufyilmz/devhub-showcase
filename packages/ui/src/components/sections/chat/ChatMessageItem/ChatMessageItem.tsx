@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { Typography } from '../../../ui/Typography'
 import { ChatMessage } from '@shared/lib/types'

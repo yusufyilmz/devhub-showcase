@@ -26,7 +26,7 @@ export const EducationItem: React.FC<EducationProps> = ({ education }) => {
           {formatDateRange(education.startedAt, education.finishedAt)}
         </Typography>
       </TimelineHeader>
-      <TimelineBody>
+      <TimelineBody className='ml-0 mr-4 my-8 md:mx-8'>
         <Card className="section-card education-card w-full">
           <Link
             href={education.institutionLink}

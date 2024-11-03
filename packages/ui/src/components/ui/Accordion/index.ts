@@ -1,7 +1,3 @@
-'use client'
-
-export {
-  Accordion,
-  AccordionSummary as AccordionHeader,
-  AccordionDetails as AccordionBody
-} from '@mui/material'
+export { Accordion } from './Accordion'
+export { AccordionBody } from './AccordionBody'
+export { AccordionHeader } from './AccordionHeader'

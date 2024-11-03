@@ -32,7 +32,7 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
 
   return (
     <>
-      <div className="fixed bottom-4 right-4 flex flex-col gap-4 z-[200]">
+      <div className="fixed bottom-8 right-8 flex flex-col gap-4 z-[200]">
         <IconButton
           className="icon-button"
           aria-label={'Resume Chat'}
