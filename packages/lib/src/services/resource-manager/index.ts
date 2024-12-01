@@ -1,10 +1,10 @@
 import { Logger } from 'pino'
 import { PageResources } from '../../types/resources'
-import { EducationService } from '../education'
-import { ExperienceService } from '../experience'
-import { ProjectService } from '../project'
+import { EducationService } from '../resources/education'
+import { ExperienceService } from '../resources/experience'
+import { ProjectService } from '../resources/project'
 import { ReferralService } from '../referral'
-import { SkillService } from '../skill'
+import { SkillService } from '../resources/skill'
 
 export class ResourceManager {
   constructor(

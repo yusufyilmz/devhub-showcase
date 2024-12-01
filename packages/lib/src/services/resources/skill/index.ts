@@ -1,5 +1,5 @@
-import { Skill } from '../../types/skill'
-import { DbClient, db } from '../../db'
+import { Skill } from '../../../types/skill'
+import { DbClient, db } from '../../../db'
 
 export class SkillService {
   constructor(private readonly dbClient: DbClient = db) {}

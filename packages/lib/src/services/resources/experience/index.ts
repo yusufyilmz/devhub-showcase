@@ -1,12 +1,12 @@
-import { db, DbClient } from '../../db'
+import { db, DbClient } from '../../../db'
 import {
   ExperienceForGptModel,
   ExperienceWithCompanyProjectAndSkills
-} from '../../types/experience'
+} from '../../../types/experience'
 import {
   ExperienceForGptModelArgs,
   ExperienceWithCompanyProjectAndSkillsArgs
-} from '../../types/experience/prisma-args'
+} from '../../../types/experience/prisma-args'
 
 export class ExperienceService {
   constructor(private readonly dbClient: DbClient = db) {}

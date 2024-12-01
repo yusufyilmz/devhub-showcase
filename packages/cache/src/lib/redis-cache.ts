@@ -1,7 +1,7 @@
 import { Redis } from '@upstash/redis'
 import { CacheClient, CacheValue } from '../types'
 
-export class RedisCacheClient implements CacheClient {
+export class CacheService implements CacheClient {
   private readonly client: Redis
   private readonly keyPrefix: string
 
@@ -17,7 +17,7 @@ export class RedisCacheClient implements CacheClient {
     return `${this.keyPrefix}:${key}`
   }
 
-  async set(key: string, value: CacheValue, ttl: number = 0): Promise<void> {
+  async set<T>(key: string, value: T, ttl: number = 0): Promise<void> {
     await this.client.set(
       this.withPrefix(key),
       value,
@@ -25,8 +25,8 @@ export class RedisCacheClient implements CacheClient {
     )
   }
 
-  async get(key: string): Promise<string | null> {
-    return await this.client.get(this.withPrefix(key))
+  async has<T>(key: string): Promise<T | null> {
+    return this.client.get<T>(this.withPrefix(key))
   }
 
   async expire(key: string, ttl: number): Promise<void> {

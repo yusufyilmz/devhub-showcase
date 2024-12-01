@@ -49,7 +49,7 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
                 href={experience.company?.link ?? '#'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="focus:outline-none focus:ring-2 focus:ring-main-blue"
+                className="focus:outline-none"
               >
                 {experience.company?.name}
               </Link>

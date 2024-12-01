@@ -18,6 +18,6 @@ export default class CacheStore {
   }
 
   public async get(key: string): Promise<string | null> {
-    return await this.cacheClient.get(key)
+    return await this.cacheClient.has(key)
   }
 }

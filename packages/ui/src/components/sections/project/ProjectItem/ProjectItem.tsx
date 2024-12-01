@@ -30,16 +30,30 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
           />
         </CardBody>
       )}
-
       <CardBody className="flex gap-4 flex-col text-left">
         <div className="flex flex-col gap-3">
-          <Typography
-            variant="h3"
-            className="font-semibold text-main-white text-2xl group-hover:text-main-blue"
-          >
-            {project.title}
-          </Typography>
-
+          {project?.link ? (
+            <Link
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="focus:outline-none"
+            >
+              <Typography
+                variant="h3"
+                className="font-semibold text-main-white text-2xl group-hover:text-main-blue"
+              >
+                {project.title}
+              </Typography>
+            </Link>
+          ) : (
+            <Typography
+              variant="h3"
+              className="font-semibold text-main-white text-2xl"
+            >
+              {project.title}
+            </Typography>
+          )}
           <Typography
             variant="h4"
             className="font-semibold text-textColor-secondary"
