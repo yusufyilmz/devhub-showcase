@@ -1,18 +1,20 @@
-import type { Redirect } from 'next'
-import { ReviewService } from '@shared/lib/services'
-import type { ReviewWithReferrals } from '@shared/lib/types'
 import { logger } from '@shared/lib/logger'
+import { ReviewService } from '@shared/lib/services'
+import { createServerClient } from '@shared/lib/supabase'
+import type { ReviewWithReferrals } from '@shared/lib/types'
 import { ReviewSection } from '@shared/ui/components'
+import type { Redirect } from 'next'
 import { handleSubmitReviewAction } from '../actions'
 
 export const getPageResources = async (): Promise<
   | ReviewWithReferrals[]
   | {
-      redirect: Redirect
-    }
+    redirect: Redirect
+  }
 > => {
   try {
-    const reviewService = new ReviewService(logger)
+    const client = await createServerClient()
+    const reviewService = new ReviewService(logger, client)
     const reviews = await reviewService.getPendingReviews()
 
     return reviews
