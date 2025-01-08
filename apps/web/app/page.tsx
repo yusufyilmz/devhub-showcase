@@ -2,7 +2,7 @@ import { copy } from '@shared/content'
 import { logger } from '@shared/lib/logger'
 import { ResourceManager } from '@shared/lib/services'
 import { createServerClient } from '@shared/lib/supabase'
-import type { PageResources } from '@shared/lib/types'
+import type { PageResources, SupabaseDbClient } from '@shared/lib/types'
 import {
   AboutMeSection,
   ChatSection,
@@ -21,15 +21,14 @@ const sections = Object.values(copy.navbar).map(
   ({ id }) => id.split('#')[1]
 ) as string[]
 
-export const getPageResources = async (): Promise<
+export const getPageResources = async (supabase: SupabaseDbClient): Promise<
   | PageResources
   | {
     redirect: Redirect
   }
 > => {
   try {
-    const dbClient = await createServerClient()
-    const resources = await new ResourceManager(logger, dbClient).getAllResources()
+    const resources = await new ResourceManager(logger, supabase).getAllResources()
 
     return resources
   } catch (error) {
@@ -47,9 +46,11 @@ export const getPageResources = async (): Promise<
   }
 }
 
+
 export default async function Home(): Promise<JSX.Element> {
+  const supabase = await createServerClient()
   const { experiences, projects, educations, referrals, skills } =
-    (await getPageResources()) as PageResources
+    (await getPageResources(supabase)) as PageResources
 
   return (
     <>

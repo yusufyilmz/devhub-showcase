@@ -52,11 +52,12 @@ export class ReviewService implements ResourceService<ReviewWithReferrals> {
   }
 
   async getPendingReviews(): Promise<ReviewWithReferrals[]> {
-
     const { data, error } = await this.dbClient
       .from('reviews')
-      .select('*')
-      .eq('state', ReviewState.PENDING);
+      .select(`
+      *,
+      referral:referrals(*)
+    `).eq('state', ReviewState.PENDING);
 
     if (error) {
       throw new Error(error.message);

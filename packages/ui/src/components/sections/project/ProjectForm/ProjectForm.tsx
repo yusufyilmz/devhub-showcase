@@ -1,13 +1,12 @@
 'use client'
 
-import React from 'react'
-import { ProjectUpdateInput, Project } from '@shared/lib/types'
-import { useState, useEffect } from 'react'
+import { Project } from '@shared/lib/types'
+import React, { useEffect, useState } from 'react'
 import { Button, TextField } from '../../../../components'
 
 interface ProjectFormProps {
   // eslint-disable-next-line no-unused-vars
-  onSubmit: (_e: ProjectUpdateInput) => void
+  onSubmit: (_e: unknown) => void
   isSubmitting: boolean
   initialData?: Project
   action: string
