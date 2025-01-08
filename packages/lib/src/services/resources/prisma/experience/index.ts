@@ -1,17 +1,18 @@
-import { db, DbClient } from '../../db'
+import { db, DbClient } from '../../../../db'
+import { ResourceService } from '../../../../types'
 import {
   ExperienceForGptModel,
   ExperienceWithCompanyProjectAndSkills
-} from '../../types/experience'
+} from '../../../../types/prisma/experience'
 import {
   ExperienceForGptModelArgs,
   ExperienceWithCompanyProjectAndSkillsArgs
-} from '../../types/experience/prisma-args'
+} from '../../../../types/prisma/experience/prisma-args'
 
-export class ExperienceService {
-  constructor(private readonly dbClient: DbClient = db) {}
+export class ExperienceService implements ResourceService<ExperienceWithCompanyProjectAndSkills> {
+  constructor(private readonly dbClient: DbClient = db) { }
 
-  async getAllExperiencesWithCompanyProjectAndSkills(): Promise<
+  async getAll(): Promise<
     ExperienceWithCompanyProjectAndSkills[]
   > {
     return this.dbClient.experience.findMany(

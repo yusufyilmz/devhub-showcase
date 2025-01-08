@@ -1,10 +1,11 @@
-import { Skill } from '../../types/skill'
-import { DbClient, db } from '../../db'
+import { DbClient, db } from '../../../../db'
+import { ResourceService } from '../../../../types'
+import { Skill } from '../../../../types/prisma/skill'
 
-export class SkillService {
-  constructor(private readonly dbClient: DbClient = db) {}
+export class SkillService implements ResourceService<Skill> {
+  constructor(private readonly dbClient: DbClient = db) { }
 
-  async getAllSkills(): Promise<Skill[]> {
+  async getAll(): Promise<Skill[]> {
     return this.dbClient.skill.findMany()
   }
 

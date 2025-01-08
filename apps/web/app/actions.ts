@@ -1,22 +1,21 @@
 'use server'
 
+import { failureMessage, MessageProcessor } from '@shared/chat'
+import { logger } from '@shared/lib/logger'
 import {
   RateLimiter,
   ReferralService,
   ReviewService
 } from '@shared/lib/services'
-import { isCategoryReferralCategory } from '@shared/lib/utils'
-import { logger } from '@shared/lib/logger'
-import { failureMessage, MessageProcessor } from '@shared/chat'
+import { createServerClient } from '@shared/lib/supabase'
 import type {
-  ReviewState,
   ChatMessage,
+  ReviewState,
   ReviewWithReferrals
 } from '@shared/lib/types'
+import { isCategoryReferralCategory } from '@shared/lib/utils'
 
 const messageProcessor = new MessageProcessor(logger)
-const reviewService = new ReviewService(logger)
-const referralService = new ReferralService(logger)
 const rateLimiter = new RateLimiter()
 
 export async function handleSendMessageAction(
@@ -29,6 +28,9 @@ export async function handleSendMessageAction(
     await rateLimiter.isAllowed(sessionId)
 
     if (isCategoryReferralCategory(message.category)) {
+      const client = await createServerClient()
+      const referralService = new ReferralService(logger, client)
+
       await referralService.saveReferral(
         message.category,
         message.content,
@@ -51,7 +53,11 @@ export async function handleSubmitReviewAction(
   reviewState: ReviewState
 ): Promise<ReviewWithReferrals | undefined> {
   try {
-    const review = await reviewService.updateReview(referralId, reviewState)
+    const client = await createServerClient()
+    const reviewService = new ReviewService(logger, client)
+    const review = await reviewService.update(referralId, {
+      state: reviewState
+    })
 
     return review
   } catch (error) {

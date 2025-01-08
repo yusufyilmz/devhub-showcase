@@ -1,4 +1,4 @@
-export function formatDateRange(startDate: Date, endDate: Date | null) {
+export function formatDateRange(startDate: Date | string, endDate: Date | string | null) {
   const start = new Date(startDate)
 
   const formatter = new Intl.DateTimeFormat('en-US', {

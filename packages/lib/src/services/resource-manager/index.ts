@@ -1,27 +1,48 @@
 import { Logger } from 'pino'
 import { PageResources } from '../../types/resources'
-import { EducationService } from '../education'
-import { ExperienceService } from '../experience'
-import { ProjectService } from '../project'
-import { ReferralService } from '../referral'
-import { SkillService } from '../skill'
+//TODO: temporarily disable prisma resources
+// import { EducationService } from '../resources/prisma/education'
+// import { ExperienceService } from '../resources/prisma/experience'
+// import { ProjectService } from '../resources/prisma/project'
+// import { ReferralService } from '../resources/prisma/referral'
+// import { SkillService } from '../resources/prisma/skill'
+
+import { SupabaseDbClient } from '../../types'
+import { EducationService } from '../resources/supabase/education'
+import { ExperienceService } from '../resources/supabase/experience'
+import { ProjectService } from '../resources/supabase/project'
+import { ReferralService } from '../resources/supabase/referral'
+import { SkillService } from '../resources/supabase/skill'
 
 export class ResourceManager {
+  private readonly dbClient: SupabaseDbClient
+  private readonly experienceService
+  private readonly projectService
+  private readonly educationService
+  private readonly referralService
+  private readonly skillService
+
   constructor(
     private logger: Logger,
-    private readonly experienceService = new ExperienceService(),
-    private readonly projectService = new ProjectService(),
-    private readonly educationService = new EducationService(),
-    private readonly referralService = new ReferralService(this.logger),
-    private readonly skillService = new SkillService()
-  ) {}
+    private client: SupabaseDbClient,
+  ) {
+    this.dbClient = client
+    this.experienceService = new ExperienceService(this.dbClient)
+    this.projectService = new ProjectService(this.dbClient)
+    this.educationService = new EducationService(this.dbClient)
+    this.referralService = new ReferralService(this.logger, this.dbClient)
+    this.skillService = new SkillService(this.dbClient)
+  }
 
   async getAllResources(): Promise<PageResources> {
-    const projects = await this.projectService.getAllProjectsWithCompanies()
+    const projects = await this.projectService.getAll()
+
+    console.log('projects', { projects })
     const experiences =
-      await this.experienceService.getAllExperiencesWithCompanyProjectAndSkills()
-    const educations = await this.educationService.getAllEducations()
-    const referrals = await this.referralService.getApprovedReferrals()
+      await this.experienceService.getAll()
+
+    const educations = await this.educationService.getAll()
+    const referrals = await this.referralService.getAll()
     const skills = await this.skillService.getCategorizedSkills()
 
     return {
