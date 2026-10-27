@@ -1,6 +1,6 @@
-import React from 'react'
+import type { ChatMessage } from '@shared/lib/types'
+import type React from 'react'
 import { Typography } from '../../../ui/Typography'
-import { ChatMessage } from '@shared/lib/types'
 import { formatTimestamp } from './utils'
 
 export const ChatMessageItem: React.FC<{ message: ChatMessage }> = ({

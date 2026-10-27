@@ -2,6 +2,6 @@
 
 import { NotFoundPage } from '@shared/ui/components'
 
-export default function Error(): JSX.Element {
+export default function ErrorRoute(): React.JSX.Element {
   return <NotFoundPage />
 }

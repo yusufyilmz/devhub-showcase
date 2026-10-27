@@ -1,2 +1,2 @@
-export { MessageProcessor } from './services/processor'
 export * from './messages'
+export { MessageProcessor } from './services/processor'

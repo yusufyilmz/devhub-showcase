@@ -5,7 +5,13 @@
 // import { Referral } from '../prisma/referral'
 // import { Skill } from '../prisma/skill'
 
-import { Education, ExperienceWithCompanyProjectAndSkills, ProjectWithCompanyAndSkills, Referral, Skill } from "../supabase"
+import type {
+  Education,
+  ExperienceWithCompanyProjectAndSkills,
+  ProjectWithCompanyAndSkills,
+  Referral,
+  Skill
+} from '../supabase'
 
 export type PageResources = {
   experiences: ExperienceWithCompanyProjectAndSkills[]
@@ -16,9 +22,9 @@ export type PageResources = {
 }
 
 export abstract class ResourceService<T> {
-  abstract createGPTModal?(): Promise<string>;
-  abstract getById?(id: string): Promise<T | null>;
+  abstract createGPTModal?(): Promise<string>
+  abstract getById?(id: string): Promise<T | null>
   abstract getAll(): Promise<T[]>
-  abstract create?(item: T): Promise<T>;
-  abstract update?(id: string, item: T): Promise<T>;
+  abstract create?(item: T): Promise<T>
+  abstract update?(id: string, item: T): Promise<T>
 }

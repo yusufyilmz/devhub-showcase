@@ -1,10 +1,10 @@
 import {
-  IconButtonWithLink,
-  Tooltip,
-  LinkedInIcon,
   EmailIcon,
   GitHubIcon,
-  PhoneIcon
+  IconButtonWithLink,
+  LinkedInIcon,
+  PhoneIcon,
+  Tooltip
 } from '../../../../components'
 
 export const SocialLinks = () => {

@@ -1,6 +1,6 @@
-import { ResourceService } from '../../../../types';
-import { Education, SupabaseDbClient } from '../../../../types/supabase';
-import { keysToCamelCase } from '../../../../utils/converter/camel-case';
+import type { ResourceService } from '../../../../types'
+import type { Education, SupabaseDbClient } from '../../../../types/supabase'
+import { keysToCamelCase } from '../../../../utils/converter/camel-case'
 
 export class EducationService implements ResourceService<Education> {
   private readonly dbClient: SupabaseDbClient
@@ -10,25 +10,17 @@ export class EducationService implements ResourceService<Education> {
   }
 
   async getAll(): Promise<Education[]> {
-
-    const { data, error } = await this.dbClient
-
-      .from('educations')
-      .select('*');
+    const { data, error } = await this.dbClient.from('educations').select('*')
 
     if (error) {
-      throw new Error(error.message);
+      throw new Error(error.message)
     }
 
-    return keysToCamelCase<Education[]>(data);
+    return keysToCamelCase<Education[]>(data)
   }
 
   async createGPTModal(): Promise<string> {
-
-    const { data, error } = await this.dbClient
-
-      .from('educations')
-      .select(`
+    const { data, error } = await this.dbClient.from('educations').select(`
         institution,
         degree,
         field_of_study,
@@ -36,23 +28,21 @@ export class EducationService implements ResourceService<Education> {
         finished_at,
         gpa,
         description
-      `);
+      `)
 
     if (error) {
-      throw new Error(error.message);
+      throw new Error(error.message)
     }
 
-    return educationFormatter(keysToCamelCase<Education[]>(data));
+    return educationFormatter(keysToCamelCase<Education[]>(data))
   }
 }
 
-export const educationFormatter = (
-  educations: Education[]
-): string => {
+export const educationFormatter = (educations: Education[]): string => {
   return educations
     .map(
-      edu =>
+      (edu) =>
         `Education: ${edu.degree} in ${edu.fieldOfStudy} from ${edu.institution}, from ${edu.startedAt} to ${edu.finishedAt || 'present'}`
     )
-    .join('\n');
+    .join('\n')
 }

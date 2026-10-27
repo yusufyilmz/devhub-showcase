@@ -1,5 +1,0 @@
-{
-  "extends": ["next/core-web-vitals", "next/typescript"],
-  "ignorePatterns": ["postcss.config.js", "tailwind.config.js"]
-
-}

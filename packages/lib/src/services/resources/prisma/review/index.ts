@@ -1,14 +1,17 @@
-import { Logger } from 'pino'
-import { db, DbClient } from '../../../../db'
-import { ResourceService } from '../../../../types'
-import { ReviewState, ReviewWithReferrals } from '../../../../types/prisma/review'
+import type { Logger } from 'pino'
+import { type DbClient, db } from '../../../../db'
+import type { ResourceService } from '../../../../types'
+import {
+  ReviewState,
+  type ReviewWithReferrals
+} from '../../../../types/prisma/review'
 import { ReviewWithReferralsArgs } from '../../../../types/prisma/review/prisma-args'
 
 export class ReviewService implements ResourceService<ReviewWithReferrals> {
   constructor(
-    private logger: Logger,
+    _logger: Logger,
     private readonly dbClient: DbClient = db
-  ) { }
+  ) {}
 
   async getAll(): Promise<ReviewWithReferrals[]> {
     return this.dbClient.review.findMany(ReviewWithReferralsArgs)

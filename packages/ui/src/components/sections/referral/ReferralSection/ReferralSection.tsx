@@ -1,8 +1,8 @@
-import React from 'react'
-import { Referral } from '@shared/lib/types'
-import { ReferralItem } from '../ReferralItem'
-import { Section, List, ListItem } from '../../../../components'
 import { copy } from '@shared/content'
+import type { Referral } from '@shared/lib/types'
+import type React from 'react'
+import { List, ListItem, Section } from '../../../../components'
+import { ReferralItem } from '../ReferralItem'
 
 const { id, title, subtitle } = copy.header.sections.referrals
 
@@ -18,7 +18,7 @@ export const ReferralSection: React.FC<{
     >
       <div className="flex items-center h-full md:min-h-[calc(100vh-4rem)]">
         <List divider className="no-scrollbar w-full md:mt-0">
-          {referrals.map(referral => (
+          {referrals.map((referral) => (
             <ListItem key={referral.id}>
               <ReferralItem referral={referral} />
             </ListItem>

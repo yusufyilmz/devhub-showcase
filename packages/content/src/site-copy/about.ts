@@ -11,12 +11,12 @@ export const aboutSection = {
     {
       name: 'Backend',
       details:
-        'The application uses Node.js and Prisma as the ORM to interact with a PostgreSQL database, ensuring seamless data management and scalability.'
+        'The application uses Node.js and Supabase for optional persisted interactions. Legacy Prisma models remain available for existing database tooling.'
     },
     {
       name: 'Database',
       details:
-        'Hosted on Heroku, the database is powered by PostgreSQL, providing a reliable and robust storage solution for project data and user feedback.'
+        'Public career content is versioned with the source code. Supabase stores optional referrals and review data.'
     },
     {
       name: 'Deployment',

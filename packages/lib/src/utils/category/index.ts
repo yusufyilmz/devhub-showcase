@@ -1,4 +1,7 @@
-import { ReferralQuestionCategory, validReferralCategories } from '../../types'
+import {
+  type ReferralQuestionCategory,
+  validReferralCategories
+} from '../../types'
 
 export const isCategoryReferralCategory = (
   category: unknown

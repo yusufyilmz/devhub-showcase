@@ -1,4 +1,4 @@
-import { ChatRole } from './roles'
+import type { ChatRole } from './roles'
 
 export type ChatType = 'referral' | 'cv'
 

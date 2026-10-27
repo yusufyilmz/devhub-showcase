@@ -1,8 +1,7 @@
-import React from 'react'
-import { ExperienceItem } from '../ExperienceItem/ExperienceItem'
-import { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
-
+import type { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
+import type React from 'react'
 import { Timeline } from '../../../../components'
+import { ExperienceItem } from '../ExperienceItem/ExperienceItem'
 
 interface ExperienceListProps {
   experiences: ExperienceWithCompanyProjectAndSkills[]
@@ -13,7 +12,7 @@ export const ExperienceList: React.FC<ExperienceListProps> = ({
 }) => {
   return (
     <Timeline className="w-full">
-      {experiences.map(experience => (
+      {experiences.map((experience) => (
         <ExperienceItem key={experience.id} experience={experience} />
       ))}
     </Timeline>

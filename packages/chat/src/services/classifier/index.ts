@@ -1,7 +1,7 @@
 import nlp from 'compromise'
+import type { Logger } from 'pino'
 import { QUESTION_CATEGORIES } from '../../models/question-categories'
-import { ChatCategory } from '../../types/cv'
-import { Logger } from 'pino'
+import type { ChatCategory } from '../../types/cv'
 
 export class ClassifierService {
   constructor(private readonly logger: Logger) {}

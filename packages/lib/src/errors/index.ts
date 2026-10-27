@@ -43,9 +43,9 @@ const errorHandling = (error: unknown) => {
 }
 
 export {
-  CustomError,
-  ValidationError,
-  NotFoundError,
   BadRequestError,
-  errorHandling
+  CustomError,
+  errorHandling,
+  NotFoundError,
+  ValidationError
 }

@@ -1,13 +1,13 @@
-import { DbClient, db } from '../../../../db'
-import { ResourceService } from '../../../../types'
+import { type DbClient, db } from '../../../../db'
+import type { ResourceService } from '../../../../types'
 import {
-  Project,
+  type Project,
   ProjectForGptModelArgs
 } from '../../../../types/prisma/project'
 import { projectFormatter } from '../../../formatter'
 
 export class ProjectService implements ResourceService<Project> {
-  constructor(private readonly dbClient: DbClient = db) { }
+  constructor(private readonly dbClient: DbClient = db) {}
 
   async getAll(): Promise<Project[]> {
     return this.dbClient.project.findMany()

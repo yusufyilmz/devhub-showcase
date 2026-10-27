@@ -1,66 +1,67 @@
-import { SupabaseClient } from '@supabase/supabase-js';
-import { Database } from './database.types';
+import type { SupabaseClient } from '@supabase/supabase-js'
+import type { Database } from './database.types'
 
-export type ExperienceRow = Database['public']['Tables']['experiences']['Row'];
-export type ProjectRow = Database['public']['Tables']['projects']['Row'];
-export type SkillRow = Database['public']['Tables']['skills']['Row'];
-export type CompanyRow = Database['public']['Tables']['companies']['Row'];
-export type EducationRow = Database['public']['Tables']['educations']['Row'];
-export type ReferralRow = Database['public']['Tables']['referrals']['Row'];
-export type Achievements = Database['public']['Tables']['achievements']['Row'];
+export type ExperienceRow = Database['public']['Tables']['experiences']['Row']
+export type ProjectRow = Database['public']['Tables']['projects']['Row']
+export type SkillRow = Database['public']['Tables']['skills']['Row']
+export type CompanyRow = Database['public']['Tables']['companies']['Row']
+export type EducationRow = Database['public']['Tables']['educations']['Row']
+export type ReferralRow = Database['public']['Tables']['referrals']['Row']
+export type Achievements = Database['public']['Tables']['achievements']['Row']
 
 export interface ProjectForGpt {
-  title: ProjectRow['title'];
-  description: ProjectRow['description'];
-  link: ProjectRow['link'];
-  role: ProjectRow['role'];
+  title: ProjectRow['title']
+  description: ProjectRow['description']
+  link: ProjectRow['link']
+  role: ProjectRow['role']
 }
 
 export interface ExperienceForGpt {
-  startedAt: string;
-  finishedAt: string | null;
-  role: string;
-  company: CompanyRow;
-  projects: ProjectForGpt[];
+  startedAt: string
+  finishedAt: string | null
+  role: string
+  company: CompanyRow
+  projects: ProjectForGpt[]
 }
 
 export interface ExperienceForGpt {
-  startedAt: string;
-  finishedAt: string | null;
-  role: string;
-  company: CompanyRow;
-  projects: ProjectForGpt[];
+  startedAt: string
+  finishedAt: string | null
+  role: string
+  company: CompanyRow
+  projects: ProjectForGpt[]
 }
 
 export interface ProjectWithSkills {
-  id: string;
-  title: string;
-  skills: Skill[];
+  id: string
+  title: string
+  skills: Skill[]
 }
 
 export interface ProjectWithCompanyAndSkills {
-  id: string;
-  title: string;
-  description: string;
-  link: string | null;
-  role: string;
-  public: boolean;
-  company: CompanyRow;
-  skills: Skill[];
-  imageUrl: string | null;
+  id: string
+  title: string
+  description: string
+  link: string | null
+  role: string
+  public: boolean
+  company: CompanyRow
+  skills: Skill[]
+  imageUrl: string | null
+  sourceUrl?: string | null
 }
 
 export interface ExperienceWithCompanyProjectAndSkills {
-  id: string;
-  startedAt: string;
-  finishedAt: string | null;
-  createdAt: string;
-  updatedAt: string | null;
-  role: string;
-  achievements: string[];
-  company: CompanyRow;
-  companyId: string | null;
-  projects: ProjectWithSkills[];
+  id: string
+  startedAt: string
+  finishedAt: string | null
+  createdAt: string
+  updatedAt: string | null
+  role: string
+  achievements: string[]
+  company: CompanyRow
+  companyId: string | null
+  projects: ProjectWithSkills[]
 }
 
 export interface Skill {
@@ -198,7 +199,7 @@ export enum ReviewState {
   REJECTED = 'REJECTED'
 }
 
-export type SupabaseDbClient = SupabaseClient<Database>;
+export type SupabaseDbClient = SupabaseClient<Database>
 
 export type ReviewWithReferrals = {
   id: string
@@ -208,4 +209,4 @@ export type ReviewWithReferrals = {
   state: ReviewState
   referralId: string
   referral: Referral
-};
+}

@@ -1,8 +1,13 @@
-import { ResourceService } from '../../../../types';
-import { ProjectWithCompanyAndSkills, SupabaseDbClient } from '../../../../types/supabase';
-import { keysToCamelCase } from '../../../../utils/converter/camel-case';
+import type { ResourceService } from '../../../../types'
+import type {
+  ProjectWithCompanyAndSkills,
+  SupabaseDbClient
+} from '../../../../types/supabase'
+import { keysToCamelCase } from '../../../../utils/converter/camel-case'
 
-export class ProjectService implements ResourceService<ProjectWithCompanyAndSkills> {
+export class ProjectService
+  implements ResourceService<ProjectWithCompanyAndSkills>
+{
   private readonly dbClient: SupabaseDbClient
 
   constructor(client: SupabaseDbClient) {
@@ -15,59 +20,55 @@ export class ProjectService implements ResourceService<ProjectWithCompanyAndSkil
       .select(`
       *,
       company:companies(*)
-    `);
+    `)
 
     if (projectsError) {
-      throw new Error(projectsError.message);
+      throw new Error(projectsError.message)
     }
 
-    console.log({ projects });
+    console.log({ projects })
 
-    const { data: projectSkills, error: projectSkillsError } = await this.dbClient
-      .from('project_skills')
-      .select(`
+    const { data: projectSkills, error: projectSkillsError } =
+      await this.dbClient.from('project_skills').select(`
       project_id,
       skill:skills(*)
-    `);
+    `)
 
     if (projectSkillsError) {
-      throw new Error(projectSkillsError.message);
+      throw new Error(projectSkillsError.message)
     }
 
-
-    const projectsWithSkills = projects.map(project => {
+    const projectsWithSkills = projects.map((project) => {
       const skills = projectSkills
-        .filter(ps => ps.project_id === project.id)
-        .map(ps => ps.skill);
+        .filter((ps) => ps.project_id === project.id)
+        .map((ps) => ps.skill)
 
       return {
         ...project,
         skills
-      };
-    });
+      }
+    })
 
-    return keysToCamelCase<ProjectWithCompanyAndSkills[]>(projectsWithSkills);
+    return keysToCamelCase<ProjectWithCompanyAndSkills[]>(projectsWithSkills)
   }
 
   async createGPTModal(): Promise<string> {
-
-    const { data, error } = await this.dbClient
-
-      .from('projects')
-      .select(`
+    const { data, error } = await this.dbClient.from('projects').select(`
         title,
         description,
         link,
         role,
         company:companies(name, link),
         skills:skills(name)
-      `);
+      `)
 
     if (error) {
-      throw new Error(error.message);
+      throw new Error(error.message)
     }
 
-    return projectFormatter(keysToCamelCase<ProjectWithCompanyAndSkills[]>(data));
+    return projectFormatter(
+      keysToCamelCase<ProjectWithCompanyAndSkills[]>(data)
+    )
   }
 }
 
@@ -76,8 +77,8 @@ export const projectFormatter = (
 ): string => {
   return projects
     .map(
-      project =>
-        `Project: ${project.title}, Description: ${project.description}, Company: ${project.company?.name}, Skills: ${project.skills.map(skill => skill.name).join(', ')}`
+      (project) =>
+        `Project: ${project.title}, Description: ${project.description}, Company: ${project.company?.name}, Skills: ${project.skills.map((skill) => skill.name).join(', ')}`
     )
-    .join('\n');
+    .join('\n')
 }

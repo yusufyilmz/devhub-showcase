@@ -1,8 +1,8 @@
 'use client'
 
-import React from 'react'
 import Link from 'next/link'
-import { useState, useEffect, useMemo } from 'react'
+import type React from 'react'
+import { useState } from 'react'
 import { Spinner } from '../Spinner'
 
 interface IFramePreviewProps {
@@ -13,10 +13,6 @@ export const IFramePreview: React.FC<IFramePreviewProps> = ({ url }) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
-  useEffect(() => {
-    setLoading(false)
-  }, [url])
-
   const handleLoad = () => {
     setLoading(false)
   }
@@ -26,21 +22,25 @@ export const IFramePreview: React.FC<IFramePreviewProps> = ({ url }) => {
     setLoading(false)
   }
 
-  const IFrame = useMemo(() => {
-    return url ? (
-      <div className="overflow-y-auto" onClick={() => window.open(url)}>
-        <iframe
-          id="iframe"
-          src={url ?? null}
-          title="Website Preview"
-          sandbox="allow-scripts"
-          className="w-full h-[100vh] transition-opacity duration-500 opacity-100 pointer-events-none"
-          onLoad={handleLoad}
-          onError={handleError}
-        />
-      </div>
-    ) : null
-  }, [url])
+  const IFrame = url ? (
+    <a
+      className="block overflow-y-auto"
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Open website preview"
+    >
+      <iframe
+        id="iframe"
+        src={url ?? null}
+        title="Website Preview"
+        sandbox="allow-scripts"
+        className="w-full h-[100vh] transition-opacity duration-500 opacity-100 pointer-events-none"
+        onLoad={handleLoad}
+        onError={handleError}
+      />
+    </a>
+  ) : null
 
   return (
     <div className="border rounded-lg shadow-lg overflow-hidden cursor-pointer relative">

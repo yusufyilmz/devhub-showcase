@@ -1,7 +1,7 @@
 'use client'
 
-import React from 'react'
-import { createContext, useCallback, useState, useContext } from 'react'
+import type React from 'react'
+import { createContext, useCallback, useContext, useState } from 'react'
 import { Alert, Typography } from '../components'
 
 export interface NotificationContextProps {
@@ -38,7 +38,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [])
 
   const handleClose = () => {
-    setNotification(prev => ({ ...prev, open: false }))
+    setNotification((prev) => ({ ...prev, open: false }))
   }
 
   return (

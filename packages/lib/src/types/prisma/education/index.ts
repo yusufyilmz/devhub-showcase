@@ -1,5 +1,5 @@
-import { Prisma } from '@prisma/client'
-import { EducationForGptModelArgs } from './prisma-args'
+import type { Prisma } from '@prisma/client'
+import type { EducationForGptModelArgs } from './prisma-args'
 
 export type { Education } from '@prisma/client'
 

@@ -1,4 +1,4 @@
-import { ReferralQuestionCategory } from '@shared/lib/types'
+import type { ReferralQuestionCategory } from '@shared/lib/types'
 
 export const REFERRAL_MODAL: Record<
   ReferralQuestionCategory,

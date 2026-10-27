@@ -3,15 +3,11 @@ import { ReviewService } from '@shared/lib/services'
 import { createServerClient } from '@shared/lib/supabase'
 import type { ReviewWithReferrals, SupabaseDbClient } from '@shared/lib/types'
 import { ReviewSection } from '@shared/ui/components'
-import type { Redirect } from 'next'
 import { handleSubmitReviewAction } from '../actions'
 
-export const getPageResources = async (supabase: SupabaseDbClient): Promise<
-  | ReviewWithReferrals[]
-  | {
-    redirect: Redirect
-  }
-> => {
+const getPageResources = async (
+  supabase: SupabaseDbClient
+): Promise<ReviewWithReferrals[]> => {
   try {
     const reviewService = new ReviewService(logger, supabase)
     const reviews = await reviewService.getPendingReviews()
@@ -23,18 +19,19 @@ export const getPageResources = async (supabase: SupabaseDbClient): Promise<
       'Error fetching reviews'
     )
 
-    return {
-      redirect: {
-        destination: '/error',
-        permanent: false
-      }
-    }
+    return []
   }
 }
 
-export default async function ReviewsPage(): Promise<JSX.Element> {
+export default async function ReviewsPage(): Promise<React.JSX.Element> {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL)
+    return (
+      <main>
+        <p>Reviews are not configured.</p>
+      </main>
+    )
   const supabase = await createServerClient()
-  const pendingReviews = (await getPageResources(supabase)) as ReviewWithReferrals[]
+  const pendingReviews = await getPageResources(supabase)
 
   return (
     <main className="w-full h-[calc(100vh-8rem)] bg-main-primary  flex flex-col justify-center items-center">

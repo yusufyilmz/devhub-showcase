@@ -1,0 +1,51 @@
+import { fileURLToPath } from 'node:url'
+import { defineConfig } from 'vitest/config'
+
+export default defineConfig({
+  resolve: {
+    alias: [
+      {
+        find: '@shared/lib/logger',
+        replacement: fileURLToPath(
+          new URL('./packages/lib/src/log/index.ts', import.meta.url)
+        )
+      },
+      {
+        find: '@shared/lib/portfolio',
+        replacement: fileURLToPath(
+          new URL(
+            './packages/lib/src/services/portfolio/index.ts',
+            import.meta.url
+          )
+        )
+      },
+      {
+        find: /^@shared\/content$/,
+        replacement: fileURLToPath(
+          new URL('./packages/content/src/index.ts', import.meta.url)
+        )
+      },
+      {
+        find: /^@shared\/lib\/(.*)$/,
+        replacement: `${fileURLToPath(new URL('./packages/lib/src/', import.meta.url))}$1`
+      },
+      {
+        find: /^@shared\/ui\/(.*)$/,
+        replacement: `${fileURLToPath(new URL('./packages/ui/src/', import.meta.url))}$1`
+      }
+    ]
+  },
+  oxc: { jsx: { runtime: 'automatic' } },
+  test: {
+    include: ['tests/**/*.test.{ts,tsx}'],
+    environment: 'node',
+    coverage: {
+      provider: 'v8',
+      include: [
+        'packages/lib/src/services/portfolio/**',
+        'packages/lib/src/utils/date/**',
+        'packages/chat/src/services/formatter/**'
+      ]
+    }
+  }
+})

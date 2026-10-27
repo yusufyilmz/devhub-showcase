@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 
 type ButtonProps = {
   children: React.ReactNode
@@ -59,7 +59,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       {...props}
     >
-      <>{children}</>
+      {children}
       {endIcon && <span className="ml-2">{endIcon}</span>}
     </Component>
   )

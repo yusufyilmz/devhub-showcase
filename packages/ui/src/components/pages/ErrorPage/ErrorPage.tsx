@@ -1,4 +1,3 @@
-import React from 'react'
 import { copy } from '@shared/content'
 import { GoBackButton, HomeButton, Typography } from '../../../components'
 

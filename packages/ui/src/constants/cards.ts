@@ -1,4 +1,4 @@
-import { CVCategoryType } from '@shared/lib/types'
+import type { CVCategoryType } from '@shared/lib/types'
 
 export const CARD_IDS: Record<CVCategoryType, string> = {
   experience: 'experience-card',

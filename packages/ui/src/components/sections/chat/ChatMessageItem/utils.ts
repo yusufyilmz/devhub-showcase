@@ -14,6 +14,6 @@ export function formatTimestamp(timestamp: number): string {
     return `${hours} hours ago`
   } else {
     const date = new Date(timestamp)
-    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString()
+    return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
   }
 }

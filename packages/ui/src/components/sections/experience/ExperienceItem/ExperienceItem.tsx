@@ -1,31 +1,30 @@
-import React from 'react'
-import { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
+import type { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
+import { formatDateRange } from '@shared/lib/utils'
 import Link from 'next/link'
+import type React from 'react'
 import {
   Card,
-  Typography,
   CardBody,
-  TimelineItem,
-  TimelineBody,
-  TimelineIcon,
-  TimelineHeader,
   Divider,
   List,
-  ListItem
+  ListItem,
+  TimelineBody,
+  TimelineHeader,
+  TimelineIcon,
+  TimelineItem,
+  Typography
 } from '../../../../components'
-
 import { CARD_IDS } from '../../../../constants'
-import { SkillItem } from '../../skill/SkillItem/SkillItem'
-import { formatDateRange } from '@shared/lib/utils'
 import { ProjectList } from '../../project/ProjectList/ProjectList'
+import { SkillItem } from '../../skill/SkillItem/SkillItem'
 
 type ExperienceProps = {
   experience: ExperienceWithCompanyProjectAndSkills
 }
 
 export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
-  const skills = experience.projects.flatMap(project => project.skills)
-  const uniqueSkills = new Set(skills.map(skill => skill.name))
+  const skills = experience.projects.flatMap((project) => project.skills)
+  const uniqueSkills = new Set(skills.map((skill) => skill.name))
 
   return (
     <TimelineItem className="w-full">
@@ -65,8 +64,8 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
           <Divider className="bg-main-light-slate" />
           <CardBody className="pt-0">
             <List className="list-disc list-inside text-main-white">
-              {experience.achievements.map((achievement, idx) => (
-                <ListItem key={idx}>
+              {experience.achievements.map((achievement) => (
+                <ListItem key={achievement}>
                   <Typography
                     variant="overline"
                     className="text-textColor-lightSlate font-light"
@@ -80,7 +79,7 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
           <CardBody className="pt-0">
             <div className="flex justify-start flex-wrap gap-2">
               {[...uniqueSkills].map(
-                skill => skill && <SkillItem key={skill} name={skill} />
+                (skill) => skill && <SkillItem key={skill} name={skill} />
               )}
             </div>
           </CardBody>

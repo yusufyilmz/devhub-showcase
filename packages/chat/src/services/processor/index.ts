@@ -1,5 +1,7 @@
 import type { ChatMessage } from '@shared/lib/types'
 import { ChatRole } from '@shared/lib/types'
+import type { Logger } from 'pino'
+import { notMeaningfulMessage, processErrorMessage } from '../../messages'
 import { CV_MODEL } from '../../models/cv-model'
 import {
   CATEGORY_PROMPT_CATEGORY_KEY,
@@ -7,13 +9,11 @@ import {
   GPT_PROMPT_TEMPLATE_COMPLETE,
   GPT_PROMPT_TEMPLATE_WITH_CATEGORY
 } from '../../models/gpt-prompt'
+import type { CVModel } from '../../types'
 import { ClassifierService } from '../classifier/index'
+import { formatAllCV, formatCVCategory } from '../formatter/index'
 import { ChatGPTService } from '../gpt/index'
-import { formatAllCV, formatters } from '../formatter/index'
-import { CVModel, CVModelValue } from '../../types'
-import { Logger } from 'pino'
 import { ReferralService } from '../referral'
-import { notMeaningfulMessage, processErrorMessage } from '../../messages'
 
 export class MessageProcessor {
   classifier: ClassifierService
@@ -84,9 +84,10 @@ export class MessageProcessor {
       } else {
         // Step 3: format the model data and send it to GPT for a response
 
-        const formattedModel = formatters[
-          classifiedMessage.category as keyof typeof CV_MODEL
-        ](classifiedMessage.model as CVModel[keyof CVModelValue])
+        const formattedModel = formatCVCategory(
+          classifiedMessage.category as keyof CVModel,
+          classifiedMessage.model as CVModel[keyof CVModel]
+        )
 
         promptWithModel = GPT_PROMPT_TEMPLATE_WITH_CATEGORY.replace(
           CATEGORY_PROMPT_CATEGORY_KEY,

@@ -1,8 +1,8 @@
 import { ReviewState } from '@prisma/client'
 import type { Logger } from 'pino'
-import { DbClient, db } from '../../../../db'
-import { ResourceService } from '../../../../types'
-import { Referral } from '../../../../types/prisma/referral'
+import { type DbClient, db } from '../../../../db'
+import type { ResourceService } from '../../../../types'
+import type { Referral } from '../../../../types/prisma/referral'
 import { ReferralForGptModelArgs } from '../../../../types/prisma/referral/prisma-args'
 import { referralFormatter } from '../../../formatter'
 
@@ -10,7 +10,7 @@ export class ReferralService implements ResourceService<Referral> {
   constructor(
     private logger: Logger,
     private readonly dbClient: DbClient = db
-  ) { }
+  ) {}
 
   async getAll(): Promise<Referral[]> {
     return this.dbClient.referral.findMany({

@@ -1,136 +1,123 @@
-Here’s the full detailed README file in the string format you requested:
+# Yusuf DevHub
 
-# DevHub Showcase
+Yusuf Yilmaz’s portfolio: [yusufdevhub.vercel.app](https://yusufdevhub.vercel.app). Built with Next.js App Router, React, TypeScript and a pnpm/Turborepo workspace. The existing navy/cyan design is preserved.
 
-This is a portfolio application designed to showcase public projects, professional experience, and an interactive AI chat feature for users to learn more about the developer. The app is built using `Next.js`, `React`, `Typescript`, `Prisma`, `PostgreSQL`, and `Tailwind CSS`.
+## Start locally
 
-## Website
+Use Node.js 24 (24.15 or newer) and the pnpm version in `package.json`.
 
-https://devhub-showcase.vercel.app/
-
-## Features
-
-- **Portfolio Showcase**: A section displaying public projects the developer has worked on.
-- **Interactive AI Chat**: Uses OpenAI’s API to allow users to ask questions and learn more about the developer's experiences and skills.
-- **CV Page**: Displays the developer's professional resume, highlighting their education, experience, and skills.
-- **Dark/Light Theme Toggle**: Allows users to switch between themes.
-- **Responsive Design**: Fully responsive and optimized for all devices.
-
-## Tech Stack
-
-- `Next.js`: For server-side rendering and optimized routing.
-- `React`: Frontend framework for building user interfaces.
-- `Typescript`: Strongly typed language ensuring safer and more reliable code.
-- `Prisma`: ORM used to interact with the PostgreSQL database.
-- `PostgreSQL`: Database used for storing project information, user data, and more.
-- `Tailwind CSS`: Utility-first CSS framework for fast styling.
-- `Vercel`: Hosting and deployment platform for serverless functions and static sites.
-
-## Project Structure
-
-The project is set up as a **monorepo** using `Turborepo` to manage the different packages:
-
-- `/app/web`: Contains the frontend application using `Next.js` and `React`.
-- `/packages/lib`: Shared utilities, constants, and types.
-- `/packages/ui`: Shared UI components and theming.
-- `/packages/content`: Shared sitecopy and messages.
-- `/packages/eslint-config`: Shared eslint configs
-- `/packages/typescript-config`: Shared typescript configs.
-- `/packages/tailwindcss-config`: Shared typescript configs.
-
-## AI Chat Feature
-
-The AI chat is built using a combination of NLP (Natural Language Processing) and OpenAI’s API. The process works as follows:
-
-1. **Classification using NLP**: User input is first classified using the `compromise` NLP library. The classification determines the intent of the message (e.g., greeting, question about skills, unrelated message, etc.).
-2. **Response Logic**:
-
-   - For certain categories like greetings or unrelated queries, predefined responses are triggered automatically.
-   - For more complex questions (e.g., about work experience or skills), the query is sent to the OpenAI API with relevant context about my CV or projects.
-
-3. **Dynamic Responses**: Depending on the classification, either a predefined message is shown, or the response is dynamically generated from OpenAI’s model based on the category of the question.
-
-This system ensures efficient responses for both casual interactions and more detailed inquiries about my professional background.
-
-## Getting Started
-
-To get started with the project, follow these steps:
-
-### Prerequisites
-
-Ensure that you have the following installed:
-
-- `Node.js` (v16 or later)
-- `Yarn` package manager
-- `PostgreSQL` (local or cloud database)
-
-### Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/yusufyilmz/devhub-showcase.git
-   ```
-
-2. Navigate into the project directory:
-
-   ```bash
-   cd devhub-showcase
-   ```
-
-3. Install dependencies using `yarn`:
-
-   ```bash
-   yarn install
-   ```
-
-4. Set up the database by running the Prisma migration:
-
-   ```bash
-   yarn prisma migrate dev
-   ```
-
-### Development
-
-To run the application in development mode:
-
-```bash
-yarn dev
+```sh
+corepack enable
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
-This will start the Next.js development server, and you can access the application at http://localhost:3000.
+Open http://localhost:3000. The public career, project and education sections work without credentials. Copy `.env.example` to `apps/web/.env.local` only if you need the optional integrations below. Keep secrets out of Git.
 
-### Build
+## Update the information
 
-To create a production build of the application:
+`packages/content/src/profile.ts` is the authoritative public profile, updated from the October 2026 CV. It contains the biography, six employers, achievements, selected projects, education, languages, skills and contact links. Both the page and AI context derive from it, so they cannot silently retain separate career histories.
 
-```bash
-yarn build
+- `packages/lib/src/services/portfolio` maps the profile into typed page resources.
+- `packages/chat/src/models/cv-model.ts` maps the same profile into the chat model. Missing durations, GPA values, references and personal traits are not invented.
+- `apps/web/public/cv.pdf` is the supplied CV and is served by the existing download links. Replace it when publishing a new CV.
+- `packages/content/src/site-copy` holds labels, SEO metadata and structured data.
+
+Professional case studies appear inside their employer’s experience card. The public project showcase includes DevHub and Fitness OS with live and GitHub links. Public career data is now versioned in Git; updating old database experience/project rows does not override this profile. Existing database tables and records are not modified or deleted.
+
+## Commands
+
+| Command                                         | Purpose                                                                    |
+| ----------------------------------------------- | -------------------------------------------------------------------------- |
+| `pnpm dev`                                      | Run the Next.js development server through Turbo                           |
+| `pnpm build`                                    | Generate the legacy Prisma client, check shared packages and build Next.js |
+| `pnpm start`                                    | Serve the built web app                                                    |
+| `pnpm format` / `pnpm format:check`             | Format / verify with Biome                                                 |
+| `pnpm lint:check` / `pnpm lint:fix`             | Check / fix Biome lint rules                                               |
+| `pnpm assist:check` / `pnpm assist`             | Check / apply import organization                                          |
+| `pnpm check` / `pnpm check:fix`                 | Combined Biome checks / fixes                                              |
+| `pnpm typecheck`                                | Check tests, tooling, every source package and the app in strict mode      |
+| `pnpm test` / `pnpm test:watch`                 | Run Vitest / watch tests                                                   |
+| `pnpm test:coverage`                            | Run Vitest with V8 coverage                                                |
+| `pnpm clean`                                    | Remove local build output                                                  |
+| `pnpm create-package` / `pnpm create-component` | Use the updated Turbo generators                                           |
+
+`pnpm types:check` remains an alias for compatibility. Packages use explicit `workspace:*` dependencies rather than relying on Yarn hoisting. Source packages are compiled by Next.js; their package build scripts run type checks instead of emitting unused JavaScript. Biome replaces ESLint and Prettier throughout the workspace. Generated SQL/database types and build outputs are excluded from formatting.
+
+## App Router structure
+
+```text
+apps/web/
+  app/                     App Router layout, pages, errors and server actions
+  lib/portfolio-resources.ts  Public profile plus optional testimonials
+  proxy.ts                 Optional Supabase session refresh (Next.js 16 convention)
+  public/cv.pdf            Downloadable CV
+packages/
+  content/                 Shared profile, labels and SEO
+  ui/                      Existing components, styles, hooks and stores
+  chat/                    Classification, CV context, formatting and OpenAI service
+  lib/                     Resource contracts, adapters, Supabase and legacy Prisma services
+  cache/                   Redis cache adapter
+  log/                     Logging
+  typescript-config/       Strict shared TypeScript configuration
+  tailwind-config/         Existing Tailwind design tokens
+prisma/                    Legacy schema and migrations, retained for compatibility
+supabase/                  Existing backend setup
+tests/                    Content, adapter, UI and configuration tests
 ```
 
-### Environment Variables
+The application already used App Router. This update modernizes it to Next.js 16 with React 19, async request APIs and `proxy.ts`. No Pages Router routes are introduced. Secrets stay in server actions and server services; client components own browser interactions.
 
-The project requires the following environment variables to be configured in a .env file:
+## Optional services
 
-```bash
-DATABASE_URL=your_postgresql_database_url
-OPENAI_API_KEY=your_openai_api_key
+### Supabase referrals and reviews
+
+Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Existing `NEXT_PUBLIC_SUPABASE_ANON_KEY` deployments remain supported. Only publishable/anon keys belong in the browser. Do not expose a service-role key.
+
+The public profile loads independently of Supabase. If configured, the homepage also reads testimonials and additional public project examples through the existing Supabase services. Versioned personal projects take priority over database entries with the same title. Private database projects are excluded. A failed testimonial query does not hide the portfolio. Referral submission and review moderation still depend on the existing schema and access policies. Configure authentication and row-level policies for your deployment before enabling moderation; this PR does not change database policies or grant new access.
+
+### AI chat
+
+Set `OPENAI_API_KEY`, `REDIS_URL` and `REDIS_TOKEN` on the server. The chat requires Redis for its existing rate limit. Without these values it returns the existing failure response instead of crashing the page build. `OPENAI_MODEL` defaults to `gpt-4.1-mini`; choose a Chat Completions model available to your account. No email or provider credentials are needed for the public portfolio.
+
+### Legacy Prisma tooling
+
+The Supabase integration remains the active backend adapter. Prisma models and services are retained for existing installations. `pnpm db:generate` only generates types and does not connect to or change a database. Run `pnpm db:migrate` for an intentional local migration or `pnpm db:deploy` for an intentional release, with `DATABASE_URL` set in the shell. CI never runs migrations, `db push`, or seeds. `prisma/seed.sh` contains historical SQL and must be reviewed before manual use.
+
+## CI and deployment
+
+`.github/workflows/ci.yml` is the single workflow. Every PR and push to `main` runs:
+
+```text
+format:check → lint:check → assist:check → test → typecheck → build
 ```
 
-### Deployment
+PR checks use no production credentials and do not deploy. Only a successful `main` push (or manual run on `main`) reaches the separate production deployment job. It pulls Vercel configuration, builds production output and deploys with `--prebuilt`. Actions and the Vercel CLI are pinned. Branch concurrency cancels outdated PR runs and serializes production work.
 
-This project is deployed using Vercel. To deploy:
+Configure these GitHub repository or `production` environment secrets directly in GitHub:
 
-1. Connect the repository to Vercel.
-2. Set the necessary environment variables in Vercel’s dashboard.
-3. Push changes to the main branch, and Vercel will automatically deploy the latest version.
+| Secret              | Source                                       |
+| ------------------- | -------------------------------------------- |
+| `VERCEL_TOKEN`      | A token authorized for the portfolio project |
+| `VERCEL_ORG_ID`     | Your linked project’s `.vercel/project.json` |
+| `VERCEL_PROJECT_ID` | Your linked project’s `.vercel/project.json` |
 
-### Contributions
+Set the Vercel project’s Root Directory to `apps/web` and Node version to 24. `apps/web/vercel.json` installs the frozen workspace lockfile and builds from the repository root. Configure optional application variables in Vercel’s Production environment, not in the workflow YAML. Set the production environment’s deployment branch restriction to `main`; add reviewers if you want a manual release gate.
 
-Feel free to submit pull requests or create issues for any bugs or suggestions!
+Require the `Verify` check before merging. If GitHub Actions should be the only production deployment path, disable automatic Vercel Git deployments for this project so they cannot bypass the checks. Keep the Vercel project and environment settings. No project or secret is created by this code change.
 
-### License
+## Dependency policy and upgrades
 
-This project is licensed under the MIT License.
+Runtime/tool versions were checked against the package registry in October 2026 and are pinned in package manifests and `pnpm-lock.yaml`. This update moves off the Next.js 15 canary to Next.js 16.4.3, React 19.3.1, MUI 9.5.0, Supabase JS 2.118.0, Supabase SSR 0.12.7, OpenAI 7.45.1, Turbo 2.11.10, Biome 2.6.3 and Vitest 5.0.5.
 
-You can copy and paste this into your project's `README.md`. It includes explanations of the tech stack, features, project setup, and instructions for running the project locally or in production. Let me know if you'd like any changes!
+TypeScript stays on 5.9.3, Tailwind on 3.4.19, Prisma/client on matching 6.19.0 versions, and pnpm on 11.25.0. These are intentional compatible upgrade boundaries: Tailwind 4 changes CSS/configuration, Prisma 7 changes the client/driver setup, TypeScript 7 needs a separate tooling compatibility migration, and pnpm matches the Fitness OS setup. Do not replace stable pins with a prerelease just because a registry tag points to one.
+
+Review dependency release notes, update pins, regenerate the lockfile, and run all checks before merging an upgrade. `pnpm-workspace.yaml` explicitly allows only the required dependency build scripts.
+
+## Validation
+
+Vitest covers current career chronology, public/work project placement, shared AI context, date formatting, missing configuration, and rendered project links. The production build must work without Supabase, OpenAI or database credentials. Live database operations and AI responses additionally require configured services.
+
+## License
+
+MIT. See [LICENSE](LICENSE).

@@ -18,6 +18,11 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       },
       {
         type: 'add',
+        path: 'packages/{{dashCase packageName}}/tsconfig.json',
+        templateFile: 'templates/package/tsconfig.json.hbs'
+      },
+      {
+        type: 'add',
         path: 'packages/{{dashCase packageName}}/src/index.ts',
         templateFile: 'templates/package/index.ts.hbs'
       },
@@ -45,9 +50,8 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       },
       {
         type: 'append',
-        path: 'package.json',
-        pattern: /"exports": {(?<insertion>)/g,
-        template: '    "./{{kebabCase name}}": "./src/{{kebabCase name}}.tsx",'
+        path: 'packages/ui/src/components/index.ts',
+        template: "export * from './{{kebabCase name}}'"
       }
     ]
   })

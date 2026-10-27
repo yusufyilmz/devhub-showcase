@@ -1,5 +1,5 @@
-import { Logger } from 'pino'
-import { PageResources } from '../../types/resources'
+import type { Logger } from 'pino'
+import type { PageResources } from '../../types/resources'
 //TODO: temporarily disable prisma resources
 // import { EducationService } from '../resources/prisma/education'
 // import { ExperienceService } from '../resources/prisma/experience'
@@ -7,7 +7,7 @@ import { PageResources } from '../../types/resources'
 // import { ReferralService } from '../resources/prisma/referral'
 // import { SkillService } from '../resources/prisma/skill'
 
-import { SupabaseDbClient } from '../../types'
+import type { SupabaseDbClient } from '../../types'
 import { EducationService } from '../resources/supabase/education'
 import { ExperienceService } from '../resources/supabase/experience'
 import { ProjectService } from '../resources/supabase/project'
@@ -24,7 +24,7 @@ export class ResourceManager {
 
   constructor(
     private logger: Logger,
-    private client: SupabaseDbClient,
+    client: SupabaseDbClient
   ) {
     this.dbClient = client
     this.experienceService = new ExperienceService(this.dbClient)
@@ -38,8 +38,7 @@ export class ResourceManager {
     const projects = await this.projectService.getAll()
 
     console.log('projects', { projects })
-    const experiences =
-      await this.experienceService.getAll()
+    const experiences = await this.experienceService.getAll()
 
     const educations = await this.educationService.getAll()
     const referrals = await this.referralService.getAll()

@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import { AboutSection } from '../../sections/about/AboutSection'
 import { MenuItems } from './MenuItems'
 import { MobileMenu } from './MobileMenu'

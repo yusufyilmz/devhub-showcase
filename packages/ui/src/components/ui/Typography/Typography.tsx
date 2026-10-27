@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 
 type Variant =
   | 'h1'
@@ -20,25 +20,25 @@ type TypographyProps = {
   variant?: Variant
   size?: Size
   className?: string
-  component?: keyof JSX.IntrinsicElements
+  component?: keyof React.JSX.IntrinsicElements
   children: React.ReactNode
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const variantMapping: { [key in Variant]: keyof JSX.IntrinsicElements } = {
-  h1: 'h1',
-  h2: 'h2',
-  h3: 'h3',
-  h4: 'h4',
-  h5: 'h5',
-  h6: 'h6',
-  subtitle1: 'h6',
-  subtitle2: 'h6',
-  body1: 'p',
-  body2: 'p',
-  caption: 'span',
-  overline: 'span'
-}
+const variantMapping: { [key in Variant]: keyof React.JSX.IntrinsicElements } =
+  {
+    h1: 'h1',
+    h2: 'h2',
+    h3: 'h3',
+    h4: 'h4',
+    h5: 'h5',
+    h6: 'h6',
+    subtitle1: 'h6',
+    subtitle2: 'h6',
+    body1: 'p',
+    body2: 'p',
+    caption: 'span',
+    overline: 'span'
+  }
 
 export const Typography: React.FC<TypographyProps> = ({
   variant = 'body1',
@@ -50,7 +50,6 @@ export const Typography: React.FC<TypographyProps> = ({
 }) => {
   const Component = component || variantMapping[variant] || 'p'
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const variantClasses: { [key in Variant]: string } = {
     h1: 'text-4xl font-bold',
     h2: 'text-3xl font-semibold',
@@ -66,7 +65,6 @@ export const Typography: React.FC<TypographyProps> = ({
     overline: 'text-xs uppercase tracking-wide font-light'
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const sizeClasses: { [key in Size]: string } = {
     xs: 'text-xs',
     sm: 'text-sm',

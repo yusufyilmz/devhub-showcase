@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useState } from 'react'
 import { copy } from '@shared/content'
-import { ChatType } from '@shared/lib/types'
+import type { ChatType } from '@shared/lib/types'
+import type React from 'react'
+import { useState } from 'react'
 import { IconButton, SendIcon } from '../../../../components'
 
 type ChatInputProps = {
@@ -53,7 +54,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         type="text"
         value={input}
         disabled={chatFinished}
-        onChange={e => setInput(e.target.value)}
+        onChange={(e) => setInput(e.target.value)}
         onKeyUp={handleKeyUp}
         onKeyDown={handleKeyDown}
         className="flex-grow p-2 border rounded-lg"

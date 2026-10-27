@@ -1,12 +1,12 @@
 'use client'
 
-import React from 'react'
-import { chatStore } from '../../../../stores'
-import { ChatMessage, ChatType } from '@shared/lib/types'
-import { useStore } from 'zustand'
-import { ChatPopupContainer } from '../ChatPopupContainer'
+import type { ChatMessage, ChatType } from '@shared/lib/types'
+import type React from 'react'
 import { useState } from 'react'
-import { IconButton, ChatIcon, ReferralIcon } from '../../../../components'
+import { useStore } from 'zustand'
+import { ChatIcon, IconButton, ReferralIcon } from '../../../../components'
+import { chatStore } from '../../../../stores'
+import { ChatPopupContainer } from '../ChatPopupContainer'
 
 type ChatSectionProps = {
   handleSendMessage: (
@@ -20,7 +20,7 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
 }) => {
   const [type, setType] = useState<ChatType>('cv')
   const [isOpen, setIsOpen] = useState(false)
-  const resetChat = useStore(chatStore, state => state.resetChat)
+  const resetChat = useStore(chatStore, (state) => state.resetChat)
 
   const closeChat = (chatFinished: boolean) => {
     setIsOpen(!isOpen)

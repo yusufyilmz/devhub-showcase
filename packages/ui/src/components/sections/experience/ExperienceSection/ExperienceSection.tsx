@@ -1,8 +1,8 @@
-import React from 'react'
-import { ExperienceList } from '../ExperienceList'
-import { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
-import { Section } from '../../../../components'
 import { copy } from '@shared/content'
+import type { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
+import type React from 'react'
+import { Section } from '../../../../components'
+import { ExperienceList } from '../ExperienceList'
 
 interface ExperienceSectionProps {
   experiences: ExperienceWithCompanyProjectAndSkills[]

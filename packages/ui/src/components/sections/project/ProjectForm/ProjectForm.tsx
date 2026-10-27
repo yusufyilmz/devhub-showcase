@@ -1,11 +1,11 @@
 'use client'
 
-import { Project } from '@shared/lib/types'
-import React, { useEffect, useState } from 'react'
+import type { Project } from '@shared/lib/types'
+import type React from 'react'
+import { useEffect, useState } from 'react'
 import { Button, TextField } from '../../../../components'
 
 interface ProjectFormProps {
-  // eslint-disable-next-line no-unused-vars
   onSubmit: (_e: unknown) => void
   isSubmitting: boolean
   initialData?: Project
@@ -35,7 +35,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value
     }))

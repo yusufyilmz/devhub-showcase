@@ -1,5 +1,8 @@
-import { Prisma } from '@prisma/client'
-import { CompanyForGptModelArgs, CompanyWithProjectsArgs } from './prisma-args'
+import type { Prisma } from '@prisma/client'
+import type {
+  CompanyForGptModelArgs,
+  CompanyWithProjectsArgs
+} from './prisma-args'
 
 export type { Company } from '@prisma/client'
 
