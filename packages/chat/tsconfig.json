@@ -1,17 +1,5 @@
 {
-  "extends": "@shared/typescript-config/library.json",
-  "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist",
-    "baseUrl": ".",
-    "module": "ESNext",
-    "target": "ES6",
-    "moduleResolution": "Bundler",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src"],
+  "extends": "@shared/typescript-config/base.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "dist"]
 }

@@ -1,15 +1,15 @@
-import { ChatCategoryType } from '@shared/lib/types'
-import { ChatCategory } from '../types/cv'
-import { CV_MODEL } from './cv-model'
+import type { ChatCategoryType } from '@shared/lib/types'
 import {
-  greetingMessage,
-  outOfTopicMessage,
-  unknownMessage,
-  simpleResponseMessage,
   goodbyeMessage,
+  greetingMessage,
+  notMeaningfulMessage,
+  outOfTopicMessage,
   processErrorMessage,
-  notMeaningfulMessage
+  simpleResponseMessage,
+  unknownMessage
 } from '../messages'
+import type { ChatCategory } from '../types/cv'
+import { CV_MODEL } from './cv-model'
 
 export const QUESTION_CATEGORIES: Record<ChatCategoryType, ChatCategory> = {
   skills: {
@@ -36,20 +36,22 @@ export const QUESTION_CATEGORIES: Record<ChatCategoryType, ChatCategory> = {
       { word: 'methodologies', weight: 3 },
       { word: 'toolset', weight: 2 },
       ...CV_MODEL.skills.frontend
-        .map(skill => skill.technology)
-        .concat(CV_MODEL.skills.backend.map(skill => skill.technology))
-        .concat(CV_MODEL.skills.devops.map(skill => skill.technology))
-        .concat(CV_MODEL.skills.testing.map(skill => skill.technology))
-        .concat(CV_MODEL.skills.version_control.map(skill => skill.technology))
+        .map((skill) => skill.technology)
+        .concat(CV_MODEL.skills.backend.map((skill) => skill.technology))
+        .concat(CV_MODEL.skills.devops.map((skill) => skill.technology))
+        .concat(CV_MODEL.skills.testing.map((skill) => skill.technology))
         .concat(
-          CV_MODEL.skills.data_visualization.map(skill => skill.technology)
+          CV_MODEL.skills.version_control.map((skill) => skill.technology)
+        )
+        .concat(
+          CV_MODEL.skills.data_visualization.map((skill) => skill.technology)
         )
         .concat(
           CV_MODEL.skills.performance_optimization.map(
-            skill => skill.technology
+            (skill) => skill.technology
           )
         )
-        .map(word => ({ word, weight: 3 }))
+        .map((word) => ({ word, weight: 3 }))
     ]
   },
   experience: {
@@ -77,9 +79,9 @@ export const QUESTION_CATEGORIES: Record<ChatCategoryType, ChatCategory> = {
       { word: 'achievements', weight: 3 },
       { word: 'contributions', weight: 2 },
       ...CV_MODEL.experience
-        .map(exp => exp.company)
-        .concat(CV_MODEL.experience.map(exp => exp.position))
-        .map(word => ({ word, weight: 1 }))
+        .map((exp) => exp.company)
+        .concat(CV_MODEL.experience.map((exp) => exp.position))
+        .map((word) => ({ word, weight: 1 }))
     ]
   },
   projects: {
@@ -106,8 +108,8 @@ export const QUESTION_CATEGORIES: Record<ChatCategoryType, ChatCategory> = {
       { word: 'optimization', weight: 3 },
       { word: 'processes', weight: 2 },
       ...CV_MODEL.projects
-        .map(project => project.name)
-        .map(word => ({ word, weight: 1 }))
+        .map((project) => project.name)
+        .map((word) => ({ word, weight: 1 }))
     ]
   },
   education: {
@@ -133,9 +135,9 @@ export const QUESTION_CATEGORIES: Record<ChatCategoryType, ChatCategory> = {
       { word: 'graduation', weight: 3 },
       { word: 'program', weight: 2 },
       ...CV_MODEL.education
-        .map(education => education.university)
-        .concat(CV_MODEL.education.map(education => education.degree))
-        .map(word => ({ word, weight: 1 }))
+        .map((education) => education.university)
+        .concat(CV_MODEL.education.map((education) => education.degree))
+        .map((word) => ({ word, weight: 1 }))
     ]
   },
   contact: {

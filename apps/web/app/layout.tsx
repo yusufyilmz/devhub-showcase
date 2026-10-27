@@ -1,10 +1,10 @@
 import '@shared/ui/globals.css'
-import { NotificationProvider } from '@shared/ui/context'
-import { Footer, Header, MouseCircle } from '@shared/ui/components'
-import type { Metadata } from 'next'
-import { copy } from '@shared/content'
-import localFont from 'next/font/local'
 import { StyledEngineProvider } from '@mui/material'
+import { copy } from '@shared/content'
+import { Footer, Header, MouseCircle } from '@shared/ui/components'
+import { NotificationProvider } from '@shared/ui/context'
+import type { Metadata } from 'next'
+import localFont from 'next/font/local'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -24,13 +24,14 @@ export default function RootLayout({
   children
 }: {
   children: React.ReactNode
-}): JSX.Element {
+}): React.JSX.Element {
   return (
     <html lang="en">
       <head>
         <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD uses trusted versioned content and escapes HTML.
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(copy.structuredData)
+            __html: JSON.stringify(copy.structuredData).replace(/</g, '\u003c')
           }}
           type="application/ld+json"
         />

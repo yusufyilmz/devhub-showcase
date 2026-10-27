@@ -1,8 +1,14 @@
-import { ResourceService } from '../../../../types';
-import { Experience, ExperienceWithCompanyProjectAndSkills, SupabaseDbClient } from '../../../../types/supabase';
-import { keysToCamelCase } from '../../../../utils/converter/camel-case';
+import type { ResourceService } from '../../../../types'
+import type {
+  Experience,
+  ExperienceWithCompanyProjectAndSkills,
+  SupabaseDbClient
+} from '../../../../types/supabase'
+import { keysToCamelCase } from '../../../../utils/converter/camel-case'
 
-export class ExperienceService implements ResourceService<ExperienceWithCompanyProjectAndSkills> {
+export class ExperienceService
+  implements ResourceService<ExperienceWithCompanyProjectAndSkills>
+{
   private readonly dbClient: SupabaseDbClient
 
   constructor(client: SupabaseDbClient) {
@@ -15,42 +21,43 @@ export class ExperienceService implements ResourceService<ExperienceWithCompanyP
       .select(`
       *,
       company:companies(*)
-    `);
+    `)
 
     if (experiencesError) {
-      throw new Error(experiencesError.message);
+      throw new Error(experiencesError.message)
     }
 
-    console.log('experiences', experiences);
+    console.log('experiences', experiences)
 
     const { data: projects, error: projectsError } = await this.dbClient
       .from('projects')
       .select(`
       *,
       skills:project_skills(skill_id, skills(*))
-    `);
+    `)
 
     if (projectsError) {
-      throw new Error(projectsError.message);
+      throw new Error(projectsError.message)
     }
 
-    const experiencesWithProjectsAndSkills = experiences.map(experience => {
-      const experienceProjects = projects.filter(project => project.experienceId === experience.id);
+    const experiencesWithProjectsAndSkills = experiences.map((experience) => {
+      const experienceProjects = projects.filter(
+        (project) => project.experienceId === experience.id
+      )
 
       return {
         ...experience,
         projects: experienceProjects
-      };
-    });
+      }
+    })
 
-    return keysToCamelCase<ExperienceWithCompanyProjectAndSkills[]>(experiencesWithProjectsAndSkills);
+    return keysToCamelCase<ExperienceWithCompanyProjectAndSkills[]>(
+      experiencesWithProjectsAndSkills
+    )
   }
 
   async createGPTModal(): Promise<string> {
-    const { data, error } = await this.dbClient
-
-      .from('experiences')
-      .select(`
+    const { data, error } = await this.dbClient.from('experiences').select(`
         role,
         company:companies(name),
         startedAt,
@@ -65,12 +72,10 @@ export class ExperienceService implements ResourceService<ExperienceWithCompanyP
   }
 }
 
-export const experienceFormatter = (
-  experiences: Experience[]
-): string => {
+export const experienceFormatter = (experiences: Experience[]): string => {
   return experiences
     .map(
-      exp =>
+      (exp) =>
         `Experience: ${exp.role} at ${exp.company?.name}, from ${exp.startedAt} to ${exp.finishedAt || 'present'}`
     )
     .join('\n')

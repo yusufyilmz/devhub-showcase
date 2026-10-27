@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 
 type FontSize = 'small' | 'medium' | 'large' | 'xlarge'
 
@@ -24,6 +24,8 @@ const Icon: React.FC<IconProps> = ({
 
   return (
     <svg
+      aria-hidden="true"
+      focusable="false"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
@@ -62,48 +64,48 @@ const icons = {
   arrowDown: 'M7 10l5 5 5-5H7z'
 }
 
-export const PdfIcon: React.FC<IconProps> = props => (
+export const PdfIcon: React.FC<IconProps> = (props) => (
   <Icon {...props} d={icons.pdf} />
 )
-export const CloseIcon: React.FC<IconProps> = props => (
+export const CloseIcon: React.FC<IconProps> = (props) => (
   <Icon {...props} d={icons.close} />
 )
-export const LinkedInIcon: React.FC<IconProps> = props => (
+export const LinkedInIcon: React.FC<IconProps> = (props) => (
   <Icon {...props} d={icons.linkedin} />
 )
-export const PhoneIcon: React.FC<IconProps> = props => (
+export const PhoneIcon: React.FC<IconProps> = (props) => (
   <Icon {...props} d={icons.phone} />
 )
-export const EmailIcon: React.FC<IconProps> = props => (
+export const EmailIcon: React.FC<IconProps> = (props) => (
   <Icon {...props} d={icons.email} />
 )
-export const GitHubIcon: React.FC<IconProps> = props => (
+export const GitHubIcon: React.FC<IconProps> = (props) => (
   <Icon {...props} d={icons.github} />
 )
-export const SendIcon: React.FC<IconProps> = props => (
+export const SendIcon: React.FC<IconProps> = (props) => (
   <Icon {...props} d={icons.send} />
 )
-export const ChatIcon: React.FC<IconProps> = props => (
+export const ChatIcon: React.FC<IconProps> = (props) => (
   <Icon {...props} d={icons.chat} />
 )
-export const ReferralIcon: React.FC<IconProps> = props => (
+export const ReferralIcon: React.FC<IconProps> = (props) => (
   <Icon {...props} d={icons.referral} />
 )
-export const ExternalLinkIcon: React.FC<IconProps> = props => (
+export const ExternalLinkIcon: React.FC<IconProps> = (props) => (
   <Icon {...props} d={icons.externalLink} />
 )
-export const MenuIcon: React.FC<IconProps> = props => (
+export const MenuIcon: React.FC<IconProps> = (props) => (
   <Icon {...props} d={icons.menu} />
 )
-export const ArrowBackIcon: React.FC<IconProps> = props => (
+export const ArrowBackIcon: React.FC<IconProps> = (props) => (
   <Icon {...props} d={icons.arrowBack} />
 )
-export const ArrowForwardIcon: React.FC<IconProps> = props => (
+export const ArrowForwardIcon: React.FC<IconProps> = (props) => (
   <Icon {...props} d={icons.arrowForward} />
 )
-export const ArrowDownwardIcon: React.FC<IconProps> = props => (
+export const ArrowDownwardIcon: React.FC<IconProps> = (props) => (
   <Icon {...props} d={icons.arrowDown} />
 )
-export const InfoIcon: React.FC<IconProps> = props => (
+export const InfoIcon: React.FC<IconProps> = (props) => (
   <Icon {...props} d={icons.info} />
 )

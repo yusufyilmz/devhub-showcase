@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useState } from 'react'
-import { IconButton, Drawer, MenuIcon } from '../../../components'
+import type React from 'react'
+import { useState } from 'react'
+import { Drawer, IconButton, MenuIcon } from '../../../components'
 import { MenuItems } from './MenuItems'
 
 export const MobileMenu: React.FC = () => {

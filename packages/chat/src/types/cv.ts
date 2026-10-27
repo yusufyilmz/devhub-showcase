@@ -1,4 +1,4 @@
-import { ChatCategoryType, ChatMessage } from '@shared/lib/types'
+import type { ChatCategoryType, ChatMessage } from '@shared/lib/types'
 
 export interface Skill {
   technology: string
@@ -10,11 +10,6 @@ export interface ContactInfo {
   email: string
   github: string
   linkedin: string
-}
-
-export interface Skill {
-  technology: string
-  yearsOfExperience: string
 }
 
 export interface Project {

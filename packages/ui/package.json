@@ -13,39 +13,41 @@
     "./globals.css": "./src/globals.css"
   },
   "scripts": {
-    "clean": "npx rimraf dist",
-    "build": "tsc -p tsconfig.build.json",
-    "lint": "eslint . --max-warnings 0",
-    "lint:fix": "eslint . --ext js,jsx,ts,tsx --fix",
-    "types:check": "tsc --noEmit --pretty",
-    "format": "prettier --write ."
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "types:check": "pnpm typecheck",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome lint .",
+    "lint:check": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\""
   },
   "devDependencies": {
-    "@shared/content": "*",
-    "@shared/eslint-config": "*",
-    "@shared/tailwind-config": "*",
-    "@shared/typescript-config": "*",
-    "@turbo/gen": "^1.12.4",
-    "@types/eslint": "^8.56.5",
-    "@types/node": "^20.11.24",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "@types/uuid": "^10.0.0",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.47",
-    "tailwindcss": "^3.4.14",
-    "typescript": "^5.6.3"
+    "@shared/tailwind-config": "workspace:*",
+    "@shared/typescript-config": "workspace:*",
+    "@turbo/gen": "2.11.10",
+    "@types/node": "^24.0.0",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "autoprefixer": "10.6.2",
+    "postcss": "8.5.32",
+    "tailwindcss": "3.4.19",
+    "typescript": "5.9.3"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
-    "@mui/material": "^6.1.6",
-    "@shared/content": "*",
-    "@shared/lib": "*",
-    "eslint": "^8",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "uuid": "^11.0.2",
-    "zustand": "^5.0.0-rc.2"
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.1",
+    "@mui/material": "9.5.0",
+    "@shared/lib": "workspace:*",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "uuid": "14.0.3",
+    "zustand": "5.0.16",
+    "@shared/content": "workspace:*",
+    "next": "16.4.3"
+  },
+  "engines": {
+    "node": ">=24.15.0 <25"
   }
 }

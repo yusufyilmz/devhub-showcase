@@ -1,9 +1,8 @@
-import { ResourceService } from '../../../../types';
-import { Company, SupabaseDbClient } from '../../../../types/supabase';
-import { keysToCamelCase } from '../../../../utils/converter/camel-case';
+import type { ResourceService } from '../../../../types'
+import type { Company, SupabaseDbClient } from '../../../../types/supabase'
+import { keysToCamelCase } from '../../../../utils/converter/camel-case'
 
 export class CompanyService implements ResourceService<Company> {
-
   private readonly dbClient: SupabaseDbClient
 
   constructor(client: SupabaseDbClient) {
@@ -11,25 +10,17 @@ export class CompanyService implements ResourceService<Company> {
   }
 
   async getAll(): Promise<Company[]> {
-
-    const { data, error } = await this.dbClient
-
-      .from('companies')
-      .select('*');
+    const { data, error } = await this.dbClient.from('companies').select('*')
 
     if (error) {
-      throw new Error(error.message);
+      throw new Error(error.message)
     }
 
-    return keysToCamelCase<Company[]>(data);
+    return keysToCamelCase<Company[]>(data)
   }
 
   async createGPTModal(): Promise<string> {
-
-    const { data, error } = await this.dbClient
-
-      .from('companies')
-      .select(`
+    const { data, error } = await this.dbClient.from('companies').select(`
         name,
         link,
         experiences (
@@ -43,23 +34,18 @@ export class CompanyService implements ResourceService<Company> {
           link,
           role
         )
-      `);
+      `)
 
     if (error) {
-      throw new Error(error.message);
+      throw new Error(error.message)
     }
 
-    return companyFormatter(keysToCamelCase<Company[]>(data));
+    return companyFormatter(keysToCamelCase<Company[]>(data))
   }
 }
 
-export const companyFormatter = (
-  companies: Company[]
-): string => {
+export const companyFormatter = (companies: Company[]): string => {
   return companies
-    .map(
-      company =>
-        `Company: ${company.name}, Link: ${company.link}`
-    )
-    .join('\n');
+    .map((company) => `Company: ${company.name}, Link: ${company.link}`)
+    .join('\n')
 }

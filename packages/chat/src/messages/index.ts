@@ -1,5 +1,9 @@
 import { copy } from '@shared/content'
-import { ChatMessage, ChatRole, ReferralMessage } from '@shared/lib/types'
+import {
+  type ChatMessage,
+  ChatRole,
+  type ReferralMessage
+} from '@shared/lib/types'
 
 export const cvWelcomeMessage: ChatMessage = {
   role: ChatRole.System,

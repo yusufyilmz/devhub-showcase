@@ -1,5 +1,5 @@
-import React from 'react'
 import { copy } from '@shared/content'
+import type React from 'react'
 
 export const SummarySection: React.FC = () => {
   return (

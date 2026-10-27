@@ -1,9 +1,8 @@
-import React from 'react'
-import { ProjectItem } from '../ProjectItem'
-import { Section, List, ListItem } from '../../../../components'
-
-import { ProjectWithCompanyAndSkills } from '@shared/lib/types'
 import { copy } from '@shared/content'
+import type { ProjectWithCompanyAndSkills } from '@shared/lib/types'
+import type React from 'react'
+import { List, ListItem, Section } from '../../../../components'
+import { ProjectItem } from '../ProjectItem'
 
 interface ProjectsSectionProps {
   projects: ProjectWithCompanyAndSkills[]
@@ -21,7 +20,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           divider
           className="overflow-y-auto mt-2 md:mt-8 no-scrollbar w-full"
         >
-          {projects.map(project => (
+          {projects.map((project) => (
             <ListItem key={project.id} className="pl-0 md:pl-4 py-8">
               <ProjectItem project={project} />
             </ListItem>

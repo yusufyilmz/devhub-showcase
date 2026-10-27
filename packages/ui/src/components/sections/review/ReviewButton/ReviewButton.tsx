@@ -1,10 +1,10 @@
 'use client'
 
-import { Button } from '../../../../components'
 import { copy } from '@shared/content'
-import { ReviewState, ReviewWithReferrals } from '@shared/lib/types'
-import { useNotification } from '../../../../hooks'
+import { ReviewState, type ReviewWithReferrals } from '@shared/lib/types'
 import { useRouter } from 'next/navigation'
+import { Button } from '../../../../components'
+import { useNotification } from '../../../../hooks'
 
 export const ReviewButton = ({
   handleReview,
@@ -26,7 +26,7 @@ export const ReviewButton = ({
         throw new Error('Error approving referral')
       }
 
-      let notifier
+      let notifier: ((name: string) => string) | undefined
 
       if (status === ReviewState.APPROVED) {
         notifier = copy.notifications.success.referralApproved
@@ -39,7 +39,7 @@ export const ReviewButton = ({
       }
 
       router.refresh()
-    } catch (e) {
+    } catch (_e) {
       setError(copy.notifications.errors.referralApproveError)
     }
   }

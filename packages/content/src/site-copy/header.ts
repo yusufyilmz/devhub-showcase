@@ -1,7 +1,9 @@
+import { profile } from '../profile'
+
 export const header = {
   main: {
-    title: 'Yusuf Yilmaz',
-    subTitle: 'Senior Fullstack Engineer'
+    title: profile.name,
+    subTitle: profile.title
   },
   subTitle:
     'Explore my portfolio, professional experience, and AI-powered chat to learn more about my skills and projects.',

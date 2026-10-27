@@ -1,5 +1,5 @@
-import { ReviewState, ReviewWithReferrals } from '@shared/lib/types'
-import React from 'react'
+import type { ReviewState, ReviewWithReferrals } from '@shared/lib/types'
+import type React from 'react'
 import { Typography } from '../../../../components'
 import { ReferralItem } from '../../referral/ReferralItem'
 import { ReviewButton } from '../ReviewButton/ReviewButton'
@@ -24,8 +24,8 @@ export const ReviewSection: React.FC<ReviewSectionProps> = ({
         Pending Reviews
       </Typography>
       <div className="flex flex-wrap gap-y-4 gap-x-1 sm:gap-x-2 md:gap-x-6 overflow-y-auto no-scrollbar w-full mt-32 md:mt-0 p">
-        {reviews?.map(review => {
-          if (!review.referral || !review.referral.name) {
+        {reviews?.map((review) => {
+          if (!review.referral?.name) {
             return null
           }
 

@@ -1,4 +1,4 @@
-import { CacheClient } from '../types'
+import type { CacheClient } from '../types'
 
 type CacheValue = string | number | Buffer
 

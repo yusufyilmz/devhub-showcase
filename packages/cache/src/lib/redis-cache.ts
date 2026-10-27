@@ -1,5 +1,5 @@
 import { Redis } from '@upstash/redis'
-import { CacheClient, CacheValue } from '../types'
+import type { CacheClient, CacheValue } from '../types'
 
 export class RedisCacheClient implements CacheClient {
   private readonly client: Redis

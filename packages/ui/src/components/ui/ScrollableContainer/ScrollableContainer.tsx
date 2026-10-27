@@ -1,10 +1,10 @@
 'use client'
 
-import React from 'react'
-import { CVCategoryType } from '@shared/lib/types'
+import type { CVCategoryType } from '@shared/lib/types'
+import type React from 'react'
 import { useEffect, useRef, useState } from 'react'
+import { ArrowBackIcon, ArrowForwardIcon } from '../../../components'
 import { CARD_IDS } from '../../../constants/cards'
-import { ArrowForwardIcon, ArrowBackIcon } from '../../../components'
 import { IconButton } from '../IconButton'
 
 interface ScrollableContainerProps {
@@ -41,16 +41,29 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
   }
 
   const handleScroll = () => {
-    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current!
+    const element = scrollContainerRef.current
+    if (!element) return
+    const { scrollLeft, scrollWidth, clientWidth } = element
     setShowLeftArrow(scrollLeft > 0)
     setShowRightArrow(scrollLeft + clientWidth < scrollWidth)
   }
 
   useEffect(() => {
-    if (scrollContainerRef.current) {
-      setContainerHeight(scrollContainerRef.current.clientHeight)
+    const element = scrollContainerRef.current
+    if (!element) return
+    const update = () => {
+      setContainerHeight(element.clientHeight)
+      setShowLeftArrow(element.scrollLeft > 0)
+      setShowRightArrow(
+        element.scrollLeft + element.clientWidth < element.scrollWidth
+      )
     }
-  }, [children])
+    update()
+    const observer = new ResizeObserver(update)
+    observer.observe(element)
+    for (const child of element.children) observer.observe(child)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <div className="relative flex align-top scrollbar-hide overflow-hidden">

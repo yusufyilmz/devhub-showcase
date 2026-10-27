@@ -15,9 +15,6 @@ import type {
 } from '@shared/lib/types'
 import { isCategoryReferralCategory } from '@shared/lib/utils'
 
-const messageProcessor = new MessageProcessor(logger)
-const rateLimiter = new RateLimiter()
-
 export async function handleSendMessageAction(
   message: ChatMessage,
   sessionId: string
@@ -25,6 +22,14 @@ export async function handleSendMessageAction(
   if (!message.content) return failureMessage
 
   try {
+    if (
+      !process.env.OPENAI_API_KEY ||
+      !process.env.REDIS_URL ||
+      !process.env.REDIS_TOKEN
+    )
+      return failureMessage
+    const rateLimiter = new RateLimiter()
+    const messageProcessor = new MessageProcessor(logger)
     await rateLimiter.isAllowed(sessionId)
 
     if (isCategoryReferralCategory(message.category)) {

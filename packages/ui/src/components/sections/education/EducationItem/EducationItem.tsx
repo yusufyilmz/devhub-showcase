@@ -1,17 +1,17 @@
-import React from 'react'
-import { Education } from '@shared/lib/types'
+import type { Education } from '@shared/lib/types'
+import { formatDateRange } from '@shared/lib/utils'
 import Link from 'next/link'
+import type React from 'react'
 import {
-  Divider,
   Card,
   CardBody,
-  Typography,
+  Divider,
   TimelineBody,
   TimelineHeader,
   TimelineIcon,
-  TimelineItem
+  TimelineItem,
+  Typography
 } from '../../../../components'
-import { formatDateRange } from '@shared/lib/utils'
 
 type EducationProps = {
   education: Education
@@ -44,9 +44,7 @@ export const EducationItem: React.FC<EducationProps> = ({ education }) => {
                 variant="h4"
                 className="font-semibold text-textColor-secondary mb-3 text-left"
               >
-                <>
-                  {education.degree} in {education.fieldOfStudy}
-                </>
+                {education.degree} in {education.fieldOfStudy}
               </Typography>
 
               <Divider className="bg-main-light-slate mb-6 mt-0" />

@@ -1,94 +1,57 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        ".env*"
-      ],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "dependsOn": ["^build"],
+      "outputs": [],
       "env": [
-        "NODE_ENV",
-        "LOG_LEVEL",
-        "APPLICATION_NAME",
+        "NEXT_PUBLIC_SUPABASE_URL",
+        "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+        "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
+      ],
+      "passThroughEnv": [
         "OPENAI_API_KEY",
+        "OPENAI_MODEL",
         "DATABASE_URL",
         "REDIS_URL",
-        "REDIS_TOKEN"
-      ]
-    },
-    "deploy": {
-      "dependsOn": ["build", "^deploy"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        ".env*"
-      ],
-      "env": [
-        "NODE_ENV",
-        "LOG_LEVEL",
+        "REDIS_TOKEN",
         "APPLICATION_NAME",
-        "OPENAI_API_KEY",
-        "DATABASE_URL"
+        "LOG_LEVEL"
       ]
     },
-    "lint": {
-      "dependsOn": [
-        "^lint"
-      ]
+    "typecheck": {
+      "dependsOn": ["^typecheck"],
+      "outputs": []
     },
     "dev": {
       "cache": false,
       "persistent": true
     },
-    "format": {
-      "dependsOn": [
-        "^format"
-      ]
+    "start": {
+      "cache": false,
+      "persistent": true
     },
-    "types:check": {
-      "dependsOn": [
-        "^types:check"
-      ]
-    },
-    "@shared/ui#build": {
+    "clean": {
       "cache": false
     },
-    "lint:fix": {
-      "dependsOn": [
-        "^lint:fix"
-      ]
-    }, 
-    "clean": {
-      "dependsOn": [
-        "^clean"
-      ]
-    },
-    "db:deploy": {
-      "dependsOn": [
-        "^db:deploy"
-      ]
-    },
-    "db:push": {
-      "dependsOn": [
-        "^db:push"
-      ]
-    },
-    "start": {
-      "dependsOn": [
-        "^start",
-        "build"
-      ],
+    "web#build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"],
       "env": [
-        "NODE_ENV",
-        "LOG_LEVEL",
-        "APPLICATION_NAME",
+        "NEXT_PUBLIC_SUPABASE_URL",
+        "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+        "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
+      ],
+      "passThroughEnv": [
         "OPENAI_API_KEY",
-        "DATABASE_URL"
+        "OPENAI_MODEL",
+        "DATABASE_URL",
+        "REDIS_URL",
+        "REDIS_TOKEN",
+        "APPLICATION_NAME",
+        "LOG_LEVEL"
       ]
     }
-  }
+  },
+  "globalEnv": ["ORM_TYPE"]
 }

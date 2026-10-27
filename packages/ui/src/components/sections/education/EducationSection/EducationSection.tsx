@@ -1,8 +1,8 @@
-import React from 'react'
-import { Education } from '@shared/lib/types'
-import { EducationItem } from '../EducationItem/EducationItem'
 import { copy } from '@shared/content'
-import { Timeline, Section } from '../../../../components'
+import type { Education } from '@shared/lib/types'
+import type React from 'react'
+import { Section, Timeline } from '../../../../components'
+import { EducationItem } from '../EducationItem/EducationItem'
 
 interface EducationsSectionProps {
   educations: Education[]
@@ -17,7 +17,7 @@ export const EducationsSection: React.FC<EducationsSectionProps> = ({
     <Section sectionId={id} title={title} subtitle={subtitle}>
       <div className="flex items-center md:min-h-[calc(100vh-4rem)]">
         <Timeline>
-          {educations.map(education => (
+          {educations.map((education) => (
             <EducationItem key={education.id} education={education} />
           ))}
         </Timeline>

@@ -1,10 +1,10 @@
 'use client'
 
-import React from 'react'
-import { ChatType, ChatRole } from '@shared/lib/types'
-import { ChatMessageItem } from '../ChatMessageItem'
-import { useRef, useEffect } from 'react'
+import { ChatRole, type ChatType } from '@shared/lib/types'
+import type React from 'react'
+import { useEffect, useRef } from 'react'
 import { useChatMessages } from '../../../../stores'
+import { ChatMessageItem } from '../ChatMessageItem'
 
 interface ChatMessageBoxProps {
   botIsTyping?: boolean
@@ -19,19 +19,18 @@ export const ChatMessageBox: React.FC<ChatMessageBoxProps> = ({
 
   const chatListRef = useRef<HTMLDivElement>(null)
 
-  const handleScrollToBottom = () => {
-    if (chatListRef.current) {
-      chatListRef.current.scrollTop = chatListRef.current.scrollHeight
-    }
-  }
-
-  useEffect(() => handleScrollToBottom(), [messages, botIsTyping])
+  const contentKey = `${messages.length}:${Boolean(botIsTyping)}`
+  useEffect(() => {
+    if (!contentKey) return
+    const element = chatListRef.current
+    if (element) element.scrollTop = element.scrollHeight
+  }, [contentKey])
 
   return (
     <div className="flex-1 overflow-y-auto p-4 space-y-2" ref={chatListRef}>
-      {messages.map((msg, idx) => (
+      {messages.map((msg) => (
         <div
-          key={idx}
+          key={`${msg.timestamp}:${msg.role}:${msg.content}`}
           className={`mb-4 ${msg.role === ChatRole.User ? 'text-right' : 'text-left'}`}
         >
           <ChatMessageItem message={msg} />

@@ -1,6 +1,6 @@
-import React from 'react'
+import type { Referral } from '@shared/lib/types'
+import type React from 'react'
 import { Card, CardBody } from '../../../../components'
-import { Referral } from '@shared/lib/types'
 
 const Comment = ({ comment }: { comment: string }) => (
   <div className="relative border-l-4 border-blue-500 italic text-textColor-lightSlate p-4  whitespace-pre-wrap">

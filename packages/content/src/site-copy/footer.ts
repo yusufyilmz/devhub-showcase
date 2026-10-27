@@ -1,3 +1,3 @@
 export const footer = {
-  copyright: '© 2024 Yusuf’s DevHub. All Rights Reserved.'
+  copyright: `© ${new Date().getFullYear()} Yusuf’s DevHub. All Rights Reserved.`
 }

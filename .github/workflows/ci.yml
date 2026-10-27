@@ -1,79 +1,77 @@
-name: CI and Deploy Pipeline
+name: CI / CD
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
-    branches:
-      - main
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: portfolio-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  build:
+  verify:
+    name: Verify
     runs-on: ubuntu-latest
-
+    timeout-minutes: 20
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      TURBO_TELEMETRY_DISABLED: "1"
     steps:
-      # Step 1: Checkout the code from the repository
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # Step 2: Set up Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          node-version: '20.17.0' # Use your Node version
-
-      # Step 3: Install dependencies with Turborepo
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      # Step 4: Set up Prisma and PostgreSQL
-      - name: Set DATABASE_URL environment variable
-        run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
-
-      # Step 5: Run Prisma migrations
-      - name: Run Prisma migrations
-        run: |
-          yarn turbo run db:deploy --filter=web
-          yarn turbo run db:push --filter=web
-
-      # Step 6: Run tests (optional)
-      # - name: Run tests
-      #   run: yarn turbo run test
-
-      # Step 7: Build the project with Turborepo
-      - name: Build with Turborepo
-        run: yarn turbo run build --filter=web...
+          persist-credentials: false
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "24"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+      - run: pnpm lint:check
+      - run: pnpm assist:check
+      - run: pnpm test
+      - run: pnpm typecheck
+      - run: pnpm build
 
   deploy:
-    needs: build
+    name: Deploy production
+    needs: verify
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-
+    environment: production
+    timeout-minutes: 20
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      NEXT_TELEMETRY_DISABLED: "1"
+      TURBO_TELEMETRY_DISABLED: "1"
     steps:
-      # Step 8: Checkout the code again in deploy job
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # Step 9: Install Vercel CLI
-      - name: Install Vercel CLI
-        run: npm install -g vercel
-
-      # Step 10: Set environment variables in Vercel
-      - name: Set Vercel environment variables
-        run: |
-          vercel env add DATABASE_URL "${{ secrets.DATABASE_URL }}"
-          vercel env add OPENAI_API_KEY "${{ secrets.OPENAI_API_KEY }}"
-          vercel env add APPLICATION_NAME "devhub-showcase" # Static value
-          vercel env add LOG_LEVEL "debug"                  # Static value
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "24"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Install deployment CLI
+        run: npm install --global vercel@65.4.0
+      - name: Pull production configuration
+        run: vercel pull --yes --environment=production
         env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-
-      # Step 11: Deploy to Vercel
-      - name: Deploy to Vercel
-        run: vercel --prod
+      - name: Build production output
+        run: vercel build --prod
         env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy verified production output
+        run: vercel deploy --prebuilt --prod
+        env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}

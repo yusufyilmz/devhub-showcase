@@ -1,4 +1,5 @@
-import React, { forwardRef, ReactNode } from 'react'
+import type React from 'react'
+import { forwardRef, type ReactNode } from 'react'
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   id?: string

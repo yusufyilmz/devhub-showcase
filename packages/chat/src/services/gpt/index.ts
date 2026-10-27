@@ -1,8 +1,8 @@
 import type { ChatMessage } from '@shared/lib/types'
 import { ChatRole } from '@shared/lib/types'
 import OpenAI from 'openai'
+import type { Logger } from 'pino'
 import { summarizeQuestions } from '../summarizer/index'
-import { Logger } from 'pino'
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY ?? ''
 
@@ -31,7 +31,7 @@ export class ChatGPTService {
       ].filter(Boolean) as ChatMessage[]
 
       const response = await this.openai.chat.completions.create({
-        model: 'gpt-3.5-turbo',
+        model: process.env.OPENAI_MODEL || 'gpt-4.1-mini',
         messages,
         max_tokens: 150
       })

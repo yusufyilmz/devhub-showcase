@@ -1,12 +1,12 @@
 import {
   ChatRole,
-  ReferralMessage,
-  ReferralQuestionCategory,
+  type ReferralMessage,
+  type ReferralQuestionCategory,
   validReferralCategories
 } from '@shared/lib/types'
-import { REFERRAL_MODAL } from '../../models/referral-modal'
-import { Logger } from 'pino'
+import type { Logger } from 'pino'
 import { failureMessage, referralFinishMessage } from '../../messages'
+import { REFERRAL_MODAL } from '../../models/referral-modal'
 
 export class ReferralService {
   constructor(private readonly logger: Logger) {}

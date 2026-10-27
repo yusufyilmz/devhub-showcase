@@ -1,8 +1,5 @@
 {
-  "extends": "@shared/typescript-config/library.json",
-  "compilerOptions": {
-    "outDir": "dist"
-  },
-  "include": ["src/**/*"],
+  "extends": "@shared/typescript-config/base.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "dist"]
 }

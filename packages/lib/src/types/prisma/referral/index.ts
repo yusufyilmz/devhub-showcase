@@ -1,5 +1,5 @@
-import { Prisma } from '@prisma/client'
-import { ReferralForGptModelArgs } from './prisma-args'
+import type { Prisma } from '@prisma/client'
+import type { ReferralForGptModelArgs } from './prisma-args'
 
 export type { Referral } from '@prisma/client'
 

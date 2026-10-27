@@ -524,7 +524,6 @@ export type Enums<
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   | keyof PublicSchema["CompositeTypes"]
   | { schema: keyof Database },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {

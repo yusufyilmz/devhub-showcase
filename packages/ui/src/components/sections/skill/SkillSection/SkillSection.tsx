@@ -1,8 +1,8 @@
-import React from 'react'
 import { copy } from '@shared/content'
-import { Section, List, ListItem } from '../../../../components'
+import type { Skill } from '@shared/lib/types'
+import type React from 'react'
+import { List, ListItem, Section } from '../../../../components'
 import { SkillCategoryItem } from '../SkillCategoryItem'
-import { Skill } from '@shared/lib/types'
 
 const { skills: skillProps } = copy.header.sections
 

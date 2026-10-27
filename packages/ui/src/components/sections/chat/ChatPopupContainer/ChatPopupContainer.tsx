@@ -1,15 +1,15 @@
 'use client'
 
-import React from 'react'
+import { type ChatMessage, ChatRole, type ChatType } from '@shared/lib/types'
+import type React from 'react'
 import { useEffect, useState } from 'react'
-import { ChatMessageBox } from '../ChatMessageBox'
-import { ChatMessage, ChatRole, type ChatType } from '@shared/lib/types'
-import { ChatInput } from '../ChatInput'
-import { IconButton, CloseIcon } from '../../../../components'
-import { chatStore, useChatMessages } from '../../../../stores'
-import { TypingIndicator } from '../TypingIndicator'
 import { useStore } from 'zustand'
+import { CloseIcon, IconButton } from '../../../../components'
 import { failureMessage } from '../../../../constants'
+import { chatStore, useChatMessages } from '../../../../stores'
+import { ChatInput } from '../ChatInput'
+import { ChatMessageBox } from '../ChatMessageBox'
+import { TypingIndicator } from '../TypingIndicator'
 
 interface ChatPopupProps {
   type: ChatType
@@ -27,8 +27,8 @@ export const ChatPopupContainer: React.FC<ChatPopupProps> = ({
   type,
   closeChat
 }) => {
-  const sessionId = useStore(chatStore, state => state.sessionId)
-  const addMessage = useStore(chatStore, state => state.addMessage)
+  const sessionId = useStore(chatStore, (state) => state.sessionId)
+  const addMessage = useStore(chatStore, (state) => state.addMessage)
   const messages = useChatMessages(type)
   const [isTyping, setIsTyping] = useState(false)
   const [isChatFinished, setIsChatFinished] = useState(false)
@@ -38,7 +38,9 @@ export const ChatPopupContainer: React.FC<ChatPopupProps> = ({
 
     setIsTyping(true)
 
-    const lastMessage = messages.filter(message => message.type === type).pop()
+    const lastMessage = messages
+      .filter((message) => message.type === type)
+      .pop()
 
     const newMessage = {
       role: ChatRole.User,

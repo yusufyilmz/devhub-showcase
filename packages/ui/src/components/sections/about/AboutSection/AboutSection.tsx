@@ -1,15 +1,15 @@
 'use client'
 
+import { copy } from '@shared/content'
 import {
-  Popover,
-  Typography,
   IconButton,
+  InfoIcon,
   List,
   ListItem,
-  InfoIcon
+  Popover,
+  Typography
 } from '@shared/ui/components'
 import { useState } from 'react'
-import { copy } from '@shared/content'
 
 export const AboutSection = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -60,8 +60,8 @@ export const AboutSection = () => {
             {copy.aboutSection.description}
           </Typography>
           <List className="p-1 border-none shadow-none">
-            {copy.aboutSection.technologies.map((tech, index) => (
-              <ListItem key={index} className="p-0 m-0">
+            {copy.aboutSection.technologies.map((tech) => (
+              <ListItem key={tech.name} className="p-0 m-0">
                 <Typography variant="body2">
                   <strong>{tech.name}:</strong> {tech.details}
                 </Typography>

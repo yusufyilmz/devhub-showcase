@@ -1,13 +1,13 @@
-import React from 'react'
 import { copy } from '@shared/content'
+import type React from 'react'
 import { Button } from '../../../components'
 
 export const MenuItems: React.FC = () => {
   return (
     <>
       {Object.keys(copy.navbar)
-        .filter(x => x !== 'summary')
-        .map(key => (
+        .filter((x) => x !== 'summary')
+        .map((key) => (
           <Button
             aria-label={copy.navbar[key]?.title}
             key={key}

@@ -1,9 +1,9 @@
+import type { ChatMessage, ChatType } from '@shared/lib/types'
+import { v4 as uuidv4 } from 'uuid'
 import { create, useStore } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { CHAT_STORAGE_NAME } from '../constants/stores'
-import { ChatMessage, ChatType } from '@shared/lib/types'
-import { v4 as uuidv4 } from 'uuid'
 import { cvWelcomeMessage, referralWelcomeMessage } from '../constants'
+import { CHAT_STORAGE_NAME } from '../constants/stores'
 
 export type ChatState = {
   chatMessages: ChatMessage[]
@@ -13,7 +13,6 @@ export type ChatState = {
 }
 
 type ChatActions = ChatState & {
-  // eslint-disable-next-line no-unused-vars
   addMessage: (message: ChatMessage) => void
   resetChat: (type: ChatType) => void
 }
@@ -22,7 +21,7 @@ type ChatStore = ChatState & ChatActions
 
 export const chatStore = create<ChatStore>()(
   persist(
-    set => ({
+    (set) => ({
       sessionId: uuidv4(),
       referralMessages: [
         {
@@ -35,8 +34,8 @@ export const chatStore = create<ChatStore>()(
         }
       ],
       messages: [],
-      addMessage: message =>
-        set(state =>
+      addMessage: (message) =>
+        set((state) =>
           message.type === 'referral'
             ? {
                 referralMessages: [
@@ -85,9 +84,9 @@ export const useChatMessages = (type: string) =>
   useStore(
     chatStore,
     type === 'referral'
-      ? state => state.referralMessages
-      : state => state.chatMessages
+      ? (state) => state.referralMessages
+      : (state) => state.chatMessages
   )
 
 export const useAddMessage = () =>
-  useStore(chatStore, state => state.addMessage)
+  useStore(chatStore, (state) => state.addMessage)

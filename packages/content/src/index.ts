@@ -1,16 +1,16 @@
-import { project } from './site-copy/project'
-import { notifications } from './site-copy/notifications'
+import { chatMessages } from './chat-messages'
+import { aboutSection } from './site-copy/about'
+import { chat } from './site-copy/chat'
 import { cta } from './site-copy/cta'
-import { header } from './site-copy/header'
-import { footer } from './site-copy/footer'
 import { cvSection } from './site-copy/cv'
+import { errorPage } from './site-copy/errorPage'
+import { footer } from './site-copy/footer'
+import { header } from './site-copy/header'
+import { metadata } from './site-copy/meta-data'
 import { navbar } from './site-copy/navbar'
 import { notFoundPage } from './site-copy/notFoundPage'
-import { errorPage } from './site-copy/errorPage'
-import { chatMessages } from './chat-messages'
-import { chat } from './site-copy/chat'
-import { aboutSection } from './site-copy/about'
-import { metadata } from './site-copy/meta-data'
+import { notifications } from './site-copy/notifications'
+import { project } from './site-copy/project'
 import { structuredData } from './site-copy/structured-data'
 
 export const copy = {
@@ -29,3 +29,6 @@ export const copy = {
   metadata,
   structuredData
 }
+
+export type { PortfolioProfile } from './profile'
+export { profile } from './profile'

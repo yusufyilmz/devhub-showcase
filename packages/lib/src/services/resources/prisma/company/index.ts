@@ -1,11 +1,11 @@
-import { db, DbClient } from '../../../../db'
-import { ResourceService } from '../../../../types'
+import { type DbClient, db } from '../../../../db'
+import type { ResourceService } from '../../../../types'
 import type { Company } from '../../../../types/prisma/company'
 import { CompanyForGptModelArgs } from '../../../../types/prisma/company/prisma-args'
 import { companyFormatter } from '../../../formatter'
 
 export class CompanyService implements ResourceService<Company> {
-  constructor(private readonly dbClient: DbClient = db) { }
+  constructor(private readonly dbClient: DbClient = db) {}
 
   async getAll(): Promise<Company[]> {
     return this.dbClient.company.findMany()

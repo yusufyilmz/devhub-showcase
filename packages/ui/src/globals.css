@@ -36,20 +36,16 @@ html {
 }
 
 .section-card {
-  @apply w-full p-4 md:p-4 bg-main-primary hover:bg-main-dark-hover focus:outline-none 
-         hover:shadow-lg flex flex-col justify-around h-full rounded-xl shadow-md 
-         overflow-hidden transform transition-all duration-300 border border-transparent hover:border-main-light; 
+  @apply w-full p-4 md:p-4 bg-main-primary hover:bg-main-dark-hover focus:outline-none hover:shadow-lg flex flex-col justify-around h-full rounded-xl shadow-md overflow-hidden transform transition-all duration-300 border border-transparent hover:border-main-light;
 
   & > * {
     pointer-events: auto; /* Enable pointer events for child elements */
   }
-
 }
 
 .section-card::before {
-  content: '';
-  @apply absolute inset-0 bg-gradient-to-br from-main-primary/0 via-main-primary/10 to-main-light/0 
-           rounded-xl transition-opacity duration-300;
+  content: "";
+  @apply absolute inset-0 bg-gradient-to-br from-main-primary/0 via-main-primary/10 to-main-light/0 rounded-xl transition-opacity duration-300;
   opacity: 0;
 }
 
@@ -92,7 +88,7 @@ html {
 }
 
 .no-before-padding::before {
-  content: '';
+  content: "";
   display: block;
   padding: 0;
   flex: 0;

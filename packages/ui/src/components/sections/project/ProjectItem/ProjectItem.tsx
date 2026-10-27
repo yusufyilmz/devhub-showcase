@@ -1,10 +1,9 @@
-import React from 'react'
-import Link from 'next/link'
+import type { ProjectWithCompanyAndSkills } from '@shared/lib/types'
 import Image from 'next/image'
-
-import { ProjectWithCompanyAndSkills } from '@shared/lib/types'
+import Link from 'next/link'
+import type React from 'react'
+import { Card, CardBody, Divider, Typography } from '../../../../components'
 import { SkillItem } from '../../skill/SkillItem/SkillItem'
-import { Typography, Divider, CardBody, Card } from '../../../../components'
 
 interface ProjectItemProps {
   project: ProjectWithCompanyAndSkills
@@ -57,8 +56,30 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
       </CardBody>
       <div className="flex justify-start flex-wrap gap-2">
         {project.skills.map(
-          skill =>
+          (skill) =>
             skill.name && <SkillItem key={skill.name} name={skill.name} />
+        )}
+      </div>
+      <div className="flex gap-4">
+        {project.link && (
+          <Link
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-main-blue underline"
+          >
+            Visit project
+          </Link>
+        )}
+        {project.sourceUrl && (
+          <Link
+            href={project.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-main-blue underline"
+          >
+            Source on GitHub
+          </Link>
         )}
       </div>
       <CardBody>

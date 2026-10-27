@@ -1,6 +1,6 @@
-import React from 'react'
+import type React from 'react'
+import type { PropsWithChildren } from 'react'
 import { Divider } from '../../../components'
-import { PropsWithChildren } from 'react'
 import { PageHeader } from '../PageHeader'
 
 type SectionProps = {
