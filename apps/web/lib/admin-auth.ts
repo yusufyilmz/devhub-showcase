@@ -2,9 +2,10 @@ import { ProfileAccessError } from '@shared/lib/profile-errors'
 import { SupabaseProfileRepository } from '@shared/lib/profile-repository'
 import { ProfileService } from '@shared/lib/profile-service'
 import { createServerClient } from '@shared/lib/supabase'
+import type { SupabaseDbClient } from '@shared/lib/types'
 
-export async function requireAdmin() {
-  const client = await createServerClient()
+export async function requireAdmin(providedClient?: SupabaseDbClient) {
+  const client = providedClient ?? (await createServerClient())
   const { data, error } = await client.auth.getUser()
   if (error || !data.user || !data.user.email_confirmed_at)
     throw new ProfileAccessError()

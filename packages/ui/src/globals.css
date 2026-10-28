@@ -1136,3 +1136,46 @@ button:disabled {
     transition: none;
   }
 }
+
+.admin-login .google-login-form {
+  margin-bottom: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.studio-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  background: #fff;
+  color: #1f1f1f;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 180ms ease;
+}
+.studio-google:hover {
+  background: #f3f6fc;
+}
+.studio-google:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.login-separator {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 12px;
+  color: rgb(var(--muted-rgb));
+  font-size: 12px;
+}
+.login-separator::before,
+.login-separator::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: rgb(var(--border-rgb));
+}
