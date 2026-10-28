@@ -3,7 +3,10 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { cvHelpers, renderCv } from '@shared/cv'
 import type { PlopTypes } from '@turbo/gen'
-import { readPublishedProfile } from '../../packages/lib/src/services/published-profile'
+import {
+  readPublicProfile,
+  readPublishedProfile
+} from '../../packages/lib/src/services/published-profile'
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   for (const [name, helper] of Object.entries(cvHelpers))
@@ -17,6 +20,12 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         name: 'output',
         message: 'Output PDF path',
         default: 'output/cv.pdf'
+      },
+      {
+        type: 'input',
+        name: 'profileId',
+        message: 'Public profile ID (main for site owner)',
+        default: 'main'
       }
     ],
     actions: [
@@ -24,7 +33,16 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         for (const file of ['apps/web/.env.local', '.env.local']) {
           if (existsSync(file)) process.loadEnvFile(file)
         }
-        const { profile, revision } = await readPublishedProfile()
+        const profileId = String(answers?.profileId || 'main')
+        const snapshot =
+          profileId === 'main'
+            ? await readPublishedProfile()
+            : await readPublicProfile(profileId)
+        if (!snapshot)
+          throw new Error(
+            'The requested public profile does not exist or is private.'
+          )
+        const { profile, revision } = snapshot
         if (revision === 0)
           console.warn(
             'No database configured; generating from the bundled development profile.'

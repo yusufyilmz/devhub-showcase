@@ -13,7 +13,11 @@ export class ProfileService {
   async save(userId: string | null | undefined, input: unknown) {
     await this.requireOwner(userId)
     const data = saveProfileSchema.parse(input)
-    const saved = await this.repository.save(data.profile, data.revision)
+    const saved = await this.repository.save(
+      data.profile,
+      data.revision,
+      data.isPublic
+    )
     if (!saved) throw new ProfileConflictError()
     return saved
   }

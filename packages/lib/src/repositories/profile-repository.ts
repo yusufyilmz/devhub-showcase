@@ -1,5 +1,7 @@
 import type { PortfolioProfile } from '@shared/content'
 export interface ProfileSnapshot {
+  id?: string
+  isPublic?: boolean
   profile: PortfolioProfile
   revision: number
   updatedAt: string
@@ -9,7 +11,8 @@ export interface ProfileRepository {
   isOwner(userId: string): Promise<boolean>
   save(
     profile: PortfolioProfile,
-    revision: number
+    revision: number,
+    isPublic?: boolean
   ): Promise<ProfileSnapshot | null>
 }
 export class ProfileConflictError extends Error {
@@ -27,7 +30,13 @@ export class ProfileAccessError extends Error {
 export class ProfileSetupError extends Error {
   constructor() {
     super(
-      'Admin storage is not configured. Apply the portfolio migration and set its owner first.'
+      'Profile storage is not configured. Apply the CV profile migrations first.'
     )
+  }
+}
+
+export class ProfileNotFoundError extends Error {
+  constructor() {
+    super('This profile is private or does not exist.')
   }
 }

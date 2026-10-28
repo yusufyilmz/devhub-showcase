@@ -2,6 +2,8 @@ import { updateSession } from '@shared/lib/supabase'
 import type { NextRequest, NextResponse } from 'next/server'
 
 export function proxy(request: NextRequest): Promise<NextResponse> {
+  // Always overwrite incoming values; only the actual URL selects a profile.
+  request.headers.set('x-profile-path', request.nextUrl.pathname)
   return updateSession(request)
 }
 

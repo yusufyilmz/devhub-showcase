@@ -9,6 +9,7 @@ import {
   LanguagesEditor,
   ProjectsEditor
 } from './career-editors'
+import { CvSettingsEditor } from './cv-settings-editor'
 import { ProfileFields } from './profile-fields'
 import { SkillsEditor } from './skills-editor'
 
@@ -19,7 +20,8 @@ const tabs = [
   'Education',
   'Skills',
   'Languages',
-  'Appearance'
+  'Appearance',
+  'PDF'
 ] as const
 function clean(profile: PortfolioProfile): PortfolioProfile {
   const lines = (values: string[]) => values.filter((value) => value.trim())
@@ -45,11 +47,14 @@ function clean(profile: PortfolioProfile): PortfolioProfile {
 export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
   const [saved, setSaved] = useState(initial)
   const [draft, setDraft] = useState(initial.profile)
+  const [isPublic, setIsPublic] = useState(initial.isPublic ?? false)
   const [tab, setTab] = useState<(typeof tabs)[number]>('Profile')
   const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
-  const dirty = JSON.stringify(draft) !== JSON.stringify(saved.profile)
+  const dirty =
+    JSON.stringify(draft) !== JSON.stringify(saved.profile) ||
+    isPublic !== (saved.isPublic ?? false)
   useEffect(() => {
     const warn = (event: BeforeUnloadEvent) => {
       if (dirty) {
@@ -70,16 +75,16 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           profile: clean(draft),
-          revision: saved.revision
+          revision: saved.revision,
+          isPublic
         })
       })
       const result = await response.json()
       if (!response.ok) throw new Error(result.error)
       setSaved(result)
       setDraft(result.profile)
-      setMessage(
-        'Published. Your portfolio and AI assistant now use these details.'
-      )
+      setIsPublic(result.isPublic ?? isPublic)
+      setMessage('Saved. Your CV now uses these details.')
     } catch (reason) {
       setError(
         reason instanceof Error
@@ -107,26 +112,28 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
             <p>Keep your portfolio as current as your work.</p>
           </div>
           <div className="studio-header-actions">
-            <a
-              href="/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="studio-secondary"
-            >
-              View portfolio ↗
-            </a>
+            {saved.isPublic && saved.id && (
+              <a
+                href={saved.id === 'main' ? '/' : `/p/${saved.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="studio-secondary"
+              >
+                View public profile ↗
+              </a>
+            )}
             <button
               type="submit"
               className="studio-primary"
               disabled={busy || !dirty}
             >
-              {busy ? 'Publishing…' : 'Publish changes'}
+              {busy ? 'Saving…' : 'Save changes'}
             </button>
           </div>
         </div>
         <div className="studio-status">
           <span className={dirty ? 'status-dot unsaved' : 'status-dot'} />
-          {dirty ? 'You have unpublished changes' : 'All changes published'}
+          {dirty ? 'You have unsaved changes' : 'All changes saved'}
           <span>Revision {saved.revision}</span>
           <button
             type="button"
@@ -156,6 +163,34 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
           >
             Sign out
           </button>
+        </div>
+        <div className="editor-card studio-sharing">
+          <label>
+            <input
+              type="checkbox"
+              checked={isPublic}
+              onChange={(event) => setIsPublic(event.target.checked)}
+              disabled={busy}
+            />{' '}
+            Publish my profile and CV at a public link
+          </label>
+          <p>
+            {isPublic
+              ? 'Anyone with the link can read your published contact and career details.'
+              : 'Your CV is private. Only you can read and download it.'}
+          </p>
+          <a href="/api/admin/cv" className="studio-secondary">
+            Download my saved CV
+          </a>
+          {saved.isPublic && saved.id && (
+            <a
+              href={`/p/${saved.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open share link ↗
+            </a>
+          )}
         </div>
         <nav className="editor-tabs" aria-label="Editor sections">
           {tabs.map((item) => (
@@ -209,12 +244,15 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
           {tab === 'Languages' && (
             <LanguagesEditor profile={draft} onChange={setDraft} />
           )}
+          {tab === 'PDF' && (
+            <CvSettingsEditor profile={draft} onChange={setDraft} />
+          )}
           {tab === 'Appearance' && (
             <AppearanceEditor profile={draft} onChange={setDraft} />
           )}
         </fieldset>
         <footer className="editor-footer">
-          <p>Your edits go live together when you publish.</p>
+          <p>Save your edits to update your CV. Public sharing is optional.</p>
           <button
             className="studio-secondary"
             type="button"
@@ -222,6 +260,7 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
             onClick={() => {
               if (window.confirm('Discard unpublished changes?')) {
                 setDraft(saved.profile)
+                setIsPublic(saved.isPublic ?? false)
                 setError('')
                 setMessage('')
               }

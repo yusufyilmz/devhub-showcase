@@ -1,7 +1,7 @@
 import { ThemeToggle } from '@shared/ui/theme'
 import type { Metadata } from 'next'
 export const metadata: Metadata = {
-  title: 'Portfolio studio',
+  title: 'CV studio',
   robots: { index: false, follow: false }
 }
 export default function AdminLayout({
@@ -16,9 +16,9 @@ export default function AdminLayout({
       </a>
       <header className="admin-brand">
         <a href="/" className="brand-mark">
-          Y<span>.</span>
+          CV<span>.</span>
         </a>
-        <span>PORTFOLIO STUDIO</span>
+        <span>CV STUDIO</span>
         <ThemeToggle />
       </header>
       {children}

@@ -1,7 +1,7 @@
 import { ProfileAccessError } from '@shared/lib/profile-errors'
 import { createServerClient } from '@shared/lib/supabase'
 import { z } from 'zod'
-import { requireAdmin, sameOrigin } from '../../../../lib/admin-auth'
+import { requireWorkspace, sameOrigin } from '../../../../lib/admin-auth'
 
 export async function POST(request: Request) {
   if (!sameOrigin(request))
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
         { status: 401 }
       )
     try {
-      await requireAdmin()
+      await requireWorkspace(client)
     } catch (error) {
       await client.auth.signOut({ scope: 'local' })
       throw error
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
       {
         error:
           error instanceof ProfileAccessError
-            ? 'This account cannot edit the portfolio.'
+            ? 'Confirm your account before opening your CV studio.'
             : 'Admin storage is not ready. Check the Supabase setup.'
       },
       { status: error instanceof ProfileAccessError ? 403 : 503 }

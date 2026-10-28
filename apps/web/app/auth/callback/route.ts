@@ -1,7 +1,7 @@
 import { ProfileAccessError } from '@shared/lib/profile-errors'
 import { createServerClient } from '@shared/lib/supabase'
 import { NextResponse } from 'next/server'
-import { requireAdmin } from '../../../lib/admin-auth'
+import { requireWorkspace } from '../../../lib/admin-auth'
 
 const redirect = (origin: string, path: string) => {
   const response = NextResponse.redirect(new URL(path, origin), 303)
@@ -19,9 +19,9 @@ export async function GET(request: Request) {
     const { error } = await client.auth.exchangeCodeForSession(code)
     if (error) return redirect(url.origin, '/admin/login?error=google_failed')
     try {
-      await requireAdmin(client)
+      await requireWorkspace(client)
     } catch (reason) {
-      // A Google identity is authenticated, but only the assigned owner may edit.
+      // Provision only the verified user's workspace; site moderation stays separate.
       await client.auth.signOut({ scope: 'local' })
       return redirect(
         url.origin,

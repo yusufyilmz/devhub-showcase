@@ -1,3 +1,5 @@
+> Multiuser upgrade: every confirmed user can now create their own CV. Follow [multiuser setup](multiuser-cvs.md) for the new migration and privacy rules. The owner assignment below applies only to the original site portfolio.
+
 # Portfolio studio setup
 
 The new `/admin` studio edits profile/contact details, biography, experience and achievements, projects and links, education, skills, languages, CV URL and appearance. Each collection has add/remove/reorder controls. Publishing saves one validated profile revision. The public page, SEO and AI context use the published profile without a redeploy. An outdated editor tab receives a conflict instead of overwriting a newer save.

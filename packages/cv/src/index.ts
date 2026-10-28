@@ -1,7 +1,7 @@
 import type { PortfolioProfile } from '@shared/content'
 import Handlebars from 'handlebars'
 import pdfmake from 'pdfmake'
-import fonts from 'pdfmake/build/vfs_fonts'
+import fonts from 'pdfmake/build/vfs_fonts.js'
 import type { TDocumentDefinitions } from 'pdfmake/interfaces'
 
 // The server and Plop share an in-memory font filesystem; no host font paths.
@@ -41,6 +41,18 @@ export const cvHelpers = {
 export function createCvData(profile: PortfolioProfile) {
   return {
     ...profile,
+    cvPageSize: profile.cvSettings?.pageSize ?? 'A4',
+    cvFontSize: profile.cvSettings?.fontSize ?? 9,
+    cvAccent:
+      profile.appearance?.accent === 'violet'
+        ? '#6f45b1'
+        : profile.appearance?.accent === 'emerald'
+          ? '#0e7156'
+          : '#096b83',
+    email: profile.cvSettings?.showEmail === false ? '' : profile.email,
+    phone: profile.cvSettings?.showPhone === false ? '' : profile.phone,
+    languages:
+      profile.cvSettings?.includeLanguages === false ? [] : profile.languages,
     emailLink: `mailto:${profile.email}`,
     skillGroups: Object.entries(profile.skills).map(([name, values]) => ({
       name,
@@ -50,7 +62,10 @@ export function createCvData(profile: PortfolioProfile) {
       ...item,
       period: period(item.start, item.end)
     })),
-    projects: profile.projects.filter((item) => item.public),
+    projects:
+      profile.cvSettings?.includeProjects === false
+        ? []
+        : profile.projects.filter((item) => item.public),
     education: profile.education.map((item) => ({
       ...item,
       period: period(item.start, item.end)

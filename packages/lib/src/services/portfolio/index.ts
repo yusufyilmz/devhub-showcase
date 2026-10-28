@@ -32,7 +32,9 @@ export function getPortfolioResources(
     description: item.description,
     link: item.url,
     sourceUrl: item.sourceUrl,
-    role: item.experienceId ? 'Software Engineer' : 'Creator',
+    role:
+      profile.experiences.find((entry) => entry.id === item.experienceId)
+        ?.position ?? 'Creator',
     public: item.public,
     imageUrl: null,
     company: company(

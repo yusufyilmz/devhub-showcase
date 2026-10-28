@@ -4,9 +4,9 @@ Yusuf Yilmaz’s portfolio: [yusufdevhub.vercel.app](https://yusufdevhub.vercel.
 
 ## Portfolio studio and refreshed themes
 
-The new `/admin` area manages the published profile, experience, projects, education, skills, languages and appearance. Public content and AI context read the same saved Supabase profile. Dark/light mode and three accent palettes share one theme system.
+The `/admin` area now gives every confirmed user their own private CV, contact/career details, appearance and PDF preferences. Users can opt in to a public profile link. See [multiuser CV setup](docs/multiuser-cvs.md). The original portfolio and its AI context read the same saved main profile. Each additional public CV page reads only its own published row. Dark/light mode and three accent palettes share one theme system.
 
-**Activation requires a new table and an assigned Supabase Auth owner.** See [admin setup](docs/admin-setup.md) for the exact migration, account setup and ownership step. The public profile retains a bundled fallback until storage is configured. The CV download is generated from the published profile, so it reflects saved edits automatically.
+**Activation requires the profile migrations and Google provider setup.** See [multiuser setup](docs/multiuser-cvs.md). Only the original site portfolio needs a manual owner assignment; other accounts provision their CV automatically. The public profile retains a bundled fallback until storage is configured. The CV download is generated from the published profile, so it reflects saved edits automatically.
 
 ## Start locally
 
@@ -134,12 +134,12 @@ The public `/cv.pdf` endpoint reads the published profile on each request and re
 
 Edit `packages/cv/templates/cv.json.hbs` to change the document layout. It is a JSON document definition rendered through Handlebars, the same template engine used by Plop. Use `{{{json value}}}` for profile values to preserve quotes and newlines safely. Content is plain text, never template code.
 
-Generate a local copy with the existing Turbo/Plop runner:
+Generate a local copy with the existing Turbo/Plop runner. Choose a public profile ID; `main` selects the original site portfolio. Private CVs are downloaded through the signed-in studio:
 
 ```sh
 pnpm cv:generate
 # Or supply an output path without a prompt:
-pnpm cv:generate --args output/my-cv.pdf
+pnpm cv:generate --args output/my-cv.pdf main
 ```
 
 The generator loads `apps/web/.env.local`, then root `.env.local`, while preserving existing environment values. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (or the existing anon key) to read the published `portfolio_profiles` row. No service-role key is used. With no database configuration, local generation clearly reports that it uses the bundled development profile. With database configuration present, a failed read stops generation. The public endpoint follows the website’s bundled-profile fallback until storage is configured or when storage is unavailable; `X-Profile-Revision: 0` identifies fallback output. It returns 503 if PDF generation itself fails. Both paths use the same template and public-profile reader. Generated PDFs go to ignored `output/` and existing files are never overwritten by the generator.

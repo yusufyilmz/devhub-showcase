@@ -1,5 +1,6 @@
 import { renderCv } from '@shared/cv'
 import template from '@shared/cv/template.hbs'
+import { unstable_rethrow } from 'next/navigation'
 import { getPublishedProfile } from '../../lib/published-profile'
 
 export const runtime = 'nodejs'
@@ -22,7 +23,8 @@ export async function GET() {
         'X-Profile-Revision': String(snapshot.revision)
       }
     })
-  } catch {
+  } catch (error) {
+    unstable_rethrow(error)
     console.error('CV generation failed.')
     return new Response(
       'The CV is temporarily unavailable. Please try again.',

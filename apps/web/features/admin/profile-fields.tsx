@@ -56,21 +56,18 @@ export function ProfileFields({
           type="url"
           value={profile.website}
           onChange={(v) => update('website', v)}
-          required
         />
         <Field
           label="GitHub URL"
           type="url"
           value={profile.github}
           onChange={(v) => update('github', v)}
-          required
         />
         <Field
           label="LinkedIn URL"
           type="url"
           value={profile.linkedin}
           onChange={(v) => update('linkedin', v)}
-          required
         />
         <Field
           label="CV link"

@@ -27,6 +27,9 @@ export const MobileMenu: React.FC = () => {
           role="presentation"
         >
           <MenuItems />
+          <a href="/admin/login" className="studio-primary">
+            Create your CV
+          </a>
         </div>
       </Drawer>
     </>

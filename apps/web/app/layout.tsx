@@ -5,7 +5,7 @@ import { NotificationProvider } from '@shared/ui/context'
 import { ThemeProvider } from '@shared/ui/theme'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-import { getPublishedProfile } from '../lib/published-profile'
+import { getActiveProfile } from '../lib/active-profile'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -20,21 +20,32 @@ const geistMono = localFont({
 })
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { profile } = await getPublishedProfile()
+  const { profile } = await getActiveProfile()
   return {
     ...copy.metadata,
-    metadataBase: new URL(profile.website),
+    keywords: [
+      profile.name,
+      profile.title,
+      'CV',
+      'portfolio',
+      ...Object.values(profile.skills).flat().slice(0, 20)
+    ],
+    icons: { icon: '/cv-icon.svg' },
+    metadataBase: new URL(
+      profile.website ||
+        process.env.NEXT_PUBLIC_SITE_URL ||
+        'https://yusufdevhub.vercel.app'
+    ),
     title: `${profile.name} | ${profile.title}`,
     description: profile.summary,
     alternates: { canonical: profile.website },
     openGraph: {
-      ...copy.metadata.openGraph,
       url: profile.website,
       title: `${profile.name} | ${profile.title}`,
       description: profile.summary
     },
     twitter: {
-      ...copy.metadata.twitter,
+      card: 'summary',
       title: `${profile.name} | ${profile.title}`,
       description: profile.summary
     }
@@ -46,7 +57,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { profile } = await getPublishedProfile()
+  const { profile, id } = await getActiveProfile()
+  const storageKey = id && id !== 'main' ? `devhub-theme:${id}` : 'devhub-theme'
   const appearance = profile.appearance ?? {
     accent: 'cyan',
     defaultTheme: 'dark'
@@ -70,7 +82,7 @@ export default async function RootLayout({
         }
       : undefined
   }
-  const themeScript = `(function(){try{var s=localStorage.getItem('devhub-theme');var d=${JSON.stringify(appearance.defaultTheme)};var t=s==='light'||s==='dark'?s:d==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):d;document.documentElement.dataset.theme=t}catch(e){}})()`
+  const themeScript = `(function(){try{var s=localStorage.getItem(${JSON.stringify(storageKey)});var d=${JSON.stringify(appearance.defaultTheme)};var t=s==='light'||s==='dark'?s:d==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):d;document.documentElement.dataset.theme=t}catch(e){}})()`
   return (
     <html
       lang="en"
@@ -92,6 +104,7 @@ export default async function RootLayout({
       >
         <StyledEngineProvider injectFirst>
           <ThemeProvider
+            storageKey={storageKey}
             defaultTheme={appearance.defaultTheme}
             accent={appearance.accent}
           >
