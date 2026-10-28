@@ -4,79 +4,187 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    '@biomejs/biome':
+      specifier: 2.6.3
+      version: 2.6.3
+    '@electric-sql/pglite':
+      specifier: 0.5.10
+      version: 0.5.10
+    '@emotion/react':
+      specifier: 11.14.0
+      version: 11.14.0
+    '@emotion/styled':
+      specifier: 11.14.1
+      version: 11.14.1
+    '@mui/material':
+      specifier: 9.5.0
+      version: 9.5.0
+    '@prisma/client':
+      specifier: 6.19.0
+      version: 6.19.0
+    '@supabase/ssr':
+      specifier: 0.12.7
+      version: 0.12.7
+    '@supabase/supabase-js':
+      specifier: 2.118.0
+      version: 2.118.0
+    '@tailwindcss/typography':
+      specifier: 0.5.20
+      version: 0.5.20
+    '@testing-library/dom':
+      specifier: 10.4.2
+      version: 10.4.2
+    '@testing-library/react':
+      specifier: 16.3.3
+      version: 16.3.3
+    '@turbo/gen':
+      specifier: 2.11.10
+      version: 2.11.10
+    '@types/node':
+      specifier: 24.19.2
+      version: 24.19.2
+    '@types/react':
+      specifier: 19.3.0
+      version: 19.3.0
+    '@types/react-dom':
+      specifier: 19.3.0
+      version: 19.3.0
+    '@upstash/redis':
+      specifier: 1.40.0
+      version: 1.40.0
+    '@vitest/coverage-v8':
+      specifier: 5.0.5
+      version: 5.0.5
+    autoprefixer:
+      specifier: 10.6.2
+      version: 10.6.2
+    axios:
+      specifier: 1.21.0
+      version: 1.21.0
+    compromise:
+      specifier: 14.19.0
+      version: 14.19.0
+    dotenv:
+      specifier: 16.6.1
+      version: 16.6.1
+    jsdom:
+      specifier: 30.1.3
+      version: 30.1.3
+    next:
+      specifier: 16.4.3
+      version: 16.4.3
+    openai:
+      specifier: 7.45.1
+      version: 7.45.1
+    pino:
+      specifier: 10.4.0
+      version: 10.4.0
+    pino-pretty:
+      specifier: 13.2.0
+      version: 13.2.0
+    postcss:
+      specifier: 8.5.32
+      version: 8.5.32
+    prisma:
+      specifier: 6.19.0
+      version: 6.19.0
+    react:
+      specifier: 19.3.1
+      version: 19.3.1
+    react-dom:
+      specifier: 19.3.1
+      version: 19.3.1
+    tailwindcss:
+      specifier: 3.4.19
+      version: 3.4.19
+    turbo:
+      specifier: 2.11.10
+      version: 2.11.10
+    typescript:
+      specifier: 7.0.2
+      version: 7.0.2
+    uuid:
+      specifier: 14.0.3
+      version: 14.0.3
+    vitest:
+      specifier: 5.0.5
+      version: 5.0.5
+    zod:
+      specifier: 4.6.7
+      version: 4.6.7
+    zustand:
+      specifier: 5.0.16
+      version: 5.0.16
+
 importers:
 
   .:
     devDependencies:
       '@biomejs/biome':
-        specifier: 2.6.3
+        specifier: 'catalog:'
         version: 2.6.3
       '@electric-sql/pglite':
-        specifier: 0.5.10
+        specifier: 'catalog:'
         version: 0.5.10
       '@prisma/client':
-        specifier: 6.19.0
-        version: 6.19.0(prisma@6.19.0(typescript@5.9.3))(typescript@5.9.3)
+        specifier: 'catalog:'
+        version: 6.19.0(prisma@6.19.0(typescript@7.0.2))(typescript@7.0.2)
       '@testing-library/dom':
-        specifier: 10.4.2
+        specifier: 'catalog:'
         version: 10.4.2
       '@testing-library/react':
-        specifier: 16.3.3
+        specifier: 'catalog:'
         version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@turbo/gen':
-        specifier: 2.11.10
+        specifier: 'catalog:'
         version: 2.11.10(@types/node@24.19.2)
       '@types/node':
-        specifier: ^24.0.0
+        specifier: 'catalog:'
         version: 24.19.2
       '@types/react':
-        specifier: 19.3.0
+        specifier: 'catalog:'
         version: 19.3.0
       '@types/react-dom':
-        specifier: 19.3.0
+        specifier: 'catalog:'
         version: 19.3.0(@types/react@19.3.0)
       '@vitest/coverage-v8':
-        specifier: 5.0.5
+        specifier: 'catalog:'
         version: 5.0.5(vitest@5.0.5)
       jsdom:
-        specifier: 30.1.3
+        specifier: 'catalog:'
         version: 30.1.3
       prisma:
-        specifier: 6.19.0
-        version: 6.19.0(typescript@5.9.3)
+        specifier: 'catalog:'
+        version: 6.19.0(typescript@7.0.2)
       react:
-        specifier: 19.3.1
+        specifier: 'catalog:'
         version: 19.3.1
       react-dom:
-        specifier: 19.3.1
+        specifier: 'catalog:'
         version: 19.3.1(react@19.3.1)
       turbo:
-        specifier: 2.11.10
+        specifier: 'catalog:'
         version: 2.11.10
       typescript:
-        specifier: 5.9.3
-        version: 5.9.3
+        specifier: 'catalog:'
+        version: 7.0.2
       vitest:
-        specifier: 5.0.5
+        specifier: 'catalog:'
         version: 5.0.5(@types/node@24.19.2)(@vitest/coverage-v8@5.0.5)(jsdom@30.1.3)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0))
 
   apps/web:
     dependencies:
       '@emotion/react':
-        specifier: 11.14.0
+        specifier: 'catalog:'
         version: 11.14.0(@types/react@19.3.0)(react@19.3.1)
       '@emotion/styled':
-        specifier: 11.14.1
+        specifier: 'catalog:'
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(react@19.3.1)
       '@mui/material':
-        specifier: 9.5.0
+        specifier: 'catalog:'
         version: 9.5.0(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@prisma/client':
-        specifier: 6.19.0
-        version: 6.19.0(prisma@6.19.0(typescript@5.9.3))(typescript@5.9.3)
-      '@shared/cache':
-        specifier: workspace:*
-        version: link:../../packages/cache
       '@shared/chat':
         specifier: workspace:*
         version: link:../../packages/chat
@@ -89,45 +197,21 @@ importers:
       '@shared/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@supabase/ssr':
-        specifier: 0.12.7
-        version: 0.12.7(@supabase/supabase-js@2.118.0)
       '@supabase/supabase-js':
-        specifier: 2.118.0
+        specifier: 'catalog:'
         version: 2.118.0
-      axios:
-        specifier: 1.21.0
-        version: 1.21.0(debug@4.4.3)
       next:
-        specifier: 16.4.3
+        specifier: 'catalog:'
         version: 16.4.3(@types/node@24.19.2)(babel-plugin-macros@3.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      openai:
-        specifier: 7.45.1
-        version: 7.45.1(undici@8.12.3)(zod@4.6.7)
-      pino:
-        specifier: 10.4.0
-        version: 10.4.0
       react:
-        specifier: 19.3.1
+        specifier: 'catalog:'
         version: 19.3.1
       react-dom:
-        specifier: 19.3.1
+        specifier: 'catalog:'
         version: 19.3.1(react@19.3.1)
-      react-icons:
-        specifier: 5.7.0
-        version: 5.7.0(react@19.3.1)
-      swr:
-        specifier: 2.5.1
-        version: 2.5.1(react@19.3.1)
-      uuid:
-        specifier: 14.0.3
-        version: 14.0.3
       zod:
-        specifier: 4.6.7
+        specifier: 'catalog:'
         version: 4.6.7
-      zustand:
-        specifier: 5.0.16
-        version: 5.0.16(@types/react@19.3.0)(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
     devDependencies:
       '@shared/tailwind-config':
         specifier: workspace:*
@@ -136,45 +220,42 @@ importers:
         specifier: workspace:*
         version: link:../../packages/typescript-config
       '@types/node':
-        specifier: ^24.0.0
+        specifier: 'catalog:'
         version: 24.19.2
       '@types/react':
-        specifier: 19.3.0
+        specifier: 'catalog:'
         version: 19.3.0
       '@types/react-dom':
-        specifier: 19.3.0
+        specifier: 'catalog:'
         version: 19.3.0(@types/react@19.3.0)
       autoprefixer:
-        specifier: 10.6.2
+        specifier: 'catalog:'
         version: 10.6.2(postcss@8.5.32)
-      pino-pretty:
-        specifier: 13.2.0
-        version: 13.2.0
       postcss:
-        specifier: 8.5.32
+        specifier: 'catalog:'
         version: 8.5.32
-      prisma:
-        specifier: 6.19.0
-        version: 6.19.0(typescript@5.9.3)
       tailwindcss:
-        specifier: 3.4.19
+        specifier: 'catalog:'
         version: 3.4.19
       typescript:
-        specifier: 5.9.3
-        version: 5.9.3
+        specifier: 'catalog:'
+        version: 7.0.2
 
   packages/cache:
     dependencies:
       '@upstash/redis':
-        specifier: 1.40.0
+        specifier: 'catalog:'
         version: 1.40.0
     devDependencies:
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.19.2
       typescript:
-        specifier: 5.9.3
-        version: 5.9.3
+        specifier: 'catalog:'
+        version: 7.0.2
 
   packages/chat:
     dependencies:
@@ -185,21 +266,24 @@ importers:
         specifier: workspace:*
         version: link:../lib
       compromise:
-        specifier: 14.19.0
+        specifier: 'catalog:'
         version: 14.19.0
       openai:
-        specifier: 7.45.1
+        specifier: 'catalog:'
         version: 7.45.1(undici@8.12.3)(zod@4.6.7)
       pino:
-        specifier: 10.4.0
+        specifier: 'catalog:'
         version: 10.4.0
     devDependencies:
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.19.2
       typescript:
-        specifier: 5.9.3
-        version: 5.9.3
+        specifier: 'catalog:'
+        version: 7.0.2
 
   packages/content:
     devDependencies:
@@ -207,17 +291,17 @@ importers:
         specifier: workspace:*
         version: link:../typescript-config
       next:
-        specifier: 16.4.3
+        specifier: 'catalog:'
         version: 16.4.3(@types/node@24.19.2)(babel-plugin-macros@3.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       typescript:
-        specifier: 5.9.3
-        version: 5.9.3
+        specifier: 'catalog:'
+        version: 7.0.2
 
   packages/lib:
     dependencies:
       '@prisma/client':
-        specifier: 6.19.0
-        version: 6.19.0(prisma@6.19.0(typescript@5.9.3))(typescript@5.9.3)
+        specifier: 'catalog:'
+        version: 6.19.0(prisma@6.19.0(typescript@7.0.2))(typescript@7.0.2)
       '@shared/cache':
         specifier: workspace:*
         version: link:../cache
@@ -225,75 +309,87 @@ importers:
         specifier: workspace:*
         version: link:../content
       '@supabase/ssr':
-        specifier: 0.12.7
+        specifier: 'catalog:'
         version: 0.12.7(@supabase/supabase-js@2.118.0)
       '@supabase/supabase-js':
-        specifier: 2.118.0
+        specifier: 'catalog:'
         version: 2.118.0
       axios:
-        specifier: 1.21.0
+        specifier: 'catalog:'
         version: 1.21.0(debug@4.4.3)
+      dotenv:
+        specifier: 'catalog:'
+        version: 16.6.1
       next:
-        specifier: 16.4.3
+        specifier: 'catalog:'
         version: 16.4.3(@types/node@24.19.2)(babel-plugin-macros@3.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       pino:
-        specifier: 10.4.0
+        specifier: 'catalog:'
         version: 10.4.0
       zod:
-        specifier: 4.6.7
+        specifier: 'catalog:'
         version: 4.6.7
     devDependencies:
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.19.2
       typescript:
-        specifier: 5.9.3
-        version: 5.9.3
+        specifier: 'catalog:'
+        version: 7.0.2
 
   packages/log:
     dependencies:
       pino:
-        specifier: 10.4.0
+        specifier: 'catalog:'
         version: 10.4.0
+      pino-pretty:
+        specifier: 'catalog:'
+        version: 13.2.0
     devDependencies:
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.19.2
       typescript:
-        specifier: 5.9.3
-        version: 5.9.3
+        specifier: 'catalog:'
+        version: 7.0.2
 
   packages/tailwind-config:
     dependencies:
       '@tailwindcss/typography':
-        specifier: 0.5.20
+        specifier: 'catalog:'
         version: 0.5.20(tailwindcss@3.4.19)
       autoprefixer:
-        specifier: 10.6.2
+        specifier: 'catalog:'
         version: 10.6.2(postcss@8.5.32)
       postcss:
-        specifier: 8.5.32
+        specifier: 'catalog:'
         version: 8.5.32
       tailwindcss:
-        specifier: 3.4.19
+        specifier: 'catalog:'
         version: 3.4.19
 
   packages/typescript-config:
     devDependencies:
       typescript:
-        specifier: 5.9.3
-        version: 5.9.3
+        specifier: 'catalog:'
+        version: 7.0.2
 
   packages/ui:
     dependencies:
       '@emotion/react':
-        specifier: 11.14.0
+        specifier: 'catalog:'
         version: 11.14.0(@types/react@19.3.0)(react@19.3.1)
       '@emotion/styled':
-        specifier: 11.14.1
+        specifier: 'catalog:'
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(react@19.3.1)
       '@mui/material':
-        specifier: 9.5.0
+        specifier: 'catalog:'
         version: 9.5.0(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@shared/content':
         specifier: workspace:*
@@ -302,19 +398,19 @@ importers:
         specifier: workspace:*
         version: link:../lib
       next:
-        specifier: 16.4.3
+        specifier: 'catalog:'
         version: 16.4.3(@types/node@24.19.2)(babel-plugin-macros@3.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react:
-        specifier: 19.3.1
+        specifier: 'catalog:'
         version: 19.3.1
       react-dom:
-        specifier: 19.3.1
+        specifier: 'catalog:'
         version: 19.3.1(react@19.3.1)
       uuid:
-        specifier: 14.0.3
+        specifier: 'catalog:'
         version: 14.0.3
       zustand:
-        specifier: 5.0.16
+        specifier: 'catalog:'
         version: 5.0.16(@types/react@19.3.0)(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
     devDependencies:
       '@shared/tailwind-config':
@@ -323,30 +419,27 @@ importers:
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@turbo/gen':
-        specifier: 2.11.10
-        version: 2.11.10(@types/node@24.19.2)
       '@types/node':
-        specifier: ^24.0.0
+        specifier: 'catalog:'
         version: 24.19.2
       '@types/react':
-        specifier: 19.3.0
+        specifier: 'catalog:'
         version: 19.3.0
       '@types/react-dom':
-        specifier: 19.3.0
+        specifier: 'catalog:'
         version: 19.3.0(@types/react@19.3.0)
       autoprefixer:
-        specifier: 10.6.2
+        specifier: 'catalog:'
         version: 10.6.2(postcss@8.5.32)
       postcss:
-        specifier: 8.5.32
+        specifier: 'catalog:'
         version: 8.5.32
       tailwindcss:
-        specifier: 3.4.19
+        specifier: 'catalog:'
         version: 3.4.19
       typescript:
-        specifier: 5.9.3
-        version: 5.9.3
+        specifier: 'catalog:'
+        version: 7.0.2
 
 packages:
 
@@ -1477,6 +1570,126 @@ packages:
   '@types/react@19.3.0':
     resolution: {integrity: sha512-N0rFCuH9YoxG9/m61l9MfpJKfmLOVU0em7ipIz6TRgSSkvReLB9vL85GB+yr8Bs5leqpvg96JSwF4ZS1s4viQg==}
 
+  '@typescript/typescript-aix-ppc64@7.0.2':
+    resolution: {integrity: sha512-MTKKkWB7p/0E9xi1d1tHtZ5PiLkGEMIq88pK2CubZjOsLtYTLqhgIgi6zepFa+9GHZ6h05NMCkQxGKiPXMxXtQ==}
+    engines: {node: '>=16.20.0'}
+    cpu: [ppc64]
+    os: [aix]
+
+  '@typescript/typescript-darwin-arm64@7.0.2':
+    resolution: {integrity: sha512-gowzar9MwS/aRWp6f3a4KUqzRjAZjOsmGNCM6LcTgXum+dBfgsBVMN+AgvOCCbguXyick6LJhpBszxMebJ8syA==}
+    engines: {node: '>=16.20.0'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@typescript/typescript-darwin-x64@7.0.2':
+    resolution: {integrity: sha512-SZ9xZInqApNlNGc9s0W1VSsktYSOe9cFqNOIqmN1Gs8SmkjKZYFt017G4VwPxASInODuAdbTW7sXiFUf893RgA==}
+    engines: {node: '>=16.20.0'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@typescript/typescript-freebsd-arm64@7.0.2':
+    resolution: {integrity: sha512-W5NH4y/J0plIIS5b2xvTEkU7JFxyqdMAOgf+Ilhl0vHQXKO5dZoxd+C/jEtq56c4F3wk71RB4BMRQ2XdI+bwYQ==}
+    engines: {node: '>=16.20.0'}
+    cpu: [arm64]
+    os: [freebsd]
+
+  '@typescript/typescript-freebsd-x64@7.0.2':
+    resolution: {integrity: sha512-UMGDx5sTpzNw3WiPebH7l90IWfJggEd+egHt/q6p7/Cm3zqoV7VxkGXt+3DxPIw8CcmvAB0j3sVVfbhX+M4Tpw==}
+    engines: {node: '>=16.20.0'}
+    cpu: [x64]
+    os: [freebsd]
+
+  '@typescript/typescript-linux-arm64@7.0.2':
+    resolution: {integrity: sha512-Qh4eU4/y3yDjnfjjyPYihMj5/ODIlmt+Bzu17OI+fiSRDW57QmU5SiN63exPRNJPKUzcc1INa1NXdrJ+MqHjUQ==}
+    engines: {node: '>=16.20.0'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@typescript/typescript-linux-arm@7.0.2':
+    resolution: {integrity: sha512-gffT3xPz9sR7j/YJExkyPntrI0P2EP9XbOyWzth2/Gs0RstK+90RBcO0ncXoXy/beYll1SXw846Nf2zdnEz0QQ==}
+    engines: {node: '>=16.20.0'}
+    cpu: [arm]
+    os: [linux]
+
+  '@typescript/typescript-linux-loong64@7.0.2':
+    resolution: {integrity: sha512-uEHck9i8hoAzXPiYRib1O7miOnz23SxIeVl6F4LXox+qov1K35jHcEW6VHKvZI+pyvl7fZEP4MCU5LYvIq1GuQ==}
+    engines: {node: '>=16.20.0'}
+    cpu: [loong64]
+    os: [linux]
+
+  '@typescript/typescript-linux-mips64el@7.0.2':
+    resolution: {integrity: sha512-R4KvAMnE43W5Qeqb0Ly56O3mWMWIAgsMyz36DCaycd5nbg/9kzm0liw3JocfRqyJY0KPmzFjbswozXyW0DnIYA==}
+    engines: {node: '>=16.20.0'}
+    cpu: [mips64el]
+    os: [linux]
+
+  '@typescript/typescript-linux-ppc64@7.0.2':
+    resolution: {integrity: sha512-DORx5b3sd/4S7eayxm4FQv+A7CrkUIGRaHiwI8oiHTAI1fAPWhF4J0vAlkC8biAlHSVVwxMQ3tjZ2/DVbnQiiA==}
+    engines: {node: '>=16.20.0'}
+    cpu: [ppc64]
+    os: [linux]
+
+  '@typescript/typescript-linux-riscv64@7.0.2':
+    resolution: {integrity: sha512-wf0jqEDOjrPRnKwYRyyJDRo11KMbvMFrU+q4zqKyChODBzvlkbhNQfKvLxQCcwTpdDaXSHZTVuh0JoCrKCUMHQ==}
+    engines: {node: '>=16.20.0'}
+    cpu: [riscv64]
+    os: [linux]
+
+  '@typescript/typescript-linux-s390x@7.0.2':
+    resolution: {integrity: sha512-IkwJc3L7yhytWd/ewjyxNDfOmswCm9GWMJT/ue/dU4aZNbwZeYAetq42VyLmsmSjvoX7z74X6ZaYCtzAr0EuGw==}
+    engines: {node: '>=16.20.0'}
+    cpu: [s390x]
+    os: [linux]
+
+  '@typescript/typescript-linux-x64@7.0.2':
+    resolution: {integrity: sha512-EYdf2cNg7rgCWJnxCdJ+F3V39O8ihb37eHAu1LK8oAFizgTQbPOK7zHHXbPt8rX24COqODXeI3sIf0fCXG7H/A==}
+    engines: {node: '>=16.20.0'}
+    cpu: [x64]
+    os: [linux]
+
+  '@typescript/typescript-netbsd-arm64@7.0.2':
+    resolution: {integrity: sha512-+polYF4MF04aPpO5FTkHran9yUQDSXqy5GiSDKpsll5jy3l3+g9QLhpf39T+ePtefhXLOGrLl0QIjkQP6VnelA==}
+    engines: {node: '>=16.20.0'}
+    cpu: [arm64]
+    os: [netbsd]
+
+  '@typescript/typescript-netbsd-x64@7.0.2':
+    resolution: {integrity: sha512-8YIT0EHM/3dq10ZOVF/A7pc/YSMtbcecct4rWtexrnSCHOPcpC2KTLXfTCR6vDpnSiY12heNb1GiN/wu+T/FyA==}
+    engines: {node: '>=16.20.0'}
+    cpu: [x64]
+    os: [netbsd]
+
+  '@typescript/typescript-openbsd-arm64@7.0.2':
+    resolution: {integrity: sha512-APT8+ClYnuYm1u9+kgGXoMj2VzWzcymwh2gNSQVySHfkRDGOTVkoWLjCmOQSaO+PoqQ57B0flRp9SA+7GnnkzQ==}
+    engines: {node: '>=16.20.0'}
+    cpu: [arm64]
+    os: [openbsd]
+
+  '@typescript/typescript-openbsd-x64@7.0.2':
+    resolution: {integrity: sha512-yX7s+Q0Dln0Dt9tEzZsAjXXR/+ytBM7AlglaqyeMPxQszJ1JhlJdZ6jLA+IzldHtflX81em7lDao1xXu+aRRkg==}
+    engines: {node: '>=16.20.0'}
+    cpu: [x64]
+    os: [openbsd]
+
+  '@typescript/typescript-sunos-x64@7.0.2':
+    resolution: {integrity: sha512-dLJDGaLZ1D4HPQn62u1n8mBDkJREwMsAkCdkwd4Ieqw+x3TUyTsqY0YiBCtE6H6OzzgGk3iuZ3vFWRS+E8/d1g==}
+    engines: {node: '>=16.20.0'}
+    cpu: [x64]
+    os: [sunos]
+
+  '@typescript/typescript-win32-arm64@7.0.2':
+    resolution: {integrity: sha512-Gyl1Vy6OsWesLzmq+EP0Fb7b4Nid5232AvcA2SFcdYreldpNtYFFofPjnt62y9hQy7VTaZp65ICJjuAQRaVcIQ==}
+    engines: {node: '>=16.20.0'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@typescript/typescript-win32-x64@7.0.2':
+    resolution: {integrity: sha512-0BQ3HkAHHlKLSp1qRvf3SUhGpGsDuhB/jgFw75guyqbxJqEaS0Cw/VFO8i2nHglJUzQCRtMMR/IBAKE3ETMC4g==}
+    engines: {node: '>=16.20.0'}
+    cpu: [x64]
+    os: [win32]
+
   '@upstash/redis@1.40.0':
     resolution: {integrity: sha512-F6+V7Kof2McJtGWclusZLt7hBRmIMZg+albS32/5TuNRg/92FM2nkyKPY9wWEieMj9hjyUi4iURsN1djsHNbwA==}
 
@@ -2398,11 +2611,6 @@ packages:
     peerDependencies:
       react: ^19.3.1
 
-  react-icons@5.7.0:
-    resolution: {integrity: sha512-LBLy340Rzqy6+/yVhZKT3B/QpP1BZaesGqasf09HPOBzRarcDIFH0WwXlXQfE7q7ipxK4MSiC5DIBWURCny6fw==}
-    peerDependencies:
-      react: '*'
-
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -2558,11 +2766,6 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  swr@2.5.1:
-    resolution: {integrity: sha512-BRw55e8r0B7SpDN20CAzoQAHl7y1yP7/Zt7oqUjMv0vSt2u2Xnkm88Ws+VypbV9BXHQVuSuyVq7zMjO16wSExw==}
-    peerDependencies:
-      react: ^16.11.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-
   tailwindcss@3.4.19:
     resolution: {integrity: sha512-3ofp+LL8E+pK/JuPLPggVAIaEuhvIz4qNcf3nA1Xn2o/7fb7s/TYpHhwGDv1ZU3PkBluUVaF8PyCHcm48cKLWQ==}
     engines: {node: '>=14.0.0'}
@@ -2624,9 +2827,9 @@ packages:
     resolution: {integrity: sha512-3GJYwig8ygEI89oaOZdduJX8/aw6O9eRPYHoIt6T3FZl9hkKjiyIspufJoVgqXihPoJu8M5CSV0DlZvzfohBCw==}
     hasBin: true
 
-  typescript@5.9.3:
-    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
-    engines: {node: '>=14.17'}
+  typescript@7.0.2:
+    resolution: {integrity: sha512-8FYau96o3NKOhbjKi/qNvG/W5jhzxkbdm5sj9AbZ/5T5sWqn3hJgLfGx27sRKZWTvyzCP8dLRBTf5tBTSRVUNA==}
+    engines: {node: '>=16.20.0'}
     hasBin: true
 
   uncrypto@0.1.3:
@@ -3494,10 +3697,10 @@ snapshots:
 
   '@popperjs/core@2.11.8': {}
 
-  '@prisma/client@6.19.0(prisma@6.19.0(typescript@5.9.3))(typescript@5.9.3)':
+  '@prisma/client@6.19.0(prisma@6.19.0(typescript@7.0.2))(typescript@7.0.2)':
     optionalDependencies:
-      prisma: 6.19.0(typescript@5.9.3)
-      typescript: 5.9.3
+      prisma: 6.19.0(typescript@7.0.2)
+      typescript: 7.0.2
 
   '@prisma/config@6.19.0':
     dependencies:
@@ -3700,6 +3903,66 @@ snapshots:
   '@types/react@19.3.0':
     dependencies:
       csstype: 3.2.3
+
+  '@typescript/typescript-aix-ppc64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-darwin-arm64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-darwin-x64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-freebsd-arm64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-freebsd-x64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-linux-arm64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-linux-arm@7.0.2':
+    optional: true
+
+  '@typescript/typescript-linux-loong64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-linux-mips64el@7.0.2':
+    optional: true
+
+  '@typescript/typescript-linux-ppc64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-linux-riscv64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-linux-s390x@7.0.2':
+    optional: true
+
+  '@typescript/typescript-linux-x64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-netbsd-arm64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-netbsd-x64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-openbsd-arm64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-openbsd-x64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-sunos-x64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-win32-arm64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-win32-x64@7.0.2':
+    optional: true
 
   '@upstash/redis@1.40.0':
     dependencies:
@@ -4521,12 +4784,12 @@ snapshots:
       ansi-styles: 5.2.0
       react-is: 17.0.2
 
-  prisma@6.19.0(typescript@5.9.3):
+  prisma@6.19.0(typescript@7.0.2):
     dependencies:
       '@prisma/config': 6.19.0
       '@prisma/engines': 6.19.0
     optionalDependencies:
-      typescript: 5.9.3
+      typescript: 7.0.2
     transitivePeerDependencies:
       - magicast
 
@@ -4562,10 +4825,6 @@ snapshots:
     dependencies:
       react: 19.3.1
       scheduler: 0.28.0
-
-  react-icons@5.7.0(react@19.3.1):
-    dependencies:
-      react: 19.3.1
 
   react-is@16.13.1: {}
 
@@ -4734,12 +4993,6 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  swr@2.5.1(react@19.3.1):
-    dependencies:
-      dequal: 2.0.3
-      react: 19.3.1
-      use-sync-external-store: 1.7.0(react@19.3.1)
-
   tailwindcss@3.4.19:
     dependencies:
       '@alloc/quick-lru': 5.3.0
@@ -4822,7 +5075,28 @@ snapshots:
       '@turbo/windows-64': 2.11.10
       '@turbo/windows-arm64': 2.11.10
 
-  typescript@5.9.3: {}
+  typescript@7.0.2:
+    optionalDependencies:
+      '@typescript/typescript-aix-ppc64': 7.0.2
+      '@typescript/typescript-darwin-arm64': 7.0.2
+      '@typescript/typescript-darwin-x64': 7.0.2
+      '@typescript/typescript-freebsd-arm64': 7.0.2
+      '@typescript/typescript-freebsd-x64': 7.0.2
+      '@typescript/typescript-linux-arm': 7.0.2
+      '@typescript/typescript-linux-arm64': 7.0.2
+      '@typescript/typescript-linux-loong64': 7.0.2
+      '@typescript/typescript-linux-mips64el': 7.0.2
+      '@typescript/typescript-linux-ppc64': 7.0.2
+      '@typescript/typescript-linux-riscv64': 7.0.2
+      '@typescript/typescript-linux-s390x': 7.0.2
+      '@typescript/typescript-linux-x64': 7.0.2
+      '@typescript/typescript-netbsd-arm64': 7.0.2
+      '@typescript/typescript-netbsd-x64': 7.0.2
+      '@typescript/typescript-openbsd-arm64': 7.0.2
+      '@typescript/typescript-openbsd-x64': 7.0.2
+      '@typescript/typescript-sunos-x64': 7.0.2
+      '@typescript/typescript-win32-arm64': 7.0.2
+      '@typescript/typescript-win32-x64': 7.0.2
 
   uncrypto@0.1.3: {}
 
@@ -4839,6 +5113,7 @@ snapshots:
   use-sync-external-store@1.7.0(react@19.3.1):
     dependencies:
       react: 19.3.1
+    optional: true
 
   util-deprecate@1.0.2: {}
 

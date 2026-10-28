@@ -30,17 +30,19 @@
   "dependencies": {
     "@shared/cache": "workspace:*",
     "@shared/content": "workspace:*",
-    "@supabase/ssr": "0.12.7",
-    "@supabase/supabase-js": "2.118.0",
-    "axios": "1.21.0",
-    "@prisma/client": "6.19.0",
-    "next": "16.4.3",
-    "zod": "4.6.7",
-    "pino": "10.4.0"
+    "@supabase/ssr": "catalog:",
+    "@supabase/supabase-js": "catalog:",
+    "axios": "catalog:",
+    "@prisma/client": "catalog:",
+    "next": "catalog:",
+    "zod": "catalog:",
+    "pino": "catalog:",
+    "dotenv": "catalog:"
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",
-    "typescript": "5.9.3"
+    "typescript": "catalog:",
+    "@types/node": "catalog:"
   },
   "private": true,
   "engines": {

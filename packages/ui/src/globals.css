@@ -989,14 +989,14 @@ button:disabled {
     from var(--reveal-angle),
     transparent 65%,
     rgb(var(--accent-rgb) / 0.15) 78%,
-    rgb(var(--accent-rgb) / 0.8) 90%,
+    rgb(var(--accent-rgb) / 0.45) 90%,
     transparent 100%
   );
   mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   mask-composite: exclude;
-  animation: reveal-shimmer 7s linear infinite;
+  animation: reveal-shimmer 12s linear infinite;
 }
 .reveal-card[data-expanded="true"]::before {
   animation-play-state: paused;
@@ -1025,7 +1025,24 @@ button:disabled {
   color: rgb(var(--muted-rgb));
   font-size: 13px;
   line-height: 1.8;
+}
+.reveal-preview {
+  display: grid;
+  grid-template-rows: 1fr;
   margin-top: 14px;
+  opacity: 1;
+  transition:
+    grid-template-rows 450ms cubic-bezier(0.22, 1, 0.36, 1),
+    margin-top 450ms ease,
+    opacity 300ms ease;
+}
+.reveal-preview > p {
+  min-height: 0;
+}
+.reveal-card[data-expanded="true"] .reveal-preview {
+  grid-template-rows: 0fr;
+  margin-top: 0;
+  opacity: 0;
 }
 .reveal-toggle {
   display: flex;
@@ -1039,7 +1056,7 @@ button:disabled {
   cursor: pointer;
 }
 .reveal-chevron {
-  transition: transform 180ms ease;
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
   font-size: 18px;
 }
 .reveal-card[data-expanded="true"] .reveal-chevron {
@@ -1057,8 +1074,26 @@ button:disabled {
   display: inline;
 }
 .reveal-details {
+  display: grid;
+  grid-template-rows: 0fr;
+  margin-top: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    grid-template-rows 450ms cubic-bezier(0.22, 1, 0.36, 1),
+    margin-top 450ms ease,
+    opacity 300ms ease,
+    visibility 450ms;
+}
+.reveal-details-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+.reveal-card[data-expanded="true"] .reveal-details {
+  grid-template-rows: 1fr;
   margin-top: 16px;
-  animation: reveal-appear 180ms ease-out;
+  opacity: 1;
+  visibility: visible;
 }
 .reveal-description,
 .reveal-projects p {
@@ -1082,16 +1117,6 @@ button:disabled {
     --reveal-angle: 360deg;
   }
 }
-@keyframes reveal-appear {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 @media (hover: none), (pointer: coarse) {
   .reveal-hint-desktop {
     display: none;
@@ -1105,7 +1130,9 @@ button:disabled {
   .reveal-details {
     animation: none;
   }
-  .reveal-chevron {
+  .reveal-chevron,
+  .reveal-preview,
+  .reveal-details {
     transition: none;
   }
 }

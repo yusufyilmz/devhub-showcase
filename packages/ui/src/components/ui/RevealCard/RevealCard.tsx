@@ -58,7 +58,11 @@ export function RevealCard({
       }}
     >
       <div className="reveal-heading">{heading}</div>
-      {!expanded && brief && <p className="reveal-brief">{brief}</p>}
+      {brief && (
+        <div className="reveal-preview" aria-hidden={expanded}>
+          <p className="reveal-brief">{brief}</p>
+        </div>
+      )}
       <button
         type="button"
         className="reveal-toggle"
@@ -91,8 +95,13 @@ export function RevealCard({
           ↗
         </span>
       </button>
-      <div id={detailsId} className="reveal-details" hidden={!expanded}>
-        {children}
+      <div
+        id={detailsId}
+        className="reveal-details"
+        aria-hidden={!expanded}
+        inert={!expanded}
+      >
+        <div className="reveal-details-inner">{children}</div>
       </div>
     </article>
   )

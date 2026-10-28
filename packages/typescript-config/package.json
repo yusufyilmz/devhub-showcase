@@ -7,7 +7,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "typescript": "5.9.3"
+    "typescript": "catalog:"
   },
   "engines": {
     "node": ">=24.15.0 <25"

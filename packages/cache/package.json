@@ -15,10 +15,11 @@
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",
-    "typescript": "5.9.3"
+    "typescript": "catalog:",
+    "@types/node": "catalog:"
   },
   "dependencies": {
-    "@upstash/redis": "1.40.0"
+    "@upstash/redis": "catalog:"
   },
   "private": true,
   "engines": {
