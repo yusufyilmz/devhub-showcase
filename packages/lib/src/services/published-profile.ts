@@ -1,6 +1,7 @@
 import { profile } from '@shared/content'
 import { createClient } from '@supabase/supabase-js'
 import { validateProfile } from '../domain/profile'
+import { usernameSchema } from '../domain/username'
 import {
   ProfileNotFoundError,
   ProfileSetupError,
@@ -50,5 +51,32 @@ export async function readPublicProfile(
     }
   })
   const snapshot = await new SupabaseProfileRepository(client, id).read()
+  return snapshot?.isPublic ? snapshot : null
+}
+
+/** Named public profiles never fall back to somebody else's data. */
+export async function readPublicProfileByUsername(
+  username: string
+): Promise<ProfileSnapshot | null> {
+  if (!usernameSchema.safeParse(username).success) return null
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key =
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  if (!url || !key) return null
+  const client = createClient<Database>(url, key, {
+    auth: { persistSession: false, autoRefreshToken: false },
+    global: {
+      fetch: (input, init) => fetch(input, { ...init, cache: 'no-store' })
+    }
+  })
+  const { data, error } = await client
+    .from('portfolio_profiles')
+    .select('id')
+    .eq('username', username)
+    .maybeSingle()
+  if (error) throw new ProfileSetupError()
+  if (!data) return null
+  const snapshot = await new SupabaseProfileRepository(client, data.id).read()
   return snapshot?.isPublic ? snapshot : null
 }

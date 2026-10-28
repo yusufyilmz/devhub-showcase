@@ -10,9 +10,9 @@ export interface Database {
   public: {
     Tables: {
       portfolio_profiles: {
-        Row: { id: string; owner_id: string | null; document: Json; revision: number; updated_at: string; is_public: boolean }
-        Insert: { id?: string; owner_id?: string | null; document: Json; revision?: number; updated_at?: string; is_public?: boolean }
-        Update: { document?: Json; revision?: number; updated_at?: string; is_public?: boolean }
+        Row: { id: string; username: string; owner_id: string | null; document: Json; revision: number; updated_at: string; is_public: boolean }
+        Insert: { id?: string; username?: string; owner_id?: string | null; document: Json; revision?: number; updated_at?: string; is_public?: boolean }
+        Update: { username?: string; document?: Json; revision?: number; updated_at?: string; is_public?: boolean }
         Relationships: []
       }
 

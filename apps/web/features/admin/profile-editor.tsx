@@ -1,6 +1,7 @@
 'use client'
 import type { PortfolioProfile } from '@shared/content'
 import type { ProfileSnapshot } from '@shared/lib/profile-errors'
+import { cvPath, editCvPath } from '@shared/lib/username'
 import { useEffect, useState } from 'react'
 import { AppearanceEditor } from './appearance-editor'
 import {
@@ -46,6 +47,7 @@ function clean(profile: PortfolioProfile): PortfolioProfile {
 }
 export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
   const [saved, setSaved] = useState(initial)
+  const [username, setUsername] = useState(initial.username ?? '')
   const [draft, setDraft] = useState(initial.profile)
   const [isPublic, setIsPublic] = useState(initial.isPublic ?? false)
   const [tab, setTab] = useState<(typeof tabs)[number]>('Profile')
@@ -54,7 +56,8 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
   const [error, setError] = useState('')
   const dirty =
     JSON.stringify(draft) !== JSON.stringify(saved.profile) ||
-    isPublic !== (saved.isPublic ?? false)
+    isPublic !== (saved.isPublic ?? false) ||
+    username !== (saved.username ?? '')
   useEffect(() => {
     const warn = (event: BeforeUnloadEvent) => {
       if (dirty) {
@@ -76,11 +79,15 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
         body: JSON.stringify({
           profile: clean(draft),
           revision: saved.revision,
-          isPublic
+          isPublic,
+          ...(username ? { username } : {})
         })
       })
       const result = await response.json()
       if (!response.ok) throw new Error(result.error)
+      if (result.username && result.username !== saved.username)
+        window.history.replaceState(null, '', editCvPath(result.username))
+      setUsername(result.username ?? username)
       setSaved(result)
       setDraft(result.profile)
       setIsPublic(result.isPublic ?? isPublic)
@@ -114,7 +121,7 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
           <div className="studio-header-actions">
             {saved.isPublic && saved.id && (
               <a
-                href={saved.id === 'main' ? '/' : `/p/${saved.id}`}
+                href={saved.username ? cvPath(saved.username) : '/'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="studio-secondary"
@@ -165,6 +172,21 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
           </button>
         </div>
         <div className="editor-card studio-sharing">
+          <label htmlFor="cv-username">Username</label>
+          <input
+            id="cv-username"
+            value={username}
+            minLength={3}
+            maxLength={50}
+            pattern="[a-z0-9]+(-[a-z0-9]+)*"
+            onChange={(event) => setUsername(event.target.value.toLowerCase())}
+            disabled={busy}
+          />
+          <p>
+            Your public CV: /{username || 'username'} · Your editor: /
+            {username || 'username'}/edit. Changing your username changes your
+            links.
+          </p>
           <label>
             <input
               type="checkbox"
@@ -184,7 +206,7 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
           </a>
           {saved.isPublic && saved.id && (
             <a
-              href={`/p/${saved.id}`}
+              href={saved.username ? cvPath(saved.username) : `/p/${saved.id}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -260,6 +282,7 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
             onClick={() => {
               if (window.confirm('Discard unpublished changes?')) {
                 setDraft(saved.profile)
+                setUsername(saved.username ?? '')
                 setIsPublic(saved.isPublic ?? false)
                 setError('')
                 setMessage('')

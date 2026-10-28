@@ -1,5 +1,6 @@
 import type { PortfolioProfile } from '@shared/content'
 import { z } from 'zod'
+import { usernameSchema } from './username'
 
 const text = (max = 200) =>
   z.string().trim().min(1, 'This field is required').max(max)
@@ -158,5 +159,6 @@ export function validateProfile(value: unknown): PortfolioProfile {
 export const saveProfileSchema = z.object({
   revision: z.number().int().min(1),
   profile: profileSchema,
-  isPublic: z.boolean().optional()
+  isPublic: z.boolean().optional(),
+  username: usernameSchema.optional()
 })

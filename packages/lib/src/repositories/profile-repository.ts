@@ -1,6 +1,7 @@
 import type { PortfolioProfile } from '@shared/content'
 export interface ProfileSnapshot {
   id?: string
+  username?: string
   isPublic?: boolean
   profile: PortfolioProfile
   revision: number
@@ -12,7 +13,8 @@ export interface ProfileRepository {
   save(
     profile: PortfolioProfile,
     revision: number,
-    isPublic?: boolean
+    isPublic?: boolean,
+    username?: string
   ): Promise<ProfileSnapshot | null>
 }
 export class ProfileConflictError extends Error {
@@ -38,5 +40,11 @@ export class ProfileSetupError extends Error {
 export class ProfileNotFoundError extends Error {
   constructor() {
     super('This profile is private or does not exist.')
+  }
+}
+
+export class ProfileUsernameError extends Error {
+  constructor() {
+    super('This username is already taken. Choose another one.')
   }
 }

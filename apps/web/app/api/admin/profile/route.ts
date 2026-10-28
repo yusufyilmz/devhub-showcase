@@ -1,7 +1,8 @@
 import {
   ProfileAccessError,
   ProfileConflictError,
-  ProfileSetupError
+  ProfileSetupError,
+  ProfileUsernameError
 } from '@shared/lib/profile-errors'
 import { ZodError } from 'zod'
 import { requireWorkspace, sameOrigin } from '../../../../lib/admin-auth'
@@ -56,7 +57,10 @@ function failure(error: unknown) {
     )
   if (error instanceof ProfileAccessError)
     return Response.json({ error: error.message }, { status: 403 })
-  if (error instanceof ProfileConflictError)
+  if (
+    error instanceof ProfileConflictError ||
+    error instanceof ProfileUsernameError
+  )
     return Response.json({ error: error.message }, { status: 409 })
   return Response.json(
     { error: 'Could not access profile storage. Check setup or try again.' },

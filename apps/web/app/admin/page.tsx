@@ -1,6 +1,6 @@
 import type { ProfileSnapshot } from '@shared/lib/profile-errors'
+import { editCvPath } from '@shared/lib/username'
 import { redirect } from 'next/navigation'
-import { ProfileEditor } from '../../features/admin/profile-editor'
 import { requireWorkspace } from '../../lib/admin-auth'
 export default async function AdminPage() {
   let snapshot: ProfileSnapshot | null
@@ -10,6 +10,6 @@ export default async function AdminPage() {
   } catch {
     redirect('/admin/login')
   }
-  if (!snapshot) redirect('/admin/login')
-  return <ProfileEditor initial={snapshot} />
+  if (!snapshot?.username) redirect('/admin/login?error=setup')
+  redirect(editCvPath(snapshot.username))
 }

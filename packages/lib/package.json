@@ -16,7 +16,8 @@
     "./profile-service": "./src/services/profile-service.ts",
     "./profile-errors": "./src/repositories/profile-repository.ts",
     "./published-profile": "./src/services/published-profile.ts",
-    "./user-profile": "./src/services/user-profile.ts"
+    "./user-profile": "./src/services/user-profile.ts",
+    "./username": "./src/domain/username.ts"
   },
   "scripts": {
     "build": "tsc --noEmit",

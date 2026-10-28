@@ -25,6 +25,7 @@ it('isolates two private CVs, allows opt-in publishing, and protects ownership a
       [root]
     )
     await apply('_user_cv_profiles.sql')
+    await apply('_cv_usernames.sql')
     const identity = async (id: string) =>
       db.exec(
         `reset role; set role authenticated; select set_config('request.jwt.claim.sub','${id}',false)`
@@ -51,6 +52,38 @@ it('isolates two private CVs, allows opt-in publishing, and protects ownership a
       'insert into public.portfolio_profiles(id,owner_id,document) values ($1,$2,$3)',
       [b, b, { name: 'Bob' }]
     )
+    await db.query(
+      'update public.portfolio_profiles set username=$1 where id=$2',
+      ['bob', b]
+    )
+    for (const username of ['admin', 'alice/edit', 'Alice', 'bad--name']) {
+      await expect(
+        db.query(
+          'update public.portfolio_profiles set username=$1 where id=$2',
+          [username, b]
+        )
+      ).rejects.toThrow()
+    }
+    expect(
+      (
+        await db.query(
+          'update public.portfolio_profiles set username=$1 where id=$2 returning id',
+          ['stolen', a]
+        )
+      ).rows
+    ).toEqual([])
+    await identity(a)
+    await expect(
+      db.query('update public.portfolio_profiles set username=$1 where id=$2', [
+        'bob',
+        a
+      ])
+    ).rejects.toThrow()
+    await db.query(
+      'update public.portfolio_profiles set username=$1 where id=$2',
+      ['alice', a]
+    )
+    await identity(b)
     expect(
       (
         await db.query(
