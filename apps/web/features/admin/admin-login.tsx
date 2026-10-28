@@ -9,9 +9,12 @@ export function AdminLogin({ initialError = '' }: { initialError?: string }) {
       <h1>
         Welcome to your
         <br />
-        <span>portfolio studio.</span>
+        <span>CV studio.</span>
       </h1>
-      <p>Sign in to update your story, projects and experience.</p>
+      <p>
+        Sign in to create your own CV. Your information stays private until you
+        publish it.
+      </p>
       <form
         method="post"
         action="/api/admin/google"

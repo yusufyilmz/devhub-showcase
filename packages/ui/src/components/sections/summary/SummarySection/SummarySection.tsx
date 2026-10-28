@@ -31,7 +31,13 @@ export function SummarySection({
         </div>
         <div className="hero-details">
           <span>
-            Engineering since <strong>{firstYear ?? '2012'}</strong>
+            {firstYear ? (
+              <>
+                Working since <strong>{firstYear}</strong>
+              </>
+            ) : (
+              'Your story, in your words'
+            )}
           </span>
           <span>
             <strong>{profile.experiences.length}</strong> roles, one evolving

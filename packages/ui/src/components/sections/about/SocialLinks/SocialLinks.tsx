@@ -15,11 +15,13 @@ export const SocialLinks = ({
 }) => {
   return (
     <div className="flex justify-center gap-4 mt-4">
-      <Tooltip title="LinkedIn" arrow>
-        <IconButtonWithLink label="LinkedIn" href={profile.linkedin}>
-          <LinkedInIcon fontSize="large" />
-        </IconButtonWithLink>
-      </Tooltip>
+      {profile.linkedin && (
+        <Tooltip title="LinkedIn" arrow>
+          <IconButtonWithLink label="LinkedIn" href={profile.linkedin}>
+            <LinkedInIcon fontSize="large" />
+          </IconButtonWithLink>
+        </Tooltip>
+      )}
 
       <Tooltip title="Email" arrow>
         <IconButtonWithLink label="Email" href={`mailto:${profile.email}`}>
@@ -27,19 +29,23 @@ export const SocialLinks = ({
         </IconButtonWithLink>
       </Tooltip>
 
-      <Tooltip title="GitHub" arrow>
-        <IconButtonWithLink label="GitHub" href={profile.github}>
-          <GitHubIcon fontSize="large" />
-        </IconButtonWithLink>
-      </Tooltip>
-      <Tooltip title="Phone" arrow>
-        <IconButtonWithLink
-          label="Phone"
-          href={`tel:${profile.phone.replaceAll(' ', '')}`}
-        >
-          <PhoneIcon fontSize="large" />
-        </IconButtonWithLink>
-      </Tooltip>
+      {profile.github && (
+        <Tooltip title="GitHub" arrow>
+          <IconButtonWithLink label="GitHub" href={profile.github}>
+            <GitHubIcon fontSize="large" />
+          </IconButtonWithLink>
+        </Tooltip>
+      )}
+      {profile.phone && (
+        <Tooltip title="Phone" arrow>
+          <IconButtonWithLink
+            label="Phone"
+            href={`tel:${profile.phone.replaceAll(' ', '')}`}
+          >
+            <PhoneIcon fontSize="large" />
+          </IconButtonWithLink>
+        </Tooltip>
+      )}
     </div>
   )
 }

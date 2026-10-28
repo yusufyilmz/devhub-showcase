@@ -27,14 +27,31 @@ const chronological = (value: { start: string; end: string | null }) =>
 
 export const profileSchema = z
   .object({
+    cvSettings: z
+      .object({
+        pageSize: z.enum(['A4', 'LETTER']),
+        fontSize: z.union([z.literal(9), z.literal(10), z.literal(11)]),
+        showEmail: z.boolean(),
+        showPhone: z.boolean(),
+        includeProjects: z.boolean(),
+        includeLanguages: z.boolean()
+      })
+      .default({
+        pageSize: 'A4',
+        fontSize: 9,
+        showEmail: true,
+        showPhone: true,
+        includeProjects: true,
+        includeLanguages: true
+      }),
     name: text(),
     title: text(),
     location: text(),
     email: z.email(),
     phone: z.string().trim().max(80),
-    website: safeUrl,
-    github: safeUrl,
-    linkedin: safeUrl,
+    website: z.union([safeUrl, z.literal('')]),
+    github: z.union([safeUrl, z.literal('')]),
+    linkedin: z.union([safeUrl, z.literal('')]),
     summary: text(3000),
     about: z.array(text(6000)).max(30),
     cvUrl: z.union([safeUrl, z.literal('/cv.pdf')]).default('/cv.pdf'),
@@ -140,5 +157,6 @@ export function validateProfile(value: unknown): PortfolioProfile {
 }
 export const saveProfileSchema = z.object({
   revision: z.number().int().min(1),
-  profile: profileSchema
+  profile: profileSchema,
+  isPublic: z.boolean().optional()
 })

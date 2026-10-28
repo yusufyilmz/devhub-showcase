@@ -1179,3 +1179,24 @@ button:disabled {
   flex: 1;
   background: rgb(var(--border-rgb));
 }
+
+.studio-sharing {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+}
+.studio-sharing label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.studio-sharing input {
+  width: auto;
+}
+.studio-sharing p {
+  width: 100%;
+  color: rgb(var(--muted-rgb));
+  font-size: 13px;
+}

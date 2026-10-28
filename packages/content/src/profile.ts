@@ -20,6 +20,15 @@ export interface ProfileProject {
   public: boolean
 }
 export interface PortfolioProfile {
+  cvSettings?: {
+    pageSize: 'A4' | 'LETTER'
+    fontSize: 9 | 10 | 11
+    showEmail: boolean
+    showPhone: boolean
+    includeProjects: boolean
+    includeLanguages: boolean
+  }
+
   cvUrl?: string
   appearance?: {
     accent: 'cyan' | 'violet' | 'emerald'

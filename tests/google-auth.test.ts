@@ -19,7 +19,7 @@ vi.mock('@shared/lib/supabase', () => ({
 }))
 vi.mock('../apps/web/lib/admin-auth', async (original) => ({
   ...(await original<typeof import('../apps/web/lib/admin-auth')>()),
-  requireAdmin: mocks.owner
+  requireWorkspace: mocks.owner
 }))
 
 import { POST } from '../apps/web/app/api/admin/google/route'
@@ -90,7 +90,7 @@ describe('Google sign in', () => {
   })
 })
 describe('Google callback', () => {
-  it('exchanges the code, checks ownership, and ignores arbitrary redirect targets', async () => {
+  it('exchanges the code, opens the account workspace, and ignores arbitrary redirect targets', async () => {
     const response = await GET(
       new Request(
         `${origin}/auth/callback?code=valid-code&next=//evil.example`,
@@ -122,7 +122,7 @@ describe('Google callback', () => {
     ).toContain('error=google_failed')
     expect(mocks.owner).not.toHaveBeenCalled()
   })
-  it('clears the local session for an authenticated nonowner', async () => {
+  it('clears the local session for an unconfirmed session', async () => {
     mocks.owner.mockRejectedValue(new ProfileAccessError())
     expect(
       (
@@ -131,7 +131,7 @@ describe('Google callback', () => {
     ).toBe(`${origin}/admin/login?error=not_owner`)
     expect(mocks.signOut).toHaveBeenCalledWith({ scope: 'local' })
   })
-  it('clears the session when ownership storage is unavailable', async () => {
+  it('clears the session when workspace storage is unavailable', async () => {
     mocks.owner.mockRejectedValue(new Error('missing table'))
     expect(
       (

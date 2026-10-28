@@ -89,3 +89,26 @@ describe('CV download', () => {
     log.mockRestore()
   })
 })
+
+it('keeps PDF preferences independent for each profile', () => {
+  const custom = {
+    ...profile,
+    appearance: { accent: 'violet' as const, defaultTheme: 'light' as const },
+    cvSettings: {
+      pageSize: 'LETTER' as const,
+      fontSize: 11 as const,
+      showEmail: false,
+      showPhone: false,
+      includeProjects: false,
+      includeLanguages: false
+    }
+  }
+  const definition = createCvDefinition(custom, template)
+  expect(definition.pageSize).toBe('LETTER')
+  expect(definition.defaultStyle?.fontSize).toBe(11)
+  expect(JSON.stringify(definition.content)).not.toContain(profile.email)
+  expect(JSON.stringify(definition.content)).not.toContain(profile.phone)
+  expect(JSON.stringify(definition.content)).not.toContain('PUBLIC PROJECTS')
+  expect(JSON.stringify(definition.content)).not.toContain('LANGUAGES')
+  expect(createCvDefinition(profile, template).pageSize).toBe('A4')
+})

@@ -5,11 +5,13 @@ import { ThemeContext } from '../theme-toggle'
 export function ThemeProvider({
   children,
   defaultTheme = 'dark',
-  accent = 'cyan'
+  accent = 'cyan',
+  storageKey = 'devhub-theme'
 }: {
   children: ReactNode
   defaultTheme?: 'dark' | 'light' | 'system'
   accent?: 'cyan' | 'violet' | 'emerald'
+  storageKey?: string
 }) {
   const [mode, setMode] = useState(defaultTheme === 'light' ? 'light' : 'dark')
   useEffect(() => {
@@ -17,7 +19,7 @@ export function ThemeProvider({
     const sync = () => {
       let preference = defaultTheme
       try {
-        const saved = localStorage.getItem('devhub-theme')
+        const saved = localStorage.getItem(storageKey)
         if (saved === 'dark' || saved === 'light') preference = saved
       } catch {}
       const next =
@@ -36,7 +38,7 @@ export function ThemeProvider({
       media.removeEventListener('change', sync)
       window.removeEventListener('storage', sync)
     }
-  }, [defaultTheme])
+  }, [defaultTheme, storageKey])
   const context = useMemo(
     () => ({
       mode,
@@ -45,11 +47,11 @@ export function ThemeProvider({
         document.documentElement.dataset.theme = next
         setMode(next)
         try {
-          localStorage.setItem('devhub-theme', next)
+          localStorage.setItem(storageKey, next)
         } catch {}
       }
     }),
-    [mode]
+    [mode, storageKey]
   )
   const theme = useMemo(
     () =>

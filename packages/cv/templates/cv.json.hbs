@@ -1,28 +1,27 @@
 {
-  "pageSize": "A4",
+  "pageSize": {{{json cvPageSize}}},
   "pageMargins": [44, 36, 44, 44],
-  "defaultStyle": { "font": "Roboto", "fontSize": 9, "lineHeight": 1.2, "color": "#253347" },
+  "defaultStyle": { "font": "Roboto", "fontSize": {{{json cvFontSize}}}, "lineHeight": 1.2, "color": "#253347" },
   "styles": {
-    "section": { "fontSize": 11, "bold": true, "color": "#096b83", "margin": [0, 15, 0, 7] },
+    "section": { "fontSize": 11, "bold": true, "color": {{{json cvAccent}}}, "margin": [0, 15, 0, 7] },
     "company": { "fontSize": 10, "bold": true, "color": "#15202b" },
     "muted": { "fontSize": 8, "color": "#64748b" },
-    "link": { "fontSize": 8, "color": "#096b83" }
+    "link": { "fontSize": 8, "color": {{{json cvAccent}}} }
   },
   "content": [
     { "text": {{{json name}}}, "fontSize": 25, "bold": true, "color": "#15202b", "margin": [0, 0, 0, 3] },
-    { "text": {{{json title}}}, "fontSize": 12, "color": "#096b83", "margin": [0, 0, 0, 7] },
+    { "text": {{{json title}}}, "fontSize": 12, "color": {{{json cvAccent}}}, "margin": [0, 0, 0, 7] },
     { "text": [
-      { "text": {{{json location}}} },
-      { "text": "  |  " },
-      { "text": {{{json email}}}, "link": {{{json emailLink}}} }
+      { "text": {{{json location}}} }
+      {{#if email}}, { "text": "  |  " },
+      { "text": {{{json email}}}, "link": {{{json emailLink}}} }{{/if}}
       {{#if phone}}, { "text": "  |  " }, { "text": {{{json phone}}} }{{/if}}
     ], "fontSize": 8, "margin": [0, 0, 0, 4] },
     { "text": [
-      { "text": "Portfolio", "link": {{{json website}}} },
-      { "text": "   /   " },
-      { "text": "GitHub", "link": {{{json github}}} },
-      { "text": "   /   " },
-      { "text": "LinkedIn", "link": {{{json linkedin}}} }
+      {{#if website}}{ "text": "Portfolio  ", "link": {{{json website}}} },{{/if}}
+      {{#if github}}{ "text": "GitHub  ", "link": {{{json github}}} },{{/if}}
+      {{#if linkedin}}{ "text": "LinkedIn", "link": {{{json linkedin}}} },{{/if}}
+      { "text": "" }
     ], "style": "link", "margin": [0, 0, 0, 12] },
     { "text": {{{json summary}}} }
     {{#if skillGroups.length}},

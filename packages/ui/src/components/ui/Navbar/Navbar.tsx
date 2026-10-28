@@ -6,7 +6,7 @@ export function Navbar({ profile = fallback }: { profile?: PortfolioProfile }) {
   return (
     <nav className="portfolio-nav">
       <a
-        href="/#summary"
+        href="#summary"
         className="brand-mark"
         aria-label={`${profile.name} home`}
       >
@@ -17,8 +17,8 @@ export function Navbar({ profile = fallback }: { profile?: PortfolioProfile }) {
         <MenuItems />
       </div>
       <div className="nav-tools">
-        <a className="nav-contact" href={`mailto:${profile.email}`}>
-          Get in touch ↗
+        <a className="nav-contact" href="/admin/login">
+          Create your CV ↗
         </a>
         <ThemeToggle />
         <MobileMenu />

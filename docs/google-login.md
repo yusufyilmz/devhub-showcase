@@ -1,6 +1,6 @@
-# Google sign in for the portfolio studio
+# Google sign in for CV workspaces
 
-The admin login now offers **Continue with Google** alongside email/password. It uses Supabase SSR cookies and PKCE. Google authenticates the identity; `requireAdmin` still verifies a confirmed user and the exact `portfolio_profiles.owner_id`. A Google login never assigns or claims ownership. Unassigned accounts are signed out locally after the callback. This requests basic identity only, with no Gmail mailbox access.
+The admin login now offers **Continue with Google** alongside email/password. It uses Supabase SSR cookies and PKCE. Google authenticates the identity; the server verifies the confirmed user and opens only that user’s CV workspace. First sign in creates a private profile owned by that UUID. The original site moderation guard remains separate. This requests basic identity only, with no Gmail mailbox access.
 
 ## Activate the provider
 
@@ -22,14 +22,14 @@ The admin login now offers **Continue with Google** alongside email/password. It
 
    Add exact callback URLs for any other domain you actually use, such as `https://devhub-showcase.vercel.app/auth/callback`. Both the Google application origin and Supabase redirect allow list must cover that domain. Avoid broad production wildcards.
 
-## Assign your owner account
+## Workspaces and the original site owner
 
-Complete [the existing admin database setup](admin-setup.md) first. The portfolio table and owner assignment are still required. If Google creates a new Supabase user on its first sign in, that first attempt will be denied until ownership is assigned. Check the confirmed account in Supabase Authentication, then run the existing `supabase/set-portfolio-owner.sql` for `yilmazyu@gmail.com`. If you already have an email/password user, verify which Supabase user ID the Google identity uses before changing ownership. Public contact email and Google profile metadata cannot grant admin access.
+Every confirmed user receives a separate private CV automatically. Complete [the multiuser migrations](multiuser-cvs.md) first. Only the original site portfolio needs the manual owner assignment described there; new users never claim it through sign in.
 
 No new app dependency, service-role key or Google secret in Vercel is needed. The app continues using the existing public Supabase URL and publishable/anon key.
 
 ## Verify after deployment
 
-Sign in with the owner Google account and confirm you reach `/admin`, can publish, and remain signed in after a reload. Sign out and try a different Google account: it must return to login with an access message, and protected APIs must remain forbidden. Verify cancellation, email/password fallback and sign out. Automated tests cover the route flow and authorization rejection, but cannot replace a real provider round trip after credentials are configured.
+Sign in with two Google accounts and confirm each reaches its own `/admin` workspace, can save its own CV and remains signed in after a reload. Each must be unable to edit the other account’s profile or moderate site reviews. Verify cancellation, email/password fallback and sign out. Automated tests cover the route flow and authorization rejection, but cannot replace a real provider round trip after credentials are configured.
 
 References: [Supabase Google OAuth](https://supabase.com/docs/guides/auth/social-sign-in/auth-google) and [redirect URL configuration](https://supabase.com/docs/guides/auth/redirect-urls).

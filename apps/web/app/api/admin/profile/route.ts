@@ -4,11 +4,11 @@ import {
   ProfileSetupError
 } from '@shared/lib/profile-errors'
 import { ZodError } from 'zod'
-import { requireAdmin, sameOrigin } from '../../../../lib/admin-auth'
+import { requireWorkspace, sameOrigin } from '../../../../lib/admin-auth'
 
 export async function GET() {
   try {
-    const { repository } = await requireAdmin()
+    const { repository } = await requireWorkspace()
     const snapshot = await repository.read()
     if (!snapshot) throw new ProfileSetupError()
     return Response.json(snapshot, {
@@ -22,7 +22,7 @@ export async function PUT(request: Request) {
   if (!sameOrigin(request))
     return Response.json({ error: 'Invalid request origin.' }, { status: 403 })
   try {
-    const { user, service } = await requireAdmin()
+    const { user, service } = await requireWorkspace()
     const body = await request.text()
     if (body.length > 250000)
       return Response.json(
