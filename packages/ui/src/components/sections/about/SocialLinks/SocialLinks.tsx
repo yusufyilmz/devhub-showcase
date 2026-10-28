@@ -1,3 +1,4 @@
+import { profile as fallback, type PortfolioProfile } from '@shared/content'
 import {
   EmailIcon,
   GitHubIcon,
@@ -7,31 +8,35 @@ import {
   Tooltip
 } from '../../../../components'
 
-export const SocialLinks = () => {
+export const SocialLinks = ({
+  profile = fallback
+}: {
+  profile?: PortfolioProfile
+}) => {
   return (
     <div className="flex justify-center gap-4 mt-4">
       <Tooltip title="LinkedIn" arrow>
-        <IconButtonWithLink
-          label="LinkedIn"
-          href="https://www.linkedin.com/in/yusuf-yilmaz-01543752"
-        >
+        <IconButtonWithLink label="LinkedIn" href={profile.linkedin}>
           <LinkedInIcon fontSize="large" />
         </IconButtonWithLink>
       </Tooltip>
 
       <Tooltip title="Email" arrow>
-        <IconButtonWithLink label="Email" href="mailto:yilmazyu@gmail.com">
+        <IconButtonWithLink label="Email" href={`mailto:${profile.email}`}>
           <EmailIcon fontSize="large" />
         </IconButtonWithLink>
       </Tooltip>
 
       <Tooltip title="GitHub" arrow>
-        <IconButtonWithLink label="GitHub" href="https://github.com/yusufyilmz">
+        <IconButtonWithLink label="GitHub" href={profile.github}>
           <GitHubIcon fontSize="large" />
         </IconButtonWithLink>
       </Tooltip>
       <Tooltip title="Phone" arrow>
-        <IconButtonWithLink label="Phone" href="tel:+34639464069">
+        <IconButtonWithLink
+          label="Phone"
+          href={`tel:${profile.phone.replaceAll(' ', '')}`}
+        >
           <PhoneIcon fontSize="large" />
         </IconButtonWithLink>
       </Tooltip>

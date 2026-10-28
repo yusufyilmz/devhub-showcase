@@ -86,7 +86,11 @@ export const ChatPopupContainer: React.FC<ChatPopupProps> = ({
 
   return (
     <div className="fixed  bottom-0 right-0 md:right-4 z-[250]">
-      <div className="w-[100vw] h-[100vh] md:w-full md:h-[32rem] bottom-0 bg-backgroundColor-chat md:rounded-lg shadow-2xl p-6 relative transition-all duration-300 ease-in-out">
+      <div
+        role="dialog"
+        aria-label="Portfolio assistant"
+        className="chat-panel w-[100vw] h-[100vh] md:w-full md:h-[32rem] bottom-0 bg-backgroundColor-chat md:rounded-lg shadow-2xl p-6 relative transition-all duration-300 ease-in-out"
+      >
         <IconButton
           aria-label="Close chat"
           onClick={() => {

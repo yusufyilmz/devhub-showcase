@@ -1,11 +1,9 @@
-import type React from 'react'
-
+import type { PortfolioProfile } from '@shared/content'
 import { Navbar } from '../Navbar'
-
-export const Header: React.FC = () => {
+export function Header({ profile }: { profile?: PortfolioProfile }) {
   return (
-    <header className="sticky top-0 z-40 bg-main-primary border-none shadow-none">
-      <Navbar />
+    <header className="site-header">
+      <Navbar profile={profile} />
     </header>
   )
 }

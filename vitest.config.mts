@@ -1,9 +1,23 @@
+import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   resolve: {
     alias: [
+      ...Object.entries(
+        JSON.parse(
+          readFileSync(
+            new URL('./packages/lib/package.json', import.meta.url),
+            'utf8'
+          )
+        ).exports as Record<string, string>
+      ).map(([key, path]) => ({
+        find: `@shared/lib/${key.slice(2)}`,
+        replacement: fileURLToPath(
+          new URL(`./packages/lib/${path}`, import.meta.url)
+        )
+      })),
       {
         find: '@shared/lib/logger',
         replacement: fileURLToPath(

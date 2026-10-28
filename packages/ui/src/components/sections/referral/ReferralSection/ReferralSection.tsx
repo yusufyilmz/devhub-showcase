@@ -9,14 +9,15 @@ const { id, title, subtitle } = copy.header.sections.referrals
 export const ReferralSection: React.FC<{
   referrals: Referral[]
 }> = ({ referrals }) => {
+  if (!referrals.length) return null
   return (
     <Section
-      className="top-32 bottom-32 mb-32"
+      className="referral-section"
       sectionId={id}
       title={title}
       subtitle={subtitle}
     >
-      <div className="flex items-center h-full md:min-h-[calc(100vh-4rem)]">
+      <div className="referral-content">
         <List divider className="no-scrollbar w-full md:mt-0">
           {referrals.map((referral) => (
             <ListItem key={referral.id}>

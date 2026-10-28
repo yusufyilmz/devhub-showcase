@@ -1,0 +1,18 @@
+import { ProfileAccessError } from '@shared/lib/profile-errors'
+import { SupabaseProfileRepository } from '@shared/lib/profile-repository'
+import { ProfileService } from '@shared/lib/profile-service'
+import { createServerClient } from '@shared/lib/supabase'
+
+export async function requireAdmin() {
+  const client = await createServerClient()
+  const { data, error } = await client.auth.getUser()
+  if (error || !data.user || !data.user.email_confirmed_at)
+    throw new ProfileAccessError()
+  const repository = new SupabaseProfileRepository(client)
+  const service = new ProfileService(repository)
+  await service.requireOwner(data.user.id)
+  return { client, user: data.user, repository, service }
+}
+export function sameOrigin(request: Request) {
+  return request.headers.get('origin') === new URL(request.url).origin
+}

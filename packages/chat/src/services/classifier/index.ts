@@ -1,10 +1,17 @@
 import nlp from 'compromise'
 import type { Logger } from 'pino'
-import { QUESTION_CATEGORIES } from '../../models/question-categories'
-import type { ChatCategory } from '../../types/cv'
+import { CV_MODEL } from '../../models/cv-model'
+import { createQuestionCategories } from '../../models/question-categories'
+import type { ChatCategory, CVModel } from '../../types/cv'
 
 export class ClassifierService {
-  constructor(private readonly logger: Logger) {}
+  private readonly categories
+  constructor(
+    private readonly logger: Logger,
+    model: CVModel = CV_MODEL
+  ) {
+    this.categories = createQuestionCategories(model)
+  }
 
   isMeaningfulInput(userInput: string): boolean {
     if (!userInput || userInput.trim().length < 5) {
@@ -36,7 +43,7 @@ export class ClassifierService {
     let bestMatch: ChatCategory & {
       weight: number
     } = {
-      ...QUESTION_CATEGORIES.unknown,
+      ...this.categories.unknown,
       weight: 0
     }
 
@@ -50,7 +57,7 @@ export class ClassifierService {
         'Important words extracted from user input'
       )
 
-      for (const questionCategory of Object.values(QUESTION_CATEGORIES)) {
+      for (const questionCategory of Object.values(this.categories)) {
         const totalWeight = questionCategory.keywords.reduce(
           (acc, categoryKeyword) => {
             if (filteredUserInput.includes(categoryKeyword.word)) {

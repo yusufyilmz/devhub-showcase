@@ -1,4 +1,7 @@
-import { profile } from '@shared/content'
+import {
+  profile as initialProfile,
+  type PortfolioProfile
+} from '@shared/content'
 import type { PageResources, Skill } from '../../types'
 
 const timestamp = '2026-10-27T00:00:00.000Z'
@@ -20,7 +23,9 @@ const skill = (name: string): Skill => ({
 })
 
 /** Maps versioned public content to the UI contract; never writes database records. */
-export function getPortfolioResources(): PageResources {
+export function getPortfolioResources(
+  profile: PortfolioProfile = initialProfile
+): PageResources {
   const projects = profile.projects.map((item) => ({
     id: item.id,
     title: item.name,

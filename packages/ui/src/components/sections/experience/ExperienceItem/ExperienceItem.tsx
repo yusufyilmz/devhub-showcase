@@ -14,7 +14,6 @@ import {
   TimelineItem,
   Typography
 } from '../../../../components'
-import { CARD_IDS } from '../../../../constants'
 import { ProjectList } from '../../project/ProjectList/ProjectList'
 import { SkillItem } from '../../skill/SkillItem/SkillItem'
 
@@ -36,7 +35,7 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
       </TimelineHeader>
       <TimelineBody className="ml-0 mr-0 my-8 md:mx-8">
         <Card
-          id={CARD_IDS.experience}
+          id={`experience-${experience.id}`}
           className="section-card experience-card group p-0 md:px-4 flex flex-col gap-4 md:gap-0"
         >
           <CardBody className="pb-0 flex flex-col gap-2">

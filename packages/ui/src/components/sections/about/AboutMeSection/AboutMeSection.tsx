@@ -1,14 +1,21 @@
-import { copy, profile } from '@shared/content'
-import type React from 'react'
+import {
+  copy,
+  profile as fallback,
+  type PortfolioProfile
+} from '@shared/content'
 import { Button, PdfIcon, Section, Typography } from '../../../../components'
 import { SocialLinks } from '../SocialLinks'
 
 const { id, title, subtitle } = copy.header.sections.aboutMe
 
-export const AboutMeSection: React.FC = () => {
+export const AboutMeSection = ({
+  profile = fallback
+}: {
+  profile?: PortfolioProfile
+}) => {
   return (
     <Section sectionId={id} title={title} subtitle={subtitle}>
-      <div className="h-full flex md:pt-32 justify-start items-center flex-col px-8 md:px-0">
+      <div className="about-content">
         <div className="space-y-4 text-lg">
           {profile.about.map((paragraph) => (
             <Typography key={paragraph} className="text-main-slate">
@@ -19,7 +26,7 @@ export const AboutMeSection: React.FC = () => {
             <Button
               aria-label="View my Resume"
               variant="text"
-              href="/cv.pdf"
+              href={profile.cvUrl ?? '/cv.pdf'}
               target="_blank"
               endIcon={<PdfIcon />}
               rel="noopener noreferrer"
@@ -29,7 +36,7 @@ export const AboutMeSection: React.FC = () => {
             </Button>
           </div>
         </div>
-        <SocialLinks />
+        <SocialLinks profile={profile} />
       </div>
     </Section>
   )

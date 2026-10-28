@@ -21,9 +21,12 @@ export class MessageProcessor {
   logger: Logger
   referralService: ReferralService
 
-  constructor(logger: Logger) {
+  constructor(
+    logger: Logger,
+    private readonly cvModel: CVModel = CV_MODEL
+  ) {
     this.logger = logger
-    this.classifier = new ClassifierService(logger)
+    this.classifier = new ClassifierService(logger, cvModel)
     this.gptService = new ChatGPTService(logger)
     this.referralService = new ReferralService(logger)
   }
@@ -76,7 +79,7 @@ export class MessageProcessor {
         }
 
         // Step 3: if result is a unknown question send all the data to GPT for a response
-        const formattedModel = formatAllCV(CV_MODEL)
+        const formattedModel = formatAllCV(this.cvModel)
         promptWithModel = GPT_PROMPT_TEMPLATE_COMPLETE.replace(
           CATEGORY_PROMPT_DATA_KEY,
           formattedModel

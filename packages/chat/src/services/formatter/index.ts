@@ -8,6 +8,10 @@ export const formatters: {
   contact: (contact) =>
     `Contact Info:\nPhone: ${contact.phone}\nEmail: ${contact.email}\nGitHub: ${contact.github}\nLinkedIn: ${contact.linkedin}`,
   skills: (skills) => {
+    if (skills.groups)
+      return Object.entries(skills.groups)
+        .map(([name, values]) => `${name}: ${values.join(', ')}`)
+        .join('\n')
     const formatSkills = (skillSet: Skill[]) =>
       skillSet
         .map((skill) =>

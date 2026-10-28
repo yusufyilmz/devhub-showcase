@@ -1,11 +1,22 @@
-import { copy } from '@shared/content'
-import type React from 'react'
-
-export const Footer: React.FC = () => {
+import { profile as fallback, type PortfolioProfile } from '@shared/content'
+export function Footer({ profile = fallback }: { profile?: PortfolioProfile }) {
   return (
-    <footer className="text-main-white min-h-10 py-6 z-[50] sticky bg-transparent border-none shadow-none">
-      <div className="max-w-6xl mx-auto text-center border-none shadow-none bg-transparent">
-        <p className="text-sm text-main-gray">{copy.footer.copyright}</p>
+    <footer className="site-footer">
+      <div>
+        <a className="brand-mark" href="/#summary">
+          {profile.name.slice(0, 1)}
+          <span>.</span>
+        </a>
+        <p>Thoughtfully built. Always evolving.</p>
+      </div>
+      <div>
+        <a href={profile.github} target="_blank" rel="noopener noreferrer">
+          GitHub ↗
+        </a>
+        <a href="/admin">Studio</a>
+        <p>
+          © {new Date().getFullYear()} {profile.name}
+        </p>
       </div>
     </footer>
   )

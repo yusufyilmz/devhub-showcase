@@ -9,6 +9,13 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      portfolio_profiles: {
+        Row: { id: string; owner_id: string | null; document: Json; revision: number; updated_at: string }
+        Insert: { id?: string; owner_id?: string | null; document: Json; revision?: number; updated_at?: string }
+        Update: { document?: Json; revision?: number; updated_at?: string }
+        Relationships: []
+      }
+
       achievements: {
         Row: {
           created_at: string
