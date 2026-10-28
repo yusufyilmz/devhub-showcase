@@ -73,12 +73,10 @@ it('adds a new project through the project editor', () => {
 })
 
 it('saves personal PDF settings and publishes only with explicit sharing enabled', async () => {
-  const fetcher = vi
-    .fn()
-    .mockResolvedValue({
-      ok: true,
-      json: async () => ({ ...initial, isPublic: true, revision: 2 })
-    })
+  const fetcher = vi.fn().mockResolvedValue({
+    ok: true,
+    json: async () => ({ ...initial, isPublic: true, revision: 2 })
+  })
   vi.stubGlobal('fetch', fetcher)
   render(<ProfileEditor initial={initial} />)
   const share = screen.getByLabelText(
