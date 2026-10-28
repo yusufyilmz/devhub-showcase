@@ -1,14 +1,6 @@
 export * from './api'
 export * from './chat'
 export * from './chat/roles'
-//TODO: temporarily disabled
-// export * from './prisma/company'
-// export * from './prisma/project'
-// export * from './prisma/education'
-// export * from './prisma/referral'
-// export * from './prisma/skill'
-// export * from './prisma/experience'
-// export * from './prisma/review'
 export * from './resources'
 export * from './supabase'
 

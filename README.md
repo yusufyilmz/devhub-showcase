@@ -33,20 +33,20 @@ Professional case studies appear inside their employer’s experience card. The 
 
 ## Commands
 
-| Command                                         | Purpose                                                                    |
-| ----------------------------------------------- | -------------------------------------------------------------------------- |
-| `pnpm dev`                                      | Run the Next.js development server through Turbo                           |
-| `pnpm build`                                    | Generate the legacy Prisma client, check shared packages and build Next.js |
-| `pnpm start`                                    | Serve the built web app                                                    |
-| `pnpm format` / `pnpm format:check`             | Format / verify with Biome                                                 |
-| `pnpm lint:check` / `pnpm lint:fix`             | Check / fix Biome lint rules                                               |
-| `pnpm assist:check` / `pnpm assist`             | Check / apply import organization                                          |
-| `pnpm check` / `pnpm check:fix`                 | Combined Biome checks / fixes                                              |
-| `pnpm typecheck`                                | Check tests, tooling, every source package and the app in strict mode      |
-| `pnpm test` / `pnpm test:watch`                 | Run Vitest / watch tests                                                   |
-| `pnpm test:coverage`                            | Run Vitest with V8 coverage                                                |
-| `pnpm clean`                                    | Remove local build output                                                  |
-| `pnpm create-package` / `pnpm create-component` | Use the updated Turbo generators                                           |
+| Command                                         | Purpose                                                               |
+| ----------------------------------------------- | --------------------------------------------------------------------- |
+| `pnpm dev`                                      | Run the Next.js development server through Turbo                      |
+| `pnpm build`                                    | Check shared packages and build Next.js                               |
+| `pnpm start`                                    | Serve the built web app                                               |
+| `pnpm format` / `pnpm format:check`             | Format / verify with Biome                                            |
+| `pnpm lint:check` / `pnpm lint:fix`             | Check / fix Biome lint rules                                          |
+| `pnpm assist:check` / `pnpm assist`             | Check / apply import organization                                     |
+| `pnpm check` / `pnpm check:fix`                 | Combined Biome checks / fixes                                         |
+| `pnpm typecheck`                                | Check tests, tooling, every source package and the app in strict mode |
+| `pnpm test` / `pnpm test:watch`                 | Run Vitest / watch tests                                              |
+| `pnpm test:coverage`                            | Run Vitest with V8 coverage                                           |
+| `pnpm clean`                                    | Remove local build output                                             |
+| `pnpm create-package` / `pnpm create-component` | Use the updated Turbo generators                                      |
 
 `pnpm types:check` remains an alias for compatibility. Packages use explicit `workspace:*` dependencies rather than relying on Yarn hoisting. Source packages are compiled by Next.js; their package build scripts run type checks instead of emitting unused JavaScript. Biome replaces ESLint and Prettier throughout the workspace. Generated SQL/database types and build outputs are excluded from formatting.
 
@@ -63,12 +63,11 @@ packages/
   ui/                      Existing components, styles, hooks and stores
   chat/                    Classification, CV context, formatting and OpenAI service
   cv/                      Shared Plop/Handlebars CV template and PDF renderer
-  lib/                     Resource contracts, adapters, Supabase and legacy Prisma services
+  lib/                     Resource contracts, profile storage and Supabase services
   cache/                   Redis cache adapter
   log/                     Logging
   typescript-config/       Strict shared TypeScript configuration
   tailwind-config/         Existing Tailwind design tokens
-prisma/                    Legacy schema and migrations, retained for compatibility
 supabase/                  Existing backend setup
 tests/                    Content, adapter, UI and configuration tests
 ```
@@ -87,9 +86,9 @@ The public profile loads independently of Supabase. If configured, the homepage 
 
 Set `OPENAI_API_KEY`, `REDIS_URL` and `REDIS_TOKEN` on the server. The chat requires Redis for its existing rate limit. Without these values it returns the existing failure response instead of crashing the page build. `OPENAI_MODEL` defaults to `gpt-4.1-mini`; choose a Chat Completions model available to your account. No email or provider credentials are needed for the public portfolio.
 
-### Legacy Prisma tooling
+### Database tooling
 
-The Supabase integration remains the active backend adapter. Prisma models and services are retained for existing installations. `pnpm db:generate` only generates types and does not connect to or change a database. Run `pnpm db:migrate` for an intentional local migration or `pnpm db:deploy` for an intentional release, with `DATABASE_URL` set in the shell. CI never runs migrations, `db push`, or seeds. `prisma/seed.sh` contains historical SQL and must be reviewed before manual use.
+Supabase is the only database integration. Versioned SQL lives in `supabase/migrations`; database changes are applied intentionally through the Supabase migration process. Installing, checking or building the app does not generate an ORM client, connect to a database, or apply migrations. There is no ORM selector or direct database connection string in the app configuration.
 
 ## CI and deployment
 
@@ -117,7 +116,7 @@ Require the `Verify` check before merging. If GitHub Actions should be the only 
 
 Runtime/tool versions were checked against the package registry in October 2026 and are centralized in the `pnpm-workspace.yaml` catalog and recorded in `pnpm-lock.yaml`. This update moves off the Next.js 15 canary to Next.js 16.4.3, React 19.3.1, MUI 9.5.0, Supabase JS 2.118.0, Supabase SSR 0.12.7, OpenAI 7.45.1, Turbo 2.11.10, Biome 2.6.3 and Vitest 5.0.5.
 
-TypeScript uses 7.0.2 across the workspace. Next.js runs its native compiler through `experimental.useTypeScriptCli`; server packages explicitly load Node globals with `types: ["node"]`. Tailwind stays on 3.4.19, Prisma/client on matching 6.19.0 versions, and pnpm on 11.25.0. Tailwind 4 changes CSS/configuration and Prisma 7 changes the client/driver setup. External packages use `catalog:` references; internal packages retain `workspace:*`. Dependabot checks npm dependencies and GitHub Actions weekly. Do not replace stable pins with a prerelease just because a registry tag points to one.
+TypeScript uses 7.0.2 across the workspace. Next.js runs its native compiler through `experimental.useTypeScriptCli`; server packages explicitly load Node globals with `types: ["node"]`. Tailwind stays on 3.4.19 and pnpm on 11.25.0. Tailwind 4 changes CSS/configuration. External packages use `catalog:` references; internal packages retain `workspace:*`. Dependabot checks npm dependencies and GitHub Actions weekly. Do not replace stable pins with a prerelease just because a registry tag points to one.
 
 Review dependency release notes, update pins, regenerate the lockfile, and run all checks before merging an upgrade. `pnpm-workspace.yaml` explicitly allows only the required dependency build scripts.
 

@@ -1,13 +1,6 @@
 import type { Logger } from 'pino'
-import type { PageResources } from '../../types/resources'
-//TODO: temporarily disable prisma resources
-// import { EducationService } from '../resources/prisma/education'
-// import { ExperienceService } from '../resources/prisma/experience'
-// import { ProjectService } from '../resources/prisma/project'
-// import { ReferralService } from '../resources/prisma/referral'
-// import { SkillService } from '../resources/prisma/skill'
-
 import type { SupabaseDbClient } from '../../types'
+import type { PageResources } from '../../types/resources'
 import { EducationService } from '../resources/supabase/education'
 import { ExperienceService } from '../resources/supabase/experience'
 import { ProjectService } from '../resources/supabase/project'

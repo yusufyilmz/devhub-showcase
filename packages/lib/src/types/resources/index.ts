@@ -1,9 +1,4 @@
 //TODO: temporaliy disable this file
-// import { Education } from '../prisma/education'
-// import { ExperienceWithCompanyProjectAndSkills } from '../prisma/experience'
-// import { ProjectWithCompanyAndSkills } from '../prisma/project'
-// import { Referral } from '../prisma/referral'
-// import { Skill } from '../prisma/skill'
 
 import type {
   Education,
