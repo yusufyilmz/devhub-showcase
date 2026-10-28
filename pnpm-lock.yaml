@@ -182,9 +182,15 @@ importers:
       '@mui/material':
         specifier: 'catalog:'
         version: 9.5.0(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@shared/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
       '@shared/chat':
         specifier: workspace:*
         version: link:../../packages/chat
+      '@shared/components':
+        specifier: workspace:*
+        version: link:../../packages/components
       '@shared/content':
         specifier: workspace:*
         version: link:../../packages/content
@@ -241,6 +247,37 @@ importers:
         specifier: 'catalog:'
         version: 7.0.2
 
+  packages/auth:
+    dependencies:
+      '@supabase/ssr':
+        specifier: 'catalog:'
+        version: 0.12.7(@supabase/supabase-js@2.118.0)
+      '@supabase/supabase-js':
+        specifier: 'catalog:'
+        version: 2.118.0
+      next:
+        specifier: 'catalog:'
+        version: 16.4.3(@types/node@26.6.5)(babel-plugin-macros@3.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.7
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 26.6.5
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.3.0
+      '@types/react-dom':
+        specifier: 'catalog:'
+        version: 19.3.0(@types/react@19.3.0)
+      typescript:
+        specifier: 'catalog:'
+        version: 7.0.2
+
   packages/cache:
     dependencies:
       '@upstash/redis':
@@ -285,6 +322,31 @@ importers:
         specifier: 'catalog:'
         version: 7.0.2
 
+  packages/components:
+    dependencies:
+      react:
+        specifier: 'catalog:'
+        version: 19.3.1
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.3.1(react@19.3.1)
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 26.6.5
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.3.0
+      '@types/react-dom':
+        specifier: 'catalog:'
+        version: 19.3.0(@types/react@19.3.0)
+      typescript:
+        specifier: 'catalog:'
+        version: 7.0.2
+
   packages/content:
     devDependencies:
       '@shared/typescript-config':
@@ -324,15 +386,15 @@ importers:
 
   packages/lib:
     dependencies:
+      '@shared/auth':
+        specifier: workspace:*
+        version: link:../auth
       '@shared/cache':
         specifier: workspace:*
         version: link:../cache
       '@shared/content':
         specifier: workspace:*
         version: link:../content
-      '@supabase/ssr':
-        specifier: 'catalog:'
-        version: 0.12.7(@supabase/supabase-js@2.118.0)
       '@supabase/supabase-js':
         specifier: 'catalog:'
         version: 2.118.0
@@ -410,6 +472,9 @@ importers:
       '@mui/material':
         specifier: 'catalog:'
         version: 9.5.0(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@shared/components':
+        specifier: workspace:*
+        version: link:../components
       '@shared/content':
         specifier: workspace:*
         version: link:../content

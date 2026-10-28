@@ -2,7 +2,14 @@
 import type { ReactNode } from 'react'
 import { EmptyState } from './fields'
 export function moveItem<T>(items: T[], from: number, to: number): T[] {
-  if (to < 0 || to >= items.length) return items
+  if (
+    from < 0 ||
+    from >= items.length ||
+    to < 0 ||
+    to >= items.length ||
+    from === to
+  )
+    return items
   const result = [...items]
   const [item] = result.splice(from, 1)
   if (item === undefined) return items
@@ -71,7 +78,7 @@ export function CollectionEditor<T extends { id: string }>({
                 onClick={() => {
                   if (
                     window.confirm(
-                      `Remove ${getTitle(item) || 'this item'}? This publishes only when you save.`
+                      `Remove ${getTitle(item) || 'this item'}? Changes take effect when you save.`
                     )
                   ) {
                     if (onRemove) onRemove(item)

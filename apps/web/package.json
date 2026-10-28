@@ -28,7 +28,9 @@
     "react": "catalog:",
     "react-dom": "catalog:",
     "zod": "catalog:",
-    "@shared/cv": "workspace:*"
+    "@shared/cv": "workspace:*",
+    "@shared/auth": "workspace:*",
+    "@shared/components": "workspace:*"
   },
   "devDependencies": {
     "@shared/tailwind-config": "workspace:*",

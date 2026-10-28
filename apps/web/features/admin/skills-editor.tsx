@@ -1,7 +1,7 @@
 'use client'
+import { LinesField } from '@shared/components/fields'
 import type { PortfolioProfile } from '@shared/content'
 import { useState } from 'react'
-import { LinesField } from './fields'
 
 function SkillGroup({
   name,

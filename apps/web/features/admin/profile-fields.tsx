@@ -1,6 +1,6 @@
 'use client'
+import { Field, LinesField } from '@shared/components/fields'
 import type { PortfolioProfile } from '@shared/content'
-import { Field, LinesField } from './fields'
 export function ProfileFields({
   profile,
   onChange

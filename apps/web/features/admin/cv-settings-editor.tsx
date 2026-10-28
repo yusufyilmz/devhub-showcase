@@ -1,6 +1,6 @@
 'use client'
+import { SelectField } from '@shared/components/fields'
 import type { PortfolioProfile } from '@shared/content'
-import { SelectField } from './fields'
 
 const defaults: NonNullable<PortfolioProfile['cvSettings']> = {
   pageSize: 'A4',

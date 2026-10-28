@@ -5,6 +5,8 @@ const nextConfig = {
   experimental: { useTypeScriptCli: true },
   transpilePackages: [
     '@shared/ui',
+    '@shared/auth',
+    '@shared/components',
     '@shared/content',
     '@shared/lib',
     '@shared/chat',

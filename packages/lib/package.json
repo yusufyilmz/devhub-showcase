@@ -33,12 +33,12 @@
   "dependencies": {
     "@shared/cache": "workspace:*",
     "@shared/content": "workspace:*",
-    "@supabase/ssr": "catalog:",
     "@supabase/supabase-js": "catalog:",
     "axios": "catalog:",
     "next": "catalog:",
     "zod": "catalog:",
-    "pino": "catalog:"
+    "pino": "catalog:",
+    "@shared/auth": "workspace:*"
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",

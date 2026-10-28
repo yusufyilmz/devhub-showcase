@@ -1,7 +1,8 @@
+import { StudioShell } from '@shared/components/studio-shell'
 import { ThemeToggle } from '@shared/ui/theme'
 import type { Metadata } from 'next'
 export const metadata: Metadata = {
-  title: 'CV studio',
+  title: 'Portfolio studio',
   robots: { index: false, follow: false }
 }
 export default function AdminLayout({
@@ -10,18 +11,17 @@ export default function AdminLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="admin-shell">
-      <a className="skip-link" href="#admin-content">
-        Skip to editor
-      </a>
-      <header className="admin-brand">
-        <a href="/" className="brand-mark">
+    <StudioShell
+      brand={
+        <>
           CV<span>.</span>
-        </a>
-        <span>CV STUDIO</span>
-        <ThemeToggle />
-      </header>
+        </>
+      }
+      title="PORTFOLIO STUDIO"
+      contentId="admin-content"
+      tools={<ThemeToggle />}
+    >
       {children}
-    </div>
+    </StudioShell>
   )
 }

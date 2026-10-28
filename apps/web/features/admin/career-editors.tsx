@@ -1,7 +1,7 @@
 'use client'
+import { CollectionEditor } from '@shared/components/collection-editor'
+import { Field, LinesField, SelectField } from '@shared/components/fields'
 import type { PortfolioProfile } from '@shared/content'
-import { CollectionEditor } from './collection-editor'
-import { Field, LinesField, SelectField } from './fields'
 
 const newId = () => crypto.randomUUID()
 const today = () => new Date().toISOString().slice(0, 10)

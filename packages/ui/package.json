@@ -44,7 +44,8 @@
     "uuid": "catalog:",
     "zustand": "catalog:",
     "@shared/content": "workspace:*",
-    "next": "catalog:"
+    "next": "catalog:",
+    "@shared/components": "workspace:*"
   },
   "engines": {
     "node": ">=24.15.0 <25"
