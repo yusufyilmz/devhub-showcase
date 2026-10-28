@@ -14,7 +14,8 @@
     "./profile": "./src/domain/profile.ts",
     "./profile-repository": "./src/repositories/supabase-profile-repository.ts",
     "./profile-service": "./src/services/profile-service.ts",
-    "./profile-errors": "./src/repositories/profile-repository.ts"
+    "./profile-errors": "./src/repositories/profile-repository.ts",
+    "./published-profile": "./src/services/published-profile.ts"
   },
   "scripts": {
     "build": "tsc --noEmit",

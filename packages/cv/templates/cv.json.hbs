@@ -1,0 +1,67 @@
+{
+  "pageSize": "A4",
+  "pageMargins": [44, 36, 44, 44],
+  "defaultStyle": { "font": "Roboto", "fontSize": 9, "lineHeight": 1.2, "color": "#253347" },
+  "styles": {
+    "section": { "fontSize": 11, "bold": true, "color": "#096b83", "margin": [0, 15, 0, 7] },
+    "company": { "fontSize": 10, "bold": true, "color": "#15202b" },
+    "muted": { "fontSize": 8, "color": "#64748b" },
+    "link": { "fontSize": 8, "color": "#096b83" }
+  },
+  "content": [
+    { "text": {{{json name}}}, "fontSize": 25, "bold": true, "color": "#15202b", "margin": [0, 0, 0, 3] },
+    { "text": {{{json title}}}, "fontSize": 12, "color": "#096b83", "margin": [0, 0, 0, 7] },
+    { "text": [
+      { "text": {{{json location}}} },
+      { "text": "  |  " },
+      { "text": {{{json email}}}, "link": {{{json emailLink}}} }
+      {{#if phone}}, { "text": "  |  " }, { "text": {{{json phone}}} }{{/if}}
+    ], "fontSize": 8, "margin": [0, 0, 0, 4] },
+    { "text": [
+      { "text": "Portfolio", "link": {{{json website}}} },
+      { "text": "   /   " },
+      { "text": "GitHub", "link": {{{json github}}} },
+      { "text": "   /   " },
+      { "text": "LinkedIn", "link": {{{json linkedin}}} }
+    ], "style": "link", "margin": [0, 0, 0, 12] },
+    { "text": {{{json summary}}} }
+    {{#if skillGroups.length}},
+    { "text": "SKILLS", "style": "section", "headlineLevel": 1 }
+    {{#each skillGroups}},
+    { "text": [ { "text": {{{json name}}}, "bold": true }, { "text": ": " }, { "text": {{{json description}}} } ], "margin": [0, 0, 0, 4] }
+    {{/each}}{{/if}}
+    {{#if experiences.length}},
+    { "text": "EXPERIENCE", "style": "section", "headlineLevel": 1 }
+    {{#each experiences}},
+    { "stack": [
+      { "columns": [ { "text": {{{json company}}}, "style": "company", "link": {{{json companyUrl}}} }, { "text": {{{json period}}}, "style": "muted", "alignment": "right", "width": 130 } ], "columnGap": 12 },
+      { "text": {{{json position}}}, "bold": true, "margin": [0, 2, 0, 5] }
+    ], "unbreakable": true, "headlineLevel": 1, "margin": [0, 4, 0, 0] }
+    {{#if achievements.length}},
+    { "ul": [{{#each achievements}}{{#unless @first}},{{/unless}}{ "text": {{{json this}}}, "margin": [0, 0, 0, 4] }{{/each}}], "margin": [0, 0, 0, 5] }
+    {{/if}}{{/each}}{{/if}}
+    {{#if projects.length}},
+    { "text": "PUBLIC PROJECTS", "style": "section", "headlineLevel": 1 }
+    {{#each projects}},
+    { "text": {{{json name}}}, "style": "company", "headlineLevel": 1, "margin": [0, 5, 0, 3] },
+    { "text": {{{json description}}}, "margin": [0, 0, 0, 3] }
+    {{#if skills.length}},
+    { "text": [{{#each skills}}{{#unless @first}}, { "text": "  /  " },{{/unless}}{ "text": {{{json this}}} }{{/each}}], "style": "muted", "margin": [0, 0, 0, 3] }
+    {{/if}}
+    {{#if url}}, { "text": {{{json url}}}, "link": {{{json url}}}, "style": "link", "margin": [0, 0, 0, 3] }{{/if}}
+    {{#if sourceUrl}}, { "text": {{{json sourceUrl}}}, "link": {{{json sourceUrl}}}, "style": "link", "margin": [0, 0, 0, 3] }{{/if}}
+    {{/each}}{{/if}}
+    {{#if education.length}},
+    { "text": "EDUCATION", "style": "section", "headlineLevel": 1 }
+    {{#each education}},
+    { "stack": [
+      { "columns": [ { "text": {{{json institution}}}, "style": "company", "link": {{{json url}}} }, { "text": {{{json period}}}, "style": "muted", "alignment": "right", "width": 130 } ], "columnGap": 12 },
+      { "text": [ { "text": {{{json degree}}} }, { "text": "  |  " }, { "text": {{{json field}}} } ], "margin": [0, 2, 0, 6] }
+    ], "unbreakable": true }
+    {{/each}}{{/if}}
+    {{#if languages.length}},
+    { "text": "LANGUAGES", "style": "section", "headlineLevel": 1 },
+    { "text": [{{#each languages}}{{#unless @first}}, { "text": "   /   " },{{/unless}}{ "text": {{{json language}}}, "bold": true }, { "text": ": " }, { "text": {{{json proficiency}}} }{{/each}}] }
+    {{/if}}
+  ]
+}

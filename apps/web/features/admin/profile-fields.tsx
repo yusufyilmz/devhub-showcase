@@ -76,7 +76,7 @@ export function ProfileFields({
           label="CV link"
           value={profile.cvUrl ?? '/cv.pdf'}
           onChange={(v) => update('cvUrl', v)}
-          hint="Use /cv.pdf or an HTTPS link to a hosted CV."
+          hint="/cv.pdf generates your CV from published information. An HTTPS URL overrides it."
         />
         <Field
           label="Short introduction"
