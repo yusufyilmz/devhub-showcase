@@ -8,6 +8,10 @@ updates:
       time: "09:00"
       timezone: Europe/Madrid
     open-pull-requests-limit: 5
+    # Supabase is active; keep the unused legacy Prisma stack pinned.
+    ignore:
+      - dependency-name: prisma
+      - dependency-name: "@prisma/client"
     groups:
       runtime:
         dependency-type: production
