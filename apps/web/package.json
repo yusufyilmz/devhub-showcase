@@ -12,7 +12,7 @@
     "lint:check": "biome lint .",
     "lint:fix": "biome lint --write .",
     "clean": "node -e \"require('node:fs').rmSync('.next',{recursive:true,force:true})\"",
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "start": "next start"
   },
   "dependencies": {
@@ -27,7 +27,8 @@
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "zod": "catalog:"
+    "zod": "catalog:",
+    "@shared/cv": "workspace:*"
   },
   "devDependencies": {
     "@shared/tailwind-config": "workspace:*",

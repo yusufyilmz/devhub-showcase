@@ -8,8 +8,15 @@ const nextConfig = {
     '@shared/content',
     '@shared/lib',
     '@shared/chat',
-    '@shared/cache'
+    '@shared/cache',
+    '@shared/cv'
   ],
-  serverExternalPackages: ['openai', 'pino', '@prisma/client']
+  serverExternalPackages: ['openai', 'pino', '@prisma/client', 'pdfmake'],
+  webpack(config) {
+    // Use the compiler entry without Handlebars' Node require.extensions hook.
+    config.resolve.alias.handlebars$ = 'handlebars/dist/cjs/handlebars.js'
+    config.module.rules.push({ test: /\.hbs$/, type: 'asset/source' })
+    return config
+  }
 }
 export default nextConfig

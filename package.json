@@ -25,7 +25,8 @@
     "db:migrate": "prisma migrate dev --schema prisma/schema.prisma",
     "db:deploy": "prisma migrate deploy --schema prisma/schema.prisma",
     "create-package": "turbo gen create-package",
-    "create-component": "turbo gen create-component"
+    "create-component": "turbo gen create-component",
+    "cv:generate": "turbo gen cv"
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
@@ -44,7 +45,8 @@
     "react-dom": "catalog:",
     "turbo": "catalog:",
     "typescript": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "@shared/cv": "workspace:*"
   },
   "packageManager": "pnpm@11.25.0",
   "engines": {

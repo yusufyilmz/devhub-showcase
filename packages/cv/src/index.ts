@@ -1,0 +1,101 @@
+import type { PortfolioProfile } from '@shared/content'
+import Handlebars from 'handlebars'
+import pdfmake from 'pdfmake'
+import fonts from 'pdfmake/build/vfs_fonts'
+import type { TDocumentDefinitions } from 'pdfmake/interfaces'
+
+// The server and Plop share an in-memory font filesystem; no host font paths.
+const virtualfs = (
+  pdfmake as typeof pdfmake & {
+    virtualfs: { writeFileSync: (path: string, data: Buffer) => void }
+  }
+).virtualfs
+for (const [name, data] of Object.entries(fonts)) {
+  virtualfs.writeFileSync(name, Buffer.from(data, 'base64'))
+}
+pdfmake.addFonts({
+  Roboto: {
+    normal: 'Roboto-Regular.ttf',
+    bold: 'Roboto-Medium.ttf',
+    italics: 'Roboto-Italic.ttf',
+    bolditalics: 'Roboto-MediumItalic.ttf'
+  }
+})
+// CVs contain text and links only. Never fetch assets supplied by profile data.
+pdfmake.setUrlAccessPolicy(() => false)
+pdfmake.setLocalAccessPolicy(() => false)
+
+const month = new Intl.DateTimeFormat('en-GB', {
+  month: 'short',
+  year: 'numeric',
+  timeZone: 'UTC'
+})
+const period = (start: string, end: string | null) =>
+  `${month.format(new Date(start))} - ${end ? month.format(new Date(end)) : 'Present'}`
+
+/** Shared with Plop so JSON escaping is identical in CLI and website output. */
+export const cvHelpers = {
+  json: (value: unknown) => JSON.stringify(value ?? '')
+}
+
+export function createCvData(profile: PortfolioProfile) {
+  return {
+    ...profile,
+    emailLink: `mailto:${profile.email}`,
+    skillGroups: Object.entries(profile.skills).map(([name, values]) => ({
+      name,
+      description: values.join(', ')
+    })),
+    experiences: profile.experiences.map((item) => ({
+      ...item,
+      period: period(item.start, item.end)
+    })),
+    projects: profile.projects.filter((item) => item.public),
+    education: profile.education.map((item) => ({
+      ...item,
+      period: period(item.start, item.end)
+    }))
+  }
+}
+
+export function createCvDefinition(
+  profile: PortfolioProfile,
+  template: string,
+  render?: (template: string, data: ReturnType<typeof createCvData>) => string
+): TDocumentDefinitions {
+  const data = createCvData(profile)
+  const engine = Handlebars.create()
+  engine.registerHelper(cvHelpers)
+  const json = render
+    ? render(template, data)
+    : engine.compile(template, { strict: true, noEscape: true })(data)
+  const definition = JSON.parse(json) as TDocumentDefinitions
+  definition.info = {
+    title: `${profile.name} | CV`,
+    author: profile.name,
+    subject: profile.title,
+    creator: 'DevHub CV template'
+  }
+  definition.pageBreakBefore = (node, queries) =>
+    node.headlineLevel === 1 && queries.getFollowingNodesOnPage().length === 0
+  definition.footer = (page, count) => ({
+    columns: [
+      { text: profile.name, alignment: 'left' },
+      { text: `${page} / ${count}`, alignment: 'right' }
+    ],
+    margin: [44, 14, 44, 0],
+    fontSize: 8,
+    color: '#64748b'
+  })
+  return definition
+}
+
+export async function renderCv(
+  profile: PortfolioProfile,
+  template: string,
+  render?: Parameters<typeof createCvDefinition>[2]
+): Promise<Buffer> {
+  return pdfmake
+    .createPdf(createCvDefinition(profile, template, render))
+    .getBuffer()
+}

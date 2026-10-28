@@ -6,7 +6,7 @@ Yusuf Yilmaz’s portfolio: [yusufdevhub.vercel.app](https://yusufdevhub.vercel.
 
 The new `/admin` area manages the published profile, experience, projects, education, skills, languages and appearance. Public content and AI context read the same saved Supabase profile. Dark/light mode and three accent palettes share one theme system.
 
-**Activation requires a new table and an assigned Supabase Auth owner.** See [admin setup](docs/admin-setup.md) for the exact migration, account setup and ownership step. The public profile retains a bundled fallback until storage is configured. The existing PDF remains a separate file; the editor can update its download URL.
+**Activation requires a new table and an assigned Supabase Auth owner.** See [admin setup](docs/admin-setup.md) for the exact migration, account setup and ownership step. The public profile retains a bundled fallback until storage is configured. The CV download is generated from the published profile, so it reflects saved edits automatically.
 
 ## Start locally
 
@@ -26,7 +26,7 @@ Open http://localhost:3000. The public career, project and education sections wo
 
 - `packages/lib/src/services/portfolio` maps the profile into typed page resources.
 - `packages/chat/src/models/cv-model.ts` maps the same profile into the chat model. Missing durations, GPA values, references and personal traits are not invented.
-- `apps/web/public/cv.pdf` is the supplied CV and is served by the existing download links. Replace it when publishing a new CV.
+- `/cv.pdf` generates a PDF from the published profile and `packages/cv/templates/cv.json.hbs`. There is no committed PDF to keep in sync.
 - `packages/content/src/site-copy` holds labels, SEO metadata and structured data.
 
 Professional case studies appear inside their employer’s experience card. The public project showcase includes DevHub and Fitness OS with live and GitHub links. Public career data starts from the versioned profile and can be published through the studio; old database experience/project rows do not override it. Existing database tables and records are not modified or deleted.
@@ -57,11 +57,12 @@ apps/web/
   app/                     App Router layout, pages, errors and server actions
   lib/portfolio-resources.ts  Public profile plus optional testimonials
   proxy.ts                 Optional Supabase session refresh (Next.js 16 convention)
-  public/cv.pdf            Downloadable CV
+  app/cv.pdf/route.ts      CV PDF download from published data
 packages/
   content/                 Shared profile, labels and SEO
   ui/                      Existing components, styles, hooks and stores
   chat/                    Classification, CV context, formatting and OpenAI service
+  cv/                      Shared Plop/Handlebars CV template and PDF renderer
   lib/                     Resource contracts, adapters, Supabase and legacy Prisma services
   cache/                   Redis cache adapter
   log/                     Logging
@@ -127,3 +128,21 @@ Vitest covers current career chronology, public/work project placement, shared A
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+## Generating the CV
+
+The public `/cv.pdf` endpoint reads the published profile on each request and returns a downloadable PDF. Keep the admin CV link set to `/cv.pdf` for automatic updates. An external URL remains an optional override. The document contains profile/contact details, summary, skills, experience, public projects, education and languages. Nonpublic projects are omitted from the project list. Page breaks, Unicode fonts and page numbers are handled by the shared renderer without Chromium or an external rendering service.
+
+Edit `packages/cv/templates/cv.json.hbs` to change the document layout. It is a JSON document definition rendered through Handlebars, the same template engine used by Plop. Use `{{{json value}}}` for profile values to preserve quotes and newlines safely. Content is plain text, never template code.
+
+Generate a local copy with the existing Turbo/Plop runner:
+
+```sh
+pnpm cv:generate
+# Or supply an output path without a prompt:
+pnpm cv:generate --args output/my-cv.pdf
+```
+
+The generator loads `apps/web/.env.local`, then root `.env.local`, while preserving existing environment values. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (or the existing anon key) to read the published `portfolio_profiles` row. No service-role key is used. With no database configuration, local generation clearly reports that it uses the bundled development profile. With database configuration present, a failed read stops generation. The public endpoint follows the website’s bundled-profile fallback until storage is configured or when storage is unavailable; `X-Profile-Revision: 0` identifies fallback output. It returns 503 if PDF generation itself fails. Both paths use the same template and public-profile reader. Generated PDFs go to ignored `output/` and existing files are never overwritten by the generator.
+
+Development uses Webpack, as does the production build, to load the `.hbs` file as source text. The template and bundled fonts ship with the server, so deployments need no filesystem write access and no build-time database connection.

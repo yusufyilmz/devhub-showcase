@@ -17,7 +17,7 @@ The editor keeps changes in memory until you choose **Publish changes**, warns b
 
 Career/project facts in `packages/content/src/profile.ts` remain the bundled fallback if Supabase is unavailable. Once the new table is configured, it becomes authoritative: the old database project rows are not merged back, so deleting a project in the editor stays deleted. The migration imports all seven existing public tools into the new editable profile. Testimonials continue using the older referral service.
 
-The CV setting accepts `/cv.pdf` or an HTTP(S) link. It changes the download link; it does not upload or regenerate a PDF. Replace `apps/web/public/cv.pdf` through Git or link a hosted file. The existing PDF will not automatically reflect text edits.
+The CV setting accepts `/cv.pdf` or an HTTP(S) link. Keep `/cv.pdf` to generate the PDF from the latest published profile on download, including saved experience, skills, education and public projects. No PDF upload or manual replacement is needed. An external link overrides this automatic download. Edit the shared `packages/cv/templates/cv.json.hbs` template to change its layout; see the README for local Plop generation.
 
 ## Appearance
 

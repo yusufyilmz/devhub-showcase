@@ -1,0 +1,31 @@
+{
+  "name": "@shared/cv",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./template.hbs": {
+      "types": "./src/template.d.ts",
+      "default": "./templates/cv.json.hbs"
+    }
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@shared/content": "workspace:*",
+    "handlebars": "catalog:",
+    "pdfmake": "catalog:"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/pdfmake": "catalog:",
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "node": ">=24.15.0 <25"
+  }
+}

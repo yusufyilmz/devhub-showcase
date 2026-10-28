@@ -71,3 +71,6 @@ secrets
 # zod
 **/lib/types/prisma
 **/test/mock/prisma
+
+# Locally generated CV exports
+/output/
