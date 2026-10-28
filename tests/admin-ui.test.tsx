@@ -101,12 +101,10 @@ it('saves personal PDF settings and publishes only with explicit sharing enabled
 })
 
 it('saves the chosen username together with profile and sharing changes', async () => {
-  const fetcher = vi
-    .fn()
-    .mockResolvedValue({
-      ok: true,
-      json: async () => ({ ...initial, username: 'new-handle', revision: 2 })
-    })
+  const fetcher = vi.fn().mockResolvedValue({
+    ok: true,
+    json: async () => ({ ...initial, username: 'new-handle', revision: 2 })
+  })
   vi.stubGlobal('fetch', fetcher)
   const history = vi
     .spyOn(window.history, 'replaceState')

@@ -175,6 +175,7 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
           <label htmlFor="cv-username">Username</label>
           <input
             id="cv-username"
+            required
             value={username}
             minLength={3}
             maxLength={50}
