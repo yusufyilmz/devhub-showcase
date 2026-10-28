@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // TypeScript 7 provides the native CLI rather than the legacy JavaScript API.
+  experimental: { useTypeScriptCli: true },
   transpilePackages: [
     '@shared/ui',
     '@shared/content',

@@ -114,9 +114,9 @@ Require the `Verify` check before merging. If GitHub Actions should be the only 
 
 ## Dependency policy and upgrades
 
-Runtime/tool versions were checked against the package registry in October 2026 and are pinned in package manifests and `pnpm-lock.yaml`. This update moves off the Next.js 15 canary to Next.js 16.4.3, React 19.3.1, MUI 9.5.0, Supabase JS 2.118.0, Supabase SSR 0.12.7, OpenAI 7.45.1, Turbo 2.11.10, Biome 2.6.3 and Vitest 5.0.5.
+Runtime/tool versions were checked against the package registry in October 2026 and are centralized in the `pnpm-workspace.yaml` catalog and recorded in `pnpm-lock.yaml`. This update moves off the Next.js 15 canary to Next.js 16.4.3, React 19.3.1, MUI 9.5.0, Supabase JS 2.118.0, Supabase SSR 0.12.7, OpenAI 7.45.1, Turbo 2.11.10, Biome 2.6.3 and Vitest 5.0.5.
 
-TypeScript stays on 5.9.3, Tailwind on 3.4.19, Prisma/client on matching 6.19.0 versions, and pnpm on 11.25.0. These are intentional compatible upgrade boundaries: Tailwind 4 changes CSS/configuration, Prisma 7 changes the client/driver setup, TypeScript 7 needs a separate tooling compatibility migration, and pnpm matches the Fitness OS setup. Do not replace stable pins with a prerelease just because a registry tag points to one.
+TypeScript uses 7.0.2 across the workspace. Next.js runs its native compiler through `experimental.useTypeScriptCli`; server packages explicitly load Node globals with `types: ["node"]`. Tailwind stays on 3.4.19, Prisma/client on matching 6.19.0 versions, and pnpm on 11.25.0. Tailwind 4 changes CSS/configuration and Prisma 7 changes the client/driver setup. External packages use `catalog:` references; internal packages retain `workspace:*`. Dependabot checks npm dependencies and GitHub Actions weekly. Do not replace stable pins with a prerelease just because a registry tag points to one.
 
 Review dependency release notes, update pins, regenerate the lockfile, and run all checks before merging an upgrade. `pnpm-workspace.yaml` explicitly allows only the required dependency build scripts.
 

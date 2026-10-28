@@ -55,7 +55,7 @@ export const TimelineHeader: React.FC<TimelineHeaderProps> = ({
   children,
   className = ''
 }) => {
-  return <div className={`flex items-center ${className}`}>{children}</div>
+  return <div className={`flex items-center ps-5 ${className}`}>{children}</div>
 }
 
 export const TimelineIcon: React.FC<TimelineIconProps> = ({

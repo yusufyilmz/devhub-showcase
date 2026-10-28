@@ -15,10 +15,12 @@
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",
-    "typescript": "5.9.3"
+    "typescript": "catalog:",
+    "@types/node": "catalog:"
   },
   "dependencies": {
-    "pino": "10.4.0"
+    "pino": "catalog:",
+    "pino-pretty": "catalog:"
   },
   "private": true,
   "engines": {

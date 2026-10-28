@@ -1,66 +1,45 @@
 import type { ProjectWithCompanyAndSkills } from '@shared/lib/types'
 import Image from 'next/image'
 import Link from 'next/link'
-import type React from 'react'
-import { Card, CardBody, Divider, Typography } from '../../../../components'
+import { RevealCard } from '../../../ui/RevealCard/RevealCard'
 import { SkillItem } from '../../skill/SkillItem/SkillItem'
 
-interface ProjectItemProps {
+export function ProjectItem({
+  project
+}: {
   project: ProjectWithCompanyAndSkills
-}
-
-export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
+}) {
   return (
-    // <Link
-    //   href={project.link ?? '#'}
-    //   target="_blank"
-    // >
-    <Card
-      tabIndex={-1}
+    <RevealCard
       id={project.id}
-      className="parallax section-card referral-card group flex flex-col gap-4 p-4 md:p-8 justify-between"
+      title={project.title}
+      brief={project.description}
+      className="project-card"
+      heading={
+        <>
+          <h3>{project.title}</h3>
+          {project.role && <p className="reveal-subtitle">{project.role}</p>}
+        </>
+      }
     >
-      {project?.imageUrl && (
-        <CardBody className="relative min-h-96">
+      {project.imageUrl && (
+        <div className="relative aspect-video mb-5">
           <Image
             fill
+            className="object-contain"
             alt={`${project.title} project image`}
             src={project.imageUrl}
           />
-        </CardBody>
-      )}
-
-      <CardBody className="flex gap-4 flex-col text-left">
-        <div className="flex flex-col gap-3">
-          <Typography
-            variant="h3"
-            className="font-semibold text-main-white text-2xl group-hover:text-main-blue"
-          >
-            {project.title}
-          </Typography>
-
-          <Typography
-            variant="h4"
-            className="font-semibold text-textColor-secondary"
-          >
-            {project.role}
-          </Typography>
-          <Divider className="bg-main-light-slate mb-6 mt-0" />
-          <Typography
-            variant="overline"
-            className="text-textColor-lightSlate font-light"
-          >
-            {project?.description}
-          </Typography>
         </div>
-      </CardBody>
-      <div className="flex justify-start flex-wrap gap-2">
+      )}
+      <p className="reveal-description">{project.description}</p>
+      <div className="flex flex-wrap gap-2 mt-4">
         {project.skills.map(
           (skill) =>
             skill.name && <SkillItem key={skill.name} name={skill.name} />
         )}
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 mt-5">
         {project.link && (
           <Link
             href={project.link}
@@ -82,24 +61,18 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => {
           </Link>
         )}
       </div>
-      <CardBody>
-        {project.company && (
-          <Typography
-            variant="caption"
-            className="tex-left text-sm mt-6 text-textColor-slate italic"
+      {project.company && (
+        <p className="reveal-credit">
+          Project and all rights reserved by{' '}
+          <Link
+            href={project.company.link}
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Project and all rights reserved by
-            <Link
-              href={project.company.link}
-              className="text-textColor-slate font-bold"
-              target="_blank"
-            >
-              {' '}
-              {project.company?.name.toUpperCase()}
-            </Link>
-          </Typography>
-        )}
-      </CardBody>
-    </Card>
+            {project.company.name}
+          </Link>
+        </p>
+      )}
+    </RevealCard>
   )
 }

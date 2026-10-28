@@ -35,6 +35,7 @@ export interface ExperienceForGpt {
 export interface ProjectWithSkills {
   id: string
   title: string
+  description?: string
   skills: Skill[]
 }
 

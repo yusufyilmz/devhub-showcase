@@ -15,8 +15,8 @@
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",
-    "typescript": "5.9.3",
-    "next": "16.4.3"
+    "typescript": "catalog:",
+    "next": "catalog:"
   },
   "private": true,
   "engines": {

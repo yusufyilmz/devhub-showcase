@@ -79,13 +79,9 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <script
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: Script contains only a validated enum; applies theme before paint.
-          dangerouslySetInnerHTML={{ __html: themeScript }}
-        />
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script
           type="application/ld+json"
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: Serialized profile is validated and HTML characters are escaped.
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(structuredData).replace(/</g, '\\u003c')
           }}

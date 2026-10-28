@@ -14,15 +14,16 @@
     "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\""
   },
   "dependencies": {
-    "compromise": "14.19.0",
-    "openai": "7.45.1",
+    "compromise": "catalog:",
+    "openai": "catalog:",
     "@shared/content": "workspace:*",
     "@shared/lib": "workspace:*",
-    "pino": "10.4.0"
+    "pino": "catalog:"
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",
-    "typescript": "5.9.3"
+    "typescript": "catalog:",
+    "@types/node": "catalog:"
   },
   "private": true,
   "engines": {
