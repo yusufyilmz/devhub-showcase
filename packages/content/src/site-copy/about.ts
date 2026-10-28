@@ -11,7 +11,7 @@ export const aboutSection = {
     {
       name: 'Backend',
       details:
-        'The application uses Node.js and Supabase for optional persisted interactions. Legacy Prisma models remain available for existing database tooling.'
+        'The application uses Node.js and Supabase for authentication, saved profiles and persisted interactions.'
     },
     {
       name: 'Database',

@@ -34,11 +34,9 @@
     "@supabase/ssr": "catalog:",
     "@supabase/supabase-js": "catalog:",
     "axios": "catalog:",
-    "@prisma/client": "catalog:",
     "next": "catalog:",
     "zod": "catalog:",
-    "pino": "catalog:",
-    "dotenv": "catalog:"
+    "pino": "catalog:"
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",

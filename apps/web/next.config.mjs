@@ -11,7 +11,7 @@ const nextConfig = {
     '@shared/cache',
     '@shared/cv'
   ],
-  serverExternalPackages: ['openai', 'pino', '@prisma/client', 'pdfmake'],
+  serverExternalPackages: ['openai', 'pino', 'pdfmake'],
   webpack(config) {
     // Use the compiler entry without Handlebars' Node require.extensions hook.
     config.resolve.alias.handlebars$ = 'handlebars/dist/cjs/handlebars.js'

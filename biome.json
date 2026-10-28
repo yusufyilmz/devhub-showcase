@@ -15,7 +15,6 @@
       "!!**/coverage",
       "!!pnpm-lock.yaml",
       "!!**/*.hbs",
-      "!!prisma/migrations",
       "!!supabase",
       "!!packages/lib/src/types/supabase/database.types.ts"
     ]
