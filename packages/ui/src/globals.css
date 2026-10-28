@@ -971,3 +971,141 @@ button:disabled {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* A moving highlight follows the border without covering content or links. */
+@property --reveal-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.reveal-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--reveal-angle),
+    transparent 65%,
+    rgb(var(--accent-rgb) / 0.15) 78%,
+    rgb(var(--accent-rgb) / 0.8) 90%,
+    transparent 100%
+  );
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: reveal-shimmer 7s linear infinite;
+}
+.reveal-card[data-expanded="true"]::before {
+  animation-play-state: paused;
+}
+.reveal-card[data-expanded="true"] {
+  border-color: rgb(var(--accent-rgb) / 0.6);
+}
+.reveal-heading h3 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.reveal-heading > div {
+  padding: 0;
+}
+.reveal-subtitle {
+  color: rgb(var(--muted-rgb));
+  font-size: 14px;
+  margin-top: 6px;
+}
+.reveal-brief {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  color: rgb(var(--muted-rgb));
+  font-size: 13px;
+  line-height: 1.8;
+  margin-top: 14px;
+}
+.reveal-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 6px 0;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: rgb(var(--accent-rgb));
+  cursor: pointer;
+}
+.reveal-chevron {
+  transition: transform 180ms ease;
+  font-size: 18px;
+}
+.reveal-card[data-expanded="true"] .reveal-chevron {
+  transform: rotate(90deg);
+}
+.reveal-hint-touch,
+.reveal-hint-keyboard {
+  display: none;
+}
+.reveal-toggle:focus-visible .reveal-hint-desktop,
+.reveal-toggle:focus-visible .reveal-hint-touch {
+  display: none;
+}
+.reveal-toggle:focus-visible .reveal-hint-keyboard {
+  display: inline;
+}
+.reveal-details {
+  margin-top: 16px;
+  animation: reveal-appear 180ms ease-out;
+}
+.reveal-description,
+.reveal-projects p {
+  color: rgb(var(--muted-rgb));
+  font-size: 13px;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+.reveal-projects h4,
+.reveal-projects h5 {
+  margin: 16px 0 6px;
+  font-weight: 600;
+}
+.reveal-credit {
+  margin-top: 20px;
+  font-size: 11px;
+  color: rgb(var(--muted-rgb));
+}
+@keyframes reveal-shimmer {
+  to {
+    --reveal-angle: 360deg;
+  }
+}
+@keyframes reveal-appear {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (hover: none), (pointer: coarse) {
+  .reveal-hint-desktop {
+    display: none;
+  }
+  .reveal-hint-touch {
+    display: inline;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-card::before,
+  .reveal-details {
+    animation: none;
+  }
+  .reveal-chevron {
+    transition: none;
+  }
+}

@@ -3,7 +3,6 @@ import { formatDateRange } from '@shared/lib/utils'
 import Link from 'next/link'
 import type React from 'react'
 import {
-  Card,
   CardBody,
   Divider,
   List,
@@ -14,7 +13,7 @@ import {
   TimelineItem,
   Typography
 } from '../../../../components'
-import { ProjectList } from '../../project/ProjectList/ProjectList'
+import { RevealCard } from '../../../ui/RevealCard/RevealCard'
 import { SkillItem } from '../../skill/SkillItem/SkillItem'
 
 type ExperienceProps = {
@@ -34,32 +33,35 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
         </Typography>
       </TimelineHeader>
       <TimelineBody className="ml-0 mr-0 my-8 md:mx-8">
-        <Card
+        <RevealCard
           id={`experience-${experience.id}`}
-          className="section-card experience-card group p-0 md:px-4 flex flex-col gap-4 md:gap-0"
-        >
-          <CardBody className="pb-0 flex flex-col gap-2">
-            <Typography
-              variant="h3"
-              className="text-2xl font-bold text-textColor-light group-hover:underline group-hover:text-main-blue"
-            >
-              <Link
-                href={experience.company?.link ?? '#'}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="focus:outline-none focus:ring-2 focus:ring-main-blue"
+          title={experience.company?.name ?? experience.role}
+          brief={experience.achievements[0]}
+          className="experience-card group"
+          heading={
+            <CardBody className="pb-0 flex flex-col gap-2">
+              <Typography
+                variant="h3"
+                className="text-2xl font-bold text-textColor-light group-hover:underline group-hover:text-main-blue"
               >
-                {experience.company?.name}
-              </Link>
-            </Typography>
-            <Typography
-              variant="h4"
-              className="font-semibold text-textColor-secondary"
-            >
-              {experience.role}
-            </Typography>
-          </CardBody>
-
+                <Link
+                  href={experience.company?.link ?? '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="focus:outline-none focus:ring-2 focus:ring-main-blue"
+                >
+                  {experience.company?.name}
+                </Link>
+              </Typography>
+              <Typography
+                variant="h4"
+                className="font-semibold text-textColor-secondary"
+              >
+                {experience.role}
+              </Typography>
+            </CardBody>
+          }
+        >
           <Divider className="bg-main-light-slate" />
           <CardBody className="pt-0">
             <List className="list-disc list-inside text-main-white">
@@ -83,9 +85,19 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
             </div>
           </CardBody>
           <CardBody className="pt-0 pl-0">
-            <ProjectList projects={experience.projects} />
+            {experience.projects.length > 0 && (
+              <div className="reveal-projects">
+                <h4>Selected projects</h4>
+                {experience.projects.map((project) => (
+                  <div key={project.id}>
+                    <h5>{project.title}</h5>
+                    <p>{project.description}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </CardBody>
-        </Card>
+        </RevealCard>
       </TimelineBody>
     </TimelineItem>
   )
