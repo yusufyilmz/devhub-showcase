@@ -11,3 +11,5 @@ export * from './chat/roles'
 // export * from './prisma/review'
 export * from './resources'
 export * from './supabase'
+
+export type { Database } from './supabase/database.types'

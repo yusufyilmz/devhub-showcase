@@ -10,23 +10,25 @@ import {
   SkillSection,
   SummarySection
 } from '@shared/ui/components'
-import { loadPageResources } from '../lib/portfolio-resources'
-import { handleSendMessageAction } from './actions'
+import { loadPageResources } from '../../lib/portfolio-resources'
+import { getPublishedProfile } from '../../lib/published-profile'
+import { handleSendMessageAction } from '../actions'
 
 const sections = Object.values(copy.navbar).map(
   ({ id }) => id.split('#')[1]
 ) as string[]
 
 export default async function Home(): Promise<React.JSX.Element> {
+  const { profile } = await getPublishedProfile()
   const { experiences, projects, educations, referrals, skills } =
     await loadPageResources()
 
   return (
     <>
-      <main className="w-full bg-main-primary  flex flex-col justify-center items-center mt-16">
-        <div className="max-w-[100vw] flex flex-col gap-2">
-          <SummarySection />
-          <AboutMeSection />
+      <main id="main-content" className="portfolio-main">
+        <div className="portfolio-inner">
+          <SummarySection profile={profile} />
+          <AboutMeSection profile={profile} />
           <ExperienceSection experiences={experiences} />
           <ProjectsSection projects={projects} />
           <SkillSection skills={skills} />

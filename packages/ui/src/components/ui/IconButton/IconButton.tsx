@@ -45,10 +45,14 @@ export const IconButtonWithLink: React.FC<IconButtonWithLinkProps> = ({
   className
 }) => {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer">
-      <IconButton aria-label={label} className={`icon-button ${className}`}>
-        {children}
-      </IconButton>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label}
+      className={`social-link ${className ?? ''}`}
+    >
+      {children}
     </a>
   )
 }

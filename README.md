@@ -2,6 +2,12 @@
 
 Yusuf Yilmaz’s portfolio: [yusufdevhub.vercel.app](https://yusufdevhub.vercel.app). Built with Next.js App Router, React, TypeScript and a pnpm/Turborepo workspace. The existing navy/cyan design is preserved.
 
+## Portfolio studio and refreshed themes
+
+The new `/admin` area manages the published profile, experience, projects, education, skills, languages and appearance. Public content and AI context read the same saved Supabase profile. Dark/light mode and three accent palettes share one theme system.
+
+**Activation requires a new table and an assigned Supabase Auth owner.** See [admin setup](docs/admin-setup.md) for the exact migration, account setup and ownership step. The public profile retains a bundled fallback until storage is configured. The existing PDF remains a separate file; the editor can update its download URL.
+
 ## Start locally
 
 Use Node.js 24 (24.15 or newer) and the pnpm version in `package.json`.
@@ -16,14 +22,14 @@ Open http://localhost:3000. The public career, project and education sections wo
 
 ## Update the information
 
-`packages/content/src/profile.ts` is the authoritative public profile, updated from the October 2026 CV. It contains the biography, six employers, achievements, selected projects, education, languages, skills and contact links. Both the page and AI context derive from it, so they cannot silently retain separate career histories.
+`packages/content/src/profile.ts` is the bundled fallback profile, updated from the October 2026 CV. Once the studio is activated, the published `portfolio_profiles` row is authoritative. It contains the biography, six employers, achievements, selected projects, education, languages, skills and contact links. Both the page and AI context derive from it, so they cannot silently retain separate career histories.
 
 - `packages/lib/src/services/portfolio` maps the profile into typed page resources.
 - `packages/chat/src/models/cv-model.ts` maps the same profile into the chat model. Missing durations, GPA values, references and personal traits are not invented.
 - `apps/web/public/cv.pdf` is the supplied CV and is served by the existing download links. Replace it when publishing a new CV.
 - `packages/content/src/site-copy` holds labels, SEO metadata and structured data.
 
-Professional case studies appear inside their employer’s experience card. The public project showcase includes DevHub and Fitness OS with live and GitHub links. Public career data is now versioned in Git; updating old database experience/project rows does not override this profile. Existing database tables and records are not modified or deleted.
+Professional case studies appear inside their employer’s experience card. The public project showcase includes DevHub and Fitness OS with live and GitHub links. Public career data starts from the versioned profile and can be published through the studio; old database experience/project rows do not override it. Existing database tables and records are not modified or deleted.
 
 ## Commands
 

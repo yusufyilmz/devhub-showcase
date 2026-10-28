@@ -20,6 +20,12 @@ export interface ProfileProject {
   public: boolean
 }
 export interface PortfolioProfile {
+  cvUrl?: string
+  appearance?: {
+    accent: 'cyan' | 'violet' | 'emerald'
+    defaultTheme: 'system' | 'light' | 'dark'
+  }
+
   name: string
   title: string
   location: string
@@ -42,7 +48,7 @@ export interface PortfolioProfile {
     end: string
   }[]
   skills: Record<string, string[]>
-  languages: { language: string; proficiency: string }[]
+  languages: { id: string; language: string; proficiency: string }[]
 }
 export const profile: PortfolioProfile = {
   name: 'Yusuf Yilmaz',
@@ -357,14 +363,17 @@ export const profile: PortfolioProfile = {
   },
   languages: [
     {
+      id: 'tr',
       language: 'Turkish',
       proficiency: 'Native'
     },
     {
+      id: 'en',
       language: 'English',
       proficiency: 'Fluent'
     },
     {
+      id: 'es',
       language: 'Spanish',
       proficiency: 'Intermediate'
     }

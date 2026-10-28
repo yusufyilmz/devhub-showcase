@@ -3,7 +3,9 @@ import { ReviewService } from '@shared/lib/services'
 import { createServerClient } from '@shared/lib/supabase'
 import type { ReviewWithReferrals, SupabaseDbClient } from '@shared/lib/types'
 import { ReviewSection } from '@shared/ui/components'
-import { handleSubmitReviewAction } from '../actions'
+import { redirect } from 'next/navigation'
+import { requireAdmin } from '../../../lib/admin-auth'
+import { handleSubmitReviewAction } from '../../actions'
 
 const getPageResources = async (
   supabase: SupabaseDbClient
@@ -24,6 +26,11 @@ const getPageResources = async (
 }
 
 export default async function ReviewsPage(): Promise<React.JSX.Element> {
+  try {
+    await requireAdmin()
+  } catch {
+    redirect('/admin/login')
+  }
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL)
     return (
       <main>

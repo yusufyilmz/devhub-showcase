@@ -10,7 +10,11 @@
     "./constants": "./src/constants/index.ts",
     "./logger": "./src/log/index.ts",
     "./supabase": "./src/supabase/index.ts",
-    "./portfolio": "./src/services/portfolio/index.ts"
+    "./portfolio": "./src/services/portfolio/index.ts",
+    "./profile": "./src/domain/profile.ts",
+    "./profile-repository": "./src/repositories/supabase-profile-repository.ts",
+    "./profile-service": "./src/services/profile-service.ts",
+    "./profile-errors": "./src/repositories/profile-repository.ts"
   },
   "scripts": {
     "build": "tsc --noEmit",

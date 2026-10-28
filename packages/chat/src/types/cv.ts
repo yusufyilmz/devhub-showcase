@@ -59,6 +59,7 @@ export interface Achievement {
 }
 
 export interface Skills {
+  groups?: Record<string, string[]>
   frontend: Skill[]
   backend: Skill[]
   devops: Skill[]

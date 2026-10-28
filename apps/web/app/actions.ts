@@ -1,6 +1,6 @@
 'use server'
 
-import { failureMessage, MessageProcessor } from '@shared/chat'
+import { createCVModel, failureMessage, MessageProcessor } from '@shared/chat'
 import { logger } from '@shared/lib/logger'
 import {
   RateLimiter,
@@ -14,6 +14,8 @@ import type {
   ReviewWithReferrals
 } from '@shared/lib/types'
 import { isCategoryReferralCategory } from '@shared/lib/utils'
+import { requireAdmin } from '../lib/admin-auth'
+import { getPublishedProfile } from '../lib/published-profile'
 
 export async function handleSendMessageAction(
   message: ChatMessage,
@@ -29,7 +31,10 @@ export async function handleSendMessageAction(
     )
       return failureMessage
     const rateLimiter = new RateLimiter()
-    const messageProcessor = new MessageProcessor(logger)
+    const messageProcessor = new MessageProcessor(
+      logger,
+      createCVModel((await getPublishedProfile()).profile)
+    )
     await rateLimiter.isAllowed(sessionId)
 
     if (isCategoryReferralCategory(message.category)) {
@@ -58,7 +63,7 @@ export async function handleSubmitReviewAction(
   reviewState: ReviewState
 ): Promise<ReviewWithReferrals | undefined> {
   try {
-    const client = await createServerClient()
+    const { client } = await requireAdmin()
     const reviewService = new ReviewService(logger, client)
     const review = await reviewService.update(referralId, {
       state: reviewState

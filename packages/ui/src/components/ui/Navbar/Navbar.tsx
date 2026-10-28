@@ -1,15 +1,27 @@
-import type React from 'react'
-import { AboutSection } from '../../sections/about/AboutSection'
+import { profile as fallback, type PortfolioProfile } from '@shared/content'
+import { ThemeToggle } from '../../../theme'
 import { MenuItems } from './MenuItems'
 import { MobileMenu } from './MobileMenu'
-
-export const Navbar: React.FC = () => {
+export function Navbar({ profile = fallback }: { profile?: PortfolioProfile }) {
   return (
-    <nav className="flex justify-between md:justify-center items-center p-4 bg-transparent">
-      <MobileMenu />
-      <AboutSection />
-      <div className={`hidden md:block`}>
+    <nav className="portfolio-nav">
+      <a
+        href="/#summary"
+        className="brand-mark"
+        aria-label={`${profile.name} home`}
+      >
+        {profile.name.slice(0, 1)}
+        <span>.</span>
+      </a>
+      <div className="nav-links">
         <MenuItems />
+      </div>
+      <div className="nav-tools">
+        <a className="nav-contact" href={`mailto:${profile.email}`}>
+          Get in touch ↗
+        </a>
+        <ThemeToggle />
+        <MobileMenu />
       </div>
     </nav>
   )

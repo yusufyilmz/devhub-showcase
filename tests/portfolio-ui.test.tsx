@@ -10,7 +10,7 @@ afterEach(cleanup)
 it('renders the current professional title in the existing hero layout', () => {
   render(<SummarySection />)
   expect(screen.getByRole('heading', { level: 1 }).textContent).toBe(
-    profile.name
+    `${profile.name}.`
   )
   expect(screen.getByRole('heading', { level: 2 }).textContent).toBe(
     profile.title

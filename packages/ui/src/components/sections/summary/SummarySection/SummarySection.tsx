@@ -1,20 +1,47 @@
-import { copy } from '@shared/content'
-import type React from 'react'
-
-export const SummarySection: React.FC = () => {
+import { profile as fallback, type PortfolioProfile } from '@shared/content'
+export function SummarySection({
+  profile = fallback
+}: {
+  profile?: PortfolioProfile
+}) {
+  const firstYear = profile.experiences
+    .map((item) => item.start.slice(0, 4))
+    .sort()[0]
   return (
-    <section
-      className="w-full flex h-section flex-col items-center justify-between px-0 text-center py-4 fade -mt-16"
-      id="summary"
-    >
-      <div className="flex flex-col justify-center align-middle h-full">
-        <h1 className="text-6xl text-main-white mb-6">
-          {copy.header.main.title}
+    <section id="summary" className="portfolio-hero">
+      <div className="hero-orbit" aria-hidden="true" />
+      <div className="hero-copy">
+        <p className="eyebrow">
+          <span className="status-dot" />
+          {profile.location}
+        </p>
+        <h1>
+          {profile.name}
+          <span className="accent-period">.</span>
         </h1>
-        <h2 className="text-3xl text-main-white mb-10">
-          {copy.header.main.subTitle}
-        </h2>
+        <h2>{profile.title}</h2>
+        <p className="hero-intro">{profile.summary}</p>
+        <div className="hero-actions">
+          <a className="studio-primary" href="#projects">
+            Explore my work <span aria-hidden="true">↗</span>
+          </a>
+          <a className="studio-secondary" href={`mailto:${profile.email}`}>
+            Let’s talk
+          </a>
+        </div>
+        <div className="hero-details">
+          <span>
+            Engineering since <strong>{firstYear ?? '2012'}</strong>
+          </span>
+          <span>
+            <strong>{profile.experiences.length}</strong> roles, one evolving
+            craft
+          </span>
+        </div>
       </div>
+      <a className="hero-scroll" href="#about-me">
+        SCROLL TO EXPLORE <span aria-hidden="true">↓</span>
+      </a>
     </section>
   )
 }
