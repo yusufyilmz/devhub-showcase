@@ -71,14 +71,35 @@ export default async function PublicCvPage({ params }: Props) {
           <SummarySection profile={profile} />
           <AboutMeSection profile={profile} />
           {experiences.length > 0 && (
-            <ExperienceSection experiences={experiences} />
+            <ExperienceSection
+              language={profile.portfolioLanguage}
+              experiences={experiences}
+            />
           )}
-          {projects.length > 0 && <ProjectsSection projects={projects} />}
-          {Object.keys(skills).length > 0 && <SkillSection skills={skills} />}
+          {projects.length > 0 && (
+            <ProjectsSection
+              language={profile.portfolioLanguage}
+              projects={projects}
+            />
+          )}
+          {Object.keys(skills).length > 0 && (
+            <SkillSection
+              language={profile.portfolioLanguage}
+              skills={skills}
+            />
+          )}
           {educations.length > 0 && (
-            <EducationsSection educations={educations} />
+            <EducationsSection
+              language={profile.portfolioLanguage}
+              educations={educations}
+            />
           )}
-          {original && <ReferralSection referrals={referrals} />}
+          {original && (
+            <ReferralSection
+              language={profile.portfolioLanguage}
+              referrals={referrals}
+            />
+          )}
         </div>
       </main>
       {original && (

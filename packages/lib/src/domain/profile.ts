@@ -28,6 +28,8 @@ const chronological = (value: { start: string; end: string | null }) =>
 
 export const profileSchema = z
   .object({
+    portfolioLanguage: z.enum(['en', 'es', 'tr']).default('en'),
+    cvLanguage: z.enum(['en', 'es', 'tr']).default('en'),
     portfolioType: z
       .enum(['engineer', 'designer', 'consultant', 'minimal'])
       .default('engineer'),

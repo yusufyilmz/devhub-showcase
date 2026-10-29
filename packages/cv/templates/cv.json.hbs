@@ -18,19 +18,19 @@
       {{#if phone}}, { "text": "  |  " }, { "text": {{{json phone}}} }{{/if}}
     ], "fontSize": 8, "margin": [0, 0, 0, 4] },
     { "text": [
-      {{#if website}}{ "text": "Portfolio  ", "link": {{{json website}}} },{{/if}}
+      {{#if website}}{ "text": {{{json labels.portfolio}}}, "link": {{{json website}}} },{{/if}}
       {{#if github}}{ "text": "GitHub  ", "link": {{{json github}}} },{{/if}}
       {{#if linkedin}}{ "text": "LinkedIn", "link": {{{json linkedin}}} },{{/if}}
       { "text": "" }
     ], "style": "link", "margin": [0, 0, 0, 12] },
     { "text": {{{json summary}}} }
     {{#if skillGroups.length}},
-    { "text": "SKILLS", "style": "section", "headlineLevel": 1 }
+    { "text": {{{json labels.cvSkills}}}, "style": "section", "headlineLevel": 1 }
     {{#each skillGroups}},
     { "text": [ { "text": {{{json name}}}, "bold": true }, { "text": ": " }, { "text": {{{json description}}} } ], "margin": [0, 0, 0, 4] }
     {{/each}}{{/if}}
     {{#if experiences.length}},
-    { "text": "EXPERIENCE", "style": "section", "headlineLevel": 1 }
+    { "text": {{{json labels.cvExperience}}}, "style": "section", "headlineLevel": 1 }
     {{#each experiences}},
     { "stack": [
       { "columns": [ { "text": {{{json company}}}, "style": "company", "link": {{{json companyUrl}}} }, { "text": {{{json period}}}, "style": "muted", "alignment": "right", "width": 130 } ], "columnGap": 12 },
@@ -40,7 +40,7 @@
     { "ul": [{{#each achievements}}{{#unless @first}},{{/unless}}{ "text": {{{json this}}}, "margin": [0, 0, 0, 4] }{{/each}}], "margin": [0, 0, 0, 5] }
     {{/if}}{{/each}}{{/if}}
     {{#if projects.length}},
-    { "text": "PUBLIC PROJECTS", "style": "section", "headlineLevel": 1 }
+    { "text": {{{json labels.cvProjects}}}, "style": "section", "headlineLevel": 1 }
     {{#each projects}},
     { "text": {{{json name}}}, "style": "company", "headlineLevel": 1, "margin": [0, 5, 0, 3] },
     { "text": {{{json description}}}, "margin": [0, 0, 0, 3] }
@@ -51,7 +51,7 @@
     {{#if sourceUrl}}, { "text": {{{json sourceUrl}}}, "link": {{{json sourceUrl}}}, "style": "link", "margin": [0, 0, 0, 3] }{{/if}}
     {{/each}}{{/if}}
     {{#if education.length}},
-    { "text": "EDUCATION", "style": "section", "headlineLevel": 1 }
+    { "text": {{{json labels.cvEducation}}}, "style": "section", "headlineLevel": 1 }
     {{#each education}},
     { "stack": [
       { "columns": [ { "text": {{{json institution}}}, "style": "company", "link": {{{json url}}} }, { "text": {{{json period}}}, "style": "muted", "alignment": "right", "width": 130 } ], "columnGap": 12 },
@@ -59,7 +59,7 @@
     ], "unbreakable": true }
     {{/each}}{{/if}}
     {{#if languages.length}},
-    { "text": "LANGUAGES", "style": "section", "headlineLevel": 1 },
+    { "text": {{{json labels.cvLanguages}}}, "style": "section", "headlineLevel": 1 },
     { "text": [{{#each languages}}{{#unless @first}}, { "text": "   /   " },{{/unless}}{ "text": {{{json language}}}, "bold": true }, { "text": ": " }, { "text": {{{json proficiency}}} }{{/each}}] }
     {{/if}}
   ]

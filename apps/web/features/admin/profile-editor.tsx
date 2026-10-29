@@ -11,6 +11,7 @@ import {
   ProjectsEditor
 } from './career-editors'
 import { CvSettingsEditor } from './cv-settings-editor'
+import { LanguageSettingsEditor } from './language-settings-editor'
 import { PortfolioTypePicker } from './portfolio-type-picker'
 import { ProfileFields } from './profile-fields'
 import { SkillsEditor } from './skills-editor'
@@ -22,6 +23,7 @@ const tabs = [
   'Education',
   'Skills',
   'Languages',
+  'Language settings',
   'Layout',
   'Appearance',
   'PDF'
@@ -368,6 +370,7 @@ function LayoutEditor({
   )
 }
 const editors = {
+  'Language settings': LanguageSettingsEditor,
   Profile: ProfileFields,
   Experience: ExperienceEditor,
   Projects: ProjectsEditor,

@@ -1,3 +1,4 @@
+import type { Language } from './languages'
 import type { CvLayout, PortfolioType } from './portfolio-types'
 
 /** Verified public career content, updated from the October 2026 CV. */
@@ -23,6 +24,8 @@ export interface ProfileProject {
   coverImage?: string | null
 }
 export interface PortfolioProfile {
+  portfolioLanguage?: Language
+  cvLanguage?: Language
   portfolioType?: PortfolioType
   templateChosen?: boolean
   cvLayout?: CvLayout

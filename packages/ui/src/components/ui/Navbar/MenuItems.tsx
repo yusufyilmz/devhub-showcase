@@ -1,23 +1,29 @@
-import { copy } from '@shared/content'
-import type React from 'react'
+import { getPortfolioCopy, type Language } from '@shared/content'
 import { Button } from '../../../components'
 
-export const MenuItems: React.FC = () => {
+export function MenuItems({ language = 'en' }: { language?: Language }) {
+  const text = getPortfolioCopy(language)
+  const items = [
+    ['#about-me', text.about],
+    ['#experiences', text.navExperience],
+    ['#projects', text.navProjects],
+    ['#skills', text.skills],
+    ['#educations', text.navEducation],
+    ['#referrals', text.navTestimonials]
+  ]
   return (
     <>
-      {Object.keys(copy.navbar)
-        .filter((x) => x !== 'summary')
-        .map((key) => (
-          <Button
-            aria-label={copy.navbar[key]?.title}
-            key={key}
-            variant="text"
-            className="text-main-white border-none whitespace-pre"
-            href={copy.navbar[key]?.id}
-          >
-            {copy.navbar[key]?.title}
-          </Button>
-        ))}
+      {items.map(([id, title]) => (
+        <Button
+          aria-label={title}
+          key={id}
+          variant="text"
+          className="text-main-white border-none whitespace-pre"
+          href={id}
+        >
+          {title}
+        </Button>
+      ))}
     </>
   )
 }

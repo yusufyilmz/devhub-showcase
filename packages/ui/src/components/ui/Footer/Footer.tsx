@@ -1,5 +1,10 @@
-import { profile as fallback, type PortfolioProfile } from '@shared/content'
+import {
+  profile as fallback,
+  getPortfolioCopy,
+  type PortfolioProfile
+} from '@shared/content'
 export function Footer({ profile = fallback }: { profile?: PortfolioProfile }) {
+  const text = getPortfolioCopy(profile.portfolioLanguage)
   return (
     <footer className="site-footer">
       <div>
@@ -7,7 +12,7 @@ export function Footer({ profile = fallback }: { profile?: PortfolioProfile }) {
           {profile.name.slice(0, 1)}
           <span>.</span>
         </a>
-        <p>Thoughtfully built. Always evolving.</p>
+        <p>{text.footer}</p>
       </div>
       <div>
         {profile.github && (
@@ -15,7 +20,7 @@ export function Footer({ profile = fallback }: { profile?: PortfolioProfile }) {
             GitHub ↗
           </a>
         )}
-        <a href="/admin/login">Create your CV</a>
+        <a href="/admin/login">{text.createCv}</a>
         <p>
           © {new Date().getFullYear()} {profile.name}
         </p>

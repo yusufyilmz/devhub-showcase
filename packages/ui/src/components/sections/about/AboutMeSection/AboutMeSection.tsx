@@ -1,20 +1,27 @@
 import {
   copy,
   profile as fallback,
+  getPortfolioCopy,
   type PortfolioProfile
 } from '@shared/content'
 import { Button, PdfIcon, Section, Typography } from '../../../../components'
 import { SocialLinks } from '../SocialLinks'
 
-const { id, title, subtitle } = copy.header.sections.aboutMe
+const { id } = copy.header.sections.aboutMe
 
 export const AboutMeSection = ({
   profile = fallback
 }: {
   profile?: PortfolioProfile
 }) => {
+  const text = getPortfolioCopy(profile.portfolioLanguage)
   return (
-    <Section sectionId={id} title={title} subtitle={subtitle}>
+    <Section
+      sectionId={id}
+      title={text.about}
+      subtitle={text.aboutSubtitle}
+      eyebrow={text.about}
+    >
       <div className="about-content">
         <div className="space-y-4 text-lg">
           {profile.about.map((paragraph) => (
@@ -24,7 +31,7 @@ export const AboutMeSection = ({
           ))}
           <div className="flex justify-center">
             <Button
-              aria-label="View my Resume"
+              aria-label={text.resume}
               variant="text"
               href={profile.cvUrl ?? '/cv.pdf'}
               target="_blank"
@@ -32,7 +39,7 @@ export const AboutMeSection = ({
               rel="noopener noreferrer"
               className="whitespace-pre-wrap shine-effect flex items-center text-white px-6 py-3 rounded-lg shadow transition"
             >
-              View my Resume
+              {text.resume}
             </Button>
           </div>
         </div>

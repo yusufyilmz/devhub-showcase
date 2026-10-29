@@ -1,4 +1,8 @@
-import { profile as fallback, type PortfolioProfile } from '@shared/content'
+import {
+  profile as fallback,
+  getPortfolioCopy,
+  type PortfolioProfile
+} from '@shared/content'
 import {
   EmailIcon,
   GitHubIcon,
@@ -13,6 +17,7 @@ export const SocialLinks = ({
 }: {
   profile?: PortfolioProfile
 }) => {
+  const text = getPortfolioCopy(profile.portfolioLanguage)
   return (
     <div className="flex justify-center gap-4 mt-4">
       {profile.linkedin && (
@@ -23,8 +28,8 @@ export const SocialLinks = ({
         </Tooltip>
       )}
 
-      <Tooltip title="Email" arrow>
-        <IconButtonWithLink label="Email" href={`mailto:${profile.email}`}>
+      <Tooltip title={text.email} arrow>
+        <IconButtonWithLink label={text.email} href={`mailto:${profile.email}`}>
           <EmailIcon fontSize="large" />
         </IconButtonWithLink>
       </Tooltip>
@@ -37,9 +42,9 @@ export const SocialLinks = ({
         </Tooltip>
       )}
       {profile.phone && (
-        <Tooltip title="Phone" arrow>
+        <Tooltip title={text.phone} arrow>
           <IconButtonWithLink
-            label="Phone"
+            label={text.phone}
             href={`tel:${profile.phone.replaceAll(' ', '')}`}
           >
             <PhoneIcon fontSize="large" />

@@ -22,6 +22,19 @@ const examples = ['designer', 'consultant', 'minimal'].map((type, index) => ({
     portfolioType: type
   }
 }))
+const localized = ['en', 'es', 'tr'].flatMap((language, languageIndex) =>
+  ['engineer', 'designer', 'consultant', 'minimal'].map((type, typeIndex) => ({
+    ...row,
+    id: `44444444-4444-4444-8444-${String(languageIndex * 4 + typeIndex).padStart(12, '0')}`,
+    username: `${type}-${language}`,
+    document: {
+      ...profile,
+      portfolioType: type,
+      portfolioLanguage: language,
+      cvLanguage: language === 'es' ? 'tr' : language
+    }
+  }))
+)
 const starters = ['desktop', 'mobile'].map((device, index) => ({
   ...row,
   id: `22222222-2222-4222-8222-22222222222${index}`,
@@ -48,7 +61,7 @@ const starters = ['desktop', 'mobile'].map((device, index) => ({
   }
 }))
 const initialStarters = structuredClone(starters)
-const rows = [row, ...examples, ...starters]
+const rows = [row, ...examples, ...localized, ...starters]
 createServer(async (request, response) => {
   const url = new URL(request.url, 'http://127.0.0.1:3101')
   response.setHeader('Content-Type', 'application/json')

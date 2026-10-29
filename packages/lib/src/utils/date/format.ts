@@ -1,20 +1,9 @@
+import { formatPortfolioPeriod, type Language } from '@shared/content'
+
 export function formatDateRange(
   startDate: Date | string,
-  endDate: Date | string | null
+  endDate: Date | string | null,
+  language: Language = 'en'
 ) {
-  const start = new Date(startDate)
-
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'short',
-    timeZone: 'UTC'
-  })
-
-  const formattedStartDate = formatter.format(start)
-
-  const formattedEndDate = endDate
-    ? formatter.format(new Date(endDate))
-    : 'Present'
-
-  return `${formattedStartDate} - ${formattedEndDate}`
+  return formatPortfolioPeriod(startDate, endDate, language)
 }

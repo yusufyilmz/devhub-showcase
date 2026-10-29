@@ -1,3 +1,4 @@
+import { getPortfolioCopy, type Language } from '@shared/content'
 import type { ProjectWithCompanyAndSkills } from '@shared/lib/types'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -5,12 +6,16 @@ import { RevealCard } from '../../../ui/RevealCard/RevealCard'
 import { SkillItem } from '../../skill/SkillItem/SkillItem'
 
 export function ProjectItem({
-  project
+  project,
+  language = 'en'
 }: {
+  language?: Language
   project: ProjectWithCompanyAndSkills
 }) {
+  const text = getPortfolioCopy(language)
   return (
     <RevealCard
+      language={language}
       id={project.id}
       title={project.title}
       brief={project.description}
@@ -47,7 +52,7 @@ export function ProjectItem({
             rel="noopener noreferrer"
             className="text-main-blue underline"
           >
-            Visit project
+            {text.visitProject}
           </Link>
         )}
         {project.sourceUrl && (
@@ -57,13 +62,13 @@ export function ProjectItem({
             rel="noopener noreferrer"
             className="text-main-blue underline"
           >
-            Source on GitHub
+            {text.sourceGithub}
           </Link>
         )}
       </div>
       {project.company && (
         <p className="reveal-credit">
-          Project and all rights reserved by{' '}
+          {text.credit}{' '}
           <Link
             href={project.company.link}
             target="_blank"

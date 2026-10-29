@@ -4,17 +4,19 @@ export function Section({
   sectionId,
   title,
   subtitle,
-  className = ''
+  className = '',
+  eyebrow
 }: PropsWithChildren<{
   sectionId: string
   title: string
   subtitle: string
   className?: string
+  eyebrow?: string
 }>) {
   return (
     <section id={sectionId} className={`portfolio-section ${className}`}>
       <div className="section-heading">
-        <p className="eyebrow">{sectionId.replaceAll('-', ' ')}</p>
+        <p className="eyebrow">{eyebrow ?? sectionId.replaceAll('-', ' ')}</p>
         <h2>{title}</h2>
         <p>{subtitle}</p>
       </div>

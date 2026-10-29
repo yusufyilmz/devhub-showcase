@@ -1,4 +1,8 @@
-import type { PortfolioProfile } from '@shared/content'
+import {
+  formatPortfolioPeriod,
+  getPortfolioCopy,
+  type PortfolioProfile
+} from '@shared/content'
 import Handlebars from 'handlebars'
 import pdfmake from 'pdfmake'
 import fonts from 'pdfmake/build/vfs_fonts.js'
@@ -24,14 +28,6 @@ pdfmake.addFonts({
 // CVs contain text and links only. Never fetch assets supplied by profile data.
 pdfmake.setUrlAccessPolicy(() => false)
 pdfmake.setLocalAccessPolicy(() => false)
-
-const month = new Intl.DateTimeFormat('en-GB', {
-  month: 'short',
-  year: 'numeric',
-  timeZone: 'UTC'
-})
-const period = (start: string, end: string | null) =>
-  `${month.format(new Date(start))} - ${end ? month.format(new Date(end)) : 'Present'}`
 
 /** Shared with Plop so JSON escaping is identical in CLI and website output. */
 export const cvHelpers = {
@@ -64,6 +60,7 @@ const cvFormats = {
 export function createCvData(profile: PortfolioProfile) {
   return {
     ...profile,
+    labels: getPortfolioCopy(profile.cvLanguage),
     ...cvFormats[profile.cvLayout ?? 'classic'],
     cvPageSize: profile.cvSettings?.pageSize ?? 'A4',
     cvFontSize: profile.cvSettings?.fontSize ?? 9,
@@ -84,7 +81,7 @@ export function createCvData(profile: PortfolioProfile) {
     })),
     experiences: profile.experiences.map((item) => ({
       ...item,
-      period: period(item.start, item.end)
+      period: formatPortfolioPeriod(item.start, item.end, profile.cvLanguage)
     })),
     projects:
       profile.cvSettings?.includeProjects === false
@@ -92,7 +89,7 @@ export function createCvData(profile: PortfolioProfile) {
         : profile.projects.filter((item) => item.public),
     education: profile.education.map((item) => ({
       ...item,
-      period: period(item.start, item.end)
+      period: formatPortfolioPeriod(item.start, item.end, profile.cvLanguage)
     }))
   }
 }
@@ -110,7 +107,7 @@ export function createCvDefinition(
     : engine.compile(template, { strict: true, noEscape: true })(data)
   const definition = JSON.parse(json) as TDocumentDefinitions
   definition.info = {
-    title: `${profile.name} | CV`,
+    title: `${profile.name} | ${data.labels.cv}`,
     author: profile.name,
     subject: profile.title,
     creator: 'DevHub CV template'

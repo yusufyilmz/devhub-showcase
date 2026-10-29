@@ -1,3 +1,4 @@
+import { getPortfolioCopy, type Language } from '@shared/content'
 import type { Education } from '@shared/lib/types'
 import { formatDateRange } from '@shared/lib/utils'
 import Link from 'next/link'
@@ -10,17 +11,25 @@ import {
 } from '../../../../components'
 import { RevealCard } from '../../../ui/RevealCard/RevealCard'
 
-export function EducationItem({ education }: { education: Education }) {
+export function EducationItem({
+  education,
+  language = 'en'
+}: {
+  education: Education
+  language?: Language
+}) {
+  const text = getPortfolioCopy(language)
   return (
     <TimelineItem>
       <TimelineHeader>
         <TimelineIcon />
         <Typography className="text-xs font-light text-main-light-slate mt-2">
-          {formatDateRange(education.startedAt, education.finishedAt)}
+          {formatDateRange(education.startedAt, education.finishedAt, language)}
         </Typography>
       </TimelineHeader>
       <TimelineBody className="ml-0 mr-4 my-8 md:mx-8">
         <RevealCard
+          language={language}
           title={education.institution}
           brief={education.description}
           className="education-card"
@@ -28,7 +37,7 @@ export function EducationItem({ education }: { education: Education }) {
             <>
               <h3>{education.institution}</h3>
               <p className="reveal-subtitle">
-                {education.degree} in {education.fieldOfStudy}
+                {education.degree} {text.inField} {education.fieldOfStudy}
               </p>
             </>
           }
@@ -41,7 +50,7 @@ export function EducationItem({ education }: { education: Education }) {
               rel="noopener noreferrer"
               className="text-main-blue underline inline-block mt-4"
             >
-              Visit institution
+              {text.visitInstitution}
             </Link>
           )}
         </RevealCard>
