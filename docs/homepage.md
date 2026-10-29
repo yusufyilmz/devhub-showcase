@@ -1,0 +1,13 @@
+# MyDevStudio homepage
+
+`/` introduces the portfolio platform. It lives outside the personal portfolio route group, with its own header, footer, metadata and `WebSite` structured data. `/admin/login` also uses neutral platform branding. Homepage theme preferences use `mydevstudio-theme` separately from personal portfolio appearance settings.
+
+Visitors can create a portfolio or sign in through the existing login page. A confirmed signed in user gets a link to their own editor, resolved from their verified auth UUID. Visiting the homepage does not create a workspace or change any profile. If an account does not yet have a workspace, the action goes through `/admin` to use the existing provisioning flow.
+
+The illustrative preview switches between portfolio and CV views and previews the three existing accent colors. Its sample content is labelled as illustrative and never saves changes. Tabs support keyboard navigation, color controls have accessible pressed states, FAQs use native details controls, and layout styles include mobile and reduced-motion rules.
+
+The real example link appears only while the original main portfolio is publicly readable. It follows that profile's current username. Private or unavailable examples fall back to the on-page preview; the homepage and login page continue to work without a readable main document. Metadata does not copy a portfolio owner's personal facts.
+
+Personal portfolios remain at `/{username}`, their editors at `/{username}/edit` and their PDFs at `/{username}/cv.pdf`. The original main portfolio retains its testimonials and chat on its username page. Existing `/p/{id}` redirects and `/cv.pdf` download compatibility remain in place. No database migration or new dependency is needed.
+
+Set `NEXT_PUBLIC_SITE_URL` to the platform's canonical domain. The default is `https://mydevstudio.vercel.app`.
