@@ -40,6 +40,14 @@
     "enabled": true,
     "rules": {
       "preset": "recommended",
+      "complexity": {
+        "noExcessiveCognitiveComplexity": {
+          "level": "warn"
+        },
+        "noForEach": {
+          "level": "off"
+        }
+      },
       "suspicious": {
         "noUnknownAtRules": {
           "level": "error",
