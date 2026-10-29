@@ -33,15 +33,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         for (const file of ['apps/web/.env.local', '.env.local']) {
           if (existsSync(file)) process.loadEnvFile(file)
         }
-        const profileId = String(answers?.profileId || 'main')
-        const snapshot =
-          profileId === 'main'
-            ? await readPublishedProfile()
-            : await readPublicProfile(profileId)
-        if (!snapshot)
-          throw new Error(
-            'The requested public profile does not exist or is private.'
-          )
+        const snapshot = await cvSnapshot(answers?.profileId)
         const { profile, revision } = snapshot
         if (revision === 0)
           console.warn(
@@ -121,4 +113,18 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       }
     ]
   })
+}
+
+async function cvSnapshot(value: unknown) {
+  const profileId = String(value || 'main')
+  const snapshot =
+    profileId === 'main'
+      ? await readPublishedProfile()
+      : await readPublicProfile(profileId)
+  if (!snapshot)
+    throw new Error(
+      'The requested public profile does not exist or is private.'
+    )
+
+  return snapshot
 }

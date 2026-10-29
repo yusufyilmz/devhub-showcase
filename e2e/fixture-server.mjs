@@ -63,14 +63,7 @@ createServer(async (request, response) => {
     response.end('{}')
     return
   }
-  let owner
-  try {
-    const token = request.headers.authorization?.split(' ')[1]
-    const userId = JSON.parse(Buffer.from(token.split('.')[1], 'base64url')).sub
-    owner = starters.find((entry) => entry.owner_id === userId)
-  } catch {
-    /* Public fixture requests have no fake session. */
-  }
+  const owner = fixtureOwner(request)
   if (request.method === 'GET' && url.pathname === '/health') {
     response.end('{}')
     return
@@ -89,28 +82,8 @@ createServer(async (request, response) => {
     )
     return
   }
-  if (url.pathname === '/rest/v1/portfolio_profiles') {
-    const found = rows.find((entry) => {
-      if (!entry.is_public && entry !== owner) return false
-      return ['id', 'username', 'owner_id', 'revision'].every(
-        (key) =>
-          !url.searchParams.has(key) ||
-          url.searchParams.get(key) === `eq.${entry[key]}`
-      )
-    })
-    if (request.method === 'GET') {
-      response.end(JSON.stringify(found ?? null))
-      return
-    }
-    if (request.method === 'PATCH' && owner && found === owner) {
-      const chunks = []
-      for await (const chunk of request) chunks.push(chunk)
-      const update = JSON.parse(Buffer.concat(chunks).toString())
-      Object.assign(owner, update)
-      response.end(JSON.stringify(owner))
-      return
-    }
-  }
+  if (url.pathname === '/rest/v1/portfolio_profiles')
+    return profileRequest(request, response, url, owner)
   if (request.method === 'GET' && url.pathname === '/rest/v1/referrals') {
     response.end('[]')
     return
@@ -119,3 +92,46 @@ createServer(async (request, response) => {
     .writeHead(405)
     .end(JSON.stringify({ message: 'Unsupported fixture request' }))
 }).listen(3101, '127.0.0.1')
+
+function fixtureOwner(request) {
+  let owner
+  try {
+    const token = request.headers.authorization?.split(' ')[1]
+    const userId = JSON.parse(Buffer.from(token.split('.')[1], 'base64url')).sub
+    owner = starters.find((entry) => entry.owner_id === userId)
+  } catch {
+    /* Public fixture requests have no fake session. */
+  }
+  return owner
+}
+
+function fixtureRow(url, owner) {
+  return rows.find((entry) => {
+    if (!entry.is_public && entry !== owner) return false
+    return ['id', 'username', 'owner_id', 'revision'].every(
+      (key) =>
+        !url.searchParams.has(key) ||
+        url.searchParams.get(key) === `eq.${entry[key]}`
+    )
+  })
+}
+
+async function profileRequest(request, response, url, owner) {
+  const found = fixtureRow(url, owner)
+  if (request.method === 'GET') {
+    response.end(JSON.stringify(found ?? null))
+    return
+  }
+  if (request.method === 'PATCH' && owner && found === owner) {
+    const chunks = []
+    for await (const chunk of request) chunks.push(chunk)
+    const update = JSON.parse(Buffer.concat(chunks).toString())
+    Object.assign(owner, update)
+    response.end(JSON.stringify(owner))
+    return
+  }
+
+  response
+    .writeHead(405)
+    .end(JSON.stringify({ message: 'Unsupported fixture request' }))
+}

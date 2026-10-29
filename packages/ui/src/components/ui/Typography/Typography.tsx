@@ -85,5 +85,3 @@ export const Typography: React.FC<TypographyProps> = ({
     </Component>
   )
 }
-
-export default Typography

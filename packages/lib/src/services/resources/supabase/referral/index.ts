@@ -111,39 +111,7 @@ export class ReferralService implements ResourceService<Referral> {
           throw updateError
         }
 
-        const { data: review, error: reviewError } = await this.dbClient
-          .from('reviews')
-          .select('state')
-          .eq('referral_id', existingReferral.id)
-          .single()
-
-        if (reviewError) {
-          throw reviewError
-        }
-
-        if (!review) {
-          const { error: createError } = await this.dbClient
-            .from('reviews')
-            .insert({
-              id: crypto.randomUUID(),
-              referral_id: existingReferral.id,
-              state: ReviewState.PENDING,
-              updated_at: new Date().toISOString()
-            })
-
-          if (createError) {
-            throw createError
-          }
-        } else if (review.state === ReviewState.REJECTED) {
-          const { error: updateReviewError } = await this.dbClient
-            .from('reviews')
-            .update({ state: ReviewState.PENDING })
-            .eq('referral_id', existingReferral.id)
-
-          if (updateReviewError) {
-            throw updateReviewError
-          }
-        }
+        await this.resetReview(existingReferral.id)
 
         logger.debug({ existingReferral }, 'Referral answer updated')
       } else {
@@ -151,6 +119,41 @@ export class ReferralService implements ResourceService<Referral> {
       }
     } catch (error) {
       logger.error({ error }, 'Error saving referral answer')
+    }
+  }
+  private async resetReview(referralId: string) {
+    const { data: review, error: reviewError } = await this.dbClient
+      .from('reviews')
+      .select('state')
+      .eq('referral_id', referralId)
+      .single()
+
+    if (reviewError) {
+      throw reviewError
+    }
+
+    if (!review) {
+      const { error: createError } = await this.dbClient
+        .from('reviews')
+        .insert({
+          id: crypto.randomUUID(),
+          referral_id: referralId,
+          state: ReviewState.PENDING,
+          updated_at: new Date().toISOString()
+        })
+
+      if (createError) {
+        throw createError
+      }
+    } else if (review.state === ReviewState.REJECTED) {
+      const { error: updateReviewError } = await this.dbClient
+        .from('reviews')
+        .update({ state: ReviewState.PENDING })
+        .eq('referral_id', referralId)
+
+      if (updateReviewError) {
+        throw updateReviewError
+      }
     }
   }
 }

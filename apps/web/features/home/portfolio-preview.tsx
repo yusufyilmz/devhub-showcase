@@ -2,6 +2,11 @@
 import { useId, useRef, useState } from 'react'
 
 const views = ['Portfolio', 'CV'] as const
+function tabIndexForKey(key: string, index: number) {
+  if (key === 'Home') return 0
+  if (key === 'End') return 1
+  return ['ArrowLeft', 'ArrowRight'].includes(key) ? 1 - index : null
+}
 const accents = ['cyan', 'violet', 'emerald'] as const
 export function PortfolioPreview() {
   const [view, setView] = useState<(typeof views)[number]>('Portfolio')
@@ -30,14 +35,7 @@ export function PortfolioPreview() {
               tabIndex={view === item ? 0 : -1}
               onClick={() => setView(item)}
               onKeyDown={(event) => {
-                const next =
-                  event.key === 'Home'
-                    ? 0
-                    : event.key === 'End'
-                      ? 1
-                      : ['ArrowLeft', 'ArrowRight'].includes(event.key)
-                        ? 1 - index
-                        : null
+                const next = tabIndexForKey(event.key, index)
                 if (next === null) return
                 event.preventDefault()
                 const nextView = views[next]
