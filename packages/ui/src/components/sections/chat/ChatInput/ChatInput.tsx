@@ -57,7 +57,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         onChange={(e) => setInput(e.target.value)}
         onKeyUp={handleKeyUp}
         onKeyDown={handleKeyDown}
-        className="flex-grow p-2 border rounded-lg"
+        className="grow p-2 border rounded-lg"
         placeholder={copy.chat[chatFinished ? 'end' : type].placeholder}
       />
       <IconButton

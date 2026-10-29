@@ -27,7 +27,10 @@ export const ChatMessageBox: React.FC<ChatMessageBoxProps> = ({
   }, [contentKey])
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-2" ref={chatListRef}>
+    <div
+      className="flex flex-col flex-1 overflow-y-auto p-4 gap-2"
+      ref={chatListRef}
+    >
       {messages.map((msg) => (
         <div
           key={`${msg.timestamp}:${msg.role}:${msg.content}`}

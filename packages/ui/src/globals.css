@@ -1,8 +1,26 @@
+@import "tailwindcss" source(none);
+@import "@shared/tailwind-config/theme.css";
 @import "@shared/components/styles.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@source "./";
+@source "../../components/src";
+@source "../../../apps/web/app";
+@source "../../../apps/web/features";
+
+/* Preserve the v3 default border and placeholder colors. */
+@layer base {
+  *,
+  ::before,
+  ::after,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-gray-400);
+  }
+}
 .site-header {
   position: sticky;
   top: 0;

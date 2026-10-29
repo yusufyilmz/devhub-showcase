@@ -21,7 +21,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`p-2 rounded-full focus:outline-none ${color} ${className}`}
+      className={`p-2 rounded-full focus:outline-hidden ${color} ${className}`}
       aria-label={ariaLabel}
       type="button"
       {...props}

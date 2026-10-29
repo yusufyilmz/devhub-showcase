@@ -29,10 +29,10 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "autoprefixer": "catalog:",
     "postcss": "catalog:",
     "tailwindcss": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "@tailwindcss/postcss": "catalog:"
   },
   "dependencies": {
     "@emotion/react": "catalog:",

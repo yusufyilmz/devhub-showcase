@@ -23,7 +23,7 @@ export const AboutMeSection = ({
       eyebrow={text.about}
     >
       <div className="about-content">
-        <div className="space-y-4 text-lg">
+        <div className="flex flex-col gap-4 text-lg">
           {profile.about.map((paragraph) => (
             <Typography key={paragraph} className="text-main-slate">
               {paragraph}
@@ -37,7 +37,7 @@ export const AboutMeSection = ({
               target="_blank"
               endIcon={<PdfIcon />}
               rel="noopener noreferrer"
-              className="whitespace-pre-wrap shine-effect flex items-center text-white px-6 py-3 rounded-lg shadow transition"
+              className="whitespace-pre-wrap shine-effect flex items-center text-white px-6 py-3 rounded-lg shadow-sm transition"
             >
               {text.resume}
             </Button>

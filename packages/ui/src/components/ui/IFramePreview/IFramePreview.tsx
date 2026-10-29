@@ -45,7 +45,7 @@ export const IFramePreview: React.FC<IFramePreviewProps> = ({ url }) => {
   return (
     <div className="border rounded-lg shadow-lg overflow-hidden cursor-pointer relative">
       {loading && !error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-50">
+        <div className="absolute inset-0 flex items-center justify-center bg-white/50">
           <Spinner />
         </div>
       )}

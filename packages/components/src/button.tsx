@@ -34,7 +34,7 @@ const Button: React.FC<ButtonProps> = ({
   disabled,
   ...props
 }) => {
-  const baseStyles = `px-4 py-2 rounded-md font-semibold focus:outline-none transition ease-in-out duration-300`
+  const baseStyles = `px-4 py-2 rounded-md font-semibold focus:outline-hidden transition ease-in-out duration-300`
 
   const variants = {
     contained: `bg-main-primary hover:bg-backgroundColor-buttonHover text-textColor-white`,
