@@ -1,10 +1,22 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
-import { afterEach, expect, it } from 'vitest'
+import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { HomePage } from '../apps/web/features/home/home-page'
 import { PortfolioPreview } from '../apps/web/features/home/portfolio-preview'
 
-afterEach(cleanup)
+beforeEach(() =>
+  vi.stubGlobal(
+    'ResizeObserver',
+    class {
+      observe() {}
+      disconnect() {}
+    }
+  )
+)
+afterEach(() => {
+  cleanup()
+  vi.unstubAllGlobals()
+})
 const guest = {
   href: '/admin/login',
   label: 'Create your portfolio',

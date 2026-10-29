@@ -7,9 +7,21 @@ import {
 } from '../apps/web/lib/platform'
 
 it('brands platform routes separately from personal portfolios and editors', () => {
-  for (const path of ['/', '/admin/login'])
+  for (const path of [
+    '/',
+    '/admin/login',
+    '/p/examples',
+    '/p/examples/maya-chen'
+  ])
     expect(isPlatformPath(path)).toBe(true)
-  for (const path of ['/alice', '/alice/edit', '/admin', '/reviews'])
+  for (const path of [
+    '/alice',
+    '/alice/edit',
+    '/admin',
+    '/reviews',
+    '/p/examplesish',
+    '/examples'
+  ])
     expect(isPlatformPath(path)).toBe(false)
 })
 it('uses platform metadata and WebSite structured data without personal CV facts', () => {
