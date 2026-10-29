@@ -10,6 +10,8 @@ it('brands platform routes separately from personal portfolios and editors', () 
   for (const path of [
     '/',
     '/admin/login',
+    '/admin/portfolios',
+    '/admin/portfolios/record',
     '/p/examples',
     '/p/examples/maya-chen'
   ])

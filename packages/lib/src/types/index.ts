@@ -4,4 +4,4 @@ export * from './chat/roles'
 export * from './resources'
 export * from './supabase'
 
-export type { Database } from './supabase/database.types'
+export type { Database, Json } from './supabase/database.types'

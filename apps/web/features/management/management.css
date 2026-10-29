@@ -1,0 +1,61 @@
+.managed-dashboard {
+  display: grid;
+  gap: 2rem;
+}
+.managed-dashboard .studio-heading {
+  margin-bottom: 0;
+}
+.managed-fields {
+  display: grid;
+  gap: 1rem;
+  border: 0;
+  padding: 0;
+  margin-top: 1.5rem;
+  min-width: 0;
+}
+.managed-fields input,
+.managed-fields select {
+  max-width: 100%;
+}
+.managed-records {
+  padding: 0;
+  list-style: none;
+}
+.managed-records li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-block: 1.5rem;
+  border-bottom: 1px solid rgb(var(--border-rgb));
+}
+.managed-records h3 {
+  margin-bottom: 0.5rem;
+}
+.managed-records p,
+.managed-notice p {
+  color: rgb(var(--muted-rgb));
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.managed-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.managed-actions a,
+.managed-notice a {
+  color: rgb(var(--accent-rgb));
+}
+.managed-transfer {
+  padding-top: 0;
+}
+.managed-notice {
+  padding-bottom: 0;
+}
+.managed-dashboard nav {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}

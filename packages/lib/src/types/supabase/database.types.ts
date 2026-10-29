@@ -10,8 +10,8 @@ export interface Database {
   public: {
     Tables: {
       portfolio_profiles: {
-        Row: { id: string; username: string; owner_id: string | null; document: Json; revision: number; updated_at: string; is_public: boolean }
-        Insert: { id?: string; username?: string; owner_id?: string | null; document: Json; revision?: number; updated_at?: string; is_public?: boolean }
+        Row: { managed_by: string | null; id: string; username: string; owner_id: string | null; document: Json; revision: number; updated_at: string; is_public: boolean }
+        Insert: { managed_by?: string | null; id?: string; username?: string; owner_id?: string | null; document: Json; revision?: number; updated_at?: string; is_public?: boolean }
         Update: { username?: string; document?: Json; revision?: number; updated_at?: string; is_public?: boolean }
         Relationships: []
       }
@@ -436,7 +436,8 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_portfolio_admin: { Args: Record<string, never>; Returns: boolean }
+      transfer_managed_portfolio: { Args: { profile_id: string; target_email: string; expected_revision: number }; Returns: Json }
     }
     Enums: {
       ReviewState: "PENDING" | "APPROVED" | "REJECTED"

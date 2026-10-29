@@ -51,7 +51,19 @@ function clean(profile: PortfolioProfile): PortfolioProfile {
     )
   }
 }
-export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
+export function ProfileEditor({
+  initial,
+  saveUrl = '/api/admin/profile',
+  downloadHref = '/api/admin/cv',
+  managed = false,
+  onSaved
+}: {
+  initial: ProfileSnapshot
+  saveUrl?: string
+  downloadHref?: string
+  managed?: boolean
+  onSaved?: (snapshot: ProfileSnapshot) => void
+}) {
   const [saved, setSaved] = useState(initial)
   const [username, setUsername] = useState(initial.username ?? '')
   const [draft, setDraft] = useState(initial.profile)
@@ -79,7 +91,7 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
     setError('')
     setMessage('')
     try {
-      const response = await fetch('/api/admin/profile', {
+      const response = await fetch(saveUrl, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -91,13 +103,14 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
       })
       const result = await response.json()
       if (!response.ok) throw new Error(result.error)
-      if (result.username && result.username !== saved.username)
+      if (!managed && result.username && result.username !== saved.username)
         window.history.replaceState(null, '', editCvPath(result.username))
       setUsername(result.username ?? username)
       setSaved(result)
       setDraft(result.profile)
       setIsPublic(result.isPublic ?? isPublic)
       setMessage('Saved. Your CV now uses these details.')
+      onSaved?.(result)
     } catch (reason) {
       setError(
         reason instanceof Error
@@ -187,6 +200,8 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
           isPublic={isPublic}
           setIsPublic={setIsPublic}
           busy={busy}
+          downloadHref={downloadHref}
+          managed={managed}
         />
         <nav className="editor-tabs" aria-label="Editor sections">
           {tabs.map((item) => (
@@ -298,7 +313,9 @@ function SharingSettings({
   setUsername,
   isPublic,
   setIsPublic,
-  busy
+  busy,
+  downloadHref,
+  managed
 }: {
   saved: ProfileSnapshot
   username: string
@@ -306,6 +323,8 @@ function SharingSettings({
   isPublic: boolean
   setIsPublic: (value: boolean) => void
   busy: boolean
+  downloadHref: string
+  managed: boolean
 }) {
   return (
     <div className="editor-card studio-sharing">
@@ -321,9 +340,11 @@ function SharingSettings({
         disabled={busy}
       />
       <p>
-        Your public CV: /{username || 'username'} · Your editor: /
-        {username || 'username'}/edit. Changing your username changes your
-        links.
+        Public portfolio: /{username || 'username'}.{' '}
+        {managed
+          ? 'This temporary portfolio is managed from your admin dashboard.'
+          : `Your editor: /${username || 'username'}/edit.`}{' '}
+        Changing your username changes the public link.
       </p>
       <label>
         <input
@@ -339,7 +360,7 @@ function SharingSettings({
           ? 'Anyone with the link can read your published contact and career details.'
           : 'Your CV is private. Only you can read and download it.'}
       </p>
-      <a href="/api/admin/cv" className="studio-secondary">
+      <a href={downloadHref} className="studio-secondary">
         Download my saved CV
       </a>
       {saved.isPublic && saved.id && (

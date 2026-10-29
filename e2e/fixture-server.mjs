@@ -105,6 +105,15 @@ const reordered = ['engineer', 'designer', 'consultant', 'minimal'].map(
     }
   })
 )
+const managers = [0, 1].map((n) => ({
+  owner_id: `99999999-9999-4999-8999-99999999999${n}`,
+  document: { email: `manager${n}@example.test` },
+  manager: true
+}))
+const recipients = [0, 1].map((n) => ({
+  owner_id: `88888888-8888-4888-8888-88888888888${n}`,
+  document: { email: `recipient${n}@example.test` }
+}))
 const initialStarters = structuredClone(starters)
 const rows = [
   row,
@@ -148,6 +157,12 @@ createServer(async (request, response) => {
     )
     return
   }
+  if (url.pathname === '/rest/v1/rpc/is_portfolio_admin') {
+    response.end(JSON.stringify(Boolean(owner?.manager)))
+    return
+  }
+  if (url.pathname === '/rest/v1/rpc/transfer_managed_portfolio')
+    return transferRequest(request, response, owner)
   if (url.pathname === '/rest/v1/portfolio_profiles')
     return profileRequest(request, response, url, owner)
   if (request.method === 'GET' && url.pathname === '/rest/v1/referrals') {
@@ -164,40 +179,124 @@ function fixtureOwner(request) {
   try {
     const token = request.headers.authorization?.split(' ')[1]
     const userId = JSON.parse(Buffer.from(token.split('.')[1], 'base64url')).sub
-    owner = starters.find((entry) => entry.owner_id === userId)
+    owner = [...starters, ...managers, ...recipients].find(
+      (entry) => entry.owner_id === userId
+    )
   } catch {
     /* Public fixture requests have no fake session. */
   }
   return owner
 }
 
+function visibleRow(entry, owner) {
+  return (
+    entry.is_public ||
+    (owner &&
+      (entry.owner_id === owner.owner_id ||
+        (owner.manager && entry.managed_by === owner.owner_id)))
+  )
+}
+function matchesRow(entry, url) {
+  return ['id', 'username', 'owner_id', 'managed_by', 'revision'].every(
+    (key) =>
+      !url.searchParams.has(key) ||
+      url.searchParams.get(key) === `eq.${entry[key]}` ||
+      (url.searchParams.get(key) === 'is.null' && entry[key] === null)
+  )
+}
 function fixtureRow(url, owner) {
-  return rows.find((entry) => {
-    if (!entry.is_public && entry !== owner) return false
-    return ['id', 'username', 'owner_id', 'revision'].every(
-      (key) =>
-        !url.searchParams.has(key) ||
-        url.searchParams.get(key) === `eq.${entry[key]}`
-    )
-  })
+  return rows.find(
+    (entry) => visibleRow(entry, owner) && matchesRow(entry, url)
+  )
 }
 
 async function profileRequest(request, response, url, owner) {
   const found = fixtureRow(url, owner)
   if (request.method === 'GET') {
-    response.end(JSON.stringify(found ?? null))
+    const result =
+      url.searchParams.has('managed_by') && !url.searchParams.has('id')
+        ? rows.filter(
+            (entry) => visibleRow(entry, owner) && matchesRow(entry, url)
+          )
+        : (found ?? null)
+    response.end(JSON.stringify(result))
     return
   }
-  if (request.method === 'PATCH' && owner && found === owner) {
+  if (request.method === 'POST' && owner?.manager)
+    return createManagedRequest(request, response, owner)
+
+  if (
+    request.method === 'PATCH' &&
+    owner &&
+    found &&
+    (found.owner_id === owner.owner_id ||
+      (owner.manager && found.managed_by === owner.owner_id))
+  ) {
     const chunks = []
     for await (const chunk of request) chunks.push(chunk)
     const update = JSON.parse(Buffer.concat(chunks).toString())
-    Object.assign(owner, update)
-    response.end(JSON.stringify(owner))
+    Object.assign(found, update)
+    response.end(JSON.stringify(found))
     return
   }
 
   response
     .writeHead(405)
     .end(JSON.stringify({ message: 'Unsupported fixture request' }))
+}
+
+async function transferRequest(request, response, owner) {
+  const chunks = []
+  for await (const chunk of request) chunks.push(chunk)
+  const input = JSON.parse(Buffer.concat(chunks).toString())
+  const found = rows.find(
+    (item) =>
+      item.id === input.profile_id && item.managed_by === owner?.owner_id
+  )
+  const target = recipients.find(
+    (item) => item.document.email === input.target_email
+  )
+  if (
+    !owner?.manager ||
+    !found ||
+    !target ||
+    found.revision !== input.expected_revision
+  ) {
+    response.writeHead(400).end(
+      JSON.stringify({
+        code: '22023',
+        message: 'Ask the recipient to sign in with Google first'
+      })
+    )
+    return
+  }
+  found.owner_id = target.owner_id
+  found.managed_by = null
+  found.revision++
+  response.end(JSON.stringify({ id: found.id, username: found.username }))
+  return
+}
+
+async function createManagedRequest(request, response, owner) {
+  const chunks = []
+  for await (const chunk of request) chunks.push(chunk)
+  const input = JSON.parse(Buffer.concat(chunks).toString())
+  if (input.managed_by !== owner.owner_id || input.owner_id !== null) {
+    response.writeHead(403).end('{}')
+    return
+  }
+  if (rows.some((entry) => entry.username === input.username)) {
+    response.writeHead(409).end(JSON.stringify({ code: '23505' }))
+    return
+  }
+  const created = {
+    ...input,
+    id: crypto.randomUUID(),
+    revision: 1,
+    updated_at: new Date().toISOString(),
+    is_public: false
+  }
+  rows.push(created)
+  response.writeHead(201).end(JSON.stringify(created))
+  return
 }
