@@ -1,6 +1,8 @@
 import { Card } from '@shared/components/cards'
 import { ThemeToggle } from '@shared/ui/theme'
 import type { HomeAction } from '../../lib/home-links'
+import { ExampleCarousel } from '../examples/example-carousel'
+import { HomeOptions } from './home-options'
 import { PortfolioPreview } from './portfolio-preview'
 import './home.css'
 
@@ -35,6 +37,18 @@ function Brand() {
 }
 const faq = [
   [
+    'Can I switch layouts later?',
+    'Yes. Choose Engineer, Designer, Consultant or Minimal, then change your layout and theme in the editor whenever you like. Your saved information stays with you.'
+  ],
+  [
+    'Are the example portfolios real people?',
+    'The eight carousel examples use fictional identities and sample work. Open any example to explore its layout and download a clearly labeled sample CV.'
+  ],
+  [
+    'Does changing language translate my writing?',
+    'Language settings change portfolio and CV labels and dates independently. English, Spanish and Turkish are available. Write your own biography and project descriptions in the language you want to share.'
+  ],
+  [
     'Is my portfolio public as soon as I sign up?',
     'No. Your portfolio starts private. Publish it when you’re ready, and turn public sharing off again whenever you need to.'
   ],
@@ -67,6 +81,7 @@ export function HomePage({
         <div className="home-container home-header-inner">
           <Brand />
           <nav className="home-nav" aria-label="Main navigation">
+            <a href="#examples">Examples</a>
             <a href="#features">Why MyDevStudio</a>
             <a href="#how-it-works">How it works</a>
             <a href="#questions">Questions</a>
@@ -138,6 +153,7 @@ export function HomePage({
           <i aria-hidden="true">✳</i>
           <span>Your next chapter</span>
         </section>
+        <ExampleCarousel />
         <section
           className="home-container home-features"
           id="features"
@@ -191,8 +207,8 @@ export function HomePage({
               </div>
               <h3>A little more you.</h3>
               <p>
-                Choose an accent and a light or dark theme. Give your portfolio
-                its own character without starting from scratch.
+                Choose Studio, Paper, Graphite or Bloom. Pair any layout with
+                your favorite theme, accent and light or dark mode.
               </p>
             </Card>
             <Card className="home-feature-card home-feature-wide">
@@ -206,14 +222,15 @@ export function HomePage({
                 <h3>One update. Both ready.</h3>
                 <p>
                   Your CV comes from your saved portfolio details. Choose its
-                  format and sections, then download a PDF when the opportunity
-                  comes.
+                  Classic, Editorial or Compact format and sections, then
+                  download a PDF when the opportunity comes.
                 </p>
               </div>
               <span className="home-file-tag">Portfolio + PDF</span>
             </Card>
           </div>
         </section>
+        <HomeOptions />
         <section
           className="home-container home-process"
           id="how-it-works"
@@ -237,8 +254,8 @@ export function HomePage({
               <span>02</span>
               <h3>Put your story together</h3>
               <p>
-                Add your work, experience and skills. Find a look that feels
-                right.
+                Choose a layout, theme and languages. Add your work, experience
+                and skills for a look that feels right.
               </p>
             </li>
             <li>

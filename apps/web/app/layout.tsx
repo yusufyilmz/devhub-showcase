@@ -9,6 +9,7 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { headers } from 'next/headers'
 import { getActiveProfile } from '../lib/active-profile'
+import { getPagePresentation } from '../lib/page-presentation'
 import { isPlatformPage, platformMetadata } from '../lib/platform'
 import { getPublicThemeStyle } from '../lib/portfolio-theme'
 import { getProfileStructuredData } from '../lib/profile-structured-data'
@@ -68,24 +69,16 @@ export default async function RootLayout({
 }) {
   const platform = await isPlatformPage()
   const snapshot = platform ? null : await getActiveProfile()
-  const profile = snapshot?.profile
   const path = (await headers()).get('x-profile-path') ?? '/'
-  const editing = path.startsWith('/admin') || path.endsWith('/edit')
-  const documentLanguage = editing ? 'en' : (profile?.portfolioLanguage ?? 'en')
-  const id = snapshot?.id
-  const storageKey =
-    platform || !snapshot
-      ? 'mydevstudio-theme'
-      : id && id !== 'main'
-        ? `devhub-theme:${id}`
-        : 'devhub-theme'
-  const appearance = profile?.appearance ?? {
-    accent: 'cyan',
-    defaultTheme: 'dark'
-  }
-  const portfolioTheme =
-    platform || editing ? undefined : (appearance.theme ?? 'studio')
-  const structuredData = getProfileStructuredData(profile)
+  const {
+    profile,
+    documentLanguage,
+    storageKey,
+    appearance,
+    portfolioTheme,
+    example
+  } = getPagePresentation(path, platform, snapshot)
+  const structuredData = getProfileStructuredData(example ? undefined : profile)
   const themeScript = `(function(){try{var s=localStorage.getItem(${JSON.stringify(storageKey)});var d=${JSON.stringify(appearance.defaultTheme)};var t=s==='light'||s==='dark'?s:d==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):d;document.documentElement.dataset.theme=t}catch(e){}})()`
   return (
     <html

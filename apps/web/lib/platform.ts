@@ -42,7 +42,10 @@ export const platformStructuredData = {
 }
 /** The proxy overwrites this header from the actual pathname. */
 export const isPlatformPath = (path: string) =>
-  path === '/' || path === '/admin/login'
+  path === '/' ||
+  path === '/admin/login' ||
+  path === '/p/examples' ||
+  path.startsWith('/p/examples/')
 export const isPlatformPage = cache(async () => {
   const path = (await headers()).get('x-profile-path') ?? '/'
   return isPlatformPath(path)

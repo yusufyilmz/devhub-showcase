@@ -11,3 +11,13 @@ The real example link follows the original main portfolio's current username whe
 Personal portfolios remain at `/{username}`, their editors at `/{username}/edit` and their PDFs at `/{username}/cv.pdf`. The original main portfolio retains its testimonials and chat on its username page. Existing `/p/{id}` redirects and `/cv.pdf` download compatibility remain in place. No database migration or new dependency is needed.
 
 Set `NEXT_PUBLIC_SITE_URL` to the platform's canonical domain. The default is `https://mydevstudio.vercel.app`.
+
+## Layout gallery
+
+The homepage explains all four layouts (Engineer, Designer, Consultant and Minimal), four themes (Studio, Paper, Graphite and Bloom), three CV formats and independent English, Spanish and Turkish language settings. Language settings change labels and dates; they do not translate authored content.
+
+The `/#examples` carousel contains two fictional profiles per layout. Filter by layout, use the previous and next controls, or swipe horizontally. There is no autoplay; arrow movement respects reduced motion. Every card opens a complete demo rendered with the same portfolio components as published profiles. The gallery and original real portfolio link serve separate purposes.
+
+Demo pages live at `/p/examples/{slug}`, within the already reserved `p` namespace, so existing usernames are unaffected. PDFs live at `/p/examples/{slug}/cv.pdf`. These static examples do not read or write profile records and work without database configuration. All pages identify the work as fictional, use platform WebSite structured data and declare noindex/nofollow. Sample PDFs include a fictional example label and the same indexing restriction in response headers. Demo theme preferences use a separate key per example.
+
+To edit the gallery, update `apps/web/features/examples/data.ts`. Keep identities fictional, external contact addresses under example.com, and project assets in `apps/web/public/examples`. No migration, new credential or dependency is required.
