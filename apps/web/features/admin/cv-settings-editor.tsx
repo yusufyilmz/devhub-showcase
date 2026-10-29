@@ -1,6 +1,10 @@
 'use client'
 import { SelectField } from '@shared/components/fields'
-import type { PortfolioProfile } from '@shared/content'
+import {
+  type CvLayout,
+  cvLayouts,
+  type PortfolioProfile
+} from '@shared/content'
 
 const defaults: NonNullable<PortfolioProfile['cvSettings']> = {
   pageSize: 'A4',
@@ -23,6 +27,19 @@ export function CvSettingsEditor({
   return (
     <section className="editor-card editor-fields">
       <h2>Your PDF preferences</h2>
+      <SelectField
+        label="CV layout"
+        value={profile.cvLayout ?? 'classic'}
+        onChange={(value) =>
+          onChange({ ...profile, cvLayout: value as CvLayout })
+        }
+      >
+        {cvLayouts.map((layout) => (
+          <option key={layout.id} value={layout.id}>
+            {layout.name}
+          </option>
+        ))}
+      </SelectField>
       <SelectField
         label="Page size"
         value={settings.pageSize}

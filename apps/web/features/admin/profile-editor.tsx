@@ -1,5 +1,5 @@
 'use client'
-import type { PortfolioProfile } from '@shared/content'
+import { type PortfolioProfile, portfolioTypes } from '@shared/content'
 import type { ProfileSnapshot } from '@shared/lib/profile-errors'
 import { cvPath, editCvPath } from '@shared/lib/username'
 import { useEffect, useState } from 'react'
@@ -11,6 +11,7 @@ import {
   ProjectsEditor
 } from './career-editors'
 import { CvSettingsEditor } from './cv-settings-editor'
+import { PortfolioTypePicker } from './portfolio-type-picker'
 import { ProfileFields } from './profile-fields'
 import { SkillsEditor } from './skills-editor'
 
@@ -21,6 +22,7 @@ const tabs = [
   'Education',
   'Skills',
   'Languages',
+  'Layout',
   'Appearance',
   'PDF'
 ] as const
@@ -102,6 +104,43 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
       setBusy(false)
     }
   }
+  if (draft.templateChosen === false)
+    return (
+      <main id="admin-content" className="studio type-onboarding">
+        <p className="eyebrow">START WITH YOUR STYLE</p>
+        <h1>
+          A home for <span>your work.</span>
+        </h1>
+        <p>
+          Pick a starting layout, then add your details. Your portfolio stays
+          private until you publish it.
+        </p>
+        <PortfolioTypePicker
+          value={draft.portfolioType ?? 'engineer'}
+          onChange={(portfolioType) => setDraft({ ...draft, portfolioType })}
+        />
+        <button
+          className="studio-primary"
+          type="button"
+          onClick={() =>
+            setDraft({
+              ...draft,
+              templateChosen: true,
+              cvLayout:
+                portfolioTypes.find(
+                  (type) => type.id === (draft.portfolioType ?? 'engineer')
+                )?.cvLayout ?? 'classic'
+            })
+          }
+        >
+          Use this layout
+        </button>
+        <p>
+          Save changes in the editor to keep your selection. Your information is
+          never replaced by sample content.
+        </p>
+      </main>
+    )
   return (
     <main id="admin-content" className="studio">
       <form
@@ -249,6 +288,17 @@ export function ProfileEditor({ initial }: { initial: ProfileSnapshot }) {
         )}
         <fieldset disabled={busy} className="editor-body">
           <legend className="sr-only">{tab} editor</legend>
+          {tab === 'Layout' && (
+            <section className="editor-card">
+              <PortfolioTypePicker
+                value={draft.portfolioType ?? 'engineer'}
+                onChange={(portfolioType) =>
+                  setDraft({ ...draft, portfolioType })
+                }
+              />
+              <p>Your CV layout is chosen separately in the PDF section.</p>
+            </section>
+          )}
           {tab === 'Profile' && (
             <ProfileFields profile={draft} onChange={setDraft} />
           )}

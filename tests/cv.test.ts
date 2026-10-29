@@ -112,3 +112,34 @@ it('keeps PDF preferences independent for each profile', () => {
   expect(JSON.stringify(definition.content)).not.toContain('LANGUAGES')
   expect(createCvDefinition(profile, template).pageSize).toBe('A4')
 })
+
+it.each(['classic', 'editorial', 'compact'] as const)(
+  'renders the %s CV layout as a PDF while preserving privacy settings',
+  async (cvLayout) => {
+    const edited = {
+      ...profile,
+      cvLayout,
+      cvSettings: {
+        pageSize: 'A4' as const,
+        fontSize: 10 as const,
+        showEmail: false,
+        showPhone: false,
+        includeProjects: true,
+        includeLanguages: true
+      }
+    }
+    const definition = createCvDefinition(edited, template)
+    expect(JSON.stringify(definition.content)).not.toContain(profile.email)
+    expect(JSON.stringify(definition.content)).not.toContain(profile.phone)
+    expect(definition.pageMargins).toEqual(
+      cvLayout === 'editorial'
+        ? [50, 48, 50, 48]
+        : cvLayout === 'compact'
+          ? [36, 28, 36, 36]
+          : [44, 36, 44, 44]
+    )
+    expect((await renderCv(edited, template)).subarray(0, 5).toString()).toBe(
+      '%PDF-'
+    )
+  }
+)

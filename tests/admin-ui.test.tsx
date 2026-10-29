@@ -123,3 +123,61 @@ it('saves the chosen username together with profile and sharing changes', async 
   expect(history).toHaveBeenCalledWith(null, '', '/new-handle/edit')
   history.mockRestore()
 })
+
+it('starts new workspaces with a type picker and saves the choice without replacing content or publishing', async () => {
+  const fetcher = vi.fn().mockImplementation(async (_url, options) => {
+    const input = JSON.parse(options.body)
+    return {
+      ok: true,
+      json: async () => ({ ...initial, ...input, revision: 2 })
+    }
+  })
+  vi.stubGlobal('fetch', fetcher)
+  render(
+    <ProfileEditor
+      initial={{
+        ...initial,
+        profile: { ...initial.profile, templateChosen: false }
+      }}
+    />
+  )
+  expect(screen.queryByLabelText('Full name')).toBeNull()
+  fireEvent.click(screen.getByRole('radio', { name: /Designer/ }))
+  fireEvent.click(screen.getByRole('button', { name: 'Use this layout' }))
+  expect(fetcher).not.toHaveBeenCalled()
+  expect((screen.getByLabelText('Full name') as HTMLInputElement).value).toBe(
+    initial.profile.name
+  )
+  fireEvent.click(screen.getByRole('button', { name: 'Save changes' }))
+  await waitFor(() => expect(fetcher).toHaveBeenCalled())
+  const input = JSON.parse(fetcher.mock.calls[0]?.[1].body)
+  expect(input.profile.portfolioType).toBe('designer')
+  expect(input.profile.cvLayout).toBe('editorial')
+  expect(input.profile.templateChosen).toBe(true)
+  expect(input.profile.projects).toEqual(initial.profile.projects)
+  expect(input.isPublic).toBe(false)
+  expect(input.revision).toBe(1)
+})
+it('switches an existing layout without changing the independent CV preference', async () => {
+  const fetcher = vi.fn().mockResolvedValue({
+    ok: true,
+    json: async () => ({ ...initial, revision: 2 })
+  })
+  vi.stubGlobal('fetch', fetcher)
+  render(
+    <ProfileEditor
+      initial={{
+        ...initial,
+        profile: { ...initial.profile, cvLayout: 'editorial' }
+      }}
+    />
+  )
+  fireEvent.click(screen.getByRole('button', { name: /^Layout$/ }))
+  fireEvent.click(screen.getByRole('radio', { name: /Minimal/ }))
+  fireEvent.click(screen.getByRole('button', { name: 'Save changes' }))
+  await waitFor(() => expect(fetcher).toHaveBeenCalled())
+  const input = JSON.parse(fetcher.mock.calls[0]?.[1].body)
+  expect(input.profile.portfolioType).toBe('minimal')
+  expect(input.profile.cvLayout).toBe('editorial')
+  expect(input.profile.experiences).toEqual(initial.profile.experiences)
+})

@@ -41,6 +41,26 @@ export const cvHelpers = {
 export function createCvData(profile: PortfolioProfile) {
   return {
     ...profile,
+    cvNameSize:
+      profile.cvLayout === 'editorial'
+        ? 34
+        : profile.cvLayout === 'compact'
+          ? 22
+          : 25,
+    cvTitleSize: profile.cvLayout === 'editorial' ? 14 : 12,
+    cvPageMargins:
+      profile.cvLayout === 'editorial'
+        ? [50, 48, 50, 48]
+        : profile.cvLayout === 'compact'
+          ? [36, 28, 36, 36]
+          : [44, 36, 44, 44],
+    cvLineHeight: profile.cvLayout === 'compact' ? 1.08 : 1.2,
+    cvSectionMargin:
+      profile.cvLayout === 'compact'
+        ? [0, 10, 0, 5]
+        : profile.cvLayout === 'editorial'
+          ? [0, 22, 0, 10]
+          : [0, 15, 0, 7],
     cvPageSize: profile.cvSettings?.pageSize ?? 'A4',
     cvFontSize: profile.cvSettings?.fontSize ?? 9,
     cvAccent:

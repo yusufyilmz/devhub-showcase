@@ -96,7 +96,7 @@ test('unknown usernames return 404 instead of another person’s portfolio', asy
 test('without local storage the example links to the published portfolio', async ({
   page
 }) => {
-  await page.goto('http://127.0.0.1:3102/')
+  await page.goto('http://localhost:3102/')
   await expect(
     page.getByRole('link', { name: 'See a real portfolio' })
   ).toHaveAttribute('href', 'https://mydevstudio.vercel.app/yusufyilmz')

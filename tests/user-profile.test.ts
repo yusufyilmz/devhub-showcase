@@ -18,6 +18,7 @@ describe('personal workspace', () => {
     expect(profile.skills).toEqual({})
     expect(JSON.stringify(profile)).not.toContain('Yusuf')
     expect(profile.website).toBe('')
+    expect(profile.templateChosen).toBe(false)
   })
   it('resolves an existing profile using the authenticated UUID', async () => {
     const eq = vi.fn().mockReturnValue({

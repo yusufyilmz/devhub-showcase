@@ -128,6 +128,15 @@ export function ProjectsEditor({ profile, onChange }: Props) {
             onChange={(url) => change({ ...item, url: url || null })}
           />
           <Field
+            label="Project cover image URL"
+            type="url"
+            value={item.coverImage ?? ''}
+            onChange={(coverImage) =>
+              change({ ...item, coverImage: coverImage || null })
+            }
+            hint="Optional public image URL for the Designer layout. Use an image you have permission to share."
+          />
+          <Field
             label="Source code URL"
             type="url"
             value={item.sourceUrl ?? ''}

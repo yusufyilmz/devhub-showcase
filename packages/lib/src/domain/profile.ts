@@ -28,6 +28,11 @@ const chronological = (value: { start: string; end: string | null }) =>
 
 export const profileSchema = z
   .object({
+    portfolioType: z
+      .enum(['engineer', 'designer', 'consultant', 'minimal'])
+      .default('engineer'),
+    templateChosen: z.boolean().default(true),
+    cvLayout: z.enum(['classic', 'editorial', 'compact']).default('classic'),
     cvSettings: z
       .object({
         pageSize: z.enum(['A4', 'LETTER']),
@@ -90,7 +95,8 @@ export const profileSchema = z
           sourceUrl: optionalUrl,
           description: text(5000),
           skills: z.array(text(100)).max(60),
-          public: z.boolean()
+          public: z.boolean(),
+          coverImage: optionalUrl.optional()
         })
       )
       .max(100),

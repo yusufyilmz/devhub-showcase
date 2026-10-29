@@ -151,3 +151,5 @@ Shared auth and component boundaries, usage examples, and guidance for adding an
 The public [MyDevStudio homepage](docs/homepage.md) introduces the platform at `/`. Personal portfolios live at `/{username}`.
 
 Browser tests: see [Playwright setup and coverage](docs/e2e.md).
+
+Portfolio layouts and CV formats: see [portfolio types](docs/portfolio-types.md).
