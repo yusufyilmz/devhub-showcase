@@ -161,3 +161,5 @@ Portfolio appearance: see [theme settings and previews](docs/themes.md).
 Styling setup: see [Tailwind CSS 4 migration](docs/tailwind.md).
 
 Portfolio section ordering: see [drag, keyboard and save behavior](docs/section-order.md).
+
+Administrator portfolio creation, JSON imports, temporary profiles and ownership transfers: see [managed portfolios](docs/managed-portfolios.md).
