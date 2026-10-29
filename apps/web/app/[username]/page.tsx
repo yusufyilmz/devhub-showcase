@@ -1,17 +1,23 @@
+import { copy } from '@shared/content'
 import { getPortfolioResources } from '@shared/lib/portfolio'
 import {
   AboutMeSection,
+  ChatSection,
   EducationsSection,
   ExperienceSection,
   Footer,
   Header,
   ProjectsSection,
+  ReferralSection,
+  ScrollButton,
   SkillSection,
   SummarySection
 } from '@shared/ui/components'
 import type { Metadata } from 'next'
 import { OwnerEditLink } from '../../features/admin/owner-edit-link'
+import { loadPageResources } from '../../lib/portfolio-resources'
 import { getUsernameProfile } from '../../lib/public-profile'
+import { handleSendMessageAction } from '../actions'
 
 type Props = { params: Promise<{ username: string }> }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -36,7 +42,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 export default async function PublicCvPage({ params }: Props) {
   const { username } = await params
-  const { profile: saved } = await getUsernameProfile(username)
+  const { profile: saved, id } = await getUsernameProfile(username)
+  const original = id === 'main'
+  const referrals = original ? (await loadPageResources()).referrals : []
   const profile = {
     ...saved,
     cvUrl:
@@ -62,8 +70,19 @@ export default async function PublicCvPage({ params }: Props) {
           {educations.length > 0 && (
             <EducationsSection educations={educations} />
           )}
+          {original && <ReferralSection referrals={referrals} />}
         </div>
       </main>
+      {original && (
+        <>
+          <ScrollButton
+            sectionIds={Object.values(copy.navbar).map(
+              (item) => item.id.split('#')[1] ?? ''
+            )}
+          />
+          <ChatSection handleSendMessage={handleSendMessageAction} />
+        </>
+      )}
       <Footer profile={profile} />
     </>
   )

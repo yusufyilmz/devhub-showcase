@@ -147,3 +147,5 @@ The generator loads `apps/web/.env.local`, then root `.env.local`, while preserv
 Development uses Webpack, as does the production build, to load the `.hbs` file as source text. The template and bundled fonts ship with the server, so deployments need no filesystem write access and no build-time database connection.
 
 Shared auth and component boundaries, usage examples, and guidance for adding another app are documented in [docs/shared-packages.md](docs/shared-packages.md).
+
+The public [MyDevStudio homepage](docs/homepage.md) introduces the platform at `/`. Personal portfolios live at `/{username}`.

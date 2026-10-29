@@ -15,6 +15,7 @@ export const getActiveProfile = cache(async () => {
     } catch {
       /* The editor page handles authentication/setup failures. */
     }
+    return null
   }
   const username = path.match(/^\/([a-z0-9-]+)\/?$/)?.[1]
   if (username && !['admin', 'reviews'].includes(username))

@@ -6,6 +6,11 @@ import { ThemeProvider } from '@shared/ui/theme'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { getActiveProfile } from '../lib/active-profile'
+import {
+  isPlatformPage,
+  platformMetadata,
+  platformStructuredData
+} from '../lib/platform'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -20,7 +25,10 @@ const geistMono = localFont({
 })
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { profile } = await getActiveProfile()
+  if (await isPlatformPage()) return platformMetadata
+  const snapshot = await getActiveProfile()
+  if (!snapshot) return platformMetadata
+  const { profile } = snapshot
   return {
     ...copy.metadata,
     keywords: [
@@ -57,31 +65,41 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { profile, id } = await getActiveProfile()
-  const storageKey = id && id !== 'main' ? `devhub-theme:${id}` : 'devhub-theme'
-  const appearance = profile.appearance ?? {
+  const platform = await isPlatformPage()
+  const snapshot = platform ? null : await getActiveProfile()
+  const profile = snapshot?.profile
+  const id = snapshot?.id
+  const storageKey =
+    platform || !snapshot
+      ? 'mydevstudio-theme'
+      : id && id !== 'main'
+        ? `devhub-theme:${id}`
+        : 'devhub-theme'
+  const appearance = profile?.appearance ?? {
     accent: 'cyan',
     defaultTheme: 'dark'
   }
-  const structuredData = {
-    ...copy.structuredData,
-    name: profile.name,
-    url: profile.website,
-    jobTitle: profile.title,
-    description: profile.summary,
-    sameAs: [profile.github, profile.linkedin],
-    knowsAbout: Object.values(profile.skills).flat(),
-    alumniOf: profile.education.map((item) => ({
-      '@type': 'CollegeOrUniversity',
-      name: item.institution
-    })),
-    worksFor: profile.experiences.find((item) => !item.end)
-      ? {
-          '@type': 'Organization',
-          name: profile.experiences.find((item) => !item.end)?.company
-        }
-      : undefined
-  }
+  const structuredData = profile
+    ? {
+        ...copy.structuredData,
+        name: profile.name,
+        url: profile.website,
+        jobTitle: profile.title,
+        description: profile.summary,
+        sameAs: [profile.github, profile.linkedin],
+        knowsAbout: Object.values(profile.skills).flat(),
+        alumniOf: profile.education.map((item) => ({
+          '@type': 'CollegeOrUniversity',
+          name: item.institution
+        })),
+        worksFor: profile.experiences.find((item) => !item.end)
+          ? {
+              '@type': 'Organization',
+              name: profile.experiences.find((item) => !item.end)?.company
+            }
+          : undefined
+      }
+    : platformStructuredData
   const themeScript = `(function(){try{var s=localStorage.getItem(${JSON.stringify(storageKey)});var d=${JSON.stringify(appearance.defaultTheme)};var t=s==='light'||s==='dark'?s:d==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):d;document.documentElement.dataset.theme=t}catch(e){}})()`
   return (
     <html
