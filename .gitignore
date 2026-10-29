@@ -71,3 +71,7 @@ secrets
 
 # Locally generated CV exports
 /output/
+
+# Playwright
+/playwright-report/
+/test-results/
