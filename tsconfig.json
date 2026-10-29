@@ -5,7 +5,9 @@
     "tests/**/*.tsx",
     "vitest.config.mts",
     "turbo/**/*.ts",
-    "generators/**/*.ts"
+    "generators/**/*.ts",
+    "e2e/**/*.ts",
+    "playwright.config.ts"
   ],
   "compilerOptions": {
     "types": ["node", "vitest/globals"]

@@ -38,6 +38,19 @@ jobs:
       - run: pnpm test
       - run: pnpm typecheck
       - run: pnpm build
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Browser tests
+        run: pnpm test:e2e
+      - name: Upload browser test report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
 
   deploy:
     name: Deploy production
