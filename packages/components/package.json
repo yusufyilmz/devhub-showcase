@@ -1,0 +1,40 @@
+{
+  "name": "@shared/components",
+  "version": "0.0.0",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./cards": "./src/cards/index.ts",
+    "./fields": "./src/fields.tsx",
+    "./collection-editor": "./src/collection-editor.tsx",
+    "./login": "./src/login-panel.tsx",
+    "./studio-shell": "./src/studio-shell.tsx",
+    "./styles.css": "./src/styles.css"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "types:check": "pnpm typecheck",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome lint .",
+    "lint:check": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\""
+  },
+  "dependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*",
+    "typescript": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=24.15.0 <25"
+  }
+}

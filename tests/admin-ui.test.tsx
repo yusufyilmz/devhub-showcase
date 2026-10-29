@@ -12,6 +12,7 @@ import { profile } from '../packages/content/src/profile'
 import { profileSchema } from '../packages/lib/src/domain/profile'
 
 const initial = {
+  username: 'yusufyilmz',
   profile: profileSchema.parse(profile),
   revision: 1,
   updatedAt: '2026-10-28'
@@ -97,4 +98,28 @@ it('saves personal PDF settings and publishes only with explicit sharing enabled
   expect(payload.isPublic).toBe(true)
   expect(payload.profile.cvSettings.pageSize).toBe('LETTER')
   expect(payload.profile.cvSettings.fontSize).toBe(11)
+})
+
+it('saves the chosen username together with profile and sharing changes', async () => {
+  const fetcher = vi.fn().mockResolvedValue({
+    ok: true,
+    json: async () => ({ ...initial, username: 'new-handle', revision: 2 })
+  })
+  vi.stubGlobal('fetch', fetcher)
+  const history = vi
+    .spyOn(window.history, 'replaceState')
+    .mockImplementation(() => {})
+  render(<ProfileEditor initial={initial} />)
+  fireEvent.change(screen.getByLabelText('Username'), {
+    target: { value: 'new-handle' }
+  })
+  fireEvent.click(screen.getByRole('button', { name: 'Save changes' }))
+  await waitFor(() =>
+    expect(screen.getByRole('status').textContent).toContain('Saved')
+  )
+  expect(JSON.parse(fetcher.mock.calls[0]?.[1].body).username).toBe(
+    'new-handle'
+  )
+  expect(history).toHaveBeenCalledWith(null, '', '/new-handle/edit')
+  history.mockRestore()
 })

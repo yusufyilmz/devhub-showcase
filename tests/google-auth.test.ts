@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ProfileAccessError } from '../packages/lib/src/repositories/profile-repository'
 
 const mocks = vi.hoisted(() => ({
+  getUser: vi.fn(),
   oauth: vi.fn(),
   exchange: vi.fn(),
   signOut: vi.fn(),
@@ -9,6 +10,7 @@ const mocks = vi.hoisted(() => ({
 }))
 const client = {
   auth: {
+    getUser: mocks.getUser,
     signInWithOAuth: mocks.oauth,
     exchangeCodeForSession: mocks.exchange,
     signOut: mocks.signOut
@@ -27,6 +29,10 @@ import { GET } from '../apps/web/app/auth/callback/route'
 
 beforeEach(() => {
   vi.resetAllMocks()
+  mocks.getUser.mockResolvedValue({
+    data: { user: { id: 'verified-user', email_confirmed_at: 'today' } },
+    error: null
+  })
   mocks.oauth.mockResolvedValue({
     data: {
       url: 'https://example.supabase.co/auth/v1/authorize?provider=google'

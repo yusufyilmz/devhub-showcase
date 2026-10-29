@@ -5,6 +5,7 @@ module.exports = {
   ...sharedConfig,
   content: [
     join(__dirname, 'app/**/*.{js,html,ts,jsx,tsx}'),
-    join(__dirname, '../../packages/ui/src/**/*.{js,ts,jsx,tsx}') // UI package components
+    join(__dirname, '../../packages/ui/src/**/*.{js,ts,jsx,tsx}'),
+    join(__dirname, '../../packages/components/src/**/*.{js,ts,jsx,tsx}') // UI package components
   ]
 }

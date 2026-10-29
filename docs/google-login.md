@@ -30,6 +30,6 @@ No new app dependency, service-role key or Google secret in Vercel is needed. Th
 
 ## Verify after deployment
 
-Sign in with two Google accounts and confirm each reaches its own `/admin` workspace, can save its own CV and remains signed in after a reload. Each must be unable to edit the other account’s profile or moderate site reviews. Verify cancellation, email/password fallback and sign out. Automated tests cover the route flow and authorization rejection, but cannot replace a real provider round trip after credentials are configured.
+Sign in with two Google accounts and confirm each reaches its own `/{username}/edit` workspace through `/admin`, can save its own CV and remains signed in after a reload. Each must be unable to edit the other account’s profile or moderate site reviews. Verify cancellation, email/password fallback and sign out. Automated tests cover the route flow and authorization rejection, but cannot replace a real provider round trip after credentials are configured.
 
 References: [Supabase Google OAuth](https://supabase.com/docs/guides/auth/social-sign-in/auth-google) and [redirect URL configuration](https://supabase.com/docs/guides/auth/redirect-urls).

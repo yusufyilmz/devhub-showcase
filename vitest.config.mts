@@ -14,6 +14,28 @@ export default defineConfig({
   ],
   resolve: {
     alias: [
+      ...['auth', 'components']
+        .flatMap((pkg) =>
+          Object.entries(
+            JSON.parse(
+              readFileSync(
+                new URL(`./packages/${pkg}/package.json`, import.meta.url),
+                'utf8'
+              )
+            ).exports as Record<string, string>
+          )
+            .filter(([key]) => !key.endsWith('.css'))
+            .map(([key, path]) => ({
+              find:
+                key === '.'
+                  ? `@shared/${pkg}`
+                  : `@shared/${pkg}/${key.slice(2)}`,
+              replacement: fileURLToPath(
+                new URL(`./packages/${pkg}/${path}`, import.meta.url)
+              )
+            }))
+        )
+        .sort((a, b) => b.find.length - a.find.length),
       ...Object.entries(
         JSON.parse(
           readFileSync(

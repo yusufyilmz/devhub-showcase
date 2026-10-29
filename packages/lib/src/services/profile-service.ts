@@ -16,7 +16,8 @@ export class ProfileService {
     const saved = await this.repository.save(
       data.profile,
       data.revision,
-      data.isPublic
+      data.isPublic,
+      data.username
     )
     if (!saved) throw new ProfileConflictError()
     return saved

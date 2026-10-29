@@ -5,11 +5,13 @@ import type { Json } from '../types/supabase/database.types'
 import {
   type ProfileRepository,
   ProfileSetupError,
-  type ProfileSnapshot
+  type ProfileSnapshot,
+  ProfileUsernameError
 } from './profile-repository'
 
 type ProfileRow = {
   id: string
+  username: string
   is_public: boolean
   document: Json
   revision: number
@@ -17,6 +19,7 @@ type ProfileRow = {
 }
 const snapshot = (row: ProfileRow): ProfileSnapshot => ({
   id: row.id,
+  username: row.username,
   isPublic: row.is_public,
   profile: validateProfile(row.document),
   revision: row.revision,
@@ -30,7 +33,7 @@ export class SupabaseProfileRepository implements ProfileRepository {
   async read() {
     const { data, error } = await this.client
       .from('portfolio_profiles')
-      .select('id, is_public, document, revision, updated_at')
+      .select('id, username, is_public, document, revision, updated_at')
       .eq('id', this.id)
       .maybeSingle()
     if (error) throw new ProfileSetupError()
@@ -46,19 +49,26 @@ export class SupabaseProfileRepository implements ProfileRepository {
     if (error) throw new ProfileSetupError()
     return Boolean(data)
   }
-  async save(profile: PortfolioProfile, revision: number, isPublic?: boolean) {
+  async save(
+    profile: PortfolioProfile,
+    revision: number,
+    isPublic?: boolean,
+    username?: string
+  ) {
     const { data, error } = await this.client
       .from('portfolio_profiles')
       .update({
         document: profile as unknown as Json,
+        ...(username === undefined ? {} : { username }),
         ...(isPublic === undefined ? {} : { is_public: isPublic }),
         revision: revision + 1,
         updated_at: new Date().toISOString()
       })
       .eq('id', this.id)
       .eq('revision', revision)
-      .select('id, is_public, document, revision, updated_at')
+      .select('id, username, is_public, document, revision, updated_at')
       .maybeSingle()
+    if (error?.code === '23505') throw new ProfileUsernameError()
     if (error) throw new Error('Could not save your profile. Please try again.')
     return data ? snapshot(data) : null
   }
