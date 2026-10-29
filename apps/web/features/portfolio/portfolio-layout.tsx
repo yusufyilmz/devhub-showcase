@@ -1,12 +1,12 @@
 import {
   formatPortfolioPeriod,
   getPortfolioCopy,
-  getPortfolioSectionOrder,
   type PortfolioProfile,
-  type PortfolioSectionId
+  type SectionRendererId
 } from '@shared/content'
 import { ThemeToggle } from '@shared/ui/theme'
-import { Fragment, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
+import { RegisteredSections } from './registered-sections'
 
 export function PortfolioLayout({
   profile,
@@ -147,8 +147,8 @@ function FolioSections({ profile }: { profile: PortfolioProfile }) {
   const text = getPortfolioCopy(profile.portfolioLanguage)
   const designer = profile.portfolioType === 'designer'
   const projects = profile.projects.filter((project) => project.public)
-  const sections: Record<PortfolioSectionId, ReactNode> = {
-    about: (
+  const renderers: Partial<Record<SectionRendererId, ReactNode>> = {
+    prose: (
       <section id="about" className="folio-section">
         <p className="folio-eyebrow">{text.personBehind}</p>
         <h2>{text.about}</h2>
@@ -159,7 +159,7 @@ function FolioSections({ profile }: { profile: PortfolioProfile }) {
         )}
       </section>
     ),
-    experience: profile.experiences.length > 0 && (
+    'experience-list': profile.experiences.length > 0 && (
       <section className="folio-section" aria-labelledby="folio-experience">
         <h2 id="folio-experience">{text.experience}</h2>
         {profile.experiences.map((experience) => (
@@ -188,10 +188,9 @@ function FolioSections({ profile }: { profile: PortfolioProfile }) {
         ))}
       </section>
     ),
-    projects: projects.length > 0 && (
-      <Work profile={profile} visual={designer} />
-    ),
-    skills: Object.keys(profile.skills).length > 0 && (
+    'project-gallery': projects.length > 0 && <Work profile={profile} visual />,
+    'project-list': projects.length > 0 && <Work profile={profile} />,
+    'skill-list': Object.keys(profile.skills).length > 0 && (
       <section className="folio-section">
         <h2>{designer ? text.creativeToolkit : text.expertise}</h2>
         <dl className="folio-skills">
@@ -204,7 +203,7 @@ function FolioSections({ profile }: { profile: PortfolioProfile }) {
         </dl>
       </section>
     ),
-    education: profile.education.length > 0 && (
+    'education-list': profile.education.length > 0 && (
       <section className="folio-section">
         <h2>{text.education}</h2>
         {profile.education.map((education) => (
@@ -224,7 +223,7 @@ function FolioSections({ profile }: { profile: PortfolioProfile }) {
         ))}
       </section>
     ),
-    languages: profile.languages.length > 0 && (
+    'language-list': profile.languages.length > 0 && (
       <section className="folio-section">
         <h2>{text.spokenLanguages}</h2>
         <p>
@@ -235,7 +234,5 @@ function FolioSections({ profile }: { profile: PortfolioProfile }) {
       </section>
     )
   }
-  return getPortfolioSectionOrder(profile).map((id) => (
-    <Fragment key={id}>{sections[id]}</Fragment>
-  ))
+  return <RegisteredSections profile={profile} renderers={renderers} />
 }

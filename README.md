@@ -163,3 +163,5 @@ Styling setup: see [Tailwind CSS 4 migration](docs/tailwind.md).
 Portfolio section ordering: see [drag, keyboard and save behavior](docs/section-order.md).
 
 Administrator portfolio creation, JSON imports, temporary profiles and ownership transfers: see [managed portfolios](docs/managed-portfolios.md).
+
+Section registry, current renderer defaults and the PageForge integration path: see [section system](docs/section-system.md).
