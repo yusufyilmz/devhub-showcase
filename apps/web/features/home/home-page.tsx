@@ -105,9 +105,13 @@ export function HomePage({
               <a className="home-button home-button-primary" href={action.href}>
                 {action.label} <span aria-hidden="true">↗</span>
               </a>
-              <a className="home-example-link" href={exampleHref ?? '#preview'}>
-                {exampleHref ? 'See a real portfolio' : 'Explore the preview'}{' '}
-                <span aria-hidden="true">→</span>
+              <a
+                className="home-example-link"
+                href={
+                  exampleHref ?? 'https://mydevstudio.vercel.app/yusufyilmz'
+                }
+              >
+                See a real portfolio <span aria-hidden="true">→</span>
               </a>
             </div>
             <div className="home-hero-notes">

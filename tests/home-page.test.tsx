@@ -27,7 +27,7 @@ it('introduces the platform and gives visitors working creation and public examp
   expect(screen.getByText('Illustrative preview')).toBeTruthy()
   expect(screen.getByRole('main').id).toBe('home-content')
 })
-it('routes an authenticated owner to their own editor', () => {
+it('routes an authenticated owner to their own editor and uses the published example without a local profile', () => {
   render(
     <HomePage
       action={{
@@ -44,13 +44,10 @@ it('routes an authenticated owner to their own editor', () => {
   for (const link of screen.getAllByRole('link', { name: /Open your studio/ }))
     expect(link.getAttribute('href')).toBe('/alice/edit')
   expect(
-    screen.queryByRole('link', { name: /See a real portfolio/ })
-  ).toBeNull()
-  expect(
     screen
-      .getByRole('link', { name: /Explore the preview/ })
+      .getByRole('link', { name: /See a real portfolio/ })
       .getAttribute('href')
-  ).toBe('#preview')
+  ).toBe('https://mydevstudio.vercel.app/yusufyilmz')
 })
 it('switches the example between portfolio and PDF with labelled tabs and keyboard navigation', () => {
   render(<PortfolioPreview />)

@@ -6,7 +6,7 @@ Visitors can create a portfolio or sign in through the existing login page. A co
 
 The illustrative preview switches between portfolio and CV views and previews the three existing accent colors. Its sample content is labelled as illustrative and never saves changes. Tabs support keyboard navigation, color controls have accessible pressed states, FAQs use native details controls, and layout styles include mobile and reduced-motion rules.
 
-The real example link appears only while the original main portfolio is publicly readable. It follows that profile's current username. Private or unavailable examples fall back to the on-page preview; the homepage and login page continue to work without a readable main document. Metadata does not copy a portfolio owner's personal facts.
+The real example link follows the original main portfolio's current username when it is publicly readable. If the local profile is private or unavailable, the link opens the published example at `https://mydevstudio.vercel.app/yusufyilmz` instead of jumping to the illustrative preview. This fallback links to a public page and does not read or expose a private document; the homepage and login page continue to work without a readable main document. Metadata does not copy a portfolio owner's personal facts.
 
 Personal portfolios remain at `/{username}`, their editors at `/{username}/edit` and their PDFs at `/{username}/cv.pdf`. The original main portfolio retains its testimonials and chat on its username page. Existing `/p/{id}` redirects and `/cv.pdf` download compatibility remain in place. No database migration or new dependency is needed.
 
