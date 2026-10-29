@@ -1,0 +1,74 @@
+/* Shared Tailwind v4 tokens preserve the existing semantic utilities. */
+@theme inline {
+  --color-main-dark: rgb(var(--bg-rgb));
+  --color-main-primary: rgb(var(--bg-rgb));
+  --color-main-secondary: rgb(var(--muted-rgb));
+  --color-main-dark-light: rgb(var(--surface-rgb));
+  --color-main-light: rgb(var(--surface-soft-rgb));
+  --color-main-dark-hover: rgb(var(--surface-soft-rgb));
+  --color-main-lightest: rgb(var(--border-rgb));
+  --color-main-shadow: rgb(var(--shadow-rgb));
+  --color-main-dark-slate: rgb(var(--muted-rgb));
+  --color-main-slate: rgb(var(--muted-rgb));
+  --color-main-light-slate: rgb(var(--muted-rgb));
+  --color-main-lightest-slate: rgb(var(--text-rgb));
+  --color-main-white: rgb(var(--text-rgb));
+  --color-main-green: rgb(var(--accent-rgb));
+  --color-main-greenTint: rgb(var(--surface-soft-rgb));
+  --color-main-pink: rgb(var(--accent-rgb));
+  --color-main-blue: rgb(var(--accent-rgb));
+  --color-textColor-primary: rgb(var(--text-rgb));
+  --color-textColor-secondary: rgb(var(--muted-rgb));
+  --color-textColor-slate: rgb(var(--muted-rgb));
+  --color-textColor-light: rgb(var(--text-rgb));
+  --color-textColor-lightSlate: rgb(var(--muted-rgb));
+  --color-textColor-white: rgb(var(--text-rgb));
+  --color-textColor-green: rgb(var(--accent-rgb));
+  --color-textColor-pink: rgb(var(--accent-rgb));
+  --color-textColor-link: rgb(var(--accent-rgb));
+  --color-textColor-error: rgb(var(--danger-rgb));
+  --color-button-primary: rgb(var(--accent-rgb));
+  --color-button-light: rgb(var(--text-rgb));
+  --color-backgroundColor-primary: rgb(var(--bg-rgb));
+  --color-backgroundColor-darkNavy: rgb(var(--bg-rgb));
+  --color-backgroundColor-lightestNavy: rgb(var(--surface-rgb));
+  --color-backgroundColor-gray: rgb(var(--border-rgb));
+  --color-backgroundColor-lightSlate: rgb(var(--muted-rgb));
+  --color-backgroundColor-slate: rgb(var(--muted-rgb));
+  --color-backgroundColor-card: rgb(var(--surface-rgb));
+  --color-backgroundColor-chat: rgb(var(--surface-rgb));
+  --color-backgroundColor-button: rgb(var(--accent-rgb));
+  --color-backgroundColor-buttonHover: rgb(var(--accent-rgb));
+  --color-backgroundColor-success: rgb(var(--accent-rgb));
+  --color-backgroundColor-danger: rgb(var(--danger-rgb));
+  --color-backgroundColor-messageBox: rgb(var(--surface-soft-rgb));
+  --color-borderColor-gray: rgb(var(--border-rgb));
+  --color-borderColor-button: rgb(var(--accent-rgb));
+  --color-borderColor-success: rgb(var(--accent-rgb));
+  --color-borderColor-danger: rgb(var(--danger-rgb));
+}
+
+@theme {
+  --spacing-page-mx: 15%;
+  --spacing-page-px: 15%;
+  --spacing-page-px-sm: 5%;
+  --spacing-section: calc(100vh - 4rem);
+  --animate-mount: mount 0.3s ease-out forwards;
+  --animate-unmount: unmount 0.3s ease-in forwards;
+  @keyframes mount {
+    0% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes unmount {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0.9);
+    }
+  }
+}

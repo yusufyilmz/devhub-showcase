@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export const Sidebar = () => {
   return (
-    <nav className="flex flex-col space-y-6">
+    <nav className="flex flex-col gap-6">
       <Link href="/" className="text-white text-xl hover:text-blue-400">
         Home
       </Link>

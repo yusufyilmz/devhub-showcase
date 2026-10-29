@@ -67,7 +67,7 @@ packages/
   cache/                   Redis cache adapter
   log/                     Logging
   typescript-config/       Strict shared TypeScript configuration
-  tailwind-config/         Existing Tailwind design tokens
+  tailwind-config/         Shared Tailwind 4 CSS tokens and PostCSS configuration
 supabase/                  Existing backend setup
 tests/                    Content, adapter, UI and configuration tests
 ```
@@ -157,3 +157,5 @@ Portfolio layouts and CV formats: see [portfolio types](docs/portfolio-types.md)
 Portfolio and CV languages: see [language settings](docs/languages.md).
 
 Portfolio appearance: see [theme settings and previews](docs/themes.md).
+
+Styling setup: see [Tailwind CSS 4 migration](docs/tailwind.md).

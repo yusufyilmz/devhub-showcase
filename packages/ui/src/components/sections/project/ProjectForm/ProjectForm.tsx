@@ -49,7 +49,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 p-6 bg-white rounded-lg shadow-lg"
+      className="flex flex-col gap-4 p-6 bg-white rounded-lg shadow-lg"
     >
       <TextField
         label="Project Title"
