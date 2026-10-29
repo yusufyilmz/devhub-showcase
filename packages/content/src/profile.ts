@@ -1,4 +1,5 @@
 import type { Language } from './languages'
+import type { PortfolioSectionId } from './portfolio-sections'
 import type { CvLayout, PortfolioType } from './portfolio-types'
 import type { PortfolioTheme } from './themes'
 
@@ -25,6 +26,7 @@ export interface ProfileProject {
   coverImage?: string | null
 }
 export interface PortfolioProfile {
+  sectionOrder?: PortfolioSectionId[]
   portfolioLanguage?: Language
   cvLanguage?: Language
   portfolioType?: PortfolioType

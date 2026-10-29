@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { getPortfolioCopy } from '../packages/content/src/languages'
 
 for (const type of ['designer', 'consultant', 'minimal']) {
   test(`${type} portfolio renders its content and downloads a CV`, async ({
@@ -126,4 +127,193 @@ test('a new owner chooses a layout, saves it and returns to the editor without l
   await page.getByRole('button', { name: 'Appearance', exact: true }).click()
   await expect(page.getByRole('radio', { name: /Paper/ })).toBeChecked()
   await expect(page.getByLabel('Default color mode')).toHaveValue('system')
+  await page.getByRole('button', { name: 'Section order', exact: true }).click()
+  const sections = page.getByRole('list', { name: 'Portfolio section order' })
+  await expect
+    .poll(() =>
+      sections
+        .locator('li')
+        .evaluateAll((rows) =>
+          rows.map((row) => (row as HTMLElement).dataset.sortableId)
+        )
+    )
+    .toEqual([
+      'projects',
+      'about',
+      'experience',
+      'skills',
+      'education',
+      'languages'
+    ])
+  const about = page.getByRole('button', { name: 'Reorder About', exact: true })
+  await about.focus()
+  await about.press('Home')
+  await expect(sections.locator('li').first()).toHaveAttribute(
+    'data-sortable-id',
+    'about'
+  )
+  await page.getByRole('button', { name: 'Save changes' }).click()
+  await expect(page.locator('.editor-success')).toContainText('Saved')
+  await page.reload()
+  await page.getByRole('button', { name: 'Section order', exact: true }).click()
+  await expect(sections.locator('li').first()).toHaveAttribute(
+    'data-sortable-id',
+    'about'
+  )
+  // A pointer cancel must not commit the provisional order.
+  await sections.scrollIntoViewIfNeeded()
+  const handle = page.getByRole('button', {
+    name: 'Reorder About',
+    exact: true
+  })
+  const target = sections.locator('[data-sortable-id="experience"]')
+  const start = await handle.boundingBox()
+  const end = await target.boundingBox()
+  if (!start || !end) throw new Error('Missing drag targets')
+  if (index) {
+    const cdp = await context.newCDPSession(page)
+    await cdp.send('Input.dispatchTouchEvent', {
+      type: 'touchStart',
+      touchPoints: [{ x: start.x + 20, y: start.y + 20 }]
+    })
+    await cdp.send('Input.dispatchTouchEvent', {
+      type: 'touchMove',
+      touchPoints: [{ x: start.x + 20, y: end.y + end.height / 2 }]
+    })
+    await cdp.send('Input.dispatchTouchEvent', {
+      type: 'touchCancel',
+      touchPoints: []
+    })
+    await expect(sections.locator('li').first()).toHaveAttribute(
+      'data-sortable-id',
+      'about'
+    )
+    await cdp.send('Input.dispatchTouchEvent', {
+      type: 'touchStart',
+      touchPoints: [{ x: start.x + 20, y: start.y + 20 }]
+    })
+    await cdp.send('Input.dispatchTouchEvent', {
+      type: 'touchMove',
+      touchPoints: [{ x: start.x + 20, y: end.y + end.height / 2 }]
+    })
+    await cdp.send('Input.dispatchTouchEvent', {
+      type: 'touchEnd',
+      touchPoints: []
+    })
+    await cdp.detach()
+  } else {
+    await page.mouse.move(start.x + 20, start.y + 20)
+    await page.mouse.down()
+    await page.mouse.move(start.x + 20, end.y + end.height / 2, { steps: 6 })
+    await page.keyboard.press('Escape')
+    await page.mouse.up()
+    await expect(sections.locator('li').first()).toHaveAttribute(
+      'data-sortable-id',
+      'about'
+    )
+    await page.mouse.move(start.x + 20, start.y + 20)
+    await page.mouse.down()
+    await page.mouse.move(start.x + 20, end.y + end.height / 2, { steps: 6 })
+    await page.mouse.up()
+  }
+  await expect
+    .poll(() =>
+      sections
+        .locator('li')
+        .evaluateAll((rows) =>
+          rows.map((row) => (row as HTMLElement).dataset.sortableId)
+        )
+    )
+    .toEqual([
+      'projects',
+      'experience',
+      'about',
+      'skills',
+      'education',
+      'languages'
+    ])
+  await page.getByRole('button', { name: 'Save changes' }).click()
+  await expect(page.locator('.editor-success')).toContainText('Saved')
+  await page.reload()
+  await page.getByRole('button', { name: 'Section order', exact: true }).click()
+  await expect
+    .poll(() =>
+      sections
+        .locator('li')
+        .evaluateAll((rows) =>
+          rows.map((row) => (row as HTMLElement).dataset.sortableId)
+        )
+    )
+    .toEqual([
+      'projects',
+      'experience',
+      'about',
+      'skills',
+      'education',
+      'languages'
+    ])
+  await page.screenshot({
+    path: testInfo.outputPath('section-order.png'),
+    fullPage: true
+  })
+  await page.getByRole('button', { name: 'Reset to layout default' }).click()
+  await expect
+    .poll(() =>
+      sections
+        .locator('li')
+        .evaluateAll((rows) =>
+          rows.map((row) => (row as HTMLElement).dataset.sortableId)
+        )
+    )
+    .toEqual([
+      'projects',
+      'about',
+      'experience',
+      'skills',
+      'education',
+      'languages'
+    ])
+  await page.getByRole('button', { name: 'Save changes' }).click()
+  await expect(page.locator('.editor-success')).toContainText('Saved')
+  await page.reload()
+  await page.getByRole('button', { name: 'Section order', exact: true }).click()
+  await expect
+    .poll(() =>
+      sections
+        .locator('li')
+        .evaluateAll((rows) =>
+          rows.map((row) => (row as HTMLElement).dataset.sortableId)
+        )
+    )
+    .toEqual([
+      'projects',
+      'about',
+      'experience',
+      'skills',
+      'education',
+      'languages'
+    ])
+  await page.getByRole('button', { name: 'Profile', exact: true }).click()
+  await page
+    .getByLabel('About paragraphs')
+    .fill('An independent test portfolio.')
+  await page.getByRole('button', { name: 'Skills', exact: true }).click()
+  await page.getByRole('button', { name: '+ Add group' }).click()
+  await page.getByLabel('Skill group 1 skills').fill('TypeScript')
+  await page.getByRole('button', { name: 'Section order', exact: true }).click()
+  await page
+    .getByRole('button', { name: 'Reorder Skills', exact: true })
+    .press('Home')
+  await page.getByLabel('Publish my profile and CV at a public link').check()
+  await page.getByRole('button', { name: 'Save changes' }).click()
+  await expect(page.locator('.editor-success')).toContainText('Saved')
+  await page.goto(`/${device}-starter`)
+  const publicHeadings = await page
+    .locator('.folio-story .folio-section h2')
+    .allTextContents()
+  const text = getPortfolioCopy('es')
+  expect(publicHeadings.slice(0, 2)).toEqual([text.creativeToolkit, text.about])
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(
+    'New Portfolio Owner'
+  )
 })

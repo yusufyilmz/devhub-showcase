@@ -1,4 +1,10 @@
-import { copy, type PortfolioProfile } from '@shared/content'
+import {
+  copy,
+  getPortfolioCopy,
+  getPortfolioSectionOrder,
+  type PortfolioProfile,
+  type PortfolioSectionId
+} from '@shared/content'
 import { getPortfolioResources } from '@shared/lib/portfolio'
 import {
   AboutMeSection,
@@ -10,10 +16,11 @@ import {
   ProjectsSection,
   ReferralSection,
   ScrollButton,
+  Section,
   SkillSection,
   SummarySection
 } from '@shared/ui/components'
-import type { ComponentProps, ReactNode } from 'react'
+import { type ComponentProps, Fragment, type ReactNode } from 'react'
 import { handleSendMessageAction } from '../../app/actions'
 
 export function EngineerPortfolio({
@@ -29,6 +36,45 @@ export function EngineerPortfolio({
 }) {
   const { experiences, projects, skills, educations } =
     getPortfolioResources(profile)
+  const text = getPortfolioCopy(profile.portfolioLanguage)
+  const sections: Record<PortfolioSectionId, ReactNode> = {
+    about: <AboutMeSection profile={profile} />,
+    experience: experiences.length > 0 && (
+      <ExperienceSection
+        language={profile.portfolioLanguage}
+        experiences={experiences}
+      />
+    ),
+    projects: projects.length > 0 && (
+      <ProjectsSection
+        language={profile.portfolioLanguage}
+        projects={projects}
+      />
+    ),
+    skills: Object.keys(skills).length > 0 && (
+      <SkillSection language={profile.portfolioLanguage} skills={skills} />
+    ),
+    education: educations.length > 0 && (
+      <EducationsSection
+        language={profile.portfolioLanguage}
+        educations={educations}
+      />
+    ),
+    languages: profile.languages.length > 0 && (
+      <Section
+        sectionId="languages"
+        title={text.spokenLanguages}
+        eyebrow={text.spokenLanguages}
+        subtitle=""
+      >
+        <p>
+          {profile.languages
+            .map((item) => `${item.language} (${item.proficiency})`)
+            .join(' · ')}
+        </p>
+      </Section>
+    )
+  }
   return (
     <>
       <Header profile={profile} />
@@ -36,31 +82,9 @@ export function EngineerPortfolio({
       <main id="main-content" className="portfolio-main">
         <div className="portfolio-inner">
           <SummarySection profile={profile} />
-          <AboutMeSection profile={profile} />
-          {experiences.length > 0 && (
-            <ExperienceSection
-              language={profile.portfolioLanguage}
-              experiences={experiences}
-            />
-          )}
-          {projects.length > 0 && (
-            <ProjectsSection
-              language={profile.portfolioLanguage}
-              projects={projects}
-            />
-          )}
-          {Object.keys(skills).length > 0 && (
-            <SkillSection
-              language={profile.portfolioLanguage}
-              skills={skills}
-            />
-          )}
-          {educations.length > 0 && (
-            <EducationsSection
-              language={profile.portfolioLanguage}
-              educations={educations}
-            />
-          )}
+          {getPortfolioSectionOrder(profile).map((id) => (
+            <Fragment key={id}>{sections[id]}</Fragment>
+          ))}
           {extras && (
             <ReferralSection
               language={profile.portfolioLanguage}

@@ -159,3 +159,5 @@ Portfolio and CV languages: see [language settings](docs/languages.md).
 Portfolio appearance: see [theme settings and previews](docs/themes.md).
 
 Styling setup: see [Tailwind CSS 4 migration](docs/tailwind.md).
+
+Portfolio section ordering: see [drag, keyboard and save behavior](docs/section-order.md).

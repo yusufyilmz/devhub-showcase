@@ -72,3 +72,7 @@ Cards, buttons and timeline remain available through the older `@shared/ui/compo
 `pnpm check`, `pnpm test`, `pnpm typecheck` and `pnpm build` include the new packages through the workspace/Turbo configuration. Tests cover the auth handlers with a second app's routes, invalid origins, unconfirmed identity, failed provisioning, password errors and session cleanup. Components tests use independent login routes and workout models, alongside the existing portfolio/card and RLS tests.
 
 No Fitness app has been migrated in this change. When adding `apps/fitness`, give it its own Next.js configuration, scripts, deployment/environment scope and fitness data policies. Reuse the shared packages, then verify a complete sign in and private-data flow for that app.
+
+## Sortable lists
+
+`@shared/components/sortable-list` exports `SortableList` and `moveItem`. Pass uniquely identified `{ id, label }` items, an accessible list label, and an `onChange(ids)` callback. The control supports pointer dragging (including touch), cancellation, keyboard shortcuts, move buttons and live position announcements. Include `@shared/components/styles.css` with the app's existing component styles. The caller owns persistence; the control commits only a completed reorder and never writes data itself.

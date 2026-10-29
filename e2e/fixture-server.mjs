@@ -86,11 +86,31 @@ const systemTheme = {
     appearance: { theme: 'paper', accent: 'cyan', defaultTheme: 'system' }
   }
 }
+const reordered = ['engineer', 'designer', 'consultant', 'minimal'].map(
+  (type, index) => ({
+    ...row,
+    id: `77777777-7777-4777-8777-77777777777${index}`,
+    username: `reordered-${type}`,
+    document: {
+      ...profile,
+      portfolioType: type,
+      sectionOrder: [
+        'languages',
+        'education',
+        'skills',
+        'projects',
+        'experience',
+        'about'
+      ]
+    }
+  })
+)
 const initialStarters = structuredClone(starters)
 const rows = [
   row,
   ...examples,
   ...localized,
+  ...reordered,
   ...themed,
   systemTheme,
   ...starters
