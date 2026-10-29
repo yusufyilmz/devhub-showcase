@@ -9,7 +9,8 @@
     "./collection-editor": "./src/collection-editor.tsx",
     "./login": "./src/login-panel.tsx",
     "./studio-shell": "./src/studio-shell.tsx",
-    "./styles.css": "./src/styles.css"
+    "./styles.css": "./src/styles.css",
+    "./sortable-list": "./src/sortable-list.tsx"
   },
   "scripts": {
     "build": "tsc --noEmit",

@@ -1,4 +1,4 @@
-import type { PortfolioProfile } from '@shared/content'
+import { type PortfolioProfile, portfolioSectionIds } from '@shared/content'
 import { z } from 'zod'
 import { usernameSchema } from './username'
 
@@ -28,6 +28,14 @@ const chronological = (value: { start: string; end: string | null }) =>
 
 export const profileSchema = z
   .object({
+    sectionOrder: z
+      .array(z.enum(portfolioSectionIds))
+      .length(portfolioSectionIds.length)
+      .refine(
+        (order) => new Set(order).size === order.length,
+        'Include each section once'
+      )
+      .optional(),
     portfolioLanguage: z.enum(['en', 'es', 'tr']).default('en'),
     cvLanguage: z.enum(['en', 'es', 'tr']).default('en'),
     portfolioType: z
