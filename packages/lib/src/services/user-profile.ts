@@ -11,6 +11,7 @@ export function createEmptyProfile(user: {
 }): PortfolioProfile {
   const name = user.user_metadata?.full_name ?? user.user_metadata?.name
   return validateProfile({
+    templateChosen: false,
     name:
       typeof name === 'string' && name.trim()
         ? name.trim().slice(0, 200)

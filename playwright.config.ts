@@ -8,7 +8,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : 2,
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
-    baseURL: 'http://127.0.0.1:3100',
+    baseURL: 'http://localhost:3100',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure'
   },
@@ -24,26 +24,26 @@ export default defineConfig({
     },
     {
       command: 'pnpm --filter web start --hostname 127.0.0.1 --port 3100',
-      url: 'http://127.0.0.1:3100',
+      url: 'http://localhost:3100',
       reuseExistingServer: false,
       timeout: 120_000,
       env: {
         NEXT_PUBLIC_SUPABASE_URL: 'http://127.0.0.1:3101',
         NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: 'e2e-public-placeholder',
         NEXT_PUBLIC_SUPABASE_ANON_KEY: 'e2e-public-placeholder',
-        NEXT_PUBLIC_SITE_URL: 'http://127.0.0.1:3100'
+        NEXT_PUBLIC_SITE_URL: 'http://localhost:3100'
       }
     },
     {
       command: 'pnpm --filter web start --hostname 127.0.0.1 --port 3102',
-      url: 'http://127.0.0.1:3102',
+      url: 'http://localhost:3102',
       reuseExistingServer: false,
       timeout: 120_000,
       env: {
         NEXT_PUBLIC_SUPABASE_URL: '',
         NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: '',
         NEXT_PUBLIC_SUPABASE_ANON_KEY: '',
-        NEXT_PUBLIC_SITE_URL: 'http://127.0.0.1:3102'
+        NEXT_PUBLIC_SITE_URL: 'http://localhost:3102'
       }
     }
   ]

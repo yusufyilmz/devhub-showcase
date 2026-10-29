@@ -1,16 +1,16 @@
 {
   "pageSize": {{{json cvPageSize}}},
-  "pageMargins": [44, 36, 44, 44],
-  "defaultStyle": { "font": "Roboto", "fontSize": {{{json cvFontSize}}}, "lineHeight": 1.2, "color": "#253347" },
+  "pageMargins": {{{json cvPageMargins}}},
+  "defaultStyle": { "font": "Roboto", "fontSize": {{{json cvFontSize}}}, "lineHeight": {{{json cvLineHeight}}}, "color": "#253347" },
   "styles": {
-    "section": { "fontSize": 11, "bold": true, "color": {{{json cvAccent}}}, "margin": [0, 15, 0, 7] },
+    "section": { "fontSize": 11, "bold": true, "color": {{{json cvAccent}}}, "margin": {{{json cvSectionMargin}}} },
     "company": { "fontSize": 10, "bold": true, "color": "#15202b" },
     "muted": { "fontSize": 8, "color": "#64748b" },
     "link": { "fontSize": 8, "color": {{{json cvAccent}}} }
   },
   "content": [
-    { "text": {{{json name}}}, "fontSize": 25, "bold": true, "color": "#15202b", "margin": [0, 0, 0, 3] },
-    { "text": {{{json title}}}, "fontSize": 12, "color": {{{json cvAccent}}}, "margin": [0, 0, 0, 7] },
+    { "text": {{{json name}}}, "fontSize": {{{json cvNameSize}}}, "bold": true, "color": "#15202b", "margin": [0, 0, 0, 3] },
+    { "text": {{{json title}}}, "fontSize": {{{json cvTitleSize}}}, "color": {{{json cvAccent}}}, "margin": [0, 0, 0, 7] },
     { "text": [
       { "text": {{{json location}}} }
       {{#if email}}, { "text": "  |  " },

@@ -38,9 +38,33 @@ export const cvHelpers = {
   json: (value: unknown) => JSON.stringify(value ?? '')
 }
 
+const cvFormats = {
+  classic: {
+    cvNameSize: 25,
+    cvTitleSize: 12,
+    cvPageMargins: [44, 36, 44, 44],
+    cvLineHeight: 1.2,
+    cvSectionMargin: [0, 15, 0, 7]
+  },
+  editorial: {
+    cvNameSize: 34,
+    cvTitleSize: 14,
+    cvPageMargins: [50, 48, 50, 48],
+    cvLineHeight: 1.2,
+    cvSectionMargin: [0, 22, 0, 10]
+  },
+  compact: {
+    cvNameSize: 22,
+    cvTitleSize: 12,
+    cvPageMargins: [36, 28, 36, 36],
+    cvLineHeight: 1.08,
+    cvSectionMargin: [0, 10, 0, 5]
+  }
+}
 export function createCvData(profile: PortfolioProfile) {
   return {
     ...profile,
+    ...cvFormats[profile.cvLayout ?? 'classic'],
     cvPageSize: profile.cvSettings?.pageSize ?? 'A4',
     cvFontSize: profile.cvSettings?.fontSize ?? 9,
     cvAccent:

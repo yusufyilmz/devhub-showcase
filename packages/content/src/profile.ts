@@ -1,3 +1,5 @@
+import type { CvLayout, PortfolioType } from './portfolio-types'
+
 /** Verified public career content, updated from the October 2026 CV. */
 export interface ProfileExperience {
   id: string
@@ -18,8 +20,12 @@ export interface ProfileProject {
   description: string
   skills: string[]
   public: boolean
+  coverImage?: string | null
 }
 export interface PortfolioProfile {
+  portfolioType?: PortfolioType
+  templateChosen?: boolean
+  cvLayout?: CvLayout
   cvSettings?: {
     pageSize: 'A4' | 'LETTER'
     fontSize: 9 | 10 | 11

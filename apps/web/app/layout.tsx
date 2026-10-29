@@ -1,4 +1,5 @@
 import '@shared/ui/globals.css'
+import '../features/portfolio/portfolio.css'
 import { StyledEngineProvider } from '@mui/material'
 import { copy } from '@shared/content'
 import { NotificationProvider } from '@shared/ui/context'

@@ -52,6 +52,25 @@ export function createAuthHandlers<Client extends AuthClient>(
     await requireConfirmedUser(client)
     await options.afterSignIn?.(client)
   }
+  const signInFailure = (reason: unknown) =>
+    json(
+      {
+        error: isAccessError(reason)
+          ? (options.accessErrorMessage ??
+            'Confirm your account before continuing.')
+          : (options.setupErrorMessage ??
+            'Sign in is unavailable. Check setup or try again.')
+      },
+      isAccessError(reason) ? 403 : 503
+    )
+  const verifyOrSignOut = async (client: Client) => {
+    try {
+      await verify(client)
+    } catch (reason) {
+      await client.auth.signOut({ scope: 'local' })
+      throw reason
+    }
+  }
   return {
     async google(request: Request) {
       if (!sameOrigin(request))
@@ -134,24 +153,10 @@ export function createAuthHandlers<Client extends AuthClient>(
             },
             401
           )
-        try {
-          await verify(client)
-        } catch (reason) {
-          await client.auth.signOut({ scope: 'local' })
-          throw reason
-        }
+        await verifyOrSignOut(client)
         return json({ ok: true })
       } catch (reason) {
-        return json(
-          {
-            error: isAccessError(reason)
-              ? (options.accessErrorMessage ??
-                'Confirm your account before continuing.')
-              : (options.setupErrorMessage ??
-                'Sign in is unavailable. Check setup or try again.')
-          },
-          isAccessError(reason) ? 403 : 503
-        )
+        return signInFailure(reason)
       }
     },
     async signOut(request: Request) {

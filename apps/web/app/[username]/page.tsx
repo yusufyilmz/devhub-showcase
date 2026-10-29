@@ -15,6 +15,7 @@ import {
 } from '@shared/ui/components'
 import type { Metadata } from 'next'
 import { OwnerEditLink } from '../../features/admin/owner-edit-link'
+import { PortfolioLayout } from '../../features/portfolio/portfolio-layout'
 import { loadPageResources } from '../../lib/portfolio-resources'
 import { getUsernameProfile } from '../../lib/public-profile'
 import { handleSendMessageAction } from '../actions'
@@ -43,6 +44,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PublicCvPage({ params }: Props) {
   const { username } = await params
   const { profile: saved, id } = await getUsernameProfile(username)
+  if (saved.portfolioType && saved.portfolioType !== 'engineer')
+    return (
+      <>
+        <OwnerEditLink username={username} />
+        <PortfolioLayout profile={saved} username={username} />
+      </>
+    )
   const original = id === 'main'
   const referrals = original ? (await loadPageResources()).referrals : []
   const profile = {
