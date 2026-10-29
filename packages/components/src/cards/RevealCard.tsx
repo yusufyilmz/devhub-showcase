@@ -2,7 +2,17 @@
 
 import { type ReactNode, useId, useRef, useState } from 'react'
 
+const defaultLabels = {
+  showDetails: 'Show details for',
+  hideDetails: 'Hide details for',
+  fullDetails: 'Full details',
+  hoverDetails: 'Hover to explore',
+  tapDetails: 'Tap for details',
+  tapClose: 'Tap to close',
+  keyboardDetails: 'Show details'
+}
 interface RevealCardProps {
+  labels?: typeof defaultLabels
   id?: string
   title: string
   heading: ReactNode
@@ -17,7 +27,8 @@ export function RevealCard({
   heading,
   brief,
   children,
-  className = ''
+  className = '',
+  labels = defaultLabels
 }: RevealCardProps) {
   const [expanded, setExpanded] = useState(false)
   const pinned = useRef(false)
@@ -66,7 +77,7 @@ export function RevealCard({
       <button
         type="button"
         className="reveal-toggle"
-        aria-label={`${expanded ? 'Hide' : 'Show'} details for ${title}`}
+        aria-label={`${expanded ? labels.hideDetails : labels.showDetails} ${title}`}
         aria-expanded={expanded}
         aria-controls={detailsId}
         onPointerDown={() => {
@@ -83,13 +94,13 @@ export function RevealCard({
         }}
       >
         <span className="reveal-hint-desktop">
-          {expanded ? 'Full details' : 'Hover to explore'}
+          {expanded ? labels.fullDetails : labels.hoverDetails}
         </span>
         <span className="reveal-hint-touch">
-          {expanded ? 'Tap to close' : 'Tap for details'}
+          {expanded ? labels.tapClose : labels.tapDetails}
         </span>
         <span className="reveal-hint-keyboard">
-          {expanded ? 'Full details' : 'Show details'}
+          {expanded ? labels.fullDetails : labels.keyboardDetails}
         </span>
         <span className="reveal-chevron" aria-hidden="true">
           ↗

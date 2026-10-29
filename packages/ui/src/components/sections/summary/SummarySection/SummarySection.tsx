@@ -1,9 +1,14 @@
-import { profile as fallback, type PortfolioProfile } from '@shared/content'
+import {
+  profile as fallback,
+  getPortfolioCopy,
+  type PortfolioProfile
+} from '@shared/content'
 export function SummarySection({
   profile = fallback
 }: {
   profile?: PortfolioProfile
 }) {
+  const text = getPortfolioCopy(profile.portfolioLanguage)
   const firstYear = profile.experiences
     .map((item) => item.start.slice(0, 4))
     .sort()[0]
@@ -23,30 +28,29 @@ export function SummarySection({
         <p className="hero-intro">{profile.summary}</p>
         <div className="hero-actions">
           <a className="studio-primary" href="#projects">
-            Explore my work <span aria-hidden="true">↗</span>
+            {text.exploreWork} <span aria-hidden="true">↗</span>
           </a>
           <a className="studio-secondary" href={`mailto:${profile.email}`}>
-            Let’s talk
+            {text.letsTalk}
           </a>
         </div>
         <div className="hero-details">
           <span>
             {firstYear ? (
               <>
-                Working since <strong>{firstYear}</strong>
+                {text.since} <strong>{firstYear}</strong>
               </>
             ) : (
-              'Your story, in your words'
+              text.yourStory
             )}
           </span>
           <span>
-            <strong>{profile.experiences.length}</strong> roles, one evolving
-            craft
+            <strong>{profile.experiences.length}</strong> {text.roles}
           </span>
         </div>
       </div>
       <a className="hero-scroll" href="#about-me">
-        SCROLL TO EXPLORE <span aria-hidden="true">↓</span>
+        {text.scroll} <span aria-hidden="true">↓</span>
       </a>
     </section>
   )

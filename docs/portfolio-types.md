@@ -14,4 +14,4 @@ The Designer direction is inspired by the large introduction and selected work g
 
 Validation covers new-user selection, legacy defaults, invalid types and unsafe cover URLs, preserving content and independent CV preferences, all three PDF formats and desktop/mobile public-page navigation and downloads.
 
-Next steps, in separate changes: portfolio and CV language options; more visual themes; homepage explanations; search metadata and generated personal name logos. None of those later steps are included here.
+Language options are described in [language settings](languages.md). Next steps, in separate changes: more visual themes; homepage explanations; search metadata and generated personal name logos. None of those later steps are included here.

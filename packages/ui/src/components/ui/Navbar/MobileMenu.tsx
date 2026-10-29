@@ -1,11 +1,12 @@
 'use client'
 
-import type React from 'react'
+import { getPortfolioCopy, type Language } from '@shared/content'
 import { useState } from 'react'
 import { Drawer, IconButton, MenuIcon } from '../../../components'
 import { MenuItems } from './MenuItems'
 
-export const MobileMenu: React.FC = () => {
+export function MobileMenu({ language = 'en' }: { language?: Language }) {
+  const text = getPortfolioCopy(language)
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleMenu = () => {
@@ -15,7 +16,7 @@ export const MobileMenu: React.FC = () => {
   return (
     <>
       <IconButton
-        aria-label="Menu"
+        aria-label={text.menu}
         onClick={toggleMenu}
         className="hover:scale-105 text-main-lightest-slate transition-transform md:hidden"
       >
@@ -26,9 +27,9 @@ export const MobileMenu: React.FC = () => {
           className="bg-main-dark h-full flex flex-col justify-start p-4 align-middle"
           role="presentation"
         >
-          <MenuItems />
+          <MenuItems language={language} />
           <a href="/admin/login" className="studio-primary">
-            Create your CV
+            {text.createCv}
           </a>
         </div>
       </Drawer>

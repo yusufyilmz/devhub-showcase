@@ -30,6 +30,8 @@ export const copy = {
   structuredData
 }
 
+export type { Language, PortfolioMessages } from './languages'
+export { formatPortfolioPeriod, getPortfolioCopy, languages } from './languages'
 export type { CvLayout, PortfolioType } from './portfolio-types'
 export { cvLayouts, portfolioTypes } from './portfolio-types'
 export type { PortfolioProfile } from './profile'

@@ -10,6 +10,7 @@ export async function cvResponse(snapshot: ProfileSnapshot) {
   return new Response(new Uint8Array(pdf), {
     headers: {
       'Content-Type': 'application/pdf',
+      'Content-Language': snapshot.profile.cvLanguage ?? 'en',
       'Content-Disposition': `attachment; filename="${name}_CV.pdf"`,
       'Cache-Control': 'private, no-store',
       'X-Content-Type-Options': 'nosniff',

@@ -153,3 +153,5 @@ The public [MyDevStudio homepage](docs/homepage.md) introduces the platform at `
 Browser tests: see [Playwright setup and coverage](docs/e2e.md).
 
 Portfolio layouts and CV formats: see [portfolio types](docs/portfolio-types.md).
+
+Portfolio and CV languages: see [language settings](docs/languages.md).

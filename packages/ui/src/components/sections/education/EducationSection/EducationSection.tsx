@@ -1,4 +1,4 @@
-import { copy } from '@shared/content'
+import { getPortfolioCopy, type Language } from '@shared/content'
 import type { Education } from '@shared/lib/types'
 import type React from 'react'
 import { Section, Timeline } from '../../../../components'
@@ -6,19 +6,29 @@ import { EducationItem } from '../EducationItem/EducationItem'
 
 interface EducationsSectionProps {
   educations: Education[]
+  language?: Language
 }
 
-const { id, title, subtitle } = copy.header.sections.educations
-
 export const EducationsSection: React.FC<EducationsSectionProps> = ({
-  educations = []
+  educations = [],
+  language = 'en'
 }) => {
+  const text = getPortfolioCopy(language)
   return (
-    <Section sectionId={id} title={title} subtitle={subtitle}>
+    <Section
+      sectionId="educations"
+      title={text.education}
+      subtitle={text.educationSubtitle}
+      eyebrow={text.education}
+    >
       <div className="flex items-center md:min-h-[calc(100vh-4rem)]">
         <Timeline>
           {educations.map((education) => (
-            <EducationItem key={education.id} education={education} />
+            <EducationItem
+              key={education.id}
+              education={education}
+              language={language}
+            />
           ))}
         </Timeline>
       </div>

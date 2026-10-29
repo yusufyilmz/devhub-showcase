@@ -1,20 +1,21 @@
-import { copy } from '@shared/content'
+import { getPortfolioCopy, type Language } from '@shared/content'
 import type { Skill } from '@shared/lib/types'
 import type React from 'react'
 import { List, ListItem, Section } from '../../../../components'
 import { SkillCategoryItem } from '../SkillCategoryItem'
 
-const { skills: skillProps } = copy.header.sections
-
-export const SkillSection: React.FC<{ skills: Record<string, Skill[]> }> = ({
-  skills = []
-}) => {
+export const SkillSection: React.FC<{
+  skills: Record<string, Skill[]>
+  language?: Language
+}> = ({ skills = {}, language = 'en' }) => {
+  const text = getPortfolioCopy(language)
   return (
     <Section
       className="mt-8"
-      sectionId={skillProps.id}
-      title={skillProps.title}
-      subtitle={skillProps.subtitle}
+      sectionId="skills"
+      title={text.skills}
+      eyebrow={text.skills}
+      subtitle={text.skillsSubtitle}
     >
       <div className="flex h-full">
         <List className="overflow-y-auto mt-2 no-scrollbar w-full mb-10">

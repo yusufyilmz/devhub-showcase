@@ -6,6 +6,7 @@ import { NotificationProvider } from '@shared/ui/context'
 import { ThemeProvider } from '@shared/ui/theme'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
+import { headers } from 'next/headers'
 import { getActiveProfile } from '../lib/active-profile'
 import {
   isPlatformPage,
@@ -69,6 +70,11 @@ export default async function RootLayout({
   const platform = await isPlatformPage()
   const snapshot = platform ? null : await getActiveProfile()
   const profile = snapshot?.profile
+  const path = (await headers()).get('x-profile-path') ?? '/'
+  const documentLanguage =
+    path.startsWith('/admin') || path.endsWith('/edit')
+      ? 'en'
+      : (profile?.portfolioLanguage ?? 'en')
   const id = snapshot?.id
   const storageKey =
     platform || !snapshot
@@ -104,7 +110,7 @@ export default async function RootLayout({
   const themeScript = `(function(){try{var s=localStorage.getItem(${JSON.stringify(storageKey)});var d=${JSON.stringify(appearance.defaultTheme)};var t=s==='light'||s==='dark'?s:d==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):d;document.documentElement.dataset.theme=t}catch(e){}})()`
   return (
     <html
-      lang="en"
+      lang={documentLanguage}
       data-theme={appearance.defaultTheme === 'light' ? 'light' : 'dark'}
       data-accent={appearance.accent}
       suppressHydrationWarning

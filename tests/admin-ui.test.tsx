@@ -181,3 +181,30 @@ it('switches an existing layout without changing the independent CV preference',
   expect(input.profile.cvLayout).toBe('editorial')
   expect(input.profile.experiences).toEqual(initial.profile.experiences)
 })
+
+it('saves portfolio and CV languages independently without changing the written content', async () => {
+  const fetcher = vi.fn().mockImplementation(async (_url, options) => ({
+    ok: true,
+    json: async () => ({
+      ...initial,
+      ...JSON.parse(options.body),
+      revision: 2
+    })
+  }))
+  vi.stubGlobal('fetch', fetcher)
+  render(<ProfileEditor initial={initial} />)
+  fireEvent.click(screen.getByRole('button', { name: 'Language settings' }))
+  fireEvent.change(screen.getByLabelText('Portfolio language'), {
+    target: { value: 'es' }
+  })
+  fireEvent.change(screen.getByLabelText('CV language'), {
+    target: { value: 'tr' }
+  })
+  fireEvent.click(screen.getByRole('button', { name: 'Save changes' }))
+  await waitFor(() => expect(fetcher).toHaveBeenCalled())
+  const input = JSON.parse(fetcher.mock.calls[0]?.[1].body)
+  expect(input.profile.portfolioLanguage).toBe('es')
+  expect(input.profile.cvLanguage).toBe('tr')
+  expect(input.profile.summary).toBe(initial.profile.summary)
+  expect(input.profile.experiences).toEqual(initial.profile.experiences)
+})

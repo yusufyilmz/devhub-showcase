@@ -1,3 +1,4 @@
+import { getPortfolioCopy, type Language } from '@shared/content'
 import type { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
 import { formatDateRange } from '@shared/lib/utils'
 import Link from 'next/link'
@@ -17,10 +18,15 @@ import { RevealCard } from '../../../ui/RevealCard/RevealCard'
 import { SkillItem } from '../../skill/SkillItem/SkillItem'
 
 type ExperienceProps = {
+  language?: Language
   experience: ExperienceWithCompanyProjectAndSkills
 }
 
-export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
+export const ExperienceItem: React.FC<ExperienceProps> = ({
+  experience,
+  language = 'en'
+}) => {
+  const text = getPortfolioCopy(language)
   const skills = experience.projects.flatMap((project) => project.skills)
   const uniqueSkills = new Set(skills.map((skill) => skill.name))
 
@@ -29,11 +35,16 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
       <TimelineHeader className="h-4">
         <TimelineIcon />
         <Typography className="text-xs font-light pb-0 text-main-light-slate mt-2">
-          {formatDateRange(experience.startedAt, experience.finishedAt)}
+          {formatDateRange(
+            experience.startedAt,
+            experience.finishedAt,
+            language
+          )}
         </Typography>
       </TimelineHeader>
       <TimelineBody className="ml-0 mr-0 my-8 md:mx-8">
         <RevealCard
+          language={language}
           id={`experience-${experience.id}`}
           title={experience.company?.name ?? experience.role}
           brief={experience.achievements[0]}
@@ -87,7 +98,7 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience }) => {
           <CardBody className="pt-0 pl-0">
             {experience.projects.length > 0 && (
               <div className="reveal-projects">
-                <h4>Selected projects</h4>
+                <h4>{text.selectedProjects}</h4>
                 {experience.projects.map((project) => (
                   <div key={project.id}>
                     <h5>{project.title}</h5>
