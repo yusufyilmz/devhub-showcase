@@ -1,9 +1,8 @@
 import {
   copy,
   getPortfolioCopy,
-  getPortfolioSectionOrder,
   type PortfolioProfile,
-  type PortfolioSectionId
+  type SectionRendererId
 } from '@shared/content'
 import { getPortfolioResources } from '@shared/lib/portfolio'
 import {
@@ -20,8 +19,9 @@ import {
   SkillSection,
   SummarySection
 } from '@shared/ui/components'
-import { type ComponentProps, Fragment, type ReactNode } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
 import { handleSendMessageAction } from '../../app/actions'
+import { RegisteredSections } from './registered-sections'
 
 export function EngineerPortfolio({
   profile,
@@ -37,30 +37,30 @@ export function EngineerPortfolio({
   const { experiences, projects, skills, educations } =
     getPortfolioResources(profile)
   const text = getPortfolioCopy(profile.portfolioLanguage)
-  const sections: Record<PortfolioSectionId, ReactNode> = {
-    about: <AboutMeSection profile={profile} />,
-    experience: experiences.length > 0 && (
+  const renderers: Partial<Record<SectionRendererId, ReactNode>> = {
+    'about-card': <AboutMeSection profile={profile} />,
+    timeline: experiences.length > 0 && (
       <ExperienceSection
         language={profile.portfolioLanguage}
         experiences={experiences}
       />
     ),
-    projects: projects.length > 0 && (
+    'project-cards': projects.length > 0 && (
       <ProjectsSection
         language={profile.portfolioLanguage}
         projects={projects}
       />
     ),
-    skills: Object.keys(skills).length > 0 && (
+    'skill-groups': Object.keys(skills).length > 0 && (
       <SkillSection language={profile.portfolioLanguage} skills={skills} />
     ),
-    education: educations.length > 0 && (
+    'education-timeline': educations.length > 0 && (
       <EducationsSection
         language={profile.portfolioLanguage}
         educations={educations}
       />
     ),
-    languages: profile.languages.length > 0 && (
+    'language-list': profile.languages.length > 0 && (
       <Section
         sectionId="languages"
         title={text.spokenLanguages}
@@ -82,9 +82,7 @@ export function EngineerPortfolio({
       <main id="main-content" className="portfolio-main">
         <div className="portfolio-inner">
           <SummarySection profile={profile} />
-          {getPortfolioSectionOrder(profile).map((id) => (
-            <Fragment key={id}>{sections[id]}</Fragment>
-          ))}
+          <RegisteredSections profile={profile} renderers={renderers} />
           {extras && (
             <ReferralSection
               language={profile.portfolioLanguage}
