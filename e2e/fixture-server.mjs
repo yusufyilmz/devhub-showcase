@@ -46,6 +46,7 @@ const starters = ['desktop', 'mobile'].map((device, index) => ({
     name: 'New Portfolio Owner',
     email: 'owner@example.test',
     templateChosen: false,
+    appearance: { theme: 'studio', accent: 'cyan', defaultTheme: 'system' },
     title: 'Add your professional title',
     summary: 'Add a short professional summary.',
     phone: '',
@@ -60,8 +61,40 @@ const starters = ['desktop', 'mobile'].map((device, index) => ({
     about: []
   }
 }))
+const themed = ['studio', 'paper', 'graphite', 'bloom'].flatMap(
+  (theme, themeIndex) =>
+    ['engineer', 'designer', 'consultant', 'minimal'].map(
+      (type, typeIndex) => ({
+        ...row,
+        id: `55555555-5555-4555-8555-${String(themeIndex * 4 + typeIndex).padStart(12, '0')}`,
+        username: `${theme}-${type}`,
+        document: {
+          ...profile,
+          portfolioType: type,
+          appearance: { theme, accent: 'violet', defaultTheme: 'dark' }
+        }
+      })
+    )
+)
+const systemTheme = {
+  ...row,
+  id: '66666666-6666-4666-8666-666666666666',
+  username: 'paper-system',
+  document: {
+    ...profile,
+    portfolioType: 'designer',
+    appearance: { theme: 'paper', accent: 'cyan', defaultTheme: 'system' }
+  }
+}
 const initialStarters = structuredClone(starters)
-const rows = [row, ...examples, ...localized, ...starters]
+const rows = [
+  row,
+  ...examples,
+  ...localized,
+  ...themed,
+  systemTheme,
+  ...starters
+]
 createServer(async (request, response) => {
   const url = new URL(request.url, 'http://127.0.0.1:3101')
   response.setHeader('Content-Type', 'application/json')

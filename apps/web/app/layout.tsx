@@ -1,4 +1,5 @@
 import '@shared/ui/globals.css'
+import '../features/portfolio/themes.css'
 import '../features/portfolio/portfolio.css'
 import { StyledEngineProvider } from '@mui/material'
 import { copy } from '@shared/content'
@@ -8,11 +9,9 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { headers } from 'next/headers'
 import { getActiveProfile } from '../lib/active-profile'
-import {
-  isPlatformPage,
-  platformMetadata,
-  platformStructuredData
-} from '../lib/platform'
+import { isPlatformPage, platformMetadata } from '../lib/platform'
+import { getPublicThemeStyle } from '../lib/portfolio-theme'
+import { getProfileStructuredData } from '../lib/profile-structured-data'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -71,10 +70,8 @@ export default async function RootLayout({
   const snapshot = platform ? null : await getActiveProfile()
   const profile = snapshot?.profile
   const path = (await headers()).get('x-profile-path') ?? '/'
-  const documentLanguage =
-    path.startsWith('/admin') || path.endsWith('/edit')
-      ? 'en'
-      : (profile?.portfolioLanguage ?? 'en')
+  const editing = path.startsWith('/admin') || path.endsWith('/edit')
+  const documentLanguage = editing ? 'en' : (profile?.portfolioLanguage ?? 'en')
   const id = snapshot?.id
   const storageKey =
     platform || !snapshot
@@ -86,33 +83,17 @@ export default async function RootLayout({
     accent: 'cyan',
     defaultTheme: 'dark'
   }
-  const structuredData = profile
-    ? {
-        ...copy.structuredData,
-        name: profile.name,
-        url: profile.website,
-        jobTitle: profile.title,
-        description: profile.summary,
-        sameAs: [profile.github, profile.linkedin],
-        knowsAbout: Object.values(profile.skills).flat(),
-        alumniOf: profile.education.map((item) => ({
-          '@type': 'CollegeOrUniversity',
-          name: item.institution
-        })),
-        worksFor: profile.experiences.find((item) => !item.end)
-          ? {
-              '@type': 'Organization',
-              name: profile.experiences.find((item) => !item.end)?.company
-            }
-          : undefined
-      }
-    : platformStructuredData
+  const portfolioTheme =
+    platform || editing ? undefined : (appearance.theme ?? 'studio')
+  const structuredData = getProfileStructuredData(profile)
   const themeScript = `(function(){try{var s=localStorage.getItem(${JSON.stringify(storageKey)});var d=${JSON.stringify(appearance.defaultTheme)};var t=s==='light'||s==='dark'?s:d==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):d;document.documentElement.dataset.theme=t}catch(e){}})()`
   return (
     <html
       lang={documentLanguage}
       data-theme={appearance.defaultTheme === 'light' ? 'light' : 'dark'}
       data-accent={appearance.accent}
+      data-portfolio-theme={portfolioTheme}
+      style={getPublicThemeStyle(portfolioTheme, appearance.accent)}
       suppressHydrationWarning
     >
       <head>
@@ -130,6 +111,7 @@ export default async function RootLayout({
         <StyledEngineProvider injectFirst>
           <ThemeProvider
             storageKey={storageKey}
+            portfolioTheme={portfolioTheme}
             defaultTheme={appearance.defaultTheme}
             accent={appearance.accent}
           >

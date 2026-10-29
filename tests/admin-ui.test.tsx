@@ -208,3 +208,35 @@ it('saves portfolio and CV languages independently without changing the written 
   expect(input.profile.summary).toBe(initial.profile.summary)
   expect(input.profile.experiences).toEqual(initial.profile.experiences)
 })
+
+it('previews a theme locally and saves it without changing layout, content or CV format', async () => {
+  const fetcher = vi.fn().mockResolvedValue({
+    ok: true,
+    json: async () => ({ ...initial, revision: 2 })
+  })
+  vi.stubGlobal('fetch', fetcher)
+  render(<ProfileEditor initial={initial} />)
+  fireEvent.click(screen.getByRole('button', { name: 'Appearance' }))
+  fireEvent.click(screen.getByRole('radio', { name: /Paper/ }))
+  fireEvent.click(screen.getByRole('button', { name: 'Preview light' }))
+  const preview = screen.getByRole('region', {
+    name: 'Portfolio theme preview'
+  })
+  expect(preview.getAttribute('data-portfolio-theme')).toBe('paper')
+  expect(preview.getAttribute('data-theme')).toBe('light')
+  expect(fetcher).not.toHaveBeenCalled()
+  fireEvent.change(screen.getByLabelText('Accent color'), {
+    target: { value: 'emerald' }
+  })
+  fireEvent.click(screen.getByRole('button', { name: 'Save changes' }))
+  await waitFor(() => expect(fetcher).toHaveBeenCalled())
+  const input = JSON.parse(fetcher.mock.calls[0]?.[1].body)
+  expect(input.profile.appearance).toEqual({
+    theme: 'paper',
+    accent: 'emerald',
+    defaultTheme: 'dark'
+  })
+  expect(input.profile.portfolioType).toBe(initial.profile.portfolioType)
+  expect(input.profile.cvLayout).toBe(initial.profile.cvLayout)
+  expect(input.profile.summary).toBe(initial.profile.summary)
+})

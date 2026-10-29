@@ -65,10 +65,13 @@ export const profileSchema = z
     cvUrl: z.union([safeUrl, z.literal('/cv.pdf')]).default('/cv.pdf'),
     appearance: z
       .object({
+        theme: z
+          .enum(['studio', 'paper', 'graphite', 'bloom'])
+          .default('studio'),
         accent: z.enum(['cyan', 'violet', 'emerald']),
         defaultTheme: z.enum(['system', 'light', 'dark'])
       })
-      .default({ accent: 'cyan', defaultTheme: 'dark' }),
+      .default({ theme: 'studio', accent: 'cyan', defaultTheme: 'dark' }),
     experiences: z
       .array(
         z
