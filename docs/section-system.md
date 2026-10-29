@@ -53,3 +53,11 @@ Public project filtering stays in the existing server rendering/resource adapter
 4. Port additional useful compositions, then introduce template/import/export support.
 
 Each step includes compatibility and browser checks before its new options are exposed. Persisted configuration, custom IDs and PDF inclusion choices are deliberately introduced with their corresponding editor features rather than accepted as unused profile fields now.
+
+## Shared view primitives (step two)
+
+The section-views entrypoint in @shared/components provides SectionGrid (cards or gallery), SectionAccordion, SectionTabs and SectionCarousel. Each takes a label and stable, uniquely identified items with a title and React content. The existing @shared/components timeline and cards remain available; they are not duplicated.
+
+Tabs support arrow keys, Home and End. Accordions use native details/summary. Carousels use scroll snap, swipe and manual controls without autoplay; arrow movement respects reduced motion and accepts localized control labels. These primitives contain no authentication, fetching or portfolio data access. Callers must supply only authorized content.
+
+These are reusable building blocks, not new persisted renderer options. The next integration step will bind canonical portfolio data to the views and expose only supported combinations in section settings. Existing portfolio defaults continue to use the registered implementations.
