@@ -1,17 +1,22 @@
 'use client'
 import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material'
+import { getThemePalette, type PortfolioTheme } from '@shared/content'
 import { type ReactNode, useEffect, useMemo, useState } from 'react'
 import { ThemeContext } from '../theme-toggle'
+
+const rgb = (value: string) => `rgb(${value.replaceAll(' ', ', ')})`
 export function ThemeProvider({
   children,
   defaultTheme = 'dark',
   accent = 'cyan',
-  storageKey = 'devhub-theme'
+  storageKey = 'devhub-theme',
+  portfolioTheme = 'studio'
 }: {
   children: ReactNode
   defaultTheme?: 'dark' | 'light' | 'system'
   accent?: 'cyan' | 'violet' | 'emerald'
   storageKey?: string
+  portfolioTheme?: PortfolioTheme
 }) {
   const [mode, setMode] = useState(defaultTheme === 'light' ? 'light' : 'dark')
   useEffect(() => {
@@ -53,11 +58,17 @@ export function ThemeProvider({
     }),
     [mode, storageKey]
   )
+  const palette = getThemePalette(
+    portfolioTheme,
+    mode === 'dark' ? 'dark' : 'light'
+  )
   const theme = useMemo(
     () =>
       createTheme({
         palette: {
           mode: mode === 'dark' ? 'dark' : 'light',
+          background: { default: rgb(palette.bg), paper: rgb(palette.surface) },
+          text: { primary: rgb(palette.text), secondary: rgb(palette.muted) },
           primary: {
             main:
               accent === 'violet'
@@ -69,7 +80,7 @@ export function ThemeProvider({
         },
         typography: { fontFamily: 'var(--font-geist-sans), sans-serif' }
       }),
-    [mode, accent]
+    [mode, accent, palette]
   )
   return (
     <ThemeContext.Provider value={context}>

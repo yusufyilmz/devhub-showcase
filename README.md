@@ -155,3 +155,5 @@ Browser tests: see [Playwright setup and coverage](docs/e2e.md).
 Portfolio layouts and CV formats: see [portfolio types](docs/portfolio-types.md).
 
 Portfolio and CV languages: see [language settings](docs/languages.md).
+
+Portfolio appearance: see [theme settings and previews](docs/themes.md).

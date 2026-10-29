@@ -1,5 +1,6 @@
 import type { Language } from './languages'
 import type { CvLayout, PortfolioType } from './portfolio-types'
+import type { PortfolioTheme } from './themes'
 
 /** Verified public career content, updated from the October 2026 CV. */
 export interface ProfileExperience {
@@ -40,6 +41,7 @@ export interface PortfolioProfile {
 
   cvUrl?: string
   appearance?: {
+    theme?: PortfolioTheme
     accent: 'cyan' | 'violet' | 'emerald'
     defaultTheme: 'system' | 'light' | 'dark'
   }

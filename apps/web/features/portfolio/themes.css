@@ -1,0 +1,234 @@
+:root[data-portfolio-theme][data-theme="dark"],
+.theme-preview[data-theme="dark"] {
+  --bg-rgb: var(--portfolio-bg-dark);
+  --surface-rgb: var(--portfolio-surface-dark);
+  --surface-soft-rgb: var(--portfolio-soft-dark);
+  --text-rgb: var(--portfolio-text-dark);
+  --muted-rgb: var(--portfolio-muted-dark);
+  --border-rgb: var(--portfolio-border-dark);
+  --shadow-rgb: var(--portfolio-shadow-dark);
+  --accent-rgb: var(--portfolio-accent-dark);
+  color-scheme: dark;
+}
+:root[data-portfolio-theme][data-theme="light"],
+.theme-preview[data-theme="light"] {
+  --bg-rgb: var(--portfolio-bg-light);
+  --surface-rgb: var(--portfolio-surface-light);
+  --surface-soft-rgb: var(--portfolio-soft-light);
+  --text-rgb: var(--portfolio-text-light);
+  --muted-rgb: var(--portfolio-muted-light);
+  --border-rgb: var(--portfolio-border-light);
+  --shadow-rgb: var(--portfolio-shadow-light);
+  --accent-rgb: var(--portfolio-accent-light);
+  color-scheme: light;
+}
+:root[data-portfolio-theme]:not([data-portfolio-theme="studio"])
+  .folio
+  :where(h1, h2),
+:root[data-portfolio-theme]:not([data-portfolio-theme="studio"])
+  .portfolio-hero
+  :where(h1),
+:root[data-portfolio-theme]:not([data-portfolio-theme="studio"])
+  .section-heading
+  :where(h2) {
+  font-family: var(--portfolio-display);
+  font-weight: var(--portfolio-heading-weight);
+  letter-spacing: -0.035em;
+}
+:root[data-portfolio-theme]:not([data-portfolio-theme="studio"])
+  :where(.section-card, .folio-cover, .folio-project-copy) {
+  border-radius: var(--portfolio-radius);
+}
+:root[data-portfolio-theme="bloom"] :where(.folio-project, .section-card) {
+  background: rgb(var(--surface-rgb));
+  padding: 28px;
+  border-radius: var(--portfolio-radius);
+}
+:root[data-portfolio-theme="bloom"]
+  :where(
+    .folio-primary,
+    .hero-actions .studio-primary,
+    .hero-actions .studio-secondary
+  ) {
+  border-radius: 999px;
+}
+:root[data-portfolio-theme="paper"] :where(.folio-section, .portfolio-section) {
+  border-top-style: double;
+  border-top-width: 3px;
+}
+:root[data-portfolio-theme="graphite"] :where(.hero-orbit) {
+  display: none;
+}
+:root[data-portfolio-theme="graphite"] :where(.folio-eyebrow, .eyebrow) {
+  letter-spacing: 0.18em;
+}
+.theme-picker {
+  border: 0;
+  padding: 0;
+  margin: 0 0 28px;
+  min-width: 0;
+}
+.theme-picker :where(legend) {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.theme-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.theme-choice {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 10px;
+  padding: 18px;
+  border: 1px solid rgb(var(--border-rgb));
+  border-radius: 12px;
+  background: rgb(var(--surface-rgb));
+  cursor: pointer;
+}
+.theme-choice[data-selected="true"] {
+  border-color: rgb(var(--accent-rgb));
+  box-shadow: 0 0 0 1px rgb(var(--accent-rgb));
+}
+.theme-choice:focus-within {
+  outline: 2px solid rgb(var(--accent-rgb));
+  outline-offset: 4px;
+}
+.theme-choice :where(input) {
+  width: 18px;
+  height: 18px;
+  accent-color: rgb(var(--accent-rgb));
+  align-self: center;
+}
+.theme-choice :where(strong) {
+  font-size: 16px;
+}
+.theme-choice > :where(span:not(.theme-preview)) {
+  grid-column: 1 / -1;
+  color: rgb(var(--muted-rgb));
+  font-size: 13px;
+  line-height: 1.6;
+}
+.theme-preview {
+  background: rgb(var(--bg-rgb));
+  color: rgb(var(--text-rgb));
+  border: 1px solid rgb(var(--border-rgb));
+  border-radius: 12px;
+  padding: 32px;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.theme-thumbnail {
+  display: block;
+  grid-column: 1 / -1;
+  padding: 20px;
+  height: 155px;
+  border-radius: 6px;
+}
+.theme-thumbnail :where(b) {
+  display: block;
+  font-family: var(--portfolio-display);
+  font-weight: var(--portfolio-heading-weight);
+  font-size: 25px;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.theme-thumbnail :where(i) {
+  display: block;
+  background: rgb(var(--muted-rgb) / 0.35);
+  height: 4px;
+  width: 70%;
+}
+.theme-mini-cards {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+}
+.theme-mini-cards :where(i) {
+  width: 50%;
+  height: 35px;
+  background: rgb(var(--surface-rgb));
+  border: 1px solid rgb(var(--border-rgb));
+  border-radius: var(--portfolio-radius);
+}
+.theme-mini-cards :where(i:first-child) {
+  border-color: rgb(var(--accent-rgb));
+}
+.theme-preview-tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-block: 26px 16px;
+}
+.theme-preview-tools :where(h3) {
+  font-size: 18px;
+}
+.theme-preview-modes {
+  display: flex;
+  gap: 8px;
+}
+.theme-preview-modes :where(button) {
+  padding: 8px 14px;
+  border: 1px solid rgb(var(--border-rgb));
+  border-radius: 6px;
+  font-size: 12px;
+}
+.theme-preview-modes :where(button[aria-pressed="true"]) {
+  background: rgb(var(--accent-rgb) / 0.1);
+  border-color: rgb(var(--accent-rgb));
+}
+.theme-preview-title {
+  font-family: var(--portfolio-display);
+  font-weight: var(--portfolio-heading-weight);
+  font-size: clamp(28px, 4vw, 46px);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  margin: 12px 0;
+}
+.theme-preview-role {
+  color: rgb(var(--accent-rgb));
+  margin-bottom: 16px;
+}
+.theme-preview-summary {
+  max-width: 660px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgb(var(--muted-rgb));
+}
+.theme-preview-card {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid rgb(var(--border-rgb));
+  border-radius: var(--portfolio-radius);
+  background: rgb(var(--surface-rgb));
+}
+.theme-preview-card :where(p) {
+  color: rgb(var(--muted-rgb));
+  font-size: 13px;
+  line-height: 1.7;
+  margin-top: 8px;
+}
+.theme-preview-note {
+  color: rgb(var(--muted-rgb));
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 14px;
+}
+@media (max-width: 600px) {
+  .theme-picker-grid {
+    grid-template-columns: 1fr;
+  }
+  .theme-preview {
+    padding: 22px;
+  }
+  .theme-thumbnail {
+    padding: 18px;
+  }
+  :root[data-portfolio-theme="bloom"] :where(.folio-project, .section-card) {
+    padding: 20px;
+  }
+}

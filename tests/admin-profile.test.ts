@@ -21,6 +21,7 @@ function repository(owner = true): ProfileRepository {
 describe('portfolio publishing', () => {
   it('accepts the existing CV profile with safe appearance defaults', () => {
     expect(profileSchema.parse(profile).appearance).toEqual({
+      theme: 'studio',
       accent: 'cyan',
       defaultTheme: 'dark'
     })

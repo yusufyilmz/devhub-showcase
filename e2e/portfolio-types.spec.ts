@@ -106,4 +106,24 @@ test('a new owner chooses a layout, saves it and returns to the editor without l
   const savedPdf = await page.request.get('/api/admin/cv')
   expect(savedPdf.headers()['content-language']).toBe('tr')
   expect((await savedPdf.body()).subarray(0, 5).toString()).toBe('%PDF-')
+  await page.getByRole('button', { name: 'Appearance', exact: true }).click()
+  await page.getByRole('radio', { name: /Paper/ }).check()
+  await page.getByRole('button', { name: 'Preview light' }).click()
+  const preview = page.getByRole('region', { name: 'Portfolio theme preview' })
+  await expect(preview).toHaveAttribute('data-portfolio-theme', 'paper')
+  await expect(preview).toHaveAttribute('data-theme', 'light')
+  await expect(
+    page.getByRole('group', { name: 'Preview color mode' }).locator('legend')
+  ).toHaveCSS('position', 'absolute')
+  await expect(page.locator('html')).not.toHaveAttribute('data-portfolio-theme')
+  await page.screenshot({
+    path: testInfo.outputPath('theme-picker.png'),
+    fullPage: true
+  })
+  await page.getByRole('button', { name: 'Save changes' }).click()
+  await expect(page.getByRole('status')).toContainText('Saved')
+  await page.reload()
+  await page.getByRole('button', { name: 'Appearance', exact: true }).click()
+  await expect(page.getByRole('radio', { name: /Paper/ })).toBeChecked()
+  await expect(page.getByLabel('Default color mode')).toHaveValue('system')
 })
