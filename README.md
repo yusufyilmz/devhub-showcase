@@ -168,8 +168,10 @@ Section registry, current renderer defaults and the PageForge integration path: 
 
 ## Repository guidance and section options
 
-Start with [AGENTS.md](AGENTS.md) for development rules and the repository skills covering workspace verification, product behavior and section workflows. See [the roadmap](docs/roadmap.md) for completed work and remaining template/import tasks.
+Start with [AGENTS.md](AGENTS.md) for development rules and the repository skills covering workspace verification, product behavior and section workflows. See [the roadmap](docs/roadmap.md) for the completed section rollout.
 
 In the editor, Appearance includes optional image or muted video hero backgrounds. Custom sections includes starters for services, testimonials, FAQs, statistics, calls to action, and YouTube/Instagram/Pinterest work. Social work is curated from public links with optional images and captions. YouTube players load on visitor request; Instagram/Pinterest cards link to the original work. These are portfolio features and do not change CV content or publish private profiles automatically.
 
 The shared [sections package](packages/sections) includes renderer/editor folders for all 42 PageForge section families plus native social work sections. See [migration coverage](docs/pageforge-section-migration.md) and [private templates and import/export](docs/section-templates.md). Import review never publishes a portfolio.
+
+Search discovery, generated name marks and sharing images: see [portfolio SEO and branding](docs/portfolio-seo.md).

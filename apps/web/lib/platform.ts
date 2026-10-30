@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { headers } from 'next/headers'
 import { cache } from 'react'
 
-export const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL || 'https://mydevstudio.vercel.app'
-).replace(/\/$/, '')
+import { siteUrl } from './site-url'
+
+export { siteUrl } from './site-url'
 export const platformDescription =
   'Create a portfolio that feels like you. Share your projects, tell your story, and download a CV from the same information.'
 export const platformMetadata: Metadata = {

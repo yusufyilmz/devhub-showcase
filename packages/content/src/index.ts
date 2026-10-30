@@ -1,3 +1,5 @@
+export { getNameInitials } from './branding'
+
 import { chatMessages } from './chat-messages'
 import { aboutSection } from './site-copy/about'
 import { chat } from './site-copy/chat'

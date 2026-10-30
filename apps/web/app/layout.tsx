@@ -3,7 +3,6 @@ import '@shared/ui/globals.css'
 import '../features/portfolio/themes.css'
 import '../features/portfolio/portfolio.css'
 import { StyledEngineProvider } from '@mui/material'
-import { copy } from '@shared/content'
 import { NotificationProvider } from '@shared/ui/context'
 import { ThemeProvider } from '@shared/ui/theme'
 import type { Metadata } from 'next'
@@ -14,6 +13,7 @@ import { getPagePresentation } from '../lib/page-presentation'
 import { isPlatformPage, platformMetadata } from '../lib/platform'
 import { getPublicThemeStyle } from '../lib/portfolio-theme'
 import { getProfileStructuredData } from '../lib/profile-structured-data'
+import { portfolioUrl } from '../lib/site-url'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -27,41 +27,8 @@ const geistMono = localFont({
   weight: '100 900'
 })
 
-export async function generateMetadata(): Promise<Metadata> {
-  if (await isPlatformPage()) return platformMetadata
-  const snapshot = await getActiveProfile()
-  if (!snapshot) return platformMetadata
-  const { profile } = snapshot
-  return {
-    ...copy.metadata,
-    keywords: [
-      profile.name,
-      profile.title,
-      'CV',
-      'portfolio',
-      ...Object.values(profile.skills).flat().slice(0, 20)
-    ],
-    icons: { icon: '/cv-icon.svg' },
-    metadataBase: new URL(
-      profile.website ||
-        process.env.NEXT_PUBLIC_SITE_URL ||
-        'https://yusufdevhub.vercel.app'
-    ),
-    title: `${profile.name} | ${profile.title}`,
-    description: profile.summary,
-    alternates: { canonical: profile.website },
-    openGraph: {
-      url: profile.website,
-      title: `${profile.name} | ${profile.title}`,
-      description: profile.summary
-    },
-    twitter: {
-      card: 'summary',
-      title: `${profile.name} | ${profile.title}`,
-      description: profile.summary
-    }
-  }
-}
+// Personal metadata belongs only to the published username route.
+export const metadata: Metadata = platformMetadata
 
 export default async function RootLayout({
   children
@@ -79,7 +46,16 @@ export default async function RootLayout({
     portfolioTheme,
     example
   } = getPagePresentation(path, platform, snapshot)
-  const structuredData = getProfileStructuredData(example ? undefined : profile)
+  const publicPortfolio =
+    !example &&
+    !path.startsWith('/admin') &&
+    !path.endsWith('/edit') &&
+    snapshot?.isPublic &&
+    snapshot.username
+  const structuredData = getProfileStructuredData(
+    publicPortfolio ? profile : undefined,
+    publicPortfolio ? portfolioUrl(snapshot.username as string) : undefined
+  )
   const themeScript = `(function(){try{var s=localStorage.getItem(${JSON.stringify(storageKey)});var d=${JSON.stringify(appearance.defaultTheme)};var t=s==='light'||s==='dark'?s:d==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):d;document.documentElement.dataset.theme=t}catch(e){}})()`
   return (
     <html
