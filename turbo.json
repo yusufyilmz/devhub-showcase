@@ -18,7 +18,8 @@
         "APPLICATION_NAME",
         "LOG_LEVEL",
         "OPENAI_CV_MODEL",
-        "CV_IMPORT_DAILY_LIMIT"
+        "CV_IMPORT_DAILY_LIMIT",
+        "OPENAI_CHAT_MODEL"
       ]
     },
     "clean": {
@@ -53,7 +54,8 @@
         "APPLICATION_NAME",
         "LOG_LEVEL",
         "OPENAI_CV_MODEL",
-        "CV_IMPORT_DAILY_LIMIT"
+        "CV_IMPORT_DAILY_LIMIT",
+        "OPENAI_CHAT_MODEL"
       ]
     }
   }

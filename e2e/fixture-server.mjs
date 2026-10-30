@@ -66,6 +66,23 @@ const starters = ["desktop", "mobile"].map((device, index) => ({
   owner_id: `33333333-3333-4333-8333-33333333333${index}`,
   username: `${device}-starter`,
 }));
+const aiOwners = ["desktop", "mobile"].map((device, index) => ({
+  ...row,
+  document: {
+    ...profile,
+    email: "ai-owner@example.test",
+    name: "Alex Private",
+    projects: [
+      { ...profile.projects[0], id: "private-work", name: "Confidential project", public: false },
+    ],
+    sectionSettings: { experience: { visible: false } },
+    templateChosen: true,
+  },
+  id: `82828282-8282-4282-8282-82828282828${index}`,
+  is_public: false,
+  owner_id: `83838383-8383-4383-8383-83838383838${index}`,
+  username: `${device}-ai-owner`,
+}));
 const cvImportOwners = ["desktop", "mobile"].map((device, index) => ({
   ...row,
   document: { ...starters[index].document, name: "CV Import Owner", templateChosen: false },
@@ -317,6 +334,7 @@ const rows = [
   ...starters,
   ...customOwners,
   ...cvImportOwners,
+  ...aiOwners,
   ...mediaOwners,
   ...mediaExamples,
   ...libraryOwners,
@@ -377,6 +395,7 @@ function fixtureOwner(request) {
       ...starters,
       ...customOwners,
       ...cvImportOwners,
+      ...aiOwners,
       ...libraryOwners,
       ...mediaOwners,
       ...managers,

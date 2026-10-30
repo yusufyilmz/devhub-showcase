@@ -5,6 +5,7 @@ import { type PortfolioProfile, portfolioTypes } from "@shared/content";
 import type { ProfileSnapshot } from "@shared/lib/profile-errors";
 import { cvPath, editCvPath } from "@shared/lib/username";
 
+import { AiProfileEditor } from "./ai-profile-editor";
 import { AppearanceEditor } from "./appearance-editor";
 import {
   EducationEditor,
@@ -26,6 +27,7 @@ import { SkillsEditor } from "./skills-editor";
 const tabs = [
   "Profile",
   "Import CV",
+  "AI profile",
   "Experience",
   "Projects",
   "Education",
@@ -139,7 +141,6 @@ export function ProfileEditor({
         setDraft={setDraft}
       />
     );
-  const CurrentEditor = editors[tab];
   return (
     <main className="studio" id="admin-content">
       <form
@@ -241,7 +242,7 @@ export function ProfileEditor({
         )}
         <fieldset className="editor-body" disabled={busy}>
           <legend className="sr-only">{tab} editor</legend>
-          <CurrentEditor onChange={setDraft} profile={draft} />
+          <EditorBody onChange={setDraft} profile={draft} readUrl={saveUrl} tab={tab} />
         </fieldset>
         <footer className="editor-footer">
           <p>Save your edits to update your CV. Public sharing is optional.</p>
@@ -265,6 +266,22 @@ export function ProfileEditor({
       </form>
     </main>
   );
+}
+
+function EditorBody({
+  tab,
+  readUrl,
+  profile,
+  onChange,
+}: {
+  tab: (typeof tabs)[number];
+  readUrl: string;
+  profile: PortfolioProfile;
+  onChange: (profile: PortfolioProfile) => void;
+}) {
+  if (tab === "AI profile") return <AiProfileEditor readUrl={readUrl} />;
+  const Editor = editors[tab];
+  return <Editor onChange={onChange} profile={profile} />;
 }
 
 function PortfolioOnboarding({
@@ -401,6 +418,7 @@ function LayoutEditor({
   );
 }
 const editors = {
+  "AI profile": AiProfileEditor,
   Appearance: AppearanceEditor,
   "Custom sections": CustomSectionsEditor,
   Education: EducationEditor,

@@ -4,9 +4,12 @@ import type React from "react";
 import { useState } from "react";
 
 import type { ChatMessage, ChatType } from "@shared/lib/types";
-import { useStore } from "zustand";
 
-import { chatStore } from "../../../../stores/chat-store";
+import {
+  type ChatIdentity,
+  PortfolioChatProvider,
+  usePortfolioChatState,
+} from "../../../../stores/chat-store";
 import { IconButton } from "../../../ui/IconButton/IconButton";
 import { ChatIcon, ReferralIcon } from "../../../ui/Icons/Icons";
 import { ChatPopupContainer } from "../ChatPopupContainer/ChatPopupContainer";
@@ -15,10 +18,18 @@ type ChatSectionProps = {
   handleSendMessage: (input: ChatMessage, sessionId: string) => Promise<ChatMessage>;
 };
 
-export const ChatSection: React.FC<ChatSectionProps> = ({ handleSendMessage }) => {
+export const ChatSection = ({
+  identity,
+  ...props
+}: ChatSectionProps & { identity: ChatIdentity }) => (
+  <PortfolioChatProvider identity={identity} key={`${identity.id}:${identity.revision}`}>
+    <ChatControls {...props} />
+  </PortfolioChatProvider>
+);
+const ChatControls: React.FC<ChatSectionProps> = ({ handleSendMessage }) => {
   const [type, setType] = useState<ChatType>("cv");
   const [isOpen, setIsOpen] = useState(false);
-  const resetChat = useStore(chatStore, (state) => state.resetChat);
+  const resetChat = usePortfolioChatState((state) => state.resetChat);
 
   const closeChat = (chatFinished: boolean) => {
     setIsOpen(!isOpen);

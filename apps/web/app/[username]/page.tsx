@@ -7,6 +7,8 @@ import { portfolioMetadata } from "../../lib/portfolio-metadata";
 import { loadPageResources } from "../../lib/portfolio-resources";
 import { getUsernameProfile } from "../../lib/public-profile";
 
+export const maxDuration = 60;
+
 type Props = { params: Promise<{ username: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { profile } = await getUsernameProfile((await params).username);
@@ -14,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 export default async function PublicCvPage({ params }: Props) {
   const { username } = await params;
-  const { profile: saved, id } = await getUsernameProfile(username);
+  const { profile: saved, id, revision } = await getUsernameProfile(username);
   if (saved.portfolioType && saved.portfolioType !== "engineer")
     return (
       <>
@@ -30,6 +32,7 @@ export default async function PublicCvPage({ params }: Props) {
   };
   return (
     <EngineerPortfolio
+      chatIdentity={original && id ? { id, name: saved.name, revision, username } : undefined}
       extras={original}
       ownerLink={<OwnerEditLink username={username} />}
       profile={profile}

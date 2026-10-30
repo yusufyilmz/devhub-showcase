@@ -1,1 +1,1 @@
-export const CHAT_STORAGE_NAME = "yusuf-chat-storage";
+export const CHAT_STORAGE_NAME = "mydevstudio:chat:public:v1";

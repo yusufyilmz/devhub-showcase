@@ -11,7 +11,8 @@ MyDevStudio is a multiuser portfolio and CV platform, developed in the `devhub-s
 - Reusable section renderers and editors, media sections and saved section templates.
 - PDF CVs generated from profile content rather than a separately maintained document.
 - Administrator-managed portfolios with controlled ownership transfer.
-- Optional AI chat and CV extraction, backed by server-side credentials and Redis limits.
+- Saved public/owner AI knowledge inspection, main-portfolio AI chat and optional CV extraction.
+- Server-side AI credentials and Redis limits; premium multiuser chat and billing remain separate rollout steps.
 
 The bundled public content works without service credentials. Authentication, persistence, managed portfolios and AI integrations require their respective setup. See the feature guides below; historical deployment notes are not proof of current production configuration.
 
@@ -32,7 +33,7 @@ Open http://localhost:3000. For optional integrations, copy [.env.example](.env.
 | --- | --- |
 | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Authentication and profile storage; legacy anon key remains supported |
 | `NEXT_PUBLIC_SITE_URL` | Canonical origin for links and metadata |
-| `OPENAI_API_KEY`, `OPENAI_MODEL` | Server-side AI chat configuration |
+| `OPENAI_API_KEY`, `OPENAI_CHAT_MODEL`, `OPENAI_MODEL` | Portfolio chat and legacy model configuration |
 | `REDIS_URL`, `REDIS_TOKEN` | Required rate-limit storage for AI features |
 | `OPENAI_CV_MODEL`, `CV_IMPORT_DAILY_LIMIT` | Optional CV extraction model and global import cap |
 | `APPLICATION_NAME`, `LOG_LEVEL` | Existing Pino logging |
@@ -90,6 +91,7 @@ Supabase is the persistence integration. Prisma is not used. Install, check and 
 | [Conventions](docs/conventions.md) | TypeScript, React, validation and dependency rules |
 | [Agent instructions](AGENTS.md) | Working safely with coding agents |
 | [Personal workspaces](docs/multiuser-cvs.md), [Google login](docs/google-login.md), [admin setup](docs/admin-setup.md) | Authentication and profile setup |
+| [AI foundation](docs/portfolio-ai-foundation.md) | Public/owner knowledge, saved AI profile inspector and chat boundaries |
 | [Managed portfolios](docs/managed-portfolios.md), [CV import](docs/cv-import.md) | Administration, transfer and extraction |
 | [Section system](docs/section-system.md), [section templates](docs/section-templates.md), [section order](docs/section-order.md) | Section editing and composition |
 | [Shared packages](docs/shared-packages.md), [section migration](docs/pageforge-section-migration.md) | Reuse boundaries and compatibility |

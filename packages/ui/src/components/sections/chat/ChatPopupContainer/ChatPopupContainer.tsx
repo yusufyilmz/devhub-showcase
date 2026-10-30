@@ -4,10 +4,9 @@ import type React from "react";
 import { useEffect, useState } from "react";
 
 import { type ChatMessage, ChatRole, type ChatType } from "@shared/lib/types";
-import { useStore } from "zustand";
 
 import { failureMessage } from "../../../../constants/messages";
-import { chatStore, useChatMessages } from "../../../../stores/chat-store";
+import { useChatMessages, usePortfolioChatState } from "../../../../stores/chat-store";
 import { IconButton } from "../../../ui/IconButton/IconButton";
 import { CloseIcon } from "../../../ui/Icons/Icons";
 import { ChatInput } from "../ChatInput/ChatInput";
@@ -27,8 +26,8 @@ export const ChatPopupContainer: React.FC<ChatPopupProps> = ({
   type,
   closeChat,
 }) => {
-  const sessionId = useStore(chatStore, (state) => state.sessionId);
-  const addMessage = useStore(chatStore, (state) => state.addMessage);
+  const sessionId = usePortfolioChatState((state) => state.sessionId);
+  const addMessage = usePortfolioChatState((state) => state.addMessage);
   const messages = useChatMessages(type);
   const [isTyping, setIsTyping] = useState(false);
   const [isChatFinished, setIsChatFinished] = useState(false);
