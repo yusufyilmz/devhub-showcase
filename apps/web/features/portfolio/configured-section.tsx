@@ -71,7 +71,7 @@ function sectionItems(profile: PortfolioProfile, kind: PortfolioSection["kind"])
       return profile.experiences.map((item) => ({
         content: (
           <>
-            <a href={item.companyUrl}>{item.company}</a>
+            {item.companyUrl ? <a href={item.companyUrl}>{item.company}</a> : item.company}
             <p>{period(item.start, item.end)}</p>
             <ul>
               {item.achievements.map((achievement) => (
@@ -87,7 +87,7 @@ function sectionItems(profile: PortfolioProfile, kind: PortfolioSection["kind"])
       return profile.education.map((item) => ({
         content: (
           <>
-            <a href={item.url}>{item.institution}</a>
+            {item.url ? <a href={item.url}>{item.institution}</a> : item.institution}
             <p>{period(item.start, item.end)}</p>
           </>
         ),

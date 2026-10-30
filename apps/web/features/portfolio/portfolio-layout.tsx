@@ -165,8 +165,12 @@ function FolioSections({
               {education.degree} · {education.field}
             </h3>
             <p>
-              <a href={education.url}>{education.institution}</a> ·{" "}
-              {formatPortfolioPeriod(education.start, education.end, profile.portfolioLanguage)}
+              {education.url ? (
+                <a href={education.url}>{education.institution}</a>
+              ) : (
+                education.institution
+              )}{" "}
+              · {formatPortfolioPeriod(education.start, education.end, profile.portfolioLanguage)}
             </p>
           </article>
         ))}
@@ -183,9 +187,13 @@ function FolioSections({
                 {formatPortfolioPeriod(experience.start, experience.end, profile.portfolioLanguage)}
               </span>
             </div>
-            <a href={experience.companyUrl} rel="noopener noreferrer">
-              {experience.company}
-            </a>
+            {experience.companyUrl ? (
+              <a href={experience.companyUrl} rel="noopener noreferrer">
+                {experience.company}
+              </a>
+            ) : (
+              experience.company
+            )}
             {experience.achievements.length > 0 && (
               <ul>
                 {experience.achievements.map((achievement) => (

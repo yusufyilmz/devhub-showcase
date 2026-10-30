@@ -20,6 +20,7 @@
     "@emotion/styled": "catalog:",
     "@mui/material": "catalog:",
     "@shared/auth": "workspace:*",
+    "@shared/cache": "workspace:*",
     "@shared/chat": "workspace:*",
     "@shared/components": "workspace:*",
     "@shared/content": "workspace:*",

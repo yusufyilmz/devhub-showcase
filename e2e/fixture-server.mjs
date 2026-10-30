@@ -66,6 +66,14 @@ const starters = ["desktop", "mobile"].map((device, index) => ({
   owner_id: `33333333-3333-4333-8333-33333333333${index}`,
   username: `${device}-starter`,
 }));
+const cvImportOwners = ["desktop", "mobile"].map((device, index) => ({
+  ...row,
+  document: { ...starters[index].document, name: "CV Import Owner", templateChosen: false },
+  id: `68686868-6868-4868-8868-68686868686${index}`,
+  is_public: false,
+  owner_id: `69696969-6969-4969-8969-69696969696${index}`,
+  username: `${device}-cv-importer`,
+}));
 const customOwners = ["desktop", "mobile"].map((device, index) => ({
   ...row,
   document: {
@@ -308,6 +316,7 @@ const rows = [
   systemTheme,
   ...starters,
   ...customOwners,
+  ...cvImportOwners,
   ...mediaOwners,
   ...mediaExamples,
   ...libraryOwners,
@@ -367,6 +376,7 @@ function fixtureOwner(request) {
     owner = [
       ...starters,
       ...customOwners,
+      ...cvImportOwners,
       ...libraryOwners,
       ...mediaOwners,
       ...managers,

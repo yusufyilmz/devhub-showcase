@@ -63,7 +63,7 @@ export const profileSchema = z
             id,
             institution: text(),
             start: date,
-            url: safeUrl,
+            url: z.union([safeUrl, z.literal("")]),
           })
           .refine(chronological, {
             message: "End date must follow the start date",
@@ -77,7 +77,7 @@ export const profileSchema = z
         z
           .object({
             company: text(),
-            companyUrl: safeUrl,
+            companyUrl: z.union([safeUrl, z.literal("")]),
             id,
             position: text(),
             ...dated,
