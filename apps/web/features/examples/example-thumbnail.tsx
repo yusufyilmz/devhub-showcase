@@ -1,12 +1,15 @@
-import { getPortfolioThemeVariables, getPreviewAccent } from '@shared/content'
-import type { CSSProperties } from 'react'
-import type { PortfolioExample } from './data'
+import type { CSSProperties } from "react";
+
+import { getPortfolioThemeVariables, getPreviewAccent } from "@shared/content";
+
+import type { PortfolioExample } from "./data";
 
 export function ExampleThumbnail({ item }: { item: PortfolioExample }) {
-  const { profile } = item
-  const theme = profile.appearance?.theme ?? 'studio'
+  const { profile } = item;
+  const theme = profile.appearance?.theme ?? "studio";
   return (
     <div
+      aria-hidden="true"
       className="example-thumbnail theme-preview"
       data-layout={profile.portfolioType}
       data-portfolio-theme={theme}
@@ -14,17 +17,16 @@ export function ExampleThumbnail({ item }: { item: PortfolioExample }) {
       style={
         {
           ...getPortfolioThemeVariables(theme),
-          ...getPreviewAccent(profile.appearance?.accent ?? 'cyan')
+          ...getPreviewAccent(profile.appearance?.accent ?? "cyan"),
         } as CSSProperties
       }
-      aria-hidden="true"
     >
       <div className="example-mini-nav">
         <b>
           {profile.name
-            .split(' ')
+            .split(" ")
             .map((part) => part[0])
-            .join('')}
+            .join("")}
           .
         </b>
         <span>WORK / ABOUT / CV</span>
@@ -39,11 +41,11 @@ export function ExampleThumbnail({ item }: { item: PortfolioExample }) {
           <div key={project.id}>
             {item.covers[project.id] ? (
               <img
-                src={`/examples/${item.covers[project.id]}`}
                 alt=""
-                loading="lazy"
-                width="600"
                 height="400"
+                loading="lazy"
+                src={`/examples/${item.covers[project.id]}`}
+                width="600"
               />
             ) : (
               <div className="example-mini-shape">
@@ -57,5 +59,5 @@ export function ExampleThumbnail({ item }: { item: PortfolioExample }) {
         ))}
       </div>
     </div>
-  )
+  );
 }

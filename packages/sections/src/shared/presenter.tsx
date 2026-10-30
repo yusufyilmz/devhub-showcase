@@ -1,91 +1,85 @@
-import { HeroSurface } from '@shared/components/hero-surface'
+import type { ReactNode } from "react";
+
+import { HeroSurface } from "@shared/components/hero-surface";
 import {
   SectionAccordion,
   SectionCarousel,
   SectionGrid,
   type SectionItem,
-  SectionTabs
-} from '@shared/components/section-views'
-import { WorkMedia } from '@shared/components/work-media'
+  SectionTabs,
+} from "@shared/components/section-views";
+import { WorkMedia } from "@shared/components/work-media";
 import {
   type AuthorableSectionType,
   authorableSections,
   type CustomSection,
   getPortfolioCopy,
-  getSocialWork
-} from '@shared/content'
-import type { ReactNode } from 'react'
-import type { SectionProps } from '../types'
-import { ContactForm, LocationMap } from './interactive'
+  getSocialWork,
+} from "@shared/content";
 
-const safeLink = (url: string) => /^https?:\/\//i.test(url)
+import type { SectionProps } from "../types";
+import { ContactForm, LocationMap } from "./interactive";
+
+const safeLink = (url: string) => /^https?:\/\//i.test(url);
 function ItemMedia({
   item,
   video,
-  language
+  language,
 }: {
-  item: CustomSection['items'][number]
-  video: boolean
-  language?: SectionProps['language']
+  item: CustomSection["items"][number];
+  video: boolean;
+  language?: SectionProps["language"];
 }) {
-  const text = getPortfolioCopy(language)
-  const work = getSocialWork(item.url)
-  return video &&
-    safeLink(item.url) &&
-    /\.(mp4|webm|ogg)(\?|$)/i.test(item.url) ? (
+  const text = getPortfolioCopy(language);
+  const work = getSocialWork(item.url);
+  return video && safeLink(item.url) && /\.(mp4|webm|ogg)(\?|$)/i.test(item.url) ? (
     <video
       className="section-native-video"
       controls
       playsInline
+      poster={item.imageUrl && safeLink(item.imageUrl) ? item.imageUrl : undefined}
       preload="none"
-      poster={
-        item.imageUrl && safeLink(item.imageUrl) ? item.imageUrl : undefined
-      }
     >
       <source src={item.url} />
       <track
+        default
         kind="captions"
         label="Captions"
-        src={
-          item.captionsUrl && safeLink(item.captionsUrl)
-            ? item.captionsUrl
-            : undefined
-        }
-        default
+        src={item.captionsUrl && safeLink(item.captionsUrl) ? item.captionsUrl : undefined}
       />
     </video>
   ) : (
     <WorkMedia
-      title={item.title}
       imageUrl={item.imageUrl}
-      youtubeId={video && work?.provider === 'youtube' ? work.id : undefined}
       loadLabel={text.loadVideo}
+      title={item.title}
       unloadLabel={text.unloadVideo}
+      youtubeId={video && work?.provider === "youtube" ? work.id : undefined}
     />
-  )
+  );
 }
 export function ItemContent({
   item,
   quote = false,
   video = false,
-  language
+  language,
 }: {
-  item: CustomSection['items'][number]
-  quote?: boolean
-  video?: boolean
-  language?: SectionProps['language']
+  item: CustomSection["items"][number];
+  quote?: boolean;
+  video?: boolean;
+  language?: SectionProps["language"];
 }) {
   const prose = item.body
     .split(/\n\s*\n/)
     .filter(Boolean)
     .map((paragraph, index) => (
-      <p key={`${item.id}-${index}`} style={{ whiteSpace: 'pre-line' }}>
+      <p key={`${item.id}-${index}`} style={{ whiteSpace: "pre-line" }}>
         {paragraph}
       </p>
-    ))
+    ));
   return (
     <>
-      <ItemMedia item={item} video={video} language={language} />
+      <ItemMedia item={item} language={language} video={video} />
       {item.value && <p className="section-item-value">{item.value}</p>}
       {item.period && <p className="section-item-period">{item.period}</p>}
       {quote ? <blockquote>{prose}</blockquote> : prose}
@@ -103,38 +97,35 @@ export function ItemContent({
       )}
       {safeLink(item.url) && <a href={item.url}>{item.title} ↗</a>}
     </>
-  )
+  );
 }
 export function CollectionView({
   section,
   type,
-  language
+  language,
 }: SectionProps & { type: AuthorableSectionType }) {
-  const view = authorableSections[type].view
+  const view = authorableSections[type].view;
   const items: SectionItem[] = section.items.map((item) => ({
-    id: item.id,
-    title: item.title,
     content: (
       <ItemContent
         item={item}
-        quote={view === 'quotes'}
-        video={view === 'video'}
         language={language}
+        quote={view === "quotes"}
+        video={view === "video"}
       />
-    )
-  }))
-  const props = { items, label: section.title }
-  if (section.renderer === 'accordion') return <SectionAccordion {...props} />
-  if (section.renderer === 'tabs') return <SectionTabs {...props} />
-  if (section.renderer === 'carousel') return <SectionCarousel {...props} />
-  if (['gallery', 'cards'].includes(section.renderer))
+    ),
+    id: item.id,
+    title: item.title,
+  }));
+  const props = { items, label: section.title };
+  if (section.renderer === "accordion") return <SectionAccordion {...props} />;
+  if (section.renderer === "tabs") return <SectionTabs {...props} />;
+  if (section.renderer === "carousel") return <SectionCarousel {...props} />;
+  if (["gallery", "cards"].includes(section.renderer))
     return (
-      <SectionGrid
-        {...props}
-        variant={section.renderer === 'gallery' ? 'gallery' : 'cards'}
-      />
-    )
-  if (section.renderer === 'masonry')
+      <SectionGrid {...props} variant={section.renderer === "gallery" ? "gallery" : "cards"} />
+    );
+  if (section.renderer === "masonry")
     return (
       <div className="section-masonry">
         {items.map((item) => (
@@ -144,8 +135,8 @@ export function CollectionView({
           </article>
         ))}
       </div>
-    )
-  if (['steps', 'timeline'].includes(section.renderer))
+    );
+  if (["steps", "timeline"].includes(section.renderer))
     return (
       <ol className={`section-${section.renderer}`}>
         {items.map((item) => (
@@ -155,29 +146,29 @@ export function CollectionView({
           </li>
         ))}
       </ol>
-    )
+    );
   return (
     <div className="section-prose">
       {items.map((item) => (
         <article key={item.id}>
-          {section.renderer !== 'text' && <h3>{item.title}</h3>}
+          {section.renderer !== "text" && <h3>{item.title}</h3>}
           {item.content}
         </article>
       ))}
     </div>
-  )
+  );
 }
 export function SpecialView({
   section,
   type,
   anchors,
   language,
-  preview
+  preview,
 }: SectionProps & { type: AuthorableSectionType }): ReactNode {
-  const text = getPortfolioCopy(language)
-  const options = section.options ?? {}
+  const text = getPortfolioCopy(language);
+  const options = section.options ?? {};
   switch (authorableSections[type].view) {
-    case 'contact':
+    case "contact":
       return options.email ? (
         preview ? (
           <div className="section-contact-form">
@@ -189,7 +180,7 @@ export function SpecialView({
               {text.formMessage}
               <textarea disabled rows={4} />
             </label>
-            <button type="button" disabled>
+            <button disabled type="button">
               {text.formOpenEmail}
             </button>
             <p>{text.formEmailNotice}</p>
@@ -197,17 +188,16 @@ export function SpecialView({
         ) : (
           <ContactForm email={options.email} language={language} />
         )
-      ) : null
-    case 'map':
-      return options.latitude !== undefined &&
-        options.longitude !== undefined ? (
+      ) : null;
+    case "map":
+      return options.latitude !== undefined && options.longitude !== undefined ? (
         <LocationMap
-          title={section.title}
           latitude={options.latitude}
           longitude={options.longitude}
+          title={section.title}
         />
-      ) : null
-    case 'toc':
+      ) : null;
+    case "toc":
       return (
         <nav aria-label={section.title}>
           <ol>
@@ -220,19 +210,17 @@ export function SpecialView({
               ))}
           </ol>
         </nav>
-      )
-    case 'newsletter':
+      );
+    case "newsletter":
       return options.actionUrl && safeLink(options.actionUrl) ? (
         <a className="section-action" href={options.actionUrl}>
           {text.subscribe} ↗
         </a>
-      ) : null
-    case 'heading':
-      return null
+      ) : null;
+    case "heading":
+      return null;
     default:
-      return (
-        <CollectionView section={section} type={type} language={language} />
-      )
+      return <CollectionView language={language} section={section} type={type} />;
   }
 }
 export function SectionPresentation({
@@ -240,50 +228,50 @@ export function SectionPresentation({
   type,
   anchors,
   language,
-  preview
+  preview,
 }: SectionProps & { type: AuthorableSectionType }) {
-  if (!section.visible) return null
-  const view = authorableSections[type].view
+  if (!section.visible) return null;
+  const view = authorableSections[type].view;
   if (
     !section.items.length &&
     !section.options?.description &&
-    !['hero', 'heading', 'contact', 'map', 'toc', 'newsletter'].includes(view)
+    !["hero", "heading", "contact", "map", "toc", "newsletter"].includes(view)
   )
-    return null
+    return null;
   const frame = (
     <section
-      id={section.id}
-      className={`folio-section configured-section library-section composition-${section.composition ?? type} section-type-${type} section-view-${view}`}
-      data-section-type={type}
-      data-columns={section.options?.columns ?? 3}
-      data-alignment={section.options?.alignment ?? 'left'}
       aria-labelledby={`${section.id}-heading`}
+      className={`folio-section configured-section library-section composition-${section.composition ?? type} section-type-${type} section-view-${view}`}
+      data-alignment={section.options?.alignment ?? "left"}
+      data-columns={section.options?.columns ?? 3}
+      data-section-type={type}
+      id={section.id}
     >
       <h2 id={`${section.id}-heading`}>{section.title}</h2>
       {section.options?.description && (
         <p className="section-description">{section.options.description}</p>
       )}
       <SpecialView
-        section={section}
-        type={type}
         anchors={anchors}
         language={language}
         preview={preview}
+        section={section}
+        type={type}
       />
     </section>
-  )
-  return view === 'hero' && section.options?.mediaUrl ? (
+  );
+  return view === "hero" && section.options?.mediaUrl ? (
     <HeroSurface
       media={{
-        kind: 'image',
+        kind: "image",
+        overlay: "strong",
+        position: "center",
         url: section.options.mediaUrl,
-        position: 'center',
-        overlay: 'strong'
       }}
     >
       {frame}
     </HeroSurface>
   ) : (
     frame
-  )
+  );
 }

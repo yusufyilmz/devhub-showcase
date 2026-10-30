@@ -1,20 +1,20 @@
-'use client'
+"use client";
 
-import { copy } from '@shared/content'
-import { useRouter } from 'next/navigation'
-import { Button } from '../../../components'
+import { Button } from "@shared/components";
+import { copy } from "@shared/content";
+import { useRouter } from "next/navigation";
 
 export const GoBackButton = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <Button
       aria-label="Go back"
-      variant="outlined"
-      onClick={() => router.back()}
       className="rounded-lg"
+      onClick={() => router.back()}
+      variant="outlined"
     >
       {copy.cta.goBack}
     </Button>
-  )
-}
+  );
+};

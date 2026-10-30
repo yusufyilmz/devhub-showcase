@@ -1,2 +1,2 @@
-export { InstagramSection } from './InstagramSection'
-export { InstagramSectionEditor } from './InstagramSectionEditor'
+export { InstagramSection } from "./InstagramSection";
+export { InstagramSectionEditor } from "./InstagramSectionEditor";

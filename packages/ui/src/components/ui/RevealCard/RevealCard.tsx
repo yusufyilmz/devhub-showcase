@@ -1,19 +1,20 @@
-import { RevealCard as SharedRevealCard } from '@shared/components/cards'
-import { getPortfolioCopy, type Language } from '@shared/content'
-import type { ComponentProps } from 'react'
+import type { ComponentProps } from "react";
+
+import { RevealCard as SharedRevealCard } from "@shared/components/cards";
+import { getPortfolioCopy, type Language } from "@shared/content";
 export function RevealCard({
-  language = 'en',
+  language = "en",
   ...props
 }: ComponentProps<typeof SharedRevealCard> & { language?: Language }) {
-  const text = getPortfolioCopy(language)
+  const text = getPortfolioCopy(language);
   const labels = {
-    showDetails: text.showDetails,
-    hideDetails: text.hideDetails,
     fullDetails: text.fullDetails,
+    hideDetails: text.hideDetails,
     hoverDetails: text.hoverDetails,
-    tapDetails: text.tapDetails,
+    keyboardDetails: text.keyboardDetails,
+    showDetails: text.showDetails,
     tapClose: text.tapClose,
-    keyboardDetails: text.keyboardDetails
-  }
-  return <SharedRevealCard {...props} labels={labels} />
+    tapDetails: text.tapDetails,
+  };
+  return <SharedRevealCard {...props} labels={labels} />;
 }

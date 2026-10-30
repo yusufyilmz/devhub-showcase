@@ -1,9 +1,9 @@
 .library-section {
-  padding-block: 3.5rem;
-  border-top: 1px solid rgb(var(--border-rgb));
-  min-width: 0;
-  overflow-wrap: anywhere;
   --section-columns: 3;
+  min-width: 0;
+  padding-block: 3.5rem;
+  overflow-wrap: anywhere;
+  border-top: 1px solid rgb(var(--border-rgb));
 }
 .library-section[data-alignment="center"] {
   text-align: center;
@@ -21,13 +21,13 @@
   --section-columns: 4;
 }
 .library-section > h2 {
+  margin-bottom: 1.5rem;
   font-size: clamp(1.75rem, 3vw, 2.75rem);
   line-height: 1.15;
-  margin-bottom: 1.5rem;
 }
 .library-section p {
-  line-height: 1.8;
   margin-block: 1rem;
+  line-height: 1.8;
   color: rgb(var(--muted-rgb));
 }
 .library-section .section-view-grid {
@@ -45,29 +45,29 @@
   font-size: 0.85rem;
 }
 .library-section h3 {
-  font-size: 1.2rem;
   margin-bottom: 0.75rem;
+  font-size: 1.2rem;
 }
 .library-section a {
   color: rgb(var(--accent-rgb));
 }
 .library-section blockquote {
-  border-left: 3px solid rgb(var(--accent-rgb));
   padding-inline-start: 1.25rem;
   font-style: italic;
+  border-left: 3px solid rgb(var(--accent-rgb));
 }
 .library-section pre {
   max-width: 100%;
+  padding: 1rem;
   overflow: auto;
   white-space: pre;
-  padding: 1rem;
-  border-radius: 12px;
   background: rgb(var(--surface-rgb));
+  border-radius: 12px;
 }
 .section-timeline {
-  border-left: 1px solid rgb(var(--border-rgb));
   padding-left: 1.5rem;
   list-style: none;
+  border-left: 1px solid rgb(var(--border-rgb));
 }
 .section-timeline > li,
 .section-steps > li {
@@ -79,11 +79,11 @@
   column-gap: 1.5rem;
 }
 .section-masonry article {
-  break-inside: avoid;
   padding: 1.25rem;
   margin-bottom: 1.5rem;
   border: 1px solid rgb(var(--border-rgb));
   border-radius: 16px;
+  break-inside: avoid;
 }
 .section-view-team .work-media img,
 .section-view-profile .work-media img {
@@ -116,19 +116,19 @@
   max-width: 680px;
 }
 .section-contact-form :is(input, textarea) {
+  padding: 0.75rem;
   font: inherit;
   color: rgb(var(--text-rgb));
   background: rgb(var(--surface-rgb));
-  padding: 0.75rem;
   border: 1px solid rgb(var(--border-rgb));
   border-radius: 8px;
 }
 .section-contact-form button,
 .section-location button {
-  font: inherit;
-  cursor: pointer;
   padding: 0.75rem 1rem;
+  font: inherit;
   color: rgb(var(--text-rgb));
+  cursor: pointer;
   background: rgb(var(--surface-rgb));
   border: 1px solid rgb(var(--border-rgb));
   border-radius: 8px;
@@ -166,19 +166,19 @@
   gap: 1rem;
 }
 .template-library button:not([class]) {
-  font: inherit;
   min-height: 44px;
   padding: 0.65rem 0.85rem;
+  font: inherit;
+  color: rgb(var(--text-rgb));
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  background: rgb(var(--surface-rgb));
   border: 1px solid rgb(var(--border-rgb));
   border-radius: 8px;
-  color: rgb(var(--text-rgb));
-  background: rgb(var(--surface-rgb));
-  cursor: pointer;
-  overflow-wrap: anywhere;
 }
 .template-library button:disabled {
-  opacity: 0.5;
   cursor: default;
+  opacity: 0.5;
 }
 .template-library-list {
   display: grid;
@@ -189,8 +189,8 @@
 .template-library-list > li {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   gap: 0.65rem;
+  align-items: center;
   padding: 1rem;
   border: 1px solid rgb(var(--border-rgb));
   border-radius: 12px;

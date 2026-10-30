@@ -1,43 +1,40 @@
-import type { Logger } from 'pino'
-import type { ResourceService } from '../../../../types'
-import {
-  type Referral,
-  ReviewState,
-  type SupabaseDbClient
-} from '../../../../types/supabase'
-import type { Database } from '../../../../types/supabase/database.types'
-import { keysToCamelCase } from '../../../../utils/converter/camel-case'
-import { referralFormatter } from '../../../formatter'
+import type { Logger } from "pino";
+
+import type { ResourceService } from "../../../../types";
+import { type Referral, ReviewState, type SupabaseDbClient } from "../../../../types/supabase";
+import type { Database } from "../../../../types/supabase/database.types";
+import { keysToCamelCase } from "../../../../utils/converter/camel-case";
+import { referralFormatter } from "../../../formatter";
 
 export class ReferralService implements ResourceService<Referral> {
-  private readonly dbClient: SupabaseDbClient
-  private logger: Logger
+  private readonly dbClient: SupabaseDbClient;
+  private logger: Logger;
 
   constructor(logger: Logger, dbClient: SupabaseDbClient) {
-    this.logger = logger
-    this.dbClient = dbClient
+    this.logger = logger;
+    this.dbClient = dbClient;
   }
 
   async getAll(): Promise<Referral[]> {
-    const { data, error } = await this.dbClient.from('referrals').select(`
+    const { data, error } = await this.dbClient.from("referrals").select(`
         *,
         review:reviews(state)
-      `)
+      `);
 
     if (error) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
 
     const filteredReferrals = data.filter((referral) => {
-      const reviewState = referral.review?.[0]?.state
-      return reviewState === ReviewState.APPROVED || !reviewState
-    })
+      const reviewState = referral.review?.[0]?.state;
+      return reviewState === ReviewState.APPROVED || !reviewState;
+    });
 
-    return keysToCamelCase<Referral[]>(filteredReferrals)
+    return keysToCamelCase<Referral[]>(filteredReferrals);
   }
 
   async createGPTModal(): Promise<string> {
-    const { data, error } = await this.dbClient.from('referrals').select(`
+    const { data, error } = await this.dbClient.from("referrals").select(`
         id,
         name,
         relationship,
@@ -48,111 +45,91 @@ export class ReferralService implements ResourceService<Referral> {
         review (
           state
         )
-      `)
+      `);
 
     if (error) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
 
-    return referralFormatter(keysToCamelCase<Referral[]>(data))
+    return referralFormatter(keysToCamelCase<Referral[]>(data));
   }
 
-  saveReferral = async (
-    category: string,
-    answer: string,
-    sessionId: string
-  ): Promise<void> => {
-    const field = category === 'contactInfo' ? 'contact_info' : category
-    const logger = this.logger.child({ category, answer, sessionId })
+  saveReferral = async (category: string, answer: string, sessionId: string): Promise<void> => {
+    const field = category === "contactInfo" ? "contact_info" : category;
+    const logger = this.logger.child({ answer, category, sessionId });
 
     try {
-      logger.debug('Saving referral answer')
+      logger.debug("Saving referral answer");
 
       // Check if the referral exists
       const { data: existingReferral, error: fetchError } = await this.dbClient
-        .from('referrals')
-        .select('id')
-        .eq('session_id', sessionId)
-        .single()
+        .from("referrals")
+        .select("id")
+        .eq("session_id", sessionId)
+        .single();
 
       if (fetchError) {
-        throw fetchError
+        throw fetchError;
       }
 
-      if (
-        ![
-          'name',
-          'relationship',
-          'feedback',
-          'recommendation',
-          'contact_info'
-        ].includes(field)
-      )
-        throw new Error('Invalid referral field')
+      if (!["name", "relationship", "feedback", "recommendation", "contact_info"].includes(field))
+        throw new Error("Invalid referral field");
       if (existingReferral) {
         // Update the existing referral
-        const update: Database['public']['Tables']['referrals']['Update'] = {
-          updated_at: new Date().toISOString()
-        }
-        update[
-          field as
-            | 'name'
-            | 'relationship'
-            | 'feedback'
-            | 'recommendation'
-            | 'contact_info'
-        ] = answer
+        const update: Database["public"]["Tables"]["referrals"]["Update"] = {
+          updated_at: new Date().toISOString(),
+        };
+        update[field as "name" | "relationship" | "feedback" | "recommendation" | "contact_info"] =
+          answer;
         const { error: updateError } = await this.dbClient
-          .from('referrals')
+          .from("referrals")
           .update(update)
-          .eq('session_id', sessionId)
+          .eq("session_id", sessionId);
 
         if (updateError) {
-          throw updateError
+          throw updateError;
         }
 
-        await this.resetReview(existingReferral.id)
+        await this.resetReview(existingReferral.id);
 
-        logger.debug({ existingReferral }, 'Referral answer updated')
+        logger.debug({ existingReferral }, "Referral answer updated");
       } else {
-        logger.warn({ sessionId }, 'Referral not found')
+        logger.warn({ sessionId }, "Referral not found");
       }
     } catch (error) {
-      logger.error({ error }, 'Error saving referral answer')
+      logger.error({ error }, "Error saving referral answer");
     }
-  }
+  };
   private async resetReview(referralId: string) {
     const { data: review, error: reviewError } = await this.dbClient
-      .from('reviews')
-      .select('state')
-      .eq('referral_id', referralId)
-      .single()
+      .from("reviews")
+      .select("state")
+      .eq("referral_id", referralId)
+      .single();
 
     if (reviewError) {
-      throw reviewError
+      throw reviewError;
     }
 
     if (!review) {
-      const { error: createError } = await this.dbClient
-        .from('reviews')
-        .insert({
-          id: crypto.randomUUID(),
-          referral_id: referralId,
-          state: ReviewState.PENDING,
-          updated_at: new Date().toISOString()
-        })
+      const { error: createError } = await this.dbClient.from("reviews").insert({
+        id: crypto.randomUUID(),
+        referral_id: referralId,
+        state: ReviewState.PENDING,
+        updated_at: new Date().toISOString(),
+      });
 
       if (createError) {
-        throw createError
+        throw createError;
       }
     } else if (review.state === ReviewState.REJECTED) {
       const { error: updateReviewError } = await this.dbClient
-        .from('reviews')
+        .from("reviews")
         .update({ state: ReviewState.PENDING })
-        .eq('referral_id', referralId)
+        .eq("referral_id", referralId);
 
       if (updateReviewError) {
-        throw updateReviewError
+        throw updateReviewError;
       }
     }
   }

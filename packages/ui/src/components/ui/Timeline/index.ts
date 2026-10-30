@@ -1,1 +1,8 @@
-export * from './Timeline'
+export {
+  Timeline,
+  TimelineBody,
+  TimelineConnector,
+  TimelineHeader,
+  TimelineIcon,
+  TimelineItem,
+} from "./Timeline";

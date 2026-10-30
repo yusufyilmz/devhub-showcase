@@ -1,85 +1,81 @@
-import type { CustomSection } from './custom-sections'
-import { formatPortfolioPeriod } from './languages'
-import type { PortfolioProfile } from './profile'
+import type { CustomSection } from "./custom-sections";
+import { formatPortfolioPeriod } from "./languages";
+import type { PortfolioProfile } from "./profile";
 export function resolveSectionSource(
   section: CustomSection,
-  profile: PortfolioProfile
+  profile: PortfolioProfile,
 ): CustomSection {
-  const source = section.source
-  if (!source) return section
-  const choose = (id: string) => !source.itemIds || source.itemIds.includes(id)
-  let items: CustomSection['items'] = []
+  const source = section.source;
+  if (!source) return section;
+  const choose = (id: string) => !source.itemIds || source.itemIds.includes(id);
+  let items: CustomSection["items"] = [];
   switch (source.field) {
-    case 'projects':
+    case "projects":
       items = profile.projects
         .filter((item) => item.public && choose(item.id))
         .map((item) => ({
-          id: item.id,
-          title: item.name,
           body: item.description,
-          url: item.url ?? '',
-          imageUrl: item.coverImage ?? '',
-          details: item.skills
-        }))
-      break
-    case 'experiences':
+          details: item.skills,
+          id: item.id,
+          imageUrl: item.coverImage ?? "",
+          title: item.name,
+          url: item.url ?? "",
+        }));
+      break;
+    case "experiences":
       items = profile.experiences
         .filter((item) => choose(item.id))
         .map((item) => ({
-          id: item.id,
-          title: item.position,
           body: item.company,
+          details: item.achievements,
+          id: item.id,
+          period: formatPortfolioPeriod(item.start, item.end, profile.portfolioLanguage),
+          title: item.position,
           url: item.companyUrl,
-          period: formatPortfolioPeriod(
-            item.start,
-            item.end,
-            profile.portfolioLanguage
-          ),
-          details: item.achievements
-        }))
-      break
-    case 'education':
+        }));
+      break;
+    case "education":
       items = profile.education
         .filter((item) => choose(item.id))
         .map((item) => ({
-          id: item.id,
-          title: item.degree,
           body: `${item.field} · ${item.institution}`,
+          id: item.id,
+          period: formatPortfolioPeriod(item.start, item.end, profile.portfolioLanguage),
+          title: item.degree,
           url: item.url,
-          period: formatPortfolioPeriod(
-            item.start,
-            item.end,
-            profile.portfolioLanguage
-          )
-        }))
-      break
-    case 'skills':
+        }));
+      break;
+    case "skills":
       items = Object.entries(profile.skills)
         .filter(([id]) => choose(id))
-        .map(([id, details]) => ({ id, title: id, body: '', url: '', details }))
-      break
-    case 'languages':
+        .map(([id, details]) => ({
+          body: "",
+          details,
+          id,
+          title: id,
+          url: "",
+        }));
+      break;
+    case "languages":
       items = profile.languages
         .filter((item) => choose(item.id))
         .map((item) => ({
+          body: item.proficiency,
           id: item.id,
           title: item.language,
-          body: item.proficiency,
-          url: ''
-        }))
-      break
-    case 'about':
+          url: "",
+        }));
+      break;
+    case "about":
       items = [
         {
-          id: 'about',
+          body: (profile.about.length ? profile.about : [profile.summary]).join("\n\n"),
+          id: "about",
           title: profile.name,
-          body: (profile.about.length ? profile.about : [profile.summary]).join(
-            '\n\n'
-          ),
-          url: ''
-        }
-      ]
-      break
+          url: "",
+        },
+      ];
+      break;
   }
-  return { ...section, items }
+  return { ...section, items };
 }

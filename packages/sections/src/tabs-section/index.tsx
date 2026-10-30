@@ -1,2 +1,2 @@
-export { TabsSection } from './TabsSection'
-export { TabsSectionEditor } from './TabsSectionEditor'
+export { TabsSection } from "./TabsSection";
+export { TabsSectionEditor } from "./TabsSectionEditor";

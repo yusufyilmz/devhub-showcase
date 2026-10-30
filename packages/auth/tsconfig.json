@@ -1,8 +1,8 @@
 {
-  "extends": "@shared/typescript-config/base.json",
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", "dist"],
   "compilerOptions": {
     "types": ["node"]
-  }
+  },
+  "exclude": ["node_modules", "dist"],
+  "extends": "@shared/typescript-config/base.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

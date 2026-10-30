@@ -1,58 +1,59 @@
-'use client'
-import { LinesField } from '@shared/components/fields'
-import type { PortfolioProfile } from '@shared/content'
-import { useState } from 'react'
+"use client";
+import { useState } from "react";
+
+import { LinesField } from "@shared/components/fields";
+import type { PortfolioProfile } from "@shared/content";
 
 function SkillGroup({
   name,
   skills,
   rename,
   change,
-  remove
+  remove,
 }: {
-  name: string
-  skills: string[]
-  rename: (name: string) => void
-  change: (skills: string[]) => void
-  remove: () => void
+  name: string;
+  skills: string[];
+  rename: (name: string) => void;
+  change: (skills: string[]) => void;
+  remove: () => void;
 }) {
-  const [label, setLabel] = useState(name)
+  const [label, setLabel] = useState(name);
   return (
     <article className="editor-card">
       <div className="editor-card-heading">
         <label className="editor-field">
           Group name
           <input
-            value={label}
-            onChange={(event) => setLabel(event.target.value)}
             onBlur={() => {
-              rename(label.trim())
-              setLabel(name)
+              rename(label.trim());
+              setLabel(name);
             }}
+            onChange={(event) => setLabel(event.target.value)}
+            value={label}
           />
         </label>
         <button
-          type="button"
           className="danger-button"
           onClick={() => {
-            if (window.confirm(`Remove ${name}?`)) remove()
+            if (window.confirm(`Remove ${name}?`)) remove();
           }}
+          type="button"
         >
           Remove group
         </button>
       </div>
-      <LinesField label={`${name} skills`} value={skills} onChange={change} />
+      <LinesField label={`${name} skills`} onChange={change} value={skills} />
     </article>
-  )
+  );
 }
 export function SkillsEditor({
   profile,
-  onChange
+  onChange,
 }: {
-  profile: PortfolioProfile
-  onChange: (profile: PortfolioProfile) => void
+  profile: PortfolioProfile;
+  onChange: (profile: PortfolioProfile) => void;
 }) {
-  const [error, setError] = useState('')
+  const [error, setError] = useState("");
   return (
     <section>
       <div className="editor-section-heading">
@@ -62,15 +63,15 @@ export function SkillsEditor({
         </div>
         <button
           className="studio-secondary"
-          type="button"
           onClick={() => {
-            let n = 1
-            while (profile.skills[`Skill group ${n}`]) n++
+            let n = 1;
+            while (profile.skills[`Skill group ${n}`]) n++;
             onChange({
               ...profile,
-              skills: { ...profile.skills, [`Skill group ${n}`]: [] }
-            })
+              skills: { ...profile.skills, [`Skill group ${n}`]: [] },
+            });
           }}
+          type="button"
         >
           + Add group
         </button>
@@ -82,45 +83,45 @@ export function SkillsEditor({
       )}
       {Object.entries(profile.skills).map(([name, skills]) => (
         <SkillGroup
+          change={(value) =>
+            onChange({
+              ...profile,
+              skills: { ...profile.skills, [name]: value },
+            })
+          }
           key={name}
           name={name}
-          skills={skills}
+          remove={() =>
+            onChange({
+              ...profile,
+              skills: Object.fromEntries(
+                Object.entries(profile.skills).filter(([key]) => key !== name),
+              ),
+            })
+          }
           rename={(next) => {
             if (
               !next ||
-              ['__proto__', 'constructor', 'prototype'].includes(next) ||
+              ["__proto__", "constructor", "prototype"].includes(next) ||
               (next !== name && next in profile.skills)
             ) {
-              setError('Choose a unique, non-empty group name.')
-              return
+              setError("Choose a unique, non-empty group name.");
+              return;
             }
-            setError('')
+            setError("");
             onChange({
               ...profile,
               skills: Object.fromEntries(
                 Object.entries(profile.skills).map(([key, value]) => [
                   key === name ? next : key,
-                  value
-                ])
-              )
-            })
+                  value,
+                ]),
+              ),
+            });
           }}
-          change={(value) =>
-            onChange({
-              ...profile,
-              skills: { ...profile.skills, [name]: value }
-            })
-          }
-          remove={() =>
-            onChange({
-              ...profile,
-              skills: Object.fromEntries(
-                Object.entries(profile.skills).filter(([key]) => key !== name)
-              )
-            })
-          }
+          skills={skills}
         />
       ))}
     </section>
-  )
+  );
 }

@@ -1,17 +1,17 @@
-import { z } from 'zod'
+import { z } from "zod";
 
 export const addProjectSchema = z.object({
-  title: z.string().min(1, 'Title is required'),
   description: z.string(),
-  link: z.string().url('Invalid URL'),
+  link: z.string().url("Invalid URL"),
+  role: z.string(),
   skills: z.array(z.string()).optional().default([]),
-  role: z.string()
-})
+  title: z.string().min(1, "Title is required"),
+});
 
 export const updateProjectSchema = z.object({
-  title: z.string().optional(),
   description: z.string().optional(),
-  link: z.string().url('Invalid URL').optional(),
+  link: z.string().url("Invalid URL").optional(),
+  role: z.string().optional(),
   skills: z.array(z.string()).optional().default([]),
-  role: z.string().optional()
-})
+  title: z.string().optional(),
+});

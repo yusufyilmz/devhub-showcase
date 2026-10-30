@@ -1,1 +1,1 @@
-export { CVSection } from './CVSection'
+export { CVSection } from "./CVSection";

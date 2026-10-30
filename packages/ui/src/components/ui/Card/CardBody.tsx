@@ -1,1 +1,1 @@
-export { CardBody } from '@shared/components/cards'
+export { CardBody } from "@shared/components/cards";

@@ -1,1 +1,20 @@
-export * from './cv'
+export type {
+  Achievement,
+  Certificate,
+  Character,
+  ChatCategory,
+  ContactInfo,
+  CVModel,
+  CVModelKey,
+  CVModelValue,
+  Education,
+  Experience,
+  Language,
+  MessageWithoutModel,
+  PersonalInformation,
+  Project,
+  Reference,
+  Skill,
+  Skills,
+  TechnicalChallenge,
+} from "./cv";

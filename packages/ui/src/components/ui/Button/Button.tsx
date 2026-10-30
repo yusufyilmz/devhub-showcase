@@ -1,1 +1,1 @@
-export { Button } from '@shared/components'
+export { Button } from "@shared/components";

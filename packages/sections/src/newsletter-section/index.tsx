@@ -1,2 +1,2 @@
-export { NewsletterSection } from './NewsletterSection'
-export { NewsletterSectionEditor } from './NewsletterSectionEditor'
+export { NewsletterSection } from "./NewsletterSection";
+export { NewsletterSectionEditor } from "./NewsletterSectionEditor";

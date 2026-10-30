@@ -1,2 +1,2 @@
-export { MenuSection } from './MenuSection'
-export { MenuSectionEditor } from './MenuSectionEditor'
+export { MenuSection } from "./MenuSection";
+export { MenuSectionEditor } from "./MenuSectionEditor";

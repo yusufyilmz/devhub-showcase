@@ -1,38 +1,32 @@
-'use client'
-import { SelectField } from '@shared/components/fields'
-import {
-  type CvLayout,
-  cvLayouts,
-  type PortfolioProfile
-} from '@shared/content'
+"use client";
+import { SelectField } from "@shared/components/fields";
+import { type CvLayout, cvLayouts, type PortfolioProfile } from "@shared/content";
 
-const defaults: NonNullable<PortfolioProfile['cvSettings']> = {
-  pageSize: 'A4',
+const defaults: NonNullable<PortfolioProfile["cvSettings"]> = {
   fontSize: 9,
+  includeLanguages: true,
+  includeProjects: true,
+  pageSize: "A4",
   showEmail: true,
   showPhone: true,
-  includeProjects: true,
-  includeLanguages: true
-}
+};
 export function CvSettingsEditor({
   profile,
-  onChange
+  onChange,
 }: {
-  profile: PortfolioProfile
-  onChange: (profile: PortfolioProfile) => void
+  profile: PortfolioProfile;
+  onChange: (profile: PortfolioProfile) => void;
 }) {
-  const settings = profile.cvSettings ?? defaults
+  const settings = profile.cvSettings ?? defaults;
   const update = (change: Partial<typeof defaults>) =>
-    onChange({ ...profile, cvSettings: { ...settings, ...change } })
+    onChange({ ...profile, cvSettings: { ...settings, ...change } });
   return (
     <section className="editor-card editor-fields">
       <h2>Your PDF preferences</h2>
       <SelectField
         label="CV layout"
-        value={profile.cvLayout ?? 'classic'}
-        onChange={(value) =>
-          onChange({ ...profile, cvLayout: value as CvLayout })
-        }
+        onChange={(value) => onChange({ ...profile, cvLayout: value as CvLayout })}
+        value={profile.cvLayout ?? "classic"}
       >
         {cvLayouts.map((layout) => (
           <option key={layout.id} value={layout.id}>
@@ -42,16 +36,16 @@ export function CvSettingsEditor({
       </SelectField>
       <SelectField
         label="Page size"
+        onChange={(v) => update({ pageSize: v as "A4" | "LETTER" })}
         value={settings.pageSize}
-        onChange={(v) => update({ pageSize: v as 'A4' | 'LETTER' })}
       >
         <option value="A4">A4</option>
         <option value="LETTER">US Letter</option>
       </SelectField>
       <SelectField
         label="Body text size"
-        value={String(settings.fontSize)}
         onChange={(v) => update({ fontSize: Number(v) as 9 | 10 | 11 })}
+        value={String(settings.fontSize)}
       >
         <option value="9">Compact (9 pt)</option>
         <option value="10">Standard (10 pt)</option>
@@ -59,25 +53,24 @@ export function CvSettingsEditor({
       </SelectField>
       {(
         [
-          ['showEmail', 'Include email'],
-          ['showPhone', 'Include phone'],
-          ['includeProjects', 'Include public projects'],
-          ['includeLanguages', 'Include languages']
+          ["showEmail", "Include email"],
+          ["showPhone", "Include phone"],
+          ["includeProjects", "Include public projects"],
+          ["includeLanguages", "Include languages"],
         ] as const
       ).map(([key, label]) => (
         <label key={key}>
           <input
-            type="checkbox"
             checked={settings[key]}
             onChange={(event) => update({ [key]: event.target.checked })}
-          />{' '}
+            type="checkbox"
+          />{" "}
           {label}
         </label>
       ))}
       <p>
-        Your Appearance accent also applies to the PDF. These settings are saved
-        only to your CV.
+        Your Appearance accent also applies to the PDF. These settings are saved only to your CV.
       </p>
     </section>
-  )
+  );
 }

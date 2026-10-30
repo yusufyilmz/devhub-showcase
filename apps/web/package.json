@@ -4,45 +4,45 @@
   "private": true,
   "scripts": {
     "build": "next build --webpack",
-    "typecheck": "tsc --noEmit",
-    "types:check": "pnpm typecheck",
+    "clean": "node -e \"require('node:fs').rmSync('.next',{recursive:true,force:true})\"",
+    "dev": "next dev --webpack",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "lint": "biome lint .",
     "lint:check": "biome lint .",
     "lint:fix": "biome lint --write .",
-    "clean": "node -e \"require('node:fs').rmSync('.next',{recursive:true,force:true})\"",
-    "dev": "next dev --webpack",
-    "start": "next start"
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "types:check": "pnpm typecheck"
   },
   "dependencies": {
     "@emotion/react": "catalog:",
     "@emotion/styled": "catalog:",
     "@mui/material": "catalog:",
+    "@shared/auth": "workspace:*",
     "@shared/chat": "workspace:*",
+    "@shared/components": "workspace:*",
     "@shared/content": "workspace:*",
+    "@shared/cv": "workspace:*",
     "@shared/lib": "workspace:*",
+    "@shared/sections": "workspace:*",
     "@shared/ui": "workspace:*",
     "@supabase/supabase-js": "catalog:",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "zod": "catalog:",
-    "@shared/cv": "workspace:*",
-    "@shared/auth": "workspace:*",
-    "@shared/components": "workspace:*",
-    "@shared/sections": "workspace:*"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@shared/tailwind-config": "workspace:*",
     "@shared/typescript-config": "workspace:*",
+    "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "postcss": "catalog:",
     "tailwindcss": "catalog:",
-    "typescript": "catalog:",
-    "@tailwindcss/postcss": "catalog:"
+    "typescript": "catalog:"
   },
   "engines": {
     "node": ">=24.15.0 <25"

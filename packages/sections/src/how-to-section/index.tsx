@@ -1,2 +1,2 @@
-export { HowToSection } from './HowToSection'
-export { HowToSectionEditor } from './HowToSectionEditor'
+export { HowToSection } from "./HowToSection";
+export { HowToSectionEditor } from "./HowToSectionEditor";

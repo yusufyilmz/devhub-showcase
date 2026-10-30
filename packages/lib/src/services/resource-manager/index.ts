@@ -1,48 +1,49 @@
-import type { Logger } from 'pino'
-import type { SupabaseDbClient } from '../../types'
-import type { PageResources } from '../../types/resources'
-import { EducationService } from '../resources/supabase/education'
-import { ExperienceService } from '../resources/supabase/experience'
-import { ProjectService } from '../resources/supabase/project'
-import { ReferralService } from '../resources/supabase/referral'
-import { SkillService } from '../resources/supabase/skill'
+import type { Logger } from "pino";
+
+import type { SupabaseDbClient } from "../../types";
+import type { PageResources } from "../../types/resources";
+import { EducationService } from "../resources/supabase/education";
+import { ExperienceService } from "../resources/supabase/experience";
+import { ProjectService } from "../resources/supabase/project";
+import { ReferralService } from "../resources/supabase/referral";
+import { SkillService } from "../resources/supabase/skill";
 
 export class ResourceManager {
-  private readonly dbClient: SupabaseDbClient
-  private readonly experienceService
-  private readonly projectService
-  private readonly educationService
-  private readonly referralService
-  private readonly skillService
+  private readonly dbClient: SupabaseDbClient;
+  private readonly experienceService;
+  private readonly projectService;
+  private readonly educationService;
+  private readonly referralService;
+  private readonly skillService;
 
   constructor(
     private logger: Logger,
-    client: SupabaseDbClient
+    client: SupabaseDbClient,
   ) {
-    this.dbClient = client
-    this.experienceService = new ExperienceService(this.dbClient)
-    this.projectService = new ProjectService(this.dbClient)
-    this.educationService = new EducationService(this.dbClient)
-    this.referralService = new ReferralService(this.logger, this.dbClient)
-    this.skillService = new SkillService(this.dbClient)
+    this.dbClient = client;
+    this.experienceService = new ExperienceService(this.dbClient);
+    this.projectService = new ProjectService(this.dbClient);
+    this.educationService = new EducationService(this.dbClient);
+    this.referralService = new ReferralService(this.logger, this.dbClient);
+    this.skillService = new SkillService(this.dbClient);
   }
 
   async getAllResources(): Promise<PageResources> {
-    const projects = await this.projectService.getAll()
+    const projects = await this.projectService.getAll();
 
-    console.log('projects', { projects })
-    const experiences = await this.experienceService.getAll()
+    console.log("projects", { projects });
+    const experiences = await this.experienceService.getAll();
 
-    const educations = await this.educationService.getAll()
-    const referrals = await this.referralService.getAll()
-    const skills = await this.skillService.getCategorizedSkills()
+    const educations = await this.educationService.getAll();
+    const referrals = await this.referralService.getAll();
+    const skills = await this.skillService.getCategorizedSkills();
 
     return {
-      projects,
-      experiences,
       educations,
+      experiences,
+      projects,
       referrals,
-      skills
-    }
+      skills,
+    };
   }
 }

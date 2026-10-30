@@ -1,2 +1,2 @@
-export { TechnicalSkillsSection } from './TechnicalSkillsSection'
-export { TechnicalSkillsSectionEditor } from './TechnicalSkillsSectionEditor'
+export { TechnicalSkillsSection } from "./TechnicalSkillsSection";
+export { TechnicalSkillsSectionEditor } from "./TechnicalSkillsSectionEditor";

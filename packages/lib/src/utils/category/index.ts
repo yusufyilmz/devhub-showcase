@@ -1,13 +1,10 @@
-import {
-  type ReferralQuestionCategory,
-  validReferralCategories
-} from '../../types'
+import { type ReferralQuestionCategory, validReferralCategories } from "../../types";
 
 export const isCategoryReferralCategory = (
-  category: unknown
+  category: unknown,
 ): category is ReferralQuestionCategory => {
   return (
-    typeof category === 'string' &&
+    typeof category === "string" &&
     validReferralCategories.includes(category as ReferralQuestionCategory)
-  )
-}
+  );
+};

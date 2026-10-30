@@ -1,49 +1,45 @@
-'use client'
-import { useId, useRef, useState } from 'react'
+"use client";
+import { useId, useRef, useState } from "react";
 
-const views = ['Portfolio', 'CV'] as const
+const views = ["Portfolio", "CV"] as const;
 function tabIndexForKey(key: string, index: number) {
-  if (key === 'Home') return 0
-  if (key === 'End') return 1
-  return ['ArrowLeft', 'ArrowRight'].includes(key) ? 1 - index : null
+  if (key === "Home") return 0;
+  if (key === "End") return 1;
+  return ["ArrowLeft", "ArrowRight"].includes(key) ? 1 - index : null;
 }
-const accents = ['cyan', 'violet', 'emerald'] as const
+const accents = ["cyan", "violet", "emerald"] as const;
 export function PortfolioPreview() {
-  const [view, setView] = useState<(typeof views)[number]>('Portfolio')
-  const [accent, setAccent] = useState<(typeof accents)[number]>('cyan')
-  const id = useId()
-  const tabs = useRef<Array<HTMLButtonElement | null>>([])
+  const [view, setView] = useState<(typeof views)[number]>("Portfolio");
+  const [accent, setAccent] = useState<(typeof accents)[number]>("cyan");
+  const id = useId();
+  const tabs = useRef<Array<HTMLButtonElement | null>>([]);
   return (
     <div className="home-preview-wrap" id="preview">
       <div className="home-preview-tools">
-        <div
-          className="home-preview-tabs"
-          role="tablist"
-          aria-label="Example views"
-        >
+        <div aria-label="Example views" className="home-preview-tabs" role="tablist">
           {views.map((item, index) => (
             <button
-              key={item}
-              ref={(node) => {
-                tabs.current[index] = node
-              }}
-              type="button"
-              role="tab"
-              id={`${id}-${item}-tab`}
-              aria-selected={view === item}
               aria-controls={`${id}-panel`}
-              tabIndex={view === item ? 0 : -1}
+              aria-selected={view === item}
+              id={`${id}-${item}-tab`}
+              key={item}
               onClick={() => setView(item)}
               onKeyDown={(event) => {
-                const next = tabIndexForKey(event.key, index)
-                if (next === null) return
-                event.preventDefault()
-                const nextView = views[next]
+                const next = tabIndexForKey(event.key, index);
+                if (next === null) return;
+                event.preventDefault();
+                const nextView = views[next];
                 if (nextView) {
-                  setView(nextView)
-                  tabs.current[next]?.focus()
+                  setView(nextView);
+                  tabs.current[next]?.focus();
                 }
               }}
+              ref={(node) => {
+                tabs.current[index] = node;
+              }}
+              role="tab"
+              tabIndex={view === item ? 0 : -1}
+              type="button"
             >
               {item}
             </button>
@@ -53,7 +49,7 @@ export function PortfolioPreview() {
       </div>
       <div className="home-preview-browser" data-preview-accent={accent}>
         <div className="home-preview-chrome">
-          <span className="home-window-dots" aria-hidden="true">
+          <span aria-hidden="true" className="home-window-dots">
             <i />
             <i />
             <i />
@@ -62,14 +58,14 @@ export function PortfolioPreview() {
           <span aria-hidden="true">↗</span>
         </div>
         <div
-          role="tabpanel"
-          id={`${id}-panel`}
           aria-labelledby={`${id}-${view}-tab`}
+          className="home-preview-panel"
+          id={`${id}-panel`}
+          role="tabpanel"
           // biome-ignore lint/a11y/noNoninteractiveTabindex: Tab panel content needs a keyboard focus destination.
           tabIndex={0}
-          className="home-preview-panel"
         >
-          {view === 'Portfolio' ? (
+          {view === "Portfolio" ? (
             <div className="home-sample-site">
               <div className="home-sample-nav">
                 <strong>
@@ -78,27 +74,25 @@ export function PortfolioPreview() {
                 <span>About&nbsp;&nbsp; Work&nbsp;&nbsp; Contact</span>
               </div>
               <div className="home-sample-intro">
-                <div className="home-sample-avatar" aria-hidden="true">
+                <div aria-hidden="true" className="home-sample-avatar">
                   yn
                 </div>
                 <p>HELLO, I’M</p>
                 <h2>
                   Your name<span>.</span>
                 </h2>
-                <p className="home-sample-role">
-                  Developer. Designer. A little of both.
-                </p>
+                <p className="home-sample-role">Developer. Designer. A little of both.</p>
                 <p className="home-sample-bio">
                   A few words about what you do,
                   <br />
                   and what makes it yours.
                 </p>
                 <button
-                  type="button"
                   onClick={() => {
-                    setView('CV')
-                    tabs.current[1]?.focus()
+                    setView("CV");
+                    tabs.current[1]?.focus();
                   }}
+                  type="button"
                 >
                   Preview your CV <span aria-hidden="true">↗</span>
                 </button>
@@ -109,10 +103,7 @@ export function PortfolioPreview() {
               </div>
               <div className="home-sample-projects">
                 <div>
-                  <div
-                    className="home-project-art home-project-art-one"
-                    aria-hidden="true"
-                  >
+                  <div aria-hidden="true" className="home-project-art home-project-art-one">
                     <span />
                     <span />
                     <span />
@@ -122,10 +113,7 @@ export function PortfolioPreview() {
                   <small>Your craft, in action</small>
                 </div>
                 <div>
-                  <div
-                    className="home-project-art home-project-art-two"
-                    aria-hidden="true"
-                  >
+                  <div aria-hidden="true" className="home-project-art home-project-art-two">
                     <i />
                     <i />
                     <i />
@@ -145,9 +133,7 @@ export function PortfolioPreview() {
                 <p className="home-cv-label">YOUR DOWNLOADABLE CV</p>
                 <h2>Your name</h2>
                 <p>Software engineer</p>
-                <div className="home-cv-contact">
-                  Your email · Your location · Your website
-                </div>
+                <div className="home-cv-contact">Your email · Your location · Your website</div>
                 <h3>Profile</h3>
                 <p>Your professional summary, in your own words.</p>
                 <h3>Experience</h3>
@@ -166,9 +152,7 @@ export function PortfolioPreview() {
                 <p>Your work, the tools you used, and its impact.</p>
                 <h3>Skills & education</h3>
                 <p>Your expertise and the path that brought you here.</p>
-                <div className="home-cv-footnote">
-                  One story. Ready for the next opportunity.
-                </div>
+                <div className="home-cv-footnote">One story. Ready for the next opportunity.</div>
               </div>
             </div>
           )}
@@ -180,19 +164,19 @@ export function PortfolioPreview() {
           <legend className="sr-only">Preview accent color</legend>
           {accents.map((item) => (
             <button
-              key={item}
-              type="button"
-              className={`home-accent home-accent-${item}`}
               aria-label={`Preview in ${item}`}
               aria-pressed={accent === item}
+              className={`home-accent home-accent-${item}`}
+              key={item}
               onClick={() => setAccent(item)}
+              type="button"
             >
-              <span aria-hidden="true">{accent === item ? '✓' : ''}</span>
+              <span aria-hidden="true">{accent === item ? "✓" : ""}</span>
             </button>
           ))}
         </fieldset>
         <span className="home-preview-note">Illustrative preview</span>
       </div>
     </div>
-  )
+  );
 }

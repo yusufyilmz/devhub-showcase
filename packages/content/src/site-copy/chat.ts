@@ -1,11 +1,11 @@
 export const chat = {
   cv: {
-    placeholder: 'Ask me about Yusuf...'
-  },
-  referral: {
-    placeholder: 'Leave a referral for Yusuf...'
+    placeholder: "Ask me about Yusuf...",
   },
   end: {
-    placeholder: 'Chat finished...'
-  }
-}
+    placeholder: "Chat finished...",
+  },
+  referral: {
+    placeholder: "Leave a referral for Yusuf...",
+  },
+};

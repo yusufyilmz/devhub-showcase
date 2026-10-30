@@ -1,27 +1,27 @@
 {
   "name": "@shared/cache",
   "version": "0.0.0",
+  "private": true,
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc --noEmit",
-    "typecheck": "tsc --noEmit",
-    "types:check": "pnpm typecheck",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "lint": "biome lint .",
     "lint:check": "biome lint .",
     "lint:fix": "biome lint --write .",
-    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\""
-  },
-  "devDependencies": {
-    "@shared/typescript-config": "workspace:*",
-    "typescript": "catalog:",
-    "@types/node": "catalog:"
+    "typecheck": "tsc --noEmit",
+    "types:check": "pnpm typecheck"
   },
   "dependencies": {
     "@upstash/redis": "catalog:"
   },
-  "private": true,
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  },
   "engines": {
     "node": ">=24.15.0 <25"
   }

@@ -1,37 +1,37 @@
 export const navbar: Record<
   string,
   {
-    title: string
-    id: string
-    description?: string
+    title: string;
+    id: string;
+    description?: string;
   }
 > = {
-  summary: {
-    title: 'SUMMARY',
-    id: '#summary'
-  },
   aboutMe: {
-    title: 'ABOUT ME',
-    id: '#about-me'
-  },
-  experience: {
-    title: 'EXPERIENCES',
-    id: '#experiences'
-  },
-  projects: {
-    title: 'PROJECTS',
-    id: '#projects'
-  },
-  skills: {
-    title: 'SKILLS',
-    id: '#skills'
+    id: "#about-me",
+    title: "ABOUT ME",
   },
   education: {
-    title: 'EDUCATION',
-    id: '#educations'
+    id: "#educations",
+    title: "EDUCATION",
+  },
+  experience: {
+    id: "#experiences",
+    title: "EXPERIENCES",
+  },
+  projects: {
+    id: "#projects",
+    title: "PROJECTS",
   },
   referrals: {
-    title: 'REFERRALS',
-    id: '#referrals'
-  }
-}
+    id: "#referrals",
+    title: "REFERRALS",
+  },
+  skills: {
+    id: "#skills",
+    title: "SKILLS",
+  },
+  summary: {
+    id: "#summary",
+    title: "SUMMARY",
+  },
+};

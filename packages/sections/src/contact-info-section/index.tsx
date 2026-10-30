@@ -1,2 +1,2 @@
-export { ContactInfoSection } from './ContactInfoSection'
-export { ContactInfoSectionEditor } from './ContactInfoSectionEditor'
+export { ContactInfoSection } from "./ContactInfoSection";
+export { ContactInfoSectionEditor } from "./ContactInfoSectionEditor";

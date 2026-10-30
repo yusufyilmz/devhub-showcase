@@ -1,12 +1,12 @@
 interface EducationForGpt {
-  degree: string
-  fieldOfStudy: string
-  institution: string
-  institutionLink: string
-  startedAt: Date
-  finishedAt?: Date | null
-  gpa?: string | null
-  description?: string | null
+  degree: string;
+  description?: string | null;
+  fieldOfStudy: string;
+  finishedAt?: Date | null;
+  gpa?: string | null;
+  institution: string;
+  institutionLink: string;
+  startedAt: Date;
 }
 
 export const educationFormatter = (educations: EducationForGpt[]): string => {
@@ -14,75 +14,71 @@ export const educationFormatter = (educations: EducationForGpt[]): string => {
     .map(
       (edu) =>
         `Education: ${edu.degree} in ${edu.fieldOfStudy} from ${edu.institution} (${edu.institutionLink}),
-      ${edu.startedAt} - ${edu.finishedAt || 'present'}` +
-        (edu.gpa ? `, GPA: ${edu.gpa}` : '') +
-        (edu.description ? `, Description: ${edu.description}` : '')
+      ${edu.startedAt} - ${edu.finishedAt || "present"}` +
+        (edu.gpa ? `, GPA: ${edu.gpa}` : "") +
+        (edu.description ? `, Description: ${edu.description}` : ""),
     )
-    .join('\n')
-}
+    .join("\n");
+};
 
 interface ReferralForGpt {
-  name?: string | null
-  relationship?: string | null
-  feedback?: string | null
-  recommendation?: string | null
-  contactInfo?: string | null
+  contactInfo?: string | null;
+  feedback?: string | null;
+  name?: string | null;
+  recommendation?: string | null;
+  relationship?: string | null;
 }
 
 export const referralFormatter = (referrals: ReferralForGpt[]): string => {
   return referrals
     .map(
       (referral) =>
-        `Referral: ${referral.name || 'Unknown'}, Relationship: ${referral.relationship || 'N/A'},
-      Feedback: ${referral.feedback || 'No feedback'},
-      Recommendation: ${referral.recommendation || 'No recommendation'},
-      Contact: ${referral.contactInfo || 'No contact info'}`
+        `Referral: ${referral.name || "Unknown"}, Relationship: ${referral.relationship || "N/A"},
+      Feedback: ${referral.feedback || "No feedback"},
+      Recommendation: ${referral.recommendation || "No recommendation"},
+      Contact: ${referral.contactInfo || "No contact info"}`,
     )
-    .join('\n')
-}
+    .join("\n");
+};
 
 interface ExperienceForGpt {
-  role: string | null
   company?: {
-    name: string | null
-  }
-  startedAt: string | null
-  finishedAt?: string | null
+    name: string | null;
+  };
+  finishedAt?: string | null;
+  role: string | null;
+  startedAt: string | null;
 }
 
-export const experienceFormatter = (
-  experiences: ExperienceForGpt[]
-): string => {
+export const experienceFormatter = (experiences: ExperienceForGpt[]): string => {
   return experiences
     .map(
       (exp) =>
-        `Experience: ${exp.role} at ${exp.company?.name}, from ${exp.startedAt} to ${exp.finishedAt || 'present'}`
+        `Experience: ${exp.role} at ${exp.company?.name}, from ${exp.startedAt} to ${exp.finishedAt || "present"}`,
     )
-    .join('\n')
-}
+    .join("\n");
+};
 
 interface ProjectForGpt {
-  title: string | null
-  role: string | null
-  skills: { name: string | null }[]
+  role: string | null;
+  skills: { name: string | null }[];
+  title: string | null;
 }
 
 export const projectFormatter = (projects: ProjectForGpt[]): string => {
   return projects
     .map(
       (project) =>
-        `Project: ${project.title}, Role: ${project.role}, Skills: ${project.skills.map((skill) => skill.name).join(', ')}`
+        `Project: ${project.title}, Role: ${project.role}, Skills: ${project.skills.map((skill) => skill.name).join(", ")}`,
     )
-    .join('\n')
-}
+    .join("\n");
+};
 
 interface CompanyForGpt {
-  name: string
-  link: string
+  link: string;
+  name: string;
 }
 
 export const companyFormatter = (companies: CompanyForGpt[]): string => {
-  return companies
-    .map((company) => `Company: ${company.name}, Link: ${company.link}`)
-    .join('\n')
-}
+  return companies.map((company) => `Company: ${company.name}, Link: ${company.link}`).join("\n");
+};

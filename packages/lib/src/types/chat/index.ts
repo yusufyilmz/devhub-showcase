@@ -1,76 +1,76 @@
-import type { ChatRole } from './roles'
+import type { ChatRole } from "./roles";
 
-export type ChatType = 'referral' | 'cv'
+export type ChatType = "referral" | "cv";
 
 export type ChatMessageCommonFields = {
-  role: ChatRole
-  content: string
-  title?: string
-  timestamp?: number
-}
+  role: ChatRole;
+  content: string;
+  title?: string;
+  timestamp?: number;
+};
 
 export type ReferralQuestionCategory =
-  | 'greeting'
-  | 'contactInfo'
-  | 'feedback'
-  | 'relationship'
-  | 'recommendation'
-  | 'name'
-  | 'end'
-  | 'error'
+  | "greeting"
+  | "contactInfo"
+  | "feedback"
+  | "relationship"
+  | "recommendation"
+  | "name"
+  | "end"
+  | "error";
 
 export const validReferralCategories: ReferralQuestionCategory[] = [
-  'name',
-  'relationship',
-  'feedback',
-  'recommendation',
-  'contactInfo'
-]
+  "name",
+  "relationship",
+  "feedback",
+  "recommendation",
+  "contactInfo",
+];
 
 export type ChatCategoryType =
-  | 'greeting'
-  | 'end'
-  | 'error'
-  | 'outOfTopic'
-  | 'greeting'
-  | 'unknown'
-  | 'simpleResponse'
-  | 'notMeaningful'
-  | 'personalInformation'
-  | 'overview'
-  | 'contact'
-  | 'skills'
-  | 'projects'
-  | 'education'
-  | 'experience'
-  | 'languages'
-  | 'certifications'
-  | 'referrals'
-  | 'achievements'
-  | 'characteristic'
-  | 'technicalChallenges'
-  | 'workPreferences'
+  | "greeting"
+  | "end"
+  | "error"
+  | "outOfTopic"
+  | "greeting"
+  | "unknown"
+  | "simpleResponse"
+  | "notMeaningful"
+  | "personalInformation"
+  | "overview"
+  | "contact"
+  | "skills"
+  | "projects"
+  | "education"
+  | "experience"
+  | "languages"
+  | "certifications"
+  | "referrals"
+  | "achievements"
+  | "characteristic"
+  | "technicalChallenges"
+  | "workPreferences";
 
 export type CVCategoryType =
-  | 'contact'
-  | 'skills'
-  | 'projects'
-  | 'education'
-  | 'experience'
-  | 'languages'
-  | 'certifications'
-  | 'referrals'
-  | 'achievements'
-  | 'characteristic'
+  | "contact"
+  | "skills"
+  | "projects"
+  | "education"
+  | "experience"
+  | "languages"
+  | "certifications"
+  | "referrals"
+  | "achievements"
+  | "characteristic";
 
 export type CVChatMessage = ChatMessageCommonFields & {
-  type: 'cv'
-  category: ChatCategoryType
-}
+  type: "cv";
+  category: ChatCategoryType;
+};
 
 export type ReferralMessage = ChatMessageCommonFields & {
-  type: 'referral'
-  category: ReferralQuestionCategory
-}
+  type: "referral";
+  category: ReferralQuestionCategory;
+};
 
-export type ChatMessage = CVChatMessage | ReferralMessage
+export type ChatMessage = CVChatMessage | ReferralMessage;

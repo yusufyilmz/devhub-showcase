@@ -21,19 +21,19 @@ Create typed Supabase clients using `@shared/auth/client` in browser code and `@
 For example, a future fitness app could configure handlers as follows:
 
 ```ts
-import { createClient } from '@shared/auth/server'
-import { createAuthHandlers } from '@shared/auth/handlers'
+import { createClient } from "@shared/auth/server";
+import { createAuthHandlers } from "@shared/auth/handlers";
 
 export const auth = createAuthHandlers({
   createClient: () => createClient(), // Provide the fitness Database generic when available.
-  loginPath: '/login',
-  successPath: '/dashboard',
-  callbackPath: '/auth/callback',
+  loginPath: "/login",
+  successPath: "/dashboard",
+  callbackPath: "/auth/callback",
   afterSignIn: async (client) => {
     // Optional fitness provisioning, using only the verified account.
     // Keep workout ownership checks and database RLS in the fitness domain.
-  }
-})
+  },
+});
 ```
 
 Route files export `auth.google` as POST, `auth.callback` as GET, `auth.signIn` as POST and `auth.signOut` as DELETE at the app's chosen paths. Mutating endpoints check the request Origin. Return paths come from server configuration, not query parameters or forwarded host headers. Both password and OAuth completion verify the user before application provisioning; failed verification/provisioning clears the local session.
@@ -49,18 +49,18 @@ Import `@shared/components/styles.css` once at the app root and include `package
 Use narrow entrypoints when possible:
 
 ```tsx
-import { LoginPanel } from '@shared/components/login'
-import { RevealCard } from '@shared/components/cards'
-import { CollectionEditor } from '@shared/components/collection-editor'
-import { Field } from '@shared/components/fields'
+import { LoginPanel } from "@shared/components/login";
+import { RevealCard } from "@shared/components/cards";
+import { CollectionEditor } from "@shared/components/collection-editor";
+import { Field } from "@shared/components/fields";
 
-;<LoginPanel
+<LoginPanel
   title="Your fitness account"
   description="Keep your training in sync."
   googleAction="/api/auth/google"
   sessionEndpoint="/api/auth/session"
   successPath="/dashboard"
-/>
+/>;
 ```
 
 The login panel takes copy, form endpoints and destinations as props. It has no portfolio API paths. `CollectionEditor` is controlled, generic over items with an ID, and delegates persistence to the consuming app. Tests exercise it with workout data. Portfolio career/PDF editors remain application features.

@@ -1,5 +1,5 @@
-export { EducationService } from './supabase/education'
-export { ExperienceService } from './supabase/experience'
-export { ProjectService } from './supabase/project'
-export { ReferralService } from './supabase/referral'
-export { SkillService } from './supabase/skill'
+export { EducationService } from "./supabase/education";
+export { ExperienceService } from "./supabase/experience";
+export { ProjectService } from "./supabase/project";
+export { ReferralService } from "./supabase/referral";
+export { SkillService } from "./supabase/skill";

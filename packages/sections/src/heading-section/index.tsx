@@ -1,2 +1,2 @@
-export { HeadingSection } from './HeadingSection'
-export { HeadingSectionEditor } from './HeadingSectionEditor'
+export { HeadingSection } from "./HeadingSection";
+export { HeadingSectionEditor } from "./HeadingSectionEditor";

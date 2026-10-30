@@ -1,7 +1,7 @@
 {
   "name": "@shared/components",
   "version": "0.0.0",
-  "main": "./src/index.ts",
+  "private": true,
   "exports": {
     ".": "./src/index.ts",
     "./cards": "./src/cards/index.ts",
@@ -15,16 +15,17 @@
     "./hero-surface": "./src/hero-surface.tsx",
     "./work-media": "./src/work-media.tsx"
   },
+  "main": "./src/index.ts",
   "scripts": {
     "build": "tsc --noEmit",
-    "typecheck": "tsc --noEmit",
-    "types:check": "pnpm typecheck",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "lint": "biome lint .",
     "lint:check": "biome lint .",
     "lint:fix": "biome lint --write .",
-    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\""
+    "typecheck": "tsc --noEmit",
+    "types:check": "pnpm typecheck"
   },
   "dependencies": {
     "react": "catalog:",
@@ -32,12 +33,11 @@
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",
-    "typescript": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
-    "@types/react-dom": "catalog:"
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
   },
-  "private": true,
   "engines": {
     "node": ">=24.15.0 <25"
   }

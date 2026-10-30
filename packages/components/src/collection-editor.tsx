@@ -1,20 +1,14 @@
-'use client'
-import type { ReactNode } from 'react'
-import { EmptyState } from './fields'
+"use client";
+import type { ReactNode } from "react";
+
+import { EmptyState } from "./fields";
 export function moveItem<T>(items: T[], from: number, to: number): T[] {
-  if (
-    from < 0 ||
-    from >= items.length ||
-    to < 0 ||
-    to >= items.length ||
-    from === to
-  )
-    return items
-  const result = [...items]
-  const [item] = result.splice(from, 1)
-  if (item === undefined) return items
-  result.splice(to, 0, item)
-  return result
+  if (from < 0 || from >= items.length || to < 0 || to >= items.length || from === to) return items;
+  const result = [...items];
+  const [item] = result.splice(from, 1);
+  if (item === undefined) return items;
+  result.splice(to, 0, item);
+  return result;
 }
 export function CollectionEditor<T extends { id: string }>({
   title,
@@ -24,16 +18,16 @@ export function CollectionEditor<T extends { id: string }>({
   render,
   getTitle,
   onRemove,
-  maxItems
+  maxItems,
 }: {
-  title: string
-  items: T[]
-  onChange: (items: T[]) => void
-  create: () => T
-  render: (item: T, change: (item: T) => void) => ReactNode
-  getTitle: (item: T) => string
-  onRemove?: (item: T) => void
-  maxItems?: number
+  title: string;
+  items: T[];
+  onChange: (items: T[]) => void;
+  create: () => T;
+  render: (item: T, change: (item: T) => void) => ReactNode;
+  getTitle: (item: T) => string;
+  onRemove?: (item: T) => void;
+  maxItems?: number;
 }) {
   return (
     <section className="editor-collection">
@@ -44,50 +38,48 @@ export function CollectionEditor<T extends { id: string }>({
         </div>
         <button
           className="studio-secondary"
-          type="button"
           disabled={maxItems !== undefined && items.length >= maxItems}
           onClick={() => onChange([...items, create()])}
+          type="button"
         >
           + Add {title.toLowerCase()}
         </button>
       </div>
-      {items.length === 0 && (
-        <EmptyState>Nothing here yet. Add your first item above.</EmptyState>
-      )}
+      {items.length === 0 && <EmptyState>Nothing here yet. Add your first item above.</EmptyState>}
       {items.map((item, index) => (
         <article className="editor-card" key={item.id}>
           <div className="editor-card-heading">
-            <h3>{getTitle(item) || 'New item'}</h3>
+            <h3>{getTitle(item) || "New item"}</h3>
             <div className="editor-actions">
               <button
-                type="button"
                 aria-label={`Move ${getTitle(item)} up`}
                 disabled={index === 0}
                 onClick={() => onChange(moveItem(items, index, index - 1))}
+                type="button"
               >
                 ↑
               </button>
               <button
-                type="button"
                 aria-label={`Move ${getTitle(item)} down`}
                 disabled={index === items.length - 1}
                 onClick={() => onChange(moveItem(items, index, index + 1))}
+                type="button"
               >
                 ↓
               </button>
               <button
                 className="danger-button"
-                type="button"
                 onClick={() => {
                   if (
                     window.confirm(
-                      `Remove ${getTitle(item) || 'this item'}? Changes take effect when you save.`
+                      `Remove ${getTitle(item) || "this item"}? Changes take effect when you save.`,
                     )
                   ) {
-                    if (onRemove) onRemove(item)
-                    else onChange(items.filter((row) => row.id !== item.id))
+                    if (onRemove) onRemove(item);
+                    else onChange(items.filter((row) => row.id !== item.id));
                   }
                 }}
+                type="button"
               >
                 Remove
               </button>
@@ -95,11 +87,11 @@ export function CollectionEditor<T extends { id: string }>({
           </div>
           <div className="editor-fields">
             {render(item, (changed) =>
-              onChange(items.map((row) => (row.id === item.id ? changed : row)))
+              onChange(items.map((row) => (row.id === item.id ? changed : row))),
             )}
           </div>
         </article>
       ))}
     </section>
-  )
+  );
 }

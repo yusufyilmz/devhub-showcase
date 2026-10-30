@@ -1,6 +1,6 @@
-import type React from 'react'
+import type React from "react";
 
-import { DownloadCVButton } from '../../../ui/buttons/DownloadCVButton'
+import { DownloadCVButton } from "../../../ui/buttons/DownloadCVButton";
 
 export const CVSection: React.FC = () => {
   return (
@@ -9,5 +9,5 @@ export const CVSection: React.FC = () => {
         <DownloadCVButton />
       </div>
     </section>
-  )
-}
+  );
+};

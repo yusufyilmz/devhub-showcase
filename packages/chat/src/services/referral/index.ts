@@ -2,47 +2,48 @@ import {
   ChatRole,
   type ReferralMessage,
   type ReferralQuestionCategory,
-  validReferralCategories
-} from '@shared/lib/types'
-import type { Logger } from 'pino'
-import { failureMessage, referralFinishMessage } from '../../messages'
-import { REFERRAL_MODAL } from '../../models/referral-modal'
+  validReferralCategories,
+} from "@shared/lib/types";
+import type { Logger } from "pino";
+
+import { failureMessage, referralFinishMessage } from "../../messages";
+import { REFERRAL_MODAL } from "../../models/referral-modal";
 
 export class ReferralService {
   constructor(private readonly logger: Logger) {}
 
   private getNextReferralQuestion(
-    category: ReferralQuestionCategory
+    category: ReferralQuestionCategory,
   ): ReferralQuestionCategory | undefined {
-    const currentIndex = validReferralCategories.indexOf(category)
+    const currentIndex = validReferralCategories.indexOf(category);
 
     return currentIndex < validReferralCategories.length - 1
       ? validReferralCategories[currentIndex + 1]
-      : undefined
+      : undefined;
   }
 
   createReferralMessage(userMessage: ReferralMessage): ReferralMessage {
     try {
-      const nextCategory = this.getNextReferralQuestion(userMessage.category)
+      const nextCategory = this.getNextReferralQuestion(userMessage.category);
 
       if (!nextCategory) {
-        return referralFinishMessage
+        return referralFinishMessage;
       }
 
       return {
-        role: ChatRole.System,
-        content: REFERRAL_MODAL[nextCategory].question,
-        type: 'referral',
         category: nextCategory,
-        timestamp: Date.now()
-      }
+        content: REFERRAL_MODAL[nextCategory].question,
+        role: ChatRole.System,
+        timestamp: Date.now(),
+        type: "referral",
+      };
     } catch (error) {
-      this.logger.info({ error }, 'Error processing user message.')
+      this.logger.info({ error }, "Error processing user message.");
       return {
         ...failureMessage,
-        type: 'referral',
-        category: 'error'
-      }
+        category: "error",
+        type: "referral",
+      };
     }
   }
 }

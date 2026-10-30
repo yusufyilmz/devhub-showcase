@@ -1,2 +1,2 @@
-export { ShopItemsSection } from './ShopItemsSection'
-export { ShopItemsSectionEditor } from './ShopItemsSectionEditor'
+export { ShopItemsSection } from "./ShopItemsSection";
+export { ShopItemsSectionEditor } from "./ShopItemsSectionEditor";

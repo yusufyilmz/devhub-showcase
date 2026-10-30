@@ -1,5 +1,5 @@
-import { SectionPresentation } from '../shared/presenter'
-import type { SectionProps } from '../types'
+import { SectionPresentation } from "../shared/presenter";
+import type { SectionProps } from "../types";
 export function AboutSection(props: SectionProps) {
-  return <SectionPresentation {...props} type="about" />
+  return <SectionPresentation {...props} type="about" />;
 }

@@ -1,1 +1,1 @@
-export * from './ChatInput'
+export { ChatInput } from "./ChatInput";

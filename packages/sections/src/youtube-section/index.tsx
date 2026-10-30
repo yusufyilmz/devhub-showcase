@@ -1,2 +1,2 @@
-export { YouTubeSection } from './YouTubeSection'
-export { YouTubeSectionEditor } from './YouTubeSectionEditor'
+export { YouTubeSection } from "./YouTubeSection";
+export { YouTubeSectionEditor } from "./YouTubeSectionEditor";

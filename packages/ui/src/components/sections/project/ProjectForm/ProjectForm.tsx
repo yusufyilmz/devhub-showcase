@@ -1,89 +1,81 @@
-'use client'
+"use client";
 
-import type { Project } from '@shared/lib/types'
-import type React from 'react'
-import { useEffect, useState } from 'react'
-import { Button, TextField } from '../../../../components'
+import type React from "react";
+import { useEffect, useState } from "react";
+
+import { TextField } from "@mui/material";
+import { Button } from "@shared/components";
+import type { Project } from "@shared/lib/types";
 
 interface ProjectFormProps {
-  onSubmit: (_e: unknown) => void
-  isSubmitting: boolean
-  initialData?: Project
-  action: string
+  action: string;
+  initialData?: Project;
+  isSubmitting: boolean;
+  onSubmit: (_e: unknown) => void;
 }
 
 export const ProjectForm: React.FC<ProjectFormProps> = ({
   onSubmit,
   isSubmitting,
   action,
-  initialData = { title: '', description: '', link: '' }
+  initialData = { description: "", link: "", title: "" },
 }) => {
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    link: ''
-  })
+    description: "",
+    link: "",
+    title: "",
+  });
 
   useEffect(() => {
     setFormData({
       ...initialData,
-      link: initialData.link ?? ''
-    })
-  }, [initialData])
+      link: initialData.link ?? "",
+    });
+  }, [initialData]);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value
-    }))
-  }
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    onSubmit(formData)
-  }
+    e.preventDefault();
+    onSubmit(formData);
+  };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col gap-4 p-6 bg-white rounded-lg shadow-lg"
-    >
+    <form className="flex flex-col gap-4 p-6 bg-white rounded-lg shadow-lg" onSubmit={handleSubmit}>
       <TextField
+        className="mb-4"
         label="Project Title"
         name="title"
-        value={formData.title}
         onChange={handleChange}
         required
-        className="mb-4"
+        value={formData.title}
       />
       <TextField
+        className="mb-4"
         label="Description"
         name="description"
-        value={formData.description}
         onChange={handleChange}
         required
         rows={4}
-        className="mb-4"
+        value={formData.description}
       />
       <TextField
+        className="mb-4"
         label="Project Link"
         name="link"
-        value={formData.link}
         onChange={handleChange}
         required
-        className="mb-4"
+        value={formData.link}
       />
-      <Button
-        aria-label={action}
-        variant="contained"
-        fullWidth
-        disabled={isSubmitting}
-      >
+      <Button aria-label={action} disabled={isSubmitting} fullWidth variant="contained">
         {action}
       </Button>
     </form>
-  )
-}
+  );
+};

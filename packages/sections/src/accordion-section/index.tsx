@@ -1,2 +1,2 @@
-export { AccordionSection } from './AccordionSection'
-export { AccordionSectionEditor } from './AccordionSectionEditor'
+export { AccordionSection } from "./AccordionSection";
+export { AccordionSectionEditor } from "./AccordionSectionEditor";

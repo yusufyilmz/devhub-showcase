@@ -1,51 +1,45 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server";
 
 class CustomError extends Error {
   constructor(
     message: string,
-    public statusCode: number
+    public statusCode: number,
   ) {
-    super(message)
+    super(message);
   }
 }
 
 class ValidationError extends CustomError {
-  constructor(message = 'Validation Error') {
-    super(message, 400)
+  constructor(message = "Validation Error") {
+    super(message, 400);
   }
 }
 
 class NotFoundError extends CustomError {
-  constructor(message = 'Resource Not Found') {
-    super(message, 404)
+  constructor(message = "Resource Not Found") {
+    super(message, 404);
   }
 }
 
 class BadRequestError extends CustomError {
-  constructor(message = 'Bad Request') {
-    super(message, 400)
+  constructor(message = "Bad Request") {
+    super(message, 400);
   }
 }
 
 const errorHandling = (error: unknown) => {
-  let statusCode = 500
-  let errorMessage = 'Internal Server Error'
+  let statusCode = 500;
+  let errorMessage = "Internal Server Error";
 
   if (error instanceof CustomError) {
-    statusCode = error.statusCode
-    errorMessage = error.message
+    statusCode = error.statusCode;
+    errorMessage = error.message;
   }
 
   return NextResponse.json(
     { message: `An error occurred: ${errorMessage}` },
-    { status: statusCode }
-  )
-}
+    { status: statusCode },
+  );
+};
 
-export {
-  BadRequestError,
-  CustomError,
-  errorHandling,
-  NotFoundError,
-  ValidationError
-}
+export { BadRequestError, CustomError, errorHandling, NotFoundError, ValidationError };

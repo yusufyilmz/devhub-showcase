@@ -1,1 +1,1 @@
-export { BlogPageSection as JsonBlogPage } from './BlogPageSection'
+export { BlogPageSection as JsonBlogPage } from "./BlogPageSection";

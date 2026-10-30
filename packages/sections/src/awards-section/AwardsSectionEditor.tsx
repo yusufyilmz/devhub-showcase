@@ -1,6 +1,6 @@
-'use client'
-import { SectionContentEditor } from '../shared/editor'
-import type { SectionEditorProps } from '../types'
+"use client";
+import { SectionContentEditor } from "../shared/editor";
+import type { SectionEditorProps } from "../types";
 export function AwardsSectionEditor(props: SectionEditorProps) {
-  return <SectionContentEditor {...props} type="awards" />
+  return <SectionContentEditor {...props} type="awards" />;
 }

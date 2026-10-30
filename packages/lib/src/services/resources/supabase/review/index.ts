@@ -1,69 +1,70 @@
-import type { Logger } from 'pino'
-import type { ResourceService } from '../../../../types'
+import type { Logger } from "pino";
+
+import type { ResourceService } from "../../../../types";
 import {
   ReviewState,
   type ReviewWithReferrals,
-  type SupabaseDbClient
-} from '../../../../types/supabase'
-import { keysToCamelCase } from '../../../../utils/converter/camel-case'
+  type SupabaseDbClient,
+} from "../../../../types/supabase";
+import { keysToCamelCase } from "../../../../utils/converter/camel-case";
 
 export class ReviewService implements ResourceService<ReviewWithReferrals> {
-  private logger: Logger
-  private readonly dbClient: SupabaseDbClient
+  private logger: Logger;
+  private readonly dbClient: SupabaseDbClient;
 
   constructor(logger: Logger, dbClient: SupabaseDbClient) {
-    this.logger = logger
-    this.dbClient = dbClient
+    this.logger = logger;
+    this.dbClient = dbClient;
   }
 
   async getAll(): Promise<ReviewWithReferrals[]> {
-    const { data, error } = await this.dbClient.from('reviews').select('*')
+    const { data, error } = await this.dbClient.from("reviews").select("*");
 
     if (error) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
 
-    return keysToCamelCase<ReviewWithReferrals[]>(data)
+    return keysToCamelCase<ReviewWithReferrals[]>(data);
   }
 
   async update(
     id: string,
     {
-      state
+      state,
     }: {
-      state: ReviewState
-    }
+      state: ReviewState;
+    },
   ): Promise<ReviewWithReferrals> {
     const { data, error } = await this.dbClient
-      .from('reviews')
+      .from("reviews")
       .update({
         state,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
-      .eq('id', id)
-      .single()
+      .eq("id", id)
+      .single();
 
     if (error) {
-      this.logger.error({ error }, 'Error updating review')
-      throw new Error(error.message)
+      this.logger.error({ error }, "Error updating review");
+      throw new Error(error.message);
     }
 
-    return keysToCamelCase<ReviewWithReferrals>(data)
+    return keysToCamelCase<ReviewWithReferrals>(data);
   }
 
   async getPendingReviews(): Promise<ReviewWithReferrals[]> {
     const { data, error } = await this.dbClient
-      .from('reviews')
+      .from("reviews")
       .select(`
       *,
       referral:referrals(*)
     `)
-      .eq('state', ReviewState.PENDING)
+      .eq("state", ReviewState.PENDING);
 
     if (error) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
 
-    return keysToCamelCase<ReviewWithReferrals[]>(data)
+    return keysToCamelCase<ReviewWithReferrals[]>(data);
   }
 }

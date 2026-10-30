@@ -1,20 +1,18 @@
-import { renderCv } from '@shared/cv'
-import template from '@shared/cv/template.hbs'
-import type { ProfileSnapshot } from '@shared/lib/profile-errors'
+import { renderCv } from "@shared/cv";
+import template from "@shared/cv/template.hbs";
+import type { ProfileSnapshot } from "@shared/lib/profile-errors";
 export async function cvResponse(snapshot: ProfileSnapshot) {
-  const pdf = await renderCv(snapshot.profile, template)
+  const pdf = await renderCv(snapshot.profile, template);
   const name =
-    snapshot.profile.name
-      .replace(/[^a-zA-Z0-9]+/g, '_')
-      .replace(/^_|_$/g, '') || 'Profile'
+    snapshot.profile.name.replace(/[^a-zA-Z0-9]+/g, "_").replace(/^_|_$/g, "") || "Profile";
   return new Response(new Uint8Array(pdf), {
     headers: {
-      'Content-Type': 'application/pdf',
-      'Content-Language': snapshot.profile.cvLanguage ?? 'en',
-      'Content-Disposition': `attachment; filename="${name}_CV.pdf"`,
-      'Cache-Control': 'private, no-store',
-      'X-Content-Type-Options': 'nosniff',
-      'X-Profile-Revision': String(snapshot.revision)
-    }
-  })
+      "Cache-Control": "private, no-store",
+      "Content-Disposition": `attachment; filename="${name}_CV.pdf"`,
+      "Content-Language": snapshot.profile.cvLanguage ?? "en",
+      "Content-Type": "application/pdf",
+      "X-Content-Type-Options": "nosniff",
+      "X-Profile-Revision": String(snapshot.revision),
+    },
+  });
 }

@@ -1,31 +1,24 @@
-import { Card } from '@shared/components/cards'
-import { ThemeToggle } from '@shared/ui/theme'
-import type { HomeAction } from '../../lib/home-links'
-import { ExampleCarousel } from '../examples/example-carousel'
-import { HomeOptions } from './home-options'
-import { PortfolioPreview } from './portfolio-preview'
-import './home.css'
+import { Card } from "@shared/components/cards";
+import { ThemeToggle } from "@shared/ui/theme";
+
+import type { HomeAction } from "../../lib/home-links";
+import { ExampleCarousel } from "../examples/example-carousel";
+import { HomeOptions } from "./home-options";
+import { PortfolioPreview } from "./portfolio-preview";
+import "./home.css";
 
 function Brand() {
   return (
-    <a className="home-brand" href="/" aria-label="MyDevStudio home">
-      <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
-        <rect
-          x="1"
-          y="1"
-          width="30"
-          height="30"
-          rx="9"
-          fill="currentColor"
-          opacity=".12"
-        />
+    <a aria-label="MyDevStudio home" className="home-brand" href="/">
+      <svg aria-hidden="true" height="32" viewBox="0 0 32 32" width="32">
+        <rect fill="currentColor" height="30" opacity=".12" rx="9" width="30" x="1" y="1" />
         <path
           d="M9 23V10l7 8 7-8v13"
           fill="none"
           stroke="currentColor"
-          strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
+          strokeWidth="2.5"
         />
       </svg>
       <span>
@@ -33,44 +26,44 @@ function Brand() {
         <b>.</b>
       </span>
     </a>
-  )
+  );
 }
 const faq = [
   [
-    'Can I switch layouts later?',
-    'Yes. Choose Engineer, Designer, Consultant or Minimal, then change your layout and theme in the editor whenever you like. Your saved information stays with you.'
+    "Can I switch layouts later?",
+    "Yes. Choose Engineer, Designer, Consultant or Minimal, then change your layout and theme in the editor whenever you like. Your saved information stays with you.",
   ],
   [
-    'Are the example portfolios real people?',
-    'The eight carousel examples use fictional identities and sample work. Open any example to explore its layout and download a clearly labeled sample CV.'
+    "Are the example portfolios real people?",
+    "The eight carousel examples use fictional identities and sample work. Open any example to explore its layout and download a clearly labeled sample CV.",
   ],
   [
-    'Does changing language translate my writing?',
-    'Language settings change portfolio and CV labels and dates independently. English, Spanish and Turkish are available. Write your own biography and project descriptions in the language you want to share.'
+    "Does changing language translate my writing?",
+    "Language settings change portfolio and CV labels and dates independently. English, Spanish and Turkish are available. Write your own biography and project descriptions in the language you want to share.",
   ],
   [
-    'Is my portfolio public as soon as I sign up?',
-    'No. Your portfolio starts private. Publish it when you’re ready, and turn public sharing off again whenever you need to.'
+    "Is my portfolio public as soon as I sign up?",
+    "No. Your portfolio starts private. Publish it when you’re ready, and turn public sharing off again whenever you need to.",
   ],
   [
-    'Do I need to write any code?',
-    'No code is needed. Add your details, projects, experience and skills in the editor. Choose your colors and theme, then save your changes.'
+    "Do I need to write any code?",
+    "No code is needed. Add your details, projects, experience and skills in the editor. Choose your colors and theme, then save your changes.",
   ],
   [
-    'How does the downloadable CV work?',
-    'Your portfolio and CV use the same saved information. Choose your PDF page size, text size and included sections, then download it from your studio. PDF contact settings affect the PDF only; published portfolio details are public.'
+    "How does the downloadable CV work?",
+    "Your portfolio and CV use the same saved information. Choose your PDF page size, text size and included sections, then download it from your studio. PDF contact settings affect the PDF only; published portfolio details are public.",
   ],
   [
-    'Can I update it after publishing?',
-    'Yes. Sign in to your studio to update your work, change the design or keep adding to your story. You can also change your username, which changes your public link.'
-  ]
-] as const
+    "Can I update it after publishing?",
+    "Yes. Sign in to your studio to update your work, change the design or keep adding to your story. You can also change your username, which changes your public link.",
+  ],
+] as const;
 export function HomePage({
   action,
-  exampleHref
+  exampleHref,
 }: {
-  action: HomeAction
-  exampleHref: string | null
+  action: HomeAction;
+  exampleHref: string | null;
 }) {
   return (
     <div className="home-page">
@@ -80,7 +73,7 @@ export function HomePage({
       <header className="home-header">
         <div className="home-container home-header-inner">
           <Brand />
-          <nav className="home-nav" aria-label="Main navigation">
+          <nav aria-label="Main navigation" className="home-nav">
             <a href="#examples">Examples</a>
             <a href="#features">Why MyDevStudio</a>
             <a href="#how-it-works">How it works</a>
@@ -89,17 +82,13 @@ export function HomePage({
           <div className="home-header-actions">
             <ThemeToggle />
             <a className="home-signin" href={action.href}>
-              {action.signedIn ? 'My studio' : 'Sign in'}{' '}
-              <span aria-hidden="true">↗</span>
+              {action.signedIn ? "My studio" : "Sign in"} <span aria-hidden="true">↗</span>
             </a>
           </div>
         </div>
       </header>
       <main id="home-content">
-        <section
-          className="home-container home-hero"
-          aria-labelledby="home-title"
-        >
+        <section aria-labelledby="home-title" className="home-container home-hero">
           <div className="home-hero-copy">
             <p className="home-eyebrow">
               <span /> A LITTLE SPACE. A LOT OF YOU.
@@ -112,9 +101,8 @@ export function HomePage({
               <span>One place.</span>
             </h1>
             <p className="home-hero-description">
-              A portfolio that feels like you, with a CV to match. Bring your
-              projects, experience and ideas together in a place you can call
-              your own.
+              A portfolio that feels like you, with a CV to match. Bring your projects, experience
+              and ideas together in a place you can call your own.
             </p>
             <div className="home-hero-actions">
               <a className="home-button home-button-primary" href={action.href}>
@@ -122,9 +110,7 @@ export function HomePage({
               </a>
               <a
                 className="home-example-link"
-                href={
-                  exampleHref ?? 'https://mydevstudio.vercel.app/yusufyilmz'
-                }
+                href={exampleHref ?? "https://mydevstudio.vercel.app/yusufyilmz"}
               >
                 See a real portfolio <span aria-hidden="true">→</span>
               </a>
@@ -140,10 +126,7 @@ export function HomePage({
           </div>
           <PortfolioPreview />
         </section>
-        <section
-          className="home-container home-capabilities"
-          aria-label="What you can include"
-        >
+        <section aria-label="What you can include" className="home-container home-capabilities">
           <span>A PLACE FOR</span>
           <span>Your projects</span>
           <i aria-hidden="true">✳</i>
@@ -155,9 +138,9 @@ export function HomePage({
         </section>
         <ExampleCarousel />
         <section
+          aria-labelledby="features-title"
           className="home-container home-features"
           id="features"
-          aria-labelledby="features-title"
         >
           <div className="home-section-intro">
             <p className="home-eyebrow">MORE THAN A DOCUMENT</p>
@@ -167,8 +150,8 @@ export function HomePage({
               <span>A CV when you need it.</span>
             </h2>
             <p>
-              Your work deserves more than a list of bullet points. Give it
-              context, make it personal, and keep everything connected.
+              Your work deserves more than a list of bullet points. Give it context, make it
+              personal, and keep everything connected.
             </p>
           </div>
           <div className="home-feature-grid">
@@ -181,8 +164,8 @@ export function HomePage({
                   yours to share.
                 </h3>
                 <p>
-                  Share what you’ve built, what you’ve learned and where you
-                  want to go. Your projects and experience take center stage.
+                  Share what you’ve built, what you’ve learned and where you want to go. Your
+                  projects and experience take center stage.
                 </p>
               </div>
               <div className="home-url-demo">
@@ -197,7 +180,7 @@ export function HomePage({
             </Card>
             <Card className="home-feature-card">
               <span className="home-feature-index">02 / MAKE IT YOURS</span>
-              <div className="home-style-demo" aria-hidden="true">
+              <div aria-hidden="true" className="home-style-demo">
                 <span />
                 <span />
                 <span />
@@ -207,23 +190,20 @@ export function HomePage({
               </div>
               <h3>A little more you.</h3>
               <p>
-                Choose Studio, Paper, Graphite or Bloom. Pair any layout with
-                your favorite theme, accent and light or dark mode.
+                Choose Studio, Paper, Graphite or Bloom. Pair any layout with your favorite theme,
+                accent and light or dark mode.
               </p>
             </Card>
             <Card className="home-feature-card home-feature-wide">
-              <div className="home-file-icon" aria-hidden="true">
+              <div aria-hidden="true" className="home-file-icon">
                 <span>CV</span>↗
               </div>
               <div>
-                <span className="home-feature-index">
-                  03 / ALWAYS CONNECTED
-                </span>
+                <span className="home-feature-index">03 / ALWAYS CONNECTED</span>
                 <h3>One update. Both ready.</h3>
                 <p>
-                  Your CV comes from your saved portfolio details. Choose its
-                  Classic, Editorial or Compact format and sections, then
-                  download a PDF when the opportunity comes.
+                  Your CV comes from your saved portfolio details. Choose its Classic, Editorial or
+                  Compact format and sections, then download a PDF when the opportunity comes.
                 </p>
               </div>
               <span className="home-file-tag">Portfolio + PDF</span>
@@ -232,9 +212,9 @@ export function HomePage({
         </section>
         <HomeOptions />
         <section
+          aria-labelledby="process-title"
           className="home-container home-process"
           id="how-it-works"
-          aria-labelledby="process-title"
         >
           <div className="home-section-intro">
             <p className="home-eyebrow">START WITH WHAT YOU HAVE</p>
@@ -254,24 +234,21 @@ export function HomePage({
               <span>02</span>
               <h3>Put your story together</h3>
               <p>
-                Choose a layout, theme and languages. Add your work, experience
-                and skills for a look that feels right.
+                Choose a layout, theme and languages. Add your work, experience and skills for a
+                look that feels right.
               </p>
             </li>
             <li>
               <span>03</span>
               <h3>Share it when you’re ready</h3>
-              <p>
-                Choose your username, publish your portfolio and take your CV
-                with you.
-              </p>
+              <p>Choose your username, publish your portfolio and take your CV with you.</p>
             </li>
           </ol>
         </section>
         <section
+          aria-labelledby="questions-title"
           className="home-container home-faq"
           id="questions"
-          aria-labelledby="questions-title"
         >
           <div className="home-section-intro">
             <p className="home-eyebrow">A FEW THINGS TO KNOW</p>
@@ -307,29 +284,25 @@ export function HomePage({
             </a>
             <span className="home-final-note">Your portfolio. Your pace.</span>
           </div>
-          <span className="home-final-glyph" aria-hidden="true">
+          <span aria-hidden="true" className="home-final-glyph">
             ↗
           </span>
         </section>
       </main>
       <footer className="home-container home-footer">
         <Brand />
-        <p className="home-footer-copy">
-          For the work you do. And the person behind it.
-        </p>
+        <p className="home-footer-copy">For the work you do. And the person behind it.</p>
         <div>
           <a
             href="https://github.com/yusufyilmz/devhub-showcase"
-            target="_blank"
             rel="noopener noreferrer"
+            target="_blank"
           >
             Source on GitHub ↗
           </a>
-          <a href={action.href}>
-            {action.signedIn ? 'Open studio' : 'Sign in'} ↗
-          </a>
+          <a href={action.href}>{action.signedIn ? "Open studio" : "Sign in"} ↗</a>
         </div>
       </footer>
     </div>
-  )
+  );
 }

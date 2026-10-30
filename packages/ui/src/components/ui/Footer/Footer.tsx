@@ -2,10 +2,10 @@ import {
   profile as fallback,
   getNameInitials,
   getPortfolioCopy,
-  type PortfolioProfile
-} from '@shared/content'
+  type PortfolioProfile,
+} from "@shared/content";
 export function Footer({ profile = fallback }: { profile?: PortfolioProfile }) {
-  const text = getPortfolioCopy(profile.portfolioLanguage)
+  const text = getPortfolioCopy(profile.portfolioLanguage);
   return (
     <footer className="site-footer">
       <div>
@@ -17,7 +17,7 @@ export function Footer({ profile = fallback }: { profile?: PortfolioProfile }) {
       </div>
       <div>
         {profile.github && (
-          <a href={profile.github} target="_blank" rel="noopener noreferrer">
+          <a href={profile.github} rel="noopener noreferrer" target="_blank">
             GitHub ↗
           </a>
         )}
@@ -27,5 +27,5 @@ export function Footer({ profile = fallback }: { profile?: PortfolioProfile }) {
         </p>
       </div>
     </footer>
-  )
+  );
 }
