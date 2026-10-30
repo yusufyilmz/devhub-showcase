@@ -9,6 +9,7 @@ import {
   type SectionOptions,
   type SectionSourceField,
 } from "@shared/content";
+
 import type { SectionEditorProps } from "../types";
 
 function OptionsEditor({
@@ -24,16 +25,14 @@ function OptionsEditor({
     <div className="editor-fields">
       <Field
         label="Section description"
-        value={options.description ?? ""}
         multiline
         onChange={(description) => change({ description })}
+        value={options.description ?? ""}
       />
       <SelectField
         label="Text alignment"
+        onChange={(alignment) => change({ alignment: alignment as SectionOptions["alignment"] })}
         value={options.alignment ?? "left"}
-        onChange={(alignment) =>
-          change({ alignment: alignment as SectionOptions["alignment"] })
-        }
       >
         {["left", "center", "right"].map((value) => (
           <option key={value}>{value}</option>
@@ -41,10 +40,8 @@ function OptionsEditor({
       </SelectField>
       <SelectField
         label="Columns"
+        onChange={(value) => change({ columns: Number(value) as 1 | 2 | 3 | 4 })}
         value={String(options.columns ?? 3)}
-        onChange={(value) =>
-          change({ columns: Number(value) as 1 | 2 | 3 | 4 })
-        }
       >
         {[1, 2, 3, 4].map((value) => (
           <option key={value}>{value}</option>
@@ -53,48 +50,44 @@ function OptionsEditor({
       {view === "hero" && (
         <Field
           label="Hero image URL"
+          onChange={(mediaUrl) => change({ mediaUrl })}
           type="url"
           value={options.mediaUrl ?? ""}
-          onChange={(mediaUrl) => change({ mediaUrl })}
         />
       )}
       {view === "contact" && (
         <Field
+          hint="The contact form opens the visitor’s email app. No message is sent by this website."
           label="Recipient email"
+          onChange={(email) => change({ email })}
+          required
           type="email"
           value={options.email ?? ""}
-          required
-          onChange={(email) => change({ email })}
-          hint="The contact form opens the visitor’s email app. No message is sent by this website."
         />
       )}
       {view === "newsletter" && (
         <Field
+          hint="Your existing newsletter subscription page. No mailing list is created here."
           label="Subscription page URL"
+          onChange={(actionUrl) => change({ actionUrl })}
+          required
           type="url"
           value={options.actionUrl ?? ""}
-          required
-          onChange={(actionUrl) => change({ actionUrl })}
-          hint="Your existing newsletter subscription page. No mailing list is created here."
         />
       )}
       {view === "map" && (
         <>
           <Field
             label="Latitude"
+            onChange={(value) => change({ latitude: value === "" ? undefined : Number(value) })}
             type="number"
             value={options.latitude?.toString() ?? ""}
-            onChange={(value) =>
-              change({ latitude: value === "" ? undefined : Number(value) })
-            }
           />
           <Field
             label="Longitude"
+            onChange={(value) => change({ longitude: value === "" ? undefined : Number(value) })}
             type="number"
             value={options.longitude?.toString() ?? ""}
-            onChange={(value) =>
-              change({ longitude: value === "" ? undefined : Number(value) })
-            }
           />
         </>
       )}
@@ -116,15 +109,13 @@ function SourceEditor({
       <legend>Content source</legend>
       <SelectField
         label="Use content from"
-        value={source?.field ?? ""}
         onChange={(field) =>
           onChange({
             ...section,
-            source: field
-              ? { type: "profile", field: field as SectionSourceField }
-              : undefined,
+            source: field ? { field: field as SectionSourceField, type: "profile" } : undefined,
           })
         }
+        value={source?.field ?? ""}
       >
         <option value="">Own content</option>
         {fields.map((field) => (
@@ -137,7 +128,6 @@ function SourceEditor({
         <>
           <label>
             <input
-              type="checkbox"
               checked={!source.itemIds}
               onChange={(event) =>
                 onChange({
@@ -148,17 +138,16 @@ function SourceEditor({
                   },
                 })
               }
+              type="checkbox"
             />{" "}
             All current and future items
           </label>
           {choices.map((item) => (
             <label className="section-source-choice" key={item.id}>
               <input
-                type="checkbox"
                 checked={source.itemIds?.includes(item.id) ?? true}
                 onChange={(event) => {
-                  const selected =
-                    source.itemIds ?? choices.map(({ id }) => id);
+                  const selected = source.itemIds ?? choices.map(({ id }) => id);
                   onChange({
                     ...section,
                     source: {
@@ -169,14 +158,12 @@ function SourceEditor({
                     },
                   });
                 }}
+                type="checkbox"
               />{" "}
               {item.title}
             </label>
           ))}
-          <p>
-            Sources use this profile’s saved fields. Private projects stay
-            excluded publicly.
-          </p>
+          <p>Sources use this profile’s saved fields. Private projects stay excluded publicly.</p>
         </>
       )}
     </fieldset>
@@ -195,66 +182,64 @@ function ItemFields({
     <>
       <Field
         label="Item title"
-        value={item.title}
-        required
         onChange={(title) => onChange({ ...item, title })}
+        required
+        value={item.title}
       />
       <Field
+        hint="Plain text. Separate paragraphs with a blank line."
         label="Item details"
-        value={item.body}
         multiline
         onChange={(body) => onChange({ ...item, body })}
-        hint="Plain text. Separate paragraphs with a blank line."
+        value={item.body}
       />
       <Field
+        hint="Public HTTP or HTTPS URL. Shop and plan links open your external checkout or product page."
         label="Item link"
+        onChange={(url) => onChange({ ...item, url })}
         type="url"
         value={item.url}
-        onChange={(url) => onChange({ ...item, url })}
-        hint="Public HTTP or HTTPS URL. Shop and plan links open your external checkout or product page."
       />
       <Field
         label="Cover image URL"
+        onChange={(imageUrl) => onChange({ ...item, imageUrl })}
         type="url"
         value={item.imageUrl ?? ""}
-        onChange={(imageUrl) => onChange({ ...item, imageUrl })}
       />
       {["pricing", "shop", "menu", "property", "statistics"].includes(view) && (
         <Field
           label="Price or value"
-          value={item.value ?? ""}
           onChange={(value) => onChange({ ...item, value })}
+          value={item.value ?? ""}
         />
       )}
       {["timeline", "posts", "awards", "careers"].includes(view) && (
         <Field
           label="Date or period"
-          value={item.period ?? ""}
           onChange={(period) => onChange({ ...item, period })}
+          value={item.period ?? ""}
         />
       )}
       {view === "video" && (
         <Field
+          hint="Optional WebVTT captions for direct MP4, WebM or Ogg video files."
           label="Video captions URL"
+          onChange={(captionsUrl) => onChange({ ...item, captionsUrl })}
           type="url"
           value={item.captionsUrl ?? ""}
-          onChange={(captionsUrl) => onChange({ ...item, captionsUrl })}
-          hint="Optional WebVTT captions for direct MP4, WebM or Ogg video files."
         />
       )}
       <LinesField
         label="Features or bullet points"
+        onChange={(details) => onChange({ ...item, details: details.filter(Boolean) })}
         value={item.details ?? []}
-        onChange={(details) =>
-          onChange({ ...item, details: details.filter(Boolean) })
-        }
       />
       {view === "steps" && (
         <Field
           label="Code example"
-          value={item.code ?? ""}
           multiline
           onChange={(code) => onChange({ ...item, code })}
+          value={item.code ?? ""}
         />
       )}
     </>
@@ -269,59 +254,47 @@ export function SectionContentEditor({
   const definition = authorableSections[type];
   return (
     <div className="section-library-editor">
-      <OptionsEditor section={section} type={type} onChange={onChange} />
+      <OptionsEditor onChange={onChange} section={section} type={type} />
       <SelectField
         label="Section display"
-        value={section.renderer}
         onChange={(renderer) =>
           onChange({
             ...section,
             renderer: renderer as CustomSection["renderer"],
           })
         }
+        value={section.renderer}
       >
         {getSectionRenderers(type).map((view) => (
-          <option value={view} key={view}>
+          <option key={view} value={view}>
             {view}
           </option>
         ))}
       </SelectField>
-      <SourceEditor
-        section={section}
-        type={type}
-        onChange={onChange}
-        sourceItems={sourceItems}
-      />
+      <SourceEditor onChange={onChange} section={section} sourceItems={sourceItems} type={type} />
       {!section.source &&
-        !["heading", "contact", "map", "toc", "newsletter"].includes(
-          definition.view,
-        ) && (
+        !["heading", "contact", "map", "toc", "newsletter"].includes(definition.view) && (
           <CollectionEditor<CustomSection["items"][number]>
-            title="Section items"
-            items={section.items}
-            maxItems={30}
-            getTitle={(item) => item.title}
             create={() => ({
+              body: "",
               id: crypto.randomUUID(),
               title: "New item",
-              body: "",
               url: "",
             })}
+            getTitle={(item) => item.title}
+            items={section.items}
+            maxItems={30}
             onChange={(items) => onChange({ ...section, items })}
             render={(item, change) => (
-              <ItemFields
-                item={item}
-                onChange={change}
-                view={definition.view}
-              />
+              <ItemFields item={item} onChange={change} view={definition.view} />
             )}
+            title="Section items"
           />
         )}
       {["youtube", "instagram", "pinterest", "video"].includes(type) && (
         <p>
-          Use public work URLs and optional cover images. YouTube players load
-          on visitor request; Instagram and Pinterest remain curated visual
-          links.
+          Use public work URLs and optional cover images. YouTube players load on visitor request;
+          Instagram and Pinterest remain curated visual links.
         </p>
       )}
     </div>

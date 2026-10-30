@@ -1,4 +1,5 @@
 import type { ProfileSnapshot } from "@shared/lib/profile-errors";
+
 import { getExampleForPath } from "../features/examples/data";
 
 function profileStorageKey(id: string | undefined) {
@@ -22,14 +23,11 @@ export function getPagePresentation(
       ? "mydevstudio-theme"
       : profileStorageKey(snapshot.id);
   return {
-    example,
-    profile,
     appearance,
-    storageKey,
     documentLanguage: editing ? "en" : (profile?.portfolioLanguage ?? "en"),
-    portfolioTheme:
-      (platform && !example) || editing
-        ? undefined
-        : (appearance.theme ?? "studio"),
+    example,
+    portfolioTheme: (platform && !example) || editing ? undefined : (appearance.theme ?? "studio"),
+    profile,
+    storageKey,
   };
 }

@@ -15,36 +15,35 @@ export function WorkMedia({
   unloadLabel?: string;
 }) {
   const [loaded, setLoaded] = useState(false);
-  const video =
-    youtubeId && /^[a-zA-Z0-9_-]{11}$/.test(youtubeId) ? youtubeId : null;
+  const video = youtubeId && /^[a-zA-Z0-9_-]{11}$/.test(youtubeId) ? youtubeId : null;
   return (
     <div className="work-media">
       {imageUrl && /^https?:\/\//i.test(imageUrl) && (
         <img
-          src={imageUrl}
           alt={title}
-          width={800}
           height={600}
           loading="lazy"
           referrerPolicy="no-referrer"
+          src={imageUrl}
+          width={800}
         />
       )}
       {video &&
         (loaded ? (
           <>
             <iframe
-              src={`https://www.youtube-nocookie.com/embed/${video}`}
-              title={title}
               allow="encrypted-media; picture-in-picture; fullscreen"
               allowFullScreen
               referrerPolicy="strict-origin-when-cross-origin"
+              src={`https://www.youtube-nocookie.com/embed/${video}`}
+              title={title}
             />
-            <button type="button" onClick={() => setLoaded(false)}>
+            <button onClick={() => setLoaded(false)} type="button">
               {unloadLabel}
             </button>
           </>
         ) : (
-          <button type="button" onClick={() => setLoaded(true)}>
+          <button onClick={() => setLoaded(true)} type="button">
             {loadLabel}: {title}
           </button>
         ))}

@@ -1,4 +1,5 @@
 import { Redis } from "@upstash/redis";
+
 import type { CacheClient, CacheValue } from "../types";
 
 export class RedisCacheClient implements CacheClient {
@@ -7,8 +8,8 @@ export class RedisCacheClient implements CacheClient {
 
   constructor(keyPrefix = "devhub-showcase") {
     this.client = new Redis({
-      url: process.env.REDIS_URL,
       token: process.env.REDIS_TOKEN,
+      url: process.env.REDIS_URL,
     });
     this.keyPrefix = keyPrefix;
   }
@@ -18,11 +19,7 @@ export class RedisCacheClient implements CacheClient {
   }
 
   async set(key: string, value: CacheValue, ttl = 0): Promise<void> {
-    await this.client.set(
-      this.withPrefix(key),
-      value,
-      ttl ? { ex: ttl } : undefined,
-    );
+    await this.client.set(this.withPrefix(key), value, ttl ? { ex: ttl } : undefined);
   }
 
   async get(key: string): Promise<string | null> {

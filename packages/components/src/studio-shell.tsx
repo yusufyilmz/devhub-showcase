@@ -20,7 +20,7 @@ export function StudioShell({
         Skip to content
       </a>
       <header className="admin-brand">
-        <a href={homeHref} className="brand-mark">
+        <a className="brand-mark" href={homeHref}>
           {brand}
         </a>
         <span>{title}</span>

@@ -1,8 +1,4 @@
-import type {
-  AuthorableSectionType,
-  SectionOptions,
-  SectionSource,
-} from "./authorable-sections";
+import type { AuthorableSectionType, SectionOptions, SectionSource } from "./authorable-sections";
 import { getPortfolioSections } from "./portfolio-sections";
 import type { PortfolioProfile } from "./profile";
 import type { SectionComposition } from "./section-compositions";
@@ -58,13 +54,10 @@ export function getPortfolioEntries(profile: PortfolioProfile) {
     })),
   ];
   const byId = new Map(entries.map((section) => [section.id, section]));
-  return [
-    ...new Set([
-      ...(profile.sectionSequence ?? []),
-      ...entries.map(({ id }) => id),
-    ]),
-  ].flatMap((id) => {
-    const section = byId.get(id);
-    return section ? [section] : [];
-  });
+  return [...new Set([...(profile.sectionSequence ?? []), ...entries.map(({ id }) => id)])].flatMap(
+    (id) => {
+      const section = byId.get(id);
+      return section ? [section] : [];
+    },
+  );
 }

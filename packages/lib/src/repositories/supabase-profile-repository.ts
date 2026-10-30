@@ -1,4 +1,5 @@
 import type { PortfolioProfile } from "@shared/content";
+
 import { validateProfile } from "../domain/profile";
 import type { SupabaseDbClient } from "../types";
 import type { Json } from "../types/supabase/database.types";
@@ -19,11 +20,11 @@ type ProfileRow = {
 };
 const snapshot = (row: ProfileRow): ProfileSnapshot => ({
   id: row.id,
-  username: row.username,
   isPublic: row.is_public,
   profile: validateProfile(row.document),
   revision: row.revision,
   updatedAt: row.updated_at,
+  username: row.username,
 });
 export class SupabaseProfileRepository implements ProfileRepository {
   constructor(
@@ -49,12 +50,7 @@ export class SupabaseProfileRepository implements ProfileRepository {
     if (error) throw new ProfileSetupError();
     return Boolean(data);
   }
-  async save(
-    profile: PortfolioProfile,
-    revision: number,
-    isPublic?: boolean,
-    username?: string,
-  ) {
+  async save(profile: PortfolioProfile, revision: number, isPublic?: boolean, username?: string) {
     const { data, error } = await this.client
       .from("portfolio_profiles")
       .update({
@@ -69,8 +65,7 @@ export class SupabaseProfileRepository implements ProfileRepository {
       .select("id, username, is_public, document, revision, updated_at")
       .maybeSingle();
     if (error?.code === "23505") throw new ProfileUsernameError();
-    if (error)
-      throw new Error("Could not save your profile. Please try again.");
+    if (error) throw new Error("Could not save your profile. Please try again.");
     return data ? snapshot(data) : null;
   }
 }

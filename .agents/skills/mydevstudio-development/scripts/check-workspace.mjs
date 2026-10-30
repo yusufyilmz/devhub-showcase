@@ -1,15 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 
 const root = JSON.parse(readFileSync("package.json", "utf8"));
-const scripts = [
-  "check",
-  "test",
-  "test:e2e",
-  "build",
-  "format",
-  "lint:fix",
-  "typecheck",
-];
+const scripts = ["check", "test", "test:e2e", "build", "format", "lint:fix", "typecheck"];
 const paths = [
   "apps/web/package.json",
   "packages/content/package.json",
@@ -23,13 +15,10 @@ const paths = [
   ".github/workflows/ci.yml",
 ];
 const missing = [
-  ...scripts
-    .filter((name) => !root.scripts[name])
-    .map((name) => `script ${name}`),
+  ...scripts.filter((name) => !root.scripts[name]).map((name) => `script ${name}`),
   ...paths.filter((path) => !existsSync(path)),
 ];
-if (missing.length)
-  throw new Error(`Workspace assumptions changed: ${missing.join(", ")}`);
+if (missing.length) throw new Error(`Workspace assumptions changed: ${missing.join(", ")}`);
 console.log(
   `Workspace verified. Use ${root.packageManager}; Node ${root.engines.node}. Read manifests for current commands.`,
 );

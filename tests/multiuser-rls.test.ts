@@ -1,4 +1,5 @@
 import { readdirSync, readFileSync } from "node:fs";
+
 import { PGlite } from "@electric-sql/pglite";
 import { expect, it } from "vitest";
 
@@ -11,8 +12,7 @@ it("isolates two private CVs, allows opt-in publishing, and protects ownership a
     await db.exec(`create schema auth; create role anon; create role authenticated; grant usage on schema public,auth to anon,authenticated;
       create table auth.users(id uuid primary key,email text,email_confirmed_at timestamptz);
       create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;`);
-    for (const id of [root, a, b])
-      await db.query("insert into auth.users(id) values ($1)", [id]);
+    for (const id of [root, a, b]) await db.query("insert into auth.users(id) values ($1)", [id]);
     const migrations = readdirSync("supabase/migrations");
     const apply = async (suffix: string) => {
       const name = migrations.find((name) => name.endsWith(suffix));
@@ -20,10 +20,7 @@ it("isolates two private CVs, allows opt-in publishing, and protects ownership a
       await db.exec(readFileSync(`supabase/migrations/${name}`, "utf8"));
     };
     await apply("_portfolio_admin.sql");
-    await db.query(
-      "update public.portfolio_profiles set owner_id=$1 where id='main'",
-      [root],
-    );
+    await db.query("update public.portfolio_profiles set owner_id=$1 where id='main'", [root]);
     await apply("_user_cv_profiles.sql");
     await apply("_cv_usernames.sql");
     const identity = async (id: string) =>
@@ -36,32 +33,28 @@ it("isolates two private CVs, allows opt-in publishing, and protects ownership a
       [a, a, { name: "Alice" }],
     );
     await expect(
-      db.query(
-        "insert into public.portfolio_profiles(id,owner_id,document) values ($1,$2,$3)",
-        [b, b, { name: "Bob" }],
-      ),
+      db.query("insert into public.portfolio_profiles(id,owner_id,document) values ($1,$2,$3)", [
+        b,
+        b,
+        { name: "Bob" },
+      ]),
     ).rejects.toThrow();
     await expect(
-      db.query(
-        "insert into public.portfolio_profiles(id,owner_id,document) values ($1,$2,$3)",
-        [b, a, { name: "Duplicate" }],
-      ),
+      db.query("insert into public.portfolio_profiles(id,owner_id,document) values ($1,$2,$3)", [
+        b,
+        a,
+        { name: "Duplicate" },
+      ]),
     ).rejects.toThrow();
     await identity(b);
     await db.query(
       "insert into public.portfolio_profiles(id,owner_id,document) values ($1,$2,$3)",
       [b, b, { name: "Bob" }],
     );
-    await db.query(
-      "update public.portfolio_profiles set username=$1 where id=$2",
-      ["bob", b],
-    );
+    await db.query("update public.portfolio_profiles set username=$1 where id=$2", ["bob", b]);
     for (const username of ["admin", "alice/edit", "Alice", "bad--name"]) {
       await expect(
-        db.query(
-          "update public.portfolio_profiles set username=$1 where id=$2",
-          [username, b],
-        ),
+        db.query("update public.portfolio_profiles set username=$1 where id=$2", [username, b]),
       ).rejects.toThrow();
     }
     expect(
@@ -74,23 +67,12 @@ it("isolates two private CVs, allows opt-in publishing, and protects ownership a
     ).toEqual([]);
     await identity(a);
     await expect(
-      db.query("update public.portfolio_profiles set username=$1 where id=$2", [
-        "bob",
-        a,
-      ]),
+      db.query("update public.portfolio_profiles set username=$1 where id=$2", ["bob", a]),
     ).rejects.toThrow();
-    await db.query(
-      "update public.portfolio_profiles set username=$1 where id=$2",
-      ["alice", a],
-    );
+    await db.query("update public.portfolio_profiles set username=$1 where id=$2", ["alice", a]);
     await identity(b);
     expect(
-      (
-        await db.query(
-          "select document from public.portfolio_profiles where id=$1",
-          [a],
-        )
-      ).rows,
+      (await db.query("select document from public.portfolio_profiles where id=$1", [a])).rows,
     ).toEqual([]);
     expect(
       (
@@ -101,24 +83,18 @@ it("isolates two private CVs, allows opt-in publishing, and protects ownership a
       ).rows,
     ).toEqual([]);
     await expect(
-      db.query("update public.portfolio_profiles set owner_id=$1 where id=$2", [
-        a,
-        b,
-      ]),
+      db.query("update public.portfolio_profiles set owner_id=$1 where id=$2", [a, b]),
     ).rejects.toThrow();
     await expect(
-      db.query("update public.portfolio_profiles set id=$1 where id=$2", [
-        "main",
-        b,
-      ]),
+      db.query("update public.portfolio_profiles set id=$1 where id=$2", ["main", b]),
     ).rejects.toThrow();
     await expect(
       db.query("delete from public.portfolio_profiles where id=$1", [b]),
     ).rejects.toThrow();
     await db.exec("reset role; set role anon");
-    expect(
-      (await db.query("select id from public.portfolio_profiles")).rows,
-    ).toEqual([{ id: "main" }]);
+    expect((await db.query("select id from public.portfolio_profiles")).rows).toEqual([
+      { id: "main" },
+    ]);
     await identity(a);
     await db.query(
       "update public.portfolio_profiles set is_public=true, revision=2 where id=$1 and revision=1",
@@ -126,33 +102,16 @@ it("isolates two private CVs, allows opt-in publishing, and protects ownership a
     );
     await db.exec("reset role; set role anon");
     expect(
-      (
-        await db.query(
-          "select document from public.portfolio_profiles where id=$1",
-          [a],
-        )
-      ).rows,
+      (await db.query("select document from public.portfolio_profiles where id=$1", [a])).rows,
     ).toEqual([{ document: { name: "Alice" } }]);
     expect(
-      (
-        await db.query(
-          "select document from public.portfolio_profiles where id=$1",
-          [b],
-        )
-      ).rows,
+      (await db.query("select document from public.portfolio_profiles where id=$1", [b])).rows,
     ).toEqual([]);
     await identity(a);
-    await db.query(
-      "update public.portfolio_profiles set is_public=false where id=$1",
-      [a],
-    );
+    await db.query("update public.portfolio_profiles set is_public=false where id=$1", [a]);
     await db.exec("reset role; set role anon");
     expect(
-      (
-        await db.query("select id from public.portfolio_profiles where id=$1", [
-          a,
-        ])
-      ).rows,
+      (await db.query("select id from public.portfolio_profiles where id=$1", [a])).rows,
     ).toEqual([]);
   } finally {
     await db.close();

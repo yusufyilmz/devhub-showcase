@@ -1,46 +1,39 @@
 // @vitest-environment jsdom
-import {
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from "@testing-library/react";
+
 import { renderToStaticMarkup } from "react-dom/server";
+
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
+
 import { ProfileEditor } from "../apps/web/features/admin/profile-editor";
 import { CustomPortfolioSection } from "../apps/web/features/portfolio/custom-portfolio-section";
 import { HeroSurface } from "../packages/components/src/hero-surface";
 import { WorkMedia } from "../packages/components/src/work-media";
-import {
-  type CustomSection,
-  getSocialWork,
-  sectionCompositions,
-} from "../packages/content/src";
+import { type CustomSection, getSocialWork, sectionCompositions } from "../packages/content/src";
 import { profile } from "../packages/content/src/profile";
 import { profileSchema } from "../packages/lib/src/domain/profile";
 
 const hero = {
   kind: "image" as const,
-  url: "https://example.com/cover.jpg",
-  position: "center" as const,
   overlay: "strong" as const,
+  position: "center" as const,
+  url: "https://example.com/cover.jpg",
 };
 const section: CustomSection = {
-  id: "custom-aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
-  title: "Films",
   composition: "youtube",
-  renderer: "cards",
-  visible: true,
+  id: "custom-aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
   items: [
     {
-      id: "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
-      title: "A film",
       body: "My work",
-      url: "https://youtu.be/M7lc1UVf-VE",
+      id: "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
       imageUrl: "https://example.com/cover.jpg",
+      title: "A film",
+      url: "https://youtu.be/M7lc1UVf-VE",
     },
   ],
+  renderer: "cards",
+  title: "Films",
+  visible: true,
 };
 afterEach(() => {
   cleanup();
@@ -54,12 +47,10 @@ it("parses only supported public work URLs and rejects spoofed hosts and unsuppo
     "https://youtube.com/shorts/M7lc1UVf-VE",
   ])
     expect(getSocialWork(url)).toEqual({
-      provider: "youtube",
       id: "M7lc1UVf-VE",
+      provider: "youtube",
     });
-  expect(
-    getSocialWork("https://www.instagram.com/reel/ABC_123/throw"),
-  ).toBeNull();
+  expect(getSocialWork("https://www.instagram.com/reel/ABC_123/throw")).toBeNull();
   expect(getSocialWork("https://www.instagram.com/p/ABC_123/")).toMatchObject({
     provider: "instagram",
   });
@@ -79,7 +70,7 @@ it("parses only supported public work URLs and rejects spoofed hosts and unsuppo
 it("preserves legacy profiles and round trips media while rejecting unsafe and incompatible input", () => {
   expect(profileSchema.parse(profile).hero).toBeUndefined();
   const saved = profileSchema.parse(
-    JSON.parse(JSON.stringify({ ...profile, hero, customSections: [section] })),
+    JSON.parse(JSON.stringify({ ...profile, customSections: [section], hero })),
   );
   expect(saved.hero).toEqual(hero);
   expect(saved.customSections).toEqual([section]);
@@ -102,15 +93,13 @@ it("loads a canonical YouTube iframe only on request and can unload it", () => {
   const view = render(<WorkMedia title="A film" youtubeId="M7lc1UVf-VE" />);
   expect(view.container.querySelector("iframe")).toBeNull();
   expect(view.container.querySelector("img")).toBeNull();
-  fireEvent.click(
-    screen.getByRole("button", { name: "Load YouTube video: A film" }),
-  );
+  fireEvent.click(screen.getByRole("button", { name: "Load YouTube video: A film" }));
   expect(view.container.querySelector("iframe")?.src).toBe(
     "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
   );
-  expect(
-    view.container.querySelector("iframe")?.getAttribute("referrerpolicy"),
-  ).toBe("strict-origin-when-cross-origin");
+  expect(view.container.querySelector("iframe")?.getAttribute("referrerpolicy")).toBe(
+    "strict-origin-when-cross-origin",
+  );
   fireEvent.click(screen.getByRole("button", { name: "Unload video" }));
   expect(view.container.querySelector("iframe")).toBeNull();
 });
@@ -135,38 +124,30 @@ it("pauses hero autoplay for reduced motion and supports explicit playback contr
   let reduced = true;
   let listener: (() => void) | undefined;
   vi.stubGlobal("matchMedia", () => ({
-    get matches() {
-      return reduced;
-    },
     addEventListener: (_type: string, callback: () => void) => {
       listener = callback;
+    },
+    get matches() {
+      return reduced;
     },
     removeEventListener: vi.fn(),
   }));
   const play = vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue();
-  const pause = vi
-    .spyOn(HTMLMediaElement.prototype, "pause")
-    .mockImplementation(() => {});
+  const pause = vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(() => {});
   const view = render(
-    <HeroSurface
-      media={{ ...hero, kind: "video", url: "https://example.com/film.mp4" }}
-    >
+    <HeroSurface media={{ ...hero, kind: "video", url: "https://example.com/film.mp4" }}>
       <h1>Story</h1>
     </HeroSurface>,
   );
   expect(play).not.toHaveBeenCalled();
   expect(pause).toHaveBeenCalled();
-  fireEvent.click(
-    screen.getByRole("button", { name: "Play background video" }),
-  );
+  fireEvent.click(screen.getByRole("button", { name: "Play background video" }));
   expect(play).toHaveBeenCalledTimes(1);
   const node = view.container.querySelector("video");
   if (!node) throw new Error("Expected video");
   vi.spyOn(node, "paused", "get").mockReturnValue(false);
   fireEvent.play(node);
-  fireEvent.click(
-    screen.getByRole("button", { name: "Pause background video" }),
-  );
+  fireEvent.click(screen.getByRole("button", { name: "Pause background video" }));
   expect(pause).toHaveBeenCalledTimes(2);
   reduced = false;
   listener?.();
@@ -176,12 +157,12 @@ it("renders every composition and keeps Instagram/Pinterest cards free of embedd
   for (const [composition, preset] of Object.entries(sectionCompositions)) {
     const html = renderToStaticMarkup(
       <CustomPortfolioSection
+        language="tr"
         section={{
           ...section,
           composition: composition as CustomSection["composition"],
           renderer: preset.renderer,
         }}
-        language="tr"
       />,
     );
     expect(html).toContain("My work");
@@ -191,10 +172,10 @@ it("renders every composition and keeps Instagram/Pinterest cards free of embedd
 });
 it("saves a YouTube starter and hero background through the normal profile editor", async () => {
   const initial = {
-    username: "example-owner",
     profile: profileSchema.parse(profile),
     revision: 1,
     updatedAt: "2026-10-30",
+    username: "example-owner",
   };
   let saved = initial;
   const fetcher = vi.fn(async (_url, options) => {
@@ -203,7 +184,7 @@ it("saves a YouTube starter and hero background through the normal profile edito
       profile: profileSchema.parse(JSON.parse(options.body).profile),
       revision: 2,
     };
-    return { ok: true, json: async () => saved };
+    return { json: async () => saved, ok: true };
   });
   vi.stubGlobal("fetch", fetcher);
   render(<ProfileEditor initial={initial} />);

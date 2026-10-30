@@ -1,4 +1,5 @@
 import type { Logger } from "pino";
+
 import type { SupabaseDbClient } from "../../types";
 import type { PageResources } from "../../types/resources";
 import { EducationService } from "../resources/supabase/education";
@@ -38,9 +39,9 @@ export class ResourceManager {
     const skills = await this.skillService.getCategorizedSkills();
 
     return {
-      projects,
-      experiences,
       educations,
+      experiences,
+      projects,
       referrals,
       skills,
     };

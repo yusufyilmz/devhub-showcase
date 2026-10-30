@@ -16,10 +16,7 @@ export async function readManagedBody(request: Request): Promise<unknown> {
 }
 export function managedFailure(error: unknown) {
   if (error instanceof ProfileAccessError)
-    return Response.json(
-      { error: "Administrator access required." },
-      { status: 403 },
-    );
+    return Response.json({ error: "Administrator access required." }, { status: 403 });
   if (error instanceof ZodError)
     return Response.json(
       {
@@ -32,16 +29,10 @@ export function managedFailure(error: unknown) {
     );
   if (error instanceof SyntaxError)
     return Response.json({ error: "Invalid JSON." }, { status: 400 });
-  if (
-    error instanceof ProfileConflictError ||
-    error instanceof ProfileUsernameError
-  )
+  if (error instanceof ProfileConflictError || error instanceof ProfileUsernameError)
     return Response.json({ error: error.message }, { status: 409 });
   if (error instanceof Error && error.message === "size")
-    return Response.json(
-      { error: "The import is too large." },
-      { status: 413 },
-    );
+    return Response.json({ error: "The import is too large." }, { status: 413 });
   return Response.json(
     {
       error: "Could not access managed portfolios. Check setup and try again.",

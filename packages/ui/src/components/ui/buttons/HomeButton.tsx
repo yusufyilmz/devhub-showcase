@@ -1,8 +1,8 @@
 "use client";
 
+import { Button } from "@shared/components";
 import { copy } from "@shared/content";
 import { useRouter } from "next/navigation";
-import { Button } from "../../../components";
 
 export const HomeButton = () => {
   const { replace } = useRouter();
@@ -10,9 +10,9 @@ export const HomeButton = () => {
   return (
     <Button
       aria-label="Go to home"
-      variant="outlined"
       className="rounded-lg"
       onClick={() => replace("/")}
+      variant="outlined"
     >
       {copy.cta.home}
     </Button>

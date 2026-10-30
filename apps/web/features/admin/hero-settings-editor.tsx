@@ -1,8 +1,9 @@
 "use client";
+import { useState } from "react";
+
 import { Field, SelectField } from "@shared/components/fields";
 import { HeroSurface } from "@shared/components/hero-surface";
 import { getPortfolioCopy, type PortfolioProfile } from "@shared/content";
-import { useState } from "react";
 export function HeroSettingsEditor({
   profile,
   onChange,
@@ -19,9 +20,9 @@ export function HeroSettingsEditor({
       hero: {
         ...(hero ?? {
           kind: "image",
-          url: "",
-          position: "center",
           overlay: "strong",
+          position: "center",
+          url: "",
         }),
         ...patch,
       },
@@ -34,15 +35,14 @@ export function HeroSettingsEditor({
     <section className="editor-card">
       <h2>Hero background</h2>
       <p>
-        Use an image or a muted video behind your introduction. Video respects
-        reduced motion and includes a pause control. Use media you have
-        permission to publish.
+        Use an image or a muted video behind your introduction. Video respects reduced motion and
+        includes a pause control. Use media you have permission to publish.
       </p>
       <label>
         <input
-          type="checkbox"
           checked={Boolean(hero)}
           onChange={(event) => (event.target.checked ? update({}) : clear())}
+          type="checkbox"
         />{" "}
         Use hero background
       </label>
@@ -50,35 +50,33 @@ export function HeroSettingsEditor({
         <>
           <SelectField
             label="Background type"
-            value={hero.kind}
             onChange={(kind) => update({ kind: kind as "image" | "video" })}
+            value={hero.kind}
           >
             <option value="image">Image</option>
             <option value="video">Video</option>
           </SelectField>
           <Field
+            hint="A direct HTTP or HTTPS image or video file URL, not a social post URL."
             label="Background media URL"
+            onChange={(url) => update({ url })}
+            required
             type="url"
             value={hero.url}
-            required
-            onChange={(url) => update({ url })}
-            hint="A direct HTTP or HTTPS image or video file URL, not a social post URL."
           />
           {hero.kind === "video" && (
             <Field
+              hint="Optional still image shown while the video is paused or unavailable."
               label="Video poster URL"
+              onChange={(poster) => update({ poster })}
               type="url"
               value={hero.poster ?? ""}
-              onChange={(poster) => update({ poster })}
-              hint="Optional still image shown while the video is paused or unavailable."
             />
           )}
           <SelectField
             label="Background position"
+            onChange={(position) => update({ position: position as typeof hero.position })}
             value={hero.position}
-            onChange={(position) =>
-              update({ position: position as typeof hero.position })
-            }
           >
             <option value="center">Center</option>
             <option value="top">Top</option>
@@ -86,10 +84,8 @@ export function HeroSettingsEditor({
           </SelectField>
           <SelectField
             label="Background overlay"
+            onChange={(overlay) => update({ overlay: overlay as typeof hero.overlay })}
             value={hero.overlay}
-            onChange={(overlay) =>
-              update({ overlay: overlay as typeof hero.overlay })
-            }
           >
             <option value="strong">Strong contrast</option>
             <option value="soft">Soft contrast</option>
@@ -98,11 +94,11 @@ export function HeroSettingsEditor({
             <summary>Preview hero background</summary>
             {preview && (
               <HeroSurface
-                media={hero}
                 labels={{
-                  play: text.playBackground,
                   pause: text.pauseBackground,
+                  play: text.playBackground,
                 }}
+                media={hero}
               >
                 <div style={{ paddingBlock: "4rem" }}>
                   <h2>{profile.name}</h2>
@@ -112,7 +108,7 @@ export function HeroSettingsEditor({
               </HeroSurface>
             )}
           </details>
-          <button className="studio-secondary" type="button" onClick={clear}>
+          <button className="studio-secondary" onClick={clear} type="button">
             Remove hero background
           </button>
         </>

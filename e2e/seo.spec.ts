@@ -12,24 +12,17 @@ test("public discovery lists published profiles and excludes private workspaces"
   expect(xml).not.toContain("private-seo-portfolio");
   expect(xml).not.toContain("/p/examples");
   const robots = await request.get("/robots.txt");
-  expect(await robots.text()).toContain(
-    "Sitemap: http://localhost:3100/sitemap.xml",
-  );
+  expect(await robots.text()).toContain("Sitemap: http://localhost:3100/sitemap.xml");
   expect(await robots.text()).toContain("Disallow: /*/edit");
 });
 
-test("portfolio metadata and branding use its published identity", async ({
-  page,
-  request,
-}) => {
+test("portfolio metadata and branding use its published identity", async ({ page, request }) => {
   await page.goto("/designer-example");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
     "http://localhost:3100/designer-example",
   );
-  await expect(
-    page.locator('meta[property="og:image"]').first(),
-  ).toHaveAttribute(
+  await expect(page.locator('meta[property="og:image"]').first()).toHaveAttribute(
     "content",
     "http://localhost:3100/designer-example/share.png",
   );
@@ -42,9 +35,7 @@ test("portfolio metadata and branding use its published identity", async ({
     "http://localhost:3100/designer-example/icon.svg",
   );
   await expect(page.locator(".folio-monogram")).toHaveText("DE");
-  const structured = await page
-    .locator('script[type="application/ld+json"]')
-    .textContent();
+  const structured = await page.locator('script[type="application/ld+json"]').textContent();
   expect(JSON.parse(structured ?? "{}")).toMatchObject({
     "@type": "Person",
     name: "Designer Example",
@@ -63,9 +54,7 @@ test("portfolio metadata and branding use its published identity", async ({
   expect(png.readUInt32BE(20)).toBe(630);
 });
 
-test("private or missing usernames have no public branding endpoints", async ({
-  request,
-}) => {
+test("private or missing usernames have no public branding endpoints", async ({ request }) => {
   for (const username of ["private-seo-portfolio", "missing-portfolio"]) {
     for (const asset of ["icon.svg", "share.png"]) {
       const response = await request.get(`/${username}/${asset}`);
@@ -79,19 +68,11 @@ test("homepage and sign-in keep platform branding without personal structured da
 }) => {
   for (const path of ["/", "/admin/login"]) {
     await page.goto(path);
-    await expect(page.locator('link[rel="icon"]')).toHaveAttribute(
-      "href",
-      "/studio-icon.svg",
-    );
+    await expect(page.locator('link[rel="icon"]')).toHaveAttribute("href", "/studio-icon.svg");
     const structured = JSON.parse(
-      (await page
-        .locator('script[type="application/ld+json"]')
-        .textContent()) ?? "{}",
+      (await page.locator('script[type="application/ld+json"]').textContent()) ?? "{}",
     );
     expect(structured["@type"]).toBe("WebSite");
   }
-  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
-    "content",
-    "noindex, nofollow",
-  );
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
 });

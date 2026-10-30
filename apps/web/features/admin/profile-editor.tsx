@@ -1,8 +1,10 @@
 "use client";
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+
 import { type PortfolioProfile, portfolioTypes } from "@shared/content";
 import type { ProfileSnapshot } from "@shared/lib/profile-errors";
 import { cvPath, editCvPath } from "@shared/lib/username";
-import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+
 import { AppearanceEditor } from "./appearance-editor";
 import {
   EducationEditor,
@@ -50,10 +52,7 @@ function clean(profile: PortfolioProfile): PortfolioProfile {
       skills: lines(item.skills),
     })),
     skills: Object.fromEntries(
-      Object.entries(profile.skills).map(([key, values]) => [
-        key,
-        lines(values),
-      ]),
+      Object.entries(profile.skills).map(([key, values]) => [key, lines(values)]),
     ),
   };
 }
@@ -98,14 +97,14 @@ export function ProfileEditor({
     setMessage("");
     try {
       const response = await fetch(saveUrl, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          isPublic,
           profile: clean(draft),
           revision: saved.revision,
-          isPublic,
           ...(username ? { username } : {}),
         }),
+        headers: { "Content-Type": "application/json" },
+        method: "PUT",
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error);
@@ -131,7 +130,7 @@ export function ProfileEditor({
     return <PortfolioOnboarding draft={draft} setDraft={setDraft} />;
   const CurrentEditor = editors[tab];
   return (
-    <main id="admin-content" className="studio">
+    <main className="studio" id="admin-content">
       <form
         onSubmit={async (event) => {
           event.preventDefault();
@@ -149,19 +148,15 @@ export function ProfileEditor({
           <div className="studio-header-actions">
             {saved.isPublic && saved.id && (
               <a
-                href={saved.username ? cvPath(saved.username) : "/"}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="studio-secondary"
+                href={saved.username ? cvPath(saved.username) : "/"}
+                rel="noopener noreferrer"
+                target="_blank"
               >
                 View public profile ↗
               </a>
             )}
-            <button
-              type="submit"
-              className="studio-primary"
-              disabled={busy || !dirty}
-            >
+            <button className="studio-primary" disabled={busy || !dirty} type="submit">
               {busy ? "Saving…" : "Save changes"}
             </button>
           </div>
@@ -171,14 +166,9 @@ export function ProfileEditor({
           {dirty ? "You have unsaved changes" : "All changes saved"}
           <span>Revision {saved.revision}</span>
           <button
-            type="button"
             disabled={busy}
             onClick={async () => {
-              if (
-                dirty &&
-                !window.confirm("Leave without publishing your changes?")
-              )
-                return;
+              if (dirty && !window.confirm("Leave without publishing your changes?")) return;
               setBusy(true);
               try {
                 const response = await fetch("/api/admin/session", {
@@ -187,35 +177,32 @@ export function ProfileEditor({
                 if (!response.ok) throw new Error("Could not sign out.");
                 window.location.assign("/admin/login");
               } catch (reason) {
-                setError(
-                  reason instanceof Error
-                    ? reason.message
-                    : "Could not sign out.",
-                );
+                setError(reason instanceof Error ? reason.message : "Could not sign out.");
                 setBusy(false);
               }
             }}
+            type="button"
           >
             Sign out
           </button>
         </div>
         <SharingSettings
-          saved={saved}
-          username={username}
-          setUsername={setUsername}
-          isPublic={isPublic}
-          setIsPublic={setIsPublic}
           busy={busy}
           downloadHref={downloadHref}
+          isPublic={isPublic}
           managed={managed}
+          saved={saved}
+          setIsPublic={setIsPublic}
+          setUsername={setUsername}
+          username={username}
         />
-        <nav className="editor-tabs" aria-label="Editor sections">
+        <nav aria-label="Editor sections" className="editor-tabs">
           {tabs.map((item) => (
             <button
-              key={item}
-              type="button"
               aria-current={tab === item ? "page" : undefined}
+              key={item}
               onClick={() => setTab(item)}
+              type="button"
             >
               {item}
             </button>
@@ -225,12 +212,12 @@ export function ProfileEditor({
           <div className="editor-alert" role="alert">
             <p>{error}</p>
             <button
-              type="button"
               disabled={busy}
               onClick={() => {
                 if (window.confirm("Reload and discard unpublished changes?"))
                   window.location.reload();
               }}
+              type="button"
             >
               Reload latest version
             </button>
@@ -241,15 +228,14 @@ export function ProfileEditor({
             {message}
           </p>
         )}
-        <fieldset disabled={busy} className="editor-body">
+        <fieldset className="editor-body" disabled={busy}>
           <legend className="sr-only">{tab} editor</legend>
-          <CurrentEditor profile={draft} onChange={setDraft} />
+          <CurrentEditor onChange={setDraft} profile={draft} />
         </fieldset>
         <footer className="editor-footer">
           <p>Save your edits to update your CV. Public sharing is optional.</p>
           <button
             className="studio-secondary"
-            type="button"
             disabled={!dirty || busy}
             onClick={() => {
               if (window.confirm("Discard unpublished changes?")) {
@@ -260,6 +246,7 @@ export function ProfileEditor({
                 setMessage("");
               }
             }}
+            type="button"
           >
             Discard changes
           </button>
@@ -277,38 +264,37 @@ function PortfolioOnboarding({
   setDraft: Dispatch<SetStateAction<PortfolioProfile>>;
 }) {
   return (
-    <main id="admin-content" className="studio type-onboarding">
+    <main className="studio type-onboarding" id="admin-content">
       <p className="eyebrow">START WITH YOUR STYLE</p>
       <h1>
         A home for <span>your work.</span>
       </h1>
       <p>
-        Pick a starting layout, then add your details. Your portfolio stays
-        private until you publish it.
+        Pick a starting layout, then add your details. Your portfolio stays private until you
+        publish it.
       </p>
       <PortfolioTypePicker
-        value={draft.portfolioType ?? "engineer"}
         onChange={(portfolioType) => setDraft({ ...draft, portfolioType })}
+        value={draft.portfolioType ?? "engineer"}
       />
       <button
         className="studio-primary"
-        type="button"
         onClick={() =>
           setDraft({
             ...draft,
-            templateChosen: true,
             cvLayout:
-              portfolioTypes.find(
-                (type) => type.id === (draft.portfolioType ?? "engineer"),
-              )?.cvLayout ?? "classic",
+              portfolioTypes.find((type) => type.id === (draft.portfolioType ?? "engineer"))
+                ?.cvLayout ?? "classic",
+            templateChosen: true,
           })
         }
+        type="button"
       >
         Use this layout
       </button>
       <p>
-        Save changes in the editor to keep your selection. Your information is
-        never replaced by sample content.
+        Save changes in the editor to keep your selection. Your information is never replaced by
+        sample content.
       </p>
     </main>
   );
@@ -336,14 +322,14 @@ function SharingSettings({
     <div className="editor-card studio-sharing">
       <label htmlFor="cv-username">Username</label>
       <input
+        disabled={busy}
         id="cv-username"
+        maxLength={50}
+        minLength={3}
+        onChange={(event) => setUsername(event.target.value.toLowerCase())}
+        pattern="[a-z0-9]+(-[a-z0-9]+)*"
         required
         value={username}
-        minLength={3}
-        maxLength={50}
-        pattern="[a-z0-9]+(-[a-z0-9]+)*"
-        onChange={(event) => setUsername(event.target.value.toLowerCase())}
-        disabled={busy}
       />
       <p>
         Public portfolio: /{username || "username"}.{" "}
@@ -354,10 +340,10 @@ function SharingSettings({
       </p>
       <label>
         <input
-          type="checkbox"
           checked={isPublic}
-          onChange={(event) => setIsPublic(event.target.checked)}
           disabled={busy}
+          onChange={(event) => setIsPublic(event.target.checked)}
+          type="checkbox"
         />{" "}
         Publish my profile and CV at a public link
       </label>
@@ -366,14 +352,14 @@ function SharingSettings({
           ? "Anyone with the link can read your published contact and career details."
           : "Your CV is private. Only you can read and download it."}
       </p>
-      <a href={downloadHref} className="studio-secondary">
+      <a className="studio-secondary" href={downloadHref}>
         Download my saved CV
       </a>
       {saved.isPublic && saved.id && (
         <a
           href={saved.username ? cvPath(saved.username) : `/p/${saved.id}`}
-          target="_blank"
           rel="noopener noreferrer"
+          target="_blank"
         >
           Open share link ↗
         </a>
@@ -391,26 +377,26 @@ function LayoutEditor({
   return (
     <section className="editor-card">
       <PortfolioTypePicker
-        value={profile.portfolioType ?? "engineer"}
         onChange={(portfolioType) => onChange({ ...profile, portfolioType })}
+        value={profile.portfolioType ?? "engineer"}
       />
       <p>Your CV layout is chosen separately in the PDF section.</p>
     </section>
   );
 }
 const editors = {
-  "Language settings": LanguageSettingsEditor,
-  Profile: ProfileFields,
-  Experience: ExperienceEditor,
-  Projects: ProjectsEditor,
-  Education: EducationEditor,
-  Skills: SkillsEditor,
-  Languages: LanguagesEditor,
-  PDF: CvSettingsEditor,
   Appearance: AppearanceEditor,
-  "Section order": SectionOrderEditor,
-  "Section display": SectionSettingsEditor,
   "Custom sections": CustomSectionsEditor,
-  Templates: SectionTemplatesEditor,
+  Education: EducationEditor,
+  Experience: ExperienceEditor,
+  "Language settings": LanguageSettingsEditor,
+  Languages: LanguagesEditor,
   Layout: LayoutEditor,
+  PDF: CvSettingsEditor,
+  Profile: ProfileFields,
+  Projects: ProjectsEditor,
+  "Section display": SectionSettingsEditor,
+  "Section order": SectionOrderEditor,
+  Skills: SkillsEditor,
+  Templates: SectionTemplatesEditor,
 };

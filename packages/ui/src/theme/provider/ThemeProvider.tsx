@@ -1,7 +1,9 @@
 "use client";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
+
 import { createTheme, ThemeProvider as MuiThemeProvider } from "@mui/material";
 import { getThemePalette, type PortfolioTheme } from "@shared/content";
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+
 import { ThemeContext } from "../theme-toggle";
 
 const rgb = (value: string) => `rgb(${value.replaceAll(" ", ", ")})`;
@@ -27,12 +29,7 @@ export function ThemeProvider({
         const saved = localStorage.getItem(storageKey);
         if (saved === "dark" || saved === "light") preference = saved;
       } catch {}
-      const next =
-        preference === "system"
-          ? media.matches
-            ? "dark"
-            : "light"
-          : preference;
+      const next = preference === "system" ? (media.matches ? "dark" : "light") : preference;
       document.documentElement.dataset.theme = next;
       setMode(next);
     };
@@ -58,25 +55,17 @@ export function ThemeProvider({
     }),
     [mode, storageKey],
   );
-  const palette = getThemePalette(
-    portfolioTheme,
-    mode === "dark" ? "dark" : "light",
-  );
+  const palette = getThemePalette(portfolioTheme, mode === "dark" ? "dark" : "light");
   const theme = useMemo(
     () =>
       createTheme({
         palette: {
-          mode: mode === "dark" ? "dark" : "light",
           background: { default: rgb(palette.bg), paper: rgb(palette.surface) },
-          text: { primary: rgb(palette.text), secondary: rgb(palette.muted) },
+          mode: mode === "dark" ? "dark" : "light",
           primary: {
-            main:
-              accent === "violet"
-                ? "#9b83f5"
-                : accent === "emerald"
-                  ? "#20b899"
-                  : "#2b9fb8",
+            main: accent === "violet" ? "#9b83f5" : accent === "emerald" ? "#20b899" : "#2b9fb8",
           },
+          text: { primary: rgb(palette.text), secondary: rgb(palette.muted) },
         },
         typography: { fontFamily: "var(--font-geist-sans), sans-serif" },
       }),

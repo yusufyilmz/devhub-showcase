@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
+
 import {
   SectionAccordion,
   SectionCarousel,
@@ -9,8 +10,8 @@ import {
 } from "../packages/components/src/section-views";
 
 const items = [
-  { id: "one", title: "First", content: <p>First content</p> },
-  { id: "two", title: "Second", content: <p>Second content</p> },
+  { content: <p>First content</p>, id: "one", title: "First" },
+  { content: <p>Second content</p>, id: "two", title: "Second" },
 ];
 afterEach(() => {
   cleanup();
@@ -21,9 +22,7 @@ it("tabs support arrow keys and keep panels associated with their tabs", () => {
   fireEvent.keyDown(screen.getByRole("tab", { name: "First" }), {
     key: "ArrowRight",
   });
-  expect(
-    screen.getByRole("tab", { name: "Second" }).getAttribute("aria-selected"),
-  ).toBe("true");
+  expect(screen.getByRole("tab", { name: "Second" }).getAttribute("aria-selected")).toBe("true");
   expect(screen.getByRole("tabpanel").textContent).toBe("Second content");
   fireEvent.keyDown(screen.getByRole("tab", { name: "Second" }), {
     key: "Home",
@@ -54,10 +53,10 @@ it("carousel controls respect reduced motion and scroll the content viewport", (
   Object.defineProperty(list, "clientWidth", { value: 1000 });
   list.scrollBy = scrollBy;
   fireEvent.click(screen.getByRole("button", { name: "Next items" }));
-  expect(scrollBy).toHaveBeenCalledWith({ left: 850, behavior: "instant" });
+  expect(scrollBy).toHaveBeenCalledWith({ behavior: "instant", left: 850 });
   fireEvent.click(screen.getByRole("button", { name: "Previous items" }));
   expect(scrollBy).toHaveBeenLastCalledWith({
-    left: -850,
     behavior: "instant",
+    left: -850,
   });
 });

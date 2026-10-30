@@ -1,4 +1,5 @@
 import { expect, it } from "vitest";
+
 import { profile } from "../packages/content/src/profile";
 import {
   getPortfolioThemeVariables,
@@ -14,9 +15,7 @@ function luminance(rgb: string) {
     .map(Number)
     .map((value) => {
       const channel = value / 255;
-      return channel <= 0.04045
-        ? channel / 12.92
-        : ((channel + 0.055) / 1.055) ** 2.4;
+      return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
     });
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
@@ -39,7 +38,7 @@ it("keeps the original theme for legacy profiles and rejects unknown names", () 
   expect(
     profileSchema.safeParse({
       ...profile,
-      appearance: { theme: "unknown", accent: "cyan", defaultTheme: "dark" },
+      appearance: { accent: "cyan", defaultTheme: "dark", theme: "unknown" },
     }).success,
   ).toBe(false);
 });
@@ -52,9 +51,7 @@ it.each(portfolioThemes)(
       const palette = getThemePalette(id, mode);
       expect(variables[`--portfolio-bg-${mode}`]).toBe(palette.bg);
       expect(contrast(palette.text, palette.bg)).toBeGreaterThanOrEqual(4.5);
-      expect(contrast(palette.muted, palette.surface)).toBeGreaterThanOrEqual(
-        4.5,
-      );
+      expect(contrast(palette.muted, palette.surface)).toBeGreaterThanOrEqual(4.5);
       for (const accent of Object.values(portfolioAccents))
         expect(contrast(accent[mode], palette.bg)).toBeGreaterThanOrEqual(4.5);
     }

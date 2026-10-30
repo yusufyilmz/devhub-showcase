@@ -1,12 +1,12 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+
 import { useState } from "react";
+
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
+
 import { SectionOrderEditor } from "../apps/web/features/admin/section-order-editor";
-import {
-  moveItem,
-  SortableList,
-} from "../packages/components/src/sortable-list";
+import { moveItem, SortableList } from "../packages/components/src/sortable-list";
 import { profile } from "../packages/content/src/profile";
 
 function Harness() {
@@ -16,11 +16,9 @@ function Harness() {
   ]);
   return (
     <SortableList
-      label="Sections"
       items={items}
-      onChange={(ids) =>
-        setItems(ids.flatMap((id) => items.filter((item) => item.id === id)))
-      }
+      label="Sections"
+      onChange={(ids) => setItems(ids.flatMap((id) => items.filter((item) => item.id === id)))}
     />
   );
 }
@@ -43,18 +41,12 @@ it("moves an item without mutating the original list or losing entries", () => {
 });
 it("supports keyboard and button reordering with announcements and boundary controls", () => {
   render(<Harness />);
-  expect(
-    screen
-      .getByRole("button", { name: "Move About up" })
-      .hasAttribute("disabled"),
-  ).toBe(true);
+  expect(screen.getByRole("button", { name: "Move About up" }).hasAttribute("disabled")).toBe(true);
   fireEvent.keyDown(screen.getByRole("button", { name: "Reorder Projects" }), {
     key: "Home",
   });
   expect(screen.getAllByRole("listitem")[0]?.textContent).toContain("Projects");
-  expect(screen.getByRole("status").textContent).toContain(
-    "Projects moved to position 1 of 2",
-  );
+  expect(screen.getByRole("status").textContent).toContain("Projects moved to position 1 of 2");
   fireEvent.click(screen.getByRole("button", { name: "Move About up" }));
   expect(screen.getAllByRole("listitem")[0]?.textContent).toContain("About");
   fireEvent.keyDown(screen.getByRole("button", { name: "Reorder About" }), {
@@ -66,24 +58,15 @@ it("reset clears the override and restores the current layout default", () => {
   const onChange = vi.fn();
   render(
     <SectionOrderEditor
+      onChange={onChange}
       profile={{
         ...profile,
         portfolioType: "designer",
-        sectionOrder: [
-          "languages",
-          "about",
-          "experience",
-          "projects",
-          "education",
-          "skills",
-        ],
+        sectionOrder: ["languages", "about", "experience", "projects", "education", "skills"],
       }}
-      onChange={onChange}
     />,
   );
-  fireEvent.click(
-    screen.getByRole("button", { name: "Reset to layout default" }),
-  );
+  fireEvent.click(screen.getByRole("button", { name: "Reset to layout default" }));
   const updated = onChange.mock.calls[0]?.[0];
   expect(updated.sectionOrder).toBeUndefined();
   expect(updated.portfolioType).toBe("designer");

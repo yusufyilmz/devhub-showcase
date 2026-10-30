@@ -1,4 +1,5 @@
 import { ProfileAccessError } from "@shared/lib/profile-errors";
+
 import { requireWorkspace } from "../../../../lib/admin-auth";
 import { cvResponse } from "../../../../lib/cv-response";
 export const runtime = "nodejs";
@@ -15,8 +16,8 @@ export async function GET(_request: Request) {
         ? "Sign in to download your saved CV."
         : "CV storage is temporarily unavailable.",
       {
-        status: error instanceof ProfileAccessError ? 403 : 503,
         headers: { "Cache-Control": "private, no-store" },
+        status: error instanceof ProfileAccessError ? 403 : 503,
       },
     );
   }

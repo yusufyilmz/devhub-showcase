@@ -1,1 +1,17 @@
-export * from "./Icons";
+export {
+  ArrowBackIcon,
+  ArrowDownwardIcon,
+  ArrowForwardIcon,
+  ChatIcon,
+  CloseIcon,
+  EmailIcon,
+  ExternalLinkIcon,
+  GitHubIcon,
+  InfoIcon,
+  LinkedInIcon,
+  MenuIcon,
+  PdfIcon,
+  PhoneIcon,
+  ReferralIcon,
+  SendIcon,
+} from "./Icons";

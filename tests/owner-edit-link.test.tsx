@@ -1,10 +1,10 @@
 import { beforeEach, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
-  getUser: vi.fn(),
-  select: vi.fn(),
   eq: vi.fn(),
+  getUser: vi.fn(),
   maybeSingle: vi.fn(),
+  select: vi.fn(),
 }));
 vi.mock("@shared/lib/supabase", () => ({
   createServerClient: async () => ({
@@ -27,7 +27,7 @@ it("shows no edit link for a visitor", async () => {
 });
 it("shows no edit link for another signed in user", async () => {
   mocks.getUser.mockResolvedValue({
-    data: { user: { id: "bob-id", email_confirmed_at: "today" } },
+    data: { user: { email_confirmed_at: "today", id: "bob-id" } },
   });
   mocks.maybeSingle.mockResolvedValue({ data: null, error: null });
   expect(await OwnerEditLink({ username: "alice" })).toBeNull();
@@ -36,7 +36,7 @@ it("shows no edit link for another signed in user", async () => {
 });
 it("offers the owner their own edit page", async () => {
   mocks.getUser.mockResolvedValue({
-    data: { user: { id: "alice-id", email_confirmed_at: "today" } },
+    data: { user: { email_confirmed_at: "today", id: "alice-id" } },
   });
   mocks.maybeSingle.mockResolvedValue({
     data: { id: "alice-profile" },

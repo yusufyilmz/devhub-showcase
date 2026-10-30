@@ -7,8 +7,7 @@ import {
 export class ProfileService {
   constructor(private readonly repository: ProfileRepository) {}
   async requireOwner(userId: string | null | undefined) {
-    if (!userId || !(await this.repository.isOwner(userId)))
-      throw new ProfileAccessError();
+    if (!userId || !(await this.repository.isOwner(userId))) throw new ProfileAccessError();
   }
   async save(userId: string | null | undefined, input: unknown) {
     await this.requireOwner(userId);

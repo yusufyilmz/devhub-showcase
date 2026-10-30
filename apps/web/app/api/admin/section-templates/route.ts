@@ -3,6 +3,7 @@ import { savedSectionTemplateSchema } from "@shared/lib/section-templates";
 import { createServerClient } from "@shared/lib/supabase";
 import type { Json } from "@shared/lib/types";
 import { ZodError, z } from "zod";
+
 import { sameOrigin } from "../../../../lib/admin-auth";
 
 const headers = { "Cache-Control": "private, no-store" };
@@ -32,8 +33,8 @@ export async function GET() {
     if (error) throw new Error("storage");
     return Response.json(
       {
-        templates: librarySchema.parse(data?.templates ?? []),
         revision: data?.revision ?? 0,
+        templates: librarySchema.parse(data?.templates ?? []),
       },
       { headers },
     );
@@ -43,22 +44,16 @@ export async function GET() {
 }
 export async function PUT(request: Request) {
   if (!sameOrigin(request))
-    return Response.json(
-      { error: "Invalid origin." },
-      { status: 403, headers },
-    );
+    return Response.json({ error: "Invalid origin." }, { headers, status: 403 });
   try {
     const { client, user } = await session();
     const raw = await request.text();
     if (new TextEncoder().encode(raw).length > 800_000)
-      return Response.json(
-        { error: "Template library is too large." },
-        { status: 413, headers },
-      );
+      return Response.json({ error: "Template library is too large." }, { headers, status: 413 });
     const input = inputSchema.parse(JSON.parse(raw));
     const document = {
-      templates: input.templates as unknown as Json,
       revision: input.revision + 1,
+      templates: input.templates as unknown as Json,
       updated_at: new Date().toISOString(),
     };
     const result =
@@ -78,10 +73,9 @@ export async function PUT(request: Request) {
     if (result.error?.code === "23505" || (!result.error && !result.data))
       return Response.json(
         {
-          error:
-            "Another tab changed your templates. Reload the library before saving.",
+          error: "Another tab changed your templates. Reload the library before saving.",
         },
-        { status: 409, headers },
+        { headers, status: 409 },
       );
     if (result.error) throw new Error("storage");
     return Response.json(result.data, { headers });
@@ -98,19 +92,19 @@ function failure(error: unknown) {
           .map((issue) => issue.message)
           .join("\n"),
       },
-      { status: 400, headers },
+      { headers, status: 400 },
     );
   if (error instanceof SyntaxError)
-    return Response.json({ error: "Invalid JSON." }, { status: 400, headers });
+    return Response.json({ error: "Invalid JSON." }, { headers, status: 400 });
   if (error instanceof AuthAccessError)
     return Response.json(
       { error: "Sign in to access your private template library." },
-      { status: 403, headers },
+      { headers, status: 403 },
     );
   return Response.json(
     {
       error: "Could not access the template library. Check setup or try again.",
     },
-    { status: 503, headers },
+    { headers, status: 503 },
   );
 }

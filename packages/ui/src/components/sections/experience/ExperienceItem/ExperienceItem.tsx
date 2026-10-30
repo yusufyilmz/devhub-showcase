@@ -1,20 +1,17 @@
+import type React from "react";
+
+import { TimelineBody, TimelineHeader, TimelineIcon, TimelineItem } from "@shared/components";
+import { CardBody } from "@shared/components/cards";
 import { getPortfolioCopy, type Language } from "@shared/content";
 import type { ExperienceWithCompanyProjectAndSkills } from "@shared/lib/types";
 import { formatDateRange } from "@shared/lib/utils";
 import Link from "next/link";
-import type React from "react";
-import {
-  CardBody,
-  Divider,
-  List,
-  ListItem,
-  TimelineBody,
-  TimelineHeader,
-  TimelineIcon,
-  TimelineItem,
-  Typography,
-} from "../../../../components";
+
+import { Divider } from "../../../ui/Divider/Divider";
+import { List } from "../../../ui/List/List";
+import { ListItem } from "../../../ui/List/ListItem";
 import { RevealCard } from "../../../ui/RevealCard/RevealCard";
+import { Typography } from "../../../ui/Typography/Typography";
 import { SkillItem } from "../../skill/SkillItem/SkillItem";
 
 type ExperienceProps = {
@@ -22,10 +19,7 @@ type ExperienceProps = {
   experience: ExperienceWithCompanyProjectAndSkills;
 };
 
-export const ExperienceItem: React.FC<ExperienceProps> = ({
-  experience,
-  language = "en",
-}) => {
+export const ExperienceItem: React.FC<ExperienceProps> = ({ experience, language = "en" }) => {
   const text = getPortfolioCopy(language);
   const skills = experience.projects.flatMap((project) => project.skills);
   const uniqueSkills = new Set(skills.map((skill) => skill.name));
@@ -35,53 +29,43 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({
       <TimelineHeader className="h-4">
         <TimelineIcon />
         <Typography className="text-xs font-light pb-0 text-main-light-slate mt-2">
-          {formatDateRange(
-            experience.startedAt,
-            experience.finishedAt,
-            language,
-          )}
+          {formatDateRange(experience.startedAt, experience.finishedAt, language)}
         </Typography>
       </TimelineHeader>
       <TimelineBody className="ml-0 mr-0 my-8 md:mx-8">
         <RevealCard
-          language={language}
-          id={`experience-${experience.id}`}
-          title={experience.company?.name ?? experience.role}
           brief={experience.achievements[0]}
           className="experience-card group"
           heading={
             <CardBody className="pb-0 flex flex-col gap-2">
               <Typography
-                variant="h3"
                 className="text-2xl font-bold text-textColor-light group-hover:underline group-hover:text-main-blue"
+                variant="h3"
               >
                 <Link
-                  href={experience.company?.link ?? "#"}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="focus:outline-hidden focus:ring-2 focus:ring-main-blue"
+                  href={experience.company?.link ?? "#"}
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
                   {experience.company?.name}
                 </Link>
               </Typography>
-              <Typography
-                variant="h4"
-                className="font-semibold text-textColor-secondary"
-              >
+              <Typography className="font-semibold text-textColor-secondary" variant="h4">
                 {experience.role}
               </Typography>
             </CardBody>
           }
+          id={`experience-${experience.id}`}
+          language={language}
+          title={experience.company?.name ?? experience.role}
         >
           <Divider className="bg-main-light-slate" />
           <CardBody className="pt-0">
             <List className="list-disc list-inside text-main-white">
               {experience.achievements.map((achievement) => (
                 <ListItem key={achievement}>
-                  <Typography
-                    variant="overline"
-                    className="text-textColor-lightSlate font-light"
-                  >
+                  <Typography className="text-textColor-lightSlate font-light" variant="overline">
                     {achievement}
                   </Typography>
                 </ListItem>
@@ -90,9 +74,7 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({
           </CardBody>
           <CardBody className="pt-0">
             <div className="flex justify-start flex-wrap gap-2">
-              {[...uniqueSkills].map(
-                (skill) => skill && <SkillItem key={skill} name={skill} />,
-              )}
+              {[...uniqueSkills].map((skill) => skill && <SkillItem key={skill} name={skill} />)}
             </div>
           </CardBody>
           <CardBody className="pt-0 pl-0">

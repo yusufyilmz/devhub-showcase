@@ -31,10 +31,7 @@ type TimelineBodyProps = {
   className?: string;
 };
 
-export const Timeline: React.FC<TimelineProps> = ({
-  children,
-  className = "",
-}) => {
+export const Timeline: React.FC<TimelineProps> = ({ children, className = "" }) => {
   return (
     <ol
       className={`relative border-l border-gray-200 dark:border-gray-700 pl-3 md:pl-6 ${className}`}
@@ -44,20 +41,12 @@ export const Timeline: React.FC<TimelineProps> = ({
   );
 };
 
-export const TimelineItem: React.FC<TimelineItemProps> = ({
-  children,
-  className = "",
-}) => {
+export const TimelineItem: React.FC<TimelineItemProps> = ({ children, className = "" }) => {
   return <li className={`mb-10 ${className}`}>{children}</li>;
 };
 
-export const TimelineHeader: React.FC<TimelineHeaderProps> = ({
-  children,
-  className = "",
-}) => {
-  return (
-    <div className={`flex items-center ps-5 ${className}`}>{children}</div>
-  );
+export const TimelineHeader: React.FC<TimelineHeaderProps> = ({ children, className = "" }) => {
+  return <div className={`flex items-center ps-5 ${className}`}>{children}</div>;
 };
 
 export const TimelineIcon: React.FC<TimelineIconProps> = ({
@@ -65,9 +54,7 @@ export const TimelineIcon: React.FC<TimelineIconProps> = ({
   className = "",
 }) => {
   return (
-    <div
-      className={`absolute w-3 h-3 rounded-full mt-1.5 -start-1.5 ${color} ${className}`}
-    />
+    <div className={`absolute w-3 h-3 rounded-full mt-1.5 -start-1.5 ${color} ${className}`} />
   );
 };
 
@@ -78,9 +65,6 @@ export const TimelineConnector: React.FC<TimelineConnectorProps> = ({
   return <div className={`absolute w-0.5 h-full ${color} ${className}`} />;
 };
 
-export const TimelineBody: React.FC<TimelineBodyProps> = ({
-  children,
-  className = "",
-}) => {
+export const TimelineBody: React.FC<TimelineBodyProps> = ({ children, className = "" }) => {
   return <div className={`my-4 ml-1 ${className}`}>{children}</div>;
 };

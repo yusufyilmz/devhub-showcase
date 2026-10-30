@@ -6,9 +6,7 @@ import type {
 } from "../../../../types/supabase";
 import { keysToCamelCase } from "../../../../utils/converter/camel-case";
 
-export class ExperienceService
-  implements ResourceService<ExperienceWithCompanyProjectAndSkills>
-{
+export class ExperienceService implements ResourceService<ExperienceWithCompanyProjectAndSkills> {
   private readonly dbClient: SupabaseDbClient;
 
   constructor(client: SupabaseDbClient) {
@@ -29,9 +27,7 @@ export class ExperienceService
 
     console.log("experiences", experiences);
 
-    const { data: projects, error: projectsError } = await this.dbClient
-      .from("projects")
-      .select(`
+    const { data: projects, error: projectsError } = await this.dbClient.from("projects").select(`
       *,
       skills:project_skills(skill_id, skills(*))
     `);

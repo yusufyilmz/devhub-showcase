@@ -11,9 +11,5 @@ export const AccordionBody: React.FC<AccordionBodyProps> = ({
   children,
   className = "",
 }) => {
-  return (
-    <div className={`${isOpen ? "block" : "hidden"} p-5 ${className}`}>
-      {children}
-    </div>
-  );
+  return <div className={`${isOpen ? "block" : "hidden"} p-5 ${className}`}>{children}</div>;
 };

@@ -20,9 +20,9 @@ export const IconButton: React.FC<IconButtonProps> = ({
 }) => {
   return (
     <button
-      onClick={onClick}
-      className={`p-2 rounded-full focus:outline-hidden ${color} ${className}`}
       aria-label={ariaLabel}
+      className={`p-2 rounded-full focus:outline-hidden ${color} ${className}`}
+      onClick={onClick}
       type="button"
       {...props}
     >
@@ -46,11 +46,11 @@ export const IconButtonWithLink: React.FC<IconButtonWithLinkProps> = ({
 }) => {
   return (
     <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
       aria-label={label}
       className={`social-link ${className ?? ""}`}
+      href={href}
+      rel="noopener noreferrer"
+      target="_blank"
     >
       {children}
     </a>

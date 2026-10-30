@@ -1,25 +1,25 @@
 "use client";
 
-import { type ChatMessage, ChatRole, type ChatType } from "@shared/lib/types";
 import type React from "react";
 import { useEffect, useState } from "react";
+
+import { type ChatMessage, ChatRole, type ChatType } from "@shared/lib/types";
 import { useStore } from "zustand";
-import { CloseIcon, IconButton } from "../../../../components";
-import { failureMessage } from "../../../../constants";
-import { chatStore, useChatMessages } from "../../../../stores";
-import { ChatInput } from "../ChatInput";
-import { ChatMessageBox } from "../ChatMessageBox";
-import { TypingIndicator } from "../TypingIndicator";
+
+import { failureMessage } from "../../../../constants/messages";
+import { chatStore, useChatMessages } from "../../../../stores/chat-store";
+import { IconButton } from "../../../ui/IconButton/IconButton";
+import { CloseIcon } from "../../../ui/Icons/Icons";
+import { ChatInput } from "../ChatInput/ChatInput";
+import { ChatMessageBox } from "../ChatMessageBox/ChatMessageBox";
+import { TypingIndicator } from "../TypingIndicator/TypingIndicator";
 
 interface ChatPopupProps {
-  type: ChatType;
-  isTyping?: boolean;
   className?: string;
-  handleSendMessage: (
-    input: ChatMessage,
-    sessionId: string,
-  ) => Promise<ChatMessage>;
   closeChat: (chatFinished: boolean) => void;
+  handleSendMessage: (input: ChatMessage, sessionId: string) => Promise<ChatMessage>;
+  isTyping?: boolean;
+  type: ChatType;
 }
 
 export const ChatPopupContainer: React.FC<ChatPopupProps> = ({
@@ -38,16 +38,14 @@ export const ChatPopupContainer: React.FC<ChatPopupProps> = ({
 
     setIsTyping(true);
 
-    const lastMessage = messages
-      .filter((message) => message.type === type)
-      .pop();
+    const lastMessage = messages.filter((message) => message.type === type).pop();
 
     const newMessage = {
-      role: ChatRole.User,
+      category: lastMessage?.category,
       content: input,
+      role: ChatRole.User,
       timestamp: Date.now(),
       type,
-      category: lastMessage?.category,
     } as ChatMessage;
 
     addMessage(newMessage);
@@ -61,8 +59,8 @@ export const ChatPopupContainer: React.FC<ChatPopupProps> = ({
       const message = (
         error?.message
           ? {
-              role: ChatRole.System,
               content: error?.message,
+              role: ChatRole.System,
               timestamp: Date.now(),
               type,
             }
@@ -76,10 +74,7 @@ export const ChatPopupContainer: React.FC<ChatPopupProps> = ({
   };
 
   useEffect(() => {
-    if (
-      messages.length > 1 &&
-      messages[messages.length - 1]?.category === "end"
-    ) {
+    if (messages.length > 1 && messages[messages.length - 1]?.category === "end") {
       setIsChatFinished(true);
     }
   }, [messages]);
@@ -87,27 +82,27 @@ export const ChatPopupContainer: React.FC<ChatPopupProps> = ({
   return (
     <div className="fixed  bottom-0 right-0 md:right-4 z-[250]">
       <div
-        role="dialog"
         aria-label="Portfolio assistant"
         className="chat-panel w-[100vw] h-[100vh] md:w-full md:h-[32rem] bottom-0 bg-backgroundColor-chat md:rounded-lg shadow-2xl p-6 relative transition-all duration-300 ease-in-out"
+        role="dialog"
       >
         <IconButton
           aria-label="Close chat"
+          className="icon-button absolute top-2 right-2"
           onClick={() => {
             closeChat(isChatFinished);
           }}
-          className="icon-button absolute top-2 right-2"
         >
-          <CloseIcon fontSize="small" className="text-main-secondary" />
+          <CloseIcon className="text-main-secondary" fontSize="small" />
         </IconButton>
         <div className="flex flex-col h-full  transition-all duration-700 transform scale-100">
-          <ChatMessageBox type={type} botIsTyping={isTyping} />
+          <ChatMessageBox botIsTyping={isTyping} type={type} />
           {isTyping && <TypingIndicator />}
           <ChatInput
-            type={type}
-            handleSendMessage={handleSendMessageAction}
             botIsTyping={isTyping}
             chatFinished={isChatFinished}
+            handleSendMessage={handleSendMessageAction}
+            type={type}
           />
         </div>
       </div>

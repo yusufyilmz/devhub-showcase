@@ -1,7 +1,7 @@
 {
-  "extends": "@shared/typescript-config/base.json",
   "compilerOptions": {
     "types": ["node"]
   },
+  "extends": "@shared/typescript-config/base.json",
   "include": ["src/**/*.ts"]
 }

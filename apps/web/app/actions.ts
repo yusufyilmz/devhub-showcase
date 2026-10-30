@@ -2,18 +2,11 @@
 
 import { createCVModel, failureMessage, MessageProcessor } from "@shared/chat";
 import { logger } from "@shared/lib/logger";
-import {
-  RateLimiter,
-  ReferralService,
-  ReviewService,
-} from "@shared/lib/services";
+import { RateLimiter, ReferralService, ReviewService } from "@shared/lib/services";
 import { createServerClient } from "@shared/lib/supabase";
-import type {
-  ChatMessage,
-  ReviewState,
-  ReviewWithReferrals,
-} from "@shared/lib/types";
+import type { ChatMessage, ReviewState, ReviewWithReferrals } from "@shared/lib/types";
 import { isCategoryReferralCategory } from "@shared/lib/utils";
+
 import { requireAdmin } from "../lib/admin-auth";
 import { getPublishedProfile } from "../lib/published-profile";
 
@@ -24,11 +17,7 @@ export async function handleSendMessageAction(
   if (!message.content) return failureMessage;
 
   try {
-    if (
-      !process.env.OPENAI_API_KEY ||
-      !process.env.REDIS_URL ||
-      !process.env.REDIS_TOKEN
-    )
+    if (!process.env.OPENAI_API_KEY || !process.env.REDIS_URL || !process.env.REDIS_TOKEN)
       return failureMessage;
     const rateLimiter = new RateLimiter();
     const messageProcessor = new MessageProcessor(
@@ -41,11 +30,7 @@ export async function handleSendMessageAction(
       const client = await createServerClient();
       const referralService = new ReferralService(logger, client);
 
-      await referralService.saveReferral(
-        message.category,
-        message.content,
-        sessionId,
-      );
+      await referralService.saveReferral(message.category, message.content, sessionId);
     }
 
     const botReply = await messageProcessor.processUserMessage(message);

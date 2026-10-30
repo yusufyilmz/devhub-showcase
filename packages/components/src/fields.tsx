@@ -19,26 +19,23 @@ export function Field({
 }) {
   const fieldId = useId();
   return (
-    <label
-      htmlFor={fieldId}
-      className={multiline ? "editor-field full-width" : "editor-field"}
-    >
+    <label className={multiline ? "editor-field full-width" : "editor-field"} htmlFor={fieldId}>
       <span>{label}</span>
       {multiline ? (
         <textarea
           id={fieldId}
-          value={value}
           onChange={(event) => onChange(event.target.value)}
-          rows={4}
           required={required}
+          rows={4}
+          value={value}
         />
       ) : (
         <input
           id={fieldId}
-          type={type}
-          value={value}
           onChange={(event) => onChange(event.target.value)}
           required={required}
+          type={type}
+          value={value}
         />
       )}{" "}
       {hint && <small>{hint}</small>}
@@ -58,11 +55,11 @@ export function LinesField({
 }) {
   return (
     <Field
-      label={label}
-      value={value.join("\n")}
-      onChange={(value) => onChange(value.split("\n"))}
-      multiline
       hint={hint ?? "One item per line."}
+      label={label}
+      multiline
+      onChange={(value) => onChange(value.split("\n"))}
+      value={value.join("\n")}
     />
   );
 }
@@ -80,7 +77,7 @@ export function SelectField({
   return (
     <label className="editor-field">
       <span>{label}</span>
-      <select value={value} onChange={(event) => onChange(event.target.value)}>
+      <select onChange={(event) => onChange(event.target.value)} value={value}>
         {children}
       </select>
     </label>

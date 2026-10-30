@@ -1,14 +1,10 @@
 // @vitest-environment jsdom
-import {
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within,
-} from "@testing-library/react";
+
 import { renderToStaticMarkup } from "react-dom/server";
+
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
+
 import { ProfileEditor } from "../apps/web/features/admin/profile-editor";
 import { CustomPortfolioSection } from "../apps/web/features/portfolio/custom-portfolio-section";
 import { RegisteredSections } from "../apps/web/features/portfolio/registered-sections";
@@ -24,17 +20,17 @@ import { profileSchema } from "../packages/lib/src/domain/profile";
 
 const section: CustomSection = {
   id: "custom-aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
-  title: "Awards",
-  renderer: "list",
-  visible: true,
   items: [
     {
+      body: "A plain text story.\n\n<script>alert(1)</script>",
       id: "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
       title: "Community award",
-      body: "A plain text story.\n\n<script>alert(1)</script>",
       url: "https://example.com/award",
     },
   ],
+  renderer: "list",
+  title: "Awards",
+  visible: true,
 };
 afterEach(() => {
   cleanup();
@@ -50,10 +46,7 @@ it("round trips custom sections and mixed ordering while preserving legacy secti
   };
   const saved = profileSchema.parse(JSON.parse(JSON.stringify(source)));
   expect(saved.customSections).toEqual([section]);
-  expect(getPortfolioEntries(saved).map(({ id }) => id)).toEqual([
-    section.id,
-    ...legacy,
-  ]);
+  expect(getPortfolioEntries(saved).map(({ id }) => id)).toEqual([section.id, ...legacy]);
   expect(getPortfolioEntries(profile).map(({ id }) => id)).toEqual(legacy);
   expect(getPortfolioEntries(original).at(-1)?.id).toBe(section.id);
   for (const invalid of [
@@ -61,18 +54,13 @@ it("round trips custom sections and mixed ordering while preserving legacy secti
     { ...original, sectionSequence: legacy },
     {
       ...original,
-      sectionSequence: [
-        ...legacy,
-        "custom-cccccccc-cccc-4ccc-8ccc-cccccccccccc",
-      ],
+      sectionSequence: [...legacy, "custom-cccccccc-cccc-4ccc-8ccc-cccccccccccc"],
     },
     { ...original, customSections: [{ ...section, id: "projects" }] },
     { ...original, customSections: [{ ...section, html: "<script/>" }] },
     {
       ...original,
-      customSections: [
-        { ...section, items: [section.items[0], section.items[0]] },
-      ],
+      customSections: [{ ...section, items: [section.items[0], section.items[0]] }],
     },
     {
       ...original,
@@ -102,26 +90,17 @@ it("renders every view as escaped content, skips hidden and empty sections and i
       url: "javascript:alert(1)",
     })),
   };
+  expect(renderToStaticMarkup(<CustomPortfolioSection section={unsafe} />)).not.toContain("href=");
   expect(
-    renderToStaticMarkup(<CustomPortfolioSection section={unsafe} />),
-  ).not.toContain("href=");
-  expect(
-    renderToStaticMarkup(
-      <CustomPortfolioSection section={{ ...section, visible: false }} />,
-    ),
+    renderToStaticMarkup(<CustomPortfolioSection section={{ ...section, visible: false }} />),
   ).toBe("");
-  expect(
-    renderToStaticMarkup(
-      <CustomPortfolioSection section={{ ...section, items: [] }} />,
-    ),
-  ).toBe("");
+  expect(renderToStaticMarkup(<CustomPortfolioSection section={{ ...section, items: [] }} />)).toBe(
+    "",
+  );
   const saved = {
     ...profile,
     customSections: [section],
-    sectionSequence: [
-      section.id,
-      ...getPortfolioSections(profile).map(({ id }) => id),
-    ],
+    sectionSequence: [section.id, ...getPortfolioSections(profile).map(({ id }) => id)],
   };
   const markup = renderToStaticMarkup(
     <RegisteredSections
@@ -129,22 +108,20 @@ it("renders every view as escaped content, skips hidden and empty sections and i
       renderers={Object.fromEntries(
         getPortfolioSections(saved).map(({ renderer }) => [
           renderer,
-          <section>Existing content</section>,
+          <section key={renderer}>Existing content</section>,
         ]),
       )}
     />,
   );
-  expect(markup.indexOf("Awards")).toBeLessThan(
-    markup.indexOf("Existing content"),
-  );
+  expect(markup.indexOf("Awards")).toBeLessThan(markup.indexOf("Existing content"));
 });
 it("creates, duplicates, reorders, removes and saves sections with independent IDs and reloads the saved draft", async () => {
   vi.spyOn(window, "confirm").mockReturnValue(true);
   const initial = {
-    username: "example-owner",
     profile: profileSchema.parse(profile),
     revision: 1,
     updatedAt: "2026-10-30",
+    username: "example-owner",
   };
   let saved = initial;
   vi.stubGlobal(
@@ -155,7 +132,7 @@ it("creates, duplicates, reorders, removes and saves sections with independent I
         profile: profileSchema.parse(JSON.parse(options.body).profile),
         revision: 2,
       };
-      return { ok: true, json: async () => saved };
+      return { json: async () => saved, ok: true };
     }),
   );
   const editor = render(<ProfileEditor initial={initial} />);
@@ -173,10 +150,7 @@ it("creates, duplicates, reorders, removes and saves sections with independent I
   });
   fireEvent.click(screen.getByRole("button", { name: "Duplicate section" }));
   fireEvent.click(screen.getByRole("button", { name: "Section order" }));
-  fireEvent.keyDown(
-    screen.getByRole("button", { name: "Reorder Awards copy" }),
-    { key: "Home" },
-  );
+  fireEvent.keyDown(screen.getByRole("button", { name: "Reorder Awards copy" }), { key: "Home" });
   fireEvent.click(screen.getByRole("button", { name: "Custom sections" }));
   fireEvent.click(
     within(screen.getByRole("group", { name: "Awards" })).getByRole("button", {
@@ -187,14 +161,10 @@ it("creates, duplicates, reorders, removes and saves sections with independent I
   await waitFor(() => expect(saved.revision).toBe(2));
   expect(saved.profile.customSections).toHaveLength(1);
   expect(saved.profile.customSections?.[0]?.title).toBe("Awards copy");
-  expect(saved.profile.sectionSequence?.[0]).toBe(
-    saved.profile.customSections?.[0]?.id,
-  );
+  expect(saved.profile.sectionSequence?.[0]).toBe(saved.profile.customSections?.[0]?.id);
   expect(saved.profile.customSections?.[0]?.items[0]?.body).toBe("My story");
   editor.unmount();
   render(<ProfileEditor initial={saved} />);
   fireEvent.click(screen.getByRole("button", { name: "Custom sections" }));
-  expect(
-    (screen.getByLabelText("Section name") as HTMLInputElement).value,
-  ).toBe("Awards copy");
+  expect((screen.getByLabelText("Section name") as HTMLInputElement).value).toBe("Awards copy");
 });

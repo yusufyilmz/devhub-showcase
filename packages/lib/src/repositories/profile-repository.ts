@@ -1,15 +1,15 @@
 import type { PortfolioProfile } from "@shared/content";
 export interface ProfileSnapshot {
   id?: string;
-  username?: string;
   isPublic?: boolean;
   profile: PortfolioProfile;
   revision: number;
   updatedAt: string;
+  username?: string;
 }
 export interface ProfileRepository {
-  read(): Promise<ProfileSnapshot | null>;
   isOwner(userId: string): Promise<boolean>;
+  read(): Promise<ProfileSnapshot | null>;
   save(
     profile: PortfolioProfile,
     revision: number,
@@ -19,9 +19,7 @@ export interface ProfileRepository {
 }
 export class ProfileConflictError extends Error {
   constructor() {
-    super(
-      "This profile changed in another tab. Reload the latest version before saving.",
-    );
+    super("This profile changed in another tab. Reload the latest version before saving.");
   }
 }
 export class ProfileAccessError extends Error {
@@ -31,9 +29,7 @@ export class ProfileAccessError extends Error {
 }
 export class ProfileSetupError extends Error {
   constructor() {
-    super(
-      "Profile storage is not configured. Apply the CV profile migrations first.",
-    );
+    super("Profile storage is not configured. Apply the CV profile migrations first.");
   }
 }
 

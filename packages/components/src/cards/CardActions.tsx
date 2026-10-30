@@ -16,9 +16,9 @@ export function CardActions({ actions }: CardActionsProps) {
       {actions.map((action) => (
         <Button
           aria-label="Card actions"
+          className="px-4 py-1 rounded-md text-sm font-medium bg-blue-500 hover:bg-blue-600 text-white transition duration-300"
           key={action.label}
           onClick={action.onClick}
-          className="px-4 py-1 rounded-md text-sm font-medium bg-blue-500 hover:bg-blue-600 text-white transition duration-300"
         >
           {action.label}
         </Button>

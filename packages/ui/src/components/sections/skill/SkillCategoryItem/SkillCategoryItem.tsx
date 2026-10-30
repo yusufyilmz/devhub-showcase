@@ -1,7 +1,11 @@
+import type React from "react";
+
+import { Card, CardBody } from "@shared/components/cards";
 import type { Skill } from "@shared/lib/types";
 import { capitalizeFirstLetter } from "@shared/lib/utils";
-import type React from "react";
-import { Card, CardBody, Divider, Typography } from "../../../../components";
+
+import { Divider } from "../../../ui/Divider/Divider";
+import { Typography } from "../../../ui/Typography/Typography";
 import { SkillItem } from "../SkillItem/SkillItem";
 
 export const SkillCategoryItem: React.FC<{ name: string; skills: Skill[] }> = ({
@@ -11,10 +15,7 @@ export const SkillCategoryItem: React.FC<{ name: string; skills: Skill[] }> = ({
   return (
     <Card className="section-card">
       <CardBody className="flex flex-col">
-        <Typography
-          variant="h3"
-          className="text-left font-semibold text-main-white mb-3 text-2xl"
-        >
+        <Typography className="text-left font-semibold text-main-white mb-3 text-2xl" variant="h3">
           {capitalizeFirstLetter(name)}
         </Typography>
         <Divider className="bg-main-light-slate mb-6 mt-0" />
@@ -22,9 +23,9 @@ export const SkillCategoryItem: React.FC<{ name: string; skills: Skill[] }> = ({
           {skills.map((skill) =>
             skill?.name ? (
               <SkillItem
+                experienceYear={skill.experienceYear ?? undefined}
                 key={skill.id}
                 name={skill.name}
-                experienceYear={skill.experienceYear ?? undefined}
               />
             ) : null,
           )}

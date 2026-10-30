@@ -8,8 +8,8 @@ export async function GET(
   const { profile } = await getUsernameProfile((await params).username);
   return new Response(portfolioIcon(profile), {
     headers: {
-      "Content-Type": "image/svg+xml; charset=utf-8",
       "Cache-Control": "private, no-store",
+      "Content-Type": "image/svg+xml; charset=utf-8",
       "X-Content-Type-Options": "nosniff",
       "X-Robots-Tag": "noindex",
     },

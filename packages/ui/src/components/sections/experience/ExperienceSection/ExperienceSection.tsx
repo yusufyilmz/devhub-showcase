@@ -1,7 +1,8 @@
 import { getPortfolioCopy, type Language } from "@shared/content";
 import type { ExperienceWithCompanyProjectAndSkills } from "@shared/lib/types";
-import { Section } from "../../../../components";
-import { ExperienceList } from "../ExperienceList";
+
+import { Section } from "../../../ui/Section/Section";
+import { ExperienceList } from "../ExperienceList/ExperienceList";
 export function ExperienceSection({
   experiences,
   language = "en",
@@ -12,10 +13,10 @@ export function ExperienceSection({
   const text = getPortfolioCopy(language);
   return (
     <Section
-      sectionId="experiences"
-      title={text.experience}
-      subtitle={text.experienceSubtitle}
       eyebrow={text.experience}
+      sectionId="experiences"
+      subtitle={text.experienceSubtitle}
+      title={text.experience}
     >
       <div className="mt-8">
         <ExperienceList experiences={experiences} language={language} />

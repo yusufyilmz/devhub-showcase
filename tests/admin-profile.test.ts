@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+
 import { createCVModel } from "../packages/chat/src/models/cv-model";
 import { formatAllCV } from "../packages/chat/src/services/formatter";
 import { profile } from "../packages/content/src/profile";
@@ -21,9 +22,9 @@ function repository(owner = true): ProfileRepository {
 describe("portfolio publishing", () => {
   it("accepts the existing CV profile with safe appearance defaults", () => {
     expect(profileSchema.parse(profile).appearance).toEqual({
-      theme: "studio",
       accent: "cyan",
       defaultTheme: "dark",
+      theme: "studio",
     });
   });
   it("rejects unauthenticated visitors and other accounts before writing", async () => {
@@ -32,9 +33,9 @@ describe("portfolio publishing", () => {
     await expect(service.save(null, { profile, revision: 1 })).rejects.toThrow(
       "Only the portfolio owner",
     );
-    await expect(
-      service.save("stranger", { profile, revision: 1 }),
-    ).rejects.toThrow("Only the portfolio owner");
+    await expect(service.save("stranger", { profile, revision: 1 })).rejects.toThrow(
+      "Only the portfolio owner",
+    );
     expect(store.save).not.toHaveBeenCalled();
   });
   it("publishes the validated profile as one revision and detects stale edits", async () => {
@@ -47,19 +48,13 @@ describe("portfolio publishing", () => {
     expect(published.revision).toBe(4);
     expect(published.profile.name).toBe("Updated name");
     vi.mocked(store.save).mockResolvedValue(null);
-    await expect(
-      service.save("owner", { profile, revision: 3 }),
-    ).rejects.toThrow("another tab");
+    await expect(service.save("owner", { profile, revision: 3 })).rejects.toThrow("another tab");
   });
   it("rejects executable links, invalid dates, duplicate IDs and detached references", () => {
-    expect(
-      profileSchema.safeParse({ ...profile, website: "javascript:alert(1)" })
-        .success,
-    ).toBe(false);
-    expect(
-      profileSchema.safeParse({ ...profile, cvUrl: "//evil.example/cv" })
-        .success,
-    ).toBe(false);
+    expect(profileSchema.safeParse({ ...profile, website: "javascript:alert(1)" }).success).toBe(
+      false,
+    );
+    expect(profileSchema.safeParse({ ...profile, cvUrl: "//evil.example/cv" }).success).toBe(false);
     expect(
       profileSchema.safeParse({
         ...profile,
@@ -82,20 +77,19 @@ describe("portfolio publishing", () => {
   it("sends edited experience and project details to both the website and AI context", () => {
     const edited = {
       ...profile,
-      title: "My new title",
       experiences: profile.experiences.map((item) => ({
         ...item,
         position: "Updated position",
       })),
+      title: "My new title",
     };
     const resources = getPortfolioResources(edited);
     const model = createCVModel(edited);
     expect(resources.experiences[0]?.role).toBe("Updated position");
     expect(formatAllCV(model)).toContain("Updated position");
     expect(formatAllCV(model)).toContain("My new title");
-    expect(
-      getPortfolioResources({ ...profile, projects: [] } as typeof profile)
-        .projects,
-    ).toEqual([]);
+    expect(getPortfolioResources({ ...profile, projects: [] } as typeof profile).projects).toEqual(
+      [],
+    );
   });
 });

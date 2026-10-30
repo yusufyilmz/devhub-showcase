@@ -42,10 +42,4 @@ const errorHandling = (error: unknown) => {
   );
 };
 
-export {
-  BadRequestError,
-  CustomError,
-  errorHandling,
-  NotFoundError,
-  ValidationError,
-};
+export { BadRequestError, CustomError, errorHandling, NotFoundError, ValidationError };

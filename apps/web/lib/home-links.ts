@@ -1,7 +1,8 @@
+import { cache } from "react";
+
 import { readPublicProfile } from "@shared/lib/published-profile";
 import { createServerClient } from "@shared/lib/supabase";
 import { cvPath, editCvPath } from "@shared/lib/username";
-import { cache } from "react";
 
 export type HomeAction = { href: string; label: string; signedIn: boolean };
 const guest: HomeAction = {
@@ -23,8 +24,7 @@ export const getHomeAction = cache(async (): Promise<HomeAction> => {
       .select("username")
       .eq("owner_id", user.id)
       .maybeSingle();
-    if (profileError)
-      return { href: "/admin", label: "Open your studio", signedIn: true };
+    if (profileError) return { href: "/admin", label: "Open your studio", signedIn: true };
     return {
       href: data?.username ? editCvPath(data.username) : "/admin",
       label: "Open your studio",

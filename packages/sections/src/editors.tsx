@@ -1,5 +1,6 @@
 "use client";
 import type { AuthorableSectionType } from "@shared/content";
+
 import { AboutHeroSectionEditor } from "./about-hero-section/AboutHeroSectionEditor";
 import { AboutSectionEditor } from "./about-section/AboutSectionEditor";
 import { AccordionSectionEditor } from "./accordion-section/AccordionSectionEditor";
@@ -49,27 +50,30 @@ import { VideoSectionEditor } from "./video-section/VideoSectionEditor";
 import { WorkExperienceSectionEditor } from "./work-experience-section/WorkExperienceSectionEditor";
 import { YouTubeSectionEditor } from "./youtube-section/YouTubeSectionEditor";
 export const sectionEditors = {
-  "about-hero": AboutHeroSectionEditor,
   about: AboutSectionEditor,
+  "about-hero": AboutHeroSectionEditor,
   accordion: AccordionSectionEditor,
   awards: AwardsSectionEditor,
   "blog-page": BlogPageSectionEditor,
-  cta: CTASectionEditor,
   "calendar-link": CalendarLinkSectionEditor,
   careers: CareersSectionEditor,
   clients: ClientsSectionEditor,
   "contact-form": ContactFormSectionEditor,
   "contact-info": ContactInfoSectionEditor,
+  cta: CTASectionEditor,
+  custom: CustomSectionEditor,
   faq: FAQSectionEditor,
   features: FeaturesSectionEditor,
   "gallery-grid": GalleryGridSectionEditor,
   heading: HeadingSectionEditor,
   hero: HeroSectionEditor,
   "how-to": HowToSectionEditor,
+  instagram: InstagramSectionEditor,
   "legal-text": LegalTextSectionEditor,
   map: MapSectionEditor,
   menu: MenuSectionEditor,
   newsletter: NewsletterSectionEditor,
+  pinterest: PinterestSectionEditor,
   plans: PlansSectionEditor,
   "posts-grid": PostsGridSectionEditor,
   pricing: PricingSectionEditor,
@@ -77,6 +81,7 @@ export const sectionEditors = {
   projects: ProjectsSectionEditor,
   property: PropertySectionEditor,
   quickstart: QuickstartSectionEditor,
+  services: ServicesSectionEditor,
   "shop-items": ShopItemsSectionEditor,
   showcase: ShowcaseSectionEditor,
   "social-links": SocialLinksSectionEditor,
@@ -91,15 +96,8 @@ export const sectionEditors = {
   timeline: TimelineSectionEditor,
   video: VideoSectionEditor,
   "work-experience": WorkExperienceSectionEditor,
-  custom: CustomSectionEditor,
-  services: ServicesSectionEditor,
   youtube: YouTubeSectionEditor,
-  instagram: InstagramSectionEditor,
-  pinterest: PinterestSectionEditor,
-} satisfies Record<
-  AuthorableSectionType,
-  (props: SectionEditorProps) => React.ReactNode
->;
+} satisfies Record<AuthorableSectionType, (props: SectionEditorProps) => React.ReactNode>;
 export function EditSection(props: SectionEditorProps) {
   const type = props.section.sectionType;
   if (!type) throw new Error("Choose a registered section type");

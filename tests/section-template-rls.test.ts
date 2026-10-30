@@ -1,4 +1,5 @@
 import { readdirSync, readFileSync } from "node:fs";
+
 import { PGlite } from "@electric-sql/pglite";
 import { expect, it } from "vitest";
 
@@ -21,15 +22,11 @@ it("keeps template content private to its account and prevents ownership changes
     );
     await db.query(
       "insert into public.portfolio_section_templates(owner_id,templates) values ($1,$2)",
-      [a, [{ name: "Private library", content: "Draft story" }]],
+      [a, [{ content: "Draft story", name: "Private library" }]],
     );
     await db.exec(`select set_config('request.jwt.claim.sub','${b}',false)`);
     expect(
-      (
-        await db.query(
-          "select templates from public.portfolio_section_templates",
-        )
-      ).rows,
+      (await db.query("select templates from public.portfolio_section_templates")).rows,
     ).toEqual([]);
     await expect(
       db.query(
@@ -39,14 +36,12 @@ it("keeps template content private to its account and prevents ownership changes
     ).rejects.toThrow();
     await db.exec(`select set_config('request.jwt.claim.sub','${a}',false)`);
     await expect(
-      db.query("update public.portfolio_section_templates set owner_id=$1", [
-        b,
-      ]),
+      db.query("update public.portfolio_section_templates set owner_id=$1", [b]),
     ).rejects.toThrow();
-    await db.query(
-      "update public.portfolio_section_templates set templates=$1 where owner_id=$2",
-      [[{ name: "Updated" }], a],
-    );
+    await db.query("update public.portfolio_section_templates set templates=$1 where owner_id=$2", [
+      [{ name: "Updated" }],
+      a,
+    ]);
     await db.exec("reset role; set role anon");
     await expect(
       db.query("select templates from public.portfolio_section_templates"),
@@ -54,4 +49,4 @@ it("keeps template content private to its account and prevents ownership changes
   } finally {
     await db.close();
   }
-});
+}, 20_000);

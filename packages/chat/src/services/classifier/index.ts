@@ -1,5 +1,6 @@
 import nlp from "compromise";
 import type { Logger } from "pino";
+
 import { CV_MODEL } from "../../models/cv-model";
 import { createQuestionCategories } from "../../models/question-categories";
 import type { ChatCategory, CVModel } from "../../types/cv";
@@ -34,9 +35,7 @@ export class ClassifierService {
   extractNounsAndAdjectives = (text: string) => {
     const doc = nlp(text);
 
-    return doc
-      .not("#Pronoun #Verb #Determiner #Preposition #Conjunction #Adverb")
-      .text();
+    return doc.not("#Pronoun #Verb #Determiner #Preposition #Conjunction #Adverb").text();
   };
 
   classify = (userInput: string): ChatCategory => {
@@ -48,36 +47,25 @@ export class ClassifierService {
     };
 
     try {
-      const filteredUserInput = this.extractNounsAndAdjectives(
-        userInput.toLowerCase(),
-      );
+      const filteredUserInput = this.extractNounsAndAdjectives(userInput.toLowerCase());
 
-      this.logger.debug(
-        { filteredUserInput },
-        "Important words extracted from user input",
-      );
+      this.logger.debug({ filteredUserInput }, "Important words extracted from user input");
 
       for (const questionCategory of Object.values(this.categories)) {
-        const totalWeight = questionCategory.keywords.reduce(
-          (acc, categoryKeyword) => {
-            if (filteredUserInput.includes(categoryKeyword.word)) {
-              this.logger.debug(
-                { categoryKeyword },
-                "Matching keyword for category",
-              );
-              return acc + categoryKeyword.weight;
-            }
-            return acc;
-          },
-          0,
-        );
+        const totalWeight = questionCategory.keywords.reduce((acc, categoryKeyword) => {
+          if (filteredUserInput.includes(categoryKeyword.word)) {
+            this.logger.debug({ categoryKeyword }, "Matching keyword for category");
+            return acc + categoryKeyword.weight;
+          }
+          return acc;
+        }, 0);
 
         if (totalWeight > (bestMatch.weight ?? 0)) {
           bestMatch = {
             category: questionCategory.category,
+            keywords: [],
             model: questionCategory.model ?? undefined,
             weight: totalWeight,
-            keywords: [],
           };
         }
       }

@@ -17,7 +17,7 @@ export function Footer({ profile = fallback }: { profile?: PortfolioProfile }) {
       </div>
       <div>
         {profile.github && (
-          <a href={profile.github} target="_blank" rel="noopener noreferrer">
+          <a href={profile.github} rel="noopener noreferrer" target="_blank">
             GitHub ↗
           </a>
         )}

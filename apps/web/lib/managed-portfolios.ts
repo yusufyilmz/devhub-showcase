@@ -19,10 +19,7 @@ export async function isPortfolioAdmin(client: SupabaseDbClient) {
 }
 export async function requirePortfolioAdmin() {
   const client = await createServerClient();
-  const user = await requireConfirmedUser(
-    client,
-    () => new ProfileAccessError(),
-  );
+  const user = await requireConfirmedUser(client, () => new ProfileAccessError());
   if (!(await isPortfolioAdmin(client))) throw new ProfileAccessError();
   return { client, user };
 }
@@ -49,12 +46,7 @@ export async function managedRepository(
 export async function saveManaged(id: string, input: unknown) {
   const { repository } = await managedRepository(id);
   const data = saveProfileSchema.parse(input);
-  const saved = await repository.save(
-    data.profile,
-    data.revision,
-    data.isPublic,
-    data.username,
-  );
+  const saved = await repository.save(data.profile, data.revision, data.isPublic, data.username);
   if (!saved) throw new ProfileConflictError();
   return saved;
 }
@@ -66,10 +58,10 @@ export async function createManaged(
   const { data, error } = await admin.client
     .from("portfolio_profiles")
     .insert({
-      owner_id: null,
-      managed_by: admin.user.id,
-      username,
       document: profile as unknown as Json,
+      managed_by: admin.user.id,
+      owner_id: null,
+      username,
     })
     .select("id")
     .single();

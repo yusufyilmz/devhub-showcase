@@ -1,8 +1,4 @@
-import type {
-  CustomSection,
-  Language,
-  SectionSourceField,
-} from "@shared/content";
+import type { CustomSection, Language, SectionSourceField } from "@shared/content";
 export type SectionProps = {
   section: CustomSection;
   language?: Language;
@@ -12,7 +8,5 @@ export type SectionProps = {
 export type SectionEditorProps = {
   section: CustomSection;
   onChange: (section: CustomSection) => void;
-  sourceItems?: Partial<
-    Record<SectionSourceField, { id: string; title: string }[]>
-  >;
+  sourceItems?: Partial<Record<SectionSourceField, { id: string; title: string }[]>>;
 };

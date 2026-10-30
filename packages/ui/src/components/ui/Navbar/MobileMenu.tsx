@@ -1,8 +1,12 @@
 "use client";
 
-import { getPortfolioCopy, type Language } from "@shared/content";
 import { useState } from "react";
-import { Drawer, IconButton, MenuIcon } from "../../../components";
+
+import { Drawer } from "@mui/material";
+import { getPortfolioCopy, type Language } from "@shared/content";
+
+import { IconButton } from "../IconButton/IconButton";
+import { MenuIcon } from "../Icons/Icons";
 import { MenuItems } from "./MenuItems";
 
 export function MobileMenu({
@@ -23,18 +27,18 @@ export function MobileMenu({
     <>
       <IconButton
         aria-label={text.menu}
-        onClick={toggleMenu}
         className="hover:scale-105 text-main-lightest-slate transition-transform md:hidden"
+        onClick={toggleMenu}
       >
         <MenuIcon fontSize="large" />
       </IconButton>
-      <Drawer anchor="right" open={isOpen} onClose={toggleMenu}>
+      <Drawer anchor="right" onClose={toggleMenu} open={isOpen}>
         <div
           className="bg-main-dark h-full flex flex-col justify-start p-4 align-middle"
           role="presentation"
         >
-          <MenuItems language={language} hiddenLinks={hiddenLinks} />
-          <a href="/admin/login" className="studio-primary">
+          <MenuItems hiddenLinks={hiddenLinks} language={language} />
+          <a className="studio-primary" href="/admin/login">
             {text.createCv}
           </a>
         </div>

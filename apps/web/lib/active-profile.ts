@@ -1,5 +1,7 @@
-import { headers } from "next/headers";
 import { cache } from "react";
+
+import { headers } from "next/headers";
+
 import { requireWorkspace } from "./admin-auth";
 import { getPublicProfile, getUsernameProfile } from "./public-profile";
 import { getPublishedProfile } from "./published-profile";
@@ -18,7 +20,6 @@ export const getActiveProfile = cache(async () => {
     return null;
   }
   const username = path.match(/^\/([a-z0-9-]+)\/?$/)?.[1];
-  if (username && !["admin", "reviews"].includes(username))
-    return getUsernameProfile(username);
+  if (username && !["admin", "reviews"].includes(username)) return getUsernameProfile(username);
   return getPublishedProfile();
 });

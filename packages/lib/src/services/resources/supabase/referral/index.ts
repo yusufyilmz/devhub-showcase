@@ -1,10 +1,7 @@
 import type { Logger } from "pino";
+
 import type { ResourceService } from "../../../../types";
-import {
-  type Referral,
-  ReviewState,
-  type SupabaseDbClient,
-} from "../../../../types/supabase";
+import { type Referral, ReviewState, type SupabaseDbClient } from "../../../../types/supabase";
 import type { Database } from "../../../../types/supabase/database.types";
 import { keysToCamelCase } from "../../../../utils/converter/camel-case";
 import { referralFormatter } from "../../../formatter";
@@ -57,13 +54,9 @@ export class ReferralService implements ResourceService<Referral> {
     return referralFormatter(keysToCamelCase<Referral[]>(data));
   }
 
-  saveReferral = async (
-    category: string,
-    answer: string,
-    sessionId: string,
-  ): Promise<void> => {
+  saveReferral = async (category: string, answer: string, sessionId: string): Promise<void> => {
     const field = category === "contactInfo" ? "contact_info" : category;
-    const logger = this.logger.child({ category, answer, sessionId });
+    const logger = this.logger.child({ answer, category, sessionId });
 
     try {
       logger.debug("Saving referral answer");
@@ -79,29 +72,15 @@ export class ReferralService implements ResourceService<Referral> {
         throw fetchError;
       }
 
-      if (
-        ![
-          "name",
-          "relationship",
-          "feedback",
-          "recommendation",
-          "contact_info",
-        ].includes(field)
-      )
+      if (!["name", "relationship", "feedback", "recommendation", "contact_info"].includes(field))
         throw new Error("Invalid referral field");
       if (existingReferral) {
         // Update the existing referral
         const update: Database["public"]["Tables"]["referrals"]["Update"] = {
           updated_at: new Date().toISOString(),
         };
-        update[
-          field as
-            | "name"
-            | "relationship"
-            | "feedback"
-            | "recommendation"
-            | "contact_info"
-        ] = answer;
+        update[field as "name" | "relationship" | "feedback" | "recommendation" | "contact_info"] =
+          answer;
         const { error: updateError } = await this.dbClient
           .from("referrals")
           .update(update)
@@ -133,14 +112,12 @@ export class ReferralService implements ResourceService<Referral> {
     }
 
     if (!review) {
-      const { error: createError } = await this.dbClient
-        .from("reviews")
-        .insert({
-          id: crypto.randomUUID(),
-          referral_id: referralId,
-          state: ReviewState.PENDING,
-          updated_at: new Date().toISOString(),
-        });
+      const { error: createError } = await this.dbClient.from("reviews").insert({
+        id: crypto.randomUUID(),
+        referral_id: referralId,
+        state: ReviewState.PENDING,
+        updated_at: new Date().toISOString(),
+      });
 
       if (createError) {
         throw createError;

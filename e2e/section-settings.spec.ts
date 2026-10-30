@@ -5,9 +5,7 @@ for (const type of ["engineer", "designer", "consultant", "minimal"]) {
     page,
   }) => {
     await page.goto(`/configured-${type}`);
-    await expect(
-      page.getByRole("heading", { name: "About me", exact: true }),
-    ).toHaveCount(0);
+    await expect(page.getByRole("heading", { exact: true, name: "About me" })).toHaveCount(0);
     const carousel = page.locator(".configured-section .section-view-carousel");
     await expect(carousel).toBeVisible();
     await expect(carousel.locator(":scope > ul > li")).toHaveCount(1);
@@ -16,15 +14,11 @@ for (const type of ["engineer", "designer", "consultant", "minimal"]) {
     const second = tabs.getByRole("tab").nth(1);
     await second.click();
     await expect(second).toHaveAttribute("aria-selected", "true");
-    const details = page
-      .locator(".configured-section .section-view-accordion details")
-      .first();
+    const details = page.locator(".configured-section .section-view-accordion details").first();
     await details.locator("summary").click();
     await expect(details).toHaveAttribute("open", "");
-    expect(
-      await page.evaluate(
-        () => document.documentElement.scrollWidth > innerWidth,
-      ),
-    ).toBe(false);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
+      false,
+    );
   });
 }

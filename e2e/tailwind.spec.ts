@@ -10,14 +10,14 @@ test("shared semantic utilities resolve the active palette in both color modes",
   await expect(skill).toHaveCSS("color", "rgb(184, 165, 255)");
   await expect(skill).toHaveCSS("background-color", "rgb(22, 34, 52)");
   await page.screenshot({
-    path: testInfo.outputPath("engineer-dark.png"),
     fullPage: true,
+    path: testInfo.outputPath("engineer-dark.png"),
   });
   await page.getByRole("button", { name: "Switch to light theme" }).click();
   await expect(skill).toHaveCSS("color", "rgb(111, 69, 177)");
   await expect(skill).toHaveCSS("background-color", "rgb(236, 242, 248)");
   await page.screenshot({
-    path: testInfo.outputPath("engineer-light.png"),
     fullPage: true,
+    path: testInfo.outputPath("engineer-light.png"),
   });
 });

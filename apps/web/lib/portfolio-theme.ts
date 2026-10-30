@@ -1,10 +1,11 @@
+import type { CSSProperties } from "react";
+
 import {
   getPortfolioThemeVariables,
   getPreviewAccent,
   type PortfolioProfile,
   type PortfolioTheme,
 } from "@shared/content";
-import type { CSSProperties } from "react";
 export function getPublicThemeStyle(
   theme: PortfolioTheme | undefined,
   accent: NonNullable<PortfolioProfile["appearance"]>["accent"],

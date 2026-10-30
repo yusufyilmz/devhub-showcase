@@ -1,6 +1,8 @@
 "use client";
-import { type PortfolioType, portfolioTypes } from "@shared/content";
 import { useEffect, useId, useRef, useState } from "react";
+
+import { type PortfolioType, portfolioTypes } from "@shared/content";
+
 import { examplePath, portfolioExamples } from "./data";
 import { ExampleThumbnail } from "./example-thumbnail";
 import "./examples.css";
@@ -18,8 +20,7 @@ export function ExampleCarousel() {
   useEffect(() => {
     const list = track.current;
     if (!list || count === 0) return;
-    const measure = () =>
-      setAtEnd(list.scrollLeft + list.clientWidth >= list.scrollWidth - 2);
+    const measure = () => setAtEnd(list.scrollLeft + list.clientWidth >= list.scrollWidth - 2);
     const observer = new ResizeObserver(measure);
     observer.observe(list);
     measure();
@@ -28,16 +29,16 @@ export function ExampleCarousel() {
   function choose(value: PortfolioType | "all") {
     setFilter(value);
     setPosition(0);
-    track.current?.scrollTo({ left: 0, behavior: "instant" });
+    track.current?.scrollTo({ behavior: "instant", left: 0 });
   }
   function move(direction: number) {
     const list = track.current;
     if (!list) return;
     list.scrollBy({
-      left: direction * (list.clientWidth * 0.85),
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
         ? "instant"
         : "smooth",
+      left: direction * (list.clientWidth * 0.85),
     });
   }
   function updatePosition() {
@@ -48,25 +49,21 @@ export function ExampleCarousel() {
     const nearest = cards.reduce(
       (best, card, index) =>
         Math.abs(card.offsetLeft - list.offsetLeft - list.scrollLeft) <
-        Math.abs(
-          (cards[best]?.offsetLeft ?? 0) - list.offsetLeft - list.scrollLeft,
-        )
+        Math.abs((cards[best]?.offsetLeft ?? 0) - list.offsetLeft - list.scrollLeft)
           ? index
           : best,
       0,
     );
     // The final card may share a viewport with the previous card.
     setPosition(
-      list.scrollLeft + list.clientWidth >= list.scrollWidth - 2
-        ? examples.length - 1
-        : nearest,
+      list.scrollLeft + list.clientWidth >= list.scrollWidth - 2 ? examples.length - 1 : nearest,
     );
   }
   return (
     <section
+      aria-labelledby="examples-title"
       className="home-container home-examples"
       id="examples"
-      aria-labelledby="examples-title"
     >
       <div className="home-section-intro">
         <p className="home-eyebrow">FIND YOUR STARTING POINT</p>
@@ -76,28 +73,21 @@ export function ExampleCarousel() {
           <span>Different ways to show it.</span>
         </h2>
         <p>
-          Explore eight fictional portfolios across four layouts. Open an
-          example to see the complete page and download its sample CV.
+          Explore eight fictional portfolios across four layouts. Open an example to see the
+          complete page and download its sample CV.
         </p>
       </div>
       <div className="example-toolbar">
-        <fieldset
-          className="example-filters"
-          aria-label="Filter portfolio examples"
-        >
-          <button
-            type="button"
-            aria-pressed={filter === "all"}
-            onClick={() => choose("all")}
-          >
+        <fieldset aria-label="Filter portfolio examples" className="example-filters">
+          <button aria-pressed={filter === "all"} onClick={() => choose("all")} type="button">
             All layouts
           </button>
           {portfolioTypes.map((type) => (
             <button
-              type="button"
-              key={type.id}
               aria-pressed={filter === type.id}
+              key={type.id}
               onClick={() => choose(type.id)}
+              type="button"
             >
               {type.name}
             </button>
@@ -105,43 +95,42 @@ export function ExampleCarousel() {
         </fieldset>
         <div className="example-controls">
           <button
-            type="button"
-            aria-label="Previous portfolio examples"
             aria-controls={id}
+            aria-label="Previous portfolio examples"
             disabled={position === 0}
             onClick={() => move(-1)}
+            type="button"
           >
             ←
           </button>
           <button
-            type="button"
-            aria-label="Next portfolio examples"
             aria-controls={id}
+            aria-label="Next portfolio examples"
             disabled={atEnd}
             onClick={() => move(1)}
+            type="button"
           >
             →
           </button>
         </div>
       </div>
       <ul
-        id={id}
-        ref={track}
-        onScroll={updatePosition}
-        className="example-track"
         aria-label="Portfolio examples carousel"
+        className="example-track"
+        id={id}
+        onScroll={updatePosition}
+        ref={track}
       >
         {examples.map((item) => (
-          <li key={item.slug} className="example-card">
+          <li className="example-card" key={item.slug}>
             <a
-              href={examplePath(item.slug)}
               aria-label={`Explore ${item.profile.name}'s ${item.profile.portfolioType} example`}
+              href={examplePath(item.slug)}
             >
               <ExampleThumbnail item={item} />
               <div className="example-card-copy">
                 <span className="example-label">
-                  {item.profile.portfolioType} /{" "}
-                  {item.profile.appearance?.theme}
+                  {item.profile.portfolioType} / {item.profile.appearance?.theme}
                 </span>
                 <h3>
                   {item.profile.name} <span aria-hidden="true">↗</span>
@@ -149,8 +138,7 @@ export function ExampleCarousel() {
                 <p>{item.profile.title}</p>
                 <div className="example-card-meta">
                   <span>
-                    {item.profile.portfolioLanguage?.toUpperCase()} ·{" "}
-                    {item.profile.cvLayout} CV
+                    {item.profile.portfolioLanguage?.toUpperCase()} · {item.profile.cvLayout} CV
                   </span>
                   <span>Fictional example</span>
                 </div>

@@ -1,47 +1,45 @@
 export const portfolioTypes = [
   {
-    id: "engineer",
-    name: "Engineer",
-    description: "A detailed career timeline, technical skills and projects.",
     audience: "Software engineers and technical specialists",
     cvLayout: "classic",
+    description: "A detailed career timeline, technical skills and projects.",
+    id: "engineer",
+    name: "Engineer",
   },
   {
-    id: "designer",
-    name: "Designer",
-    description: "A bold introduction and a visual gallery of selected work.",
     audience: "Designers, photographers and visual creators",
     cvLayout: "editorial",
+    description: "A bold introduction and a visual gallery of selected work.",
+    id: "designer",
+    name: "Designer",
   },
   {
-    id: "consultant",
-    name: "Consultant",
-    description:
-      "A personal introduction alongside experience and client work.",
     audience: "Consultants, freelancers and business professionals",
     cvLayout: "classic",
+    description: "A personal introduction alongside experience and client work.",
+    id: "consultant",
+    name: "Consultant",
   },
   {
-    id: "minimal",
-    name: "Minimal",
-    description:
-      "A quiet, single column page that lets your story do the talking.",
     audience: "Writers, researchers and anyone who prefers simplicity",
     cvLayout: "compact",
+    description: "A quiet, single column page that lets your story do the talking.",
+    id: "minimal",
+    name: "Minimal",
   },
 ] as const;
 export type PortfolioType = (typeof portfolioTypes)[number]["id"];
 export const cvLayouts = [
-  { id: "classic", name: "Classic", description: "The original balanced CV." },
+  { description: "The original balanced CV.", id: "classic", name: "Classic" },
   {
+    description: "A larger name and generous spacing.",
     id: "editorial",
     name: "Editorial",
-    description: "A larger name and generous spacing.",
   },
   {
+    description: "Tighter spacing for a longer career.",
     id: "compact",
     name: "Compact",
-    description: "Tighter spacing for a longer career.",
   },
 ] as const;
 export type CvLayout = (typeof cvLayouts)[number]["id"];

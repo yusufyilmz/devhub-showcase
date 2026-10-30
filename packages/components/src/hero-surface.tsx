@@ -10,7 +10,7 @@ export type HeroMedia = {
 export function HeroSurface({
   media,
   children,
-  labels = { play: "Play background video", pause: "Pause background video" },
+  labels = { pause: "Pause background video", play: "Play background video" },
 }: {
   media?: HeroMedia;
   children: ReactNode;
@@ -18,9 +18,10 @@ export function HeroSurface({
 }) {
   const video = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
+  const mediaUrl = media?.url;
   useEffect(() => {
     const node = video.current;
-    if (!node || media?.kind !== "video") return;
+    if (!node || media?.kind !== "video" || !mediaUrl || !/^https?:\/\//i.test(mediaUrl)) return;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const apply = () => {
       if (motion.matches) node.pause();
@@ -32,43 +33,43 @@ export function HeroSurface({
       motion.removeEventListener("change", apply);
       node.pause();
     };
-  }, [media?.kind, media?.url]);
+  }, [media?.kind, mediaUrl]);
   if (!media || !/^https?:\/\//i.test(media.url)) return <>{children}</>;
   const position = { objectPosition: media.position };
   return (
     <div className="hero-surface" data-overlay={media.overlay}>
       {media.kind === "image" ? (
         <img
-          className="hero-surface-media"
-          src={media.url}
           alt=""
-          style={position}
+          className="hero-surface-media"
           referrerPolicy="no-referrer"
+          src={media.url}
+          style={position}
         />
       ) : (
         <>
           {media.poster && /^https?:\/\//i.test(media.poster) && (
             <img
-              className="hero-surface-media"
-              src={media.poster}
               alt=""
-              style={position}
+              className="hero-surface-media"
               referrerPolicy="no-referrer"
+              src={media.poster}
+              style={position}
             />
           )}
           <video
+            aria-hidden="true"
             className="hero-surface-media hero-surface-video"
-            ref={video}
-            src={media.url}
-            muted
             loop
+            muted
+            onPause={() => setPlaying(false)}
+            onPlay={() => setPlaying(true)}
             playsInline
             preload="none"
+            ref={video}
+            src={media.url}
             style={position}
-            aria-hidden="true"
             tabIndex={-1}
-            onPlay={() => setPlaying(true)}
-            onPause={() => setPlaying(false)}
           />
         </>
       )}
@@ -77,12 +78,12 @@ export function HeroSurface({
       {media.kind === "video" && (
         <button
           className="hero-surface-toggle"
-          type="button"
           onClick={() => {
             const node = video.current;
             if (node?.paused) node.play().catch(() => {});
             else node?.pause();
           }}
+          type="button"
         >
           {playing ? labels.pause : labels.play}
         </button>

@@ -1,20 +1,10 @@
-import {
-  profile as fallback,
-  getPortfolioCopy,
-  type PortfolioProfile,
-} from "@shared/content";
-export function SummarySection({
-  profile = fallback,
-}: {
-  profile?: PortfolioProfile;
-}) {
+import { profile as fallback, getPortfolioCopy, type PortfolioProfile } from "@shared/content";
+export function SummarySection({ profile = fallback }: { profile?: PortfolioProfile }) {
   const text = getPortfolioCopy(profile.portfolioLanguage);
-  const firstYear = profile.experiences
-    .map((item) => item.start.slice(0, 4))
-    .sort()[0];
+  const firstYear = profile.experiences.map((item) => item.start.slice(0, 4)).sort()[0];
   return (
-    <section id="summary" className="portfolio-hero">
-      <div className="hero-orbit" aria-hidden="true" />
+    <section className="portfolio-hero" id="summary">
+      <div aria-hidden="true" className="hero-orbit" />
       <div className="hero-copy">
         <p className="eyebrow">
           <span className="status-dot" />

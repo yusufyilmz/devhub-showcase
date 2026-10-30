@@ -1,1 +1,1 @@
-export * from "./ChatMessageBox";
+export { ChatMessageBox } from "./ChatMessageBox";

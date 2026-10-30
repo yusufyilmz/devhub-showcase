@@ -6,32 +6,32 @@ export interface Skill {
 }
 
 export interface ContactInfo {
-  phone: string;
   email: string;
   github: string;
   linkedin: string;
+  phone: string;
 }
 
 export interface Project {
-  name: string;
   company: string;
   description: string;
+  name: string;
   usedSkills: string[];
 }
 
 export interface Education {
   degree: string;
+  description: string;
+  gpa: string;
   university: string;
   years: string;
-  gpa: string;
-  description: string;
 }
 
 export interface Experience {
-  position: string;
   company: string;
-  years: string;
   description: string;
+  position: string;
+  years: string;
 }
 
 export interface Language {
@@ -40,33 +40,33 @@ export interface Language {
 }
 
 export interface Certificate {
-  name: string;
   date: string;
   hours: string;
+  name: string;
 }
 
 export interface Reference {
+  contact: string;
+  email: string;
+  feedback: string;
   name: string;
   position: string;
-  email: string;
-  contact: string;
-  feedback: string;
 }
 
 export interface Achievement {
-  title: string;
   description: string;
+  title: string;
 }
 
 export interface Skills {
-  groups?: Record<string, string[]>;
-  frontend: Skill[];
   backend: Skill[];
+  data_visualization: Skill[];
   devops: Skill[];
+  frontend: Skill[];
+  groups?: Record<string, string[]>;
+  performance_optimization: Skill[];
   testing: Skill[];
   version_control: Skill[];
-  data_visualization: Skill[];
-  performance_optimization: Skill[];
 }
 
 type Summary = {
@@ -108,14 +108,16 @@ export type CVModel = {
 };
 
 export interface Character {
-  strengths: string[];
-  weaknesses: string[];
-  leadership: {
-    philosophy: string;
-
-    examples: string[];
+  adaptability: string;
+  attentionToDetail: string;
+  careerGoals: {
+    shortTerm: string;
+    longTerm: string;
   };
-  teamwork: {
+  communicationStyle: string;
+
+  innovation: string;
+  leadership: {
     philosophy: string;
 
     examples: string[];
@@ -125,25 +127,22 @@ export interface Character {
 
     longTerm: string;
   };
-  communicationStyle: string;
-
-  problemSolvingPhilosophy: string;
-
-  adaptability: string;
-
-  innovation: string;
 
   problemSolvingApproach: string;
+
+  problemSolvingPhilosophy: string;
+  resilience: string;
+  strengths: string[];
+  teamwork: {
+    philosophy: string;
+
+    examples: string[];
+  };
+  weaknesses: string[];
   workEthic: {
     punctuality: string;
     dedication: string;
     continuousLearning: string;
-  };
-  resilience: string;
-  attentionToDetail: string;
-  careerGoals: {
-    shortTerm: string;
-    longTerm: string;
   };
 }
 

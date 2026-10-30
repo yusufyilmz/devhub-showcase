@@ -14,7 +14,7 @@ export function Section({
   eyebrow?: string;
 }>) {
   return (
-    <section id={sectionId} className={`portfolio-section ${className}`}>
+    <section className={`portfolio-section ${className}`} id={sectionId}>
       <div className="section-heading">
         <p className="eyebrow">{eyebrow ?? sectionId.replaceAll("-", " ")}</p>
         <h2>{title}</h2>

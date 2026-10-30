@@ -1,6 +1,7 @@
 import type { ProfileSnapshot } from "@shared/lib/profile-errors";
 import { editCvPath } from "@shared/lib/username";
 import { redirect } from "next/navigation";
+
 import { requireWorkspace } from "../../lib/admin-auth";
 export default async function AdminPage() {
   let snapshot: ProfileSnapshot | null;

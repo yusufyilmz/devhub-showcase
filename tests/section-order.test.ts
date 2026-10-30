@@ -1,4 +1,5 @@
 import { expect, it } from "vitest";
+
 import {
   getPortfolioSectionOrder,
   portfolioSectionIds,
@@ -7,12 +8,7 @@ import { profile } from "../packages/content/src/profile";
 import { profileSchema } from "../packages/lib/src/domain/profile";
 
 it("keeps each layout default when existing documents have no saved order", () => {
-  for (const portfolioType of [
-    "engineer",
-    "designer",
-    "consultant",
-    "minimal",
-  ] as const) {
+  for (const portfolioType of ["engineer", "designer", "consultant", "minimal"] as const) {
     const saved = profileSchema.parse({ ...profile, portfolioType });
     expect(saved.sectionOrder).toBeUndefined();
     const order = getPortfolioSectionOrder(saved);
@@ -22,13 +18,9 @@ it("keeps each layout default when existing documents have no saved order", () =
 });
 it("preserves custom order through serialization independently of layout and CV format", () => {
   const sectionOrder = [...portfolioSectionIds].reverse();
-  const saved = profileSchema.parse(
-    JSON.parse(JSON.stringify({ ...profile, sectionOrder })),
-  );
+  const saved = profileSchema.parse(JSON.parse(JSON.stringify({ ...profile, sectionOrder })));
   expect(getPortfolioSectionOrder(saved)).toEqual(sectionOrder);
-  expect(
-    getPortfolioSectionOrder({ ...saved, portfolioType: "designer" }),
-  ).toEqual(sectionOrder);
+  expect(getPortfolioSectionOrder({ ...saved, portfolioType: "designer" })).toEqual(sectionOrder);
   expect(saved.cvLayout).toBe("classic");
   expect(getPortfolioSectionOrder(profile)[0]).toBe("about");
 });
@@ -39,7 +31,5 @@ it("rejects duplicates, missing sections and unknown section names", () => {
     [...portfolioSectionIds, "about"],
     [...portfolioSectionIds.slice(0, 5), "script"],
   ])
-    expect(profileSchema.safeParse({ ...profile, sectionOrder }).success).toBe(
-      false,
-    );
+    expect(profileSchema.safeParse({ ...profile, sectionOrder }).success).toBe(false);
 });

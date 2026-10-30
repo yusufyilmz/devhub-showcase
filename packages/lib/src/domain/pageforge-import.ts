@@ -5,6 +5,7 @@ import {
   type SectionOptions,
   type SectionTemplateFile,
 } from "@shared/content";
+
 import { customSectionSchema } from "./section";
 import {
   emptySection,
@@ -14,15 +15,9 @@ import {
 
 type RecordValue = Record<string, unknown>;
 const object = (value: unknown): RecordValue =>
-  value && typeof value === "object" && !Array.isArray(value)
-    ? (value as RecordValue)
-    : {};
+  value && typeof value === "object" && !Array.isArray(value) ? (value as RecordValue) : {};
 const text = (value: unknown) =>
-  typeof value === "string"
-    ? value
-    : typeof value === "number"
-      ? String(value)
-      : "";
+  typeof value === "string" ? value : typeof value === "number" ? String(value) : "";
 const first = (...values: unknown[]) => values.map(text).find(Boolean) ?? "";
 const url = (value: unknown, base?: string) => {
   const raw =
@@ -62,41 +57,40 @@ function extractBlocks(input: unknown): RecordValue[] {
       ...block,
       display: record.display === false ? false : block.display,
     }));
-  if (record.content && typeof record.content === "object")
-    return extractBlocks(record.content);
+  if (record.content && typeof record.content === "object") return extractBlocks(record.content);
   const keys = ["header", "hero", "main", "sections", "sidebar", "footer"];
   return keys.flatMap((key) => (record[key] ? extractBlocks(record[key]) : []));
 }
 const listKeys: Record<string, string[]> = {
   accordion: ["items"],
-  tabs: ["tabs", "items"],
   awards: ["awards"],
-  clients: ["clients"],
-  team: ["members"],
-  stats: ["stats"],
-  testimonials: ["testimonials"],
-  pricing: ["plans"],
-  plans: ["plans"],
-  features: ["features"],
-  projects: ["projects"],
-  "gallery-grid": ["images"],
-  showcase: ["items"],
-  studies: ["institutions"],
-  "technical-skills": ["skills"],
-  "work-experience": ["experiences"],
-  timeline: ["items"],
-  careers: ["jobs"],
-  "shop-items": ["items"],
-  property: ["properties"],
-  "how-to": ["steps"],
-  quickstart: ["steps"],
   "blog-page": ["posts"],
-  "posts-grid": ["featuredPosts", "recentPosts", "posts"],
-  "social-links": ["links"],
+  careers: ["jobs"],
+  clients: ["clients"],
   "contact-info": ["contacts"],
-  "legal-text": ["sections"],
-  hero: ["buttons"],
   cta: ["buttons"],
+  features: ["features"],
+  "gallery-grid": ["images"],
+  hero: ["buttons"],
+  "how-to": ["steps"],
+  "legal-text": ["sections"],
+  plans: ["plans"],
+  "posts-grid": ["featuredPosts", "recentPosts", "posts"],
+  pricing: ["plans"],
+  projects: ["projects"],
+  property: ["properties"],
+  quickstart: ["steps"],
+  "shop-items": ["items"],
+  showcase: ["items"],
+  "social-links": ["links"],
+  stats: ["stats"],
+  studies: ["institutions"],
+  tabs: ["tabs", "items"],
+  team: ["members"],
+  "technical-skills": ["skills"],
+  testimonials: ["testimonials"],
+  timeline: ["items"],
+  "work-experience": ["experiences"],
 };
 function sourceItems(content: RecordValue, type: string): unknown[] {
   if (type === "faq") {
@@ -125,14 +119,10 @@ function sourceItems(content: RecordValue, type: string): unknown[] {
             : [];
         })
       : [];
-  if (
-    type === "contact-info" &&
-    content.contacts &&
-    !Array.isArray(content.contacts)
-  )
+  if (type === "contact-info" && content.contacts && !Array.isArray(content.contacts))
     return Object.entries(object(content.contacts)).map(([title, value]) => ({
-      title,
       description: plain(value),
+      title,
     }));
   return (listKeys[type] ?? ["items"]).flatMap((key) =>
     Array.isArray(content[key]) ? (content[key] as unknown[]) : [],
@@ -217,7 +207,12 @@ function itemFromPageForge(
     )
     .map(([key, value]) => `${key}: ${plain(value)}`);
   return {
+    body: [body, ...extra].filter(Boolean).join("\n\n"),
+    code: first(item.code, item.snippet),
+    details,
     id: newId(),
+    imageUrl: image ? url(image, base) : "",
+    period: first(item.period, item.date, item.timeframe, metadata.publishedAt),
     title: first(
       item.title,
       item.name,
@@ -232,33 +227,16 @@ function itemFromPageForge(
       typeof value === "string" ? value : "",
       `Item ${index + 1}`,
     ),
-    body: [body, ...extra].filter(Boolean).join("\n\n"),
-    url: url(
-      item.url ||
-        item.href ||
-        item.link ||
-        object(item.cta).href ||
-        metadata.link,
-      base,
-    ),
-    imageUrl: image ? url(image, base) : "",
+    url: url(item.url || item.href || item.link || object(item.cta).href || metadata.link, base),
     value: first(
       item.value,
       item.number,
       typeof item.price === "object" ? plain(item.price) : item.price,
     ),
-    period: first(item.period, item.date, item.timeframe, metadata.publishedAt),
-    details,
-    code: first(item.code, item.snippet),
   };
 }
-function optionsFromPageForge(
-  content: RecordValue,
-  base?: string,
-): SectionOptions {
-  const alignment = ["left", "center", "right"].includes(
-    text(content.alignment ?? content.align),
-  )
+function optionsFromPageForge(content: RecordValue, base?: string): SectionOptions {
+  const alignment = ["left", "center", "right"].includes(text(content.alignment ?? content.align))
     ? (text(content.alignment ?? content.align) as SectionOptions["alignment"])
     : undefined;
   const columns = [1, 2, 3, 4].includes(Number(content.columns))
@@ -266,17 +244,13 @@ function optionsFromPageForge(
     : undefined;
   const coordinates = object(content.coordinates);
   return {
-    description: first(content.description, content.subtitle, content.text),
+    actionUrl: url(content.subscriptionUrl || content.actionUrl || content.link, base),
     alignment,
     columns,
+    description: first(content.description, content.subtitle, content.text),
     email: text(content.email),
-    actionUrl: url(
-      content.subscriptionUrl || content.actionUrl || content.link,
-      base,
-    ),
     latitude: typeof coordinates.lat === "number" ? coordinates.lat : undefined,
-    longitude:
-      typeof coordinates.lng === "number" ? coordinates.lng : undefined,
+    longitude: typeof coordinates.lng === "number" ? coordinates.lng : undefined,
     mediaUrl: url(content.backgroundImage, base),
     posterUrl: url(content.poster, base),
   };
@@ -288,22 +262,17 @@ function convertBlock(
   base?: string,
 ): CustomSection {
   const type = sectionTypeFromPageForge(text(block.type));
-  if (!type)
-    throw new Error(`Unsupported PageForge section type: ${text(block.type)}`);
+  if (!type) throw new Error(`Unsupported PageForge section type: ${text(block.type)}`);
   const content = object(block.content);
   const section = emptySection(type, newId);
   const items = sourceItems(content, type).map((item, index) =>
     itemFromPageForge(item, index, newId, base),
   );
-  if (
-    ["text", "about", "about-hero", "profile"].includes(type) &&
-    !items.length
-  ) {
+  if (["text", "about", "about-hero", "profile"].includes(type) && !items.length) {
     const intro = object(content.intro);
     items.push(
       itemFromPageForge(
         {
-          title: first(content.name, intro.title, content.title, section.title),
           body: first(
             content.bio,
             content.content,
@@ -312,6 +281,7 @@ function convertBlock(
             content.text,
           ),
           image: content.avatar ?? content.image,
+          title: first(content.name, intro.title, content.title, section.title),
           url: object(content.calendar).link,
         },
         0,
@@ -324,10 +294,10 @@ function convertBlock(
     items.push(
       itemFromPageForge(
         {
+          body: content.description,
+          image: content.poster,
           title: first(content.title, "Video"),
           url: first(content.embedUrl, content.videoUrl, content.src),
-          image: content.poster,
-          body: content.description,
         },
         0,
         newId,
@@ -338,9 +308,9 @@ function convertBlock(
     items.push(
       itemFromPageForge(
         {
+          body: content.description,
           title: first(content.text, content.title, "Book a time"),
           url: content.link,
-          body: content.description,
         },
         0,
         newId,
@@ -349,19 +319,17 @@ function convertBlock(
     );
   const layout = first(content.layout, block.variant);
   const layouts: Record<string, string> = {
-    grid: "cards",
-    masonry: "masonry",
-    carousel: "carousel",
     accordion: "accordion",
-    tabs: "tabs",
+    carousel: "carousel",
+    grid: "cards",
     list: "list",
+    masonry: "masonry",
     steps: "steps",
+    tabs: "tabs",
   };
   const renderer = layouts[layout];
   if (items.length > 30)
-    throw new Error(
-      `${section.title} has more than 30 items; split it before importing`,
-    );
+    throw new Error(`${section.title} has more than 30 items; split it before importing`);
   const options = optionsFromPageForge(content, base);
   const mapped = new Set([
     "title",
@@ -412,9 +380,7 @@ function convertBlock(
     .filter((value, index, all) => value && all.indexOf(value) === index)
     .join("\n\n");
   if (type === "newsletter" && !options.actionUrl)
-    warnings.push(
-      "Newsletter: configure a subscription page URL in its editor.",
-    );
+    warnings.push("Newsletter: configure a subscription page URL in its editor.");
   if (type === "contact-form")
     warnings.push(
       "Contact form: configure the recipient email. External endpoints and custom form fields are not imported; the form opens an email app.",
@@ -424,15 +390,14 @@ function convertBlock(
   );
   return customSectionSchema.parse({
     ...section,
-    title: first(content.title, content.name, section.title),
-    visible: block.display !== false,
-    options,
     items,
+    options,
     renderer:
-      renderer &&
-      (getSectionRenderers(type) as readonly string[]).includes(renderer)
+      renderer && (getSectionRenderers(type) as readonly string[]).includes(renderer)
         ? renderer
         : section.renderer,
+    title: first(content.title, content.name, section.title),
+    visible: block.display !== false,
   });
 }
 export function importPageForge(
@@ -443,20 +408,17 @@ export function importPageForge(
   if (base && !/^https?:\/\//i.test(base))
     throw new Error("Use an HTTP or HTTPS source asset base URL");
   const blocks = extractBlocks(input);
-  if (!blocks.length)
-    throw new Error("No compatible PageForge content blocks found");
+  if (!blocks.length) throw new Error("No compatible PageForge content blocks found");
   if (blocks.length > MAX_CUSTOM_SECTIONS)
     throw new Error(`Import at most ${MAX_CUSTOM_SECTIONS} sections at a time`);
   const warnings: string[] = [];
-  const sections = blocks.map((block) =>
-    convertBlock(block, newId, warnings, base),
-  );
+  const sections = blocks.map((block) => convertBlock(block, newId, warnings, base));
   const document = sectionTemplateFileSchema.parse({
     format: "mydevstudio.sections",
-    version: 1,
-    name: "PageForge import",
     includesContent: true,
+    name: "PageForge import",
     sections,
+    version: 1,
   });
   return { document, warnings };
 }

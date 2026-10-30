@@ -1,13 +1,8 @@
 "use client";
-import { getPortfolioCopy, type Language } from "@shared/content";
 import { useId, useState } from "react";
-export function ContactForm({
-  email,
-  language,
-}: {
-  email: string;
-  language?: Language;
-}) {
+
+import { getPortfolioCopy, type Language } from "@shared/content";
+export function ContactForm({ email, language }: { email: string; language?: Language }) {
   const text = getPortfolioCopy(language);
   const id = useId();
   return (
@@ -20,17 +15,11 @@ export function ContactForm({
       }}
     >
       <label htmlFor={`${id}-email`}>{text.formEmail}</label>
-      <input id={`${id}-email`} name="email" type="email" required />
+      <input id={`${id}-email`} name="email" required type="email" />
       <label htmlFor={`${id}-subject`}>{text.formSubject}</label>
-      <input id={`${id}-subject`} name="subject" required maxLength={200} />
+      <input id={`${id}-subject`} maxLength={200} name="subject" required />
       <label htmlFor={`${id}-message`}>{text.formMessage}</label>
-      <textarea
-        id={`${id}-message`}
-        name="message"
-        required
-        maxLength={6000}
-        rows={5}
-      />
+      <textarea id={`${id}-message`} maxLength={6000} name="message" required rows={5} />
       <button type="submit">{text.formOpenEmail}</button>
       <p>{text.formEmailNotice}</p>
     </form>
@@ -59,14 +48,9 @@ export function LocationMap({
   return (
     <div className="section-location">
       {loaded ? (
-        <iframe
-          title={title}
-          src={url}
-          loading="lazy"
-          referrerPolicy="no-referrer"
-        />
+        <iframe loading="lazy" referrerPolicy="no-referrer" src={url} title={title} />
       ) : (
-        <button type="button" onClick={() => setLoaded(true)}>
+        <button onClick={() => setLoaded(true)} type="button">
           {text.loadMap}
         </button>
       )}

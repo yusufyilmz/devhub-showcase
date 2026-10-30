@@ -1,5 +1,5 @@
+import { Button } from "@shared/components";
 import { getPortfolioCopy, type Language } from "@shared/content";
-import { Button } from "../../../components";
 
 export function MenuItems({
   language = "en",
@@ -24,10 +24,10 @@ export function MenuItems({
         .map(([id, title]) => (
           <Button
             aria-label={title}
-            key={id}
-            variant="text"
             className="text-main-white border-none whitespace-pre"
             href={id}
+            key={id}
+            variant="text"
           >
             {title}
           </Button>

@@ -1,1 +1,1 @@
-export * from "./EducationSection";
+export { EducationsSection } from "./EducationSection";

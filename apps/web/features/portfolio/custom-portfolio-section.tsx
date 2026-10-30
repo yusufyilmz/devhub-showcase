@@ -27,59 +27,44 @@ export function CustomPortfolioSection({
 }) {
   if (section.sectionType)
     return (
-      <RenderSection
-        section={section}
-        language={language}
-        anchors={anchors}
-        preview={preview}
-      />
+      <RenderSection anchors={anchors} language={language} preview={preview} section={section} />
     );
   if (!section.visible || !section.items.length) return null;
   const text = getPortfolioCopy(language);
   const items: SectionItem[] = section.items.map((item) => ({
-    id: item.id,
-    title: item.title,
     content: (
       <>
         <WorkMedia
-          loadLabel={text.loadVideo}
-          unloadLabel={text.unloadVideo}
-          title={item.title}
           imageUrl={item.imageUrl}
-          youtubeId={
-            section.composition === "youtube"
-              ? getSocialWork(item.url)?.id
-              : undefined
-          }
+          loadLabel={text.loadVideo}
+          title={item.title}
+          unloadLabel={text.unloadVideo}
+          youtubeId={section.composition === "youtube" ? getSocialWork(item.url)?.id : undefined}
         />
         {item.body
           .split(/\n\s*\n/)
           .filter(Boolean)
           .map((paragraph, index) => (
             <p
+              className={section.composition === "testimonials" ? "testimonial-quote" : undefined}
               key={`${item.id}-${index}`}
-              className={
-                section.composition === "testimonials"
-                  ? "testimonial-quote"
-                  : undefined
-              }
               style={{ whiteSpace: "pre-line" }}
             >
               {paragraph}
             </p>
           ))}
-        {/^https?:\/\//i.test(item.url) && (
-          <a href={item.url}>{item.title} ↗</a>
-        )}
+        {/^https?:\/\//i.test(item.url) && <a href={item.url}>{item.title} ↗</a>}
       </>
     ),
+    id: item.id,
+    title: item.title,
   }));
   const props = { items, label: section.title };
   return (
     <section
-      id={section.id}
-      className={`folio-section configured-section composition-${section.composition ?? "custom"}`}
       aria-labelledby={`${section.id}-heading`}
+      className={`folio-section configured-section composition-${section.composition ?? "custom"}`}
+      id={section.id}
     >
       <h2 id={`${section.id}-heading`}>{section.title}</h2>
       <CustomView renderer={section.renderer} {...props} />

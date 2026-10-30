@@ -1,6 +1,7 @@
 import type { ChatMessage } from "@shared/lib/types";
 import { ChatRole } from "@shared/lib/types";
 import type { Logger } from "pino";
+
 import { notMeaningfulMessage, processErrorMessage } from "../../messages";
 import { CV_MODEL } from "../../models/cv-model";
 import {
@@ -35,9 +36,7 @@ export class MessageProcessor {
    * Handles sending a message and processing it through casual response checks,
    * classification, and fallback to GPT.
    */
-  public async processUserMessage(
-    userMessage: ChatMessage,
-  ): Promise<ChatMessage> {
+  public async processUserMessage(userMessage: ChatMessage): Promise<ChatMessage> {
     try {
       this.logger.info({ userMessage }, "User message received.");
 
@@ -48,10 +47,7 @@ export class MessageProcessor {
       // Step 1: Do message classification with the NLP classification model
       const classifiedMessage = this.classifier.classify(userMessage.content);
 
-      this.logger.info(
-        { category: classifiedMessage.category },
-        "Message classified.",
-      );
+      this.logger.info({ category: classifiedMessage.category }, "Message classified.");
 
       // Step 2: if result is a casual question or greeting, return a casual response
       if (
@@ -61,10 +57,10 @@ export class MessageProcessor {
         classifiedMessage?.category === "end"
       ) {
         return {
-          role: ChatRole.Assistant,
-          content: (classifiedMessage.model as ChatMessage).content,
-          timestamp: Date.now(),
           category: classifiedMessage.category,
+          content: (classifiedMessage.model as ChatMessage).content,
+          role: ChatRole.Assistant,
+          timestamp: Date.now(),
           type: userMessage.type,
         };
       }
@@ -108,11 +104,11 @@ export class MessageProcessor {
       this.logger.info({ gptResponse }, "GPT response:");
 
       return {
-        role: ChatRole.Assistant,
+        category: classifiedMessage.category,
         content: gptResponse,
+        role: ChatRole.Assistant,
         timestamp: Date.now(),
         type: userMessage.type,
-        category: classifiedMessage.category,
       };
     } catch (error) {
       this.logger.error({ error }, "Error processing user message");

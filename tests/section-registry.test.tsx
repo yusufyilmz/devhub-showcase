@@ -1,5 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
+
 import { expect, it } from "vitest";
+
 import { RegisteredSections } from "../apps/web/features/portfolio/registered-sections";
 import {
   getPortfolioSectionOrder,
@@ -17,16 +19,12 @@ it("defines a valid existing renderer and real content binding for every section
   for (const { id: portfolioType } of portfolioTypes) {
     const saved = profileSchema.parse({ ...profile, portfolioType });
     const sections = getPortfolioSections(saved);
-    expect(sections.map(({ id }) => id)).toEqual(
-      getPortfolioSectionOrder(saved),
-    );
+    expect(sections.map(({ id }) => id)).toEqual(getPortfolioSectionOrder(saved));
     expect(sections).toHaveLength(6);
     for (const section of sections) {
       expect(portfolioSectionSchema.parse(section)).toEqual(section);
       expect(section.source.field in profile).toBe(true);
-      expect(sectionRegistry[section.kind].name).toBe(
-        portfolioSectionLabels[section.kind],
-      );
+      expect(sectionRegistry[section.kind].name).toBe(portfolioSectionLabels[section.kind]);
     }
   }
 });
@@ -42,14 +40,10 @@ it("preserves defaults for legacy documents, including designer work first and e
   ]);
   const designer = getPortfolioSections({ portfolioType: "designer" });
   expect(designer[0]?.renderer).toBe("project-gallery");
-  expect(designer.find(({ kind }) => kind === "experience")?.source.field).toBe(
-    "experiences",
-  );
+  expect(designer.find(({ kind }) => kind === "experience")?.source.field).toBe("experiences");
   for (const portfolioType of ["consultant", "minimal"] as const)
     expect(
-      getPortfolioSections({ portfolioType }).find(
-        ({ kind }) => kind === "projects",
-      )?.renderer,
+      getPortfolioSections({ portfolioType }).find(({ kind }) => kind === "projects")?.renderer,
     ).toBe("project-list");
 });
 it("normalizes saved order without mutating or adding fields to a profile, with independent instance settings", () => {
@@ -70,15 +64,13 @@ it("rejects unknown renderers, mismatched sources and extra executable settings"
   for (const patch of [
     { renderer: "carousel" },
     { renderer: "timeline" },
-    { source: { type: "profile", field: "projects" } },
-    { source: { type: "url", field: "https://example.com" } },
+    { source: { field: "projects", type: "profile" } },
+    { source: { field: "https://example.com", type: "url" } },
     { kind: "custom" },
     { id: "another-section" },
-    { settings: { visible: true, html: "<script>bad()</script>" } },
+    { settings: { html: "<script>bad()</script>", visible: true } },
   ])
-    expect(
-      portfolioSectionSchema.safeParse({ ...about, ...patch }).success,
-    ).toBe(false);
+    expect(portfolioSectionSchema.safeParse({ ...about, ...patch }).success).toBe(false);
 });
 it("dispatches by renderer in saved order without introducing DOM wrappers", () => {
   const saved = {
@@ -90,11 +82,11 @@ it("dispatches by renderer in saved order without introducing DOM wrappers", () 
       profile={saved}
       renderers={{
         "about-card": <section>A</section>,
-        timeline: <section>B</section>,
-        "project-cards": <section>C</section>,
-        "skill-groups": <section>D</section>,
         "education-timeline": <section>E</section>,
         "language-list": <section>F</section>,
+        "project-cards": <section>C</section>,
+        "skill-groups": <section>D</section>,
+        timeline: <section>B</section>,
       }}
     />,
   );
@@ -102,8 +94,6 @@ it("dispatches by renderer in saved order without introducing DOM wrappers", () 
     "<section>F</section><section>E</section><section>D</section><section>C</section><section>B</section><section>A</section>",
   );
   expect(() =>
-    renderToStaticMarkup(
-      <RegisteredSections profile={profile} renderers={{}} />,
-    ),
+    renderToStaticMarkup(<RegisteredSections profile={profile} renderers={{}} />),
   ).toThrow(/Missing portfolio renderer/);
 });

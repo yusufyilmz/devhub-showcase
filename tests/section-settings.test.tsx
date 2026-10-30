@@ -1,14 +1,10 @@
 // @vitest-environment jsdom
-import {
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within,
-} from "@testing-library/react";
+
 import { renderToStaticMarkup } from "react-dom/server";
+
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
+
 import { ProfileEditor } from "../apps/web/features/admin/profile-editor";
 import { RegisteredSections } from "../apps/web/features/portfolio/registered-sections";
 import {
@@ -27,12 +23,11 @@ afterEach(() => {
 });
 it("round trips compatible settings and rejects cross section renderers, duplicates and executable settings", () => {
   const sectionSettings = {
-    projects: { renderer: "project-carousel", visible: false, itemIds: [] },
+    projects: { itemIds: [], renderer: "project-carousel", visible: false },
   };
   expect(
-    profileSchema.parse(
-      JSON.parse(JSON.stringify({ ...profile, sectionSettings })),
-    ).sectionSettings,
+    profileSchema.parse(JSON.parse(JSON.stringify({ ...profile, sectionSettings })))
+      .sectionSettings,
   ).toEqual(sectionSettings);
   for (const invalid of [
     { about: { renderer: "project-carousel" } },
@@ -40,17 +35,11 @@ it("round trips compatible settings and rejects cross section renderers, duplica
     { projects: { html: "<script/>" } },
     { custom: { visible: true } },
   ])
-    expect(
-      profileSchema.safeParse({ ...profile, sectionSettings: invalid }).success,
-    ).toBe(false);
+    expect(profileSchema.safeParse({ ...profile, sectionSettings: invalid }).success).toBe(false);
 });
 it("selects content by stable IDs, never reveals private projects and leaves the original document intact", () => {
   const source: PortfolioProfile = {
     ...profile,
-    sectionSettings: {
-      projects: { itemIds: ["private", "chosen"] },
-      experience: { itemIds: [] },
-    },
     projects: [
       {
         ...sampleProject,
@@ -66,6 +55,10 @@ it("selects content by stable IDs, never reveals private projects and leaves the
       },
       { ...sampleProject, id: "other", name: "Other work", public: true },
     ],
+    sectionSettings: {
+      experience: { itemIds: [] },
+      projects: { itemIds: ["private", "chosen"] },
+    },
   };
   const before = JSON.stringify(source);
   const selected = selectPortfolioContent(source);
@@ -86,10 +79,7 @@ it("selects content by stable IDs, never reveals private projects and leaves the
     <RegisteredSections
       profile={configured}
       renderers={Object.fromEntries(
-        getPortfolioSections(configured).map(({ renderer }) => [
-          renderer,
-          null,
-        ]),
+        getPortfolioSections(configured).map(({ renderer }) => [renderer, null]),
       )}
     />,
   );
@@ -99,10 +89,10 @@ it("selects content by stable IDs, never reveals private projects and leaves the
 });
 it("saves editor choices, visibility and item selection and restores them after reloading", async () => {
   const initial = {
-    username: "example-person",
     profile: profileSchema.parse(profile),
     revision: 1,
     updatedAt: "2026-10-30",
+    username: "example-person",
   };
   let saved = initial;
   const fetcher = vi.fn(async (_url, options) => {
@@ -112,7 +102,7 @@ it("saves editor choices, visibility and item selection and restores them after 
       profile: profileSchema.parse(payload.profile),
       revision: 2,
     };
-    return { ok: true, json: async () => saved };
+    return { json: async () => saved, ok: true };
   });
   vi.stubGlobal("fetch", fetcher);
   const editor = render(<ProfileEditor initial={initial} />);
@@ -121,24 +111,18 @@ it("saves editor choices, visibility and item selection and restores them after 
   fireEvent.change(within(projects).getByLabelText("Display style"), {
     target: { value: "project-carousel" },
   });
-  fireEvent.click(
-    within(projects).getByLabelText("All items, including future additions"),
-  );
+  fireEvent.click(within(projects).getByLabelText("All items, including future additions"));
   const first = sampleProject;
   fireEvent.click(
-    within(projects).getByLabelText(
-      `${first.name}${first.public ? "" : " (private)"}`,
-    ),
+    within(projects).getByLabelText(`${first.name}${first.public ? "" : " (private)"}`),
   );
   const about = screen.getByRole("group", { name: "About" });
   fireEvent.click(within(about).getByLabelText("Show section"));
   fireEvent.click(screen.getByRole("button", { name: "Save changes" }));
-  await waitFor(() =>
-    expect(screen.getByRole("status").textContent).toContain("Saved"),
-  );
+  await waitFor(() => expect(screen.getByRole("status").textContent).toContain("Saved"));
   expect(saved.profile.sectionSettings?.projects).toEqual({
-    renderer: "project-carousel",
     itemIds: [first.id],
+    renderer: "project-carousel",
   });
   expect(saved.profile.sectionSettings?.about?.visible).toBe(false);
   editor.unmount();
@@ -151,9 +135,7 @@ it("saves editor choices, visibility and item selection and restores them after 
       ) as HTMLSelectElement
     ).value,
   ).toBe("project-carousel");
-  fireEvent.click(
-    screen.getByRole("button", { name: "Reset Projects to default" }),
-  );
+  fireEvent.click(screen.getByRole("button", { name: "Reset Projects to default" }));
   expect(
     (
       within(screen.getByRole("group", { name: "Projects" })).getByLabelText(

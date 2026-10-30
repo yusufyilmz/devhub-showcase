@@ -1,23 +1,21 @@
 "use client";
 
-import type { ChatMessage, ChatType } from "@shared/lib/types";
 import type React from "react";
 import { useState } from "react";
+
+import type { ChatMessage, ChatType } from "@shared/lib/types";
 import { useStore } from "zustand";
-import { ChatIcon, IconButton, ReferralIcon } from "../../../../components";
-import { chatStore } from "../../../../stores";
-import { ChatPopupContainer } from "../ChatPopupContainer";
+
+import { chatStore } from "../../../../stores/chat-store";
+import { IconButton } from "../../../ui/IconButton/IconButton";
+import { ChatIcon, ReferralIcon } from "../../../ui/Icons/Icons";
+import { ChatPopupContainer } from "../ChatPopupContainer/ChatPopupContainer";
 
 type ChatSectionProps = {
-  handleSendMessage: (
-    input: ChatMessage,
-    sessionId: string,
-  ) => Promise<ChatMessage>;
+  handleSendMessage: (input: ChatMessage, sessionId: string) => Promise<ChatMessage>;
 };
 
-export const ChatSection: React.FC<ChatSectionProps> = ({
-  handleSendMessage,
-}) => {
+export const ChatSection: React.FC<ChatSectionProps> = ({ handleSendMessage }) => {
   const [type, setType] = useState<ChatType>("cv");
   const [isOpen, setIsOpen] = useState(false);
   const resetChat = useStore(chatStore, (state) => state.resetChat);
@@ -34,8 +32,8 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
     <>
       <div className="fixed bottom-8 right-8 flex flex-col gap-4 z-[200]">
         <IconButton
-          className="icon-button"
           aria-label={"Resume Chat"}
+          className="icon-button"
           onClick={() => {
             setType("cv");
             setIsOpen(!isOpen);
@@ -44,8 +42,8 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
           <ChatIcon fontSize="xlarge" />
         </IconButton>
         <IconButton
-          className="icon-button"
           aria-label={"Referral Chat"}
+          className="icon-button"
           onClick={() => {
             setType("referral");
             setIsOpen(!isOpen);
@@ -56,9 +54,9 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
       </div>
       {isOpen && (
         <ChatPopupContainer
-          type={type}
-          handleSendMessage={handleSendMessage}
           closeChat={closeChat}
+          handleSendMessage={handleSendMessage}
+          type={type}
         />
       )}
     </>

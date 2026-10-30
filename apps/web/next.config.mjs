@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
   // TypeScript 7 provides the native CLI rather than the legacy JavaScript API.
   experimental: { useTypeScriptCli: true },
+  reactStrictMode: true,
+  serverExternalPackages: ["openai", "pino", "pdfmake"],
   transpilePackages: [
     "@shared/ui",
     "@shared/auth",
@@ -14,7 +15,6 @@ const nextConfig = {
     "@shared/cache",
     "@shared/cv",
   ],
-  serverExternalPackages: ["openai", "pino", "pdfmake"],
   webpack(config) {
     // Use the compiler entry without Handlebars' Node require.extensions hook.
     config.resolve.alias.handlebars$ = "handlebars/dist/cjs/handlebars.js";

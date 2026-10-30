@@ -16,19 +16,19 @@ import { project } from "./site-copy/project";
 import { structuredData } from "./site-copy/structured-data";
 
 export const copy = {
-  project,
-  notifications,
+  aboutSection,
+  chat,
+  chatMessages,
   cta,
-  header,
-  footer,
   cvSection,
+  errorPage,
+  footer,
+  header,
+  metadata,
   navbar,
   notFoundPage,
-  errorPage,
-  chatMessages,
-  chat,
-  aboutSection,
-  metadata,
+  notifications,
+  project,
   structuredData,
 };
 

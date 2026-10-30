@@ -4,12 +4,11 @@ import { createServerClient } from "@shared/lib/supabase";
 import type { ReviewWithReferrals, SupabaseDbClient } from "@shared/lib/types";
 import { ReviewSection } from "@shared/ui/components";
 import { redirect } from "next/navigation";
+
 import { requireAdmin } from "../../../lib/admin-auth";
 import { handleSubmitReviewAction } from "../../actions";
 
-const getPageResources = async (
-  supabase: SupabaseDbClient,
-): Promise<ReviewWithReferrals[]> => {
+const getPageResources = async (supabase: SupabaseDbClient): Promise<ReviewWithReferrals[]> => {
   try {
     const reviewService = new ReviewService(logger, supabase);
     const reviews = await reviewService.getPendingReviews();
@@ -42,10 +41,7 @@ export default async function ReviewsPage(): Promise<React.JSX.Element> {
 
   return (
     <main className="w-full h-[calc(100vh-8rem)] bg-main-primary  flex flex-col justify-center items-center">
-      <ReviewSection
-        handleReview={handleSubmitReviewAction}
-        reviews={pendingReviews}
-      />
+      <ReviewSection handleReview={handleSubmitReviewAction} reviews={pendingReviews} />
     </main>
   );
 }

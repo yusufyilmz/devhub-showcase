@@ -1,20 +1,18 @@
 "use client";
 
+import { Button } from "@shared/components";
 import { copy } from "@shared/content";
 import { ReviewState, type ReviewWithReferrals } from "@shared/lib/types";
 import { useRouter } from "next/navigation";
-import { Button } from "../../../../components";
-import { useNotification } from "../../../../hooks";
+
+import { useNotification } from "../../../../hooks/use-notification";
 
 export const ReviewButton = ({
   handleReview,
   id,
 }: {
   id: string;
-  handleReview: (
-    id: string,
-    status: ReviewState,
-  ) => Promise<ReviewWithReferrals | undefined>;
+  handleReview: (id: string, status: ReviewState) => Promise<ReviewWithReferrals | undefined>;
 }) => {
   const { setError, setInfo } = useNotification();
   const router = useRouter();
@@ -49,16 +47,16 @@ export const ReviewButton = ({
       <Button
         aria-label="Reject"
         fullWidth
-        variant="outlined"
         onClick={() => onReview(id, ReviewState.REJECTED)}
+        variant="outlined"
       >
         Reject
       </Button>
       <Button
-        fullWidth
         aria-label="Approve"
-        variant="outlined"
+        fullWidth
         onClick={() => onReview(id, ReviewState.APPROVED)}
+        variant="outlined"
       >
         Approve
       </Button>

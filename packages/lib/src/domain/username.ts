@@ -20,13 +20,9 @@ export const usernameSchema = z
   .toLowerCase()
   .min(3)
   .max(50)
-  .regex(
-    /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-    "Use lowercase letters, numbers and single hyphens",
-  )
+  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use lowercase letters, numbers and single hyphens")
   .refine(
-    (value) =>
-      !reservedUsernames.includes(value as (typeof reservedUsernames)[number]),
+    (value) => !reservedUsernames.includes(value as (typeof reservedUsernames)[number]),
     "This username is reserved",
   );
 export const cvPath = (username: string) => `/${encodeURIComponent(username)}`;

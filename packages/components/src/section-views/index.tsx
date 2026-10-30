@@ -11,10 +11,7 @@ export function SectionGrid({
   variant?: "cards" | "gallery";
 }) {
   return (
-    <ul
-      className={`section-view-grid section-view-${variant}`}
-      aria-label={label}
-    >
+    <ul aria-label={label} className={`section-view-grid section-view-${variant}`}>
       {items.map((item) => (
         <li key={item.id}>
           <h3>{item.title}</h3>
@@ -24,13 +21,7 @@ export function SectionGrid({
     </ul>
   );
 }
-export function SectionAccordion({
-  items,
-  label,
-}: {
-  items: SectionItem[];
-  label: string;
-}) {
+export function SectionAccordion({ items, label }: { items: SectionItem[]; label: string }) {
   return (
     <section aria-label={label} className="section-view-accordion">
       {items.map((item) => (
@@ -42,13 +33,7 @@ export function SectionAccordion({
     </section>
   );
 }
-export function SectionTabs({
-  items,
-  label,
-}: {
-  items: SectionItem[];
-  label: string;
-}) {
+export function SectionTabs({ items, label }: { items: SectionItem[]; label: string }) {
   const [selected, setSelected] = useState("");
   const id = useId();
   const buttons = useRef<Array<HTMLButtonElement | null>>([]);
@@ -65,27 +50,21 @@ export function SectionTabs({
     }
   }
   return (
-    <section className="section-view-tabs" aria-label={label}>
-      <div role="tablist" aria-label={label}>
+    <section aria-label={label} className="section-view-tabs">
+      <div aria-label={label} role="tablist">
         {items.map((item, n) => (
           <button
-            key={item.id}
-            ref={(node) => {
-              buttons.current[n] = node;
-            }}
-            type="button"
-            role="tab"
-            id={`${id}-tab-${n}`}
             aria-controls={`${id}-panel-${n}`}
             aria-selected={n === index}
-            tabIndex={n === index ? 0 : -1}
+            id={`${id}-tab-${n}`}
+            key={item.id}
             onClick={() => setSelected(item.id)}
             onKeyDown={(event) => {
               const keys: Record<string, number> = {
-                Home: 0,
-                End: items.length - 1,
-                ArrowRight: (index + 1) % items.length,
                 ArrowLeft: (index + items.length - 1) % items.length,
+                ArrowRight: (index + 1) % items.length,
+                End: items.length - 1,
+                Home: 0,
               };
               const next = keys[event.key];
               if (next !== undefined) {
@@ -93,6 +72,12 @@ export function SectionTabs({
                 select(next);
               }
             }}
+            ref={(node) => {
+              buttons.current[n] = node;
+            }}
+            role="tab"
+            tabIndex={n === index ? 0 : -1}
+            type="button"
           >
             {item.title}
           </button>
@@ -100,11 +85,11 @@ export function SectionTabs({
       </div>
       {items.map((item, n) => (
         <div
-          key={item.id}
-          role="tabpanel"
-          id={`${id}-panel-${n}`}
           aria-labelledby={`${id}-tab-${n}`}
           hidden={n !== index}
+          id={`${id}-panel-${n}`}
+          key={item.id}
+          role="tabpanel"
         >
           {item.content}
         </div>
@@ -129,10 +114,10 @@ export function SectionCarousel({
     const node = list.current;
     if (node)
       node.scrollBy({
-        left: direction * node.clientWidth * 0.85,
         behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
           ? "instant"
           : "smooth",
+        left: direction * node.clientWidth * 0.85,
       });
   }
   if (!items.length) return null;
@@ -140,23 +125,18 @@ export function SectionCarousel({
     <section aria-label={label} className="section-view-carousel">
       <div className="section-view-controls">
         <button
-          type="button"
-          aria-label={previousLabel}
           aria-controls={id}
+          aria-label={previousLabel}
           onClick={() => move(-1)}
+          type="button"
         >
           ←
         </button>
-        <button
-          type="button"
-          aria-label={nextLabel}
-          aria-controls={id}
-          onClick={() => move(1)}
-        >
+        <button aria-controls={id} aria-label={nextLabel} onClick={() => move(1)} type="button">
           →
         </button>
       </div>
-      <ul ref={list} id={id}>
+      <ul id={id} ref={list}>
         {items.map((item) => (
           <li key={item.id}>
             <h3>{item.title}</h3>

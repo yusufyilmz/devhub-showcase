@@ -1,7 +1,8 @@
 "use client";
+import { useState } from "react";
+
 import { LinesField } from "@shared/components/fields";
 import type { PortfolioProfile } from "@shared/content";
-import { useState } from "react";
 
 function SkillGroup({
   name,
@@ -23,25 +24,25 @@ function SkillGroup({
         <label className="editor-field">
           Group name
           <input
-            value={label}
-            onChange={(event) => setLabel(event.target.value)}
             onBlur={() => {
               rename(label.trim());
               setLabel(name);
             }}
+            onChange={(event) => setLabel(event.target.value)}
+            value={label}
           />
         </label>
         <button
-          type="button"
           className="danger-button"
           onClick={() => {
             if (window.confirm(`Remove ${name}?`)) remove();
           }}
+          type="button"
         >
           Remove group
         </button>
       </div>
-      <LinesField label={`${name} skills`} value={skills} onChange={change} />
+      <LinesField label={`${name} skills`} onChange={change} value={skills} />
     </article>
   );
 }
@@ -62,7 +63,6 @@ export function SkillsEditor({
         </div>
         <button
           className="studio-secondary"
-          type="button"
           onClick={() => {
             let n = 1;
             while (profile.skills[`Skill group ${n}`]) n++;
@@ -71,6 +71,7 @@ export function SkillsEditor({
               skills: { ...profile.skills, [`Skill group ${n}`]: [] },
             });
           }}
+          type="button"
         >
           + Add group
         </button>
@@ -82,9 +83,22 @@ export function SkillsEditor({
       )}
       {Object.entries(profile.skills).map(([name, skills]) => (
         <SkillGroup
+          change={(value) =>
+            onChange({
+              ...profile,
+              skills: { ...profile.skills, [name]: value },
+            })
+          }
           key={name}
           name={name}
-          skills={skills}
+          remove={() =>
+            onChange({
+              ...profile,
+              skills: Object.fromEntries(
+                Object.entries(profile.skills).filter(([key]) => key !== name),
+              ),
+            })
+          }
           rename={(next) => {
             if (
               !next ||
@@ -105,20 +119,7 @@ export function SkillsEditor({
               ),
             });
           }}
-          change={(value) =>
-            onChange({
-              ...profile,
-              skills: { ...profile.skills, [name]: value },
-            })
-          }
-          remove={() =>
-            onChange({
-              ...profile,
-              skills: Object.fromEntries(
-                Object.entries(profile.skills).filter(([key]) => key !== name),
-              ),
-            })
-          }
+          skills={skills}
         />
       ))}
     </section>

@@ -1,2 +1,2 @@
 export { CARD_IDS } from "./cards";
-export * from "./messages";
+export { cvWelcomeMessage, failureMessage, referralWelcomeMessage } from "./messages";

@@ -1,12 +1,16 @@
+import type React from "react";
+
 import { getPortfolioCopy, type Language } from "@shared/content";
 import type { ProjectWithCompanyAndSkills } from "@shared/lib/types";
-import type React from "react";
-import { List, ListItem, Section } from "../../../../components";
-import { ProjectItem } from "../ProjectItem";
+
+import { List } from "../../../ui/List/List";
+import { ListItem } from "../../../ui/List/ListItem";
+import { Section } from "../../../ui/Section/Section";
+import { ProjectItem } from "../ProjectItem/ProjectItem";
 
 interface ProjectsSectionProps {
-  projects: ProjectWithCompanyAndSkills[];
   language?: Language;
+  projects: ProjectWithCompanyAndSkills[];
 }
 
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
@@ -17,19 +21,16 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   return (
     <Section
       className="mt-8"
-      sectionId="projects"
-      title={text.projects}
-      subtitle={text.projectsSubtitle}
       eyebrow={text.projects}
+      sectionId="projects"
+      subtitle={text.projectsSubtitle}
+      title={text.projects}
     >
       <div className="flex h-full no-scrollbar">
-        <List
-          divider
-          className="overflow-y-auto mt-2 md:mt-8 no-scrollbar w-full"
-        >
+        <List className="overflow-y-auto mt-2 md:mt-8 no-scrollbar w-full" divider>
           {projects.map((project) => (
-            <ListItem key={project.id} className="pl-0 md:pl-4 py-8">
-              <ProjectItem project={project} language={language} />
+            <ListItem className="pl-0 md:pl-4 py-8" key={project.id}>
+              <ProjectItem language={language} project={project} />
             </ListItem>
           ))}
         </List>

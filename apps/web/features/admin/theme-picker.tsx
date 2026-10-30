@@ -1,4 +1,6 @@
 "use client";
+import type { CSSProperties } from "react";
+
 import {
   type ColorMode,
   getPortfolioThemeVariables,
@@ -7,13 +9,9 @@ import {
   type PortfolioTheme,
   portfolioThemes,
 } from "@shared/content";
-import type { CSSProperties } from "react";
 
 type Accent = NonNullable<PortfolioProfile["appearance"]>["accent"];
-export function themePreviewStyle(
-  theme: PortfolioTheme,
-  accent: Accent,
-): CSSProperties {
+export function themePreviewStyle(theme: PortfolioTheme, accent: Accent): CSSProperties {
   return {
     ...getPortfolioThemeVariables(theme),
     ...getPreviewAccent(accent),
@@ -35,17 +33,13 @@ export function ThemePicker({
       <legend>Portfolio theme</legend>
       <div className="theme-picker-grid">
         {portfolioThemes.map((theme) => (
-          <label
-            className="theme-choice"
-            key={theme.id}
-            data-selected={value === theme.id}
-          >
+          <label className="theme-choice" data-selected={value === theme.id} key={theme.id}>
             <span
+              aria-hidden="true"
               className="theme-preview theme-thumbnail"
               data-portfolio-theme={theme.id}
               data-theme={mode}
               style={themePreviewStyle(theme.id, accent)}
-              aria-hidden="true"
             >
               <b>Aa. Your story.</b>
               <i />
@@ -55,11 +49,11 @@ export function ThemePicker({
               </span>
             </span>
             <input
-              type="radio"
-              name="portfolio-theme"
-              value={theme.id}
               checked={value === theme.id}
+              name="portfolio-theme"
               onChange={() => onChange(theme.id)}
+              type="radio"
+              value={theme.id}
             />
             <strong>{theme.name}</strong>
             <span>{theme.description}</span>

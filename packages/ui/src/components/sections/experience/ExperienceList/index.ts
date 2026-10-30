@@ -1,1 +1,1 @@
-export * from "./ExperienceList";
+export { ExperienceList } from "./ExperienceList";

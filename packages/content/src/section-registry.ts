@@ -10,18 +10,34 @@ type Definition = {
 /** Only implemented renderers belong here. No runtime component paths or user code. */
 export const sectionRegistry = {
   about: {
-    source: "about",
-    name: "About",
-    renderers: ["about-card", "prose", "about-accordion"],
     defaults: {
-      engineer: "about-card",
-      designer: "prose",
       consultant: "prose",
+      designer: "prose",
+      engineer: "about-card",
       minimal: "prose",
     },
+    name: "About",
+    renderers: ["about-card", "prose", "about-accordion"],
+    source: "about",
+  },
+  education: {
+    defaults: {
+      consultant: "education-list",
+      designer: "education-list",
+      engineer: "education-timeline",
+      minimal: "education-list",
+    },
+    name: "Education",
+    renderers: ["education-timeline", "education-list", "education-cards", "education-accordion"],
+    source: "education",
   },
   experience: {
-    source: "experiences",
+    defaults: {
+      consultant: "experience-list",
+      designer: "experience-list",
+      engineer: "timeline",
+      minimal: "experience-list",
+    },
     name: "Experience",
     renderers: [
       "timeline",
@@ -30,15 +46,26 @@ export const sectionRegistry = {
       "experience-accordion",
       "experience-tabs",
     ],
+    source: "experiences",
+  },
+  languages: {
     defaults: {
-      engineer: "timeline",
-      designer: "experience-list",
-      consultant: "experience-list",
-      minimal: "experience-list",
+      consultant: "language-list",
+      designer: "language-list",
+      engineer: "language-list",
+      minimal: "language-list",
     },
+    name: "Languages",
+    renderers: ["language-list", "language-cards"],
+    source: "languages",
   },
   projects: {
-    source: "projects",
+    defaults: {
+      consultant: "project-list",
+      designer: "project-gallery",
+      engineer: "project-cards",
+      minimal: "project-list",
+    },
     name: "Projects",
     renderers: [
       "project-cards",
@@ -48,55 +75,22 @@ export const sectionRegistry = {
       "project-accordion",
       "project-tabs",
     ],
-    defaults: {
-      engineer: "project-cards",
-      designer: "project-gallery",
-      consultant: "project-list",
-      minimal: "project-list",
-    },
+    source: "projects",
   },
   skills: {
-    source: "skills",
-    name: "Skills",
-    renderers: ["skill-groups", "skill-list", "skill-cards", "skill-accordion"],
     defaults: {
-      engineer: "skill-groups",
-      designer: "skill-list",
       consultant: "skill-list",
+      designer: "skill-list",
+      engineer: "skill-groups",
       minimal: "skill-list",
     },
-  },
-  education: {
-    source: "education",
-    name: "Education",
-    renderers: [
-      "education-timeline",
-      "education-list",
-      "education-cards",
-      "education-accordion",
-    ],
-    defaults: {
-      engineer: "education-timeline",
-      designer: "education-list",
-      consultant: "education-list",
-      minimal: "education-list",
-    },
-  },
-  languages: {
-    source: "languages",
-    name: "Languages",
-    renderers: ["language-list", "language-cards"],
-    defaults: {
-      engineer: "language-list",
-      designer: "language-list",
-      consultant: "language-list",
-      minimal: "language-list",
-    },
+    name: "Skills",
+    renderers: ["skill-groups", "skill-list", "skill-cards", "skill-accordion"],
+    source: "skills",
   },
 } as const satisfies Record<PortfolioSectionId, Definition>;
 
-export type SectionRendererId =
-  (typeof sectionRegistry)[PortfolioSectionId]["renderers"][number];
+export type SectionRendererId = (typeof sectionRegistry)[PortfolioSectionId]["renderers"][number];
 /** Content identity, presentation and binding are separate JSON values. */
 export type PortfolioSection = {
   [Kind in PortfolioSectionId]: {
@@ -121,28 +115,28 @@ export type PortfolioSectionSettings = Partial<{
 
 /** Explicit implementations shared by the editor and public section dispatcher. */
 export const sectionRendererViews = {
-  "about-card": "cards",
-  prose: "paragraphs",
   "about-accordion": "accordion",
-  timeline: "timeline",
-  "experience-list": "list",
-  "experience-cards": "cards",
+  "about-card": "cards",
+  "education-accordion": "accordion",
+  "education-cards": "cards",
+  "education-list": "list",
+  "education-timeline": "timeline",
   "experience-accordion": "accordion",
+  "experience-cards": "cards",
+  "experience-list": "list",
   "experience-tabs": "tabs",
+  "language-cards": "cards",
+  "language-list": "list",
+  "project-accordion": "accordion",
   "project-cards": "cards",
+  "project-carousel": "carousel",
   "project-gallery": "gallery",
   "project-list": "list",
-  "project-carousel": "carousel",
-  "project-accordion": "accordion",
   "project-tabs": "tabs",
+  prose: "paragraphs",
+  "skill-accordion": "accordion",
+  "skill-cards": "cards",
   "skill-groups": "cards",
   "skill-list": "list",
-  "skill-cards": "cards",
-  "skill-accordion": "accordion",
-  "education-timeline": "timeline",
-  "education-list": "list",
-  "education-cards": "cards",
-  "education-accordion": "accordion",
-  "language-list": "list",
-  "language-cards": "cards",
+  timeline: "timeline",
 } as const satisfies Record<SectionRendererId, string>;

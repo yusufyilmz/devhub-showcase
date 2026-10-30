@@ -2,14 +2,12 @@
 
 import type React from "react";
 import { useState } from "react";
-import {
-  Accordion,
-  AccordionBody,
-  AccordionHeader,
-  ArrowDownwardIcon,
-  ExternalLinkIcon,
-  Typography,
-} from "../../../../components";
+
+import { Accordion } from "../../../ui/Accordion/Accordion";
+import { AccordionBody } from "../../../ui/Accordion/AccordionBody";
+import { AccordionHeader } from "../../../ui/Accordion/AccordionHeader";
+import { ArrowDownwardIcon, ExternalLinkIcon } from "../../../ui/Icons/Icons";
+import { Typography } from "../../../ui/Typography/Typography";
 
 type ProjectListProps = {
   projects: { id: string; title: string; description?: string }[];
@@ -25,13 +23,11 @@ export const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
   return (
     <Accordion className="animate-mount">
       <AccordionHeader
+        aria-controls="panel2-content"
+        className="bg-transparent border-textColor-light mx-auto"
+        expandIcon={<ArrowDownwardIcon className="text-textColor-light animate-bounce ml-2 mr-1" />}
         isOpen={isOpen}
         onClick={toggleOpen}
-        expandIcon={
-          <ArrowDownwardIcon className="text-textColor-light animate-bounce ml-2 mr-1" />
-        }
-        className="bg-transparent border-textColor-light mx-auto"
-        aria-controls="panel2-content"
       >
         <Typography className="text-textColor-light">Projects</Typography>
       </AccordionHeader>
@@ -39,9 +35,9 @@ export const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
         <div className="flex flex-col gap-2">
           {projects.map((project) => (
             <div
-              key={project.id}
-              id={project.id}
               className="flex items-center gap-1 text-sm text-main-light-slate hover:underline hover:text-button-primary transition-colors duration-200"
+              id={project.id}
+              key={project.id}
             >
               <ExternalLinkIcon className="w-4 h-4 text-main-light-slate" />
               <span>

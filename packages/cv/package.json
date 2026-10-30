@@ -2,7 +2,6 @@
   "name": "@shared/cv",
   "version": "0.0.0",
   "private": true,
-  "main": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
     "./template.hbs": {
@@ -10,6 +9,7 @@
       "default": "./templates/cv.json.hbs"
     }
   },
+  "main": "./src/index.ts",
   "scripts": {
     "build": "tsc --noEmit",
     "typecheck": "tsc --noEmit"

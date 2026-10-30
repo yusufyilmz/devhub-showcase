@@ -1,10 +1,11 @@
 import { beforeEach, expect, it, vi } from "vitest";
+
 import { usernameSchema } from "../packages/lib/src/domain/username";
 
 const mocks = vi.hoisted(() => ({
-  workspace: vi.fn(),
   publicRead: vi.fn(),
   render: vi.fn(),
+  workspace: vi.fn(),
 }));
 vi.mock("../apps/web/lib/admin-auth", () => ({
   requireWorkspace: mocks.workspace,
@@ -38,22 +39,20 @@ it("rejects reserved, malformed, and path injection usernames and normalizes nam
 });
 it("redirects signed out editors to login", async () => {
   mocks.workspace.mockRejectedValue(new Error("signed out"));
-  await expect(
-    EditPage({ params: Promise.resolve({ username: "alice" }) }),
-  ).rejects.toMatchObject({
+  await expect(EditPage({ params: Promise.resolve({ username: "alice" }) })).rejects.toMatchObject({
     digest: expect.stringContaining(";/admin/login;"),
   });
 });
 it("denies another account even when its CV is public", async () => {
   mocks.workspace.mockResolvedValue({
-    repository: { read: async () => ({ username: "bob", isPublic: true }) },
+    repository: { read: async () => ({ isPublic: true, username: "bob" }) },
   });
-  await expect(
-    EditPage({ params: Promise.resolve({ username: "alice" }) }),
-  ).rejects.toThrow("NEXT_HTTP_ERROR_FALLBACK;404");
+  await expect(EditPage({ params: Promise.resolve({ username: "alice" }) })).rejects.toThrow(
+    "NEXT_HTTP_ERROR_FALLBACK;404",
+  );
 });
 it("lets the owner edit a private CV and sends the studio entry to their own editor", async () => {
-  const snapshot = { username: "alice", isPublic: false, revision: 1 };
+  const snapshot = { isPublic: false, revision: 1, username: "alice" };
   mocks.workspace.mockResolvedValue({
     repository: { read: async () => snapshot },
   });

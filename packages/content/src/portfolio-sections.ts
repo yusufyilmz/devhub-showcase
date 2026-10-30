@@ -14,10 +14,9 @@ export const portfolioSectionIds = [
   "languages",
 ] as const;
 export type PortfolioSectionId = (typeof portfolioSectionIds)[number];
-export const portfolioSectionLabels: Record<PortfolioSectionId, string> =
-  Object.fromEntries(
-    portfolioSectionIds.map((id) => [id, sectionRegistry[id].name]),
-  ) as Record<PortfolioSectionId, string>;
+export const portfolioSectionLabels: Record<PortfolioSectionId, string> = Object.fromEntries(
+  portfolioSectionIds.map((id) => [id, sectionRegistry[id].name]),
+) as Record<PortfolioSectionId, string>;
 export type PortfolioSectionPreferences = {
   portfolioType?: PortfolioType;
   sectionOrder?: PortfolioSectionId[];
@@ -34,9 +33,7 @@ export function getPortfolioSectionOrder(
 }
 
 /** Read adapter for existing saved documents. Never mutates or persists profile data. */
-export function getPortfolioSections(
-  profile: PortfolioSectionPreferences,
-): PortfolioSection[] {
+export function getPortfolioSections(profile: PortfolioSectionPreferences): PortfolioSection[] {
   const layout = profile.portfolioType ?? "engineer";
   return getPortfolioSectionOrder(profile).map(
     (kind) =>
@@ -44,10 +41,9 @@ export function getPortfolioSections(
         id: kind,
         kind,
         renderer:
-          profile.sectionSettings?.[kind]?.renderer ??
-          sectionRegistry[kind].defaults[layout],
-        source: { type: "profile", field: sectionRegistry[kind].source },
+          profile.sectionSettings?.[kind]?.renderer ?? sectionRegistry[kind].defaults[layout],
         settings: { visible: profile.sectionSettings?.[kind]?.visible ?? true },
+        source: { field: sectionRegistry[kind].source, type: "profile" },
       }) as PortfolioSection,
   );
 }

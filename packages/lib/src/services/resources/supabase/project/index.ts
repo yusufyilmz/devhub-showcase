@@ -1,13 +1,8 @@
 import type { ResourceService } from "../../../../types";
-import type {
-  ProjectWithCompanyAndSkills,
-  SupabaseDbClient,
-} from "../../../../types/supabase";
+import type { ProjectWithCompanyAndSkills, SupabaseDbClient } from "../../../../types/supabase";
 import { keysToCamelCase } from "../../../../utils/converter/camel-case";
 
-export class ProjectService
-  implements ResourceService<ProjectWithCompanyAndSkills>
-{
+export class ProjectService implements ResourceService<ProjectWithCompanyAndSkills> {
   private readonly dbClient: SupabaseDbClient;
 
   constructor(client: SupabaseDbClient) {
@@ -15,9 +10,7 @@ export class ProjectService
   }
 
   async getAll(): Promise<ProjectWithCompanyAndSkills[]> {
-    const { data: projects, error: projectsError } = await this.dbClient
-      .from("projects")
-      .select(`
+    const { data: projects, error: projectsError } = await this.dbClient.from("projects").select(`
       *,
       company:companies(*)
     `);
@@ -28,8 +21,9 @@ export class ProjectService
 
     console.log({ projects });
 
-    const { data: projectSkills, error: projectSkillsError } =
-      await this.dbClient.from("project_skills").select(`
+    const { data: projectSkills, error: projectSkillsError } = await this.dbClient
+      .from("project_skills")
+      .select(`
       project_id,
       skill:skills(*)
     `);
@@ -66,15 +60,11 @@ export class ProjectService
       throw new Error(error.message);
     }
 
-    return projectFormatter(
-      keysToCamelCase<ProjectWithCompanyAndSkills[]>(data),
-    );
+    return projectFormatter(keysToCamelCase<ProjectWithCompanyAndSkills[]>(data));
   }
 }
 
-export const projectFormatter = (
-  projects: ProjectWithCompanyAndSkills[],
-): string => {
+export const projectFormatter = (projects: ProjectWithCompanyAndSkills[]): string => {
   return projects
     .map(
       (project) =>

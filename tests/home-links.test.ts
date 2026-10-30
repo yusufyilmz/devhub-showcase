@@ -1,12 +1,12 @@
 import { beforeEach, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
-  getUser: vi.fn(),
-  from: vi.fn(),
-  select: vi.fn(),
   eq: vi.fn(),
+  from: vi.fn(),
+  getUser: vi.fn(),
   maybeSingle: vi.fn(),
   publicProfile: vi.fn(),
+  select: vi.fn(),
 }));
 vi.mock("@shared/lib/supabase", () => ({
   createServerClient: async () => ({
@@ -41,7 +41,7 @@ it("offers sign in to a visitor without looking up or creating a portfolio", asy
 });
 it("uses only the verified UUID to find the current account editor", async () => {
   mocks.getUser.mockResolvedValue({
-    data: { user: { id: "alice-id", email_confirmed_at: "today" } },
+    data: { user: { email_confirmed_at: "today", id: "alice-id" } },
     error: null,
   });
   expect((await getHomeAction()).href).toBe("/alice/edit");
@@ -50,12 +50,12 @@ it("uses only the verified UUID to find the current account editor", async () =>
 });
 it("does not use an unconfirmed session or an errored identity", async () => {
   mocks.getUser.mockResolvedValue({
-    data: { user: { id: "alice", email_confirmed_at: null } },
+    data: { user: { email_confirmed_at: null, id: "alice" } },
     error: null,
   });
   expect((await getHomeAction()).signedIn).toBe(false);
   mocks.getUser.mockResolvedValue({
-    data: { user: { id: "alice", email_confirmed_at: "today" } },
+    data: { user: { email_confirmed_at: "today", id: "alice" } },
     error: new Error("invalid token"),
   });
   expect((await getHomeAction()).signedIn).toBe(false);
@@ -63,7 +63,7 @@ it("does not use an unconfirmed session or an errored identity", async () => {
 });
 it("uses the studio entry for an existing session without a workspace and handles setup outages", async () => {
   mocks.getUser.mockResolvedValue({
-    data: { user: { id: "alice-id", email_confirmed_at: "today" } },
+    data: { user: { email_confirmed_at: "today", id: "alice-id" } },
     error: null,
   });
   mocks.maybeSingle.mockResolvedValue({ data: null, error: null });

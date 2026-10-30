@@ -1,12 +1,12 @@
 interface EducationForGpt {
   degree: string;
+  description?: string | null;
   fieldOfStudy: string;
+  finishedAt?: Date | null;
+  gpa?: string | null;
   institution: string;
   institutionLink: string;
   startedAt: Date;
-  finishedAt?: Date | null;
-  gpa?: string | null;
-  description?: string | null;
 }
 
 export const educationFormatter = (educations: EducationForGpt[]): string => {
@@ -22,11 +22,11 @@ export const educationFormatter = (educations: EducationForGpt[]): string => {
 };
 
 interface ReferralForGpt {
-  name?: string | null;
-  relationship?: string | null;
-  feedback?: string | null;
-  recommendation?: string | null;
   contactInfo?: string | null;
+  feedback?: string | null;
+  name?: string | null;
+  recommendation?: string | null;
+  relationship?: string | null;
 }
 
 export const referralFormatter = (referrals: ReferralForGpt[]): string => {
@@ -42,17 +42,15 @@ export const referralFormatter = (referrals: ReferralForGpt[]): string => {
 };
 
 interface ExperienceForGpt {
-  role: string | null;
   company?: {
     name: string | null;
   };
-  startedAt: string | null;
   finishedAt?: string | null;
+  role: string | null;
+  startedAt: string | null;
 }
 
-export const experienceFormatter = (
-  experiences: ExperienceForGpt[],
-): string => {
+export const experienceFormatter = (experiences: ExperienceForGpt[]): string => {
   return experiences
     .map(
       (exp) =>
@@ -62,9 +60,9 @@ export const experienceFormatter = (
 };
 
 interface ProjectForGpt {
-  title: string | null;
   role: string | null;
   skills: { name: string | null }[];
+  title: string | null;
 }
 
 export const projectFormatter = (projects: ProjectForGpt[]): string => {
@@ -77,12 +75,10 @@ export const projectFormatter = (projects: ProjectForGpt[]): string => {
 };
 
 interface CompanyForGpt {
-  name: string;
   link: string;
+  name: string;
 }
 
 export const companyFormatter = (companies: CompanyForGpt[]): string => {
-  return companies
-    .map((company) => `Company: ${company.name}, Link: ${company.link}`)
-    .join("\n");
+  return companies.map((company) => `Company: ${company.name}, Link: ${company.link}`).join("\n");
 };

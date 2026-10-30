@@ -1,6 +1,8 @@
 import { readFileSync } from "node:fs";
+
 import { createCvDefinition, renderCv } from "@shared/cv";
 import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { profile } from "../packages/content/src/profile";
 
 const template = readFileSync(
@@ -20,11 +22,11 @@ describe("CV template", () => {
     const edited = {
       ...profile,
       name: 'Yusuf "Yılmaz" \\ résumé',
-      summary: 'Line one\nLine two "quoted"',
       projects: profile.projects.map((p) => ({
         ...p,
         description: `Edited ${p.name}`,
       })),
+      summary: 'Line one\nLine two "quoted"',
     };
     const definition = createCvDefinition(edited, template);
     const content = JSON.stringify(definition.content);
@@ -38,12 +40,12 @@ describe("CV template", () => {
     const definition = createCvDefinition(
       {
         ...profile,
-        experiences: [],
-        projects: [],
         education: [],
-        skills: {},
+        experiences: [],
         languages: [],
         phone: "",
+        projects: [],
+        skills: {},
       },
       template,
     );
@@ -67,9 +69,7 @@ describe("CV download", () => {
     const response = await GET();
     expect(response.status).toBe(200);
     expect(response.headers.get("Content-Type")).toBe("application/pdf");
-    expect(response.headers.get("Content-Disposition")).toContain(
-      "New_Name_CV.pdf",
-    );
+    expect(response.headers.get("Content-Disposition")).toContain("New_Name_CV.pdf");
     expect(response.headers.get("Cache-Control")).toBe("no-store");
     expect(response.headers.get("X-Profile-Revision")).toBe("9");
     expect(
@@ -95,12 +95,12 @@ it("keeps PDF preferences independent for each profile", () => {
     ...profile,
     appearance: { accent: "violet" as const, defaultTheme: "light" as const },
     cvSettings: {
-      pageSize: "LETTER" as const,
       fontSize: 11 as const,
+      includeLanguages: false,
+      includeProjects: false,
+      pageSize: "LETTER" as const,
       showEmail: false,
       showPhone: false,
-      includeProjects: false,
-      includeLanguages: false,
     },
   };
   const definition = createCvDefinition(custom, template);
@@ -120,12 +120,12 @@ it.each(["classic", "editorial", "compact"] as const)(
       ...profile,
       cvLayout,
       cvSettings: {
-        pageSize: "A4" as const,
         fontSize: 10 as const,
+        includeLanguages: true,
+        includeProjects: true,
+        pageSize: "A4" as const,
         showEmail: false,
         showPhone: false,
-        includeProjects: true,
-        includeLanguages: true,
       },
     };
     const definition = createCvDefinition(edited, template);
@@ -138,8 +138,6 @@ it.each(["classic", "editorial", "compact"] as const)(
           ? [36, 28, 36, 36]
           : [44, 36, 44, 44],
     );
-    expect((await renderCv(edited, template)).subarray(0, 5).toString()).toBe(
-      "%PDF-",
-    );
+    expect((await renderCv(edited, template)).subarray(0, 5).toString()).toBe("%PDF-");
   },
 );

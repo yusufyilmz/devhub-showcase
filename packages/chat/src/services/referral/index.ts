@@ -5,6 +5,7 @@ import {
   validReferralCategories,
 } from "@shared/lib/types";
 import type { Logger } from "pino";
+
 import { failureMessage, referralFinishMessage } from "../../messages";
 import { REFERRAL_MODAL } from "../../models/referral-modal";
 
@@ -30,18 +31,18 @@ export class ReferralService {
       }
 
       return {
-        role: ChatRole.System,
-        content: REFERRAL_MODAL[nextCategory].question,
-        type: "referral",
         category: nextCategory,
+        content: REFERRAL_MODAL[nextCategory].question,
+        role: ChatRole.System,
         timestamp: Date.now(),
+        type: "referral",
       };
     } catch (error) {
       this.logger.info({ error }, "Error processing user message.");
       return {
         ...failureMessage,
-        type: "referral",
         category: "error",
+        type: "referral",
       };
     }
   }

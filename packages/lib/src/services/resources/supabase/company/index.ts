@@ -45,7 +45,5 @@ export class CompanyService implements ResourceService<Company> {
 }
 
 export const companyFormatter = (companies: Company[]): string => {
-  return companies
-    .map((company) => `Company: ${company.name}, Link: ${company.link}`)
-    .join("\n");
+  return companies.map((company) => `Company: ${company.name}, Link: ${company.link}`).join("\n");
 };

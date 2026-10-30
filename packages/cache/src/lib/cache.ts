@@ -5,11 +5,7 @@ type CacheValue = string | number | Buffer;
 export default class CacheStore {
   constructor(private readonly cacheClient: CacheClient) {}
 
-  public async set(
-    key: string,
-    value: CacheValue,
-    ttl: number | false = false,
-  ): Promise<void> {
+  public async set(key: string, value: CacheValue, ttl: number | false = false): Promise<void> {
     await this.cacheClient.set(key, value);
 
     if (ttl) {

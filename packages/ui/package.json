@@ -2,7 +2,6 @@
   "name": "@shared/ui",
   "version": "0.0.0",
   "private": true,
-  "main": "./src/index.ts",
   "exports": {
     "./context": "./src/context/index.ts",
     "./utils": "./src/utils/index.ts",
@@ -12,40 +11,41 @@
     "./stores": "./src/stores/index.ts",
     "./globals.css": "./src/globals.css"
   },
+  "main": "./src/index.ts",
   "scripts": {
     "build": "tsc --noEmit",
-    "typecheck": "tsc --noEmit",
-    "types:check": "pnpm typecheck",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "lint": "biome lint .",
     "lint:check": "biome lint .",
     "lint:fix": "biome lint --write .",
-    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\""
-  },
-  "devDependencies": {
-    "@shared/tailwind-config": "workspace:*",
-    "@shared/typescript-config": "workspace:*",
-    "@types/node": "catalog:",
-    "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
-    "postcss": "catalog:",
-    "tailwindcss": "catalog:",
-    "typescript": "catalog:",
-    "@tailwindcss/postcss": "catalog:"
+    "typecheck": "tsc --noEmit",
+    "types:check": "pnpm typecheck"
   },
   "dependencies": {
     "@emotion/react": "catalog:",
     "@emotion/styled": "catalog:",
     "@mui/material": "catalog:",
+    "@shared/components": "workspace:*",
+    "@shared/content": "workspace:*",
     "@shared/lib": "workspace:*",
+    "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "uuid": "catalog:",
-    "zustand": "catalog:",
-    "@shared/content": "workspace:*",
-    "next": "catalog:",
-    "@shared/components": "workspace:*"
+    "zustand": "catalog:"
+  },
+  "devDependencies": {
+    "@shared/tailwind-config": "workspace:*",
+    "@shared/typescript-config": "workspace:*",
+    "@tailwindcss/postcss": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "postcss": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
   },
   "engines": {
     "node": ">=24.15.0 <25"

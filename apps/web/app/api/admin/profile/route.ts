@@ -5,6 +5,7 @@ import {
   ProfileUsernameError,
 } from "@shared/lib/profile-errors";
 import { ZodError } from "zod";
+
 import { requireWorkspace, sameOrigin } from "../../../../lib/admin-auth";
 
 export async function GET() {
@@ -26,10 +27,7 @@ export async function PUT(request: Request) {
     const { user, service } = await requireWorkspace();
     const body = await request.text();
     if (body.length > 250000)
-      return Response.json(
-        { error: "The profile is too large." },
-        { status: 413 },
-      );
+      return Response.json({ error: "The profile is too large." }, { status: 413 });
     let input: unknown;
     try {
       input = JSON.parse(body);
@@ -57,10 +55,7 @@ function failure(error: unknown) {
     );
   if (error instanceof ProfileAccessError)
     return Response.json({ error: error.message }, { status: 403 });
-  if (
-    error instanceof ProfileConflictError ||
-    error instanceof ProfileUsernameError
-  )
+  if (error instanceof ProfileConflictError || error instanceof ProfileUsernameError)
     return Response.json({ error: error.message }, { status: 409 });
   return Response.json(
     { error: "Could not access profile storage. Check setup or try again." },

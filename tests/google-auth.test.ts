@@ -1,18 +1,19 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { ProfileAccessError } from "../packages/lib/src/repositories/profile-repository";
 
 const mocks = vi.hoisted(() => ({
+  exchange: vi.fn(),
   getUser: vi.fn(),
   oauth: vi.fn(),
-  exchange: vi.fn(),
-  signOut: vi.fn(),
   owner: vi.fn(),
+  signOut: vi.fn(),
 }));
 const client = {
   auth: {
+    exchangeCodeForSession: mocks.exchange,
     getUser: mocks.getUser,
     signInWithOAuth: mocks.oauth,
-    exchangeCodeForSession: mocks.exchange,
     signOut: mocks.signOut,
   },
 };
@@ -30,7 +31,7 @@ import { GET } from "../apps/web/app/auth/callback/route";
 beforeEach(() => {
   vi.resetAllMocks();
   mocks.getUser.mockResolvedValue({
-    data: { user: { id: "verified-user", email_confirmed_at: "today" } },
+    data: { user: { email_confirmed_at: "today", id: "verified-user" } },
     error: null,
   });
   mocks.oauth.mockResolvedValue({
@@ -48,8 +49,8 @@ describe("Google sign in", () => {
   it("starts PKCE at a fixed callback and redirects to the provider", async () => {
     const response = await POST(
       new Request(`${origin}/api/admin/google?next=https://evil.example`, {
-        method: "POST",
         headers: { origin },
+        method: "POST",
       }),
     );
     expect(response.status).toBe(303);
@@ -58,12 +59,12 @@ describe("Google sign in", () => {
     );
     expect(response.headers.get("cache-control")).toBe("no-store");
     expect(mocks.oauth).toHaveBeenCalledWith({
-      provider: "google",
       options: {
+        queryParams: { prompt: "select_account" },
         redirectTo: `${origin}/auth/callback`,
         skipBrowserRedirect: true,
-        queryParams: { prompt: "select_account" },
       },
+      provider: "google",
     });
   });
   it.each(["https://evil.example", "null", ""])(
@@ -73,8 +74,8 @@ describe("Google sign in", () => {
         (
           await POST(
             new Request(`${origin}/api/admin/google`, {
-              method: "POST",
               headers: { origin: requestOrigin },
+              method: "POST",
             }),
           )
         ).status,
@@ -86,24 +87,19 @@ describe("Google sign in", () => {
     mocks.oauth.mockRejectedValue(new Error("internal configuration"));
     const response = await POST(
       new Request(`${origin}/api/admin/google`, {
-        method: "POST",
         headers: { origin },
+        method: "POST",
       }),
     );
-    expect(response.headers.get("location")).toBe(
-      `${origin}/admin/login?error=google_failed`,
-    );
+    expect(response.headers.get("location")).toBe(`${origin}/admin/login?error=google_failed`);
   });
 });
 describe("Google callback", () => {
   it("exchanges the code, opens the account workspace, and ignores arbitrary redirect targets", async () => {
     const response = await GET(
-      new Request(
-        `${origin}/auth/callback?code=valid-code&next=//evil.example`,
-        {
-          headers: { "x-forwarded-host": "evil.example" },
-        },
-      ),
+      new Request(`${origin}/auth/callback?code=valid-code&next=//evil.example`, {
+        headers: { "x-forwarded-host": "evil.example" },
+      }),
     );
     expect(mocks.exchange).toHaveBeenCalledWith("valid-code");
     expect(mocks.owner).toHaveBeenCalledWith(client);
@@ -114,39 +110,29 @@ describe("Google callback", () => {
   it.each(["?error=access_denied", "", "?code=bad&error=access_denied"])(
     "handles cancelled or missing authorization: %s",
     async (query) => {
-      const response = await GET(
-        new Request(`${origin}/auth/callback${query}`),
-      );
-      expect(response.headers.get("location")).toBe(
-        `${origin}/admin/login?error=google_failed`,
-      );
+      const response = await GET(new Request(`${origin}/auth/callback${query}`));
+      expect(response.headers.get("location")).toBe(`${origin}/admin/login?error=google_failed`);
       expect(mocks.exchange).not.toHaveBeenCalled();
     },
   );
   it("rejects a failed PKCE exchange before ownership checks", async () => {
     mocks.exchange.mockResolvedValue({ error: new Error("bad verifier") });
     expect(
-      (
-        await GET(new Request(`${origin}/auth/callback?code=invalid`))
-      ).headers.get("location"),
+      (await GET(new Request(`${origin}/auth/callback?code=invalid`))).headers.get("location"),
     ).toContain("error=google_failed");
     expect(mocks.owner).not.toHaveBeenCalled();
   });
   it("clears the local session for an unconfirmed session", async () => {
     mocks.owner.mockRejectedValue(new ProfileAccessError());
     expect(
-      (
-        await GET(new Request(`${origin}/auth/callback?code=valid`))
-      ).headers.get("location"),
+      (await GET(new Request(`${origin}/auth/callback?code=valid`))).headers.get("location"),
     ).toBe(`${origin}/admin/login?error=not_owner`);
     expect(mocks.signOut).toHaveBeenCalledWith({ scope: "local" });
   });
   it("clears the session when workspace storage is unavailable", async () => {
     mocks.owner.mockRejectedValue(new Error("missing table"));
     expect(
-      (
-        await GET(new Request(`${origin}/auth/callback?code=valid`))
-      ).headers.get("location"),
+      (await GET(new Request(`${origin}/auth/callback?code=valid`))).headers.get("location"),
     ).toBe(`${origin}/admin/login?error=setup`);
     expect(mocks.signOut).toHaveBeenCalledWith({ scope: "local" });
   });

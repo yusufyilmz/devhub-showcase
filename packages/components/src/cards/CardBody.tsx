@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 
 interface CardBodyProps {
-  title?: string;
   children?: ReactNode;
   className?: string;
+  title?: string;
 }
 
 export function CardBody({ title, children, className }: CardBodyProps) {

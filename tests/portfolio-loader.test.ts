@@ -1,17 +1,17 @@
 import { afterEach, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
-  referrals: vi.fn(),
-  projects: vi.fn(),
   client: vi.fn(),
+  projects: vi.fn(),
+  referrals: vi.fn(),
   warn: vi.fn(),
 }));
 vi.mock("@shared/lib/services", () => ({
-  ReferralService: class {
-    getAll = mocks.referrals;
-  },
   ProjectService: class {
     getAll = mocks.projects;
+  },
+  ReferralService: class {
+    getAll = mocks.referrals;
   },
 }));
 vi.mock("@shared/lib/supabase", () => ({ createServerClient: mocks.client }));
@@ -32,9 +32,7 @@ afterEach(() => {
 });
 it("serves current CV content without requiring external services", async () => {
   vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "");
-  expect((await loadPageResources()).experiences[0]?.company.name).toBe(
-    "dLocal",
-  );
+  expect((await loadPageResources()).experiences[0]?.company.name).toBe("dLocal");
   expect(mocks.client).not.toHaveBeenCalled();
 });
 it("does not resurrect deleted projects from the older database tables", async () => {
@@ -43,10 +41,7 @@ it("does not resurrect deleted projects from the older database tables", async (
   mocks.client.mockResolvedValue({});
   mocks.referrals.mockResolvedValue([]);
   const result = await loadPageResources();
-  expect(result.projects.map((item) => item.id)).toEqual([
-    "fitness-os",
-    "devhub",
-  ]);
+  expect(result.projects.map((item) => item.id)).toEqual(["fitness-os", "devhub"]);
   expect(mocks.projects).not.toHaveBeenCalled();
 });
 it("keeps the portfolio usable when a configured backend fails", async () => {

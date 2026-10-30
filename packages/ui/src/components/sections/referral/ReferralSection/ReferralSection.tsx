@@ -1,8 +1,12 @@
+import type React from "react";
+
 import { getPortfolioCopy, type Language } from "@shared/content";
 import type { Referral } from "@shared/lib/types";
-import type React from "react";
-import { List, ListItem, Section } from "../../../../components";
-import { ReferralItem } from "../ReferralItem";
+
+import { List } from "../../../ui/List/List";
+import { ListItem } from "../../../ui/List/ListItem";
+import { Section } from "../../../ui/Section/Section";
+import { ReferralItem } from "../ReferralItem/ReferralItem";
 
 export const ReferralSection: React.FC<{
   referrals: Referral[];
@@ -13,13 +17,13 @@ export const ReferralSection: React.FC<{
   return (
     <Section
       className="referral-section"
-      sectionId="referrals"
-      title={text.testimonials}
       eyebrow={text.testimonials}
+      sectionId="referrals"
       subtitle={text.testimonialsSubtitle}
+      title={text.testimonials}
     >
       <div className="referral-content">
-        <List divider className="no-scrollbar w-full md:mt-0">
+        <List className="no-scrollbar w-full md:mt-0" divider>
           {referrals.map((referral) => (
             <ListItem key={referral.id}>
               <ReferralItem referral={referral} />

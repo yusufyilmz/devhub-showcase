@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+
 import { CreatePortfolio } from "../../../features/management/create-portfolio";
 import { requirePortfolioAdmin } from "../../../lib/managed-portfolios";
 import "../../../features/management/management.css";
@@ -14,8 +15,7 @@ export default async function PortfolioManager({
     notFound();
   }
   const raw = Number((await searchParams).page ?? 0);
-  const page =
-    Number.isSafeInteger(raw) && raw >= 0 ? Math.min(raw, 100000) : 0;
+  const page = Number.isSafeInteger(raw) && raw >= 0 ? Math.min(raw, 100000) : 0;
   const { data, error } = await admin.client
     .from("portfolio_profiles")
     .select("id, username, is_public, document, updated_at")
@@ -24,16 +24,14 @@ export default async function PortfolioManager({
     .order("updated_at", { ascending: false })
     .range(page * 50, page * 50 + 50);
   return (
-    <main id="admin-content" className="studio managed-dashboard">
+    <main className="studio managed-dashboard" id="admin-content">
       <div className="studio-heading">
         <div>
           <p className="eyebrow">PLATFORM ADMINISTRATION</p>
           <h1>Manage portfolios</h1>
-          <p>
-            Create temporary portfolios, import content and manage publishing.
-          </p>
+          <p>Create temporary portfolios, import content and manage publishing.</p>
         </div>
-        <a href="/admin" className="studio-secondary">
+        <a className="studio-secondary" href="/admin">
           My portfolio
         </a>
       </div>
@@ -42,8 +40,7 @@ export default async function PortfolioManager({
         <h2>Managed portfolios</h2>
         {error ? (
           <p role="alert">
-            Could not load portfolios. Apply the managed portfolio migration and
-            try again.
+            Could not load portfolios. Apply the managed portfolio migration and try again.
           </p>
         ) : (
           <>
@@ -58,17 +55,13 @@ export default async function PortfolioManager({
                     <div>
                       <h3>{profile.name ?? row.username}</h3>
                       <p>
-                        /{row.username} · {profile.portfolioType ?? "engineer"}{" "}
-                        · {row.is_public ? "Published" : "Private draft"}
+                        /{row.username} · {profile.portfolioType ?? "engineer"} ·{" "}
+                        {row.is_public ? "Published" : "Private draft"}
                       </p>
                     </div>
                     <div className="managed-actions">
-                      <a href={`/admin/portfolios/${row.id}`}>
-                        Edit portfolio ↗
-                      </a>
-                      {row.is_public && (
-                        <a href={`/${row.username}`}>Public page ↗</a>
-                      )}
+                      <a href={`/admin/portfolios/${row.id}`}>Edit portfolio ↗</a>
+                      {row.is_public && <a href={`/${row.username}`}>Public page ↗</a>}
                     </div>
                   </li>
                 );
@@ -77,9 +70,7 @@ export default async function PortfolioManager({
             {!data?.length && <p>No temporary portfolios yet.</p>}
             <nav aria-label="Managed portfolio pages">
               {page > 0 && <a href={`?page=${page - 1}`}>Previous page</a>}
-              {(data?.length ?? 0) > 50 && (
-                <a href={`?page=${page + 1}`}>Next page</a>
-              )}
+              {(data?.length ?? 0) > 50 && <a href={`?page=${page + 1}`}>Next page</a>}
             </nav>
           </>
         )}

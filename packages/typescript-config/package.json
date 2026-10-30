@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
   "devDependencies": {
     "typescript": "catalog:"
   },
   "engines": {
     "node": ">=24.15.0 <25"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

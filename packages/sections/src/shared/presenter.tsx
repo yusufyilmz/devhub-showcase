@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { HeroSurface } from "@shared/components/hero-surface";
 import {
   SectionAccordion,
@@ -14,7 +16,7 @@ import {
   getPortfolioCopy,
   getSocialWork,
 } from "@shared/content";
-import type { ReactNode } from "react";
+
 import type { SectionProps } from "../types";
 import { ContactForm, LocationMap } from "./interactive";
 
@@ -30,37 +32,29 @@ function ItemMedia({
 }) {
   const text = getPortfolioCopy(language);
   const work = getSocialWork(item.url);
-  return video &&
-    safeLink(item.url) &&
-    /\.(mp4|webm|ogg)(\?|$)/i.test(item.url) ? (
+  return video && safeLink(item.url) && /\.(mp4|webm|ogg)(\?|$)/i.test(item.url) ? (
     <video
       className="section-native-video"
       controls
       playsInline
+      poster={item.imageUrl && safeLink(item.imageUrl) ? item.imageUrl : undefined}
       preload="none"
-      poster={
-        item.imageUrl && safeLink(item.imageUrl) ? item.imageUrl : undefined
-      }
     >
       <source src={item.url} />
       <track
+        default
         kind="captions"
         label="Captions"
-        src={
-          item.captionsUrl && safeLink(item.captionsUrl)
-            ? item.captionsUrl
-            : undefined
-        }
-        default
+        src={item.captionsUrl && safeLink(item.captionsUrl) ? item.captionsUrl : undefined}
       />
     </video>
   ) : (
     <WorkMedia
-      title={item.title}
       imageUrl={item.imageUrl}
-      youtubeId={video && work?.provider === "youtube" ? work.id : undefined}
       loadLabel={text.loadVideo}
+      title={item.title}
       unloadLabel={text.unloadVideo}
+      youtubeId={video && work?.provider === "youtube" ? work.id : undefined}
     />
   );
 }
@@ -85,7 +79,7 @@ export function ItemContent({
     ));
   return (
     <>
-      <ItemMedia item={item} video={video} language={language} />
+      <ItemMedia item={item} language={language} video={video} />
       {item.value && <p className="section-item-value">{item.value}</p>}
       {item.period && <p className="section-item-period">{item.period}</p>}
       {quote ? <blockquote>{prose}</blockquote> : prose}
@@ -112,16 +106,16 @@ export function CollectionView({
 }: SectionProps & { type: AuthorableSectionType }) {
   const view = authorableSections[type].view;
   const items: SectionItem[] = section.items.map((item) => ({
-    id: item.id,
-    title: item.title,
     content: (
       <ItemContent
         item={item}
+        language={language}
         quote={view === "quotes"}
         video={view === "video"}
-        language={language}
       />
     ),
+    id: item.id,
+    title: item.title,
   }));
   const props = { items, label: section.title };
   if (section.renderer === "accordion") return <SectionAccordion {...props} />;
@@ -129,10 +123,7 @@ export function CollectionView({
   if (section.renderer === "carousel") return <SectionCarousel {...props} />;
   if (["gallery", "cards"].includes(section.renderer))
     return (
-      <SectionGrid
-        {...props}
-        variant={section.renderer === "gallery" ? "gallery" : "cards"}
-      />
+      <SectionGrid {...props} variant={section.renderer === "gallery" ? "gallery" : "cards"} />
     );
   if (section.renderer === "masonry")
     return (
@@ -189,7 +180,7 @@ export function SpecialView({
               {text.formMessage}
               <textarea disabled rows={4} />
             </label>
-            <button type="button" disabled>
+            <button disabled type="button">
               {text.formOpenEmail}
             </button>
             <p>{text.formEmailNotice}</p>
@@ -199,12 +190,11 @@ export function SpecialView({
         )
       ) : null;
     case "map":
-      return options.latitude !== undefined &&
-        options.longitude !== undefined ? (
+      return options.latitude !== undefined && options.longitude !== undefined ? (
         <LocationMap
-          title={section.title}
           latitude={options.latitude}
           longitude={options.longitude}
+          title={section.title}
         />
       ) : null;
     case "toc":
@@ -230,9 +220,7 @@ export function SpecialView({
     case "heading":
       return null;
     default:
-      return (
-        <CollectionView section={section} type={type} language={language} />
-      );
+      return <CollectionView language={language} section={section} type={type} />;
   }
 }
 export function SectionPresentation({
@@ -252,23 +240,23 @@ export function SectionPresentation({
     return null;
   const frame = (
     <section
-      id={section.id}
-      className={`folio-section configured-section library-section composition-${section.composition ?? type} section-type-${type} section-view-${view}`}
-      data-section-type={type}
-      data-columns={section.options?.columns ?? 3}
-      data-alignment={section.options?.alignment ?? "left"}
       aria-labelledby={`${section.id}-heading`}
+      className={`folio-section configured-section library-section composition-${section.composition ?? type} section-type-${type} section-view-${view}`}
+      data-alignment={section.options?.alignment ?? "left"}
+      data-columns={section.options?.columns ?? 3}
+      data-section-type={type}
+      id={section.id}
     >
       <h2 id={`${section.id}-heading`}>{section.title}</h2>
       {section.options?.description && (
         <p className="section-description">{section.options.description}</p>
       )}
       <SpecialView
-        section={section}
-        type={type}
         anchors={anchors}
         language={language}
         preview={preview}
+        section={section}
+        type={type}
       />
     </section>
   );
@@ -276,9 +264,9 @@ export function SectionPresentation({
     <HeroSurface
       media={{
         kind: "image",
-        url: section.options.mediaUrl,
-        position: "center",
         overlay: "strong",
+        position: "center",
+        url: section.options.mediaUrl,
       }}
     >
       {frame}

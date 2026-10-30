@@ -1,4 +1,5 @@
 import type { AuthorableSectionType } from "@shared/content";
+
 import { AboutHeroSection } from "./about-hero-section/AboutHeroSection";
 import { AboutSection } from "./about-section/AboutSection";
 import { AccordionSection } from "./accordion-section/AccordionSection";
@@ -48,27 +49,30 @@ import { VideoSection } from "./video-section/VideoSection";
 import { WorkExperienceSection } from "./work-experience-section/WorkExperienceSection";
 import { YouTubeSection } from "./youtube-section/YouTubeSection";
 export const sectionRenderers = {
-  "about-hero": AboutHeroSection,
   about: AboutSection,
+  "about-hero": AboutHeroSection,
   accordion: AccordionSection,
   awards: AwardsSection,
   "blog-page": BlogPageSection,
-  cta: CTASection,
   "calendar-link": CalendarLinkSection,
   careers: CareersSection,
   clients: ClientsSection,
   "contact-form": ContactFormSection,
   "contact-info": ContactInfoSection,
+  cta: CTASection,
+  custom: CustomSection,
   faq: FAQSection,
   features: FeaturesSection,
   "gallery-grid": GalleryGridSection,
   heading: HeadingSection,
   hero: HeroSection,
   "how-to": HowToSection,
+  instagram: InstagramSection,
   "legal-text": LegalTextSection,
   map: MapSection,
   menu: MenuSection,
   newsletter: NewsletterSection,
+  pinterest: PinterestSection,
   plans: PlansSection,
   "posts-grid": PostsGridSection,
   pricing: PricingSection,
@@ -76,6 +80,7 @@ export const sectionRenderers = {
   projects: ProjectsSection,
   property: PropertySection,
   quickstart: QuickstartSection,
+  services: ServicesSection,
   "shop-items": ShopItemsSection,
   showcase: ShowcaseSection,
   "social-links": SocialLinksSection,
@@ -90,15 +95,8 @@ export const sectionRenderers = {
   timeline: TimelineSection,
   video: VideoSection,
   "work-experience": WorkExperienceSection,
-  custom: CustomSection,
-  services: ServicesSection,
   youtube: YouTubeSection,
-  instagram: InstagramSection,
-  pinterest: PinterestSection,
-} satisfies Record<
-  AuthorableSectionType,
-  (props: SectionProps) => React.ReactNode
->;
+} satisfies Record<AuthorableSectionType, (props: SectionProps) => React.ReactNode>;
 export function RenderSection(props: SectionProps) {
   const type = props.section.sectionType;
   if (!type) throw new Error("Choose a registered section type");

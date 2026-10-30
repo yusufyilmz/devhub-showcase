@@ -1,5 +1,7 @@
-import { getPortfolioThemeVariables, getPreviewAccent } from "@shared/content";
 import type { CSSProperties } from "react";
+
+import { getPortfolioThemeVariables, getPreviewAccent } from "@shared/content";
+
 import type { PortfolioExample } from "./data";
 
 export function ExampleThumbnail({ item }: { item: PortfolioExample }) {
@@ -7,6 +9,7 @@ export function ExampleThumbnail({ item }: { item: PortfolioExample }) {
   const theme = profile.appearance?.theme ?? "studio";
   return (
     <div
+      aria-hidden="true"
       className="example-thumbnail theme-preview"
       data-layout={profile.portfolioType}
       data-portfolio-theme={theme}
@@ -17,7 +20,6 @@ export function ExampleThumbnail({ item }: { item: PortfolioExample }) {
           ...getPreviewAccent(profile.appearance?.accent ?? "cyan"),
         } as CSSProperties
       }
-      aria-hidden="true"
     >
       <div className="example-mini-nav">
         <b>
@@ -39,11 +41,11 @@ export function ExampleThumbnail({ item }: { item: PortfolioExample }) {
           <div key={project.id}>
             {item.covers[project.id] ? (
               <img
-                src={`/examples/${item.covers[project.id]}`}
                 alt=""
-                loading="lazy"
-                width="600"
                 height="400"
+                loading="lazy"
+                src={`/examples/${item.covers[project.id]}`}
+                width="600"
               />
             ) : (
               <div className="example-mini-shape">

@@ -1,15 +1,17 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
+  oxc: { jsx: { runtime: "automatic" } },
   plugins: [
     {
-      name: "cv-handlebars-source",
       load(id) {
         if (id.endsWith(".hbs"))
           return `export default ${JSON.stringify(readFileSync(id, "utf8"))}`;
       },
+      name: "cv-handlebars-source",
     },
   ],
   resolve: {
@@ -18,57 +20,36 @@ export default defineConfig({
         .flatMap((pkg) =>
           Object.entries(
             JSON.parse(
-              readFileSync(
-                new URL(`./packages/${pkg}/package.json`, import.meta.url),
-                "utf8",
-              ),
+              readFileSync(new URL(`./packages/${pkg}/package.json`, import.meta.url), "utf8"),
             ).exports as Record<string, string>,
           )
             .filter(([key]) => !key.endsWith(".css"))
             .map(([key, path]) => ({
-              find:
-                key === "."
-                  ? `@shared/${pkg}`
-                  : `@shared/${pkg}/${key.slice(2)}`,
-              replacement: fileURLToPath(
-                new URL(`./packages/${pkg}/${path}`, import.meta.url),
-              ),
+              find: key === "." ? `@shared/${pkg}` : `@shared/${pkg}/${key.slice(2)}`,
+              replacement: fileURLToPath(new URL(`./packages/${pkg}/${path}`, import.meta.url)),
             })),
         )
         .sort((a, b) => b.find.length - a.find.length),
       ...Object.entries(
-        JSON.parse(
-          readFileSync(
-            new URL("./packages/lib/package.json", import.meta.url),
-            "utf8",
-          ),
-        ).exports as Record<string, string>,
+        JSON.parse(readFileSync(new URL("./packages/lib/package.json", import.meta.url), "utf8"))
+          .exports as Record<string, string>,
       ).map(([key, path]) => ({
         find: `@shared/lib/${key.slice(2)}`,
-        replacement: fileURLToPath(
-          new URL(`./packages/lib/${path}`, import.meta.url),
-        ),
+        replacement: fileURLToPath(new URL(`./packages/lib/${path}`, import.meta.url)),
       })),
       {
         find: "@shared/lib/logger",
-        replacement: fileURLToPath(
-          new URL("./packages/lib/src/log/index.ts", import.meta.url),
-        ),
+        replacement: fileURLToPath(new URL("./packages/lib/src/log/index.ts", import.meta.url)),
       },
       {
         find: "@shared/lib/portfolio",
         replacement: fileURLToPath(
-          new URL(
-            "./packages/lib/src/services/portfolio/index.ts",
-            import.meta.url,
-          ),
+          new URL("./packages/lib/src/services/portfolio/index.ts", import.meta.url),
         ),
       },
       {
         find: /^@shared\/content$/,
-        replacement: fileURLToPath(
-          new URL("./packages/content/src/index.ts", import.meta.url),
-        ),
+        replacement: fileURLToPath(new URL("./packages/content/src/index.ts", import.meta.url)),
       },
       {
         find: /^@shared\/lib\/(.*)$/,
@@ -80,18 +61,18 @@ export default defineConfig({
       },
     ],
   },
-  oxc: { jsx: { runtime: "automatic" } },
   test: {
-    include: ["tests/**/*.test.{ts,tsx}"],
-    environment: "node",
-    pool: 'vmThreads',
     coverage: {
-      provider: "v8",
       include: [
         "packages/lib/src/services/portfolio/**",
         "packages/lib/src/utils/date/**",
         "packages/chat/src/services/formatter/**",
       ],
+      provider: "v8",
     },
+    environment: "node",
+    include: ["tests/**/*.test.{ts,tsx}"],
+    maxWorkers: 2,
+    pool: "vmThreads",
   },
 });

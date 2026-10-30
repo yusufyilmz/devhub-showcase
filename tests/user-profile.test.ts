@@ -1,8 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import {
-  createEmptyProfile,
-  ensureUserProfile,
-} from "../packages/lib/src/services/user-profile";
+
+import { createEmptyProfile, ensureUserProfile } from "../packages/lib/src/services/user-profile";
 import type { SupabaseDbClient } from "../packages/lib/src/types";
 
 describe("personal workspace", () => {
@@ -31,8 +29,8 @@ describe("personal workspace", () => {
       from: () => ({ select: () => ({ eq }) }),
     } as unknown as SupabaseDbClient;
     const repo = await ensureUserProfile(client, {
-      id: "alice",
       email: "alice@example.com",
+      id: "alice",
     });
     expect(eq).toHaveBeenCalledWith("owner_id", "alice");
     expect(repo.id).toBe("alice-profile");
@@ -41,22 +39,22 @@ describe("personal workspace", () => {
     const insert = vi.fn().mockResolvedValue({ error: null });
     const client = {
       from: () => ({
+        insert,
         select: () => ({
           eq: () => ({
             maybeSingle: async () => ({ data: null, error: null }),
           }),
         }),
-        insert,
       }),
     } as unknown as SupabaseDbClient;
     await ensureUserProfile(client, {
-      id: "alice",
       email: "alice@example.com",
+      id: "alice",
     });
     expect(insert).toHaveBeenCalledWith(
       expect.objectContaining({
-        owner_id: "alice",
         document: expect.objectContaining({ name: "Your name" }),
+        owner_id: "alice",
       }),
     );
     expect(insert.mock.calls[0]?.[0].is_public).toBeUndefined();

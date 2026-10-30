@@ -1,20 +1,21 @@
 import os from "node:os";
+
 import type { LoggerOptions } from "pino";
 import pino from "pino";
 
 const options: LoggerOptions = {
   base: {
-    pid: process.pid,
-    host: os.hostname(),
     application: process.env.APPLICATION_NAME,
     env: process.env.NODE_ENV,
+    host: os.hostname(),
+    pid: process.pid,
   },
-  timestamp: () => `,"time":"${new Date(Date.now()).toISOString()}"`,
   formatters: {
     level(label) {
       return { level: label };
     },
   },
+  timestamp: () => `,"time":"${new Date(Date.now()).toISOString()}"`,
 };
 
 if (process.env.NODE_ENV !== "production") {

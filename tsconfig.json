@@ -1,4 +1,7 @@
 {
+  "compilerOptions": {
+    "types": ["node", "vitest/globals"]
+  },
   "extends": "./packages/typescript-config/base.json",
   "include": [
     "tests/**/*.ts",
@@ -8,8 +11,5 @@
     "generators/**/*.ts",
     "e2e/**/*.ts",
     "playwright.config.ts"
-  ],
-  "compilerOptions": {
-    "types": ["node", "vitest/globals"]
-  }
+  ]
 }

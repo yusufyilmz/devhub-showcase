@@ -47,7 +47,9 @@ build
 
 # misc
 .DS_Store
-.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
 *.pem
 
 # debug

@@ -15,10 +15,7 @@ import {
   selectPortfolioContent,
 } from "@shared/content";
 
-function sectionItems(
-  profile: PortfolioProfile,
-  kind: PortfolioSection["kind"],
-): SectionItem[] {
+function sectionItems(profile: PortfolioProfile, kind: PortfolioSection["kind"]): SectionItem[] {
   const text = getPortfolioCopy(profile.portfolioLanguage);
   const period = (start: string, end: string | null) =>
     formatPortfolioPeriod(start, end, profile.portfolioLanguage);
@@ -26,34 +23,30 @@ function sectionItems(
     case "about":
       return [
         {
-          id: "about",
-          title: profile.name,
           content: (
             <>
-              {(profile.about.length ? profile.about : [profile.summary]).map(
-                (paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ),
-              )}
+              {(profile.about.length ? profile.about : [profile.summary]).map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
             </>
           ),
+          id: "about",
+          title: profile.name,
         },
       ];
     case "projects":
       return profile.projects.map((item) => ({
-        id: item.id,
-        title: item.name,
         content: (
           <>
             {item.coverImage && (
               <img
-                src={item.coverImage}
                 alt={item.name}
-                width={800}
                 height={600}
                 loading="lazy"
                 referrerPolicy="no-referrer"
-                style={{ maxWidth: "100%", height: "auto" }}
+                src={item.coverImage}
+                style={{ height: "auto", maxWidth: "100%" }}
+                width={800}
               />
             )}
             <p>{item.company}</p>
@@ -71,11 +64,11 @@ function sectionItems(
             )}
           </>
         ),
+        id: item.id,
+        title: item.name,
       }));
     case "experience":
       return profile.experiences.map((item) => ({
-        id: item.id,
-        title: item.position,
         content: (
           <>
             <a href={item.companyUrl}>{item.company}</a>
@@ -87,29 +80,31 @@ function sectionItems(
             </ul>
           </>
         ),
+        id: item.id,
+        title: item.position,
       }));
     case "education":
       return profile.education.map((item) => ({
-        id: item.id,
-        title: `${item.degree} · ${item.field}`,
         content: (
           <>
             <a href={item.url}>{item.institution}</a>
             <p>{period(item.start, item.end)}</p>
           </>
         ),
+        id: item.id,
+        title: `${item.degree} · ${item.field}`,
       }));
     case "skills":
       return Object.entries(profile.skills).map(([group, skills]) => ({
+        content: <p>{skills.join(" · ")}</p>,
         id: group,
         title: group,
-        content: <p>{skills.join(" · ")}</p>,
       }));
     case "languages":
       return profile.languages.map((item) => ({
+        content: <p>{item.proficiency}</p>,
         id: item.id,
         title: item.language,
-        content: <p>{item.proficiency}</p>,
       }));
   }
 }
@@ -124,26 +119,25 @@ export function ConfiguredSection({
   const items = sectionItems(selectPortfolioContent(profile), section.kind);
   if (!items.length) return null;
   const text = getPortfolioCopy(profile.portfolioLanguage);
-  const label =
-    section.kind === "languages" ? text.spokenLanguages : text[section.kind];
+  const label = section.kind === "languages" ? text.spokenLanguages : text[section.kind];
   const props = { items, label };
   return (
     <section
+      className="folio-section configured-section"
       id={
         profile.portfolioType === "engineer" || !profile.portfolioType
           ? ({
               about: "about-me",
-              experience: "experiences",
               education: "educations",
+              experience: "experiences",
+              languages: "languages",
               projects: "projects",
               skills: "skills",
-              languages: "languages",
             }[section.kind] ?? section.kind)
           : section.kind === "projects"
             ? "work"
             : section.kind
       }
-      className="folio-section configured-section"
     >
       <h2>{label}</h2>
       <SectionView renderer={section.renderer} {...props} />
@@ -171,14 +165,11 @@ function SectionView({
         ))}
       </ol>
     );
-  if (view === "accordion")
-    return <SectionAccordion items={items} label={label} />;
+  if (view === "accordion") return <SectionAccordion items={items} label={label} />;
   if (view === "tabs") return <SectionTabs items={items} label={label} />;
-  if (view === "carousel")
-    return <SectionCarousel items={items} label={label} />;
+  if (view === "carousel") return <SectionCarousel items={items} label={label} />;
   if (view === "cards") return <SectionGrid items={items} label={label} />;
-  if (view === "gallery")
-    return <SectionGrid items={items} label={label} variant="gallery" />;
+  if (view === "gallery") return <SectionGrid items={items} label={label} variant="gallery" />;
   return (
     <div>
       {items.map((item) => (

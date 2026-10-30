@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+
 import { OwnerEditLink } from "../../features/admin/owner-edit-link";
 import { EngineerPortfolio } from "../../features/portfolio/engineer-portfolio";
 import { PortfolioLayout } from "../../features/portfolio/portfolio-layout";
@@ -25,17 +26,14 @@ export default async function PublicCvPage({ params }: Props) {
   const referrals = original ? (await loadPageResources()).referrals : [];
   const profile = {
     ...saved,
-    cvUrl:
-      !saved.cvUrl || saved.cvUrl === "/cv.pdf"
-        ? `/${username}/cv.pdf`
-        : saved.cvUrl,
+    cvUrl: !saved.cvUrl || saved.cvUrl === "/cv.pdf" ? `/${username}/cv.pdf` : saved.cvUrl,
   };
   return (
     <EngineerPortfolio
-      profile={profile}
-      ownerLink={<OwnerEditLink username={username} />}
-      referrals={referrals}
       extras={original}
+      ownerLink={<OwnerEditLink username={username} />}
+      profile={profile}
+      referrals={referrals}
     />
   );
 }

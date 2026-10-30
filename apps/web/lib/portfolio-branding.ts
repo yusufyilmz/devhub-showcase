@@ -1,11 +1,11 @@
 import { getNameInitials, type PortfolioProfile } from "@shared/content";
 export function brandColor(profile: PortfolioProfile) {
   const colors = {
+    amber: "#fbbf24",
     cyan: "#22d3ee",
     emerald: "#34d399",
-    violet: "#a78bfa",
-    amber: "#fbbf24",
     rose: "#fb7185",
+    violet: "#a78bfa",
   };
   return colors[profile.appearance?.accent ?? "cyan"] ?? colors.cyan;
 }
@@ -14,11 +14,11 @@ function escapeXml(text: string) {
     /[<>&"']/g,
     (character) =>
       ({
+        "'": "&apos;",
+        '"': "&quot;",
+        "&": "&amp;",
         "<": "&lt;",
         ">": "&gt;",
-        "&": "&amp;",
-        '"': "&quot;",
-        "'": "&apos;",
       })[character] as string,
   );
 }
