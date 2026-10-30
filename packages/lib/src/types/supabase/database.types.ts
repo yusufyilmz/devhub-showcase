@@ -9,6 +9,13 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      portfolio_section_templates: {
+        Row: {owner_id:string;templates:Json;revision:number;updated_at:string}
+        Insert: {owner_id:string;templates:Json;revision?:number;updated_at?:string}
+        Update: {templates?:Json;revision?:number;updated_at?:string}
+        Relationships: []
+      }
+
       portfolio_profiles: {
         Row: { managed_by: string | null; id: string; username: string; owner_id: string | null; document: Json; revision: number; updated_at: string; is_public: boolean }
         Insert: { managed_by?: string | null; id?: string; username?: string; owner_id?: string | null; document: Json; revision?: number; updated_at?: string; is_public?: boolean }

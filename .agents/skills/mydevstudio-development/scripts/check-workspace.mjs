@@ -15,6 +15,7 @@ const paths = [
   'packages/content/package.json',
   'packages/lib/package.json',
   'packages/components/package.json',
+  'packages/sections/package.json',
   'packages/auth/package.json',
   'packages/cv/package.json',
   'pnpm-workspace.yaml',

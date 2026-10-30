@@ -14,7 +14,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: [
-      ...['auth', 'components']
+      ...['auth', 'components', 'sections']
         .flatMap((pkg) =>
           Object.entries(
             JSON.parse(

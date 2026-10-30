@@ -1,6 +1,8 @@
 import {
   getPortfolioEntries,
   type PortfolioProfile,
+  portfolioSectionLabels,
+  resolveSectionSource,
   type SectionRendererId
 } from '@shared/content'
 import { Fragment, type ReactNode } from 'react'
@@ -15,12 +17,35 @@ export function RegisteredSections({
   profile: PortfolioProfile
   renderers: Partial<Record<SectionRendererId, ReactNode>>
 }) {
-  return getPortfolioEntries(profile).map((section) => {
+  const entries = getPortfolioEntries(profile)
+  const engineer =
+    !profile.portfolioType || profile.portfolioType === 'engineer'
+  const builtinAnchors = {
+    about: engineer ? 'about-me' : 'about',
+    experience: engineer ? 'experiences' : 'experience',
+    projects: engineer ? 'projects' : 'work',
+    skills: 'skills',
+    education: engineer ? 'educations' : 'education',
+    languages: 'languages'
+  }
+  const anchors = entries
+    .filter((entry) =>
+      entry.kind === 'custom' ? entry.visible : entry.settings.visible
+    )
+    .map((entry) => ({
+      id: entry.kind === 'custom' ? entry.id : builtinAnchors[entry.kind],
+      title:
+        entry.kind === 'custom'
+          ? entry.title
+          : portfolioSectionLabels[entry.kind]
+    }))
+  return entries.map((section) => {
     if (section.kind === 'custom')
       return (
         <CustomPortfolioSection
           key={section.id}
-          section={section}
+          section={resolveSectionSource(section, profile)}
+          anchors={anchors}
           language={profile.portfolioLanguage}
         />
       )

@@ -18,7 +18,9 @@
     "./published-profile": "./src/services/published-profile.ts",
     "./user-profile": "./src/services/user-profile.ts",
     "./username": "./src/domain/username.ts",
-    "./section": "./src/domain/section.ts"
+    "./section": "./src/domain/section.ts",
+    "./section-templates": "./src/domain/section-templates.ts",
+    "./pageforge-import": "./src/domain/pageforge-import.ts"
   },
   "scripts": {
     "build": "tsc --noEmit",

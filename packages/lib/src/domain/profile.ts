@@ -1,4 +1,8 @@
-import { type PortfolioProfile, portfolioSectionIds } from '@shared/content'
+import {
+  MAX_CUSTOM_SECTIONS,
+  type PortfolioProfile,
+  portfolioSectionIds
+} from '@shared/content'
 import { z } from 'zod'
 import {
   customSectionSchema,
@@ -43,8 +47,14 @@ export const profileSchema = z
       })
       .strict()
       .optional(),
-    customSections: z.array(customSectionSchema).max(20).optional(),
-    sectionSequence: z.array(portfolioEntryIdSchema).max(26).optional(),
+    customSections: z
+      .array(customSectionSchema)
+      .max(MAX_CUSTOM_SECTIONS)
+      .optional(),
+    sectionSequence: z
+      .array(portfolioEntryIdSchema)
+      .max(MAX_CUSTOM_SECTIONS + 6)
+      .optional(),
     sectionSettings: sectionSettingsSchema.optional(),
     sectionOrder: z
       .array(z.enum(portfolioSectionIds))

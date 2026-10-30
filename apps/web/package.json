@@ -30,7 +30,8 @@
     "zod": "catalog:",
     "@shared/cv": "workspace:*",
     "@shared/auth": "workspace:*",
-    "@shared/components": "workspace:*"
+    "@shared/components": "workspace:*",
+    "@shared/sections": "workspace:*"
   },
   "devDependencies": {
     "@shared/tailwind-config": "workspace:*",

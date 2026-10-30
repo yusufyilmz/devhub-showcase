@@ -47,8 +47,7 @@ Public project filtering stays in the existing server rendering/resource adapter
 
 ## Next steps
 
-1. Port additional useful section compositions.
-2. Introduce reusable templates and dedicated import/export controls.
+The section library and template/import stages are implemented. See [the source migration map](pageforge-section-migration.md) and [private templates](section-templates.md) for the current contracts.
 
 Each step includes compatibility and browser checks before its new options are exposed. Persisted configuration, custom IDs and PDF inclusion choices are deliberately introduced with their corresponding editor features rather than accepted as unused profile fields now.
 
@@ -78,7 +77,7 @@ A new optional sectionSequence lists built-in and custom IDs together. The valid
 
 The existing accessible drag handles, keyboard shortcuts and move buttons now order all sections together. Empty and hidden custom sections are omitted publicly. Section names are authored content and stay as entered when the portfolio language changes. Custom sections are portfolio-only in this step; PDF content retains its established document layout and inclusion settings.
 
-Limits are 20 custom sections, 30 items per section, 160 characters per section name, 200 per item title and 6000 per item body. Validation and storage use the existing profile document; no migration, dependency or production data edit is needed.
+Limits are 60 custom sections, 30 items per section, 160 characters per section name, 200 per item title and 6000 per item body. Validation and storage use the existing profile document; no migration, dependency or production data edit is needed.
 
 ## Compositions, hero and social work (step five)
 
@@ -89,3 +88,9 @@ YouTube, Instagram and Pinterest sections require public work URLs matching the 
 The optional profile.hero stores image/video URL, poster, position and overlay. HeroSurface wraps existing introductory content only when configured, preserving legacy markup otherwise. Video is muted and looping, offers play/pause, pauses under reduced motion and falls back to the optional poster when not playing. Public controls use the portfolio language. Appearance contains the editor and preview. Uploaded media storage and automatic transcoding are not part of this step; authors provide direct media URLs.
 
 References for YouTube behavior: [official embed guidance](https://support.google.com/youtube/answer/171780), [player parameters](https://developers.google.com/youtube/player_parameters). No PageForge or original portfolio implementation code/assets are copied by this feature.
+
+## Complete library and templates (step six)
+
+All 42 PageForge section families now have explicit renderer/editor folders in @shared/sections, alongside native custom/services/social sections. New sectionType and compatible options/source fields extend custom sections without changing legacy instances. The source mapping and integration boundaries are listed in docs/pageforge-section-migration.md.
+
+Templates are versioned JSON and are saved separately to an account-private library with owner RLS and optimistic revisions. Export defaults to configuration only. Native and compatible PageForge imports are reviewed before applying fresh section/item IDs to a draft; identity, sharing and CV content remain independent. Profile-source bindings are resolved from the current canonical document and public project filtering applies independently of the built-in project section selection.

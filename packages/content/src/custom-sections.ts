@@ -1,3 +1,8 @@
+import type {
+  AuthorableSectionType,
+  SectionOptions,
+  SectionSource
+} from './authorable-sections'
 import { getPortfolioSections } from './portfolio-sections'
 import type { PortfolioProfile } from './profile'
 import type { SectionComposition } from './section-compositions'
@@ -7,13 +12,21 @@ export const customSectionViews = [
   'cards',
   'accordion',
   'tabs',
-  'carousel'
+  'carousel',
+  'timeline',
+  'gallery',
+  'masonry',
+  'steps',
+  'text'
 ] as const
 export type CustomSectionId = `custom-${string}`
 export type CustomSection = {
   id: CustomSectionId
   title: string
   composition?: SectionComposition
+  sectionType?: AuthorableSectionType
+  source?: SectionSource
+  options?: SectionOptions
   renderer: (typeof customSectionViews)[number]
   visible: boolean
   items: {
@@ -21,6 +34,11 @@ export type CustomSection = {
     title: string
     body: string
     url: string
+    value?: string
+    period?: string
+    details?: string[]
+    code?: string
+    captionsUrl?: string
     imageUrl?: string
   }[]
 }

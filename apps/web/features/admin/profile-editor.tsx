@@ -17,6 +17,7 @@ import { PortfolioTypePicker } from './portfolio-type-picker'
 import { ProfileFields } from './profile-fields'
 import { SectionOrderEditor } from './section-order-editor'
 import { SectionSettingsEditor } from './section-settings-editor'
+import { SectionTemplatesEditor } from './section-templates-editor'
 import { SkillsEditor } from './skills-editor'
 
 const tabs = [
@@ -31,6 +32,7 @@ const tabs = [
   'Section order',
   'Section display',
   'Custom sections',
+  'Templates',
   'Appearance',
   'PDF'
 ] as const
@@ -409,5 +411,6 @@ const editors = {
   'Section order': SectionOrderEditor,
   'Section display': SectionSettingsEditor,
   'Custom sections': CustomSectionsEditor,
+  Templates: SectionTemplatesEditor,
   Layout: LayoutEditor
 }

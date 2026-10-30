@@ -6,6 +6,16 @@ export const languages = [
 export type Language = (typeof languages)[number]['id']
 
 const en = {
+  formEmail: 'Your email',
+  formSubject: 'Subject',
+  formMessage: 'Message',
+  formOpenEmail: 'Open email app',
+  formEmailNotice:
+    'Your email app opens with this message. Send it there to contact the recipient.',
+  loadMap: 'Load location map',
+  viewMap: 'View location on OpenStreetMap',
+  subscribe: 'Subscribe',
+
   playBackground: 'Play background video',
   pauseBackground: 'Pause background video',
   loadVideo: 'Load YouTube video',
@@ -85,6 +95,16 @@ const en = {
 }
 export type PortfolioMessages = { [Key in keyof typeof en]: string }
 const es: PortfolioMessages = {
+  formEmail: 'Tu correo',
+  formSubject: 'Asunto',
+  formMessage: 'Mensaje',
+  formOpenEmail: 'Abrir aplicación de correo',
+  formEmailNotice:
+    'Se abrirá tu aplicación de correo con este mensaje. Envíalo allí para contactar.',
+  loadMap: 'Cargar mapa',
+  viewMap: 'Ver ubicación en OpenStreetMap',
+  subscribe: 'Suscribirse',
+
   playBackground: 'Reproducir vídeo de fondo',
   pauseBackground: 'Pausar vídeo de fondo',
   loadVideo: 'Cargar vídeo de YouTube',
@@ -164,6 +184,16 @@ const es: PortfolioMessages = {
   portfolio: 'Portafolio'
 }
 const tr: PortfolioMessages = {
+  formEmail: 'E-posta adresiniz',
+  formSubject: 'Konu',
+  formMessage: 'Mesaj',
+  formOpenEmail: 'E-posta uygulamasını aç',
+  formEmailNotice:
+    'Bu mesaj e-posta uygulamanızda açılır. İletişim kurmak için oradan gönderin.',
+  loadMap: 'Konum haritasını yükle',
+  viewMap: 'Konumu OpenStreetMap üzerinde göster',
+  subscribe: 'Abone ol',
+
   playBackground: 'Arka plan videosunu oynat',
   pauseBackground: 'Arka plan videosunu duraklat',
   loadVideo: 'YouTube videosunu yükle',

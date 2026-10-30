@@ -12,14 +12,28 @@ import {
   getSocialWork,
   type Language
 } from '@shared/content'
+import { RenderSection } from '@shared/sections/renderers'
 
 export function CustomPortfolioSection({
   section,
-  language
+  language,
+  anchors,
+  preview
 }: {
   section: CustomSection
   language?: Language
+  preview?: boolean
+  anchors?: { id: string; title: string }[]
 }) {
+  if (section.sectionType)
+    return (
+      <RenderSection
+        section={section}
+        language={language}
+        anchors={anchors}
+        preview={preview}
+      />
+    )
   if (!section.visible || !section.items.length) return null
   const text = getPortfolioCopy(language)
   const items: SectionItem[] = section.items.map((item) => ({
@@ -82,6 +96,22 @@ function CustomView({
   label: string
 }) {
   switch (renderer) {
+    case 'gallery':
+    case 'masonry':
+      return <SectionGrid {...{ items, label }} variant="gallery" />
+    case 'timeline':
+    case 'steps':
+      return (
+        <ol>
+          {items.map((item) => (
+            <li key={item.id}>
+              <h3>{item.title}</h3>
+              {item.content}
+            </li>
+          ))}
+        </ol>
+      )
+    case 'text':
     case 'cards':
       return <SectionGrid items={items} label={label} />
     case 'accordion':
