@@ -12,7 +12,7 @@ export const sectionRegistry = {
   about: {
     source: 'about',
     name: 'About',
-    renderers: ['about-card', 'prose'],
+    renderers: ['about-card', 'prose', 'about-accordion'],
     defaults: {
       engineer: 'about-card',
       designer: 'prose',
@@ -23,7 +23,13 @@ export const sectionRegistry = {
   experience: {
     source: 'experiences',
     name: 'Experience',
-    renderers: ['timeline', 'experience-list'],
+    renderers: [
+      'timeline',
+      'experience-list',
+      'experience-cards',
+      'experience-accordion',
+      'experience-tabs'
+    ],
     defaults: {
       engineer: 'timeline',
       designer: 'experience-list',
@@ -34,7 +40,14 @@ export const sectionRegistry = {
   projects: {
     source: 'projects',
     name: 'Projects',
-    renderers: ['project-cards', 'project-gallery', 'project-list'],
+    renderers: [
+      'project-cards',
+      'project-gallery',
+      'project-list',
+      'project-carousel',
+      'project-accordion',
+      'project-tabs'
+    ],
     defaults: {
       engineer: 'project-cards',
       designer: 'project-gallery',
@@ -45,7 +58,7 @@ export const sectionRegistry = {
   skills: {
     source: 'skills',
     name: 'Skills',
-    renderers: ['skill-groups', 'skill-list'],
+    renderers: ['skill-groups', 'skill-list', 'skill-cards', 'skill-accordion'],
     defaults: {
       engineer: 'skill-groups',
       designer: 'skill-list',
@@ -56,7 +69,12 @@ export const sectionRegistry = {
   education: {
     source: 'education',
     name: 'Education',
-    renderers: ['education-timeline', 'education-list'],
+    renderers: [
+      'education-timeline',
+      'education-list',
+      'education-cards',
+      'education-accordion'
+    ],
     defaults: {
       engineer: 'education-timeline',
       designer: 'education-list',
@@ -67,7 +85,7 @@ export const sectionRegistry = {
   languages: {
     source: 'languages',
     name: 'Languages',
-    renderers: ['language-list'],
+    renderers: ['language-list', 'language-cards'],
     defaults: {
       engineer: 'language-list',
       designer: 'language-list',
@@ -89,3 +107,39 @@ export type PortfolioSection = {
     settings: { visible: boolean }
   }
 }[PortfolioSectionId]
+
+export type PortfolioSectionSettings = Partial<{
+  [Kind in PortfolioSectionId]: {
+    renderer?: (typeof sectionRegistry)[Kind]['renderers'][number]
+    visible?: boolean
+    itemIds?: string[]
+  }
+}>
+
+/** Explicit implementations shared by the editor and public section dispatcher. */
+export const sectionRendererViews = {
+  'about-card': 'cards',
+  prose: 'paragraphs',
+  'about-accordion': 'accordion',
+  timeline: 'timeline',
+  'experience-list': 'list',
+  'experience-cards': 'cards',
+  'experience-accordion': 'accordion',
+  'experience-tabs': 'tabs',
+  'project-cards': 'cards',
+  'project-gallery': 'gallery',
+  'project-list': 'list',
+  'project-carousel': 'carousel',
+  'project-accordion': 'accordion',
+  'project-tabs': 'tabs',
+  'skill-groups': 'cards',
+  'skill-list': 'list',
+  'skill-cards': 'cards',
+  'skill-accordion': 'accordion',
+  'education-timeline': 'timeline',
+  'education-list': 'list',
+  'education-cards': 'cards',
+  'education-accordion': 'accordion',
+  'language-list': 'list',
+  'language-cards': 'cards'
+} as const satisfies Record<SectionRendererId, string>

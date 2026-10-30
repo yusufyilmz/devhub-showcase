@@ -2,7 +2,8 @@ import {
   formatPortfolioPeriod,
   getPortfolioCopy,
   type PortfolioProfile,
-  type SectionRendererId
+  type SectionRendererId,
+  selectPortfolioContent
 } from '@shared/content'
 import { ThemeToggle } from '@shared/ui/theme'
 import type { ReactNode } from 'react'
@@ -15,9 +16,13 @@ export function PortfolioLayout({
   profile: PortfolioProfile
   username: string
 }) {
+  profile = selectPortfolioContent(profile)
   const text = getPortfolioCopy(profile.portfolioLanguage)
   const type = profile.portfolioType ?? 'minimal'
-  const projects = profile.projects.filter((project) => project.public)
+  const projects =
+    profile.sectionSettings?.projects?.visible === false
+      ? []
+      : profile.projects.filter((project) => project.public)
   return (
     <div className="folio" data-portfolio-type={type}>
       <a className="skip-link" href="#main-content">
@@ -29,7 +34,9 @@ export function PortfolioLayout({
         </a>
         <nav aria-label={text.sections}>
           {projects.length > 0 && <a href="#work">{text.work}</a>}
-          <a href="#about">{text.about}</a>
+          {profile.sectionSettings?.about?.visible !== false && (
+            <a href="#about">{text.about}</a>
+          )}
           <a href="#contact">{text.contact}</a>
         </nav>
         <ThemeToggle

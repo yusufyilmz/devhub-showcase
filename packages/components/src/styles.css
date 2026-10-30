@@ -878,6 +878,10 @@ button:disabled {
   border: 0;
 }
 
+.configured-timeline > li {
+  padding: 0.75rem 0 1.5rem;
+}
+
 .section-view-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
@@ -915,8 +919,8 @@ button:disabled {
   gap: 0.5rem;
   overflow-x: auto;
 }
-.section-view-tabs [role="tablist"] > button,
-.section-view-controls button {
+.section-view-controls button,
+.section-view-tabs [role="tablist"] > button {
   padding: 0.75rem 1rem;
   background: rgb(var(--surface-rgb));
   color: rgb(var(--text-rgb));
@@ -931,7 +935,7 @@ button:disabled {
 .section-view-tabs [role="tabpanel"] {
   padding-block: 1rem;
 }
-.section-view-carousel ul {
+.section-view-carousel > ul {
   display: flex;
   gap: 1rem;
   padding: 0.5rem 0;
@@ -947,4 +951,14 @@ button:disabled {
   .section-view-carousel > ul > li {
     flex-basis: calc(50% - 0.5rem);
   }
+}
+
+.configured-section {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.configured-timeline {
+  list-style: none;
+  padding-left: 1.5rem;
+  border-left: 1px solid rgb(var(--border-rgb));
 }
