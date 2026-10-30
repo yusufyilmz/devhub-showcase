@@ -3,6 +3,7 @@ import { ThemeToggle } from "@shared/ui/theme";
 
 import type { HomeAction } from "../../lib/home-links";
 import { ExampleCarousel } from "../examples/example-carousel";
+import { HomeLibrary } from "./home-library";
 import { HomeOptions } from "./home-options";
 import { PortfolioPreview } from "./portfolio-preview";
 import "./home.css";
@@ -29,6 +30,14 @@ function Brand() {
   );
 }
 const faq = [
+  [
+    "Can I start with my existing CV?",
+    "Yes. Sign in, open Import CV in your studio and upload a PDF, DOCX or text file up to 3 MB. With your permission, OpenAI extracts details for review. Choose what to apply, correct mistakes and save your draft. Availability depends on service configuration; importing does not publish your portfolio.",
+  ],
+  [
+    "Can I reuse my sections?",
+    "Yes. Save private section templates or export a JSON configuration. Review native or compatible PageForge imports before applying them. Configuration exports omit authored content by default.",
+  ],
   [
     "Can I switch layouts later?",
     "Yes. Choose Engineer, Designer, Consultant or Minimal, then change your layout and theme in the editor whenever you like. Your saved information stays with you.",
@@ -211,6 +220,7 @@ export function HomePage({
           </div>
         </section>
         <HomeOptions />
+        <HomeLibrary href={action.href} />
         <section
           aria-labelledby="process-title"
           className="home-container home-process"
@@ -234,8 +244,8 @@ export function HomePage({
               <span>02</span>
               <h3>Put your story together</h3>
               <p>
-                Choose a layout, theme and languages. Add your work, experience and skills for a
-                look that feels right.
+                Import and review your CV or add details yourself. Choose sections, a layout, theme
+                and languages for a look that feels right.
               </p>
             </li>
             <li>

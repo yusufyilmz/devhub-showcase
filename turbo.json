@@ -16,7 +16,9 @@
         "REDIS_URL",
         "REDIS_TOKEN",
         "APPLICATION_NAME",
-        "LOG_LEVEL"
+        "LOG_LEVEL",
+        "OPENAI_CV_MODEL",
+        "CV_IMPORT_DAILY_LIMIT"
       ]
     },
     "clean": {
@@ -49,7 +51,9 @@
         "REDIS_URL",
         "REDIS_TOKEN",
         "APPLICATION_NAME",
-        "LOG_LEVEL"
+        "LOG_LEVEL",
+        "OPENAI_CV_MODEL",
+        "CV_IMPORT_DAILY_LIMIT"
       ]
     }
   }

@@ -16,6 +16,14 @@ export default defineConfig({
   ],
   resolve: {
     alias: [
+      {
+        find: "@shared/cache",
+        replacement: fileURLToPath(new URL("./packages/cache/src/index.ts", import.meta.url)),
+      },
+      {
+        find: "@shared/chat",
+        replacement: fileURLToPath(new URL("./packages/chat/src/index.ts", import.meta.url)),
+      },
       ...["auth", "components", "sections"]
         .flatMap((pkg) =>
           Object.entries(

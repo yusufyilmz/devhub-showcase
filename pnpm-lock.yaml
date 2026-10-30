@@ -188,6 +188,9 @@ importers:
       '@shared/auth':
         specifier: workspace:*
         version: link:../../packages/auth
+      '@shared/cache':
+        specifier: workspace:*
+        version: link:../../packages/cache
       '@shared/chat':
         specifier: workspace:*
         version: link:../../packages/chat

@@ -436,3 +436,45 @@
 }
 
 /* A moving highlight follows the border without covering content or links. */
+
+.cv-import-panel {
+  display: grid;
+  gap: 1rem;
+}
+.cv-import-panel input[type="file"] {
+  max-width: 100%;
+  padding: 1rem;
+  border: 1px dashed var(--border);
+  border-radius: 1rem;
+}
+.cv-import-actions,
+.cv-import-groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.cv-import-actions button {
+  min-height: 44px;
+}
+.cv-import-review {
+  display: grid;
+  gap: 1.25rem;
+  min-width: 0;
+}
+.cv-import-review details {
+  padding-block: 1rem;
+  border-top: 1px solid var(--border);
+}
+.cv-import-review summary {
+  padding-block: 0.5rem;
+  cursor: pointer;
+}
+.cv-import-review .editor-fields {
+  margin-block: 1rem;
+}
+.cv-import-groups label {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  min-height: 44px;
+}

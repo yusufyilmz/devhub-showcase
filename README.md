@@ -175,3 +175,5 @@ In the editor, Appearance includes optional image or muted video hero background
 The shared [sections package](packages/sections) includes renderer/editor folders for all 42 PageForge section families plus native social work sections. See [migration coverage](docs/pageforge-section-migration.md) and [private templates and import/export](docs/section-templates.md). Import review never publishes a portfolio.
 
 Search discovery, generated name marks and sharing images: see [portfolio SEO and branding](docs/portfolio-seo.md).
+
+CV upload, OpenAI extraction, review and setup: see [CV import](docs/cv-import.md). The homepage now showcases the section library and private templates.

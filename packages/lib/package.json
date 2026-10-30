@@ -20,7 +20,9 @@
     "./username": "./src/domain/username.ts",
     "./section": "./src/domain/section.ts",
     "./section-templates": "./src/domain/section-templates.ts",
-    "./pageforge-import": "./src/domain/pageforge-import.ts"
+    "./pageforge-import": "./src/domain/pageforge-import.ts",
+    "./cv-import": "./src/domain/cv-import.ts",
+    "./cv-file": "./src/domain/cv-file.ts"
   },
   "main": "src/index.ts",
   "scripts": {

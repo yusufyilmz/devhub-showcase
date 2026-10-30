@@ -13,6 +13,7 @@ import {
   ProjectsEditor,
 } from "./career-editors";
 import { CustomSectionsEditor } from "./custom-sections-editor";
+import { CvImportEditor } from "./cv-import-editor";
 import { CvSettingsEditor } from "./cv-settings-editor";
 import { LanguageSettingsEditor } from "./language-settings-editor";
 import { PortfolioTypePicker } from "./portfolio-type-picker";
@@ -24,6 +25,7 @@ import { SkillsEditor } from "./skills-editor";
 
 const tabs = [
   "Profile",
+  "Import CV",
   "Experience",
   "Projects",
   "Education",
@@ -127,7 +129,16 @@ export function ProfileEditor({
     }
   }
   if (draft.templateChosen === false)
-    return <PortfolioOnboarding draft={draft} setDraft={setDraft} />;
+    return (
+      <PortfolioOnboarding
+        draft={draft}
+        onImport={() => {
+          setDraft({ ...draft, templateChosen: true });
+          setTab("Import CV");
+        }}
+        setDraft={setDraft}
+      />
+    );
   const CurrentEditor = editors[tab];
   return (
     <main className="studio" id="admin-content">
@@ -258,9 +269,11 @@ export function ProfileEditor({
 
 function PortfolioOnboarding({
   draft,
+  onImport,
   setDraft,
 }: {
   draft: PortfolioProfile;
+  onImport: () => void;
   setDraft: Dispatch<SetStateAction<PortfolioProfile>>;
 }) {
   return (
@@ -273,6 +286,9 @@ function PortfolioOnboarding({
         Pick a starting layout, then add your details. Your portfolio stays private until you
         publish it.
       </p>
+      <button className="studio-secondary" onClick={onImport} type="button">
+        Start from a CV
+      </button>
       <PortfolioTypePicker
         onChange={(portfolioType) => setDraft({ ...draft, portfolioType })}
         value={draft.portfolioType ?? "engineer"}
@@ -389,6 +405,7 @@ const editors = {
   "Custom sections": CustomSectionsEditor,
   Education: EducationEditor,
   Experience: ExperienceEditor,
+  "Import CV": CvImportEditor,
   "Language settings": LanguageSettingsEditor,
   Languages: LanguagesEditor,
   Layout: LayoutEditor,
