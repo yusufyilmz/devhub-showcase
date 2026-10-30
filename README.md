@@ -1,179 +1,122 @@
-# Yusuf DevHub
+# MyDevStudio
 
-Yusuf Yilmaz’s portfolio: [yusufdevhub.vercel.app](https://yusufdevhub.vercel.app). Built with Next.js App Router, React, TypeScript and a pnpm/Turborepo workspace. The existing navy/cyan design is preserved.
+MyDevStudio is a multiuser portfolio and CV platform, developed in the `devhub-showcase` repository. It combines public portfolio pages, a private editing studio, reusable sections, PDF generation and optional AI features.
 
-## Portfolio studio and refreshed themes
+[Live site](https://mydevstudio.vercel.app) · [Yusuf's portfolio](https://yusufdevhub.vercel.app) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md)
 
-The `/admin` area now gives every confirmed user their own private CV, contact/career details, appearance and PDF preferences. Users can opt in to a public profile link. See [multiuser CV setup](docs/multiuser-cvs.md). The original portfolio and its AI context read the same saved main profile. Each additional public CV page reads only its own published row. Dark/light mode and three accent palettes share one theme system.
+## What it does
 
-**Activation requires the profile migrations and Google provider setup.** See [multiuser setup](docs/multiuser-cvs.md). Only the original site portfolio needs a manual owner assignment; other accounts provision their CV automatically. The public profile retains a bundled fallback until storage is configured. The CV download is generated from the published profile, so it reflects saved edits automatically.
+- Personal workspaces with private saves and explicit public sharing.
+- Public username pages, themes, layouts and independent portfolio/PDF language settings.
+- Reusable section renderers and editors, media sections and saved section templates.
+- PDF CVs generated from profile content rather than a separately maintained document.
+- Administrator-managed portfolios with controlled ownership transfer.
+- Optional AI chat and CV extraction, backed by server-side credentials and Redis limits.
+
+The bundled public content works without service credentials. Authentication, persistence, managed portfolios and AI integrations require their respective setup. See the feature guides below; historical deployment notes are not proof of current production configuration.
 
 ## Start locally
 
-Use Node.js 24 (24.15 or newer) and the pnpm version in `package.json`.
+Use Node `>=24.15.0 <25` and `pnpm@11.25.0`, as declared in [package.json](package.json). Install that pnpm version using your Node tooling before continuing.
 
 ```sh
-corepack enable
+git clone https://github.com/yusufyilmz/devhub-showcase.git
+cd devhub-showcase
 pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open http://localhost:3000. The public career, project and education sections work without credentials. Copy `.env.example` to `apps/web/.env.local` only if you need the optional integrations below. Keep secrets out of Git.
+Open http://localhost:3000. For optional integrations, copy [.env.example](.env.example) to `apps/web/.env.local` and supply only the services you need. Never commit the resulting file.
 
-## Update the information
+| Configuration | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Authentication and profile storage; legacy anon key remains supported |
+| `NEXT_PUBLIC_SITE_URL` | Canonical origin for links and metadata |
+| `OPENAI_API_KEY`, `OPENAI_MODEL` | Server-side AI chat configuration |
+| `REDIS_URL`, `REDIS_TOKEN` | Required rate-limit storage for AI features |
+| `OPENAI_CV_MODEL`, `CV_IMPORT_DAILY_LIMIT` | Optional CV extraction model and global import cap |
+| `APPLICATION_NAME`, `LOG_LEVEL` | Existing Pino logging |
 
-`packages/content/src/profile.ts` is the bundled fallback profile, updated from the October 2026 CV. Once the studio is activated, the published `portfolio_profiles` row is authoritative. It contains the biography, six employers, achievements, selected projects, education, languages, skills and contact links. Both the page and AI context derive from it, so they cannot silently retain separate career histories.
+Use [.env.example](.env.example) for current defaults. Do not expose OpenAI, Redis, deployment or service-role credentials through `NEXT_PUBLIC_` variables.
 
-- `packages/lib/src/services/portfolio` maps the profile into typed page resources.
-- `packages/chat/src/models/cv-model.ts` maps the same profile into the chat model. Missing durations, GPA values, references and personal traits are not invented.
-- `/cv.pdf` generates a PDF from the published profile and `packages/cv/templates/cv.json.hbs`. There is no committed PDF to keep in sync.
-- `packages/content/src/site-copy` holds labels, SEO metadata and structured data.
+## Everyday commands
 
-Professional case studies appear inside their employer’s experience card. The public project showcase includes DevHub and Fitness OS with live and GitHub links. Public career data starts from the versioned profile and can be published through the studio; old database experience/project rows do not override it. Existing database tables and records are not modified or deleted.
+Run these from the repository root.
 
-## Commands
+| Command | Purpose |
+| --- | --- |
+| `pnpm dev` | Start development through Turborepo |
+| `pnpm check` | Biome checks, complexity checks and TypeScript |
+| `pnpm check:format` / `pnpm format` | Check / write formatting |
+| `pnpm lint` / `pnpm lint:fix` | Check / fix lint issues |
+| `pnpm check:assist` / `pnpm assist` | Check / apply configured import assistance |
+| `pnpm test` / `pnpm test:watch` | Vitest run / watch mode |
+| `pnpm test:coverage` | V8 coverage for the configured source subset |
+| `pnpm build` | Full workspace production build |
+| `pnpm start` | Serve the built web app |
+| `pnpm test:e2e` | Playwright against production output and local fixtures |
+| `pnpm test:e2e:report` | Open the browser test report |
+| `pnpm cv:generate` | Generate a local PDF from a public profile |
 
-| Command                                         | Purpose                                                               |
-| ----------------------------------------------- | --------------------------------------------------------------------- |
-| `pnpm dev`                                      | Run the Next.js development server through Turbo                      |
-| `pnpm build`                                    | Check shared packages and build Next.js                               |
-| `pnpm start`                                    | Serve the built web app                                               |
-| `pnpm format` / `pnpm format:check`             | Format / verify with Biome                                            |
-| `pnpm lint:check` / `pnpm lint:fix`             | Check / fix Biome lint rules                                          |
-| `pnpm assist:check` / `pnpm assist`             | Check / apply import organization                                     |
-| `pnpm check` / `pnpm check:fix`                 | Combined Biome checks / fixes                                         |
-| `pnpm typecheck`                                | Check tests, tooling, every source package and the app in strict mode |
-| `pnpm test` / `pnpm test:watch`                 | Run Vitest / watch tests                                              |
-| `pnpm test:coverage`                            | Run Vitest with V8 coverage                                           |
-| `pnpm clean`                                    | Remove local build output                                             |
-| `pnpm create-package` / `pnpm create-component` | Use the updated Turbo generators                                      |
+See [testing](docs/testing.md) for browser prerequisites and coverage limitations. Package-specific aliases may differ from root commands; root `format:check`, `lint:check` and `assist:check` are not the documented entry points.
 
-`pnpm types:check` remains an alias for compatibility. Packages use explicit `workspace:*` dependencies rather than relying on Yarn hoisting. Source packages are compiled by Next.js; their package build scripts run type checks instead of emitting unused JavaScript. Biome replaces ESLint and Prettier throughout the workspace. Generated SQL/database types and build outputs are excluded from formatting.
+## Architecture
 
-## App Router structure
+Next.js App Router and React run in a pnpm/Turborepo workspace. TypeScript, Biome, Tailwind CSS and MUI support the application. External dependency versions live in [pnpm-workspace.yaml](pnpm-workspace.yaml); internal dependencies use `workspace:*`.
 
-```text
-apps/web/
-  app/                     App Router layout, pages, errors and server actions
-  lib/portfolio-resources.ts  Public profile plus optional testimonials
-  proxy.ts                 Optional Supabase session refresh (Next.js 16 convention)
-  app/cv.pdf/route.ts      CV PDF download from published data
-packages/
-  content/                 Shared profile, labels and SEO
-  ui/                      Existing components, styles, hooks and stores
-  chat/                    Classification, CV context, formatting and OpenAI service
-  cv/                      Shared Plop/Handlebars CV template and PDF renderer
-  lib/                     Resource contracts, profile storage and Supabase services
-  cache/                   Redis cache adapter
-  log/                     Logging
-  typescript-config/       Strict shared TypeScript configuration
-  tailwind-config/         Shared Tailwind 4 CSS tokens and PostCSS configuration
-supabase/                  Existing backend setup
-tests/                    Content, adapter, UI and configuration tests
-```
+| Location | Responsibility |
+| --- | --- |
+| `apps/web` | Routes, server adapters, metadata and application composition |
+| `packages/content` | Domain content, profile types, themes and section metadata |
+| `packages/lib` | Validation, services, repositories and persistence |
+| `packages/auth` | Shared authentication integration |
+| `packages/components`, `packages/sections` | Portable UI and section renderer/editor pairs |
+| `packages/ui` | Existing portfolio presentation and adapters |
+| `packages/cv`, `packages/chat` | PDF generation and AI chat |
+| `packages/cache`, `packages/log` | Redis adapter and logging |
+| `supabase/migrations` | Reviewed schema and access-policy history |
+| `tests`, `e2e` | Vitest and Playwright suites |
 
-The application already used App Router. This update modernizes it to Next.js 16 with React 19, async request APIs and `proxy.ts`. No Pages Router routes are introduced. Secrets stay in server actions and server services; client components own browser interactions.
+Supabase is the persistence integration. Prisma is not used. Install, check and build commands do not apply migrations. The published main profile, when configured, supplies the original portfolio content and chat context; bundled content supplies the supported fallback. Named private or missing profiles must never fall back to another person's data.
 
-## Optional services
+## Documentation
 
-### Supabase referrals and reviews
+| Guide | Read it for |
+| --- | --- |
+| [Architecture](docs/architecture.md) | Package boundaries, data flow and trust boundaries |
+| [Contributing](CONTRIBUTING.md) | Setup, development workflow and PR expectations |
+| [Testing](docs/testing.md) | Verification commands, coverage and debugging |
+| [Observability](docs/observability.md) | Free logging baseline, Sentry adoption plan and incident response |
+| [Conventions](docs/conventions.md) | TypeScript, React, validation and dependency rules |
+| [Agent instructions](AGENTS.md) | Working safely with coding agents |
+| [Personal workspaces](docs/multiuser-cvs.md), [Google login](docs/google-login.md), [admin setup](docs/admin-setup.md) | Authentication and profile setup |
+| [Managed portfolios](docs/managed-portfolios.md), [CV import](docs/cv-import.md) | Administration, transfer and extraction |
+| [Section system](docs/section-system.md), [section templates](docs/section-templates.md), [section order](docs/section-order.md) | Section editing and composition |
+| [Shared packages](docs/shared-packages.md), [section migration](docs/pageforge-section-migration.md) | Reuse boundaries and compatibility |
+| [Themes](docs/themes.md), [Tailwind](docs/tailwind.md), [languages](docs/languages.md) | Presentation and localization |
+| [Portfolio types](docs/portfolio-types.md), [SEO](docs/portfolio-seo.md), [homepage](docs/homepage.md) | Public routes and discovery |
+| [Browser tests](docs/e2e.md), [legacy RLS review](docs/legacy-rls-review.md), [roadmap](docs/roadmap.md) | Detailed operations and remaining work |
 
-Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Existing `NEXT_PUBLIC_SUPABASE_ANON_KEY` deployments remain supported. Only publishable/anon keys belong in the browser. Do not expose a service-role key.
+## CV generation
 
-The public profile loads independently of Supabase. If configured, the homepage also reads testimonials and additional public project examples through the existing Supabase services. Versioned personal projects take priority over database entries with the same title. Private database projects are excluded. A failed testimonial query does not hide the portfolio. Referral submission and review moderation still depend on the existing schema and access policies. Configure authentication and row-level policies for your deployment before enabling moderation; this PR does not change database policies or grant new access.
-
-### AI chat
-
-Set `OPENAI_API_KEY`, `REDIS_URL` and `REDIS_TOKEN` on the server. The chat requires Redis for its existing rate limit. Without these values it returns the existing failure response instead of crashing the page build. `OPENAI_MODEL` defaults to `gpt-4.1-mini`; choose a Chat Completions model available to your account. No email or provider credentials are needed for the public portfolio.
-
-### Database tooling
-
-Supabase is the only database integration. Versioned SQL lives in `supabase/migrations`; database changes are applied intentionally through the Supabase migration process. Installing, checking or building the app does not generate an ORM client, connect to a database, or apply migrations. There is no ORM selector or direct database connection string in the app configuration.
-
-## CI and deployment
-
-`.github/workflows/ci.yml` is the single workflow. Every PR and push to `main` runs:
-
-```text
-format:check → lint:check → assist:check → test → typecheck → build
-```
-
-PR checks use no production credentials and do not deploy. Only a successful `main` push (or manual run on `main`) reaches the separate production deployment job. It pulls Vercel configuration, builds production output and deploys with `--prebuilt`. Actions and the Vercel CLI are pinned. Branch concurrency cancels outdated PR runs and serializes production work.
-
-Configure these GitHub repository or `production` environment secrets directly in GitHub:
-
-| Secret              | Source                                       |
-| ------------------- | -------------------------------------------- |
-| `VERCEL_TOKEN`      | A token authorized for the portfolio project |
-| `VERCEL_ORG_ID`     | Your linked project’s `.vercel/project.json` |
-| `VERCEL_PROJECT_ID` | Your linked project’s `.vercel/project.json` |
-
-Set the Vercel project’s Root Directory to `apps/web` and Node version to 24. `apps/web/vercel.json` installs the frozen workspace lockfile and builds from the repository root. Configure optional application variables in Vercel’s Production environment, not in the workflow YAML. Set the production environment’s deployment branch restriction to `main`; add reviewers if you want a manual release gate.
-
-Require the `Verify` check before merging. If GitHub Actions should be the only production deployment path, disable automatic Vercel Git deployments for this project so they cannot bypass the checks. Keep the Vercel project and environment settings. No project or secret is created by this code change.
-
-## Dependency policy and upgrades
-
-Runtime/tool versions were checked against the package registry in October 2026 and are centralized in the `pnpm-workspace.yaml` catalog and recorded in `pnpm-lock.yaml`. This update moves off the Next.js 15 canary to Next.js 16.4.3, React 19.3.1, MUI 9.5.0, Supabase JS 2.118.0, Supabase SSR 0.12.7, OpenAI 7.45.1, Turbo 2.11.10, Biome 2.6.3 and Vitest 5.0.5.
-
-TypeScript uses 7.0.2 across the workspace. Next.js runs its native compiler through `experimental.useTypeScriptCli`; server packages explicitly load Node globals with `types: ["node"]`. Tailwind stays on 3.4.19 and pnpm on 11.25.0. Tailwind 4 changes CSS/configuration. External packages use `catalog:` references; internal packages retain `workspace:*`. Dependabot checks npm dependencies and GitHub Actions weekly. Do not replace stable pins with a prerelease just because a registry tag points to one.
-
-Review dependency release notes, update pins, regenerate the lockfile, and run all checks before merging an upgrade. `pnpm-workspace.yaml` explicitly allows only the required dependency build scripts.
-
-## Validation
-
-Vitest covers current career chronology, public/work project placement, shared AI context, date formatting, missing configuration, and rendered project links. The production build must work without Supabase, OpenAI or database credentials. Live database operations and AI responses additionally require configured services.
-
-## License
-
-MIT. See [LICENSE](LICENSE).
-
-## Generating the CV
-
-The public `/cv.pdf` endpoint reads the published profile on each request and returns a downloadable PDF. Keep the admin CV link set to `/cv.pdf` for automatic updates. An external URL remains an optional override. The document contains profile/contact details, summary, skills, experience, public projects, education and languages. Nonpublic projects are omitted from the project list. Page breaks, Unicode fonts and page numbers are handled by the shared renderer without Chromium or an external rendering service.
-
-Edit `packages/cv/templates/cv.json.hbs` to change the document layout. It is a JSON document definition rendered through Handlebars, the same template engine used by Plop. Use `{{{json value}}}` for profile values to preserve quotes and newlines safely. Content is plain text, never template code.
-
-Generate a local copy with the existing Turbo/Plop runner. Choose a public profile ID; `main` selects the original site portfolio. Private CVs are downloaded through the signed-in studio:
+Public CV endpoints generate PDFs from published data. Private downloads require the authenticated studio. Edit `packages/cv/templates/cv.json.hbs` for template changes; profile values are data, never executable template code.
 
 ```sh
 pnpm cv:generate
-# Or supply an output path without a prompt:
+# Public profile ID; main selects the original portfolio:
 pnpm cv:generate --args output/my-cv.pdf main
 ```
 
-The generator loads `apps/web/.env.local`, then root `.env.local`, while preserving existing environment values. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (or the existing anon key) to read the published `portfolio_profiles` row. No service-role key is used. With no database configuration, local generation clearly reports that it uses the bundled development profile. With database configuration present, a failed read stops generation. The public endpoint follows the website’s bundled-profile fallback until storage is configured or when storage is unavailable; `X-Profile-Revision: 0` identifies fallback output. It returns 503 if PDF generation itself fails. Both paths use the same template and public-profile reader. Generated PDFs go to ignored `output/` and existing files are never overwritten by the generator.
+The generator does not overwrite existing output. See [personal workspaces](docs/multiuser-cvs.md) for public/private behavior and deployment prerequisites.
 
-Development uses Webpack, as does the production build, to load the `.hbs` file as source text. The template and bundled fonts ship with the server, so deployments need no filesystem write access and no build-time database connection.
+## CI and deployment
 
-Shared auth and component boundaries, usage examples, and guidance for adding another app are documented in [docs/shared-packages.md](docs/shared-packages.md).
+[The workflow](.github/workflows/ci.yml) runs frozen installation, `pnpm check`, `pnpm test`, `pnpm build`, Chromium installation and `pnpm test:e2e` in the `Verify` job. Browser reports are retained for seven days.
 
-The public [MyDevStudio homepage](docs/homepage.md) introduces the platform at `/`. Personal portfolios live at `/{username}`.
+Production deployment is a separate job that requires successful verification and a non-PR run on `main`. It uses `VERCEL_TOKEN`, `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID` from GitHub secrets, pulls production configuration, builds and deploys prebuilt output. Application variables belong in deployment configuration. See `apps/web/vercel.json` for build settings.
 
-Browser tests: see [Playwright setup and coverage](docs/e2e.md).
+Require `Verify` before merging. If GitHub Actions is the intended sole release path, check the project's automatic Git deployment settings separately. A successful build does not confirm a deployment, migration or external provider setup.
 
-Portfolio layouts and CV formats: see [portfolio types](docs/portfolio-types.md).
+## License
 
-Portfolio and CV languages: see [language settings](docs/languages.md).
-
-Portfolio appearance: see [theme settings and previews](docs/themes.md).
-
-Styling setup: see [Tailwind CSS 4 migration](docs/tailwind.md).
-
-Portfolio section ordering: see [drag, keyboard and save behavior](docs/section-order.md).
-
-Administrator portfolio creation, JSON imports, temporary profiles and ownership transfers: see [managed portfolios](docs/managed-portfolios.md).
-
-Section registry, current renderer defaults and the PageForge integration path: see [section system](docs/section-system.md).
-
-## Repository guidance and section options
-
-Start with [AGENTS.md](AGENTS.md) for development rules and the repository skills covering workspace verification, product behavior and section workflows. See [the roadmap](docs/roadmap.md) for the completed section rollout.
-
-In the editor, Appearance includes optional image or muted video hero backgrounds. Custom sections includes starters for services, testimonials, FAQs, statistics, calls to action, and YouTube/Instagram/Pinterest work. Social work is curated from public links with optional images and captions. YouTube players load on visitor request; Instagram/Pinterest cards link to the original work. These are portfolio features and do not change CV content or publish private profiles automatically.
-
-The shared [sections package](packages/sections) includes renderer/editor folders for all 42 PageForge section families plus native social work sections. See [migration coverage](docs/pageforge-section-migration.md) and [private templates and import/export](docs/section-templates.md). Import review never publishes a portfolio.
-
-Search discovery, generated name marks and sharing images: see [portfolio SEO and branding](docs/portfolio-seo.md).
-
-CV upload, OpenAI extraction, review and setup: see [CV import](docs/cv-import.md). The homepage now showcases the section library and private templates.
+[MIT](LICENSE).
