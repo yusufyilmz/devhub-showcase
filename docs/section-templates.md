@@ -24,4 +24,4 @@ The review accepts a block array, content blocks, grouped sections or a PageConf
 
 Supported content becomes typed items, descriptions, links and options. Grouped FAQs and menus flatten into authorable items; images, prices, features, authors and periods map to supported fields. Conversion notes describe external integrations and visual adaptations. Unsupported section types abort the import; scripts, CSS, metadata, auth, endpoints and executable React/MDX are never applied. Review and previews occur before Apply to draft. Publishing remains a separate user choice.
 
-The migration 20261030092215_private_section_templates.sql creates only the private library table and owner policies. It has been applied to the linked Supabase project. No existing profile content or publication setting was modified.
+The migration 20261030092215_private_section_templates.sql creates only the private library table and owner policies. Check the target environment's migration history before applying it; documentation does not certify production migration state. The migration is separate from profile content and publication.

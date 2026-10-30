@@ -29,14 +29,14 @@ pnpm dev
 
 Open http://localhost:3000. For optional integrations, copy [.env.example](.env.example) to `apps/web/.env.local` and supply only the services you need. Never commit the resulting file.
 
-| Configuration | Purpose |
-| --- | --- |
+| Configuration                                                      | Purpose                                                               |
+| ------------------------------------------------------------------ | --------------------------------------------------------------------- |
 | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Authentication and profile storage; legacy anon key remains supported |
-| `NEXT_PUBLIC_SITE_URL` | Canonical origin for links and metadata |
-| `OPENAI_API_KEY`, `OPENAI_CHAT_MODEL`, `OPENAI_MODEL` | Portfolio chat and legacy model configuration |
-| `REDIS_URL`, `REDIS_TOKEN` | Required rate-limit storage for AI features |
-| `OPENAI_CV_MODEL`, `CV_IMPORT_DAILY_LIMIT` | Optional CV extraction model and global import cap |
-| `APPLICATION_NAME`, `LOG_LEVEL` | Existing Pino logging |
+| `NEXT_PUBLIC_SITE_URL`                                             | Canonical origin for links and metadata                               |
+| `OPENAI_API_KEY`, `OPENAI_CHAT_MODEL`, `OPENAI_MODEL`              | Portfolio chat and legacy model configuration                         |
+| `REDIS_URL`, `REDIS_TOKEN`                                         | Required rate-limit storage for AI features                           |
+| `OPENAI_CV_MODEL`, `CV_IMPORT_DAILY_LIMIT`                         | Optional CV extraction model and global import cap                    |
+| `APPLICATION_NAME`, `LOG_LEVEL`                                    | Existing Pino logging                                                 |
 
 Use [.env.example](.env.example) for current defaults. Do not expose OpenAI, Redis, deployment or service-role credentials through `NEXT_PUBLIC_` variables.
 
@@ -44,20 +44,20 @@ Use [.env.example](.env.example) for current defaults. Do not expose OpenAI, Red
 
 Run these from the repository root.
 
-| Command | Purpose |
-| --- | --- |
-| `pnpm dev` | Start development through Turborepo |
-| `pnpm check` | Biome checks, complexity checks and TypeScript |
-| `pnpm check:format` / `pnpm format` | Check / write formatting |
-| `pnpm lint` / `pnpm lint:fix` | Check / fix lint issues |
-| `pnpm check:assist` / `pnpm assist` | Check / apply configured import assistance |
-| `pnpm test` / `pnpm test:watch` | Vitest run / watch mode |
-| `pnpm test:coverage` | V8 coverage for the configured source subset |
-| `pnpm build` | Full workspace production build |
-| `pnpm start` | Serve the built web app |
-| `pnpm test:e2e` | Playwright against production output and local fixtures |
-| `pnpm test:e2e:report` | Open the browser test report |
-| `pnpm cv:generate` | Generate a local PDF from a public profile |
+| Command                             | Purpose                                                 |
+| ----------------------------------- | ------------------------------------------------------- |
+| `pnpm dev`                          | Start development through Turborepo                     |
+| `pnpm check`                        | Biome checks, complexity checks and TypeScript          |
+| `pnpm check:format` / `pnpm format` | Check / write formatting                                |
+| `pnpm lint` / `pnpm lint:fix`       | Check / fix lint issues                                 |
+| `pnpm check:assist` / `pnpm assist` | Check / apply configured import assistance              |
+| `pnpm test` / `pnpm test:watch`     | Vitest run / watch mode                                 |
+| `pnpm test:coverage`                | V8 coverage for the configured source subset            |
+| `pnpm build`                        | Full workspace production build                         |
+| `pnpm start`                        | Serve the built web app                                 |
+| `pnpm test:e2e`                     | Playwright against production output and local fixtures |
+| `pnpm test:e2e:report`              | Open the browser test report                            |
+| `pnpm cv:generate`                  | Generate a local PDF from a public profile              |
 
 See [testing](docs/testing.md) for browser prerequisites and coverage limitations. Package-specific aliases may differ from root commands; root `format:check`, `lint:check` and `assist:check` are not the documented entry points.
 
@@ -65,39 +65,39 @@ See [testing](docs/testing.md) for browser prerequisites and coverage limitation
 
 Next.js App Router and React run in a pnpm/Turborepo workspace. TypeScript, Biome, Tailwind CSS and MUI support the application. External dependency versions live in [pnpm-workspace.yaml](pnpm-workspace.yaml); internal dependencies use `workspace:*`.
 
-| Location | Responsibility |
-| --- | --- |
-| `apps/web` | Routes, server adapters, metadata and application composition |
-| `packages/content` | Domain content, profile types, themes and section metadata |
-| `packages/lib` | Validation, services, repositories and persistence |
-| `packages/auth` | Shared authentication integration |
-| `packages/components`, `packages/sections` | Portable UI and section renderer/editor pairs |
-| `packages/ui` | Existing portfolio presentation and adapters |
-| `packages/cv`, `packages/chat` | PDF generation and AI chat |
-| `packages/cache`, `packages/log` | Redis adapter and logging |
-| `supabase/migrations` | Reviewed schema and access-policy history |
-| `tests`, `e2e` | Vitest and Playwright suites |
+| Location                                   | Responsibility                                                |
+| ------------------------------------------ | ------------------------------------------------------------- |
+| `apps/web`                                 | Routes, server adapters, metadata and application composition |
+| `packages/content`                         | Domain content, profile types, themes and section metadata    |
+| `packages/lib`                             | Validation, services, repositories and persistence            |
+| `packages/auth`                            | Shared authentication integration                             |
+| `packages/components`, `packages/sections` | Portable UI and section renderer/editor pairs                 |
+| `packages/ui`                              | Existing portfolio presentation and adapters                  |
+| `packages/cv`, `packages/chat`             | PDF generation and AI chat                                    |
+| `packages/cache`, `packages/log`           | Redis adapter and logging                                     |
+| `supabase/migrations`                      | Reviewed schema and access-policy history                     |
+| `tests`, `e2e`                             | Vitest and Playwright suites                                  |
 
 Supabase is the persistence integration. Prisma is not used. Install, check and build commands do not apply migrations. The published main profile, when configured, supplies the original portfolio content and chat context; bundled content supplies the supported fallback. Named private or missing profiles must never fall back to another person's data.
 
 ## Documentation
 
-| Guide | Read it for |
-| --- | --- |
-| [Architecture](docs/architecture.md) | Package boundaries, data flow and trust boundaries |
-| [Contributing](CONTRIBUTING.md) | Setup, development workflow and PR expectations |
-| [Testing](docs/testing.md) | Verification commands, coverage and debugging |
-| [Observability](docs/observability.md) | Free logging baseline, Sentry adoption plan and incident response |
-| [Conventions](docs/conventions.md) | TypeScript, React, validation and dependency rules |
-| [Agent instructions](AGENTS.md) | Working safely with coding agents |
-| [Personal workspaces](docs/multiuser-cvs.md), [Google login](docs/google-login.md), [admin setup](docs/admin-setup.md) | Authentication and profile setup |
-| [AI foundation](docs/portfolio-ai-foundation.md) | Public/owner knowledge, saved AI profile inspector and chat boundaries |
-| [Managed portfolios](docs/managed-portfolios.md), [CV import](docs/cv-import.md) | Administration, transfer and extraction |
-| [Section system](docs/section-system.md), [section templates](docs/section-templates.md), [section order](docs/section-order.md) | Section editing and composition |
-| [Shared packages](docs/shared-packages.md), [section migration](docs/pageforge-section-migration.md) | Reuse boundaries and compatibility |
-| [Themes](docs/themes.md), [Tailwind](docs/tailwind.md), [languages](docs/languages.md) | Presentation and localization |
-| [Portfolio types](docs/portfolio-types.md), [SEO](docs/portfolio-seo.md), [homepage](docs/homepage.md) | Public routes and discovery |
-| [Browser tests](docs/e2e.md), [legacy RLS review](docs/legacy-rls-review.md), [roadmap](docs/roadmap.md) | Detailed operations and remaining work |
+| Guide                                                                                                | Read it for                                                            |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| [Features](docs/features.md)                                                                         | Current capabilities, user flows and limitations                       |
+| [Architecture](docs/architecture.md)                                                                 | Package boundaries, data flow and trust boundaries                     |
+| [Contributing](CONTRIBUTING.md)                                                                      | Setup, development workflow and PR expectations                        |
+| [Testing](docs/testing.md)                                                                           | Verification commands, coverage and debugging                          |
+| [Observability](docs/observability.md)                                                               | Free logging baseline, Sentry adoption plan and incident response      |
+| [Conventions](docs/conventions.md)                                                                   | TypeScript, React, validation and dependency rules                     |
+| [Agent instructions](AGENTS.md)                                                                      | Working safely with coding agents                                      |
+| [Personal workspaces](docs/multiuser-cvs.md), [Google login](docs/google-login.md)                   | Authentication and profile setup                                       |
+| [AI foundation](docs/portfolio-ai-foundation.md)                                                     | Public/owner knowledge, saved AI profile inspector and chat boundaries |
+| [Managed portfolios](docs/managed-portfolios.md), [CV import](docs/cv-import.md)                     | Administration, transfer and extraction                                |
+| [Section system](docs/section-system.md), [section templates](docs/section-templates.md)             | Section editing and composition                                        |
+| [Shared packages](docs/shared-packages.md), [section migration](docs/pageforge-section-migration.md) | Reuse boundaries and compatibility                                     |
+| [Tailwind](docs/tailwind.md)                                                                         | Shared CSS pipeline and theme tokens                                   |
+| [Legacy RLS review](docs/legacy-rls-review.md)                                                       | Historical security findings to revalidate                             |
 
 ## CV generation
 

@@ -1,5 +1,5 @@
 # Shared chat
 
-Classifies portfolio questions, formats the shared profile into model context, and calls OpenAI through the server-side chat service. Career facts come from `@shared/content` rather than an independent CV copy.
+Provides CV extraction, public portfolio answers and legacy classification/formatting. The application constructs permitted context from the saved profile; public and private owner knowledge are separate contracts. Public chat currently remains restricted to the main portfolio.
 
-See [the root README](../../README.md) for optional OpenAI/Redis configuration and tests. Never import server credentials into UI components.
+See [AI foundation](../../docs/portfolio-ai-foundation.md), [CV import](../../docs/cv-import.md) and [the root README](../../README.md). Keep provider credentials and private owner context out of browser components and public prompts.

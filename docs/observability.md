@@ -4,14 +4,14 @@
 
 Use the existing **Pino** logging as the free baseline. Adopt **Sentry Developer** as the recommended hosted error-monitoring option when configuring monitoring for this project. This guide defines the framework and rollout; it does not install a Sentry SDK or provision an account.
 
-| Capability | Current status |
-| --- | --- |
-| Server logs | Pino is installed in `packages/log` and `packages/lib/src/log` |
-| Log level | Both entry points honor `LOG_LEVEL` |
-| Application identity | Both use `APPLICATION_NAME` |
-| Hosted error monitoring | Sentry recommended; SDK and account setup still required |
-| Distributed traces, dashboards and alerts | Proposed below; not active merely by merging this guide |
-| Automatic telemetry redaction | Not configured in the existing logger factories; callers must allowlist safe fields |
+| Capability                                | Current status                                                                      |
+| ----------------------------------------- | ----------------------------------------------------------------------------------- |
+| Server logs                               | Pino is installed in `packages/log` and `packages/lib/src/log`                      |
+| Log level                                 | Both entry points honor `LOG_LEVEL`                                                 |
+| Application identity                      | Both use `APPLICATION_NAME`                                                         |
+| Hosted error monitoring                   | Sentry recommended; SDK and account setup still required                            |
+| Distributed traces, dashboards and alerts | Proposed below; not active merely by merging this guide                             |
+| Automatic telemetry redaction             | Not configured in the existing logger factories; callers must allowlist safe fields |
 
 The two existing logger factories are not identical: `packages/log` includes environment and ISO timestamps, string levels and pretty development output; the lib logger retains Pino defaults. Do not assume one schema across both. Use the entry point already used by the affected package and normalize fields in a separately tested implementation when needed.
 
@@ -19,12 +19,12 @@ The two existing logger factories are not identical: `packages/log` includes env
 
 Checked against vendor information on 30 October 2026. Recheck the linked plan and your account quotas before enabling ingestion.
 
-| Option | Free basis | Fit |
-| --- | --- | --- |
-| Pino | Existing open-source dependency; no monitoring subscription required | Structured server logs; hosting retention and collection can still cost money |
-| Sentry Developer | Free plan confirmed by Sentry's help center; usage quotas apply | Recommended next step for application error triage |
-| Grafana Cloud Free | Advertises a free tier including 50 GB monthly log ingestion | Alternative for broader logs/metrics work; check retention and ingestion-path costs |
-| Coralogix | Pricing advertises a 14-day trial and paid ingestion | Do not treat the trial as permanent free monitoring |
+| Option             | Free basis                                                           | Fit                                                                                 |
+| ------------------ | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Pino               | Existing open-source dependency; no monitoring subscription required | Structured server logs; hosting retention and collection can still cost money       |
+| Sentry Developer   | Free plan confirmed by Sentry's help center; usage quotas apply      | Recommended next step for application error triage                                  |
+| Grafana Cloud Free | Advertises a free tier including 50 GB monthly log ingestion         | Alternative for broader logs/metrics work; check retention and ingestion-path costs |
+| Coralogix          | Pricing advertises a 14-day trial and paid ingestion                 | Do not treat the trial as permanent free monitoring                                 |
 
 Sources: [Sentry Developer plan update](https://www.sentry.help/en/articles/16738709-changes-to-legacy-developer-plans-september-2026), [Sentry quota handling](https://www.sentry.help/en/articles/13964891-i-ve-exhausted-my-quota-what-now), [Sentry pricing](https://sentry.io/pricing/), [Grafana pricing](https://grafana.com/pricing/), [Coralogix pricing](https://www.coralogix.com/pricing/).
 
@@ -34,14 +34,14 @@ Choose the free plan explicitly after any trial. Do not enable paid overages or 
 
 Use structured, allowlisted fields. This is the convention for new instrumentation, not a claim that every existing call already follows it.
 
-| Field | Meaning |
-| --- | --- |
-| `event` | Stable operation name, such as `profile.save.failed` |
-| `requestId` | Generated opaque correlation ID; never a session token |
-| `operation` | Low-cardinality operation name |
-| `outcome` | `success`, `rejected` or `failure` |
-| `durationMs` | Elapsed time measured with a monotonic clock |
-| `errorCode` | Sanitized internal code, not a raw provider message |
+| Field                    | Meaning                                                    |
+| ------------------------ | ---------------------------------------------------------- |
+| `event`                  | Stable operation name, such as `profile.save.failed`       |
+| `requestId`              | Generated opaque correlation ID; never a session token     |
+| `operation`              | Low-cardinality operation name                             |
+| `outcome`                | `success`, `rejected` or `failure`                         |
+| `durationMs`             | Elapsed time measured with a monotonic clock               |
+| `errorCode`              | Sanitized internal code, not a raw provider message        |
 | `release`, `environment` | Deployment commit and environment when explicitly supplied |
 
 Use route templates instead of full URLs or usernames. Do not use profile IDs, email addresses or request IDs as metric labels.
@@ -89,13 +89,13 @@ Completion means an event and alert were actually observed, not just that a DSN 
 
 These are starting thresholds to tune after collecting a baseline, not installed alerts or promised service levels.
 
-| Signal | Initial rule | Response |
-| --- | --- | --- |
-| Unexpected application errors | New production error, grouped by release | Inspect scope and compare to the latest change |
-| Save/PDF failures | At least 5 failures and over 5% failure rate in 10 minutes | Check persistence/PDF dependencies and recent deployment |
-| Slow save/PDF operations | p95 above 2 seconds for 15 minutes, with at least 20 operations | Compare dependency latency and workload |
-| AI dependency failures | At least 5 unexpected provider failures in 10 minutes | Check provider status, configuration and limits; never attach prompts |
-| Telemetry usage | 80% of the free monthly allowance | Reduce noisy events/sampling and inspect unexpected volume |
+| Signal                        | Initial rule                                                    | Response                                                              |
+| ----------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------------- |
+| Unexpected application errors | New production error, grouped by release                        | Inspect scope and compare to the latest change                        |
+| Save/PDF failures             | At least 5 failures and over 5% failure rate in 10 minutes      | Check persistence/PDF dependencies and recent deployment              |
+| Slow save/PDF operations      | p95 above 2 seconds for 15 minutes, with at least 20 operations | Compare dependency latency and workload                               |
+| AI dependency failures        | At least 5 unexpected provider failures in 10 minutes           | Check provider status, configuration and limits; never attach prompts |
+| Telemetry usage               | 80% of the free monthly allowance                               | Reduce noisy events/sampling and inspect unexpected volume            |
 
 Use separate environments and deployment release IDs. Deduplicate alerts and notify the maintainer through configured channels. Do not create alerts until the underlying event/metric instrumentation exists. Rate-limit rejections should be tracked separately from provider outages.
 

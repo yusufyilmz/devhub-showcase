@@ -15,27 +15,27 @@ pnpm test:e2e
 
 CI installs Chromium with `--with-deps` on Linux. For an app-only production build, use `NODE_ENV=production pnpm --filter web build`; CI uses the full workspace build.
 
-| Check | What it establishes |
-| --- | --- |
-| `pnpm check` | Biome checks, complexity limits and root/workspace types |
-| `pnpm test` | Vitest tests under `tests/**/*.test.{ts,tsx}` |
+| Check                | What it establishes                                                               |
+| -------------------- | --------------------------------------------------------------------------------- |
+| `pnpm check`         | Biome checks, complexity limits and root/workspace types                          |
+| `pnpm test`          | Vitest tests under `tests/**/*.test.{ts,tsx}`                                     |
 | `pnpm test:coverage` | V8 coverage for configured portfolio services, date utilities and chat formatting |
-| `pnpm build` | Workspace type/build tasks and production Next.js compilation |
-| `pnpm test:e2e` | Desktop Chromium and Pixel 7 emulation against production output |
+| `pnpm build`         | Workspace type/build tasks and production Next.js compilation                     |
+| `pnpm test:e2e`      | Desktop Chromium and Pixel 7 emulation against production output                  |
 
 Coverage is a selected source subset, not a whole-repository percentage. A green suite does not certify live Google OAuth, real provider requests, production database policies or real iPhone/Safari behavior.
 
 ## Choose meaningful tests
 
-| Change | Useful verification |
-| --- | --- |
-| Profile types and validation | Valid/invalid input, legacy missing fields, save/import round trips |
-| Ownership and publication | Anonymous, owner, other user and administrator; private reads and denied writes |
-| Managed transfer | Revision conflicts, existing recipient content, access after transfer |
-| Sections and editor | Render defaults, serialized settings, keyboard interaction and reload persistence |
-| PDF generation | Correct profile, visibility, language/settings, generated content |
-| AI integrations | Missing configuration, limits, provider failures, no sensitive output |
-| Documentation | Relative links, executable commands, current source claims and setup status |
+| Change                       | Useful verification                                                               |
+| ---------------------------- | --------------------------------------------------------------------------------- |
+| Profile types and validation | Valid/invalid input, legacy missing fields, save/import round trips               |
+| Ownership and publication    | Anonymous, owner, other user and administrator; private reads and denied writes   |
+| Managed transfer             | Revision conflicts, existing recipient content, access after transfer             |
+| Sections and editor          | Render defaults, serialized settings, keyboard interaction and reload persistence |
+| PDF generation               | Correct profile, visibility, language/settings, generated content                 |
+| AI integrations              | Missing configuration, limits, provider failures, no sensitive output             |
+| Documentation                | Relative links, executable commands, current source claims and setup status       |
 
 Use existing fixtures and test helpers. Add regression coverage for behavior changes, not tests that merely repeat implementation details. Never weaken checks or assertions to hide a failure.
 
@@ -55,15 +55,23 @@ Rebuild before testing changed application code with Playwright. Targeted tests 
 
 The Playwright configuration owns three servers and does not reuse existing ones:
 
-| Port | Service |
-| --- | --- |
+| Port | Service                                              |
+| ---- | ---------------------------------------------------- |
 | 3100 | Production app with synthetic Supabase configuration |
-| 3101 | Local fixture transport with in-memory test data |
-| 3102 | Production app without database configuration |
+| 3101 | Local fixture transport with in-memory test data     |
+| 3102 | Production app without database configuration        |
 
 Keep these ports free. Tests must not point at production accounts or databases. Fixture sessions exercise application behavior but do not validate real provider authentication. Migration/RLS tests provide separate policy coverage; live-environment verification remains a distinct step.
 
-See [browser tests](e2e.md) for detailed scenarios. Check mobile overflow, focus order, labels, empty/error states and reduced motion when reviewing UI changes.
+Check mobile overflow, focus order, labels, empty/error states and reduced motion when reviewing UI changes.
+
+## Browser coverage and fixture contract
+
+Each test has a fresh browser context. The local transport returns checked-in public content and synthetic accounts through the application's normal repository paths. Unknown usernames return no row; public fixture records reject writes, and isolated synthetic accounts edit only their own in-memory starter records. Synthetic sessions are accepted by the fixture only.
+
+Coverage includes homepage navigation and metadata, keyboard preview tabs, themes, layout/language combinations, CV downloads, owner editing and save/reload behavior, private and unknown profiles, managed publication/transfer, custom sections/media/templates, SEO and sitemap exclusions. CV extraction scenarios use a fictional intercepted provider response, not paid requests.
+
+Use localhost consistently as configured because origin checks depend on the application origin. Do not redirect fixture traffic to a real database. Mobile Chromium emulation is not a real iPhone test.
 
 ## Diagnose failures
 

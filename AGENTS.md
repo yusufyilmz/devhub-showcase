@@ -12,7 +12,7 @@ Read the relevant repository skill:
 - [Business rules](.agents/skills/mydevstudio-business/SKILL.md): ownership, publication, managed profiles, editing and CV behavior.
 - [Sections](.agents/skills/mydevstudio-sections/SKILL.md): models, renderer/editor pairs, media and compatibility.
 
-Use [architecture](docs/architecture.md), [conventions](docs/conventions.md), [testing](docs/testing.md) and [observability](docs/observability.md) as supporting guides. Run `node .agents/skills/mydevstudio-development/scripts/check-workspace.mjs` from the root to check basic workspace assumptions.
+Use [features](docs/features.md) for the current product inventory. Use [architecture](docs/architecture.md), [conventions](docs/conventions.md), [testing](docs/testing.md) and [observability](docs/observability.md) as supporting guides. Run `node .agents/skills/mydevstudio-development/scripts/check-workspace.mjs` from the root to check basic workspace assumptions.
 
 ## Tooling
 
