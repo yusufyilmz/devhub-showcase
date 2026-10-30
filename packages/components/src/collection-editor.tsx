@@ -23,7 +23,8 @@ export function CollectionEditor<T extends { id: string }>({
   create,
   render,
   getTitle,
-  onRemove
+  onRemove,
+  maxItems
 }: {
   title: string
   items: T[]
@@ -32,6 +33,7 @@ export function CollectionEditor<T extends { id: string }>({
   render: (item: T, change: (item: T) => void) => ReactNode
   getTitle: (item: T) => string
   onRemove?: (item: T) => void
+  maxItems?: number
 }) {
   return (
     <section className="editor-collection">
@@ -43,6 +45,7 @@ export function CollectionEditor<T extends { id: string }>({
         <button
           className="studio-secondary"
           type="button"
+          disabled={maxItems !== undefined && items.length >= maxItems}
           onClick={() => onChange([...items, create()])}
         >
           + Add {title.toLowerCase()}

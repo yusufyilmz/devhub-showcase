@@ -1,9 +1,9 @@
 'use client'
 import { SortableList } from '@shared/components/sortable-list'
 import {
-  getPortfolioSectionOrder,
+  getPortfolioEntries,
+  type PortfolioEntryId,
   type PortfolioProfile,
-  type PortfolioSectionId,
   portfolioSectionLabels
 } from '@shared/content'
 
@@ -24,20 +24,27 @@ export function SectionOrderEditor({
       </p>
       <SortableList
         label="Portfolio section order"
-        items={getPortfolioSectionOrder(profile).map((id) => ({
-          id,
-          label: portfolioSectionLabels[id]
+        items={getPortfolioEntries(profile).map((section) => ({
+          id: section.id,
+          label:
+            section.kind === 'custom'
+              ? section.title
+              : portfolioSectionLabels[section.kind]
         }))}
         onChange={(ids) =>
-          onChange({ ...profile, sectionOrder: ids as PortfolioSectionId[] })
+          onChange({ ...profile, sectionSequence: ids as PortfolioEntryId[] })
         }
       />
       <button
         type="button"
         className="studio-secondary"
-        disabled={!profile.sectionOrder}
+        disabled={!profile.sectionOrder && !profile.sectionSequence}
         onClick={() => {
-          const { sectionOrder: _order, ...rest } = profile
+          const {
+            sectionOrder: _order,
+            sectionSequence: _sequence,
+            ...rest
+          } = profile
           onChange(rest)
         }}
       >

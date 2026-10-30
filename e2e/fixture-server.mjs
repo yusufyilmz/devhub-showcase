@@ -61,6 +61,19 @@ const starters = ['desktop', 'mobile'].map((device, index) => ({
     about: []
   }
 }))
+const customOwners = ['desktop', 'mobile'].map((device, index) => ({
+  ...row,
+  id: `abababab-abab-4bab-8bab-abababababa${index}`,
+  owner_id: `cdcdcdcd-cdcd-4dcd-8dcd-cdcdcdcdcdc${index}`,
+  username: `${device}-custom-owner`,
+  is_public: false,
+  document: {
+    ...profile,
+    name: 'Custom Section Owner',
+    email: 'custom-owner@example.test',
+    templateChosen: true
+  }
+}))
 const themed = ['studio', 'paper', 'graphite', 'bloom'].flatMap(
   (theme, themeIndex) =>
     ['engineer', 'designer', 'consultant', 'minimal'].map(
@@ -145,7 +158,8 @@ const rows = [
   ...configured,
   ...themed,
   systemTheme,
-  ...starters
+  ...starters,
+  ...customOwners
 ]
 createServer(async (request, response) => {
   const url = new URL(request.url, 'http://127.0.0.1:3101')
@@ -202,7 +216,7 @@ function fixtureOwner(request) {
   try {
     const token = request.headers.authorization?.split(' ')[1]
     const userId = JSON.parse(Buffer.from(token.split('.')[1], 'base64url')).sub
-    owner = [...starters, ...managers, ...recipients].find(
+    owner = [...starters, ...customOwners, ...managers, ...recipients].find(
       (entry) => entry.owner_id === userId
     )
   } catch {

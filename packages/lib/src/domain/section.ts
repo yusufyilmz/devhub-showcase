@@ -1,4 +1,8 @@
-import { type PortfolioSectionId, sectionRegistry } from '@shared/content'
+import {
+  customSectionViews,
+  type PortfolioSectionId,
+  sectionRegistry
+} from '@shared/content'
 import { z } from 'zod'
 
 function definition<Kind extends PortfolioSectionId>(kind: Kind) {
@@ -54,5 +58,50 @@ export const sectionSettingsSchema = z
     skills: preferences(sectionRegistry.skills.renderers),
     education: preferences(sectionRegistry.education.renderers),
     languages: preferences(sectionRegistry.languages.renderers)
+  })
+  .strict()
+
+const customId = z.templateLiteral(['custom-', z.uuid()])
+export const portfolioEntryIdSchema = z.union([
+  z.enum([
+    'about',
+    'experience',
+    'projects',
+    'skills',
+    'education',
+    'languages'
+  ]),
+  customId
+])
+export const customSectionSchema = z
+  .object({
+    id: customId,
+    title: z.string().trim().min(1).max(160),
+    renderer: z.enum(customSectionViews).default('list'),
+    visible: z.boolean().default(true),
+    items: z
+      .array(
+        z
+          .object({
+            id: z.uuid(),
+            title: z.string().trim().min(1).max(200),
+            body: z.string().trim().max(6000),
+            url: z.union([
+              z
+                .url()
+                .refine(
+                  (value) => /^https?:\/\//i.test(value),
+                  'Use an http or https URL'
+                ),
+              z.literal('')
+            ])
+          })
+          .strict()
+      )
+      .max(30)
+      .refine(
+        (items) => new Set(items.map(({ id }) => id)).size === items.length,
+        'Each item needs a unique ID'
+      )
   })
   .strict()

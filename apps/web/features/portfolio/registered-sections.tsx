@@ -1,10 +1,11 @@
 import {
-  getPortfolioSections,
+  getPortfolioEntries,
   type PortfolioProfile,
   type SectionRendererId
 } from '@shared/content'
 import { Fragment, type ReactNode } from 'react'
 import { ConfiguredSection } from './configured-section'
+import { CustomPortfolioSection } from './custom-portfolio-section'
 
 /** Server component: only explicit React implementations can render saved content. */
 export function RegisteredSections({
@@ -14,7 +15,9 @@ export function RegisteredSections({
   profile: PortfolioProfile
   renderers: Partial<Record<SectionRendererId, ReactNode>>
 }) {
-  return getPortfolioSections(profile).map((section) => {
+  return getPortfolioEntries(profile).map((section) => {
+    if (section.kind === 'custom')
+      return <CustomPortfolioSection key={section.id} section={section} />
     if (!section.settings.visible) return null
     if (profile.sectionSettings?.[section.kind]?.renderer)
       return (
