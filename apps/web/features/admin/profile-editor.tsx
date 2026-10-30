@@ -15,6 +15,7 @@ import { LanguageSettingsEditor } from './language-settings-editor'
 import { PortfolioTypePicker } from './portfolio-type-picker'
 import { ProfileFields } from './profile-fields'
 import { SectionOrderEditor } from './section-order-editor'
+import { SectionSettingsEditor } from './section-settings-editor'
 import { SkillsEditor } from './skills-editor'
 
 const tabs = [
@@ -27,6 +28,7 @@ const tabs = [
   'Language settings',
   'Layout',
   'Section order',
+  'Section display',
   'Appearance',
   'PDF'
 ] as const
@@ -403,5 +405,6 @@ const editors = {
   PDF: CvSettingsEditor,
   Appearance: AppearanceEditor,
   'Section order': SectionOrderEditor,
+  'Section display': SectionSettingsEditor,
   Layout: LayoutEditor
 }

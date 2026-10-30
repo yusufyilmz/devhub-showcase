@@ -5,7 +5,13 @@ import { useState } from 'react'
 import { Drawer, IconButton, MenuIcon } from '../../../components'
 import { MenuItems } from './MenuItems'
 
-export function MobileMenu({ language = 'en' }: { language?: Language }) {
+export function MobileMenu({
+  language = 'en',
+  hiddenLinks = []
+}: {
+  language?: Language
+  hiddenLinks?: string[]
+}) {
   const text = getPortfolioCopy(language)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -27,7 +33,7 @@ export function MobileMenu({ language = 'en' }: { language?: Language }) {
           className="bg-main-dark h-full flex flex-col justify-start p-4 align-middle"
           role="presentation"
         >
-          <MenuItems language={language} />
+          <MenuItems language={language} hiddenLinks={hiddenLinks} />
           <a href="/admin/login" className="studio-primary">
             {text.createCv}
           </a>

@@ -1,7 +1,13 @@
 import { getPortfolioCopy, type Language } from '@shared/content'
 import { Button } from '../../../components'
 
-export function MenuItems({ language = 'en' }: { language?: Language }) {
+export function MenuItems({
+  language = 'en',
+  hiddenLinks = []
+}: {
+  language?: Language
+  hiddenLinks?: string[]
+}) {
   const text = getPortfolioCopy(language)
   const items = [
     ['#about-me', text.about],
@@ -13,17 +19,19 @@ export function MenuItems({ language = 'en' }: { language?: Language }) {
   ]
   return (
     <>
-      {items.map(([id, title]) => (
-        <Button
-          aria-label={title}
-          key={id}
-          variant="text"
-          className="text-main-white border-none whitespace-pre"
-          href={id}
-        >
-          {title}
-        </Button>
-      ))}
+      {items
+        .filter(([id]) => !hiddenLinks.includes(id ?? ''))
+        .map(([id, title]) => (
+          <Button
+            aria-label={title}
+            key={id}
+            variant="text"
+            className="text-main-white border-none whitespace-pre"
+            href={id}
+          >
+            {title}
+          </Button>
+        ))}
     </>
   )
 }

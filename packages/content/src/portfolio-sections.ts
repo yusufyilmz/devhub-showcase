@@ -1,5 +1,9 @@
 import type { PortfolioType } from './portfolio-types'
-import { type PortfolioSection, sectionRegistry } from './section-registry'
+import {
+  type PortfolioSection,
+  type PortfolioSectionSettings,
+  sectionRegistry
+} from './section-registry'
 
 export const portfolioSectionIds = [
   'about',
@@ -17,6 +21,7 @@ export const portfolioSectionLabels: Record<PortfolioSectionId, string> =
 export type PortfolioSectionPreferences = {
   portfolioType?: PortfolioType
   sectionOrder?: PortfolioSectionId[]
+  sectionSettings?: PortfolioSectionSettings
 }
 export function getPortfolioSectionOrder(
   profile: PortfolioSectionPreferences
@@ -38,9 +43,11 @@ export function getPortfolioSections(
       ({
         id: kind,
         kind,
-        renderer: sectionRegistry[kind].defaults[layout],
+        renderer:
+          profile.sectionSettings?.[kind]?.renderer ??
+          sectionRegistry[kind].defaults[layout],
         source: { type: 'profile', field: sectionRegistry[kind].source },
-        settings: { visible: true }
+        settings: { visible: profile.sectionSettings?.[kind]?.visible ?? true }
       }) as PortfolioSection
   )
 }

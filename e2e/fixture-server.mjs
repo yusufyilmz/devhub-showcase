@@ -105,6 +105,28 @@ const reordered = ['engineer', 'designer', 'consultant', 'minimal'].map(
     }
   })
 )
+const configured = ['engineer', 'designer', 'consultant', 'minimal'].map(
+  (type, index) => ({
+    ...row,
+    id: `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa${index}`,
+    username: `configured-${type}`,
+    document: {
+      ...profile,
+      portfolioType: type,
+      sectionSettings: {
+        about: { visible: false },
+        projects: {
+          renderer: 'project-carousel',
+          itemIds: [profile.projects.find((item) => item.public).id]
+        },
+        experience: { renderer: 'experience-tabs' },
+        education: { renderer: 'education-accordion' },
+        skills: { renderer: 'skill-cards' },
+        languages: { renderer: 'language-cards' }
+      }
+    }
+  })
+)
 const managers = [0, 1].map((n) => ({
   owner_id: `99999999-9999-4999-8999-99999999999${n}`,
   document: { email: `manager${n}@example.test` },
@@ -120,6 +142,7 @@ const rows = [
   ...examples,
   ...localized,
   ...reordered,
+  ...configured,
   ...themed,
   systemTheme,
   ...starters

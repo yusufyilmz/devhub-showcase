@@ -2,7 +2,8 @@ import {
   copy,
   getPortfolioCopy,
   type PortfolioProfile,
-  type SectionRendererId
+  type SectionRendererId,
+  selectPortfolioContent
 } from '@shared/content'
 import { getPortfolioResources } from '@shared/lib/portfolio'
 import {
@@ -34,6 +35,7 @@ export function EngineerPortfolio({
   referrals?: ComponentProps<typeof ReferralSection>['referrals']
   extras?: boolean
 }) {
+  profile = selectPortfolioContent(profile)
   const { experiences, projects, skills, educations } =
     getPortfolioResources(profile)
   const text = getPortfolioCopy(profile.portfolioLanguage)

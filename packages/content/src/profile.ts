@@ -1,6 +1,7 @@
 import type { Language } from './languages'
 import type { PortfolioSectionId } from './portfolio-sections'
 import type { CvLayout, PortfolioType } from './portfolio-types'
+import type { PortfolioSectionSettings } from './section-registry'
 import type { PortfolioTheme } from './themes'
 
 /** Verified public career content, updated from the October 2026 CV. */
@@ -27,6 +28,7 @@ export interface ProfileProject {
 }
 export interface PortfolioProfile {
   sectionOrder?: PortfolioSectionId[]
+  sectionSettings?: PortfolioSectionSettings
   portfolioLanguage?: Language
   cvLanguage?: Language
   portfolioType?: PortfolioType

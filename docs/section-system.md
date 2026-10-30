@@ -1,6 +1,6 @@
 # Section system: foundation
 
-This first step establishes a shared section model, a registry of existing renderers and a compatibility adapter. It does not add editor controls, custom sections or new visual variants. Profile documents and the existing save/import APIs retain their current contract. No database migration or new dependency is required.
+The section system includes a shared registry, reusable views and validated display settings in the profile editor. Existing documents keep their original layout defaults. No database migration or new dependency is required. Custom sections remain the next step.
 
 ## Architecture decision
 
@@ -20,7 +20,7 @@ A normalized section contains:
 - kind: semantic purpose, such as experience or projects.
 - renderer: an explicit identifier for an existing presentation.
 - source: a typed reference to the canonical profile field.
-- settings: the normalized visibility setting, currently true for every built-in section.
+- settings: the normalized visibility setting, derived from the saved visibility preference.
 
 For example, the experience section defaults to the timeline renderer in Engineer and reads the experiences profile field. Its content is not copied into a second document. The schema rejects an experience renderer assigned to About, a mismatched source, unknown kinds, unregistered renderers and extra settings.
 
@@ -35,7 +35,7 @@ For example, the experience section defaults to the timeline renderer in Enginee
 | Education  | education      | education-timeline | education-list  | education-list       |
 | Languages  | languages      | language-list      | language-list   | language-list        |
 
-Renderer identifiers describe the existing implementations. They are not yet selectable across every layout. A future choice is exposed only after its implementation and content adapter are available in that context.
+Layout default retains the existing implementation. Explicit selections use the shared content adapter and renderer views across all four layouts.
 
 ## Compatibility and rendering
 
@@ -47,10 +47,8 @@ Public project filtering stays in the existing server rendering/resource adapter
 
 ## Next steps
 
-1. Extract reusable renderers and add carousel, cards, gallery, accordion and tabs where they fit the content.
-2. Add validated per-section editor choices, element selection and previews.
-3. Add stable custom section instances with create, duplicate, remove and reorder controls.
-4. Port additional useful compositions, then introduce template/import/export support.
+1. Add stable custom section instances with create, duplicate, remove and reorder controls.
+2. Port additional useful compositions, then introduce template/import/export support.
 
 Each step includes compatibility and browser checks before its new options are exposed. Persisted configuration, custom IDs and PDF inclusion choices are deliberately introduced with their corresponding editor features rather than accepted as unused profile fields now.
 
@@ -60,4 +58,12 @@ The section-views entrypoint in @shared/components provides SectionGrid (cards o
 
 Tabs support arrow keys, Home and End. Accordions use native details/summary. Carousels use scroll snap, swipe and manual controls without autoplay; arrow movement respects reduced motion and accepts localized control labels. These primitives contain no authentication, fetching or portfolio data access. Callers must supply only authorized content.
 
-These are reusable building blocks, not new persisted renderer options. The next integration step will bind canonical portfolio data to the views and expose only supported combinations in section settings. Existing portfolio defaults continue to use the registered implementations.
+## Saved section settings (step three)
+
+The Section display editor saves optional sectionSettings in the existing profile JSON document. Each built-in section accepts a compatible renderer, visible flag and optional itemIds. The save and import validator rejects unknown keys, incompatible renderers, duplicate item IDs and arbitrary executable settings. Sources remain fixed to the canonical profile fields.
+
+Omitting renderer uses the layout default. Omitting itemIds includes all items, including future additions; an empty array includes none. Project, experience, education and language selections use stable record IDs. Skills use the existing group names, so renaming a selected group requires selecting its new name. About uses its authored paragraphs and summary fallback rather than selectable paragraph indexes. Deleted IDs are ignored and never substituted for other content.
+
+ConfiguredSection adapts profile content to shared cards, gallery, carousel, accordion, tabs, timeline or list views. Headings and dates use the portfolio language. Private projects stay excluded even if their IDs appear in a selection. Empty sections are omitted. Hidden sections are omitted from the section dispatcher and their navigation links.
+
+The editor provides a current-draft preview for explicitly selected views, per-section reset and the existing save/discard controls. Settings use the normal revision-checked save/read path for owned and managed portfolios. PDF rendering reads the complete canonical profile and keeps its own inclusion settings. No production data is modified by this change.

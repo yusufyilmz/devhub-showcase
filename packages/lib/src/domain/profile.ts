@@ -1,5 +1,6 @@
 import { type PortfolioProfile, portfolioSectionIds } from '@shared/content'
 import { z } from 'zod'
+import { sectionSettingsSchema } from './section'
 import { usernameSchema } from './username'
 
 const text = (max = 200) =>
@@ -28,6 +29,7 @@ const chronological = (value: { start: string; end: string | null }) =>
 
 export const profileSchema = z
   .object({
+    sectionSettings: sectionSettingsSchema.optional(),
     sectionOrder: z
       .array(z.enum(portfolioSectionIds))
       .length(portfolioSectionIds.length)

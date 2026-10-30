@@ -43,9 +43,13 @@ export type { CvLayout, PortfolioType } from './portfolio-types'
 export { cvLayouts, portfolioTypes } from './portfolio-types'
 export type { PortfolioProfile } from './profile'
 export { profile } from './profile'
-export type { PortfolioSection, SectionRendererId } from './section-registry'
-
-export { sectionRegistry } from './section-registry'
+export { getSectionItems, selectPortfolioContent } from './section-content'
+export type {
+  PortfolioSection,
+  PortfolioSectionSettings,
+  SectionRendererId
+} from './section-registry'
+export { sectionRegistry, sectionRendererViews } from './section-registry'
 export type { ColorMode, PortfolioTheme } from './themes'
 export {
   getPortfolioThemeVariables,
