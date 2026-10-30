@@ -22,7 +22,7 @@ vi.mock("../apps/web/lib/managed-portfolios", () => ({
 vi.mock("../apps/web/lib/cv-response", () => ({ cvResponse: mocks.cv }));
 
 import { GET as pdf } from "../apps/web/app/admin/portfolios/[id]/cv.pdf/route";
-import { PUT as save } from "../apps/web/app/api/admin/managed/[id]/route";
+import { GET as readManaged, PUT as save } from "../apps/web/app/api/admin/managed/[id]/route";
 import { POST as transfer } from "../apps/web/app/api/admin/managed/[id]/transfer/route";
 import { POST as create } from "../apps/web/app/api/admin/managed/route";
 
@@ -108,4 +108,27 @@ it("reports transfer failures without performing an alternate ownership write", 
     profile_id: id,
     target_email: "owner@example.com",
   });
+});
+
+it("reads only the requested authorized managed record without caching private content", async () => {
+  const snapshot = {
+    id,
+    isPublic: false,
+    profile,
+    revision: 1,
+    updatedAt: "today",
+    username: "managed-example",
+  };
+  const read = vi.fn().mockResolvedValue(snapshot);
+  mocks.managed.mockResolvedValue({ repository: { read } });
+  const result = await readManaged(
+    new Request(`https://example.com/api/admin/managed/${id}`),
+    context,
+  );
+  expect(result.status).toBe(200);
+  expect(result.headers.get("cache-control")).toContain("no-store");
+  expect(await result.json()).toEqual(snapshot);
+  expect(mocks.managed).toHaveBeenCalledWith(id);
+  mocks.managed.mockRejectedValue(new ProfileAccessError());
+  expect((await readManaged(new Request("https://example.com"), context)).status).toBe(403);
 });

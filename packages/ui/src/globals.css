@@ -478,3 +478,12 @@
   align-items: center;
   min-height: 44px;
 }
+
+.ai-profile-json {
+  max-height: 34rem;
+  padding: 1rem;
+  overflow: auto;
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}

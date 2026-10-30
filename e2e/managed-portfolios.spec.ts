@@ -97,6 +97,9 @@ test("an administrator creates, edits, publishes, hides and transfers an importe
   await expect(page).toHaveURL(editorUrl);
   await page.reload();
   await expect(page.getByLabel("Full name")).toHaveValue("Creative Managed");
+  await page.getByRole("button", { exact: true, name: "AI profile" }).click();
+  await expect(page.locator(".ai-profile-json")).toContainText("Creative Managed");
+  await page.getByRole("button", { exact: true, name: "Profile" }).click();
   await page.screenshot({
     fullPage: true,
     path: info.outputPath("managed-editor.png"),
@@ -120,6 +123,11 @@ test("an administrator creates, edits, publishes, hides and transfers an importe
   await expect(page).toHaveURL("/admin/portfolios");
   await expect(page.getByRole("link", { name: "Edit portfolio" })).toHaveCount(0);
   expect((await page.request.get(`${editorUrl}/cv.pdf`)).status()).toBe(403);
+  expect(
+    (
+      await page.request.get(editorUrl.replace("/admin/portfolios/", "/api/admin/managed/"))
+    ).status(),
+  ).toBe(403);
   await context.clearCookies();
   await signIn(context, `88888888-8888-4888-8888-88888888888${n}`, `recipient${n}@example.test`);
   await page.goto(`/managed-portfolio-${n}/edit`);

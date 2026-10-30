@@ -1,45 +1,73 @@
 "use server";
 
-import { createCVModel, failureMessage, MessageProcessor } from "@shared/chat";
+import { createCVModel, failureMessage, MessageProcessor, PortfolioChatModel } from "@shared/chat";
 import { logger } from "@shared/lib/logger";
-import { RateLimiter, ReferralService, ReviewService } from "@shared/lib/services";
+import { ReferralService, ReviewService } from "@shared/lib/services";
 import { createServerClient } from "@shared/lib/supabase";
-import type { ChatMessage, ReviewState, ReviewWithReferrals } from "@shared/lib/types";
+import {
+  type ChatMessage,
+  ChatRole,
+  type ReviewState,
+  type ReviewWithReferrals,
+} from "@shared/lib/types";
 import { isCategoryReferralCategory } from "@shared/lib/utils";
 
 import { requireAdmin } from "../lib/admin-auth";
-import { getPublishedProfile } from "../lib/published-profile";
+import { portfolioChatInput, requireLegacyChat } from "../lib/portfolio-chat";
 
 export async function handleSendMessageAction(
+  username: string,
   message: ChatMessage,
   sessionId: string,
 ): Promise<ChatMessage> {
-  if (!message.content) return failureMessage;
+  if (!message?.content) return failureMessage;
 
   try {
-    if (!process.env.OPENAI_API_KEY || !process.env.REDIS_URL || !process.env.REDIS_TOKEN)
-      return failureMessage;
-    const rateLimiter = new RateLimiter();
-    const messageProcessor = new MessageProcessor(
-      logger,
-      createCVModel((await getPublishedProfile()).profile),
-    );
-    await rateLimiter.isAllowed(sessionId);
-
-    if (isCategoryReferralCategory(message.category)) {
+    const input = portfolioChatInput.parse(message);
+    const { knowledge, snapshot } = await requireLegacyChat(username, sessionId);
+    if (input.type === "cv") {
+      const content = await new PortfolioChatModel().answer(
+        knowledge,
+        input.content,
+        AbortSignal.timeout(45000),
+      );
+      return {
+        category: "unknown",
+        content,
+        role: ChatRole.Assistant,
+        timestamp: Date.now(),
+        type: "cv",
+      };
+    }
+    const normalizedMessage: ChatMessage = {
+      ...message,
+      content: input.content,
+      role: ChatRole.User,
+    };
+    const messageProcessor = new MessageProcessor(logger, createCVModel(snapshot.profile));
+    if (isCategoryReferralCategory(normalizedMessage.category)) {
       const client = await createServerClient();
       const referralService = new ReferralService(logger, client);
 
-      await referralService.saveReferral(message.category, message.content, sessionId);
+      await referralService.saveReferral(
+        normalizedMessage.category,
+        normalizedMessage.content,
+        sessionId,
+      );
     }
 
-    const botReply = await messageProcessor.processUserMessage(message);
+    const botReply = await messageProcessor.processUserMessage(normalizedMessage);
 
     return botReply;
-  } catch (error) {
-    logger.error({ error }, "Failed to process message");
-
-    throw error;
+  } catch {
+    logger.error("Portfolio chat request failed");
+    return {
+      category: "error",
+      content: failureMessage.content,
+      role: ChatRole.System,
+      timestamp: Date.now(),
+      type: message.type === "referral" ? "referral" : "cv",
+    };
   }
 }
 

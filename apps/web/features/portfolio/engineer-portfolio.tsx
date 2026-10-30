@@ -32,11 +32,13 @@ export function EngineerPortfolio({
   ownerLink,
   referrals = [],
   extras = false,
+  chatIdentity,
 }: {
   profile: PortfolioProfile;
   ownerLink?: ReactNode;
   referrals?: ComponentProps<typeof ReferralSection>["referrals"];
   extras?: boolean;
+  chatIdentity?: { id: string; username: string; name: string; revision: number };
 }) {
   const canonicalProfile = profile;
   profile = selectPortfolioContent(profile);
@@ -90,7 +92,12 @@ export function EngineerPortfolio({
           <ScrollButton
             sectionIds={Object.values(copy.navbar).map((item) => item.id.split("#")[1] ?? "")}
           />
-          <ChatSection handleSendMessage={handleSendMessageAction} />
+          {chatIdentity && (
+            <ChatSection
+              handleSendMessage={handleSendMessageAction.bind(null, chatIdentity.username)}
+              identity={chatIdentity}
+            />
+          )}
         </>
       )}
       <Footer profile={profile} />

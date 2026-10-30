@@ -3,7 +3,6 @@ import { ChatRole } from "@shared/lib/types";
 import type { Logger } from "pino";
 
 import { notMeaningfulMessage, processErrorMessage } from "../../messages";
-import { CV_MODEL } from "../../models/cv-model";
 import {
   CATEGORY_PROMPT_CATEGORY_KEY,
   CATEGORY_PROMPT_DATA_KEY,
@@ -24,7 +23,7 @@ export class MessageProcessor {
 
   constructor(
     logger: Logger,
-    private readonly cvModel: CVModel = CV_MODEL,
+    private readonly cvModel: CVModel,
   ) {
     this.logger = logger;
     this.classifier = new ClassifierService(logger, cvModel);
@@ -38,8 +37,6 @@ export class MessageProcessor {
    */
   public async processUserMessage(userMessage: ChatMessage): Promise<ChatMessage> {
     try {
-      this.logger.info({ userMessage }, "User message received.");
-
       if (userMessage.type === "referral") {
         return this.referralService.createReferralMessage(userMessage);
       }
@@ -101,8 +98,6 @@ export class MessageProcessor {
         promptWithModel,
       );
 
-      this.logger.info({ gptResponse }, "GPT response:");
-
       return {
         category: classifiedMessage.category,
         content: gptResponse,
@@ -110,8 +105,8 @@ export class MessageProcessor {
         timestamp: Date.now(),
         type: userMessage.type,
       };
-    } catch (error) {
-      this.logger.error({ error }, "Error processing user message");
+    } catch {
+      this.logger.error("Portfolio message processing failed");
       // Step 6: If an error occurs, return a default error message
       return {
         ...processErrorMessage,

@@ -13,4 +13,5 @@ export {
 } from "./messages";
 export { CvImportModel } from "./models/cv-import-model";
 export { createCVModel } from "./models/cv-model";
+export { PortfolioChatModel } from "./models/portfolio-chat-model";
 export { MessageProcessor } from "./services/processor";

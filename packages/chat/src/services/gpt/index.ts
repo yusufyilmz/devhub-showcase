@@ -45,7 +45,7 @@ export class ChatGPTService {
 
       return responseMessage;
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error("Portfolio model request failed");
 
       throw error;
     }

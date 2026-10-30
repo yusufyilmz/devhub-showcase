@@ -1,7 +1,6 @@
 import nlp from "compromise";
 import type { Logger } from "pino";
 
-import { CV_MODEL } from "../../models/cv-model";
 import { createQuestionCategories } from "../../models/question-categories";
 import type { ChatCategory, CVModel } from "../../types/cv";
 
@@ -9,7 +8,7 @@ export class ClassifierService {
   private readonly categories;
   constructor(
     private readonly logger: Logger,
-    model: CVModel = CV_MODEL,
+    model: CVModel,
   ) {
     this.categories = createQuestionCategories(model);
   }
@@ -69,8 +68,8 @@ export class ClassifierService {
           };
         }
       }
-    } catch (error) {
-      this.logger.error({ error }, "Error classifying question");
+    } catch {
+      this.logger.error("Portfolio classification failed");
     }
 
     return bestMatch;
