@@ -22,7 +22,8 @@
     "./section-templates": "./src/domain/section-templates.ts",
     "./pageforge-import": "./src/domain/pageforge-import.ts",
     "./cv-import": "./src/domain/cv-import.ts",
-    "./cv-file": "./src/domain/cv-file.ts"
+    "./cv-file": "./src/domain/cv-file.ts",
+    "./portfolio-knowledge": "./src/domain/portfolio-knowledge.ts"
   },
   "main": "src/index.ts",
   "scripts": {

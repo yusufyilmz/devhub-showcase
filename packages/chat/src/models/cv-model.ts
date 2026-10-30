@@ -1,4 +1,4 @@
-import { type PortfolioProfile, profile } from "@shared/content";
+import type { PortfolioProfile } from "@shared/content";
 
 import type { CVModel } from "../types/cv";
 
@@ -13,23 +13,7 @@ const month = (date: string) =>
   }).format(new Date(date));
 export function createCVModel(profile: PortfolioProfile): CVModel {
   return {
-    achievements: [
-      {
-        description:
-          "Built reusable UI primitives, hooks, contexts and tooling across financial applications with type safety and maintainable delivery.",
-        title: "Platform engineering",
-      },
-      {
-        description:
-          "Connected interfaces to transaction processing, classification and notification flows, with operational visibility and audit history.",
-        title: "Workflow automation",
-      },
-      {
-        description:
-          "Worked with stakeholders to turn ambiguous business flows into reliable interfaces and documented integrations.",
-        title: "Cross-functional ownership",
-      },
-    ],
+    achievements: [],
     certifications: [],
     characteristic: {
       adaptability: "",
@@ -42,12 +26,7 @@ export function createCVModel(profile: PortfolioProfile): CVModel {
       problemSolvingApproach: "",
       problemSolvingPhilosophy: "",
       resilience: "",
-      strengths: [
-        "Technical ownership",
-        "Cross-functional collaboration",
-        "Mentoring",
-        "End-to-end product delivery",
-      ],
+      strengths: [],
       teamwork: { examples: [], philosophy: "" },
       weaknesses: [],
       workEthic: { continuousLearning: "", dedication: "", punctuality: "" },
@@ -80,12 +59,14 @@ export function createCVModel(profile: PortfolioProfile): CVModel {
       location: profile.location,
       nationality: "",
     },
-    projects: profile.projects.map((project) => ({
-      company: project.company,
-      description: project.description,
-      name: project.name,
-      usedSkills: project.skills,
-    })),
+    projects: profile.projects
+      .filter((project) => project.public)
+      .map((project) => ({
+        company: project.company,
+        description: project.description,
+        name: project.name,
+        usedSkills: project.skills,
+      })),
     referrals: [],
     skills: {
       backend: skills(profile.skills["Backend & data"] ?? []),
@@ -93,12 +74,11 @@ export function createCVModel(profile: PortfolioProfile): CVModel {
       devops: skills(profile.skills["Platform & quality"] ?? []),
       frontend: skills(Object.values(profile.skills).flat()),
       groups: profile.skills,
-      performance_optimization: skills(["SSR", "Frontend platform architecture"]),
-      testing: skills(["Jest", "React Testing Library", "Playwright", "Cypress"]),
-      version_control: skills(["Git", "GitHub", "GitHub Actions"]),
+      performance_optimization: [],
+      testing: [],
+      version_control: [],
     },
     technicalChallenges: [],
     workPreferences: { hybrid: "", office: "", remote: "" },
   };
 }
-export const CV_MODEL = createCVModel(profile);

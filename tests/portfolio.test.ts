@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { CV_MODEL } from "../packages/chat/src/models/cv-model";
+import { createCVModel } from "../packages/chat/src/models/cv-model";
 import { formatAllCV, formatters } from "../packages/chat/src/services/formatter";
 import { profile } from "../packages/content/src/profile";
 import { getPortfolioResources } from "../packages/lib/src/services/portfolio";
 import { formatDateRange } from "../packages/lib/src/utils/date/format";
+
+const CV_MODEL = createCVModel(profile);
 
 describe("CV content and portfolio mapping", () => {
   it("shows the current dLocal role first and preserves career chronology", () => {

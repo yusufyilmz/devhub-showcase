@@ -177,3 +177,5 @@ The shared [sections package](packages/sections) includes renderer/editor folder
 Search discovery, generated name marks and sharing images: see [portfolio SEO and branding](docs/portfolio-seo.md).
 
 CV upload, OpenAI extraction, review and setup: see [CV import](docs/cv-import.md). The homepage now showcases the section library and private templates.
+
+Per-portfolio public/owner AI knowledge, the saved AI profile inspector and the reusable chat foundation: see [portfolio AI foundation](docs/portfolio-ai-foundation.md). Premium access and billing remain separate rollout steps.

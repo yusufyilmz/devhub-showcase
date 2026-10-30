@@ -10,7 +10,6 @@ import {
   unknownMessage,
 } from "../messages";
 import type { ChatCategory, CVModel } from "../types/cv";
-import { CV_MODEL } from "./cv-model";
 
 export function createQuestionCategories(
   CV_MODEL: CVModel,
@@ -525,4 +524,3 @@ export function createQuestionCategories(
     },
   };
 }
-export const QUESTION_CATEGORIES = createQuestionCategories(CV_MODEL);
