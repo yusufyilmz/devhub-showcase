@@ -10,6 +10,7 @@ import {
   LanguagesEditor,
   ProjectsEditor
 } from './career-editors'
+import { CustomSectionsEditor } from './custom-sections-editor'
 import { CvSettingsEditor } from './cv-settings-editor'
 import { LanguageSettingsEditor } from './language-settings-editor'
 import { PortfolioTypePicker } from './portfolio-type-picker'
@@ -29,6 +30,7 @@ const tabs = [
   'Layout',
   'Section order',
   'Section display',
+  'Custom sections',
   'Appearance',
   'PDF'
 ] as const
@@ -406,5 +408,6 @@ const editors = {
   Appearance: AppearanceEditor,
   'Section order': SectionOrderEditor,
   'Section display': SectionSettingsEditor,
+  'Custom sections': CustomSectionsEditor,
   Layout: LayoutEditor
 }

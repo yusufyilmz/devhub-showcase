@@ -1,6 +1,10 @@
 import { type PortfolioProfile, portfolioSectionIds } from '@shared/content'
 import { z } from 'zod'
-import { sectionSettingsSchema } from './section'
+import {
+  customSectionSchema,
+  portfolioEntryIdSchema,
+  sectionSettingsSchema
+} from './section'
 import { usernameSchema } from './username'
 
 const text = (max = 200) =>
@@ -29,6 +33,8 @@ const chronological = (value: { start: string; end: string | null }) =>
 
 export const profileSchema = z
   .object({
+    customSections: z.array(customSectionSchema).max(20).optional(),
+    sectionSequence: z.array(portfolioEntryIdSchema).max(26).optional(),
     sectionSettings: sectionSettingsSchema.optional(),
     sectionOrder: z
       .array(z.enum(portfolioSectionIds))
@@ -163,6 +169,27 @@ export const profileSchema = z
           message: 'Each item needs a unique ID'
         })
     }
+    const expectedSections = [
+      ...portfolioSectionIds,
+      ...(value.customSections ?? []).map(({ id }) => id)
+    ]
+    if (new Set(expectedSections).size !== expectedSections.length)
+      ctx.addIssue({
+        code: 'custom',
+        path: ['customSections'],
+        message: 'Each section needs a unique ID'
+      })
+    if (
+      value.sectionSequence &&
+      (value.sectionSequence.length !== expectedSections.length ||
+        new Set(value.sectionSequence).size !== expectedSections.length ||
+        value.sectionSequence.some((id) => !expectedSections.includes(id)))
+    )
+      ctx.addIssue({
+        code: 'custom',
+        path: ['sectionSequence'],
+        message: 'Include each existing section once'
+      })
     const employers = new Set(value.experiences.map((item) => item.id))
     value.projects.forEach((project, index) => {
       if (project.experienceId && !employers.has(project.experienceId))

@@ -30,6 +30,12 @@ export const copy = {
   structuredData
 }
 
+export type {
+  CustomSection,
+  CustomSectionId,
+  PortfolioEntryId
+} from './custom-sections'
+export { customSectionViews, getPortfolioEntries } from './custom-sections'
 export type { Language, PortfolioMessages } from './languages'
 export { formatPortfolioPeriod, getPortfolioCopy, languages } from './languages'
 export type { PortfolioSectionId } from './portfolio-sections'

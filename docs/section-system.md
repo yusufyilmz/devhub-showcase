@@ -1,6 +1,6 @@
 # Section system: foundation
 
-The section system includes a shared registry, reusable views and validated display settings in the profile editor. Existing documents keep their original layout defaults. No database migration or new dependency is required. Custom sections remain the next step.
+The section system includes a shared registry, reusable views and validated display settings in the profile editor. Existing documents keep their original layout defaults. No database migration or new dependency is required. Custom sections can be authored, previewed and placed between the built-in sections.
 
 ## Architecture decision
 
@@ -47,8 +47,8 @@ Public project filtering stays in the existing server rendering/resource adapter
 
 ## Next steps
 
-1. Add stable custom section instances with create, duplicate, remove and reorder controls.
-2. Port additional useful compositions, then introduce template/import/export support.
+1. Port additional useful section compositions.
+2. Introduce reusable templates and dedicated import/export controls.
 
 Each step includes compatibility and browser checks before its new options are exposed. Persisted configuration, custom IDs and PDF inclusion choices are deliberately introduced with their corresponding editor features rather than accepted as unused profile fields now.
 
@@ -67,3 +67,15 @@ Omitting renderer uses the layout default. Omitting itemIds includes all items, 
 ConfiguredSection adapts profile content to shared cards, gallery, carousel, accordion, tabs, timeline or list views. Headings and dates use the portfolio language. Private projects stay excluded even if their IDs appear in a selection. Empty sections are omitted. Hidden sections are omitted from the section dispatcher and their navigation links.
 
 The editor provides a current-draft preview for explicitly selected views, per-section reset and the existing save/discard controls. Settings use the normal revision-checked save/read path for owned and managed portfolios. PDF rendering reads the complete canonical profile and keeps its own inclusion settings. No production data is modified by this change.
+
+## Custom sections (step four)
+
+The Custom sections editor creates named portfolio sections with list as the default view. Cards, accordion, tabs and carousel reuse @shared/components. Each section has visibility and an ordered collection of titled plain-text items with optional HTTP or HTTPS links. HTML and executable component configuration are not accepted. Text is escaped by React; draft previews also omit unsafe links.
+
+Custom section IDs use a custom- prefix and a UUID. Item IDs are UUIDs. Duplicating creates independent section and item IDs while retaining content and display choices. Removing a section also removes its ordering reference. Normal save, discard, revision checks, portfolio ownership and managed editing apply.
+
+A new optional sectionSequence lists built-in and custom IDs together. The validator requires every existing section exactly once and rejects unknown, missing or duplicate references. The existing sectionOrder field keeps its six-section contract, so old documents and imports retain their defaults. Without a mixed sequence, built-in sections use their existing order and custom sections follow in creation order. Reset restores that ordering.
+
+The existing accessible drag handles, keyboard shortcuts and move buttons now order all sections together. Empty and hidden custom sections are omitted publicly. Section names are authored content and stay as entered when the portfolio language changes. Custom sections are portfolio-only in this step; PDF content retains its established document layout and inclusion settings.
+
+Limits are 20 custom sections, 30 items per section, 160 characters per section name, 200 per item title and 6000 per item body. Validation and storage use the existing profile document; no migration, dependency or production data edit is needed.

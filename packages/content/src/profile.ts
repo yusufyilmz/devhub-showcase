@@ -1,3 +1,4 @@
+import type { CustomSection, PortfolioEntryId } from './custom-sections'
 import type { Language } from './languages'
 import type { PortfolioSectionId } from './portfolio-sections'
 import type { CvLayout, PortfolioType } from './portfolio-types'
@@ -28,6 +29,8 @@ export interface ProfileProject {
 }
 export interface PortfolioProfile {
   sectionOrder?: PortfolioSectionId[]
+  customSections?: CustomSection[]
+  sectionSequence?: PortfolioEntryId[]
   sectionSettings?: PortfolioSectionSettings
   portfolioLanguage?: Language
   cvLanguage?: Language
