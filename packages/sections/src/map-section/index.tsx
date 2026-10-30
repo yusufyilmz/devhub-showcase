@@ -1,2 +1,2 @@
-export { MapSection } from './MapSection'
-export { MapSectionEditor } from './MapSectionEditor'
+export { MapSection } from "./MapSection";
+export { MapSectionEditor } from "./MapSectionEditor";

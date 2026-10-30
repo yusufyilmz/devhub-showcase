@@ -1,54 +1,54 @@
-'use client'
+"use client";
 
-import type { ChatMessage, ChatType } from '@shared/lib/types'
-import type React from 'react'
-import { useState } from 'react'
-import { useStore } from 'zustand'
-import { ChatIcon, IconButton, ReferralIcon } from '../../../../components'
-import { chatStore } from '../../../../stores'
-import { ChatPopupContainer } from '../ChatPopupContainer'
+import type { ChatMessage, ChatType } from "@shared/lib/types";
+import type React from "react";
+import { useState } from "react";
+import { useStore } from "zustand";
+import { ChatIcon, IconButton, ReferralIcon } from "../../../../components";
+import { chatStore } from "../../../../stores";
+import { ChatPopupContainer } from "../ChatPopupContainer";
 
 type ChatSectionProps = {
   handleSendMessage: (
     input: ChatMessage,
-    sessionId: string
-  ) => Promise<ChatMessage>
-}
+    sessionId: string,
+  ) => Promise<ChatMessage>;
+};
 
 export const ChatSection: React.FC<ChatSectionProps> = ({
-  handleSendMessage
+  handleSendMessage,
 }) => {
-  const [type, setType] = useState<ChatType>('cv')
-  const [isOpen, setIsOpen] = useState(false)
-  const resetChat = useStore(chatStore, (state) => state.resetChat)
+  const [type, setType] = useState<ChatType>("cv");
+  const [isOpen, setIsOpen] = useState(false);
+  const resetChat = useStore(chatStore, (state) => state.resetChat);
 
   const closeChat = (chatFinished: boolean) => {
-    setIsOpen(!isOpen)
+    setIsOpen(!isOpen);
 
     if (chatFinished) {
-      resetChat(type)
+      resetChat(type);
     }
-  }
+  };
 
   return (
     <>
       <div className="fixed bottom-8 right-8 flex flex-col gap-4 z-[200]">
         <IconButton
           className="icon-button"
-          aria-label={'Resume Chat'}
+          aria-label={"Resume Chat"}
           onClick={() => {
-            setType('cv')
-            setIsOpen(!isOpen)
+            setType("cv");
+            setIsOpen(!isOpen);
           }}
         >
           <ChatIcon fontSize="xlarge" />
         </IconButton>
         <IconButton
           className="icon-button"
-          aria-label={'Referral Chat'}
+          aria-label={"Referral Chat"}
           onClick={() => {
-            setType('referral')
-            setIsOpen(!isOpen)
+            setType("referral");
+            setIsOpen(!isOpen);
           }}
         >
           <ReferralIcon fontSize="xlarge" />
@@ -62,5 +62,5 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
         />
       )}
     </>
-  )
-}
+  );
+};

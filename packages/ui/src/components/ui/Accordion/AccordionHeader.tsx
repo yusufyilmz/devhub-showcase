@@ -1,21 +1,21 @@
-import type React from 'react'
-import type { ReactNode } from 'react'
-import { Button } from '../Button'
+import type React from "react";
+import type { ReactNode } from "react";
+import { Button } from "../Button";
 
 type AccordionHeaderProps = {
-  isOpen: boolean
-  onClick: () => void
-  expandIcon?: ReactNode
-  children?: ReactNode
-  className?: string
-}
+  isOpen: boolean;
+  onClick: () => void;
+  expandIcon?: ReactNode;
+  children?: ReactNode;
+  className?: string;
+};
 
 export const AccordionHeader: React.FC<AccordionHeaderProps> = ({
   children,
   isOpen,
   onClick,
   expandIcon,
-  className
+  className,
 }) => {
   return (
     <Button
@@ -27,10 +27,10 @@ export const AccordionHeader: React.FC<AccordionHeaderProps> = ({
     >
       {children}
       <span
-        className={`transform transition-transform ${isOpen ? 'rotate-180 -translate-y-2' : ''}`}
+        className={`transform transition-transform ${isOpen ? "rotate-180 -translate-y-2" : ""}`}
       >
         {expandIcon}
       </span>
     </Button>
-  )
-}
+  );
+};

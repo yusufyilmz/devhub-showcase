@@ -1,66 +1,66 @@
-'use client'
-import { type PortfolioType, portfolioTypes } from '@shared/content'
-import { useEffect, useId, useRef, useState } from 'react'
-import { examplePath, portfolioExamples } from './data'
-import { ExampleThumbnail } from './example-thumbnail'
-import './examples.css'
+"use client";
+import { type PortfolioType, portfolioTypes } from "@shared/content";
+import { useEffect, useId, useRef, useState } from "react";
+import { examplePath, portfolioExamples } from "./data";
+import { ExampleThumbnail } from "./example-thumbnail";
+import "./examples.css";
 
 export function ExampleCarousel() {
-  const [filter, setFilter] = useState<PortfolioType | 'all'>('all')
-  const [position, setPosition] = useState(0)
-  const [atEnd, setAtEnd] = useState(false)
-  const track = useRef<HTMLUListElement>(null)
-  const id = useId()
+  const [filter, setFilter] = useState<PortfolioType | "all">("all");
+  const [position, setPosition] = useState(0);
+  const [atEnd, setAtEnd] = useState(false);
+  const track = useRef<HTMLUListElement>(null);
+  const id = useId();
   const examples = portfolioExamples.filter(
-    (item) => filter === 'all' || item.profile.portfolioType === filter
-  )
-  const count = examples.length
+    (item) => filter === "all" || item.profile.portfolioType === filter,
+  );
+  const count = examples.length;
   useEffect(() => {
-    const list = track.current
-    if (!list || count === 0) return
+    const list = track.current;
+    if (!list || count === 0) return;
     const measure = () =>
-      setAtEnd(list.scrollLeft + list.clientWidth >= list.scrollWidth - 2)
-    const observer = new ResizeObserver(measure)
-    observer.observe(list)
-    measure()
-    return () => observer.disconnect()
-  }, [count])
-  function choose(value: PortfolioType | 'all') {
-    setFilter(value)
-    setPosition(0)
-    track.current?.scrollTo({ left: 0, behavior: 'instant' })
+      setAtEnd(list.scrollLeft + list.clientWidth >= list.scrollWidth - 2);
+    const observer = new ResizeObserver(measure);
+    observer.observe(list);
+    measure();
+    return () => observer.disconnect();
+  }, [count]);
+  function choose(value: PortfolioType | "all") {
+    setFilter(value);
+    setPosition(0);
+    track.current?.scrollTo({ left: 0, behavior: "instant" });
   }
   function move(direction: number) {
-    const list = track.current
-    if (!list) return
+    const list = track.current;
+    if (!list) return;
     list.scrollBy({
       left: direction * (list.clientWidth * 0.85),
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        ? 'instant'
-        : 'smooth'
-    })
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "instant"
+        : "smooth",
+    });
   }
   function updatePosition() {
-    const list = track.current
-    if (!list) return
-    setAtEnd(list.scrollLeft + list.clientWidth >= list.scrollWidth - 2)
-    const cards = Array.from(list.children) as HTMLElement[]
+    const list = track.current;
+    if (!list) return;
+    setAtEnd(list.scrollLeft + list.clientWidth >= list.scrollWidth - 2);
+    const cards = Array.from(list.children) as HTMLElement[];
     const nearest = cards.reduce(
       (best, card, index) =>
         Math.abs(card.offsetLeft - list.offsetLeft - list.scrollLeft) <
         Math.abs(
-          (cards[best]?.offsetLeft ?? 0) - list.offsetLeft - list.scrollLeft
+          (cards[best]?.offsetLeft ?? 0) - list.offsetLeft - list.scrollLeft,
         )
           ? index
           : best,
-      0
-    )
+      0,
+    );
     // The final card may share a viewport with the previous card.
     setPosition(
       list.scrollLeft + list.clientWidth >= list.scrollWidth - 2
         ? examples.length - 1
-        : nearest
-    )
+        : nearest,
+    );
   }
   return (
     <section
@@ -87,8 +87,8 @@ export function ExampleCarousel() {
         >
           <button
             type="button"
-            aria-pressed={filter === 'all'}
-            onClick={() => choose('all')}
+            aria-pressed={filter === "all"}
+            onClick={() => choose("all")}
           >
             All layouts
           </button>
@@ -140,7 +140,7 @@ export function ExampleCarousel() {
               <ExampleThumbnail item={item} />
               <div className="example-card-copy">
                 <span className="example-label">
-                  {item.profile.portfolioType} /{' '}
+                  {item.profile.portfolioType} /{" "}
                   {item.profile.appearance?.theme}
                 </span>
                 <h3>
@@ -149,7 +149,7 @@ export function ExampleCarousel() {
                 <p>{item.profile.title}</p>
                 <div className="example-card-meta">
                   <span>
-                    {item.profile.portfolioLanguage?.toUpperCase()} ·{' '}
+                    {item.profile.portfolioLanguage?.toUpperCase()} ·{" "}
                     {item.profile.cvLayout} CV
                   </span>
                   <span>Fictional example</span>
@@ -166,5 +166,5 @@ export function ExampleCarousel() {
         </span>
       </div>
     </section>
-  )
+  );
 }

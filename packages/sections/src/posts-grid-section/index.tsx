@@ -1,2 +1,2 @@
-export { PostsGridSection } from './PostsGridSection'
-export { PostsGridSectionEditor } from './PostsGridSectionEditor'
+export { PostsGridSection } from "./PostsGridSection";
+export { PostsGridSectionEditor } from "./PostsGridSectionEditor";

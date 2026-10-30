@@ -1,22 +1,22 @@
-'use client'
-import { useState } from 'react'
+"use client";
+import { useState } from "react";
 /** No platform request or player is created until the visitor asks to load it. */
 export function WorkMedia({
   title,
   imageUrl,
   youtubeId,
-  loadLabel = 'Load YouTube video',
-  unloadLabel = 'Unload video'
+  loadLabel = "Load YouTube video",
+  unloadLabel = "Unload video",
 }: {
-  title: string
-  imageUrl?: string
-  youtubeId?: string
-  loadLabel?: string
-  unloadLabel?: string
+  title: string;
+  imageUrl?: string;
+  youtubeId?: string;
+  loadLabel?: string;
+  unloadLabel?: string;
 }) {
-  const [loaded, setLoaded] = useState(false)
+  const [loaded, setLoaded] = useState(false);
   const video =
-    youtubeId && /^[a-zA-Z0-9_-]{11}$/.test(youtubeId) ? youtubeId : null
+    youtubeId && /^[a-zA-Z0-9_-]{11}$/.test(youtubeId) ? youtubeId : null;
   return (
     <div className="work-media">
       {imageUrl && /^https?:\/\//i.test(imageUrl) && (
@@ -49,5 +49,5 @@ export function WorkMedia({
           </button>
         ))}
     </div>
-  )
+  );
 }

@@ -1,27 +1,27 @@
-'use client'
-import { type ReactNode, useId } from 'react'
+"use client";
+import { type ReactNode, useId } from "react";
 export function Field({
   label,
   value,
   onChange,
-  type = 'text',
+  type = "text",
   multiline = false,
   hint,
-  required = false
+  required = false,
 }: {
-  label: string
-  value: string
-  onChange: (value: string) => void
-  type?: string
-  multiline?: boolean
-  hint?: string
-  required?: boolean
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  type?: string;
+  multiline?: boolean;
+  hint?: string;
+  required?: boolean;
 }) {
-  const fieldId = useId()
+  const fieldId = useId();
   return (
     <label
       htmlFor={fieldId}
-      className={multiline ? 'editor-field full-width' : 'editor-field'}
+      className={multiline ? "editor-field full-width" : "editor-field"}
     >
       <span>{label}</span>
       {multiline ? (
@@ -40,42 +40,42 @@ export function Field({
           onChange={(event) => onChange(event.target.value)}
           required={required}
         />
-      )}{' '}
+      )}{" "}
       {hint && <small>{hint}</small>}
     </label>
-  )
+  );
 }
 export function LinesField({
   label,
   value,
   onChange,
-  hint
+  hint,
 }: {
-  label: string
-  value: string[]
-  onChange: (value: string[]) => void
-  hint?: string
+  label: string;
+  value: string[];
+  onChange: (value: string[]) => void;
+  hint?: string;
 }) {
   return (
     <Field
       label={label}
-      value={value.join('\n')}
-      onChange={(value) => onChange(value.split('\n'))}
+      value={value.join("\n")}
+      onChange={(value) => onChange(value.split("\n"))}
       multiline
-      hint={hint ?? 'One item per line.'}
+      hint={hint ?? "One item per line."}
     />
-  )
+  );
 }
 export function SelectField({
   label,
   value,
   onChange,
-  children
+  children,
 }: {
-  label: string
-  value: string
-  onChange: (value: string) => void
-  children: ReactNode
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  children: ReactNode;
 }) {
   return (
     <label className="editor-field">
@@ -84,8 +84,8 @@ export function SelectField({
         {children}
       </select>
     </label>
-  )
+  );
 }
 export function EmptyState({ children }: { children: ReactNode }) {
-  return <div className="editor-empty">{children}</div>
+  return <div className="editor-empty">{children}</div>;
 }

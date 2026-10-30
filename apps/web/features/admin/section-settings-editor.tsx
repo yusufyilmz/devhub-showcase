@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import {
   getPortfolioSections,
   getSectionItems,
@@ -6,35 +6,35 @@ import {
   type PortfolioSectionId,
   type PortfolioSectionSettings,
   sectionRegistry,
-  sectionRendererViews
-} from '@shared/content'
-import { ConfiguredSection } from '../portfolio/configured-section'
+  sectionRendererViews,
+} from "@shared/content";
+import { ConfiguredSection } from "../portfolio/configured-section";
 
 const names: Record<string, string> = {
-  paragraphs: 'Paragraphs',
-  timeline: 'Timeline',
-  list: 'List',
-  cards: 'Cards',
-  gallery: 'Gallery',
-  carousel: 'Carousel',
-  accordion: 'Accordion',
-  tabs: 'Tabs'
-}
+  paragraphs: "Paragraphs",
+  timeline: "Timeline",
+  list: "List",
+  cards: "Cards",
+  gallery: "Gallery",
+  carousel: "Carousel",
+  accordion: "Accordion",
+  tabs: "Tabs",
+};
 export function SectionSettingsEditor({
   profile,
-  onChange
+  onChange,
 }: {
-  profile: PortfolioProfile
-  onChange: (profile: PortfolioProfile) => void
+  profile: PortfolioProfile;
+  onChange: (profile: PortfolioProfile) => void;
 }) {
   function update(
     kind: PortfolioSectionId,
-    value: PortfolioSectionSettings[PortfolioSectionId]
+    value: PortfolioSectionSettings[PortfolioSectionId],
   ) {
     onChange({
       ...profile,
-      sectionSettings: { ...profile.sectionSettings, [kind]: value }
-    })
+      sectionSettings: { ...profile.sectionSettings, [kind]: value },
+    });
   }
   return (
     <section className="editor-card">
@@ -45,9 +45,9 @@ export function SectionSettingsEditor({
         layout and content.
       </p>
       {getPortfolioSections(profile).map((section) => {
-        const kind = section.kind
-        const settings = profile.sectionSettings?.[kind] ?? {}
-        const items = getSectionItems(profile, kind)
+        const kind = section.kind;
+        const settings = profile.sectionSettings?.[kind] ?? {};
+        const items = getSectionItems(profile, kind);
         return (
           <fieldset key={kind} className="editor-card">
             <legend>{sectionRegistry[kind].name}</legend>
@@ -58,17 +58,17 @@ export function SectionSettingsEditor({
                 onChange={(event) =>
                   update(kind, { ...settings, visible: event.target.checked })
                 }
-              />{' '}
+              />{" "}
               Show section
             </label>
             <label htmlFor={`section-display-${kind}`}>Display style</label>
             <select
               id={`section-display-${kind}`}
-              value={settings.renderer ?? ''}
+              value={settings.renderer ?? ""}
               onChange={(event) =>
                 update(kind, {
                   ...settings,
-                  renderer: event.target.value || undefined
+                  renderer: event.target.value || undefined,
                 } as PortfolioSectionSettings[typeof kind])
               }
             >
@@ -89,28 +89,28 @@ export function SectionSettingsEditor({
                     onChange={(event) =>
                       update(kind, {
                         ...settings,
-                        itemIds: event.target.checked ? undefined : []
+                        itemIds: event.target.checked ? undefined : [],
                       })
                     }
-                  />{' '}
+                  />{" "}
                   All items, including future additions
                 </label>
                 {items.map((item) => (
-                  <label key={item.id} style={{ display: 'block' }}>
+                  <label key={item.id} style={{ display: "block" }}>
                     <input
                       type="checkbox"
                       checked={settings.itemIds?.includes(item.id) ?? true}
                       onChange={(event) => {
                         const selected =
-                          settings.itemIds ?? items.map(({ id }) => id)
+                          settings.itemIds ?? items.map(({ id }) => id);
                         update(kind, {
                           ...settings,
                           itemIds: event.target.checked
                             ? [...selected, item.id]
-                            : selected.filter((id) => id !== item.id)
-                        })
+                            : selected.filter((id) => id !== item.id),
+                        });
                       }}
-                    />{' '}
+                    />{" "}
                     {item.title}
                   </label>
                 ))}
@@ -130,16 +130,16 @@ export function SectionSettingsEditor({
               type="button"
               className="studio-secondary"
               onClick={() => {
-                const next = { ...profile.sectionSettings }
-                delete next[kind]
-                onChange({ ...profile, sectionSettings: next })
+                const next = { ...profile.sectionSettings };
+                delete next[kind];
+                onChange({ ...profile, sectionSettings: next });
               }}
             >
               Reset {sectionRegistry[kind].name} to default
             </button>
           </fieldset>
-        )
+        );
       })}
     </section>
-  )
+  );
 }

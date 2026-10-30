@@ -1,27 +1,28 @@
-import { notFound } from 'next/navigation'
-import { CreatePortfolio } from '../../../features/management/create-portfolio'
-import { requirePortfolioAdmin } from '../../../lib/managed-portfolios'
-import '../../../features/management/management.css'
+import { notFound } from "next/navigation";
+import { CreatePortfolio } from "../../../features/management/create-portfolio";
+import { requirePortfolioAdmin } from "../../../lib/managed-portfolios";
+import "../../../features/management/management.css";
 export default async function PortfolioManager({
-  searchParams
+  searchParams,
 }: {
-  searchParams: Promise<{ page?: string }>
+  searchParams: Promise<{ page?: string }>;
 }) {
-  let admin: Awaited<ReturnType<typeof requirePortfolioAdmin>>
+  let admin: Awaited<ReturnType<typeof requirePortfolioAdmin>>;
   try {
-    admin = await requirePortfolioAdmin()
+    admin = await requirePortfolioAdmin();
   } catch {
-    notFound()
+    notFound();
   }
-  const raw = Number((await searchParams).page ?? 0)
-  const page = Number.isSafeInteger(raw) && raw >= 0 ? Math.min(raw, 100000) : 0
+  const raw = Number((await searchParams).page ?? 0);
+  const page =
+    Number.isSafeInteger(raw) && raw >= 0 ? Math.min(raw, 100000) : 0;
   const { data, error } = await admin.client
-    .from('portfolio_profiles')
-    .select('id, username, is_public, document, updated_at')
-    .eq('managed_by', admin.user.id)
-    .is('owner_id', null)
-    .order('updated_at', { ascending: false })
-    .range(page * 50, page * 50 + 50)
+    .from("portfolio_profiles")
+    .select("id, username, is_public, document, updated_at")
+    .eq("managed_by", admin.user.id)
+    .is("owner_id", null)
+    .order("updated_at", { ascending: false })
+    .range(page * 50, page * 50 + 50);
   return (
     <main id="admin-content" className="studio managed-dashboard">
       <div className="studio-heading">
@@ -49,16 +50,16 @@ export default async function PortfolioManager({
             <ul className="managed-records">
               {(data ?? []).slice(0, 50).map((row) => {
                 const profile = row.document as {
-                  name?: string
-                  portfolioType?: string
-                }
+                  name?: string;
+                  portfolioType?: string;
+                };
                 return (
                   <li key={row.id}>
                     <div>
                       <h3>{profile.name ?? row.username}</h3>
                       <p>
-                        /{row.username} · {profile.portfolioType ?? 'engineer'}{' '}
-                        · {row.is_public ? 'Published' : 'Private draft'}
+                        /{row.username} · {profile.portfolioType ?? "engineer"}{" "}
+                        · {row.is_public ? "Published" : "Private draft"}
                       </p>
                     </div>
                     <div className="managed-actions">
@@ -70,7 +71,7 @@ export default async function PortfolioManager({
                       )}
                     </div>
                   </li>
-                )
+                );
               })}
             </ul>
             {!data?.length && <p>No temporary portfolios yet.</p>}
@@ -84,5 +85,5 @@ export default async function PortfolioManager({
         )}
       </section>
     </main>
-  )
+  );
 }

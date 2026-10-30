@@ -1,13 +1,13 @@
-'use client'
-import { Button } from '../button'
+"use client";
+import { Button } from "../button";
 
 interface CardAction {
-  label: string
-  onClick: () => void
+  label: string;
+  onClick: () => void;
 }
 
 interface CardActionsProps {
-  actions: CardAction[]
+  actions: CardAction[];
 }
 
 export function CardActions({ actions }: CardActionsProps) {
@@ -24,5 +24,5 @@ export function CardActions({ actions }: CardActionsProps) {
         </Button>
       ))}
     </div>
-  )
+  );
 }

@@ -1,2 +1,2 @@
-export { QuickstartSection } from './QuickstartSection'
-export { QuickstartSectionEditor } from './QuickstartSectionEditor'
+export { QuickstartSection } from "./QuickstartSection";
+export { QuickstartSectionEditor } from "./QuickstartSectionEditor";

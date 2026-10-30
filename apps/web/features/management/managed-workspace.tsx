@@ -1,16 +1,16 @@
-'use client'
-import type { ProfileSnapshot } from '@shared/lib/profile-errors'
-import { useState } from 'react'
-import { ProfileEditor } from '../admin/profile-editor'
-import { TransferPortfolio } from './transfer-portfolio'
+"use client";
+import type { ProfileSnapshot } from "@shared/lib/profile-errors";
+import { useState } from "react";
+import { ProfileEditor } from "../admin/profile-editor";
+import { TransferPortfolio } from "./transfer-portfolio";
 export function ManagedWorkspace({
   initial,
-  id
+  id,
 }: {
-  initial: ProfileSnapshot
-  id: string
+  initial: ProfileSnapshot;
+  id: string;
 }) {
-  const [revision, setRevision] = useState(initial.revision)
+  const [revision, setRevision] = useState(initial.revision);
   return (
     <>
       <ProfileEditor
@@ -24,5 +24,5 @@ export function ManagedWorkspace({
         <TransferPortfolio id={id} revision={revision} />
       </div>
     </>
-  )
+  );
 }

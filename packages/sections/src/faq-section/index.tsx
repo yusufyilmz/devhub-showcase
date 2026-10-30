@@ -1,2 +1,2 @@
-export { FAQSection } from './FAQSection'
-export { FAQSectionEditor } from './FAQSectionEditor'
+export { FAQSection } from "./FAQSection";
+export { FAQSectionEditor } from "./FAQSectionEditor";

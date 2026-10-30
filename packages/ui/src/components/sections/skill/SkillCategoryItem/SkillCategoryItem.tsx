@@ -1,12 +1,12 @@
-import type { Skill } from '@shared/lib/types'
-import { capitalizeFirstLetter } from '@shared/lib/utils'
-import type React from 'react'
-import { Card, CardBody, Divider, Typography } from '../../../../components'
-import { SkillItem } from '../SkillItem/SkillItem'
+import type { Skill } from "@shared/lib/types";
+import { capitalizeFirstLetter } from "@shared/lib/utils";
+import type React from "react";
+import { Card, CardBody, Divider, Typography } from "../../../../components";
+import { SkillItem } from "../SkillItem/SkillItem";
 
 export const SkillCategoryItem: React.FC<{ name: string; skills: Skill[] }> = ({
   name,
-  skills
+  skills,
 }) => {
   return (
     <Card className="section-card">
@@ -26,10 +26,10 @@ export const SkillCategoryItem: React.FC<{ name: string; skills: Skill[] }> = ({
                 name={skill.name}
                 experienceYear={skill.experienceYear ?? undefined}
               />
-            ) : null
+            ) : null,
           )}
         </div>
       </CardBody>
     </Card>
-  )
-}
+  );
+};

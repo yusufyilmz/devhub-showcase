@@ -1,7 +1,7 @@
-import type { CVModel, Skill } from '../../types'
+import type { CVModel, Skill } from "../../types";
 
 export const formatters: {
-  [K in keyof CVModel]: (data: CVModel[K]) => string
+  [K in keyof CVModel]: (data: CVModel[K]) => string;
 } = {
   personalInformation: (personalInfo) =>
     `Personal Information:\nNationality: ${personalInfo.nationality} \nLocation: ${personalInfo.location} \nFull Name: ${personalInfo.fullName} \nBirth Date: ${personalInfo.birthDate} \nAge: ${personalInfo.age}`,
@@ -10,16 +10,16 @@ export const formatters: {
   skills: (skills) => {
     if (skills.groups)
       return Object.entries(skills.groups)
-        .map(([name, values]) => `${name}: ${values.join(', ')}`)
-        .join('\n')
+        .map(([name, values]) => `${name}: ${values.join(", ")}`)
+        .join("\n");
     const formatSkills = (skillSet: Skill[]) =>
       skillSet
         .map((skill) =>
           skill.yearsOfExperience
             ? `${skill.technology}: ${skill.yearsOfExperience} years`
-            : skill.technology
+            : skill.technology,
         )
-        .join('\n')
+        .join("\n");
 
     return `
   Frontend Skills:
@@ -36,62 +36,60 @@ export const formatters: {
   
   Version Control:
   ${formatSkills(skills.version_control)}
-      `
+      `;
   },
   projects: (projects) =>
     `Projects:\n${projects
       .map(
         (proj) =>
-          `${proj.name} at ${proj.company}\nDescription: ${proj.description}\nSkills Used: ${proj.usedSkills.join(', ')}\n`
+          `${proj.name} at ${proj.company}\nDescription: ${proj.description}\nSkills Used: ${proj.usedSkills.join(", ")}\n`,
       )
-      .join('\n')}`,
+      .join("\n")}`,
   education: (education) =>
     `Education:\n${education
       .map(
         (edu) =>
-          `${edu.degree} from ${edu.university} (${edu.years})\nGPA: ${edu.gpa}\nDescription: ${edu.description}`
+          `${edu.degree} from ${edu.university} (${edu.years})\nGPA: ${edu.gpa}\nDescription: ${edu.description}`,
       )
-      .join('\n')}`,
+      .join("\n")}`,
   experience: (experience) =>
     `Experience:\n${experience
       .map(
         (exp) =>
-          `${exp.position} at ${exp.company} (${exp.years})\n${exp.description}`
+          `${exp.position} at ${exp.company} (${exp.years})\n${exp.description}`,
       )
-      .join('\n')}`,
+      .join("\n")}`,
   languages: (languages) =>
-    `Languages:\n${languages
-      .map((lang) => `${lang.language} (${lang.proficiency})`)
-      .join('\n')}`,
+    `Languages:\n${languages.map((lang) => `${lang.language} (${lang.proficiency})`).join("\n")}`,
   certifications: (certificates) =>
     `Certificates:\n${certificates
       .map((cert) => `${cert.name} (${cert.date})\nHours: ${cert.hours}`)
-      .join('\n')}`,
+      .join("\n")}`,
   referrals: (references) =>
     `References:\n${references
       .map(
         (ref) =>
-          `${ref.name} (${ref.position})\nContact: ${ref.contact}\nFeedback: ${ref.feedback}`
+          `${ref.name} (${ref.position})\nContact: ${ref.contact}\nFeedback: ${ref.feedback}`,
       )
-      .join('\n')}`,
+      .join("\n")}`,
   achievements: (achievements) =>
     `Achievements:\n${achievements
       .map((ach) => `${ach.title}\nDescription: ${ach.description}`)
-      .join('\n')}`,
+      .join("\n")}`,
   characteristic: (characteristic) => `
     Strengths:
-    ${characteristic.strengths.join(', ')}
+    ${characteristic.strengths.join(", ")}
   
     Weaknesses:
-    ${characteristic.weaknesses.join(', ')}
+    ${characteristic.weaknesses.join(", ")}
   
     Leadership:
     Philosophy: ${characteristic.leadership.philosophy}
-    Examples: ${characteristic.leadership.examples.join('; ')}
+    Examples: ${characteristic.leadership.examples.join("; ")}
   
     Teamwork:
     Philosophy: ${characteristic.teamwork.philosophy}
-    Examples: ${characteristic.teamwork.examples.join('; ')}
+    Examples: ${characteristic.teamwork.examples.join("; ")}
   
     Motivation:
     Short Term: ${characteristic.motivation.shortTerm}
@@ -123,24 +121,24 @@ export const formatters: {
     technicalChallenges
       .map(
         (challenge) =>
-          `Challenge: ${challenge.challenge}\nSolution: ${challenge.solution}\n`
+          `Challenge: ${challenge.challenge}\nSolution: ${challenge.solution}\n`,
       )
-      .join('\n'),
-  overview: (overview) => `Overview:\n${overview.summary}`
-}
+      .join("\n"),
+  overview: (overview) => `Overview:\n${overview.summary}`,
+};
 
 export const formatAllCV = (cv: CVModel) => {
   function formatCategory<K extends keyof CVModel>(key: K) {
-    return formatters[key](cv[key])
+    return formatters[key](cv[key]);
   }
   return (Object.keys(cv) as (keyof CVModel)[])
     .map((key) => formatCategory(key))
-    .join('\n\n')
-}
+    .join("\n\n");
+};
 
 export function formatCVCategory<K extends keyof CVModel>(
   key: K,
-  data: CVModel[K]
+  data: CVModel[K],
 ) {
-  return formatters[key](data)
+  return formatters[key](data);
 }

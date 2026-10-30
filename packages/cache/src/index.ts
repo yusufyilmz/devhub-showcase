@@ -1,1 +1,1 @@
-export { RedisCacheClient } from './lib/redis-cache'
+export { RedisCacheClient } from "./lib/redis-cache";

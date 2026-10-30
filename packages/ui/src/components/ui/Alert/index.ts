@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
-export type { AlertProps } from '@mui/material'
-export { Alert } from '@mui/material'
+export type { AlertProps } from "@mui/material";
+export { Alert } from "@mui/material";

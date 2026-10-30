@@ -1,4 +1,4 @@
-import type React from 'react'
+import type React from "react";
 
 export const TypingIndicator: React.FC = () => {
   return (
@@ -9,5 +9,5 @@ export const TypingIndicator: React.FC = () => {
         <div className="w-2.5 h-2.5 bg-gray-400 rounded-full animate-bounce delay-400"></div>
       </div>
     </div>
-  )
-}
+  );
+};

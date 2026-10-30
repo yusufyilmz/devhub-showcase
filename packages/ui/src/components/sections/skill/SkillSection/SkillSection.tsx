@@ -1,14 +1,14 @@
-import { getPortfolioCopy, type Language } from '@shared/content'
-import type { Skill } from '@shared/lib/types'
-import type React from 'react'
-import { List, ListItem, Section } from '../../../../components'
-import { SkillCategoryItem } from '../SkillCategoryItem'
+import { getPortfolioCopy, type Language } from "@shared/content";
+import type { Skill } from "@shared/lib/types";
+import type React from "react";
+import { List, ListItem, Section } from "../../../../components";
+import { SkillCategoryItem } from "../SkillCategoryItem";
 
 export const SkillSection: React.FC<{
-  skills: Record<string, Skill[]>
-  language?: Language
-}> = ({ skills = {}, language = 'en' }) => {
-  const text = getPortfolioCopy(language)
+  skills: Record<string, Skill[]>;
+  language?: Language;
+}> = ({ skills = {}, language = "en" }) => {
+  const text = getPortfolioCopy(language);
   return (
     <Section
       className="mt-8"
@@ -27,5 +27,5 @@ export const SkillSection: React.FC<{
         </List>
       </div>
     </Section>
-  )
-}
+  );
+};

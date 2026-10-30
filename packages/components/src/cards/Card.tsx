@@ -1,16 +1,16 @@
-'use client'
-import type React from 'react'
-import { forwardRef, type ReactNode } from 'react'
+"use client";
+import type React from "react";
+import { forwardRef, type ReactNode } from "react";
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  id?: string
-  children: ReactNode
-  tabIndex?: number
-  className?: string
+  id?: string;
+  children: ReactNode;
+  tabIndex?: number;
+  className?: string;
 }
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ id, tabIndex = -1, children, className = '', ...props }, ref) => {
+  ({ id, tabIndex = -1, children, className = "", ...props }, ref) => {
     return (
       <div
         ref={ref}
@@ -21,10 +21,10 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
       >
         {children}
       </div>
-    )
-  }
-)
+    );
+  },
+);
 
-Card.displayName = 'Card'
+Card.displayName = "Card";
 
-export { Card }
+export { Card };

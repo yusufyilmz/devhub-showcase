@@ -1,24 +1,24 @@
-'use client'
+"use client";
 
-import { type ReactNode, useId, useRef, useState } from 'react'
+import { type ReactNode, useId, useRef, useState } from "react";
 
 const defaultLabels = {
-  showDetails: 'Show details for',
-  hideDetails: 'Hide details for',
-  fullDetails: 'Full details',
-  hoverDetails: 'Hover to explore',
-  tapDetails: 'Tap for details',
-  tapClose: 'Tap to close',
-  keyboardDetails: 'Show details'
-}
+  showDetails: "Show details for",
+  hideDetails: "Hide details for",
+  fullDetails: "Full details",
+  hoverDetails: "Hover to explore",
+  tapDetails: "Tap for details",
+  tapClose: "Tap to close",
+  keyboardDetails: "Show details",
+};
 interface RevealCardProps {
-  labels?: typeof defaultLabels
-  id?: string
-  title: string
-  heading: ReactNode
-  brief?: string | null
-  children: ReactNode
-  className?: string
+  labels?: typeof defaultLabels;
+  id?: string;
+  title: string;
+  heading: ReactNode;
+  brief?: string | null;
+  children: ReactNode;
+  className?: string;
 }
 
 export function RevealCard({
@@ -27,13 +27,13 @@ export function RevealCard({
   heading,
   brief,
   children,
-  className = '',
-  labels = defaultLabels
+  className = "",
+  labels = defaultLabels,
 }: RevealCardProps) {
-  const [expanded, setExpanded] = useState(false)
-  const pinned = useRef(false)
-  const pointerIntent = useRef<boolean | null>(null)
-  const detailsId = useId()
+  const [expanded, setExpanded] = useState(false);
+  const pinned = useRef(false);
+  const pointerIntent = useRef<boolean | null>(null);
+  const detailsId = useId();
 
   return (
     <article
@@ -41,14 +41,14 @@ export function RevealCard({
       className={`section-card reveal-card ${className}`}
       data-expanded={expanded}
       onPointerEnter={(event) => {
-        if (event.pointerType === 'mouse') setExpanded(true)
+        if (event.pointerType === "mouse") setExpanded(true);
       }}
       onPointerLeave={(event) => {
         if (
           !pinned.current &&
           !event.currentTarget.contains(document.activeElement)
         )
-          setExpanded(false)
+          setExpanded(false);
       }}
       onFocusCapture={() => setExpanded(true)}
       onBlurCapture={(event) => {
@@ -56,15 +56,15 @@ export function RevealCard({
           !pinned.current &&
           !event.currentTarget.contains(event.relatedTarget)
         )
-          setExpanded(false)
+          setExpanded(false);
       }}
       onKeyDown={(event) => {
-        if (event.key === 'Escape') {
-          pinned.current = false
+        if (event.key === "Escape") {
+          pinned.current = false;
           event.currentTarget
-            .querySelector<HTMLButtonElement>('.reveal-toggle')
-            ?.focus()
-          setExpanded(false)
+            .querySelector<HTMLButtonElement>(".reveal-toggle")
+            ?.focus();
+          setExpanded(false);
         }
       }}
     >
@@ -81,16 +81,16 @@ export function RevealCard({
         aria-expanded={expanded}
         aria-controls={detailsId}
         onPointerDown={() => {
-          pointerIntent.current = !expanded
+          pointerIntent.current = !expanded;
         }}
         onPointerCancel={() => {
-          pointerIntent.current = null
+          pointerIntent.current = null;
         }}
         onClick={() => {
-          const next = pointerIntent.current ?? !expanded
-          pointerIntent.current = null
-          pinned.current = next
-          setExpanded(next)
+          const next = pointerIntent.current ?? !expanded;
+          pointerIntent.current = null;
+          pinned.current = next;
+          setExpanded(next);
         }}
       >
         <span className="reveal-hint-desktop">
@@ -115,5 +115,5 @@ export function RevealCard({
         <div className="reveal-details-inner">{children}</div>
       </div>
     </article>
-  )
+  );
 }

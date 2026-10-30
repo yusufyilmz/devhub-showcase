@@ -1,3 +1,3 @@
-export { ThemeProvider } from './provider/ThemeProvider'
+export { ThemeProvider } from "./provider/ThemeProvider";
 
-export { ThemeToggle } from './theme-toggle'
+export { ThemeToggle } from "./theme-toggle";

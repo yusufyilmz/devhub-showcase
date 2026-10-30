@@ -1,15 +1,15 @@
-import { StudioShell } from '@shared/components/studio-shell'
-import { ThemeToggle } from '@shared/ui/theme'
-import type { Metadata } from 'next'
-import { ManagementLink } from '../../features/management/management-link'
+import { StudioShell } from "@shared/components/studio-shell";
+import { ThemeToggle } from "@shared/ui/theme";
+import type { Metadata } from "next";
+import { ManagementLink } from "../../features/management/management-link";
 export const metadata: Metadata = {
-  title: 'Portfolio studio',
-  robots: { index: false, follow: false }
-}
+  title: "Portfolio studio",
+  robots: { index: false, follow: false },
+};
 export default function AdminLayout({
-  children
+  children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <StudioShell
@@ -29,5 +29,5 @@ export default function AdminLayout({
     >
       {children}
     </StudioShell>
-  )
+  );
 }

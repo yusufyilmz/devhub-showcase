@@ -1,14 +1,14 @@
-'use client'
-import { type ReactNode, useId, useRef, useState } from 'react'
-export type SectionItem = { id: string; title: string; content: ReactNode }
+"use client";
+import { type ReactNode, useId, useRef, useState } from "react";
+export type SectionItem = { id: string; title: string; content: ReactNode };
 export function SectionGrid({
   items,
   label,
-  variant = 'cards'
+  variant = "cards",
 }: {
-  items: SectionItem[]
-  label: string
-  variant?: 'cards' | 'gallery'
+  items: SectionItem[];
+  label: string;
+  variant?: "cards" | "gallery";
 }) {
   return (
     <ul
@@ -22,14 +22,14 @@ export function SectionGrid({
         </li>
       ))}
     </ul>
-  )
+  );
 }
 export function SectionAccordion({
   items,
-  label
+  label,
 }: {
-  items: SectionItem[]
-  label: string
+  items: SectionItem[];
+  label: string;
 }) {
   return (
     <section aria-label={label} className="section-view-accordion">
@@ -40,28 +40,28 @@ export function SectionAccordion({
         </details>
       ))}
     </section>
-  )
+  );
 }
 export function SectionTabs({
   items,
-  label
+  label,
 }: {
-  items: SectionItem[]
-  label: string
+  items: SectionItem[];
+  label: string;
 }) {
-  const [selected, setSelected] = useState('')
-  const id = useId()
-  const buttons = useRef<Array<HTMLButtonElement | null>>([])
+  const [selected, setSelected] = useState("");
+  const id = useId();
+  const buttons = useRef<Array<HTMLButtonElement | null>>([]);
   const index = Math.max(
     0,
-    items.findIndex((item) => item.id === selected)
-  )
-  if (!items.length) return null
+    items.findIndex((item) => item.id === selected),
+  );
+  if (!items.length) return null;
   function select(next: number) {
-    const item = items[next]
+    const item = items[next];
     if (item) {
-      setSelected(item.id)
-      buttons.current[next]?.focus()
+      setSelected(item.id);
+      buttons.current[next]?.focus();
     }
   }
   return (
@@ -71,7 +71,7 @@ export function SectionTabs({
           <button
             key={item.id}
             ref={(node) => {
-              buttons.current[n] = node
+              buttons.current[n] = node;
             }}
             type="button"
             role="tab"
@@ -85,12 +85,12 @@ export function SectionTabs({
                 Home: 0,
                 End: items.length - 1,
                 ArrowRight: (index + 1) % items.length,
-                ArrowLeft: (index + items.length - 1) % items.length
-              }
-              const next = keys[event.key]
+                ArrowLeft: (index + items.length - 1) % items.length,
+              };
+              const next = keys[event.key];
               if (next !== undefined) {
-                event.preventDefault()
-                select(next)
+                event.preventDefault();
+                select(next);
               }
             }}
           >
@@ -110,32 +110,32 @@ export function SectionTabs({
         </div>
       ))}
     </section>
-  )
+  );
 }
 export function SectionCarousel({
   items,
   label,
-  previousLabel = 'Previous items',
-  nextLabel = 'Next items'
+  previousLabel = "Previous items",
+  nextLabel = "Next items",
 }: {
-  items: SectionItem[]
-  label: string
-  previousLabel?: string
-  nextLabel?: string
+  items: SectionItem[];
+  label: string;
+  previousLabel?: string;
+  nextLabel?: string;
 }) {
-  const list = useRef<HTMLUListElement>(null)
-  const id = useId()
+  const list = useRef<HTMLUListElement>(null);
+  const id = useId();
   function move(direction: number) {
-    const node = list.current
+    const node = list.current;
     if (node)
       node.scrollBy({
         left: direction * node.clientWidth * 0.85,
-        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-          ? 'instant'
-          : 'smooth'
-      })
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+      });
   }
-  if (!items.length) return null
+  if (!items.length) return null;
   return (
     <section aria-label={label} className="section-view-carousel">
       <div className="section-view-controls">
@@ -165,5 +165,5 @@ export function SectionCarousel({
         ))}
       </ul>
     </section>
-  )
+  );
 }

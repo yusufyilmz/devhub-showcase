@@ -1,2 +1,2 @@
-export { HeroSection } from './HeroSection'
-export { HeroSectionEditor } from './HeroSectionEditor'
+export { HeroSection } from "./HeroSection";
+export { HeroSectionEditor } from "./HeroSectionEditor";

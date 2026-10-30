@@ -2,19 +2,19 @@ import {
   copy,
   profile as fallback,
   getPortfolioCopy,
-  type PortfolioProfile
-} from '@shared/content'
-import { Button, PdfIcon, Section, Typography } from '../../../../components'
-import { SocialLinks } from '../SocialLinks'
+  type PortfolioProfile,
+} from "@shared/content";
+import { Button, PdfIcon, Section, Typography } from "../../../../components";
+import { SocialLinks } from "../SocialLinks";
 
-const { id } = copy.header.sections.aboutMe
+const { id } = copy.header.sections.aboutMe;
 
 export const AboutMeSection = ({
-  profile = fallback
+  profile = fallback,
 }: {
-  profile?: PortfolioProfile
+  profile?: PortfolioProfile;
 }) => {
-  const text = getPortfolioCopy(profile.portfolioLanguage)
+  const text = getPortfolioCopy(profile.portfolioLanguage);
   return (
     <Section
       sectionId={id}
@@ -33,7 +33,7 @@ export const AboutMeSection = ({
             <Button
               aria-label={text.resume}
               variant="text"
-              href={profile.cvUrl ?? '/cv.pdf'}
+              href={profile.cvUrl ?? "/cv.pdf"}
               target="_blank"
               endIcon={<PdfIcon />}
               rel="noopener noreferrer"
@@ -46,5 +46,5 @@ export const AboutMeSection = ({
         <SocialLinks profile={profile} />
       </div>
     </Section>
-  )
-}
+  );
+};

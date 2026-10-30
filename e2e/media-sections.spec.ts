@@ -1,133 +1,138 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from "@playwright/test";
 
-for (const type of ['engineer', 'designer', 'consultant', 'minimal']) {
+for (const type of ["engineer", "designer", "consultant", "minimal"]) {
   test(`${type} supports hero media and authored compositions with curated social work`, async ({
-    page
+    page,
   }, info) => {
-    await page.route('https://www.youtube-nocookie.com/**', (route) =>
-      route.fulfill({ contentType: 'text/html', body: '<p>Fixture player</p>' })
-    )
-    await page.goto(`/media-${type}`)
-    await expect(page.locator('.hero-surface img')).toBeVisible()
+    await page.route("https://www.youtube-nocookie.com/**", (route) =>
+      route.fulfill({
+        contentType: "text/html",
+        body: "<p>Fixture player</p>",
+      }),
+    );
+    await page.goto(`/media-${type}`);
+    await expect(page.locator(".hero-surface img")).toBeVisible();
     await expect(
-      page.getByRole('heading', { name: 'Services', exact: true })
-    ).toBeVisible()
-    const faq = page.locator('.composition-faq')
-    await faq.locator('summary').click()
+      page.getByRole("heading", { name: "Services", exact: true }),
+    ).toBeVisible();
+    const faq = page.locator(".composition-faq");
+    await faq.locator("summary").click();
     await expect(
-      faq.getByText('Send a message to discuss your project.')
-    ).toBeVisible()
-    await expect(page.locator('.composition-statistics')).toContainText('12+')
-    const films = page.locator('.composition-youtube')
-    await expect(films.locator('iframe')).toHaveCount(0)
+      faq.getByText("Send a message to discuss your project."),
+    ).toBeVisible();
+    await expect(page.locator(".composition-statistics")).toContainText("12+");
+    const films = page.locator(".composition-youtube");
+    await expect(films.locator("iframe")).toHaveCount(0);
     await films
-      .getByRole('button', { name: 'Load YouTube video: Studio film' })
-      .click()
-    await expect(films.locator('iframe')).toHaveAttribute(
-      'src',
-      'https://www.youtube-nocookie.com/embed/M7lc1UVf-VE'
-    )
-    await films.getByRole('button', { name: 'Unload video' }).click()
-    await expect(films.locator('iframe')).toHaveCount(0)
-    await expect(page.locator('.composition-instagram img')).toBeVisible()
-    await expect(page.locator('.composition-instagram a')).toHaveAttribute(
-      'href',
-      'https://www.instagram.com/p/ABC_123/'
-    )
-    await expect(page.locator('.composition-pinterest a')).toHaveAttribute(
-      'href',
-      'https://www.pinterest.com/pin/123456/'
-    )
+      .getByRole("button", { name: "Load YouTube video: Studio film" })
+      .click();
+    await expect(films.locator("iframe")).toHaveAttribute(
+      "src",
+      "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+    );
+    await films.getByRole("button", { name: "Unload video" }).click();
+    await expect(films.locator("iframe")).toHaveCount(0);
+    await expect(page.locator(".composition-instagram img")).toBeVisible();
+    await expect(page.locator(".composition-instagram a")).toHaveAttribute(
+      "href",
+      "https://www.instagram.com/p/ABC_123/",
+    );
+    await expect(page.locator(".composition-pinterest a")).toHaveAttribute(
+      "href",
+      "https://www.pinterest.com/pin/123456/",
+    );
     expect(
       await page.evaluate(
-        () => document.documentElement.scrollWidth > innerWidth
-      )
-    ).toBe(false)
+        () => document.documentElement.scrollWidth > innerWidth,
+      ),
+    ).toBe(false);
     await page
-      .locator('.hero-surface')
-      .screenshot({ path: info.outputPath('hero.png') })
+      .locator(".hero-surface")
+      .screenshot({ path: info.outputPath("hero.png") });
     await page
-      .locator('.composition-instagram')
-      .screenshot({ path: info.outputPath('social-work.png') })
-  })
+      .locator(".composition-instagram")
+      .screenshot({ path: info.outputPath("social-work.png") });
+  });
 }
-test('owner saves a video hero and YouTube section and visitors with reduced motion see a paused background', async ({
+test("owner saves a video hero and YouTube section and visitors with reduced motion see a paused background", async ({
   page,
-  context
+  context,
 }, info) => {
-  const device = info.project.name.startsWith('mobile') ? 'mobile' : 'desktop'
-  const id = `eeeeeeee-eeee-4eee-8eee-eeeeeeeeeee${device === 'mobile' ? 1 : 0}`
-  const exp = Math.floor(Date.now() / 1000) + 3600
+  const device = info.project.name.startsWith("mobile") ? "mobile" : "desktop";
+  const id = `eeeeeeee-eeee-4eee-8eee-eeeeeeeeeee${device === "mobile" ? 1 : 0}`;
+  const exp = Math.floor(Date.now() / 1000) + 3600;
   const token = [
-    Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString(
-      'base64url'
+    Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString(
+      "base64url",
     ),
     Buffer.from(
-      JSON.stringify({ sub: id, exp, aud: 'authenticated' })
-    ).toString('base64url'),
-    Buffer.from('fixture-only-signature').toString('base64url')
-  ].join('.')
+      JSON.stringify({ sub: id, exp, aud: "authenticated" }),
+    ).toString("base64url"),
+    Buffer.from("fixture-only-signature").toString("base64url"),
+  ].join(".");
   const session = {
     access_token: token,
-    refresh_token: 'fixture-refresh',
-    token_type: 'bearer',
+    refresh_token: "fixture-refresh",
+    token_type: "bearer",
     expires_in: 3600,
     expires_at: exp,
-    user: { id, email: 'media-owner@example.test' }
-  }
+    user: { id, email: "media-owner@example.test" },
+  };
   await context.addCookies([
     {
-      name: 'sb-127-auth-token',
-      value: `base64-${Buffer.from(JSON.stringify(session)).toString('base64url')}`,
-      url: 'http://localhost:3100',
-      sameSite: 'Lax'
-    }
-  ])
-  await page.emulateMedia({ reducedMotion: 'reduce' })
-  await page.route('**/test-background.mp4', (route) => route.abort())
-  await page.goto(`/${device}-media-owner/edit`)
-  await page.getByRole('button', { name: 'Appearance', exact: true }).click()
-  await page.getByLabel('Use hero background').check()
-  await page.getByLabel('Background type').selectOption('video')
+      name: "sb-127-auth-token",
+      value: `base64-${Buffer.from(JSON.stringify(session)).toString("base64url")}`,
+      url: "http://localhost:3100",
+      sameSite: "Lax",
+    },
+  ]);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.route("**/test-background.mp4", (route) => route.abort());
+  await page.goto(`/${device}-media-owner/edit`);
+  await page.getByRole("button", { name: "Appearance", exact: true }).click();
+  await page.getByLabel("Use hero background").check();
+  await page.getByLabel("Background type").selectOption("video");
   await page
-    .getByLabel('Background media URL')
-    .fill('http://localhost:3100/test-background.mp4')
+    .getByLabel("Background media URL")
+    .fill("http://localhost:3100/test-background.mp4");
   await page
-    .getByLabel('Video poster URL')
-    .fill('http://localhost:3100/examples/orbit-brand.svg')
+    .getByLabel("Video poster URL")
+    .fill("http://localhost:3100/examples/orbit-brand.svg");
   await page
-    .getByRole('button', { name: 'Custom sections', exact: true })
-    .click()
-  await page.getByLabel('Section starter').selectOption('youtube')
+    .getByRole("button", { name: "Custom sections", exact: true })
+    .click();
+  await page.getByLabel("Section starter").selectOption("youtube");
   await page
-    .getByRole('button', { name: 'Add custom section', exact: true })
-    .click()
+    .getByRole("button", { name: "Add custom section", exact: true })
+    .click();
   await page
-    .getByRole('button', { name: '+ Add section items', exact: true })
-    .click()
-  await page.getByLabel('Item title', { exact: true }).fill('A new film')
-  await page.getByLabel('Item link').fill('https://youtu.be/M7lc1UVf-VE')
-  await page.getByLabel('Publish my profile and CV at a public link').check()
-  await page.getByRole('button', { name: 'Save changes', exact: true }).click()
-  await expect(page.getByRole('status')).toContainText('Saved.')
-  await page.reload()
-  await page.getByRole('button', { name: 'Appearance', exact: true }).click()
-  await expect(page.getByLabel('Background media URL')).toHaveValue(
-    'http://localhost:3100/test-background.mp4'
-  )
-  await context.clearCookies()
-  await page.goto(`/${device}-media-owner`)
+    .getByRole("button", { name: "+ Add section items", exact: true })
+    .click();
+  await page.getByLabel("Item title", { exact: true }).fill("A new film");
+  await page.getByLabel("Item link").fill("https://youtu.be/M7lc1UVf-VE");
+  await page.getByLabel("Publish my profile and CV at a public link").check();
+  await page.getByRole("button", { name: "Save changes", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("Saved.");
+  await page.reload();
+  await page.getByRole("button", { name: "Appearance", exact: true }).click();
+  await expect(page.getByLabel("Background media URL")).toHaveValue(
+    "http://localhost:3100/test-background.mp4",
+  );
+  await context.clearCookies();
+  await page.goto(`/${device}-media-owner`);
   await expect(
-    page.getByRole('button', { name: 'Play background video', exact: true })
-  ).toBeVisible()
+    page.getByRole("button", { name: "Play background video", exact: true }),
+  ).toBeVisible();
   expect(
     await page
-      .locator('.hero-surface video')
-      .evaluate((node: HTMLVideoElement) => node.paused && node.muted)
-  ).toBe(true)
-  await expect(page.locator('.composition-youtube')).toContainText('A new film')
-  await expect(page.locator('.composition-youtube iframe')).toHaveCount(0)
+      .locator(".hero-surface video")
+      .evaluate((node: HTMLVideoElement) => node.paused && node.muted),
+  ).toBe(true);
+  await expect(page.locator(".composition-youtube")).toContainText(
+    "A new film",
+  );
+  await expect(page.locator(".composition-youtube iframe")).toHaveCount(0);
   await page
-    .locator('.hero-surface')
-    .screenshot({ path: info.outputPath('video-poster.png') })
-})
+    .locator(".hero-surface")
+    .screenshot({ path: info.outputPath("video-poster.png") });
+});

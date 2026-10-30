@@ -1,1 +1,1 @@
-export { addProjectSchema, updateProjectSchema } from './schema/project'
+export { addProjectSchema, updateProjectSchema } from "./schema/project";

@@ -1,5 +1,5 @@
-import { LoginPanel } from '@shared/components/login'
-export function AdminLogin({ initialError = '' }: { initialError?: string }) {
+import { LoginPanel } from "@shared/components/login";
+export function AdminLogin({ initialError = "" }: { initialError?: string }) {
   return (
     <LoginPanel
       initialError={initialError}
@@ -19,5 +19,5 @@ export function AdminLogin({ initialError = '' }: { initialError?: string }) {
       submitLabel="Open studio →"
       backLabel="← Back to portfolio"
     />
-  )
+  );
 }

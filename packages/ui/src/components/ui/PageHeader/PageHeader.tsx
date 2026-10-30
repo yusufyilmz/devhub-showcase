@@ -1,8 +1,8 @@
-import type React from 'react'
+import type React from "react";
 
 export const PageHeader: React.FC<{ title: string; subtitle: string }> = ({
   title,
-  subtitle
+  subtitle,
 }) => (
   <div className="z-50 sticky top-0 w-full text-center">
     <div className="flex items-center flex-col text-textColor-light justify-center text-center mx-8">
@@ -10,4 +10,4 @@ export const PageHeader: React.FC<{ title: string; subtitle: string }> = ({
       <p className="text-lg text-textColor-lightSlate italic">{subtitle}</p>
     </div>
   </div>
-)
+);

@@ -1,21 +1,21 @@
-'use client'
+"use client";
 import {
   type ColorMode,
   getPortfolioCopy,
-  type PortfolioProfile
-} from '@shared/content'
-import { themePreviewStyle } from './theme-picker'
+  type PortfolioProfile,
+} from "@shared/content";
+import { themePreviewStyle } from "./theme-picker";
 
 export function ThemePreview({
   profile,
-  mode
+  mode,
 }: {
-  profile: PortfolioProfile
-  mode: ColorMode
+  profile: PortfolioProfile;
+  mode: ColorMode;
 }) {
-  const theme = profile.appearance?.theme ?? 'studio'
-  const accent = profile.appearance?.accent ?? 'cyan'
-  const text = getPortfolioCopy(profile.portfolioLanguage)
+  const theme = profile.appearance?.theme ?? "studio";
+  const accent = profile.appearance?.accent ?? "cyan";
+  const text = getPortfolioCopy(profile.portfolioLanguage);
   return (
     <section
       aria-label="Portfolio theme preview"
@@ -32,9 +32,9 @@ export function ThemePreview({
         <strong>{text.experience}</strong>
         <p>
           {profile.experiences[0]?.position ??
-            'Your experience will appear here.'}
+            "Your experience will appear here."}
         </p>
       </div>
     </section>
-  )
+  );
 }

@@ -1,4 +1,4 @@
 export const cvSection = {
-  title: 'My CV',
-  buttonText: 'Download CV'
-}
+  title: "My CV",
+  buttonText: "Download CV",
+};

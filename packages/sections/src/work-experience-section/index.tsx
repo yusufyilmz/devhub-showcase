@@ -1,2 +1,2 @@
-export { WorkExperienceSection } from './WorkExperienceSection'
-export { WorkExperienceSectionEditor } from './WorkExperienceSectionEditor'
+export { WorkExperienceSection } from "./WorkExperienceSection";
+export { WorkExperienceSectionEditor } from "./WorkExperienceSectionEditor";

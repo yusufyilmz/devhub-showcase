@@ -1,1 +1,1 @@
-export { supabaseConfig } from '@shared/auth/config'
+export { supabaseConfig } from "@shared/auth/config";

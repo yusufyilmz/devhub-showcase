@@ -1,17 +1,17 @@
-import { notFound } from 'next/navigation'
-import { ManagedWorkspace } from '../../../../features/management/managed-workspace'
-import { managedRepository } from '../../../../lib/managed-portfolios'
-import '../../../../features/management/management.css'
+import { notFound } from "next/navigation";
+import { ManagedWorkspace } from "../../../../features/management/managed-workspace";
+import { managedRepository } from "../../../../lib/managed-portfolios";
+import "../../../../features/management/management.css";
 export default async function ManagedEditor({
-  params
+  params,
 }: {
-  params: Promise<{ id: string }>
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = await params
-  const admin = await managedRepository(id).catch(() => null)
-  if (!admin) notFound()
-  const snapshot = await admin.repository.read()
-  if (!snapshot) notFound()
+  const { id } = await params;
+  const admin = await managedRepository(id).catch(() => null);
+  if (!admin) notFound();
+  const snapshot = await admin.repository.read();
+  if (!snapshot) notFound();
   return (
     <>
       <div className="studio managed-notice">
@@ -23,5 +23,5 @@ export default async function ManagedEditor({
       </div>
       <ManagedWorkspace initial={snapshot} id={id} />
     </>
-  )
+  );
 }

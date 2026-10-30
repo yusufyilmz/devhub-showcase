@@ -1,14 +1,14 @@
-import type React from 'react'
-import type { ReactNode } from 'react'
+import type React from "react";
+import type { ReactNode } from "react";
 
 type AccordionProps = {
-  children: ReactNode
-  className?: string
-}
+  children: ReactNode;
+  className?: string;
+};
 
 export const Accordion: React.FC<AccordionProps> = ({
   children,
-  className = ''
+  className = "",
 }) => {
-  return <div className={`accordion ${className}`}>{children}</div>
-}
+  return <div className={`accordion ${className}`}>{children}</div>;
+};

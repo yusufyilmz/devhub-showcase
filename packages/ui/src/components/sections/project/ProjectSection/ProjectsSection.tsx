@@ -1,19 +1,19 @@
-import { getPortfolioCopy, type Language } from '@shared/content'
-import type { ProjectWithCompanyAndSkills } from '@shared/lib/types'
-import type React from 'react'
-import { List, ListItem, Section } from '../../../../components'
-import { ProjectItem } from '../ProjectItem'
+import { getPortfolioCopy, type Language } from "@shared/content";
+import type { ProjectWithCompanyAndSkills } from "@shared/lib/types";
+import type React from "react";
+import { List, ListItem, Section } from "../../../../components";
+import { ProjectItem } from "../ProjectItem";
 
 interface ProjectsSectionProps {
-  projects: ProjectWithCompanyAndSkills[]
-  language?: Language
+  projects: ProjectWithCompanyAndSkills[];
+  language?: Language;
 }
 
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   projects = [],
-  language = 'en'
+  language = "en",
 }) => {
-  const text = getPortfolioCopy(language)
+  const text = getPortfolioCopy(language);
   return (
     <Section
       className="mt-8"
@@ -35,5 +35,5 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
         </List>
       </div>
     </Section>
-  )
-}
+  );
+};

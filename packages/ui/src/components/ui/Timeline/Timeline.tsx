@@ -4,5 +4,5 @@ export {
   TimelineConnector,
   TimelineHeader,
   TimelineIcon,
-  TimelineItem
-} from '@shared/components'
+  TimelineItem,
+} from "@shared/components";

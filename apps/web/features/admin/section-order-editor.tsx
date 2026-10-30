@@ -1,18 +1,18 @@
-'use client'
-import { SortableList } from '@shared/components/sortable-list'
+"use client";
+import { SortableList } from "@shared/components/sortable-list";
 import {
   getPortfolioEntries,
   type PortfolioEntryId,
   type PortfolioProfile,
-  portfolioSectionLabels
-} from '@shared/content'
+  portfolioSectionLabels,
+} from "@shared/content";
 
 export function SectionOrderEditor({
   profile,
-  onChange
+  onChange,
 }: {
-  profile: PortfolioProfile
-  onChange: (profile: PortfolioProfile) => void
+  profile: PortfolioProfile;
+  onChange: (profile: PortfolioProfile) => void;
 }) {
   return (
     <section className="editor-card">
@@ -27,9 +27,9 @@ export function SectionOrderEditor({
         items={getPortfolioEntries(profile).map((section) => ({
           id: section.id,
           label:
-            section.kind === 'custom'
+            section.kind === "custom"
               ? section.title
-              : portfolioSectionLabels[section.kind]
+              : portfolioSectionLabels[section.kind],
         }))}
         onChange={(ids) =>
           onChange({ ...profile, sectionSequence: ids as PortfolioEntryId[] })
@@ -44,8 +44,8 @@ export function SectionOrderEditor({
             sectionOrder: _order,
             sectionSequence: _sequence,
             ...rest
-          } = profile
-          onChange(rest)
+          } = profile;
+          onChange(rest);
         }}
       >
         Reset to layout default
@@ -55,5 +55,5 @@ export function SectionOrderEditor({
         own document layout.
       </p>
     </section>
-  )
+  );
 }

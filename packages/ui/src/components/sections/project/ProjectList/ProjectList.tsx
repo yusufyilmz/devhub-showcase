@@ -1,26 +1,26 @@
-'use client'
+"use client";
 
-import type React from 'react'
-import { useState } from 'react'
+import type React from "react";
+import { useState } from "react";
 import {
   Accordion,
   AccordionBody,
   AccordionHeader,
   ArrowDownwardIcon,
   ExternalLinkIcon,
-  Typography
-} from '../../../../components'
+  Typography,
+} from "../../../../components";
 
 type ProjectListProps = {
-  projects: { id: string; title: string; description?: string }[]
-}
+  projects: { id: string; title: string; description?: string }[];
+};
 
 export const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => {
-    setIsOpen(!isOpen)
-  }
+    setIsOpen(!isOpen);
+  };
 
   return (
     <Accordion className="animate-mount">
@@ -46,12 +46,12 @@ export const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
               <ExternalLinkIcon className="w-4 h-4 text-main-light-slate" />
               <span>
                 {project.title}
-                {project.description ? `: ${project.description}` : ''}
+                {project.description ? `: ${project.description}` : ""}
               </span>
             </div>
           ))}
         </div>
       </AccordionBody>
     </Accordion>
-  )
-}
+  );
+};

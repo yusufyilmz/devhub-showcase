@@ -1,10 +1,10 @@
-import { Card } from '@shared/components/cards'
-import { ThemeToggle } from '@shared/ui/theme'
-import type { HomeAction } from '../../lib/home-links'
-import { ExampleCarousel } from '../examples/example-carousel'
-import { HomeOptions } from './home-options'
-import { PortfolioPreview } from './portfolio-preview'
-import './home.css'
+import { Card } from "@shared/components/cards";
+import { ThemeToggle } from "@shared/ui/theme";
+import type { HomeAction } from "../../lib/home-links";
+import { ExampleCarousel } from "../examples/example-carousel";
+import { HomeOptions } from "./home-options";
+import { PortfolioPreview } from "./portfolio-preview";
+import "./home.css";
 
 function Brand() {
   return (
@@ -33,44 +33,44 @@ function Brand() {
         <b>.</b>
       </span>
     </a>
-  )
+  );
 }
 const faq = [
   [
-    'Can I switch layouts later?',
-    'Yes. Choose Engineer, Designer, Consultant or Minimal, then change your layout and theme in the editor whenever you like. Your saved information stays with you.'
+    "Can I switch layouts later?",
+    "Yes. Choose Engineer, Designer, Consultant or Minimal, then change your layout and theme in the editor whenever you like. Your saved information stays with you.",
   ],
   [
-    'Are the example portfolios real people?',
-    'The eight carousel examples use fictional identities and sample work. Open any example to explore its layout and download a clearly labeled sample CV.'
+    "Are the example portfolios real people?",
+    "The eight carousel examples use fictional identities and sample work. Open any example to explore its layout and download a clearly labeled sample CV.",
   ],
   [
-    'Does changing language translate my writing?',
-    'Language settings change portfolio and CV labels and dates independently. English, Spanish and Turkish are available. Write your own biography and project descriptions in the language you want to share.'
+    "Does changing language translate my writing?",
+    "Language settings change portfolio and CV labels and dates independently. English, Spanish and Turkish are available. Write your own biography and project descriptions in the language you want to share.",
   ],
   [
-    'Is my portfolio public as soon as I sign up?',
-    'No. Your portfolio starts private. Publish it when you’re ready, and turn public sharing off again whenever you need to.'
+    "Is my portfolio public as soon as I sign up?",
+    "No. Your portfolio starts private. Publish it when you’re ready, and turn public sharing off again whenever you need to.",
   ],
   [
-    'Do I need to write any code?',
-    'No code is needed. Add your details, projects, experience and skills in the editor. Choose your colors and theme, then save your changes.'
+    "Do I need to write any code?",
+    "No code is needed. Add your details, projects, experience and skills in the editor. Choose your colors and theme, then save your changes.",
   ],
   [
-    'How does the downloadable CV work?',
-    'Your portfolio and CV use the same saved information. Choose your PDF page size, text size and included sections, then download it from your studio. PDF contact settings affect the PDF only; published portfolio details are public.'
+    "How does the downloadable CV work?",
+    "Your portfolio and CV use the same saved information. Choose your PDF page size, text size and included sections, then download it from your studio. PDF contact settings affect the PDF only; published portfolio details are public.",
   ],
   [
-    'Can I update it after publishing?',
-    'Yes. Sign in to your studio to update your work, change the design or keep adding to your story. You can also change your username, which changes your public link.'
-  ]
-] as const
+    "Can I update it after publishing?",
+    "Yes. Sign in to your studio to update your work, change the design or keep adding to your story. You can also change your username, which changes your public link.",
+  ],
+] as const;
 export function HomePage({
   action,
-  exampleHref
+  exampleHref,
 }: {
-  action: HomeAction
-  exampleHref: string | null
+  action: HomeAction;
+  exampleHref: string | null;
 }) {
   return (
     <div className="home-page">
@@ -89,7 +89,7 @@ export function HomePage({
           <div className="home-header-actions">
             <ThemeToggle />
             <a className="home-signin" href={action.href}>
-              {action.signedIn ? 'My studio' : 'Sign in'}{' '}
+              {action.signedIn ? "My studio" : "Sign in"}{" "}
               <span aria-hidden="true">↗</span>
             </a>
           </div>
@@ -123,7 +123,7 @@ export function HomePage({
               <a
                 className="home-example-link"
                 href={
-                  exampleHref ?? 'https://mydevstudio.vercel.app/yusufyilmz'
+                  exampleHref ?? "https://mydevstudio.vercel.app/yusufyilmz"
                 }
               >
                 See a real portfolio <span aria-hidden="true">→</span>
@@ -326,10 +326,10 @@ export function HomePage({
             Source on GitHub ↗
           </a>
           <a href={action.href}>
-            {action.signedIn ? 'Open studio' : 'Sign in'} ↗
+            {action.signedIn ? "Open studio" : "Sign in"} ↗
           </a>
         </div>
       </footer>
     </div>
-  )
+  );
 }

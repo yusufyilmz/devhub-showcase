@@ -1,26 +1,26 @@
-import { getPortfolioCopy, type Language } from '@shared/content'
-import { Button } from '../../../components'
+import { getPortfolioCopy, type Language } from "@shared/content";
+import { Button } from "../../../components";
 
 export function MenuItems({
-  language = 'en',
-  hiddenLinks = []
+  language = "en",
+  hiddenLinks = [],
 }: {
-  language?: Language
-  hiddenLinks?: string[]
+  language?: Language;
+  hiddenLinks?: string[];
 }) {
-  const text = getPortfolioCopy(language)
+  const text = getPortfolioCopy(language);
   const items = [
-    ['#about-me', text.about],
-    ['#experiences', text.navExperience],
-    ['#projects', text.navProjects],
-    ['#skills', text.skills],
-    ['#educations', text.navEducation],
-    ['#referrals', text.navTestimonials]
-  ]
+    ["#about-me", text.about],
+    ["#experiences", text.navExperience],
+    ["#projects", text.navProjects],
+    ["#skills", text.skills],
+    ["#educations", text.navEducation],
+    ["#referrals", text.navTestimonials],
+  ];
   return (
     <>
       {items
-        .filter(([id]) => !hiddenLinks.includes(id ?? ''))
+        .filter(([id]) => !hiddenLinks.includes(id ?? ""))
         .map(([id, title]) => (
           <Button
             aria-label={title}
@@ -33,5 +33,5 @@ export function MenuItems({
           </Button>
         ))}
     </>
-  )
+  );
 }

@@ -6,9 +6,9 @@ import {
   getSocialWork,
   type PortfolioSectionId,
   sectionCompositionIds,
-  sectionRegistry
-} from '@shared/content'
-import { z } from 'zod'
+  sectionRegistry,
+} from "@shared/content";
+import { z } from "zod";
 
 function definition<Kind extends PortfolioSectionId>(kind: Kind) {
   return z
@@ -18,26 +18,26 @@ function definition<Kind extends PortfolioSectionId>(kind: Kind) {
       renderer: z.enum(sectionRegistry[kind].renderers),
       source: z
         .object({
-          type: z.literal('profile'),
-          field: z.literal(sectionRegistry[kind].source)
+          type: z.literal("profile"),
+          field: z.literal(sectionRegistry[kind].source),
         })
         .strict(),
-      settings: z.object({ visible: z.boolean() }).strict()
+      settings: z.object({ visible: z.boolean() }).strict(),
     })
-    .strict()
+    .strict();
 }
 /** Validates normalized built-in definitions with fixed source bindings. */
-export const portfolioSectionSchema = z.discriminatedUnion('kind', [
-  definition('about'),
-  definition('experience'),
-  definition('projects'),
-  definition('skills'),
-  definition('education'),
-  definition('languages')
-])
+export const portfolioSectionSchema = z.discriminatedUnion("kind", [
+  definition("about"),
+  definition("experience"),
+  definition("projects"),
+  definition("skills"),
+  definition("education"),
+  definition("languages"),
+]);
 
 function preferences<const Renderers extends readonly [string, ...string[]]>(
-  renderers: Renderers
+  renderers: Renderers,
 ) {
   return z
     .object({
@@ -48,12 +48,12 @@ function preferences<const Renderers extends readonly [string, ...string[]]>(
         .max(100)
         .refine(
           (ids) => new Set(ids).size === ids.length,
-          'Select each item once'
+          "Select each item once",
         )
-        .optional()
+        .optional(),
     })
     .strict()
-    .optional()
+    .optional();
 }
 export const sectionSettingsSchema = z
   .object({
@@ -62,25 +62,25 @@ export const sectionSettingsSchema = z
     projects: preferences(sectionRegistry.projects.renderers),
     skills: preferences(sectionRegistry.skills.renderers),
     education: preferences(sectionRegistry.education.renderers),
-    languages: preferences(sectionRegistry.languages.renderers)
+    languages: preferences(sectionRegistry.languages.renderers),
   })
-  .strict()
+  .strict();
 
-const customId = z.templateLiteral(['custom-', z.uuid()])
+const customId = z.templateLiteral(["custom-", z.uuid()]);
 export const portfolioEntryIdSchema = z.union([
   z.enum([
-    'about',
-    'experience',
-    'projects',
-    'skills',
-    'education',
-    'languages'
+    "about",
+    "experience",
+    "projects",
+    "skills",
+    "education",
+    "languages",
   ]),
-  customId
-])
+  customId,
+]);
 const optionalSectionUrl = z
-  .union([z.url().refine((url) => /^https?:\/\//i.test(url)), z.literal('')])
-  .optional()
+  .union([z.url().refine((url) => /^https?:\/\//i.test(url)), z.literal("")])
+  .optional();
 const customSectionBase = z
   .object({
     id: customId,
@@ -89,40 +89,40 @@ const customSectionBase = z
     sectionType: z.enum(authorableSectionTypes).optional(),
     source: z
       .object({
-        type: z.literal('profile'),
+        type: z.literal("profile"),
         field: z.enum([
-          'projects',
-          'experiences',
-          'education',
-          'skills',
-          'languages',
-          'about'
+          "projects",
+          "experiences",
+          "education",
+          "skills",
+          "languages",
+          "about",
         ]),
         itemIds: z
           .array(z.string().min(1).max(200))
           .max(100)
           .refine((ids) => new Set(ids).size === ids.length)
-          .optional()
+          .optional(),
       })
       .strict()
       .optional(),
     options: z
       .object({
         description: z.string().max(6000).optional(),
-        alignment: z.enum(['left', 'center', 'right']).optional(),
+        alignment: z.enum(["left", "center", "right"]).optional(),
         columns: z
           .union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)])
           .optional(),
-        email: z.union([z.email(), z.literal('')]).optional(),
+        email: z.union([z.email(), z.literal("")]).optional(),
         actionUrl: optionalSectionUrl,
         latitude: z.number().min(-90).max(90).optional(),
         longitude: z.number().min(-180).max(180).optional(),
         mediaUrl: optionalSectionUrl,
-        posterUrl: optionalSectionUrl
+        posterUrl: optionalSectionUrl,
       })
       .strict()
       .optional(),
-    renderer: z.enum(customSectionViews).default('list'),
+    renderer: z.enum(customSectionViews).default("list"),
     visible: z.boolean().default(true),
     items: z
       .array(
@@ -139,7 +139,7 @@ const customSectionBase = z
             imageUrl: z
               .union([
                 z.url().refine((value) => /^https?:\/\//i.test(value)),
-                z.literal('')
+                z.literal(""),
               ])
               .optional(),
             url: z.union([
@@ -147,74 +147,74 @@ const customSectionBase = z
                 .url()
                 .refine(
                   (value) => /^https?:\/\//i.test(value),
-                  'Use an http or https URL'
+                  "Use an http or https URL",
                 ),
-              z.literal('')
-            ])
+              z.literal(""),
+            ]),
           })
-          .strict()
+          .strict(),
       )
       .max(30)
       .refine(
         (items) => new Set(items.map(({ id }) => id)).size === items.length,
-        'Each item needs a unique ID'
-      )
+        "Each item needs a unique ID",
+      ),
   })
-  .strict()
+  .strict();
 
 export const customSectionSchema = customSectionBase.superRefine(
   (section, ctx) => {
-    if (section.sectionType) validateSectionType(section, ctx)
+    if (section.sectionType) validateSectionType(section, ctx);
     if (
-      !['youtube', 'instagram', 'pinterest'].includes(section.composition ?? '')
+      !["youtube", "instagram", "pinterest"].includes(section.composition ?? "")
     )
-      return
+      return;
     section.items.forEach((item, index) => {
       if (getSocialWork(item.url)?.provider !== section.composition)
         ctx.addIssue({
-          code: 'custom',
-          path: ['items', index, 'url'],
-          message: `Use a public ${section.composition} work URL (video, post/reel or pin)`
-        })
-    })
-  }
-)
+          code: "custom",
+          path: ["items", index, "url"],
+          message: `Use a public ${section.composition} work URL (video, post/reel or pin)`,
+        });
+    });
+  },
+);
 
 function validateSectionType(
   section: z.infer<typeof customSectionBase>,
-  ctx: z.RefinementCtx
+  ctx: z.RefinementCtx,
 ) {
-  const type = section.sectionType
-  if (!type) return
+  const type = section.sectionType;
+  if (!type) return;
   if (
     !(getSectionRenderers(type) as readonly string[]).includes(section.renderer)
   )
     ctx.addIssue({
-      code: 'custom',
-      path: ['renderer'],
-      message: 'Choose a compatible section layout'
-    })
+      code: "custom",
+      path: ["renderer"],
+      message: "Choose a compatible section layout",
+    });
   if (
     section.source &&
     !(authorableSections[type].sources as readonly string[]).includes(
-      section.source.field
+      section.source.field,
     )
   )
     ctx.addIssue({
-      code: 'custom',
-      path: ['source'],
-      message: 'Choose a compatible content source'
-    })
-  const social = ['youtube', 'instagram', 'pinterest'].includes(type)
+      code: "custom",
+      path: ["source"],
+      message: "Choose a compatible content source",
+    });
+  const social = ["youtube", "instagram", "pinterest"].includes(type)
     ? type
-    : null
+    : null;
   if (social)
     section.items.forEach((item, index) => {
       if (getSocialWork(item.url)?.provider !== social)
         ctx.addIssue({
-          code: 'custom',
-          path: ['items', index, 'url'],
-          message: `Use a public ${social} work URL`
-        })
-    })
+          code: "custom",
+          path: ["items", index, "url"],
+          message: `Use a public ${social} work URL`,
+        });
+    });
 }

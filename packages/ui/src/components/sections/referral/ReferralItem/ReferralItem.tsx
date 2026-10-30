@@ -1,6 +1,6 @@
-import type { Referral } from '@shared/lib/types'
-import type React from 'react'
-import { Card, CardBody } from '../../../../components'
+import type { Referral } from "@shared/lib/types";
+import type React from "react";
+import { Card, CardBody } from "../../../../components";
 
 const Comment = ({ comment }: { comment: string }) => (
   <div className="relative border-l-4 border-blue-500 italic text-textColor-lightSlate p-4  whitespace-pre-wrap">
@@ -9,14 +9,14 @@ const Comment = ({ comment }: { comment: string }) => (
     </span>
     {comment}
   </div>
-)
+);
 
 export const ReferralItem: React.FC<{
   referral: Pick<
     Referral,
-    'name' | 'feedback' | 'recommendation' | 'relationship'
-  >
-  children?: React.ReactElement
+    "name" | "feedback" | "recommendation" | "relationship"
+  >;
+  children?: React.ReactElement;
 }> = ({ referral, children }) => {
   return (
     <Card className="section-card referral-card min-w-[40vw]">
@@ -27,14 +27,14 @@ export const ReferralItem: React.FC<{
         )}
         <div className="mt-4">
           <h3 className="text-xl font-semibold text-textColor-light ">
-            {referral.name || 'Anonymous'}
+            {referral.name || "Anonymous"}
           </h3>
           <p className="text-sm text-textColor-secondary font-light">
-            {referral.relationship || 'No relationship provided'}
+            {referral.relationship || "No relationship provided"}
           </p>
         </div>
       </CardBody>
       {children}
     </Card>
-  )
-}
+  );
+};

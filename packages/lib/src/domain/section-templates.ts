@@ -5,28 +5,28 @@ import {
   getSectionRenderers,
   MAX_CUSTOM_SECTIONS,
   type PortfolioProfile,
-  type SectionTemplateFile
-} from '@shared/content'
-import { z } from 'zod'
-import { customSectionSchema } from './section'
+  type SectionTemplateFile,
+} from "@shared/content";
+import { z } from "zod";
+import { customSectionSchema } from "./section";
 export const sectionTemplateFileSchema = z
   .object({
-    format: z.literal('mydevstudio.sections'),
+    format: z.literal("mydevstudio.sections"),
     version: z.literal(1),
     name: z.string().trim().min(1).max(100),
     includesContent: z.boolean(),
-    sections: z.array(customSectionSchema).max(MAX_CUSTOM_SECTIONS)
+    sections: z.array(customSectionSchema).max(MAX_CUSTOM_SECTIONS),
   })
   .strict()
   .refine(
     (value) => JSON.stringify(value).length <= 160_000,
-    'Template is too large'
+    "Template is too large",
   )
   .refine(
     (value) =>
       new Set(value.sections.map(({ id }) => id)).size ===
       value.sections.length,
-    'Each section needs a unique ID'
+    "Each section needs a unique ID",
   )
   .refine(
     (value) =>
@@ -41,24 +41,24 @@ export const sectionTemplateFileSchema = z
           section.options?.latitude === undefined &&
           section.options?.longitude === undefined &&
           !section.options?.mediaUrl &&
-          !section.options?.posterUrl
+          !section.options?.posterUrl,
       ),
-    'Configuration-only templates must omit authored content and profile bindings'
-  )
+    "Configuration-only templates must omit authored content and profile bindings",
+  );
 export const savedSectionTemplateSchema = sectionTemplateFileSchema.safeExtend({
-  id: z.uuid()
-})
+  id: z.uuid(),
+});
 export function createSectionTemplate(
   profile: PortfolioProfile,
   name: string,
-  includeContent = false
+  includeContent = false,
 ): SectionTemplateFile {
   const sections = (profile.customSections ?? []).map((section) => {
-    if (includeContent) return structuredClone(section)
-    const type = section.sectionType
+    if (includeContent) return structuredClone(section);
+    const type = section.sectionType;
     return {
       id: section.id,
-      title: type ? authorableSections[type].name : 'Custom section',
+      title: type ? authorableSections[type].name : "Custom section",
       sectionType: type,
       composition: section.composition,
       renderer: section.renderer,
@@ -67,74 +67,74 @@ export function createSectionTemplate(
       options: section.options
         ? {
             alignment: section.options.alignment,
-            columns: section.options.columns
+            columns: section.options.columns,
           }
-        : undefined
-    }
-  })
+        : undefined,
+    };
+  });
   return sectionTemplateFileSchema.parse({
-    format: 'mydevstudio.sections',
+    format: "mydevstudio.sections",
     version: 1,
     name,
     includesContent: includeContent,
-    sections
-  })
+    sections,
+  });
 }
 export function applySectionTemplate(
   profile: PortfolioProfile,
   document: SectionTemplateFile,
-  mode: 'append' | 'replace',
-  newId: () => string
+  mode: "append" | "replace",
+  newId: () => string,
 ): PortfolioProfile {
-  const validated = sectionTemplateFileSchema.parse(document)
+  const validated = sectionTemplateFileSchema.parse(document);
   const sections = validated.sections.map((section) => ({
     ...section,
-    id: `custom-${newId()}` as CustomSection['id'],
+    id: `custom-${newId()}` as CustomSection["id"],
     source: section.source
       ? { ...section.source, itemIds: undefined }
       : undefined,
-    items: section.items.map((item) => ({ ...item, id: newId() }))
-  }))
+    items: section.items.map((item) => ({ ...item, id: newId() })),
+  }));
   const customSections =
-    mode === 'append'
+    mode === "append"
       ? [...(profile.customSections ?? []), ...sections]
-      : sections
+      : sections;
   if (customSections.length > MAX_CUSTOM_SECTIONS)
-    throw new Error(`Use at most ${MAX_CUSTOM_SECTIONS} custom sections`)
+    throw new Error(`Use at most ${MAX_CUSTOM_SECTIONS} custom sections`);
   const old =
-    mode === 'append'
+    mode === "append"
       ? (profile.sectionSequence ?? [])
       : (profile.sectionSequence ?? []).filter(
-          (id) => !id.startsWith('custom-')
-        )
+          (id) => !id.startsWith("custom-"),
+        );
   return {
     ...profile,
     customSections,
     ...(profile.sectionSequence
       ? { sectionSequence: [...old, ...sections.map(({ id }) => id)] }
-      : {})
-  }
+      : {}),
+  };
 }
 export function sectionTypeFromPageForge(
-  value: string
+  value: string,
 ): AuthorableSectionType | null {
-  const normalized = value.replaceAll('_', '-').replace(/-section$/, '')
+  const normalized = value.replaceAll("_", "-").replace(/-section$/, "");
   const aliases: Record<string, AuthorableSectionType> = {
-    experience: 'work-experience',
-    experiences: 'work-experience',
-    skills: 'technical-skills',
-    socials: 'social-links',
-    gallery: 'gallery-grid',
-    statistics: 'stats'
-  }
-  const type = aliases[normalized] ?? normalized
+    experience: "work-experience",
+    experiences: "work-experience",
+    skills: "technical-skills",
+    socials: "social-links",
+    gallery: "gallery-grid",
+    statistics: "stats",
+  };
+  const type = aliases[normalized] ?? normalized;
   return Object.hasOwn(authorableSections, type)
     ? (type as AuthorableSectionType)
-    : null
+    : null;
 }
 export function emptySection(
   type: AuthorableSectionType,
-  newId: () => string
+  newId: () => string,
 ): CustomSection {
   return {
     id: `custom-${newId()}`,
@@ -142,6 +142,6 @@ export function emptySection(
     title: authorableSections[type].name,
     visible: true,
     renderer: getSectionRenderers(type)[0],
-    items: []
-  }
+    items: [],
+  };
 }

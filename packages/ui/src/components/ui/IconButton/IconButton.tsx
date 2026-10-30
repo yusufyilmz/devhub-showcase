@@ -1,19 +1,19 @@
-import type React from 'react'
+import type React from "react";
 
 type IconButtonProps = {
-  onClick?: (event: React.MouseEvent<HTMLElement>) => void
-  color?: string
-  size?: string
-  className?: string
-  children: React.ReactNode
-  ariaLabel?: string
-} & React.ButtonHTMLAttributes<HTMLButtonElement>
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
+  color?: string;
+  size?: string;
+  className?: string;
+  children: React.ReactNode;
+  ariaLabel?: string;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const IconButton: React.FC<IconButtonProps> = ({
   onClick,
-  color = 'text-gray-600',
-  size = 'w-6 h-6',
-  className = '',
+  color = "text-gray-600",
+  size = "w-6 h-6",
+  className = "",
   children,
   ariaLabel,
   ...props
@@ -28,21 +28,21 @@ export const IconButton: React.FC<IconButtonProps> = ({
     >
       <div className={size}>{children}</div>
     </button>
-  )
-}
+  );
+};
 
 type IconButtonWithLinkProps = {
-  href: string
-  children: React.ReactNode
-  label: string
-  className?: string
-}
+  href: string;
+  children: React.ReactNode;
+  label: string;
+  className?: string;
+};
 
 export const IconButtonWithLink: React.FC<IconButtonWithLinkProps> = ({
   href,
   children,
   label,
-  className
+  className,
 }) => {
   return (
     <a
@@ -50,9 +50,9 @@ export const IconButtonWithLink: React.FC<IconButtonWithLinkProps> = ({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className={`social-link ${className ?? ''}`}
+      className={`social-link ${className ?? ""}`}
     >
       {children}
     </a>
-  )
-}
+  );
+};

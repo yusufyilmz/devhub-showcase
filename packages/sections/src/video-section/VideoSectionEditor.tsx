@@ -1,6 +1,6 @@
-'use client'
-import { SectionContentEditor } from '../shared/editor'
-import type { SectionEditorProps } from '../types'
+"use client";
+import { SectionContentEditor } from "../shared/editor";
+import type { SectionEditorProps } from "../types";
 export function VideoSectionEditor(props: SectionEditorProps) {
-  return <SectionContentEditor {...props} type="video" />
+  return <SectionContentEditor {...props} type="video" />;
 }

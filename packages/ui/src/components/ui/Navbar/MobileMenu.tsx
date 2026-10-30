@@ -1,23 +1,23 @@
-'use client'
+"use client";
 
-import { getPortfolioCopy, type Language } from '@shared/content'
-import { useState } from 'react'
-import { Drawer, IconButton, MenuIcon } from '../../../components'
-import { MenuItems } from './MenuItems'
+import { getPortfolioCopy, type Language } from "@shared/content";
+import { useState } from "react";
+import { Drawer, IconButton, MenuIcon } from "../../../components";
+import { MenuItems } from "./MenuItems";
 
 export function MobileMenu({
-  language = 'en',
-  hiddenLinks = []
+  language = "en",
+  hiddenLinks = [],
 }: {
-  language?: Language
-  hiddenLinks?: string[]
+  language?: Language;
+  hiddenLinks?: string[];
 }) {
-  const text = getPortfolioCopy(language)
-  const [isOpen, setIsOpen] = useState(false)
+  const text = getPortfolioCopy(language);
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen)
-  }
+    setIsOpen(!isOpen);
+  };
 
   return (
     <>
@@ -40,5 +40,5 @@ export function MobileMenu({
         </div>
       </Drawer>
     </>
-  )
+  );
 }

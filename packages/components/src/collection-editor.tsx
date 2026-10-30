@@ -1,6 +1,6 @@
-'use client'
-import type { ReactNode } from 'react'
-import { EmptyState } from './fields'
+"use client";
+import type { ReactNode } from "react";
+import { EmptyState } from "./fields";
 export function moveItem<T>(items: T[], from: number, to: number): T[] {
   if (
     from < 0 ||
@@ -9,12 +9,12 @@ export function moveItem<T>(items: T[], from: number, to: number): T[] {
     to >= items.length ||
     from === to
   )
-    return items
-  const result = [...items]
-  const [item] = result.splice(from, 1)
-  if (item === undefined) return items
-  result.splice(to, 0, item)
-  return result
+    return items;
+  const result = [...items];
+  const [item] = result.splice(from, 1);
+  if (item === undefined) return items;
+  result.splice(to, 0, item);
+  return result;
 }
 export function CollectionEditor<T extends { id: string }>({
   title,
@@ -24,16 +24,16 @@ export function CollectionEditor<T extends { id: string }>({
   render,
   getTitle,
   onRemove,
-  maxItems
+  maxItems,
 }: {
-  title: string
-  items: T[]
-  onChange: (items: T[]) => void
-  create: () => T
-  render: (item: T, change: (item: T) => void) => ReactNode
-  getTitle: (item: T) => string
-  onRemove?: (item: T) => void
-  maxItems?: number
+  title: string;
+  items: T[];
+  onChange: (items: T[]) => void;
+  create: () => T;
+  render: (item: T, change: (item: T) => void) => ReactNode;
+  getTitle: (item: T) => string;
+  onRemove?: (item: T) => void;
+  maxItems?: number;
 }) {
   return (
     <section className="editor-collection">
@@ -57,7 +57,7 @@ export function CollectionEditor<T extends { id: string }>({
       {items.map((item, index) => (
         <article className="editor-card" key={item.id}>
           <div className="editor-card-heading">
-            <h3>{getTitle(item) || 'New item'}</h3>
+            <h3>{getTitle(item) || "New item"}</h3>
             <div className="editor-actions">
               <button
                 type="button"
@@ -81,11 +81,11 @@ export function CollectionEditor<T extends { id: string }>({
                 onClick={() => {
                   if (
                     window.confirm(
-                      `Remove ${getTitle(item) || 'this item'}? Changes take effect when you save.`
+                      `Remove ${getTitle(item) || "this item"}? Changes take effect when you save.`,
                     )
                   ) {
-                    if (onRemove) onRemove(item)
-                    else onChange(items.filter((row) => row.id !== item.id))
+                    if (onRemove) onRemove(item);
+                    else onChange(items.filter((row) => row.id !== item.id));
                   }
                 }}
               >
@@ -95,11 +95,13 @@ export function CollectionEditor<T extends { id: string }>({
           </div>
           <div className="editor-fields">
             {render(item, (changed) =>
-              onChange(items.map((row) => (row.id === item.id ? changed : row)))
+              onChange(
+                items.map((row) => (row.id === item.id ? changed : row)),
+              ),
             )}
           </div>
         </article>
       ))}
     </section>
-  )
+  );
 }

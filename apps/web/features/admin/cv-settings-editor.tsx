@@ -1,35 +1,35 @@
-'use client'
-import { SelectField } from '@shared/components/fields'
+"use client";
+import { SelectField } from "@shared/components/fields";
 import {
   type CvLayout,
   cvLayouts,
-  type PortfolioProfile
-} from '@shared/content'
+  type PortfolioProfile,
+} from "@shared/content";
 
-const defaults: NonNullable<PortfolioProfile['cvSettings']> = {
-  pageSize: 'A4',
+const defaults: NonNullable<PortfolioProfile["cvSettings"]> = {
+  pageSize: "A4",
   fontSize: 9,
   showEmail: true,
   showPhone: true,
   includeProjects: true,
-  includeLanguages: true
-}
+  includeLanguages: true,
+};
 export function CvSettingsEditor({
   profile,
-  onChange
+  onChange,
 }: {
-  profile: PortfolioProfile
-  onChange: (profile: PortfolioProfile) => void
+  profile: PortfolioProfile;
+  onChange: (profile: PortfolioProfile) => void;
 }) {
-  const settings = profile.cvSettings ?? defaults
+  const settings = profile.cvSettings ?? defaults;
   const update = (change: Partial<typeof defaults>) =>
-    onChange({ ...profile, cvSettings: { ...settings, ...change } })
+    onChange({ ...profile, cvSettings: { ...settings, ...change } });
   return (
     <section className="editor-card editor-fields">
       <h2>Your PDF preferences</h2>
       <SelectField
         label="CV layout"
-        value={profile.cvLayout ?? 'classic'}
+        value={profile.cvLayout ?? "classic"}
         onChange={(value) =>
           onChange({ ...profile, cvLayout: value as CvLayout })
         }
@@ -43,7 +43,7 @@ export function CvSettingsEditor({
       <SelectField
         label="Page size"
         value={settings.pageSize}
-        onChange={(v) => update({ pageSize: v as 'A4' | 'LETTER' })}
+        onChange={(v) => update({ pageSize: v as "A4" | "LETTER" })}
       >
         <option value="A4">A4</option>
         <option value="LETTER">US Letter</option>
@@ -59,10 +59,10 @@ export function CvSettingsEditor({
       </SelectField>
       {(
         [
-          ['showEmail', 'Include email'],
-          ['showPhone', 'Include phone'],
-          ['includeProjects', 'Include public projects'],
-          ['includeLanguages', 'Include languages']
+          ["showEmail", "Include email"],
+          ["showPhone", "Include phone"],
+          ["includeProjects", "Include public projects"],
+          ["includeLanguages", "Include languages"],
         ] as const
       ).map(([key, label]) => (
         <label key={key}>
@@ -70,7 +70,7 @@ export function CvSettingsEditor({
             type="checkbox"
             checked={settings[key]}
             onChange={(event) => update({ [key]: event.target.checked })}
-          />{' '}
+          />{" "}
           {label}
         </label>
       ))}
@@ -79,5 +79,5 @@ export function CvSettingsEditor({
         only to your CV.
       </p>
     </section>
-  )
+  );
 }

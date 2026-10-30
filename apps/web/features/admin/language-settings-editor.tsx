@@ -1,24 +1,24 @@
-'use client'
-import { SelectField } from '@shared/components/fields'
+"use client";
+import { SelectField } from "@shared/components/fields";
 import {
   type Language,
   languages,
-  type PortfolioProfile
-} from '@shared/content'
+  type PortfolioProfile,
+} from "@shared/content";
 
 export function LanguageSettingsEditor({
   profile,
-  onChange
+  onChange,
 }: {
-  profile: PortfolioProfile
-  onChange: (profile: PortfolioProfile) => void
+  profile: PortfolioProfile;
+  onChange: (profile: PortfolioProfile) => void;
 }) {
   return (
     <section className="editor-card editor-fields">
       <h2>Portfolio and CV languages</h2>
       <SelectField
         label="Portfolio language"
-        value={profile.portfolioLanguage ?? 'en'}
+        value={profile.portfolioLanguage ?? "en"}
         onChange={(value) =>
           onChange({ ...profile, portfolioLanguage: value as Language })
         }
@@ -31,7 +31,7 @@ export function LanguageSettingsEditor({
       </SelectField>
       <SelectField
         label="CV language"
-        value={profile.cvLanguage ?? 'en'}
+        value={profile.cvLanguage ?? "en"}
         onChange={(value) =>
           onChange({ ...profile, cvLanguage: value as Language })
         }
@@ -52,5 +52,5 @@ export function LanguageSettingsEditor({
         platform homepage currently use English.
       </p>
     </section>
-  )
+  );
 }

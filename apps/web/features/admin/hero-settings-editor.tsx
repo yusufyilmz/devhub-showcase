@@ -1,35 +1,35 @@
-'use client'
-import { Field, SelectField } from '@shared/components/fields'
-import { HeroSurface } from '@shared/components/hero-surface'
-import { getPortfolioCopy, type PortfolioProfile } from '@shared/content'
-import { useState } from 'react'
+"use client";
+import { Field, SelectField } from "@shared/components/fields";
+import { HeroSurface } from "@shared/components/hero-surface";
+import { getPortfolioCopy, type PortfolioProfile } from "@shared/content";
+import { useState } from "react";
 export function HeroSettingsEditor({
   profile,
-  onChange
+  onChange,
 }: {
-  profile: PortfolioProfile
-  onChange: (profile: PortfolioProfile) => void
+  profile: PortfolioProfile;
+  onChange: (profile: PortfolioProfile) => void;
 }) {
-  const [preview, setPreview] = useState(false)
-  const text = getPortfolioCopy(profile.portfolioLanguage)
-  const hero = profile.hero
-  const update = (patch: Partial<NonNullable<PortfolioProfile['hero']>>) =>
+  const [preview, setPreview] = useState(false);
+  const text = getPortfolioCopy(profile.portfolioLanguage);
+  const hero = profile.hero;
+  const update = (patch: Partial<NonNullable<PortfolioProfile["hero"]>>) =>
     onChange({
       ...profile,
       hero: {
         ...(hero ?? {
-          kind: 'image',
-          url: '',
-          position: 'center',
-          overlay: 'strong'
+          kind: "image",
+          url: "",
+          position: "center",
+          overlay: "strong",
         }),
-        ...patch
-      }
-    })
+        ...patch,
+      },
+    });
   const clear = () => {
-    const { hero: _hero, ...rest } = profile
-    onChange(rest)
-  }
+    const { hero: _hero, ...rest } = profile;
+    onChange(rest);
+  };
   return (
     <section className="editor-card">
       <h2>Hero background</h2>
@@ -43,7 +43,7 @@ export function HeroSettingsEditor({
           type="checkbox"
           checked={Boolean(hero)}
           onChange={(event) => (event.target.checked ? update({}) : clear())}
-        />{' '}
+        />{" "}
         Use hero background
       </label>
       {hero && (
@@ -51,7 +51,7 @@ export function HeroSettingsEditor({
           <SelectField
             label="Background type"
             value={hero.kind}
-            onChange={(kind) => update({ kind: kind as 'image' | 'video' })}
+            onChange={(kind) => update({ kind: kind as "image" | "video" })}
           >
             <option value="image">Image</option>
             <option value="video">Video</option>
@@ -64,11 +64,11 @@ export function HeroSettingsEditor({
             onChange={(url) => update({ url })}
             hint="A direct HTTP or HTTPS image or video file URL, not a social post URL."
           />
-          {hero.kind === 'video' && (
+          {hero.kind === "video" && (
             <Field
               label="Video poster URL"
               type="url"
-              value={hero.poster ?? ''}
+              value={hero.poster ?? ""}
               onChange={(poster) => update({ poster })}
               hint="Optional still image shown while the video is paused or unavailable."
             />
@@ -101,10 +101,10 @@ export function HeroSettingsEditor({
                 media={hero}
                 labels={{
                   play: text.playBackground,
-                  pause: text.pauseBackground
+                  pause: text.pauseBackground,
                 }}
               >
-                <div style={{ paddingBlock: '4rem' }}>
+                <div style={{ paddingBlock: "4rem" }}>
                   <h2>{profile.name}</h2>
                   <p>{profile.title}</p>
                   <p>{profile.summary}</p>
@@ -118,5 +118,5 @@ export function HeroSettingsEditor({
         </>
       )}
     </section>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-import { copy } from '@shared/content'
-import { GoBackButton, HomeButton, Typography } from '../../../components'
+import { copy } from "@shared/content";
+import { GoBackButton, HomeButton, Typography } from "../../../components";
 
 export const ErrorPage = () => {
   return (
@@ -15,5 +15,5 @@ export const ErrorPage = () => {
         <HomeButton />
       </div>
     </div>
-  )
-}
+  );
+};

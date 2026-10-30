@@ -1,3 +1,3 @@
-'use client'
+"use client";
 
-export { Tooltip } from '@mui/material'
+export { Tooltip } from "@mui/material";

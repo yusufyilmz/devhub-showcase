@@ -1,4 +1,4 @@
-import type React from 'react'
+import type React from "react";
 
 export const DownloadCVButton: React.FC = () => {
   return (
@@ -9,5 +9,5 @@ export const DownloadCVButton: React.FC = () => {
     >
       Download CV
     </a>
-  )
-}
+  );
+};

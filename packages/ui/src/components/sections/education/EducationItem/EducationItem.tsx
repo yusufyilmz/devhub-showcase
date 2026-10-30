@@ -1,24 +1,24 @@
-import { getPortfolioCopy, type Language } from '@shared/content'
-import type { Education } from '@shared/lib/types'
-import { formatDateRange } from '@shared/lib/utils'
-import Link from 'next/link'
+import { getPortfolioCopy, type Language } from "@shared/content";
+import type { Education } from "@shared/lib/types";
+import { formatDateRange } from "@shared/lib/utils";
+import Link from "next/link";
 import {
   TimelineBody,
   TimelineHeader,
   TimelineIcon,
   TimelineItem,
-  Typography
-} from '../../../../components'
-import { RevealCard } from '../../../ui/RevealCard/RevealCard'
+  Typography,
+} from "../../../../components";
+import { RevealCard } from "../../../ui/RevealCard/RevealCard";
 
 export function EducationItem({
   education,
-  language = 'en'
+  language = "en",
 }: {
-  education: Education
-  language?: Language
+  education: Education;
+  language?: Language;
 }) {
-  const text = getPortfolioCopy(language)
+  const text = getPortfolioCopy(language);
   return (
     <TimelineItem>
       <TimelineHeader>
@@ -56,5 +56,5 @@ export function EducationItem({
         </RevealCard>
       </TimelineBody>
     </TimelineItem>
-  )
+  );
 }

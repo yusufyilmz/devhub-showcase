@@ -1,16 +1,16 @@
-import type React from 'react'
-import type { ReactNode } from 'react'
+import type React from "react";
+import type { ReactNode } from "react";
 
 interface ListItemProps {
-  children: ReactNode
-  onClick?: () => void
-  className?: string
+  children: ReactNode;
+  onClick?: () => void;
+  className?: string;
 }
 
 export const ListItem: React.FC<ListItemProps> = ({
   children,
   onClick,
-  className = '',
+  className = "",
   ...props
 }) => {
   return (
@@ -26,5 +26,5 @@ export const ListItem: React.FC<ListItemProps> = ({
         children
       )}
     </li>
-  )
-}
+  );
+};

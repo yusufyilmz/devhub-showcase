@@ -1,26 +1,26 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import type React from 'react'
-import { useState } from 'react'
-import { Spinner } from '../Spinner'
+import Link from "next/link";
+import type React from "react";
+import { useState } from "react";
+import { Spinner } from "../Spinner";
 
 interface IFramePreviewProps {
-  url: string
+  url: string;
 }
 
 export const IFramePreview: React.FC<IFramePreviewProps> = ({ url }) => {
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const handleLoad = () => {
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   const handleError = () => {
-    setError(true)
-    setLoading(false)
-  }
+    setError(true);
+    setLoading(false);
+  };
 
   const IFrame = url ? (
     <a
@@ -40,7 +40,7 @@ export const IFramePreview: React.FC<IFramePreviewProps> = ({ url }) => {
         onError={handleError}
       />
     </a>
-  ) : null
+  ) : null;
 
   return (
     <div className="border rounded-lg shadow-lg overflow-hidden cursor-pointer relative">
@@ -65,5 +65,5 @@ export const IFramePreview: React.FC<IFramePreviewProps> = ({ url }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};

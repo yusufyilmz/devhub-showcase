@@ -3,8 +3,8 @@ import {
   SectionCarousel,
   SectionGrid,
   type SectionItem,
-  SectionTabs
-} from '@shared/components/section-views'
+  SectionTabs,
+} from "@shared/components/section-views";
 import {
   formatPortfolioPeriod,
   getPortfolioCopy,
@@ -12,34 +12,34 @@ import {
   type PortfolioSection,
   type SectionRendererId,
   sectionRendererViews,
-  selectPortfolioContent
-} from '@shared/content'
+  selectPortfolioContent,
+} from "@shared/content";
 
 function sectionItems(
   profile: PortfolioProfile,
-  kind: PortfolioSection['kind']
+  kind: PortfolioSection["kind"],
 ): SectionItem[] {
-  const text = getPortfolioCopy(profile.portfolioLanguage)
+  const text = getPortfolioCopy(profile.portfolioLanguage);
   const period = (start: string, end: string | null) =>
-    formatPortfolioPeriod(start, end, profile.portfolioLanguage)
+    formatPortfolioPeriod(start, end, profile.portfolioLanguage);
   switch (kind) {
-    case 'about':
+    case "about":
       return [
         {
-          id: 'about',
+          id: "about",
           title: profile.name,
           content: (
             <>
               {(profile.about.length ? profile.about : [profile.summary]).map(
                 (paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
-                )
+                ),
               )}
             </>
-          )
-        }
-      ]
-    case 'projects':
+          ),
+        },
+      ];
+    case "projects":
       return profile.projects.map((item) => ({
         id: item.id,
         title: item.name,
@@ -53,12 +53,12 @@ function sectionItems(
                 height={600}
                 loading="lazy"
                 referrerPolicy="no-referrer"
-                style={{ maxWidth: '100%', height: 'auto' }}
+                style={{ maxWidth: "100%", height: "auto" }}
               />
             )}
             <p>{item.company}</p>
             <p>{item.description}</p>
-            <p>{item.skills.join(' · ')}</p>
+            <p>{item.skills.join(" · ")}</p>
             {item.url && (
               <p>
                 <a href={item.url}>{text.viewProject} ↗</a>
@@ -70,9 +70,9 @@ function sectionItems(
               </p>
             )}
           </>
-        )
-      }))
-    case 'experience':
+        ),
+      }));
+    case "experience":
       return profile.experiences.map((item) => ({
         id: item.id,
         title: item.position,
@@ -86,9 +86,9 @@ function sectionItems(
               ))}
             </ul>
           </>
-        )
-      }))
-    case 'education':
+        ),
+      }));
+    case "education":
       return profile.education.map((item) => ({
         id: item.id,
         title: `${item.degree} · ${item.field}`,
@@ -97,50 +97,50 @@ function sectionItems(
             <a href={item.url}>{item.institution}</a>
             <p>{period(item.start, item.end)}</p>
           </>
-        )
-      }))
-    case 'skills':
+        ),
+      }));
+    case "skills":
       return Object.entries(profile.skills).map(([group, skills]) => ({
         id: group,
         title: group,
-        content: <p>{skills.join(' · ')}</p>
-      }))
-    case 'languages':
+        content: <p>{skills.join(" · ")}</p>,
+      }));
+    case "languages":
       return profile.languages.map((item) => ({
         id: item.id,
         title: item.language,
-        content: <p>{item.proficiency}</p>
-      }))
+        content: <p>{item.proficiency}</p>,
+      }));
   }
 }
 export function ConfiguredSection({
   profile,
-  section
+  section,
 }: {
-  profile: PortfolioProfile
-  section: PortfolioSection
+  profile: PortfolioProfile;
+  section: PortfolioSection;
 }) {
-  if (!section.settings.visible) return null
-  const items = sectionItems(selectPortfolioContent(profile), section.kind)
-  if (!items.length) return null
-  const text = getPortfolioCopy(profile.portfolioLanguage)
+  if (!section.settings.visible) return null;
+  const items = sectionItems(selectPortfolioContent(profile), section.kind);
+  if (!items.length) return null;
+  const text = getPortfolioCopy(profile.portfolioLanguage);
   const label =
-    section.kind === 'languages' ? text.spokenLanguages : text[section.kind]
-  const props = { items, label }
+    section.kind === "languages" ? text.spokenLanguages : text[section.kind];
+  const props = { items, label };
   return (
     <section
       id={
-        profile.portfolioType === 'engineer' || !profile.portfolioType
+        profile.portfolioType === "engineer" || !profile.portfolioType
           ? ({
-              about: 'about-me',
-              experience: 'experiences',
-              education: 'educations',
-              projects: 'projects',
-              skills: 'skills',
-              languages: 'languages'
+              about: "about-me",
+              experience: "experiences",
+              education: "educations",
+              projects: "projects",
+              skills: "skills",
+              languages: "languages",
             }[section.kind] ?? section.kind)
-          : section.kind === 'projects'
-            ? 'work'
+          : section.kind === "projects"
+            ? "work"
             : section.kind
       }
       className="folio-section configured-section"
@@ -148,19 +148,19 @@ export function ConfiguredSection({
       <h2>{label}</h2>
       <SectionView renderer={section.renderer} {...props} />
     </section>
-  )
+  );
 }
 function SectionView({
   renderer,
   items,
-  label
+  label,
 }: {
-  renderer: SectionRendererId
-  items: SectionItem[]
-  label: string
+  renderer: SectionRendererId;
+  items: SectionItem[];
+  label: string;
 }) {
-  const view = sectionRendererViews[renderer]
-  if (view === 'timeline')
+  const view = sectionRendererViews[renderer];
+  if (view === "timeline")
     return (
       <ol className="configured-timeline">
         {items.map((item) => (
@@ -170,15 +170,15 @@ function SectionView({
           </li>
         ))}
       </ol>
-    )
-  if (view === 'accordion')
-    return <SectionAccordion items={items} label={label} />
-  if (view === 'tabs') return <SectionTabs items={items} label={label} />
-  if (view === 'carousel')
-    return <SectionCarousel items={items} label={label} />
-  if (view === 'cards') return <SectionGrid items={items} label={label} />
-  if (view === 'gallery')
-    return <SectionGrid items={items} label={label} variant="gallery" />
+    );
+  if (view === "accordion")
+    return <SectionAccordion items={items} label={label} />;
+  if (view === "tabs") return <SectionTabs items={items} label={label} />;
+  if (view === "carousel")
+    return <SectionCarousel items={items} label={label} />;
+  if (view === "cards") return <SectionGrid items={items} label={label} />;
+  if (view === "gallery")
+    return <SectionGrid items={items} label={label} variant="gallery" />;
   return (
     <div>
       {items.map((item) => (
@@ -188,5 +188,5 @@ function SectionView({
         </article>
       ))}
     </div>
-  )
+  );
 }

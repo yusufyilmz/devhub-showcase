@@ -1,15 +1,15 @@
-import { getPortfolioCopy, type Language } from '@shared/content'
-import type { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
-import { Section } from '../../../../components'
-import { ExperienceList } from '../ExperienceList'
+import { getPortfolioCopy, type Language } from "@shared/content";
+import type { ExperienceWithCompanyProjectAndSkills } from "@shared/lib/types";
+import { Section } from "../../../../components";
+import { ExperienceList } from "../ExperienceList";
 export function ExperienceSection({
   experiences,
-  language = 'en'
+  language = "en",
 }: {
-  experiences: ExperienceWithCompanyProjectAndSkills[]
-  language?: Language
+  experiences: ExperienceWithCompanyProjectAndSkills[];
+  language?: Language;
 }) {
-  const text = getPortfolioCopy(language)
+  const text = getPortfolioCopy(language);
   return (
     <Section
       sectionId="experiences"
@@ -21,5 +21,5 @@ export function ExperienceSection({
         <ExperienceList experiences={experiences} language={language} />
       </div>
     </Section>
-  )
+  );
 }

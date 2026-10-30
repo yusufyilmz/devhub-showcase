@@ -2,24 +2,24 @@ import {
   profile as fallback,
   getNameInitials,
   getPortfolioCopy,
-  type PortfolioProfile
-} from '@shared/content'
-import { ThemeToggle } from '../../../theme'
-import { MenuItems } from './MenuItems'
-import { MobileMenu } from './MobileMenu'
+  type PortfolioProfile,
+} from "@shared/content";
+import { ThemeToggle } from "../../../theme";
+import { MenuItems } from "./MenuItems";
+import { MobileMenu } from "./MobileMenu";
 export function Navbar({ profile = fallback }: { profile?: PortfolioProfile }) {
   const anchors = {
-    about: '#about-me',
-    experience: '#experiences',
-    projects: '#projects',
-    skills: '#skills',
-    education: '#educations',
-    languages: '#languages'
-  }
+    about: "#about-me",
+    experience: "#experiences",
+    projects: "#projects",
+    skills: "#skills",
+    education: "#educations",
+    languages: "#languages",
+  };
   const hiddenLinks = Object.entries(profile.sectionSettings ?? {})
     .filter(([, settings]) => settings?.visible === false)
-    .map(([kind]) => anchors[kind as keyof typeof anchors])
-  const text = getPortfolioCopy(profile.portfolioLanguage)
+    .map(([kind]) => anchors[kind as keyof typeof anchors]);
+  const text = getPortfolioCopy(profile.portfolioLanguage);
   return (
     <nav className="portfolio-nav">
       <a
@@ -49,5 +49,5 @@ export function Navbar({ profile = fallback }: { profile?: PortfolioProfile }) {
         />
       </div>
     </nav>
-  )
+  );
 }

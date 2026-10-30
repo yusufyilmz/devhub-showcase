@@ -1,2 +1,2 @@
-export { TestimonialsSection } from './TestimonialsSection'
-export { TestimonialsSectionEditor } from './TestimonialsSectionEditor'
+export { TestimonialsSection } from "./TestimonialsSection";
+export { TestimonialsSectionEditor } from "./TestimonialsSectionEditor";

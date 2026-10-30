@@ -1,29 +1,29 @@
-'use client'
+"use client";
 
-import { copy } from '@shared/content'
+import { copy } from "@shared/content";
 import {
   IconButton,
   InfoIcon,
   List,
   ListItem,
   Popover,
-  Typography
-} from '@shared/ui/components'
-import { useState } from 'react'
+  Typography,
+} from "@shared/ui/components";
+import { useState } from "react";
 
 export const AboutSection = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
+    setAnchorEl(event.currentTarget);
+  };
 
   const handlePopoverClose = () => {
-    setAnchorEl(null)
-  }
+    setAnchorEl(null);
+  };
 
-  const open = Boolean(anchorEl)
-  const id = open ? 'about-popover' : undefined
+  const open = Boolean(anchorEl);
+  const id = open ? "about-popover" : undefined;
 
   return (
     <div className="-mt-1">
@@ -31,7 +31,7 @@ export const AboutSection = () => {
         aria-label="About project"
         className="icon-button"
         color="primary"
-        aria-owns={open ? 'mouse-over-popover' : undefined}
+        aria-owns={open ? "mouse-over-popover" : undefined}
         aria-haspopup="true"
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
@@ -40,18 +40,18 @@ export const AboutSection = () => {
       </IconButton>
       <Popover
         id={id}
-        sx={{ pointerEvents: 'none' }}
+        sx={{ pointerEvents: "none" }}
         open={open}
         anchorEl={anchorEl}
         disableRestoreFocus
         disableAutoFocus
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center'
+          vertical: "bottom",
+          horizontal: "center",
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center'
+          vertical: "top",
+          horizontal: "center",
         }}
       >
         <section id="about-development" className="max-w-[500px] p-8">
@@ -74,5 +74,5 @@ export const AboutSection = () => {
         </section>
       </Popover>
     </div>
-  )
-}
+  );
+};

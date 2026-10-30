@@ -4,22 +4,22 @@ const nextConfig = {
   // TypeScript 7 provides the native CLI rather than the legacy JavaScript API.
   experimental: { useTypeScriptCli: true },
   transpilePackages: [
-    '@shared/ui',
-    '@shared/auth',
-    '@shared/components',
-    '@shared/sections',
-    '@shared/content',
-    '@shared/lib',
-    '@shared/chat',
-    '@shared/cache',
-    '@shared/cv'
+    "@shared/ui",
+    "@shared/auth",
+    "@shared/components",
+    "@shared/sections",
+    "@shared/content",
+    "@shared/lib",
+    "@shared/chat",
+    "@shared/cache",
+    "@shared/cv",
   ],
-  serverExternalPackages: ['openai', 'pino', 'pdfmake'],
+  serverExternalPackages: ["openai", "pino", "pdfmake"],
   webpack(config) {
     // Use the compiler entry without Handlebars' Node require.extensions hook.
-    config.resolve.alias.handlebars$ = 'handlebars/dist/cjs/handlebars.js'
-    config.module.rules.push({ test: /\.hbs$/, type: 'asset/source' })
-    return config
-  }
-}
-export default nextConfig
+    config.resolve.alias.handlebars$ = "handlebars/dist/cjs/handlebars.js";
+    config.module.rules.push({ test: /\.hbs$/, type: "asset/source" });
+    return config;
+  },
+};
+export default nextConfig;

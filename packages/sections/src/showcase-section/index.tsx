@@ -1,2 +1,2 @@
-export { ShowcaseSection } from './ShowcaseSection'
-export { ShowcaseSectionEditor } from './ShowcaseSectionEditor'
+export { ShowcaseSection } from "./ShowcaseSection";
+export { ShowcaseSectionEditor } from "./ShowcaseSectionEditor";

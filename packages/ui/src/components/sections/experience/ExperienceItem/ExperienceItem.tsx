@@ -1,8 +1,8 @@
-import { getPortfolioCopy, type Language } from '@shared/content'
-import type { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
-import { formatDateRange } from '@shared/lib/utils'
-import Link from 'next/link'
-import type React from 'react'
+import { getPortfolioCopy, type Language } from "@shared/content";
+import type { ExperienceWithCompanyProjectAndSkills } from "@shared/lib/types";
+import { formatDateRange } from "@shared/lib/utils";
+import Link from "next/link";
+import type React from "react";
 import {
   CardBody,
   Divider,
@@ -12,23 +12,23 @@ import {
   TimelineHeader,
   TimelineIcon,
   TimelineItem,
-  Typography
-} from '../../../../components'
-import { RevealCard } from '../../../ui/RevealCard/RevealCard'
-import { SkillItem } from '../../skill/SkillItem/SkillItem'
+  Typography,
+} from "../../../../components";
+import { RevealCard } from "../../../ui/RevealCard/RevealCard";
+import { SkillItem } from "../../skill/SkillItem/SkillItem";
 
 type ExperienceProps = {
-  language?: Language
-  experience: ExperienceWithCompanyProjectAndSkills
-}
+  language?: Language;
+  experience: ExperienceWithCompanyProjectAndSkills;
+};
 
 export const ExperienceItem: React.FC<ExperienceProps> = ({
   experience,
-  language = 'en'
+  language = "en",
 }) => {
-  const text = getPortfolioCopy(language)
-  const skills = experience.projects.flatMap((project) => project.skills)
-  const uniqueSkills = new Set(skills.map((skill) => skill.name))
+  const text = getPortfolioCopy(language);
+  const skills = experience.projects.flatMap((project) => project.skills);
+  const uniqueSkills = new Set(skills.map((skill) => skill.name));
 
   return (
     <TimelineItem className="w-full">
@@ -38,7 +38,7 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({
           {formatDateRange(
             experience.startedAt,
             experience.finishedAt,
-            language
+            language,
           )}
         </Typography>
       </TimelineHeader>
@@ -56,7 +56,7 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({
                 className="text-2xl font-bold text-textColor-light group-hover:underline group-hover:text-main-blue"
               >
                 <Link
-                  href={experience.company?.link ?? '#'}
+                  href={experience.company?.link ?? "#"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="focus:outline-hidden focus:ring-2 focus:ring-main-blue"
@@ -91,7 +91,7 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({
           <CardBody className="pt-0">
             <div className="flex justify-start flex-wrap gap-2">
               {[...uniqueSkills].map(
-                (skill) => skill && <SkillItem key={skill} name={skill} />
+                (skill) => skill && <SkillItem key={skill} name={skill} />,
               )}
             </div>
           </CardBody>
@@ -111,5 +111,5 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({
         </RevealCard>
       </TimelineBody>
     </TimelineItem>
-  )
-}
+  );
+};

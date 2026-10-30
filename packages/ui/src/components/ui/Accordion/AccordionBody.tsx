@@ -1,19 +1,19 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
 type AccordionBodyProps = {
-  isOpen: boolean
-  children: ReactNode
-  className?: string
-}
+  isOpen: boolean;
+  children: ReactNode;
+  className?: string;
+};
 
 export const AccordionBody: React.FC<AccordionBodyProps> = ({
   isOpen,
   children,
-  className = ''
+  className = "",
 }) => {
   return (
-    <div className={`${isOpen ? 'block' : 'hidden'} p-5 ${className}`}>
+    <div className={`${isOpen ? "block" : "hidden"} p-5 ${className}`}>
       {children}
     </div>
-  )
-}
+  );
+};

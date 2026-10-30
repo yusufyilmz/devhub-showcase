@@ -1,1 +1,1 @@
-export { ChatPopupContainer } from './ChatPopupContainer'
+export { ChatPopupContainer } from "./ChatPopupContainer";

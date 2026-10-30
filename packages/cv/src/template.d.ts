@@ -1,2 +1,2 @@
-declare const template: string
-export default template
+declare const template: string;
+export default template;

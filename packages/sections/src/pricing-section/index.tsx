@@ -1,2 +1,2 @@
-export { PricingSection } from './PricingSection'
-export { PricingSectionEditor } from './PricingSectionEditor'
+export { PricingSection } from "./PricingSection";
+export { PricingSectionEditor } from "./PricingSectionEditor";

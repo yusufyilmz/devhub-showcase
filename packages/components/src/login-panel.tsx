@@ -1,32 +1,32 @@
-'use client'
-import { type ReactNode, useState } from 'react'
+"use client";
+import { type ReactNode, useState } from "react";
 export function LoginPanel({
-  initialError = '',
+  initialError = "",
   googleAction,
   sessionEndpoint,
   successPath,
   title,
   description,
-  eyebrow = 'WELCOME BACK',
-  submitLabel = 'Sign in',
-  backHref = '/',
-  backLabel = '← Back',
-  contentId = 'auth-content'
+  eyebrow = "WELCOME BACK",
+  submitLabel = "Sign in",
+  backHref = "/",
+  backLabel = "← Back",
+  contentId = "auth-content",
 }: {
-  initialError?: string
-  googleAction: string
-  sessionEndpoint: string
-  successPath: string
-  title: ReactNode
-  description: ReactNode
-  eyebrow?: string
-  submitLabel?: string
-  backHref?: string
-  backLabel?: string
-  contentId?: string
+  initialError?: string;
+  googleAction: string;
+  sessionEndpoint: string;
+  successPath: string;
+  title: ReactNode;
+  description: ReactNode;
+  eyebrow?: string;
+  submitLabel?: string;
+  backHref?: string;
+  backLabel?: string;
+  contentId?: string;
 }) {
-  const [error, setError] = useState(initialError)
-  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState(initialError);
+  const [busy, setBusy] = useState(false);
   return (
     <main id={contentId} className="auth-login">
       <p className="eyebrow">{eyebrow}</p>
@@ -37,8 +37,8 @@ export function LoginPanel({
         action={googleAction}
         className="google-login-form"
         onSubmit={() => {
-          setError('')
-          setBusy(true)
+          setError("");
+          setBusy(true);
         }}
       >
         <button type="submit" disabled={busy} className="studio-google">
@@ -66,28 +66,28 @@ export function LoginPanel({
       </form>
       <form
         onSubmit={async (event) => {
-          event.preventDefault()
-          setError('')
-          setBusy(true)
-          const fields = new FormData(event.currentTarget)
+          event.preventDefault();
+          setError("");
+          setBusy(true);
+          const fields = new FormData(event.currentTarget);
           try {
             const response = await fetch(sessionEndpoint, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
-                email: fields.get('email'),
-                password: fields.get('password')
-              })
-            })
-            const result = await response.json()
-            if (!response.ok) throw new Error(result.error)
-            window.location.assign(successPath)
+                email: fields.get("email"),
+                password: fields.get("password"),
+              }),
+            });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.error);
+            window.location.assign(successPath);
           } catch (reason) {
             setError(
-              reason instanceof Error ? reason.message : 'Could not sign in.'
-            )
+              reason instanceof Error ? reason.message : "Could not sign in.",
+            );
           } finally {
-            setBusy(false)
+            setBusy(false);
           }
         }}
       >
@@ -105,7 +105,7 @@ export function LoginPanel({
           />
         </label>
         <button className="studio-primary" disabled={busy} type="submit">
-          {busy ? 'Signing in…' : submitLabel}
+          {busy ? "Signing in…" : submitLabel}
         </button>
         {error && (
           <p role="alert" className="form-error">
@@ -115,5 +115,5 @@ export function LoginPanel({
       </form>
       <a href={backHref}>{backLabel}</a>
     </main>
-  )
+  );
 }

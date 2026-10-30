@@ -1,2 +1,2 @@
-export { TimelineSection } from './TimelineSection'
-export { TimelineSectionEditor } from './TimelineSectionEditor'
+export { TimelineSection } from "./TimelineSection";
+export { TimelineSectionEditor } from "./TimelineSectionEditor";

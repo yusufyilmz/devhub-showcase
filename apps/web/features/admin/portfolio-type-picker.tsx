@@ -1,12 +1,12 @@
-'use client'
-import { type PortfolioType, portfolioTypes } from '@shared/content'
+"use client";
+import { type PortfolioType, portfolioTypes } from "@shared/content";
 
 export function PortfolioTypePicker({
   value,
-  onChange
+  onChange,
 }: {
-  value: PortfolioType
-  onChange: (type: PortfolioType) => void
+  value: PortfolioType;
+  onChange: (type: PortfolioType) => void;
 }) {
   return (
     <fieldset className="type-picker">
@@ -49,5 +49,5 @@ export function PortfolioTypePicker({
         ))}
       </div>
     </fieldset>
-  )
+  );
 }

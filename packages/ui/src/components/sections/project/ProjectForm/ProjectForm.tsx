@@ -1,50 +1,50 @@
-'use client'
+"use client";
 
-import type { Project } from '@shared/lib/types'
-import type React from 'react'
-import { useEffect, useState } from 'react'
-import { Button, TextField } from '../../../../components'
+import type { Project } from "@shared/lib/types";
+import type React from "react";
+import { useEffect, useState } from "react";
+import { Button, TextField } from "../../../../components";
 
 interface ProjectFormProps {
-  onSubmit: (_e: unknown) => void
-  isSubmitting: boolean
-  initialData?: Project
-  action: string
+  onSubmit: (_e: unknown) => void;
+  isSubmitting: boolean;
+  initialData?: Project;
+  action: string;
 }
 
 export const ProjectForm: React.FC<ProjectFormProps> = ({
   onSubmit,
   isSubmitting,
   action,
-  initialData = { title: '', description: '', link: '' }
+  initialData = { title: "", description: "", link: "" },
 }) => {
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    link: ''
-  })
+    title: "",
+    description: "",
+    link: "",
+  });
 
   useEffect(() => {
     setFormData({
       ...initialData,
-      link: initialData.link ?? ''
-    })
-  }, [initialData])
+      link: initialData.link ?? "",
+    });
+  }, [initialData]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value
-    }))
-  }
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    onSubmit(formData)
-  }
+    e.preventDefault();
+    onSubmit(formData);
+  };
 
   return (
     <form
@@ -85,5 +85,5 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
         {action}
       </Button>
     </form>
-  )
-}
+  );
+};

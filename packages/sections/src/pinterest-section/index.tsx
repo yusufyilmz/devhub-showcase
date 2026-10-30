@@ -1,2 +1,2 @@
-export { PinterestSection } from './PinterestSection'
-export { PinterestSectionEditor } from './PinterestSectionEditor'
+export { PinterestSection } from "./PinterestSection";
+export { PinterestSectionEditor } from "./PinterestSectionEditor";

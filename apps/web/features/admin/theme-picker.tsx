@@ -1,34 +1,34 @@
-'use client'
+"use client";
 import {
   type ColorMode,
   getPortfolioThemeVariables,
   getPreviewAccent,
   type PortfolioProfile,
   type PortfolioTheme,
-  portfolioThemes
-} from '@shared/content'
-import type { CSSProperties } from 'react'
+  portfolioThemes,
+} from "@shared/content";
+import type { CSSProperties } from "react";
 
-type Accent = NonNullable<PortfolioProfile['appearance']>['accent']
+type Accent = NonNullable<PortfolioProfile["appearance"]>["accent"];
 export function themePreviewStyle(
   theme: PortfolioTheme,
-  accent: Accent
+  accent: Accent,
 ): CSSProperties {
   return {
     ...getPortfolioThemeVariables(theme),
-    ...getPreviewAccent(accent)
-  } as CSSProperties
+    ...getPreviewAccent(accent),
+  } as CSSProperties;
 }
 export function ThemePicker({
   value,
   accent,
   mode,
-  onChange
+  onChange,
 }: {
-  value: PortfolioTheme
-  accent: Accent
-  mode: ColorMode
-  onChange: (value: PortfolioTheme) => void
+  value: PortfolioTheme;
+  accent: Accent;
+  mode: ColorMode;
+  onChange: (value: PortfolioTheme) => void;
 }) {
   return (
     <fieldset className="theme-picker">
@@ -67,5 +67,5 @@ export function ThemePicker({
         ))}
       </div>
     </fieldset>
-  )
+  );
 }

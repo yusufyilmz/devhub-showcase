@@ -1,12 +1,12 @@
-import { HeroSurface } from '@shared/components/hero-surface'
+import { HeroSurface } from "@shared/components/hero-surface";
 import {
   copy,
   getPortfolioCopy,
   type PortfolioProfile,
   type SectionRendererId,
-  selectPortfolioContent
-} from '@shared/content'
-import { getPortfolioResources } from '@shared/lib/portfolio'
+  selectPortfolioContent,
+} from "@shared/content";
+import { getPortfolioResources } from "@shared/lib/portfolio";
 import {
   AboutMeSection,
   ChatSection,
@@ -19,52 +19,52 @@ import {
   ScrollButton,
   Section,
   SkillSection,
-  SummarySection
-} from '@shared/ui/components'
-import type { ComponentProps, ReactNode } from 'react'
-import { handleSendMessageAction } from '../../app/actions'
-import { RegisteredSections } from './registered-sections'
+  SummarySection,
+} from "@shared/ui/components";
+import type { ComponentProps, ReactNode } from "react";
+import { handleSendMessageAction } from "../../app/actions";
+import { RegisteredSections } from "./registered-sections";
 
 export function EngineerPortfolio({
   profile,
   ownerLink,
   referrals = [],
-  extras = false
+  extras = false,
 }: {
-  profile: PortfolioProfile
-  ownerLink?: ReactNode
-  referrals?: ComponentProps<typeof ReferralSection>['referrals']
-  extras?: boolean
+  profile: PortfolioProfile;
+  ownerLink?: ReactNode;
+  referrals?: ComponentProps<typeof ReferralSection>["referrals"];
+  extras?: boolean;
 }) {
-  const canonicalProfile = profile
-  profile = selectPortfolioContent(profile)
+  const canonicalProfile = profile;
+  profile = selectPortfolioContent(profile);
   const { experiences, projects, skills, educations } =
-    getPortfolioResources(profile)
-  const text = getPortfolioCopy(profile.portfolioLanguage)
+    getPortfolioResources(profile);
+  const text = getPortfolioCopy(profile.portfolioLanguage);
   const renderers: Partial<Record<SectionRendererId, ReactNode>> = {
-    'about-card': <AboutMeSection profile={profile} />,
+    "about-card": <AboutMeSection profile={profile} />,
     timeline: experiences.length > 0 && (
       <ExperienceSection
         language={profile.portfolioLanguage}
         experiences={experiences}
       />
     ),
-    'project-cards': projects.length > 0 && (
+    "project-cards": projects.length > 0 && (
       <ProjectsSection
         language={profile.portfolioLanguage}
         projects={projects}
       />
     ),
-    'skill-groups': Object.keys(skills).length > 0 && (
+    "skill-groups": Object.keys(skills).length > 0 && (
       <SkillSection language={profile.portfolioLanguage} skills={skills} />
     ),
-    'education-timeline': educations.length > 0 && (
+    "education-timeline": educations.length > 0 && (
       <EducationsSection
         language={profile.portfolioLanguage}
         educations={educations}
       />
     ),
-    'language-list': profile.languages.length > 0 && (
+    "language-list": profile.languages.length > 0 && (
       <Section
         sectionId="languages"
         title={text.spokenLanguages}
@@ -74,11 +74,11 @@ export function EngineerPortfolio({
         <p>
           {profile.languages
             .map((item) => `${item.language} (${item.proficiency})`)
-            .join(' · ')}
+            .join(" · ")}
         </p>
       </Section>
-    )
-  }
+    ),
+  };
   return (
     <>
       <Header profile={profile} />
@@ -107,7 +107,7 @@ export function EngineerPortfolio({
         <>
           <ScrollButton
             sectionIds={Object.values(copy.navbar).map(
-              (item) => item.id.split('#')[1] ?? ''
+              (item) => item.id.split("#")[1] ?? "",
             )}
           />
           <ChatSection handleSendMessage={handleSendMessageAction} />
@@ -115,5 +115,5 @@ export function EngineerPortfolio({
       )}
       <Footer profile={profile} />
     </>
-  )
+  );
 }

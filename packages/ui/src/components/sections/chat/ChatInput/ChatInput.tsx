@@ -1,52 +1,52 @@
-'use client'
+"use client";
 
-import { copy } from '@shared/content'
-import type { ChatType } from '@shared/lib/types'
-import type React from 'react'
-import { useState } from 'react'
-import { IconButton, SendIcon } from '../../../../components'
+import { copy } from "@shared/content";
+import type { ChatType } from "@shared/lib/types";
+import type React from "react";
+import { useState } from "react";
+import { IconButton, SendIcon } from "../../../../components";
 
 type ChatInputProps = {
-  handleSendMessage: (input: string) => void
-  botIsTyping?: boolean
-  chatFinished?: boolean
-  type: ChatType
-}
+  handleSendMessage: (input: string) => void;
+  botIsTyping?: boolean;
+  chatFinished?: boolean;
+  type: ChatType;
+};
 
 export const ChatInput: React.FC<ChatInputProps> = ({
   handleSendMessage,
   botIsTyping,
   type,
-  chatFinished
+  chatFinished,
 }) => {
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState("");
 
   const handleSendButtonClick = () => {
-    if (!input || botIsTyping || chatFinished) return
-    handleSendMessage(input)
-    setInput('')
-  }
+    if (!input || botIsTyping || chatFinished) return;
+    handleSendMessage(input);
+    setInput("");
+  };
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (
-      e.code === 'Enter' &&
+      e.code === "Enter" &&
       !e.shiftKey &&
-      input !== '' &&
+      input !== "" &&
       !botIsTyping &&
       !chatFinished
     ) {
-      e.preventDefault()
-      handleSendMessage(input)
-      setInput('')
+      e.preventDefault();
+      handleSendMessage(input);
+      setInput("");
     }
-  }
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === 'Enter' && !e.shiftKey && input !== '' && !chatFinished) {
-      setInput(input.replace(/\n$/, ''))
-      e.preventDefault()
+    if (e.code === "Enter" && !e.shiftKey && input !== "" && !chatFinished) {
+      setInput(input.replace(/\n$/, ""));
+      e.preventDefault();
     }
-  }
+  };
 
   return (
     <div className="flex items-center space-x-2">
@@ -58,7 +58,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         onKeyUp={handleKeyUp}
         onKeyDown={handleKeyDown}
         className="grow p-2 border rounded-lg"
-        placeholder={copy.chat[chatFinished ? 'end' : type].placeholder}
+        placeholder={copy.chat[chatFinished ? "end" : type].placeholder}
       />
       <IconButton
         aria-label="Send message"
@@ -70,5 +70,5 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         <SendIcon />
       </IconButton>
     </div>
-  )
-}
+  );
+};

@@ -1,6 +1,6 @@
-import type { CacheClient } from '../types'
+import type { CacheClient } from "../types";
 
-type CacheValue = string | number | Buffer
+type CacheValue = string | number | Buffer;
 
 export default class CacheStore {
   constructor(private readonly cacheClient: CacheClient) {}
@@ -8,16 +8,16 @@ export default class CacheStore {
   public async set(
     key: string,
     value: CacheValue,
-    ttl: number | false = false
+    ttl: number | false = false,
   ): Promise<void> {
-    await this.cacheClient.set(key, value)
+    await this.cacheClient.set(key, value);
 
     if (ttl) {
-      await this.cacheClient.expire(key, ttl)
+      await this.cacheClient.expire(key, ttl);
     }
   }
 
   public async get(key: string): Promise<string | null> {
-    return await this.cacheClient.get(key)
+    return await this.cacheClient.get(key);
   }
 }

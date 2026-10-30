@@ -1,17 +1,17 @@
 import {
   profile as fallback,
   getPortfolioCopy,
-  type PortfolioProfile
-} from '@shared/content'
+  type PortfolioProfile,
+} from "@shared/content";
 export function SummarySection({
-  profile = fallback
+  profile = fallback,
 }: {
-  profile?: PortfolioProfile
+  profile?: PortfolioProfile;
 }) {
-  const text = getPortfolioCopy(profile.portfolioLanguage)
+  const text = getPortfolioCopy(profile.portfolioLanguage);
   const firstYear = profile.experiences
     .map((item) => item.start.slice(0, 4))
-    .sort()[0]
+    .sort()[0];
   return (
     <section id="summary" className="portfolio-hero">
       <div className="hero-orbit" aria-hidden="true" />
@@ -53,5 +53,5 @@ export function SummarySection({
         {text.scroll} <span aria-hidden="true">↓</span>
       </a>
     </section>
-  )
+  );
 }

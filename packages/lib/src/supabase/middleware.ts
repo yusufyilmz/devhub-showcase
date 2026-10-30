@@ -1,1 +1,1 @@
-export { updateSession } from '@shared/auth/middleware'
+export { updateSession } from "@shared/auth/middleware";

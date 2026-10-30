@@ -1,45 +1,45 @@
-'use client'
+"use client";
 
-import type React from 'react'
-import { createContext, useCallback, useContext, useState } from 'react'
-import { Alert, Typography } from '../components'
+import type React from "react";
+import { createContext, useCallback, useContext, useState } from "react";
+import { Alert, Typography } from "../components";
 
 export interface NotificationContextProps {
-  setError: (message: string) => void
-  setSuccess: (message: string) => void
-  setInfo: (message: string) => void
+  setError: (message: string) => void;
+  setSuccess: (message: string) => void;
+  setInfo: (message: string) => void;
 }
 
-type AlertTypes = 'success' | 'error' | 'warning' | 'info'
+type AlertTypes = "success" | "error" | "warning" | "info";
 
 export const NotificationContext = createContext<
   NotificationContextProps | undefined
->(undefined)
+>(undefined);
 
 export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
-  children
+  children,
 }) => {
   const [notification, setNotification] = useState({
-    message: '',
-    severity: 'success' as AlertTypes,
-    open: false
-  })
+    message: "",
+    severity: "success" as AlertTypes,
+    open: false,
+  });
 
   const setError = useCallback((message: string) => {
-    setNotification({ message, severity: 'error', open: true })
-  }, [])
+    setNotification({ message, severity: "error", open: true });
+  }, []);
 
   const setSuccess = useCallback((message: string) => {
-    setNotification({ message, severity: 'success', open: true })
-  }, [])
+    setNotification({ message, severity: "success", open: true });
+  }, []);
 
   const setInfo = useCallback((message: string) => {
-    setNotification({ message, severity: 'info', open: true })
-  }, [])
+    setNotification({ message, severity: "info", open: true });
+  }, []);
 
   const handleClose = () => {
-    setNotification((prev) => ({ ...prev, open: false }))
-  }
+    setNotification((prev) => ({ ...prev, open: false }));
+  };
 
   return (
     <NotificationContext.Provider value={{ setError, setSuccess, setInfo }}>
@@ -56,15 +56,15 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
         </Alert>
       )}
     </NotificationContext.Provider>
-  )
-}
+  );
+};
 
 export const useNotification = (): NotificationContextProps => {
-  const context = useContext(NotificationContext)
+  const context = useContext(NotificationContext);
   if (!context) {
     throw new Error(
-      'useNotification must be used within a NotificationProvider'
-    )
+      "useNotification must be used within a NotificationProvider",
+    );
   }
-  return context
-}
+  return context;
+};

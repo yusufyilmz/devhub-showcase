@@ -1,2 +1,2 @@
-import { authHandlers } from '../../../lib/auth-handlers'
-export const GET = authHandlers.callback
+import { authHandlers } from "../../../lib/auth-handlers";
+export const GET = authHandlers.callback;

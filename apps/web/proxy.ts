@@ -1,10 +1,10 @@
-import { updateSession } from '@shared/lib/supabase'
-import type { NextRequest, NextResponse } from 'next/server'
+import { updateSession } from "@shared/lib/supabase";
+import type { NextRequest, NextResponse } from "next/server";
 
 export function proxy(request: NextRequest): Promise<NextResponse> {
   // Always overwrite incoming values; only the actual URL selects a profile.
-  request.headers.set('x-profile-path', request.nextUrl.pathname)
-  return updateSession(request)
+  request.headers.set("x-profile-path", request.nextUrl.pathname);
+  return updateSession(request);
 }
 
 export const config = {
@@ -16,6 +16,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * Feel free to modify this pattern to include more paths.
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'
-  ]
-}
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
+};

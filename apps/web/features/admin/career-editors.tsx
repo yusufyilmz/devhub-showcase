@@ -1,14 +1,14 @@
-'use client'
-import { CollectionEditor } from '@shared/components/collection-editor'
-import { Field, LinesField, SelectField } from '@shared/components/fields'
-import type { PortfolioProfile } from '@shared/content'
+"use client";
+import { CollectionEditor } from "@shared/components/collection-editor";
+import { Field, LinesField, SelectField } from "@shared/components/fields";
+import type { PortfolioProfile } from "@shared/content";
 
-const newId = () => crypto.randomUUID()
-const today = () => new Date().toISOString().slice(0, 10)
+const newId = () => crypto.randomUUID();
+const today = () => new Date().toISOString().slice(0, 10);
 type Props = {
-  profile: PortfolioProfile
-  onChange: (profile: PortfolioProfile) => void
-}
+  profile: PortfolioProfile;
+  onChange: (profile: PortfolioProfile) => void;
+};
 export function ExperienceEditor({ profile, onChange }: Props) {
   return (
     <CollectionEditor
@@ -17,12 +17,12 @@ export function ExperienceEditor({ profile, onChange }: Props) {
       onChange={(experiences) => onChange({ ...profile, experiences })}
       create={() => ({
         id: newId(),
-        company: '',
-        companyUrl: 'https://',
-        position: '',
+        company: "",
+        companyUrl: "https://",
+        position: "",
         start: today(),
         end: null,
-        achievements: []
+        achievements: [],
       })}
       getTitle={(item) => item.company}
       onRemove={(item) =>
@@ -32,8 +32,8 @@ export function ExperienceEditor({ profile, onChange }: Props) {
           projects: profile.projects.map((project) =>
             project.experienceId === item.id
               ? { ...project, experienceId: null }
-              : project
-          )
+              : project,
+          ),
         })
       }
       render={(item, change) => (
@@ -63,7 +63,7 @@ export function ExperienceEditor({ profile, onChange }: Props) {
           <Field
             label="End date"
             type="date"
-            value={item.end ?? ''}
+            value={item.end ?? ""}
             onChange={(end) => change({ ...item, end: end || null })}
             hint="Leave blank for your current role."
           />
@@ -75,7 +75,7 @@ export function ExperienceEditor({ profile, onChange }: Props) {
         </>
       )}
     />
-  )
+  );
 }
 export function ProjectsEditor({ profile, onChange }: Props) {
   return (
@@ -85,14 +85,14 @@ export function ProjectsEditor({ profile, onChange }: Props) {
       onChange={(projects) => onChange({ ...profile, projects })}
       create={() => ({
         id: newId(),
-        name: '',
-        company: 'Personal',
+        name: "",
+        company: "Personal",
         experienceId: null,
         url: null,
         sourceUrl: null,
-        description: '',
+        description: "",
         skills: [],
-        public: true
+        public: true,
       })}
       getTitle={(item) => item.name}
       render={(item, change) => (
@@ -109,7 +109,7 @@ export function ProjectsEditor({ profile, onChange }: Props) {
           />
           <SelectField
             label="Related experience"
-            value={item.experienceId ?? ''}
+            value={item.experienceId ?? ""}
             onChange={(experienceId) =>
               change({ ...item, experienceId: experienceId || null })
             }
@@ -124,13 +124,13 @@ export function ProjectsEditor({ profile, onChange }: Props) {
           <Field
             label="Live URL"
             type="url"
-            value={item.url ?? ''}
+            value={item.url ?? ""}
             onChange={(url) => change({ ...item, url: url || null })}
           />
           <Field
             label="Project cover image URL"
             type="url"
-            value={item.coverImage ?? ''}
+            value={item.coverImage ?? ""}
             onChange={(coverImage) =>
               change({ ...item, coverImage: coverImage || null })
             }
@@ -139,7 +139,7 @@ export function ProjectsEditor({ profile, onChange }: Props) {
           <Field
             label="Source code URL"
             type="url"
-            value={item.sourceUrl ?? ''}
+            value={item.sourceUrl ?? ""}
             onChange={(sourceUrl) =>
               change({ ...item, sourceUrl: sourceUrl || null })
             }
@@ -168,7 +168,7 @@ export function ProjectsEditor({ profile, onChange }: Props) {
         </>
       )}
     />
-  )
+  );
 }
 export function EducationEditor({ profile, onChange }: Props) {
   return (
@@ -178,12 +178,12 @@ export function EducationEditor({ profile, onChange }: Props) {
       onChange={(education) => onChange({ ...profile, education })}
       create={() => ({
         id: newId(),
-        degree: '',
-        field: '',
-        institution: '',
-        url: 'https://',
+        degree: "",
+        field: "",
+        institution: "",
+        url: "https://",
         start: today(),
-        end: today()
+        end: today(),
       })}
       getTitle={(item) => item.institution}
       render={(item, change) => (
@@ -224,7 +224,7 @@ export function EducationEditor({ profile, onChange }: Props) {
         </>
       )}
     />
-  )
+  );
 }
 export function LanguagesEditor({ profile, onChange }: Props) {
   return (
@@ -232,7 +232,7 @@ export function LanguagesEditor({ profile, onChange }: Props) {
       title="Languages"
       items={profile.languages}
       onChange={(languages) => onChange({ ...profile, languages })}
-      create={() => ({ id: newId(), language: '', proficiency: '' })}
+      create={() => ({ id: newId(), language: "", proficiency: "" })}
       getTitle={(item) => item.language}
       render={(item, change) => (
         <>
@@ -249,5 +249,5 @@ export function LanguagesEditor({ profile, onChange }: Props) {
         </>
       )}
     />
-  )
+  );
 }

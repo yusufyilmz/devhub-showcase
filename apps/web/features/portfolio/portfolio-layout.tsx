@@ -1,31 +1,31 @@
-import { HeroSurface } from '@shared/components/hero-surface'
+import { HeroSurface } from "@shared/components/hero-surface";
 import {
   formatPortfolioPeriod,
   getNameInitials,
   getPortfolioCopy,
   type PortfolioProfile,
   type SectionRendererId,
-  selectPortfolioContent
-} from '@shared/content'
-import { ThemeToggle } from '@shared/ui/theme'
-import type { ReactNode } from 'react'
-import { RegisteredSections } from './registered-sections'
+  selectPortfolioContent,
+} from "@shared/content";
+import { ThemeToggle } from "@shared/ui/theme";
+import type { ReactNode } from "react";
+import { RegisteredSections } from "./registered-sections";
 
 export function PortfolioLayout({
   profile,
-  username
+  username,
 }: {
-  profile: PortfolioProfile
-  username: string
+  profile: PortfolioProfile;
+  username: string;
 }) {
-  const canonicalProfile = profile
-  profile = selectPortfolioContent(profile)
-  const text = getPortfolioCopy(profile.portfolioLanguage)
-  const type = profile.portfolioType ?? 'minimal'
+  const canonicalProfile = profile;
+  profile = selectPortfolioContent(profile);
+  const text = getPortfolioCopy(profile.portfolioLanguage);
+  const type = profile.portfolioType ?? "minimal";
   const projects =
     profile.sectionSettings?.projects?.visible === false
       ? []
-      : profile.projects.filter((project) => project.public)
+      : profile.projects.filter((project) => project.public);
   return (
     <div className="folio" data-portfolio-type={type}>
       <a className="skip-link" href="#main-content">
@@ -98,22 +98,22 @@ export function PortfolioLayout({
         <a href="/">{text.madeWith} ↗</a>
       </footer>
     </div>
-  )
+  );
 }
 
 function Work({
   profile,
-  visual = false
+  visual = false,
 }: {
-  profile: PortfolioProfile
-  visual?: boolean
+  profile: PortfolioProfile;
+  visual?: boolean;
 }) {
-  const text = getPortfolioCopy(profile.portfolioLanguage)
+  const text = getPortfolioCopy(profile.portfolioLanguage);
   return (
     <section id="work" className="folio-section">
       <p className="folio-eyebrow">{text.workSelection}</p>
       <h2>{visual ? text.selectedWork : text.clientWork}</h2>
-      <div className={visual ? 'folio-gallery' : 'folio-project-list'}>
+      <div className={visual ? "folio-gallery" : "folio-project-list"}>
         {profile.projects
           .filter((project) => project.public)
           .map((project, index) => (
@@ -133,7 +133,7 @@ function Work({
                     />
                   ) : (
                     <span aria-hidden="true">
-                      {String(index + 1).padStart(2, '0')}
+                      {String(index + 1).padStart(2, "0")}
                     </span>
                   )}
                 </div>
@@ -143,7 +143,7 @@ function Work({
                 <h3>{project.name}</h3>
                 <p>{project.description}</p>
                 {project.skills.length > 0 && (
-                  <p className="folio-tags">{project.skills.join(' · ')}</p>
+                  <p className="folio-tags">{project.skills.join(" · ")}</p>
                 )}
                 <div className="folio-actions">
                   {project.url && (
@@ -158,19 +158,19 @@ function Work({
           ))}
       </div>
     </section>
-  )
+  );
 }
 
 function FolioSections({
   profile,
-  sourceProfile = profile
+  sourceProfile = profile,
 }: {
-  profile: PortfolioProfile
-  sourceProfile?: PortfolioProfile
+  profile: PortfolioProfile;
+  sourceProfile?: PortfolioProfile;
 }) {
-  const text = getPortfolioCopy(profile.portfolioLanguage)
-  const designer = profile.portfolioType === 'designer'
-  const projects = profile.projects.filter((project) => project.public)
+  const text = getPortfolioCopy(profile.portfolioLanguage);
+  const designer = profile.portfolioType === "designer";
+  const projects = profile.projects.filter((project) => project.public);
   const renderers: Partial<Record<SectionRendererId, ReactNode>> = {
     prose: (
       <section id="about" className="folio-section">
@@ -183,7 +183,7 @@ function FolioSections({
         )}
       </section>
     ),
-    'experience-list': profile.experiences.length > 0 && (
+    "experience-list": profile.experiences.length > 0 && (
       <section className="folio-section" aria-labelledby="folio-experience">
         <h2 id="folio-experience">{text.experience}</h2>
         {profile.experiences.map((experience) => (
@@ -194,7 +194,7 @@ function FolioSections({
                 {formatPortfolioPeriod(
                   experience.start,
                   experience.end,
-                  profile.portfolioLanguage
+                  profile.portfolioLanguage,
                 )}
               </span>
             </div>
@@ -212,22 +212,22 @@ function FolioSections({
         ))}
       </section>
     ),
-    'project-gallery': projects.length > 0 && <Work profile={profile} visual />,
-    'project-list': projects.length > 0 && <Work profile={profile} />,
-    'skill-list': Object.keys(profile.skills).length > 0 && (
+    "project-gallery": projects.length > 0 && <Work profile={profile} visual />,
+    "project-list": projects.length > 0 && <Work profile={profile} />,
+    "skill-list": Object.keys(profile.skills).length > 0 && (
       <section className="folio-section">
         <h2>{designer ? text.creativeToolkit : text.expertise}</h2>
         <dl className="folio-skills">
           {Object.entries(profile.skills).map(([group, skills]) => (
             <div key={group}>
               <dt>{group}</dt>
-              <dd>{skills.join(' · ')}</dd>
+              <dd>{skills.join(" · ")}</dd>
             </div>
           ))}
         </dl>
       </section>
     ),
-    'education-list': profile.education.length > 0 && (
+    "education-list": profile.education.length > 0 && (
       <section className="folio-section">
         <h2>{text.education}</h2>
         {profile.education.map((education) => (
@@ -236,27 +236,27 @@ function FolioSections({
               {education.degree} · {education.field}
             </h3>
             <p>
-              <a href={education.url}>{education.institution}</a> ·{' '}
+              <a href={education.url}>{education.institution}</a> ·{" "}
               {formatPortfolioPeriod(
                 education.start,
                 education.end,
-                profile.portfolioLanguage
+                profile.portfolioLanguage,
               )}
             </p>
           </article>
         ))}
       </section>
     ),
-    'language-list': profile.languages.length > 0 && (
+    "language-list": profile.languages.length > 0 && (
       <section className="folio-section">
         <h2>{text.spokenLanguages}</h2>
         <p>
           {profile.languages
             .map((language) => `${language.language} (${language.proficiency})`)
-            .join(' · ')}
+            .join(" · ")}
         </p>
       </section>
-    )
-  }
-  return <RegisteredSections profile={sourceProfile} renderers={renderers} />
+    ),
+  };
+  return <RegisteredSections profile={sourceProfile} renderers={renderers} />;
 }

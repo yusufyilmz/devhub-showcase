@@ -1,1 +1,1 @@
-export { IFramePreview } from './IFramePreview'
+export { IFramePreview } from "./IFramePreview";

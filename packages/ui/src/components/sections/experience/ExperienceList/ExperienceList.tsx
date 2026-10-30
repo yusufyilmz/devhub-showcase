@@ -1,17 +1,17 @@
-import type { Language } from '@shared/content'
-import type { ExperienceWithCompanyProjectAndSkills } from '@shared/lib/types'
-import type React from 'react'
-import { Timeline } from '../../../../components'
-import { ExperienceItem } from '../ExperienceItem/ExperienceItem'
+import type { Language } from "@shared/content";
+import type { ExperienceWithCompanyProjectAndSkills } from "@shared/lib/types";
+import type React from "react";
+import { Timeline } from "../../../../components";
+import { ExperienceItem } from "../ExperienceItem/ExperienceItem";
 
 interface ExperienceListProps {
-  language?: Language
-  experiences: ExperienceWithCompanyProjectAndSkills[]
+  language?: Language;
+  experiences: ExperienceWithCompanyProjectAndSkills[];
 }
 
 export const ExperienceList: React.FC<ExperienceListProps> = ({
   experiences = [],
-  language = 'en'
+  language = "en",
 }) => {
   return (
     <Timeline className="w-full">
@@ -23,5 +23,5 @@ export const ExperienceList: React.FC<ExperienceListProps> = ({
         />
       ))}
     </Timeline>
-  )
-}
+  );
+};

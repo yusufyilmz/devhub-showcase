@@ -1,2 +1,2 @@
-export { ProfileSection } from './ProfileSection'
-export { ProfileSectionEditor } from './ProfileSectionEditor'
+export { ProfileSection } from "./ProfileSection";
+export { ProfileSectionEditor } from "./ProfileSectionEditor";

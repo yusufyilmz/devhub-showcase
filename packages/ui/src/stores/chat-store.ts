@@ -1,23 +1,23 @@
-import type { ChatMessage, ChatType } from '@shared/lib/types'
-import { v4 as uuidv4 } from 'uuid'
-import { create, useStore } from 'zustand'
-import { persist } from 'zustand/middleware'
-import { cvWelcomeMessage, referralWelcomeMessage } from '../constants'
-import { CHAT_STORAGE_NAME } from '../constants/stores'
+import type { ChatMessage, ChatType } from "@shared/lib/types";
+import { v4 as uuidv4 } from "uuid";
+import { create, useStore } from "zustand";
+import { persist } from "zustand/middleware";
+import { cvWelcomeMessage, referralWelcomeMessage } from "../constants";
+import { CHAT_STORAGE_NAME } from "../constants/stores";
 
 export type ChatState = {
-  chatMessages: ChatMessage[]
-  messages: ChatMessage[]
-  referralMessages: ChatMessage[]
-  sessionId: string
-}
+  chatMessages: ChatMessage[];
+  messages: ChatMessage[];
+  referralMessages: ChatMessage[];
+  sessionId: string;
+};
 
 type ChatActions = ChatState & {
-  addMessage: (message: ChatMessage) => void
-  resetChat: (type: ChatType) => void
-}
+  addMessage: (message: ChatMessage) => void;
+  resetChat: (type: ChatType) => void;
+};
 
-type ChatStore = ChatState & ChatActions
+type ChatStore = ChatState & ChatActions;
 
 export const chatStore = create<ChatStore>()(
   persist(
@@ -25,68 +25,68 @@ export const chatStore = create<ChatStore>()(
       sessionId: uuidv4(),
       referralMessages: [
         {
-          ...referralWelcomeMessage
-        }
+          ...referralWelcomeMessage,
+        },
       ],
       chatMessages: [
         {
-          ...cvWelcomeMessage
-        }
+          ...cvWelcomeMessage,
+        },
       ],
       messages: [],
       addMessage: (message) =>
         set((state) =>
-          message.type === 'referral'
+          message.type === "referral"
             ? {
                 referralMessages: [
                   ...state.referralMessages,
                   {
-                    ...message
-                  }
-                ]
+                    ...message,
+                  },
+                ],
               }
             : {
                 chatMessages: [
                   ...state.chatMessages,
                   {
-                    ...message
-                  }
-                ]
-              }
+                    ...message,
+                  },
+                ],
+              },
         ),
       resetChat: (type: ChatType) => {
         set(
-          type === 'referral'
+          type === "referral"
             ? {
                 referralMessages: [
                   {
-                    ...referralWelcomeMessage
-                  }
-                ]
+                    ...referralWelcomeMessage,
+                  },
+                ],
               }
             : {
                 chatMessages: [
                   {
-                    ...cvWelcomeMessage
-                  }
-                ]
-              }
-        )
-      }
+                    ...cvWelcomeMessage,
+                  },
+                ],
+              },
+        );
+      },
     }),
     {
-      name: CHAT_STORAGE_NAME
-    }
-  )
-)
+      name: CHAT_STORAGE_NAME,
+    },
+  ),
+);
 
 export const useChatMessages = (type: string) =>
   useStore(
     chatStore,
-    type === 'referral'
+    type === "referral"
       ? (state) => state.referralMessages
-      : (state) => state.chatMessages
-  )
+      : (state) => state.chatMessages,
+  );
 
 export const useAddMessage = () =>
-  useStore(chatStore, (state) => state.addMessage)
+  useStore(chatStore, (state) => state.addMessage);

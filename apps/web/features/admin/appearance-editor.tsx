@@ -1,28 +1,28 @@
-'use client'
-import { SelectField } from '@shared/components/fields'
-import type { ColorMode, PortfolioProfile } from '@shared/content'
-import { useState } from 'react'
-import { HeroSettingsEditor } from './hero-settings-editor'
-import { ThemePicker } from './theme-picker'
-import { ThemePreview } from './theme-preview'
+"use client";
+import { SelectField } from "@shared/components/fields";
+import type { ColorMode, PortfolioProfile } from "@shared/content";
+import { useState } from "react";
+import { HeroSettingsEditor } from "./hero-settings-editor";
+import { ThemePicker } from "./theme-picker";
+import { ThemePreview } from "./theme-preview";
 
 export function AppearanceEditor({
   profile,
-  onChange
+  onChange,
 }: {
-  profile: PortfolioProfile
-  onChange: (profile: PortfolioProfile) => void
+  profile: PortfolioProfile;
+  onChange: (profile: PortfolioProfile) => void;
 }) {
   const appearance = profile.appearance ?? {
-    accent: 'cyan',
-    defaultTheme: 'dark'
-  }
+    accent: "cyan",
+    defaultTheme: "dark",
+  };
   const [previewMode, setPreviewMode] = useState<ColorMode>(
-    appearance.defaultTheme === 'light' ? 'light' : 'dark'
-  )
+    appearance.defaultTheme === "light" ? "light" : "dark",
+  );
   const update = (
-    change: Partial<NonNullable<PortfolioProfile['appearance']>>
-  ) => onChange({ ...profile, appearance: { ...appearance, ...change } })
+    change: Partial<NonNullable<PortfolioProfile["appearance"]>>,
+  ) => onChange({ ...profile, appearance: { ...appearance, ...change } });
   return (
     <section>
       <div className="editor-section-heading">
@@ -37,7 +37,7 @@ export function AppearanceEditor({
       </div>
       <div className="editor-card">
         <ThemePicker
-          value={appearance.theme ?? 'studio'}
+          value={appearance.theme ?? "studio"}
           accent={appearance.accent}
           mode={previewMode}
           onChange={(theme) => update({ theme })}
@@ -47,8 +47,8 @@ export function AppearanceEditor({
             label="Default color mode"
             value={appearance.defaultTheme}
             onChange={(value) => {
-              update({ defaultTheme: value as typeof appearance.defaultTheme })
-              setPreviewMode(value === 'light' ? 'light' : 'dark')
+              update({ defaultTheme: value as typeof appearance.defaultTheme });
+              setPreviewMode(value === "light" ? "light" : "dark");
             }}
           >
             <option value="dark">Dark</option>
@@ -71,7 +71,7 @@ export function AppearanceEditor({
           <h3>Try it with your story</h3>
           <fieldset className="theme-preview-modes">
             <legend className="sr-only">Preview color mode</legend>
-            {(['light', 'dark'] as const).map((mode) => (
+            {(["light", "dark"] as const).map((mode) => (
               <button
                 key={mode}
                 type="button"
@@ -93,5 +93,5 @@ export function AppearanceEditor({
       </div>
       <HeroSettingsEditor profile={profile} onChange={onChange} />
     </section>
-  )
+  );
 }

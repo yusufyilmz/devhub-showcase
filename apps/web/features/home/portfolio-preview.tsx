@@ -1,18 +1,18 @@
-'use client'
-import { useId, useRef, useState } from 'react'
+"use client";
+import { useId, useRef, useState } from "react";
 
-const views = ['Portfolio', 'CV'] as const
+const views = ["Portfolio", "CV"] as const;
 function tabIndexForKey(key: string, index: number) {
-  if (key === 'Home') return 0
-  if (key === 'End') return 1
-  return ['ArrowLeft', 'ArrowRight'].includes(key) ? 1 - index : null
+  if (key === "Home") return 0;
+  if (key === "End") return 1;
+  return ["ArrowLeft", "ArrowRight"].includes(key) ? 1 - index : null;
 }
-const accents = ['cyan', 'violet', 'emerald'] as const
+const accents = ["cyan", "violet", "emerald"] as const;
 export function PortfolioPreview() {
-  const [view, setView] = useState<(typeof views)[number]>('Portfolio')
-  const [accent, setAccent] = useState<(typeof accents)[number]>('cyan')
-  const id = useId()
-  const tabs = useRef<Array<HTMLButtonElement | null>>([])
+  const [view, setView] = useState<(typeof views)[number]>("Portfolio");
+  const [accent, setAccent] = useState<(typeof accents)[number]>("cyan");
+  const id = useId();
+  const tabs = useRef<Array<HTMLButtonElement | null>>([]);
   return (
     <div className="home-preview-wrap" id="preview">
       <div className="home-preview-tools">
@@ -25,7 +25,7 @@ export function PortfolioPreview() {
             <button
               key={item}
               ref={(node) => {
-                tabs.current[index] = node
+                tabs.current[index] = node;
               }}
               type="button"
               role="tab"
@@ -35,13 +35,13 @@ export function PortfolioPreview() {
               tabIndex={view === item ? 0 : -1}
               onClick={() => setView(item)}
               onKeyDown={(event) => {
-                const next = tabIndexForKey(event.key, index)
-                if (next === null) return
-                event.preventDefault()
-                const nextView = views[next]
+                const next = tabIndexForKey(event.key, index);
+                if (next === null) return;
+                event.preventDefault();
+                const nextView = views[next];
                 if (nextView) {
-                  setView(nextView)
-                  tabs.current[next]?.focus()
+                  setView(nextView);
+                  tabs.current[next]?.focus();
                 }
               }}
             >
@@ -69,7 +69,7 @@ export function PortfolioPreview() {
           tabIndex={0}
           className="home-preview-panel"
         >
-          {view === 'Portfolio' ? (
+          {view === "Portfolio" ? (
             <div className="home-sample-site">
               <div className="home-sample-nav">
                 <strong>
@@ -96,8 +96,8 @@ export function PortfolioPreview() {
                 <button
                   type="button"
                   onClick={() => {
-                    setView('CV')
-                    tabs.current[1]?.focus()
+                    setView("CV");
+                    tabs.current[1]?.focus();
                   }}
                 >
                   Preview your CV <span aria-hidden="true">↗</span>
@@ -187,12 +187,12 @@ export function PortfolioPreview() {
               aria-pressed={accent === item}
               onClick={() => setAccent(item)}
             >
-              <span aria-hidden="true">{accent === item ? '✓' : ''}</span>
+              <span aria-hidden="true">{accent === item ? "✓" : ""}</span>
             </button>
           ))}
         </fieldset>
         <span className="home-preview-note">Illustrative preview</span>
       </div>
     </div>
-  )
+  );
 }

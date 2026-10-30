@@ -1,78 +1,78 @@
-'use client'
+"use client";
 import {
   type PortfolioProfile,
   type PortfolioType,
-  portfolioTypes
-} from '@shared/content'
-import { createEmptyProfile } from '@shared/lib/user-profile'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+  portfolioTypes,
+} from "@shared/content";
+import { createEmptyProfile } from "@shared/lib/user-profile";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 function errorMessage(reason: unknown) {
   return reason instanceof Error
     ? reason.message
-    : 'Could not process the portfolio.'
+    : "Could not process the portfolio.";
 }
 export function CreatePortfolio() {
-  const router = useRouter()
-  const [name, setName] = useState('')
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [type, setType] = useState<PortfolioType>('designer')
-  const [imported, setImported] = useState<PortfolioProfile | null>(null)
-  const [error, setError] = useState('')
-  const [busy, setBusy] = useState(false)
+  const router = useRouter();
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [type, setType] = useState<PortfolioType>("designer");
+  const [imported, setImported] = useState<PortfolioProfile | null>(null);
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
   async function readImport(file: File | undefined) {
-    if (!file) return
+    if (!file) return;
     try {
       if (file.size > 250000)
-        throw new Error('The import must be smaller than 250 KB.')
-      const input = JSON.parse(await file.text())
-      const profile = input.profile ?? input
-      if (typeof profile.name !== 'string')
-        throw new Error('Choose a portfolio profile JSON file.')
-      setImported(profile)
-      setName(profile.name)
-      setEmail(profile.email ?? '')
-      setType(profile.portfolioType ?? 'designer')
-      if (typeof input.username === 'string') setUsername(input.username)
-      setError('')
+        throw new Error("The import must be smaller than 250 KB.");
+      const input = JSON.parse(await file.text());
+      const profile = input.profile ?? input;
+      if (typeof profile.name !== "string")
+        throw new Error("Choose a portfolio profile JSON file.");
+      setImported(profile);
+      setName(profile.name);
+      setEmail(profile.email ?? "");
+      setType(profile.portfolioType ?? "designer");
+      if (typeof input.username === "string") setUsername(input.username);
+      setError("");
     } catch (reason) {
-      setError(errorMessage(reason))
+      setError(errorMessage(reason));
     }
   }
 
   async function create(event: React.FormEvent) {
-    event.preventDefault()
-    setError('')
-    setBusy(true)
+    event.preventDefault();
+    setError("");
+    setBusy(true);
     try {
       const base =
         imported ??
-        createEmptyProfile({ email: email || 'pending@example.com' })
+        createEmptyProfile({ email: email || "pending@example.com" });
       const profile = {
         ...base,
         name,
-        email: email || 'pending@example.com',
+        email: email || "pending@example.com",
         portfolioType: type,
-        templateChosen: true
-      }
-      const response = await fetch('/api/admin/managed', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, profile })
-      })
-      const result = await response.json()
-      if (!response.ok) throw new Error(result.error)
-      router.push(`/admin/portfolios/${result.id}`)
-      router.refresh()
+        templateChosen: true,
+      };
+      const response = await fetch("/api/admin/managed", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, profile }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error);
+      router.push(`/admin/portfolios/${result.id}`);
+      router.refresh();
     } catch (reason) {
       setError(
         reason instanceof Error
           ? reason.message
-          : 'Could not create the portfolio.'
-      )
-      setBusy(false)
+          : "Could not create the portfolio.",
+      );
+      setBusy(false);
     }
   }
   return (
@@ -148,7 +148,7 @@ export function CreatePortfolio() {
             publishing.
           </p>
           <button type="submit" className="studio-primary">
-            {busy ? 'Creating…' : 'Create private portfolio'}
+            {busy ? "Creating…" : "Create private portfolio"}
           </button>
           {imported && (
             <button
@@ -167,5 +167,5 @@ export function CreatePortfolio() {
         )}
       </form>
     </section>
-  )
+  );
 }

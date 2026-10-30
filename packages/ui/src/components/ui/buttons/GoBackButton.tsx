@@ -1,11 +1,11 @@
-'use client'
+"use client";
 
-import { copy } from '@shared/content'
-import { useRouter } from 'next/navigation'
-import { Button } from '../../../components'
+import { copy } from "@shared/content";
+import { useRouter } from "next/navigation";
+import { Button } from "../../../components";
 
 export const GoBackButton = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <Button
@@ -16,5 +16,5 @@ export const GoBackButton = () => {
     >
       {copy.cta.goBack}
     </Button>
-  )
-}
+  );
+};

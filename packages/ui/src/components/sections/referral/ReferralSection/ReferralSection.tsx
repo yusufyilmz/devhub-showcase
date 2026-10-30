@@ -1,15 +1,15 @@
-import { getPortfolioCopy, type Language } from '@shared/content'
-import type { Referral } from '@shared/lib/types'
-import type React from 'react'
-import { List, ListItem, Section } from '../../../../components'
-import { ReferralItem } from '../ReferralItem'
+import { getPortfolioCopy, type Language } from "@shared/content";
+import type { Referral } from "@shared/lib/types";
+import type React from "react";
+import { List, ListItem, Section } from "../../../../components";
+import { ReferralItem } from "../ReferralItem";
 
 export const ReferralSection: React.FC<{
-  referrals: Referral[]
-  language?: Language
-}> = ({ referrals, language = 'en' }) => {
-  const text = getPortfolioCopy(language)
-  if (!referrals.length) return null
+  referrals: Referral[];
+  language?: Language;
+}> = ({ referrals, language = "en" }) => {
+  const text = getPortfolioCopy(language);
+  if (!referrals.length) return null;
   return (
     <Section
       className="referral-section"
@@ -28,5 +28,5 @@ export const ReferralSection: React.FC<{
         </List>
       </div>
     </Section>
-  )
-}
+  );
+};

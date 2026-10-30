@@ -1,5 +1,5 @@
-'use client'
-import { Field, SelectField } from '@shared/components/fields'
+"use client";
+import { Field, SelectField } from "@shared/components/fields";
 import {
   type AuthorableSectionType,
   authorableSections,
@@ -11,58 +11,58 @@ import {
   MAX_CUSTOM_SECTIONS,
   type PortfolioProfile,
   resolveSectionSource,
-  type SectionComposition
-} from '@shared/content'
-import { EditSection } from '@shared/sections/editors'
-import { useState } from 'react'
-import { CustomPortfolioSection } from '../portfolio/custom-portfolio-section'
+  type SectionComposition,
+} from "@shared/content";
+import { EditSection } from "@shared/sections/editors";
+import { useState } from "react";
+import { CustomPortfolioSection } from "../portfolio/custom-portfolio-section";
 
 const legacyType = (section: CustomSection): AuthorableSectionType =>
   section.sectionType ??
-  (section.composition === 'statistics'
-    ? 'stats'
-    : (section.composition ?? 'custom'))
+  (section.composition === "statistics"
+    ? "stats"
+    : (section.composition ?? "custom"));
 function createSection(type: AuthorableSectionType): CustomSection {
   const aliases: Partial<Record<AuthorableSectionType, SectionComposition>> = {
-    custom: 'custom',
-    services: 'services',
-    testimonials: 'testimonials',
-    faq: 'faq',
-    stats: 'statistics',
-    cta: 'cta',
-    youtube: 'youtube',
-    instagram: 'instagram',
-    pinterest: 'pinterest'
-  }
+    custom: "custom",
+    services: "services",
+    testimonials: "testimonials",
+    faq: "faq",
+    stats: "statistics",
+    cta: "cta",
+    youtube: "youtube",
+    instagram: "instagram",
+    pinterest: "pinterest",
+  };
   return {
     id: `custom-${crypto.randomUUID()}`,
     title:
-      type === 'custom'
-        ? 'New section'
-        : type === 'youtube'
-          ? 'Films and videos'
+      type === "custom"
+        ? "New section"
+        : type === "youtube"
+          ? "Films and videos"
           : authorableSections[type].name,
     sectionType: type,
     composition: aliases[type],
     renderer: getSectionRenderers(type)[0],
     visible: true,
-    items: []
-  }
+    items: [],
+  };
 }
 export function CustomSectionsEditor({
   profile,
-  onChange
+  onChange,
 }: {
-  profile: PortfolioProfile
-  onChange: (profile: PortfolioProfile) => void
+  profile: PortfolioProfile;
+  onChange: (profile: PortfolioProfile) => void;
 }) {
-  const [starter, setStarter] = useState<AuthorableSectionType>('custom')
-  const sections = profile.customSections ?? []
+  const [starter, setStarter] = useState<AuthorableSectionType>("custom");
+  const sections = profile.customSections ?? [];
   function change(customSections: CustomSection[]) {
-    const ids = new Set(customSections.map(({ id }) => id))
+    const ids = new Set(customSections.map(({ id }) => id));
     const sequence = profile.sectionSequence?.filter(
-      (id) => !id.startsWith('custom-') || ids.has(id as CustomSection['id'])
-    )
+      (id) => !id.startsWith("custom-") || ids.has(id as CustomSection["id"]),
+    );
     onChange({
       ...profile,
       customSections,
@@ -72,11 +72,11 @@ export function CustomSectionsEditor({
               ...sequence,
               ...customSections
                 .filter(({ id }) => !sequence.includes(id))
-                .map(({ id }) => id)
-            ]
+                .map(({ id }) => id),
+            ],
           }
-        : {})
-    })
+        : {}),
+    });
   }
   return (
     <section>
@@ -112,7 +112,7 @@ export function CustomSectionsEditor({
           profile={profile}
           onChange={(updated) =>
             change(
-              sections.map((item) => (item.id === updated.id ? updated : item))
+              sections.map((item) => (item.id === updated.id ? updated : item)),
             )
           }
           onDuplicate={
@@ -128,7 +128,7 @@ export function CustomSectionsEditor({
                       items: section.items.map((item) => ({
                         ...item,
                         id: crypto.randomUUID(),
-                        details: item.details ? [...item.details] : undefined
+                        details: item.details ? [...item.details] : undefined,
                       })),
                       options: section.options
                         ? { ...section.options }
@@ -138,50 +138,50 @@ export function CustomSectionsEditor({
                             ...section.source,
                             itemIds: section.source.itemIds
                               ? [...section.source.itemIds]
-                              : undefined
+                              : undefined,
                           }
-                        : undefined
-                    }
+                        : undefined,
+                    },
                   ])
           }
           onRemove={() => {
             if (
               window.confirm(
-                `Remove ${section.title}? Changes take effect when you save.`
+                `Remove ${section.title}? Changes take effect when you save.`,
               )
             )
-              change(sections.filter(({ id }) => id !== section.id))
+              change(sections.filter(({ id }) => id !== section.id));
           }}
         />
       ))}
     </section>
-  )
+  );
 }
 function SectionEditor({
   section,
   profile,
   onChange,
   onDuplicate,
-  onRemove
+  onRemove,
 }: {
-  section: CustomSection
-  profile: PortfolioProfile
-  onChange: (section: CustomSection) => void
-  onDuplicate?: () => void
-  onRemove: () => void
+  section: CustomSection;
+  profile: PortfolioProfile;
+  onChange: (section: CustomSection) => void;
+  onDuplicate?: () => void;
+  onRemove: () => void;
 }) {
-  const type = legacyType(section)
+  const type = legacyType(section);
   const sourceItems = {
-    projects: getSectionItems(profile, 'projects'),
-    experiences: getSectionItems(profile, 'experience'),
-    education: getSectionItems(profile, 'education'),
-    skills: getSectionItems(profile, 'skills'),
-    languages: getSectionItems(profile, 'languages'),
-    about: [{ id: 'about', title: 'About' }]
-  }
+    projects: getSectionItems(profile, "projects"),
+    experiences: getSectionItems(profile, "experience"),
+    education: getSectionItems(profile, "education"),
+    skills: getSectionItems(profile, "skills"),
+    languages: getSectionItems(profile, "languages"),
+    about: [{ id: "about", title: "About" }],
+  };
   return (
     <fieldset className="editor-card">
-      <legend>{section.title || 'New section'}</legend>
+      <legend>{section.title || "New section"}</legend>
       <Field
         label="Section name"
         value={section.title}
@@ -192,14 +192,14 @@ function SectionEditor({
         label="Section type"
         value={type}
         onChange={(value) => {
-          const next = value as AuthorableSectionType
+          const next = value as AuthorableSectionType;
           onChange({
             ...section,
             sectionType: next,
             composition: undefined,
             source: undefined,
-            renderer: getSectionRenderers(next)[0]
-          })
+            renderer: getSectionRenderers(next)[0],
+          });
         }}
       >
         {authorableSectionTypes.map((value) => (
@@ -215,7 +215,7 @@ function SectionEditor({
           onChange={(event) =>
             onChange({ ...section, visible: event.target.checked })
           }
-        />{' '}
+        />{" "}
         Show custom section
       </label>
       <EditSection
@@ -242,15 +242,15 @@ function SectionEditor({
           preview
           section={resolveSectionSource(
             { ...section, sectionType: type },
-            profile
+            profile,
           )}
           language={profile.portfolioLanguage}
           anchors={getPortfolioEntries(profile).map((entry) => ({
             id: entry.id,
-            title: entry.title
+            title: entry.title,
           }))}
         />
       </details>
     </fieldset>
-  )
+  );
 }

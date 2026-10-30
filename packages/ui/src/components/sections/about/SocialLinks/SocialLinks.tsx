@@ -1,23 +1,23 @@
 import {
   profile as fallback,
   getPortfolioCopy,
-  type PortfolioProfile
-} from '@shared/content'
+  type PortfolioProfile,
+} from "@shared/content";
 import {
   EmailIcon,
   GitHubIcon,
   IconButtonWithLink,
   LinkedInIcon,
   PhoneIcon,
-  Tooltip
-} from '../../../../components'
+  Tooltip,
+} from "../../../../components";
 
 export const SocialLinks = ({
-  profile = fallback
+  profile = fallback,
 }: {
-  profile?: PortfolioProfile
+  profile?: PortfolioProfile;
 }) => {
-  const text = getPortfolioCopy(profile.portfolioLanguage)
+  const text = getPortfolioCopy(profile.portfolioLanguage);
   return (
     <div className="flex justify-center gap-4 mt-4">
       {profile.linkedin && (
@@ -45,12 +45,12 @@ export const SocialLinks = ({
         <Tooltip title={text.phone} arrow>
           <IconButtonWithLink
             label={text.phone}
-            href={`tel:${profile.phone.replaceAll(' ', '')}`}
+            href={`tel:${profile.phone.replaceAll(" ", "")}`}
           >
             <PhoneIcon fontSize="large" />
           </IconButtonWithLink>
         </Tooltip>
       )}
     </div>
-  )
-}
+  );
+};

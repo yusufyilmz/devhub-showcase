@@ -1,30 +1,30 @@
 import {
   profile as initialProfile,
-  type PortfolioProfile
-} from '@shared/content'
-import type { PageResources, Skill } from '../../types'
+  type PortfolioProfile,
+} from "@shared/content";
+import type { PageResources, Skill } from "../../types";
 
-const timestamp = '2026-10-27T00:00:00.000Z'
+const timestamp = "2026-10-27T00:00:00.000Z";
 const company = (name: string, link: string) => ({
   id: name,
   name,
   link,
   created_at: timestamp,
-  updated_at: timestamp
-})
+  updated_at: timestamp,
+});
 const skill = (name: string): Skill => ({
   id: name,
   name,
-  type: 'Technical',
+  type: "Technical",
   experienceYear: null,
   createdAt: timestamp,
   updatedAt: timestamp,
-  projects: []
-})
+  projects: [],
+});
 
 /** Maps versioned public content to the UI contract; never writes database records. */
 export function getPortfolioResources(
-  profile: PortfolioProfile = initialProfile
+  profile: PortfolioProfile = initialProfile,
 ): PageResources {
   const projects = profile.projects.map((item) => ({
     id: item.id,
@@ -34,16 +34,16 @@ export function getPortfolioResources(
     sourceUrl: item.sourceUrl,
     role:
       profile.experiences.find((entry) => entry.id === item.experienceId)
-        ?.position ?? 'Creator',
+        ?.position ?? "Creator",
     public: item.public,
     imageUrl: null,
     company: company(
       item.company,
       profile.experiences.find((exp) => exp.id === item.experienceId)
-        ?.companyUrl ?? profile.website
+        ?.companyUrl ?? profile.website,
     ),
-    skills: item.skills.map(skill)
-  }))
+    skills: item.skills.map(skill),
+  }));
   return {
     experiences: profile.experiences.map((item) => ({
       id: item.id,
@@ -58,8 +58,8 @@ export function getPortfolioResources(
       projects: projects.filter(
         (project) =>
           profile.projects.find((p) => p.id === project.id)?.experienceId ===
-          item.id
-      )
+          item.id,
+      ),
     })),
     projects: projects.filter((item) => item.public),
     educations: profile.education.map((item) => ({
@@ -73,14 +73,14 @@ export function getPortfolioResources(
       startedAt: item.start,
       finishedAt: item.end,
       gpa: null,
-      description: null
+      description: null,
     })),
     skills: Object.fromEntries(
       Object.entries(profile.skills).map(([group, names]) => [
         group,
-        names.map((name) => ({ ...skill(name), type: group }))
-      ])
+        names.map((name) => ({ ...skill(name), type: group })),
+      ]),
     ),
-    referrals: []
-  }
+    referrals: [],
+  };
 }

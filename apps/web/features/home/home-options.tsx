@@ -1,4 +1,4 @@
-import { cvLayouts, portfolioThemes } from '@shared/content'
+import { cvLayouts, portfolioThemes } from "@shared/content";
 export function HomeOptions() {
   return (
     <section
@@ -67,5 +67,5 @@ export function HomeOptions() {
         </div>
       </div>
     </section>
-  )
+  );
 }

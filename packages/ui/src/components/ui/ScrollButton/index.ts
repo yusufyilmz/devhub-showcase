@@ -1,1 +1,1 @@
-export { ScrollButton } from './ScrollButton'
+export { ScrollButton } from "./ScrollButton";

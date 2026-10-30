@@ -3,27 +3,27 @@ import {
   SectionCarousel,
   SectionGrid,
   type SectionItem,
-  SectionTabs
-} from '@shared/components/section-views'
-import { WorkMedia } from '@shared/components/work-media'
+  SectionTabs,
+} from "@shared/components/section-views";
+import { WorkMedia } from "@shared/components/work-media";
 import {
   type CustomSection,
   getPortfolioCopy,
   getSocialWork,
-  type Language
-} from '@shared/content'
-import { RenderSection } from '@shared/sections/renderers'
+  type Language,
+} from "@shared/content";
+import { RenderSection } from "@shared/sections/renderers";
 
 export function CustomPortfolioSection({
   section,
   language,
   anchors,
-  preview
+  preview,
 }: {
-  section: CustomSection
-  language?: Language
-  preview?: boolean
-  anchors?: { id: string; title: string }[]
+  section: CustomSection;
+  language?: Language;
+  preview?: boolean;
+  anchors?: { id: string; title: string }[];
 }) {
   if (section.sectionType)
     return (
@@ -33,9 +33,9 @@ export function CustomPortfolioSection({
         anchors={anchors}
         preview={preview}
       />
-    )
-  if (!section.visible || !section.items.length) return null
-  const text = getPortfolioCopy(language)
+    );
+  if (!section.visible || !section.items.length) return null;
+  const text = getPortfolioCopy(language);
   const items: SectionItem[] = section.items.map((item) => ({
     id: item.id,
     title: item.title,
@@ -47,7 +47,7 @@ export function CustomPortfolioSection({
           title={item.title}
           imageUrl={item.imageUrl}
           youtubeId={
-            section.composition === 'youtube'
+            section.composition === "youtube"
               ? getSocialWork(item.url)?.id
               : undefined
           }
@@ -59,11 +59,11 @@ export function CustomPortfolioSection({
             <p
               key={`${item.id}-${index}`}
               className={
-                section.composition === 'testimonials'
-                  ? 'testimonial-quote'
+                section.composition === "testimonials"
+                  ? "testimonial-quote"
                   : undefined
               }
-              style={{ whiteSpace: 'pre-line' }}
+              style={{ whiteSpace: "pre-line" }}
             >
               {paragraph}
             </p>
@@ -72,35 +72,35 @@ export function CustomPortfolioSection({
           <a href={item.url}>{item.title} ↗</a>
         )}
       </>
-    )
-  }))
-  const props = { items, label: section.title }
+    ),
+  }));
+  const props = { items, label: section.title };
   return (
     <section
       id={section.id}
-      className={`folio-section configured-section composition-${section.composition ?? 'custom'}`}
+      className={`folio-section configured-section composition-${section.composition ?? "custom"}`}
       aria-labelledby={`${section.id}-heading`}
     >
       <h2 id={`${section.id}-heading`}>{section.title}</h2>
       <CustomView renderer={section.renderer} {...props} />
     </section>
-  )
+  );
 }
 function CustomView({
   renderer,
   items,
-  label
+  label,
 }: {
-  renderer: CustomSection['renderer']
-  items: SectionItem[]
-  label: string
+  renderer: CustomSection["renderer"];
+  items: SectionItem[];
+  label: string;
 }) {
   switch (renderer) {
-    case 'gallery':
-    case 'masonry':
-      return <SectionGrid {...{ items, label }} variant="gallery" />
-    case 'timeline':
-    case 'steps':
+    case "gallery":
+    case "masonry":
+      return <SectionGrid {...{ items, label }} variant="gallery" />;
+    case "timeline":
+    case "steps":
       return (
         <ol>
           {items.map((item) => (
@@ -110,17 +110,17 @@ function CustomView({
             </li>
           ))}
         </ol>
-      )
-    case 'text':
-    case 'cards':
-      return <SectionGrid items={items} label={label} />
-    case 'accordion':
-      return <SectionAccordion items={items} label={label} />
-    case 'tabs':
-      return <SectionTabs items={items} label={label} />
-    case 'carousel':
-      return <SectionCarousel items={items} label={label} />
-    case 'list':
+      );
+    case "text":
+    case "cards":
+      return <SectionGrid items={items} label={label} />;
+    case "accordion":
+      return <SectionAccordion items={items} label={label} />;
+    case "tabs":
+      return <SectionTabs items={items} label={label} />;
+    case "carousel":
+      return <SectionCarousel items={items} label={label} />;
+    case "list":
       return (
         <div>
           {items.map((item) => (
@@ -130,6 +130,6 @@ function CustomView({
             </article>
           ))}
         </div>
-      )
+      );
   }
 }
