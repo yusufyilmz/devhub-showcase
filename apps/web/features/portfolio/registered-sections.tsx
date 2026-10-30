@@ -17,7 +17,13 @@ export function RegisteredSections({
 }) {
   return getPortfolioEntries(profile).map((section) => {
     if (section.kind === 'custom')
-      return <CustomPortfolioSection key={section.id} section={section} />
+      return (
+        <CustomPortfolioSection
+          key={section.id}
+          section={section}
+          language={profile.portfolioLanguage}
+        />
+      )
     if (!section.settings.visible) return null
     if (profile.sectionSettings?.[section.kind]?.renderer)
       return (

@@ -79,3 +79,13 @@ A new optional sectionSequence lists built-in and custom IDs together. The valid
 The existing accessible drag handles, keyboard shortcuts and move buttons now order all sections together. Empty and hidden custom sections are omitted publicly. Section names are authored content and stay as entered when the portfolio language changes. Custom sections are portfolio-only in this step; PDF content retains its established document layout and inclusion settings.
 
 Limits are 20 custom sections, 30 items per section, 160 characters per section name, 200 per item title and 6000 per item body. Validation and storage use the existing profile document; no migration, dependency or production data edit is needed.
+
+## Compositions, hero and social work (step five)
+
+See [the roadmap](roadmap.md) and [repository guidance](../AGENTS.md). sectionCompositions defines authorable starters for services, testimonials, FAQs, statistics, calls to action and curated social work. A starter chooses a title and default view without inventing content. All use the same custom section IDs, collections, visibility, previews, mixed order and profile save boundaries. Legacy sections without composition remain generic custom sections.
+
+YouTube, Instagram and Pinterest sections require public work URLs matching the selected provider. getSocialWork checks exact HTTPS hosts and supported video/post/pin paths. Optional image URLs and captions provide visual work cards. YouTube player URLs are constructed from validated video IDs and use youtube-nocookie.com. WorkMedia mounts the iframe only on a visitor's load action and supports unloading; there are no automatic thumbnails, third-party scripts or server-side social fetches. Instagram and Pinterest cards link to their originals. Automatic feeds and native Instagram/Pinterest embeds are separate future integrations.
+
+The optional profile.hero stores image/video URL, poster, position and overlay. HeroSurface wraps existing introductory content only when configured, preserving legacy markup otherwise. Video is muted and looping, offers play/pause, pauses under reduced motion and falls back to the optional poster when not playing. Public controls use the portfolio language. Appearance contains the editor and preview. Uploaded media storage and automatic transcoding are not part of this step; authors provide direct media URLs.
+
+References for YouTube behavior: [official embed guidance](https://support.google.com/youtube/answer/171780), [player parameters](https://developers.google.com/youtube/player_parameters). No PageForge or original portfolio implementation code/assets are copied by this feature.

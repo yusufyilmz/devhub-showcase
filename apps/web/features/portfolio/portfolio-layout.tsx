@@ -1,3 +1,4 @@
+import { HeroSurface } from '@shared/components/hero-surface'
 import {
   formatPortfolioPeriod,
   getPortfolioCopy,
@@ -44,25 +45,30 @@ export function PortfolioLayout({
         />
       </header>
       <main id="main-content" className="folio-main">
-        <section className="folio-intro" aria-labelledby="folio-title">
-          <p className="folio-eyebrow">{profile.location}</p>
-          <h1 id="folio-title">
-            {profile.name}
-            <span aria-hidden="true">.</span>
-          </h1>
-          <p className="folio-role">{profile.title}</p>
-          <p className="folio-summary">{profile.summary}</p>
-          <div className="folio-actions">
-            {projects.length > 0 && (
-              <a className="folio-primary" href="#work">
-                {text.exploreWork} <span aria-hidden="true">↗</span>
+        <HeroSurface
+          media={profile.hero}
+          labels={{ play: text.playBackground, pause: text.pauseBackground }}
+        >
+          <section className="folio-intro" aria-labelledby="folio-title">
+            <p className="folio-eyebrow">{profile.location}</p>
+            <h1 id="folio-title">
+              {profile.name}
+              <span aria-hidden="true">.</span>
+            </h1>
+            <p className="folio-role">{profile.title}</p>
+            <p className="folio-summary">{profile.summary}</p>
+            <div className="folio-actions">
+              {projects.length > 0 && (
+                <a className="folio-primary" href="#work">
+                  {text.exploreWork} <span aria-hidden="true">↗</span>
+                </a>
+              )}
+              <a href={`/${username}/cv.pdf`}>
+                {text.downloadCv} <span aria-hidden="true">↓</span>
               </a>
-            )}
-            <a href={`/${username}/cv.pdf`}>
-              {text.downloadCv} <span aria-hidden="true">↓</span>
-            </a>
-          </div>
-        </section>
+            </div>
+          </section>
+        </HeroSurface>
         <div className="folio-story">
           <FolioSections profile={profile} />
           <section id="contact" className="folio-section folio-contact">

@@ -5,24 +5,52 @@ import {
   type SectionItem,
   SectionTabs
 } from '@shared/components/section-views'
-import type { CustomSection } from '@shared/content'
+import { WorkMedia } from '@shared/components/work-media'
+import {
+  type CustomSection,
+  getPortfolioCopy,
+  getSocialWork,
+  type Language
+} from '@shared/content'
 
 export function CustomPortfolioSection({
-  section
+  section,
+  language
 }: {
   section: CustomSection
+  language?: Language
 }) {
   if (!section.visible || !section.items.length) return null
+  const text = getPortfolioCopy(language)
   const items: SectionItem[] = section.items.map((item) => ({
     id: item.id,
     title: item.title,
     content: (
       <>
+        <WorkMedia
+          loadLabel={text.loadVideo}
+          unloadLabel={text.unloadVideo}
+          title={item.title}
+          imageUrl={item.imageUrl}
+          youtubeId={
+            section.composition === 'youtube'
+              ? getSocialWork(item.url)?.id
+              : undefined
+          }
+        />
         {item.body
           .split(/\n\s*\n/)
           .filter(Boolean)
           .map((paragraph, index) => (
-            <p key={`${item.id}-${index}`} style={{ whiteSpace: 'pre-line' }}>
+            <p
+              key={`${item.id}-${index}`}
+              className={
+                section.composition === 'testimonials'
+                  ? 'testimonial-quote'
+                  : undefined
+              }
+              style={{ whiteSpace: 'pre-line' }}
+            >
               {paragraph}
             </p>
           ))}
@@ -36,7 +64,7 @@ export function CustomPortfolioSection({
   return (
     <section
       id={section.id}
-      className="folio-section configured-section"
+      className={`folio-section configured-section composition-${section.composition ?? 'custom'}`}
       aria-labelledby={`${section.id}-heading`}
     >
       <h2 id={`${section.id}-heading`}>{section.title}</h2>

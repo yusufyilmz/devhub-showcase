@@ -6,6 +6,11 @@ export const languages = [
 export type Language = (typeof languages)[number]['id']
 
 const en = {
+  playBackground: 'Play background video',
+  pauseBackground: 'Pause background video',
+  loadVideo: 'Load YouTube video',
+  unloadVideo: 'Unload video',
+
   navExperience: 'Experience',
   navProjects: 'Projects',
   navEducation: 'Education',
@@ -80,6 +85,11 @@ const en = {
 }
 export type PortfolioMessages = { [Key in keyof typeof en]: string }
 const es: PortfolioMessages = {
+  playBackground: 'Reproducir vídeo de fondo',
+  pauseBackground: 'Pausar vídeo de fondo',
+  loadVideo: 'Cargar vídeo de YouTube',
+  unloadVideo: 'Cerrar vídeo',
+
   navExperience: 'Experiencia',
   navProjects: 'Proyectos',
   navEducation: 'Formación',
@@ -154,6 +164,11 @@ const es: PortfolioMessages = {
   portfolio: 'Portafolio'
 }
 const tr: PortfolioMessages = {
+  playBackground: 'Arka plan videosunu oynat',
+  pauseBackground: 'Arka plan videosunu duraklat',
+  loadVideo: 'YouTube videosunu yükle',
+  unloadVideo: 'Videoyu kapat',
+
   navExperience: 'Deneyim',
   navProjects: 'Projeler',
   navEducation: 'Eğitim',

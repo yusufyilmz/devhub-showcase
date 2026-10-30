@@ -1,6 +1,8 @@
 import {
   customSectionViews,
+  getSocialWork,
   type PortfolioSectionId,
+  sectionCompositionIds,
   sectionRegistry
 } from '@shared/content'
 import { z } from 'zod'
@@ -73,10 +75,11 @@ export const portfolioEntryIdSchema = z.union([
   ]),
   customId
 ])
-export const customSectionSchema = z
+const customSectionBase = z
   .object({
     id: customId,
     title: z.string().trim().min(1).max(160),
+    composition: z.enum(sectionCompositionIds).optional(),
     renderer: z.enum(customSectionViews).default('list'),
     visible: z.boolean().default(true),
     items: z
@@ -86,6 +89,12 @@ export const customSectionSchema = z
             id: z.uuid(),
             title: z.string().trim().min(1).max(200),
             body: z.string().trim().max(6000),
+            imageUrl: z
+              .union([
+                z.url().refine((value) => /^https?:\/\//i.test(value)),
+                z.literal('')
+              ])
+              .optional(),
             url: z.union([
               z
                 .url()
@@ -105,3 +114,20 @@ export const customSectionSchema = z
       )
   })
   .strict()
+
+export const customSectionSchema = customSectionBase.superRefine(
+  (section, ctx) => {
+    if (
+      !['youtube', 'instagram', 'pinterest'].includes(section.composition ?? '')
+    )
+      return
+    section.items.forEach((item, index) => {
+      if (getSocialWork(item.url)?.provider !== section.composition)
+        ctx.addIssue({
+          code: 'custom',
+          path: ['items', index, 'url'],
+          message: `Use a public ${section.composition} work URL (video, post/reel or pin)`
+        })
+    })
+  }
+)

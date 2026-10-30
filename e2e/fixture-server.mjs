@@ -74,6 +74,113 @@ const customOwners = ['desktop', 'mobile'].map((device, index) => ({
     templateChosen: true
   }
 }))
+const mediaOwners = ['desktop', 'mobile'].map((device, index) => ({
+  ...row,
+  id: `dddddddd-dddd-4ddd-8ddd-ddddddddddd${index}`,
+  owner_id: `eeeeeeee-eeee-4eee-8eee-eeeeeeeeeee${index}`,
+  username: `${device}-media-owner`,
+  is_public: false,
+  document: {
+    ...profile,
+    name: 'Media Portfolio Owner',
+    email: 'media-owner@example.test',
+    templateChosen: true
+  }
+}))
+const mediaExamples = ['engineer', 'designer', 'consultant', 'minimal'].map(
+  (type, index) => ({
+    ...row,
+    id: `ffffffff-ffff-4fff-8fff-fffffffffff${index}`,
+    username: `media-${type}`,
+    document: {
+      ...profile,
+      portfolioType: type,
+      hero: {
+        kind: 'image',
+        url: 'http://localhost:3100/examples/orbit-brand.svg',
+        position: 'center',
+        overlay: 'strong'
+      },
+      customSections: [
+        [
+          'services',
+          'Services',
+          'cards',
+          'Design systems',
+          'Brand and interface design',
+          ''
+        ],
+        [
+          'testimonials',
+          'Testimonials',
+          'cards',
+          'A happy collaborator',
+          'Thoughtful, clear work.',
+          ''
+        ],
+        [
+          'faq',
+          'Questions',
+          'accordion',
+          'How do we start?',
+          'Send a message to discuss your project.',
+          ''
+        ],
+        ['statistics', 'Numbers', 'cards', '12+', 'Projects delivered', ''],
+        [
+          'cta',
+          'Start a project',
+          'cards',
+          'Work together',
+          'Tell me about your idea.',
+          'https://example.com/contact'
+        ],
+        [
+          'youtube',
+          'Films',
+          'cards',
+          'Studio film',
+          'A selected film.',
+          'https://youtu.be/M7lc1UVf-VE'
+        ],
+        [
+          'instagram',
+          'Instagram projects',
+          'cards',
+          'Poster study',
+          'A selected poster.',
+          'https://www.instagram.com/p/ABC_123/'
+        ],
+        [
+          'pinterest',
+          'Pinterest work',
+          'cards',
+          'Visual collection',
+          'A selected pin.',
+          'https://www.pinterest.com/pin/123456/'
+        ]
+      ].map(([composition, title, renderer, itemTitle, body, url], n) => ({
+        id: `custom-12345678-1234-4234-8234-${String(n).padStart(12, '0')}`,
+        composition,
+        title,
+        renderer,
+        visible: true,
+        items: [
+          {
+            id: `87654321-4321-4321-8321-${String(n).padStart(12, '0')}`,
+            title: itemTitle,
+            body,
+            url,
+            imageUrl:
+              composition === 'instagram' || composition === 'pinterest'
+                ? 'http://localhost:3100/examples/orbit-brand.svg'
+                : ''
+          }
+        ]
+      }))
+    }
+  })
+)
 const themed = ['studio', 'paper', 'graphite', 'bloom'].flatMap(
   (theme, themeIndex) =>
     ['engineer', 'designer', 'consultant', 'minimal'].map(
@@ -159,7 +266,9 @@ const rows = [
   ...themed,
   systemTheme,
   ...starters,
-  ...customOwners
+  ...customOwners,
+  ...mediaOwners,
+  ...mediaExamples
 ]
 createServer(async (request, response) => {
   const url = new URL(request.url, 'http://127.0.0.1:3101')
@@ -216,9 +325,13 @@ function fixtureOwner(request) {
   try {
     const token = request.headers.authorization?.split(' ')[1]
     const userId = JSON.parse(Buffer.from(token.split('.')[1], 'base64url')).sub
-    owner = [...starters, ...customOwners, ...managers, ...recipients].find(
-      (entry) => entry.owner_id === userId
-    )
+    owner = [
+      ...starters,
+      ...customOwners,
+      ...mediaOwners,
+      ...managers,
+      ...recipients
+    ].find((entry) => entry.owner_id === userId)
   } catch {
     /* Public fixture requests have no fake session. */
   }
