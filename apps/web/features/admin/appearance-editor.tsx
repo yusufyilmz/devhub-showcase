@@ -2,6 +2,7 @@
 import { SelectField } from '@shared/components/fields'
 import type { ColorMode, PortfolioProfile } from '@shared/content'
 import { useState } from 'react'
+import { HeroSettingsEditor } from './hero-settings-editor'
 import { ThemePicker } from './theme-picker'
 import { ThemePreview } from './theme-preview'
 
@@ -90,6 +91,7 @@ export function AppearanceEditor({
           layout and the selected accent.
         </p>
       </div>
+      <HeroSettingsEditor profile={profile} onChange={onChange} />
     </section>
   )
 }

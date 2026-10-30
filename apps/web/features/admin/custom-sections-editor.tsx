@@ -4,15 +4,20 @@ import { Field, SelectField } from '@shared/components/fields'
 import {
   type CustomSection,
   customSectionViews,
-  type PortfolioProfile
+  type Language,
+  type PortfolioProfile,
+  type SectionComposition,
+  sectionCompositions
 } from '@shared/content'
+import { useState } from 'react'
 import { CustomPortfolioSection } from '../portfolio/custom-portfolio-section'
 
-function createSection(): CustomSection {
+function createSection(composition: SectionComposition): CustomSection {
   return {
     id: `custom-${crypto.randomUUID()}`,
-    title: 'New section',
-    renderer: 'list',
+    title: sectionCompositions[composition].title,
+    renderer: sectionCompositions[composition].renderer,
+    composition,
     visible: true,
     items: []
   }
@@ -24,6 +29,7 @@ export function CustomSectionsEditor({
   profile: PortfolioProfile
   onChange: (profile: PortfolioProfile) => void
 }) {
+  const [starter, setStarter] = useState<SectionComposition>('custom')
   const sections = profile.customSections ?? []
   function change(customSections: CustomSection[]) {
     const ids = new Set(customSections.map(({ id }) => id))
@@ -53,11 +59,22 @@ export function CustomSectionsEditor({
         story. Custom sections appear in your portfolio. Your PDF keeps its
         existing content and settings.
       </p>
+      <SelectField
+        label="Section starter"
+        value={starter}
+        onChange={(value) => setStarter(value as SectionComposition)}
+      >
+        {Object.entries(sectionCompositions).map(([id, preset]) => (
+          <option key={id} value={id}>
+            {preset.name}
+          </option>
+        ))}
+      </SelectField>
       <button
         type="button"
         className="studio-primary"
         disabled={sections.length >= 20}
-        onClick={() => change([...sections, createSection()])}
+        onClick={() => change([...sections, createSection(starter)])}
       >
         Add custom section
       </button>
@@ -69,6 +86,7 @@ export function CustomSectionsEditor({
         <CustomSectionEditor
           key={section.id}
           section={section}
+          language={profile.portfolioLanguage}
           onChange={(updated) =>
             change(
               sections.map((item) => (item.id === updated.id ? updated : item))
@@ -108,9 +126,11 @@ function CustomSectionEditor({
   section,
   onChange,
   onDuplicate,
-  onRemove
+  onRemove,
+  language
 }: {
   section: CustomSection
+  language?: Language
   onChange: (section: CustomSection) => void
   onDuplicate?: () => void
   onRemove: () => void
@@ -118,6 +138,50 @@ function CustomSectionEditor({
   return (
     <fieldset className="editor-card">
       <legend>{section.title || 'New section'}</legend>
+      <SelectField
+        label="Section purpose"
+        value={section.composition ?? 'custom'}
+        onChange={(value) =>
+          onChange({
+            ...section,
+            composition: value as SectionComposition,
+            renderer: sectionCompositions[value as SectionComposition].renderer
+          })
+        }
+      >
+        {Object.entries(sectionCompositions).map(([id, preset]) => (
+          <option key={id} value={id}>
+            {preset.name}
+          </option>
+        ))}
+      </SelectField>
+      {['youtube', 'instagram', 'pinterest'].includes(
+        section.composition ?? ''
+      ) && (
+        <p>
+          Add selected public videos, posts or pins using their full HTTPS
+          links, a caption and an optional cover image URL. This is a curated
+          showcase, not an automatic account feed. Visitors load YouTube players
+          on demand.
+        </p>
+      )}
+      {section.composition === 'statistics' && (
+        <p>
+          Use the item title for the number (for example 12+) and the details
+          for its label.
+        </p>
+      )}
+      {section.composition === 'testimonials' && (
+        <p>
+          Use the title for the author and the details for their quote. Publish
+          only quotes you have permission to share.
+        </p>
+      )}
+      {section.composition === 'faq' && (
+        <p>
+          Use the item title for the question and the details for the answer.
+        </p>
+      )}
       <Field
         label="Section name"
         value={section.title}
@@ -151,7 +215,7 @@ function CustomSectionEditor({
         />{' '}
         Show custom section
       </label>
-      <CollectionEditor
+      <CollectionEditor<CustomSection['items'][number]>
         title="Section items"
         maxItems={30}
         items={section.items}
@@ -179,6 +243,13 @@ function CustomSectionEditor({
               hint="Plain text. Separate paragraphs with a blank line."
             />
             <Field
+              label="Cover image URL"
+              value={item.imageUrl ?? ''}
+              type="url"
+              onChange={(imageUrl) => change({ ...item, imageUrl })}
+              hint="Optional image for this work. Use an image URL you can share publicly."
+            />
+            <Field
               label="Item link"
               value={item.url}
               type="url"
@@ -203,7 +274,7 @@ function CustomSectionEditor({
       </div>
       <details>
         <summary>Preview {section.title}</summary>
-        <CustomPortfolioSection section={section} />
+        <CustomPortfolioSection section={section} language={language} />
       </details>
     </fieldset>
   )

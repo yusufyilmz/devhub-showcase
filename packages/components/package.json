@@ -11,7 +11,9 @@
     "./studio-shell": "./src/studio-shell.tsx",
     "./styles.css": "./src/styles.css",
     "./sortable-list": "./src/sortable-list.tsx",
-    "./section-views": "./src/section-views/index.tsx"
+    "./section-views": "./src/section-views/index.tsx",
+    "./hero-surface": "./src/hero-surface.tsx",
+    "./work-media": "./src/work-media.tsx"
   },
   "scripts": {
     "build": "tsc --noEmit",

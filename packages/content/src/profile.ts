@@ -28,6 +28,13 @@ export interface ProfileProject {
   coverImage?: string | null
 }
 export interface PortfolioProfile {
+  hero?: {
+    kind: 'image' | 'video'
+    url: string
+    poster?: string
+    position: 'center' | 'top' | 'bottom'
+    overlay: 'soft' | 'strong'
+  }
   sectionOrder?: PortfolioSectionId[]
   customSections?: CustomSection[]
   sectionSequence?: PortfolioEntryId[]

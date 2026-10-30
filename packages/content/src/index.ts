@@ -49,6 +49,12 @@ export type { CvLayout, PortfolioType } from './portfolio-types'
 export { cvLayouts, portfolioTypes } from './portfolio-types'
 export type { PortfolioProfile } from './profile'
 export { profile } from './profile'
+export type { SectionComposition } from './section-compositions'
+export {
+  getSocialWork,
+  sectionCompositionIds,
+  sectionCompositions
+} from './section-compositions'
 export { getSectionItems, selectPortfolioContent } from './section-content'
 export type {
   PortfolioSection,

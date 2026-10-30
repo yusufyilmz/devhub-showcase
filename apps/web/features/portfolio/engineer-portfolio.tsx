@@ -1,3 +1,4 @@
+import { HeroSurface } from '@shared/components/hero-surface'
 import {
   copy,
   getPortfolioCopy,
@@ -83,7 +84,12 @@ export function EngineerPortfolio({
       {ownerLink}
       <main id="main-content" className="portfolio-main">
         <div className="portfolio-inner">
-          <SummarySection profile={profile} />
+          <HeroSurface
+            media={profile.hero}
+            labels={{ play: text.playBackground, pause: text.pauseBackground }}
+          >
+            <SummarySection profile={profile} />
+          </HeroSurface>
           <RegisteredSections profile={profile} renderers={renderers} />
           {extras && (
             <ReferralSection

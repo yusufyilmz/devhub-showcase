@@ -33,6 +33,16 @@ const chronological = (value: { start: string; end: string | null }) =>
 
 export const profileSchema = z
   .object({
+    hero: z
+      .object({
+        kind: z.enum(['image', 'video']),
+        url: safeUrl,
+        poster: z.union([safeUrl, z.literal('')]).optional(),
+        position: z.enum(['center', 'top', 'bottom']),
+        overlay: z.enum(['soft', 'strong'])
+      })
+      .strict()
+      .optional(),
     customSections: z.array(customSectionSchema).max(20).optional(),
     sectionSequence: z.array(portfolioEntryIdSchema).max(26).optional(),
     sectionSettings: sectionSettingsSchema.optional(),

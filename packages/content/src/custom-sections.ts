@@ -1,5 +1,6 @@
 import { getPortfolioSections } from './portfolio-sections'
 import type { PortfolioProfile } from './profile'
+import type { SectionComposition } from './section-compositions'
 
 export const customSectionViews = [
   'list',
@@ -12,9 +13,16 @@ export type CustomSectionId = `custom-${string}`
 export type CustomSection = {
   id: CustomSectionId
   title: string
+  composition?: SectionComposition
   renderer: (typeof customSectionViews)[number]
   visible: boolean
-  items: { id: string; title: string; body: string; url: string }[]
+  items: {
+    id: string
+    title: string
+    body: string
+    url: string
+    imageUrl?: string
+  }[]
 }
 export type PortfolioEntryId =
   | ReturnType<typeof getPortfolioSections>[number]['id']

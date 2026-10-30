@@ -165,3 +165,9 @@ Portfolio section ordering: see [drag, keyboard and save behavior](docs/section-
 Administrator portfolio creation, JSON imports, temporary profiles and ownership transfers: see [managed portfolios](docs/managed-portfolios.md).
 
 Section registry, current renderer defaults and the PageForge integration path: see [section system](docs/section-system.md).
+
+## Repository guidance and section options
+
+Start with [AGENTS.md](AGENTS.md) for development rules and the repository skills covering workspace verification, product behavior and section workflows. See [the roadmap](docs/roadmap.md) for completed work and remaining template/import tasks.
+
+In the editor, Appearance includes optional image or muted video hero backgrounds. Custom sections includes starters for services, testimonials, FAQs, statistics, calls to action, and YouTube/Instagram/Pinterest work. Social work is curated from public links with optional images and captions. YouTube players load on visitor request; Instagram/Pinterest cards link to the original work. These are portfolio features and do not change CV content or publish private profiles automatically.
