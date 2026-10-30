@@ -1,5 +1,6 @@
 import {
   profile as fallback,
+  getNameInitials,
   getPortfolioCopy,
   type PortfolioProfile
 } from '@shared/content'
@@ -26,7 +27,7 @@ export function Navbar({ profile = fallback }: { profile?: PortfolioProfile }) {
         className="brand-mark"
         aria-label={`${profile.name} ${text.home}`}
       >
-        {profile.name.slice(0, 1)}
+        {getNameInitials(profile.name)}
         <span>.</span>
       </a>
       <div className="nav-links">

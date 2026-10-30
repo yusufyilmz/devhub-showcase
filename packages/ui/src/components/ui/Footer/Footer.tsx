@@ -1,5 +1,6 @@
 import {
   profile as fallback,
+  getNameInitials,
   getPortfolioCopy,
   type PortfolioProfile
 } from '@shared/content'
@@ -9,7 +10,7 @@ export function Footer({ profile = fallback }: { profile?: PortfolioProfile }) {
     <footer className="site-footer">
       <div>
         <a className="brand-mark" href="#summary">
-          {profile.name.slice(0, 1)}
+          {getNameInitials(profile.name)}
           <span>.</span>
         </a>
         <p>{text.footer}</p>

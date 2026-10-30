@@ -8,7 +8,7 @@
 | 3          | Merged      | Compatible display choices, item selection, section order, visibility and previews                                                                                                     |
 | 4          | Merged      | Custom section creation, naming, duplication, deletion, content editing and mixed ordering                                                                                             |
 | 5          | Merged      | Services, testimonials, FAQs, statistics and calls to action as authorable compositions; optional image/video hero backgrounds; curated YouTube, Instagram and Pinterest work sections |
-| 6          | This change | Versioned private section templates, explicit import review, native JSON export and compatible conversion of all 42 PageForge section families                                         |
+| 6          | Merged      | Versioned private section templates, explicit import review, native JSON export and compatible conversion of all 42 PageForge section families                                         |
 | Follow-up  | Implemented | Select existing portfolio elements as custom section sources, beyond the existing built-in item selections                                                                             |
 
 ## Step five boundaries

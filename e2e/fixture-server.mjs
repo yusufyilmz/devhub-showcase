@@ -316,6 +316,12 @@ const recipients = [0, 1].map((n) => ({
 const initialStarters = structuredClone(starters)
 const rows = [
   row,
+  {
+    ...row,
+    id: '90909090-9090-4090-8090-909090909090',
+    username: 'private-seo-portfolio',
+    is_public: false
+  },
   ...examples,
   ...localized,
   ...reordered,
@@ -410,7 +416,14 @@ function visibleRow(entry, owner) {
   )
 }
 function matchesRow(entry, url) {
-  return ['id', 'username', 'owner_id', 'managed_by', 'revision'].every(
+  return [
+    'id',
+    'username',
+    'owner_id',
+    'managed_by',
+    'revision',
+    'is_public'
+  ].every(
     (key) =>
       !url.searchParams.has(key) ||
       url.searchParams.get(key) === `eq.${entry[key]}` ||
@@ -423,9 +436,23 @@ function fixtureRow(url, owner) {
   )
 }
 
+function discoveryRows(url, owner) {
+  const offset = Number(url.searchParams.get('offset') ?? 0)
+  const limit = Number(url.searchParams.get('limit') ?? 1000)
+  return rows
+    .filter((entry) => visibleRow(entry, owner) && matchesRow(entry, url))
+    .sort((a, b) => a.username.localeCompare(b.username))
+    .slice(offset, offset + limit)
+    .map(({ username, updated_at }) => ({ username, updated_at }))
+}
+
 async function profileRequest(request, response, url, owner) {
   const found = fixtureRow(url, owner)
   if (request.method === 'GET') {
+    if (url.searchParams.get('select') === 'username,updated_at') {
+      response.end(JSON.stringify(discoveryRows(url, owner)))
+      return
+    }
     const result =
       url.searchParams.has('managed_by') && !url.searchParams.has('id')
         ? rows.filter(

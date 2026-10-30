@@ -487,3 +487,21 @@
     flex-wrap: wrap;
   }
 }
+
+.folio-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+.folio-monogram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid currentColor;
+  border-radius: 0.65rem;
+  color: var(--accent);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}

@@ -1,6 +1,7 @@
 import { HeroSurface } from '@shared/components/hero-surface'
 import {
   formatPortfolioPeriod,
+  getNameInitials,
   getPortfolioCopy,
   type PortfolioProfile,
   type SectionRendererId,
@@ -32,6 +33,9 @@ export function PortfolioLayout({
       </a>
       <header className="folio-nav">
         <a href={`/${username}`} className="folio-name">
+          <span className="folio-monogram" aria-hidden="true">
+            {getNameInitials(profile.name)}
+          </span>
           {profile.name}
         </a>
         <nav aria-label={text.sections}>
