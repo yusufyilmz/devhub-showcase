@@ -10,7 +10,8 @@
     "./login": "./src/login-panel.tsx",
     "./studio-shell": "./src/studio-shell.tsx",
     "./styles.css": "./src/styles.css",
-    "./sortable-list": "./src/sortable-list.tsx"
+    "./sortable-list": "./src/sortable-list.tsx",
+    "./section-views": "./src/section-views/index.tsx"
   },
   "scripts": {
     "build": "tsc --noEmit",
