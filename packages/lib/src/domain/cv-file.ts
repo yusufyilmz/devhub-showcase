@@ -1,3 +1,4 @@
+export const CV_PROCESS_TIMEOUT_MS = 45000;
 export const MAX_CV_BYTES = 3 * 1024 * 1024;
 export class CvImportError extends Error {
   constructor(

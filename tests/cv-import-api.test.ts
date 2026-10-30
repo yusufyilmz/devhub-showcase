@@ -13,7 +13,8 @@ vi.mock("@shared/chat", () => ({
   },
 }));
 
-import { GET, POST } from "../apps/web/app/api/admin/cv-import/route";
+import { GET, maxDuration, POST } from "../apps/web/app/api/admin/cv-import/route";
+import { CV_PROCESS_TIMEOUT_MS } from "../packages/lib/src/domain/cv-file";
 
 function upload(
   content = "%PDF-1.7\nExample CV",
@@ -42,6 +43,10 @@ beforeEach(() => {
 });
 afterEach(() => vi.unstubAllEnvs());
 describe("private CV processing endpoint", () => {
+  it("keeps processing within the deployment's 60 second function budget", () => {
+    expect(maxDuration).toBeLessThanOrEqual(60);
+    expect(CV_PROCESS_TIMEOUT_MS).toBeLessThanOrEqual(maxDuration * 1000 - 15000);
+  });
   it("requires a confirmed identity and same origin before processing", async () => {
     expect((await POST(upload(undefined, undefined, "https://elsewhere.example"))).status).toBe(
       403,

@@ -1,14 +1,19 @@
 import { requireConfirmedUser } from "@shared/auth";
 import { allowCvImport } from "@shared/cache";
 import { CvImportModel } from "@shared/chat";
-import { CvImportError, MAX_CV_BYTES, validateCvFile } from "@shared/lib/cv-file";
+import {
+  CV_PROCESS_TIMEOUT_MS,
+  CvImportError,
+  MAX_CV_BYTES,
+  validateCvFile,
+} from "@shared/lib/cv-file";
 import { ProfileAccessError } from "@shared/lib/profile-errors";
 import { createServerClient } from "@shared/lib/supabase";
 
 import { sameOrigin } from "../../../../lib/admin-auth";
 
 export const runtime = "nodejs";
-export const maxDuration = 90;
+export const maxDuration = 60;
 const headers = { "Cache-Control": "private, no-store" };
 function configured() {
   return Boolean(process.env.OPENAI_API_KEY && process.env.REDIS_URL && process.env.REDIS_TOKEN);
@@ -72,7 +77,7 @@ export async function POST(request: Request) {
       );
     const result = await new CvImportModel().extract(
       file,
-      AbortSignal.any([request.signal, AbortSignal.timeout(60000)]),
+      AbortSignal.any([request.signal, AbortSignal.timeout(CV_PROCESS_TIMEOUT_MS)]),
     );
     return Response.json(result, { headers });
   } catch (error) {

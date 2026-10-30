@@ -1,4 +1,4 @@
-import { type CvFile, CvImportError } from "@shared/lib/cv-file";
+import { CV_PROCESS_TIMEOUT_MS, type CvFile, CvImportError } from "@shared/lib/cv-file";
 import { cvExtractionJsonSchema, cvExtractionSchema } from "@shared/lib/cv-import";
 import OpenAI from "openai";
 
@@ -9,7 +9,7 @@ export class CvImportModel {
     private readonly client = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
       maxRetries: 0,
-      timeout: 60000,
+      timeout: CV_PROCESS_TIMEOUT_MS,
     }),
   ) {}
   async extract(file: CvFile, signal?: AbortSignal) {
