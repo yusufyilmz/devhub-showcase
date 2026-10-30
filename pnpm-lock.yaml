@@ -203,6 +203,9 @@ importers:
       '@shared/lib':
         specifier: workspace:*
         version: link:../../packages/lib
+      '@shared/sections':
+        specifier: workspace:*
+        version: link:../../packages/sections
       '@shared/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -439,6 +442,31 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 26.6.5
+      typescript:
+        specifier: 'catalog:'
+        version: 7.0.2
+
+  packages/sections:
+    dependencies:
+      '@shared/components':
+        specifier: workspace:*
+        version: link:../components
+      '@shared/content':
+        specifier: workspace:*
+        version: link:../content
+      react:
+        specifier: 'catalog:'
+        version: 19.3.1
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 26.6.5
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.3.0
       typescript:
         specifier: 'catalog:'
         version: 7.0.2

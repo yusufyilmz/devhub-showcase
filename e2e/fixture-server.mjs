@@ -1,4 +1,8 @@
 import { createServer } from 'node:http'
+import {
+  authorableSectionTypes,
+  getSectionRenderers
+} from '../packages/content/src/authorable-sections.ts'
 import { profile } from '../packages/content/src/profile.ts'
 
 // Test-only transport fixture, never imported by application code. Public
@@ -181,6 +185,59 @@ const mediaExamples = ['engineer', 'designer', 'consultant', 'minimal'].map(
     }
   })
 )
+const libraryOwners = ['desktop', 'mobile'].map((device, index) => ({
+  ...row,
+  id: `10101010-1010-4010-8010-10101010101${index}`,
+  owner_id: `20202020-2020-4020-8020-20202020202${index}`,
+  username: `${device}-library-owner`,
+  is_public: false,
+  document: {
+    ...profile,
+    name: 'Library Portfolio Owner',
+    email: 'library-owner@example.test',
+    templateChosen: true
+  }
+}))
+const libraryExamples = ['engineer', 'designer'].map((type, index) => ({
+  ...row,
+  id: `30303030-3030-4030-8030-30303030303${index}`,
+  username: `library-${type}`,
+  document: {
+    ...profile,
+    portfolioType: type,
+    customSections: authorableSectionTypes.map((sectionType, n) => ({
+      id: `custom-40404040-4040-4040-8040-${String(n).padStart(12, '0')}`,
+      sectionType,
+      title: `Library ${sectionType}`,
+      renderer: getSectionRenderers(sectionType)[0],
+      visible: true,
+      options: {
+        description: `An example ${sectionType} section.`,
+        email: 'contact@example.test',
+        actionUrl: 'https://example.test/subscribe',
+        latitude: 41.38,
+        longitude: 2.17
+      },
+      items: [
+        {
+          id: `50505050-5050-4050-8050-${String(n).padStart(12, '0')}`,
+          title: 'Example work',
+          body: 'A sample section item.',
+          value: '12+',
+          period: '2026',
+          details: ['First detail', 'Second detail'],
+          url:
+            sectionType === 'instagram'
+              ? 'https://www.instagram.com/p/ABC/'
+              : sectionType === 'pinterest'
+                ? 'https://www.pinterest.com/pin/123/'
+                : 'https://youtu.be/M7lc1UVf-VE',
+          imageUrl: 'http://localhost:3100/examples/orbit-brand.svg'
+        }
+      ]
+    }))
+  }
+}))
 const themed = ['studio', 'paper', 'graphite', 'bloom'].flatMap(
   (theme, themeIndex) =>
     ['engineer', 'designer', 'consultant', 'minimal'].map(
@@ -268,8 +325,11 @@ const rows = [
   ...starters,
   ...customOwners,
   ...mediaOwners,
-  ...mediaExamples
+  ...mediaExamples,
+  ...libraryOwners,
+  ...libraryExamples
 ]
+const templateLibraries = new Map()
 createServer(async (request, response) => {
   const url = new URL(request.url, 'http://127.0.0.1:3101')
   response.setHeader('Content-Type', 'application/json')
@@ -309,6 +369,8 @@ createServer(async (request, response) => {
   }
   if (url.pathname === '/rest/v1/rpc/transfer_managed_portfolio')
     return transferRequest(request, response, owner)
+  if (url.pathname === '/rest/v1/portfolio_section_templates')
+    return templateLibraryRequest(request, response, url, owner)
   if (url.pathname === '/rest/v1/portfolio_profiles')
     return profileRequest(request, response, url, owner)
   if (request.method === 'GET' && url.pathname === '/rest/v1/referrals') {
@@ -328,6 +390,7 @@ function fixtureOwner(request) {
     owner = [
       ...starters,
       ...customOwners,
+      ...libraryOwners,
       ...mediaOwners,
       ...managers,
       ...recipients
@@ -449,4 +512,50 @@ async function createManagedRequest(request, response, owner) {
   rows.push(created)
   response.writeHead(201).end(JSON.stringify(created))
   return
+}
+
+async function templateLibraryRequest(request, response, url, owner) {
+  if (!owner) {
+    response.writeHead(403).end('{}')
+    return
+  }
+  const id = owner.owner_id
+  const existing = templateLibraries.get(id)
+  if (request.method === 'GET') {
+    response.end(
+      JSON.stringify(
+        url.searchParams.get('owner_id') === `eq.${id}`
+          ? (existing ?? null)
+          : null
+      )
+    )
+    return
+  }
+  const chunks = []
+  for await (const chunk of request) chunks.push(chunk)
+  const input = JSON.parse(Buffer.concat(chunks).toString())
+  if (request.method === 'POST') {
+    if (input.owner_id !== id) {
+      response.writeHead(403).end('{}')
+      return
+    }
+    if (existing) {
+      response.writeHead(409).end(JSON.stringify({ code: '23505' }))
+      return
+    }
+    templateLibraries.set(id, input)
+    response.end(JSON.stringify(input))
+    return
+  }
+  if (
+    request.method === 'PATCH' &&
+    existing &&
+    url.searchParams.get('owner_id') === `eq.${id}` &&
+    url.searchParams.get('revision') === `eq.${existing.revision}`
+  ) {
+    Object.assign(existing, input)
+    response.end(JSON.stringify(existing))
+    return
+  }
+  response.end('null')
 }

@@ -10,7 +10,7 @@ MyDevStudio is a multiuser portfolio and CV platform. Read the relevant reposito
 
 Use the Node engine and pnpm version declared in package.json. Install with pnpm install --frozen-lockfile. Use catalog: for external workspace dependencies and workspace:* for internal packages. Update pnpm-workspace.yaml and the lockfile together when changing dependencies. Prisma is disabled; do not reintroduce it.
 
-Keep portable UI in packages/components, domain content in packages/content, validators and repositories in packages/lib, authentication in packages/auth, PDF rendering in packages/cv, and app routes/adapters in apps/web. packages/ui contains the existing portfolio UI. Do not move app routes, private data access or auth into portable components. Never hand edit generated Next.js files.
+Keep portable UI in packages/components, domain content in packages/content, validators and repositories in packages/lib, authentication in packages/auth, PDF rendering in packages/cv, high-level section renderer/editor pairs in packages/sections, and app routes/adapters in apps/web. packages/ui contains the existing portfolio UI. Do not move app routes, private data access or auth into portable components. Never hand edit generated Next.js files.
 
 Preserve legacy profile documents and existing renderer defaults. Validate new saved fields at every save/import boundary. Keep authorization on the server and isolate each owner's records. Do not publish private profiles, transfer ownership, or mutate production data as a side effect of a code change. Never commit credentials or private database exports.
 

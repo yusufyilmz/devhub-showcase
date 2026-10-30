@@ -7,6 +7,7 @@ const nextConfig = {
     '@shared/ui',
     '@shared/auth',
     '@shared/components',
+    '@shared/sections',
     '@shared/content',
     '@shared/lib',
     '@shared/chat',

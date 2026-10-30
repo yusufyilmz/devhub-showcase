@@ -17,6 +17,7 @@ export function PortfolioLayout({
   profile: PortfolioProfile
   username: string
 }) {
+  const canonicalProfile = profile
   profile = selectPortfolioContent(profile)
   const text = getPortfolioCopy(profile.portfolioLanguage)
   const type = profile.portfolioType ?? 'minimal'
@@ -70,7 +71,7 @@ export function PortfolioLayout({
           </section>
         </HeroSurface>
         <div className="folio-story">
-          <FolioSections profile={profile} />
+          <FolioSections profile={profile} sourceProfile={canonicalProfile} />
           <section id="contact" className="folio-section folio-contact">
             <p className="folio-eyebrow">{text.conversation}</p>
             <h2>{text.contactHeading}</h2>
@@ -156,7 +157,13 @@ function Work({
   )
 }
 
-function FolioSections({ profile }: { profile: PortfolioProfile }) {
+function FolioSections({
+  profile,
+  sourceProfile = profile
+}: {
+  profile: PortfolioProfile
+  sourceProfile?: PortfolioProfile
+}) {
   const text = getPortfolioCopy(profile.portfolioLanguage)
   const designer = profile.portfolioType === 'designer'
   const projects = profile.projects.filter((project) => project.public)
@@ -247,5 +254,5 @@ function FolioSections({ profile }: { profile: PortfolioProfile }) {
       </section>
     )
   }
-  return <RegisteredSections profile={profile} renderers={renderers} />
+  return <RegisteredSections profile={sourceProfile} renderers={renderers} />
 }

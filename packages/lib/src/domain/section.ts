@@ -1,5 +1,8 @@
 import {
+  authorableSections,
+  authorableSectionTypes,
   customSectionViews,
+  getSectionRenderers,
   getSocialWork,
   type PortfolioSectionId,
   sectionCompositionIds,
@@ -75,11 +78,50 @@ export const portfolioEntryIdSchema = z.union([
   ]),
   customId
 ])
+const optionalSectionUrl = z
+  .union([z.url().refine((url) => /^https?:\/\//i.test(url)), z.literal('')])
+  .optional()
 const customSectionBase = z
   .object({
     id: customId,
     title: z.string().trim().min(1).max(160),
     composition: z.enum(sectionCompositionIds).optional(),
+    sectionType: z.enum(authorableSectionTypes).optional(),
+    source: z
+      .object({
+        type: z.literal('profile'),
+        field: z.enum([
+          'projects',
+          'experiences',
+          'education',
+          'skills',
+          'languages',
+          'about'
+        ]),
+        itemIds: z
+          .array(z.string().min(1).max(200))
+          .max(100)
+          .refine((ids) => new Set(ids).size === ids.length)
+          .optional()
+      })
+      .strict()
+      .optional(),
+    options: z
+      .object({
+        description: z.string().max(6000).optional(),
+        alignment: z.enum(['left', 'center', 'right']).optional(),
+        columns: z
+          .union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)])
+          .optional(),
+        email: z.union([z.email(), z.literal('')]).optional(),
+        actionUrl: optionalSectionUrl,
+        latitude: z.number().min(-90).max(90).optional(),
+        longitude: z.number().min(-180).max(180).optional(),
+        mediaUrl: optionalSectionUrl,
+        posterUrl: optionalSectionUrl
+      })
+      .strict()
+      .optional(),
     renderer: z.enum(customSectionViews).default('list'),
     visible: z.boolean().default(true),
     items: z
@@ -89,6 +131,11 @@ const customSectionBase = z
             id: z.uuid(),
             title: z.string().trim().min(1).max(200),
             body: z.string().trim().max(6000),
+            value: z.string().max(200).optional(),
+            period: z.string().max(160).optional(),
+            code: z.string().max(6000).optional(),
+            details: z.array(z.string().max(500)).max(30).optional(),
+            captionsUrl: optionalSectionUrl,
             imageUrl: z
               .union([
                 z.url().refine((value) => /^https?:\/\//i.test(value)),
@@ -117,6 +164,7 @@ const customSectionBase = z
 
 export const customSectionSchema = customSectionBase.superRefine(
   (section, ctx) => {
+    if (section.sectionType) validateSectionType(section, ctx)
     if (
       !['youtube', 'instagram', 'pinterest'].includes(section.composition ?? '')
     )
@@ -131,3 +179,42 @@ export const customSectionSchema = customSectionBase.superRefine(
     })
   }
 )
+
+function validateSectionType(
+  section: z.infer<typeof customSectionBase>,
+  ctx: z.RefinementCtx
+) {
+  const type = section.sectionType
+  if (!type) return
+  if (
+    !(getSectionRenderers(type) as readonly string[]).includes(section.renderer)
+  )
+    ctx.addIssue({
+      code: 'custom',
+      path: ['renderer'],
+      message: 'Choose a compatible section layout'
+    })
+  if (
+    section.source &&
+    !(authorableSections[type].sources as readonly string[]).includes(
+      section.source.field
+    )
+  )
+    ctx.addIssue({
+      code: 'custom',
+      path: ['source'],
+      message: 'Choose a compatible content source'
+    })
+  const social = ['youtube', 'instagram', 'pinterest'].includes(type)
+    ? type
+    : null
+  if (social)
+    section.items.forEach((item, index) => {
+      if (getSocialWork(item.url)?.provider !== social)
+        ctx.addIssue({
+          code: 'custom',
+          path: ['items', index, 'url'],
+          message: `Use a public ${social} work URL`
+        })
+    })
+}

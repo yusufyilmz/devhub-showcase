@@ -1,0 +1,631 @@
+{
+  "content": {
+    "main": [
+      {
+        "id": "main",
+        "blocks": [
+          {
+            "type": "about-hero",
+            "display": true,
+            "content": {
+              "title": "Imported About Hero",
+              "description": "Introduction for about-hero",
+              "intro": {
+                "title": "My story",
+                "description": "An introduction"
+              }
+            }
+          },
+          {
+            "type": "about",
+            "display": true,
+            "content": {
+              "title": "Imported About",
+              "description": "Introduction for about",
+              "content": "An about story"
+            }
+          },
+          {
+            "type": "accordion",
+            "display": true,
+            "content": {
+              "title": "Imported Accordion",
+              "description": "Introduction for accordion",
+              "items": [
+                {
+                  "title": "Sample accordion",
+                  "name": "Sample accordion",
+                  "description": "Body for accordion",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "awards",
+            "display": true,
+            "content": {
+              "title": "Imported Awards",
+              "description": "Introduction for awards",
+              "awards": [
+                {
+                  "title": "Sample awards",
+                  "name": "Sample awards",
+                  "description": "Body for awards",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "blog-page",
+            "display": true,
+            "content": {
+              "title": "Imported Blog Page",
+              "description": "Introduction for blog-page",
+              "posts": [
+                {
+                  "title": "Sample blog-page",
+                  "name": "Sample blog-page",
+                  "description": "Body for blog-page",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "cta",
+            "display": true,
+            "content": {
+              "title": "Imported CTA",
+              "description": "Introduction for cta",
+              "buttons": [
+                {
+                  "label": "See my work",
+                  "href": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "calendar-link",
+            "display": true,
+            "content": {
+              "title": "Imported Calendar Link",
+              "description": "Introduction for calendar-link",
+              "text": "Book a call",
+              "link": "https://example.test/calendar"
+            }
+          },
+          {
+            "type": "careers",
+            "display": true,
+            "content": {
+              "title": "Imported Careers",
+              "description": "Introduction for careers",
+              "jobs": [
+                {
+                  "title": "Sample careers",
+                  "name": "Sample careers",
+                  "description": "Body for careers",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "clients",
+            "display": true,
+            "content": {
+              "title": "Imported Clients",
+              "description": "Introduction for clients",
+              "clients": [
+                {
+                  "title": "Sample clients",
+                  "name": "Sample clients",
+                  "description": "Body for clients",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "contact-form",
+            "display": true,
+            "content": {
+              "title": "Imported Contact Form",
+              "description": "Introduction for contact-form",
+              "email": "contact@example.test",
+              "fields": [
+                {
+                  "name": "email",
+                  "type": "email",
+                  "label": "Email"
+                }
+              ],
+              "endpoint": "https://example.test/contact"
+            }
+          },
+          {
+            "type": "contact-info",
+            "display": true,
+            "content": {
+              "title": "Imported Contact Info",
+              "description": "Introduction for contact-info",
+              "contacts": [
+                {
+                  "title": "Sample contact-info",
+                  "name": "Sample contact-info",
+                  "description": "Body for contact-info",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "faq",
+            "display": true,
+            "content": {
+              "title": "Imported FAQ",
+              "description": "Introduction for faq",
+              "questions": [
+                {
+                  "question": "How does this work?",
+                  "answer": "With clear sections."
+                }
+              ]
+            }
+          },
+          {
+            "type": "features",
+            "display": true,
+            "content": {
+              "title": "Imported Features",
+              "description": "Introduction for features",
+              "features": [
+                {
+                  "title": "Sample features",
+                  "name": "Sample features",
+                  "description": "Body for features",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "gallery-grid",
+            "display": true,
+            "content": {
+              "title": "Imported Gallery Grid",
+              "description": "Introduction for gallery-grid",
+              "images": [
+                {
+                  "src": "https://example.test/image.jpg",
+                  "alt": "Imported art",
+                  "caption": "A study"
+                }
+              ]
+            }
+          },
+          {
+            "type": "heading",
+            "display": true,
+            "content": {
+              "title": "Imported Heading",
+              "description": "Introduction for heading",
+              "text": "Section heading",
+              "level": 2
+            }
+          },
+          {
+            "type": "hero",
+            "display": true,
+            "content": {
+              "title": "Imported Hero",
+              "description": "Introduction for hero",
+              "buttons": [
+                {
+                  "label": "See my work",
+                  "href": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "how-to",
+            "display": true,
+            "content": {
+              "title": "Imported How To",
+              "description": "Introduction for how-to",
+              "steps": [
+                {
+                  "title": "Sample how-to",
+                  "name": "Sample how-to",
+                  "description": "Body for how-to",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "legal-text",
+            "display": true,
+            "content": {
+              "title": "Imported Legal Text",
+              "description": "Introduction for legal-text",
+              "sections": [
+                {
+                  "title": "Sample legal-text",
+                  "name": "Sample legal-text",
+                  "description": "Body for legal-text",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "map",
+            "display": true,
+            "content": {
+              "title": "Imported Map",
+              "description": "Introduction for map",
+              "coordinates": {
+                "lat": 41.38,
+                "lng": 2.17
+              },
+              "address": "Barcelona"
+            }
+          },
+          {
+            "type": "menu",
+            "display": true,
+            "content": {
+              "title": "Imported Menu",
+              "description": "Introduction for menu",
+              "categories": [
+                {
+                  "name": "Lunch",
+                  "items": [
+                    {
+                      "name": "Lunch menu",
+                      "description": "Freshly prepared",
+                      "price": 12
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "newsletter",
+            "display": true,
+            "content": {
+              "title": "Imported Newsletter",
+              "description": "Introduction for newsletter",
+              "subscriptionUrl": "https://example.test/subscribe"
+            }
+          },
+          {
+            "type": "plans",
+            "display": true,
+            "content": {
+              "title": "Imported Plans",
+              "description": "Introduction for plans",
+              "plans": [
+                {
+                  "title": "Sample plans",
+                  "name": "Sample plans",
+                  "description": "Body for plans",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "posts-grid",
+            "display": true,
+            "content": {
+              "title": "Imported Posts Grid",
+              "description": "Introduction for posts-grid",
+              "posts": [
+                {
+                  "title": "Sample posts-grid",
+                  "name": "Sample posts-grid",
+                  "description": "Body for posts-grid",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "pricing",
+            "display": true,
+            "content": {
+              "title": "Imported Pricing",
+              "description": "Introduction for pricing",
+              "plans": [
+                {
+                  "title": "Sample pricing",
+                  "name": "Sample pricing",
+                  "description": "Body for pricing",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "profile",
+            "display": true,
+            "content": {
+              "title": "Imported Profile",
+              "description": "Introduction for profile",
+              "name": "Example Author",
+              "role": "Designer",
+              "bio": "My biography",
+              "avatar": {
+                "src": "https://example.test/avatar.jpg"
+              }
+            }
+          },
+          {
+            "type": "projects",
+            "display": true,
+            "content": {
+              "title": "Imported Projects",
+              "description": "Introduction for projects",
+              "projects": [
+                {
+                  "title": "Sample projects",
+                  "name": "Sample projects",
+                  "description": "Body for projects",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "property",
+            "display": true,
+            "content": {
+              "title": "Imported Property",
+              "description": "Introduction for property",
+              "properties": [
+                {
+                  "title": "Sample property",
+                  "name": "Sample property",
+                  "description": "Body for property",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "quickstart",
+            "display": true,
+            "content": {
+              "title": "Imported Quickstart",
+              "description": "Introduction for quickstart",
+              "steps": [
+                {
+                  "title": "Sample quickstart",
+                  "name": "Sample quickstart",
+                  "description": "Body for quickstart",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "shop-items",
+            "display": true,
+            "content": {
+              "title": "Imported Shop Items",
+              "description": "Introduction for shop-items",
+              "items": [
+                {
+                  "title": "Sample shop-items",
+                  "name": "Sample shop-items",
+                  "description": "Body for shop-items",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "showcase",
+            "display": true,
+            "content": {
+              "title": "Imported Showcase",
+              "description": "Introduction for showcase",
+              "items": [
+                {
+                  "title": "Sample showcase",
+                  "name": "Sample showcase",
+                  "description": "Body for showcase",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "social-links",
+            "display": true,
+            "content": {
+              "title": "Imported Social Links",
+              "description": "Introduction for social-links",
+              "links": [
+                {
+                  "title": "Sample social-links",
+                  "name": "Sample social-links",
+                  "description": "Body for social-links",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "stats",
+            "display": true,
+            "content": {
+              "title": "Imported Stats",
+              "description": "Introduction for stats",
+              "stats": [
+                {
+                  "title": "Sample stats",
+                  "name": "Sample stats",
+                  "description": "Body for stats",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "studies",
+            "display": true,
+            "content": {
+              "title": "Imported Studies",
+              "description": "Introduction for studies",
+              "institutions": [
+                {
+                  "title": "Sample studies",
+                  "name": "Sample studies",
+                  "description": "Body for studies",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "table-of-contents",
+            "display": true,
+            "content": {
+              "title": "Imported Table Of Contents",
+              "description": "Introduction for table-of-contents",
+              "items": [
+                {
+                  "title": "Projects"
+                }
+              ]
+            }
+          },
+          {
+            "type": "tabs",
+            "display": true,
+            "content": {
+              "title": "Imported Tabs",
+              "description": "Introduction for tabs",
+              "tabs": [
+                {
+                  "title": "Sample tabs",
+                  "name": "Sample tabs",
+                  "description": "Body for tabs",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "team",
+            "display": true,
+            "content": {
+              "title": "Imported Team",
+              "description": "Introduction for team",
+              "members": [
+                {
+                  "title": "Sample team",
+                  "name": "Sample team",
+                  "description": "Body for team",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "technical-skills",
+            "display": true,
+            "content": {
+              "title": "Imported Technical Skills",
+              "description": "Introduction for technical-skills",
+              "skills": [
+                {
+                  "title": "Sample technical-skills",
+                  "name": "Sample technical-skills",
+                  "description": "Body for technical-skills",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "testimonials",
+            "display": true,
+            "content": {
+              "title": "Imported Testimonials",
+              "description": "Introduction for testimonials",
+              "testimonials": [
+                {
+                  "content": "A thoughtful collaborator.",
+                  "author": {
+                    "name": "Example Author",
+                    "role": "Designer",
+                    "company": "Example Studio"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "text",
+            "display": true,
+            "content": {
+              "title": "Imported Text",
+              "description": "Introduction for text",
+              "text": "Plain text content"
+            }
+          },
+          {
+            "type": "timeline",
+            "display": true,
+            "content": {
+              "title": "Imported Timeline",
+              "description": "Introduction for timeline",
+              "items": [
+                {
+                  "title": "Sample timeline",
+                  "name": "Sample timeline",
+                  "description": "Body for timeline",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          },
+          {
+            "type": "video",
+            "display": true,
+            "content": {
+              "title": "Imported Video",
+              "description": "Introduction for video",
+              "videoUrl": "https://youtu.be/M7lc1UVf-VE"
+            }
+          },
+          {
+            "type": "work-experience",
+            "display": true,
+            "content": {
+              "title": "Imported Work Experience",
+              "description": "Introduction for work-experience",
+              "experiences": [
+                {
+                  "title": "Sample work-experience",
+                  "name": "Sample work-experience",
+                  "description": "Body for work-experience",
+                  "url": "https://example.test/work"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

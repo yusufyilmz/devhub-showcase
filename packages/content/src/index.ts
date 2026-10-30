@@ -31,6 +31,18 @@ export const copy = {
 }
 
 export type {
+  AuthorableSectionType,
+  SectionOptions,
+  SectionSource,
+  SectionSourceField
+} from './authorable-sections'
+export {
+  authorableSections,
+  authorableSectionTypes,
+  getSectionRenderers,
+  MAX_CUSTOM_SECTIONS
+} from './authorable-sections'
+export type {
   CustomSection,
   CustomSectionId,
   PortfolioEntryId
@@ -62,6 +74,11 @@ export type {
   SectionRendererId
 } from './section-registry'
 export { sectionRegistry, sectionRendererViews } from './section-registry'
+export { resolveSectionSource } from './section-source'
+export type {
+  SavedSectionTemplate,
+  SectionTemplateFile
+} from './section-templates'
 export type { ColorMode, PortfolioTheme } from './themes'
 export {
   getPortfolioThemeVariables,

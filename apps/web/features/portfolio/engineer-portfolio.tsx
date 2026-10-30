@@ -36,6 +36,7 @@ export function EngineerPortfolio({
   referrals?: ComponentProps<typeof ReferralSection>['referrals']
   extras?: boolean
 }) {
+  const canonicalProfile = profile
   profile = selectPortfolioContent(profile)
   const { experiences, projects, skills, educations } =
     getPortfolioResources(profile)
@@ -90,7 +91,10 @@ export function EngineerPortfolio({
           >
             <SummarySection profile={profile} />
           </HeroSurface>
-          <RegisteredSections profile={profile} renderers={renderers} />
+          <RegisteredSections
+            profile={canonicalProfile}
+            renderers={renderers}
+          />
           {extras && (
             <ReferralSection
               language={profile.portfolioLanguage}
