@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+import { getThemePalette, portfolioAccents } from "../packages/content/src/themes";
+
 test("homepage opens the real portfolio instead of an anchor", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveTitle("MyDevStudio | A home for your work");
@@ -115,4 +117,34 @@ test("plans show configured sandbox pricing and a safe sign-in link", async ({ p
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(
     false,
   );
+});
+
+test("portfolio preview stays straight and matches the active theme and accent", async ({
+  page,
+}, info) => {
+  await page.goto("/");
+  const preview = page.locator(".home-preview-browser");
+  const rgb = (value: string) => `rgb(${value.replaceAll(" ", ", ")})`;
+  await expect(page.locator(".home-preview-wrap")).toHaveCSS("transform", "none");
+  for (const mode of ["dark", "light", "dark"] as const) {
+    if (mode !== (await page.locator("html").getAttribute("data-theme")))
+      await page.getByRole("button", { name: `Switch to ${mode} theme` }).click();
+    const palette = getThemePalette("studio", mode);
+    await expect(preview).toHaveCSS("background-color", rgb(palette.surface));
+    await expect(preview).toHaveCSS("color", rgb(palette.text));
+    await expect(page.locator(".home-preview-chrome")).toHaveCSS(
+      "background-color",
+      rgb(palette.soft),
+    );
+    for (const accent of ["cyan", "violet", "emerald"] as const) {
+      await page.getByRole("button", { name: `Preview in ${accent}` }).click();
+      await expect(page.locator(".home-sample-intro h2 span")).toHaveCSS(
+        "color",
+        rgb(portfolioAccents[accent][mode]),
+      );
+    }
+    await page
+      .locator(".home-preview-wrap")
+      .screenshot({ path: info.outputPath(`homepage-preview-${mode}.png`) });
+  }
 });

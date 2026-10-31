@@ -1,5 +1,7 @@
 "use client";
-import { useId, useRef, useState } from "react";
+import { type CSSProperties, useId, useRef, useState } from "react";
+
+import { getPreviewAccent } from "@shared/content";
 
 const views = ["Portfolio", "CV"] as const;
 function tabIndexForKey(key: string, index: number) {
@@ -47,7 +49,11 @@ export function PortfolioPreview() {
         </div>
         <span className="home-preview-caption">Your story, two ways</span>
       </div>
-      <div className="home-preview-browser" data-preview-accent={accent}>
+      <div
+        className="home-preview-browser"
+        data-preview-accent={accent}
+        style={getPreviewAccent(accent) as CSSProperties}
+      >
         <div className="home-preview-chrome">
           <span aria-hidden="true" className="home-window-dots">
             <i />
