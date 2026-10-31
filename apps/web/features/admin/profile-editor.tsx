@@ -17,6 +17,7 @@ import {
 import { CustomSectionsEditor } from "./custom-sections-editor";
 import { CvImportEditor } from "./cv-import-editor";
 import { CvSettingsEditor } from "./cv-settings-editor";
+import { GoogleImportEditor } from "./google-import-editor";
 import { LanguageSettingsEditor } from "./language-settings-editor";
 import { PortfolioTypePicker } from "./portfolio-type-picker";
 import { ProfileFields } from "./profile-fields";
@@ -28,6 +29,7 @@ import { SkillsEditor } from "./skills-editor";
 const tabs = [
   "Profile",
   "Import CV",
+  "Import Google",
   "AI profile",
   "AI assistant",
   "Experience",
@@ -136,6 +138,11 @@ export function ProfileEditor({
     return (
       <PortfolioOnboarding
         draft={draft}
+        managed={managed}
+        onGoogleImport={() => {
+          setDraft({ ...draft, templateChosen: true });
+          setTab("Import Google");
+        }}
         onImport={() => {
           setDraft({ ...draft, templateChosen: true });
           setTab("Import CV");
@@ -305,6 +312,8 @@ function EditorBody({
         revision={snapshot.revision}
       />
     );
+  if (tab === "Import Google")
+    return <GoogleImportEditor managed={managed} onChange={onChange} profile={profile} />;
   if (tab === "AI profile") return <AiProfileEditor readUrl={readUrl} />;
   const Editor = editors[tab];
   return <Editor onChange={onChange} profile={profile} />;
@@ -313,10 +322,14 @@ function EditorBody({
 function PortfolioOnboarding({
   draft,
   onImport,
+  onGoogleImport,
+  managed,
   setDraft,
 }: {
   draft: PortfolioProfile;
   onImport: () => void;
+  onGoogleImport: () => void;
+  managed: boolean;
   setDraft: Dispatch<SetStateAction<PortfolioProfile>>;
 }) {
   return (
@@ -332,6 +345,11 @@ function PortfolioOnboarding({
       <button className="studio-secondary" onClick={onImport} type="button">
         Start from a CV
       </button>
+      {!managed && (
+        <button className="studio-secondary" onClick={onGoogleImport} type="button">
+          Start from Google profile
+        </button>
+      )}
       <PortfolioTypePicker
         onChange={(portfolioType) => setDraft({ ...draft, portfolioType })}
         value={draft.portfolioType ?? "engineer"}

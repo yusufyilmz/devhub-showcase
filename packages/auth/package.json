@@ -8,7 +8,9 @@
     "./client": "./src/client.ts",
     "./server": "./src/server.ts",
     "./middleware": "./src/middleware.ts",
-    "./config": "./src/config.ts"
+    "./config": "./src/config.ts",
+    "./google-consent": "./src/google-consent.ts",
+    "./google-profile-scopes": "./src/google-profile-scopes.ts"
   },
   "main": "./src/index.ts",
   "scripts": {

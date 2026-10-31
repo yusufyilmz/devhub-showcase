@@ -96,6 +96,14 @@ const billingOwners = [
   owner_id: id,
   username: `billing-test-${index}`,
 }));
+const googleOwners = ["desktop", "mobile"].map((device, index) => ({
+  ...row,
+  document: { ...starters[index].document, name: "Google Import Owner" },
+  id: `72727272-7272-4272-8272-72727272727${index}`,
+  is_public: false,
+  owner_id: `71717171-7171-4171-8171-71717171717${index}`,
+  username: `${device}-google-owner`,
+}));
 const cvImportOwners = ["desktop", "mobile"].map((device, index) => ({
   ...row,
   document: { ...starters[index].document, name: "CV Import Owner", templateChosen: false },
@@ -349,6 +357,7 @@ const rows = [
   ...cvImportOwners,
   ...aiOwners,
   ...billingOwners,
+  ...googleOwners,
   ...mediaOwners,
   ...mediaExamples,
   ...libraryOwners,
@@ -411,6 +420,7 @@ function fixtureOwner(request) {
       ...cvImportOwners,
       ...aiOwners,
       ...billingOwners,
+      ...googleOwners,
       ...libraryOwners,
       ...mediaOwners,
       ...managers,

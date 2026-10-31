@@ -131,3 +131,7 @@ The homepage compares Free and Pro with dynamic sandbox pricing and bounded AI a
 ## Premium account status
 
 Subscription settings show plan access, its end date, assignment/publication, separate AI usage and remaining attempts. Readiness explains missing Pro, assignment, service configuration, allowance, publication and visitor opt-in. Refresh status reloads account data without creating Stripe sessions or model requests. Checkout return never grants access. Billing errors use safe codes and next actions instead of raw provider payloads. See [premium status](features/premium-status.md).
+
+## Optional Google profile import
+
+Owners can request selected Google profile categories after normal login, review available name/email, city, phone, birthdate and current job details, then apply chosen fields to their draft. Google consent is separate from basic login and does not read mail or contacts. Birthdate is off by default and can become public profile data if explicitly saved; existing page/PDF layouts do not display it. People API/OAuth setup and verification are required. See [Google profile import](features/google-profile-import.md).

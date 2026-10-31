@@ -27,7 +27,8 @@
     "./billing": "./src/billing/index.ts",
     "./billing-repository": "./src/billing/repository.ts",
     "./stripe": "./src/billing/stripe.ts",
-    "./ai-edit": "./src/domain/ai-edit.ts"
+    "./ai-edit": "./src/domain/ai-edit.ts",
+    "./google-profile": "./src/domain/google-profile.ts"
   },
   "main": "src/index.ts",
   "scripts": {
