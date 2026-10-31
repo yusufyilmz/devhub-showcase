@@ -5,6 +5,7 @@ import { type PortfolioProfile, portfolioTypes } from "@shared/content";
 import type { ProfileSnapshot } from "@shared/lib/profile-errors";
 import { cvPath, editCvPath } from "@shared/lib/username";
 
+import { AiAssistantEditor } from "./ai-assistant-editor";
 import { AiProfileEditor } from "./ai-profile-editor";
 import { AppearanceEditor } from "./appearance-editor";
 import {
@@ -28,6 +29,7 @@ const tabs = [
   "Profile",
   "Import CV",
   "AI profile",
+  "AI assistant",
   "Experience",
   "Projects",
   "Education",
@@ -242,7 +244,14 @@ export function ProfileEditor({
         )}
         <fieldset className="editor-body" disabled={busy}>
           <legend className="sr-only">{tab} editor</legend>
-          <EditorBody onChange={setDraft} profile={draft} readUrl={saveUrl} tab={tab} />
+          <EditorBody
+            managed={managed}
+            onChange={setDraft}
+            profile={draft}
+            readUrl={saveUrl}
+            snapshot={saved}
+            tab={tab}
+          />
         </fieldset>
         <footer className="editor-footer">
           <p>Save your edits to update your CV. Public sharing is optional.</p>
@@ -270,15 +279,29 @@ export function ProfileEditor({
 
 function EditorBody({
   tab,
+  snapshot,
+  managed,
   readUrl,
   profile,
   onChange,
 }: {
   tab: (typeof tabs)[number];
+  snapshot: ProfileSnapshot;
+  managed: boolean;
   readUrl: string;
   profile: PortfolioProfile;
   onChange: (profile: PortfolioProfile) => void;
 }) {
+  if (tab === "AI assistant")
+    return (
+      <AiAssistantEditor
+        managed={managed}
+        onChange={onChange}
+        profile={profile}
+        profileId={snapshot.id}
+        revision={snapshot.revision}
+      />
+    );
   if (tab === "AI profile") return <AiProfileEditor readUrl={readUrl} />;
   const Editor = editors[tab];
   return <Editor onChange={onChange} profile={profile} />;

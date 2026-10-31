@@ -119,3 +119,7 @@ Remaining product work includes premium entitlements and usage accounting, billi
 Stripe sandbox billing is available at `/admin/billing` once its server configuration and migrations are installed. Checkout, customer portal and signed subscription webhooks are implemented; live keys remain disabled and actual sandbox checkout verification is required. See [setup and limitations](features/stripe-billing.md).
 
 Pro owners can opt into a public portfolio assistant at `/admin/billing`. The reusable chat widget supports all portfolio layouts, with public-only context, isolated session history and reserved usage accounting. Existing main portfolio chat keeps its legacy behavior. See [premium portfolio chat](features/premium-portfolio-chat.md) for migration and verification requirements.
+
+## Private AI editing assistant
+
+Pro owners can generate validated changes from the AI assistant editor tab, review before/after values and apply selected fields to their draft. Saving remains explicit. Public visitor chat is independent of private assistant access. See [private AI editor](features/private-ai-editor.md) for supported fields, privacy, accounting and setup.

@@ -26,7 +26,8 @@
     "./portfolio-knowledge": "./src/domain/portfolio-knowledge.ts",
     "./billing": "./src/billing/index.ts",
     "./billing-repository": "./src/billing/repository.ts",
-    "./stripe": "./src/billing/stripe.ts"
+    "./stripe": "./src/billing/stripe.ts",
+    "./ai-edit": "./src/domain/ai-edit.ts"
   },
   "main": "src/index.ts",
   "scripts": {

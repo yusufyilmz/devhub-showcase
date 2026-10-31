@@ -25,7 +25,8 @@
         "STRIPE_PRO_PRICE_ID",
         "STRIPE_PRO_CHAT_LIMIT",
         "STRIPE_PRO_EDITOR_LIMIT",
-        "SUPABASE_SERVICE_ROLE_KEY"
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "OPENAI_EDITOR_MODEL"
       ]
     },
     "clean": {
@@ -67,7 +68,8 @@
         "STRIPE_PRO_PRICE_ID",
         "STRIPE_PRO_CHAT_LIMIT",
         "STRIPE_PRO_EDITOR_LIMIT",
-        "SUPABASE_SERVICE_ROLE_KEY"
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "OPENAI_EDITOR_MODEL"
       ]
     }
   }
