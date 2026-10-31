@@ -5,7 +5,7 @@ import type { ReviewWithReferrals, SupabaseDbClient } from "@shared/lib/types";
 import { ReviewSection } from "@shared/ui/components";
 import { redirect } from "next/navigation";
 
-import { requireAdmin } from "../../../lib/admin-auth";
+import { requireAdmin } from "@/lib/admin-auth";
 import { handleSubmitReviewAction } from "../../actions";
 
 const getPageResources = async (supabase: SupabaseDbClient): Promise<ReviewWithReferrals[]> => {

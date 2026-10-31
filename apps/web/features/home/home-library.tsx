@@ -1,7 +1,7 @@
 import { authorableSections, authorableSectionTypes, type CustomSection } from "@shared/content";
 import { RenderSection } from "@shared/sections/renderers";
 
-import { siteUrl } from "../../lib/site-url";
+import { siteUrl } from "@/lib/site-url";
 import { LibraryPicker } from "./library-picker";
 
 const samples: CustomSection[] = [

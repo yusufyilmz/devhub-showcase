@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 
-import { OwnerEditLink } from "../../features/admin/owner-edit-link";
-import { PremiumWidget } from "../../features/chat/premium-widget";
-import { EngineerPortfolio } from "../../features/portfolio/engineer-portfolio";
-import { PortfolioLayout } from "../../features/portfolio/portfolio-layout";
-import { portfolioMetadata } from "../../lib/portfolio-metadata";
-import { loadPageResources } from "../../lib/portfolio-resources";
-import { premiumChatAvailable } from "../../lib/premium-chat";
-import { getUsernameProfile } from "../../lib/public-profile";
+import { OwnerEditLink } from "@/features/admin/owner-edit-link";
+import { PremiumWidget } from "@/features/chat/premium-widget";
+import { EngineerPortfolio } from "@/features/portfolio/engineer-portfolio";
+import { PortfolioLayout } from "@/features/portfolio/portfolio-layout";
+import { portfolioMetadata } from "@/lib/portfolio-metadata";
+import { loadPageResources } from "@/lib/portfolio-resources";
+import { premiumChatAvailable } from "@/lib/premium-chat";
+import { getUsernameProfile } from "@/lib/public-profile";
 
 export const maxDuration = 60;
 

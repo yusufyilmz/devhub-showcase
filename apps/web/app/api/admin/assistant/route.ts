@@ -11,8 +11,8 @@ import { buildOwnerPortfolioKnowledge } from "@shared/lib/portfolio-knowledge";
 import { ProfileAccessError, ProfileConflictError } from "@shared/lib/profile-errors";
 import { ZodError } from "zod";
 
-import { requireWorkspace, sameOrigin } from "../../../../lib/admin-auth";
-import { billingServiceClient } from "../../../../lib/billing/client";
+import { requireWorkspace, sameOrigin } from "@/lib/admin-auth";
+import { billingServiceClient } from "@/lib/billing/client";
 
 export const maxDuration = 60;
 const headers = { "Cache-Control": "private, no-store" };

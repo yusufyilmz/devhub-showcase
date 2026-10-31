@@ -1,10 +1,6 @@
-import { sameOrigin } from "../../../../../lib/admin-auth";
-import { managedFailure, privateHeaders, readManagedBody } from "../../../../../lib/managed-api";
-import {
-  managedRepository,
-  requirePortfolioAdmin,
-  saveManaged,
-} from "../../../../../lib/managed-portfolios";
+import { sameOrigin } from "@/lib/admin-auth";
+import { managedFailure, privateHeaders, readManagedBody } from "@/lib/managed-api";
+import { managedRepository, requirePortfolioAdmin, saveManaged } from "@/lib/managed-portfolios";
 export async function PUT(request: Request, context: { params: Promise<{ id: string }> }) {
   if (!sameOrigin(request)) return Response.json({ error: "Invalid origin." }, { status: 403 });
   try {

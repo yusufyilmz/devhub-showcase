@@ -6,7 +6,7 @@ import {
 } from "@shared/lib/profile-errors";
 import { ZodError } from "zod";
 
-import { requireWorkspace, sameOrigin } from "../../../../lib/admin-auth";
+import { requireWorkspace, sameOrigin } from "@/lib/admin-auth";
 
 export async function GET() {
   try {

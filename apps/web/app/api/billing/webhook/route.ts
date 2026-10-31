@@ -1,4 +1,4 @@
-import { billingGateway, synchronize } from "../../../../lib/billing/gateway";
+import { billingGateway, synchronize } from "@/lib/billing/gateway";
 
 export const runtime = "nodejs";
 export async function POST(request: Request) {

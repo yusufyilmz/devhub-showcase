@@ -4,7 +4,7 @@ import { createServerClient } from "@shared/lib/supabase";
 import type { Json } from "@shared/lib/types";
 import { ZodError, z } from "zod";
 
-import { sameOrigin } from "../../../../lib/admin-auth";
+import { sameOrigin } from "@/lib/admin-auth";
 
 const headers = { "Cache-Control": "private, no-store" };
 const librarySchema = z

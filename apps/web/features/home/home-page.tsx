@@ -1,7 +1,7 @@
 import { Card } from "@shared/components/cards";
 import { ThemeToggle } from "@shared/ui/theme";
 
-import type { HomeAction } from "../../lib/home-links";
+import type { HomeAction } from "@/lib/home-links";
 import { ExampleCarousel } from "../examples/example-carousel";
 import { HomeLibrary } from "./home-library";
 import { HomeOptions } from "./home-options";

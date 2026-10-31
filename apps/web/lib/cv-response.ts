@@ -1,6 +1,7 @@
 import { renderCv } from "@shared/cv";
 import template from "@shared/cv/template.hbs";
 import type { ProfileSnapshot } from "@shared/lib/profile-errors";
+
 export async function cvResponse(snapshot: ProfileSnapshot) {
   const pdf = await renderCv(snapshot.profile, template);
   const name =

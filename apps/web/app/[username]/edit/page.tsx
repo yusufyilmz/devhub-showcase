@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
-import { ProfileEditor } from "../../../features/admin/profile-editor";
-import { requireWorkspace } from "../../../lib/admin-auth";
+import { ProfileEditor } from "@/features/admin/profile-editor";
+import { requireWorkspace } from "@/lib/admin-auth";
 export const metadata: Metadata = {
   robots: { follow: false, index: false },
   title: "Edit your CV",

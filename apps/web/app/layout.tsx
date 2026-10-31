@@ -1,8 +1,8 @@
 import "@shared/components/portfolio-chat.css";
 import "@shared/sections/styles.css";
 import "@shared/ui/globals.css";
-import "../features/portfolio/themes.css";
-import "../features/portfolio/portfolio.css";
+import "@/features/portfolio/themes.css";
+import "@/features/portfolio/portfolio.css";
 import { StyledEngineProvider } from "@mui/material";
 import { NotificationProvider } from "@shared/ui/context";
 import { ThemeProvider } from "@shared/ui/theme";
@@ -10,12 +10,12 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { headers } from "next/headers";
 
-import { getActiveProfile } from "../lib/active-profile";
-import { getPagePresentation } from "../lib/page-presentation";
-import { isPlatformPage, platformMetadata } from "../lib/platform";
-import { getPublicThemeStyle } from "../lib/portfolio-theme";
-import { getProfileStructuredData } from "../lib/profile-structured-data";
-import { portfolioUrl } from "../lib/site-url";
+import { getActiveProfile } from "@/lib/active-profile";
+import { getPagePresentation } from "@/lib/page-presentation";
+import { isPlatformPage, platformMetadata } from "@/lib/platform";
+import { getPublicThemeStyle } from "@/lib/portfolio-theme";
+import { getProfileStructuredData } from "@/lib/profile-structured-data";
+import { portfolioUrl } from "@/lib/site-url";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

@@ -2,7 +2,7 @@ import { StudioShell } from "@shared/components/studio-shell";
 import { ThemeToggle } from "@shared/ui/theme";
 import type { Metadata } from "next";
 
-import { ManagementLink } from "../../features/management/management-link";
+import { ManagementLink } from "@/features/management/management-link";
 export const metadata: Metadata = {
   robots: { follow: false, index: false },
   title: "Portfolio studio",

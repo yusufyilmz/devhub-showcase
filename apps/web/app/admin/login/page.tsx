@@ -1,4 +1,4 @@
-import { AdminLogin } from "../../../features/admin/admin-login";
+import { AdminLogin } from "@/features/admin/admin-login";
 
 const errors: Record<string, string> = {
   google_failed: "Google sign in did not complete. Try again or use your password.",

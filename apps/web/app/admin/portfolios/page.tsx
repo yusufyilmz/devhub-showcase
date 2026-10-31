@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 
-import { CreatePortfolio } from "../../../features/management/create-portfolio";
-import { requirePortfolioAdmin } from "../../../lib/managed-portfolios";
-import "../../../features/management/management.css";
+import { CreatePortfolio } from "@/features/management/create-portfolio";
+import { requirePortfolioAdmin } from "@/lib/managed-portfolios";
+import "@/features/management/management.css";
 export default async function PortfolioManager({
   searchParams,
 }: {
