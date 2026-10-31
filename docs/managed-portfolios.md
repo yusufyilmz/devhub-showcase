@@ -20,8 +20,7 @@ No invitations or account emails are sent. No service role key or new environmen
 
 The managed portfolio migrations add a manager column and index, a private administrator membership table, explicit deny access to that table, management RLS policies, and a tightly scoped transfer operation. Privileged helpers reside in a non-exposed private schema with a fixed empty search path, explicit auth UID checks and revoked public/anonymous execution. Public RPC wrappers run as the caller.
 
-The migrations in this PR are already applied to the connected production project. New environments should apply all committed migrations in order. They initialize administrator membership from the main profile's verified owner; configure that owner first.
-
+Inspect the target environment's migration history before applying missing committed migrations in order. The managed-portfolio migrations initialize administrator membership from the main profile's verified owner; configure that owner first. Historical rollout notes are not evidence of current production state.
 
 ## Verification and existing advisories
 

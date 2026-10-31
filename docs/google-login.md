@@ -4,16 +4,18 @@ The admin login now offers **Continue with Google** alongside email/password. It
 
 ## Activate the provider
 
+Replace `https://your-app.example` and `YOUR_PROJECT_REF` with the actual deployment origin and Supabase project reference. These are placeholders, not values to paste into production.
+
 1. In [Google Auth Platform](https://console.cloud.google.com/auth/overview), select your project, configure branding/audience, and create an OAuth client of type **Web application**. Use `openid`, email and profile scopes. If the consent app is in testing mode, add your owner Google account as a test user.
-2. Add `https://yusufdevhub.vercel.app` as an authorized JavaScript origin. Add `http://localhost:3000` for local development if needed.
+2. Add `https://your-app.example` as an authorized JavaScript origin. Add `http://localhost:3000` for local development if needed.
 3. Add this **Google authorized redirect URI**:
 
    ```text
-   https://quepwjalwkfzxyqhtyby.supabase.co/auth/v1/callback
+   https://YOUR_PROJECT_REF.supabase.co/auth/v1/callback
    ```
 
-4. Open [DevHub Supabase Google provider](https://supabase.com/dashboard/project/quepwjalwkfzxyqhtyby/auth/providers?provider=Google), enable Google, and enter the client ID and client secret there. Do not put the client secret in source code, browser environment variables or chat. Leave nonce/email verification checks enabled.
-5. In [Supabase URL Configuration](https://supabase.com/dashboard/project/quepwjalwkfzxyqhtyby/auth/url-configuration), set the production Site URL and allow these application callback URLs:
+4. Open your Supabase project's Google provider settings, enable Google, and enter the client ID and client secret there. Do not put the client secret in source code, browser environment variables or chat. Leave nonce/email verification checks enabled.
+5. In your Supabase project's URL Configuration, set the production Site URL and allow these application callback URLs:
 
    ```text
    https://yusufdevhub.vercel.app/auth/callback

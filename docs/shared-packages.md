@@ -44,7 +44,7 @@ Register each app's callback in Supabase and its origin in Google. Sharing auth 
 
 ## Components in another app
 
-Import `@shared/components/styles.css` once at the app root and include `packages/components/src/**/*.{js,ts,jsx,tsx}` in the app's Tailwind content paths. Existing portfolio consumers can continue importing `@shared/ui/globals.css`; it includes the shared stylesheet. The CSS supplies the existing design tokens, form and card treatments, responsive behavior and reduced-motion rules. Set `data-theme` and `data-accent` on the root to use the existing themes. Apps can override tokens and provide their own fonts.
+Import `@shared/components/styles.css` once at the app root and configure Tailwind 4 `@source` declarations to include the shared component source; see [Tailwind setup](tailwind.md). Existing portfolio consumers can continue importing `@shared/ui/globals.css`; it includes the shared stylesheet. The CSS supplies the existing design tokens, form and card treatments, responsive behavior and reduced-motion rules. Set `data-theme` and `data-accent` on the root to use the existing themes. Apps can override tokens and provide their own fonts.
 
 Use narrow entrypoints when possible:
 

@@ -1,6 +1,6 @@
-# Section system: foundation
+# Section system
 
-The section system includes a shared registry, reusable views and validated display settings in the profile editor. Existing documents keep their original layout defaults. No database migration or new dependency is required. Custom sections can be authored, previewed and placed between the built-in sections.
+The section system includes a shared registry, reusable views, validated display settings, custom sections and a private template library. Existing documents retain their layout defaults. Section configuration lives in the profile document; saved templates use their own table and migration. See [features](features.md) for the product overview.
 
 ## Architecture decision
 
@@ -12,7 +12,7 @@ This foundation introduces the composition concepts without copying PageForge im
 
 ## Shared model and boundaries
 
-The registry and JSON model live in @shared/content. The shared validator is exported from @shared/lib/section. The React renderer dispatcher remains in the portfolio app; shared content does not import React, Next.js, authentication or database clients. Reusable visual renderers can move into @shared/components in the next step.
+The registry and JSON model live in @shared/content. The shared validator is exported from @shared/lib/section. The portfolio app composes the renderer dispatcher; reusable views live in @shared/components and section renderer/editor pairs live in @shared/sections. Shared content does not import React, Next.js, authentication or database clients.
 
 A normalized section contains:
 
@@ -45,19 +45,17 @@ RegisteredSections selects the explicit server-rendered implementation by render
 
 Public project filtering stays in the existing server rendering/resource adapters. The registry contains only static presentation metadata and field references, not personal content. Header/introduction, contact, testimonials, chat and footer retain their current placement. CV generation continues to read the canonical profile through the existing renderer.
 
-## Next steps
+## Further references
 
-The section library and template/import stages are implemented. See [the source migration map](pageforge-section-migration.md) and [private templates](section-templates.md) for the current contracts.
+See [the source migration map](pageforge-section-migration.md) for all supported families and integration boundaries, and [private templates](section-templates.md) for library and import/export contracts.
 
-Each step includes compatibility and browser checks before its new options are exposed. Persisted configuration, custom IDs and PDF inclusion choices are deliberately introduced with their corresponding editor features rather than accepted as unused profile fields now.
-
-## Shared view primitives (step two)
+## Shared view primitives
 
 The section-views entrypoint in @shared/components provides SectionGrid (cards or gallery), SectionAccordion, SectionTabs and SectionCarousel. Each takes a label and stable, uniquely identified items with a title and React content. The existing @shared/components timeline and cards remain available; they are not duplicated.
 
 Tabs support arrow keys, Home and End. Accordions use native details/summary. Carousels use scroll snap, swipe and manual controls without autoplay; arrow movement respects reduced motion and accepts localized control labels. These primitives contain no authentication, fetching or portfolio data access. Callers must supply only authorized content.
 
-## Saved section settings (step three)
+## Saved section settings
 
 The Section display editor saves optional sectionSettings in the existing profile JSON document. Each built-in section accepts a compatible renderer, visible flag and optional itemIds. The save and import validator rejects unknown keys, incompatible renderers, duplicate item IDs and arbitrary executable settings. Sources remain fixed to the canonical profile fields.
 
@@ -67,7 +65,15 @@ ConfiguredSection adapts profile content to shared cards, gallery, carousel, acc
 
 The editor provides a current-draft preview for explicitly selected views, per-section reset and the existing save/discard controls. Settings use the normal revision-checked save/read path for owned and managed portfolios. PDF rendering reads the complete canonical profile and keeps its own inclusion settings. No production data is modified by this change.
 
-## Custom sections (step four)
+## Reordering and defaults
+
+The Section order editor supports pointer/touch dragging, move buttons and handle keyboard shortcuts: Arrow Up, Arrow Down, Home and End. Escape cancels a drag. A reorder stays in the draft until Save changes succeeds.
+
+An explicit order applies across all four portfolio layouts. The introduction, contact area, footer and original testimonials retain fixed positions; empty sections are skipped. Reset removes the override: Designer defaults to projects first, other layouts to About. Changing layout preserves an explicit order until reset. PDF order remains controlled by its own format.
+
+The reusable SortableList and moveItem exports in @shared/components/sortable-list accept uniquely identified items and delegate persistence to the caller. They contain no portfolio/auth logic and announce position changes accessibly.
+
+## Custom sections
 
 The Custom sections editor creates named portfolio sections with list as the default view. Cards, accordion, tabs and carousel reuse @shared/components. Each section has visibility and an ordered collection of titled plain-text items with optional HTTP or HTTPS links. HTML and executable component configuration are not accepted. Text is escaped by React; draft previews also omit unsafe links.
 
@@ -75,13 +81,13 @@ Custom section IDs use a custom- prefix and a UUID. Item IDs are UUIDs. Duplicat
 
 A new optional sectionSequence lists built-in and custom IDs together. The validator requires every existing section exactly once and rejects unknown, missing or duplicate references. The existing sectionOrder field keeps its six-section contract, so old documents and imports retain their defaults. Without a mixed sequence, built-in sections use their existing order and custom sections follow in creation order. Reset restores that ordering.
 
-The existing accessible drag handles, keyboard shortcuts and move buttons now order all sections together. Empty and hidden custom sections are omitted publicly. Section names are authored content and stay as entered when the portfolio language changes. Custom sections are portfolio-only in this step; PDF content retains its established document layout and inclusion settings.
+The existing accessible drag handles, keyboard shortcuts and move buttons now order all sections together. Empty and hidden custom sections are omitted publicly. Section names are authored content and stay as entered when the portfolio language changes. Custom sections are portfolio-only; PDF content retains its established document layout and inclusion settings.
 
 Limits are 60 custom sections, 30 items per section, 160 characters per section name, 200 per item title and 6000 per item body. Validation and storage use the existing profile document; no migration, dependency or production data edit is needed.
 
-## Compositions, hero and social work (step five)
+## Compositions, hero and social work
 
-See [the roadmap](roadmap.md) and [repository guidance](../AGENTS.md). sectionCompositions defines authorable starters for services, testimonials, FAQs, statistics, calls to action and curated social work. A starter chooses a title and default view without inventing content. All use the same custom section IDs, collections, visibility, previews, mixed order and profile save boundaries. Legacy sections without composition remain generic custom sections.
+See [the feature overview](features.md) and [repository guidance](../AGENTS.md). sectionCompositions defines authorable starters for services, testimonials, FAQs, statistics, calls to action and curated social work. A starter chooses a title and default view without inventing content. All use the same custom section IDs, collections, visibility, previews, mixed order and profile save boundaries. Legacy sections without composition remain generic custom sections.
 
 YouTube, Instagram and Pinterest sections require public work URLs matching the selected provider. getSocialWork checks exact HTTPS hosts and supported video/post/pin paths. Optional image URLs and captions provide visual work cards. YouTube player URLs are constructed from validated video IDs and use youtube-nocookie.com. WorkMedia mounts the iframe only on a visitor's load action and supports unloading; there are no automatic thumbnails, third-party scripts or server-side social fetches. Instagram and Pinterest cards link to their originals. Automatic feeds and native Instagram/Pinterest embeds are separate future integrations.
 
@@ -89,7 +95,7 @@ The optional profile.hero stores image/video URL, poster, position and overlay. 
 
 References for YouTube behavior: [official embed guidance](https://support.google.com/youtube/answer/171780), [player parameters](https://developers.google.com/youtube/player_parameters). No PageForge or original portfolio implementation code/assets are copied by this feature.
 
-## Complete library and templates (step six)
+## Complete library and templates
 
 All 42 PageForge section families now have explicit renderer/editor folders in @shared/sections, alongside native custom/services/social sections. New sectionType and compatible options/source fields extend custom sections without changing legacy instances. The source mapping and integration boundaries are listed in docs/pageforge-section-migration.md.
 
