@@ -5,6 +5,7 @@ import type { HomeAction } from "@/lib/home-links";
 import { ExampleCarousel } from "../examples/example-carousel";
 import { HomeLibrary } from "./home-library";
 import { HomeOptions } from "./home-options";
+import { HomePricing } from "./home-pricing";
 import { PortfolioPreview } from "./portfolio-preview";
 import "./home.css";
 
@@ -30,6 +31,14 @@ function Brand() {
   );
 }
 const faq = [
+  [
+    "What do the AI assistants do?",
+    "Pro can add visitor chat using published portfolio information and a private editing assistant for your current draft. You choose whether to enable visitor chat. Review proposed edits before applying and saving. Private drafts may be sent to OpenAI for owner-requested proposals. Allowances count attempts, including failed or uncertain requests.",
+  ],
+  [
+    "Can I pay for Pro now?",
+    "Pro is currently a Stripe sandbox preview. Checkout uses test cards and does not move real money. Current test pricing and allowances appear in Plans and your subscription settings. Your regular portfolio and CV stay available on Free.",
+  ],
   [
     "Can I start with my existing CV?",
     "Yes. Sign in, open Import CV in your studio and upload a PDF, DOCX or text file up to 3 MB. With your permission, OpenAI extracts details for review. Choose what to apply, correct mistakes and save your draft. Availability depends on service configuration; importing does not publish your portfolio.",
@@ -86,6 +95,7 @@ export function HomePage({
             <a href="#examples">Examples</a>
             <a href="#features">Why MyDevStudio</a>
             <a href="#how-it-works">How it works</a>
+            <a href="#pricing">Plans</a>
             <a href="#questions">Questions</a>
           </nav>
           <div className="home-header-actions">
@@ -220,6 +230,7 @@ export function HomePage({
           </div>
         </section>
         <HomeOptions />
+        <HomePricing action={action} />
         <HomeLibrary href={action.href} />
         <section
           aria-labelledby="process-title"

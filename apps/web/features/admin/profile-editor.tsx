@@ -160,6 +160,9 @@ export function ProfileEditor({
             <p>Keep your portfolio as current as your work.</p>
           </div>
           <div className="studio-header-actions">
+            <a className="studio-secondary" href="/admin/billing">
+              Plan and usage
+            </a>
             {saved.isPublic && saved.id && (
               <a
                 className="studio-secondary"

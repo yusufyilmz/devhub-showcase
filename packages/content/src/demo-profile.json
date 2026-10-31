@@ -1,0 +1,2328 @@
+{
+  "about": [
+    "This is fictional demo content for exploring portfolio layouts, CVs and AI features.",
+    "Sample projects and experience can be edited without affecting any real portfolio."
+  ],
+  "appearance": {
+    "accent": "emerald",
+    "defaultTheme": "dark",
+    "theme": "graphite"
+  },
+  "customSections": [
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000900",
+      "items": [
+        {
+          "body": "Use the editor to switch layouts, themes and portfolio/CV languages. Try section ordering, compatible renderers, custom sections, templates, import/export and PDF settings. The sections below demonstrate the complete registered library. Some links are labeled placeholders; contact forms open an email draft and newsletter links need your own provider.",
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000000901",
+          "title": "Try the complete studio",
+          "url": ""
+        },
+        {
+          "body": "The private AI assistant proposes edits for review and draft apply. Saving remains explicit. Public AI chat requires an owner opt-in and a published portfolio. Use test cards in the Stripe sandbox. Demo allowances are limited and real AI requests consume the configured provider budget.",
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000000902",
+          "title": "AI and billing",
+          "url": "https://mydevstudio.vercel.app/admin/billing"
+        }
+      ],
+      "renderer": "text",
+      "sectionType": "text",
+      "title": "Demo feature checklist",
+      "visible": true
+    },
+    {
+      "id": "custom-11111111-1111-4111-8111-111111111111",
+      "items": [
+        {
+          "body": "Fictional service content for testing section renderers.",
+          "id": "22222222-2222-4222-8222-222222222222",
+          "title": "Interface development",
+          "url": ""
+        }
+      ],
+      "renderer": "cards",
+      "sectionType": "services",
+      "title": "Sample services",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000001",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001010",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "About Hero example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001011",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the About Hero section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "list",
+      "sectionType": "about-hero",
+      "source": {
+        "field": "about",
+        "type": "profile"
+      },
+      "title": "Demo · About Hero",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000002",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001020",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "About example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001021",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the About section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "about",
+      "source": {
+        "field": "about",
+        "type": "profile"
+      },
+      "title": "Demo · About",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000003",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001030",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Accordion example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001031",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Accordion section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "accordion",
+      "sectionType": "accordion",
+      "title": "Demo · Accordion",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000004",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001040",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Awards example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001041",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Awards section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "awards",
+      "title": "Demo · Awards",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000005",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001050",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Blog Page example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001051",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Blog Page section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "blog-page",
+      "title": "Demo · Blog Page",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000006",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001060",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "CTA example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001061",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the CTA section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "cta",
+      "title": "Demo · CTA",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000007",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001070",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Calendar Link example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001071",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Calendar Link section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "calendar-link",
+      "title": "Demo · Calendar Link",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000008",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001080",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Careers example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001081",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Careers section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "careers",
+      "title": "Demo · Careers",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000009",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001090",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Clients example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001091",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Clients section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "gallery",
+      "sectionType": "clients",
+      "title": "Demo · Clients",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000010",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001100",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Contact Form example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001101",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Contact Form section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "list",
+      "sectionType": "contact-form",
+      "title": "Demo · Contact Form",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000011",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001110",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Contact Info example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001111",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Contact Info section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "contact-info",
+      "title": "Demo · Contact Info",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000012",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001120",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "FAQ example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001121",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the FAQ section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "accordion",
+      "sectionType": "faq",
+      "title": "Demo · FAQ",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000013",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001130",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Features example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001131",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Features section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "features",
+      "source": {
+        "field": "projects",
+        "type": "profile"
+      },
+      "title": "Demo · Features",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000014",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001140",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Gallery Grid example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001141",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Gallery Grid section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "gallery",
+      "sectionType": "gallery-grid",
+      "source": {
+        "field": "projects",
+        "type": "profile"
+      },
+      "title": "Demo · Gallery Grid",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000015",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001150",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Heading example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001151",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Heading section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "list",
+      "sectionType": "heading",
+      "title": "Demo · Heading",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000016",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001160",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Hero example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001161",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Hero section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "list",
+      "sectionType": "hero",
+      "title": "Demo · Hero",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000017",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001170",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "How To example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001171",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the How To section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "steps",
+      "sectionType": "how-to",
+      "title": "Demo · How To",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000018",
+      "items": [
+        {
+          "body": "Sample wording for layout testing only. Replace this with your own reviewed policy before using it for a real business.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001180",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Legal Text example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Sample wording for layout testing only. Replace this with your own reviewed policy before using it for a real business.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001181",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Legal Text section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "text",
+      "sectionType": "legal-text",
+      "title": "Demo · Legal Text",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000019",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001190",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Map example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001191",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Map section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "list",
+      "sectionType": "map",
+      "title": "Demo · Map",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000020",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001200",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Menu example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001201",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Menu section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "menu",
+      "title": "Demo · Menu",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000021",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001210",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Newsletter example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001211",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Demonstration subscription link only; no mailing list is connected.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "list",
+      "sectionType": "newsletter",
+      "title": "Demo · Newsletter",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000022",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001220",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Plans example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001221",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Plans section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "plans",
+      "title": "Demo · Plans",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000023",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001230",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Posts Grid example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001231",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Posts Grid section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "posts-grid",
+      "title": "Demo · Posts Grid",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000024",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001240",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Pricing example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001241",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Pricing section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "pricing",
+      "title": "Demo · Pricing",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000025",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001250",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Profile example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001251",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Profile section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "profile",
+      "title": "Demo · Profile",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000026",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001260",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Projects example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001261",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Projects section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "projects",
+      "source": {
+        "field": "projects",
+        "type": "profile"
+      },
+      "title": "Demo · Projects",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000027",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001270",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Property example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001271",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Property section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "property",
+      "title": "Demo · Property",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000028",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001280",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Quickstart example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001281",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Quickstart section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "steps",
+      "sectionType": "quickstart",
+      "title": "Demo · Quickstart",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000029",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001290",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Shop Items example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001291",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Shop Items section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "shop-items",
+      "title": "Demo · Shop Items",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000030",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001300",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Showcase example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001301",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Showcase section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "gallery",
+      "sectionType": "showcase",
+      "source": {
+        "field": "projects",
+        "type": "profile"
+      },
+      "title": "Demo · Showcase",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000031",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001310",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Social Links example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001311",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Social Links section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "social-links",
+      "title": "Demo · Social Links",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000032",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001320",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Stats example",
+          "url": "https://example.com",
+          "value": "3"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001321",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "4"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Stats section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "stats",
+      "title": "Demo · Stats",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000033",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001330",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Studies example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001331",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Studies section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "timeline",
+      "sectionType": "studies",
+      "source": {
+        "field": "education",
+        "type": "profile"
+      },
+      "title": "Demo · Studies",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000034",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001340",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Table Of Contents example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001341",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Table Of Contents section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "list",
+      "sectionType": "table-of-contents",
+      "title": "Demo · Table Of Contents",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000035",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001350",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Tabs example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001351",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Tabs section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "tabs",
+      "sectionType": "tabs",
+      "title": "Demo · Tabs",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000036",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001360",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Team example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001361",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Team section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "team",
+      "title": "Demo · Team",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000037",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001370",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Technical Skills example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001371",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Technical Skills section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "technical-skills",
+      "source": {
+        "field": "skills",
+        "type": "profile"
+      },
+      "title": "Demo · Technical Skills",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000038",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001380",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Testimonials example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001381",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Testimonials section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "testimonials",
+      "title": "Demo · Testimonials",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000039",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001390",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Text example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001391",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Text section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "text",
+      "sectionType": "text",
+      "source": {
+        "field": "about",
+        "type": "profile"
+      },
+      "title": "Demo · Text",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000040",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001400",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Timeline example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001401",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Timeline section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "timeline",
+      "sectionType": "timeline",
+      "source": {
+        "field": "experiences",
+        "type": "profile"
+      },
+      "title": "Demo · Timeline",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000041",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001410",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Video example",
+          "url": "https://youtu.be/M7lc1UVf-VE",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001411",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://youtu.be/M7lc1UVf-VE",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Video section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "video",
+      "title": "Demo · Video",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000042",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001420",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Work Experience example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001421",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Work Experience section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "timeline",
+      "sectionType": "work-experience",
+      "source": {
+        "field": "experiences",
+        "type": "profile"
+      },
+      "title": "Demo · Work Experience",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000043",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001430",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Custom example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001431",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Custom section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "list",
+      "sectionType": "custom",
+      "source": {
+        "field": "projects",
+        "type": "profile"
+      },
+      "title": "Demo · Custom",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000045",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001450",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "YouTube example",
+          "url": "https://youtu.be/M7lc1UVf-VE",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001451",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://youtu.be/M7lc1UVf-VE",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the YouTube section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "youtube",
+      "title": "Demo · YouTube",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000046",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001460",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Instagram example",
+          "url": "https://www.instagram.com/p/DEMO/",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001461",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://www.instagram.com/p/DEMO/",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Sample social URL and local thumbnail. Replace the placeholder URL with your own public post or pin before testing the external link.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "gallery",
+      "sectionType": "instagram",
+      "title": "Demo · Instagram",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000047",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001470",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Pinterest example",
+          "url": "https://www.pinterest.com/pin/123/",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001471",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://www.pinterest.com/pin/123/",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Sample social URL and local thumbnail. Replace the placeholder URL with your own public post or pin before testing the external link.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "gallery",
+      "sectionType": "pinterest",
+      "title": "Demo · Pinterest",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000147",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002470",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Custom example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002471",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Custom section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "cards",
+      "sectionType": "custom",
+      "source": {
+        "field": "projects",
+        "type": "profile"
+      },
+      "title": "Demo layout · cards",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000148",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002480",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Custom example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002481",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Custom section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "gallery",
+      "sectionType": "custom",
+      "source": {
+        "field": "projects",
+        "type": "profile"
+      },
+      "title": "Demo layout · gallery",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000149",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002490",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Custom example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002491",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Custom section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "masonry",
+      "sectionType": "custom",
+      "source": {
+        "field": "projects",
+        "type": "profile"
+      },
+      "title": "Demo layout · masonry",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000150",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002500",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Custom example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002501",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Custom section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "carousel",
+      "sectionType": "custom",
+      "source": {
+        "field": "projects",
+        "type": "profile"
+      },
+      "title": "Demo layout · carousel",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000151",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002510",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Custom example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002511",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Custom section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "accordion",
+      "sectionType": "custom",
+      "source": {
+        "field": "projects",
+        "type": "profile"
+      },
+      "title": "Demo layout · accordion",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000152",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002520",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Custom example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002521",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Custom section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "tabs",
+      "sectionType": "custom",
+      "source": {
+        "field": "projects",
+        "type": "profile"
+      },
+      "title": "Demo layout · tabs",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000153",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002530",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Custom example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002531",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Custom section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "timeline",
+      "sectionType": "custom",
+      "source": {
+        "field": "projects",
+        "type": "profile"
+      },
+      "title": "Demo layout · timeline",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000154",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002540",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Custom example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002541",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Custom section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "steps",
+      "sectionType": "custom",
+      "source": {
+        "field": "projects",
+        "type": "profile"
+      },
+      "title": "Demo layout · steps",
+      "visible": true
+    },
+    {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000155",
+      "items": [
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002550",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/orbit-brand.svg",
+          "period": "2024–Present",
+          "title": "Custom example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        },
+        {
+          "body": "Fictional sample content for testing this section. Edit the content and switch its compatible layout in the studio.",
+          "details": ["Sample detail one", "Sample detail two"],
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000002551",
+          "imageUrl": "https://mydevstudio.vercel.app/examples/atlas-interface.svg",
+          "period": "2022–2023",
+          "title": "Second fictional example",
+          "url": "https://example.com",
+          "value": "Demo only"
+        }
+      ],
+      "options": {
+        "actionUrl": "https://example.com",
+        "alignment": "left",
+        "columns": 2,
+        "description": "Explore the Custom section with fictional content.",
+        "email": "demo@example.com",
+        "latitude": 41.38,
+        "longitude": 2.17
+      },
+      "renderer": "text",
+      "sectionType": "custom",
+      "source": {
+        "field": "projects",
+        "type": "profile"
+      },
+      "title": "Demo layout · text",
+      "visible": true
+    }
+  ],
+  "cvLanguage": "en",
+  "cvLayout": "classic",
+  "cvSettings": {
+    "fontSize": 9,
+    "includeLanguages": true,
+    "includeProjects": true,
+    "pageSize": "A4",
+    "showEmail": true,
+    "showPhone": false
+  },
+  "cvUrl": "/cv.pdf",
+  "education": [
+    {
+      "degree": "BSc",
+      "end": "2022-06-30",
+      "field": "Computer Science",
+      "id": "demo-degree",
+      "institution": "Example University",
+      "start": "2018-09-01",
+      "url": ""
+    }
+  ],
+  "email": "demo@example.com",
+  "experiences": [
+    {
+      "achievements": [
+        "Built a reusable component library for sample products.",
+        "Improved keyboard access and responsive layouts in the fictional studio dashboard."
+      ],
+      "company": "Example Studio",
+      "companyUrl": "https://example.com",
+      "end": null,
+      "id": "demo-studio",
+      "position": "Frontend Engineer",
+      "start": "2023-01-01"
+    }
+  ],
+  "github": "",
+  "hero": {
+    "kind": "image",
+    "overlay": "strong",
+    "position": "center",
+    "url": "https://mydevstudio.vercel.app/examples/orbit-brand.svg"
+  },
+  "languages": [
+    {
+      "id": "demo-english",
+      "language": "English",
+      "proficiency": "Fluent"
+    },
+    {
+      "id": "demo-spanish",
+      "language": "Spanish",
+      "proficiency": "Intermediate"
+    }
+  ],
+  "linkedin": "",
+  "location": "Barcelona, Spain",
+  "name": "Alex Morgan",
+  "phone": "",
+  "portfolioLanguage": "en",
+  "portfolioType": "engineer",
+  "projects": [
+    {
+      "company": "Example Studio",
+      "description": "A fictional dashboard for exploring project cards, layouts and portfolio chat.",
+      "experienceId": "demo-studio",
+      "id": "demo-dashboard",
+      "name": "Studio Dashboard",
+      "public": true,
+      "skills": ["React", "TypeScript"],
+      "sourceUrl": null,
+      "url": null
+    },
+    {
+      "company": "Independent",
+      "description": "A sample design system with reusable fields, cards and navigation.",
+      "experienceId": null,
+      "id": "demo-system",
+      "name": "Component Library",
+      "public": true,
+      "skills": ["Accessibility", "CSS"],
+      "sourceUrl": null,
+      "url": null
+    },
+    {
+      "company": "Example Studio",
+      "description": "PRIVATE_DEMO_MARKER: this fictional project must stay out of public chat context.",
+      "experienceId": "demo-studio",
+      "id": "demo-private",
+      "name": "Confidential Sample",
+      "public": false,
+      "skills": ["Prototyping"],
+      "sourceUrl": null,
+      "url": null
+    }
+  ],
+  "skills": {
+    "Frontend": ["React", "TypeScript", "Next.js"],
+    "Product quality": ["Accessibility", "Responsive design", "Testing"]
+  },
+  "summary": "A fictional portfolio for testing MyDevStudio. Alex builds accessible interfaces and reusable product systems.",
+  "templateChosen": true,
+  "title": "Frontend Engineer · Fictional Demo",
+  "website": ""
+}

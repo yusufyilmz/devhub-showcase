@@ -24,8 +24,8 @@ export function stripeConfiguration() {
     throw new Error("Invalid billing origin.");
   return { ...input, origin: url.origin };
 }
-export function createStripe() {
-  return new Stripe(stripeConfiguration().key, { maxNetworkRetries: 0, timeout: 15000 });
+export function createStripe(timeout = 15000) {
+  return new Stripe(stripeConfiguration().key, { maxNetworkRetries: 0, timeout });
 }
 export type SubscriptionState = {
   subscription: string | null;
@@ -40,6 +40,20 @@ export class StripeBilling {
     private readonly stripe: Stripe,
     private readonly config = stripeConfiguration(),
   ) {}
+  async publicPlan() {
+    const price = await this.stripe.prices.retrieve(this.config.price);
+    validateMonthlyTestPrice(price);
+    if (price.unit_amount === null) throw new Error("Flat monthly price required.");
+    return {
+      amount: price.unit_amount,
+      available: true as const,
+      chatLimit: this.config.chat,
+      currency: price.currency,
+      editorLimit: this.config.editor,
+      interval: "month" as const,
+      mode: "test" as const,
+    };
+  }
   async customer(account: string) {
     z.uuid().parse(account);
     const result = await this.stripe.customers.create(
@@ -60,14 +74,7 @@ export class StripeBilling {
     )
       throw new Error("Manage your existing subscription instead.");
     const price = await this.stripe.prices.retrieve(this.config.price);
-    if (
-      price.livemode ||
-      !price.active ||
-      price.recurring?.interval !== "month" ||
-      price.recurring.interval_count !== 1 ||
-      price.type !== "recurring"
-    )
-      throw new Error("Monthly test price required.");
+    validateMonthlyTestPrice(price);
     const session = await this.stripe.checkout.sessions.create(
       {
         cancel_url: `${this.config.origin}/admin/billing`,
@@ -124,3 +131,16 @@ export class StripeBilling {
 }
 
 export type StripeEvent = Stripe.Event;
+
+function validateMonthlyTestPrice(price: Stripe.Price) {
+  if (
+    price.livemode ||
+    !price.active ||
+    price.recurring?.interval !== "month" ||
+    price.recurring.interval_count !== 1 ||
+    price.recurring.usage_type !== "licensed" ||
+    price.type !== "recurring" ||
+    price.billing_scheme !== "per_unit"
+  )
+    throw new Error("Monthly test price required.");
+}

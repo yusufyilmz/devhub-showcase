@@ -2,6 +2,7 @@ import { requireConfirmedUser } from "@shared/auth";
 import { createServerClient } from "@shared/lib/supabase";
 import { redirect } from "next/navigation";
 
+import { PlanDetails } from "@/features/billing/plan-details";
 import { ChatSettings } from "./chat-settings";
 import { BillingControls } from "./controls";
 
@@ -16,13 +17,14 @@ export default async function BillingPage() {
       <section className="editor-card">
         <h1>Subscription settings</h1>
         <p>
-          Stripe test environment. No live payments are enabled. Premium AI features are being
-          prepared and are not available yet.
+          Stripe test environment. No live payments are enabled. Pro includes optional visitor chat
+          and private editing proposals.
         </p>
         <p>
           Checkout displays the configured monthly test price. AI allowances count reserved
           attempts, including failed or uncertain provider requests.
         </p>
+        <PlanDetails />
         <BillingControls />
         <ChatSettings />
         <a href="/admin">Back to your portfolio</a>

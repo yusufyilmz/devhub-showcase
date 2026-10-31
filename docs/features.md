@@ -123,3 +123,7 @@ Pro owners can opt into a public portfolio assistant at `/admin/billing`. The re
 ## Private AI editing assistant
 
 Pro owners can generate validated changes from the AI assistant editor tab, review before/after values and apply selected fields to their draft. Saving remains explicit. Public visitor chat is independent of private assistant access. See [private AI editor](features/private-ai-editor.md) for supported fields, privacy, accounting and setup.
+
+## Plans and demo testing
+
+The homepage compares Free and Pro with dynamic sandbox pricing and bounded AI allowances. The subscription page exposes the same test price, and the editor links to plan/usage settings. A guarded server-only helper can seed fictional content into a separate verified empty account for private feature testing. See [plans and demo checklist](features/pricing-and-demo.md).

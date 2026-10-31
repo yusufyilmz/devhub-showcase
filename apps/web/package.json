@@ -5,6 +5,7 @@
   "scripts": {
     "build": "next build --webpack",
     "clean": "node -e \"require('node:fs').rmSync('.next',{recursive:true,force:true})\"",
+    "demo:seed": "node --env-file-if-exists=.env.local scripts/seed-demo.mjs",
     "dev": "next dev --webpack",
     "format": "biome format --write .",
     "format:check": "biome format .",
