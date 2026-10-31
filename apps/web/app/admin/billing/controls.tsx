@@ -49,7 +49,11 @@ export function BillingControls() {
       >
         Manage subscription
       </button>
-      {error && <p role="alert">{error}</p>}
+      {error && (
+        <p aria-label="Billing error" role="alert">
+          {error}
+        </p>
+      )}
     </>
   );
 }

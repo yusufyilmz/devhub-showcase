@@ -100,7 +100,7 @@ test("checkout return alone never displays active Pro and portal errors explain 
   await expect(page.getByRole("heading", { name: "You are on Free" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Pro is active" })).toHaveCount(0);
   await page.getByRole("button", { name: "Manage subscription" }).click();
-  await expect(page.getByRole("alert")).toContainText(
+  await expect(page.getByRole("alert", { name: "Billing error" })).toContainText(
     "A demo grant does not create a Stripe subscription",
   );
   await expect(page.getByText("hidden provider detail")).toHaveCount(0);
