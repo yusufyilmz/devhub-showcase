@@ -19,7 +19,13 @@
         "LOG_LEVEL",
         "OPENAI_CV_MODEL",
         "CV_IMPORT_DAILY_LIMIT",
-        "OPENAI_CHAT_MODEL"
+        "OPENAI_CHAT_MODEL",
+        "STRIPE_SECRET_KEY",
+        "STRIPE_WEBHOOK_SECRET",
+        "STRIPE_PRO_PRICE_ID",
+        "STRIPE_PRO_CHAT_LIMIT",
+        "STRIPE_PRO_EDITOR_LIMIT",
+        "SUPABASE_SERVICE_ROLE_KEY"
       ]
     },
     "clean": {
@@ -55,7 +61,13 @@
         "LOG_LEVEL",
         "OPENAI_CV_MODEL",
         "CV_IMPORT_DAILY_LIMIT",
-        "OPENAI_CHAT_MODEL"
+        "OPENAI_CHAT_MODEL",
+        "STRIPE_SECRET_KEY",
+        "STRIPE_WEBHOOK_SECRET",
+        "STRIPE_PRO_PRICE_ID",
+        "STRIPE_PRO_CHAT_LIMIT",
+        "STRIPE_PRO_EDITOR_LIMIT",
+        "SUPABASE_SERVICE_ROLE_KEY"
       ]
     }
   }

@@ -25,7 +25,8 @@
     "./cv-file": "./src/domain/cv-file.ts",
     "./portfolio-knowledge": "./src/domain/portfolio-knowledge.ts",
     "./billing": "./src/billing/index.ts",
-    "./billing-repository": "./src/billing/repository.ts"
+    "./billing-repository": "./src/billing/repository.ts",
+    "./stripe": "./src/billing/stripe.ts"
   },
   "main": "src/index.ts",
   "scripts": {
@@ -47,6 +48,7 @@
     "axios": "catalog:",
     "next": "catalog:",
     "pino": "catalog:",
+    "stripe": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

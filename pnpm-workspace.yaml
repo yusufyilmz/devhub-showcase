@@ -11,6 +11,7 @@ minimumReleaseAgeExclude:
 
 # External dependency versions are shared by every workspace package.
 catalog:
+  stripe: 23.1.0
   "@playwright/test": "1.64.1"
   "@biomejs/biome": "2.6.4"
   "@electric-sql/pglite": "0.5.12"

@@ -115,3 +115,5 @@ Published pages derive titles, descriptions, canonical links, sharing cards, loc
 Automated coverage includes layout/theme/language combinations, profile saves and publication, sections/templates, generated PDFs/assets, metadata/sitemap exclusions, managed access and AI request contracts. Browser tests use synthetic fixtures; they do not certify live OAuth, production RLS, paid model responses, Safari or Firefox. See [testing](testing.md).
 
 Remaining product work includes premium entitlements and usage accounting, billing, expanded visitor chat and a private editing assistant. External commerce, automatic social feeds and media upload/transcoding need separate integrations. Hosted monitoring remains a setup plan in [observability](observability.md), not an active service.
+
+Stripe sandbox billing is available at `/admin/billing` once its server configuration and migrations are installed. Checkout, customer portal and signed subscription webhooks are implemented; live keys remain disabled and actual sandbox checkout verification is required. See [setup and limitations](stripe-billing.md).
