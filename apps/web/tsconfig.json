@@ -2,8 +2,8 @@
   "compilerOptions": {
     "incremental": true,
     "paths": {
-      "@/features/*": ["./apps/web/features/*"],
-      "@/lib/*": ["./apps/web/lib/*"]
+      "@/features/*": ["./features/*"],
+      "@/lib/*": ["./lib/*"]
     },
     "plugins": [
       {
