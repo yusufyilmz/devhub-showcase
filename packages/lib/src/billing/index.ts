@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export { type BillingSummary, billingSummarySchema, premiumFeatureStatus } from "./status";
+
 export const featureSchema = z.enum(["portfolio_chat", "studio_assistant"]);
 export type PremiumFeature = z.infer<typeof featureSchema>;
 export const entitlementSchema = z.object({
@@ -12,18 +14,31 @@ export const entitlementSchema = z.object({
   status: z.enum(["inactive", "active", "trialing", "past_due", "canceled"]),
 });
 export type Entitlement = z.infer<typeof entitlementSchema>;
+export type PlanAccess =
+  | "free"
+  | "active"
+  | "expired"
+  | "scheduled"
+  | "past_due"
+  | "canceled"
+  | "inactive";
+function planAccess(record: Entitlement | null, now: number): PlanAccess {
+  if (record?.plan !== "pro") return "free";
+  if (record.status !== "active" && record.status !== "trialing") return record.status;
+  if (now < Date.parse(record.period_start)) return "scheduled";
+  return now < Date.parse(record.period_end) ? "active" : "expired";
+}
 export function entitlementSummary(record: Entitlement | null, now = Date.now()) {
-  const active =
-    record?.plan === "pro" &&
-    ["active", "trialing"].includes(record.status) &&
-    Date.parse(record.period_start) <= now &&
-    now < Date.parse(record.period_end);
+  const access = planAccess(record, now);
+  const active = access === "active";
   return {
+    access,
     limits: {
       portfolio_chat: active && record ? record.chat_limit : 0,
       studio_assistant: active && record ? record.editor_limit : 0,
     },
     periodEnd: record?.period_end ?? null,
+    periodStart: record?.period_start ?? null,
     plan: active ? ("pro" as const) : ("free" as const),
   };
 }

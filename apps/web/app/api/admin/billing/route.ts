@@ -4,6 +4,7 @@ import { createServerClient } from "@shared/lib/supabase";
 import { ZodError, z } from "zod";
 
 import { sameOrigin } from "@/lib/admin-auth";
+import { premiumAiConfigured } from "@/lib/premium-configuration";
 
 const headers = { "Cache-Control": "private, no-store" };
 const assignment = z
@@ -20,7 +21,10 @@ async function session() {
 export async function GET() {
   try {
     const { user, repository } = await session();
-    return Response.json(await repository.summary(user.id), { headers });
+    return Response.json(
+      { ...(await repository.summary(user.id)), aiConfigured: premiumAiConfigured() },
+      { headers },
+    );
   } catch (error) {
     return failure(error);
   }

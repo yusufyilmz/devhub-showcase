@@ -13,17 +13,10 @@ import { ZodError } from "zod";
 
 import { requireWorkspace, sameOrigin } from "@/lib/admin-auth";
 import { billingServiceClient } from "@/lib/billing/client";
+import { premiumAiConfigured } from "@/lib/premium-configuration";
 
 export const maxDuration = 60;
 const headers = { "Cache-Control": "private, no-store" };
-function configured() {
-  return Boolean(
-    process.env.OPENAI_API_KEY &&
-      process.env.REDIS_URL &&
-      process.env.REDIS_TOKEN &&
-      process.env.SUPABASE_SERVICE_ROLE_KEY,
-  );
-}
 async function workspace() {
   const result = await requireWorkspace();
   const snapshot = await result.repository.read();
@@ -39,7 +32,7 @@ export async function GET() {
     return Response.json(
       {
         enabled:
-          configured() &&
+          premiumAiConfigured() &&
           billing.plan === "pro" &&
           billing.assignedProfileId === snapshot.id &&
           billing.limits.studio_assistant > billing.usage.studio_assistant,
@@ -57,7 +50,7 @@ export async function POST(request: Request) {
     return Response.json({ error: "Invalid origin." }, { headers, status: 403 });
   try {
     const { user, snapshot, repository, service, client } = await workspace();
-    if (!configured()) throw new Error("Unavailable");
+    if (!premiumAiConfigured()) throw new Error("Unavailable");
     const raw = await readBody(request);
     const input = aiEditRequestSchema.parse(JSON.parse(raw));
     if (input.profileId !== snapshot.id) throw new ProfileAccessError();

@@ -31,3 +31,22 @@ it("checks origin and confirmed identity before creating billing sessions", asyn
   expect(action).toHaveBeenCalledWith("verified-account");
   expect(response.headers.get("cache-control")).toBe("private, no-store");
 });
+
+it("returns allowlisted billing error codes and hides raw upstream failures", async () => {
+  const { BillingActionError } = await import("../apps/web/lib/billing/errors");
+  mocks.user.mockResolvedValue({ id: "verified-account" });
+  const request = () =>
+    new Request("https://example.test/api/billing/portal", {
+      headers: { origin: "https://example.test" },
+      method: "POST",
+    });
+  const known = await billingPost(request(), async () => {
+    throw new BillingActionError("no_subscription");
+  });
+  expect(await known.json()).toMatchObject({ code: "no_subscription" });
+  const unknown = await billingPost(request(), async () => {
+    throw new Error("private provider response secret");
+  });
+  expect(unknown.status).toBe(503);
+  expect(await unknown.text()).not.toContain("secret");
+});

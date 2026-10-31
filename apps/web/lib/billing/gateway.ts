@@ -1,12 +1,22 @@
-import { createStripe, StripeBilling, stripeConfiguration } from "@shared/lib/stripe";
+import {
+  createStripe,
+  ExistingSubscriptionError,
+  StripeBilling,
+  stripeConfiguration,
+} from "@shared/lib/stripe";
 
 import { billingServiceClient } from "./client";
+import { BillingActionError } from "./errors";
 
 export function billingGateway() {
-  const config = stripeConfiguration();
-  const db = billingServiceClient();
-  const stripe = createStripe();
-  return { config, db, service: new StripeBilling(stripe, config), stripe };
+  try {
+    const config = stripeConfiguration();
+    const db = billingServiceClient();
+    const stripe = createStripe();
+    return { config, db, service: new StripeBilling(stripe, config), stripe };
+  } catch {
+    throw new BillingActionError("not_configured");
+  }
 }
 export async function withBillingLease<T>(
   account: string,
@@ -15,8 +25,8 @@ export async function withBillingLease<T>(
   const gateway = billingGateway();
   const lease = crypto.randomUUID();
   const claimed = await gateway.db.rpc("claim_billing", { p_account: account, p_lease: lease });
-  if (claimed.error || claimed.data !== true)
-    throw new Error("Billing busy or unavailable. Please retry.");
+  if (claimed.error) throw new BillingActionError("unavailable");
+  if (claimed.data !== true) throw new BillingActionError("busy");
   try {
     return await action(gateway, lease);
   } finally {
@@ -52,7 +62,13 @@ export async function checkout(account: string) {
       key: record.data.checkout_key,
       previous: record.data.checkout_id,
     });
-    const session = await service.checkout(customer, `checkout-${account}-${checkoutKey}`);
+    const session = await service
+      .checkout(customer, `checkout-${account}-${checkoutKey}`)
+      .catch((error: unknown) => {
+        if (error instanceof ExistingSubscriptionError)
+          throw new BillingActionError("existing_subscription");
+        throw error;
+      });
     const result = await db
       .from("billing_customers")
       .update({ checkout_id: session.id })
@@ -70,8 +86,9 @@ export async function portal(account: string) {
     .from("billing_customers")
     .select("customer_id")
     .eq("account_id", account)
-    .single();
-  if (record.error || !record.data.customer_id) throw new Error("No billing customer.");
+    .maybeSingle();
+  if (record.error) throw new BillingActionError("unavailable");
+  if (!record.data?.customer_id) throw new BillingActionError("no_subscription");
   return gateway.service.portal(record.data.customer_id);
 }
 export async function synchronize(customer: string, eventId: string) {
