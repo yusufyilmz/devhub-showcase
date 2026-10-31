@@ -34,6 +34,7 @@ export interface PortfolioProfile {
     accent: "cyan" | "violet" | "emerald";
     defaultTheme: "system" | "light" | "dark";
   };
+  birthDate?: string;
   customSections?: CustomSection[];
   cvLanguage?: Language;
   cvLayout?: CvLayout;

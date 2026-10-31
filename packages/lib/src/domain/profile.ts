@@ -32,6 +32,12 @@ export const profileSchema = z
         theme: z.enum(["studio", "paper", "graphite", "bloom"]).default("studio"),
       })
       .default({ accent: "cyan", defaultTheme: "dark", theme: "studio" }),
+    birthDate: date
+      .refine(
+        (value) => value <= new Date().toISOString().slice(0, 10),
+        "Birthdate cannot be in the future",
+      )
+      .optional(),
     customSections: z.array(customSectionSchema).max(MAX_CUSTOM_SECTIONS).optional(),
     cvLanguage: z.enum(["en", "es", "tr"]).default("en"),
     cvLayout: z.enum(["classic", "editorial", "compact"]).default("classic"),

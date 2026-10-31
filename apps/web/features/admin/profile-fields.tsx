@@ -52,6 +52,15 @@ export function ProfileFields({
           value={profile.phone}
         />
         <Field
+          hint="Stored as profile data if set and potentially public when published. Current page and CV layouts do not display it."
+          label="Birthdate (optional)"
+          onChange={(value) => {
+            onChange({ ...profile, birthDate: value || undefined });
+          }}
+          type="date"
+          value={profile.birthDate ?? ""}
+        />
+        <Field
           label="Portfolio URL"
           onChange={(v) => update("website", v)}
           type="url"
