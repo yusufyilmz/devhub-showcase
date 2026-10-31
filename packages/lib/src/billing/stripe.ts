@@ -35,6 +35,11 @@ export type SubscriptionState = {
   chat: number;
   editor: number;
 };
+export class ExistingSubscriptionError extends Error {
+  constructor() {
+    super("Manage your existing subscription instead.");
+  }
+}
 export class StripeBilling {
   constructor(
     private readonly stripe: Stripe,
@@ -72,7 +77,7 @@ export class StripeBilling {
       subscriptions.has_more ||
       subscriptions.data.some((s) => !["canceled", "incomplete_expired"].includes(s.status))
     )
-      throw new Error("Manage your existing subscription instead.");
+      throw new ExistingSubscriptionError();
     const price = await this.stripe.prices.retrieve(this.config.price);
     validateMonthlyTestPrice(price);
     const session = await this.stripe.checkout.sessions.create(

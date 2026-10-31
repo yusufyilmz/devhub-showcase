@@ -3,23 +3,31 @@ import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/re
 import { afterEach, expect, it, vi } from "vitest";
 
 import { ChatSettings } from "../apps/web/app/admin/billing/chat-settings";
+import { entitlementSummary } from "../packages/lib/src/billing";
 
 afterEach(() => {
   cleanup();
   vi.unstubAllGlobals();
 });
 it("assigns Pro for private editing without opting into visitor chat", async () => {
+  let assignedProfileId: string | null = null;
   const fetchMock = vi.fn(async (url: RequestInfo | URL, options?: RequestInit) => {
-    if (options?.method === "PUT") return Response.json({ saved: true });
+    if (options?.method === "PUT") {
+      assignedProfileId = JSON.parse(String(options.body)).profileId;
+      return Response.json({ saved: true });
+    }
     return Response.json(
       String(url).endsWith("/profile")
-        ? { id: "alpha" }
+        ? { id: "alpha", isPublic: false }
         : {
-            assignedProfileId: null,
+            ...entitlementSummary(null),
+            access: "active",
+            aiConfigured: true,
+            assignedProfileId,
             chatEnabled: false,
-            limits: { portfolio_chat: 100 },
+            limits: { portfolio_chat: 100, studio_assistant: 5 },
             plan: "pro",
-            usage: { portfolio_chat: 0 },
+            usage: { portfolio_chat: 0, studio_assistant: 0 },
           },
     );
   });

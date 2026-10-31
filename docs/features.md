@@ -15,9 +15,9 @@ This is the current product overview. It describes repository behavior, not a gu
 | Managed portfolios and transfer          | Implemented          | Administrator membership and database policies                   |
 | CV upload extraction                     | Optional integration | OpenAI, Redis, consent and review                                |
 | Saved AI profile inspector               | Implemented          | Authorized saved-profile read; no model call                     |
-| Public portfolio chat                    | Limited rollout      | Main portfolio only, with OpenAI and Redis                       |
-| Multiuser premium chat and billing       | Not implemented      | Entitlements, usage accounting and billing remain follow-up work |
-| Private AI editing assistant             | Not implemented      | Future proposals must preserve explicit apply/save controls      |
+| Public portfolio chat                    | Optional integration | Published portfolio, owner opt-in, active Pro, OpenAI and Redis  |
+| Multiuser premium chat and billing       | Sandbox implemented  | Reviewed migrations, Stripe test setup and webhook confirmation  |
+| Private AI editing assistant             | Optional integration | Assigned Pro, bounded usage and explicit review/apply/save       |
 | Hosted error monitoring                  | Planned              | Existing Pino logs; Sentry setup is documented but not installed |
 
 ## Personal workspaces and sharing
@@ -114,7 +114,7 @@ Published pages derive titles, descriptions, canonical links, sharing cards, loc
 
 Automated coverage includes layout/theme/language combinations, profile saves and publication, sections/templates, generated PDFs/assets, metadata/sitemap exclusions, managed access and AI request contracts. Browser tests use synthetic fixtures; they do not certify live OAuth, production RLS, paid model responses, Safari or Firefox. See [testing](testing.md).
 
-Remaining product work includes premium entitlements and usage accounting, billing, expanded visitor chat and a private editing assistant. External commerce, automatic social feeds and media upload/transcoding need separate integrations. Hosted monitoring remains a setup plan in [observability](observability.md), not an active service.
+Premium entitlements, bounded usage, sandbox billing, visitor chat and private editing proposals are implemented. Real checkout/webhook and paid model verification remain independent operational checks before launch. External commerce, automatic social feeds and media upload/transcoding need separate integrations. Hosted monitoring remains a setup plan in [observability](observability.md), not an active service.
 
 Stripe sandbox billing is available at `/admin/billing` once its server configuration and migrations are installed. Checkout, customer portal and signed subscription webhooks are implemented; live keys remain disabled and actual sandbox checkout verification is required. See [setup and limitations](features/stripe-billing.md).
 
@@ -127,3 +127,7 @@ Pro owners can generate validated changes from the AI assistant editor tab, revi
 ## Plans and demo testing
 
 The homepage compares Free and Pro with dynamic sandbox pricing and bounded AI allowances. The subscription page exposes the same test price, and the editor links to plan/usage settings. A guarded server-only helper can seed fictional content into a separate verified empty account for private feature testing. See [plans and demo checklist](features/pricing-and-demo.md).
+
+## Premium account status
+
+Subscription settings show plan access, its end date, assignment/publication, separate AI usage and remaining attempts. Readiness explains missing Pro, assignment, service configuration, allowance, publication and visitor opt-in. Refresh status reloads account data without creating Stripe sessions or model requests. Checkout return never grants access. Billing errors use safe codes and next actions instead of raw provider payloads. See [premium status](features/premium-status.md).
