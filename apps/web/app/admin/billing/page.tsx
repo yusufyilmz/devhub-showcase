@@ -2,6 +2,7 @@ import { requireConfirmedUser } from "@shared/auth";
 import { createServerClient } from "@shared/lib/supabase";
 import { redirect } from "next/navigation";
 
+import { ChatSettings } from "./chat-settings";
 import { BillingControls } from "./controls";
 
 export default async function BillingPage() {
@@ -23,6 +24,7 @@ export default async function BillingPage() {
           attempts, including failed or uncertain provider requests.
         </p>
         <BillingControls />
+        <ChatSettings />
         <a href="/admin">Back to your portfolio</a>
       </section>
     </main>

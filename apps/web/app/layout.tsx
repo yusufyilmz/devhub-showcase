@@ -1,3 +1,4 @@
+import "@shared/components/portfolio-chat.css";
 import "@shared/sections/styles.css";
 import "@shared/ui/globals.css";
 import "../features/portfolio/themes.css";

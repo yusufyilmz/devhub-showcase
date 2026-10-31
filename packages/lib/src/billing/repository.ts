@@ -23,7 +23,7 @@ type BillingDatabase = {
   public: {
     Tables: {
       billing_entitlements: Table<Entitlement>;
-      billing_assignments: Table<{ account_id: string; profile_id: string }>;
+      billing_assignments: Table<{ account_id: string; profile_id: string; chat_enabled: boolean }>;
       billing_usage: Table<Usage>;
     };
     Views: Record<string, never>;
@@ -50,7 +50,7 @@ export class BillingRepository {
       .maybeSingle();
     const assignment = await this.client
       .from("billing_assignments")
-      .select("profile_id")
+      .select("profile_id,chat_enabled")
       .eq("account_id", accountId)
       .maybeSingle();
     if (record.error || assignment.error) throw new Error("Billing unavailable.");
@@ -70,10 +70,11 @@ export class BillingRepository {
     return {
       ...entitlementSummary(entitlement),
       assignedProfileId: assignment.data?.profile_id ?? null,
+      chatEnabled: assignment.data?.chat_enabled ?? false,
       usage,
     };
   }
-  async assign(accountId: string, profileId: string | null) {
+  async assign(accountId: string, profileId: string | null, chatEnabled = false) {
     z.uuid().parse(accountId);
     const query = this.client.from("billing_assignments");
     const result =
@@ -81,6 +82,7 @@ export class BillingRepository {
         ? await query.delete().eq("account_id", accountId)
         : await query.upsert({
             account_id: accountId,
+            chat_enabled: chatEnabled,
             profile_id: z.string().min(1).max(100).parse(profileId),
           });
     if (result.error) throw new Error("Assignment denied or unavailable.");
