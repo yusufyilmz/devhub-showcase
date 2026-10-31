@@ -13,7 +13,9 @@
     "./sortable-list": "./src/sortable-list.tsx",
     "./section-views": "./src/section-views/index.tsx",
     "./hero-surface": "./src/hero-surface.tsx",
-    "./work-media": "./src/work-media.tsx"
+    "./work-media": "./src/work-media.tsx",
+    "./portfolio-chat": "./src/portfolio-chat.tsx",
+    "./portfolio-chat.css": "./src/portfolio-chat.css"
   },
   "main": "./src/index.ts",
   "scripts": {

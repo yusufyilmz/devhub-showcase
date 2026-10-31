@@ -1,14 +1,10 @@
 import { createStripe, StripeBilling, stripeConfiguration } from "@shared/lib/stripe";
-import { createClient } from "@supabase/supabase-js";
-import { z } from "zod";
+
+import { billingServiceClient } from "./client";
 
 export function billingGateway() {
   const config = stripeConfiguration();
-  const secret = z.string().min(20).parse(process.env.SUPABASE_SERVICE_ROLE_KEY);
-  const url = z.url().parse(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  const db = createClient(url, secret, {
-    auth: { autoRefreshToken: false, persistSession: false },
-  });
+  const db = billingServiceClient();
   const stripe = createStripe();
   return { config, db, service: new StripeBilling(stripe, config), stripe };
 }

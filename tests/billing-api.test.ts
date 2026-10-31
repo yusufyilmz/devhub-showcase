@@ -44,7 +44,7 @@ it("uses confirmed account identity and private caching", async () => {
 });
 it("allows assignment but denies client grants and foreign origins", async () => {
   expect((await put({ profileId: "alpha" })).status).toBe(200);
-  expect(mocks.assign).toHaveBeenCalledWith(id, "alpha");
+  expect(mocks.assign).toHaveBeenCalledWith(id, "alpha", false);
   expect((await put({ plan: "pro", profileId: "alpha" })).status).toBe(400);
   expect((await put({ profileId: "alpha" }, "https://other.test")).status).toBe(403);
   expect(mocks.assign).toHaveBeenCalledTimes(1);

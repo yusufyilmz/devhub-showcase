@@ -1,0 +1,79 @@
+.portfolio-chat {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 100;
+}
+.portfolio-chat-launch {
+  max-width: calc(100vw - 2rem);
+  padding: 0.8rem 1rem;
+  color: #f8fafc;
+  background: #0f172a;
+  border: 1px solid #64748b;
+  border-radius: 2rem;
+}
+.portfolio-chat-panel {
+  position: fixed;
+  inset: auto 1rem 1rem auto;
+  width: min(28rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  padding: 1.2rem;
+  margin: 0;
+  overflow: auto;
+  color: #f8fafc;
+  background: #0f172a;
+  border: 1px solid #64748b;
+  border-radius: 1rem;
+  box-shadow: 0 1rem 3rem #0006;
+}
+.portfolio-chat-panel::backdrop {
+  background: #0008;
+}
+.portfolio-chat-panel header {
+  display: flex;
+  gap: 1rem;
+  align-items: start;
+  justify-content: space-between;
+}
+.portfolio-chat-panel h2 {
+  font-size: 1.15rem;
+}
+.portfolio-chat-panel p {
+  margin: 0.8rem 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.portfolio-chat-panel form {
+  display: grid;
+  gap: 0.5rem;
+}
+.portfolio-chat-panel textarea {
+  width: 100%;
+  min-height: 5rem;
+  padding: 0.5rem;
+  color: #f8fafc;
+  background: #1e293b;
+  border: 1px solid #94a3b8;
+  border-radius: 0.5rem;
+}
+.portfolio-chat-panel button {
+  padding: 0.5rem 0.8rem;
+  color: #f8fafc;
+  cursor: pointer;
+  background: #1e293b;
+  border: 1px solid #94a3b8;
+  border-radius: 0.5rem;
+}
+.portfolio-chat-panel button:disabled {
+  cursor: wait;
+  opacity: 0.5;
+}
+.portfolio-chat-panel :focus-visible,
+.portfolio-chat-launch:focus-visible {
+  outline: 3px solid #38bdf8;
+  outline-offset: 3px;
+}
+.portfolio-chat-messages {
+  max-height: 35dvh;
+  overflow: auto;
+}

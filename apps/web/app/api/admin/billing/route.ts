@@ -6,7 +6,12 @@ import { ZodError, z } from "zod";
 import { sameOrigin } from "../../../../lib/admin-auth";
 
 const headers = { "Cache-Control": "private, no-store" };
-const assignment = z.object({ profileId: z.string().min(1).max(100).nullable() }).strict();
+const assignment = z
+  .object({
+    chatEnabled: z.boolean().default(false),
+    profileId: z.string().min(1).max(100).nullable(),
+  })
+  .strict();
 async function session() {
   const client = await createServerClient();
   const user = await requireConfirmedUser(client);
@@ -29,7 +34,7 @@ export async function PUT(request: Request) {
     if (raw.length > 1024)
       return Response.json({ error: "Request too large." }, { headers, status: 413 });
     const input = assignment.parse(JSON.parse(raw));
-    await repository.assign(user.id, input.profileId);
+    await repository.assign(user.id, input.profileId, input.chatEnabled);
     return Response.json({ saved: true }, { headers });
   } catch (error) {
     return failure(error);

@@ -117,3 +117,5 @@ Automated coverage includes layout/theme/language combinations, profile saves an
 Remaining product work includes premium entitlements and usage accounting, billing, expanded visitor chat and a private editing assistant. External commerce, automatic social feeds and media upload/transcoding need separate integrations. Hosted monitoring remains a setup plan in [observability](observability.md), not an active service.
 
 Stripe sandbox billing is available at `/admin/billing` once its server configuration and migrations are installed. Checkout, customer portal and signed subscription webhooks are implemented; live keys remain disabled and actual sandbox checkout verification is required. See [setup and limitations](stripe-billing.md).
+
+Pro owners can opt into a public portfolio assistant at `/admin/billing`. The reusable chat widget supports all portfolio layouts, with public-only context, isolated session history and reserved usage accounting. Existing main portfolio chat keeps its legacy behavior. See [premium portfolio chat](premium-portfolio-chat.md) for migration and verification requirements.
