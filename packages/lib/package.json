@@ -23,7 +23,9 @@
     "./pageforge-import": "./src/domain/pageforge-import.ts",
     "./cv-import": "./src/domain/cv-import.ts",
     "./cv-file": "./src/domain/cv-file.ts",
-    "./portfolio-knowledge": "./src/domain/portfolio-knowledge.ts"
+    "./portfolio-knowledge": "./src/domain/portfolio-knowledge.ts",
+    "./billing": "./src/billing/index.ts",
+    "./billing-repository": "./src/billing/repository.ts"
   },
   "main": "src/index.ts",
   "scripts": {
