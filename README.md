@@ -27,7 +27,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open http://localhost:3000. For optional integrations, copy [.env.example](.env.example) to `apps/web/.env.local` and supply only the services you need. Never commit the resulting file.
+Open <http://localhost:3000>. For optional integrations, copy [.env.example](.env.example) to `apps/web/.env.local` and supply only the services you need. Never commit the resulting file.
 
 | Configuration                                                      | Purpose                                                               |
 | ------------------------------------------------------------------ | --------------------------------------------------------------------- |
@@ -82,22 +82,37 @@ Supabase is the persistence integration. Prisma is not used. Install, check and 
 
 ## Documentation
 
-| Guide                                                                                                | Read it for                                                            |
-| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| [Features](docs/features.md)                                                                         | Current capabilities, user flows and limitations                       |
-| [Architecture](docs/architecture.md)                                                                 | Package boundaries, data flow and trust boundaries                     |
-| [Contributing](CONTRIBUTING.md)                                                                      | Setup, development workflow and PR expectations                        |
-| [Testing](docs/testing.md)                                                                           | Verification commands, coverage and debugging                          |
-| [Observability](docs/observability.md)                                                               | Free logging baseline, Sentry adoption plan and incident response      |
-| [Conventions](docs/conventions.md)                                                                   | TypeScript, React, validation and dependency rules                     |
-| [Agent instructions](AGENTS.md)                                                                      | Working safely with coding agents                                      |
-| [Personal workspaces](docs/multiuser-cvs.md), [Google login](docs/google-login.md)                   | Authentication and profile setup                                       |
-| [AI foundation](docs/portfolio-ai-foundation.md)                                                     | Public/owner knowledge, saved AI profile inspector and chat boundaries |
-| [Managed portfolios](docs/managed-portfolios.md), [CV import](docs/cv-import.md)                     | Administration, transfer and extraction                                |
-| [Section system](docs/section-system.md), [section templates](docs/section-templates.md)             | Section editing and composition                                        |
-| [Shared packages](docs/shared-packages.md), [section migration](docs/pageforge-section-migration.md) | Reuse boundaries and compatibility                                     |
-| [Tailwind](docs/tailwind.md)                                                                         | Shared CSS pipeline and theme tokens                                   |
-| [Legacy RLS review](docs/legacy-rls-review.md)                                                       | Historical security findings to revalidate                             |
+See [docs/README.md](docs/README.md) for the full index.
+
+### Hubs
+
+| Guide                                  | Read it for                                                       |
+| -------------------------------------- | ----------------------------------------------------------------- |
+| [Features](docs/features.md)           | Current capabilities, user flows and limitations                  |
+| [Architecture](docs/architecture.md)   | Package boundaries, data flow and trust boundaries                |
+| [Contributing](CONTRIBUTING.md)        | Setup, development workflow and PR expectations                   |
+| [Testing](docs/testing.md)             | Verification commands, coverage and debugging                     |
+| [Observability](docs/observability.md) | Free logging baseline, Sentry adoption plan and incident response |
+| [Conventions](docs/conventions.md)     | TypeScript, React, validation and dependency rules                |
+| [Agent instructions](AGENTS.md)        | Working safely with coding agents                                 |
+
+### Features
+
+| Guide                                                                                                                                                         | Read it for                                                            |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| [Personal workspaces](docs/features/multiuser-cvs.md), [Google login](docs/features/google-login.md)                                                          | Authentication and profile setup                                       |
+| [AI foundation](docs/features/portfolio-ai-foundation.md)                                                                                                     | Public/owner knowledge, saved AI profile inspector and chat boundaries |
+| [Managed portfolios](docs/features/managed-portfolios.md), [CV import](docs/features/cv-import.md)                                                            | Administration, transfer and extraction                                |
+| [Section system](docs/features/section-system.md), [section templates](docs/features/section-templates.md)                                                    | Section editing and composition                                        |
+| [Premium access](docs/features/premium-access.md), [premium chat](docs/features/premium-portfolio-chat.md), [Stripe billing](docs/features/stripe-billing.md) | Entitlements, chat and test billing                                    |
+
+### Reference
+
+| Guide                                                                                                                    | Read it for                                |
+| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------ |
+| [Shared packages](docs/reference/shared-packages.md), [section migration](docs/reference/pageforge-section-migration.md) | Reuse boundaries and compatibility         |
+| [Tailwind](docs/reference/tailwind.md)                                                                                   | Shared CSS pipeline and theme tokens       |
+| [Legacy RLS review](docs/reference/legacy-rls-review.md)                                                                 | Historical security findings to revalidate |
 
 ## CV generation
 
@@ -109,7 +124,7 @@ pnpm cv:generate
 pnpm cv:generate --args output/my-cv.pdf main
 ```
 
-The generator does not overwrite existing output. See [personal workspaces](docs/multiuser-cvs.md) for public/private behavior and deployment prerequisites.
+The generator does not overwrite existing output. See [personal workspaces](docs/features/multiuser-cvs.md) for public/private behavior and deployment prerequisites.
 
 ## CI and deployment
 

@@ -25,8 +25,6 @@ export class ExperienceService implements ResourceService<ExperienceWithCompanyP
       throw new Error(experiencesError.message);
     }
 
-    console.log("experiences", experiences);
-
     const { data: projects, error: projectsError } = await this.dbClient.from("projects").select(`
       *,
       skills:project_skills(skill_id, skills(*))

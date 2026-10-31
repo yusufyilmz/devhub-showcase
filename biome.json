@@ -153,7 +153,12 @@
         "useJsxKeyInIterable": "error"
       },
       "nursery": {
-        "useExplicitType": "off"
+        "useConsistentHeadingLevel": "error",
+        "useConsistentUnicodeBom": "error",
+        "useExplicitType": "off",
+        "useFencedCodeLanguage": "error",
+        "useSingleTopLevelHeading": "error",
+        "useTopLevelHeading": "error"
       },
       "performance": {
         "noAccumulatingSpread": "warn",
@@ -224,6 +229,7 @@
         "noDuplicateParameters": "error",
         "noEmptyBlockStatements": "warn",
         "noEmptyInterface": "error",
+        "noEmptySource": "error",
         "noEvolvingTypes": "warn",
         "noExplicitAny": "warn",
         "noExportsInTest": "error",
@@ -244,6 +250,20 @@
         "noRedundantUseStrict": "error",
         "useIterableCallbackReturn": "off"
       }
+    }
+  },
+  "markdown": {
+    "analyzeEmbeds": true,
+    "formatter": {
+      "enabled": true,
+      "formatEmbeds": true,
+      "lineWidth": 100
+    },
+    "linter": {
+      "enabled": true
+    },
+    "parser": {
+      "frontmatter": true
     }
   },
   "overrides": [
@@ -292,6 +312,22 @@
       "includes": ["**/*.stories.*"],
       "linter": {
         "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          },
+          "suspicious": {
+            "noConsole": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/*.md"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedImports": "off"
+          },
           "style": {
             "noDefaultExport": "off"
           },

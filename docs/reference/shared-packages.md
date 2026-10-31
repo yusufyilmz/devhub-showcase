@@ -21,18 +21,18 @@ Create typed Supabase clients using `@shared/auth/client` in browser code and `@
 For example, a future fitness app could configure handlers as follows:
 
 ```ts
-import { createClient } from "@shared/auth/server";
 import { createAuthHandlers } from "@shared/auth/handlers";
+import { createClient } from "@shared/auth/server";
 
 export const auth = createAuthHandlers({
-  createClient: () => createClient(), // Provide the fitness Database generic when available.
-  loginPath: "/login",
-  successPath: "/dashboard",
-  callbackPath: "/auth/callback",
-  afterSignIn: async (client) => {
+  afterSignIn: async (_client) => {
     // Optional fitness provisioning, using only the verified account.
     // Keep workout ownership checks and database RLS in the fitness domain.
   },
+  callbackPath: "/auth/callback",
+  createClient: () => createClient(), // Provide the fitness Database generic when available.
+  loginPath: "/login",
+  successPath: "/dashboard",
 });
 ```
 
@@ -49,17 +49,17 @@ Import `@shared/components/styles.css` once at the app root and configure Tailwi
 Use narrow entrypoints when possible:
 
 ```tsx
-import { LoginPanel } from "@shared/components/login";
 import { RevealCard } from "@shared/components/cards";
 import { CollectionEditor } from "@shared/components/collection-editor";
 import { Field } from "@shared/components/fields";
+import { LoginPanel } from "@shared/components/login";
 
 <LoginPanel
-  title="Your fitness account"
   description="Keep your training in sync."
   googleAction="/api/auth/google"
   sessionEndpoint="/api/auth/session"
   successPath="/dashboard"
+  title="Your fitness account"
 />;
 ```
 

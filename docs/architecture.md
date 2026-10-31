@@ -160,7 +160,7 @@ Browser reports are uploaded for diagnosis. Database migrations and provider set
 
 Consult the actual route files for individual methods and response contracts. Database ownership and publication checks remain necessary even if the UI hides an action.
 
-Managed portfolios are a separate administrator flow. Transfer requires explicit action, validated access and revision checks; it must not replace an edited or published recipient profile. See [managed portfolios](managed-portfolios.md).
+Managed portfolios are a separate administrator flow. Transfer requires explicit action, validated access and revision checks; it must not replace an edited or published recipient profile. See [managed portfolios](features/managed-portfolios.md).
 
 ## Rendering and runtime
 
@@ -168,7 +168,7 @@ Server components and handlers load permitted data. Client components own intera
 
 PDFs are generated from normalized profile data using the shared CV package and its Handlebars/JSON template. Treat profile strings as data. Preserve the independent portfolio/PDF settings and visibility rules.
 
-Saved AI knowledge has separate public and owner projections. The authorized editor can inspect saved knowledge without an LLM request; private owner knowledge is not public chat context. Public chat currently remains restricted to the main portfolio, reads its published snapshot on every request and does not enable premium chat for other accounts. See [AI foundation](portfolio-ai-foundation.md).
+Saved AI knowledge has separate public and owner projections. The authorized editor can inspect saved knowledge without an LLM request; private owner knowledge is not public chat context. Public chat currently remains restricted to the main portfolio, reads its published snapshot on every request and does not enable premium chat for other accounts. See [AI foundation](features/portfolio-ai-foundation.md).
 
 AI chat uses OpenAI with Redis rate limiting. CV extraction additionally has per-user and global limits. Missing optional services should produce the supported unavailable/fallback behavior without preventing a credential-free build.
 
@@ -176,9 +176,9 @@ AI chat uses OpenAI with Redis rate limiting. CV extraction additionally has per
 
 Supabase is the database/auth integration; Prisma is not used. RLS complements server authorization. Installation, tests and builds do not apply production migrations. Revalidate historical deployment notes before provisioning or migrating an environment.
 
-See [features](features.md) for user-visible behavior and [shared packages](shared-packages.md) for reuse in another app.
+See [features](features.md) for user-visible behavior and [shared packages](reference/shared-packages.md) for reuse in another app.
 
-See [security policy](../SECURITY.md), [personal workspaces](multiuser-cvs.md) and the [legacy RLS review](legacy-rls-review.md). Browser fixtures do not prove real OAuth or production RLS behavior.
+See [security policy](../SECURITY.md), [personal workspaces](features/multiuser-cvs.md) and the [legacy RLS review](reference/legacy-rls-review.md). Browser fixtures do not prove real OAuth or production RLS behavior.
 
 ## Change strategy
 

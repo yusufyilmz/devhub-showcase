@@ -22,4 +22,4 @@ Portfolio type (Engineer, Designer, Consultant, Minimal), theme, color mode, acc
 
 Public project views must exclude projects marked private, including preview adapters. Custom content is escaped text with validated links. Remote images/media are loaded by the visitor, never fetched by the app server from arbitrary user URLs. Social showcases contain selected public work, not synchronized account feeds.
 
-Before changing a rule, read packages/lib/src/domain/profile.ts, profile services/repositories, apps/web/app route handlers, apps/web/features/admin and docs/section-system.md. For auth/RLS or migrations, inspect the actual current policies and use the Supabase guidance rather than guessing. Use fictional identities in tests and public PR examples.
+Before changing a rule, read packages/lib/src/domain/profile.ts, profile services/repositories, apps/web/app route handlers, apps/web/features/admin and docs/features/section-system.md. For auth/RLS or migrations, inspect the actual current policies and use the Supabase guidance rather than guessing. Use fictional identities in tests and public PR examples.

@@ -19,8 +19,6 @@ export class ProjectService implements ResourceService<ProjectWithCompanyAndSkil
       throw new Error(projectsError.message);
     }
 
-    console.log({ projects });
-
     const { data: projectSkills, error: projectSkillsError } = await this.dbClient
       .from("project_skills")
       .select(`

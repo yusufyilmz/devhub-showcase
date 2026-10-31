@@ -22,7 +22,7 @@ Turning public sharing off and saving immediately hides both public endpoints, i
 4. Deploy the app with the existing Supabase URL and publishable/anon key. Optionally set `NEXT_PUBLIC_SITE_URL` to the canonical deployed base URL. No service-role credential is used by the application.
 5. Verify two independent accounts: create/edit/download both CVs, publish one, ensure the other remains unreadable, turn sharing off, and confirm both public links stop working. Verify the original site owner still edits main and other users cannot moderate its reviews.
 
-The pre-existing legacy tables are separate from the CV document table. Their earlier RLS audit remains relevant; see [legacy-rls-review.md](legacy-rls-review.md). This migration does not grant CV users privileges on those tables or alter their policies.
+The pre-existing legacy tables are separate from the CV document table. Their earlier RLS audit remains relevant; see [legacy-rls-review.md](../reference/legacy-rls-review.md). This migration does not grant CV users privileges on those tables or alter their policies.
 
 ## Local generation
 
@@ -38,4 +38,4 @@ Private CVs are downloaded through the signed-in studio. Local public generation
 
 Historical rollout notes do not establish which migrations, providers or owners are configured today. Inspect the target environment before applying SQL or changing ownership. The main-owner setup script is project-specific: review its target account and verify that confirmed identity before executing it. Never reuse its email/account assumptions for another deployment.
 
-Check the [legacy RLS review](legacy-rls-review.md) separately from profile isolation. After setup, verify anonymous, owner, other-user and administrator access with synthetic records. No install, test or build command applies these changes automatically.
+Check the [legacy RLS review](../reference/legacy-rls-review.md) separately from profile isolation. After setup, verify anonymous, owner, other-user and administrator access with synthetic records. No install, test or build command applies these changes automatically.

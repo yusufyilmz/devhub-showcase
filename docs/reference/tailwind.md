@@ -12,4 +12,4 @@ Tailwind 4 targets Safari 16.4+, Chrome 111+ and Firefox 128+. Browser tests in 
 
 Validation includes the production build, strict repository checks, unit tests and the full browser suite. A dedicated browser check verifies shared semantic text/background utilities and spacing on an Engineer portfolio in both color modes. Theme screenshots can be compared to the v3 build.
 
-References: https://tailwindcss.com/docs/upgrade-guide and https://tailwindcss.com/docs/detecting-classes-in-source-files.
+References: <https://tailwindcss.com/docs/upgrade-guide> and <https://tailwindcss.com/docs/detecting-classes-in-source-files>.

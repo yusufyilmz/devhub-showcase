@@ -18,4 +18,4 @@
 
 Root package scripts coordinate packages with Turborepo. pnpm-workspace.yaml is the external dependency catalog. Add external versions there and reference catalog: in package manifests. Use workspace:* for internal dependencies. Keep package export maps explicit. Do not replace the package manager or add a second lockfile.
 
-packages/sections contains the versioned section library with separate public renderers and client editors. Use explicit exports and keep auth/database access in app adapters. See docs/pageforge-section-migration.md for all source families.
+packages/sections contains the versioned section library with separate public renderers and client editors. Use explicit exports and keep auth/database access in app adapters. See docs/reference/pageforge-section-migration.md for all source families.

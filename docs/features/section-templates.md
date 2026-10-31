@@ -1,6 +1,6 @@
 # Section package and templates
 
-@shared/sections exposes an explicit renderer registry, a separate editor registry, individual section entrypoints and styles.css. Public rendering imports the renderers entrypoint; the editor imports editors. The package depends on content and portable components, not Next.js routes, auth or database clients. See [the complete source mapping](pageforge-section-migration.md).
+@shared/sections exposes an explicit renderer registry, a separate editor registry, individual section entrypoints and styles.css. Public rendering imports the renderers entrypoint; the editor imports editors. The package depends on content and portable components, not Next.js routes, auth or database clients. See [the complete source mapping](../reference/pageforge-section-migration.md).
 
 ## Saved data and compatibility
 

@@ -30,8 +30,6 @@ export class ResourceManager {
 
   async getAllResources(): Promise<PageResources> {
     const projects = await this.projectService.getAll();
-
-    console.log("projects", { projects });
     const experiences = await this.experienceService.getAll();
 
     const educations = await this.educationService.getAll();

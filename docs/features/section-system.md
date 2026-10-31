@@ -1,6 +1,6 @@
 # Section system
 
-The section system includes a shared registry, reusable views, validated display settings, custom sections and a private template library. Existing documents retain their layout defaults. Section configuration lives in the profile document; saved templates use their own table and migration. See [features](features.md) for the product overview.
+The section system includes a shared registry, reusable views, validated display settings, custom sections and a private template library. Existing documents retain their layout defaults. Section configuration lives in the profile document; saved templates use their own table and migration. See [features](../features.md) for the product overview.
 
 ## Architecture decision
 
@@ -47,7 +47,7 @@ Public project filtering stays in the existing server rendering/resource adapter
 
 ## Further references
 
-See [the source migration map](pageforge-section-migration.md) for all supported families and integration boundaries, and [private templates](section-templates.md) for library and import/export contracts.
+See [the source migration map](../reference/pageforge-section-migration.md) for all supported families and integration boundaries, and [private templates](section-templates.md) for library and import/export contracts.
 
 ## Shared view primitives
 
@@ -87,7 +87,7 @@ Limits are 60 custom sections, 30 items per section, 160 characters per section 
 
 ## Compositions, hero and social work
 
-See [the feature overview](features.md) and [repository guidance](../AGENTS.md). sectionCompositions defines authorable starters for services, testimonials, FAQs, statistics, calls to action and curated social work. A starter chooses a title and default view without inventing content. All use the same custom section IDs, collections, visibility, previews, mixed order and profile save boundaries. Legacy sections without composition remain generic custom sections.
+See [the feature overview](../features.md) and [repository guidance](../../AGENTS.md). sectionCompositions defines authorable starters for services, testimonials, FAQs, statistics, calls to action and curated social work. A starter chooses a title and default view without inventing content. All use the same custom section IDs, collections, visibility, previews, mixed order and profile save boundaries. Legacy sections without composition remain generic custom sections.
 
 YouTube, Instagram and Pinterest sections require public work URLs matching the selected provider. getSocialWork checks exact HTTPS hosts and supported video/post/pin paths. Optional image URLs and captions provide visual work cards. YouTube player URLs are constructed from validated video IDs and use youtube-nocookie.com. WorkMedia mounts the iframe only on a visitor's load action and supports unloading; there are no automatic thumbnails, third-party scripts or server-side social fetches. Instagram and Pinterest cards link to their originals. Automatic feeds and native Instagram/Pinterest embeds are separate future integrations.
 
@@ -97,6 +97,6 @@ References for YouTube behavior: [official embed guidance](https://support.googl
 
 ## Complete library and templates
 
-All 42 PageForge section families now have explicit renderer/editor folders in @shared/sections, alongside native custom/services/social sections. New sectionType and compatible options/source fields extend custom sections without changing legacy instances. The source mapping and integration boundaries are listed in docs/pageforge-section-migration.md.
+All 42 PageForge section families now have explicit renderer/editor folders in @shared/sections, alongside native custom/services/social sections. New sectionType and compatible options/source fields extend custom sections without changing legacy instances. The source mapping and integration boundaries are listed in [the PageForge migration map](../reference/pageforge-section-migration.md).
 
 Templates are versioned JSON and are saved separately to an account-private library with owner RLS and optimistic revisions. Export defaults to configuration only. Native and compatible PageForge imports are reviewed before applying fresh section/item IDs to a draft; identity, sharing and CV content remain independent. Profile-source bindings are resolved from the current canonical document and public project filtering applies independently of the built-in project section selection.

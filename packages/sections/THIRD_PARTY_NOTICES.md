@@ -1,6 +1,6 @@
 # PageForge section provenance
 
-Section names, content concepts and conversion mappings are adapted from https://github.com/yusufyilmz/pageforge-ai at 82ee192f7b9125bf42b899fb3e356c2be4983eb2. MyDevStudio implements its own React renderers and editors against its shared theme and validated data model. Once UI components, runtime styles and project assets are not vendored. The source license notice is retained below.
+Section names, content concepts and conversion mappings are adapted from <https://github.com/yusufyilmz/pageforge-ai> at 82ee192f7b9125bf42b899fb3e356c2be4983eb2. MyDevStudio implements its own React renderers and editors against its shared theme and validated data model. Once UI components, runtime styles and project assets are not vendored. The source license notice is retained below.
 
 MIT License
 

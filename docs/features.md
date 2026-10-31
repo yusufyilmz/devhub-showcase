@@ -28,7 +28,7 @@ The studio edits profile/contact details, About, experience and achievements, pr
 
 Publishing exposes `/{username}` and `/{username}/cv.pdf`. Unpublishing hides public reads, but cannot recall downloaded files or search-engine copies. Username changes change public links; legacy `/p/{id}` links resolve to the current username. Private downloads use authenticated endpoints. PDF hide-email/hide-phone preferences do not hide those details on the public website.
 
-See [personal workspace setup](multiuser-cvs.md) and [Google login](google-login.md) for activation and access rules.
+See [personal workspace setup](features/multiuser-cvs.md) and [Google login](features/google-login.md) for activation and access rules.
 
 ## Layout, appearance and language
 
@@ -60,13 +60,13 @@ Section order supports pointer/touch dragging, move buttons and keyboard control
 
 Optional image/video hero backgrounds support poster, position, overlay and playback controls. Reduced motion pauses automatic playback. Social work is curated from public links: YouTube loads a privacy-enhanced player after a visitor action; Instagram and Pinterest cards link to original posts. Automatic feeds, scraping, media uploads and transcoding are not provided.
 
-See [section contracts](section-system.md), [templates](section-templates.md) and [the source mapping](pageforge-section-migration.md). Contact/newsletter/shop/pricing sections do not provision mail, subscriptions, checkout or booking services.
+See [section contracts](features/section-system.md), [templates](features/section-templates.md) and [the source mapping](reference/pageforge-section-migration.md). Contact/newsletter/shop/pricing sections do not provision mail, subscriptions, checkout or booking services.
 
 ## Templates and import/export
 
 Each account can save up to five templates in its private library. The library has its own immediate save; applying a template changes only the portfolio draft and still requires **Save changes**.
 
-Configuration-only export omits personal authored content by default. Including authored content, media and bindings is explicit. Imports are validated and reviewed before applying; append or confirmed replacement creates fresh section/item IDs. Imports cannot change identity, ownership, username, publication or CV settings. See [template limits and formats](section-templates.md).
+Configuration-only export omits personal authored content by default. Including authored content, media and bindings is explicit. Imports are validated and reviewed before applying; append or confirmed replacement creates fresh section/item IDs. Imports cannot change identity, ownership, username, publication or CV settings. See [template limits and formats](features/section-templates.md).
 
 ## CV generation and extraction
 
@@ -74,13 +74,13 @@ Public and private PDF downloads share `packages/cv` and its Handlebars/JSON tem
 
 Optional **Import CV** accepts PDF, DOCX or UTF-8 text up to 3 MB. After consent, the server validates the file, authorizes the user, applies Redis limits and sends it to OpenAI. The original file is not stored in Supabase. Provider data policies still apply.
 
-Users review and correct extracted fields, select groups to replace and apply them to the draft. Missing facts are not invented; new projects start hidden. Apply does not save or publish. Cancel/failure leaves the existing draft intact. See [CV import](cv-import.md) for exact limits, models, retention caveats and tests.
+Users review and correct extracted fields, select groups to replace and apply them to the draft. Missing facts are not invented; new projects start hidden. Apply does not save or publish. Cancel/failure leaves the existing draft intact. See [CV import](features/cv-import.md) for exact limits, models, retention caveats and tests.
 
 ## Managed portfolios
 
 Authorized administrators can create private temporary portfolios, import validated JSON, edit them, download private PDFs and explicitly publish. These records use administrator authorization, not a shared login or password.
 
-Transfer requires a verified recipient and revision checks. An untouched private starter can be preserved before assignment; an edited/published recipient portfolio blocks transfer. Main cannot become managed, and the manager loses access after transfer. No invitation email is sent. See [managed portfolios](managed-portfolios.md).
+Transfer requires a verified recipient and revision checks. An untouched private starter can be preserved before assignment; an edited/published recipient portfolio blocks transfer. Main cannot become managed, and the manager loses access after transfer. No invitation email is sent. See [managed portfolios](features/managed-portfolios.md).
 
 ## AI knowledge and chat
 
@@ -88,7 +88,7 @@ The AI profile tab inspects knowledge derived from the saved revision, not unsav
 
 The existing public chat is restricted to the main portfolio. Each request re-reads the published snapshot, validates input and enforces Redis limits; missing/private profiles do not fall back to someone else's data. Conversation state is scoped by portfolio and revision. Premium chat for other accounts, subscriptions and an editing agent are not enabled.
 
-See [AI foundation](portfolio-ai-foundation.md) for projections, limits, provider behavior and the remaining rollout.
+See [AI foundation](features/portfolio-ai-foundation.md) for projections, limits, provider behavior and the remaining rollout.
 
 ## Homepage and fictional examples
 
@@ -116,6 +116,6 @@ Automated coverage includes layout/theme/language combinations, profile saves an
 
 Remaining product work includes premium entitlements and usage accounting, billing, expanded visitor chat and a private editing assistant. External commerce, automatic social feeds and media upload/transcoding need separate integrations. Hosted monitoring remains a setup plan in [observability](observability.md), not an active service.
 
-Stripe sandbox billing is available at `/admin/billing` once its server configuration and migrations are installed. Checkout, customer portal and signed subscription webhooks are implemented; live keys remain disabled and actual sandbox checkout verification is required. See [setup and limitations](stripe-billing.md).
+Stripe sandbox billing is available at `/admin/billing` once its server configuration and migrations are installed. Checkout, customer portal and signed subscription webhooks are implemented; live keys remain disabled and actual sandbox checkout verification is required. See [setup and limitations](features/stripe-billing.md).
 
-Pro owners can opt into a public portfolio assistant at `/admin/billing`. The reusable chat widget supports all portfolio layouts, with public-only context, isolated session history and reserved usage accounting. Existing main portfolio chat keeps its legacy behavior. See [premium portfolio chat](premium-portfolio-chat.md) for migration and verification requirements.
+Pro owners can opt into a public portfolio assistant at `/admin/billing`. The reusable chat widget supports all portfolio layouts, with public-only context, isolated session history and reserved usage accounting. Existing main portfolio chat keeps its legacy behavior. See [premium portfolio chat](features/premium-portfolio-chat.md) for migration and verification requirements.

@@ -4,14 +4,15 @@
 
 Use the existing **Pino** logging as the free baseline. Adopt **Sentry Developer** as the recommended hosted error-monitoring option when configuring monitoring for this project. This guide defines the framework and rollout; it does not install a Sentry SDK or provision an account.
 
-| Capability                                | Current status                                                                      |
-| ----------------------------------------- | ----------------------------------------------------------------------------------- |
-| Server logs                               | Pino is installed in `packages/log` and `packages/lib/src/log`                      |
-| Log level                                 | Both entry points honor `LOG_LEVEL`                                                 |
-| Application identity                      | Both use `APPLICATION_NAME`                                                         |
-| Hosted error monitoring                   | Sentry recommended; SDK and account setup still required                            |
-| Distributed traces, dashboards and alerts | Proposed below; not active merely by merging this guide                             |
-| Automatic telemetry redaction             | Not configured in the existing logger factories; callers must allowlist safe fields |
+| Capability           | Current status                                                 |
+| -------------------- | -------------------------------------------------------------- |
+| Server logs          | Pino is installed in `packages/log` and `packages/lib/src/log` |
+| Log level            | Both entry points honor `LOG_LEVEL`                            |
+| Application identity | Both use `APPLICATION_NAME`                                    |
+
+pnpm exec playwright install chromium
+| Distributed traces, dashboards and alerts | Proposed below; not active merely by merging this guide |
+| Automatic telemetry redaction | Not configured in the existing logger factories; callers must allowlist safe fields |
 
 The two existing logger factories are not identical: `packages/log` includes environment and ISO timestamps, string levels and pretty development output; the lib logger retains Pino defaults. Do not assume one schema across both. Use the entry point already used by the affected package and normalize fields in a separately tested implementation when needed.
 
@@ -51,10 +52,10 @@ For example, with an existing logger instance in scope:
 ```ts
 logger.error(
   {
+    errorCode: "PERSISTENCE_UNAVAILABLE",
     event: "profile.save.failed",
     operation: "profile.save",
     outcome: "failure",
-    errorCode: "PERSISTENCE_UNAVAILABLE",
   },
   "Profile save failed",
 );

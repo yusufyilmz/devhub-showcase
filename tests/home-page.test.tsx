@@ -56,8 +56,8 @@ it("routes an authenticated owner to their own editor and uses the published exa
 });
 it("switches the example between portfolio and PDF with labelled tabs and keyboard navigation", () => {
   render(<PortfolioPreview />);
-  const portfolio = screen.getByRole("tab", { name: "Portfolio" }),
-    cv = screen.getByRole("tab", { name: "CV" });
+  const portfolio = screen.getByRole("tab", { name: "Portfolio" });
+  const cv = screen.getByRole("tab", { name: "CV" });
   expect(portfolio.getAttribute("aria-selected")).toBe("true");
   fireEvent.keyDown(portfolio, { key: "ArrowRight" });
   expect(cv.getAttribute("aria-selected")).toBe("true");

@@ -4,7 +4,7 @@ The platform administrator can open /admin/portfolios or use **Manage portfolios
 
 Create a temporary portfolio with a name, username and optional contact email. Alternatively, import a JSON file containing either a profile document or an object with username and profile properties. Imports are limited to 250 KB and validated with the normal profile schema. They preserve projects, image URLs, themes, language settings and CV preferences. Ownership and publication flags supplied in the file are ignored.
 
-Every new managed portfolio starts private and uses no separate login or shared password. Missing contact emails use pending@example.com as an explicitly temporary value. Replace placeholder contacts before publishing. Temporary portfolio records have no auth owner and are assigned to the administrator who creates them.
+Every new managed portfolio starts private and uses no separate login or shared password. Missing contact emails use <pending@example.com> as an explicitly temporary value. Replace placeholder contacts before publishing. Temporary portfolio records have no auth owner and are assigned to the administrator who creates them.
 
 The managed editor provides the existing content, language, layout, theme, section order and PDF settings. Save changes to update the document, or toggle publication to show or hide the public username page. Username changes keep the administrator on the same management URL. Private PDF downloads also require the administrator session. The list shows 50 records per page.
 
