@@ -28,9 +28,10 @@ it("blocks duplicate subscriptions and uses only server price and fixed return U
     prices: {
       retrieve: vi.fn().mockResolvedValue({
         active: true,
+        billing_scheme: "per_unit",
         id: "price_pro",
         livemode: false,
-        recurring: { interval: "month", interval_count: 1 },
+        recurring: { interval: "month", interval_count: 1, usage_type: "licensed" },
         type: "recurring",
       }),
     },

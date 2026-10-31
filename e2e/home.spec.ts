@@ -88,3 +88,31 @@ test("without local storage the example links to the published portfolio", async
   );
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Your work.");
 });
+
+test("plans show configured sandbox pricing and a safe sign-in link", async ({ page }) => {
+  await page.route("**/api/billing/pricing", (route) =>
+    route.fulfill({
+      body: JSON.stringify({
+        amount: 1200,
+        available: true,
+        chatLimit: 80,
+        currency: "eur",
+        editorLimit: 15,
+        interval: "month",
+        mode: "test",
+      }),
+      contentType: "application/json",
+    }),
+  );
+  await page.goto("/");
+  const plans = page.locator("#pricing");
+  await expect(plans).toContainText("€12.00");
+  await expect(plans).toContainText("80 visitor chat attempts");
+  await expect(plans.getByRole("link", { name: "Sign in to try Pro" })).toHaveAttribute(
+    "href",
+    "/admin/login",
+  );
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(
+    false,
+  );
+});
