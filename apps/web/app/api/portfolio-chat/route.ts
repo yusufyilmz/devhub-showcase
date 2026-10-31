@@ -1,5 +1,5 @@
-import { sameOrigin } from "../../../lib/admin-auth";
-import { answerPremiumChat } from "../../../lib/premium-chat";
+import { sameOrigin } from "@/lib/admin-auth";
+import { answerPremiumChat } from "@/lib/premium-chat";
 export const maxDuration = 60;
 export async function POST(request: Request) {
   const headers = { "Cache-Control": "no-store" };

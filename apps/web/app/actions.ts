@@ -12,8 +12,8 @@ import {
 } from "@shared/lib/types";
 import { isCategoryReferralCategory } from "@shared/lib/utils";
 
-import { requireAdmin } from "../lib/admin-auth";
-import { portfolioChatInput, requireLegacyChat } from "../lib/portfolio-chat";
+import { requireAdmin } from "@/lib/admin-auth";
+import { portfolioChatInput, requireLegacyChat } from "@/lib/portfolio-chat";
 
 export async function handleSendMessageAction(
   username: string,

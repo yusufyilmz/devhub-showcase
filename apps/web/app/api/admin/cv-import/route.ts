@@ -10,7 +10,7 @@ import {
 import { ProfileAccessError } from "@shared/lib/profile-errors";
 import { createServerClient } from "@shared/lib/supabase";
 
-import { sameOrigin } from "../../../../lib/admin-auth";
+import { sameOrigin } from "@/lib/admin-auth";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;

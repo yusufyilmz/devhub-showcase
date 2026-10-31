@@ -1,5 +1,5 @@
-import { getPortfolioExample } from "../../../../../features/examples/data";
-import { cvResponse } from "../../../../../lib/cv-response";
+import { getPortfolioExample } from "@/features/examples/data";
+import { cvResponse } from "@/lib/cv-response";
 export const runtime = "nodejs";
 export async function GET(_request: Request, context: { params: Promise<{ slug: string }> }) {
   const item = getPortfolioExample((await context.params).slug);

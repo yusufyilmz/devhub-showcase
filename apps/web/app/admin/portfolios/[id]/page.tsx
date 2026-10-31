@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 
-import { ManagedWorkspace } from "../../../../features/management/managed-workspace";
-import { managedRepository } from "../../../../lib/managed-portfolios";
-import "../../../../features/management/management.css";
+import { ManagedWorkspace } from "@/features/management/managed-workspace";
+import { managedRepository } from "@/lib/managed-portfolios";
+import "@/features/management/management.css";
 export default async function ManagedEditor({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const admin = await managedRepository(id).catch(() => null);

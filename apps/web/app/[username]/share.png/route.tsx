@@ -1,9 +1,9 @@
 import { getNameInitials } from "@shared/content";
 import { ImageResponse } from "next/og";
 
-import { brandColor } from "../../../lib/portfolio-branding";
-import { getUsernameProfile } from "../../../lib/public-profile";
-import { portfolioUrl } from "../../../lib/site-url";
+import { brandColor } from "@/lib/portfolio-branding";
+import { getUsernameProfile } from "@/lib/public-profile";
+import { portfolioUrl } from "@/lib/site-url";
 export const dynamic = "force-dynamic";
 export async function GET(
   _request: Request,

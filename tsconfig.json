@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@/features/*": ["./apps/web/features/*"],
+      "@/lib/*": ["./apps/web/lib/*"]
+    },
     "types": ["node", "vitest/globals"]
   },
   "extends": "./packages/typescript-config/base.json",

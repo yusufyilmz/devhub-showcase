@@ -17,6 +17,11 @@ export default defineConfig({
   resolve: {
     alias: [
       {
+        find: "@/features",
+        replacement: fileURLToPath(new URL("./apps/web/features", import.meta.url)),
+      },
+      { find: "@/lib", replacement: fileURLToPath(new URL("./apps/web/lib", import.meta.url)) },
+      {
         find: "@shared/cache",
         replacement: fileURLToPath(new URL("./packages/cache/src/index.ts", import.meta.url)),
       },

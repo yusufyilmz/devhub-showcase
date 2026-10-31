@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-import { sameOrigin } from "../../../../../../lib/admin-auth";
-import { managedFailure, privateHeaders, readManagedBody } from "../../../../../../lib/managed-api";
-import { managedRepository } from "../../../../../../lib/managed-portfolios";
+import { sameOrigin } from "@/lib/admin-auth";
+import { managedFailure, privateHeaders, readManagedBody } from "@/lib/managed-api";
+import { managedRepository } from "@/lib/managed-portfolios";
 
 const transferSchema = z.object({
   email: z.email(),

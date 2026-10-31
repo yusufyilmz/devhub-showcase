@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
     "incremental": true,
+    "paths": {
+      "@/features/*": ["./features/*"],
+      "@/lib/*": ["./lib/*"]
+    },
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "types": ["node"]
+    "types": ["node", "vitest/globals"]
   },
   "exclude": ["node_modules"],
   "extends": "@shared/typescript-config/nextjs.json",

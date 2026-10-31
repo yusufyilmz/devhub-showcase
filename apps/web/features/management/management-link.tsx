@@ -1,4 +1,4 @@
-import { requirePortfolioAdmin } from "../../lib/managed-portfolios";
+import { requirePortfolioAdmin } from "@/lib/managed-portfolios";
 export async function ManagementLink() {
   const admin = await requirePortfolioAdmin().catch(() => null);
   return admin ? (

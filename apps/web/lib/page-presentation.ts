@@ -1,6 +1,6 @@
 import type { ProfileSnapshot } from "@shared/lib/profile-errors";
 
-import { getExampleForPath } from "../features/examples/data";
+import { getExampleForPath } from "@/features/examples/data";
 
 function profileStorageKey(id: string | undefined) {
   return id && id !== "main" ? `devhub-theme:${id}` : "devhub-theme";

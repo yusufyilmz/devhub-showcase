@@ -3,7 +3,7 @@ import { type BillingClient, BillingRepository } from "@shared/lib/billing-repos
 import { createServerClient } from "@shared/lib/supabase";
 import { ZodError, z } from "zod";
 
-import { sameOrigin } from "../../../../lib/admin-auth";
+import { sameOrigin } from "@/lib/admin-auth";
 
 const headers = { "Cache-Control": "private, no-store" };
 const assignment = z

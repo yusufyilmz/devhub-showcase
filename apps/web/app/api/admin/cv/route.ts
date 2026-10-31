@@ -1,7 +1,7 @@
 import { ProfileAccessError } from "@shared/lib/profile-errors";
 
-import { requireWorkspace } from "../../../../lib/admin-auth";
-import { cvResponse } from "../../../../lib/cv-response";
+import { requireWorkspace } from "@/lib/admin-auth";
+import { cvResponse } from "@/lib/cv-response";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export async function GET(_request: Request) {

@@ -6,10 +6,10 @@ import {
   exampleViewProfile,
   getPortfolioExample,
   portfolioExamples,
-} from "../../../../features/examples/data";
-import { EngineerPortfolio } from "../../../../features/portfolio/engineer-portfolio";
-import { PortfolioLayout } from "../../../../features/portfolio/portfolio-layout";
-import "../../../../features/examples/examples.css";
+} from "@/features/examples/data";
+import { EngineerPortfolio } from "@/features/portfolio/engineer-portfolio";
+import { PortfolioLayout } from "@/features/portfolio/portfolio-layout";
+import "@/features/examples/examples.css";
 
 type Props = { params: Promise<{ slug: string }> };
 export function generateStaticParams() {

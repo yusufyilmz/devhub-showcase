@@ -2,7 +2,7 @@ import { renderCv } from "@shared/cv";
 import template from "@shared/cv/template.hbs";
 import { unstable_rethrow } from "next/navigation";
 
-import { getPublishedProfile } from "../../lib/published-profile";
+import { getPublishedProfile } from "@/lib/published-profile";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

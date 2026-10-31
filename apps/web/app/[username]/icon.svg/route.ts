@@ -1,5 +1,5 @@
-import { portfolioIcon } from "../../../lib/portfolio-branding";
-import { getUsernameProfile } from "../../../lib/public-profile";
+import { portfolioIcon } from "@/lib/portfolio-branding";
+import { getUsernameProfile } from "@/lib/public-profile";
 export const dynamic = "force-dynamic";
 export async function GET(
   _request: Request,
