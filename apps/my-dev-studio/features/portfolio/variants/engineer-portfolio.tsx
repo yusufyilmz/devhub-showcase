@@ -36,7 +36,11 @@ interface EngineerPortfolioProps {
     revision: number;
   };
   extras?: boolean;
-  handleSendMessage: (input: ChatMessage, sessionId: string) => Promise<ChatMessage>;
+  handleSendMessage: (
+    input: ChatMessage,
+    sessionId: string,
+    onDelta?: (text: string) => void,
+  ) => Promise<ChatMessage>;
   ownerLink?: ReactNode;
   profile: PortfolioProfile;
   referrals?: ComponentProps<typeof ReferralSection>["referrals"];
@@ -124,8 +128,24 @@ export function EngineerPortfolio(
   return (
     <EngineerPortfolioView
       {...props}
-      handleSendMessage={(message, sessionId) => {
+      handleSendMessage={async (message, sessionId, onDelta) => {
         if (!username) return Promise.reject(new Error("Chat is unavailable"));
+        if (message.type === "cv" && onDelta) {
+          const { streamPortfolioAnswer } = await import("@/features/chat/stream-client");
+          const content = await streamPortfolioAnswer(
+            username,
+            sessionId,
+            message.content,
+            onDelta,
+          );
+          return {
+            ...message,
+            category: "unknown",
+            content,
+            role: "assistant" as ChatMessage["role"],
+            timestamp: Date.now(),
+          };
+        }
         return handleSendMessageAction(username, message, sessionId);
       }}
     />

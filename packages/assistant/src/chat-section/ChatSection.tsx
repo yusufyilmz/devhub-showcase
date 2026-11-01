@@ -12,7 +12,11 @@ import { PortfolioChatProvider } from "@shared/ui/providers";
 import { ChatPopupContainer } from "./ChatPopupContainer";
 
 type ChatSectionProps = {
-  handleSendMessage: (input: ChatMessage, sessionId: string) => Promise<ChatMessage>;
+  handleSendMessage: (
+    input: ChatMessage,
+    sessionId: string,
+    onDelta?: (text: string) => void,
+  ) => Promise<ChatMessage>;
 };
 
 export const ChatSection = ({

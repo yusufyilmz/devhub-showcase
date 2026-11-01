@@ -5,11 +5,15 @@ import { useEffect, useId, useState } from "react";
 import { type ChatMessage, ChatRole, type ChatType } from "@shared/lib/types";
 import { useChatMessages, useChatState } from "@shared/runtime/chat";
 
-import { ChatPanel } from "../chat/assistant-chat/chat-panel";
+import { ChatPanel, type ChatPanelMessage } from "../chat/assistant-chat/chat-panel";
 
 interface ChatPopupProps {
   closeChat: (chatFinished: boolean) => void;
-  handleSendMessage: (input: ChatMessage, sessionId: string) => Promise<ChatMessage>;
+  handleSendMessage: (
+    input: ChatMessage,
+    sessionId: string,
+    onDelta?: (text: string) => void,
+  ) => Promise<ChatMessage>;
   type: ChatType;
 }
 
@@ -19,6 +23,7 @@ export const ChatPopupContainer = ({ handleSendMessage, type, closeChat }: ChatP
   const messages = useChatMessages(type);
   const [draft, setDraft] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [partial, setPartial] = useState("");
   const [isChatFinished, setIsChatFinished] = useState(false);
   const titleId = useId();
   const inputId = useId();
@@ -27,6 +32,7 @@ export const ChatPopupContainer = ({ handleSendMessage, type, closeChat }: ChatP
     if (!input || isTyping || isChatFinished) return;
 
     setIsTyping(true);
+    setPartial("");
     setDraft("");
 
     const lastMessage = messages.filter((message) => message.type === type).pop();
@@ -41,7 +47,9 @@ export const ChatPopupContainer = ({ handleSendMessage, type, closeChat }: ChatP
     addMessage(newMessage);
 
     try {
-      const response = await handleSendMessage(newMessage, sessionId);
+      const response = await handleSendMessage(newMessage, sessionId, (text) =>
+        setPartial((value) => value + text),
+      );
       addMessage(response);
     } catch (e) {
       const error = e as Error;
@@ -53,6 +61,7 @@ export const ChatPopupContainer = ({ handleSendMessage, type, closeChat }: ChatP
         type,
       } as ChatMessage);
     } finally {
+      setPartial("");
       setIsTyping(false);
     }
   };
@@ -76,16 +85,19 @@ export const ChatPopupContainer = ({ handleSendMessage, type, closeChat }: ChatP
           emptyDescription="Start the conversation."
           inputId={inputId}
           inputLabel={isChatFinished ? "Conversation ended" : "Your message"}
-          messages={messages.map((message) => ({
-            id: `${message.timestamp ?? ""}:${message.role}:${message.content}`,
-            role:
-              message.role === ChatRole.User
-                ? "user"
-                : message.role === ChatRole.System
-                  ? "system"
-                  : "assistant",
-            text: message.title ? `${message.title}\n${message.content}` : message.content,
-          }))}
+          messages={[
+            ...messages.map<ChatPanelMessage>((message) => ({
+              id: `${message.timestamp ?? ""}:${message.role}:${message.content}`,
+              role:
+                message.role === ChatRole.User
+                  ? "user"
+                  : message.role === ChatRole.System
+                    ? "system"
+                    : "assistant",
+              text: message.title ? `${message.title}\n${message.content}` : message.content,
+            })),
+            ...(partial ? [{ id: "streaming", role: "assistant" as const, text: partial }] : []),
+          ]}
           onClose={() => closeChat(isChatFinished)}
           onSubmit={handleSendMessageAction}
           onValueChange={setDraft}

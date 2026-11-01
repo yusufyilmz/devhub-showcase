@@ -1,5 +1,10 @@
 # Assistant catalog
 
+Provider configuration and optional text streaming live in
+src/services/provider.ts (AssistantService). Model classes own task context and
+validation; use the service for provider access, not a second business workflow.
+See docs/features/assistant-configuration.md for saved agents and external prompts.
+
 Portfolio and editing assistants for `@shared/assistant`. Models call a provider. They do not authorize a user or write a profile.
 
 | Export                         | Path             | Use                                                        |

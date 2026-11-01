@@ -45,6 +45,11 @@ function AssistantWorkspace({ profile, profileId, revision, onChange }: Props) {
   const [undo, setUndo] = useState<{ before: PortfolioProfile; after: string } | null>(null);
   const controller = useRef<AbortController | null>(null);
   useEffect(() => {
+    const pending = sessionStorage.getItem("studio-assistant-pending");
+    if (pending) {
+      setMessage(pending.slice(0, 4000));
+      sessionStorage.removeItem("studio-assistant-pending");
+    }
     const request = new AbortController();
     studioRequest(urls.next.studio.assistant(), { signal: request.signal })
       .then(async (response) => {
