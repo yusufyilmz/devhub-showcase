@@ -4,8 +4,12 @@ import { runInNewContext } from "node:vm";
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { storageThemeScript } from "../stores/storage-theme";
-import { USER_STORAGE_KEY, useStorage } from "../stores/use-storage";
+import {
+  USER_CONFIG_STORAGE_KEY,
+  userConfigThemeScript,
+  useUserConfigStore,
+} from "@shared/runtime/stores";
+
 import { ThemeProvider } from "./ThemeProvider";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -29,7 +33,7 @@ describe("Shared document theme", () => {
   beforeEach(() => {
     dark = false;
     change = undefined;
-    useStorage.setState({ theme: null, user: null });
+    useUserConfigStore.setState({ activeMode: null, user: null });
     localStorage.clear();
     vi.stubGlobal("matchMedia", () => ({
       addEventListener: (_: string, cb: () => void) => {
@@ -49,7 +53,7 @@ describe("Shared document theme", () => {
     fireEvent.click(screen.getByRole("button", { name: "Switch to light theme" }));
     home.unmount();
     document.documentElement.dataset.theme = "dark";
-    runInNewContext(storageThemeScript("devhub-theme:owner", "dark"), {
+    runInNewContext(userConfigThemeScript("devhub-theme:owner", "dark"), {
       document,
       localStorage,
       matchMedia: window.matchMedia,
@@ -62,7 +66,7 @@ describe("Shared document theme", () => {
     localStorage.setItem("mydevstudio-theme", "light");
     localStorage.setItem("devhub-theme:owner", "dark");
     render(<Page storageKey="devhub-theme:owner" />);
-    expect(useStorage.getState().theme).toBe("light");
+    expect(useUserConfigStore.getState().activeMode).toBe("light");
     expect(document.documentElement.dataset.theme).toBe("light");
   });
   it("follows the device in system mode and preserves an explicit override", () => {
@@ -80,9 +84,9 @@ describe("Shared document theme", () => {
   });
   it("accepts preference changes from another tab", () => {
     render(<Page storageKey="legacy" />);
-    const newValue = JSON.stringify({ state: { theme: "light", user: null }, version: 1 });
-    localStorage.setItem(USER_STORAGE_KEY, newValue);
-    fireEvent(window, new StorageEvent("storage", { key: USER_STORAGE_KEY, newValue }));
+    const newValue = JSON.stringify({ state: { activeMode: "light", user: null }, version: 2 });
+    localStorage.setItem(USER_CONFIG_STORAGE_KEY, newValue);
+    fireEvent(window, new StorageEvent("storage", { key: USER_CONFIG_STORAGE_KEY, newValue }));
     expect(document.documentElement.dataset.theme).toBe("light");
   });
   it("still toggles when local storage is blocked", () => {
@@ -95,5 +99,23 @@ describe("Shared document theme", () => {
     render(<Page storageKey="legacy" />);
     fireEvent.click(screen.getByRole("button", { name: "Switch to light theme" }));
     expect(document.documentElement.dataset.theme).toBe("light");
+  });
+  it("imports the temporary store once without resurrecting a signed-out user", () => {
+    localStorage.setItem(
+      "mydevstudio-storage",
+      JSON.stringify({
+        state: { theme: "light", user: { id: "owner", name: "Yusuf" } },
+        version: 1,
+      }),
+    );
+    const page = render(<Page storageKey="legacy" />);
+    expect(useUserConfigStore.getState().activeMode).toBe("light");
+    expect(useUserConfigStore.getState().user?.id).toBe("owner");
+    expect(localStorage.getItem("mydevstudio-storage")).toBeNull();
+    useUserConfigStore.getState().clearUser();
+    page.unmount();
+    render(<Page storageKey="legacy" />);
+    expect(useUserConfigStore.getState().user).toBeNull();
+    expect(useUserConfigStore.getState().activeMode).toBe("light");
   });
 });

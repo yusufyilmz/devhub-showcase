@@ -3,7 +3,7 @@
 import { type CSSProperties, type ReactNode, useEffect, useMemo } from "react";
 
 import type { PortfolioTheme } from "@shared/config";
-import { storageThemeScript } from "@shared/ui/stores";
+import { userConfigThemeScript } from "@shared/runtime/stores";
 
 import { PageProviders } from "../../providers";
 import type { StudioRequest } from "../../studio";
@@ -116,7 +116,7 @@ export function PageShell({
     );
   }
 
-  const themeScript = storageThemeScript(storageKey, appearance.defaultTheme).replace(
+  const themeScript = userConfigThemeScript(storageKey, appearance.defaultTheme).replace(
     /</g,
     "\\u003c",
   );

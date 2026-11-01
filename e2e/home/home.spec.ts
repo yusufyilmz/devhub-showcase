@@ -47,6 +47,12 @@ test("theme choice persists across homepage, studio navigation and reload", asyn
   await page.getByRole("link", { exact: true, name: "Sign in" }).first().click();
   await expect(page).toHaveURL("/admin/login");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(9, 15, 26)");
+  await expect(page.locator(".admin-shell")).toHaveCSS("background-color", "rgb(9, 15, 26)");
+  await expect(page.getByRole("button", { name: "Open studio →" })).toHaveCSS(
+    "background-color",
+    "rgb(103, 216, 231)",
+  );
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await page.getByRole("button", { name: "Switch to light theme" }).click();

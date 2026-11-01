@@ -12,3 +12,18 @@ Browser helpers for `@shared/runtime`. These hooks do not choose an API URL or a
 | `@shared/runtime/browser`       | `src/browser`       | Outside click, window size, mobile            |
 | `@shared/runtime/notifications` | `src/notifications` | Notification context                          |
 | `@shared/runtime/stores`        | `src/stores`        | Chat, profile, and user config stores         |
+
+## User configuration
+
+`useUserConfigStore` from `@shared/runtime/stores` owns `activeMode`
+(`light`, `dark`, `system`, or unset before initial selection) and `user`
+(id, name, optional email/avatar). `setActiveMode`, `setUser`, `clearUser`, and
+`reset` are its actions. It keeps the existing `buzzy-userconfig-store` storage
+key with schema version 2 and migrates version 1. Unused sidebar, chat sizing,
+VBA, CAPTCHA, Nginx, file-browser and other legacy flags are removed.
+
+The provider imports preferences from the temporary `mydevstudio-storage`
+record and older page keys, then removes the temporary record only after the
+canonical record is saved. `clearUser` keeps the mode. Only whitelisted display
+fields are cached; authorization stays on the server. Storage is optional and
+hydration is explicit so server rendering does not read browser state.

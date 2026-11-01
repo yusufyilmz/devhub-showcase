@@ -5,3 +5,35 @@
 @import "./portfolios.css";
 @import "./themes.css";
 @import "./legacy/layout.css";
+
+/* App controls consume the active page palette. Primitive-only hosts do not load this entry. */
+:root[data-theme]:not([data-brand]),
+:root[data-theme][data-brand] {
+  --background: rgb(var(--bg-rgb));
+  --foreground: rgb(var(--text-rgb));
+  --card: rgb(var(--surface-rgb));
+  --card-foreground: rgb(var(--text-rgb));
+  --popover: rgb(var(--surface-rgb));
+  --popover-foreground: rgb(var(--text-rgb));
+  --primary: rgb(var(--accent-rgb));
+  --primary-foreground: rgb(var(--bg-rgb));
+  --secondary: rgb(var(--surface-soft-rgb));
+  --secondary-foreground: rgb(var(--text-rgb));
+  --muted: rgb(var(--surface-soft-rgb));
+  --muted-foreground: rgb(var(--muted-rgb));
+  --accent: rgb(var(--surface-soft-rgb));
+  --accent-foreground: rgb(var(--text-rgb));
+  --destructive: rgb(var(--danger-rgb));
+  --destructive-foreground: rgb(var(--bg-rgb));
+  --border: rgb(var(--border-rgb));
+  --input: rgb(var(--border-rgb));
+  --ring: rgb(var(--accent-rgb));
+  --sidebar: rgb(var(--surface-rgb));
+  --sidebar-foreground: rgb(var(--text-rgb));
+  --sidebar-primary: rgb(var(--accent-rgb));
+  --sidebar-primary-foreground: rgb(var(--bg-rgb));
+  --sidebar-accent: rgb(var(--surface-soft-rgb));
+  --sidebar-accent-foreground: rgb(var(--text-rgb));
+  --sidebar-border: rgb(var(--border-rgb));
+  --sidebar-ring: rgb(var(--accent-rgb));
+}

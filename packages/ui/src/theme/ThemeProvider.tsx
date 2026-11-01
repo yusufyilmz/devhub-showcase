@@ -2,26 +2,23 @@
 
 import { useEffect, useState } from "react";
 
-import { isStorageTheme, type StorageTheme, USER_STORAGE_KEY } from "../stores/storage-theme";
-import { useStorage } from "../stores/use-storage";
+import {
+  completeUserConfigMigration,
+  readLegacyUserConfig,
+  USER_CONFIG_STORAGE_KEY,
+  type UserConfigMode,
+  useUserConfigStore,
+} from "@shared/runtime/stores";
+
 import { ThemeContext } from "./theme-toggle";
 
 type ResolvedTheme = "light" | "dark";
-function resolveTheme(theme: StorageTheme): ResolvedTheme {
+function resolveTheme(theme: UserConfigMode): ResolvedTheme {
   return theme === "system"
     ? window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light"
     : theme;
-}
-
-function legacyTheme(storageKey: string) {
-  try {
-    const stored = localStorage.getItem("mydevstudio-theme") ?? localStorage.getItem(storageKey);
-    return isStorageTheme(stored) ? stored : null;
-  } catch {
-    return null;
-  }
 }
 
 export function ThemeProvider({
@@ -33,19 +30,24 @@ export function ThemeProvider({
 }: {
   accent: "cyan" | "violet" | "emerald";
   children: React.ReactNode;
-  defaultTheme: StorageTheme;
+  defaultTheme: UserConfigMode;
   portfolioTheme?: string;
   /** Read only to migrate a preference written by an older version. */
   storageKey: string;
 }) {
   const [mode, setMode] = useState<ResolvedTheme>(defaultTheme === "light" ? "light" : "dark");
   useEffect(() => {
-    void useStorage.persist.rehydrate();
-    if (!useStorage.getState().theme)
-      useStorage.getState().setTheme(legacyTheme(storageKey) ?? defaultTheme);
+    void useUserConfigStore.persist.rehydrate();
+    const legacy = readLegacyUserConfig(storageKey);
+    if (!useUserConfigStore.getState().activeMode) {
+      useUserConfigStore.getState().setActiveMode(legacy.mode ?? defaultTheme);
+      if (!useUserConfigStore.getState().user && legacy.user)
+        useUserConfigStore.getState().setUser(legacy.user);
+    }
+    completeUserConfigMigration();
     const root = document.documentElement;
     const apply = () => {
-      const resolved = resolveTheme(useStorage.getState().theme ?? defaultTheme);
+      const resolved = resolveTheme(useUserConfigStore.getState().activeMode ?? defaultTheme);
       setMode(resolved);
       root.dataset.theme = resolved;
     };
@@ -53,14 +55,14 @@ export function ThemeProvider({
     root.dataset.accent = accent;
     if (portfolioTheme) root.dataset.portfolioTheme = portfolioTheme;
     else delete root.dataset.portfolioTheme;
-    const unsubscribe = useStorage.subscribe((state, previous) => {
-      if (state.theme !== previous.theme) apply();
+    const unsubscribe = useUserConfigStore.subscribe((state, previous) => {
+      if (state.activeMode !== previous.activeMode) apply();
     });
     const media = window.matchMedia("(prefers-color-scheme: dark)");
     const syncStorage = (event: StorageEvent) => {
-      if (event.key !== USER_STORAGE_KEY && event.key !== null) return;
-      if (!event.newValue) useStorage.setState({ theme: null, user: null });
-      else void useStorage.persist.rehydrate();
+      if (event.key !== USER_CONFIG_STORAGE_KEY && event.key !== null) return;
+      if (!event.newValue) useUserConfigStore.setState({ activeMode: null, user: null });
+      else void useUserConfigStore.persist.rehydrate();
     };
     media.addEventListener("change", apply);
     window.addEventListener("storage", syncStorage);
@@ -70,6 +72,7 @@ export function ThemeProvider({
       window.removeEventListener("storage", syncStorage);
     };
   }, [accent, defaultTheme, portfolioTheme, storageKey]);
-  const toggle = () => useStorage.getState().setTheme(mode === "dark" ? "light" : "dark");
+  const toggle = () =>
+    useUserConfigStore.getState().setActiveMode(mode === "dark" ? "light" : "dark");
   return <ThemeContext.Provider value={{ mode, toggle }}>{children}</ThemeContext.Provider>;
 }

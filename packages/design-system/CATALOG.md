@@ -46,3 +46,8 @@ Storybook and does not modify a user's saved portfolio settings.
 reduced motion. It is exported as `@shared/design-system/surfaces.css` and is
 already included by `styles.css`. Product pages use these shared rules rather
 than introducing new shadow recipes per page.
+
+The app-only `legacy.css` entry also maps semantic control colors to the current
+RGB page palette. Home, sign-in and studio controls therefore follow the same
+persisted color mode and accent as their surrounding page. Storybook's semantic
+entry remains independent and retains its brand palettes.

@@ -25,8 +25,15 @@ export { usePatch } from "./http/usePatch";
 export { usePost } from "./http/usePost";
 export { usePut } from "./http/usePut";
 export {
-  getChatDimensions,
-  getSidebarCollapsed,
+  completeUserConfigMigration,
+  readLegacyUserConfig,
+  USER_CONFIG_STORAGE_KEY,
+  USER_CONFIG_STORAGE_VERSION,
+  userConfigThemeScript,
+} from "./stores/userConfigPersistence";
+export type { StoredUser, UserConfigMode } from "./stores/userConfigStore";
+export {
+  userConfigActions,
+  userconfigSelectors,
   useUserConfigStore,
-  useUserConfigStoreSafe,
 } from "./stores/userConfigStore";

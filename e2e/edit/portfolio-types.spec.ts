@@ -41,7 +41,7 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
   await expect
     .poll(() =>
       page.evaluate(
-        () => JSON.parse(localStorage.getItem("mydevstudio-storage") ?? "null")?.state?.user?.id,
+        () => JSON.parse(localStorage.getItem("buzzy-userconfig-store") ?? "null")?.state?.user?.id,
       ),
     )
     .toBe(userId);

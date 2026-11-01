@@ -7,9 +7,11 @@ export {
   useProfileStore,
 } from "./profileStore";
 export {
-  getChatDimensions,
-  getSidebarCollapsed,
-  userConfigActions,
-  useUserConfigStore,
-  useUserConfigStoreSafe,
-} from "./userConfigStore";
+  completeUserConfigMigration,
+  readLegacyUserConfig,
+  USER_CONFIG_STORAGE_KEY,
+  USER_CONFIG_STORAGE_VERSION,
+  userConfigThemeScript,
+} from "./userConfigPersistence";
+export type { StoredUser, UserConfigMode } from "./userConfigStore";
+export { userConfigActions, userconfigSelectors, useUserConfigStore } from "./userConfigStore";

@@ -18,7 +18,7 @@ export function Header({ action }: { action: PageAction }) {
         </nav>
         <div className="home-header-actions">
           <ThemeToggle />
-          <Button className="home-signin" href={action.href}>
+          <Button className="home-signin" href={action.href} variant="outline">
             {action.signedIn ? "My studio" : "Sign in"} <span aria-hidden="true">↗</span>
           </Button>
         </div>

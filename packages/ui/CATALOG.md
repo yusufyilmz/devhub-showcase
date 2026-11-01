@@ -140,17 +140,10 @@ See **UI Components / Card / Product Surfaces** in Storybook.
 
 ## Browser preferences
 
-`useStorage` from `@shared/ui/stores` persists the visitor's light, dark or system
-choice and a small display-only user cache in `mydevstudio-storage` (version 1).
-It hydrates explicitly after mount, validates persisted fields and tolerates
-unavailable storage. `setUser` keeps only id, name, email and avatar URL; never
-pass credentials or a session. `clearUser` preserves the theme on sign-out.
-
-`ThemeProvider` shares this preference across home, studio and portfolio routes,
-migrates older theme keys, and follows device changes for system mode. The page
-shell's pre-paint script reads the same storage format. Theme defaults and
-portfolio palettes remain authored profile settings; a browser preference does
-not modify a saved portfolio.
+`ThemeProvider` consumes `useUserConfigStore` from `@shared/runtime/stores`.
+The existing runtime store owns the persisted mode and display-only user cache.
+There is no separate UI storage store. Its pre-paint script and provider share
+migration precedence and system-mode behavior.
 
 `IconButton` supports `surface="portfolio"` for controls inside published
 portfolios. Use it for menu, chat and scroll controls so their foreground,
