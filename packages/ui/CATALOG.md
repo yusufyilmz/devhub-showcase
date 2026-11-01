@@ -1,5 +1,10 @@
 # UI catalog
 
+`GalleryLightbox` from `@shared/ui/dialog` provides a focus-trapped gallery dialog,
+previous/next navigation, arrow keys, thumbnails, and optional full-page links.
+Gallery Grid sections use it for authored images; homepage examples use the same
+viewer with first-party fictional portfolio pages.
+
 Public components exported from `packages/ui/src/components/index.ts`. Import them as `@shared/ui/{folder}`. Visual recipes for the pieces that define the product look live in the root [DESIGN.md](../../DESIGN.md).
 
 ## Actions

@@ -5,12 +5,14 @@ import { useEffect, useId, useRef, useState } from "react";
 
 import { type PortfolioType, portfolioTypes } from "@shared/config";
 import { Card } from "@shared/ui/cards";
+import { GalleryLightbox } from "@shared/ui/dialog";
 
 import { examplePath, portfolioExamples } from "./data";
 import { ExampleThumbnail } from "./example-thumbnail";
 
 export function ExampleCarousel() {
   const [filter, setFilter] = useState<PortfolioType | "all">("all");
+  const [activeExample, setActiveExample] = useState<number | null>(null);
   const [position, setPosition] = useState(0);
   const [atEnd, setAtEnd] = useState(false);
   const track = useRef<HTMLUListElement>(null);
@@ -30,6 +32,7 @@ export function ExampleCarousel() {
   }, [count]);
   function choose(value: PortfolioType | "all") {
     setFilter(value);
+    setActiveExample(null);
     setPosition(0);
     track.current?.scrollTo({ behavior: "instant", left: 0 });
   }
@@ -123,12 +126,17 @@ export function ExampleCarousel() {
         onScroll={updatePosition}
         ref={track}
       >
-        {examples.map((item) => (
+        {examples.map((item, itemIndex) => (
           <Card asChild key={item.slug} layout="plain" surface="portfolio">
             <li className="example-card">
               <a
                 aria-label={`Explore ${item.profile.name}'s ${item.profile.portfolioType} example`}
                 href={examplePath(item.slug)}
+                onClick={(event) => {
+                  if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+                  event.preventDefault();
+                  setActiveExample(itemIndex);
+                }}
               >
                 <ExampleThumbnail item={item} />
                 <div className="example-card-copy">
@@ -151,6 +159,24 @@ export function ExampleCarousel() {
           </Card>
         ))}
       </ul>
+      <GalleryLightbox
+        index={activeExample}
+        items={examples.map((item) => ({
+          content: (
+            <iframe
+              loading="lazy"
+              src={examplePath(item.slug)}
+              title={`${item.profile.name} portfolio preview`}
+            />
+          ),
+          description: `${item.profile.portfolioType} · Fictional portfolio example`,
+          href: examplePath(item.slug),
+          id: item.slug,
+          thumbnail: <ExampleThumbnail item={item} />,
+          title: item.profile.name,
+        }))}
+        onIndexChange={setActiveExample}
+      />
       <div className="example-caption">
         <span>Swipe, scroll or use the arrows to explore.</span>
         <span role="status">

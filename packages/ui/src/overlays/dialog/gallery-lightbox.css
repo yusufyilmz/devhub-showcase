@@ -1,0 +1,84 @@
+.gallery-lightbox[data-slot="dialog-content"] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  gap: 12px;
+  width: min(1200px, calc(100vw - 24px));
+  max-width: none;
+  height: min(94dvh, 1000px);
+  padding: 20px;
+  color: var(--foreground);
+  background: var(--background);
+}
+.gallery-lightbox-heading {
+  padding-right: 32px;
+}
+.gallery-lightbox-stage {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  overflow: auto;
+}
+.gallery-lightbox-stage > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.gallery-lightbox-stage > iframe {
+  width: 100%;
+  height: 100%;
+  background: white;
+  border: 0;
+}
+.gallery-lightbox-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+.gallery-lightbox-thumbnails {
+  display: flex;
+  gap: 8px;
+  padding: 4px;
+  overflow-x: auto;
+}
+.gallery-lightbox-thumbnail.ui-button {
+  flex: 0 0 100px;
+  height: 64px;
+  padding: 4px;
+  overflow: hidden;
+  white-space: normal;
+}
+.gallery-lightbox-thumbnail[aria-pressed="true"] {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+.gallery-lightbox-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.gallery-lightbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 16px;
+}
+.gallery-lightbox-grid .ui-button {
+  display: grid;
+  gap: 8px;
+  height: auto;
+  padding: 12px;
+  white-space: normal;
+}
+.gallery-lightbox-grid img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+}
+@media (max-width: 600px) {
+  .gallery-lightbox[data-slot="dialog-content"] {
+    gap: 8px;
+    padding: 12px;
+  }
+}

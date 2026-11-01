@@ -18,6 +18,7 @@ import { Textarea } from "../../forms/textarea";
 import { HeroSurface } from "../../layout/hero";
 import type { SectionItem } from "../../layout/section";
 import { SectionAccordion, SectionCarousel, SectionGrid, SectionTabs } from "../../layout/section";
+import { GalleryCollection } from "../gallery-grid-section/GalleryCollection";
 import type { SectionProps } from "../types";
 
 const safeLink = (url: string) => /^https?:\/\//i.test(url);
@@ -105,6 +106,12 @@ export function CollectionView({
   language,
 }: SectionProps & { type: AuthorableSectionType }) {
   const view = authorableSections[type].view;
+  if (
+    type === "gallery-grid" &&
+    section.items.length > 0 &&
+    section.items.every((item) => item.imageUrl && safeLink(item.imageUrl))
+  )
+    return <GalleryCollection section={section} />;
   const items: SectionItem[] = section.items.map((item) => ({
     content: (
       <ItemContent
