@@ -65,4 +65,16 @@ describe("public chat streaming", () => {
     expect(response.status).toBe(400);
     expect(access).not.toHaveBeenCalled();
   });
+  it("aborts generation when the response reader cancels", async () => {
+    let generationSignal: AbortSignal | undefined;
+    answer.mockImplementation((_knowledge, _message, signal: AbortSignal) => {
+      generationSignal = signal;
+      return new Promise((_resolve, reject) => {
+        signal.addEventListener("abort", () => reject(new Error("Cancelled")), { once: true });
+      });
+    });
+    const response = await POST(request(valid));
+    await response.body!.cancel();
+    expect(generationSignal?.aborted).toBe(true);
+  });
 });

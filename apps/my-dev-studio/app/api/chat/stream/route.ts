@@ -41,23 +41,17 @@ export async function POST(request: Request) {
       cancel() {
         controller.abort();
       },
-      async start(output) {
+      start(output) {
         const send = (event: unknown) => {
           if (!signal.aborted) output.enqueue(encoder.encode(`${JSON.stringify(event)}\n`));
         };
-        try {
-          const answer = await new PortfolioChatModel().answer(
-            knowledge,
-            input.message,
-            signal,
-            (text) => send({ text, type: "delta" }),
-          );
-          send({ answer, type: "done" });
-        } catch {
-          send({ error: "Chat unavailable. Please try again.", type: "error" });
-        } finally {
-          if (!controller.signal.aborted) output.close();
-        }
+        new PortfolioChatModel()
+          .answer(knowledge, input.message, signal, (text) => send({ text, type: "delta" }))
+          .then((answer) => send({ answer, type: "done" }))
+          .catch(() => send({ error: "Chat unavailable. Please try again.", type: "error" }))
+          .finally(() => {
+            if (!controller.signal.aborted) output.close();
+          });
       },
     });
     return new Response(stream, {
