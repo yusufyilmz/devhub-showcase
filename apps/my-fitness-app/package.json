@@ -3,8 +3,9 @@
   "version": "2.1.0",
   "private": true,
   "scripts": {
-    "build": "next build --webpack --port=3002",
+    "build": "next build --webpack",
     "clean": "node -e \"require('node:fs').rmSync('.next',{recursive:true,force:true})\"",
+    "demo:seed": "node --env-file-if-exists=.env.local scripts/seed-demo.mjs",
     "dev": "next dev --webpack --port=3002",
     "format": "biome format --write .",
     "format:check": "biome format .",
@@ -19,7 +20,11 @@
     "types:check": "pnpm typecheck"
   },
   "dependencies": {
-    "@supabase/supabase-js": "catalog:",
+    "@shared/auth": "workspace:*",
+    "@shared/config": "workspace:*",
+    "@shared/runtime": "workspace:*",
+    "@shared/services": "workspace:*",
+    "@shared/ui": "workspace:*",
     "drizzle-orm": "catalog:",
     "lucide-react": "catalog:",
     "next": "catalog:",

@@ -1,4 +1,4 @@
-import { DashboardIcon } from "@shared/ui/icons";
+import { DashboardIcon } from "@shared/ui/display";
 
 import { requirePortfolioAdmin } from "@/features/management/managed-portfolios";
 

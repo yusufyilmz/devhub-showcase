@@ -3,15 +3,14 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { test } from "vitest";
 
+import { seedWorkspace } from "@shared/services/db/seed";
+import { TaskService } from "@shared/services/fitness/task";
+
+import { MealPlanningService, WeeklyPlanningService } from "../../../packages/services/src/meal";
+import { AgendaService, ScheduleService } from "../../../packages/services/src/schedule";
+import { validateWorkspace, workspaceSchema } from "../../../packages/services/src/types";
 import { DayAgenda } from "../features/agenda/day-agenda";
 import { CalendarGrid } from "../features/calendar/calendar-grid";
-import { seedWorkspace } from "../lib/domain/seed";
-import { validateWorkspace, workspaceSchema } from "../lib/domain/workspace";
-import { AgendaService } from "../lib/services/agenda-service";
-import { MealPlanningService } from "../lib/services/meal-planning-service";
-import { ScheduleService } from "../lib/services/schedule-service";
-import { TaskService } from "../lib/services/task-service";
-import { WeeklyPlanningService } from "../lib/services/weekly-planning-service";
 
 const agenda = new AgendaService();
 const schedule = new ScheduleService();

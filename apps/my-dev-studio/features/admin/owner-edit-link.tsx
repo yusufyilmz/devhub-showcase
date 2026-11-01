@@ -1,5 +1,5 @@
+import { editCvPath } from "@shared/lib/profiles";
 import { createServerClient } from "@shared/lib/supabase";
-import { editCvPath } from "@shared/lib/username";
 import { EditIcon } from "@shared/ui/icons";
 
 const editLinkClass =

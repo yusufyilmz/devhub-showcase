@@ -1,4 +1,4 @@
-import { billingGateway, synchronize } from "@/features/billing/gateway";
+import { billingGateway, synchronize } from "@shared/billing/server";
 
 export const runtime = "nodejs";
 
@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   }
   const raw = await request.text();
   if (raw.length > 1000000) return new Response("Payload too large", { status: 413 });
-  let event: import("@shared/lib/stripe").StripeEvent;
+  let event: import("@shared/billing/server").StripeEvent;
   try {
     event = gateway.stripe.webhooks.constructEvent(
       raw,

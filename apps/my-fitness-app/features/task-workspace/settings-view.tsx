@@ -3,9 +3,10 @@ import { useState } from "react";
 
 import { Plus, X } from "lucide-react";
 
-import type { Workspace } from "@/lib/domain/workspace";
-import { TaskService } from "@/lib/services/task-service";
-import { signOut } from "@/lib/supabase/browser";
+import { TaskService } from "@shared/services/fitness/task";
+import type { Workspace } from "@shared/services/types";
+
+import { signOut } from "@/lib/browser-session";
 
 interface Props {
   busy: boolean;

@@ -2,12 +2,12 @@
 
 Profile shape, themes, copy, and section metadata for `@shared/config`. This package does not read a database or authorize a request.
 
-| Export                     | Path            | Use                                              |
-| -------------------------- | --------------- | ------------------------------------------------ |
-| `@shared/config`           | `src/index.ts`  | Profile, themes, languages, copy, and sections   |
-| `@shared/config/variables` | `src/variables` | Shared variables                                 |
-| `@shared/config/urls`      | `src/urls`      | Shared URLs                                      |
-| `@shared/config/sections`  | `src/sections`  | Section metadata without the rest of the package |
+| Export                     | Path            | Use                                                        |
+| -------------------------- | --------------- | ---------------------------------------------------------- |
+| `@shared/config`           | `src/index.ts`  | Profile, themes, languages, copy, and sections             |
+| `@shared/config/variables` | `src/variables` | Shared variables                                           |
+| `@shared/config/urls`      | `src/urls`      | App API paths, Trello proxy/API paths, external fetch URLs |
+| `@shared/config/sections`  | `src/sections`  | Section metadata without the rest of the package           |
 
 | Area                                     | Use                                             |
 | ---------------------------------------- | ----------------------------------------------- |

@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+import { urls } from "@shared/config/urls";
+
 test("owner can inspect private and public knowledge from the latest saved revision", async ({
   page,
   context,
@@ -49,7 +51,7 @@ test("owner can inspect private and public knowledge from the latest saved revis
     .filter({ has: page.getByRole("heading", { exact: true, name: "Your AI profile" }) })
     .screenshot({ path: info.outputPath("ai-profile.png") });
   await context.clearCookies();
-  expect((await page.request.get("/api/admin/profile")).status()).toBe(403);
+  expect((await page.request.get(urls.next.studio.profile())).status()).toBe(403);
   await page.goto(`/${device}-ai-owner`);
   await expect(page.getByRole("button", { name: "Resume Chat" })).toHaveCount(0);
 });

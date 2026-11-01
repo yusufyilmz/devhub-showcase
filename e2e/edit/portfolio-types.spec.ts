@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 import { getPortfolioCopy } from "@shared/config";
+import { urls } from "@shared/config/urls";
 
 test("a new owner chooses a layout, saves it and returns to the editor without losing the choice", async ({
   page,
@@ -72,7 +73,7 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
   await page.getByRole("button", { name: "Language settings" }).click();
   await expect(page.getByLabel("Portfolio language")).toHaveValue("es");
   await expect(page.getByLabel("CV language")).toHaveValue("tr");
-  const savedPdf = await page.request.get("/api/admin/cv");
+  const savedPdf = await page.request.get(urls.next.studio.cv());
   expect(savedPdf.headers()["content-language"]).toBe("tr");
   expect((await savedPdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
   await page.getByRole("button", { exact: true, name: "Appearance" }).click();

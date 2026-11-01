@@ -1,7 +1,8 @@
-import "@shared/design-system/globals.css";
+import "@shared/ui/foundation.css";
 
 import type { Preview } from "@storybook/react-vite";
 
+import { BRANDS } from "../../../packages/ui/src/theme/types";
 import { ThemePreview } from "./theme-preview";
 
 const preview: Preview = {
@@ -15,7 +16,7 @@ const preview: Preview = {
   globalTypes: {
     brand: {
       description: "Semantic color palette",
-      toolbar: { dynamicTitle: true, icon: "paintbrush", items: ["white", "sand", "aqua"] },
+      toolbar: { dynamicTitle: true, icon: "paintbrush", items: [...BRANDS] },
     },
     mode: {
       description: "Color mode",
@@ -42,6 +43,9 @@ const preview: Preview = {
     backgrounds: { disable: true },
     controls: { matchers: { color: /(background|color)$/i, date: /Date$/i } },
     docs: { story: { iframeHeight: 480, inline: false } },
+    viewMode: {
+      docs: { hidden: true },
+    },
   },
 };
 

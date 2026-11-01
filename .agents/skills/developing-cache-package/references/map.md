@@ -2,14 +2,14 @@
 
 Package `@shared/cache` in `packages/cache`. Import from `@shared/cache`.
 
-| Symbol                 | File                                | Returns                                             |
-| ---------------------- | ----------------------------------- | --------------------------------------------------- |
-| `allowCvImport`        | `src/lib/cv-import-limit.ts`        | Whether another CV import attempt may continue      |
-| `allowPortfolioChat`   | `src/lib/portfolio-chat-limit.ts`   | Whether another visitor chat attempt may continue   |
-| `allowStudioAssistant` | `src/lib/studio-assistant-limit.ts` | Whether another private editor attempt may continue |
-| `RedisCacheClient`     | `src/lib/redis-cache.ts`            | Prefixed get, set, expire, and incr                 |
-| `cvImportLimitScript`  | `src/lib/cv-import-limit.ts`        | Lua used by the CV helper                           |
-| `studioLimitScript`    | `src/lib/studio-assistant-limit.ts` | Lua used by the studio helper                       |
+| Symbol                 | File                                   | Returns                                             |
+| ---------------------- | -------------------------------------- | --------------------------------------------------- |
+| `allowCvImport`        | `src/lib/cv-import-limit.ts`           | Whether another CV import attempt may continue      |
+| `allowPortfolioChat`   | `src/services/portfolio-chat-limit.ts` | Whether another visitor chat attempt may continue   |
+| `allowStudioAssistant` | `src/lib/studio-assistant-limit.ts`    | Whether another private editor attempt may continue |
+| `RedisCacheClient`     | `src/lib/redis-cache.ts`               | Prefixed get, set, expire, and incr                 |
+| `cvImportLimitScript`  | `src/lib/cv-import-limit.ts`           | Lua used by the CV helper                           |
+| `studioLimitScript`    | `src/lib/studio-assistant-limit.ts`    | Lua used by the studio helper                       |
 
 `src/lib/cache.ts` and `src/types/index.ts` support the client. The package root is `src/index.ts`.
 

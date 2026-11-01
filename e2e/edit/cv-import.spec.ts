@@ -1,6 +1,10 @@
 import { extractedCv } from "@fixtures/cv-import-fixture";
 import { expect, test } from "@playwright/test";
 
+import { urls } from "@shared/config/urls";
+
+const cvImportApi = urls.next.studio.cvImport();
+
 test("owner reviews a CV, cancels safely, applies edits and explicitly saves before publishing", async ({
   page,
   context,
@@ -23,7 +27,7 @@ test("owner reviews a CV, cancels safely, applies edits and explicitly saves bef
     },
   ]);
   let requests = 0;
-  await page.route("**/api/admin/cv-import", async (route) => {
+  await page.route(`**${cvImportApi}`, async (route) => {
     if (route.request().method() === "GET") return route.fulfill({ json: { enabled: true } });
     requests++;
     if (requests === 1)
@@ -81,7 +85,7 @@ test("owner reviews a CV, cancels safely, applies edits and explicitly saves bef
   await context.clearCookies();
   expect(
     (
-      await page.request.post("/api/admin/cv-import", {
+      await page.request.post(cvImportApi, {
         headers: { origin: "http://localhost:3100" },
       })
     ).status(),

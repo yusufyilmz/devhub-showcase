@@ -1,0 +1,26 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.6.4/schema.json",
+  "extends": "//",
+  "linter": {
+    "rules": {
+      "style": {
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "patterns": [
+              {
+                "group": [
+                  "@shared/assistant",
+                  "@shared/assistant/**",
+                  "@shared/ui/chat",
+                  "@shared/ui/chat/**"
+                ],
+                "message": "Use relative imports within @shared/assistant instead of the package alias."
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

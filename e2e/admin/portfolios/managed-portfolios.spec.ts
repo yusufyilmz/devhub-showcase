@@ -1,5 +1,7 @@
 import { type BrowserContext, expect, test } from "@playwright/test";
 
+import { urls } from "@shared/config/urls";
+
 async function signIn(context: BrowserContext, id: string, email: string) {
   const exp = Math.floor(Date.now() / 1000) + 3600;
   const token = [
@@ -28,7 +30,7 @@ test("signed out visitors cannot open management pages or create temporary profi
   page,
 }) => {
   expect((await page.goto("/admin/portfolios"))?.status()).toBe(404);
-  const result = await page.request.post("/api/admin/managed", {
+  const result = await page.request.post(urls.next.studio.managed(), {
     data: {},
     headers: { Origin: "http://localhost:3100" },
   });
@@ -125,7 +127,9 @@ test("an administrator creates, edits, publishes, hides and transfers an importe
   expect((await page.request.get(`${editorUrl}/cv.pdf`)).status()).toBe(403);
   expect(
     (
-      await page.request.get(editorUrl.replace("/admin/portfolios/", "/api/admin/managed/"))
+      await page.request.get(
+        editorUrl.replace("/admin/portfolios/", `${urls.next.studio.managed()}/`),
+      )
     ).status(),
   ).toBe(403);
   await context.clearCookies();

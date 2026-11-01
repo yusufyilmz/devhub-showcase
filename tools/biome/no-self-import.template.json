@@ -1,0 +1,21 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.6.4/schema.json",
+  "extends": "//",
+  "linter": {
+    "rules": {
+      "style": {
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "patterns": [
+              {
+                "group": ["REPLACE_ME"],
+                "message": "Use relative imports within this package instead of its published alias."
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

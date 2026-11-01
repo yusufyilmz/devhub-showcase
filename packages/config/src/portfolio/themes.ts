@@ -141,12 +141,60 @@ export function getPortfolioThemeVariables(theme: PortfolioTheme = "studio") {
   variables["--portfolio-heading-weight"] = shape[theme].weight;
   return variables;
 }
+function rgbParts(hex: string): string {
+  const normalized = hex.replace("#", "");
+  const r = Number.parseInt(normalized.slice(0, 2), 16);
+  const g = Number.parseInt(normalized.slice(2, 4), 16);
+  const b = Number.parseInt(normalized.slice(4, 6), 16);
+  return `${r} ${g} ${b}`;
+}
+
+function previewAccent(darkHex: string, lightHex: string) {
+  return { dark: rgbParts(darkHex), light: rgbParts(lightHex) };
+}
+
+/** Published-page accent previews (dark = on studio canvas, light = on light canvas). */
 export const portfolioAccents = {
+  aqua: previewAccent("#53d4d3", "#0c6367"),
+  blue: previewAccent("#97baff", "#033cf8"),
   cyan: { dark: "103 216 231", light: "13 110 132" },
   emerald: { dark: "98 220 183", light: "14 113 86" },
+  gray: previewAccent("#b2b2b2", "#595959"),
+  green: previewAccent("#53d47c", "#0c6731"),
+  indigo: previewAccent("#b9adfc", "#7058d8"),
+  magenta: previewAccent("#dc98fd", "#9902b3"),
+  moss: previewAccent("#86b849", "#6b2d09"),
+  orange: previewAccent("#ff9964", "#ac2401"),
+  pink: previewAccent("#fd8be4", "#ae0169"),
+  red: previewAccent("#ff9689", "#b6020c"),
+  sand: previewAccent("#b7b2a4", "#5e594c"),
+  slate: previewAccent("#acb2c8", "#52586f"),
   violet: { dark: "184 165 255", light: "111 69 177" },
-};
-export function getPreviewAccent(accent: keyof typeof portfolioAccents) {
+  yellow: previewAccent("#fe9c0b", "#924205"),
+} as const;
+
+export type PortfolioAccentId = keyof typeof portfolioAccents;
+
+export const portfolioAccentIds = [
+  "red",
+  "orange",
+  "yellow",
+  "moss",
+  "green",
+  "emerald",
+  "aqua",
+  "cyan",
+  "blue",
+  "indigo",
+  "violet",
+  "magenta",
+  "pink",
+  "sand",
+  "gray",
+  "slate",
+] as const satisfies readonly PortfolioAccentId[];
+
+export function getPreviewAccent(accent: PortfolioAccentId) {
   return {
     "--portfolio-accent-dark": portfolioAccents[accent].dark,
     "--portfolio-accent-light": portfolioAccents[accent].light,

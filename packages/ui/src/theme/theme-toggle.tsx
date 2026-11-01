@@ -3,6 +3,7 @@
 import { createContext, useContext } from "react";
 
 export const ThemeContext = createContext({ mode: "dark", toggle: () => {} });
+
 export function ThemeToggle({
   labels = { dark: "Switch to dark theme", light: "Switch to light theme" },
 }: {

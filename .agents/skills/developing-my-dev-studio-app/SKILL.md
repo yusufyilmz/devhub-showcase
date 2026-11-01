@@ -1,11 +1,14 @@
 ---
 name: developing-my-dev-studio-app
-description: Develop the Next.js app in apps/my-dev-studio. Use when adding a route, API handler, feature data-access module, page metadata, sitemap entry, or app-only admin, billing, chat, home, management, platform, or portfolio behavior.
+description: Develop the Next.js app in apps/my-dev-studio. Use when adding a
+  route, API handler, feature data-access module, page metadata, sitemap entry,
+  or app-only admin, billing, chat, home, management, platform, or portfolio
+  behavior.
 ---
 
 # Developing the MyDevStudio app
 
-`apps/my-dev-studio` is the Next.js app, package name `my-dev-studio`. Routes and metadata live in `app/`. Data access lives in `features/`. There is no `lib` folder in this app, and there is no `apps/web` package. Shared UI comes from `@shared/components` and `@shared/ui`.
+`apps/my-dev-studio` is the Next.js app, package name `my-dev-studio`. Routes and metadata live in `app/`. Data access lives in `features/`. There is no `lib` folder in this app, and there is no `apps/web` package. Shared UI comes from `@shared/ui` and `@shared/ui`.
 
 Read [the file map](references/map.md). Read [mydevstudio-development](../mydevstudio-development/SKILL.md) for commands and [mydevstudio-business](../mydevstudio-business/SKILL.md) before changing ownership, publication, usernames, transfers, or CV privacy. `docs/architecture.md` still says `apps/web`. Follow this skill and `AGENTS.md`.
 
@@ -29,7 +32,7 @@ Feature folders:
 | `platform`   | Site URL, platform metadata, page presentation, document shell data             |
 | `portfolio`  | Published and public profiles, metadata, branding, CV responses, page resources |
 
-`features/admin/auth-handlers.ts` builds `@shared/auth` handlers with `/admin/login`, `/admin`, and `/auth/callback`. `requireWorkspace` is the portfolio guard. It is not a generic login helper. Do not copy it into `@shared/auth`.
+`features/admin/auth-handlers.ts` builds `@shared/auth` handlers with `/login`, `/admin`, and `/auth/callback`. `/admin/login` redirects to `/login`. `requireWorkspace` is the portfolio guard. It is not a generic login helper. Do not copy it into `@shared/auth`.
 
 ## Route rules
 
@@ -54,17 +57,17 @@ Do not publish a profile, transfer ownership, assign a role, or run a production
 
 ## Presentation
 
-Import studio and portfolio surfaces from `@shared/components` (`studio`, `layout`, `portfolio`, `sections`). Import controls from `@shared/ui/<folder>`. The root layout loads `@shared/design-system/globals.css` and wraps children in `PageShell` using `features/platform/page-presentation.ts`.
+Import studio and portfolio surfaces from `@shared/ui` (`studio`, `layout`, `portfolio`, `sections`). Import controls from `@shared/ui/<folder>`. The root layout loads `@shared/ui/globals.css` and wraps children in `PageShell` using `features/platform/page-presentation.ts`.
 
 Pass fetched data and links into the shared screen. `features/platform/studio-client.tsx` is the client boundary pattern. Add `"use client"` only for hooks and interaction.
 
-`features/portfolio/cv-response.ts` builds the PDF response. Visibility and authorization stay in the route that calls it. `@shared/cv` does not know which route is public.
+`features/portfolio/cv-response.ts` builds the PDF response. Visibility and authorization stay in the route that calls it. `@shared/templates` does not know which route is public.
 
 ## Tests
 
 Colocate `route.test.ts` next to `route.ts` and `module.test.ts` next to the feature module. Start with `describe`. Use synthetic users and the existing mocks. Do not point tests at production Supabase, Stripe, OpenAI, or Redis.
 
-Browser coverage lives in `e2e/` by page: `home`, `portfolio`, `edit`, `admin/login`, `admin/billing`, `admin/portfolios`, and `examples`. A flow that edits and then checks the published page stays in `edit`. Playwright uses fixture transport. Do not retarget it at a real database.
+Browser coverage lives in `e2e/` by page: `home`, `portfolio`, `edit`, `login`, `admin/billing`, `admin/portfolios`, and `examples`. A flow that edits and then checks the published page stays in `edit`. Playwright uses fixture transport. Do not retarget it at a real database.
 
 ```sh
 pnpm --filter my-dev-studio dev
@@ -83,7 +86,7 @@ Run `pnpm check` and `pnpm test`. For a route or UI change that can affect the p
 
 ## Related skills
 
-- [Developing the components package](../developing-components-package/SKILL.md)
+- [Developing the UI package](../developing-ui-package/SKILL.md)
 - [Developing the lib package](../developing-lib-package/SKILL.md)
 - [Developing the auth package](../developing-auth-package/SKILL.md)
 - [Developing the cache package](../developing-cache-package/SKILL.md)

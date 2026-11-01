@@ -12,7 +12,7 @@ test("homepage showcases working section previews, templates and CV import", asy
   await expect(
     page.getByText("Start with a conversation about your goals and ideas.", { exact: true }),
   ).toBeVisible();
-  await page.getByText(/Browse all \d+ section types/).click();
+  await page.getByRole("searchbox", { name: "Find a section" }).fill("YouTube");
   await expect(page.locator(".home-library-catalog")).toContainText("YouTube");
   await expect(
     page.getByRole("heading", { name: "A starting point you can reuse." }),
@@ -22,5 +22,5 @@ test("homepage showcases working section previews, templates and CV import", asy
     false,
   );
   await page.getByRole("link", { name: "Start with your CV" }).click();
-  await expect(page).toHaveURL("/admin/login");
+  await expect(page).toHaveURL("/login");
 });

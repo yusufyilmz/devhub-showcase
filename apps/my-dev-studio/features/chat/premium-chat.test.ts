@@ -18,14 +18,14 @@ vi.mock("@shared/assistant", () => ({
     answer = mocks.answer;
   },
 }));
-vi.mock("@shared/lib/published-profile", () => ({ readPublicProfileByUsername: mocks.read }));
-vi.mock("@shared/lib/billing-repository", () => ({
+vi.mock("@shared/services/published-profile", () => ({ readPublicProfileByUsername: mocks.read }));
+vi.mock("@shared/billing/server", () => ({
   PremiumUsageRepository: class {
     reserve = mocks.reserve;
     finish = mocks.finish;
   },
 }));
-vi.mock("@/features/billing/client", () => ({
+vi.mock("@shared/billing/client", () => ({
   billingServiceClient: () => ({
     from: (table: string) => {
       const query = {
@@ -43,8 +43,8 @@ vi.mock("@/features/billing/client", () => ({
                     account_id: mocks.owner,
                     chat_limit: 100,
                     editor_limit: 10,
-                    period_end: "2099-01-01T00:00:00Z",
-                    period_start: "2020-01-01T00:00:00Z",
+                    period_end: "2099-01-01T00:00:00+00:00",
+                    period_start: "2020-01-01T00:00:00+00:00",
                     plan: "pro",
                     status: mocks.status,
                   },
@@ -61,7 +61,7 @@ import { answerPremiumChat, premiumChatAvailable } from "@/features/chat/premium
 
 const input = {
   message: "What are Alex's skills?",
-  requestId: "44444444-4444-4444-8444-444444444444",
+  requestId: "44444444-4444-4444-8444-444444444441",
   sessionId: "33333333-3333-4333-8333-333333333333",
   username: "alex",
 };

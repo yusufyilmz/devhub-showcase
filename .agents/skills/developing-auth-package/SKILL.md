@@ -1,6 +1,9 @@
 ---
 name: developing-auth-package
-description: Change Supabase session helpers and Google sign-in in @shared/auth. Use when editing requireConfirmedUser, createAuthHandlers, the browser or server client, session middleware, origin checks, or Google profile consent and People API scopes in packages/auth.
+description: Change Supabase session helpers and Google sign-in in @shared/auth.
+  Use when editing requireConfirmedUser, createAuthHandlers, the browser or
+  server client, session middleware, origin checks, or Google profile consent
+  and People API scopes in packages/auth.
 ---
 
 # Developing the auth package
@@ -25,7 +28,7 @@ Google proves identity through Supabase. It does not grant portfolio ownership. 
 
 | Option         | MyDevStudio value  | Rule                               |
 | -------------- | ------------------ | ---------------------------------- |
-| `loginPath`    | `/admin/login`     | Local path only                    |
+| `loginPath`    | `/login`           | Local path only                    |
 | `successPath`  | `/admin`           | Local path only                    |
 | `callbackPath` | `/auth/callback`   | Local path only                    |
 | `createClient` | app server client  | Supplied by the app                |
@@ -39,7 +42,7 @@ Public Supabase URL and key are read in `src/config.ts`. Names of public configu
 
 ## Google profile import
 
-`src/google-consent.ts` is the one-time consent gate for importing a Google profile. `src/google-profile-scopes.ts` lists profile categories and People API scopes. Reviewing which fields may be copied onto a portfolio is `@shared/lib/google-profile`. The app route is `app/api/admin/google-profile`. Change the scope list, the consent flag, the reviewed field mapping, and the route together.
+`src/google-consent.ts` is the one-time consent gate for importing a Google profile. `src/google-profile-scopes.ts` lists profile categories and People API scopes. Reviewing which fields may be copied onto a portfolio is `@shared/lib/profiles`. The app route is `app/api/admin/google-profile`. Change the scope list, the consent flag, the reviewed field mapping, and the route together.
 
 Do not request a broader scope than the import uses. Do not store the provider token in a portfolio document or a log line.
 
@@ -47,7 +50,7 @@ Do not request a broader scope than the import uses. Do not store the provider t
 
 Current exports are `.`, `./handlers`, `./client`, `./server`, `./middleware`, `./config`, `./google-consent`, and `./google-profile-scopes`. Add a file, a `package.json` export, and a catalog row. Run `pnpm check:exports`.
 
-This package may depend on Supabase and Zod. It must not depend on `@shared/components`, `@shared/lib` portfolio repositories, or `apps/my-dev-studio`. The app depends on auth, not the other way around.
+This package may depend on Supabase and Zod. It must not depend on `@shared/ui`, `@shared/lib` portfolio repositories, or `apps/my-dev-studio`. The app depends on auth, not the other way around.
 
 ## Tests
 

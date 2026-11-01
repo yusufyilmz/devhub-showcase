@@ -2,7 +2,14 @@
   "compilerOptions": {
     "incremental": true,
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@shared/services/db/*": ["../../packages/services/src/fitness/db/*"],
+      "@shared/services/fitness": ["../../packages/services/src/fitness/index.ts"],
+      "@shared/services/fitness/meal": ["../../packages/services/src/meal/index.ts"],
+      "@shared/services/fitness/schedule": ["../../packages/services/src/schedule/index.ts"],
+      "@shared/services/fitness/task": ["../../packages/services/src/fitness/task/index.ts"],
+      "@shared/services/fitness/types": ["../../packages/services/src/types/index.ts"],
+      "@shared/services/fitness/workspace": ["../../packages/services/src/workspace/index.ts"]
     },
     "plugins": [
       {

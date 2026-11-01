@@ -2,16 +2,16 @@
 
 Package `@shared/auth` in `packages/auth`.
 
-| Export                               | File                           | Use                                                                   |
-| ------------------------------------ | ------------------------------ | --------------------------------------------------------------------- |
-| `@shared/auth`                       | `src/index.ts`                 | `requireConfirmedUser`, `AuthAccessError`, `sameOrigin`, `AuthClient` |
-| `@shared/auth/handlers`              | `src/handlers.ts`              | `createAuthHandlers`                                                  |
-| `@shared/auth/client`                | `src/client.ts`                | Browser `createClient`                                                |
-| `@shared/auth/server`                | `src/server.ts`                | Server `createClient`                                                 |
-| `@shared/auth/middleware`            | `src/middleware.ts`            | `updateSession`                                                       |
-| `@shared/auth/config`                | `src/config.ts`                | Public Supabase URL and key                                           |
-| `@shared/auth/google-consent`        | `src/google-consent.ts`        | One-time Google profile consent                                       |
-| `@shared/auth/google-profile-scopes` | `src/google-profile-scopes.ts` | People API scopes and categories                                      |
+| Export                         | File                           | Use                                                                   |
+| ------------------------------ | ------------------------------ | --------------------------------------------------------------------- |
+| `@shared/auth`                 | `src/index.ts`                 | `requireConfirmedUser`, `AuthAccessError`, `sameOrigin`, `AuthClient` |
+| `@shared/auth/handlers`        | `src/handlers.ts`              | `createAuthHandlers`                                                  |
+| `@shared/auth/client`          | `src/client.ts`                | Browser `createClient`                                                |
+| `@shared/auth/server`          | `src/server.ts`                | Server `createClient`                                                 |
+| `@shared/auth/middleware`      | `src/middleware.ts`            | `updateSession`                                                       |
+| `@shared/auth/config`          | `src/config.ts`                | Public Supabase URL and key                                           |
+| `@shared/auth/google-consent`  | `src/google-consent.ts`        | One-time Google profile consent                                       |
+| `@shared/auth/google-provider` | `src/google-profile-scopes.ts` | People API scopes and categories                                      |
 
 ## App wiring
 
@@ -22,9 +22,9 @@ Package `@shared/auth` in `packages/auth`.
 | `apps/my-dev-studio/app/auth/callback/route.ts`      | Callback route                                              |
 | `apps/my-dev-studio/app/api/admin/google/route.ts`   | Google start                                                |
 | `apps/my-dev-studio/app/api/admin/session/route.ts`  | Session                                                     |
-| `apps/my-dev-studio/app/admin/login/page.tsx`        | Login page                                                  |
+| `apps/my-dev-studio/app/login/page.tsx`              | Login page                                                  |
 
-`LoginPanel` presentation is `@shared/components/login`. It receives endpoints as props.
+`LoginPanel` presentation is `@shared/ui/login`. It receives endpoints as props.
 
 ## Invariants
 

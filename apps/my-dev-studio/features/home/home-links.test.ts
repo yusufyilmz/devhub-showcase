@@ -14,7 +14,7 @@ vi.mock("@shared/lib/supabase", () => ({
     from: mocks.from,
   }),
 }));
-vi.mock("@shared/lib/published-profile", () => ({
+vi.mock("@shared/services/published-profile", () => ({
   readPublicProfile: mocks.publicProfile,
 }));
 
@@ -34,7 +34,7 @@ describe("HomeLinks", () => {
   });
   it("offers sign in to a visitor without looking up or creating a portfolio", async () => {
     expect(await getHomeAction()).toEqual({
-      href: "/admin/login",
+      href: "/login",
       label: "Create your portfolio",
       signedIn: false,
     });
@@ -70,7 +70,7 @@ describe("HomeLinks", () => {
     mocks.maybeSingle.mockResolvedValue({ data: null, error: null });
     expect((await getHomeAction()).href).toBe("/admin");
     mocks.getUser.mockRejectedValue(new Error("unavailable"));
-    expect((await getHomeAction()).href).toBe("/admin/login");
+    expect((await getHomeAction()).href).toBe("/login");
   });
   it("offers an example only when the main portfolio is public and uses its current username", async () => {
     mocks.publicProfile.mockResolvedValue({ username: "renamed-owner" });

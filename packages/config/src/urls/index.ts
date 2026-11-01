@@ -11,8 +11,22 @@ export const urls = {
     public: BASE_URLS.public,
   },
 
+  external: {
+    googlePeopleMe: () => "https://people.googleapis.com/v1/people/me",
+  },
+
   // Next.js internal API (frontend) – always relative
   next: {
+    auth: {
+      google: () => "/api/auth/google",
+      session: () => "/api/auth/session",
+    },
+    billing: {
+      action: (action: "checkout" | "portal") => `/api/billing/${action}`,
+      pricing: () => "/api/billing/pricing",
+      root: () => "/api/billing",
+      webhook: () => "/api/billing/webhook",
+    },
     boards: {
       board: (boardId: string) => `/api/trello/boards/${boardId}`,
       boardCards: (boardId: string) => `/api/trello/boards/${boardId}/cards`,
@@ -44,6 +58,20 @@ export const urls = {
       memberCards: (memberId: string) => `/api/trello/members/${memberId}/cards`,
       memberMe: () => "/api/trello/members/me",
       myBoards: () => "/api/trello/members/me/boards",
+    },
+    fitness: {
+      state: () => "/api/state",
+    },
+    studio: {
+      assistant: () => "/api/assistant",
+      cv: () => "/api/cv",
+      cvImport: () => "/api/cv-import",
+      googleProfile: () => "/api/google-profile",
+      managed: () => "/api/managed",
+      managedPortfolio: (id: string) => `/api/managed/${id}`,
+      managedTransfer: (id: string) => `/api/managed/${id}/transfer`,
+      profile: () => "/api/profile",
+      sectionTemplates: () => "/api/section-templates",
     },
   },
 

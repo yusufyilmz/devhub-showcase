@@ -8,7 +8,7 @@ import {
   USER_CONFIG_STORAGE_KEY,
   userConfigThemeScript,
   useUserConfigStore,
-} from "@shared/runtime/stores";
+} from "@shared/runtime/user";
 
 import { ThemeProvider } from "./ThemeProvider";
 import { ThemeToggle } from "./theme-toggle";

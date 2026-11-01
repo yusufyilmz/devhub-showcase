@@ -6,7 +6,7 @@ import {
   buildPublicPortfolioKnowledge,
   type PublicPortfolioKnowledge,
   serializePublicKnowledge,
-} from "@shared/lib/portfolio-knowledge";
+} from "@shared/lib/profiles";
 
 const snapshot = {
   id: "person-a",

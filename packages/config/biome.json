@@ -1,0 +1,21 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.6.4/schema.json",
+  "extends": "//",
+  "linter": {
+    "rules": {
+      "style": {
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "patterns": [
+              {
+                "group": ["@shared/config", "@shared/config/**"],
+                "message": "Use relative imports within @shared/config instead of the package alias."
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

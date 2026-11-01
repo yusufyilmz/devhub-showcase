@@ -1,61 +1,50 @@
-import { afterEach, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
   createClient: vi.fn(),
   getSession: vi.fn(),
-  setSession: vi.fn(),
   signOut: vi.fn(),
 }));
-vi.mock("@supabase/supabase-js", () => ({ createClient: mocks.createClient }));
+vi.mock("@shared/auth/client", () => ({ createClient: mocks.createClient }));
 
-import { authorizationHeaders, rememberSession, signOut } from "../lib/supabase/browser";
+import { urls } from "@shared/config/urls";
 
-afterEach(() => {
-  vi.unstubAllGlobals();
-  vi.unstubAllEnvs();
-});
-it("uses persistent localStorage sessions, auto-refresh, and clears the login through sign-out", async () => {
-  const localStorage = {
-    getItem: vi.fn(),
-    removeItem: vi.fn(),
-    setItem: vi.fn(),
-  };
-  vi.stubGlobal("window", { localStorage });
-  vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://test.supabase.co");
-  vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "publishable");
-  mocks.createClient.mockReturnValue({
-    auth: {
-      getSession: mocks.getSession,
-      setSession: mocks.setSession,
-      signOut: mocks.signOut,
-    },
+import { authorizationHeaders, signOut } from "../lib/browser-session";
+
+describe("Fitness browser session", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.unstubAllEnvs();
   });
-  mocks.setSession.mockResolvedValue({ error: null });
-  mocks.signOut.mockResolvedValue({ error: null });
-  mocks.getSession.mockResolvedValue({
-    data: { session: { access_token: "renewed-access" } },
-    error: null,
+
+  it("reads the shared cookie client and clears that session through sign-out", async () => {
+    vi.stubGlobal("window", {});
+    const fetchMock = vi.fn().mockResolvedValue({
+      json: async () => ({ ok: true }),
+      ok: true,
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://test.supabase.co");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "publishable");
+    mocks.createClient.mockReturnValue({
+      auth: {
+        getSession: mocks.getSession,
+        signOut: mocks.signOut,
+      },
+    });
+    mocks.signOut.mockResolvedValue({ error: null });
+    mocks.getSession.mockResolvedValue({
+      data: { session: { access_token: "renewed-access" } },
+      error: null,
+    });
+    expect(await authorizationHeaders()).toEqual({
+      Authorization: "Bearer renewed-access",
+    });
+    expect(mocks.createClient).toHaveBeenCalledOnce();
+    await signOut();
+    expect(fetchMock).toHaveBeenCalledExactlyOnceWith(urls.next.auth.session(), {
+      method: "DELETE",
+    });
+    expect(mocks.signOut).toHaveBeenCalledExactlyOnceWith({ scope: "local" });
   });
-  await rememberSession({ access_token: "access", refresh_token: "refresh" });
-  expect(mocks.createClient).toHaveBeenCalledWith(
-    "https://test.supabase.co",
-    "publishable",
-    expect.objectContaining({
-      auth: expect.objectContaining({
-        autoRefreshToken: true,
-        persistSession: true,
-        storage: localStorage,
-        storageKey: "fitness-os-session",
-      }),
-    }),
-  );
-  expect(mocks.setSession).toHaveBeenCalledExactlyOnceWith({
-    access_token: "access",
-    refresh_token: "refresh",
-  });
-  expect(await authorizationHeaders()).toEqual({
-    Authorization: "Bearer renewed-access",
-  });
-  await signOut();
-  expect(mocks.signOut).toHaveBeenCalledExactlyOnceWith({ scope: "local" });
 });

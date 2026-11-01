@@ -1,13 +1,11 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@shared/lib/*": ["./src/*"]
+    },
     "types": ["node"]
   },
   "exclude": ["node_modules", "dist"],
   "extends": "@shared/typescript-config/base.json",
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "../assistant/src/models/portfolio-knowledge.test.ts",
-    "../assistant/src/models/portfolio.test.ts"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

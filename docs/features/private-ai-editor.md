@@ -14,7 +14,7 @@ Discard proposal makes no draft changes. Undo AI changes restores the previous d
 
 ## Shared contracts and model
 
-The domain contract lives in `@shared/lib/ai-edit`; the reusable PortfolioEditModel lives in packages/chat. Proposals replace allowlisted profile fields rather than arbitrary object paths, code or tools. Supported fields cover introduction, career collections, skills/languages, layout, theme, hero, section configuration and PDF preferences. Contact details, usernames, ownership, billing, CV URLs, onboarding flags and portfolio publication are outside the allowlist.
+The domain contract lives in `@shared/lib/profiles`; the reusable PortfolioEditModel lives in packages/chat. Proposals replace allowlisted profile fields rather than arbitrary object paths, code or tools. Supported fields cover introduction, career collections, skills/languages, layout, theme, hero, section configuration and PDF preferences. Contact details, usernames, ownership, billing, CV URLs, onboarding flags and portfolio publication are outside the allowlist.
 
 The model receives the owner's validated current draft and the shared profile schema as quoted data. Static instructions require preserving facts and IDs, asking for missing details, and avoiding moving private project facts into public fields. Instructions are safeguards, not proof of factual accuracy: the owner must review generated prose. Existing project public flags cannot change through a proposal and new projects must be private. No links are fetched and no external tools execute.
 

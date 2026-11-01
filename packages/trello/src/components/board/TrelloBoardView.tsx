@@ -3,7 +3,7 @@
 import { type FC, useCallback, useEffect, useState } from "react";
 
 import { Button } from "@shared/ui/button";
-import { Card } from "@shared/ui/card";
+import { Card } from "@shared/ui/cards";
 import { Flex } from "@shared/ui/flex";
 import { IconButton } from "@shared/ui/icon-button";
 import { Input } from "@shared/ui/input";

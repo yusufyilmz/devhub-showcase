@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
-import type { ProfileSnapshot } from "@shared/lib/profile-errors";
-import { editCvPath } from "@shared/lib/username";
+import { editCvPath } from "@shared/lib/profiles";
+import type { ProfileSnapshot } from "@shared/services/profile";
 
 import { requireWorkspace } from "@/features/admin/admin-auth";
 
@@ -11,8 +11,8 @@ export default async function AdminPage() {
     const { repository } = await requireWorkspace();
     snapshot = await repository.read();
   } catch {
-    redirect("/admin/login");
+    redirect("/login");
   }
-  if (!snapshot?.username) redirect("/admin/login?error=setup");
+  if (!snapshot?.username) redirect("/login?error=setup");
   redirect(editCvPath(snapshot.username));
 }

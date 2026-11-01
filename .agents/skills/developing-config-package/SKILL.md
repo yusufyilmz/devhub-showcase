@@ -1,6 +1,9 @@
 ---
 name: developing-config-package
-description: Change profile types, themes, languages, CV layout choices, and section metadata in @shared/config. Use when adding a persisted profile field, theme, portfolio type, authorable section, section composition, or site copy that describes the profile document in packages/config.
+description: Change profile types, themes, languages, CV layout choices, and
+  section metadata in @shared/config. Use when adding a persisted profile field,
+  theme, portfolio type, authorable section, section composition, or site copy
+  that describes the profile document in packages/config.
 ---
 
 # Developing the config package
@@ -9,7 +12,7 @@ description: Change profile types, themes, languages, CV layout choices, and sec
 
 Read [the file map](references/map.md) and [packages/config/CATALOG.md](../../../packages/config/CATALOG.md). A section change also needs [mydevstudio-sections](../mydevstudio-sections/SKILL.md). Publication, usernames, and privacy need [mydevstudio-business](../mydevstudio-business/SKILL.md).
 
-Homepage FAQ copy lives in `@shared/content`, not here. Zod validation of a save lives in `@shared/lib`. Rendering lives in `@shared/components` and `@shared/cv`.
+Homepage FAQ copy lives in `@shared/config`, not here. Zod validation of a save lives in `@shared/lib`. Rendering lives in `@shared/ui` and `@shared/templates`.
 
 ## Change a persisted profile field
 
@@ -17,8 +20,8 @@ Update these together. A document that omits the field must keep loading.
 
 1. The type and default on `PortfolioProfile` in `src/profile/profile.ts`. The exported `profile` value is the default document.
 2. The save and import schemas in `packages/lib/src/domain/profile.ts`, plus any import path that copies the field (`cv-import`, `pageforge-import`, `google-profile`, `section-templates`).
-3. The renderer and editor in `@shared/components`.
-4. PDF output in `@shared/cv` when the field can appear on a CV.
+3. The renderer and editor in `@shared/ui`.
+4. PDF output in `@shared/templates` when the field can appear on a CV.
 5. Tests for the valid value, the rejected value, and a fixture that omits the field.
 
 Do not give the field a second name in copy, config, and the validator. Pick the name already used on `PortfolioProfile`.
@@ -52,11 +55,11 @@ Register renderer metadata explicitly. Do not accept an arbitrary component path
 | `portfolioTypes`, `cvLayouts`                            | `src/portfolio/portfolio-types.ts`    | Layout and PDF format choices     |
 | `getPortfolioSections`, `portfolioSectionIds`            | `src/portfolio/portfolio-sections.ts` | Built-in section order and labels |
 
-Theme tokens that the browser applies still live in `@shared/design-system`. This package describes the allowed theme ids and palettes. Adding a theme id requires both the config entry and the CSS variables.
+Theme tokens that the browser applies still live in `@shared/ui`. This package describes the allowed theme ids and palettes. Adding a theme id requires both the config entry and the CSS variables.
 
 ## Copy in this package
 
-`src/copy` holds site, chat, CV, error, and structured-data copy exported as `copy` from the package root. Chat message strings that the assistant speaks as fixed replies also have a home in `@shared/assistant` `src/messages`. Match the existing file before adding a new copy module. Public marketing FAQ belongs in `@shared/content`.
+`src/copy` holds site, chat, CV, error, and structured-data copy exported as `copy` from the package root. Chat message strings that the assistant speaks as fixed replies also have a home in `@shared/assistant` `src/messages`. Match the existing file before adding a new copy module. Public marketing FAQ belongs in `@shared/config`.
 
 `src/profile/demo-profile.json` is fixture content. Use fictional people. Do not commit a real CV, token, or private export.
 
@@ -84,6 +87,6 @@ When the field is rendered, also run the component test and the CV test that cov
 ## Related skills
 
 - [Developing the lib package](../developing-lib-package/SKILL.md)
-- [Developing the components package](../developing-components-package/SKILL.md)
+- [Developing the UI package](../developing-ui-package/SKILL.md)
 - [Developing the CV package](../developing-cv-package/SKILL.md)
 - [Developing the content package](../developing-content-package/SKILL.md)

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({ pricing: vi.fn() }));
-vi.mock("@/features/billing/public-pricing", () => ({ publicPricing: mocks.pricing }));
+vi.mock("@shared/billing/server", () => ({ publicPricing: mocks.pricing }));
 
 import { GET } from "./route";
 

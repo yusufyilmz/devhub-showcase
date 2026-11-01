@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
 
-import { ReviewSection } from "@shared/components";
-import { ReviewService } from "@shared/lib/services";
 import { createServerClient } from "@shared/lib/supabase";
 import type { ReviewWithReferrals, SupabaseDbClient } from "@shared/lib/types";
+import { ReviewService } from "@shared/services/studio";
+import { ReviewSection } from "@shared/ui/sections";
 import { logger } from "@shared/utils/logger";
 
 import { requireAdmin } from "@/features/admin/admin-auth";
@@ -30,7 +30,7 @@ export default async function ReviewsPage(): Promise<React.JSX.Element> {
   try {
     await requireAdmin();
   } catch {
-    redirect("/admin/login");
+    redirect("/login");
   }
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL)
     return (

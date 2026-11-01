@@ -2,19 +2,19 @@
 
 The monorepo keeps reusable infrastructure separate from portfolio features:
 
-| Package              | Responsibility                                                                                           | Must not depend on                                        |
-| -------------------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `@shared/auth`       | Supabase browser/server clients, verified identity, session refresh, Google/password/logout handlers     | Portfolio documents, repositories, UI, app routes         |
-| `@shared/components` | Cards, reveal cards, buttons, timeline, fields, collection editor, login panel, studio shell, shared CSS | Auth clients, database tables, portfolio content, Next.js |
-| `@shared/lib`        | Portfolio schemas, repositories, ownership and provisioning                                              | Application route implementations                         |
-| `@shared/ui`         | Existing portfolio sections and MUI theme adapter; compatibility exports for moved components            | Application route implementations                         |
-| `apps/web`           | Portfolio routes, page content and auth configuration                                                    | Other apps                                                |
+| Package        | Responsibility                                                                                           | Must not depend on                                        |
+| -------------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `@shared/auth` | Supabase browser/server clients, verified identity, session refresh, Google/password/logout handlers     | Portfolio documents, repositories, UI, app routes         |
+| `@shared/ui`   | Cards, reveal cards, buttons, timeline, fields, collection editor, login panel, studio shell, shared CSS | Auth clients, database tables, portfolio content, Next.js |
+| `@shared/lib`  | Portfolio schemas, repositories, ownership and provisioning                                              | Application route implementations                         |
+| `@shared/ui`   | Existing portfolio sections and MUI theme adapter; compatibility exports for moved components            | Application route implementations                         |
+| `apps/web`     | Portfolio routes, page content and auth configuration                                                    | Other apps                                                |
 
 Authentication verifies identity. Application guards and database policies still authorize access. The portfolio's `requireWorkspace` and main-owner review moderation stay in the portfolio app. They are not part of generic sign in and must not be reused to authorize workouts.
 
 ## Authentication in another Next.js app
 
-Add `@shared/auth` and `@shared/components` as `workspace:*` dependencies. Keep external versions in the workspace catalog. Add both packages to the app's `transpilePackages`.
+Add `@shared/auth` and `@shared/ui` as `workspace:*` dependencies. Keep external versions in the workspace catalog. Add both packages to the app's `transpilePackages`.
 
 Create typed Supabase clients using `@shared/auth/client` in browser code and `@shared/auth/server` on the server. The server factory reads Next.js cookies; `@shared/auth/middleware` exports `updateSession` for `proxy.ts`. These entrypoints remain separate so browser code does not import Next.js server APIs. Each app supplies its own Supabase URL and public key environment variables. No service-role key is used.
 
@@ -44,15 +44,15 @@ Register each app's callback in Supabase and its origin in Google. Sharing auth 
 
 ## Components in another app
 
-Import `@shared/components/styles.css` once at the app root and configure Tailwind 4 `@source` declarations to include the shared component source; see [Tailwind setup](tailwind.md). Existing portfolio consumers can continue importing `@shared/ui/globals.css`; it includes the shared stylesheet. The CSS supplies the existing design tokens, form and card treatments, responsive behavior and reduced-motion rules. Set `data-theme` and `data-accent` on the root to use the existing themes. Apps can override tokens and provide their own fonts.
+Import `@shared/ui/styles.css` once at the app root and configure Tailwind 4 `@source` declarations to include the shared component source; see [Tailwind setup](tailwind.md). Existing portfolio consumers can continue importing `@shared/ui/globals.css`; it includes the shared stylesheet. The CSS supplies the existing design tokens, form and card treatments, responsive behavior and reduced-motion rules. Set `data-theme` and `data-accent` on the root to use the existing themes. Apps can override tokens and provide their own fonts.
 
 Use narrow entrypoints when possible:
 
 ```tsx
-import { RevealCard } from "@shared/components/cards";
-import { CollectionEditor } from "@shared/components/collection-editor";
-import { Field } from "@shared/components/fields";
-import { LoginPanel } from "@shared/components/login";
+import { RevealCard } from "@shared/ui/cards";
+import { CollectionEditor } from "@shared/ui/collection-editor";
+import { Field } from "@shared/ui/fields";
+import { LoginPanel } from "@shared/ui/login";
 
 <LoginPanel
   description="Keep your training in sync."
@@ -65,14 +65,14 @@ import { LoginPanel } from "@shared/components/login";
 
 The login panel takes copy, form endpoints and destinations as props. It has no portfolio API paths. `CollectionEditor` is controlled, generic over items with an ID, and delegates persistence to the consuming app. Tests exercise it with workout data. Portfolio career/PDF editors remain application features.
 
-Cards, buttons and timeline remain available through the older `@shared/ui/components` imports as compatibility reexports; they have one implementation in `@shared/components`. Existing hover, keyboard, touch and reduced-motion behavior is retained.
+Cards, buttons and timeline remain available through the older `@shared/ui/components` imports as compatibility reexports; they have one implementation in `@shared/ui`. Existing hover, keyboard, touch and reduced-motion behavior is retained.
 
 ## Validation and adding an app
 
 `pnpm check`, `pnpm test`, `pnpm typecheck` and `pnpm build` include the new packages through the workspace/Turbo configuration. Tests cover the auth handlers with a second app's routes, invalid origins, unconfirmed identity, failed provisioning, password errors and session cleanup. Components tests use independent login routes and workout models, alongside the existing portfolio/card and RLS tests.
 
-`apps/my-fitness-app` is a separate Next.js app with its own routes, session storage, and Vercel project. Its tables live in `supabase/migrations` and reference the same `auth.users` rows as portfolio profiles. It does not use these shared auth handlers. A later app that reuses `@shared/auth` still needs its own Next.js configuration, scripts, deployment scope, and data policies, then a verified sign-in and private-data flow.
+`apps/my-fitness-app` is a separate Next.js app with its own routes and Vercel project. Its tables live in `supabase/migrations` and reference the same `auth.users` rows as portfolio profiles. Light and dark mode uses the shared `buzzy-userconfig-store` record. Google and email sign-in use `createAuthHandlers` and the shared Supabase cookie session. Fitness does not run portfolio provisioning after sign-in. A later app that reuses `@shared/auth` still needs its own Next.js configuration, scripts, deployment scope, and data policies, then a verified sign-in and private-data flow.
 
 ## Sortable lists
 
-`@shared/components/sortable-list` exports `SortableList` and `moveItem`. Pass uniquely identified `{ id, label }` items, an accessible list label, and an `onChange(ids)` callback. The control supports pointer dragging (including touch), cancellation, keyboard shortcuts, move buttons and live position announcements. Include `@shared/components/styles.css` with the app's existing component styles. The caller owns persistence; the control commits only a completed reorder and never writes data itself.
+`@shared/ui/sortable-list` exports `SortableList` and `moveItem`. Pass uniquely identified `{ id, label }` items, an accessible list label, and an `onChange(ids)` callback. The control supports pointer dragging (including touch), cancellation, keyboard shortcuts, move buttons and live position announcements. Include `@shared/ui/styles.css` with the app's existing component styles. The caller owns persistence; the control commits only a completed reorder and never writes data itself.

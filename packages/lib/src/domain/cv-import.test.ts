@@ -12,7 +12,7 @@ import {
   cvExtractionSchema,
   cvReviewNotes,
 } from "../domain/cv-import";
-import { validateProfile } from "../domain/profile";
+import { validateProfile } from "../profiles/profile";
 
 describe("CV extraction and reviewed drafts", () => {
   it("creates fresh identities for career items while preserving portfolio configuration", () => {

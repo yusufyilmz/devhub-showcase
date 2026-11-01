@@ -1,6 +1,8 @@
 ---
 name: developing-utils-package
-description: Change logging and generic helpers in @shared/utils. Use when editing the server logger, browser logger, CLI logger, URL or date helpers, i18n helpers, UUID helpers, or another generic utility in packages/utils.
+description: Change logging and generic helpers in @shared/utils. Use when
+  editing the server logger, browser logger, CLI logger, URL or date helpers,
+  i18n helpers, UUID helpers, or another generic utility in packages/utils.
 ---
 
 # Developing the utils package
@@ -29,7 +31,7 @@ Use the logger the caller already uses. Do not add a second logging library.
 
 The package root exports URL, date, id, flatten, and debug helpers from `src/helpers`. Notable symbols include `createUUID`, `joinUrl`, `toAbsoluteUrl`, `formatDateRange`, `capitalizeFirstLetter`, `fetchTimeout`, `sleepMs`, `flatten`, and `unflattenObject`.
 
-Before adding a helper, search `@shared/lib/utils` and this package. Date formatting for a portfolio period belongs in `@shared/config` `formatPortfolioPeriod`. Username checks belong in `@shared/lib/username`. A new helper here must be generic enough for more than one feature.
+Before adding a helper, search `@shared/lib/utils` and this package. Date formatting for a portfolio period belongs in `@shared/config` `formatPortfolioPeriod`. Username checks belong in `@shared/lib/profiles`. A new helper here must be generic enough for more than one feature.
 
 `src/helpers/url.test.ts` is the colocated test pattern. Cover joining, trailing slashes, and absolute URLs when you change `src/helpers/url.ts`.
 

@@ -6,9 +6,8 @@ The Next.js app is `apps/my-dev-studio` (`my-dev-studio`). Shared libraries use 
 | ------------------------- | --------------------------------------------------------------------------------------- |
 | `apps/my-dev-studio`      | Next.js routes in `app/` and feature data access in `features/`                         |
 | `apps/my-fitness-app`     | Fitness OS app. Its tables are in `supabase/migrations` and belong to `auth.users`      |
-| `apps/storybook-app`      | Storybook for `packages/ui` and `packages/components`                                   |
-| `packages/components`     | Portable studio UI, section renderers and editors, layout, chat, and portfolio surfaces |
-| `packages/ui`             | Primitive controls, theme provider, and notification provider                           |
+| `apps/storybook-app`      | Storybook for `packages/ui`                                                             |
+| `packages/ui`             | Controls, sections, studio and portfolio surfaces, theme, notifications, and global CSS |
 | `packages/config`         | Profile types, themes, section registry, and custom-section metadata                    |
 | `packages/content`        | Page copy, including the home FAQ                                                       |
 | `packages/lib`            | Zod validation, domain services, repositories, and Supabase persistence                 |
@@ -18,7 +17,6 @@ The Next.js app is `apps/my-dev-studio` (`my-dev-studio`). Shared libraries use 
 | `packages/cache`          | Cache integrations                                                                      |
 | `packages/runtime`        | Shared runtime helpers, including notifications                                         |
 | `packages/utils`          | Logging and other shared utilities                                                      |
-| `packages/design-system`  | Global CSS and design tokens                                                            |
 | `packages/trello`         | Trello board UI                                                                         |
 | `tools/typescript-config` | Shared TypeScript configs                                                               |
 | `tests`                   | Vitest unit, API, and UI coverage                                                       |
@@ -40,4 +38,4 @@ App features, and what stays out of shared packages:
 
 Root scripts coordinate packages with Turborepo. `pnpm-workspace.yaml` is the external dependency catalog. Add external versions there and reference `catalog:` in manifests. Use `workspace:*` for internal dependencies. Keep package export maps explicit. Do not add another package manager or lockfile.
 
-Section renderers and editors live in `packages/components/src/sections`. Import them through the package exports (`@shared/components/sections`, `@shared/components/section/renderers`, `@shared/components/section/editors`). Keep auth and database access in app routes and `features/`. Do not add a feature file that only re-exports a shared component. See `docs/reference/pageforge-section-migration.md` for source families.
+Section renderers and editors live in `packages/ui/src/sections`. Import them through `@shared/ui/sections`. `RenderSection` and `EditSection` live in `src/sections/renderers` and `src/sections/editors`. Keep auth and database access in app routes and `features/`. Do not add a feature file that only re-exports a shared component. See `docs/reference/pageforge-section-migration.md` for source families.

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 import { profile } from "@shared/config";
-import { buildOwnerPortfolioKnowledge } from "@shared/lib/portfolio-knowledge";
+import { buildOwnerPortfolioKnowledge } from "@shared/lib/profiles";
 
 import { PortfolioEditModel } from "./portfolio-edit-model";
 

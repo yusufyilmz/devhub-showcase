@@ -6,24 +6,22 @@ MyDevStudio is a multiuser portfolio and CV platform in the `devhub-showcase` re
 
 Workspace members are `apps/*`, `packages/*`, and `tools/*`. The Next.js app package name is `my-dev-studio`. Shared packages use the `@shared/*` name. There is no `apps/web` package.
 
-| Location                 | Name                    | Responsibility                                                      |
-| ------------------------ | ----------------------- | ------------------------------------------------------------------- |
-| `apps/my-dev-studio`     | `my-dev-studio`         | Next.js routes, API handlers, and feature data access               |
-| `apps/my-fitness-app`    | `my-fitness-app`        | Fitness OS app. Task rows share the Supabase project and Auth users |
-| `apps/storybook-app`     | `storybook-app`         | Storybook for `packages/ui` and `packages/components`               |
-| `packages/components`    | `@shared/components`    | Portable studio UI, sections, layout, chat, and portfolio surfaces  |
-| `packages/ui`            | `@shared/ui`            | Primitive controls, theme provider, and notification provider       |
-| `packages/config`        | `@shared/config`        | Profile types, themes, and section metadata                         |
-| `packages/content`       | `@shared/content`       | Page copy, including the home FAQ                                   |
-| `packages/lib`           | `@shared/lib`           | Validation, repositories, Supabase access, and domain services      |
-| `packages/auth`          | `@shared/auth`          | Session helpers and Google sign-in                                  |
-| `packages/cv`            | `@shared/cv`            | CV PDF rendering                                                    |
-| `packages/assistant`     | `@shared/assistant`     | Portfolio and editing assistants                                    |
-| `packages/cache`         | `@shared/cache`         | Cache integrations                                                  |
-| `packages/runtime`       | `@shared/runtime`       | Shared runtime helpers, including notifications                     |
-| `packages/utils`         | `@shared/utils`         | Logging and other shared utilities                                  |
-| `packages/design-system` | `@shared/design-system` | Global CSS and design tokens                                        |
-| `packages/trello`        | `@shared/trello`        | Trello board UI                                                     |
+| Location              | Name                | Responsibility                                                                  |
+| --------------------- | ------------------- | ------------------------------------------------------------------------------- |
+| `apps/my-dev-studio`  | `my-dev-studio`     | Next.js routes, API handlers, and feature data access                           |
+| `apps/my-fitness-app` | `my-fitness-app`    | Fitness OS app. Task rows share the Supabase project and Auth users             |
+| `apps/storybook-app`  | `storybook-app`     | Storybook for `packages/ui`                                                     |
+| `packages/ui`         | `@shared/ui`        | Controls, sections, studio and portfolio surfaces, theme, and global CSS        |
+| `packages/config`     | `@shared/config`    | Profile types, themes, and section , Page copy, including the home FAQ metadata |
+| `packages/lib`        | `@shared/lib`       | Validation, schemas, Supabase helpers, and shared types                         |
+| `packages/services`   | `@shared/services`  | Domain services and repositories (studio profile, portfolio, fitness workspace) |
+| `packages/auth`       | `@shared/auth`      | Session helpers and Google sign-in                                              |
+| `packages/cv`         | `@shared/templates` | CV PDF rendering                                                                |
+| `packages/assistant`  | `@shared/assistant` | Portfolio and editing assistants                                                |
+| `packages/cache`      | `@shared/cache`     | Cache integrations                                                              |
+| `packages/runtime`    | `@shared/runtime`   | Shared runtime helpers, including notifications                                 |
+| `packages/utils`      | `@shared/utils`     | Logging and other shared utilities                                              |
+| `packages/trello`     | `@shared/trello`    | Trello board UI                                                                 |
 
 App routes stay in `apps/my-dev-studio/app`. App-only data access stays in `apps/my-dev-studio/features/<feature>`. That app has no `lib` folder.
 
@@ -37,18 +35,32 @@ App routes stay in `apps/my-dev-studio/app`. App-only data access stays in `apps
 | `platform`   | Site URL, platform metadata, page presentation, document request client         |
 | `portfolio`  | Published and public profiles, metadata, branding, CV responses, page resources |
 
-Import portable UI from `@shared/components` (`studio`, `layout`, `portfolio`, `sections`). Do not add a feature file that only re-exports a shared component. Do not move auth, database access, or route handlers into `packages/components`. Pass fetching and navigation in from the app.
+Import portable UI from `@shared/ui`. Do not add a feature file that only re-exports a shared component. Do not move auth, database access, or route handlers into `packages/ui`. Pass fetching and navigation in from the app.
+
+## Lib and services
+
+`@shared/services` owns service and repository implementations, grouped by domain under `packages/services/src` (for example `profile/`, `portfolio/`, `fitness/`). See [packages/services/CATALOG.md](packages/services/CATALOG.md).
+
+`@shared/lib` owns validators, profile and section domain modules, Supabase client helpers, and shared database or chat types. See [packages/lib/CATALOG.md](packages/lib/CATALOG.md).
+
+Do not add a file in one package that only re-exports another package’s implementation, especially through relative paths into a sibling folder (for example `packages/lib/src/repositories/profile-repository.ts` that contains `export * from "../../../services/src/..."`). That creates a hidden dependency, breaks package boundaries, and invites cyclic workspace deps. Import the owning package export instead (`@shared/services/profile`, `@shared/services/profile-repository`, and so on). When code moves from lib to services, update `package.json` exports and call sites in the same change; do not leave compatibility shims in lib.
+
+### Package export paths
+
+In each workspace package’s `package.json` `exports`, prefer shallow public entry points. Use at most **two** path segments after the package name:
+
+- One segment: `@shared/lib/types`, `@shared/services/profile`, `@shared/services/fitness`
+- Two segments: `@shared/services/fitness/workspace`, `@shared/services/db/client` (with `./db/*` mapping to files under `src/fitness/db/`)
+
+Do **not** add deep export keys or tsconfig path aliases such as `@shared/lib/types/supabase/database.types` or `@shared/services/fitness/task/service/task-service`. Put modules behind a domain barrel (`src/fitness/task/index.ts` exported as `./fitness/task`) or the package root barrel (`./types`, `./fitness`). Import `Database`, `Json`, and row types from `@shared/lib/types`, not from generated file paths.
 
 ## Reuse shared UI
 
-Always build interface from the shared packages. Check the catalogs before writing markup.
+Always build interface from `packages/ui`. Check [packages/ui/CATALOG.md](packages/ui/CATALOG.md) before writing markup. Controls, sections, layout, chat, studio screens, portfolio surfaces, and global CSS all live there. Import a control as `@shared/ui/{folder}`.
 
-- Use `@shared/ui` for controls: buttons, inputs, cards, overlays, feedback, theme, and toasts. Import them as `@shared/ui/{folder}`. See [packages/ui/CATALOG.md](packages/ui/CATALOG.md).
-- Use `@shared/components` for sections, pages, layout, chat, studio screens, and portfolio surfaces. See [packages/components/CATALOG.md](packages/components/CATALOG.md).
+Do not create one-off components from plain HTML elements in app routes, features, or other packages. Homepage blocks live in `packages/ui/src/sections/home-section` and compose the shared controls.
 
-Do not create one-off components from plain HTML elements. `packages/components/src/containers` is that pattern: home blocks such as `Hero` and `Features` are hand-written `section`, `div`, and heading markup. Do not add more files like that, and do not copy that style into app routes, features, or other packages.
-
-If the catalogs have no component that fits, add one in the matching package and update its catalog in the same change. A primitive control goes in `packages/ui`. A section, page, layout, chat, studio screen, or portfolio surface goes in `packages/components`.
+If the catalog has no component that fits, add it in `packages/ui` and update the catalog in the same change.
 
 ## Where code goes
 
@@ -61,17 +73,16 @@ flowchart TD
   route -->|Yes| app["apps/my-dev-studio/app"]
   route -->|No| access{Does it authorize, read a database, call Stripe, or know an API URL?}
   access -->|Yes| feature["apps/my-dev-studio/features"]
-  access -->|No| visual{Is it a reusable visual component?}
-  visual -->|Control, theme, or toast| ui["packages/ui"]
-  visual -->|Studio, section, layout, chat, or portfolio surface| components["packages/components"]
+  access -->|No| visual{Is it a reusable visual component, stylesheet, or token?}
+  visual -->|Yes| ui["packages/ui"]
   visual -->|No| kind{What kind of shared code is it?}
   kind -->|Page copy| contentPkg["packages/content"]
   kind -->|Profile shape, theme, or section metadata| config["packages/config"]
   kind -->|Validation, repository, or Supabase| lib["packages/lib"]
+  kind -->|Domain service or repository impl| servicesPkg["packages/services"]
   kind -->|Sign-in or session helper| auth["packages/auth"]
   kind -->|CV PDF| cv["packages/cv"]
   kind -->|Assistant model| assistant["packages/assistant"]
-  kind -->|Global CSS or token| design["packages/design-system"]
   kind -->|Trello board| trello["packages/trello"]
   kind -->|Log or generic helper| utils["packages/utils"]
   kind -->|Story for an existing component| story["Colocate the story with that component"]
@@ -120,41 +131,38 @@ Read the matching skill before a large change:
 
 When the change is inside one package or app, also read that package skill:
 
-| Area                     | Skill                                                                                            |
-| ------------------------ | ------------------------------------------------------------------------------------------------ |
-| `packages/ui`            | [Developing the UI package](.agents/skills/developing-ui-package/SKILL.md)                       |
-| `packages/components`    | [Developing the components package](.agents/skills/developing-components-package/SKILL.md)       |
-| `packages/config`        | [Developing the config package](.agents/skills/developing-config-package/SKILL.md)               |
-| `packages/content`       | [Developing the content package](.agents/skills/developing-content-package/SKILL.md)             |
-| `packages/lib`           | [Developing the lib package](.agents/skills/developing-lib-package/SKILL.md)                     |
-| `packages/auth`          | [Developing the auth package](.agents/skills/developing-auth-package/SKILL.md)                   |
-| `packages/cv`            | [Developing the CV package](.agents/skills/developing-cv-package/SKILL.md)                       |
-| `packages/assistant`     | [Developing the assistant package](.agents/skills/developing-assistant-package/SKILL.md)         |
-| `packages/cache`         | [Developing the cache package](.agents/skills/developing-cache-package/SKILL.md)                 |
-| `packages/runtime`       | [Developing the runtime package](.agents/skills/developing-runtime-package/SKILL.md)             |
-| `packages/utils`         | [Developing the utils package](.agents/skills/developing-utils-package/SKILL.md)                 |
-| `packages/design-system` | [Developing the design-system package](.agents/skills/developing-design-system-package/SKILL.md) |
-| `packages/trello`        | [Developing the Trello package](.agents/skills/developing-trello-package/SKILL.md)               |
-| `apps/my-dev-studio`     | [Developing the MyDevStudio app](.agents/skills/developing-my-dev-studio-app/SKILL.md)           |
-| `apps/storybook-app`     | [Developing the Storybook app](.agents/skills/developing-storybook-app/SKILL.md)                 |
+| Area                 | Skill                                                                                    |
+| -------------------- | ---------------------------------------------------------------------------------------- |
+| `packages/ui`        | [Developing the UI package](.agents/skills/developing-ui-package/SKILL.md)               |
+| `packages/config`    | [Developing the config package](.agents/skills/developing-config-package/SKILL.md)       |
+| `packages/content`   | [Developing the content package](.agents/skills/developing-content-package/SKILL.md)     |
+| `packages/lib`       | [Developing the lib package](.agents/skills/developing-lib-package/SKILL.md)             |
+| `packages/auth`      | [Developing the auth package](.agents/skills/developing-auth-package/SKILL.md)           |
+| `packages/cv`        | [Developing the CV package](.agents/skills/developing-cv-package/SKILL.md)               |
+| `packages/assistant` | [Developing the assistant package](.agents/skills/developing-assistant-package/SKILL.md) |
+| `packages/cache`     | [Developing the cache package](.agents/skills/developing-cache-package/SKILL.md)         |
+| `packages/runtime`   | [Developing the runtime package](.agents/skills/developing-runtime-package/SKILL.md)     |
+| `packages/utils`     | [Developing the utils package](.agents/skills/developing-utils-package/SKILL.md)         |
+| `packages/trello`    | [Developing the Trello package](.agents/skills/developing-trello-package/SKILL.md)       |
+| `apps/my-dev-studio` | [Developing the MyDevStudio app](.agents/skills/developing-my-dev-studio-app/SKILL.md)   |
+| `apps/storybook-app` | [Developing the Storybook app](.agents/skills/developing-storybook-app/SKILL.md)         |
 
 Use [features](docs/features.md), [architecture](docs/architecture.md), [conventions](docs/conventions.md), [testing](docs/testing.md), and [DESIGN.md](DESIGN.md). Check the matching catalog before adding a public export:
 
-| Package         | Catalog                                                                | Check it before adding                        |
-| --------------- | ---------------------------------------------------------------------- | --------------------------------------------- |
-| `components`    | [packages/components/CATALOG.md](packages/components/CATALOG.md)       | A section, editor, chat, or portfolio surface |
-| `ui`            | [packages/ui/CATALOG.md](packages/ui/CATALOG.md)                       | A primitive control, theme, or toast          |
-| `config`        | [packages/config/CATALOG.md](packages/config/CATALOG.md)               | A profile field, theme, or section metadata   |
-| `content`       | [packages/content/CATALOG.md](packages/content/CATALOG.md)             | Page copy                                     |
-| `lib`           | [packages/lib/CATALOG.md](packages/lib/CATALOG.md)                     | Validation, a repository, or a domain service |
-| `auth`          | [packages/auth/CATALOG.md](packages/auth/CATALOG.md)                   | A sign-in or session helper                   |
-| `cv`            | [packages/cv/CATALOG.md](packages/cv/CATALOG.md)                       | CV PDF rendering                              |
-| `assistant`     | [packages/assistant/CATALOG.md](packages/assistant/CATALOG.md)         | An assistant model or message                 |
-| `cache`         | [packages/cache/CATALOG.md](packages/cache/CATALOG.md)                 | A cache client or rate limit                  |
-| `runtime`       | [packages/runtime/CATALOG.md](packages/runtime/CATALOG.md)             | A shared browser or fetch helper              |
-| `utils`         | [packages/utils/CATALOG.md](packages/utils/CATALOG.md)                 | A logger or generic helper                    |
-| `design-system` | [packages/design-system/CATALOG.md](packages/design-system/CATALOG.md) | Global CSS or a design token                  |
-| `trello`        | [packages/trello/CATALOG.md](packages/trello/CATALOG.md)               | Trello board UI or a Trello client            |
+| Package     | Catalog                                                        | Check it before adding                      |
+| ----------- | -------------------------------------------------------------- | ------------------------------------------- |
+| `ui`        | [packages/ui/CATALOG.md](packages/ui/CATALOG.md)               | A control, section, surface, or stylesheet  |
+| `config`    | [packages/config/CATALOG.md](packages/config/CATALOG.md)       | A profile field, theme, or section metadata |
+| `content`   | [packages/content/CATALOG.md](packages/content/CATALOG.md)     | Page copy                                   |
+| `lib`       | [packages/lib/CATALOG.md](packages/lib/CATALOG.md)             | Validation, a schema, or a Supabase helper  |
+| `services`  | [packages/services/CATALOG.md](packages/services/CATALOG.md)   | A domain service or repository              |
+| `auth`      | [packages/auth/CATALOG.md](packages/auth/CATALOG.md)           | A sign-in or session helper                 |
+| `cv`        | [packages/cv/CATALOG.md](packages/templates/CATALOG.md)        | CV PDF rendering                            |
+| `assistant` | [packages/assistant/CATALOG.md](packages/assistant/CATALOG.md) | An assistant model or message               |
+| `cache`     | [packages/cache/CATALOG.md](packages/cache/CATALOG.md)         | A cache client or rate limit                |
+| `runtime`   | [packages/runtime/CATALOG.md](packages/runtime/CATALOG.md)     | A shared browser or fetch helper            |
+| `utils`     | [packages/utils/CATALOG.md](packages/utils/CATALOG.md)         | A logger or generic helper                  |
+| `trello`    | [packages/trello/CATALOG.md](packages/trello/CATALOG.md)       | Trello board UI or a Trello client          |
 
 ## Data and security
 
@@ -174,7 +182,7 @@ Unit tests start with `describe`. Keep `beforeEach`, `afterEach`, and `it` insid
 
 - Full local gate: `pnpm check` and `pnpm test`
 - App types: `pnpm --filter my-dev-studio typecheck`
-- One file: `pnpm exec vitest run --project unit packages/components/src/studio/admin/admin-login.test.tsx`
+- One file: `pnpm exec vitest run --project unit packages/ui/src/theme/ThemeProvider.test.tsx`
 - Browser tests: `pnpm test:e2e` after `pnpm exec playwright install chromium`
 
 Browser tests use local fixtures, not production accounts. If a required check cannot run, say what blocked it. Do not invent test output.

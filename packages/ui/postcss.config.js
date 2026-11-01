@@ -1,1 +1,1 @@
-module.exports = require("@shared/design-system/postcss.config");
+module.exports = { plugins: { "@tailwindcss/postcss": {} } };

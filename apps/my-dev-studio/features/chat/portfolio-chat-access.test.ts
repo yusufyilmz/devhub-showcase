@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { profile } from "@shared/config";
 
 const mocks = vi.hoisted(() => ({ limit: vi.fn(), read: vi.fn() }));
-vi.mock("@shared/lib/published-profile", () => ({ readPublicProfileByUsername: mocks.read }));
+vi.mock("@shared/services/published-profile", () => ({ readPublicProfileByUsername: mocks.read }));
 vi.mock("@shared/cache", () => ({ allowPortfolioChat: mocks.limit }));
 
 import { requireLegacyChat } from "@/features/chat/portfolio-chat";

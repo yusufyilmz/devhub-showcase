@@ -1,9 +1,27 @@
+import "@shared/ui/styles.css";
 import "./globals.css";
-import "./themes.css";
 
 import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 
-import { themeBootstrap } from "@/features/theme/theme-script";
+import { PageShell } from "@shared/ui/page-shell";
+
+/** Same platform theme record as MyDevStudio (`getPagePresentation` on platform routes). */
+const platformAppearance = { accent: "cyan" as const, defaultTheme: "light" as const };
+const platformThemeStorageKey = "mydevstudio-theme";
+
+const geistSans = localFont({
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+});
+
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-geist-mono",
+  weight: "100 900",
+});
+
 export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
@@ -21,14 +39,16 @@ export const viewport: Viewport = {
   themeColor: "#010d1a",
   width: "device-width",
 };
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html data-theme="dark" lang="en" suppressHydrationWarning>
-      <head>
-        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: This is a static first-party theme bootstrap, with no user-supplied content. */}
-        <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
-      </head>
-      <body>{children}</body>
-    </html>
+    <PageShell
+      appearance={platformAppearance}
+      bodyClassName={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      documentLanguage="en"
+      storageKey={platformThemeStorageKey}
+    >
+      {children}
+    </PageShell>
   );
 }

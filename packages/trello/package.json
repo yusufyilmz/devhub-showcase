@@ -4,7 +4,6 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsdown",
-    "build-storybook": "storybook build",
     "check-types": "tsc --noEmit --pretty",
     "clean": "npx rimraf dist",
     "format": "biome format --write .",
@@ -16,21 +15,16 @@
     "typecheck": "tsc --noEmit --pretty"
   },
   "dependencies": {
-    "@shared/components": "workspace:*",
     "@shared/config": "workspace:*",
-    "@shared/lib": "workspace:*",
     "@shared/runtime": "workspace:*",
     "@shared/ui": "workspace:*",
     "@shared/utils": "workspace:*",
     "cn": "catalog:",
-    "next": "catalog:",
     "react": "catalog:",
-    "react-dom": "catalog:",
     "uuid": "catalog:",
     "zustand": "catalog:"
   },
   "devDependencies": {
-    "@shared/design-system": "workspace:*",
     "@shared/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",

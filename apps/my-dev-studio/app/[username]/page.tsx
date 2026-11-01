@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 
-import { PortfolioLayout } from "@shared/components/portfolio";
-
 import { OwnerEditLink } from "@/features/admin/owner-edit-link";
 import { premiumChatAvailable } from "@/features/chat/premium-chat";
 import { PremiumWidget } from "@/features/chat/premium-widget";
-import { EngineerPortfolio } from "@/features/portfolio/engineer-portfolio";
 import { portfolioMetadata } from "@/features/portfolio/portfolio-metadata";
 import { loadPageResources } from "@/features/portfolio/portfolio-resources";
-import { getUsernameProfile } from "@/features/portfolio/public-profile";
+import { getUsernameProfile } from "@/features/portfolio/profiles/public-profile";
+import { PortfolioLayout } from "@/features/portfolio/sections";
+import { EngineerPortfolio } from "@/features/portfolio/variants/engineer-portfolio";
 
 export const maxDuration = 60;
 

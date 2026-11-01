@@ -1,14 +1,12 @@
 import { z } from "zod";
 
 import { PortfolioChatModel } from "@shared/assistant";
+import { entitlementSchema, entitlementSummary, runPremiumOperation } from "@shared/billing";
+import { billingServiceClient } from "@shared/billing/client";
+import { type BillingClient, PremiumUsageRepository } from "@shared/billing/server";
 import { allowPortfolioChat } from "@shared/cache";
-import { entitlementSchema, entitlementSummary, runPremiumOperation } from "@shared/lib/billing";
-import { type BillingClient, PremiumUsageRepository } from "@shared/lib/billing-repository";
-import { buildPublicPortfolioKnowledge } from "@shared/lib/portfolio-knowledge";
-import { readPublicProfileByUsername } from "@shared/lib/published-profile";
-import { usernameSchema } from "@shared/lib/username";
-
-import { billingServiceClient } from "@/features/billing/client";
+import { buildPublicPortfolioKnowledge, usernameSchema } from "@shared/lib/profiles";
+import { readPublicProfileByUsername } from "@shared/services/published-profile";
 
 export const premiumChatInput = z
   .object({

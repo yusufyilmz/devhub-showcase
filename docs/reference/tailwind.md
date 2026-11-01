@@ -1,8 +1,8 @@
 # Tailwind CSS 4
 
-The workspace uses Tailwind CSS 4.3.3 and its matching @tailwindcss/postcss plugin. Both versions are pinned in pnpm-workspace.yaml; package manifests use catalog references. Applications and the UI package reuse the PostCSS configuration exported by @shared/design-system.
+The workspace uses Tailwind CSS 4.3.3 and its matching @tailwindcss/postcss plugin. Both versions are pinned in pnpm-workspace.yaml; package manifests use catalog references. Applications and the UI package reuse the PostCSS configuration exported by @shared/ui.
 
-Shared semantic colors, spacing and animation tokens live in packages/design-system/theme.css. The shadcn and Radix semantic theme lives in packages/design-system/shadcn.css. Both are exported by @shared/design-system. The existing semantic utility names remain available. Colors use @theme inline so utilities resolve the active portfolio palette on the element, including nested previews and light/dark changes.
+Shared semantic colors, spacing and animation tokens live in packages/design-system/theme.css. The shadcn and Radix semantic theme lives in packages/design-system/shadcn.css. Both are exported by @shared/ui. The existing semantic utility names remain available. Colors use @theme inline so utilities resolve the active portfolio palette on the element, including nested previews and light/dark changes.
 
 The CSS entry in packages/ui/src/globals.css imports Tailwind, the shared tokens and shared component styles. Existing component styles retain their original unlayered precedence, including the padding reset used by expandable card headings. Explicit @source declarations include the web app, feature components, shared UI and shared components. New applications should provide sources for their own app code and can reuse the shared theme CSS and PostCSS configuration.
 

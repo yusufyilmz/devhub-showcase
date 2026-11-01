@@ -3,11 +3,12 @@ import { type DragEvent, useMemo, useState } from "react";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+import { type AgendaEvent, AgendaService } from "@shared/services/schedule";
+import type { Workspace } from "@shared/services/types";
+import { dateKey, dateLabel, monday, shiftDate } from "@shared/services/types";
+
 import { EventRow, eventDragType } from "@/features/agenda/event-row";
 import { dayHref } from "@/features/agenda/use-agenda-navigation";
-import { dateKey, dateLabel, monday, shiftDate } from "@/lib/domain/dates";
-import type { Workspace } from "@/lib/domain/workspace";
-import { type AgendaEvent, AgendaService } from "@/lib/services/agenda-service";
 
 const agenda = new AgendaService();
 export interface CalendarGridProps {

@@ -1,4 +1,4 @@
-import { publicPricing } from "@/features/billing/public-pricing";
+import { publicPricing } from "@shared/billing/server";
 
 export async function GET() {
   try {

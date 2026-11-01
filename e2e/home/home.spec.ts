@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { getThemePalette, portfolioAccents } from "@shared/config";
+import { getThemePalette, portfolioAccentIds, portfolioAccents } from "@shared/config";
 
 test("homepage opens the real portfolio instead of an anchor", async ({ page }) => {
   await page.goto("/");
@@ -45,7 +45,7 @@ test("theme choice persists across homepage, studio navigation and reload", asyn
   await page.getByRole("button", { name: "Switch to dark theme" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await page.getByRole("link", { exact: true, name: "Sign in" }).first().click();
-  await expect(page).toHaveURL("/admin/login");
+  await expect(page).toHaveURL("/login");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(9, 15, 26)");
   await expect(page.locator(".admin-shell")).toHaveCSS("background-color", "rgb(9, 15, 26)");
@@ -102,7 +102,7 @@ test("plans show configured sandbox pricing and a safe sign-in link", async ({ p
   await expect(plans).toContainText("80 visitor chat attempts");
   await expect(plans.getByRole("link", { name: "Sign in to try Pro" })).toHaveAttribute(
     "href",
-    "/admin/login",
+    "/login",
   );
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(
     false,
@@ -126,7 +126,7 @@ test("portfolio preview stays straight and matches the active theme and accent",
       "background-color",
       rgb(palette.soft),
     );
-    for (const accent of ["cyan", "violet", "emerald"] as const) {
+    for (const accent of portfolioAccentIds) {
       await page.getByRole("button", { name: `Preview in ${accent}` }).click();
       await expect(page.locator(".home-sample-intro h2 span")).toHaveCSS(
         "color",

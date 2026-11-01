@@ -3,11 +3,12 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { test } from "vitest";
 
+import { seedWorkspace } from "@shared/services/db/seed";
+
+import { ScheduleService } from "../../../packages/services/src/schedule";
 import Preview from "../app/preview/page";
 import { TaskTree } from "../features/task-tree/task-tree";
 import { WeeklyPlanner } from "../features/weekly-planner/weekly-planner";
-import { seedWorkspace } from "../lib/domain/seed";
-import { ScheduleService } from "../lib/services/schedule-service";
 
 const noop = () => {
   /* Static markup does not handle interaction. */

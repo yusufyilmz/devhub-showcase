@@ -1,6 +1,6 @@
 # Premium portfolio chat
 
-The reusable PortfolioChat component lives in packages/components, with a small app transport adapter. Published named portfolios across all four layouts can display it when their current owner has an active assigned Pro entitlement and explicitly enabled chat. Free, private, transferred, unassigned or disabled portfolios cannot invoke it. The existing main portfolio assistant retains its legacy configuration and limits; it is not charged twice.
+The reusable PortfolioChat UI lives in `@shared/ui` (`portfolio/chat`) and `@shared/assistant`, with a small app transport adapter in `apps/my-dev-studio/features/chat`. Published named portfolios across all four layouts can display it when their current owner has an active assigned Pro entitlement and explicitly enabled chat. Free, private, transferred, unassigned or disabled portfolios cannot invoke it. The existing main portfolio assistant retains its legacy configuration and limits; it is not charged twice.
 
 ## Owner setup
 

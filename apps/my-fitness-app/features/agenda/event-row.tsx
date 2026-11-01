@@ -1,7 +1,7 @@
 "use client";
 import { ChevronRight } from "lucide-react";
 
-import type { AgendaEvent } from "@/lib/services/agenda-service";
+import type { AgendaEvent } from "@shared/services/schedule";
 
 import { dayHref } from "./use-agenda-navigation";
 export const eventDragType = "application/x-fitness-event";

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.6.4/schema.json",
+  "extends": "//",
+  "linter": {
+    "rules": {
+      "style": {
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "patterns": [
+              {
+                "group": [
+                  "@shared/auth",
+                  "@shared/auth/**",
+                  "@shared/ui/login",
+                  "@shared/ui/login/**"
+                ],
+                "message": "Use relative imports within @shared/auth instead of the package alias."
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

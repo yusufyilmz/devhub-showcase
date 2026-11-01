@@ -1,6 +1,8 @@
 ---
 name: developing-trello-package
-description: Change the Trello board UI and client in @shared/trello. Use when editing Trello services, board hooks, the board store, or board, card, list, and comment screens in packages/trello.
+description: Change the Trello board UI and client in @shared/trello. Use when
+  editing Trello services, board hooks, the board store, or board, card, list,
+  and comment screens in packages/trello.
 ---
 
 # Developing the Trello package
@@ -35,7 +37,7 @@ This package does not authorize a MyDevStudio user. If a screen is mounted insid
 
 ## UI boundaries
 
-Use `@shared/ui` primitives and `@shared/design-system` tokens for new board UI. Local pieces in `src/components/ui` are board-specific layout, not a second control kit. `TrelloErrorBoundary` lives in `src/components/layout`.
+Use `@shared/ui` primitives and tokens for new board UI. Local pieces in `src/components/ui` are board-specific layout, not a second control kit. `TrelloErrorBoundary` lives in `src/components/layout`.
 
 `useTrelloStore` is client state for the open board. It is not the portfolio profile store in `@shared/runtime`. Do not write portfolio revisions from a Trello action.
 
@@ -43,7 +45,7 @@ Comments UI is `TrelloCardComments` and `TrelloArticleComments` under `src/compo
 
 ## Tests and build
 
-The package script `test` runs Vitest. Colocate `file.test.ts` next to the source. Stub `fetch`. Do not call `api.trello.com` from unit tests. The package also has `build-storybook` and `generate:component`. Prefer a story next to a screen only when Storybook for this package is actually wired. The shared Storybook app loads stories from `@shared/ui` and `@shared/components`, not from this package. Do not move a Trello screen into `@shared/components` to make it appear there.
+The package script `test` runs Vitest. Colocate `file.test.ts` next to the source. Stub `fetch`. Do not call `api.trello.com` from unit tests. The package also has `build-storybook` and `generate:component`. Prefer a story next to a screen only when Storybook for this package is actually wired. The shared Storybook app loads stories from `@shared/ui`, not from this package. Do not move a Trello screen into `@shared/ui` to make it appear there.
 
 ```sh
 pnpm --filter @shared/trello typecheck
@@ -55,5 +57,4 @@ pnpm --filter @shared/trello lint
 ## Related skills
 
 - [Developing the UI package](../developing-ui-package/SKILL.md)
-- [Developing the components package](../developing-components-package/SKILL.md)
 - [Developing the utils package](../developing-utils-package/SKILL.md)

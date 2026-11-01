@@ -1,10 +1,10 @@
-import { getPortfolioResources } from "@shared/lib/portfolio";
-import { ReferralService } from "@shared/lib/services";
 import { createServerClient } from "@shared/lib/supabase";
 import type { PageResources } from "@shared/lib/types";
+import { getPortfolioResources } from "@shared/services/portfolio";
+import { ReferralService } from "@shared/services/studio";
 import { logger } from "@shared/utils/logger";
 
-import { getPublishedProfile } from "./published-profile";
+import { getPublishedProfile } from "./profiles/published-profile";
 
 export const loadPageResources = async (): Promise<PageResources> => {
   const { profile } = await getPublishedProfile();

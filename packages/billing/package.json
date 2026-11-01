@@ -1,0 +1,47 @@
+{
+  "name": "@shared/billing",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./handler": "./src/handler/index.ts",
+    "./client": "./src/client/index.ts",
+    "./server": "./src/server/index.ts",
+    "./middleware": "./src/middleware.ts",
+    "./components": "./src/components/index.ts",
+    "./config": "./src/config/index.ts",
+    "./provider": "./src/provider/index.ts",
+    "./types": "./src/types.ts"
+  },
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "tsdown",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome lint .",
+    "lint:check": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "typecheck": "tsc --noEmit",
+    "types:check": "pnpm typecheck"
+  },
+  "dependencies": {
+    "@shared/auth": "workspace:*",
+    "@shared/config": "workspace:*",
+    "@shared/ui": "workspace:*",
+    "@supabase/supabase-js": "catalog:",
+    "react": "catalog:",
+    "stripe": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "node": ">=24.15.0 <25"
+  }
+}

@@ -1,8 +1,6 @@
-import {
-  type GoogleProfileCategory,
-  googleProfilePermissions,
-} from "@shared/auth/google-profile-scopes";
-import { reviewGooglePerson } from "@shared/lib/google-profile";
+import { type GoogleProfileCategory, googleProfilePermissions } from "@shared/auth/google-provider";
+import { urls } from "@shared/config/urls";
+import { reviewGooglePerson } from "@shared/lib/profiles";
 
 export function googleProfileClientId() {
   const value = process.env.GOOGLE_PROFILE_CLIENT_ID || "";
@@ -31,7 +29,7 @@ export async function readGoogleProfile(
   signal: AbortSignal,
 ) {
   const fields = categories.flatMap((category) => googleProfilePermissions[category].fields);
-  const url = new URL("https://people.googleapis.com/v1/people/me");
+  const url = new URL(urls.external.googlePeopleMe());
   url.searchParams.set("personFields", fields.join(","));
   url.searchParams.set("sources", "READ_SOURCE_TYPE_PROFILE");
   const response = await fetch(url, {

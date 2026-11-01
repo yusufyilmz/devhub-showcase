@@ -1,6 +1,6 @@
 import { createAuthHandlers } from "@shared/auth/handlers";
-import { ProfileAccessError } from "@shared/lib/profile-errors";
 import { createServerClient } from "@shared/lib/supabase";
+import { ProfileAccessError } from "@shared/services/profile";
 
 import { requireWorkspace } from "./admin-auth";
 
@@ -11,7 +11,7 @@ export const authHandlers = createAuthHandlers({
   callbackPath: "/auth/callback",
   createClient: createServerClient,
   isAccessError: (error) => error instanceof ProfileAccessError,
-  loginPath: "/admin/login",
+  loginPath: "/login",
   setupErrorMessage: "Portfolio storage is not ready. Check the Supabase setup.",
   successPath: "/admin",
 });

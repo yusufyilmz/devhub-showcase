@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-import { CreatePortfolio as CreatePortfolioView } from "@shared/components/studio";
+import { CreatePortfolio as CreatePortfolioView } from "@/features/studio";
 
 export function CreatePortfolio() {
   const router = useRouter();

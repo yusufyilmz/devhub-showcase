@@ -2,8 +2,9 @@
 
 import { useRouter } from "next/navigation";
 
-import { ManagedWorkspace as ManagedWorkspaceView } from "@shared/components/studio";
-import type { ProfileSnapshot } from "@shared/lib/profile-errors";
+import type { ProfileSnapshot } from "@shared/services/profile";
+
+import { ManagedWorkspace as ManagedWorkspaceView } from "@/features/studio";
 
 export function ManagedWorkspace({ initial, id }: { initial: ProfileSnapshot; id: string }) {
   const router = useRouter();

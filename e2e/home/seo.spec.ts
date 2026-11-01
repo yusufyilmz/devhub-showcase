@@ -18,7 +18,7 @@ test("public discovery lists published profiles and excludes private workspaces"
 test("homepage and sign-in keep platform branding without personal structured data", async ({
   page,
 }) => {
-  for (const path of ["/", "/admin/login"]) {
+  for (const path of ["/", "/login"]) {
     await page.goto(path);
     await expect(page.locator('link[rel="icon"]')).toHaveAttribute("href", "/studio-icon.svg");
     const structured = JSON.parse(

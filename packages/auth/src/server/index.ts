@@ -1,0 +1,43 @@
+import { cookies } from "next/headers";
+
+import { createServerClient } from "@supabase/ssr";
+import { createClient as createSupabaseJsClient } from "@supabase/supabase-js";
+
+import { supabaseConfig } from "../config";
+
+export async function createClient<Database = unknown>() {
+  const cookieStore = await cookies();
+  const { url, key } = supabaseConfig();
+
+  return createServerClient<Database>(url, key, {
+    cookies: {
+      getAll() {
+        return cookieStore.getAll();
+      },
+      setAll(cookiesToSet) {
+        try {
+          for (const { name, value, options } of cookiesToSet) {
+            cookieStore.set(name, value, options);
+          }
+        } catch {
+          // The `setAll` method was called from a Server Component.
+          // This can be ignored if you have middleware refreshing
+          // user sessions.
+        }
+      },
+    },
+  });
+}
+
+/** Stateless server client for bearer-token verification. Never persists sessions. */
+export function createRequestClient<Database = unknown>(token?: string) {
+  const { url, key } = supabaseConfig();
+  return createSupabaseJsClient<Database>(url, key, {
+    auth: {
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+      persistSession: false,
+    },
+    global: token ? { headers: { Authorization: `Bearer ${token}` } } : undefined,
+  });
+}

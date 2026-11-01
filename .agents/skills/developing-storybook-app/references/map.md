@@ -17,17 +17,16 @@ Package `storybook-app` in `apps/storybook-app`. Dev server port 6006.
 
 ## Where stories live
 
-| Stories                       | Glob in `main.ts`                        |
-| ----------------------------- | ---------------------------------------- |
-| UI primitives                 | `packages/ui/src/**/*.stories.*`         |
-| Sections and studio UI        | `packages/components/src/**/*.stories.*` |
-| Anything added under this app | `apps/storybook-app/src/**/*.stories.*`  |
+| Stories                           | Glob in `main.ts`                       |
+| --------------------------------- | --------------------------------------- |
+| Controls, sections, and studio UI | `packages/ui/src/**/*.stories.*`        |
+| Anything added under this app     | `apps/storybook-app/src/**/*.stories.*` |
 
 Prefer the package folder. A story file uses the component's base name: `admin-login.stories.tsx` next to `admin-login.tsx`.
 
 ## Decorator contract
 
-- Import `@shared/design-system/globals.css` once in preview.
+- Import `@shared/ui/globals.css` once in preview.
 - Wrap with `PageShell` unless the story component is `PageShell`.
 - Default appearance is accent `cyan` and theme `studio`.
 - `storageKey` is `storybook-document-shell`.

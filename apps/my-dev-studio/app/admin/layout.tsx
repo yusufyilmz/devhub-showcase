@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
-import { StudioShell } from "@shared/components/studio";
 import { ThemeToggle } from "@shared/ui/theme";
 
 import { ManagementLink } from "@/features/management/management-link";
+import { StudioShell } from "@/features/studio";
 
 export const metadata: Metadata = {
   robots: { follow: false, index: false },

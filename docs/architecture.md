@@ -4,19 +4,18 @@ MyDevStudio is a Next.js App Router application in a pnpm/Turborepo monorepo. Th
 
 ## Workspace ownership
 
-| Package or directory             | Owns                                                                       | Keep out                                    |
-| -------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------- |
-| `apps/web`                       | Routes, API handlers, app composition, metadata, data-access adapters      | Duplicated portable UI                      |
-| `packages/content`               | Profile types, seed content, translations, themes, section metadata        | Credentials and private database access     |
-| `packages/lib`                   | Validators, domain services, repository contracts and Supabase persistence | Route-specific presentation                 |
-| `packages/auth`                  | Shared browser/server authentication integration                           | Portfolio content ownership decisions in UI |
-| `packages/components`            | Portable UI primitives and reusable views                                  | Auth, routes and private repositories       |
-| `packages/sections`              | Section definitions, public renderers and client editors                   | App-specific session and database logic     |
-| `packages/ui`                    | Existing portfolio UI, styles, hooks and adapters                          | A second source of profile facts            |
-| `packages/cv`                    | PDF normalization, layouts and templates                                   | Public bypasses for private downloads       |
-| `packages/chat`                  | AI context, classification and response formatting                         | Ownership or publication authority          |
-| `packages/cache`, `packages/log` | Redis integration and Pino logging                                         | Secrets or private payloads in telemetry    |
-| `supabase/migrations`            | Schema and RLS change history                                              | Implicit execution during app builds        |
+| Package or directory                                   | Owns                                                                       | Keep out                                    |
+| ------------------------------------------------------ | -------------------------------------------------------------------------- | ------------------------------------------- |
+| `apps/my-dev-studio`                                   | Routes, API handlers, feature data access, metadata                        | Duplicated portable UI                      |
+| `apps/storybook-app`                                   | Storybook for `@shared/ui`                                                 | Production routes                           |
+| `packages/config`                                      | Profile types, themes, section metadata, page copy                         | Credentials and private database access     |
+| `packages/lib`                                         | Validators, domain services, repository contracts and Supabase persistence | Route-specific presentation                 |
+| `packages/auth`                                        | Shared browser/server authentication integration                           | Portfolio content ownership decisions in UI |
+| `packages/ui`                                          | Controls, sections, studio and portfolio surfaces, theme, global CSS       | Auth, routes and private repositories       |
+| `packages/templates` (`packages/cv`)                   | PDF normalization, layouts and templates                                   | Public bypasses for private downloads       |
+| `packages/assistant`                                   | Portfolio and editing assistants, chat models                              | Ownership or publication authority          |
+| `packages/cache`, `packages/utils`, `packages/runtime` | Redis, logging, shared browser stores                                      | Secrets or private payloads in telemetry    |
+| `supabase/migrations`                                  | Schema and RLS change history                                              | Implicit execution during app builds        |
 
 Shared compiler and Tailwind configuration live in their own packages. Packages expose explicit entry points; external versions are centralized in the workspace catalog.
 
@@ -40,41 +39,37 @@ The browser owns display/interaction, but the server and database enforce access
 
 ## Package dependency diagrams
 
-Arrows mean **imports/declares a dependency on**. These views show selected internal runtime dependencies from package manifests, not every external dependency or build-tool edge. `apps/web` composes both groups.
+Arrows mean **imports/declares a dependency on**. These views show selected internal runtime dependencies from package manifests, not every external dependency or build-tool edge. `apps/my-dev-studio` composes both groups.
 
 ### Presentation and document packages
 
 ```mermaid
 flowchart TD
-  Web["apps/web"] --> UI["packages/ui"]
-  Web --> Sections["packages/sections"]
-  Web --> CV["packages/cv"]
-  UI --> Components["packages/components"]
-  UI --> Content["packages/content"]
+  App["apps/my-dev-studio"] --> UI["packages/ui"]
+  App --> Templates["packages/templates"]
+  UI --> Config["packages/config"]
   UI --> Lib["packages/lib"]
-  Sections --> Components
-  Sections --> Content
-  CV --> Content
+  Templates --> Config
 ```
 
-Portable components have no internal runtime package dependencies. Content defines shared data; section renderers/editors consume content and components. The older UI package also consumes lib adapters. The CV package consumes content without depending on app routes.
+Section renderers, editors, and controls live in `packages/ui`. Config defines shared profile and section metadata; UI consumes config and lib adapters. Templates consume config without depending on app routes.
 
 ### Services and authorization packages
 
 ```mermaid
 flowchart TD
-  Web["apps/web"] --> Chat["packages/chat"]
-  Web --> Lib["packages/lib"]
-  Web --> Auth["packages/auth"]
-  Web --> Cache["packages/cache"]
-  Chat --> Lib
-  Chat --> Content["packages/content"]
+  App["apps/my-dev-studio"] --> Assistant["packages/assistant"]
+  App --> Lib["packages/lib"]
+  App --> Auth["packages/auth"]
+  App --> Cache["packages/cache"]
+  Assistant --> Lib
+  Assistant --> Config["packages/config"]
   Lib --> Auth
   Lib --> Cache
-  Lib --> Content
+  Lib --> Config
 ```
 
-No shared package imports `apps/web`. Authentication establishes identity; app guards, repositories and RLS decide resource access. The standalone `packages/log` logger and the lib logger currently have separate factories; see [observability](observability.md).
+No shared package imports `apps/my-dev-studio`. Authentication establishes identity; app guards, repositories and RLS decide resource access. See [observability](observability.md) for logging boundaries.
 
 ## Profile save flow
 

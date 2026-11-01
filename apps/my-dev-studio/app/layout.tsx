@@ -1,17 +1,16 @@
-import "@shared/design-system/globals.css";
-import "@shared/design-system/legacy.css";
+import "@shared/ui/globals.css";
 
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { headers } from "next/headers";
 
-import { PageShell } from "@shared/components/page";
+import { PageShell } from "@shared/ui/page-shell";
 
 import { getPagePresentation } from "@/features/platform/page-presentation";
 import { isPlatformPage, platformMetadata } from "@/features/platform/platform";
 import { portfolioUrl } from "@/features/platform/site-url";
-import { getActiveProfile } from "@/features/portfolio/active-profile";
 import { getProfileStructuredData } from "@/features/portfolio/profile-structured-data";
+import { getActiveProfile } from "@/features/portfolio/profiles/active-profile";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

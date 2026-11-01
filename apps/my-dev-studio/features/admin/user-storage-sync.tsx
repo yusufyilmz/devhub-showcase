@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { type StoredUser, useUserConfigStore } from "@shared/runtime/stores";
+import { type StoredUser, useUserConfigStore } from "@shared/runtime/user";
 
 /** Cache only server-confirmed display fields. Never use this cache for authorization. */
 export function UserStorageSync({ user }: { user: StoredUser | null }) {

@@ -1,10 +1,9 @@
 "use client";
 import { useEffect } from "react";
 
-import { dateKey } from "@/lib/domain/dates";
-import type { Task } from "@/lib/domain/task";
-import type { Workspace } from "@/lib/domain/workspace";
-import { ScheduleService } from "@/lib/services/schedule-service";
+import { ScheduleService } from "@shared/services/schedule";
+import type { Task, Workspace } from "@shared/services/types";
+import { dateKey } from "@shared/services/types";
 
 const remindedKinds = new Set(["meal", "supplement", "water", "workout"]);
 

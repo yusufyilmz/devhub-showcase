@@ -1,6 +1,6 @@
 import { configured } from "@/lib/auth";
 
-import { FitnessApp } from "./fitness-app";
+import { FitnessApp } from "../features/fitness/fitness-app";
 export const dynamic = "force-dynamic";
 export default function Page() {
   if (!configured() || !process.env.SUPABASE_DB_URL || !process.env.WORKSPACE_OWNER_ID)

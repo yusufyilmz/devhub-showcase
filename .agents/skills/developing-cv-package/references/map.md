@@ -1,6 +1,6 @@
 # CV package map
 
-Package `@shared/cv` in `packages/cv`.
+Package `@shared/templates` in `packages/cv`.
 
 | Symbol               | Role                                                                          |
 | -------------------- | ----------------------------------------------------------------------------- |
@@ -10,10 +10,10 @@ Package `@shared/cv` in `packages/cv`.
 | `cvHelpers`          | Handlebars helpers shared with the CLI generator                              |
 | `cvFormats`          | `classic`, `compact`, and `editorial` metrics inside `src/index.ts`           |
 
-| Export                    | File                                                        |
-| ------------------------- | ----------------------------------------------------------- |
-| `@shared/cv`              | `src/index.ts`                                              |
-| `@shared/cv/template.hbs` | `templates/cv.json.hbs` with types from `src/template.d.ts` |
+| Export                           | File                                                        |
+| -------------------------------- | ----------------------------------------------------------- |
+| `@shared/templates`              | `src/index.ts`                                              |
+| `@shared/templates/template.hbs` | `templates/cv.json.hbs` with types from `src/template.d.ts` |
 
 ## App routes that call the renderer
 
@@ -40,6 +40,6 @@ The feature helper is `apps/my-dev-studio/features/portfolio/cv-response.ts`. Ch
 ## Checks
 
 ```sh
-pnpm --filter @shared/cv typecheck
+pnpm --filter @shared/templates typecheck
 pnpm exec vitest run --project unit packages/cv/src/index.test.ts
 ```
