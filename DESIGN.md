@@ -414,8 +414,10 @@ Portfolio sections in `packages/components` share one frame, `.library-section`,
 Use `@shared/ui/card`, `@shared/ui/button`, `@shared/ui/input` and
 `@shared/ui/textarea` in product compositions. Elevation and focus styling live in
 `packages/design-system/surfaces.css`, imported by the semantic stylesheet.
-Cards are static by default. Set `interaction="lift"` only for a surface with an
-action. Lift is limited to fine hover pointers, with matching focus-within depth.
+Cards use `interaction="lift"` by default for shared depth, an accent edge and
+hover feedback. Use `interaction="static"` for a preview frame or nested surface
+that should stay still. Lift is limited to fine hover pointers, with matching
+focus-within depth.
 Reduced motion removes transforms and transitions.
 
 Use `Card asChild layout="plain"` around an existing section or article to keep

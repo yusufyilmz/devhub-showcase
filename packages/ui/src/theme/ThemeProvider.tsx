@@ -2,15 +2,26 @@
 
 import { useEffect, useState } from "react";
 
+import { isStorageTheme, type StorageTheme, USER_STORAGE_KEY } from "../stores/storage-theme";
+import { useStorage } from "../stores/use-storage";
 import { ThemeContext } from "./theme-toggle";
 
 type ResolvedTheme = "light" | "dark";
+function resolveTheme(theme: StorageTheme): ResolvedTheme {
+  return theme === "system"
+    ? window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light"
+    : theme;
+}
 
-function resolveTheme(stored: string | null, fallback: "system" | "light" | "dark"): ResolvedTheme {
-  if (stored === "light" || stored === "dark") return stored;
-  if (fallback === "light") return "light";
-  if (fallback === "dark") return "dark";
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+function legacyTheme(storageKey: string) {
+  try {
+    const stored = localStorage.getItem("mydevstudio-theme") ?? localStorage.getItem(storageKey);
+    return isStorageTheme(stored) ? stored : null;
+  } catch {
+    return null;
+  }
 }
 
 export function ThemeProvider({
@@ -22,45 +33,43 @@ export function ThemeProvider({
 }: {
   accent: "cyan" | "violet" | "emerald";
   children: React.ReactNode;
-  defaultTheme: "system" | "light" | "dark";
+  defaultTheme: StorageTheme;
   portfolioTheme?: string;
+  /** Read only to migrate a preference written by an older version. */
   storageKey: string;
 }) {
   const [mode, setMode] = useState<ResolvedTheme>(defaultTheme === "light" ? "light" : "dark");
-
   useEffect(() => {
-    const readStored = () => {
-      try {
-        return localStorage.getItem(storageKey);
-      } catch {
-        return null;
-      }
-    };
-    const next = resolveTheme(readStored(), defaultTheme);
-    setMode(next);
+    void useStorage.persist.rehydrate();
+    if (!useStorage.getState().theme)
+      useStorage.getState().setTheme(legacyTheme(storageKey) ?? defaultTheme);
     const root = document.documentElement;
-    root.dataset.theme = next;
-    root.dataset.accent = accent;
-    if (portfolioTheme) root.dataset.portfolioTheme = portfolioTheme;
-    else delete root.dataset.portfolioTheme;
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const sync = () => {
-      const resolved = resolveTheme(readStored(), defaultTheme);
+    const apply = () => {
+      const resolved = resolveTheme(useStorage.getState().theme ?? defaultTheme);
       setMode(resolved);
       root.dataset.theme = resolved;
     };
-    media.addEventListener("change", sync);
-    return () => media.removeEventListener("change", sync);
-  }, [accent, defaultTheme, portfolioTheme, storageKey]);
-
-  const toggle = () => {
-    setMode((current) => {
-      const next = current === "dark" ? "light" : "dark";
-      localStorage.setItem(storageKey, next);
-      document.documentElement.dataset.theme = next;
-      return next;
+    apply();
+    root.dataset.accent = accent;
+    if (portfolioTheme) root.dataset.portfolioTheme = portfolioTheme;
+    else delete root.dataset.portfolioTheme;
+    const unsubscribe = useStorage.subscribe((state, previous) => {
+      if (state.theme !== previous.theme) apply();
     });
-  };
-
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const syncStorage = (event: StorageEvent) => {
+      if (event.key !== USER_STORAGE_KEY && event.key !== null) return;
+      if (!event.newValue) useStorage.setState({ theme: null, user: null });
+      else void useStorage.persist.rehydrate();
+    };
+    media.addEventListener("change", apply);
+    window.addEventListener("storage", syncStorage);
+    return () => {
+      unsubscribe();
+      media.removeEventListener("change", apply);
+      window.removeEventListener("storage", syncStorage);
+    };
+  }, [accent, defaultTheme, portfolioTheme, storageKey]);
+  const toggle = () => useStorage.getState().setTheme(mode === "dark" ? "light" : "dark");
   return <ThemeContext.Provider value={{ mode, toggle }}>{children}</ThemeContext.Provider>;
 }

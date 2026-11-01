@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { ProfileEditor } from "@shared/components/studio";
 
 import { requireWorkspace } from "@/features/admin/admin-auth";
+import { UserStorageSync } from "@/features/admin/user-storage-sync";
 
 export const metadata: Metadata = {
   robots: { follow: false, index: false },
@@ -19,5 +20,16 @@ export default async function EditCvPage({ params }: { params: Promise<{ usernam
   }
   const snapshot = await workspace.repository.read();
   if (!snapshot || snapshot.username !== username) notFound();
-  return <ProfileEditor initial={snapshot} />;
+  return (
+    <>
+      <UserStorageSync
+        user={{
+          id: workspace.user.id,
+          name: snapshot.profile.name,
+          ...(workspace.user.email ? { email: workspace.user.email } : {}),
+        }}
+      />
+      <ProfileEditor initial={snapshot} />
+    </>
+  );
 }

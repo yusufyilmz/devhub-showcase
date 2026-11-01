@@ -14,7 +14,7 @@ function Card({
   className,
   asChild = false,
   surface = "semantic",
-  interaction = "static",
+  interaction = "lift",
   layout = "stack",
   ...props
 }: CardProps) {

@@ -244,7 +244,7 @@ export const ThemeAdaptive: Story = {
 export const ProductSurfaces: Story = {
   render: () => (
     <div className="grid max-w-3xl gap-6 p-6 sm:grid-cols-2">
-      <Card>
+      <Card interaction="static">
         <CardHeader>
           <CardTitle>Portfolio settings</CardTitle>
           <CardDescription>Quiet depth for editing surfaces.</CardDescription>

@@ -5,6 +5,7 @@ import "./examples.css";
 import { useEffect, useId, useRef, useState } from "react";
 
 import { type PortfolioType, portfolioTypes } from "@shared/config";
+import { Card } from "@shared/ui/card";
 
 import { examplePath, portfolioExamples } from "./data";
 import { ExampleThumbnail } from "./example-thumbnail";
@@ -124,29 +125,31 @@ export function ExampleCarousel() {
         ref={track}
       >
         {examples.map((item) => (
-          <li className="example-card" key={item.slug}>
-            <a
-              aria-label={`Explore ${item.profile.name}'s ${item.profile.portfolioType} example`}
-              href={examplePath(item.slug)}
-            >
-              <ExampleThumbnail item={item} />
-              <div className="example-card-copy">
-                <span className="example-label">
-                  {item.profile.portfolioType} / {item.profile.appearance?.theme}
-                </span>
-                <h3>
-                  {item.profile.name} <span aria-hidden="true">↗</span>
-                </h3>
-                <p>{item.profile.title}</p>
-                <div className="example-card-meta">
-                  <span>
-                    {item.profile.portfolioLanguage?.toUpperCase()} · {item.profile.cvLayout} CV
+          <Card asChild key={item.slug} layout="plain" surface="portfolio">
+            <li className="example-card">
+              <a
+                aria-label={`Explore ${item.profile.name}'s ${item.profile.portfolioType} example`}
+                href={examplePath(item.slug)}
+              >
+                <ExampleThumbnail item={item} />
+                <div className="example-card-copy">
+                  <span className="example-label">
+                    {item.profile.portfolioType} / {item.profile.appearance?.theme}
                   </span>
-                  <span>Fictional example</span>
+                  <h3>
+                    {item.profile.name} <span aria-hidden="true">↗</span>
+                  </h3>
+                  <p>{item.profile.title}</p>
+                  <div className="example-card-meta">
+                    <span>
+                      {item.profile.portfolioLanguage?.toUpperCase()} · {item.profile.cvLayout} CV
+                    </span>
+                    <span>Fictional example</span>
+                  </div>
                 </div>
-              </div>
-            </a>
-          </li>
+              </a>
+            </li>
+          </Card>
         ))}
       </ul>
       <div className="example-caption">

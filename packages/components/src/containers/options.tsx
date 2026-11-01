@@ -1,4 +1,5 @@
 import { cvLayouts, portfolioThemes } from "@shared/config";
+import { Card } from "@shared/ui/card";
 
 export function Options() {
   return (
@@ -16,7 +17,7 @@ export function Options() {
         </p>
       </div>
       <div className="home-options-grid">
-        <div>
+        <Card layout="plain" surface="portfolio">
           <h3>Four themes. Your character.</h3>
           <p>Mix any layout with any theme, choose an accent, and switch between light and dark.</p>
           <ul className="home-theme-list">
@@ -32,8 +33,8 @@ export function Options() {
               </li>
             ))}
           </ul>
-        </div>
-        <div>
+        </Card>
+        <Card layout="plain" surface="portfolio">
           <h3>A CV that fits your story.</h3>
           <p>
             Your saved information becomes a PDF. Choose the format, page size, text size and
@@ -55,7 +56,7 @@ export function Options() {
               dates follow your selection. Your written content stays in the language you write it.
             </p>
           </div>
-        </div>
+        </Card>
       </div>
     </section>
   );

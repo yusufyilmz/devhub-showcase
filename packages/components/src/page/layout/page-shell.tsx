@@ -3,14 +3,11 @@
 import { type CSSProperties, type ReactNode, useEffect, useMemo } from "react";
 
 import type { PortfolioTheme } from "@shared/config";
+import { storageThemeScript } from "@shared/ui/stores";
 
 import { PageProviders } from "../../providers";
 import type { StudioRequest } from "../../studio";
 import { getPublicThemeStyle, type PageAppearance } from "../theme/page-theme";
-
-function themeBootstrapScript(storageKey: string, defaultTheme: PageAppearance["defaultTheme"]) {
-  return `(function(){try{var s=localStorage.getItem(${JSON.stringify(storageKey)});var d=${JSON.stringify(defaultTheme)};var t=s==='light'||s==='dark'?s:d==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):d;document.documentElement.dataset.theme=t}catch(e){}})()`;
-}
 
 function safeJson(value: unknown) {
   return JSON.stringify(value).replace(/</g, "\\u003c");
@@ -45,7 +42,6 @@ function EmbeddedDocument({
     };
     root.lang = documentLanguage;
     root.dataset.accent = appearance.accent;
-    root.dataset.theme = appearance.defaultTheme === "light" ? "light" : "dark";
     if (portfolioTheme) root.dataset.portfolioTheme = portfolioTheme;
     else delete root.dataset.portfolioTheme;
     for (const [key, value] of Object.entries(themeStyle ?? {})) {
@@ -120,7 +116,7 @@ export function PageShell({
     );
   }
 
-  const themeScript = themeBootstrapScript(storageKey, appearance.defaultTheme).replace(
+  const themeScript = storageThemeScript(storageKey, appearance.defaultTheme).replace(
     /</g,
     "\\u003c",
   );

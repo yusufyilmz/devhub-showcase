@@ -130,10 +130,24 @@ Public components exported from `packages/ui/src/components/index.ts`. Import th
 ### Shared product surfaces
 
 `Card` supports `asChild`, `layout="stack|plain"`,
-`surface="semantic|portfolio"`, and `interaction="static|lift"`.
+`surface="semantic|portfolio"`, and `interaction="static|lift"` (default `lift`).
 Use `asChild` to preserve section/article semantics without an extra wrapper.
 Use the portfolio adapter only on existing RGB portfolio/studio surfaces.
 `Button` supports native actions, link actions via `href`, and single-child
 composition via `asChild`. Links preserve accessibility attributes and disabled
 links have no navigation target. Inputs and textareas share the same focus treatment.
 See **UI Components / Card / Product Surfaces** in Storybook.
+
+## Browser preferences
+
+`useStorage` from `@shared/ui/stores` persists the visitor's light, dark or system
+choice and a small display-only user cache in `mydevstudio-storage` (version 1).
+It hydrates explicitly after mount, validates persisted fields and tolerates
+unavailable storage. `setUser` keeps only id, name, email and avatar URL; never
+pass credentials or a session. `clearUser` preserves the theme on sign-out.
+
+`ThemeProvider` shares this preference across home, studio and portfolio routes,
+migrates older theme keys, and follows device changes for system mode. The page
+shell's pre-paint script reads the same storage format. Theme defaults and
+portfolio palettes remain authored profile settings; a browser preference does
+not modify a saved portfolio.

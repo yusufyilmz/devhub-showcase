@@ -10,12 +10,16 @@
   --elevation-hover: 0 4px 8px rgb(0 0 0 / 0.2), 0 18px 40px rgb(0 0 0 / 0.35);
 }
 /* A local adapter preserves each published palette. It never rewrites root tokens. */
-.ui-card[data-surface="portfolio"] {
+.ui-card[data-slot="card"][data-surface="portfolio"] {
+  --card-accent: rgb(var(--accent-rgb));
   --card: rgb(var(--surface-rgb));
   --card-foreground: rgb(var(--text-rgb));
   --border: rgb(var(--border-rgb));
 }
 .ui-card[data-slot="card"] {
+  --card-accent: var(--primary);
+  position: relative;
+  min-width: 0;
   border-color: color-mix(in srgb, var(--border) 65%, transparent);
   box-shadow:
     var(--elevation-rest),
@@ -26,12 +30,12 @@
     transform var(--surface-duration) ease;
 }
 .ui-card[data-interaction="lift"]:focus-within {
-  border-color: var(--border);
+  border-color: color-mix(in srgb, var(--card-accent) 55%, var(--border));
   box-shadow: var(--elevation-hover);
 }
 @media (hover: hover) and (pointer: fine) {
   .ui-card[data-interaction="lift"]:hover {
-    border-color: var(--border);
+    border-color: color-mix(in srgb, var(--card-accent) 55%, var(--border));
     box-shadow: var(--elevation-hover);
     transform: translateY(-3px);
   }
@@ -78,4 +82,25 @@
   .ui-button[data-slot="button"]:active {
     transform: none;
   }
+}
+
+/* The portfolio edge treatment is shared by static-content and reveal cards. */
+.ui-card[data-interaction="lift"]:not(.reveal-card)::before {
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--card-accent) 35%, transparent),
+    transparent 35%,
+    transparent 65%,
+    color-mix(in srgb, var(--card-accent) 18%, transparent)
+  );
+  border-radius: inherit;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
 }

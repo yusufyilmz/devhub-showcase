@@ -40,13 +40,18 @@ test("preview supports keyboard tabs and accent selection", async ({ page }) => 
   );
 });
 
-test("theme choice persists after reload", async ({ page }) => {
-  await page.emulateMedia({ colorScheme: "dark" });
+test("theme choice persists across homepage, studio navigation and reload", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Switch to light theme" }).click();
-  await expect(page.getByRole("button", { name: "Switch to dark theme" })).toBeVisible();
+  await page.getByRole("button", { name: "Switch to dark theme" }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await page.getByRole("link", { exact: true, name: "Sign in" }).first().click();
+  await expect(page).toHaveURL("/admin/login");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await page.reload();
-  await expect(page.getByRole("button", { name: "Switch to dark theme" })).toBeVisible();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await page.getByRole("button", { name: "Switch to light theme" }).click();
+  await page.goto("/");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 });
 
 test("FAQs expand and the layout fits the viewport", async ({ page }) => {

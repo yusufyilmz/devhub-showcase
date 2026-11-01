@@ -1222,3 +1222,222 @@
     padding: 16px;
   }
 }
+
+/* Homepage cards share the portfolio surface; preview-browser remains independent. */
+.home-feature-card.ui-card {
+  background: rgb(var(--surface-rgb));
+  border-radius: 14px;
+}
+.home-feature-card.reveal-card {
+  align-self: start;
+  padding: 32px;
+}
+.home-feature-card .reveal-heading h3 {
+  font-size: clamp(26px, 3vw, 36px);
+}
+.home-feature-card .home-url-demo {
+  margin-block: 24px;
+}
+.home-feature-card .reveal-brief {
+  display: block;
+  max-height: none;
+}
+.home-feature-card .reveal-toggle {
+  margin-top: 20px;
+}
+.home-feature-details {
+  display: grid;
+  gap: 10px;
+  padding-left: 18px;
+  margin-top: 18px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgb(var(--muted-rgb));
+}
+.home-feature-details li::marker {
+  color: rgb(var(--accent-rgb));
+}
+.home-options-grid > .ui-card {
+  padding: clamp(24px, 3vw, 36px);
+  border-radius: 14px;
+}
+.home-library-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.7fr);
+  gap: 48px;
+  align-items: center;
+}
+.home-library-count {
+  padding-left: 32px;
+  border-left: 1px solid rgb(var(--accent-rgb) / 0.4);
+}
+.home-library-count strong {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  font-size: clamp(64px, 7vw, 96px);
+  font-weight: 500;
+  line-height: 1;
+  color: rgb(var(--accent-rgb));
+  letter-spacing: -0.07em;
+}
+.home-library-count strong span {
+  font-size: 14px;
+  color: rgb(var(--text-rgb));
+  letter-spacing: 0;
+}
+.home-library-count p {
+  max-width: 24ch;
+  margin-block: 16px 24px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+.home-library-count > span {
+  font-size: 9px;
+  color: rgb(var(--muted-rgb));
+  letter-spacing: 0.12em;
+}
+.home-library-demo.ui-card {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(0, 2fr);
+  padding: 8px;
+  border-radius: 18px;
+}
+.home-library-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-self: start;
+  min-width: 0;
+  padding: 16px 12px;
+  background: none;
+  border: 0;
+}
+.home-library-buttons button {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 82px;
+  padding: 16px 12px;
+  color: rgb(var(--muted-rgb));
+  text-align: left;
+  white-space: normal;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
+}
+.home-library-buttons button[aria-pressed="true"] {
+  color: rgb(var(--text-rgb));
+  background: rgb(var(--accent-rgb) / 0.08);
+  border-color: rgb(var(--accent-rgb) / 0.3);
+}
+.home-library-buttons button > span:nth-child(2) {
+  flex: 1;
+}
+.home-library-buttons strong,
+.home-library-buttons small {
+  display: block;
+}
+.home-library-buttons strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+.home-library-buttons small {
+  margin-top: 5px;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgb(var(--muted-rgb));
+}
+.home-library-number {
+  align-self: flex-start;
+  padding-top: 2px;
+  font:
+    10px var(--font-geist-mono),
+    monospace;
+  color: rgb(var(--accent-rgb));
+}
+.home-library-preview {
+  min-height: 390px;
+  max-height: 540px;
+  padding: 0;
+  margin: 12px;
+  background: rgb(var(--bg-rgb) / 0.5);
+  border: 1px solid rgb(var(--border-rgb) / 0.65);
+  border-radius: 10px;
+}
+.home-library-preview-bar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 20px;
+  font:
+    9px var(--font-geist-mono),
+    monospace;
+  color: rgb(var(--muted-rgb));
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid rgb(var(--border-rgb) / 0.6);
+}
+.home-library-preview-bar > span:first-child {
+  display: flex;
+  gap: 5px;
+}
+.home-library-preview-bar i {
+  width: 6px;
+  height: 6px;
+  background: rgb(var(--muted-rgb) / 0.35);
+  border-radius: 50%;
+}
+.home-library-preview-content {
+  padding: 24px;
+}
+.home-library-demo > .home-sample-note {
+  grid-column: 1 / -1;
+  padding: 16px 24px;
+  margin: 0;
+  border-top: 1px solid rgb(var(--border-rgb) / 0.5);
+}
+.home-library-workflows article.ui-card {
+  border-radius: 14px;
+}
+@media (max-width: 700px) {
+  .home-feature-card.reveal-card {
+    padding: 24px;
+  }
+  .home-library-header {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .home-library-count {
+    padding-left: 20px;
+  }
+  .home-library-count p {
+    max-width: none;
+    margin-block: 10px;
+    font-size: 15px;
+  }
+  .home-library-demo.ui-card {
+    grid-template-columns: 1fr;
+  }
+  .home-library-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 8px;
+  }
+  .home-library-buttons button {
+    gap: 8px;
+    min-height: 72px;
+    padding: 12px;
+  }
+  .home-library-buttons button > span:last-child {
+    display: none;
+  }
+  .home-library-preview {
+    min-height: 320px;
+    margin: 8px;
+  }
+  .home-library-preview-content {
+    padding: 16px;
+  }
+}
