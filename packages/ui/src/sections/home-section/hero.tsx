@@ -1,6 +1,7 @@
 import { Button } from "../../buttons/button";
 import { Section } from "../../layout/section";
 import type { PageAction } from "./action";
+import { HomeChatLauncher } from "./chat-launcher";
 import { PortfolioPreview } from "./portfolio-preview";
 
 export function HomeHeroSection({
@@ -40,6 +41,7 @@ export function HomeHeroSection({
               See a real portfolio <span aria-hidden="true">→</span>
             </Button>
           </div>
+          <HomeChatLauncher />
           <div className="home-hero-notes">
             <span>
               <i aria-hidden="true">✓</i> No code needed

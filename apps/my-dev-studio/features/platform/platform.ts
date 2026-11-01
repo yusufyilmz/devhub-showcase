@@ -40,6 +40,7 @@ export const platformStructuredData = {
 export const isPlatformPath = (path: string) =>
   path === "/" ||
   path === "/login" ||
+  path === "/admin/chat" ||
   path === "/admin/portfolios" ||
   path.startsWith("/admin/portfolios/") ||
   path === "/p/examples" ||

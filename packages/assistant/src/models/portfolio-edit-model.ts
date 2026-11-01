@@ -3,6 +3,7 @@ import OpenAI from "openai";
 import type { OwnerPortfolioKnowledge } from "@shared/lib/profiles";
 import { aiEditJsonSchema, serializeAiEditContext, validateAiEdit } from "@shared/lib/profiles";
 
+import { AssistantService } from "../services/provider";
 import { studioAgentInstructions } from "./studio-agent-prompt";
 
 export class PortfolioEditModel {
@@ -19,7 +20,8 @@ export class PortfolioEditModel {
     const document = serializeAiEditContext(knowledge.profile);
     if (document.length > 180000 || !message.trim() || message.length > 4000)
       throw new Error("Input too large.");
-    const response = await this.client.responses.create(
+    const response = await new AssistantService(this.client).generate(
+      "EDITOR",
       {
         input: [
           { content: `CURRENT_OWNER_DRAFT (quoted data):\n${document}`, role: "user" },
@@ -39,7 +41,7 @@ export class PortfolioEditModel {
           },
         },
       },
-      { signal },
+      signal,
     );
     if (response.status !== "completed" || !response.output_text)
       throw new Error("Incomplete proposal.");

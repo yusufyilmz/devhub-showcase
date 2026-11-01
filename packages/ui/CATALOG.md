@@ -1,5 +1,8 @@
 # UI catalog
 
+HomeChatLauncher in src/sections/home-section/chat-launcher.tsx composes the shared
+ChatInput and opens the authenticated Studio assistant.
+
 `GalleryLightbox` from `@shared/ui/dialog` provides a focus-trapped gallery dialog,
 previous/next navigation, arrow keys, thumbnails, and optional full-page links.
 Gallery Grid sections use it for authored images; homepage examples use the same

@@ -74,18 +74,20 @@ export function ProfileEditor({
   downloadHref = urls.next.studio.cv(),
   managed = false,
   onSaved,
+  initialTab = "Profile",
 }: {
   initial: ProfileSnapshot;
   saveUrl?: string;
   downloadHref?: string;
   managed?: boolean;
   onSaved?: (snapshot: ProfileSnapshot) => void;
+  initialTab?: (typeof tabs)[number];
 }) {
   const [saved, setSaved] = useState(initial);
   const [username, setUsername] = useState(initial.username ?? "");
   const [draft, setDraft] = useState(initial.profile);
   const [isPublic, setIsPublic] = useState(initial.isPublic ?? false);
-  const [tab, setTab] = useState<(typeof tabs)[number]>("Profile");
+  const [tab, setTab] = useState<(typeof tabs)[number]>(initialTab);
   const request = useStudioRequest();
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
