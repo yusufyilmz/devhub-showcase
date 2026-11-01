@@ -31,13 +31,24 @@ describe("Edit", () => {
   });
 
   it("lets the owner edit a private CV", async () => {
-    const snapshot = { isPublic: false, revision: 1, username: "alice" };
+    const snapshot = {
+      isPublic: false,
+      profile: { name: "Alice" },
+      revision: 1,
+      username: "alice",
+    };
     mocks.workspace.mockResolvedValue({
       repository: { read: async () => snapshot },
+      user: { app_metadata: { role: "owner" }, email: "alice@example.test", id: "owner-id" },
     });
     const result = await EditPage({
       params: Promise.resolve({ username: "alice" }),
     });
-    expect(result.props.initial).toBe(snapshot);
+    expect(result.props.children[1].props.initial).toBe(snapshot);
+    expect(result.props.children[0].props.user).toEqual({
+      email: "alice@example.test",
+      id: "owner-id",
+      name: "Alice",
+    });
   });
 });
