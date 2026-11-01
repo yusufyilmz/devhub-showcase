@@ -55,17 +55,27 @@ export interface PremiumUsage {
 /** Invoke only with server-resolved identities and a trusted reservation adapter. */
 export async function runPremiumOperation<T>(
   usage: PremiumUsage,
-  input: { accountId: string; profileId: string; feature: PremiumFeature; requestId: string },
+  input: {
+    accountId: string;
+    profileId: string;
+    feature: PremiumFeature;
+    requestId: string;
+    signal?: AbortSignal;
+  },
   operation: () => Promise<T>,
 ): Promise<T> {
   z.uuid().parse(input.accountId);
   z.uuid().parse(input.requestId);
   featureSchema.parse(input.feature);
+  input.signal?.throwIfAborted();
   if (!(await usage.reserve(input.accountId, input.profileId, input.feature, input.requestId)))
     throw new Error("Premium access unavailable or allowance exhausted.");
   let value: T;
   try {
+    // A cancellation during reservation still consumes the reserved attempt.
+    input.signal?.throwIfAborted();
     value = await operation();
+    input.signal?.throwIfAborted();
   } catch (error) {
     await usage.finish(input.requestId, "failed").catch(() => undefined);
     throw error;

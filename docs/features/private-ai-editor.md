@@ -28,6 +28,8 @@ GET/POST `/api/admin/assistant` require confirmed ownership through the existing
 
 Paid calls reserve a studio_assistant attempt before invoking the model. Missing configuration, expired grants, foreign assignments, exhausted quotas and failed reservations deny access. Private portfolios are supported; public chat opt-in is not required. Separate Redis limits permit ten owner attempts per hour and one hundred globally per day, independent of the billing period allowance. Failed, aborted and uncertain attempts count, as established by billing. Oversized context is rejected before reserving usage. There are no automatic provider retries or refunds.
 
+The route starts its 45 second cancellation budget before workspace lookup and passes the same signal to usage accounting and the model. A canceled request is checked before reservation, after reservation and after generation. Cancellation before reservation consumes no billing allowance. Cancellation during reservation keeps the reserved attempt, records failure when possible and skips the provider. A result arriving after cancellation is rejected. Cancellation does not interrupt an in-flight database reservation or outcome update.
+
 Responses are private/no-store. Prompts, private drafts, provider responses and upstream errors are not logged by this path. Errors preserve the local draft. The route never calls save, publishes, transfers ownership or edits a billing grant. User actions in the existing Save changes workflow are required to persist anything.
 
 ## Configuration and verification

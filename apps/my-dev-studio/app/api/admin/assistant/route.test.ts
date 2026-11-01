@@ -130,4 +130,36 @@ describe("Assistant", () => {
     expect(mocks.rate).not.toHaveBeenCalled();
     expect(mocks.reserve).not.toHaveBeenCalled();
   });
+  it("does not authorize, reserve or call the provider for an aborted request", async () => {
+    const response = await POST(
+      new Request("https://example.test/api/admin/assistant", {
+        body: JSON.stringify(input),
+        headers: { origin: "https://example.test" },
+        method: "POST",
+        signal: AbortSignal.abort(),
+      }),
+    );
+    expect(response.status).toBe(503);
+    expect(mocks.workspace).not.toHaveBeenCalled();
+    expect(mocks.reserve).not.toHaveBeenCalled();
+    expect(mocks.propose).not.toHaveBeenCalled();
+  });
+  it("records the attempt without starting the provider if canceled during reservation", async () => {
+    const controller = new AbortController();
+    mocks.reserve.mockImplementation(async () => {
+      controller.abort();
+      return true;
+    });
+    const response = await POST(
+      new Request("https://example.test/api/admin/assistant", {
+        body: JSON.stringify(input),
+        headers: { origin: "https://example.test" },
+        method: "POST",
+        signal: controller.signal,
+      }),
+    );
+    expect(response.status).toBe(503);
+    expect(mocks.propose).not.toHaveBeenCalled();
+    expect(mocks.finish).toHaveBeenCalledWith(input.requestId, "failed");
+  });
 });

@@ -130,4 +130,20 @@ describe("PremiumChat", () => {
     expect(mocks.answer).toHaveBeenCalledTimes(1);
     expect(mocks.finish).toHaveBeenCalledWith(input.requestId, "failed");
   });
+  it("does not read profiles, reserve or call the provider after cancellation", async () => {
+    await expect(answerPremiumChat(input, AbortSignal.abort())).rejects.toThrow();
+    expect(mocks.read).not.toHaveBeenCalled();
+    expect(mocks.reserve).not.toHaveBeenCalled();
+    expect(mocks.answer).not.toHaveBeenCalled();
+  });
+  it("does not invoke the provider when the deadline expires during reservation", async () => {
+    const controller = new AbortController();
+    mocks.reserve.mockImplementation(async () => {
+      controller.abort();
+      return true;
+    });
+    await expect(answerPremiumChat(input, controller.signal)).rejects.toThrow();
+    expect(mocks.answer).not.toHaveBeenCalled();
+    expect(mocks.finish).toHaveBeenCalledWith(input.requestId, "failed");
+  });
 });
