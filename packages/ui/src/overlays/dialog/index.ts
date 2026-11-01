@@ -10,3 +10,4 @@ export {
   DialogTitle,
   DialogTrigger,
 } from "./Dialog";
+export { GalleryLightbox, type GalleryLightboxItem } from "./GalleryLightbox";
