@@ -5,6 +5,8 @@ import { useState } from "react";
 import type { Language } from "@shared/config";
 import { getPortfolioCopy } from "@shared/config";
 
+import { Button } from "../button";
+
 export interface LocationMapProps {
   language?: Language;
   latitude: number;
@@ -27,9 +29,9 @@ export function LocationMap({ latitude, longitude, title, language }: LocationMa
       {loaded ? (
         <iframe loading="lazy" referrerPolicy="no-referrer" src={url} title={title} />
       ) : (
-        <button onClick={() => setLoaded(true)} type="button">
+        <Button onClick={() => setLoaded(true)} type="button">
           {text.loadMap}
-        </button>
+        </Button>
       )}
       <p>
         <a

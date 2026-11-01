@@ -7,10 +7,14 @@ import {
   getPortfolioCopy,
   getSocialWork,
 } from "@shared/config";
+import { Button } from "@shared/ui/button";
+import { Card } from "@shared/ui/card";
 import { ContactForm } from "@shared/ui/contact-form";
+import { Input } from "@shared/ui/input";
 import { LocationMap } from "@shared/ui/map";
 import type { SectionItem } from "@shared/ui/section";
 import { SectionAccordion, SectionCarousel, SectionGrid, SectionTabs } from "@shared/ui/section";
+import { Textarea } from "@shared/ui/textarea";
 
 import { HeroSurface } from "../../portfolio/hero-surface";
 import { WorkMedia } from "../../portfolio/work-media";
@@ -113,7 +117,7 @@ export function CollectionView({
     id: item.id,
     title: item.title,
   }));
-  const props = { items, label: section.title };
+  const props = { items, label: section.title, surface: "portfolio" as const };
   if (section.renderer === "accordion") return <SectionAccordion {...props} />;
   if (section.renderer === "tabs") return <SectionTabs {...props} />;
   if (section.renderer === "carousel") return <SectionCarousel {...props} />;
@@ -125,10 +129,12 @@ export function CollectionView({
     return (
       <div className="section-masonry">
         {items.map((item) => (
-          <article key={item.id}>
-            <h3>{item.title}</h3>
-            {item.content}
-          </article>
+          <Card asChild layout="plain" surface="portfolio" key={item.id}>
+            <article>
+              <h3>{item.title}</h3>
+              {item.content}
+            </article>
+          </Card>
         ))}
       </div>
     );
@@ -146,10 +152,12 @@ export function CollectionView({
   return (
     <div className="section-prose">
       {items.map((item) => (
-        <article key={item.id}>
-          {section.renderer !== "text" && <h3>{item.title}</h3>}
-          {item.content}
-        </article>
+        <Card asChild layout="plain" surface="portfolio" key={item.id}>
+          <article>
+            {section.renderer !== "text" && <h3>{item.title}</h3>}
+            {item.content}
+          </article>
+        </Card>
       ))}
     </div>
   );
@@ -170,15 +178,15 @@ export function SpecialView({
           <div className="section-contact-form">
             <label>
               {text.formEmail}
-              <input disabled type="email" />
+              <Input disabled type="email" />
             </label>
             <label>
               {text.formMessage}
-              <textarea disabled rows={4} />
+              <Textarea disabled rows={4} />
             </label>
-            <button disabled type="button">
+            <Button disabled type="button">
               {text.formOpenEmail}
-            </button>
+            </Button>
             <p>{text.formEmailNotice}</p>
           </div>
         ) : (
@@ -209,9 +217,9 @@ export function SpecialView({
       );
     case "newsletter":
       return options.actionUrl && safeLink(options.actionUrl) ? (
-        <a className="section-action" href={options.actionUrl}>
+        <Button className="section-action" href={options.actionUrl}>
           {text.subscribe} ↗
-        </a>
+        </Button>
       ) : null;
     case "heading":
       return null;

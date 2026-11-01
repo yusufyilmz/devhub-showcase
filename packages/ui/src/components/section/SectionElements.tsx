@@ -2,41 +2,65 @@
 
 import { type ReactNode, useId, useRef, useState } from "react";
 
+import { Button } from "../button";
+import { Card } from "../card";
+
 export type SectionItem = { id: string; title: string; content: ReactNode };
 
 export function SectionGrid({
   items,
   label,
   variant = "cards",
+  surface = "semantic",
 }: {
   items: SectionItem[];
   label: string;
   variant?: "cards" | "gallery";
+  surface?: "semantic" | "portfolio";
 }) {
   return (
     <ul aria-label={label} className={`section-view-grid section-view-${variant}`}>
       {items.map((item) => (
-        <li key={item.id}>
-          <h3>{item.title}</h3>
-          {item.content}
-        </li>
+        <Card asChild layout="plain" surface={surface} key={item.id}>
+          <li>
+            <h3>{item.title}</h3>
+            {item.content}
+          </li>
+        </Card>
       ))}
     </ul>
   );
 }
-export function SectionAccordion({ items, label }: { items: SectionItem[]; label: string }) {
+export function SectionAccordion({
+  items,
+  label,
+  surface = "semantic",
+}: {
+  items: SectionItem[];
+  label: string;
+  surface?: "semantic" | "portfolio";
+}) {
   return (
     <section aria-label={label} className="section-view-accordion">
       {items.map((item) => (
-        <details key={item.id}>
-          <summary>{item.title}</summary>
-          <div>{item.content}</div>
-        </details>
+        <Card asChild layout="plain" surface={surface} interaction="static" key={item.id}>
+          <details>
+            <summary>{item.title}</summary>
+            <div>{item.content}</div>
+          </details>
+        </Card>
       ))}
     </section>
   );
 }
-export function SectionTabs({ items, label }: { items: SectionItem[]; label: string }) {
+export function SectionTabs({
+  items,
+  label,
+}: {
+  items: SectionItem[];
+  label: string;
+  surface?: "semantic" | "portfolio";
+}) {
   const [selected, setSelected] = useState("");
   const id = useId();
   const buttons = useRef<Array<HTMLButtonElement | null>>([]);
@@ -56,7 +80,7 @@ export function SectionTabs({ items, label }: { items: SectionItem[]; label: str
     <section aria-label={label} className="section-view-tabs">
       <div aria-label={label} role="tablist">
         {items.map((item, n) => (
-          <button
+          <Button
             aria-controls={`${id}-panel-${n}`}
             aria-selected={n === index}
             id={`${id}-tab-${n}`}
@@ -83,7 +107,7 @@ export function SectionTabs({ items, label }: { items: SectionItem[]; label: str
             type="button"
           >
             {item.title}
-          </button>
+          </Button>
         ))}
       </div>
       {items.map((item, n) => (
@@ -105,11 +129,13 @@ export function SectionCarousel({
   label,
   previousLabel = "Previous items",
   nextLabel = "Next items",
+  surface = "semantic",
 }: {
   items: SectionItem[];
   label: string;
   previousLabel?: string;
   nextLabel?: string;
+  surface?: "semantic" | "portfolio";
 }) {
   const list = useRef<HTMLUListElement>(null);
   const id = useId();
@@ -127,24 +153,26 @@ export function SectionCarousel({
   return (
     <section aria-label={label} className="section-view-carousel">
       <div className="section-view-controls">
-        <button
+        <Button
           aria-controls={id}
           aria-label={previousLabel}
           onClick={() => move(-1)}
           type="button"
         >
           ←
-        </button>
-        <button aria-controls={id} aria-label={nextLabel} onClick={() => move(1)} type="button">
+        </Button>
+        <Button aria-controls={id} aria-label={nextLabel} onClick={() => move(1)} type="button">
           →
-        </button>
+        </Button>
       </div>
       <ul id={id} ref={list}>
         {items.map((item) => (
-          <li key={item.id}>
-            <h3>{item.title}</h3>
-            {item.content}
-          </li>
+          <Card asChild layout="plain" surface={surface} key={item.id}>
+            <li>
+              <h3>{item.title}</h3>
+              {item.content}
+            </li>
+          </Card>
         ))}
       </ul>
     </section>

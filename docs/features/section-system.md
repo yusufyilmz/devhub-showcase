@@ -100,3 +100,11 @@ References for YouTube behavior: [official embed guidance](https://support.googl
 All 42 PageForge section families now have explicit renderer/editor folders in @shared/components/sections, alongside native custom/services/social sections. New sectionType and compatible options/source fields extend custom sections without changing legacy instances. The source mapping and integration boundaries are listed in [the PageForge migration map](../reference/pageforge-section-migration.md).
 
 Templates are versioned JSON and are saved separately to an account-private library with owner RLS and optimistic revisions. Export defaults to configuration only. Native and compatible PageForge imports are reviewed before applying fresh section/item IDs to a draft; identity, sharing and CV content remain independent. Profile-source bindings are resolved from the current canonical document and public project filtering applies independently of the built-in project section selection.
+
+## Component reuse and stories
+
+Homepage sections now live alongside the section variants in `packages/components/src/sections/variants/home-section`. App features import them through `@shared/components/sections`; the old containers entry point is removed. The existing published section schema and registry are unchanged.
+
+The homepage catalog derives its 47 names from `authorableSectionTypes`, with a labelled search field, category filters, result count and empty state. It uses the shared Input, Label, Badge, Button and Card controls. Shared section grids, native accordions, carousels and masonry views use Card surfaces; tab and carousel actions use Button. Native details behavior and existing tab keyboard behavior are preserved.
+
+Each registered authorable section has colocated Default, Compact and Empty stories. Shared UI stories cover the controls and compositions independently. Use the Storybook brand and mode toolbar to review semantic controls. Homepage and section stories use a scoped portfolio palette; they do not load legacy global CSS into primitive stories.

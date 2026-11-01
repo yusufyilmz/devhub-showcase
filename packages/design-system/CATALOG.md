@@ -51,3 +51,5 @@ The app-only `legacy.css` entry also maps semantic control colors to the current
 RGB page palette. Home, sign-in and studio controls therefore follow the same
 persisted color mode and accent as their surrounding page. Storybook's semantic
 entry remains independent and retains its brand palettes.
+
+`@shared/design-system/home.css` contains the homepage section layouts and searchable section catalog. The app and homepage stories import this same stylesheet.

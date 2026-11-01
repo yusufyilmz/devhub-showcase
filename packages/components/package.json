@@ -15,7 +15,6 @@
     "./forms": "./src/forms/index.ts",
     "./editor": "./src/editor/index.ts",
     "./login": "./src/auth/login-panel.tsx",
-    "./containers": "./src/containers/index.ts",
     "./studio": "./src/studio/index.ts",
     "./studio/examples.css": "./src/studio/examples/examples.css"
   },

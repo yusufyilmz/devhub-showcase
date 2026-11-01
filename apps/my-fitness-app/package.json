@@ -3,7 +3,7 @@
   "version": "2.1.0",
   "private": true,
   "scripts": {
-    "build": "next build --webpack --port=3002",
+    "build": "next build --webpack",
     "clean": "node -e \"require('node:fs').rmSync('.next',{recursive:true,force:true})\"",
     "dev": "next dev --webpack --port=3002",
     "format": "biome format --write .",

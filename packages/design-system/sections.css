@@ -61,7 +61,7 @@
   padding: 1rem;
   overflow: auto;
   white-space: pre;
-  background: rgb(var(--surface-rgb));
+  background: var(--card);
   border-radius: 12px;
 }
 .section-timeline {
@@ -81,7 +81,7 @@
 .section-masonry article {
   padding: 1.25rem;
   margin-bottom: 1.5rem;
-  border: 1px solid rgb(var(--border-rgb));
+  border: 1px solid var(--border);
   border-radius: 16px;
   break-inside: avoid;
 }
@@ -119,8 +119,8 @@
   padding: 0.75rem;
   font: inherit;
   color: rgb(var(--text-rgb));
-  background: rgb(var(--surface-rgb));
-  border: 1px solid rgb(var(--border-rgb));
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 8px;
 }
 .section-contact-form button,
@@ -129,8 +129,8 @@
   font: inherit;
   color: rgb(var(--text-rgb));
   cursor: pointer;
-  background: rgb(var(--surface-rgb));
-  border: 1px solid rgb(var(--border-rgb));
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 8px;
 }
 .section-location iframe {
@@ -172,8 +172,8 @@
   color: rgb(var(--text-rgb));
   overflow-wrap: anywhere;
   cursor: pointer;
-  background: rgb(var(--surface-rgb));
-  border: 1px solid rgb(var(--border-rgb));
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 8px;
 }
 .template-library button:disabled {
@@ -192,7 +192,7 @@
   gap: 0.65rem;
   align-items: center;
   padding: 1rem;
-  border: 1px solid rgb(var(--border-rgb));
+  border: 1px solid var(--border);
   border-radius: 12px;
 }
 .template-library label {
@@ -201,4 +201,107 @@
 .template-library .editor-actions {
   flex-wrap: wrap;
   gap: 0.75rem;
+}
+
+.section-view-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+.section-view-grid > li,
+.section-view-carousel > ul > li {
+  min-width: 0;
+  padding: 1.25rem;
+  overflow-wrap: anywhere;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+.section-view-gallery img {
+  width: 100%;
+  height: auto;
+}
+.section-view-accordion details {
+  padding: 1rem;
+  border-bottom: 1px solid rgb(var(--border-rgb));
+}
+.section-view-accordion summary {
+  font-weight: 600;
+  cursor: pointer;
+}
+.section-view-accordion details > div {
+  padding-top: 1rem;
+}
+.section-view-tabs [role="tablist"],
+.section-view-controls {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+}
+.work-media button {
+  padding: 10px 14px;
+  font: inherit;
+  color: rgb(var(--text-rgb));
+  cursor: pointer;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.section-view-controls button,
+.section-view-tabs [role="tablist"] > button {
+  padding: 0.75rem 1rem;
+  font: inherit;
+  color: rgb(var(--text-rgb));
+  cursor: pointer;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.section-view-tabs [aria-selected="true"] {
+  border-color: rgb(var(--accent-rgb));
+}
+.section-view-tabs [role="tabpanel"] {
+  padding-block: 1rem;
+}
+.section-view-carousel > ul {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  overflow-x: auto;
+  list-style: none;
+  scroll-snap-type: x mandatory;
+}
+.section-view-carousel > ul > li {
+  flex: 0 0 85%;
+  scroll-snap-align: start;
+}
+@media (min-width: 700px) {
+  .section-view-carousel > ul > li {
+    flex-basis: calc(50% - 0.5rem);
+  }
+}
+
+.section-view-accordion details {
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.section-view-accordion summary {
+  padding: 4px;
+  border-radius: 6px;
+}
+.section-view-accordion summary:focus-visible {
+  outline: 2px solid rgb(var(--accent-rgb));
+  outline-offset: 4px;
+}
+.section-view-accordion details[open] {
+  border-color: rgb(var(--accent-rgb) / 0.55);
+}
+.section-view-accordion details + details {
+  margin-top: 12px;
+}
+.section-view-tabs [role="tablist"] {
+  flex-wrap: wrap;
 }

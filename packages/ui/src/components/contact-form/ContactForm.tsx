@@ -4,6 +4,10 @@ import { useId } from "react";
 
 import { getPortfolioCopy, type Language } from "@shared/config";
 
+import { Button } from "../button";
+import { Input } from "../input";
+import { Textarea } from "../textarea";
+
 export function ContactForm({ email, language }: { email: string; language?: Language }) {
   const text = getPortfolioCopy(language);
   const id = useId();
@@ -17,12 +21,12 @@ export function ContactForm({ email, language }: { email: string; language?: Lan
       }}
     >
       <label htmlFor={`${id}-email`}>{text.formEmail}</label>
-      <input id={`${id}-email`} name="email" required type="email" />
+      <Input id={`${id}-email`} name="email" required type="email" />
       <label htmlFor={`${id}-subject`}>{text.formSubject}</label>
-      <input id={`${id}-subject`} maxLength={200} name="subject" required />
+      <Input id={`${id}-subject`} maxLength={200} name="subject" required />
       <label htmlFor={`${id}-message`}>{text.formMessage}</label>
-      <textarea id={`${id}-message`} maxLength={6000} name="message" required rows={5} />
-      <button type="submit">{text.formOpenEmail}</button>
+      <Textarea id={`${id}-message`} maxLength={6000} name="message" required rows={5} />
+      <Button type="submit">{text.formOpenEmail}</Button>
       <p>{text.formEmailNotice}</p>
     </form>
   );

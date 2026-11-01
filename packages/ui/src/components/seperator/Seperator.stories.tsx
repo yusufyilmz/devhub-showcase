@@ -52,3 +52,25 @@ export const Vertical: Story = {
     orientation: "vertical",
   },
 };
+
+export const NarrowCanvas: StoryObj<typeof meta> = {
+  ...Default,
+  decorators: [
+    (Story) => (
+      <div style={{ width: "100%", maxWidth: 320 }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
+
+export const WideCanvas: StoryObj<typeof meta> = {
+  ...Default,
+  decorators: [
+    (Story) => (
+      <div style={{ width: "100%", maxWidth: 960 }}>
+        <Story />
+      </div>
+    ),
+  ],
+};

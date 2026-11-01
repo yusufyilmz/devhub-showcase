@@ -259,3 +259,25 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Demo: Story = {};
+
+export const NarrowCanvas: StoryObj<typeof meta> = {
+  ...Demo,
+  decorators: [
+    (Story) => (
+      <div style={{ width: "100%", maxWidth: 320 }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
+
+export const WideCanvas: StoryObj<typeof meta> = {
+  ...Demo,
+  decorators: [
+    (Story) => (
+      <div style={{ width: "100%", maxWidth: 960 }}>
+        <Story />
+      </div>
+    ),
+  ],
+};

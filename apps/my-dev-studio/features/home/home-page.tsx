@@ -1,17 +1,17 @@
 import {
-  Capabilities,
-  Faq,
-  Features,
-  Final,
-  Footer,
-  Header,
-  Hero,
-  Library,
-  Options,
+  HomeCapabilitiesSection,
+  HomeCTASection,
+  HomeFAQSection,
+  HomeFeaturesSection,
+  HomeFooter,
+  HomeHeader,
+  HomeHeroSection,
+  HomeLibrarySection,
+  HomeOptionsSection,
+  HomePricingSection,
+  HomeProcessSection,
   type PageAction,
-  Pricing,
-  Process,
-} from "@shared/components/containers";
+} from "@shared/components/sections";
 import { ExampleCarousel } from "@shared/components/studio";
 
 export function HomePage({
@@ -26,20 +26,20 @@ export function HomePage({
       <a className="skip-link" href="#home-content">
         Skip to content
       </a>
-      <Header action={action} />
+      <HomeHeader action={action} />
       <main id="home-content">
-        <Hero action={action} exampleHref={exampleHref} />
-        <Capabilities />
+        <HomeHeroSection action={action} exampleHref={exampleHref} />
+        <HomeCapabilitiesSection />
         <ExampleCarousel />
-        <Features />
-        <Options />
-        <Pricing action={action} />
-        <Library href={action.href} />
-        <Process />
-        <Faq />
-        <Final action={action} />
+        <HomeFeaturesSection />
+        <HomeOptionsSection />
+        <HomePricingSection action={action} />
+        <HomeLibrarySection href={action.href} />
+        <HomeProcessSection />
+        <HomeFAQSection />
+        <HomeCTASection action={action} />
       </main>
-      <Footer action={action} />
+      <HomeFooter action={action} />
     </div>
   );
 }

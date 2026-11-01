@@ -44,6 +44,22 @@ export {
 } from "./gallery-grid-section";
 export { HeadingSection, HeadingSectionEditor } from "./heading-section";
 export { HeroSection, HeroSectionEditor } from "./hero-section";
+export {
+  HomeCapabilitiesSection,
+  HomeCTASection,
+  HomeFAQSection,
+  HomeFeaturesSection,
+  HomeFooter,
+  HomeHeader,
+  HomeHeroSection,
+  HomeLibrarySection,
+  HomeOptionsSection,
+  HomePricingSection,
+  HomeProcessSection,
+  LibraryPicker,
+  type PageAction,
+  PortfolioPreview,
+} from "./home-section";
 export { HowToSection, HowToSectionEditor } from "./how-to-section";
 export { InstagramSection, InstagramSectionEditor } from "./instagram-section";
 export { LegalTextSection, LegalTextSectionEditor } from "./legal-text-section";

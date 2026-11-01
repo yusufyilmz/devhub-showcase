@@ -118,3 +118,9 @@ Each content section lives in `src/sections/variants/{name}`. Most export the se
 | `VideoSection`                                          | editor                                                                                                          |
 | `WorkExperienceSection`                                 | editor                                                                                                          |
 | `YouTubeSection`                                        | editor                                                                                                          |
+
+## Homepage sections
+
+Import homepage compositions from `@shared/components/sections`. They live in `src/sections/variants/home-section` and replace the removed `containers` entry point. `HomeHeroSection`, `HomeFeaturesSection`, `HomeOptionsSection`, `HomePricingSection`, `HomeLibrarySection`, `HomeProcessSection`, `HomeFAQSection`, `HomeCTASection` and `HomeCapabilitiesSection` compose shared controls and surfaces. `HomeHeader`, `HomeFooter`, `PortfolioPreview` and `LibraryPicker` support that composition. Session decisions and navigation remain app props.
+
+All 47 registered authorable sections have colocated Default, Compact and Empty stories using fictional fixtures from `src/sections/__fixtures__/section-story.ts`. `SectionCatalog` provides a searchable name/category browser for the same registry, without copying its list into another data source.

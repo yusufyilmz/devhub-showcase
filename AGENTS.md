@@ -39,6 +39,14 @@ App routes stay in `apps/my-dev-studio/app`. App-only data access stays in `apps
 
 Import portable UI from `@shared/components` (`studio`, `layout`, `portfolio`, `sections`). Do not add a feature file that only re-exports a shared component. Do not move auth, database access, or route handlers into `packages/components`. Pass fetching and navigation in from the app.
 
+## Reuse shared components
+
+Before creating a component, search `@shared/ui`, `@shared/components/sections`, and their catalogs. Reuse an existing component or add a small variant when it can satisfy the page. Create a new component only when the existing ones cannot meet the requirement; explain that gap in the PR.
+
+Homepage compositions live in `packages/components/src/sections/variants/home-section` and use shared UI controls and surfaces. Do not recreate the removed `containers` package entry point or duplicate its components in app features. Import the homepage variants from `@shared/components/sections`.
+
+Colocate simple stories with each new or changed component and section. Cover the populated/default state, a narrow or compact layout, and the relevant empty, disabled or expanded state. Keep fixtures fictional and free of live account requests. Check existing stories before adding another story for the same behavior.
+
 ## Where code goes
 
 Follow the first matching question. Stop at the first yes.
