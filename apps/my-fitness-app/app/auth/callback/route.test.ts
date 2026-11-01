@@ -14,9 +14,9 @@ vi.mock("@shared/auth/server", () => ({
   createRequestClient: () => ({ auth: bearer }),
 }));
 
-import { POST } from "../app/api/auth/session/route";
-import { GET } from "../app/auth/callback/route";
-import { requestIdentity } from "../lib/auth";
+import { requestIdentity } from "../../../lib/auth";
+import { POST } from "../../api/auth/session/route";
+import { GET } from "./route";
 
 const owner = "00000000-0000-4000-8000-000000000001";
 
