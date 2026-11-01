@@ -37,26 +37,32 @@ const ChatControls: React.FC<ChatSectionProps> = ({ handleSendMessage }) => {
 
   return (
     <>
-      <div className="fixed bottom-8 right-8 flex flex-col gap-4 z-[200]">
+      <div className="fixed bottom-6 right-4 flex flex-col gap-3 z-[200] sm:right-8">
         <IconButton
           aria-label={"Resume Chat"}
-          className="icon-button"
+          className="rounded-full"
           onClick={() => {
             setType("cv");
             setIsOpen(!isOpen);
           }}
+          size="lg"
+          surface="portfolio"
+          variant="outline"
         >
-          <ChatIcon fontSize="xlarge" />
+          <ChatIcon fontSize="medium" />
         </IconButton>
         <IconButton
           aria-label={"Referral Chat"}
-          className="icon-button"
+          className="rounded-full"
           onClick={() => {
             setType("referral");
             setIsOpen(!isOpen);
           }}
+          size="lg"
+          surface="portfolio"
+          variant="outline"
         >
-          <ReferralIcon fontSize="xlarge" />
+          <ReferralIcon fontSize="medium" />
         </IconButton>
       </div>
       {isOpen && (

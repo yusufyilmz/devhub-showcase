@@ -151,3 +151,9 @@ migrates older theme keys, and follows device changes for system mode. The page
 shell's pre-paint script reads the same storage format. Theme defaults and
 portfolio palettes remain authored profile settings; a browser preference does
 not modify a saved portfolio.
+
+`IconButton` supports `surface="portfolio"` for controls inside published
+portfolios. Use it for menu, chat and scroll controls so their foreground,
+surface, border and focus ring all resolve from the same portfolio palette.
+Icons inherit `currentColor`; use a 24px icon inside the 44px large control.
+`IconButtonWithLink` renders one link rather than nesting a button inside it.

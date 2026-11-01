@@ -104,3 +104,40 @@
     linear-gradient(#fff 0 0);
   mask-composite: exclude;
 }
+
+/* Keep portfolio icon foregrounds and backgrounds in the same palette. */
+.ui-icon-button[data-surface="portfolio"] {
+  --primary: rgb(var(--surface-rgb));
+  --primary-foreground: rgb(var(--text-rgb));
+  --background: rgb(var(--surface-rgb));
+  --foreground: rgb(var(--text-rgb));
+  --secondary: rgb(var(--surface-soft-rgb));
+  --secondary-foreground: rgb(var(--text-rgb));
+  --accent: rgb(var(--surface-soft-rgb));
+  --accent-foreground: rgb(var(--text-rgb));
+  --border: rgb(var(--border-rgb));
+  --ring: rgb(var(--accent-rgb));
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  box-shadow: var(--control-shadow);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+.ui-icon-button[data-surface="portfolio"]:hover {
+  border-color: rgb(var(--accent-rgb));
+}
+.ui-icon-button[data-surface="portfolio"]:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.ui-icon-button > svg {
+  flex-shrink: 0;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ui-icon-button[data-surface="portfolio"] {
+    transition: none;
+  }
+}

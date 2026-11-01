@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 
@@ -37,14 +38,31 @@ export interface IconButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof iconButtonVariants> {
   asChild?: boolean;
+  surface?: "semantic" | "portfolio";
 }
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    {
+      className,
+      variant = "default",
+      size,
+      asChild = false,
+      surface = "semantic",
+      type = "button",
+      ...props
+    },
+    ref,
+  ) => {
+    const Comp = asChild ? Slot : "button";
     return (
-      <button
-        className={cn(iconButtonVariants({ className, size, variant }))}
+      <Comp
+        className={cn("ui-icon-button", iconButtonVariants({ className, size, variant }))}
+        data-slot="icon-button"
+        data-surface={surface}
+        data-variant={variant}
         ref={ref}
+        type={asChild ? undefined : type}
         {...props}
       />
     );
@@ -66,10 +84,15 @@ export const IconButtonWithLink = ({
   className,
 }: IconButtonWithLinkProps) => {
   return (
-    <a href={href} rel="noopener noreferrer" target="_blank">
-      <IconButton aria-label={label} className={`icon-button ${className}`}>
+    <IconButton
+      aria-label={label}
+      asChild
+      className={`icon-button ${className ?? ""}`}
+      surface="portfolio"
+    >
+      <a href={href} rel="noopener noreferrer" target="_blank">
         {children}
-      </IconButton>
-    </a>
+      </a>
+    </IconButton>
   );
 };
