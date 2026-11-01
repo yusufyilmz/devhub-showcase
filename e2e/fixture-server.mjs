@@ -1,10 +1,10 @@
 import { createServer } from "node:http";
 
-import { profile } from "../packages/content/src/profile/profile.ts";
+import { profile } from "../packages/config/src/profile/profile.ts";
 import {
   authorableSectionTypes,
   getSectionRenderers,
-} from "../packages/content/src/sections/authorable-sections.ts";
+} from "../packages/config/src/sections/authorable-sections.ts";
 
 // Test-only transport fixture, never imported by application code. Public
 // records are read only. Two isolated fake accounts can save their own starter.

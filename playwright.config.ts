@@ -22,7 +22,7 @@ export default defineConfig({
       url: "http://127.0.0.1:3101/health",
     },
     {
-      command: "pnpm --filter web start --hostname 127.0.0.1 --port 3100",
+      command: "pnpm --filter my-dev-studio start --hostname 127.0.0.1 --port 3100",
       env: {
         NEXT_PUBLIC_SITE_URL: "http://localhost:3100",
         NEXT_PUBLIC_SUPABASE_ANON_KEY: "e2e-public-placeholder",
@@ -37,7 +37,7 @@ export default defineConfig({
       url: "http://localhost:3100",
     },
     {
-      command: "pnpm --filter web start --hostname 127.0.0.1 --port 3102",
+      command: "pnpm --filter my-dev-studio start --hostname 127.0.0.1 --port 3102",
       env: {
         NEXT_PUBLIC_SITE_URL: "http://localhost:3102",
         NEXT_PUBLIC_SUPABASE_ANON_KEY: "",
