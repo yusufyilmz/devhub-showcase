@@ -16,6 +16,7 @@ import {
   resolveSectionSource,
   type SectionComposition,
 } from "@shared/config";
+import { Button } from "@shared/ui/button";
 
 import { Field } from "../../forms/field";
 import { SelectField } from "../../forms/select-field";
@@ -96,14 +97,14 @@ export function CustomSectionsEditor({
           </option>
         ))}
       </SelectField>
-      <button
+      <Button
         className="studio-primary"
         disabled={sections.length >= MAX_CUSTOM_SECTIONS}
         onClick={() => change([...sections, createSection(starter)])}
         type="button"
       >
         Add custom section
-      </button>
+      </Button>
       {sections.map((section) => (
         <SectionEditor
           key={section.id}
@@ -213,17 +214,18 @@ function SectionEditor({
         sourceItems={sourceItems}
       />
       <div className="editor-actions">
-        <button
+        <Button
           className="studio-secondary"
           disabled={!onDuplicate}
           onClick={onDuplicate}
           type="button"
+          variant="outline"
         >
           Duplicate section
-        </button>
-        <button className="danger-button" onClick={onRemove} type="button">
+        </Button>
+        <Button className="danger-button" onClick={onRemove} type="button">
           Remove section
-        </button>
+        </Button>
       </div>
       <details>
         <summary>Preview {section.title}</summary>

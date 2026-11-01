@@ -126,3 +126,14 @@ Public components exported from `packages/ui/src/components/index.ts`. Import th
 | ---------------------------------------- | ------------------------------------------ | --------------------------------- |
 | `ThemeCustomizer`, `ComponentCustomizer` | `theme-customizer`, `component-customizer` | Live theme and component controls |
 | `MouseCircle`                            | `mouse-circle`                             | Pointer decoration                |
+
+### Shared product surfaces
+
+`Card` supports `asChild`, `layout="stack|plain"`,
+`surface="semantic|portfolio"`, and `interaction="static|lift"`.
+Use `asChild` to preserve section/article semantics without an extra wrapper.
+Use the portfolio adapter only on existing RGB portfolio/studio surfaces.
+`Button` supports native actions, link actions via `href`, and single-child
+composition via `asChild`. Links preserve accessibility attributes and disabled
+links have no navigation target. Inputs and textareas share the same focus treatment.
+See **UI Components / Card / Product Surfaces** in Storybook.

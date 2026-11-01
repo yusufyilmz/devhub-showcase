@@ -4,7 +4,6 @@ import "@shared/design-system/legacy.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { headers } from "next/headers";
-import { useCallback } from "react";
 
 import { PageShell } from "@shared/components/page";
 
@@ -45,7 +44,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     publicPortfolio ? profile : undefined,
     publicPortfolio ? portfolioUrl(snapshot.username as string) : undefined,
   );
-  const request = useCallback((input: string, init?: RequestInit) => fetch(input, init), []);
 
   return (
     <PageShell
@@ -53,7 +51,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       bodyClassName={`${geistSans.variable} ${geistMono.variable} antialiased`}
       documentLanguage={documentLanguage}
       portfolioTheme={portfolioTheme}
-      request={request}
       storageKey={storageKey}
       structuredData={structuredData}
     >

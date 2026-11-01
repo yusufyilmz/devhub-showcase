@@ -2,6 +2,9 @@
 
 import { useId } from "react";
 
+import { Input } from "@shared/ui/input";
+import { Textarea } from "@shared/ui/textarea";
+
 export function Field({
   label,
   value,
@@ -24,7 +27,7 @@ export function Field({
     <label className={multiline ? "editor-field full-width" : "editor-field"} htmlFor={fieldId}>
       <span>{label}</span>
       {multiline ? (
-        <textarea
+        <Textarea
           id={fieldId}
           onChange={(event) => onChange(event.target.value)}
           required={required}
@@ -32,7 +35,7 @@ export function Field({
           value={value}
         />
       ) : (
-        <input
+        <Input
           id={fieldId}
           onChange={(event) => onChange(event.target.value)}
           required={required}

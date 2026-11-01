@@ -8,6 +8,8 @@ import {
   type OwnerPortfolioKnowledge,
   type PublicPortfolioKnowledge,
 } from "@shared/lib/portfolio-knowledge";
+import { Button } from "@shared/ui/button";
+import { Card } from "@shared/ui/card";
 
 import { useStudioRequest } from "../context/studio-request";
 
@@ -40,48 +42,51 @@ export function AiProfileEditor({ readUrl = "/api/admin/profile" }: { readUrl?: 
     return () => controller.abort();
   }, [refresh, readUrl, request]);
   return (
-    <section className="editor-card">
-      <h2>Your AI profile</h2>
-      <p>
-        This knowledge is derived from your saved information. Save draft changes, then reload to
-        inspect the new revision. Building it does not call OpenAI.
-      </p>
-      <p>
-        Public knowledge contains only visible portfolio content. The private owner profile includes
-        your full saved document for the future studio assistant. This screen does not enable public
-        chat.
-      </p>
-      <button
-        className="studio-secondary"
-        onClick={() => setRefresh((value) => value + 1)}
-        type="button"
-      >
-        Reload saved AI profile
-      </button>
-      <label className="editor-checkbox">
-        <input
-          checked={privateView}
-          onChange={(event) => setPrivateView(event.target.checked)}
-          type="checkbox"
-        />{" "}
-        Show private owner knowledge
-      </label>
-      {error && <p role="alert">{error}</p>}
-      {!data && !error && <p role="status">Loading saved knowledge…</p>}
-      {data && (
-        <>
-          <p>
-            Saved revision {data.owner.source.revision} · Schema {data.owner.schemaVersion}
-          </p>
-          {!privateView && !data.public ? (
-            <p>Your portfolio is private. No public AI knowledge is available.</p>
-          ) : (
-            <pre className="ai-profile-json">
-              {JSON.stringify(privateView ? data.owner : data.public, null, 2)}
-            </pre>
-          )}
-        </>
-      )}
-    </section>
+    <Card asChild layout="plain" surface="portfolio">
+      <section className="editor-card">
+        <h2>Your AI profile</h2>
+        <p>
+          This knowledge is derived from your saved information. Save draft changes, then reload to
+          inspect the new revision. Building it does not call OpenAI.
+        </p>
+        <p>
+          Public knowledge contains only visible portfolio content. The private owner profile
+          includes your full saved document for the future studio assistant. This screen does not
+          enable public chat.
+        </p>
+        <Button
+          className="studio-secondary"
+          onClick={() => setRefresh((value) => value + 1)}
+          type="button"
+          variant="outline"
+        >
+          Reload saved AI profile
+        </Button>
+        <label className="editor-checkbox">
+          <input
+            checked={privateView}
+            onChange={(event) => setPrivateView(event.target.checked)}
+            type="checkbox"
+          />{" "}
+          Show private owner knowledge
+        </label>
+        {error && <p role="alert">{error}</p>}
+        {!data && !error && <p role="status">Loading saved knowledge…</p>}
+        {data && (
+          <>
+            <p>
+              Saved revision {data.owner.source.revision} · Schema {data.owner.schemaVersion}
+            </p>
+            {!privateView && !data.public ? (
+              <p>Your portfolio is private. No public AI knowledge is available.</p>
+            ) : (
+              <pre className="ai-profile-json">
+                {JSON.stringify(privateView ? data.owner : data.public, null, 2)}
+              </pre>
+            )}
+          </>
+        )}
+      </section>
+    </Card>
   );
 }

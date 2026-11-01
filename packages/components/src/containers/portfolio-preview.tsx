@@ -3,6 +3,7 @@
 import { type CSSProperties, useId, useRef, useState } from "react";
 
 import { getPreviewAccent } from "@shared/config";
+import { Button } from "@shared/ui/button";
 
 const views = ["Portfolio", "CV"] as const;
 function tabIndexForKey(key: string, index: number) {
@@ -21,7 +22,7 @@ export function PortfolioPreview() {
       <div className="home-preview-tools">
         <div aria-label="Example views" className="home-preview-tabs" role="tablist">
           {views.map((item, index) => (
-            <button
+            <Button
               aria-controls={`${id}-panel`}
               aria-selected={view === item}
               id={`${id}-${item}-tab`}
@@ -45,7 +46,7 @@ export function PortfolioPreview() {
               type="button"
             >
               {item}
-            </button>
+            </Button>
           ))}
         </div>
         <span className="home-preview-caption">Your story, two ways</span>
@@ -94,7 +95,7 @@ export function PortfolioPreview() {
                   <br />
                   and what makes it yours.
                 </p>
-                <button
+                <Button
                   onClick={() => {
                     setView("CV");
                     tabs.current[1]?.focus();
@@ -102,7 +103,7 @@ export function PortfolioPreview() {
                   type="button"
                 >
                   Preview your CV <span aria-hidden="true">↗</span>
-                </button>
+                </Button>
               </div>
               <div className="home-sample-work">
                 <span>SELECTED WORK</span>
@@ -170,7 +171,7 @@ export function PortfolioPreview() {
         <fieldset className="home-preview-colors">
           <legend className="sr-only">Preview accent color</legend>
           {accents.map((item) => (
-            <button
+            <Button
               aria-label={`Preview in ${item}`}
               aria-pressed={accent === item}
               className={`home-accent home-accent-${item}`}
@@ -179,7 +180,7 @@ export function PortfolioPreview() {
               type="button"
             >
               <span aria-hidden="true">{accent === item ? "✓" : ""}</span>
-            </button>
+            </Button>
           ))}
         </fieldset>
         <span className="home-preview-note">Illustrative preview</span>

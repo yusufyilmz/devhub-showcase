@@ -1,0 +1,81 @@
+/* One elevation and interaction system shared by product pages and Storybook. */
+:root {
+  --elevation-rest: 0 1px 2px rgb(0 0 0 / 0.04), 0 6px 20px rgb(0 0 0 / 0.06);
+  --elevation-hover: 0 3px 6px rgb(0 0 0 / 0.05), 0 16px 36px rgb(0 0 0 / 0.12);
+  --control-shadow: 0 1px 2px rgb(0 0 0 / 0.1), inset 0 1px 0 rgb(255 255 255 / 0.12);
+  --surface-duration: 220ms;
+}
+[data-theme="dark"] {
+  --elevation-rest: 0 2px 4px rgb(0 0 0 / 0.18), 0 8px 24px rgb(0 0 0 / 0.22);
+  --elevation-hover: 0 4px 8px rgb(0 0 0 / 0.2), 0 18px 40px rgb(0 0 0 / 0.35);
+}
+/* A local adapter preserves each published palette. It never rewrites root tokens. */
+.ui-card[data-surface="portfolio"] {
+  --card: rgb(var(--surface-rgb));
+  --card-foreground: rgb(var(--text-rgb));
+  --border: rgb(var(--border-rgb));
+}
+.ui-card[data-slot="card"] {
+  border-color: color-mix(in srgb, var(--border) 65%, transparent);
+  box-shadow:
+    var(--elevation-rest),
+    inset 0 1px 0 color-mix(in srgb, var(--card-foreground) 4%, transparent);
+  transition:
+    box-shadow var(--surface-duration) ease,
+    border-color var(--surface-duration) ease,
+    transform var(--surface-duration) ease;
+}
+.ui-card[data-interaction="lift"]:focus-within {
+  border-color: var(--border);
+  box-shadow: var(--elevation-hover);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ui-card[data-interaction="lift"]:hover {
+    border-color: var(--border);
+    box-shadow: var(--elevation-hover);
+    transform: translateY(-3px);
+  }
+}
+.ui-button[data-slot="button"] {
+  box-shadow: var(--control-shadow);
+  transition:
+    box-shadow 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+.ui-button[data-variant="link"],
+.ui-button[data-variant="ghost"],
+.ui-button[data-variant="text"] {
+  box-shadow: none;
+}
+.ui-button[data-slot="button"]:focus-visible,
+.ui-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.ui-button[data-slot="button"]:active:not(:disabled):not([aria-disabled="true"]) {
+  transform: translateY(1px);
+}
+.ui-button[aria-disabled="true"] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.ui-input {
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.04);
+}
+.account-feature-card {
+  padding: 24px;
+  margin-block: 16px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ui-card[data-slot="card"],
+  .ui-button[data-slot="button"],
+  .ui-input {
+    transition: none;
+  }
+  .ui-card[data-interaction="lift"]:hover,
+  .ui-button[data-slot="button"]:active {
+    transform: none;
+  }
+}

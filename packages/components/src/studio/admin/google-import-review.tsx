@@ -6,6 +6,7 @@ import {
   type GoogleImportField,
   type GoogleProfileReview,
 } from "@shared/lib/google-profile";
+import { Button } from "@shared/ui/button";
 
 import { Field } from "../../forms/field";
 
@@ -102,14 +103,14 @@ export function GoogleImportReview({
       {!valid && (
         <p role="alert">Check the selected values before applying. Your draft has not changed.</p>
       )}
-      <button
+      <Button
         className="studio-primary"
         disabled={!valid || selected.length === 0}
         onClick={onApply}
         type="button"
       >
         Apply selected Google details to draft
-      </button>
+      </Button>
     </section>
   );
 }

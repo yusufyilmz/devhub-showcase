@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { billingErrorMessage } from "@shared/lib/billing";
+import { Button } from "@shared/ui/button";
 
 import { useStudioRequest } from "../context/studio-request";
 
@@ -40,22 +41,23 @@ export function BillingControls() {
   }
   return (
     <>
-      <button
+      <Button
         className="studio-primary"
         disabled={busy}
         onClick={() => open("checkout")}
         type="button"
       >
         Try Pro checkout
-      </button>{" "}
-      <button
+      </Button>{" "}
+      <Button
         className="studio-secondary"
         disabled={busy}
         onClick={() => open("portal")}
         type="button"
+        variant="outline"
       >
         Manage subscription
-      </button>
+      </Button>
       {error && (
         <p aria-label="Billing error" role="alert">
           {error}

@@ -1,5 +1,6 @@
 import { RenderSection } from "@shared/components/section/renderers";
 import { authorableSections, authorableSectionTypes, type CustomSection } from "@shared/config";
+import { Button } from "@shared/ui/button";
 
 import { LibraryPicker } from "./library-picker";
 
@@ -136,9 +137,9 @@ export function Library({ href }: { href: string }) {
             Upload a PDF, DOCX or text CV. OpenAI extracts the details for you to review and edit.
             Apply only what you want, then save when you are ready.
           </p>
-          <a className="home-button home-button-primary" href={href}>
+          <Button className="home-button home-button-primary" href={href}>
             Start with your CV <span aria-hidden="true">↗</span>
-          </a>
+          </Button>
           <p className="home-sample-note">
             Sign in first. Import availability depends on the service configuration. Nothing is
             published automatically.

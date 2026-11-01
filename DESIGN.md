@@ -282,7 +282,7 @@ Published section cards use 14px. Studio buttons use 9px. Those are fixed radii,
 
 ## Elevation
 
-Component shadows are soft and short. They separate a card or a dialog from the page. They are not a decoration on buttons.
+Component shadows are soft and short. They separate a card or a dialog from the page. Buttons use a smaller control shadow and a quiet inset highlight.
 
 | Token | Value                                                                |
 | ----- | -------------------------------------------------------------------- |
@@ -351,7 +351,7 @@ Height 36px for a single-line field. Full width, radius `{rounded.md}`, 1px inpu
 
 Centered overlay at 50% black. The panel is `{colors.canvas}`, radius `{rounded.lg}`, padding `{spacing.md}`, shadow `lg`, max width 32rem. It fades and scales in over 200ms. The title is 18px semibold. The close control sits 16px from the top and right. Description text is 14px muted.
 
-### Typography
+### Typography component
 
 `packages/ui/src/components/typography`
 
@@ -406,5 +406,19 @@ Portfolio sections in `packages/components` share one frame, `.library-section`,
 - Reach for `packages/ui` components before adding a one-off control.
 - Keep one accent on a page. Cyan is the product accent. Red is for contrast marks and destructive actions.
 - Use the spacing and radius tokens. Do not invent a third radius for a button.
-- Put elevation on cards and dialogs. Leave buttons flat.
+- Use the shared elevation tokens on cards and dialogs. Buttons use the smaller control shadow; text and ghost actions stay flat.
 - Swap brand with `data-brand` and theme with `data-theme`. Do not hard-code a new hex for a one-off screen.
+
+## Shared surface implementation
+
+Use `@shared/ui/card`, `@shared/ui/button`, `@shared/ui/input` and
+`@shared/ui/textarea` in product compositions. Elevation and focus styling live in
+`packages/design-system/surfaces.css`, imported by the semantic stylesheet.
+Cards are static by default. Set `interaction="lift"` only for a surface with an
+action. Lift is limited to fine hover pointers, with matching focus-within depth.
+Reduced motion removes transforms and transitions.
+
+Use `Card asChild layout="plain"` around an existing section or article to keep
+its semantics and page layout. Existing published palettes use the explicit
+`surface="portfolio"` adapter, which maps local card tokens without overwriting
+root shadcn tokens. New semantic screens use the default surface.

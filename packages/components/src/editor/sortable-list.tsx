@@ -2,6 +2,8 @@
 
 import { type PointerEvent, useEffect, useId, useRef, useState } from "react";
 
+import { Button } from "@shared/ui/button";
+
 export function moveItem<T>(items: readonly T[], from: number, to: number): T[] {
   const next = [...items];
   if (from < 0 || to < 0 || from >= next.length || to >= next.length) return next;
@@ -115,7 +117,7 @@ export function SortableList({
             data-sortable-id={item.id}
             key={item.id}
           >
-            <button
+            <Button
               aria-describedby={helpId}
               aria-label={`Reorder ${item.label}`}
               className="sortable-handle"
@@ -140,12 +142,12 @@ export function SortableList({
               type="button"
             >
               <span aria-hidden="true">⠿</span>
-            </button>
+            </Button>
             <span aria-hidden="true" className="sortable-number">
               {index + 1}
             </span>
             <span className="sortable-label">{item.label}</span>
-            <button
+            <Button
               aria-label={`Move ${item.label} up`}
               className="sortable-move"
               disabled={index === 0}
@@ -153,8 +155,8 @@ export function SortableList({
               type="button"
             >
               ↑
-            </button>
-            <button
+            </Button>
+            <Button
               aria-label={`Move ${item.label} down`}
               className="sortable-move"
               disabled={index === items.length - 1}
@@ -162,7 +164,7 @@ export function SortableList({
               type="button"
             >
               ↓
-            </button>
+            </Button>
           </li>
         ))}
       </ol>

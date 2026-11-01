@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { Button } from "@shared/ui/button";
+
 import { useStudioRequest } from "../context/studio-request";
 
 export function TransferPortfolio({
@@ -60,9 +62,9 @@ export function TransferPortfolio({
             value={email}
           />
         </label>
-        <button className="studio-secondary" disabled={busy} type="submit">
+        <Button className="studio-secondary" disabled={busy} type="submit" variant="outline">
           {busy ? "Transferring…" : "Transfer portfolio"}
-        </button>
+        </Button>
       </form>
       {error && (
         <p className="editor-alert" role="alert">

@@ -8,6 +8,8 @@ import {
   type SectionRendererId,
   selectPortfolioContent,
 } from "@shared/config";
+import { Button } from "@shared/ui/button";
+import { Card } from "@shared/ui/card";
 import { ThemeToggle } from "@shared/ui/theme";
 
 import { HeroSurface } from "./hero-surface";
@@ -62,9 +64,9 @@ export function PortfolioLayout({
             <p className="folio-summary">{profile.summary}</p>
             <div className="folio-actions">
               {projects.length > 0 && (
-                <a className="folio-primary" href="#work">
+                <Button className="folio-primary" href="#work">
                   {text.exploreWork} <span aria-hidden="true">↗</span>
-                </a>
+                </Button>
               )}
               <a href={`/${username}/cv.pdf`}>
                 {text.downloadCv} <span aria-hidden="true">↓</span>
@@ -107,38 +109,40 @@ function Work({ profile, visual = false }: { profile: PortfolioProfile; visual?:
         {profile.projects
           .filter((project) => project.public)
           .map((project, index) => (
-            <article className="folio-project" key={project.id}>
-              {visual && (
-                <div className="folio-cover">
-                  {project.coverImage ? (
-                    // Public user supplied images are loaded directly by the visitor;
-                    // the app server never fetches arbitrary remote image URLs.
-                    <img
-                      alt={project.name}
-                      height={600}
-                      loading="lazy"
-                      referrerPolicy="no-referrer"
-                      src={project.coverImage}
-                      width={800}
-                    />
-                  ) : (
-                    <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                  )}
-                </div>
-              )}
-              <div className="folio-project-copy">
-                <p className="folio-eyebrow">{project.company}</p>
-                <h3>{project.name}</h3>
-                <p>{project.description}</p>
-                {project.skills.length > 0 && (
-                  <p className="folio-tags">{project.skills.join(" · ")}</p>
+            <Card asChild interaction="lift" key={project.id} layout="plain" surface="portfolio">
+              <article className="folio-project">
+                {visual && (
+                  <div className="folio-cover">
+                    {project.coverImage ? (
+                      // Public user supplied images are loaded directly by the visitor;
+                      // the app server never fetches arbitrary remote image URLs.
+                      <img
+                        alt={project.name}
+                        height={600}
+                        loading="lazy"
+                        referrerPolicy="no-referrer"
+                        src={project.coverImage}
+                        width={800}
+                      />
+                    ) : (
+                      <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                    )}
+                  </div>
                 )}
-                <div className="folio-actions">
-                  {project.url && <a href={project.url}>{text.viewProject} ↗</a>}
-                  {project.sourceUrl && <a href={project.sourceUrl}>{text.sourceCode} ↗</a>}
+                <div className="folio-project-copy">
+                  <p className="folio-eyebrow">{project.company}</p>
+                  <h3>{project.name}</h3>
+                  <p>{project.description}</p>
+                  {project.skills.length > 0 && (
+                    <p className="folio-tags">{project.skills.join(" · ")}</p>
+                  )}
+                  <div className="folio-actions">
+                    {project.url && <a href={project.url}>{text.viewProject} ↗</a>}
+                    {project.sourceUrl && <a href={project.sourceUrl}>{text.sourceCode} ↗</a>}
+                  </div>
                 </div>
-              </div>
-            </article>
+              </article>
+            </Card>
           ))}
       </div>
     </section>

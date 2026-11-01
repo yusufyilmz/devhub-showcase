@@ -2,6 +2,8 @@
 
 import { type ReactNode, useState } from "react";
 
+import { Button } from "@shared/ui/button";
+
 export function LibraryPicker({
   items,
 }: {
@@ -13,7 +15,7 @@ export function LibraryPicker({
       <fieldset className="home-library-buttons">
         <legend className="sr-only">Section examples</legend>
         {items.map((item) => (
-          <button
+          <Button
             aria-controls={`home-section-${item.id}`}
             aria-pressed={selected === item.id}
             key={item.id}
@@ -21,7 +23,7 @@ export function LibraryPicker({
             type="button"
           >
             {item.title}
-          </button>
+          </Button>
         ))}
       </fieldset>
       {items.map((item) => (

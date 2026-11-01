@@ -1,4 +1,5 @@
 import { type BillingSummary, premiumFeatureStatus } from "@shared/lib/billing";
+import { Card } from "@shared/ui/card";
 
 const planLabels: Record<BillingSummary["access"], string> = {
   active: "Pro is active",
@@ -54,23 +55,25 @@ export function AccountOverview({ billing, aiConfigured, profile }: AccountStatu
         const label = feature === "studio_assistant" ? "Private editing assistant" : "Visitor chat";
         const status = premiumFeatureStatus(billing, profile, feature, aiConfigured);
         return (
-          <section key={feature}>
-            <h4>{label}</h4>
-            <p>{featureLabels[status]}</p>
-            {status !== "legacy" && (
-              <>
-                <p>
-                  {billing.usage[feature]} / {billing.limits[feature]} attempts used.{" "}
-                  {Math.max(0, billing.limits[feature] - billing.usage[feature])} remaining.
-                </p>
-                <progress
-                  aria-label={`${label} usage`}
-                  max={Math.max(1, billing.limits[feature])}
-                  value={Math.min(billing.usage[feature], Math.max(1, billing.limits[feature]))}
-                />
-              </>
-            )}
-          </section>
+          <Card asChild key={feature} layout="plain" surface="portfolio">
+            <section className="account-feature-card">
+              <h4>{label}</h4>
+              <p>{featureLabels[status]}</p>
+              {status !== "legacy" && (
+                <>
+                  <p>
+                    {billing.usage[feature]} / {billing.limits[feature]} attempts used.{" "}
+                    {Math.max(0, billing.limits[feature] - billing.usage[feature])} remaining.
+                  </p>
+                  <progress
+                    aria-label={`${label} usage`}
+                    max={Math.max(1, billing.limits[feature])}
+                    value={Math.min(billing.usage[feature], Math.max(1, billing.limits[feature]))}
+                  />
+                </>
+              )}
+            </section>
+          </Card>
         );
       })}
       <p>

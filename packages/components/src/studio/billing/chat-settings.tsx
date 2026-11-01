@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { Button } from "@shared/ui/button";
+
 import { useStudioRequest } from "../context/studio-request";
 import { AccountOverview, type AccountStatus } from "./account-overview";
 import { useAccountStatus } from "./use-account-status";
@@ -15,9 +17,15 @@ export function ChatSettings() {
         Assign Pro to your portfolio to use the private editing assistant. Visitor chat is a
         separate opt-in and uses only published portfolio information.
       </p>
-      <button className="studio-secondary" disabled={loading} onClick={refresh} type="button">
+      <Button
+        className="studio-secondary"
+        disabled={loading}
+        onClick={refresh}
+        type="button"
+        variant="outline"
+      >
         Refresh status
-      </button>
+      </Button>
       {loading && <p role="status">Loading plan and usage…</p>}
       {!loading && data && (
         <>
@@ -56,24 +64,26 @@ function AssignmentControls({ data, refresh }: { data: AccountStatus; refresh: (
   }
   return (
     <>
-      <button
+      <Button
         className="studio-secondary"
         disabled={busy || (!assigned && billing.plan !== "pro")}
         onClick={() => configure(assigned ? null : profile.id, false)}
         type="button"
+        variant="outline"
       >
         {assigned ? "Remove Pro assignment" : "Use Pro for my portfolio"}
-      </button>
+      </Button>
       <p>Removing the assignment disables both premium assistants. It does not reset usage.</p>
       {profile.id !== "main" && (
-        <button
+        <Button
           className="studio-secondary"
           disabled={busy || (!enabled && billing.plan !== "pro")}
           onClick={() => configure(billing.plan === "pro" ? profile.id : null, !enabled)}
           type="button"
+          variant="outline"
         >
           {enabled ? "Disable portfolio AI chat" : "Enable portfolio AI chat"}
-        </button>
+        </Button>
       )}
       {error && <p role="alert">{error}</p>}
     </>

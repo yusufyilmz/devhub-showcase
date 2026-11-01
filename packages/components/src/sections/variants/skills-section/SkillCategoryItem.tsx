@@ -13,7 +13,7 @@ export const SkillCategoryItem: React.FC<{ name: string; skills: Skill[] }> = ({
   skills,
 }) => {
   return (
-    <Card className="section-card">
+    <Card className="section-card" surface="portfolio">
       <CardBody className="flex flex-col">
         <Typography className="text-left font-semibold text-main-white mb-3 text-2xl" variant="h3">
           {capitalizeFirstLetter(name)}

@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "@shared/ui/button";
+import { Card } from "@shared/ui/card";
+import { Input } from "@shared/ui/input";
 
 function ThemeGallery() {
   return (
@@ -10,7 +12,7 @@ function ThemeGallery() {
         Choose White, Sand or Aqua and light or dark in the toolbar. Portals inherit the same
         document theme.
       </p>
-      <section className="rounded-xl border bg-card p-6 text-card-foreground shadow-sm">
+      <Card className="p-6">
         <h2 className="mb-4 text-xl font-semibold">Controls</h2>
         <div className="flex flex-wrap gap-3">
           <Button>Primary action</Button>
@@ -19,14 +21,15 @@ function ThemeGallery() {
           <Button variant="destructive">Delete</Button>
           <Button disabled>Disabled</Button>
         </div>
-        <label className="mt-6 block text-sm">
+        <label className="mt-6 block text-sm" htmlFor="theme-portfolio-name">
           Portfolio name
-          <input
+          <Input
             className="mt-2 block rounded-md border border-input bg-background px-3 py-2 text-foreground outline-ring"
+            id="theme-portfolio-name"
             placeholder="My studio"
           />
         </label>
-      </section>
+      </Card>
       <section className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         {[
           "background",

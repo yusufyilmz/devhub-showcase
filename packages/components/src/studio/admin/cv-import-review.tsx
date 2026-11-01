@@ -3,6 +3,7 @@
 import type { PortfolioProfile } from "@shared/config";
 import { applyCvDraft, type CvImportGroup, cvImportGroups } from "@shared/lib/cv-import";
 import { profileSchema } from "@shared/lib/profile";
+import { Button } from "@shared/ui/button";
 
 import { Field } from "../../forms/field";
 import { LinesField } from "../../forms/lines-field";
@@ -130,14 +131,14 @@ export function CvImportReview({
           </ul>
         </div>
       )}
-      <button
+      <Button
         className="studio-primary"
         disabled={!selected.length}
         onClick={onApply}
         type="button"
       >
         Apply reviewed details to draft
-      </button>
+      </Button>
       <p>Applying does not save or publish. Use Save changes when your draft is ready.</p>
     </section>
   );

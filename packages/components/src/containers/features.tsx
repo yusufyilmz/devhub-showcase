@@ -20,7 +20,7 @@ export function Features() {
         </p>
       </div>
       <div className="home-feature-grid">
-        <Card className="home-feature-card home-feature-main">
+        <Card className="home-feature-card home-feature-main" surface="portfolio">
           <div>
             <span className="home-feature-index">01 / YOUR OWN CORNER</span>
             <h3>
@@ -43,7 +43,7 @@ export function Features() {
             </div>
           </div>
         </Card>
-        <Card className="home-feature-card">
+        <Card className="home-feature-card" surface="portfolio">
           <span className="home-feature-index">02 / MAKE IT YOURS</span>
           <div aria-hidden="true" className="home-style-demo">
             <span />
@@ -59,7 +59,7 @@ export function Features() {
             accent and light or dark mode.
           </p>
         </Card>
-        <Card className="home-feature-card home-feature-wide">
+        <Card className="home-feature-card home-feature-wide" surface="portfolio">
           <div aria-hidden="true" className="home-file-icon">
             <span>CV</span>↗
           </div>

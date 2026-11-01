@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 
 import type { PortfolioProfile } from "@shared/config";
 import { type AiEditProposal, aiEditProposalSchema, applyAiEdit } from "@shared/lib/ai-edit";
+import { Button } from "@shared/ui/button";
+import { Card } from "@shared/ui/card";
 
 import { useStudioRequest } from "../context/studio-request";
 
@@ -18,10 +20,12 @@ type Review = { proposal: AiEditProposal; baseline: string; revision: number };
 export function AiAssistantEditor(props: Props) {
   if (props.managed)
     return (
-      <section className="editor-card">
-        <h2>Private AI assistant</h2>
-        <p>This assistant is available only in your own portfolio workspace.</p>
-      </section>
+      <Card asChild layout="plain" surface="portfolio">
+        <section className="editor-card">
+          <h2>Private AI assistant</h2>
+          <p>This assistant is available only in your own portfolio workspace.</p>
+        </section>
+      </Card>
     );
   return <AssistantWorkspace {...props} />;
 }
@@ -110,75 +114,78 @@ function AssistantWorkspace({ profile, profileId, revision, onChange }: Props) {
     }
   }
   return (
-    <section className="editor-card">
-      <h2>Private AI assistant</h2>
-      <p>
-        Describe how to create or improve your portfolio. Your current draft, including private
-        content, is sent to OpenAI. Avoid including secrets. AI can make mistakes; verify every
-        proposed change.
-      </p>
-      <p>
-        Proposals never save automatically. Applying changes updates this draft only. Saving a
-        published portfolio updates its public page, so review visibility and content first.
-      </p>
-      {availability && (
+    <Card asChild layout="plain" surface="portfolio">
+      <section className="editor-card">
+        <h2>Private AI assistant</h2>
         <p>
-          Studio assistant attempts: {availability.usage} / {availability.limit} this billing
-          period. Failed or uncertain requests also count.
+          Describe how to create or improve your portfolio. Your current draft, including private
+          content, is sent to OpenAI. Avoid including secrets. AI can make mistakes; verify every
+          proposed change.
         </p>
-      )}
-      {availability && !availability.enabled && (
         <p>
-          An active Pro subscription assigned to this portfolio, with remaining allowance, is
-          required. <a href="/admin/billing">Manage subscription and assignment</a>.
+          Proposals never save automatically. Applying changes updates this draft only. Saving a
+          published portfolio updates its public page, so review visibility and content first.
         </p>
-      )}
-      <label htmlFor="ai-studio-message">What would you like to change?</label>
-      <textarea
-        disabled={busy}
-        id="ai-studio-message"
-        maxLength={4000}
-        onChange={(event) => setMessage(event.target.value)}
-        rows={4}
-        value={message}
-      />
-      <button
-        className="studio-primary"
-        disabled={busy || !availability?.enabled || !message.trim() || !profileId}
-        onClick={generate}
-        type="button"
-      >
-        {busy ? "Preparing proposal…" : "Generate proposal"}
-      </button>
-      {busy && <p role="status">Reviewing your draft…</p>}
-      {error && <p role="alert">{error}</p>}
-      {status && <p role="status">{status}</p>}
-      {review && (
-        <ProposalReview
-          apply={apply}
-          discard={() => setReview(null)}
-          profile={profile}
-          review={review}
-          selected={selected}
-          setSelected={setSelected}
-          stale={stale}
+        {availability && (
+          <p>
+            Studio assistant attempts: {availability.usage} / {availability.limit} this billing
+            period. Failed or uncertain requests also count.
+          </p>
+        )}
+        {availability && !availability.enabled && (
+          <p>
+            An active Pro subscription assigned to this portfolio, with remaining allowance, is
+            required. <a href="/admin/billing">Manage subscription and assignment</a>.
+          </p>
+        )}
+        <label htmlFor="ai-studio-message">What would you like to change?</label>
+        <textarea
+          disabled={busy}
+          id="ai-studio-message"
+          maxLength={4000}
+          onChange={(event) => setMessage(event.target.value)}
+          rows={4}
+          value={message}
         />
-      )}
-      {undo && (
-        <button
-          className="studio-secondary"
-          disabled={busy || undo.after !== current}
-          onClick={() => {
-            onChange(undo.before);
-            setUndo(null);
-            setStatus("AI changes undone in your draft.");
-          }}
+        <Button
+          className="studio-primary"
+          disabled={busy || !availability?.enabled || !message.trim() || !profileId}
+          onClick={generate}
           type="button"
         >
-          Undo AI changes
-        </button>
-      )}
-    </section>
+          {busy ? "Preparing proposal…" : "Generate proposal"}
+        </Button>
+        {busy && <p role="status">Reviewing your draft…</p>}
+        {error && <p role="alert">{error}</p>}
+        {status && <p role="status">{status}</p>}
+        {review && (
+          <ProposalReview
+            apply={apply}
+            discard={() => setReview(null)}
+            profile={profile}
+            review={review}
+            selected={selected}
+            setSelected={setSelected}
+            stale={stale}
+          />
+        )}
+        {undo && (
+          <Button
+            className="studio-secondary"
+            disabled={busy || undo.after !== current}
+            onClick={() => {
+              onChange(undo.before);
+              setUndo(null);
+              setStatus("AI changes undone in your draft.");
+            }}
+            type="button"
+            variant="outline"
+          >
+            Undo AI changes
+          </Button>
+        )}
+      </section>
+    </Card>
   );
 }
 function ProposalReview({
@@ -236,17 +243,17 @@ function ProposalReview({
           </details>
         </div>
       ))}
-      <button
+      <Button
         className="studio-primary"
         disabled={stale || selected.length === 0}
         onClick={apply}
         type="button"
       >
         Apply selected changes to draft
-      </button>{" "}
-      <button className="studio-secondary" onClick={discard} type="button">
+      </Button>{" "}
+      <Button className="studio-secondary" onClick={discard} type="button" variant="outline">
         Discard proposal
-      </button>
+      </Button>
     </section>
   );
 }

@@ -41,3 +41,8 @@ Do not import legacy CSS into new primitive stories.
 Run `pnpm --filter storybook-app storybook` and open **Design system / Themes**.
 The toolbar selects brand, mode, radius and spacing. Theme selection is local to
 Storybook and does not modify a user's saved portfolio settings.
+
+`surfaces.css` owns shared card elevation, control shadows, focus outlines and
+reduced motion. It is exported as `@shared/design-system/surfaces.css` and is
+already included by `styles.css`. Product pages use these shared rules rather
+than introducing new shadow recipes per page.

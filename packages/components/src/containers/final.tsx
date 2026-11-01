@@ -1,3 +1,5 @@
+import { Button } from "@shared/ui/button";
+
 import type { PageAction } from "./action";
 
 export function Final({ action }: { action: PageAction }) {
@@ -11,9 +13,9 @@ export function Final({ action }: { action: PageAction }) {
           to live<span className="home-final-period">.</span>
         </h2>
         <p>Start with your story. Make the rest yours.</p>
-        <a className="home-button home-button-primary" href={action.href}>
+        <Button className="home-button home-button-primary" href={action.href}>
           {action.label} <span aria-hidden="true">↗</span>
-        </a>
+        </Button>
         <span className="home-final-note">Your portfolio. Your pace.</span>
       </div>
       <span aria-hidden="true" className="home-final-glyph">

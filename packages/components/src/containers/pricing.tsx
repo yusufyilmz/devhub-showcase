@@ -1,5 +1,8 @@
 import "./pricing.css";
 
+import { Button } from "@shared/ui/button";
+import { Card } from "@shared/ui/card";
+
 import { PlanDetails } from "../studio/billing/plan-details";
 import type { PageAction } from "./action";
 
@@ -19,39 +22,47 @@ export function Pricing({ action }: { action: PageAction }) {
         </p>
       </div>
       <div className="home-plan-grid">
-        <article className="home-plan">
-          <h3>Free</h3>
-          <p className="home-plan-price">Free</p>
-          <p>A home for your work.</p>
-          <ul>
-            <li>Your portfolio website and downloadable CV</li>
-            <li>Four layouts, themes and language settings</li>
-            <li>Section library, custom sections and reusable templates</li>
-            <li>Private drafts and explicit publication</li>
-            <li>CV import when the extraction service is available</li>
-          </ul>
-          <a className="home-button home-button-secondary" href={action.href}>
-            {action.label}
-          </a>
-        </article>
-        <article className="home-plan home-plan-pro">
-          <p className="home-eyebrow">SANDBOX PREVIEW</p>
-          <h3>Pro</h3>
-          <PlanDetails />
-          <ul>
-            <li>Everything in Free</li>
-            <li>Optional visitor chat grounded in your published work</li>
-            <li>Private AI editing proposals with review and draft apply</li>
-            <li>One assigned portfolio per account</li>
-            <li>Usage tracking and subscription management</li>
-          </ul>
-          <a
-            className="home-button home-button-primary"
-            href={action.signedIn ? "/admin/billing" : "/admin/login"}
-          >
-            {action.signedIn ? "Try Pro sandbox" : "Sign in to try Pro"}
-          </a>
-        </article>
+        <Card asChild layout="plain" surface="portfolio">
+          <article className="home-plan">
+            <h3>Free</h3>
+            <p className="home-plan-price">Free</p>
+            <p>A home for your work.</p>
+            <ul>
+              <li>Your portfolio website and downloadable CV</li>
+              <li>Four layouts, themes and language settings</li>
+              <li>Section library, custom sections and reusable templates</li>
+              <li>Private drafts and explicit publication</li>
+              <li>CV import when the extraction service is available</li>
+            </ul>
+            <Button
+              className="home-button home-button-secondary"
+              href={action.href}
+              variant="outline"
+            >
+              {action.label}
+            </Button>
+          </article>
+        </Card>
+        <Card asChild layout="plain" surface="portfolio">
+          <article className="home-plan home-plan-pro">
+            <p className="home-eyebrow">SANDBOX PREVIEW</p>
+            <h3>Pro</h3>
+            <PlanDetails />
+            <ul>
+              <li>Everything in Free</li>
+              <li>Optional visitor chat grounded in your published work</li>
+              <li>Private AI editing proposals with review and draft apply</li>
+              <li>One assigned portfolio per account</li>
+              <li>Usage tracking and subscription management</li>
+            </ul>
+            <Button
+              className="home-button home-button-primary"
+              href={action.signedIn ? "/admin/billing" : "/admin/login"}
+            >
+              {action.signedIn ? "Try Pro sandbox" : "Sign in to try Pro"}
+            </Button>
+          </article>
+        </Card>
       </div>
       <p className="home-plan-note">
         Pro is currently a test environment. Use test cards; no real payments are enabled.

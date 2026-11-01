@@ -12,6 +12,8 @@ import {
   cvImportGroups,
   cvReviewNotes,
 } from "@shared/lib/cv-import";
+import { Button } from "@shared/ui/button";
+import { Card } from "@shared/ui/card";
 
 import { type StudioRequest, useStudioRequest } from "../context/studio-request";
 import { CvImportReview } from "./cv-import-review";
@@ -74,108 +76,111 @@ export function CvImportEditor({
     }
   }
   return (
-    <section aria-labelledby="cv-import-title" className="editor-card cv-import-panel">
-      <p className="eyebrow">START WITH YOUR EXPERIENCE</p>
-      <h2 id="cv-import-title">Turn your CV into a portfolio</h2>
-      <p>
-        Upload your CV, review the extracted details and choose what to use. Your portfolio and
-        downloadable CV will use the details you save.
-      </p>
-      {enabled === null && <p role="status">Checking CV import availability…</p>}
-      {enabled === false && (
-        <p role="status">
-          CV import is not available right now. You can still add your details in the editor.
+    <Card asChild layout="plain" surface="portfolio">
+      <section aria-labelledby="cv-import-title" className="editor-card cv-import-panel">
+        <p className="eyebrow">START WITH YOUR EXPERIENCE</p>
+        <h2 id="cv-import-title">Turn your CV into a portfolio</h2>
+        <p>
+          Upload your CV, review the extracted details and choose what to use. Your portfolio and
+          downloadable CV will use the details you save.
         </p>
-      )}
-      <label className="cv-upload-label" htmlFor="cv-upload">
-        Your CV file
-      </label>
-      <input
-        accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
-        disabled={busy || !enabled}
-        id="cv-upload"
-        onChange={(event) => {
-          setFile(event.target.files?.[0] ?? null);
-          setCandidate(null);
-          showError("");
-          setMessage("");
-        }}
-        type="file"
-      />
-      <p>
-        PDF, DOCX or UTF-8 text, up to 3 MB. Scanned PDFs may need a clearer copy. Original files
-        are not saved to your account.
-      </p>
-      <label className="editor-checkbox">
+        {enabled === null && <p role="status">Checking CV import availability…</p>}
+        {enabled === false && (
+          <p role="status">
+            CV import is not available right now. You can still add your details in the editor.
+          </p>
+        )}
+        <label className="cv-upload-label" htmlFor="cv-upload">
+          Your CV file
+        </label>
         <input
-          checked={consent}
-          disabled={busy}
-          onChange={(event) => setConsent(event.target.checked)}
-          type="checkbox"
-        />{" "}
-        Send this CV to OpenAI to extract my portfolio details.
-      </label>
-      <p>
-        The file is sent for this request. OpenAI’s API data retention policies apply. Review the
-        result for mistakes before saving.
-      </p>
-      <div className="cv-import-actions">
-        <button
-          className="studio-primary"
-          disabled={!enabled || !file || !consent || busy}
-          onClick={extract}
-          type="button"
-        >
-          {busy ? "Reading your CV…" : "Process CV"}
-        </button>
-        {(busy || candidate) && (
-          <button
-            className="studio-secondary"
-            onClick={() => {
-              pending.current?.abort();
-              setBusy(false);
-              setCandidate(null);
-              setMessage("Import cancelled. Your draft is unchanged.");
-            }}
+          accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
+          disabled={busy || !enabled}
+          id="cv-upload"
+          onChange={(event) => {
+            setFile(event.target.files?.[0] ?? null);
+            setCandidate(null);
+            showError("");
+            setMessage("");
+          }}
+          type="file"
+        />
+        <p>
+          PDF, DOCX or UTF-8 text, up to 3 MB. Scanned PDFs may need a clearer copy. Original files
+          are not saved to your account.
+        </p>
+        <label className="editor-checkbox">
+          <input
+            checked={consent}
+            disabled={busy}
+            onChange={(event) => setConsent(event.target.checked)}
+            type="checkbox"
+          />{" "}
+          Send this CV to OpenAI to extract my portfolio details.
+        </label>
+        <p>
+          The file is sent for this request. OpenAI’s API data retention policies apply. Review the
+          result for mistakes before saving.
+        </p>
+        <div className="cv-import-actions">
+          <Button
+            className="studio-primary"
+            disabled={!enabled || !file || !consent || busy}
+            onClick={extract}
             type="button"
           >
-            Cancel import
-          </button>
+            {busy ? "Reading your CV…" : "Process CV"}
+          </Button>
+          {(busy || candidate) && (
+            <Button
+              className="studio-secondary"
+              onClick={() => {
+                pending.current?.abort();
+                setBusy(false);
+                setCandidate(null);
+                setMessage("Import cancelled. Your draft is unchanged.");
+              }}
+              type="button"
+              variant="outline"
+            >
+              Cancel import
+            </Button>
+          )}
+        </div>
+        {busy && (
+          <p aria-live="polite" role="status">
+            Extracting your experience, projects and skills. This can take about a minute.
+          </p>
         )}
-      </div>
-      {busy && (
-        <p aria-live="polite" role="status">
-          Extracting your experience, projects and skills. This can take about a minute.
-        </p>
-      )}
-      {error && (
-        <p className="editor-alert" role="alert">
-          {error}
-        </p>
-      )}
-      {message && (
-        <p className="editor-success" role="status">
-          {message}
-        </p>
-      )}
-      {candidate && (
-        <CvImportReview
-          base={profile}
-          candidate={candidate}
-          notes={notes}
-          onApply={() => {
-            onChange(applyCvDraft(profile, candidate, selected));
-            setCandidate(null);
-            setMessage(
-              "Applied to your draft. Review required fields, then Save changes when ready.",
-            );
-          }}
-          onChange={setCandidate}
-          onSelect={setSelected}
-          selected={selected}
-        />
-      )}
-    </section>
+        {error && (
+          <p className="editor-alert" role="alert">
+            {error}
+          </p>
+        )}
+        {message && (
+          <p className="editor-success" role="status">
+            {message}
+          </p>
+        )}
+        {candidate && (
+          <CvImportReview
+            base={profile}
+            candidate={candidate}
+            notes={notes}
+            onApply={() => {
+              onChange(applyCvDraft(profile, candidate, selected));
+              setCandidate(null);
+              setMessage(
+                "Applied to your draft. Review required fields, then Save changes when ready.",
+              );
+            }}
+            onChange={setCandidate}
+            onSelect={setSelected}
+            selected={selected}
+          />
+        )}
+      </section>
+    </Card>
   );
 }
 

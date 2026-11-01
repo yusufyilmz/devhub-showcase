@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { type PortfolioProfile, type PortfolioType, portfolioTypes } from "@shared/config";
 import { createEmptyProfile } from "@shared/lib/user-profile";
+import { Button } from "@shared/ui/button";
 
 import { useStudioRequest } from "../context/studio-request";
 
@@ -127,13 +128,18 @@ export function CreatePortfolio({ onCreated }: { onCreated: (id: string) => void
             New portfolios are private. A missing email uses pending@example.com until you replace
             it. Review imported contact details before publishing.
           </p>
-          <button className="studio-primary" type="submit">
+          <Button className="studio-primary" type="submit">
             {busy ? "Creating…" : "Create private portfolio"}
-          </button>
+          </Button>
           {imported && (
-            <button className="studio-secondary" onClick={() => setImported(null)} type="button">
+            <Button
+              className="studio-secondary"
+              onClick={() => setImported(null)}
+              type="button"
+              variant="outline"
+            >
               Clear imported content
-            </button>
+            </Button>
           )}
         </fieldset>
         {error && (

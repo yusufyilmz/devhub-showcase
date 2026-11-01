@@ -5,6 +5,9 @@ import { type ReactNode, useId, useRef, useState } from "react";
 
 import { getPortfolioCopy, type Language } from "@shared/config";
 
+import { Button } from "../Button/Button";
+import { Card } from "../Card/Card";
+
 const defaultLabels = {
   fullDetails: "Full details",
   hideDetails: "Hide details for",
@@ -39,70 +42,75 @@ export function RevealCardBase({
   const detailsId = useId();
 
   return (
-    <article
-      className={`section-card reveal-card ${className}`}
-      data-expanded={expanded}
-      id={id}
-      onBlurCapture={(event) => {
-        if (!pinned.current && !event.currentTarget.contains(event.relatedTarget))
-          setExpanded(false);
-      }}
-      onFocusCapture={() => setExpanded(true)}
-      onKeyDown={(event) => {
-        if (event.key === "Escape") {
-          pinned.current = false;
-          event.currentTarget.querySelector<HTMLButtonElement>(".reveal-toggle")?.focus();
-          setExpanded(false);
-        }
-      }}
-      onPointerEnter={(event) => {
-        if (event.pointerType === "mouse") setExpanded(true);
-      }}
-      onPointerLeave={(event) => {
-        if (!pinned.current && !event.currentTarget.contains(document.activeElement))
-          setExpanded(false);
-      }}
-    >
-      <div className="reveal-heading">{heading}</div>
-      {brief && (
-        <div aria-hidden={expanded} className="reveal-preview">
-          <p className="reveal-brief">{brief}</p>
-        </div>
-      )}
-      <button
-        aria-controls={detailsId}
-        aria-expanded={expanded}
-        aria-label={`${expanded ? labels.hideDetails : labels.showDetails} ${title}`}
-        className="reveal-toggle"
-        onClick={() => {
-          const next = pointerIntent.current ?? !expanded;
-          pointerIntent.current = null;
-          pinned.current = next;
-          setExpanded(next);
+    <Card asChild interaction="lift" layout="plain" surface="portfolio">
+      <article
+        className={`section-card reveal-card ${className}`}
+        data-expanded={expanded}
+        id={id}
+        onBlurCapture={(event) => {
+          if (!pinned.current && !event.currentTarget.contains(event.relatedTarget))
+            setExpanded(false);
         }}
-        onPointerCancel={() => {
-          pointerIntent.current = null;
+        onFocusCapture={() => setExpanded(true)}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") {
+            pinned.current = false;
+            event.currentTarget.querySelector<HTMLButtonElement>(".reveal-toggle")?.focus();
+            setExpanded(false);
+          }
         }}
-        onPointerDown={() => {
-          pointerIntent.current = !expanded;
+        onPointerEnter={(event) => {
+          if (event.pointerType === "mouse") setExpanded(true);
         }}
-        type="button"
+        onPointerLeave={(event) => {
+          if (!pinned.current && !event.currentTarget.contains(document.activeElement))
+            setExpanded(false);
+        }}
       >
-        <span className="reveal-hint-desktop">
-          {expanded ? labels.fullDetails : labels.hoverDetails}
-        </span>
-        <span className="reveal-hint-touch">{expanded ? labels.tapClose : labels.tapDetails}</span>
-        <span className="reveal-hint-keyboard">
-          {expanded ? labels.fullDetails : labels.keyboardDetails}
-        </span>
-        <span aria-hidden="true" className="reveal-chevron">
-          ↗
-        </span>
-      </button>
-      <div aria-hidden={!expanded} className="reveal-details" id={detailsId} inert={!expanded}>
-        <div className="reveal-details-inner">{children}</div>
-      </div>
-    </article>
+        <div className="reveal-heading">{heading}</div>
+        {brief && (
+          <div aria-hidden={expanded} className="reveal-preview">
+            <p className="reveal-brief">{brief}</p>
+          </div>
+        )}
+        <Button
+          aria-controls={detailsId}
+          aria-expanded={expanded}
+          aria-label={`${expanded ? labels.hideDetails : labels.showDetails} ${title}`}
+          className="reveal-toggle"
+          onClick={() => {
+            const next = pointerIntent.current ?? !expanded;
+            pointerIntent.current = null;
+            pinned.current = next;
+            setExpanded(next);
+          }}
+          onPointerCancel={() => {
+            pointerIntent.current = null;
+          }}
+          onPointerDown={() => {
+            pointerIntent.current = !expanded;
+          }}
+          type="button"
+          variant="ghost"
+        >
+          <span className="reveal-hint-desktop">
+            {expanded ? labels.fullDetails : labels.hoverDetails}
+          </span>
+          <span className="reveal-hint-touch">
+            {expanded ? labels.tapClose : labels.tapDetails}
+          </span>
+          <span className="reveal-hint-keyboard">
+            {expanded ? labels.fullDetails : labels.keyboardDetails}
+          </span>
+          <span aria-hidden="true" className="reveal-chevron">
+            ↗
+          </span>
+        </Button>
+        <div aria-hidden={!expanded} className="reveal-details" id={detailsId} inert={!expanded}>
+          <div className="reveal-details-inner">{children}</div>
+        </div>
+      </article>
+    </Card>
   );
 }
 

@@ -13,7 +13,8 @@
     "./themes.css": "./themes.css",
     "./globals.css": "./globals.css",
     "./styles.css": "./styles.css",
-    "./legacy.css": "./legacy.css"
+    "./legacy.css": "./legacy.css",
+    "./surfaces.css": "./surfaces.css"
   },
   "files": [
     "*.css",

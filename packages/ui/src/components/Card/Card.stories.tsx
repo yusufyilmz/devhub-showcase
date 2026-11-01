@@ -239,3 +239,39 @@ export const ThemeAdaptive: Story = {
     </div>
   ),
 };
+
+/** Compare static and interactive elevation using the brand and mode toolbar. */
+export const ProductSurfaces: Story = {
+  render: () => (
+    <div className="grid max-w-3xl gap-6 p-6 sm:grid-cols-2">
+      <Card>
+        <CardHeader>
+          <CardTitle>Portfolio settings</CardTitle>
+          <CardDescription>Quiet depth for editing surfaces.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>Your draft stays private until you publish.</p>
+        </CardContent>
+        <CardFooter>
+          <Button>Save changes</Button>
+        </CardFooter>
+      </Card>
+      <Card asChild interaction="lift">
+        <article>
+          <CardHeader>
+            <CardTitle>Selected work</CardTitle>
+            <CardDescription>Hover or focus the link to lift this card.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>Soft elevation and a defined border in every palette.</p>
+          </CardContent>
+          <CardFooter>
+            <Button asChild variant="outline">
+              <a href="#project">View project ↗</a>
+            </Button>
+          </CardFooter>
+        </article>
+      </Card>
+    </div>
+  ),
+};

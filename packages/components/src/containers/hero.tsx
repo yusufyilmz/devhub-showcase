@@ -1,3 +1,5 @@
+import { Button } from "@shared/ui/button";
+
 import type { PageAction } from "./action";
 import { PortfolioPreview } from "./portfolio-preview";
 
@@ -20,9 +22,9 @@ export function Hero({ action, exampleHref }: { action: PageAction; exampleHref:
           ideas together in a place you can call your own.
         </p>
         <div className="home-hero-actions">
-          <a className="home-button home-button-primary" href={action.href}>
+          <Button className="home-button home-button-primary" href={action.href}>
             {action.label} <span aria-hidden="true">↗</span>
-          </a>
+          </Button>
           <a
             className="home-example-link"
             href={exampleHref ?? "https://mydevstudio.vercel.app/yusufyilmz"}

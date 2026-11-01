@@ -1,4 +1,5 @@
 import { Brand } from "@shared/ui/brand";
+import { Button } from "@shared/ui/button";
 import { ThemeToggle } from "@shared/ui/theme";
 
 import type { PageAction } from "./action";
@@ -17,9 +18,9 @@ export function Header({ action }: { action: PageAction }) {
         </nav>
         <div className="home-header-actions">
           <ThemeToggle />
-          <a className="home-signin" href={action.href}>
+          <Button className="home-signin" href={action.href}>
             {action.signedIn ? "My studio" : "Sign in"} <span aria-hidden="true">↗</span>
-          </a>
+          </Button>
         </div>
       </div>
     </header>

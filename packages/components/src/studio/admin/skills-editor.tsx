@@ -3,6 +3,8 @@
 import { useState } from "react";
 
 import type { PortfolioProfile } from "@shared/config";
+import { Button } from "@shared/ui/button";
+import { Card } from "@shared/ui/card";
 
 import { LinesField } from "../../forms/lines-field";
 
@@ -21,31 +23,35 @@ function SkillGroup({
 }) {
   const [label, setLabel] = useState(name);
   return (
-    <article className="editor-card">
-      <div className="editor-card-heading">
-        <label className="editor-field">
-          Group name
-          <input
-            onBlur={() => {
-              rename(label.trim());
-              setLabel(name);
-            }}
-            onChange={(event) => setLabel(event.target.value)}
-            value={label}
-          />
-        </label>
-        <button
-          className="danger-button"
-          onClick={() => {
-            if (window.confirm(`Remove ${name}?`)) remove();
-          }}
-          type="button"
-        >
-          Remove group
-        </button>
-      </div>
-      <LinesField label={`${name} skills`} onChange={change} value={skills} />
-    </article>
+    <Card asChild layout="plain" surface="portfolio">
+      <article className="editor-card">
+        <Card asChild layout="plain" surface="portfolio">
+          <div className="editor-card-heading">
+            <label className="editor-field">
+              Group name
+              <input
+                onBlur={() => {
+                  rename(label.trim());
+                  setLabel(name);
+                }}
+                onChange={(event) => setLabel(event.target.value)}
+                value={label}
+              />
+            </label>
+            <Button
+              className="danger-button"
+              onClick={() => {
+                if (window.confirm(`Remove ${name}?`)) remove();
+              }}
+              type="button"
+            >
+              Remove group
+            </Button>
+          </div>
+        </Card>
+        <LinesField label={`${name} skills`} onChange={change} value={skills} />
+      </article>
+    </Card>
   );
 }
 export function SkillsEditor({
@@ -63,7 +69,7 @@ export function SkillsEditor({
           <p className="eyebrow">THE TOOLBOX</p>
           <h2>Skills</h2>
         </div>
-        <button
+        <Button
           className="studio-secondary"
           onClick={() => {
             let n = 1;
@@ -74,9 +80,10 @@ export function SkillsEditor({
             });
           }}
           type="button"
+          variant="outline"
         >
           + Add group
-        </button>
+        </Button>
       </div>
       {error && (
         <p className="form-error" role="alert">

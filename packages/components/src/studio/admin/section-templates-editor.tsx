@@ -14,6 +14,8 @@ import {
   createSectionTemplate,
   sectionTemplateFileSchema,
 } from "@shared/lib/section-templates";
+import { Button } from "@shared/ui/button";
+import { Card } from "@shared/ui/card";
 
 import { Field } from "../../forms/field";
 import { SelectField } from "../../forms/select-field";
@@ -117,171 +119,180 @@ export function SectionTemplatesEditor({
     return createSectionTemplate(profile, name, includeContent);
   }
   return (
-    <section className="editor-card template-library">
-      <h2>Section templates and import/export</h2>
-      <p>
-        Templates contain authorable sections. Identity, publication, CV content and account
-        ownership are never imported. Configuration exports omit content, media, contact details and
-        profile bindings by default.
-      </p>
-      <Field label="Template name" onChange={setName} value={name} />
-      <label>
-        <input
-          checked={includeContent}
-          onChange={(event) => setIncludeContent(event.target.checked)}
-          type="checkbox"
-        />{" "}
-        Include authored content, media and bindings
-      </label>
-      <div className="editor-actions">
-        <button
-          className="studio-secondary"
-          disabled={loading || busy || !name.trim() || templates.length >= 5}
-          onClick={() =>
-            attempt(() => persist([...templates, { ...snapshot(), id: crypto.randomUUID() }]))
-          }
-          type="button"
-        >
-          Save section template
-        </button>
-        <button
-          className="studio-secondary"
-          disabled={!name.trim()}
-          onClick={() => attempt(() => download(snapshot()))}
-          type="button"
-        >
-          Export sections JSON
-        </button>
-      </div>
-      <p>
-        Saved templates belong to your signed-in account and are stored privately, separately from
-        your published portfolio. Applying a template changes only the portfolio draft. Exports with
-        content can contain personal information; share those files only intentionally.
-      </p>
-      <ul className="template-library-list">
-        {templates.map((template) => (
-          <li key={template.id}>
-            {template.name} · {template.sections.length} sections
-            <button
-              onClick={() => {
-                setReview(template);
-                showWarnings([]);
-              }}
-              type="button"
-            >
-              Review {template.name}
-            </button>
-            <button onClick={() => download(template)} type="button">
-              Export {template.name}
-            </button>
-            <button
-              onClick={() => persist(templates.filter(({ id }) => id !== template.id))}
-              type="button"
-            >
-              Delete {template.name}
-            </button>
-          </li>
-        ))}
-      </ul>
-      <Field
-        hint="Optional original website URL to resolve relative image and link paths. Native templates do not need it."
-        label="PageForge source asset base URL"
-        onChange={setAssetBase}
-        type="url"
-        value={assetBase}
-      />
-      <label>
-        Import sections JSON
-        <input
-          accept=".json,application/json"
-          onChange={async (event) => {
-            const file = event.target.files?.[0];
-            if (!file) return;
-            if (file.size > 500_000) {
-              showError("Import files must be smaller than 500 KB");
-              return;
-            }
-            try {
-              inspect(await file.text());
-            } catch {
-              showError("Could not read this file");
-            }
-          }}
-          type="file"
-        />
-      </label>
-      <Field label="Paste sections JSON" multiline onChange={setJson} value={json} />
-      <button disabled={!json.trim()} onClick={() => inspect(json)} type="button">
-        Review import
-      </button>
-      {error && <p role="alert">{error}</p>}
-      {review && (
-        <section aria-label="Import review" className="editor-card">
-          <h3>Review: {review.name}</h3>
-          <p>
-            {review.sections.length} sections ·{" "}
-            {review.includesContent ? "includes authored content" : "configuration only"}. Applying
-            creates fresh IDs. Profile sources bind to this account and include current/future
-            items; private projects remain excluded. Nothing is published by importing.
-          </p>
-          {warnings.length > 0 && (
-            <details open>
-              <summary>Conversion notes ({warnings.length})</summary>
-              <ul>
-                {warnings.map((warning, index) => (
-                  <li key={`${index}-${warning}`}>{warning}</li>
-                ))}
-              </ul>
-            </details>
-          )}
-          <ol>
-            {review.sections.map((section) => (
-              <li key={section.id}>
-                {section.title} · {section.sectionType ?? section.composition ?? "custom"} ·{" "}
-                {section.renderer} · {section.items.length} items
-                <details>
-                  <summary>Preview {section.title}</summary>
-                  <CustomPortfolioSection
-                    language={profile.portfolioLanguage}
-                    preview
-                    section={resolveSectionSource(section, profile)}
-                  />
-                </details>
-              </li>
-            ))}
-          </ol>
-          <SelectField
-            label="Apply mode"
-            onChange={(value) => setMode(value as typeof mode)}
-            value={mode}
-          >
-            <option value="append">Append sections</option>
-            <option value="replace">Replace custom sections</option>
-          </SelectField>
-          <button
-            className="studio-primary"
+    <Card asChild layout="plain" surface="portfolio">
+      <section className="editor-card template-library">
+        <h2>Section templates and import/export</h2>
+        <p>
+          Templates contain authorable sections. Identity, publication, CV content and account
+          ownership are never imported. Configuration exports omit content, media, contact details
+          and profile bindings by default.
+        </p>
+        <Field label="Template name" onChange={setName} value={name} />
+        <label>
+          <input
+            checked={includeContent}
+            onChange={(event) => setIncludeContent(event.target.checked)}
+            type="checkbox"
+          />{" "}
+          Include authored content, media and bindings
+        </label>
+        <div className="editor-actions">
+          <Button
+            className="studio-secondary"
+            disabled={loading || busy || !name.trim() || templates.length >= 5}
             onClick={() =>
-              attempt(() => {
-                if (
-                  mode === "replace" &&
-                  !window.confirm(
-                    "Replace the custom sections in this draft? Save changes later to keep the result.",
-                  )
-                )
-                  return;
-                onChange(applySectionTemplate(profile, review, mode, () => crypto.randomUUID()));
-                setReview(null);
-              })
+              attempt(() => persist([...templates, { ...snapshot(), id: crypto.randomUUID() }]))
             }
             type="button"
+            variant="outline"
           >
-            Apply to draft
-          </button>
-          <button onClick={() => setReview(null)} type="button">
-            Cancel import
-          </button>
-        </section>
-      )}
-    </section>
+            Save section template
+          </Button>
+          <Button
+            className="studio-secondary"
+            disabled={!name.trim()}
+            onClick={() => attempt(() => download(snapshot()))}
+            type="button"
+            variant="outline"
+          >
+            Export sections JSON
+          </Button>
+        </div>
+        <p>
+          Saved templates belong to your signed-in account and are stored privately, separately from
+          your published portfolio. Applying a template changes only the portfolio draft. Exports
+          with content can contain personal information; share those files only intentionally.
+        </p>
+        <ul className="template-library-list">
+          {templates.map((template) => (
+            <li key={template.id}>
+              {template.name} · {template.sections.length} sections
+              <Button
+                onClick={() => {
+                  setReview(template);
+                  showWarnings([]);
+                }}
+                type="button"
+              >
+                Review {template.name}
+              </Button>
+              <Button onClick={() => download(template)} type="button">
+                Export {template.name}
+              </Button>
+              <Button
+                onClick={() => persist(templates.filter(({ id }) => id !== template.id))}
+                type="button"
+              >
+                Delete {template.name}
+              </Button>
+            </li>
+          ))}
+        </ul>
+        <Field
+          hint="Optional original website URL to resolve relative image and link paths. Native templates do not need it."
+          label="PageForge source asset base URL"
+          onChange={setAssetBase}
+          type="url"
+          value={assetBase}
+        />
+        <label>
+          Import sections JSON
+          <input
+            accept=".json,application/json"
+            onChange={async (event) => {
+              const file = event.target.files?.[0];
+              if (!file) return;
+              if (file.size > 500_000) {
+                showError("Import files must be smaller than 500 KB");
+                return;
+              }
+              try {
+                inspect(await file.text());
+              } catch {
+                showError("Could not read this file");
+              }
+            }}
+            type="file"
+          />
+        </label>
+        <Field label="Paste sections JSON" multiline onChange={setJson} value={json} />
+        <Button disabled={!json.trim()} onClick={() => inspect(json)} type="button">
+          Review import
+        </Button>
+        {error && <p role="alert">{error}</p>}
+        {review && (
+          <Card asChild layout="plain" surface="portfolio">
+            <section aria-label="Import review" className="editor-card">
+              <h3>Review: {review.name}</h3>
+              <p>
+                {review.sections.length} sections ·{" "}
+                {review.includesContent ? "includes authored content" : "configuration only"}.
+                Applying creates fresh IDs. Profile sources bind to this account and include
+                current/future items; private projects remain excluded. Nothing is published by
+                importing.
+              </p>
+              {warnings.length > 0 && (
+                <details open>
+                  <summary>Conversion notes ({warnings.length})</summary>
+                  <ul>
+                    {warnings.map((warning, index) => (
+                      <li key={`${index}-${warning}`}>{warning}</li>
+                    ))}
+                  </ul>
+                </details>
+              )}
+              <ol>
+                {review.sections.map((section) => (
+                  <li key={section.id}>
+                    {section.title} · {section.sectionType ?? section.composition ?? "custom"} ·{" "}
+                    {section.renderer} · {section.items.length} items
+                    <details>
+                      <summary>Preview {section.title}</summary>
+                      <CustomPortfolioSection
+                        language={profile.portfolioLanguage}
+                        preview
+                        section={resolveSectionSource(section, profile)}
+                      />
+                    </details>
+                  </li>
+                ))}
+              </ol>
+              <SelectField
+                label="Apply mode"
+                onChange={(value) => setMode(value as typeof mode)}
+                value={mode}
+              >
+                <option value="append">Append sections</option>
+                <option value="replace">Replace custom sections</option>
+              </SelectField>
+              <Button
+                className="studio-primary"
+                onClick={() =>
+                  attempt(() => {
+                    if (
+                      mode === "replace" &&
+                      !window.confirm(
+                        "Replace the custom sections in this draft? Save changes later to keep the result.",
+                      )
+                    )
+                      return;
+                    onChange(
+                      applySectionTemplate(profile, review, mode, () => crypto.randomUUID()),
+                    );
+                    setReview(null);
+                  })
+                }
+                type="button"
+              >
+                Apply to draft
+              </Button>
+              <Button onClick={() => setReview(null)} type="button">
+                Cancel import
+              </Button>
+            </section>
+          </Card>
+        )}
+      </section>
+    </Card>
   );
 }

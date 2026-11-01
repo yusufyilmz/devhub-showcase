@@ -5,6 +5,9 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { type PortfolioProfile, portfolioTypes } from "@shared/config";
 import type { ProfileSnapshot } from "@shared/lib/profile-errors";
 import { cvPath, editCvPath } from "@shared/lib/username";
+import { Button } from "@shared/ui/button";
+import { Card } from "@shared/ui/card";
+import { Input } from "@shared/ui/input";
 
 import { useStudioRequest } from "../context/studio-request";
 import { AiAssistantEditor } from "./ai-assistant-editor";
@@ -170,29 +173,30 @@ export function ProfileEditor({
             <p>Keep your portfolio as current as your work.</p>
           </div>
           <div className="studio-header-actions">
-            <a className="studio-secondary" href="/admin/billing">
+            <Button className="studio-secondary" href="/admin/billing" variant="outline">
               Plan and usage
-            </a>
+            </Button>
             {saved.isPublic && saved.id && (
-              <a
+              <Button
                 className="studio-secondary"
                 href={saved.username ? cvPath(saved.username) : "/"}
                 rel="noopener noreferrer"
                 target="_blank"
+                variant="outline"
               >
                 View public profile ↗
-              </a>
+              </Button>
             )}
-            <button className="studio-primary" disabled={busy || !dirty} type="submit">
+            <Button className="studio-primary" disabled={busy || !dirty} type="submit">
               {busy ? "Saving…" : "Save changes"}
-            </button>
+            </Button>
           </div>
         </div>
         <div className="studio-status">
           <span className={dirty ? "status-dot unsaved" : "status-dot"} />
           {dirty ? "You have unsaved changes" : "All changes saved"}
           <span>Revision {saved.revision}</span>
-          <button
+          <Button
             disabled={busy}
             onClick={async () => {
               if (dirty && !window.confirm("Leave without publishing your changes?")) return;
@@ -211,7 +215,7 @@ export function ProfileEditor({
             type="button"
           >
             Sign out
-          </button>
+          </Button>
         </div>
         <SharingSettings
           busy={busy}
@@ -225,20 +229,20 @@ export function ProfileEditor({
         />
         <nav aria-label="Editor sections" className="editor-tabs">
           {tabs.map((item) => (
-            <button
+            <Button
               aria-current={tab === item ? "page" : undefined}
               key={item}
               onClick={() => setTab(item)}
               type="button"
             >
               {item}
-            </button>
+            </Button>
           ))}
         </nav>
         {error && (
           <div className="editor-alert" role="alert">
             <p>{error}</p>
-            <button
+            <Button
               disabled={busy}
               onClick={() => {
                 if (window.confirm("Reload and discard unpublished changes?"))
@@ -247,7 +251,7 @@ export function ProfileEditor({
               type="button"
             >
               Reload latest version
-            </button>
+            </Button>
           </div>
         )}
         {message && (
@@ -268,7 +272,7 @@ export function ProfileEditor({
         </fieldset>
         <footer className="editor-footer">
           <p>Save your edits to update your CV. Public sharing is optional.</p>
-          <button
+          <Button
             className="studio-secondary"
             disabled={!dirty || busy}
             onClick={() => {
@@ -281,9 +285,10 @@ export function ProfileEditor({
               }
             }}
             type="button"
+            variant="outline"
           >
             Discard changes
-          </button>
+          </Button>
         </footer>
       </form>
     </main>
@@ -345,19 +350,24 @@ function PortfolioOnboarding({
         Pick a starting layout, then add your details. Your portfolio stays private until you
         publish it.
       </p>
-      <button className="studio-secondary" onClick={onImport} type="button">
+      <Button className="studio-secondary" onClick={onImport} type="button" variant="outline">
         Start from a CV
-      </button>
+      </Button>
       {!managed && (
-        <button className="studio-secondary" onClick={onGoogleImport} type="button">
+        <Button
+          className="studio-secondary"
+          onClick={onGoogleImport}
+          type="button"
+          variant="outline"
+        >
           Start from Google profile
-        </button>
+        </Button>
       )}
       <PortfolioTypePicker
         onChange={(portfolioType) => setDraft({ ...draft, portfolioType })}
         value={draft.portfolioType ?? "engineer"}
       />
-      <button
+      <Button
         className="studio-primary"
         onClick={() =>
           setDraft({
@@ -371,7 +381,7 @@ function PortfolioOnboarding({
         type="button"
       >
         Use this layout
-      </button>
+      </Button>
       <p>
         Save changes in the editor to keep your selection. Your information is never replaced by
         sample content.
@@ -399,52 +409,54 @@ function SharingSettings({
   managed: boolean;
 }) {
   return (
-    <div className="editor-card studio-sharing">
-      <label htmlFor="cv-username">Username</label>
-      <input
-        disabled={busy}
-        id="cv-username"
-        maxLength={50}
-        minLength={3}
-        onChange={(event) => setUsername(event.target.value.toLowerCase())}
-        pattern="[a-z0-9]+(-[a-z0-9]+)*"
-        required
-        value={username}
-      />
-      <p>
-        Public portfolio: /{username || "username"}.{" "}
-        {managed
-          ? "This temporary portfolio is managed from your admin dashboard."
-          : `Your editor: /${username || "username"}/edit.`}{" "}
-        Changing your username changes the public link.
-      </p>
-      <label>
-        <input
-          checked={isPublic}
+    <Card asChild layout="plain" surface="portfolio">
+      <div className="editor-card studio-sharing">
+        <label htmlFor="cv-username">Username</label>
+        <Input
           disabled={busy}
-          onChange={(event) => setIsPublic(event.target.checked)}
-          type="checkbox"
-        />{" "}
-        Publish my profile and CV at a public link
-      </label>
-      <p>
-        {isPublic
-          ? "Anyone with the link can read your published contact and career details."
-          : "Your CV is private. Only you can read and download it."}
-      </p>
-      <a className="studio-secondary" href={downloadHref}>
-        Download my saved CV
-      </a>
-      {saved.isPublic && saved.id && (
-        <a
-          href={saved.username ? cvPath(saved.username) : `/p/${saved.id}`}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Open share link ↗
-        </a>
-      )}
-    </div>
+          id="cv-username"
+          maxLength={50}
+          minLength={3}
+          onChange={(event) => setUsername(event.target.value.toLowerCase())}
+          pattern="[a-z0-9]+(-[a-z0-9]+)*"
+          required
+          value={username}
+        />
+        <p>
+          Public portfolio: /{username || "username"}.{" "}
+          {managed
+            ? "This temporary portfolio is managed from your admin dashboard."
+            : `Your editor: /${username || "username"}/edit.`}{" "}
+          Changing your username changes the public link.
+        </p>
+        <label>
+          <input
+            checked={isPublic}
+            disabled={busy}
+            onChange={(event) => setIsPublic(event.target.checked)}
+            type="checkbox"
+          />{" "}
+          Publish my profile and CV at a public link
+        </label>
+        <p>
+          {isPublic
+            ? "Anyone with the link can read your published contact and career details."
+            : "Your CV is private. Only you can read and download it."}
+        </p>
+        <Button className="studio-secondary" href={downloadHref} variant="outline">
+          Download my saved CV
+        </Button>
+        {saved.isPublic && saved.id && (
+          <a
+            href={saved.username ? cvPath(saved.username) : `/p/${saved.id}`}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Open share link ↗
+          </a>
+        )}
+      </div>
+    </Card>
   );
 }
 function LayoutEditor({
@@ -455,13 +467,15 @@ function LayoutEditor({
   onChange: (profile: PortfolioProfile) => void;
 }) {
   return (
-    <section className="editor-card">
-      <PortfolioTypePicker
-        onChange={(portfolioType) => onChange({ ...profile, portfolioType })}
-        value={profile.portfolioType ?? "engineer"}
-      />
-      <p>Your CV layout is chosen separately in the PDF section.</p>
-    </section>
+    <Card asChild layout="plain" surface="portfolio">
+      <section className="editor-card">
+        <PortfolioTypePicker
+          onChange={(portfolioType) => onChange({ ...profile, portfolioType })}
+          value={profile.portfolioType ?? "engineer"}
+        />
+        <p>Your CV layout is chosen separately in the PDF section.</p>
+      </section>
+    </Card>
   );
 }
 const editors = {
