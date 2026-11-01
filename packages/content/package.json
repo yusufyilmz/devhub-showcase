@@ -1,10 +1,13 @@
 {
   "name": "@shared/content",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "main": "src/index.ts",
   "scripts": {
-    "build": "tsc --noEmit",
+    "build": "tsdown",
     "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
     "format": "biome format --write .",
     "format:check": "biome format .",
@@ -16,7 +19,7 @@
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",
-    "next": "catalog:",
+    "@types/node": "catalog:",
     "typescript": "catalog:"
   },
   "engines": {

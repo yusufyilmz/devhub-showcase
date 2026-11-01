@@ -1,4 +1,4 @@
-import type { PortfolioProfile } from "@shared/content";
+import type { PortfolioProfile } from "@shared/config";
 
 import { validateProfile } from "../domain/profile";
 import type { SupabaseDbClient } from "../types";

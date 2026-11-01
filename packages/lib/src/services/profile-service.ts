@@ -4,6 +4,7 @@ import {
   ProfileConflictError,
   type ProfileRepository,
 } from "../repositories/profile-repository";
+
 export class ProfileService {
   constructor(private readonly repository: ProfileRepository) {}
   async requireOwner(userId: string | null | undefined) {

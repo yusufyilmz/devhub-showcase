@@ -1,5 +1,6 @@
-import type { PortfolioProfile } from "@shared/content";
 import { z } from "zod";
+
+import type { PortfolioProfile } from "@shared/config";
 
 const text = (max = 200) => z.string().trim().max(max);
 const nullableText = (max = 200) => text(max).nullable();

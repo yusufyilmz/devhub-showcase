@@ -1,0 +1,49 @@
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+const mocks = vi.hoisted(() => ({
+  eq: vi.fn(),
+  getUser: vi.fn(),
+  maybeSingle: vi.fn(),
+  select: vi.fn(),
+}));
+vi.mock("@shared/lib/supabase", () => ({
+  createServerClient: async () => ({
+    auth: { getUser: mocks.getUser },
+    from: () => ({ select: mocks.select }),
+  }),
+}));
+
+import { OwnerEditLink } from "@/features/admin/owner-edit-link";
+
+describe("OwnerEditLink", () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+    mocks.select.mockReturnValue({ eq: mocks.eq });
+    mocks.eq.mockReturnValue({ eq: mocks.eq, maybeSingle: mocks.maybeSingle });
+  });
+  it("shows no edit link for a visitor", async () => {
+    mocks.getUser.mockResolvedValue({ data: { user: null } });
+    expect(await OwnerEditLink({ username: "alice" })).toBeNull();
+    expect(mocks.select).not.toHaveBeenCalled();
+  });
+  it("shows no edit link for another signed in user", async () => {
+    mocks.getUser.mockResolvedValue({
+      data: { user: { email_confirmed_at: "today", id: "bob-id" } },
+    });
+    mocks.maybeSingle.mockResolvedValue({ data: null, error: null });
+    expect(await OwnerEditLink({ username: "alice" })).toBeNull();
+    expect(mocks.eq).toHaveBeenCalledWith("owner_id", "bob-id");
+    expect(mocks.eq).toHaveBeenCalledWith("username", "alice");
+  });
+  it("offers the owner their own edit page", async () => {
+    mocks.getUser.mockResolvedValue({
+      data: { user: { email_confirmed_at: "today", id: "alice-id" } },
+    });
+    mocks.maybeSingle.mockResolvedValue({
+      data: { id: "alice-profile" },
+      error: null,
+    });
+    const link = await OwnerEditLink({ username: "alice" });
+    expect(link?.props.children.props.href).toBe("/alice/edit");
+  });
+});

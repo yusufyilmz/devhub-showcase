@@ -1,0 +1,71 @@
+"use client";
+
+import type React from "react";
+import { useState } from "react";
+
+import type { ChatMessage, ChatType } from "@shared/lib/types";
+import { IconButton } from "@shared/ui/icon-button";
+import { ChatIcon, ReferralIcon } from "@shared/ui/icons";
+import { type ChatIdentity, PortfolioChatProvider, usePortfolioChatState } from "@shared/ui/stores";
+
+import { ChatPopupContainer } from "./ChatPopupContainer";
+
+type ChatSectionProps = {
+  handleSendMessage: (input: ChatMessage, sessionId: string) => Promise<ChatMessage>;
+};
+
+export const ChatSection = ({
+  identity,
+  ...props
+}: ChatSectionProps & { identity: ChatIdentity }) => (
+  <PortfolioChatProvider identity={identity} key={`${identity.id}:${identity.revision}`}>
+    <ChatControls {...props} />
+  </PortfolioChatProvider>
+);
+const ChatControls: React.FC<ChatSectionProps> = ({ handleSendMessage }) => {
+  const [type, setType] = useState<ChatType>("cv");
+  const [isOpen, setIsOpen] = useState(false);
+  const resetChat = usePortfolioChatState((state) => state.resetChat);
+
+  const closeChat = (chatFinished: boolean) => {
+    setIsOpen(!isOpen);
+
+    if (chatFinished) {
+      resetChat(type);
+    }
+  };
+
+  return (
+    <>
+      <div className="fixed bottom-8 right-8 flex flex-col gap-4 z-[200]">
+        <IconButton
+          aria-label={"Resume Chat"}
+          className="icon-button"
+          onClick={() => {
+            setType("cv");
+            setIsOpen(!isOpen);
+          }}
+        >
+          <ChatIcon fontSize="xlarge" />
+        </IconButton>
+        <IconButton
+          aria-label={"Referral Chat"}
+          className="icon-button"
+          onClick={() => {
+            setType("referral");
+            setIsOpen(!isOpen);
+          }}
+        >
+          <ReferralIcon fontSize="xlarge" />
+        </IconButton>
+      </div>
+      {isOpen && (
+        <ChatPopupContainer
+          closeChat={closeChat}
+          handleSendMessage={handleSendMessage}
+          type={type}
+        />
+      )}
+    </>
+  );
+};

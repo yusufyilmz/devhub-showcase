@@ -10,7 +10,7 @@
         "NEXT_PUBLIC_SITE_URL",
         "GOOGLE_PROFILE_CLIENT_ID"
       ],
-      "outputs": [],
+      "outputs": ["dist/**"],
       "passThroughEnv": [
         "OPENAI_API_KEY",
         "OPENAI_MODEL",
@@ -37,15 +37,7 @@
       "cache": false,
       "persistent": true
     },
-    "start": {
-      "cache": false,
-      "persistent": true
-    },
-    "typecheck": {
-      "dependsOn": ["^typecheck"],
-      "outputs": []
-    },
-    "web#build": {
+    "my-dev-studio#build": {
       "dependsOn": ["^build"],
       "env": [
         "NEXT_PUBLIC_SUPABASE_URL",
@@ -73,6 +65,18 @@
         "SUPABASE_SERVICE_ROLE_KEY",
         "OPENAI_EDITOR_MODEL"
       ]
+    },
+    "start": {
+      "cache": false,
+      "persistent": true
+    },
+    "storybook-app#build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["^typecheck"],
+      "outputs": []
     }
   }
 }

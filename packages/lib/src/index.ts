@@ -5,7 +5,6 @@ export {
   NotFoundError,
   ValidationError,
 } from "./errors";
-export { logger } from "./log";
 export { ProjectService, projectFormatter } from "./services/resources/supabase/project";
 export { ReferralService } from "./services/resources/supabase/referral";
 export type {

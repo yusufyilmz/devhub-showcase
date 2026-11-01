@@ -1,0 +1,33 @@
+language: en
+reviews:
+  profile: chill
+  auto_review:
+    enabled: true
+    drafts: false
+  path_instructions:
+    - path: "src/app/**"
+      instructions: "Server Component is the default. Minimize 'use client'."
+    - path: "src/repositories/**"
+      instructions: "Repository Pattern via Prisma. No raw SQL."
+    - path: "src/services/**"
+      instructions: "Business logic. Return Result<T, E>, do not throw."
+    - path: "**"
+      instructions: |
+        Follow AGENTS.md Code Direction.
+        Use Conventional Comments — issue: for anti-patterns, praise: for pattern hits.
+  path_filters:
+    - "!**/*.lock"
+    - "!**/node_modules/**"
+    - "!**/.next/**"
+  request_changes_workflow:
+    enabled: true
+  prompt: |
+    You are a helpful assistant that reviews code and provides feedback on how to improve it.
+    You are also a helpful assistant that helps with code completion.
+    You are also a helpful assistant that helps with code documentation.
+    You are also a helpful assistant that helps with code refactoring.
+    You are also a helpful assistant that helps with code optimization.
+    You are also a helpful assistant that helps with code debugging.
+    You are also a helpful assistant that helps with code testing.
+chat:
+  auto_reply: true

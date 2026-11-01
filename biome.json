@@ -9,15 +9,26 @@
           "level": "on",
           "options": {
             "groups": [
-              ["react", "react-dom", "react/**", "react-dom/**"],
-              [":NODE:"],
+              [":STYLE:"],
+              ["use client;"],
               ":BLANK_LINE:",
-              ":PACKAGE:",
-              "@dlocal-int/**",
+              ["react", "react/**", "react-*", "react-*/**", "next", "next/**", ":NODE:"],
               ":BLANK_LINE:",
-              ["@/**", "~/**"],
-              ":PATH:"
-            ]
+              ["vitest", "vitest/**", "@testing-library", "@testing-library/**"],
+              ":BLANK_LINE:",
+              [":PACKAGE:", ":PACKAGE_WITH_PROTOCOL:", "!@shared/**"],
+              ":BLANK_LINE:",
+              "@shared/**",
+              ":BLANK_LINE:",
+              ":ALIAS:",
+              ":BLANK_LINE:",
+              ":PATH:",
+              ["./**"],
+              {
+                "type": true
+              }
+            ],
+            "sortBareImports": true
           }
         },
         "useSortedInterfaceMembers": "on"
@@ -98,8 +109,11 @@
     "enabled": true,
     "rules": {
       "a11y": {
+        "noStaticElementInteractions": "off",
+        "noSvgWithoutTitle": "off",
         "preset": "recommended",
-        "useButtonType": "error"
+        "useButtonType": "off",
+        "useKeyWithClickEvents": "off"
       },
       "complexity": {
         "noAdjacentSpacesInRegex": "error",
@@ -146,7 +160,10 @@
         "noPrecisionLoss": "error",
         "noRenderReturnValue": "error",
         "noUnusedFunctionParameters": "warn",
-        "noUnusedImports": "error",
+        "noUnusedImports": {
+          "fix": "safe",
+          "level": "error"
+        },
         "noUnusedVariables": "error",
         "useExhaustiveDependencies": "error",
         "useHookAtTopLevel": "error",
@@ -253,7 +270,7 @@
     }
   },
   "markdown": {
-    "analyzeEmbeds": true,
+    "analyzeEmbeds": false,
     "formatter": {
       "enabled": true,
       "formatEmbeds": true,

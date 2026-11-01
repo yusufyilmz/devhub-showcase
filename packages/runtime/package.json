@@ -1,0 +1,44 @@
+{
+  "name": "@shared/runtime",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./api": "./src/api/index.ts",
+    "./http": "./src/http/index.ts",
+    "./debounced": "./src/debounced/index.ts",
+    "./clipboard": "./src/clipboard/index.ts",
+    "./browser": "./src/browser/index.ts",
+    "./notifications": "./src/notifications/index.ts",
+    "./stores": "./src/stores/index.ts"
+  },
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "tsdown",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome lint .",
+    "lint:check": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "typecheck": "tsc --noEmit",
+    "types:check": "pnpm typecheck"
+  },
+  "dependencies": {
+    "@shared/config": "workspace:*",
+    "@shared/lib": "workspace:*",
+    "@shared/utils": "workspace:*",
+    "@supabase/ssr": "catalog:",
+    "zustand": "catalog:"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "node": ">=24.15.0 <25"
+  }
+}

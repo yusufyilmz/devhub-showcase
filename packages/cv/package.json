@@ -11,11 +11,11 @@
   },
   "main": "./src/index.ts",
   "scripts": {
-    "build": "tsc --noEmit",
+    "build": "tsdown",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@shared/content": "workspace:*",
+    "@shared/config": "workspace:*",
     "handlebars": "catalog:",
     "pdfmake": "catalog:"
   },

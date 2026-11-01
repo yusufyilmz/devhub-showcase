@@ -1,4 +1,5 @@
-import type { PortfolioProfile } from "@shared/content";
+import type { PortfolioProfile } from "@shared/config";
+
 export interface ProfileSnapshot {
   id?: string;
   isPublic?: boolean;

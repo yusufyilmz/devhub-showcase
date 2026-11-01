@@ -4,7 +4,7 @@ import {
   MAX_CUSTOM_SECTIONS,
   type SectionOptions,
   type SectionTemplateFile,
-} from "@shared/content";
+} from "@shared/config";
 
 import { customSectionSchema } from "./section";
 import {

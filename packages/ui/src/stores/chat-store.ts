@@ -1,4 +1,5 @@
 "use client";
+
 import {
   createContext,
   createElement,
@@ -8,9 +9,10 @@ import {
   useState,
 } from "react";
 
-import { type ChatMessage, ChatRole, type ChatType } from "@shared/lib/types";
 import { createStore, useStore } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+
+import { type ChatMessage, ChatRole, type ChatType } from "@shared/lib/types";
 
 import { CHAT_STORAGE_NAME } from "../constants/stores";
 

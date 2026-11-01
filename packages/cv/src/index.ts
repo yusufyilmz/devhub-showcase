@@ -1,8 +1,9 @@
-import { formatPortfolioPeriod, getPortfolioCopy, type PortfolioProfile } from "@shared/content";
 import Handlebars from "handlebars";
 import pdfmake from "pdfmake";
 import fonts from "pdfmake/build/vfs_fonts.js";
 import type { TDocumentDefinitions } from "pdfmake/interfaces";
+
+import { formatPortfolioPeriod, getPortfolioCopy, type PortfolioProfile } from "@shared/config";
 
 // The server and Plop share an in-memory font filesystem; no host font paths.
 const virtualfs = (

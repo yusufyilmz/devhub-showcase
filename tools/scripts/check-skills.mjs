@@ -5,9 +5,10 @@ import YAML from "yaml";
 const fix = process.argv.includes("--fix");
 let errors = 0;
 
-for await (const file of glob("**/SKILL.md", {
-  exclude: (path) => path.includes("node_modules") || path.includes(".next"),
-})) {
+// Node's glob does not enter dot directories for "**", so name the skill roots.
+const skillFiles = glob([".agents/skills/**/SKILL.md", ".cursor/skills/**/SKILL.md"]);
+
+for await (const file of skillFiles) {
   const content = await readFile(file, "utf8");
 
   if (!content.startsWith("---\n")) {

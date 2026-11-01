@@ -1,5 +1,5 @@
 import { RedisCacheClient } from "@shared/cache";
-import { copy } from "@shared/content";
+import { copy } from "@shared/config";
 
 export class RateLimiter {
   constructor(

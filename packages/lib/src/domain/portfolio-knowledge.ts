@@ -1,11 +1,12 @@
+import { z } from "zod";
+
 import {
   getPortfolioSections,
   type Language,
   type PortfolioProfile,
   resolveSectionSource,
   selectPortfolioContent,
-} from "@shared/content";
-import { z } from "zod";
+} from "@shared/config";
 
 import type { ProfileSnapshot } from "../repositories/profile-repository";
 
