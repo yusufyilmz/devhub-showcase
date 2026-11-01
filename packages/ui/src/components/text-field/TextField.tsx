@@ -5,10 +5,10 @@ import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 
-import { Flex, FlexCenter, FlexCol } from "../flex";
+import { Flex, FlexCenter, FlexCol } from "../Flex";
 import { IconButton } from "../icon-button";
-import { Label } from "../label";
-import { Typography } from "../typography";
+import { Label } from "../Label";
+import { Typography } from "../Typography";
 
 const textFieldVariants = cva(
   "flex w-full rounded-[var(--radius-m)] border border-[var(--border)] bg-[var(--background)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 disabled:cursor-not-allowed disabled:opacity-50 transition-colors",

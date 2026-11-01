@@ -1,32 +1,25 @@
-# React + TypeScript + Vite
+# MyDevStudio Storybook
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Run from the repository root:
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "options": {
-    "typeAware": true
-  },
-  "plugins": ["react", "typescript", "oxc"],
-  "rules": {
-    "react/only-export-components": ["warn", { "allowConstantExport": true }],
-    "react/rules-of-hooks": "error"
-  }
-}
+```sh
+pnpm --filter storybook-app storybook
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Open `http://localhost:6006` and select **Design system / Themes / Playground**.
+The toolbar selects White, Sand or Aqua, light/dark mode, spacing and radius.
+The same attributes apply to the document root so portaled controls share the palette.
+Changes do not write portfolio settings or use the portfolio theme storage key.
+
+```sh
+pnpm --filter storybook-app build-storybook
+```
+
+Stories load the semantic `@shared/design-system/globals.css` entry. The old
+portfolio stylesheet is an explicit `@shared/design-system/legacy.css` entry
+used by the Next.js app during migration. It is not loaded into primitive stories.
+See [the design system catalog](../../packages/design-system/CATALOG.md).
+
+Stories belong beside their components in `packages/ui` or `packages/components`.
+The `dev` and `build` commands still target the separate Vite shell; use the
+Storybook commands above for the component explorer.

@@ -2,8 +2,8 @@
 
 import { cn } from "cn";
 
-import { Flex, FlexRow } from "../flex";
-import { Typography } from "../typography";
+import { Flex, FlexRow } from "../Flex";
+import { Typography } from "../Typography";
 
 export interface ChatTypingIndicatorProps {
   className?: string;

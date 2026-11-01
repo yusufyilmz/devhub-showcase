@@ -4,9 +4,9 @@ import { useState } from "react";
 
 import { getPortfolioCopy, type Language } from "@shared/config";
 
-import { Drawer } from "../drawer";
+import { Drawer } from "../Drawer";
+import { MenuIcon } from "../Icons/Icons";
 import { IconButton } from "../icon-button/IconButton";
-import { MenuIcon } from "../icons/Icons";
 import { MenuItems } from "./MenuItems";
 
 export function MobileMenu({

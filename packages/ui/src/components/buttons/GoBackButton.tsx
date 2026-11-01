@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 import { copy } from "@shared/config";
 
-import { Button } from "../button";
+import { Button } from "../Button";
 
 export const GoBackButton = () => {
   const router = useRouter();

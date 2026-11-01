@@ -12,8 +12,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../card/Card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../select/Select";
+} from "../Card/Card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../Select/Select";
 import { ToggleGroup, ToggleGroupItem } from "../toggle-group/ToggleGroup";
 import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "./Chart";
 

@@ -14,3 +14,30 @@ Global CSS and design tokens for `@shared/design-system`. Import a stylesheet. T
 | `@shared/design-system/portfolios.css`     | `portfolios.css`     | Portfolio layout styles  |
 | `@shared/design-system/portfolio-chat.css` | `portfolio-chat.css` | Portfolio chat styles    |
 | `@shared/design-system/postcss.config`     | `postcss.config.js`  | Shared PostCSS config    |
+
+## Semantic themes
+
+`globals.css` / `styles.css` load only Tailwind and the shadcn system. Select
+`data-brand="white|sand|aqua"` and `data-theme="light|dark"` on the document root.
+The `dark` utility variant accepts both `.dark` and `data-theme="dark"`.
+Root attributes also cover dialogs and other portals mounted under the body.
+
+| Directory               | Responsibility                                        |
+| ----------------------- | ----------------------------------------------------- |
+| `tokens/primitives.css` | Raw colors and default semantic values                |
+| `tokens/palettes.css`   | Existing White, Sand and Aqua light/dark palettes     |
+| `tokens/appearance.css` | Spacing, radius, borders, shadows and motion settings |
+| `tokens/tailwind.css`   | Semantic Tailwind utility mappings                    |
+| `tokens/base.css`       | Minimal semantic reset and color scheme               |
+| `tokens/typography.css` | Optional font utilities                               |
+| `legacy/`               | Existing portfolio/studio layout rules                |
+
+Import `@shared/design-system/legacy.css` explicitly for existing portfolio
+surfaces. It is excluded from Storybook's semantic entry, so the previous RGB
+portfolio palettes and global control rules cannot override primitive stories.
+The Next.js app keeps this compatibility import during the gradual migration.
+Do not import legacy CSS into new primitive stories.
+
+Run `pnpm --filter storybook-app storybook` and open **Design system / Themes**.
+The toolbar selects brand, mode, radius and spacing. Theme selection is local to
+Storybook and does not modify a user's saved portfolio settings.

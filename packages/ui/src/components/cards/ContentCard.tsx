@@ -7,7 +7,7 @@ import { forwardRef, type ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 
-import { Card } from "../card/Card";
+import { Card } from "../Card/Card";
 
 const contentCardVariants = cva(
   "cursor-pointer overflow-hidden relative flex flex-col justify-between transition-all duration-300 ease-in-out group/card",

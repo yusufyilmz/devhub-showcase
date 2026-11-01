@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { BellRing } from "lucide-react";
 
-import { Button } from "../button/Button";
+import { Button } from "../Button/Button";
 import {
   Card,
   CardAction,

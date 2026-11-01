@@ -2,11 +2,11 @@
 
 import { cn } from "cn";
 
-import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
-import { Badge } from "../badge";
-import { Button } from "../button";
-import { FlexCol, FlexRow } from "../flex";
-import { Typography } from "../typography";
+import { Avatar, AvatarFallback, AvatarImage } from "../Avatar";
+import { Badge } from "../Badge";
+import { Button } from "../Button";
+import { FlexCol, FlexRow } from "../Flex";
+import { Typography } from "../Typography";
 
 export interface ChatHeaderProps {
   avatar?: string;

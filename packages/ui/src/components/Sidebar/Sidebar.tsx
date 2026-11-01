@@ -8,12 +8,12 @@ import { cn } from "cn";
 import { PanelLeftIcon } from "lucide-react";
 
 import { useIsMobile } from "../../hooks/use-mobile";
-import { Button } from "../button/Button";
-import { Input } from "../input/Input";
-import { Separator } from "../seperator/Seperator";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "../sheet/Sheet";
-import { Skeleton } from "../skeleton/Skeleton";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../tooltip/Tooltip";
+import { Button } from "../Button/Button";
+import { Input } from "../Input/Input";
+import { Separator } from "../Seperator/Seperator";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "../Sheet/Sheet";
+import { Skeleton } from "../Skeleton/Skeleton";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../Tooltip/Tooltip";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;

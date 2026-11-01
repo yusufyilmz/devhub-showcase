@@ -17,7 +17,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "../sidebar/Sidebar";
+} from "../Sidebar/Sidebar";
 
 export function NavProjects({
   projects,

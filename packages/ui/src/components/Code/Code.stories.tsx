@@ -2,9 +2,9 @@ import type * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Card, CardContent, CardHeader, CardTitle } from "../card";
-import { FlexCol } from "../flex";
-import { Typography } from "../typography";
+import { Card, CardContent, CardHeader, CardTitle } from "../Card";
+import { FlexCol } from "../Flex";
+import { Typography } from "../Typography";
 import {
   Code,
   CodeBlock,

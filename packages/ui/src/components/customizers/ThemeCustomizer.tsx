@@ -4,19 +4,19 @@ import { useEffect, useState } from "react";
 
 import { cn } from "cn";
 
-import { Alert } from "../alert";
-import { Button } from "../button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../card";
-import { FlexBetween, FlexCol, FlexRow } from "../flex";
-import { Input } from "../input";
+import { Alert } from "../Alert";
+import { Button } from "../Button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../Card";
+import { FlexBetween, FlexCol, FlexRow } from "../Flex";
+import { Input } from "../Input";
+import { Typography } from "../Typography";
 import { TextField } from "../text-field";
-import { Typography } from "../typography";
 
 export type ThemeOption = "light" | "dark" | "system";
 
-export type BrandOption = "blue" | "violet" | "pink" | "cyan" | "emerald";
+export type BrandOption = "white" | "sand" | "aqua";
 
-export type ShadowOption = "minimal" | "subtle" | "pronounced" | "dramatic";
+export type ShadowOption = "none" | "soft" | "medium" | "strong";
 
 export type SpacingOption = "compact" | "comfortable" | "relaxed" | "spacious";
 
@@ -34,24 +34,23 @@ export const themeOptions: SelectOption[] = [
 ];
 
 export const brandOptions: SelectOption[] = [
-  { label: "Blue", value: "blue" },
-  { label: "Violet", value: "violet" },
-  { label: "Pink", value: "pink" },
-  { label: "Cyan", value: "cyan" },
-  { label: "Emerald", value: "emerald" },
+  { label: "White", value: "white" },
+  { label: "Sand", value: "sand" },
+  { label: "Aqua", value: "aqua" },
 ];
 
 export const borderOptions: SelectOption[] = [
-  { label: "Subtle", value: "subtle" },
-  { label: "Moderate", value: "moderate" },
-  { label: "Pronounced", value: "pronounced" },
+  { label: "None", value: "none" },
+  { label: "Thin", value: "thin" },
+  { label: "Base", value: "base" },
+  { label: "Thick", value: "thick" },
 ];
 
 export const shadowOptions: SelectOption[] = [
-  { label: "Minimal", value: "minimal" },
-  { label: "Subtle", value: "subtle" },
-  { label: "Pronounced", value: "pronounced" },
-  { label: "Dramatic", value: "dramatic" },
+  { label: "None", value: "none" },
+  { label: "Soft", value: "soft" },
+  { label: "Medium", value: "medium" },
+  { label: "Strong", value: "strong" },
 ];
 
 export const spacingOptions: SelectOption[] = [
@@ -62,16 +61,16 @@ export const spacingOptions: SelectOption[] = [
 ];
 
 export const radiusOptions: SelectOption[] = [
-  { label: "None", value: "none" },
-  { label: "Subtle", value: "subtle" },
-  { label: "Moderate", value: "moderate" },
-  { label: "Pronounced", value: "pronounced" },
+  { label: "Square", value: "square" },
+  { label: "Small", value: "small" },
+  { label: "Base", value: "base" },
   { label: "Rounded", value: "rounded" },
+  { label: "Pill", value: "pill" },
 ];
 
 export const transitionOptions: SelectOption[] = [
   { label: "None", value: "none" },
-  { label: "Subtle", value: "subtle" },
+  { label: "Base", value: "base" },
   { label: "Smooth", value: "smooth" },
   { label: "Bouncy", value: "bouncy" },
 ];
@@ -143,18 +142,25 @@ export function ThemeCustomizer({
   ...props
 }: ThemeCustomizerProps) {
   const [theme, setTheme] = useState<ThemeOption>("system");
-  const [brand, setBrand] = useState<BrandOption>("blue");
-  const [border, setBorder] = useState("moderate");
-  const [shadow, setShadow] = useState<ShadowOption>("subtle");
+  const [brand, setBrand] = useState<BrandOption>("white");
+  const [border, setBorder] = useState("base");
+  const [shadow, setShadow] = useState<ShadowOption>("soft");
   const [spacing, setSpacing] = useState<SpacingOption>("comfortable");
-  const [radius, setRadius] = useState("moderate");
+  const [radius, setRadius] = useState("base");
   const [transition, setTransition] = useState("smooth");
   const [showCodePanel, setShowCodePanel] = useState(showCode);
 
   // Apply theme changes to document
   useEffect(() => {
     const root = document.documentElement;
-    root.setAttribute("data-theme", theme);
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const applyMode = () => {
+      const resolved = theme === "system" ? (media.matches ? "dark" : "light") : theme;
+      root.setAttribute("data-theme", resolved);
+      root.classList.toggle("dark", resolved === "dark");
+    };
+    applyMode();
+    media.addEventListener("change", applyMode);
     root.setAttribute("data-brand", brand);
     root.setAttribute("data-border", border);
     root.setAttribute("data-shadow", shadow);
@@ -170,6 +176,7 @@ export function ThemeCustomizer({
     localStorage.setItem("data-spacing", spacing);
     localStorage.setItem("data-radius", radius);
     localStorage.setItem("data-transition", transition);
+    return () => media.removeEventListener("change", applyMode);
   }, [theme, brand, border, shadow, spacing, radius, transition]);
 
   const handleThemeChange = (newTheme: ThemeOption) => {
@@ -209,11 +216,11 @@ export function ThemeCustomizer({
 
   const resetToDefaults = () => {
     setTheme("system");
-    setBrand("blue");
-    setBorder("moderate");
-    setShadow("subtle");
+    setBrand("white");
+    setBorder("base");
+    setShadow("soft");
     setSpacing("comfortable");
-    setRadius("moderate");
+    setRadius("base");
     setTransition("smooth");
   };
 

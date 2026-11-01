@@ -1,6 +1,6 @@
 import { getPortfolioCopy, type Language } from "@shared/config";
 
-import { Button } from "../button";
+import { Button } from "../Button";
 
 export function MenuItems({
   language = "en",

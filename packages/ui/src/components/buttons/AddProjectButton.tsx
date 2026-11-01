@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-import { Button } from "../button";
+import { Button } from "../Button";
 
 export const AddProjectButton = () => {
   const { push } = useRouter();

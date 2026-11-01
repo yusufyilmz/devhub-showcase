@@ -5,10 +5,10 @@ import { useState } from "react";
 
 import { cn } from "cn";
 
-import { Badge } from "../badge/Badge";
-import { Button } from "../button/Button";
-import { Flex, FlexRow } from "../flex/Flex";
-import { Typography } from "../typography/Typography";
+import { Badge } from "../Badge/Badge";
+import { Button } from "../Button/Button";
+import { Flex, FlexRow } from "../Flex/Flex";
+import { Typography } from "../Typography/Typography";
 
 // Simple Chevron Down icon as SVG
 const ChevronDownIcon = () => (

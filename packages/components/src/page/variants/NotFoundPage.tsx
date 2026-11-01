@@ -1,8 +1,8 @@
 import { copy } from "@shared/config";
+import { Typography } from "@shared/ui/typography";
 
 import { GoBackButton } from "../../../../ui/src/components/buttons/GoBackButton";
 import { HomeButton } from "../../../../ui/src/components/buttons/HomeButton";
-import { Typography } from "../../../../ui/src/components/typography/Typography";
 
 export const NotFoundPage = () => {
   return (

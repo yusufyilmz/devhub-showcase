@@ -10,7 +10,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "../sidebar/Sidebar";
+} from "../Sidebar/Sidebar";
 
 export function NavSecondary({
   items,

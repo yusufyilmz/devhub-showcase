@@ -3,8 +3,8 @@ import type { ChangeEvent } from "react";
 
 import { cn } from "cn";
 
-import { FlexCol, FlexRow } from "../flex";
-import { Typography } from "../typography";
+import { FlexCol, FlexRow } from "../Flex";
+import { Typography } from "../Typography";
 import { Switch } from "./Switch";
 
 export interface StyledSwitchProps {

@@ -12,12 +12,14 @@
     "./portfolios.css": "./portfolios.css",
     "./themes.css": "./themes.css",
     "./globals.css": "./globals.css",
-    "./styles.css": "./styles.css"
+    "./styles.css": "./styles.css",
+    "./legacy.css": "./legacy.css"
   },
   "files": [
-    "./globals.css",
-    "./styles.css",
-    "./postcss.config.js"
+    "*.css",
+    "tokens",
+    "legacy",
+    "postcss.config.js"
   ],
   "dependencies": {
     "@tailwindcss/postcss": "catalog:",

@@ -2,7 +2,7 @@ import { forwardRef, type ReactNode } from "react";
 
 import { cn } from "cn";
 
-import { Card } from "../card/Card";
+import { Card } from "../Card/Card";
 
 const GRADIENT_MAP = {
   default: "bg-card",

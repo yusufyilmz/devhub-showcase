@@ -1,7 +1,7 @@
 import type React from "react";
 import type { ReactNode } from "react";
 
-import { Button } from "../button";
+import { Button } from "../Button";
 
 type AccordionHeaderProps = {
   isOpen: boolean;

@@ -2,11 +2,11 @@ import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Badge } from "../badge";
-import { Button } from "../button";
-import { Card } from "../card";
-import { FlexCol, FlexRow } from "../flex";
-import { Typography } from "../typography";
+import { Badge } from "../Badge";
+import { Button } from "../Button";
+import { Card } from "../Card";
+import { FlexCol, FlexRow } from "../Flex";
+import { Typography } from "../Typography";
 import { Chat, type ChatMessage } from "./Chat";
 import { ChatHeader } from "./ChatHeader";
 import { ChatInput } from "./ChatInput";

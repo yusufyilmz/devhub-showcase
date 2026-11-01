@@ -2,45 +2,46 @@ import "@shared/design-system/globals.css";
 
 import type { Preview } from "@storybook/react-vite";
 
-import { PageShell } from "@shared/components/page";
+import { ThemePreview } from "./theme-preview";
 
 const preview: Preview = {
   decorators: [
-    (Story, context) => {
-      if (context.component === PageShell) return <Story />;
-      return (
-        <PageShell
-          appearance={{ accent: "cyan", defaultTheme: "light" }}
-          documentLanguage="en"
-          embed
-          portfolioTheme="studio"
-          request={async () => Response.json({ ok: true })}
-          storageKey="storybook-document-shell"
-        >
-          <Story />
-        </PageShell>
-      );
-    },
+    (Story, context) => (
+      <ThemePreview globals={context.globals}>
+        <Story />
+      </ThemePreview>
+    ),
   ],
+  globalTypes: {
+    brand: {
+      description: "Semantic color palette",
+      toolbar: { dynamicTitle: true, icon: "paintbrush", items: ["white", "sand", "aqua"] },
+    },
+    mode: {
+      description: "Color mode",
+      toolbar: { dynamicTitle: true, icon: "circlehollow", items: ["light", "dark"] },
+    },
+    radius: {
+      toolbar: {
+        dynamicTitle: true,
+        icon: "outline",
+        items: ["square", "small", "base", "rounded", "pill"],
+      },
+    },
+    spacing: {
+      toolbar: {
+        dynamicTitle: true,
+        icon: "grow",
+        items: ["compact", "comfortable", "relaxed", "spacious"],
+      },
+    },
+  },
+  initialGlobals: { brand: "white", mode: "light", radius: "base", spacing: "comfortable" },
   parameters: {
-    a11y: {
-      // 'todo' - show a11y violations in the test UI only
-      // 'error' - fail CI on a11y violations
-      // 'off' - skip a11y checks entirely
-      test: "todo",
-    },
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
-      },
-    },
-    docs: {
-      story: {
-        iframeHeight: 480,
-        inline: false,
-      },
-    },
+    a11y: { test: "todo" },
+    backgrounds: { disable: true },
+    controls: { matchers: { color: /(background|color)$/i, date: /Date$/i } },
+    docs: { story: { iframeHeight: 480, inline: false } },
   },
 };
 

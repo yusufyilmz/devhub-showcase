@@ -13,7 +13,7 @@ import {
   XIcon,
 } from "lucide-react";
 
-import { Button } from "../button";
+import { Button } from "../Button";
 
 const toast = ToastPrimitive.createToastManager();
 

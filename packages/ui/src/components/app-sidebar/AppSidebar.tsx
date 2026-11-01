@@ -13,16 +13,16 @@ import {
   SquareTerminal,
 } from "lucide-react";
 
-import { NavMain } from "../nav/NavMain";
-import { NavProjects } from "../nav/NavProjects";
-import { NavUser } from "../nav/NavUser";
+import { NavMain } from "../Nav/NavMain";
+import { NavProjects } from "../Nav/NavProjects";
+import { NavUser } from "../Nav/NavUser";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "../sidebar/Sidebar";
+} from "../Sidebar/Sidebar";
 import { TeamSwitcher } from "../team-switcher/TeamSwitcher";
 
 // This is sample data.

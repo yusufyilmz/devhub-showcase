@@ -4,10 +4,10 @@ import type * as React from "react";
 
 import { cn } from "cn";
 
-import { Button } from "../button";
-import { FlexCol, FlexRow } from "../flex";
+import { Button } from "../Button";
+import { FlexCol, FlexRow } from "../Flex";
+import { Typography } from "../Typography";
 import { TextField } from "../text-field";
-import { Typography } from "../typography";
 
 export interface ChatInputProps {
   className?: string;

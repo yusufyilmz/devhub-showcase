@@ -1,6 +1,6 @@
 import type { PortfolioProfile } from "@shared/config";
 
-import { Navbar } from "../navbar/Navbar";
+import { Navbar } from "../Navbar/Navbar";
 
 export function Header({ profile }: { profile?: PortfolioProfile }) {
   return (

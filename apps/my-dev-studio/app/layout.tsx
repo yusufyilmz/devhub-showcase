@@ -1,4 +1,5 @@
 import "@shared/design-system/globals.css";
+import "@shared/design-system/legacy.css";
 
 import type { Metadata } from "next";
 import localFont from "next/font/local";

@@ -5,8 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 
-import { Flex, FlexCenter, FlexCol } from "../flex";
-import { Typography } from "../typography";
+import { Flex, FlexCenter, FlexCol } from "../Flex";
+import { Typography } from "../Typography";
 import { ChatHeader } from "./ChatHeader";
 import { ChatInput } from "./ChatInput";
 import { ChatMessageBubble } from "./ChatMessageBubble";

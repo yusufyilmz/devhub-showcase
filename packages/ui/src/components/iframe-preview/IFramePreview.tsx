@@ -4,7 +4,7 @@ import Link from "next/link";
 import type React from "react";
 import { useState } from "react";
 
-import { Spinner } from "../spinner";
+import { Spinner } from "../Spinner";
 
 interface IFramePreviewProps {
   url: string;

@@ -1,5 +1,5 @@
 /** Adapted from Once UI (MIT). Copyright (c) 2024-2025 Once UI. */
-import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../Avatar";
 
 export function AvatarGroup({
   avatars,

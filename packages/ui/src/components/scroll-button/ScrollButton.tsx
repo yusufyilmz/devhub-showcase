@@ -3,8 +3,8 @@
 import type React from "react";
 import { useEffect, useState } from "react";
 
+import { ArrowDownwardIcon } from "../Icons/Icons";
 import { IconButton } from "../icon-button/IconButton";
-import { ArrowDownwardIcon } from "../icons/Icons";
 
 type ScrollButtonProps = {
   sectionIds: string[];

@@ -1,4 +1,4 @@
-import { Alert, AlertDescription, AlertTitle } from "../alert";
+import { Alert, AlertDescription, AlertTitle } from "../Alert";
 
 interface SnackbarNotificationProps {
   message: string;

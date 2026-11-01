@@ -2,12 +2,12 @@
 
 import { cn } from "cn";
 
-import { Avatar, AvatarFallback } from "../avatar";
-import { Badge } from "../badge";
-import { Button } from "../button";
-import { Flex, FlexCenter, FlexCol, FlexRow } from "../flex";
-import { Input } from "../input";
-import { Typography } from "../typography";
+import { Avatar, AvatarFallback } from "../Avatar";
+import { Badge } from "../Badge";
+import { Button } from "../Button";
+import { Flex, FlexCenter, FlexCol, FlexRow } from "../Flex";
+import { Input } from "../Input";
+import { Typography } from "../Typography";
 
 export interface ChatSidebarProps {
   className?: string;

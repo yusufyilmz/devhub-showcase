@@ -2,8 +2,8 @@ import type React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Button } from "../button";
-import { Card } from "../card";
+import { Button } from "../Button";
+import { Card } from "../Card";
 import {
   Flex,
   FlexBetween,

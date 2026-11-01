@@ -55,15 +55,15 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import { useIsMobile } from "../../hooks/use-mobile";
-import { Badge } from "../badge/Badge";
-import { Button } from "../button/Button";
+import { Badge } from "../Badge/Badge";
+import { Button } from "../Button/Button";
 import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "../chart/Chart";
-import { Checkbox } from "../checkbox/Checkbox";
+} from "../Chart/Chart";
+import { Checkbox } from "../Checkbox/Checkbox";
 import {
   Drawer,
   DrawerClose,
@@ -73,7 +73,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../drawer/Drawer";
+} from "../Drawer/Drawer";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -82,12 +82,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../dropdown-menu/DropdownMenu";
-import { Input } from "../input/Input";
-import { Label } from "../label/Label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../select/Select";
-import { Separator } from "../seperator/Seperator";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../table/Table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../tabs/Tabs";
+import { Input } from "../Input/Input";
+import { Label } from "../Label/Label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../Select/Select";
+import { Separator } from "../Seperator/Seperator";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../Table/Table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../Tabs/Tabs";
 
 export const schema = z.object({
   header: z.string(),

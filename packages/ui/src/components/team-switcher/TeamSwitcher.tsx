@@ -13,7 +13,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "../dropdown-menu/DropdownMenu";
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "../sidebar/Sidebar";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "../Sidebar/Sidebar";
 
 export function TeamSwitcher({
   teams,
