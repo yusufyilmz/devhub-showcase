@@ -1,5 +1,46 @@
 import { expect, test } from "@playwright/test";
 
+test("homepage examples arrive server-rendered, open inline, and show project images", async ({
+  page,
+  request,
+}, info) => {
+  const html = await (await request.get("/")).text();
+  expect(html).toContain("Avery Morgan");
+  expect(html).toContain("/examples/atlas-interface.svg");
+  expect(html).toContain("example-rendered-preview");
+  await page.goto("/");
+  await page
+    .getByRole("heading", { name: "Where would you like to start?" })
+    .scrollIntoViewIfNeeded();
+  await page.screenshot({ path: info.outputPath("homepage-composer.png") });
+  await page
+    .getByRole("link", { exact: true, name: "Explore Avery Morgan's engineer example" })
+    .click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog.getByRole("heading", { exact: true, name: "Avery Morgan" })).toBeVisible();
+  await expect(dialog.locator("iframe")).toHaveCount(0);
+  const image = dialog.getByRole("img", { exact: true, name: "Beacon developer portal" });
+  await image.scrollIntoViewIfNeeded();
+  await expect(image).toBeVisible();
+  await expect
+    .poll(() => image.evaluate((element) => (element as HTMLImageElement).naturalWidth))
+    .toBeGreaterThan(0);
+  await page.screenshot({ path: info.outputPath("example-with-images.png") });
+});
+
+test("section browser reveals more rows only after explicit activation", async ({ page }, info) => {
+  await page.goto("/");
+  const list = page.getByRole("list", { name: "Available section types" });
+  const reveal = page.getByRole("button", { exact: true, name: "Show all section types" });
+  await reveal.scrollIntoViewIfNeeded();
+  const expected = info.project.name.startsWith("mobile") ? 6 : 15;
+  await expect(list.locator("li:visible")).toHaveCount(expected);
+  await reveal.click();
+  await expect(list.locator("li:visible")).toHaveCount(47);
+  await page.getByRole("button", { exact: true, name: "Show fewer sections" }).click();
+  await expect(list.locator("li:visible")).toHaveCount(expected);
+});
+
 const demos = [
   ["avery-morgan", "Avery Morgan", "engineer", "studio", "en"],
   ["maya-chen", "Maya Chen", "designer", "paper", "en"],

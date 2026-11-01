@@ -19,7 +19,7 @@ export function WorkMedia({
   const video = youtubeId && /^[a-zA-Z0-9_-]{11}$/.test(youtubeId) ? youtubeId : null;
   return (
     <div className="work-media">
-      {imageUrl && /^https?:\/\//i.test(imageUrl) && (
+      {imageUrl && (/^https?:\/\//i.test(imageUrl) || /^\/(?!\/)/.test(imageUrl)) && (
         <img
           alt={title}
           height={600}

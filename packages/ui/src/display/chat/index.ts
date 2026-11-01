@@ -3,6 +3,7 @@ export {
   type ChatMessage,
   type ChatProps,
 } from "./Chat";
+export { ChatComposer } from "./ChatComposer";
 // Individual Chat Components
 export { ChatHeader, type ChatHeaderProps } from "./ChatHeader";
 export { ChatInput, type ChatInputProps } from "./ChatInput";
@@ -14,3 +15,4 @@ export {
   type ChatSidebarSection,
 } from "./ChatSidebar";
 export { ChatTypingIndicator, type ChatTypingIndicatorProps } from "./ChatTypingIndicator";
+export { StudioChatScreen } from "./StudioChatScreen";

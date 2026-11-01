@@ -131,21 +131,24 @@ export function PortfolioPreview() {
               </div>
               <div className="home-sample-projects">
                 <div>
-                  <div aria-hidden="true" className="home-project-art home-project-art-one">
-                    <span />
-                    <span />
-                    <span />
-                    <b>build.</b>
-                  </div>
+                  <img
+                    alt="Illustrative interface project"
+                    className="home-project-art"
+                    height={400}
+                    src="/examples/atlas-interface.svg"
+                    width={600}
+                  />
                   <strong>A project you’re proud of</strong>
                   <small>Your craft, in action</small>
                 </div>
                 <div>
-                  <div aria-hidden="true" className="home-project-art home-project-art-two">
-                    <i />
-                    <i />
-                    <i />
-                  </div>
+                  <img
+                    alt="Illustrative brand identity project"
+                    className="home-project-art"
+                    height={400}
+                    src="/examples/orbit-brand.svg"
+                    width={600}
+                  />
                   <strong>Your next great idea</strong>
                   <small>A little room to grow</small>
                 </div>

@@ -1,5 +1,6 @@
 import {
   HomeCapabilitiesSection,
+  HomeChatLauncher,
   HomeCTASection,
   HomeFAQSection,
   HomeFeaturesSection,
@@ -31,6 +32,7 @@ export function HomePage({
       <main id="home-content">
         <HomeHeroSection action={action} exampleHref={exampleHref} />
         <HomeCapabilitiesSection />
+        <HomeChatLauncher />
         <ExampleCarousel />
         <HomeFeaturesSection />
         <HomeOptionsSection />

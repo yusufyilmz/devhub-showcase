@@ -54,6 +54,7 @@ export { HeadingSection, HeadingSectionEditor } from "./heading-section";
 export { HeroSection, HeroSectionEditor, HeroSettingsEditor } from "./hero-section";
 export {
   HomeCapabilitiesSection,
+  HomeChatLauncher,
   HomeCTASection,
   HomeFAQSection,
   HomeFeaturesSection,

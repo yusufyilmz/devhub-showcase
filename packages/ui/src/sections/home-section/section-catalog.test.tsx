@@ -8,6 +8,17 @@ import { SectionCatalog } from "./section-catalog";
 
 describe("Section catalog", () => {
   afterEach(cleanup);
+  it("requires an explicit reveal action and exposes the expanded state", () => {
+    render(<SectionCatalog />);
+    const reveal = screen.getByRole("button", { name: "Show all section types" });
+    const list = screen.getByRole("list", { name: "Available section types" });
+    expect(list.getAttribute("data-expanded")).toBe("false");
+    fireEvent.click(reveal);
+    expect(list.getAttribute("data-expanded")).toBe("true");
+    expect(reveal.getAttribute("aria-expanded")).toBe("true");
+    fireEvent.click(screen.getByRole("button", { name: "Show fewer sections" }));
+    expect(list.getAttribute("data-expanded")).toBe("false");
+  });
   it("lists every registered type and filters names without case sensitivity", () => {
     render(<SectionCatalog />);
     const list = screen.getByRole("list", { name: "Available section types" });

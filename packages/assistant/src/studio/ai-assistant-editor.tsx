@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
+import { type ComponentProps, useEffect, useRef, useState } from "react";
 
 import type { PortfolioProfile } from "@shared/config";
 import { urls } from "@shared/config/urls";
@@ -8,6 +9,7 @@ import { type AiEditProposal, aiEditProposalSchema, applyAiEdit } from "@shared/
 import { useStudioRequest } from "@shared/runtime/studio";
 import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
+import { StudioChatScreen } from "@shared/ui/display";
 
 type Props = {
   profile: PortfolioProfile;
@@ -15,8 +17,56 @@ type Props = {
   revision: number;
   managed: boolean;
   onChange: (profile: PortfolioProfile) => void;
+  chat?: { editorHref: string; actions?: ReactNode; status?: string; error?: string };
 };
 type Review = { proposal: AiEditProposal; baseline: string; revision: number };
+type Availability = { enabled: boolean; usage: number; limit: number };
+
+function ChatPresentation({
+  availability,
+  profileId,
+  saveError,
+  saveStatus,
+  error,
+  status,
+  ...screen
+}: Omit<ComponentProps<typeof StudioChatScreen>, "notice" | "disabled"> & {
+  availability: Availability | null;
+  profileId?: string;
+  saveError?: string;
+  saveStatus?: string;
+}) {
+  return (
+    <StudioChatScreen
+      {...screen}
+      disabled={!availability?.enabled || !profileId}
+      error={error || saveError}
+      notice={<AssistantNotice availability={availability} />}
+      status={saveStatus || status}
+    />
+  );
+}
+
+function AssistantNotice({ availability }: { availability: Availability | null }) {
+  return (
+    <>
+      <p>Your draft is sent to OpenAI. Review proposals before applying or saving.</p>
+      {availability ? (
+        <p>
+          {availability.usage} / {availability.limit} attempts used.
+          {!availability.enabled && (
+            <>
+              {" "}
+              Pro allowance required. <a href="/admin/billing">Manage subscription</a>.
+            </>
+          )}
+        </p>
+      ) : (
+        <p>Checking assistant access…</p>
+      )}
+    </>
+  );
+}
 export function AiAssistantEditor(props: Props) {
   if (props.managed)
     return (
@@ -29,7 +79,7 @@ export function AiAssistantEditor(props: Props) {
     );
   return <AssistantWorkspace {...props} />;
 }
-function AssistantWorkspace({ profile, profileId, revision, onChange }: Props) {
+function AssistantWorkspace({ profile, profileId, revision, onChange, chat }: Props) {
   const studioRequest = useStudioRequest();
   const [availability, setAvailability] = useState<{
     enabled: boolean;
@@ -40,6 +90,9 @@ function AssistantWorkspace({ profile, profileId, revision, onChange }: Props) {
   const [error, showError] = useState("");
   const [status, setStatus] = useState("");
   const [busy, setBusy] = useState(false);
+  const [turns, setTurns] = useState<{ id: number; role: "user" | "assistant"; text: string }[]>(
+    [],
+  );
   const [review, setReview] = useState<Review | null>(null);
   const [selected, setSelected] = useState<string[]>([]);
   const [undo, setUndo] = useState<{ before: PortfolioProfile; after: string } | null>(null);
@@ -67,6 +120,11 @@ function AssistantWorkspace({ profile, profileId, revision, onChange }: Props) {
   }, [studioRequest]);
   const current = JSON.stringify(profile);
   const stale = Boolean(review && (review.baseline !== current || review.revision !== revision));
+  function recordTurn(role: "user" | "assistant", text: string) {
+    if (!chat) return;
+    setTurns((previous) => [...previous, { id: previous.length, role, text }]);
+    if (role === "user") setMessage("");
+  }
   async function generate() {
     if (!profileId || !message.trim() || busy) return;
     setBusy(true);
@@ -75,6 +133,7 @@ function AssistantWorkspace({ profile, profileId, revision, onChange }: Props) {
     setReview(null);
     controller.current = new AbortController();
     const baseline = JSON.stringify(profile);
+    recordTurn("user", message);
     try {
       const response = await studioRequest(urls.next.studio.assistant(), {
         body: JSON.stringify({
@@ -93,6 +152,7 @@ function AssistantWorkspace({ profile, profileId, revision, onChange }: Props) {
       const proposal = aiEditProposalSchema.parse(data.proposal);
       applyAiEdit(profile, proposal);
       setReview({ baseline, proposal, revision });
+      recordTurn("assistant", proposal.summary);
       setSelected(proposal.changes.map((change) => change.field));
       setAvailability((previous) =>
         previous ? { ...previous, usage: previous.usage + 1 } : previous,
@@ -118,6 +178,47 @@ function AssistantWorkspace({ profile, profileId, revision, onChange }: Props) {
       );
     }
   }
+  if (chat)
+    return (
+      <ChatPresentation
+        actions={chat.actions}
+        availability={availability}
+        busy={busy}
+        editorHref={chat.editorHref}
+        error={error}
+        message={message}
+        messages={turns}
+        onMessageChange={setMessage}
+        onReset={() => {
+          setTurns([]);
+          setReview(null);
+          setMessage("");
+          showError("");
+          setStatus("");
+        }}
+        onStop={() => controller.current?.abort()}
+        onSubmit={generate}
+        profileId={profileId}
+        review={
+          review ? (
+            <div className="studio-chat-review">
+              <ProposalReview
+                apply={apply}
+                discard={() => setReview(null)}
+                profile={profile}
+                review={review}
+                selected={selected}
+                setSelected={setSelected}
+                stale={stale}
+              />
+            </div>
+          ) : undefined
+        }
+        saveError={chat.error}
+        saveStatus={chat.status}
+        status={status}
+      />
+    );
   return (
     <Card asChild layout="plain" surface="portfolio">
       <section className="editor-card">

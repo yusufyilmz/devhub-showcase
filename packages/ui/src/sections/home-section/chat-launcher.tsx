@@ -2,30 +2,30 @@
 
 import { useState } from "react";
 
-import { Button } from "../../buttons/button";
-import { ChatInput } from "../../display/chat/ChatInput";
+import { ChatComposer } from "../../display/chat/ChatComposer";
+import { Section } from "../../layout/section";
 
 export function HomeChatLauncher() {
   const [message, setMessage] = useState("");
   function open() {
-    if (message.trim()) sessionStorage.setItem("studio-assistant-pending", message.trim());
+    try {
+      if (message.trim()) sessionStorage.setItem("studio-assistant-pending", message.trim());
+    } catch {}
     window.location.assign("/admin/chat");
   }
   return (
-    <div className="home-chat-launcher">
-      <ChatInput
-        maxLength={4000}
-        onChange={setMessage}
-        onSend={open}
-        placeholder="What would you like to create?"
-        showCharacterCount={false}
-        showClearButton={false}
-        value={message}
-      />
-      <Button href="/admin/chat" variant="link">
-        Open Studio assistant →
-      </Button>
-      <p>Shape your portfolio and CV. Review every change before saving.</p>
-    </div>
+    <Section asChild>
+      <section aria-labelledby="home-chat-title" className="home-container home-chat-launcher">
+        <p className="home-eyebrow">A LITTLE HELP, A LOT OF POSSIBILITY</p>
+        <h2 id="home-chat-title">Where would you like to start?</h2>
+        <ChatComposer
+          onChange={setMessage}
+          onSubmit={open}
+          placeholder="What would you like to create?"
+          value={message}
+        />
+        <p>Shape your portfolio and CV with Studio. You review every change.</p>
+      </section>
+    </Section>
   );
 }

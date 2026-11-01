@@ -24,6 +24,7 @@ function category(type: (typeof authorableSectionTypes)[number]): Exclude<Group,
 export function SectionCatalog() {
   const [query, setQuery] = useState("");
   const [group, setGroup] = useState<Group>("All");
+  const [expanded, setExpanded] = useState(false);
   const id = useId();
   const search = query.trim().toLocaleLowerCase();
   const matches = authorableSectionTypes.filter(
@@ -72,7 +73,12 @@ export function SectionCatalog() {
         <p aria-live="polite" className="section-catalog-count">
           {matches.length} of {authorableSectionTypes.length} section types
         </p>
-        <ul aria-label="Available section types" className="section-catalog-grid">
+        <ul
+          aria-label="Available section types"
+          className="section-catalog-grid"
+          data-expanded={expanded || Boolean(search) || group !== "All"}
+          id={`${id}-results`}
+        >
           {matches.map((type) => (
             <Card asChild interaction="static" key={type} layout="plain" surface="portfolio">
               <li>
@@ -87,6 +93,19 @@ export function SectionCatalog() {
             </Card>
           ))}
         </ul>
+        {!search && group === "All" && (
+          <Button
+            aria-controls={`${id}-results`}
+            aria-expanded={expanded}
+            className="section-catalog-reveal"
+            onClick={() => setExpanded(!expanded)}
+            type="button"
+            variant="ghost"
+          >
+            {expanded ? "Show fewer sections" : "Show all section types"}{" "}
+            <span aria-hidden="true">{expanded ? "↑" : "↓"}</span>
+          </Button>
+        )}
         {matches.length === 0 && (
           <div className="section-catalog-empty">
             <p>No sections match your search.</p>

@@ -96,6 +96,12 @@ const billingOwners = [
   owner_id: id,
   username: `billing-test-${index}`,
 }));
+const chatOwners = aiOwners.map((owner, index) => ({
+  ...owner,
+  id: `86868686-8686-4686-8686-86868686868${index}`,
+  owner_id: `87878787-8787-4787-8787-87878787878${index}`,
+  username: `${index === 0 ? "desktop" : "mobile"}-chat-owner`,
+}));
 const googleOwners = ["desktop", "mobile"].map((device, index) => ({
   ...row,
   document: { ...starters[index].document, name: "Google Import Owner" },
@@ -356,6 +362,7 @@ const rows = [
   ...customOwners,
   ...cvImportOwners,
   ...aiOwners,
+  ...chatOwners,
   ...billingOwners,
   ...googleOwners,
   ...mediaOwners,
@@ -419,6 +426,7 @@ function fixtureOwner(request) {
       ...customOwners,
       ...cvImportOwners,
       ...aiOwners,
+      ...chatOwners,
       ...billingOwners,
       ...googleOwners,
       ...libraryOwners,

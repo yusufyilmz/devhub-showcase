@@ -1,7 +1,10 @@
 # UI catalog
 
 HomeChatLauncher in src/sections/home-section/chat-launcher.tsx composes the shared
-ChatInput and opens the authenticated Studio assistant.
+ChatComposer and opens the authenticated Studio assistant below the capabilities strip.
+ChatComposer and StudioChatScreen from @shared/ui/display provide the compact icon
+composer and responsive assistant shell. They receive callbacks and do not fetch
+or save data. Styles use shared semantic, spacing, elevation and radius tokens.
 
 `GalleryLightbox` from `@shared/ui/dialog` provides a focus-trapped gallery dialog,
 previous/next navigation, arrow keys, thumbnails, and optional full-page links.

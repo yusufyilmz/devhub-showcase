@@ -43,9 +43,18 @@ agent must extract stated facts only into the supplied extraction schema.
 ## Interfaces
 
 The homepage composer opens /admin/chat and transfers its draft through sessionStorage,
-not URL parameters. /admin/chat requires the owner's confirmed session and opens the
-existing Studio editor on its AI assistant tab, retaining review and save controls.
+not URL parameters. /admin/chat requires the owner's confirmed session and opens a
+dedicated conversation screen with a workspace sidebar, centered empty state and
+compact composer. It reuses the assistant's validated proposal/review/apply flow.
+Explicit save uses the profile endpoint and saved revision. Saving a published
+portfolio is labeled accordingly. New chat resets the conversation, not the draft.
 The existing portfolio popup remains available.
+
+Homepage examples render their portfolio content on the server and pass it as
+React content into the interactive gallery, avoiding a second iframe page load.
+First-party example images render in both the gallery and standalone portfolios.
+The section browser shows three compact rows until its reveal button is activated;
+search and category filtering expose all matching results.
 
 POST /api/chat/stream accepts username, sessionId (UUID) and message. It checks
 origin, bounded input, current published profile, legacy access and rate limits.

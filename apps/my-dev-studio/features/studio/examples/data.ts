@@ -31,7 +31,10 @@ function example(seed: Seed): PortfolioExample {
   const defaultTheme = ["paper", "bloom"].includes(seed.theme) ? "light" : "dark";
   return {
     category: seed.category,
-    covers: seed.covers ? { first: seed.covers[0], second: seed.covers[1] } : {},
+    covers: {
+      first: seed.covers?.[0] ?? "atlas-interface.svg",
+      second: seed.covers?.[1] ?? "orbit-brand.svg",
+    },
     profile: {
       about: [seed.summary, seed.focus],
       appearance: {
