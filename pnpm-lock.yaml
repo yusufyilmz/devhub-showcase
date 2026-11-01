@@ -728,6 +728,9 @@ importers:
       '@shared/utils':
         specifier: workspace:*
         version: link:../utils
+      '@supabase/supabase-js':
+        specifier: 'catalog:'
+        version: 2.118.0
       drizzle-orm:
         specifier: 'catalog:'
         version: 0.45.4(@electric-sql/pglite@0.5.12)(@upstash/redis@1.40.0)(postgres@3.4.9)

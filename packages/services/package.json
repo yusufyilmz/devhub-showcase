@@ -32,6 +32,7 @@
     "@shared/config": "workspace:*",
     "@shared/lib": "workspace:*",
     "@shared/utils": "workspace:*",
+    "@supabase/supabase-js": "catalog:",
     "drizzle-orm": "catalog:",
     "postgres": "catalog:",
     "zod": "catalog:"
