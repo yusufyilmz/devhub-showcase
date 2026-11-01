@@ -2,7 +2,7 @@ import { forwardRef, type MouseEvent } from "react";
 
 import { cn } from "cn";
 
-import { Button } from "../Button";
+import { Button } from "../button";
 
 export type ActionButtonColor = "primary" | "warning" | "danger" | "success" | "info";
 

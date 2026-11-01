@@ -6,8 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import type { CVCategoryType } from "@shared/lib/types";
 
 import { CARD_IDS } from "../../constants/cards";
-import { ArrowBackIcon, ArrowForwardIcon } from "../Icons/Icons";
 import { IconButton } from "../icon-button/IconButton";
+import { ArrowBackIcon, ArrowForwardIcon } from "../icons/Icons";
 
 interface ScrollableContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   category?: CVCategoryType;

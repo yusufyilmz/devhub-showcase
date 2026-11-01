@@ -2,7 +2,7 @@ import { forwardRef, type MouseEvent, type ReactNode } from "react";
 
 import { cn } from "cn";
 
-import { Button } from "../Button";
+import { Button } from "../button";
 
 export interface StyledIconButtonProps
   extends Omit<React.ComponentProps<typeof Button>, "variant"> {

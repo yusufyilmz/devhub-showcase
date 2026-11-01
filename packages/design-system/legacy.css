@@ -1,5 +1,4 @@
 /* Compatibility for existing portfolios. Never import in primitive-only hosts. */
-@import "./theme.css";
 @import "./components.css";
 @import "./sections.css";
 @import "./portfolio-chat.css";

@@ -6,16 +6,16 @@ import { useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 
-import { Button } from "../Button";
-import { Card, CardContent, CardHeader, CardTitle } from "../Card";
-import { Checkbox } from "../Checkbox";
-import { CodeBlock } from "../Code";
-import { FlexBetween, FlexCenter, FlexCol, FlexRow } from "../Flex";
-import { Input } from "../Input";
+import { Button } from "../button";
+import { Card, CardContent, CardHeader, CardTitle } from "../card";
+import { Checkbox } from "../checkbox";
+import { CodeBlock } from "../code";
+import { FlexBetween, FlexCenter, FlexCol, FlexRow } from "../flex";
 import { IconButton } from "../icon-button";
-import { Label } from "../Label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../Select";
-import { Typography } from "../Typography";
+import { Input } from "../input";
+import { Label } from "../label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../select";
+import { Typography } from "../typography";
 
 const customizerVariants = cva(
   "w-full max-w-4xl mx-auto p-6 bg-[var(--background)] border border-[var(--border)] rounded-lg shadow-lg",

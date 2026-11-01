@@ -41,6 +41,7 @@ test("preview supports keyboard tabs and accent selection", async ({ page }) => 
 });
 
 test("theme choice persists after reload", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("/");
   await page.getByRole("button", { name: "Switch to light theme" }).click();
   await expect(page.getByRole("button", { name: "Switch to dark theme" })).toBeVisible();

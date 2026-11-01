@@ -5,8 +5,8 @@ import { type ReactNode, useId, useRef, useState } from "react";
 
 import { getPortfolioCopy, type Language } from "@shared/config";
 
-import { Button } from "../Button/Button";
-import { Card } from "../Card/Card";
+import { Button } from "../button/Button";
+import { Card } from "../card/Card";
 
 const defaultLabels = {
   fullDetails: "Full details",

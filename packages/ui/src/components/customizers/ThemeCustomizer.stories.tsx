@@ -2,9 +2,9 @@ import type React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Card } from "../Card";
-import { FlexCol } from "../Flex";
-import { Typography } from "../Typography";
+import { Card } from "../card";
+import { FlexCol } from "../flex";
+import { Typography } from "../typography";
 import { ThemeCustomizer } from "./ThemeCustomizer";
 
 /**

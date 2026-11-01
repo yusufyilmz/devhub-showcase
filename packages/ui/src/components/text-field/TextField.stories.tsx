@@ -3,10 +3,10 @@ import { useState } from "react";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Button } from "../Button";
-import { Card } from "../Card";
-import { FlexCol, FlexRow } from "../Flex";
-import { Typography } from "../Typography";
+import { Button } from "../button";
+import { Card } from "../card";
+import { FlexCol, FlexRow } from "../flex";
+import { Typography } from "../typography";
 import { SearchField, TextArea, TextField } from "./TextField";
 
 /**

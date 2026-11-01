@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 
 import { cn } from "cn";
 
-import { Alert } from "../Alert";
-import { Button } from "../Button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../Card";
-import { FlexBetween, FlexCol, FlexRow } from "../Flex";
-import { Input } from "../Input";
-import { Typography } from "../Typography";
+import { Alert } from "../alert";
+import { Button } from "../button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../card";
+import { FlexBetween, FlexCol, FlexRow } from "../flex";
+import { Input } from "../input";
 import { TextField } from "../text-field";
+import { Typography } from "../typography";
 
 export type ThemeOption = "light" | "dark" | "system";
 

@@ -3,9 +3,9 @@
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
 
-import { Button } from "../Button";
-import { Flex } from "../Flex";
-import { Typography } from "../Typography";
+import { Button } from "../button";
+import { Flex } from "../flex";
+import { Typography } from "../typography";
 
 export const ErrorPage: FC = () => {
   const router = useRouter();

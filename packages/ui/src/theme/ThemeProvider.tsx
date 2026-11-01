@@ -29,13 +29,28 @@ export function ThemeProvider({
   const [mode, setMode] = useState<ResolvedTheme>(defaultTheme === "light" ? "light" : "dark");
 
   useEffect(() => {
-    const next = resolveTheme(localStorage.getItem(storageKey), defaultTheme);
+    const readStored = () => {
+      try {
+        return localStorage.getItem(storageKey);
+      } catch {
+        return null;
+      }
+    };
+    const next = resolveTheme(readStored(), defaultTheme);
     setMode(next);
     const root = document.documentElement;
     root.dataset.theme = next;
     root.dataset.accent = accent;
     if (portfolioTheme) root.dataset.portfolioTheme = portfolioTheme;
     else delete root.dataset.portfolioTheme;
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const sync = () => {
+      const resolved = resolveTheme(readStored(), defaultTheme);
+      setMode(resolved);
+      root.dataset.theme = resolved;
+    };
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
   }, [accent, defaultTheme, portfolioTheme, storageKey]);
 
   const toggle = () => {

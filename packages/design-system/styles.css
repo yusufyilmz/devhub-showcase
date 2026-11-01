@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./shadcn.css";
+@import "./theme.css";
 @import "./surfaces.css";
 
 @source "../../apps/my-dev-studio/app";

@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { SidebarInset, SidebarProvider } from "../Sidebar/Sidebar";
+import { SidebarInset, SidebarProvider } from "../sidebar/Sidebar";
 import { AppSidebar } from "./AppSidebar";
 
 const providerStyles = {

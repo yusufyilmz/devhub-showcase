@@ -1,15 +1,15 @@
-export { Accordion, AccordionBody, AccordionHeader } from "./Accordion";
-export { Alert, AlertDescription, AlertTitle } from "./Alert";
-export { Avatar, AvatarFallback, AvatarImage } from "./Avatar";
+export { Accordion, AccordionBody, AccordionHeader } from "./accordion";
+export { Alert, AlertDescription, AlertTitle } from "./alert";
 export { AlertDialog } from "./alert-dialog";
 export { AspectRatio } from "./aspect-ratio";
+export { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 export { AvatarGroup } from "./avatar-group";
-export { Background } from "./Background";
-export { Badge } from "./Badge";
-export { Banner } from "./Banner";
-export { Breadcrumb } from "./Breadcrumb";
-export { Button } from "./Button";
+export { Background } from "./background";
+export { Badge } from "./badge";
+export { Banner } from "./banner";
 export { Brand } from "./brand";
+export { Breadcrumb } from "./breadcrumb";
+export { Button } from "./button";
 export {
   AddProjectButton,
   DownloadCVButton,
@@ -17,7 +17,7 @@ export {
   HomeButton,
   ProjectButton,
 } from "./buttons";
-export { Calendar } from "./Calendar";
+export { Calendar } from "./calendar";
 export {
   Card,
   CardAction,
@@ -28,7 +28,8 @@ export {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./Card";
+} from "./card";
+export { HoverCard, HoverCardContent, HoverCardTrigger } from "./cards/HoverCard";
 export {
   Carousel,
   type CarouselApi,
@@ -36,7 +37,7 @@ export {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./Carousel/Carousel";
+} from "./carousel/Carousel";
 export {
   type ChartConfig,
   ChartContainer,
@@ -45,7 +46,7 @@ export {
   ChartStyle,
   ChartTooltip,
   ChartTooltipContent,
-} from "./Chart/Chart";
+} from "./chart/Chart";
 export {
   Chat,
   ChatHeader,
@@ -62,9 +63,9 @@ export {
   type ChatSidebarSection,
   ChatTypingIndicator,
   type ChatTypingIndicatorProps,
-} from "./Chat";
-export { Checkbox } from "./Checkbox";
-export { Chip } from "./Chip";
+} from "./chat";
+export { Checkbox } from "./checkbox";
+export { Chip } from "./chip";
 export {
   Code,
   CodeBlock,
@@ -77,8 +78,8 @@ export {
   CodeSmall,
   CodeSuccess,
   CodeWarning,
-} from "./Code";
-export { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./Collapsible/Collapsible";
+} from "./code";
+export { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./collapsible/Collapsible";
 export {
   Command,
   CommandDialog,
@@ -89,8 +90,7 @@ export {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from "./Command/Command";
-export { HoverCard, HoverCardContent, HoverCardTrigger } from "./cards/HoverCard";
+} from "./command/Command";
 export { ContactForm } from "./contact-form";
 export {
   ContextMenu,
@@ -118,8 +118,8 @@ export {
   type ThemeCustomizerProps,
   TypographyCustomizer,
 } from "./customizers";
-export { Dialog } from "./Dialog";
-export { Divider } from "./Divider";
+export { Dialog } from "./dialog";
+export { Divider } from "./divider";
 export {
   Drawer,
   DrawerClose,
@@ -130,7 +130,7 @@ export {
   DrawerPortal,
   DrawerTitle,
   DrawerTrigger,
-} from "./Drawer";
+} from "./drawer";
 export {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -150,7 +150,7 @@ export {
 } from "./dropdown-menu/DropdownMenu";
 export { EmptyState } from "./empty-state/EmptyState";
 export { ErrorPage } from "./error-page";
-export { Feedback } from "./Feedback";
+export { Feedback } from "./feedback";
 export {
   Flex,
   FlexBetween,
@@ -163,8 +163,8 @@ export {
   FlexSpaced,
   FlexStack,
   FlexWrap,
-} from "./Flex";
-export { Footer } from "./Footer";
+} from "./flex";
+export { Footer } from "./footer";
 export {
   Form,
   FormControl,
@@ -174,8 +174,15 @@ export {
   FormLabel,
   FormMessage,
   useFormField,
-} from "./Form/Form";
-export { Header } from "./Header";
+} from "./form/Form";
+export { Header } from "./header";
+export {
+  IconButton,
+  type IconButtonProps,
+  IconButtonWithLink,
+  StyledIconButton,
+  type StyledIconButtonProps,
+} from "./icon-button";
 export {
   ArrowBackIcon,
   ArrowDownwardIcon,
@@ -192,22 +199,16 @@ export {
   PhoneIcon,
   ReferralIcon,
   SendIcon,
-} from "./Icons";
-export { Input, type InputProps } from "./Input";
-export {
-  IconButton,
-  type IconButtonProps,
-  IconButtonWithLink,
-  StyledIconButton,
-  type StyledIconButtonProps,
-} from "./icon-button";
+} from "./icons";
 export { IFramePreview } from "./iframe-preview";
 export { InlineCode } from "./inline-code";
+export { Input, type InputProps } from "./input";
 export { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "./input-otp/InputOTP";
-export { Kbd } from "./Kbd";
-export { Label } from "./Label";
-export { List, ListItem } from "./List";
+export { Kbd } from "./kbd";
+export { Label } from "./label";
+export { List, ListItem } from "./list";
 export { LogoCloud } from "./logo-cloud";
+export { LocationMap } from "./map";
 export {
   Menubar,
   MenubarCheckboxItem,
@@ -225,12 +226,10 @@ export {
   MenubarSubContent,
   MenubarSubTrigger,
   MenubarTrigger,
-} from "./Menubar/Menubar";
-export { LocationMap } from "./map";
+} from "./menubar/Menubar";
 export { MouseCircle } from "./mouse-circle/MouseCircle";
-export { Navbar } from "./Navbar";
-export { MobileMenu } from "./Navbar/MobileMenu";
-export { SnackbarNotification } from "./Notification";
+export { Navbar } from "./navbar";
+export { MobileMenu } from "./navbar/MobileMenu";
 export {
   NavigationMenu,
   NavigationMenuContent,
@@ -242,6 +241,8 @@ export {
   NavigationMenuViewport,
   navigationMenuTriggerStyle,
 } from "./navigation-menu/NavigationMenu";
+export { SnackbarNotification } from "./notification";
+export { PageHeader } from "./page-header";
 export {
   Pagination,
   PaginationContent,
@@ -250,11 +251,9 @@ export {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "./Pagination/Pagination";
-export { Popover } from "./Popover/Popover";
-export { Progress } from "./Progress/Progress";
-export { PageHeader } from "./page-header";
-export { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "./Resizable/Resizable";
+} from "./pagination/Pagination";
+export { Popover } from "./popover/Popover";
+export { Progress } from "./progress/Progress";
 export { RadioButton } from "./radio-button";
 export { RadioGroup, RadioGroupItem } from "./radio-group/RadioGroup";
 export {
@@ -269,7 +268,11 @@ export {
   DialogTitle as RadixDialogTitle,
   DialogTrigger as RadixDialogTrigger,
 } from "./radix-dialog/RadixDialog";
+export { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "./resizable/Resizable";
 export { RevealCard } from "./reveal-card";
+export { ScrollButton } from "./scroll-button";
+export { ScrollToTop } from "./scroll-to-top";
+export { ScrollArea, ScrollableContainer } from "./scrollable-container";
 export {
   Section,
   SectionAccordion,
@@ -278,7 +281,8 @@ export {
   SectionHeader,
   type SectionItem,
   SectionTabs,
-} from "./Section";
+} from "./section";
+export { SegmentedControl } from "./segmented-control";
 export {
   Select,
   SelectContent,
@@ -290,8 +294,8 @@ export {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "./Select";
-export { Separator } from "./Seperator";
+} from "./select";
+export { Separator } from "./seperator";
 export {
   Sheet,
   SheetClose,
@@ -301,7 +305,7 @@ export {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./Sheet/Sheet";
+} from "./sheet/Sheet";
 export {
   Sidebar,
   SidebarContent,
@@ -327,21 +331,27 @@ export {
   SidebarSeparator,
   SidebarTrigger,
   useSidebar,
-} from "./Sidebar";
-export { Skeleton } from "./Skeleton";
-export { Slider } from "./Slider/Slider";
-export { Spinner } from "./Spinner";
-export { Switch } from "./Switch";
-export { ScrollButton } from "./scroll-button";
-export { ScrollToTop } from "./scroll-to-top";
-export { ScrollArea, ScrollableContainer } from "./scrollable-container";
-export { SegmentedControl } from "./segmented-control";
+} from "./sidebar";
+export { Skeleton } from "./skeleton";
+export { Slider } from "./slider/Slider";
 export { SonnerToaster } from "./sonner/Sonner";
+export { Spinner } from "./spinner";
 export { StatusIndicator } from "./status-indicator";
-export { Table } from "./Table";
-export { Tabs, TabsContent, TabsList, TabsTrigger } from "./Tabs/Tabs";
-export { Tag } from "./Tag";
-export { Textarea } from "./Textarea";
+export { Switch } from "./switch";
+export { Table } from "./table";
+export { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs/Tabs";
+export { Tag } from "./tag";
+export {
+  SearchField,
+  type SearchFieldProps,
+  StyledTextField,
+  type StyledTextFieldProps,
+  TextArea,
+  type TextAreaProps,
+  TextField,
+  type TextFieldProps,
+} from "./text-field";
+export { Textarea } from "./textarea";
 export {
   Timeline,
   TimelineBody,
@@ -349,8 +359,10 @@ export {
   TimelineHeader,
   TimelineIcon,
   TimelineItem,
-} from "./Timeline";
-export { Toggle, toggleVariants } from "./Toggle/Toggle";
+} from "./timeline";
+export { Toggle, toggleVariants } from "./toggle/Toggle";
+export { ToggleButton } from "./toggle-button";
+export { ToggleGroup, ToggleGroupItem } from "./toggle-group/ToggleGroup";
 export {
   AnimatedTooltip,
   type AnimatedTooltipProps,
@@ -360,7 +372,7 @@ export {
   TooltipProvider,
   TooltipTrigger,
   type TooltipVariant,
-} from "./Tooltip";
+} from "./tooltip";
 export {
   Body1,
   Body2,
@@ -375,16 +387,4 @@ export {
   Muted,
   Typography,
   type TypographyProps,
-} from "./Typography";
-export {
-  SearchField,
-  type SearchFieldProps,
-  StyledTextField,
-  type StyledTextFieldProps,
-  TextArea,
-  type TextAreaProps,
-  TextField,
-  type TextFieldProps,
-} from "./text-field";
-export { ToggleButton } from "./toggle-button";
-export { ToggleGroup, ToggleGroupItem } from "./toggle-group/ToggleGroup";
+} from "./typography";

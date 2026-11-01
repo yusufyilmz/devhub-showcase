@@ -1,6 +1,6 @@
-import { Button } from "../Button/Button";
-import { Separator } from "../Seperator/Seperator";
-import { SidebarTrigger } from "../Sidebar/Sidebar";
+import { Button } from "../button/Button";
+import { Separator } from "../seperator/Seperator";
+import { SidebarTrigger } from "../sidebar/Sidebar";
 
 export function SiteHeader() {
   return (

@@ -1,9 +1,9 @@
 import { cn } from "cn";
 
-import { Button } from "../Button/Button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../Card/Card";
-import { Input } from "../Input/Input";
-import { Label } from "../Label/Label";
+import { Button } from "../button/Button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../card/Card";
+import { Input } from "../input/Input";
+import { Label } from "../label/Label";
 
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
   return (

@@ -3,10 +3,10 @@ import { forwardRef } from "react";
 
 import { cn } from "cn";
 
-import { FlexCol } from "../Flex/Flex";
-import { Input } from "../Input";
-import { Label } from "../Label";
-import { Typography } from "../Typography";
+import { FlexCol } from "../flex/Flex";
+import { Input } from "../input";
+import { Label } from "../label";
+import { Typography } from "../typography";
 
 export interface StyledTextFieldProps extends Omit<React.ComponentProps<typeof Input>, "variant"> {
   /**
