@@ -8,7 +8,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { CustomPortfolioSection, HeroSurface, WorkMedia } from "@shared/components/portfolio";
 import { ProfileEditor } from "@shared/components/studio";
 import { type CustomSection, getSocialWork, profile, sectionCompositions } from "@shared/config";
-import { profileSchema } from "@shared/lib/domain/profile";
+import { profileSchema } from "@shared/lib/profile";
 
 const hero = {
   kind: "image" as const,

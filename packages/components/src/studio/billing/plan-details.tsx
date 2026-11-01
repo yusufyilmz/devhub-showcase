@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { z } from "zod";
 
-import { useStudioRequest } from "../studio-request";
+import { useStudioRequest } from "../context/studio-request";
 
 const planSchema = z.object({
   amount: z.number().int().min(0),

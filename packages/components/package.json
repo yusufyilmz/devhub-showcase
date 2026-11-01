@@ -10,11 +10,11 @@
     "./sections": "./src/sections/variants/index.ts",
     "./section/editors": "./src/sections/editors/index.ts",
     "./section/renderers": "./src/sections/renderers/index.ts",
+    "./providers": "./src/providers/index.ts",
+    "./page": "./src/page/index.ts",
     "./forms": "./src/forms/index.ts",
     "./editor": "./src/editor/index.ts",
     "./login": "./src/auth/login-panel.tsx",
-    "./pages": "./src/pages/index.ts",
-    "./layout": "./src/layout/index.ts",
     "./containers": "./src/containers/index.ts",
     "./studio": "./src/studio/index.ts",
     "./studio/examples.css": "./src/studio/examples/examples.css"

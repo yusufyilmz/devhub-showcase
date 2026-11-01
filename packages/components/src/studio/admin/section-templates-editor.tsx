@@ -18,7 +18,7 @@ import {
 import { Field } from "../../forms/field";
 import { SelectField } from "../../forms/select-field";
 import { CustomPortfolioSection } from "../../portfolio/custom-portfolio-section";
-import { useStudioRequest } from "../studio-request";
+import { useStudioRequest } from "../context/studio-request";
 
 function download(document: SectionTemplateFile) {
   const url = URL.createObjectURL(

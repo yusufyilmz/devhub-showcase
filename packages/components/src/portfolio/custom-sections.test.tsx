@@ -15,7 +15,7 @@ import {
   type PortfolioProfile,
   profile,
 } from "@shared/config";
-import { profileSchema } from "@shared/lib/domain/profile";
+import { profileSchema } from "@shared/lib/profile";
 
 const section: CustomSection = {
   id: "custom-aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",

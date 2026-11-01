@@ -9,7 +9,7 @@ import {
   type PublicPortfolioKnowledge,
 } from "@shared/lib/portfolio-knowledge";
 
-import { useStudioRequest } from "../studio-request";
+import { useStudioRequest } from "../context/studio-request";
 
 export function AiProfileEditor({ readUrl = "/api/admin/profile" }: { readUrl?: string }) {
   const request = useStudioRequest();

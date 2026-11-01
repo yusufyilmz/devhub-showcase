@@ -3,13 +3,13 @@ import "@shared/design-system/globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { headers } from "next/headers";
+import { useCallback } from "react";
 
-import { PageShell } from "@shared/components/layout";
+import { PageShell } from "@shared/components/page";
 
 import { getPagePresentation } from "@/features/platform/page-presentation";
 import { isPlatformPage, platformMetadata } from "@/features/platform/platform";
 import { portfolioUrl } from "@/features/platform/site-url";
-import { StudioClient } from "@/features/platform/studio-client";
 import { getActiveProfile } from "@/features/portfolio/active-profile";
 import { getProfileStructuredData } from "@/features/portfolio/profile-structured-data";
 
@@ -44,6 +44,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     publicPortfolio ? profile : undefined,
     publicPortfolio ? portfolioUrl(snapshot.username as string) : undefined,
   );
+  const request = useCallback((input: string, init?: RequestInit) => fetch(input, init), []);
 
   return (
     <PageShell
@@ -51,10 +52,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       bodyClassName={`${geistSans.variable} ${geistMono.variable} antialiased`}
       documentLanguage={documentLanguage}
       portfolioTheme={portfolioTheme}
+      request={request}
       storageKey={storageKey}
       structuredData={structuredData}
     >
-      <StudioClient>{children}</StudioClient>
+      {children}
     </PageShell>
   );
 }

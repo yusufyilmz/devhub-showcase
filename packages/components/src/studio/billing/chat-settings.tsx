@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { useStudioRequest } from "../studio-request";
+import { useStudioRequest } from "../context/studio-request";
 import { AccountOverview, type AccountStatus } from "./account-overview";
 import { useAccountStatus } from "./use-account-status";
 

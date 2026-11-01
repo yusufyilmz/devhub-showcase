@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { billingErrorMessage } from "@shared/lib/billing";
 
-import { useStudioRequest } from "../studio-request";
+import { useStudioRequest } from "../context/studio-request";
 
 const stripeHosts = new Set(["checkout.stripe.com", "billing.stripe.com"]);
 

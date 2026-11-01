@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { PremiumWidget } from "@shared/components/chat";
-import { PortfolioLayout } from "@shared/components/layout";
+import { PortfolioLayout } from "@shared/components/portfolio";
 
 import { OwnerEditLink } from "@/features/admin/owner-edit-link";
 import { premiumChatAvailable } from "@/features/chat/premium-chat";

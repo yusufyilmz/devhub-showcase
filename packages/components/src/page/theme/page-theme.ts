@@ -7,11 +7,11 @@ import {
   type PortfolioTheme,
 } from "@shared/config";
 
-export type DocumentAppearance = NonNullable<PortfolioProfile["appearance"]>;
+export type PageAppearance = NonNullable<PortfolioProfile["appearance"]>;
 
 export function getPublicThemeStyle(
   theme: PortfolioTheme | undefined,
-  accent: DocumentAppearance["accent"],
+  accent: PageAppearance["accent"],
 ): CSSProperties | undefined {
   if (!theme) return undefined;
   return {

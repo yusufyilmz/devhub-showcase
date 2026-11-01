@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { StudioShell } from "@shared/components/layout";
+import { StudioShell } from "@shared/components/studio";
 import { ThemeToggle } from "@shared/ui/theme";
 
 import { ManagementLink } from "@/features/management/management-link";

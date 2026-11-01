@@ -6,7 +6,7 @@ import { z } from "zod";
 
 import { billingSummarySchema } from "@shared/lib/billing";
 
-import { useStudioRequest } from "../studio-request";
+import { useStudioRequest } from "../context/studio-request";
 import type { AccountStatus } from "./account-overview";
 
 const billingResponse = billingSummarySchema.extend({ aiConfigured: z.boolean() });

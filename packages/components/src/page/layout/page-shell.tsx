@@ -3,45 +3,17 @@
 import { type CSSProperties, type ReactNode, useEffect, useMemo } from "react";
 
 import type { PortfolioTheme } from "@shared/config";
-import { NotificationProvider } from "@shared/ui/providers";
-import { ThemeProvider } from "@shared/ui/theme";
 
-import { type DocumentAppearance, getPublicThemeStyle } from "./public-theme-style";
+import { PageProviders } from "../../providers";
+import type { StudioRequest } from "../../studio";
+import { getPublicThemeStyle, type PageAppearance } from "../theme/page-theme";
 
-function themeBootstrapScript(
-  storageKey: string,
-  defaultTheme: DocumentAppearance["defaultTheme"],
-) {
+function themeBootstrapScript(storageKey: string, defaultTheme: PageAppearance["defaultTheme"]) {
   return `(function(){try{var s=localStorage.getItem(${JSON.stringify(storageKey)});var d=${JSON.stringify(defaultTheme)};var t=s==='light'||s==='dark'?s:d==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):d;document.documentElement.dataset.theme=t}catch(e){}})()`;
 }
 
 function safeJson(value: unknown) {
   return JSON.stringify(value).replace(/</g, "\\u003c");
-}
-
-function DocumentProviders({
-  accent,
-  children,
-  defaultTheme,
-  portfolioTheme,
-  storageKey,
-}: {
-  accent: DocumentAppearance["accent"];
-  children: ReactNode;
-  defaultTheme: DocumentAppearance["defaultTheme"];
-  portfolioTheme?: PortfolioTheme;
-  storageKey: string;
-}) {
-  return (
-    <ThemeProvider
-      accent={accent}
-      defaultTheme={defaultTheme}
-      portfolioTheme={portfolioTheme}
-      storageKey={storageKey}
-    >
-      <NotificationProvider>{children}</NotificationProvider>
-    </ThemeProvider>
-  );
 }
 
 function EmbeddedDocument({
@@ -52,14 +24,16 @@ function EmbeddedDocument({
   portfolioTheme,
   storageKey,
   themeStyle,
+  request,
 }: {
-  appearance: DocumentAppearance;
+  appearance: PageAppearance;
   bodyClassName?: string;
   children: ReactNode;
   documentLanguage: string;
   portfolioTheme?: PortfolioTheme;
   storageKey: string;
   themeStyle?: CSSProperties;
+  request?: StudioRequest;
 }) {
   useEffect(() => {
     const root = document.documentElement;
@@ -90,14 +64,15 @@ function EmbeddedDocument({
 
   return (
     <div className={bodyClassName}>
-      <DocumentProviders
+      <PageProviders
         accent={appearance.accent}
         defaultTheme={appearance.defaultTheme}
         portfolioTheme={portfolioTheme}
+        request={request}
         storageKey={storageKey}
       >
         {children}
-      </DocumentProviders>
+      </PageProviders>
     </div>
   );
 }
@@ -111,8 +86,9 @@ export function PageShell({
   portfolioTheme,
   storageKey,
   structuredData,
+  request,
 }: {
-  appearance: DocumentAppearance;
+  appearance: PageAppearance;
   bodyClassName?: string;
   children: ReactNode;
   documentLanguage: string;
@@ -121,6 +97,7 @@ export function PageShell({
   portfolioTheme?: PortfolioTheme;
   storageKey: string;
   structuredData?: unknown;
+  request?: StudioRequest;
 }) {
   const themeStyle = useMemo(
     () => getPublicThemeStyle(portfolioTheme, appearance.accent),
@@ -134,6 +111,7 @@ export function PageShell({
         bodyClassName={bodyClassName}
         documentLanguage={documentLanguage}
         portfolioTheme={portfolioTheme}
+        request={request}
         storageKey={storageKey}
         themeStyle={themeStyle}
       >
@@ -163,14 +141,15 @@ export function PageShell({
         ) : null}
       </head>
       <body className={bodyClassName}>
-        <DocumentProviders
+        <PageProviders
           accent={appearance.accent}
           defaultTheme={appearance.defaultTheme}
           portfolioTheme={portfolioTheme}
+          request={request}
           storageKey={storageKey}
         >
           {children}
-        </DocumentProviders>
+        </PageProviders>
       </body>
     </html>
   );

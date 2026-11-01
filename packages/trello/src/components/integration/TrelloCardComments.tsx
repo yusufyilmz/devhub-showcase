@@ -19,6 +19,7 @@ interface TrelloCardCommentsProps {
 
 interface TrelloCommentReplyProps {
   commentReply: CommentReply;
+  isCommentReply?: boolean;
   onDelete: (commentReplyId: number | undefined) => void;
   onEdit: (commentReplyId: number | undefined) => void;
   onReply: (commentReplyId: number | undefined) => void;
@@ -212,6 +213,7 @@ const TrelloCommentReply: FC<TrelloCommentReplyProps> = ({
   onReply,
   onEdit,
   onDelete,
+  isCommentReply,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(commentReply.text);
@@ -315,7 +317,7 @@ const TrelloCommentReply: FC<TrelloCommentReplyProps> = ({
                 </Typography>
 
                 <Flex align="center" gap="sm" style={{ flexWrap: "wrap", width: "100%" }}>
-                  {!isMycommentReply && (
+                  {!isCommentReply && (
                     <Button
                       onClick={handleUseful}
                       size="sm"
@@ -338,7 +340,7 @@ const TrelloCommentReply: FC<TrelloCommentReplyProps> = ({
                     Reply
                   </Button>
 
-                  {isMycommentReply && (
+                  {isCommentReply && (
                     <>
                       <Button
                         onClick={() => setIsEditing(true)}

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import type { PortfolioProfile } from "@shared/config";
 import { type AiEditProposal, aiEditProposalSchema, applyAiEdit } from "@shared/lib/ai-edit";
 
-import { useStudioRequest } from "../studio-request";
+import { useStudioRequest } from "../context/studio-request";
 
 type Props = {
   profile: PortfolioProfile;

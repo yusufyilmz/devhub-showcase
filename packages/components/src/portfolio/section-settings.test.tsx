@@ -13,7 +13,7 @@ import {
   profile,
   selectPortfolioContent,
 } from "@shared/config";
-import { profileSchema } from "@shared/lib/domain/profile";
+import { profileSchema } from "@shared/lib/profile";
 
 const sampleProject = profile.projects[0];
 if (!sampleProject) throw new Error("Expected a sample project");

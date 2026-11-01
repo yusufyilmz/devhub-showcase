@@ -6,7 +6,7 @@ import { type PortfolioProfile, portfolioTypes } from "@shared/config";
 import type { ProfileSnapshot } from "@shared/lib/profile-errors";
 import { cvPath, editCvPath } from "@shared/lib/username";
 
-import { useStudioRequest } from "../studio-request";
+import { useStudioRequest } from "../context/studio-request";
 import { AiAssistantEditor } from "./ai-assistant-editor";
 import { AiProfileEditor } from "./ai-profile-editor";
 import { AppearanceEditor } from "./appearance-editor";

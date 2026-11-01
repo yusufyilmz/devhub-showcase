@@ -17,15 +17,15 @@ import {
   profile,
   resolveSectionSource,
 } from "@shared/config";
-import { importPageForge, parseSectionFile } from "@shared/lib/domain/pageforge-import";
-import { profileSchema } from "@shared/lib/domain/profile";
-import { customSectionSchema } from "@shared/lib/domain/section";
+import { importPageForge, parseSectionFile } from "@shared/lib/pageforge-import";
+import { profileSchema } from "@shared/lib/profile";
+import { customSectionSchema } from "@shared/lib/section";
 import {
   applySectionTemplate,
   createSectionTemplate,
   emptySection,
   sectionTemplateFileSchema,
-} from "@shared/lib/domain/section-templates";
+} from "@shared/lib/section-templates";
 import { LocationMap } from "@shared/ui/map";
 
 const sectionsRoot = dirname(fileURLToPath(import.meta.url));

@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 
-import { HeroSurface } from "@shared/components/portfolio";
 import {
   formatPortfolioPeriod,
   getNameInitials,
@@ -11,7 +10,8 @@ import {
 } from "@shared/config";
 import { ThemeToggle } from "@shared/ui/theme";
 
-import { RegisteredSections } from "../portfolio/registered-sections";
+import { HeroSurface } from "./hero-surface";
+import { RegisteredSections } from "./registered-sections";
 
 export function PortfolioLayout({
   profile,

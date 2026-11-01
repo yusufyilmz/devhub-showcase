@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { useStudioRequest } from "../studio-request";
+import { useStudioRequest } from "../context/studio-request";
 
 export function TransferPortfolio({
   id,

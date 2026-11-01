@@ -13,7 +13,7 @@ import {
   cvReviewNotes,
 } from "@shared/lib/cv-import";
 
-import { type StudioRequest, useStudioRequest } from "../studio-request";
+import { type StudioRequest, useStudioRequest } from "../context/studio-request";
 import { CvImportReview } from "./cv-import-review";
 
 export function CvImportEditor({

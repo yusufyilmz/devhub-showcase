@@ -12,7 +12,7 @@ import {
 import type { GoogleProfileCategory } from "@shared/auth/google-profile-scopes";
 import { type GoogleProfileReview, googleProfileReviewSchema } from "@shared/lib/google-profile";
 
-import { type StudioRequest, useStudioRequest } from "../studio-request";
+import { type StudioRequest, useStudioRequest } from "../context/studio-request";
 
 const setupSchema = z.object({ clientId: z.string().nullable(), enabled: z.boolean() });
 export function useGoogleImport() {

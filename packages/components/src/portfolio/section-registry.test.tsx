@@ -12,8 +12,8 @@ import {
   profile,
   sectionRegistry,
 } from "@shared/config";
-import { profileSchema } from "@shared/lib/domain/profile";
-import { portfolioSectionSchema } from "@shared/lib/domain/section";
+import { profileSchema } from "@shared/lib/profile";
+import { portfolioSectionSchema } from "@shared/lib/section";
 
 describe("SectionRegistry", () => {
   it("defines a valid existing renderer and real content binding for every section in every layout", () => {

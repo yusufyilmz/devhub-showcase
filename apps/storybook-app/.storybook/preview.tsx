@@ -2,7 +2,7 @@ import "@shared/design-system/globals.css";
 
 import type { Preview } from "@storybook/react-vite";
 
-import { PageShell } from "@shared/components/layout";
+import { PageShell } from "@shared/components/page";
 
 const preview: Preview = {
   decorators: [
@@ -14,6 +14,7 @@ const preview: Preview = {
           documentLanguage="en"
           embed
           portfolioTheme="studio"
+          request={async () => Response.json({ ok: true })}
           storageKey="storybook-document-shell"
         >
           <Story />

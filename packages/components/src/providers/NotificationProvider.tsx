@@ -4,8 +4,7 @@ import type React from "react";
 import { useCallback, useState } from "react";
 
 import { NotificationContext, type NotificationType } from "@shared/runtime/notifications";
-
-import { Alert, AlertDescription } from "../components/alert";
+import { Alert, AlertDescription } from "@shared/ui/alert";
 
 export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [notification, setNotification] = useState({

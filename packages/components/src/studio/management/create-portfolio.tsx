@@ -7,7 +7,7 @@ import { useState } from "react";
 import { type PortfolioProfile, type PortfolioType, portfolioTypes } from "@shared/config";
 import { createEmptyProfile } from "@shared/lib/user-profile";
 
-import { useStudioRequest } from "../studio-request";
+import { useStudioRequest } from "../context/studio-request";
 
 function errorMessage(reason: unknown) {
   return reason instanceof Error ? reason.message : "Could not process the portfolio.";

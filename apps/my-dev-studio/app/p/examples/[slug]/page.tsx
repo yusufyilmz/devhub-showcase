@@ -3,7 +3,7 @@ import "@shared/components/studio/examples.css";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { PortfolioLayout } from "@shared/components/layout";
+import { PortfolioLayout } from "@shared/components/portfolio";
 import {
   examplePath,
   exampleViewProfile,
