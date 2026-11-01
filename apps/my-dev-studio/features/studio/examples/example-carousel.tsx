@@ -166,11 +166,13 @@ export function ExampleCarousel() {
         index={activeExample}
         items={examples.map((item) => ({
           content: (
-            <iframe
-              loading="lazy"
-              src={examplePath(item.slug)}
-              title={`${item.profile.name} portfolio preview`}
-            />
+            <div className="gallery-lightbox-webpage">
+              <iframe
+                loading="lazy"
+                src={examplePath(item.slug)}
+                title={`${item.profile.name} portfolio preview`}
+              />
+            </div>
           ),
           description: `${item.profile.portfolioType} · Fictional portfolio example`,
           href: examplePath(item.slug),
