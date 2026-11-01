@@ -1,3 +1,5 @@
+import "./page.css";
+
 import { getHomeAction, getHomeExample } from "@/features/home/home-links";
 import { HomePage } from "@/features/home/home-page";
 
