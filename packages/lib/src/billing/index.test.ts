@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { runPremiumOperation, type PremiumFeature } from "./index";
+import { type PremiumFeature, runPremiumOperation } from "./index";
 
 const features: PremiumFeature[] = ["portfolio_chat", "studio_assistant"];
 
@@ -49,7 +49,9 @@ describe("Premium operation accounting", () => {
         controller.abort(new DOMException("Deadline exceeded", "TimeoutError"));
         return "late answer";
       });
-      await expect(runPremiumOperation(usage, input, operation)).rejects.toThrow("Deadline exceeded");
+      await expect(runPremiumOperation(usage, input, operation)).rejects.toThrow(
+        "Deadline exceeded",
+      );
       expect(operation).toHaveBeenCalledTimes(1);
       expect(usage.finish).toHaveBeenCalledExactlyOnceWith(input.requestId, "failed");
     });
@@ -59,7 +61,9 @@ describe("Premium operation accounting", () => {
       usage.reserve.mockResolvedValue(false);
       await expect(runPremiumOperation(usage, input, operation)).rejects.toThrow();
       usage.reserve.mockRejectedValue(new Error("Storage unavailable"));
-      await expect(runPremiumOperation(usage, input, operation)).rejects.toThrow("Storage unavailable");
+      await expect(runPremiumOperation(usage, input, operation)).rejects.toThrow(
+        "Storage unavailable",
+      );
       expect(operation).not.toHaveBeenCalled();
       expect(usage.finish).not.toHaveBeenCalled();
     });
