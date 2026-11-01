@@ -139,6 +139,9 @@ export function ExampleCarousel() {
                 }}
               >
                 <ExampleThumbnail item={item} />
+                <span className="example-preview-action">
+                  Preview portfolio <span aria-hidden="true">↗</span>
+                </span>
                 <div className="example-card-copy">
                   <span className="example-label">
                     {item.profile.portfolioType} / {item.profile.appearance?.theme}

@@ -5,7 +5,7 @@ import "./gallery-lightbox.css";
 import type { ReactNode } from "react";
 
 import { Button } from "../../buttons/button";
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from "./Dialog";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "./Dialog";
 
 export type GalleryLightboxItem = {
   id: string;
@@ -50,10 +50,17 @@ export function GalleryLightbox({
               move(event.key === "ArrowLeft" ? -1 : 1);
             }
           }}
+          showCloseButton={false}
         >
           <header className="gallery-lightbox-heading">
+            <span className="gallery-lightbox-eyebrow">THE GALLERY</span>
             <DialogTitle>{active.title}</DialogTitle>
             <DialogDescription>{active.description || "Gallery preview"}</DialogDescription>
+            <DialogClose asChild>
+              <Button aria-label="Close" className="gallery-lightbox-close" variant="ghost">
+                ✕
+              </Button>
+            </DialogClose>
           </header>
           <div className="gallery-lightbox-stage" key={active.id}>
             {active.content}
@@ -94,7 +101,10 @@ export function GalleryLightbox({
                 onClick={() => onIndexChange(itemIndex)}
                 variant="outline"
               >
-                {item.thumbnail}
+                <span aria-hidden="true" className="gallery-lightbox-thumbnail-art">
+                  {item.thumbnail}
+                </span>
+                <span className="gallery-lightbox-thumbnail-name">{item.title}</span>
               </Button>
             ))}
           </nav>
