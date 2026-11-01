@@ -39,6 +39,17 @@ App routes stay in `apps/my-dev-studio/app`. App-only data access stays in `apps
 
 Import portable UI from `@shared/components` (`studio`, `layout`, `portfolio`, `sections`). Do not add a feature file that only re-exports a shared component. Do not move auth, database access, or route handlers into `packages/components`. Pass fetching and navigation in from the app.
 
+## Reuse shared UI
+
+Always build interface from the shared packages. Check the catalogs before writing markup.
+
+- Use `@shared/ui` for controls: buttons, inputs, cards, overlays, feedback, theme, and toasts. Import them as `@shared/ui/{folder}`. See [packages/ui/CATALOG.md](packages/ui/CATALOG.md).
+- Use `@shared/components` for sections, pages, layout, chat, studio screens, and portfolio surfaces. See [packages/components/CATALOG.md](packages/components/CATALOG.md).
+
+Do not create one-off components from plain HTML elements. `packages/components/src/containers` is that pattern: home blocks such as `Hero` and `Features` are hand-written `section`, `div`, and heading markup. Do not add more files like that, and do not copy that style into app routes, features, or other packages.
+
+If the catalogs have no component that fits, add one in the matching package and update its catalog in the same change. A primitive control goes in `packages/ui`. A section, page, layout, chat, studio screen, or portfolio surface goes in `packages/components`.
+
 ## Where code goes
 
 Follow the first matching question. Stop at the first yes.
