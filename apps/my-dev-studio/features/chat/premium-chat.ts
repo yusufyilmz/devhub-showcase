@@ -58,6 +58,7 @@ export async function premiumChatAvailable(profileId: string) {
   }
 }
 export async function answerPremiumChat(raw: unknown, signal: AbortSignal) {
+  signal.throwIfAborted();
   const input = premiumChatInput.parse(raw);
   const snapshot = await readPublicProfileByUsername(input.username);
   if (!snapshot?.id || snapshot.id === "main") throw new Error("Unavailable");
@@ -80,6 +81,7 @@ export async function answerPremiumChat(raw: unknown, signal: AbortSignal) {
       feature: "portfolio_chat",
       profileId: snapshot.id,
       requestId: input.requestId,
+      signal,
     },
     () => new PortfolioChatModel().answer(knowledge, input.message, signal),
   );

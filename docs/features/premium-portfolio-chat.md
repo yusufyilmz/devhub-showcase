@@ -14,6 +14,8 @@ The premium chat server action accepts only username, message, sessionId and req
 
 Requests pass visitor/portfolio/global Redis abuse limits before the atomic database reservation. The reservation RPC also checks chat_enabled while holding its assignment lock, preventing stale UI availability from granting access. Each request reserves one attempt; provider failures, aborts and uncertain requests still count. Missing configuration, storage failures and allowance exhaustion fail closed with a generic visitor error, without logging prompts or secrets. The owner billing API remains private/no-store. Public chat responses use no-store and do not expose billing/customer data.
 
+The server action supplies a 45 second deadline shared by usage accounting and the model. Already canceled requests are rejected before profile reads. Cancellation is checked before reservation, after reservation and after generation, so cancellation during reservation skips the provider and a late answer is rejected. A visitor closing the widget does not guarantee cancellation of an already running server action. Database calls are not interrupted by this signal.
+
 ## Answers and browser state
 
 Responses use the shared public PortfolioChatModel, bounded to 2,000 question characters, 800 output tokens, no external tools, no automatic retries and a 45 second request budget. Answers come from visible saved portfolio content and acknowledge absent facts. This version returns a completed plain-text answer; token streaming and claim-level citations are not implemented. The visitor disclosure explains AI fallibility and that questions are sent to OpenAI. Prior messages are displayed locally but are not sent as trusted profile facts or conversational context.

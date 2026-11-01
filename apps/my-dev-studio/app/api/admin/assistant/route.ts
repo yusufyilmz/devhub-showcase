@@ -1,5 +1,6 @@
 import { ZodError } from "zod";
 
+import { PortfolioEditModel } from "@shared/assistant";
 import { allowStudioAssistant } from "@shared/cache";
 import { aiEditRequestSchema, serializeAiEditContext } from "@shared/lib/ai-edit";
 import { runPremiumOperation } from "@shared/lib/billing";
@@ -14,8 +15,6 @@ import { ProfileAccessError, ProfileConflictError } from "@shared/lib/profile-er
 import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
 import { billingServiceClient } from "@/features/billing/client";
 import { premiumAiConfigured } from "@/features/billing/premium-configuration";
-
-import { PortfolioEditModel } from "../../../../../../packages/assistant/src";
 
 export const maxDuration = 60;
 const headers = { "Cache-Control": "private, no-store" };
@@ -50,7 +49,9 @@ export async function GET() {
 export async function POST(request: Request) {
   if (!sameOrigin(request))
     return Response.json({ error: "Invalid origin." }, { headers, status: 403 });
+  const signal = AbortSignal.any([request.signal, AbortSignal.timeout(45000)]);
   try {
+    signal.throwIfAborted();
     const { user, snapshot, repository, service, client } = await workspace();
     if (!premiumAiConfigured()) throw new Error("Unavailable");
     const raw = await readBody(request);
@@ -80,12 +81,13 @@ export async function POST(request: Request) {
         feature: "studio_assistant",
         profileId: snapshot.id,
         requestId: input.requestId,
+        signal,
       },
       () =>
         new PortfolioEditModel().propose(
           buildOwnerPortfolioKnowledge({ ...snapshot, profile: input.draft }),
           input.message,
-          AbortSignal.any([request.signal, AbortSignal.timeout(45000)]),
+          signal,
         ),
     );
     await service.requireOwner(user.id);
