@@ -25,6 +25,7 @@ function sampleCvLayout(type: PortfolioType) {
   if (type === "designer" || type === "creator") return "editorial";
   return type === "minimal" ? "compact" : "classic";
 }
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: This is a function that generates a portfolio example>
 function example(seed: Seed): PortfolioExample {
   const language = seed.language ?? "en";
   const defaultTheme = ["paper", "bloom"].includes(seed.theme) ? "light" : "dark";
