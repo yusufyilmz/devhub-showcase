@@ -1,7 +1,19 @@
 import { createServerClient } from "@shared/lib/supabase";
 import { editCvPath } from "@shared/lib/username";
+import { EditIcon } from "@shared/ui/icons";
 
-export async function OwnerEditLink({ username }: { username: string }) {
+const editLinkClass =
+  "icon-button inline-flex h-10 w-10 items-center justify-center rounded-md bg-[var(--primary)] text-sm font-medium text-[var(--primary-foreground)] ring-offset-[var(--background)] transition-colors hover:bg-[var(--primary)]/90 focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 focus-visible:outline-none";
+
+export async function OwnerEditLink({
+  username,
+  floating = true,
+  offset = false,
+}: {
+  username: string;
+  floating?: boolean;
+  offset?: boolean;
+}) {
   const client = await createServerClient();
   const {
     data: { user },
@@ -14,11 +26,11 @@ export async function OwnerEditLink({ username }: { username: string }) {
     .eq("username", username)
     .maybeSingle();
   if (error || !data) return null;
-  return (
-    <div className="portfolio-inner">
-      <a className="studio-secondary" href={editCvPath(username)}>
-        Edit my CV
-      </a>
-    </div>
+  const link = (
+    <a aria-label="Edit my CV" className={editLinkClass} href={editCvPath(username)}>
+      <EditIcon fontSize="xlarge" />
+    </a>
   );
+  if (!floating) return link;
+  return <div className={`fixed right-8 z-[200] ${offset ? "bottom-28" : "bottom-8"}`}>{link}</div>;
 }

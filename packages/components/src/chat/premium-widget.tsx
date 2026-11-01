@@ -4,14 +4,14 @@ import { PortfolioChat } from "./portfolio-chat";
 
 export function PremiumWidget({
   id,
-  username,
   name,
   revision,
+  handleSendMessage,
 }: {
   id: string;
-  username: string;
   name: string;
   revision: number;
+  handleSendMessage: (message: string, sessionId: string) => Promise<string>;
 }) {
   return (
     <PortfolioChat
@@ -19,15 +19,10 @@ export function PremiumWidget({
       name={name}
       revision={revision}
       send={async (message: string, sessionId: string, signal: AbortSignal) => {
-        const result = await fetch("/api/portfolio-chat", {
-          body: JSON.stringify({ message, requestId: crypto.randomUUID(), sessionId, username }),
-          headers: { "Content-Type": "application/json" },
-          method: "POST",
-          signal,
-        });
-        const data = await result.json();
-        if (!result.ok || typeof data.answer !== "string") throw new Error("Unavailable");
-        return data.answer;
+        if (signal.aborted) throw new DOMException("Aborted", "AbortError");
+        const answer = await handleSendMessage(message, sessionId);
+        if (signal.aborted) throw new DOMException("Aborted", "AbortError");
+        return answer;
       }}
     />
   );

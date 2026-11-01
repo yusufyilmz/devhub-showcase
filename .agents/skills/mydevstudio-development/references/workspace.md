@@ -5,6 +5,7 @@ The Next.js app is `apps/my-dev-studio` (`my-dev-studio`). Shared libraries use 
 | Location                  | Responsibility                                                                          |
 | ------------------------- | --------------------------------------------------------------------------------------- |
 | `apps/my-dev-studio`      | Next.js routes in `app/` and feature data access in `features/`                         |
+| `apps/my-fitness-app`     | Fitness OS app. Its tables are in `supabase/migrations` and belong to `auth.users`      |
 | `apps/storybook-app`      | Storybook for `packages/ui` and `packages/components`                                   |
 | `packages/components`     | Portable studio UI, section renderers and editors, layout, chat, and portfolio surfaces |
 | `packages/ui`             | Primitive controls, theme provider, and notification provider                           |

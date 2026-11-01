@@ -16,8 +16,8 @@ import { getPagePresentation } from "@/features/platform/page-presentation";
 
 describe("Examples", () => {
   it("provides two valid, independent fictional profiles for every layout", () => {
-    expect(portfolioExamples).toHaveLength(8);
-    expect(new Set(portfolioExamples.map((item) => item.slug)).size).toBe(8);
+    expect(portfolioExamples).toHaveLength(12);
+    expect(new Set(portfolioExamples.map((item) => item.slug)).size).toBe(12);
     for (const type of portfolioTypes)
       expect(
         portfolioExamples.filter((item) => item.profile.portfolioType === type.id),

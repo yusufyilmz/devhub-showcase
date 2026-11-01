@@ -1,0 +1,643 @@
+"use client";
+import type { ReactNode } from "react";
+
+import {
+  ArrowUpRight,
+  CalendarDays,
+  Droplets,
+  Home,
+  Layers,
+  Plus,
+  Settings2,
+  ShoppingBasket,
+} from "lucide-react";
+
+import { DayAgenda } from "@/features/agenda/day-agenda";
+import { TaskDetails } from "@/features/agenda/task-details";
+import { TaskTree } from "@/features/task-tree/task-tree";
+import { ThemeToggle } from "@/features/theme/theme-toggle";
+import { WeeklyPlanner } from "@/features/weekly-planner/weekly-planner";
+import { dateLabel, shiftDate } from "@/lib/domain/dates";
+import { createTask, type Task } from "@/lib/domain/task";
+import type { Workspace } from "@/lib/domain/workspace";
+import type { AgendaEvent } from "@/lib/services/agenda-service";
+import { ScheduleService } from "@/lib/services/schedule-service";
+import { TaskService } from "@/lib/services/task-service";
+
+import { CalendarView } from "./calendar-view";
+import { SettingsView } from "./settings-view";
+import type { WorkspaceController } from "./use-task-workspace";
+
+const navigation = [
+  { icon: Home, name: "Today" },
+  { icon: Layers, name: "Tasks" },
+  { icon: ShoppingBasket, name: "Week" },
+  { icon: CalendarDays, name: "Calendar" },
+  { icon: Settings2, name: "More" },
+];
+const scheduleService = new ScheduleService();
+const taskService = new TaskService();
+
+type Update = WorkspaceController["update"];
+type TreeProps = {
+  busy: boolean;
+  onAdd: (parent: Task) => void;
+  onEdit: (task: Task) => void;
+  onSet: (task: Task, reps: number, weight: number) => void;
+  onStatus: (task: Task, status: Task["status"]) => void;
+  readOnly: boolean;
+};
+
+export function WorkspaceFrame({
+  busy,
+  children,
+  date,
+  error,
+  name,
+  overlay,
+  onDismissError,
+  readOnly,
+  selectedTitle,
+  setDate,
+  setTab,
+  tab,
+  taskId,
+  today,
+}: {
+  busy: boolean;
+  children: ReactNode;
+  date: string;
+  error: string;
+  name: string;
+  overlay?: ReactNode;
+  onDismissError: () => void;
+  readOnly: boolean;
+  selectedTitle?: string;
+  setDate: (date: string) => void;
+  setTab: (tab: string) => void;
+  tab: string;
+  taskId: string | null;
+  today: string;
+}) {
+  return (
+    <div className="app">
+      <WorkspaceSidebar name={name} readOnly={readOnly} setTab={setTab} tab={tab} />
+      <main className="main">
+        {readOnly ? <ReadOnlyBanner /> : null}
+        <WorkspaceTopbar busy={busy} readOnly={readOnly} tab={tab} />
+        <PageHeading
+          date={date}
+          name={name}
+          selectedTitle={selectedTitle}
+          setDate={setDate}
+          tab={tab}
+          taskId={taskId}
+          today={today}
+        />
+        {error ? <ErrorBanner message={error} onDismiss={onDismissError} /> : null}
+        {children}
+        <footer>Fitness OS · A little better, every day.</footer>
+      </main>
+      {overlay}
+    </div>
+  );
+}
+
+export function WorkspacePanels({
+  busy,
+  date,
+  day,
+  onAdd,
+  onEventStatus,
+  onMove,
+  openDay,
+  openTask,
+  readOnly,
+  selectedTask,
+  setDate,
+  setError,
+  setTarget,
+  setTemplateRoot,
+  state,
+  tab,
+  taskId,
+  templateRoot,
+  treeProps,
+  update,
+}: {
+  busy: boolean;
+  date: string;
+  day: Workspace;
+  onAdd: (parent: Task) => void;
+  onEventStatus: (event: AgendaEvent) => void;
+  onMove: (id: string, from: string, to: string, time: string | null) => Promise<void>;
+  openDay: (date: string) => void;
+  openTask: (date: string, taskId: string) => void;
+  readOnly: boolean;
+  selectedTask: Task | null;
+  setDate: (date: string) => void;
+  setError: (message: string) => void;
+  setTarget: (target: { parent?: Task; task?: Task } | null) => void;
+  setTemplateRoot: (id: string | null) => void;
+  state: Workspace;
+  tab: string;
+  taskId: string | null;
+  templateRoot: string | null;
+  treeProps: TreeProps;
+  update: Update;
+}) {
+  if (tab === "Today" && !taskId) {
+    return (
+      <TodayView
+        busy={busy}
+        date={date}
+        day={day}
+        onAdd={onAdd}
+        onEventStatus={onEventStatus}
+        openTask={openTask}
+        readOnly={readOnly}
+        setDate={setDate}
+        state={state}
+        update={update}
+      />
+    );
+  }
+  if (tab === "Today") {
+    return (
+      <TodayActivity
+        date={date}
+        day={day}
+        onMove={onMove}
+        openDay={openDay}
+        selectedTask={selectedTask}
+        treeProps={treeProps}
+      />
+    );
+  }
+  if (tab === "Tasks") {
+    return (
+      <TasksView
+        busy={busy}
+        readOnly={readOnly}
+        setTarget={setTarget}
+        setTemplateRoot={setTemplateRoot}
+        state={state}
+        templateRoot={templateRoot}
+        treeProps={treeProps}
+      />
+    );
+  }
+  if (tab === "Week") {
+    return (
+      <WeeklyPlanner
+        busy={busy}
+        date={date}
+        readOnly={readOnly}
+        update={update}
+        workspace={state}
+      />
+    );
+  }
+  if (tab === "Calendar") {
+    return (
+      <CalendarView
+        busy={busy}
+        date={date}
+        onMove={onMove}
+        onOpen={openTask}
+        onStatus={onEventStatus}
+        openDay={openDay}
+        readOnly={readOnly}
+        setDate={setDate}
+        update={update}
+        workspace={state}
+      />
+    );
+  }
+  if (tab === "More") {
+    return (
+      <SettingsView
+        busy={busy}
+        date={date}
+        onError={setError}
+        readOnly={readOnly}
+        update={update}
+        workspace={state}
+      />
+    );
+  }
+  return null;
+}
+
+function WorkspaceSidebar({
+  name,
+  readOnly,
+  setTab,
+  tab,
+}: {
+  name: string;
+  readOnly: boolean;
+  setTab: (tab: string) => void;
+  tab: string;
+}) {
+  return (
+    <aside className="sidebar">
+      <a className="brand" href={readOnly ? "/preview" : "/"}>
+        <span>↗</span>Fitness OS<span className="brand-dot">.</span>
+      </a>
+      <span className="eyebrow nav-label">YOUR DAILY PRACTICE</span>
+      <nav>
+        {navigation.map(({ name: label, icon: Icon }) => (
+          <button
+            className={tab === label ? "active" : ""}
+            key={label}
+            onClick={() => setTab(label)}
+            type="button"
+          >
+            <Icon size={20} />
+            <span>{label}</span>
+          </button>
+        ))}
+      </nav>
+      <div className="sidebar-bottom">
+        <div className="side-note">
+          Small steps.
+          <br />
+          Lasting change.
+          <ArrowUpRight />
+        </div>
+        <div className="profile">
+          <span className="avatar">{name.slice(0, 1)}</span>
+          <div>
+            <strong>{name}</strong>
+            <small>{readOnly ? "Read-only workspace" : "Owner · Editing enabled"}</small>
+          </div>
+        </div>
+      </div>
+    </aside>
+  );
+}
+
+function ReadOnlyBanner() {
+  return (
+    <div className="preview-banner">
+      <span>
+        <strong>Read-only workspace</strong> · Live plans and progress.
+      </span>
+      <a href="/login">Sign in to edit →</a>
+    </div>
+  );
+}
+
+function WorkspaceTopbar({
+  busy,
+  readOnly,
+  tab,
+}: {
+  busy: boolean;
+  readOnly: boolean;
+  tab: string;
+}) {
+  return (
+    <header className="topbar">
+      <span className="breadcrumb">My workspace / {tab}</span>
+      <div className="topbar-actions">
+        <ThemeToggle />
+        <span className="sync">
+          <i />
+          {syncLabel(readOnly, busy)}
+        </span>
+      </div>
+    </header>
+  );
+}
+
+function syncLabel(readOnly: boolean, busy: boolean) {
+  if (readOnly) return "Read-only";
+  if (busy) return "Saving…";
+  return "Owner · Editing";
+}
+
+function PageHeading({
+  date,
+  name,
+  selectedTitle,
+  setDate,
+  tab,
+  taskId,
+  today,
+}: {
+  date: string;
+  name: string;
+  selectedTitle?: string;
+  setDate: (date: string) => void;
+  tab: string;
+  taskId: string | null;
+  today: string;
+}) {
+  return (
+    <div className="page-heading">
+      <div>
+        <p className="eyebrow">ONE ROUTINE. SMALL STEPS.</p>
+        <h1>{headingTitle({ date, name, selectedTitle, tab, taskId, today })}</h1>
+        <p>{headingSummary(tab)}</p>
+      </div>
+      <label className="date-control">
+        Active date
+        <input
+          onChange={(event) => {
+            if (event.target.value) setDate(event.target.value);
+          }}
+          type="date"
+          value={date}
+        />
+      </label>
+    </div>
+  );
+}
+
+function headingTitle(input: {
+  date: string;
+  name: string;
+  selectedTitle?: string;
+  tab: string;
+  taskId: string | null;
+  today: string;
+}) {
+  if (input.tab === "Today") return todayTitle(input);
+  if (input.tab === "Tasks") return "A place for every step.";
+  if (input.tab === "Week") return "Plan. Prepare. Show up.";
+  if (input.tab === "Calendar") return "A little structure.";
+  return "Make it yours.";
+}
+
+function todayTitle(input: {
+  date: string;
+  name: string;
+  selectedTitle?: string;
+  taskId: string | null;
+  today: string;
+}) {
+  if (input.taskId) return input.selectedTitle ?? "Activity details";
+  if (input.date === input.today) return `Your day, ${input.name}.`;
+  return dateLabel(input.date);
+}
+
+function headingSummary(tab: string) {
+  if (tab === "Tasks") return "Plans, meals, workouts and sets—all organized as tasks.";
+  if (tab === "Week") return "Cooking and groceries, derived from the meals on your calendar.";
+  return "A clear plan. A few small wins. You’ve got this.";
+}
+
+function ErrorBanner({ message, onDismiss }: { message: string; onDismiss: () => void }) {
+  return (
+    <div className="error floating-error" role="alert">
+      {message}
+      <button className="text-btn" onClick={onDismiss} type="button">
+        Dismiss
+      </button>
+    </div>
+  );
+}
+
+function TodayView({
+  busy,
+  date,
+  day,
+  onAdd,
+  onEventStatus,
+  openTask,
+  readOnly,
+  setDate,
+  state,
+  update,
+}: {
+  busy: boolean;
+  date: string;
+  day: Workspace;
+  onAdd: (parent: Task) => void;
+  onEventStatus: (event: AgendaEvent) => void;
+  openTask: (date: string, taskId: string) => void;
+  readOnly: boolean;
+  setDate: (date: string) => void;
+  state: Workspace;
+  update: Update;
+}) {
+  const progress = taskService.progress(day.tasks, `day:${date}`);
+  const percent = progress.total ? Math.round((progress.done / progress.total) * 100) : 0;
+  const water = scheduleService.waterTotal(day, date);
+  const dayRoot = day.tasks.find((task) => task.id === `day:${date}`);
+  return (
+    <>
+      <div className="overview">
+        <section className="day-summary">
+          <div>
+            <span className="eyebrow">{dateLabel(date)}</span>
+            <h2>Every small step counts.</h2>
+            <p>
+              {progress.done} of {progress.total} leaf tasks completed · {progress.skipped} skipped
+            </p>
+            <span className="light-pill">
+              {state.tasks.find((task) => task.id === scheduleService.dietFor(state, date))?.title}
+            </span>
+          </div>
+          <div
+            className="ring"
+            style={{
+              background: `conic-gradient(var(--ring-fill) ${percent}%,var(--ring-track) 0)`,
+            }}
+          >
+            <div>
+              <strong>
+                {percent}
+                <small>%</small>
+              </strong>
+              <span>COMPLETE</span>
+            </div>
+          </div>
+        </section>
+        <section className="water-summary">
+          <span className="water-symbol">
+            <Droplets />
+          </span>
+          <span className="eyebrow">KEEP IT FLOWING</span>
+          <h2>
+            {(water / 1000).toFixed(2)} <small>/ {state.settings.waterTarget / 1000} L</small>
+          </h2>
+          <div className="progress">
+            <i
+              style={{
+                width: `${Math.min(100, (water / state.settings.waterTarget) * 100)}%`,
+              }}
+            />
+          </div>
+          <button
+            className="text-btn"
+            disabled={readOnly || busy}
+            onClick={() => update((current) => logWater(current, date), "250 ml logged")}
+            type="button"
+          >
+            <Plus size={15} />
+            250 ml water
+          </button>
+        </section>
+      </div>
+      <div className="section-heading">
+        <h2>Your daily agenda</h2>
+        <div className="row">
+          <button className="text-btn" onClick={() => setDate(shiftDate(date, -1))} type="button">
+            Previous
+          </button>
+          <button className="text-btn" onClick={() => setDate(shiftDate(date, 1))} type="button">
+            Next
+          </button>
+          <button
+            className="outline"
+            disabled={readOnly || busy || !dayRoot}
+            onClick={() => {
+              if (dayRoot) onAdd(dayRoot);
+            }}
+            type="button"
+          >
+            <Plus size={16} />
+            Add task
+          </button>
+        </div>
+      </div>
+      <DayAgenda
+        busy={busy}
+        date={date}
+        onOpen={openTask}
+        onStatus={onEventStatus}
+        readOnly={readOnly}
+        workspace={day}
+      />
+      <p className="hint space-top">
+        Activities are ordered by hour. Open an activity with the arrow to see its details and
+        subtasks. Items without a time appear at the end.
+      </p>
+    </>
+  );
+}
+
+function logWater(state: Workspace, date: string) {
+  const next = structuredClone(scheduleService.ensureDay(state, date));
+  next.tasks.push(
+    createTask({
+      date,
+      details: { ml: 250, type: "water" },
+      id: crypto.randomUUID(),
+      kind: "water",
+      parentId: `day:${date}`,
+      position: 100,
+      scope: "scheduled",
+      status: "done",
+      title: "Extra water",
+    }),
+  );
+  return next;
+}
+
+function TodayActivity({
+  date,
+  day,
+  onMove,
+  openDay,
+  selectedTask,
+  treeProps,
+}: {
+  date: string;
+  day: Workspace;
+  onMove: (id: string, from: string, to: string, time: string | null) => Promise<void>;
+  openDay: (date: string) => void;
+  selectedTask: Task | null;
+  treeProps: TreeProps;
+}) {
+  if (!selectedTask) {
+    return (
+      <section className="card">
+        <p>This activity is no longer on this date. It may have been moved or regenerated.</p>
+        <button className="outline" onClick={() => openDay(date)} type="button">
+          Back to agenda
+        </button>
+      </section>
+    );
+  }
+  return (
+    <TaskDetails
+      date={date}
+      key={selectedTask.id}
+      onBack={() => openDay(date)}
+      onMove={onMove}
+      task={selectedTask}
+      workspace={day}
+      {...treeProps}
+    />
+  );
+}
+
+function TasksView({
+  busy,
+  readOnly,
+  setTarget,
+  setTemplateRoot,
+  state,
+  templateRoot,
+  treeProps,
+}: {
+  busy: boolean;
+  readOnly: boolean;
+  setTarget: (target: { parent?: Task; task?: Task } | null) => void;
+  setTemplateRoot: (id: string | null) => void;
+  state: Workspace;
+  templateRoot: string | null;
+  treeProps: TreeProps;
+}) {
+  const roots = taskService.children(state.tasks, null).filter((task) => task.scope === "template");
+  return (
+    <>
+      <div className="section-heading">
+        <div className="tabs wrap">
+          <button
+            className={templateRoot === null ? "selected" : ""}
+            onClick={() => setTemplateRoot(null)}
+            type="button"
+          >
+            All plans
+          </button>
+          {roots.map((task) => (
+            <button
+              className={templateRoot === task.id ? "selected" : ""}
+              key={task.id}
+              onClick={() => setTemplateRoot(task.id)}
+              type="button"
+            >
+              {task.title}
+            </button>
+          ))}
+        </div>
+        <button
+          className="outline"
+          disabled={readOnly || busy}
+          onClick={() => setTarget({})}
+          type="button"
+        >
+          <Plus size={15} />
+          New task
+        </button>
+      </div>
+      <TaskTree
+        parentId={templateRoot}
+        workspace={{
+          ...state,
+          tasks: state.tasks.filter((task) => task.scope === "template"),
+        }}
+        {...treeProps}
+      />
+      <p className="hint space-top">
+        Use + to add a subtask and the pencil to edit, reorder, or archive. Meal ingredients and
+        alternatives are edited inside each meal.
+      </p>
+    </>
+  );
+}

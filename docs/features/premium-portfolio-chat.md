@@ -10,7 +10,7 @@ The billing page shows reserved chat attempts and the period allowance. Stripe s
 
 ## Request boundaries
 
-/api/portfolio-chat accepts only username, message, sessionId and requestId. The server validates origin and input size, reloads the current published profile, constructs whitelisted public knowledge and resolves ownership/entitlement server-side. No client profile, owner ID, prompt or plan is trusted. Anonymous visitors do not need accounts. A service client is server-only and independent of Stripe configuration. No model request is made for display checks.
+The premium chat server action accepts only username, message, sessionId and requestId. The server reloads the current published profile, constructs whitelisted public knowledge and resolves ownership/entitlement server-side. No client profile, owner ID, prompt or plan is trusted. Anonymous visitors do not need accounts. A service client is server-only and independent of Stripe configuration. No model request is made for display checks.
 
 Requests pass visitor/portfolio/global Redis abuse limits before the atomic database reservation. The reservation RPC also checks chat_enabled while holding its assignment lock, preventing stale UI availability from granting access. Each request reserves one attempt; provider failures, aborts and uncertain requests still count. Missing configuration, storage failures and allowance exhaustion fail closed with a generic visitor error, without logging prompts or secrets. The owner billing API remains private/no-store. Public chat responses use no-store and do not expose billing/customer data.
 

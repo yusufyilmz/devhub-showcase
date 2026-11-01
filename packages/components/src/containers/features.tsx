@@ -80,7 +80,7 @@ export function Features() {
           </p>
           <ul className="home-feature-details">
             <li>Four themes, each with its own character</li>
-            <li>Engineer, Designer, Consultant and Minimal layouts</li>
+            <li>Engineer, Designer, Consultant, Minimal, Trainer and Content creator layouts</li>
             <li>Separate portfolio and CV language settings</li>
           </ul>
         </RevealCardBase>

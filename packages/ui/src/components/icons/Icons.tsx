@@ -41,6 +41,8 @@ const icons = {
   chat: "M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1m-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1",
   close:
     "M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z",
+  dashboard: "M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z",
+  edit: "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z",
   email:
     "M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 14H4V8l8 5 8-5zm-8-7L4 6h16z",
   externalLink:
@@ -68,6 +70,10 @@ export const EmailIcon: React.FC<IconProps> = (props) => <Icon {...props} d={ico
 export const GitHubIcon: React.FC<IconProps> = (props) => <Icon {...props} d={icons.github} />;
 export const SendIcon: React.FC<IconProps> = (props) => <Icon {...props} d={icons.send} />;
 export const ChatIcon: React.FC<IconProps> = (props) => <Icon {...props} d={icons.chat} />;
+export const DashboardIcon: React.FC<IconProps> = (props) => (
+  <Icon {...props} d={icons.dashboard} />
+);
+export const EditIcon: React.FC<IconProps> = (props) => <Icon {...props} d={icons.edit} />;
 export const ReferralIcon: React.FC<IconProps> = (props) => <Icon {...props} d={icons.referral} />;
 export const ExternalLinkIcon: React.FC<IconProps> = (props) => (
   <Icon {...props} d={icons.externalLink} />

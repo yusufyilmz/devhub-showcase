@@ -29,7 +29,7 @@ export function Pricing({ action }: { action: PageAction }) {
             <p>A home for your work.</p>
             <ul>
               <li>Your portfolio website and downloadable CV</li>
-              <li>Four layouts, themes and language settings</li>
+              <li>Every layout, plus themes and language settings</li>
               <li>Section library, custom sections and reusable templates</li>
               <li>Private drafts and explicit publication</li>
               <li>CV import when the extraction service is available</li>

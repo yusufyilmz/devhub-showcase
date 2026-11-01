@@ -19,6 +19,20 @@ import { logger } from "@shared/utils/logger";
 
 import { requireAdmin } from "@/features/admin/admin-auth";
 import { portfolioChatInput, requireLegacyChat } from "@/features/chat/portfolio-chat";
+import { answerPremiumChat } from "@/features/chat/premium-chat";
+
+export async function handlePremiumChatAction(
+  username: string,
+  message: string,
+  sessionId: string,
+  requestId: string,
+): Promise<string> {
+  const result = await answerPremiumChat(
+    { message, requestId, sessionId, username },
+    AbortSignal.timeout(45000),
+  );
+  return result.answer;
+}
 
 export async function handleSendMessageAction(
   username: string,

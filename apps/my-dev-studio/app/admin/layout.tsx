@@ -20,10 +20,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       contentId="admin-content"
       title="PORTFOLIO STUDIO"
       tools={
-        <>
+        <div className="admin-tools">
           <ManagementLink />
           <ThemeToggle />
-        </>
+        </div>
       }
     >
       {children}

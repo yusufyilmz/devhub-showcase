@@ -1,0 +1,22 @@
+{
+  "background_color": "#f4f7fb",
+  "display": "standalone",
+  "icons": [
+    {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "/icon-192.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "/icon-512.png",
+      "type": "image/png"
+    }
+  ],
+  "name": "Yusuf Fitness OS",
+  "short_name": "Fitness OS",
+  "start_url": "/",
+  "theme_color": "#f4f7fb"
+}

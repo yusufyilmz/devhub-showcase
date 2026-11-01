@@ -157,7 +157,7 @@ function FolioSections({
   sourceProfile?: PortfolioProfile;
 }) {
   const text = getPortfolioCopy(profile.portfolioLanguage);
-  const designer = profile.portfolioType === "designer";
+  const designer = profile.portfolioType === "designer" || profile.portfolioType === "creator";
   const projects = profile.projects.filter((project) => project.public);
   const renderers: Partial<Record<SectionRendererId, ReactNode>> = {
     "education-list": profile.education.length > 0 && (

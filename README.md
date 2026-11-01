@@ -130,7 +130,7 @@ The generator does not overwrite existing output. See [personal workspaces](docs
 
 [The workflow](.github/workflows/ci.yml) runs frozen installation, `pnpm check`, `pnpm test`, `pnpm build`, Chromium installation and `pnpm test:e2e` in the `Verify` job. Browser reports are retained for seven days.
 
-Production deployment is a separate job that requires successful verification and a non-PR run on `main`. It uses `VERCEL_TOKEN`, `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID` from GitHub secrets, pulls production configuration, builds and deploys prebuilt output. Application variables belong in deployment configuration. See `apps/web/vercel.json` for build settings.
+Production deployment runs after verification on non-PR pushes to `main`. Two jobs deploy in parallel: MyDevStudio (`VERCEL_PROJECT_ID`) and Fitness OS (`VERCEL_FITNESS_PROJECT_ID`), both using `VERCEL_TOKEN` and `VERCEL_ORG_ID`. Each job pulls production configuration, builds, and deploys prebuilt output. Application variables belong in deployment configuration. See `apps/my-dev-studio/vercel.json` and `apps/my-fitness-app/vercel.json`.
 
 Require `Verify` before merging. If GitHub Actions is the intended sole release path, check the project's automatic Git deployment settings separately. A successful build does not confirm a deployment, migration or external provider setup.
 

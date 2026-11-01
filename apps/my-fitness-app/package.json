@@ -1,0 +1,43 @@
+{
+  "name": "my-fitness-app",
+  "version": "2.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build --webpack --port=3002",
+    "clean": "node -e \"require('node:fs').rmSync('.next',{recursive:true,force:true})\"",
+    "dev": "next dev --webpack --port=3002",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "kill": "node -e \"const {execSync}=require('node:child_process'); let ids=''; try { ids=execSync('lsof -nP -tiTCP:3002 -sTCP:LISTEN',{encoding:'utf8'}).trim(); } catch {} for (const id of ids.split(/\\s+/).filter(Boolean)) { try { process.kill(Number(id)); } catch {} }\"",
+    "lint": "biome lint .",
+    "lint:check": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "start": "next start --port=3002",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "types:check": "pnpm typecheck"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "catalog:",
+    "drizzle-orm": "catalog:",
+    "lucide-react": "catalog:",
+    "next": "catalog:",
+    "postgres": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "catalog:",
+    "@shared/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "engines": {
+    "node": ">=24.15.0 <25"
+  }
+}

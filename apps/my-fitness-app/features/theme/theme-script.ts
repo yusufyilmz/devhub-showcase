@@ -1,0 +1,1 @@
+export const themeBootstrap = `try{var t=localStorage.getItem("fitness-os-theme");document.documentElement.dataset.theme=t==="light"?"light":"dark"}catch{document.documentElement.dataset.theme="dark"}`;

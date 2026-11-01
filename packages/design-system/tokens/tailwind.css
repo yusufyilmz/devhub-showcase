@@ -42,7 +42,15 @@
   --shadow-xl: 0 8px 16px rgb(0 0 0 / calc(0.16 * var(--shadow-level)));
   --shadow-2xl: 0 16px 32px rgb(0 0 0 / calc(0.2 * var(--shadow-level)));
 
-  /* Spacing scale - Tailwind will generate p-*, m-*, gap-* utilities */
+  /* Named steps follow the data-spacing scale. Numeric steps still use --spacing. */
+  --spacing-xs: var(--spacing-xs);
+  --spacing-s: var(--spacing-s);
+  --spacing-sm: var(--spacing-sm);
+  --spacing-md: var(--spacing-md);
+  --spacing-lg: var(--spacing-lg);
+  --spacing-xl: var(--spacing-xl);
+  --spacing-2xl: var(--spacing-2xl);
+  --spacing-3xl: var(--spacing-3xl);
 
   /* Text sizes - Tailwind will generate text-* utilities */
   --text-xs: calc(0.75rem * var(--text-scale));

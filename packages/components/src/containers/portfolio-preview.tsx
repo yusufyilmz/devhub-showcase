@@ -2,7 +2,12 @@
 
 import { type CSSProperties, useId, useRef, useState } from "react";
 
-import { getPreviewAccent } from "@shared/config";
+import {
+  getPortfolioThemeVariables,
+  getPreviewAccent,
+  type PortfolioTheme,
+  portfolioThemes,
+} from "@shared/config";
 import { Button } from "@shared/ui/button";
 
 const views = ["Portfolio", "CV"] as const;
@@ -15,6 +20,7 @@ const accents = ["cyan", "violet", "emerald"] as const;
 export function PortfolioPreview() {
   const [view, setView] = useState<(typeof views)[number]>("Portfolio");
   const [accent, setAccent] = useState<(typeof accents)[number]>("cyan");
+  const [theme, setTheme] = useState<PortfolioTheme>("studio");
   const id = useId();
   const tabs = useRef<Array<HTMLButtonElement | null>>([]);
   return (
@@ -53,8 +59,14 @@ export function PortfolioPreview() {
       </div>
       <div
         className="home-preview-browser"
+        data-portfolio-theme={theme}
         data-preview-accent={accent}
-        style={getPreviewAccent(accent) as CSSProperties}
+        style={
+          {
+            ...getPortfolioThemeVariables(theme),
+            ...getPreviewAccent(accent),
+          } as CSSProperties
+        }
       >
         <div className="home-preview-chrome">
           <span aria-hidden="true" className="home-window-dots">
@@ -180,6 +192,22 @@ export function PortfolioPreview() {
               type="button"
             >
               <span aria-hidden="true">{accent === item ? "✓" : ""}</span>
+            </Button>
+          ))}
+        </fieldset>
+        <fieldset className="home-preview-colors home-preview-themes">
+          <legend className="sr-only">Preview theme</legend>
+          {portfolioThemes.map((item) => (
+            <Button
+              aria-label={`Preview the ${item.name} theme`}
+              aria-pressed={theme === item.id}
+              className={`home-accent home-accent-${item.id}`}
+              key={item.id}
+              onClick={() => setTheme(item.id)}
+              title={item.name}
+              type="button"
+            >
+              <span aria-hidden="true">{theme === item.id ? "✓" : ""}</span>
             </Button>
           ))}
         </fieldset>

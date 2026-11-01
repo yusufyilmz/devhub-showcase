@@ -6,23 +6,24 @@ MyDevStudio is a multiuser portfolio and CV platform in the `devhub-showcase` re
 
 Workspace members are `apps/*`, `packages/*`, and `tools/*`. The Next.js app package name is `my-dev-studio`. Shared packages use the `@shared/*` name. There is no `apps/web` package.
 
-| Location                 | Name                    | Responsibility                                                     |
-| ------------------------ | ----------------------- | ------------------------------------------------------------------ |
-| `apps/my-dev-studio`     | `my-dev-studio`         | Next.js routes, API handlers, and feature data access              |
-| `apps/storybook-app`     | `storybook-app`         | Storybook for `packages/ui` and `packages/components`              |
-| `packages/components`    | `@shared/components`    | Portable studio UI, sections, layout, chat, and portfolio surfaces |
-| `packages/ui`            | `@shared/ui`            | Primitive controls, theme provider, and notification provider      |
-| `packages/config`        | `@shared/config`        | Profile types, themes, and section metadata                        |
-| `packages/content`       | `@shared/content`       | Page copy, including the home FAQ                                  |
-| `packages/lib`           | `@shared/lib`           | Validation, repositories, Supabase access, and domain services     |
-| `packages/auth`          | `@shared/auth`          | Session helpers and Google sign-in                                 |
-| `packages/cv`            | `@shared/cv`            | CV PDF rendering                                                   |
-| `packages/assistant`     | `@shared/assistant`     | Portfolio and editing assistants                                   |
-| `packages/cache`         | `@shared/cache`         | Cache integrations                                                 |
-| `packages/runtime`       | `@shared/runtime`       | Shared runtime helpers, including notifications                    |
-| `packages/utils`         | `@shared/utils`         | Logging and other shared utilities                                 |
-| `packages/design-system` | `@shared/design-system` | Global CSS and design tokens                                       |
-| `packages/trello`        | `@shared/trello`        | Trello board UI                                                    |
+| Location                 | Name                    | Responsibility                                                      |
+| ------------------------ | ----------------------- | ------------------------------------------------------------------- |
+| `apps/my-dev-studio`     | `my-dev-studio`         | Next.js routes, API handlers, and feature data access               |
+| `apps/my-fitness-app`    | `my-fitness-app`        | Fitness OS app. Task rows share the Supabase project and Auth users |
+| `apps/storybook-app`     | `storybook-app`         | Storybook for `packages/ui` and `packages/components`               |
+| `packages/components`    | `@shared/components`    | Portable studio UI, sections, layout, chat, and portfolio surfaces  |
+| `packages/ui`            | `@shared/ui`            | Primitive controls, theme provider, and notification provider       |
+| `packages/config`        | `@shared/config`        | Profile types, themes, and section metadata                         |
+| `packages/content`       | `@shared/content`       | Page copy, including the home FAQ                                   |
+| `packages/lib`           | `@shared/lib`           | Validation, repositories, Supabase access, and domain services      |
+| `packages/auth`          | `@shared/auth`          | Session helpers and Google sign-in                                  |
+| `packages/cv`            | `@shared/cv`            | CV PDF rendering                                                    |
+| `packages/assistant`     | `@shared/assistant`     | Portfolio and editing assistants                                    |
+| `packages/cache`         | `@shared/cache`         | Cache integrations                                                  |
+| `packages/runtime`       | `@shared/runtime`       | Shared runtime helpers, including notifications                     |
+| `packages/utils`         | `@shared/utils`         | Logging and other shared utilities                                  |
+| `packages/design-system` | `@shared/design-system` | Global CSS and design tokens                                        |
+| `packages/trello`        | `@shared/trello`        | Trello board UI                                                     |
 
 App routes stay in `apps/my-dev-studio/app`. App-only data access stays in `apps/my-dev-studio/features/<feature>`. That app has no `lib` folder.
 

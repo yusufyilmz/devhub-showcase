@@ -140,7 +140,7 @@ export default defineConfig({
         extends: true,
         test: {
           environment: "node",
-          exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**"],
+          exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**", "apps/my-fitness-app/**"],
           include: ["packages/**/*.test.{ts,tsx}", "apps/**/*.test.{ts,tsx}"],
           maxWorkers: 2,
           name: "unit",

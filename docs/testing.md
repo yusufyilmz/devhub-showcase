@@ -18,7 +18,7 @@ CI installs Chromium with `--with-deps` on Linux. For an app-only production bui
 | Check                | What it establishes                                                               |
 | -------------------- | --------------------------------------------------------------------------------- |
 | `pnpm check`         | Biome checks, complexity limits and root/workspace types                          |
-| `pnpm test`          | Colocated Vitest tests under `packages/**` and `apps/my-dev-studio/**`            |
+| `pnpm test`          | Studio Vitest project, then the `my-fitness-app` suite                            |
 | `pnpm test:coverage` | V8 coverage for configured portfolio services, date utilities and chat formatting |
 | `pnpm build`         | Workspace type/build tasks and production Next.js compilation                     |
 | `pnpm test:e2e`      | Desktop Chromium and Pixel 7 emulation against production output                  |

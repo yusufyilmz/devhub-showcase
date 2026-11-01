@@ -113,7 +113,9 @@ export const profileSchema = z
     name: text(),
     phone: z.string().trim().max(80),
     portfolioLanguage: z.enum(["en", "es", "tr"]).default("en"),
-    portfolioType: z.enum(["engineer", "designer", "consultant", "minimal"]).default("engineer"),
+    portfolioType: z
+      .enum(["engineer", "designer", "consultant", "minimal", "trainer", "creator"])
+      .default("engineer"),
     projects: z
       .array(
         z.object({

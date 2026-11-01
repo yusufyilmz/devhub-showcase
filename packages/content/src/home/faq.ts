@@ -17,11 +17,11 @@ export const homeFaq = [
   ],
   [
     "Can I switch layouts later?",
-    "Yes. Choose Engineer, Designer, Consultant or Minimal, then change your layout and theme in the editor whenever you like. Your saved information stays with you.",
+    "Yes. Choose a layout, then change the layout and theme in the editor whenever you like. Your saved information stays with you.",
   ],
   [
     "Are the example portfolios real people?",
-    "The eight carousel examples use fictional identities and sample work. Open any example to explore its layout and download a clearly labeled sample CV.",
+    "The carousel examples use fictional identities and sample work. Open any example to explore its layout and download a clearly labeled sample CV.",
   ],
   [
     "Does changing language translate my writing?",

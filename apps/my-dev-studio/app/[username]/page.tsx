@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 
-import { PremiumWidget } from "@shared/components/chat";
 import { PortfolioLayout } from "@shared/components/portfolio";
 
 import { OwnerEditLink } from "@/features/admin/owner-edit-link";
 import { premiumChatAvailable } from "@/features/chat/premium-chat";
+import { PremiumWidget } from "@/features/chat/premium-widget";
 import { EngineerPortfolio } from "@/features/portfolio/engineer-portfolio";
 import { portfolioMetadata } from "@/features/portfolio/portfolio-metadata";
 import { loadPageResources } from "@/features/portfolio/portfolio-resources";
@@ -28,7 +28,7 @@ export default async function PublicCvPage({ params }: Props) {
     return (
       <>
         {widget}
-        <OwnerEditLink username={username} />
+        <OwnerEditLink offset={Boolean(widget)} username={username} />
         <PortfolioLayout profile={saved} username={username} />
       </>
     );
@@ -44,7 +44,7 @@ export default async function PublicCvPage({ params }: Props) {
       <EngineerPortfolio
         chatIdentity={original && id ? { id, name: saved.name, revision, username } : undefined}
         extras={original}
-        ownerLink={<OwnerEditLink username={username} />}
+        ownerLink={<OwnerEditLink floating={!original} username={username} />}
         profile={profile}
         referrals={referrals}
       />

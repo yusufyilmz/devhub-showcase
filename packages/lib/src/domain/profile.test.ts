@@ -88,11 +88,20 @@ describe("PortfolioTypes", () => {
 
 describe("SectionOrder", () => {
   it("keeps each layout default when existing documents have no saved order", () => {
-    for (const portfolioType of ["engineer", "designer", "consultant", "minimal"] as const) {
+    for (const portfolioType of [
+      "engineer",
+      "designer",
+      "consultant",
+      "minimal",
+      "trainer",
+      "creator",
+    ] as const) {
       const saved = profileSchema.parse({ ...profile, portfolioType });
       expect(saved.sectionOrder).toBeUndefined();
       const order = getPortfolioSectionOrder(saved);
-      expect(order[0]).toBe(portfolioType === "designer" ? "projects" : "about");
+      expect(order[0]).toBe(
+        portfolioType === "designer" || portfolioType === "creator" ? "projects" : "about",
+      );
       expect(new Set(order)).toEqual(new Set(portfolioSectionIds));
     }
   });

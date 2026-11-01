@@ -76,8 +76,8 @@ export function ExampleCarousel() {
           <span>Different ways to show it.</span>
         </h2>
         <p>
-          Explore eight fictional portfolios across four layouts. Open an example to see the
-          complete page and download its sample CV.
+          Explore fictional portfolios for every layout. Open an example to see the complete page
+          and download its sample CV.
         </p>
       </div>
       <div className="example-toolbar">

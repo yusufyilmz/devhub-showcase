@@ -20,8 +20,15 @@ describe("ExampleCarousel", () => {
     );
     HTMLElement.prototype.scrollTo = vi.fn();
     render(<ExampleCarousel />);
-    expect(screen.getAllByRole("link")).toHaveLength(8);
-    for (const name of ["Engineer", "Designer", "Consultant", "Minimal"]) {
+    expect(screen.getAllByRole("link")).toHaveLength(12);
+    for (const name of [
+      "Engineer",
+      "Designer",
+      "Consultant",
+      "Minimal",
+      "Trainer",
+      "Content creator",
+    ]) {
       fireEvent.click(screen.getByRole("button", { name }));
       expect(screen.getAllByRole("link")).toHaveLength(2);
       expect(screen.getByRole("button", { name }).getAttribute("aria-pressed")).toBe("true");
@@ -33,6 +40,6 @@ describe("ExampleCarousel", () => {
       ).toBe(true);
     }
     fireEvent.click(screen.getByRole("button", { name: "All layouts" }));
-    expect(screen.getAllByRole("link")).toHaveLength(8);
+    expect(screen.getAllByRole("link")).toHaveLength(12);
   });
 });

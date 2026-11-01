@@ -287,6 +287,24 @@
 .folio[data-portfolio-type="minimal"] .folio-section {
   padding-block: 36px;
 }
+.folio[data-portfolio-type="trainer"] .folio-role {
+  font-size: clamp(22px, 3vw, 34px);
+}
+.folio[data-portfolio-type="trainer"] .folio-experience {
+  padding: 22px;
+  background: rgb(var(--surface-rgb));
+  border: 1px solid rgb(var(--border-rgb));
+  border-radius: 12px;
+}
+.folio[data-portfolio-type="trainer"] .folio-experience + .folio-experience {
+  margin-top: 16px;
+}
+.folio[data-portfolio-type="creator"] .folio-intro {
+  padding-block: 80px 40px;
+}
+.folio[data-portfolio-type="creator"] :where(h1) {
+  font-size: clamp(52px, 7vw, 96px);
+}
 .type-onboarding {
   max-width: 1180px;
 }
@@ -426,6 +444,19 @@
   height: 4px;
   background: rgb(var(--text-rgb) / 0.1);
   border: 0;
+}
+.type-thumbnail[data-type="trainer"] .type-thumb-blocks {
+  grid-template-columns: 1fr;
+}
+.type-thumbnail[data-type="trainer"] .type-thumb-blocks :where(i) {
+  height: 22px;
+}
+.type-thumbnail[data-type="creator"] .type-thumb-blocks {
+  grid-template-columns: 1fr 1fr;
+}
+.type-thumbnail[data-type="creator"] .type-thumb-blocks :where(i:first-child) {
+  grid-column: 1 / -1;
+  height: 36px;
 }
 @media (max-width: 900px) {
   .folio {

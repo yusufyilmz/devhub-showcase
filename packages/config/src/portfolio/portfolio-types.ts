@@ -27,6 +27,20 @@ export const portfolioTypes = [
     id: "minimal",
     name: "Minimal",
   },
+  {
+    audience: "Fitness coaches, tutors and personal trainers",
+    cvLayout: "classic",
+    description: "Programs, client results and the credentials behind your coaching.",
+    id: "trainer",
+    name: "Trainer",
+  },
+  {
+    audience: "Creators who publish ongoing media and paid memberships",
+    cvLayout: "editorial",
+    description: "A visual page for featured posts, series and a clear way to subscribe.",
+    id: "creator",
+    name: "Content creator",
+  },
 ] as const;
 export type PortfolioType = (typeof portfolioTypes)[number]["id"];
 export const cvLayouts = [

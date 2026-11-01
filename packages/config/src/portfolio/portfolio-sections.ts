@@ -26,7 +26,7 @@ export function getPortfolioSectionOrder(
   profile: PortfolioSectionPreferences,
 ): PortfolioSectionId[] {
   const defaults: PortfolioSectionId[] =
-    profile.portfolioType === "designer"
+    profile.portfolioType === "designer" || profile.portfolioType === "creator"
       ? ["projects", "about", "experience", "skills", "education", "languages"]
       : [...portfolioSectionIds];
   return [...new Set([...(profile.sectionOrder ?? []), ...defaults])];

@@ -38,4 +38,18 @@ describe("PortfolioPreview", () => {
       container.querySelector("[data-preview-accent]")?.getAttribute("data-preview-accent"),
     ).toBe("violet");
   });
+  it("previews every portfolio theme from the accent row", () => {
+    const { container } = render(<PortfolioPreview />);
+    const preview = container.querySelector("[data-portfolio-theme]");
+    expect(preview?.getAttribute("data-portfolio-theme")).toBe("studio");
+    for (const name of ["Paper", "Graphite", "Bloom", "Studio"]) {
+      const theme = screen.getByRole("button", { name: `Preview the ${name} theme` });
+      fireEvent.click(theme);
+      expect(theme.getAttribute("aria-pressed")).toBe("true");
+      expect(preview?.getAttribute("data-portfolio-theme")).toBe(name.toLowerCase());
+    }
+    expect(
+      screen.getByRole("button", { name: "Preview in cyan" }).getAttribute("aria-pressed"),
+    ).toBe("true");
+  });
 });

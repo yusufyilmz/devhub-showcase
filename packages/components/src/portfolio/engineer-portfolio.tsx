@@ -80,10 +80,11 @@ export function EngineerPortfolio({
       <ExperienceSection experiences={experiences} language={profile.portfolioLanguage} />
     ),
   };
+  const showChat = Boolean(extras && chatIdentity);
   return (
     <>
       <Header profile={profile} />
-      {ownerLink}
+      {!showChat && ownerLink}
       <main className="portfolio-main" id="main-content">
         <div className="portfolio-inner">
           <HeroSurface
@@ -102,7 +103,11 @@ export function EngineerPortfolio({
             sectionIds={Object.values(copy.navbar).map((item) => item.id.split("#")[1] ?? "")}
           />
           {chatIdentity && (
-            <ChatSection handleSendMessage={handleSendMessage} identity={chatIdentity} />
+            <ChatSection
+              handleSendMessage={handleSendMessage}
+              identity={chatIdentity}
+              leading={ownerLink}
+            />
           )}
         </>
       )}

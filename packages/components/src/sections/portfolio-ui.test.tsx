@@ -21,10 +21,10 @@ describe("PortfolioUi", () => {
     render(<ProjectItem project={project} />);
     fireEvent.click(screen.getByRole("button", { name: `Show details for ${project.title}` }));
     expect(screen.getByRole("link", { name: "Visit project" }).getAttribute("href")).toBe(
-      "https://yusuf-fitness-os.vercel.app",
+      "https://my-fitness-app.vercel.app",
     );
     expect(screen.getByRole("link", { name: "Source on GitHub" }).getAttribute("href")).toBe(
-      "https://github.com/yusufyilmz/yusuf-fitness-os",
+      "https://github.com/yusufyilmz/my-fitness-app",
     );
   });
 

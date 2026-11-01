@@ -22,7 +22,7 @@ export type PortfolioExample = {
   covers: Record<string, string>;
 };
 function sampleCvLayout(type: PortfolioType) {
-  if (type === "designer") return "editorial";
+  if (type === "designer" || type === "creator") return "editorial";
   return type === "minimal" ? "compact" : "classic";
 }
 function example(seed: Seed): PortfolioExample {
@@ -34,7 +34,12 @@ function example(seed: Seed): PortfolioExample {
     profile: {
       about: [seed.summary, seed.focus],
       appearance: {
-        accent: seed.type === "designer" ? "violet" : "emerald",
+        accent:
+          seed.type === "designer" || seed.type === "creator"
+            ? "violet"
+            : seed.type === "trainer"
+              ? "cyan"
+              : "emerald",
         defaultTheme: defaultTheme,
         theme: seed.theme,
       },
@@ -265,6 +270,84 @@ export const portfolioExamples: PortfolioExample[] = [
     theme: "bloom",
     title: "Investigadora y divulgadora",
     type: "minimal",
+  }),
+  example({
+    category: "Coaching that fits a real week",
+    company: "Northline Coaching",
+    focus:
+      "Each program starts with a clear goal, a weekly plan and check-ins that keep progress visible.",
+    name: "Priya Shah",
+    projects: [
+      "Twelve-week strength block",
+      "A fictional coaching program for people returning to the gym, with simple sessions and recovery notes.",
+      "Desk-to-deadlift",
+      "A sample beginner plan that builds a lifting habit around a normal work week.",
+    ],
+    skills: ["Strength coaching", "Program design", "Mobility", "Habit building"],
+    slug: "priya-shah",
+    summary: "I help busy people get stronger with plans they can actually keep.",
+    theme: "studio",
+    title: "Strength coach",
+    type: "trainer",
+  }),
+  example({
+    category: "Language practice with a plan",
+    company: "Studio Voss",
+    focus:
+      "Lessons mix conversation, short writing tasks and a review of what stuck from the last session.",
+    name: "Elena Voss",
+    projects: [
+      "Conversation studio",
+      "A fictional tutoring series for professionals who need confident spoken English in meetings.",
+      "Writing clinic",
+      "A sample set of short assignments that turn rough drafts into clearer messages.",
+    ],
+    skills: ["Tutoring", "Conversation", "Lesson design", "Feedback"],
+    slug: "elena-voss",
+    summary: "I coach adults who want their next conversation to feel easier than the last one.",
+    theme: "paper",
+    title: "Language tutor",
+    type: "trainer",
+  }),
+  example({
+    category: "Memberships built around a series",
+    company: "Field Notes Studio",
+    focus:
+      "Public posts introduce a series. Members get the longer cuts, behind-the-scenes notes and a monthly live session.",
+    name: "Nora Hale",
+    projects: [
+      "Sunday photo essays",
+      "A fictional membership of weekly photo stories, with a public preview and a longer edit for subscribers.",
+      "Studio hours",
+      "A sample monthly session where members ask about a shoot, a caption or the next series.",
+    ],
+    skills: ["Photography", "Series editing", "Memberships", "Community"],
+    slug: "nora-hale",
+    summary:
+      "I publish ongoing photo stories, with a public preview and a membership for the rest.",
+    theme: "bloom",
+    title: "Independent creator",
+    type: "creator",
+  }),
+  example({
+    category: "Training films people can follow",
+    company: "Open Floor",
+    focus:
+      "Each film is a full session. Subscribers get the program notes, substitutions and the next week queued up.",
+    name: "Kai Mendes",
+    projects: [
+      "Floor sessions",
+      "A fictional series of follow-along training films, with a free episode and a membership for the full block.",
+      "Form notes",
+      "A sample library of short clips that show one movement, one cue and an easier option.",
+    ],
+    skills: ["Video", "Training programs", "Memberships", "Coaching cues"],
+    slug: "kai-mendes",
+    summary:
+      "I make training films people can follow at home, and a membership that keeps the plan going.",
+    theme: "graphite",
+    title: "Fitness creator",
+    type: "creator",
   }),
 ];
 export const examplePath = (slug: string) => `/p/examples/${slug}`;

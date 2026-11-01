@@ -42,7 +42,11 @@ describe("SectionRegistry", () => {
     const designer = getPortfolioSections({ portfolioType: "designer" });
     expect(designer[0]?.renderer).toBe("project-gallery");
     expect(designer.find(({ kind }) => kind === "experience")?.source.field).toBe("experiences");
-    for (const portfolioType of ["consultant", "minimal"] as const)
+    expect(
+      getPortfolioSections({ portfolioType: "creator" }).find(({ kind }) => kind === "projects")
+        ?.renderer,
+    ).toBe("project-gallery");
+    for (const portfolioType of ["consultant", "minimal", "trainer"] as const)
       expect(
         getPortfolioSections({ portfolioType }).find(({ kind }) => kind === "projects")?.renderer,
       ).toBe("project-list");

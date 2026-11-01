@@ -225,8 +225,8 @@ export const profile: PortfolioProfile = {
       name: "Yusuf Fitness OS",
       public: true,
       skills: ["Next.js", "React", "TypeScript", "Supabase", "Vitest", "GitHub Actions"],
-      sourceUrl: "https://github.com/yusufyilmz/yusuf-fitness-os",
-      url: "https://yusuf-fitness-os.vercel.app",
+      sourceUrl: "https://github.com/yusufyilmz/my-fitness-app",
+      url: "https://my-fitness-app.vercel.app",
     },
     {
       company: "Personal",

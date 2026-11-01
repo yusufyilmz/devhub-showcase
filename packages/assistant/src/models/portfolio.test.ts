@@ -32,7 +32,7 @@ describe("CV content and portfolio mapping", () => {
   it("places personal projects in the public showcase and professional work inside its employer", () => {
     const resources = getPortfolioResources();
     expect(resources.projects.map((item) => item.link)).toEqual([
-      "https://yusuf-fitness-os.vercel.app",
+      "https://my-fitness-app.vercel.app",
       "https://yusufdevhub.vercel.app",
     ]);
     expect(resources.projects.every((item) => item.sourceUrl?.startsWith(profile.github))).toBe(

@@ -12,9 +12,11 @@ export const sectionRegistry = {
   about: {
     defaults: {
       consultant: "prose",
+      creator: "prose",
       designer: "prose",
       engineer: "about-card",
       minimal: "prose",
+      trainer: "prose",
     },
     name: "About",
     renderers: ["about-card", "prose", "about-accordion"],
@@ -23,9 +25,11 @@ export const sectionRegistry = {
   education: {
     defaults: {
       consultant: "education-list",
+      creator: "education-list",
       designer: "education-list",
       engineer: "education-timeline",
       minimal: "education-list",
+      trainer: "education-list",
     },
     name: "Education",
     renderers: ["education-timeline", "education-list", "education-cards", "education-accordion"],
@@ -34,9 +38,11 @@ export const sectionRegistry = {
   experience: {
     defaults: {
       consultant: "experience-list",
+      creator: "experience-list",
       designer: "experience-list",
       engineer: "timeline",
       minimal: "experience-list",
+      trainer: "experience-list",
     },
     name: "Experience",
     renderers: [
@@ -51,9 +57,11 @@ export const sectionRegistry = {
   languages: {
     defaults: {
       consultant: "language-list",
+      creator: "language-list",
       designer: "language-list",
       engineer: "language-list",
       minimal: "language-list",
+      trainer: "language-list",
     },
     name: "Languages",
     renderers: ["language-list", "language-cards"],
@@ -62,9 +70,11 @@ export const sectionRegistry = {
   projects: {
     defaults: {
       consultant: "project-list",
+      creator: "project-gallery",
       designer: "project-gallery",
       engineer: "project-cards",
       minimal: "project-list",
+      trainer: "project-list",
     },
     name: "Projects",
     renderers: [
@@ -80,9 +90,11 @@ export const sectionRegistry = {
   skills: {
     defaults: {
       consultant: "skill-list",
+      creator: "skill-list",
       designer: "skill-list",
       engineer: "skill-groups",
       minimal: "skill-list",
+      trainer: "skill-list",
     },
     name: "Skills",
     renderers: ["skill-groups", "skill-list", "skill-cards", "skill-accordion"],

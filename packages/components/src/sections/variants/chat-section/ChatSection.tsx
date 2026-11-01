@@ -16,13 +16,17 @@ type ChatSectionProps = {
 
 export const ChatSection = ({
   identity,
+  leading,
   ...props
-}: ChatSectionProps & { identity: ChatIdentity }) => (
+}: ChatSectionProps & { identity: ChatIdentity; leading?: React.ReactNode }) => (
   <PortfolioChatProvider identity={identity} key={`${identity.id}:${identity.revision}`}>
-    <ChatControls {...props} />
+    <ChatControls {...props} leading={leading} />
   </PortfolioChatProvider>
 );
-const ChatControls: React.FC<ChatSectionProps> = ({ handleSendMessage }) => {
+const ChatControls: React.FC<ChatSectionProps & { leading?: React.ReactNode }> = ({
+  handleSendMessage,
+  leading,
+}) => {
   const [type, setType] = useState<ChatType>("cv");
   const [isOpen, setIsOpen] = useState(false);
   const resetChat = usePortfolioChatState((state) => state.resetChat);
@@ -38,6 +42,7 @@ const ChatControls: React.FC<ChatSectionProps> = ({ handleSendMessage }) => {
   return (
     <>
       <div className="fixed bottom-6 right-4 flex flex-col gap-3 z-[200] sm:right-8">
+        {leading}
         <IconButton
           aria-label={"Resume Chat"}
           className="rounded-full"

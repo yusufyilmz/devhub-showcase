@@ -189,6 +189,8 @@ export {
   ArrowForwardIcon,
   ChatIcon,
   CloseIcon,
+  DashboardIcon,
+  EditIcon,
   EmailIcon,
   ExternalLinkIcon,
   GitHubIcon,

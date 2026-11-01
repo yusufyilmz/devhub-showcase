@@ -209,6 +209,15 @@ button:disabled {
 .admin-brand .theme-toggle {
   margin-left: auto;
 }
+.admin-tools {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-left: auto;
+}
+.admin-tools .theme-toggle {
+  margin-left: 0;
+}
 .auth-login {
   max-width: 500px;
   padding: 0 30px 80px;
