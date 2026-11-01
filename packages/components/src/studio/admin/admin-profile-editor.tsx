@@ -5,6 +5,7 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { type PortfolioProfile, portfolioTypes } from "@shared/config";
 import type { ProfileSnapshot } from "@shared/lib/profile-errors";
 import { cvPath, editCvPath } from "@shared/lib/username";
+import { useUserConfigStore } from "@shared/runtime/stores";
 import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/card";
 import { Input } from "@shared/ui/input";
@@ -206,6 +207,7 @@ export function ProfileEditor({
                   method: "DELETE",
                 });
                 if (!response.ok) throw new Error("Could not sign out.");
+                useUserConfigStore.getState().clearUser();
                 window.location.assign("/admin/login");
               } catch (reason) {
                 showError(reason instanceof Error ? reason.message : "Could not sign out.");

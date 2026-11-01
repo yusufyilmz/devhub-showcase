@@ -26,11 +26,15 @@ export function MobileMenu({
   return (
     <>
       <IconButton
+        aria-expanded={isOpen}
         aria-label={text.menu}
-        className="hover:scale-105 text-main-lightest-slate transition-transform md:hidden"
+        className="md:hidden"
         onClick={toggleMenu}
+        size="lg"
+        surface="portfolio"
+        variant="outline"
       >
-        <MenuIcon fontSize="large" />
+        <MenuIcon fontSize="medium" />
       </IconButton>
       <Drawer anchor="right" onClose={toggleMenu} open={isOpen}>
         <div

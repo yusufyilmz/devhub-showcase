@@ -130,10 +130,23 @@ Public components exported from `packages/ui/src/components/index.ts`. Import th
 ### Shared product surfaces
 
 `Card` supports `asChild`, `layout="stack|plain"`,
-`surface="semantic|portfolio"`, and `interaction="static|lift"`.
+`surface="semantic|portfolio"`, and `interaction="static|lift"` (default `lift`).
 Use `asChild` to preserve section/article semantics without an extra wrapper.
 Use the portfolio adapter only on existing RGB portfolio/studio surfaces.
 `Button` supports native actions, link actions via `href`, and single-child
 composition via `asChild`. Links preserve accessibility attributes and disabled
 links have no navigation target. Inputs and textareas share the same focus treatment.
 See **UI Components / Card / Product Surfaces** in Storybook.
+
+## Browser preferences
+
+`ThemeProvider` consumes `useUserConfigStore` from `@shared/runtime/stores`.
+The existing runtime store owns the persisted mode and display-only user cache.
+There is no separate UI storage store. Its pre-paint script and provider share
+migration precedence and system-mode behavior.
+
+`IconButton` supports `surface="portfolio"` for controls inside published
+portfolios. Use it for menu, chat and scroll controls so their foreground,
+surface, border and focus ring all resolve from the same portfolio palette.
+Icons inherit `currentColor`; use a 24px icon inside the 44px large control.
+`IconButtonWithLink` renders one link rather than nesting a button inside it.

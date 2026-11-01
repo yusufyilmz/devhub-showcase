@@ -2,15 +2,23 @@
 
 import { useEffect, useState } from "react";
 
+import {
+  completeUserConfigMigration,
+  readLegacyUserConfig,
+  USER_CONFIG_STORAGE_KEY,
+  type UserConfigMode,
+  useUserConfigStore,
+} from "@shared/runtime/stores";
+
 import { ThemeContext } from "./theme-toggle";
 
 type ResolvedTheme = "light" | "dark";
-
-function resolveTheme(stored: string | null, fallback: "system" | "light" | "dark"): ResolvedTheme {
-  if (stored === "light" || stored === "dark") return stored;
-  if (fallback === "light") return "light";
-  if (fallback === "dark") return "dark";
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+function resolveTheme(theme: UserConfigMode): ResolvedTheme {
+  return theme === "system"
+    ? window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light"
+    : theme;
 }
 
 export function ThemeProvider({
@@ -22,45 +30,49 @@ export function ThemeProvider({
 }: {
   accent: "cyan" | "violet" | "emerald";
   children: React.ReactNode;
-  defaultTheme: "system" | "light" | "dark";
+  defaultTheme: UserConfigMode;
   portfolioTheme?: string;
+  /** Read only to migrate a preference written by an older version. */
   storageKey: string;
 }) {
   const [mode, setMode] = useState<ResolvedTheme>(defaultTheme === "light" ? "light" : "dark");
-
   useEffect(() => {
-    const readStored = () => {
-      try {
-        return localStorage.getItem(storageKey);
-      } catch {
-        return null;
-      }
-    };
-    const next = resolveTheme(readStored(), defaultTheme);
-    setMode(next);
+    void useUserConfigStore.persist.rehydrate();
+    const legacy = readLegacyUserConfig(storageKey);
+    if (!useUserConfigStore.getState().activeMode) {
+      useUserConfigStore.getState().setActiveMode(legacy.mode ?? defaultTheme);
+      if (!useUserConfigStore.getState().user && legacy.user)
+        useUserConfigStore.getState().setUser(legacy.user);
+    }
+    completeUserConfigMigration();
     const root = document.documentElement;
-    root.dataset.theme = next;
-    root.dataset.accent = accent;
-    if (portfolioTheme) root.dataset.portfolioTheme = portfolioTheme;
-    else delete root.dataset.portfolioTheme;
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const sync = () => {
-      const resolved = resolveTheme(readStored(), defaultTheme);
+    const apply = () => {
+      const resolved = resolveTheme(useUserConfigStore.getState().activeMode ?? defaultTheme);
       setMode(resolved);
       root.dataset.theme = resolved;
     };
-    media.addEventListener("change", sync);
-    return () => media.removeEventListener("change", sync);
-  }, [accent, defaultTheme, portfolioTheme, storageKey]);
-
-  const toggle = () => {
-    setMode((current) => {
-      const next = current === "dark" ? "light" : "dark";
-      localStorage.setItem(storageKey, next);
-      document.documentElement.dataset.theme = next;
-      return next;
+    apply();
+    root.dataset.accent = accent;
+    if (portfolioTheme) root.dataset.portfolioTheme = portfolioTheme;
+    else delete root.dataset.portfolioTheme;
+    const unsubscribe = useUserConfigStore.subscribe((state, previous) => {
+      if (state.activeMode !== previous.activeMode) apply();
     });
-  };
-
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const syncStorage = (event: StorageEvent) => {
+      if (event.key !== USER_CONFIG_STORAGE_KEY && event.key !== null) return;
+      if (!event.newValue) useUserConfigStore.setState({ activeMode: null, user: null });
+      else void useUserConfigStore.persist.rehydrate();
+    };
+    media.addEventListener("change", apply);
+    window.addEventListener("storage", syncStorage);
+    return () => {
+      unsubscribe();
+      media.removeEventListener("change", apply);
+      window.removeEventListener("storage", syncStorage);
+    };
+  }, [accent, defaultTheme, portfolioTheme, storageKey]);
+  const toggle = () =>
+    useUserConfigStore.getState().setActiveMode(mode === "dark" ? "light" : "dark");
   return <ThemeContext.Provider value={{ mode, toggle }}>{children}</ThemeContext.Provider>;
 }

@@ -6,6 +6,8 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
   page,
   context,
 }, testInfo) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Switch to dark theme" }).click();
   const index = testInfo.project.name.startsWith("mobile") ? 1 : 0;
   const device = index ? "mobile" : "desktop";
   await page.request.post(`http://127.0.0.1:3101/__test/reset/${device}`);
@@ -35,6 +37,14 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
     },
   ]);
   await page.goto(`/${device}-starter/edit`);
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () => JSON.parse(localStorage.getItem("buzzy-userconfig-store") ?? "null")?.state?.user?.id,
+      ),
+    )
+    .toBe(userId);
   await expect(page.getByRole("group", { name: "Choose your portfolio layout" })).toBeVisible();
   await page.getByRole("radio", { name: /Designer/ }).check();
   await page.screenshot({

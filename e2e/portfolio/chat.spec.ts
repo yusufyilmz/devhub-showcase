@@ -7,7 +7,7 @@ test("existing public chat uses a scoped greeting and session-only history", asy
     "published experience, projects and skills",
   );
   await page.locator(".chat-panel").getByRole("textbox").fill("Which projects are public?");
-  await page.getByRole("button", { name: "Send message" }).click();
+  await page.locator(".chat-panel").getByRole("button", { exact: true, name: "Send" }).click();
   await expect(page.locator(".chat-panel")).toContainText("Which projects are public?");
   await page.reload();
   await page.getByRole("button", { name: "Resume Chat" }).click();

@@ -56,10 +56,13 @@ export const ScrollButton: React.FC<ScrollButtonProps> = ({ sectionIds }) => {
     <div className="fixed bottom-4 inset-x-0 flex justify-center animate-bounce z-50">
       <IconButton
         aria-label="Scroll to next section"
-        className="z-50 icon-button flex items-center justify-center w-12 px-6 py-3 rounded-full bg-button-primary text-white transition duration-300 hover:scale-105"
+        className="rounded-full"
         onClick={scrollToNextSection}
+        size="lg"
+        surface="portfolio"
+        variant="outline"
       >
-        <ArrowDownwardIcon className="text-textColor-light" />
+        <ArrowDownwardIcon />
       </IconButton>
     </div>
   );

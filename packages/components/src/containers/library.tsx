@@ -1,6 +1,7 @@
 import { RenderSection } from "@shared/components/section/renderers";
 import { authorableSections, authorableSectionTypes, type CustomSection } from "@shared/config";
 import { Button } from "@shared/ui/button";
+import { Card } from "@shared/ui/card";
 
 import { LibraryPicker } from "./library-picker";
 
@@ -101,22 +102,33 @@ export function Library({ href }: { href: string }) {
       className="home-container home-library"
       id="section-library"
     >
-      <div className="home-section-intro">
-        <p className="home-eyebrow">BUILD IT YOUR WAY</p>
-        <h2 id="library-title">
-          Your story.
-          <br />
-          <span>More ways to tell it.</span>
-        </h2>
-        <p>
-          Choose from {authorableSectionTypes.length} section types. Mix galleries, timelines,
-          services, FAQs, video and more. Reorder them, choose their layout or add a section of your
-          own.
-        </p>
+      <div className="home-library-header">
+        <div className="home-section-intro">
+          <p className="home-eyebrow">BUILD IT YOUR WAY</p>
+          <h2 id="library-title">
+            Your story.
+            <br />
+            <span>More ways to tell it.</span>
+          </h2>
+          <p>
+            Choose from {authorableSectionTypes.length} section types. Mix galleries, timelines,
+            services, FAQs, video and more. Reorder them, choose their layout or add a section of
+            your own.
+          </p>
+        </div>
+        <div className="home-library-count">
+          <strong>
+            {authorableSectionTypes.length}
+            <span>section types</span>
+          </strong>
+          <p>A place for every part of your story.</p>
+          <span>SELECT · ARRANGE · MAKE IT YOURS</span>
+        </div>
       </div>
       <LibraryPicker
         items={samples.map((section) => ({
           content: <RenderSection preview section={section} />,
+          description: section.title,
           id: section.sectionType ?? "custom",
           title: authorableSections[section.sectionType ?? "custom"].name,
         }))}
@@ -130,37 +142,41 @@ export function Library({ href }: { href: string }) {
         </ul>
       </details>
       <div className="home-library-workflows">
-        <article>
-          <span className="home-feature-index">START WITH WHAT YOU HAVE</span>
-          <h3>Your CV, a new beginning.</h3>
-          <p>
-            Upload a PDF, DOCX or text CV. OpenAI extracts the details for you to review and edit.
-            Apply only what you want, then save when you are ready.
-          </p>
-          <Button className="home-button home-button-primary" href={href}>
-            Start with your CV <span aria-hidden="true">↗</span>
-          </Button>
-          <p className="home-sample-note">
-            Sign in first. Import availability depends on the service configuration. Nothing is
-            published automatically.
-          </p>
-        </article>
-        <article>
-          <span className="home-feature-index">KEEP YOUR FAVORITES</span>
-          <h3>A starting point you can reuse.</h3>
-          <p>
-            Save section configurations as private templates, export them as JSON, or review a
-            compatible PageForge import. Include authored content only when you choose to.
-          </p>
-          <ul>
-            <li>Private template library</li>
-            <li>Review before replacing or adding sections</li>
-            <li>Keep your identity and sharing settings</li>
-          </ul>
-          <a className="home-text-link" href={href}>
-            Explore your studio →
-          </a>
-        </article>
+        <Card asChild layout="plain" surface="portfolio">
+          <article>
+            <span className="home-feature-index">START WITH WHAT YOU HAVE</span>
+            <h3>Your CV, a new beginning.</h3>
+            <p>
+              Upload a PDF, DOCX or text CV. OpenAI extracts the details for you to review and edit.
+              Apply only what you want, then save when you are ready.
+            </p>
+            <Button className="home-button home-button-primary" href={href}>
+              Start with your CV <span aria-hidden="true">↗</span>
+            </Button>
+            <p className="home-sample-note">
+              Sign in first. Import availability depends on the service configuration. Nothing is
+              published automatically.
+            </p>
+          </article>
+        </Card>
+        <Card asChild layout="plain" surface="portfolio">
+          <article>
+            <span className="home-feature-index">KEEP YOUR FAVORITES</span>
+            <h3>A starting point you can reuse.</h3>
+            <p>
+              Save section configurations as private templates, export them as JSON, or review a
+              compatible PageForge import. Include authored content only when you choose to.
+            </p>
+            <ul>
+              <li>Private template library</li>
+              <li>Review before replacing or adding sections</li>
+              <li>Keep your identity and sharing settings</li>
+            </ul>
+            <a className="home-text-link" href={href}>
+              Explore your studio →
+            </a>
+          </article>
+        </Card>
       </div>
     </section>
   );
