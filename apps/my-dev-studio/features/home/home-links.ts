@@ -1,14 +1,14 @@
 import { cache } from "react";
 
-import type { PageAction } from "@shared/components/sections";
 import { readPublicProfile } from "@shared/lib/published-profile";
 import { createServerClient } from "@shared/lib/supabase";
 import { cvPath, editCvPath } from "@shared/lib/username";
+import type { PageAction } from "@shared/ui/sections";
 
 export type { PageAction };
 
 const guest: PageAction = {
-  href: "/admin/login",
+  href: "/login",
   label: "Create your portfolio",
   signedIn: false,
 };

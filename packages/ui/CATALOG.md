@@ -140,7 +140,8 @@ See **UI Components / Card / Product Surfaces** in Storybook.
 
 ## Browser preferences
 
-`ThemeProvider` consumes `useUserConfigStore` from `@shared/runtime/stores`.
+`ThemeProvider` consumes `useUserConfigStore` from `@shared/runtime/user`.
+`ThemeContext` exposes the resolved `mode` and `toggle` when an app keeps its own button.
 The existing runtime store owns the persisted mode and display-only user cache.
 There is no separate UI storage store. Its pre-paint script and provider share
 migration precedence and system-mode behavior.
@@ -150,3 +151,127 @@ portfolios. Use it for menu, chat and scroll controls so their foreground,
 surface, border and focus ring all resolve from the same portfolio palette.
 Icons inherit `currentColor`; use a 24px icon inside the 44px large control.
 `IconButtonWithLink` renders one link rather than nesting a button inside it.
+
+Portfolio sections, editors, and chat exported from `@shared/ui`. Visual rules for the shared section frame live in the root [DESIGN.md](../../DESIGN.md).
+
+## Entry points
+
+| Export                         | Path                       | Use                                                          |
+| ------------------------------ | -------------------------- | ------------------------------------------------------------ |
+| `@shared/ui`                   | `src/index.ts`             | Shell, fields, portfolio surfaces, and every section variant |
+| `@shared/ui/sections`          | `src/sections/variants`    | Section components and their editors                         |
+| `@shared/ui/section/renderers` | `src/sections/renderers`   | `RenderSection` and the renderer map                         |
+| `@shared/ui/section/editors`   | `src/sections/editors`     | `EditSection` and the editor map                             |
+| `@shared/ui/editor`            | `src/editor`               | Collection, content, options, and source editors             |
+| `@shared/ui/forms`             | `src/forms`                | `Field`, `LinesField`, `SelectField`, `EmptyState`           |
+| `@shared/ui/fields`            | `src/forms/fields.tsx`     | The same form fields                                         |
+| `@shared/ui/layout`            | `src/layout`               | `StudioShell`, `PageShell`, `PortfolioLayout`                |
+| `@/features/studio`            | `src/studio`               | Home, studio editors, billing views, and example content     |
+| `@shared/ui/login`             | `src/auth/login-panel.tsx` | `LoginPanel`                                                 |
+| `@shared/ui/pages`             | `src/pages`                | `ErrorPage`, `NotFoundPage`                                  |
+| `@shared/ui/portfolio`         | `src/portfolio`            | `HeroSurface`, `WorkMedia`                                   |
+| `@shared/ui/portfolio-chat`    | `src/portfolio/chat`       | `PortfolioChat`                                              |
+| `@shared/ui/chat`              | `src/chat`                 | Chat bubbles, input, list, and typing                        |
+
+## Shell and editing
+
+| Component                                               | Folder               | Use                                                  |
+| ------------------------------------------------------- | -------------------- | ---------------------------------------------------- |
+| `StudioShell`                                           | `layout`             | Owner studio frame                                   |
+| Home, editors, billing views, examples                  | `studio`             | Feature UI. App code keeps fetching and navigation   |
+| `PageShell`                                             | `layout`             | Root document theme, providers, and metadata scripts |
+| `LoginPanel`                                            | `auth`               | Sign-in panel                                        |
+| `ErrorPage`, `NotFoundPage`                             | `pages`              | Error and missing-page states                        |
+| `CollectionEditor`, `SortableList`                      | `editor`             | Reorderable collections                              |
+| `SectionContentEditor`, `OptionsEditor`, `SourceEditor` | `editor`             | Section content, options, and source editing         |
+| `Field`, `LinesField`, `SelectField`, `EmptyState`      | `forms`              | Editor fields                                        |
+| `RenderSection`                                         | `sections/renderers` | Renders a saved section by type                      |
+| `EditSection`                                           | `sections/editors`   | Edits a saved section by type                        |
+
+## Portfolio surfaces
+
+| Component       | Folder           | Use                      |
+| --------------- | ---------------- | ------------------------ |
+| `HeroSurface`   | `portfolio`      | Hero media surface       |
+| `WorkMedia`     | `portfolio`      | Work and profile imagery |
+| `PortfolioChat` | `portfolio/chat` | Published portfolio chat |
+
+## Chat
+
+| Component                                                                     | Folder | Use                    |
+| ----------------------------------------------------------------------------- | ------ | ---------------------- |
+| `ChatPanel`                                                                   | `chat` | Chat panel             |
+| `ChatBubble`, `ChatBubbleGroup`, `ChatBubbleReactions`, `ChatBubbleTimestamp` | `chat` | A message and its meta |
+| `ChatInput`, `ChatInputAction`                                                | `chat` | Composer               |
+| `ChatList`, `ChatListItem`, `ChatListEmpty`, `ChatListSeparator`              | `chat` | Message list           |
+| `ChatAvatar`, `ChatAvatarGroup`                                               | `chat` | Speaker marks          |
+| `ChatTyping`, `ChatTypingText`                                                | `chat` | Typing state           |
+| `ChatMessageActions`, `ChatMessageActionGroup`, `ChatQuickReactions`          | `chat` | Message actions        |
+
+## Sections
+
+Each content section lives in `src/sections/variants/{name}`. Most export the section and a matching editor. Item, list, and form parts stay in that folder.
+
+| Section                                                 | Also exports                                                                                                    |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `AboutHeroSection`                                      | editor                                                                                                          |
+| `AboutMeSection`                                        |                                                                                                                 |
+| `AboutSection`, `PortfolioAboutSection`                 | editor                                                                                                          |
+| `AccordionSection`                                      | editor                                                                                                          |
+| `AwardsSection`                                         | editor                                                                                                          |
+| `BlogPageSection`, `JsonBlogPage`, `Post`, `Posts`      | editor                                                                                                          |
+| `CalendarLinkSection`                                   | editor                                                                                                          |
+| `CareersSection`                                        | editor                                                                                                          |
+| `ClientsSection`                                        | editor                                                                                                          |
+| `ContactFormSection`                                    | editor                                                                                                          |
+| `ContactInfoSection`                                    | editor                                                                                                          |
+| `CTASection`                                            | editor                                                                                                          |
+| `CustomSection`                                         | editor                                                                                                          |
+| `CVSection`                                             |                                                                                                                 |
+| `EducationsSection`, `EducationItem`                    |                                                                                                                 |
+| `ExperienceSection`, `ExperienceItem`, `ExperienceList` |                                                                                                                 |
+| `FAQSection`                                            | editor                                                                                                          |
+| `FeaturesSection`                                       | editor                                                                                                          |
+| `GalleryGridSection`, `MasonryGrid`                     | editor                                                                                                          |
+| `HeadingSection`                                        | editor                                                                                                          |
+| `HeroSection`                                           | editor                                                                                                          |
+| `HowToSection`                                          | editor                                                                                                          |
+| `InstagramSection`                                      | editor                                                                                                          |
+| `LegalTextSection`                                      | editor                                                                                                          |
+| `MapSection`                                            | editor                                                                                                          |
+| `MenuSection`                                           | editor                                                                                                          |
+| `NewsletterSection`                                     | editor                                                                                                          |
+| `PinterestSection`                                      | editor                                                                                                          |
+| `PlansSection`                                          | editor                                                                                                          |
+| `PostsGridSection`                                      | editor                                                                                                          |
+| `PricingSection`                                        | editor                                                                                                          |
+| `ProfileSection`                                        | editor                                                                                                          |
+| `ProjectsSection`                                       | editor; `PortfolioProjectsSection`, `ProjectForm`, `ProjectItem`, `ProjectList` are the portfolio project parts |
+| `PropertySection`                                       | editor                                                                                                          |
+| `QuickstartSection`                                     | editor                                                                                                          |
+| `ReferralSection`, `ReferralItem`                       |                                                                                                                 |
+| `ReviewSection`, `ReviewButton`                         |                                                                                                                 |
+| `ServicesSection`                                       | editor                                                                                                          |
+| `ShopItemsSection`                                      | editor                                                                                                          |
+| `ShowcaseSection`                                       | editor                                                                                                          |
+| `SkillSection`, `SkillItem`, `SkillCategoryItem`        |                                                                                                                 |
+| `SocialLinksSection`, `SocialLinks`                     | editor                                                                                                          |
+| `StatsSection`                                          | editor                                                                                                          |
+| `StudiesSection`                                        | editor                                                                                                          |
+| `SummarySection`                                        |                                                                                                                 |
+| `TableOfContentsSection`, `TableOfContents`             | editor                                                                                                          |
+| `TabsSection`                                           | editor                                                                                                          |
+| `TeamSection`                                           | editor                                                                                                          |
+| `TechnicalSkillsSection`                                | editor                                                                                                          |
+| `TestimonialsSection`                                   | editor                                                                                                          |
+| `TextSection`                                           | editor                                                                                                          |
+| `TimelineSection`                                       | editor                                                                                                          |
+| `VideoSection`                                          | editor                                                                                                          |
+| `WorkExperienceSection`                                 | editor                                                                                                          |
+| `YouTubeSection`                                        | editor                                                                                                          |
+
+## Homepage sections
+
+Import homepage compositions from `@shared/ui/sections`. They live in `src/sections/variants/home-section` and replace the removed `containers` entry point. `HomeHeroSection`, `HomeFeaturesSection`, `HomeOptionsSection`, `HomePricingSection`, `HomeLibrarySection`, `HomeProcessSection`, `HomeFAQSection`, `HomeCTASection` and `HomeCapabilitiesSection` compose shared controls and surfaces. `HomeHeader`, `HomeFooter`, `PortfolioPreview` and `LibraryPicker` support that composition. Session decisions and navigation remain app props.
+
+All 47 registered authorable sections have colocated Default, Compact and Empty stories using fictional fixtures from `src/sections/__fixtures__/section-story.ts`. `SectionCatalog` provides a searchable name/category browser for the same registry, without copying its list into another data source.

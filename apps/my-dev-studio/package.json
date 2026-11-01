@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "next build --webpack --port=3001",
+    "build": "next build --webpack",
     "clean": "node -e \"require('node:fs').rmSync('.next',{recursive:true,force:true})\"",
     "demo:seed": "node --env-file-if-exists=.env.local scripts/seed-demo.mjs",
     "dev": "next dev --webpack port=3001",
@@ -20,12 +20,12 @@
   "dependencies": {
     "@shared/assistant": "workspace:*",
     "@shared/auth": "workspace:*",
+    "@shared/billing": "workspace:*",
     "@shared/cache": "workspace:*",
-    "@shared/components": "workspace:*",
     "@shared/config": "workspace:*",
-    "@shared/cv": "workspace:*",
     "@shared/lib": "workspace:*",
     "@shared/runtime": "workspace:*",
+    "@shared/templates": "workspace:*",
     "@shared/ui": "workspace:*",
     "@shared/utils": "workspace:*",
     "@supabase/supabase-js": "catalog:",
@@ -35,8 +35,8 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@shared/design-system": "workspace:*",
     "@shared/typescript-config": "workspace:*",
+    "@shared/ui": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",

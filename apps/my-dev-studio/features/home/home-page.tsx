@@ -11,8 +11,9 @@ import {
   HomePricingSection,
   HomeProcessSection,
   type PageAction,
-} from "@shared/components/sections";
-import { ExampleCarousel } from "@shared/components/studio";
+} from "@shared/ui/sections";
+
+import { ExampleCarousel, StudioPlanDetails } from "@/features/studio";
 
 export function HomePage({
   action,
@@ -33,7 +34,9 @@ export function HomePage({
         <ExampleCarousel />
         <HomeFeaturesSection />
         <HomeOptionsSection />
-        <HomePricingSection action={action} />
+        <HomePricingSection action={action}>
+          <StudioPlanDetails />
+        </HomePricingSection>
         <HomeLibrarySection href={action.href} />
         <HomeProcessSection />
         <HomeFAQSection />

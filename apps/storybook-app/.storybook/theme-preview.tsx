@@ -1,7 +1,6 @@
 import { type ReactNode, useLayoutEffect } from "react";
 
-import { NotificationProvider } from "../../../packages/components/src/providers/NotificationProvider";
-import { StudioRequestProvider } from "../../../packages/components/src/providers/StudioRequestProvider";
+import { NotificationProvider, StudioRequestProvider } from "../../../packages/ui/src/providers";
 
 type ThemeGlobals = Record<string, unknown>;
 
@@ -41,7 +40,7 @@ export function ThemePreview({
   }, [brand, mode, radius, spacing]);
   return (
     <div
-      className="min-h-screen bg-background p-6 text-foreground"
+      className="min-h-screen bg-background p-lg text-foreground"
       data-brand={brand}
       data-radius={radius}
       data-spacing={spacing}

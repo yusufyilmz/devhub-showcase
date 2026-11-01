@@ -1,12 +1,16 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { createStripe } from "@shared/lib/stripe";
+import { createStripe } from "@shared/billing/server";
 
 const mocks = vi.hoisted(() => ({ gateway: vi.fn(), sync: vi.fn() }));
-vi.mock("@/features/billing/gateway", () => ({
-  billingGateway: mocks.gateway,
-  synchronize: mocks.sync,
-}));
+vi.mock("@shared/billing/server", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@shared/billing/server")>();
+  return {
+    ...actual,
+    billingGateway: mocks.gateway,
+    synchronize: mocks.sync,
+  };
+});
 
 import { POST } from "./route";
 

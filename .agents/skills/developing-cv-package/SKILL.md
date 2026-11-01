@@ -1,13 +1,13 @@
 ---
 name: developing-cv-package
-description: Render CV PDFs in @shared/cv. Use when changing pdfmake output, the Handlebars CV template, CV layout metrics, accent colors, or which profile fields appear in a downloaded CV in packages/cv.
+description: Render CV PDFs in @shared/templates. Use when changing pdfmake output, the Handlebars CV template, CV layout metrics, accent colors, or which profile fields appear in a downloaded CV in packages/cv.
 ---
 
 # Developing the CV package
 
-`packages/cv` is `@shared/cv`. It turns a `PortfolioProfile` into PDF bytes. The caller supplies the profile and decides who may download it. This package does not read Supabase, check a session, or choose a public versus private route.
+`packages/cv` is `@shared/templates`. It turns a `PortfolioProfile` into PDF bytes. The caller supplies the profile and decides who may download it. This package does not read Supabase, check a session, or choose a public versus private route.
 
-Read [the file map](references/map.md) and [packages/cv/CATALOG.md](../../../packages/cv/CATALOG.md). Download routes live in the app. Read [mydevstudio-business](../mydevstudio-business/SKILL.md) before changing visibility.
+Read [the file map](references/map.md) and [packages/cv/CATALOG.md](../../../packages/templates/CATALOG.md). Download routes live in the app. Read [mydevstudio-business](../mydevstudio-business/SKILL.md) before changing visibility.
 
 ## Render path
 
@@ -15,7 +15,7 @@ Read [the file map](references/map.md) and [packages/cv/CATALOG.md](../../../pac
 2. `createCvDefinition` fills `templates/cv.json.hbs` with Handlebars and `cvHelpers`.
 3. `renderCv` returns PDF bytes through pdfmake.
 
-The template source is the export `@shared/cv/template.hbs`, which points at `templates/cv.json.hbs` with types in `src/template.d.ts`. The Plop generator and the website share `cvHelpers.json` so JSON escaping matches. Change the helper and the template together.
+The template source is the export `@shared/templates/template.hbs`, which points at `templates/cv.json.hbs` with types in `src/template.d.ts`. The Plop generator and the website share `cvHelpers.json` so JSON escaping matches. Change the helper and the template together.
 
 pdfmake uses an in-memory font filesystem. Do not point it at host font files. `setUrlAccessPolicy` and `setLocalAccessPolicy` both return false. A CV is text and links only. Never fetch an image, stylesheet, or other asset named in profile data.
 
@@ -42,7 +42,7 @@ Periods use `formatPortfolioPeriod` from `@shared/config` with `cvLanguage`.
 `src/index.test.ts` covers the renderer. Extend it when layout metrics, a visibility flag, or escaping changes. Use a fictional profile. App route tests such as `app/[username]/cv.pdf/route.test.ts` cover authorization and response headers. Run both when the bytes or the route contract change.
 
 ```sh
-pnpm --filter @shared/cv typecheck
+pnpm --filter @shared/templates typecheck
 pnpm exec vitest run --project unit packages/cv/src/index.test.ts
 ```
 
@@ -50,7 +50,7 @@ The root script `pnpm cv:generate` is a generator. Read `turbo/generators` befor
 
 ## Dependencies
 
-`@shared/config`, `handlebars`, and `pdfmake` are the runtime dependencies. New external packages use `catalog:`. This package must not depend on `apps/my-dev-studio`, `@shared/auth`, or `@shared/components`.
+`@shared/config`, `handlebars`, and `pdfmake` are the runtime dependencies. New external packages use `catalog:`. This package must not depend on `apps/my-dev-studio`, `@shared/auth`, or `@shared/ui`.
 
 ## Related skills
 

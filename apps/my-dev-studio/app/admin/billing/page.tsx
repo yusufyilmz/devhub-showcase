@@ -1,8 +1,9 @@
 import { redirect } from "next/navigation";
 
 import { requireConfirmedUser } from "@shared/auth";
-import { BillingSettings } from "@shared/components/studio";
 import { createServerClient } from "@shared/lib/supabase";
+
+import { BillingSettings } from "@/features/studio";
 
 export default async function BillingPage({
   searchParams,
@@ -12,7 +13,7 @@ export default async function BillingPage({
   try {
     await requireConfirmedUser(await createServerClient());
   } catch {
-    redirect("/admin/login");
+    redirect("/login");
   }
   const returned = (await searchParams).checkout === "returned";
   return <BillingSettings returned={returned} />;

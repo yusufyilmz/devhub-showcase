@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "@shared/design-system/globals.css";
+@import "@shared/ui/globals.css";
 
 :root {
   --text: #6b6375;

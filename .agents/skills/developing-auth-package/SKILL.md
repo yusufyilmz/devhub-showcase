@@ -25,7 +25,7 @@ Google proves identity through Supabase. It does not grant portfolio ownership. 
 
 | Option         | MyDevStudio value  | Rule                               |
 | -------------- | ------------------ | ---------------------------------- |
-| `loginPath`    | `/admin/login`     | Local path only                    |
+| `loginPath`    | `/login`           | Local path only                    |
 | `successPath`  | `/admin`           | Local path only                    |
 | `callbackPath` | `/auth/callback`   | Local path only                    |
 | `createClient` | app server client  | Supplied by the app                |
@@ -47,7 +47,7 @@ Do not request a broader scope than the import uses. Do not store the provider t
 
 Current exports are `.`, `./handlers`, `./client`, `./server`, `./middleware`, `./config`, `./google-consent`, and `./google-profile-scopes`. Add a file, a `package.json` export, and a catalog row. Run `pnpm check:exports`.
 
-This package may depend on Supabase and Zod. It must not depend on `@shared/components`, `@shared/lib` portfolio repositories, or `apps/my-dev-studio`. The app depends on auth, not the other way around.
+This package may depend on Supabase and Zod. It must not depend on `@shared/ui`, `@shared/lib` portfolio repositories, or `apps/my-dev-studio`. The app depends on auth, not the other way around.
 
 ## Tests
 

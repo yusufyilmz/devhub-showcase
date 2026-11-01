@@ -15,6 +15,7 @@ import { WeeklyPlanningService } from "../lib/services/weekly-planning-service";
 
 const owner = "00000000-0000-4000-8000-000000000001";
 const other = "00000000-0000-4000-8000-000000000002";
+
 test("real SQL migrations, ORM roundtrip, conflicts, rollback and owner isolation", async () => {
   const engine = new PGlite();
   try {

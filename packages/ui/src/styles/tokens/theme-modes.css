@@ -1,0 +1,17 @@
+/* Light/dark mode baselines (devhub-showcase-v2 design-system). */
+
+[data-theme="light"]:not([data-brand]) {
+  --background: var(--clr-gray-1000);
+  --foreground: var(--clr-gray-100);
+}
+
+[data-theme="dark"]:not([data-brand]) {
+  --background: var(--clr-gray-100);
+  --foreground: var(--clr-gray-1100);
+  --primary: var(--clr-blue-400);
+  --accent: var(--clr-pink-600);
+  --muted: var(--clr-gray-400);
+  --muted-foreground: var(--clr-gray-800);
+  --card: var(--clr-gray-200);
+  --card-foreground: var(--clr-gray-1000);
+}

@@ -199,7 +199,63 @@ components:
 
 Published portfolios read as a dark studio: navy canvas, one cyan accent, Inter for reading, and a mono eyebrow for labels. The shared UI kit in `packages/ui` is the editing surface. It is closer to a compact product UI: white canvas, near-black primary, gray secondary, and small 8px corners.
 
-Tokens live in `packages/design-system/shadcn.css` and `packages/design-system/components.css`. Components in `packages/ui` consume those tokens. They do not invent a second palette.
+Styles and tokens live in `packages/ui/src/styles`. Components in `packages/ui` consume those tokens. They do not invent a second palette. The folder map and export names are documented below; day-to-day edits follow the “where to edit” table.
+
+## Stylesheet architecture
+
+Two stacks share one component library. **Foundation** is the token + Tailwind layer (`data-brand`, `data-theme`, appearance). **Portfolio** is the RGB palette model for published pages (`data-portfolio-theme`, section frames, site chrome). Storybook and token-only hosts load foundation only so toolbar brands are not overridden by portfolio remaps.
+
+### Entry points
+
+| Import                      | Loads                                                       |
+| --------------------------- | ----------------------------------------------------------- |
+| `@shared/ui/foundation.css` | Tailwind, design tokens, shared surfaces. **Storybook.**    |
+| `@shared/ui/app.css`        | Foundation + portfolio bundle. **MyDevStudio root layout.** |
+| `@shared/ui/globals.css`    | Same as `app.css` (compatibility shim).                     |
+
+Lazy or partial loads: `@shared/ui/portfolio/bundle.css` (portfolio CSS without the foundation `@source` setup), `@shared/ui/examples.css` (example carousel pages).
+
+### Repository layout
+
+```tree
+packages/ui/src/styles/
+  app.css                 Full app (foundation + portfolio)
+  foundation.css          Tailwind + tokens + shared surfaces
+
+  tokens/                 Brand palettes, modes, appearance, @theme extensions
+    index.css             Token aggregator (shim: @shared/ui/shadcn.css)
+
+  foundation/
+    theme-aliases.css     Legacy Tailwind color names tied to --bg-rgb
+    surfaces.css          Card elevation, focus, reduced motion
+
+  portfolio/              Published portfolio + RGB studio chrome
+    bundle.css            Imports portfolio sheets + semantic-bridge
+    components.css        Control skins, studio defaults, 767px collapse
+    sections.css          Section frames (.library-section, etc.)
+    layouts.css           Portfolio page layout
+    presets.css           Named portfolio themes on [data-portfolio-theme]
+    chrome.css            Sticky header, portfolio nav
+    chat.css              Visitor chat widget
+    semantic-bridge.css   Maps --bg-rgb → shadcn vars on [data-portfolio-theme] only
+
+  examples.css            Example carousel only
+```
+
+Older root paths (`styles.css`, `legacy.css`, `layout.css`, `components.css`, `sections.css`, `portfolios.css`, `themes.css`, `portfolio-chat.css`, `theme.css`, `surfaces.css`) re-export the files above. Prefer the names in the entry table for new code.
+
+### Where to edit
+
+| Change                  | File                                                |
+| ----------------------- | --------------------------------------------------- |
+| New brand or mode token | `tokens/`                                           |
+| Shadcn semantic token   | `tokens/palettes.css` or `tokens/accent-brands.css` |
+| Studio control skin     | `portfolio/components.css`                          |
+| Section layout          | `portfolio/sections.css`                            |
+| Portfolio theme preset  | `portfolio/presets.css`                             |
+| Site header or nav      | `portfolio/chrome.css`                              |
+
+Implementation detail for contributors: [packages/ui/src/styles/STYLES.md](packages/ui/src/styles/STYLES.md) mirrors this section and links back here.
 
 ## Colors
 
@@ -299,7 +355,7 @@ Motion is short. Buttons move 1px down on press. Studio buttons move 1px up on h
 
 ## Components
 
-The recipes below are the pieces that define the look, in the same sense as Airbnb's search bar, listing card, and primary button. Controls from `packages/ui` are listed in [the UI catalog](packages/ui/CATALOG.md). Portfolio sections, editors, and chat from `packages/components` are listed in [the sections catalog](packages/components/CATALOG.md). Visual rules stay here. The catalogs are the inventory.
+The recipes below are the pieces that define the look, in the same sense as Airbnb's search bar, listing card, and primary button. Controls, sections, editors, and chat surfaces from `packages/ui` are listed in [the UI catalog](packages/ui/CATALOG.md). Visual rules stay here. The catalog is the inventory.
 
 ### Button
 
@@ -377,7 +433,7 @@ The published page is not a second component library. It is the same type and ac
 
 ## Section library
 
-Portfolio sections in `packages/components` share one frame, `.library-section`, styled in `packages/design-system/sections.css`. A section does not invent its own palette. It uses the studio canvas, hairline, and accent.
+Portfolio sections in `packages/ui` share one frame, `.library-section`, styled in `packages/ui/src/styles/portfolio/sections.css`. A section does not invent its own palette. It uses the studio canvas, hairline, and accent.
 
 **`library-section`** — Top hairline in `{colors.hairline-studio}`, 56px vertical padding. The heading is `clamp(28px, 3vw, 44px)` with line height 1.15. Body copy is muted with line height 1.8. Links are `{colors.accent}`. Alignment is left unless `data-alignment` is `center` or `right`. The content grid defaults to 3 columns and can be set to 1, 2, or 4 with `data-columns`. Below 700px the grid and masonry collapse to one column.
 
@@ -413,7 +469,7 @@ Portfolio sections in `packages/components` share one frame, `.library-section`,
 
 Use `@shared/ui/card`, `@shared/ui/button`, `@shared/ui/input` and
 `@shared/ui/textarea` in product compositions. Elevation and focus styling live in
-`packages/design-system/surfaces.css`, imported by the semantic stylesheet.
+`packages/ui/src/styles/foundation/surfaces.css`, imported by `foundation.css`.
 Cards use `interaction="lift"` by default for shared depth, an accent edge and
 hover feedback. Use `interaction="static"` for a preview frame or nested surface
 that should stay still. Lift is limited to fine hover pointers, with matching

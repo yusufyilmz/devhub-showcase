@@ -4,7 +4,7 @@ import { dirname, resolve } from "node:path";
 
 import type { PlopTypes } from "@turbo/gen";
 
-import { cvHelpers, renderCv } from "@shared/cv";
+import { cvHelpers, renderCv } from "@shared/templates";
 
 import {
   readPublicProfile,

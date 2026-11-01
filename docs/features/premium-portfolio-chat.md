@@ -1,6 +1,6 @@
 # Premium portfolio chat
 
-The reusable PortfolioChat component lives in packages/components, with a small app transport adapter. Published named portfolios across all four layouts can display it when their current owner has an active assigned Pro entitlement and explicitly enabled chat. Free, private, transferred, unassigned or disabled portfolios cannot invoke it. The existing main portfolio assistant retains its legacy configuration and limits; it is not charged twice.
+The reusable PortfolioChat UI lives in `@shared/ui` (`portfolio/chat`) and `@shared/assistant`, with a small app transport adapter in `apps/my-dev-studio/features/chat`. Published named portfolios across all four layouts can display it when their current owner has an active assigned Pro entitlement and explicitly enabled chat. Free, private, transferred, unassigned or disabled portfolios cannot invoke it. The existing main portfolio assistant retains its legacy configuration and limits; it is not charged twice.
 
 ## Owner setup
 
@@ -13,6 +13,8 @@ The billing page shows reserved chat attempts and the period allowance. Stripe s
 The premium chat server action accepts only username, message, sessionId and requestId. The server reloads the current published profile, constructs whitelisted public knowledge and resolves ownership/entitlement server-side. No client profile, owner ID, prompt or plan is trusted. Anonymous visitors do not need accounts. A service client is server-only and independent of Stripe configuration. No model request is made for display checks.
 
 Requests pass visitor/portfolio/global Redis abuse limits before the atomic database reservation. The reservation RPC also checks chat_enabled while holding its assignment lock, preventing stale UI availability from granting access. Each request reserves one attempt; provider failures, aborts and uncertain requests still count. Missing configuration, storage failures and allowance exhaustion fail closed with a generic visitor error, without logging prompts or secrets. The owner billing API remains private/no-store. Public chat responses use no-store and do not expose billing/customer data.
+
+The server action supplies a 45 second deadline shared by usage accounting and the model. Already canceled requests are rejected before profile reads. Cancellation is checked before reservation, after reservation and after generation, so cancellation during reservation skips the provider and a late answer is rejected. A visitor closing the widget does not guarantee cancellation of an already running server action. Database calls are not interrupted by this signal.
 
 ## Answers and browser state
 

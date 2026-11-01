@@ -10,7 +10,9 @@
     "./clipboard": "./src/clipboard/index.ts",
     "./browser": "./src/browser/index.ts",
     "./notifications": "./src/notifications/index.ts",
-    "./stores": "./src/stores/index.ts"
+    "./user": "./src/user/index.ts",
+    "./chat": "./src/chat/index.ts",
+    "./studio": "./src/studio/index.ts"
   },
   "main": "./src/index.ts",
   "scripts": {
@@ -29,6 +31,8 @@
     "@shared/lib": "workspace:*",
     "@shared/utils": "workspace:*",
     "@supabase/ssr": "catalog:",
+    "react": "catalog:",
+    "zod": "catalog:",
     "zustand": "catalog:"
   },
   "devDependencies": {

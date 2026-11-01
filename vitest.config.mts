@@ -8,6 +8,31 @@ import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 import { playwright } from "@vitest/browser-playwright";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
+function exportAliases(folder: string, options: { cssOnly?: boolean; packageName?: string } = {}) {
+  const { cssOnly = false, packageName = `@shared/${folder}` } = options;
+  const exports = JSON.parse(
+    readFileSync(new URL(`./packages/${folder}/package.json`, import.meta.url), "utf8"),
+  ).exports as Record<string, string>;
+  return Object.entries(exports)
+    .filter(([key]) => !key.includes("*"))
+    .filter(([key]) => (cssOnly ? key.endsWith(".css") : !key.endsWith(".css")))
+    .flatMap(([key, target]) => {
+      const resolved =
+        typeof target === "string"
+          ? target
+          : typeof (target as { default?: string })?.default === "string"
+            ? (target as { default?: string }).default
+            : null;
+
+      if (!resolved) return [];
+      return [
+        {
+          find: key === "." ? packageName : `${packageName}/${key.slice(2)}`,
+          replacement: fileURLToPath(new URL(`./packages/${folder}/${resolved}`, import.meta.url)),
+        },
+      ];
+    });
+}
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
@@ -21,6 +46,7 @@ export default defineConfig({
       load(id) {
         if (id.endsWith(".hbs"))
           return `export default ${JSON.stringify(readFileSync(id, "utf8"))}`;
+        if (id.endsWith(".css")) return "";
       },
       name: "cv-handlebars-source",
     },
@@ -60,17 +86,15 @@ export default defineConfig({
         replacement: fileURLToPath(new URL("./packages/config/src/index.ts", import.meta.url)),
       },
       {
-        find: "@shared/content",
-        replacement: fileURLToPath(new URL("./packages/content/src/index.ts", import.meta.url)),
-      },
-      {
         find: "@shared/cache",
         replacement: fileURLToPath(new URL("./packages/cache/src/index.ts", import.meta.url)),
       },
-      {
-        find: "@shared/assistant",
-        replacement: fileURLToPath(new URL("./packages/assistant/src/index.ts", import.meta.url)),
-      },
+      ...["assistant", "auth", "billing", "runtime", "templates", "ui"]
+        .flatMap((pkg) => exportAliases(pkg))
+        .sort((a, b) => b.find.length - a.find.length),
+      ...["ui"]
+        .flatMap((pkg) => exportAliases(pkg, { cssOnly: true }))
+        .sort((a, b) => b.find.length - a.find.length),
       {
         find: /^@shared\/assistant\/models\/([^/]+)$/,
         replacement: `${fileURLToPath(new URL("./packages/assistant/src/models/", import.meta.url))}$1.ts`,
@@ -80,23 +104,11 @@ export default defineConfig({
         replacement: `${fileURLToPath(new URL("./packages/assistant/src/services/", import.meta.url))}$1/index.ts`,
       },
       {
-        find: /^@shared\/assistant\/(.*)$/,
-        replacement: `${fileURLToPath(new URL("./packages/assistant/src/", import.meta.url))}$1`,
+        find: "@shared/billing-repository",
+        replacement: fileURLToPath(
+          new URL("./packages/billing/src/server/repository.ts", import.meta.url),
+        ),
       },
-      ...["auth", "components", "ui"]
-        .flatMap((pkg) =>
-          Object.entries(
-            JSON.parse(
-              readFileSync(new URL(`./packages/${pkg}/package.json`, import.meta.url), "utf8"),
-            ).exports as Record<string, string>,
-          )
-            .filter(([key]) => !key.endsWith(".css") && !key.includes("*"))
-            .map(([key, path]) => ({
-              find: key === "." ? `@shared/${pkg}` : `@shared/${pkg}/${key.slice(2)}`,
-              replacement: fileURLToPath(new URL(`./packages/${pkg}/${path}`, import.meta.url)),
-            })),
-        )
-        .sort((a, b) => b.find.length - a.find.length),
       ...Object.entries(
         JSON.parse(readFileSync(new URL("./packages/lib/package.json", import.meta.url), "utf8"))
           .exports as Record<string, string>,

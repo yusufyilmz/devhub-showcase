@@ -12,11 +12,11 @@ pnpm install --frozen-lockfile
 pnpm --filter my-fitness-app dev
 ```
 
-Open `http://localhost:3001` after completing Supabase setup below. The dev server uses port 3001 so it can run beside MyDevStudio on port 3000. The same URL shows your live workspace read-only to visitors and unlocks editing when you sign in as its owner. `/preview` always displays that same live data in read-only mode, even if you are signed in. It is no longer a bundled sample and requires your configured Supabase project.
+Open `http://localhost:3002` after completing Supabase setup below. The dev server uses port 3002 so it can run beside MyDevStudio on port 3000. The same URL shows your live workspace read-only to visitors and unlocks editing when you sign in as its owner. `/preview` always displays that same live data in read-only mode, even if you are signed in. It is no longer a bundled sample and requires your configured Supabase project.
 
 ## Light and dark themes
 
-The original dashboard layout is preserved. Use the sun/moon button in the top bar (or on the login page) to switch between light and dark. Dark is the default when no preference is saved; the light/dark choice is restored from localStorage on reload and synchronized across tabs. Dark uses the Devhub navy/cyan palette, with a cool-white companion palette for light. Both work in the public preview.
+The original dashboard layout is preserved. Use the sun/moon button in the top bar (or on the login page) to switch between light and dark. Dark is the default when no preference is saved. The choice is the same `buzzy-userconfig-store` record MyDevStudio writes with `useUserConfigStore` (`activeMode`: `light`, `dark`, or `system`), so one origin keeps one theme. An older `fitness-os-theme` value is read only when that record has no mode. The choice is restored before paint, kept across reloads, and synchronized across tabs. Dark uses the Devhub navy/cyan palette, with a cool-white companion palette for light. Both work in the public preview.
 
 Colors are centralized in `app/themes.css`; responsive layout stays in `app/globals.css`. Theme controls live in `features/theme` and do not change workspace data.
 
@@ -26,7 +26,8 @@ Colors are centralized in `app/themes.css`; responsive layout stays in `app/glob
 2. Set the Supabase URL and publishable key from that project. Set `SUPABASE_DB_URL` to the same project's pooler connection URI, including its database password. Keep this server-only value private; never prefix it with `NEXT_PUBLIC_`.
 3. Apply `supabase/migrations/20261101120000_fitness_task_workspaces.sql` with the rest of the shared migration history. It creates the fitness tables and ties `user_id` to `auth.users`. Do not run a second migrator from this app.
 4. Copy the owner's UUID from Authentication → Users into `WORKSPACE_OWNER_ID` in `.env.local`. That id must already exist in this project's Auth users. Only this user can edit.
-5. Restart the app and sign in at `/login`. The first owner load creates or imports your task workspace. Until this first login, visitors see an initialization message. Share the main website URL after that; visitors need no login.
+5. Add this app's `/auth/callback` URL to the same Supabase project's Authentication → URL Configuration → Redirect URLs. Locally that is `http://localhost:3002/auth/callback`. Keep the MyDevStudio callback in that list too.
+6. Restart the app and sign in at `/login` with Google or email. The first owner load creates or imports your task workspace. Until this first login, visitors see an initialization message. Share the main website URL after that; visitors need no login.
 
 The app verifies bearer tokens with Supabase Auth and compares the verified user ID with `WORKSPACE_OWNER_ID` before every write. Anonymous visitors and other authenticated accounts can only read the configured owner’s workspace. The server ORM uses your pooler credentials, which can bypass RLS; every repository query therefore explicitly scopes data to the configured owner. Anonymous database grants remain revoked: public reads go through the controlled application API. Never expose the database URI to browsers or commit `.env.local`.
 
@@ -34,7 +35,7 @@ The app verifies bearer tokens with Supabase Auth and compares the verified user
 
 Anyone with the site URL can view the current task plans, calendar, completion records, shopping lists, and weight history. Visitors cannot change tasks, log sets, drag events, or modify settings. The read-only view refreshes every 30 seconds while visible and when the tab receives focus. The API is uncached and rejects writes unless Supabase verifies the configured owner; UI controls are not the authorization boundary.
 
-After owner sign-in, Supabase stores the session in browser localStorage under `fitness-os-session` and automatically refreshes it. Your password is sent only for sign-in and is never saved in localStorage. The browser’s password manager can fill it using the standard password field. Sign out under More to end the session on that browser. Other open tabs switch back to read-only after sign-out. Theme preference is stored separately.
+Sign-in uses the same Google and email handlers as MyDevStudio. Supabase stores the session in a host cookie (`path=/`, shared by every port on that host), so signing in on MyDevStudio opens this app already signed in, and the reverse is true. Your password is sent only for sign-in and is never saved. The browser’s password manager can fill it using the standard password field. Sign out under More clears that shared cookie on this browser, including the studio session. Other open tabs switch back to read-only after sign-out. A signed-in account that is not `WORKSPACE_OWNER_ID` can view the workspace and cannot edit it. Theme preference stays in the shared user-config record, separate from the session.
 
 The previously used SSR cookies are no longer used for access control. Existing users need to sign in once after this update. This is one shared personal workspace, not a platform where any registered account gets editing rights.
 

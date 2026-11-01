@@ -1,0 +1,21 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.6.4/schema.json",
+  "extends": "//",
+  "linter": {
+    "rules": {
+      "style": {
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "patterns": [
+              {
+                "group": ["@shared/billing", "@shared/billing/**", "@shared/billing-repository"],
+                "message": "Use relative imports within @shared/billing instead of the package alias."
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

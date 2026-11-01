@@ -4,13 +4,13 @@
   "private": true,
   "exports": {
     ".": "./src/index.ts",
-    "./handlers": "./src/handlers.ts",
-    "./client": "./src/client.ts",
-    "./server": "./src/server.ts",
+    "./handlers": "./src/handlers/index.ts",
+    "./client": "./src/client/index.ts",
+    "./server": "./src/server/index.ts",
     "./middleware": "./src/middleware.ts",
-    "./config": "./src/config.ts",
-    "./google-consent": "./src/google-consent.ts",
-    "./google-profile-scopes": "./src/google-profile-scopes.ts"
+    "./components": "./src/components/index.ts",
+    "./config": "./src/config/index.ts",
+    "./google-provider": "./src/google-provider/index.ts"
   },
   "main": "./src/index.ts",
   "scripts": {
@@ -28,6 +28,8 @@
     "@supabase/ssr": "catalog:",
     "@supabase/supabase-js": "catalog:",
     "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

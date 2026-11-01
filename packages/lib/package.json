@@ -22,9 +22,6 @@
     "./cv-import": "./src/domain/cv-import.ts",
     "./cv-file": "./src/domain/cv-file.ts",
     "./portfolio-knowledge": "./src/domain/portfolio-knowledge.ts",
-    "./billing": "./src/billing/index.ts",
-    "./billing-repository": "./src/billing/repository.ts",
-    "./stripe": "./src/billing/stripe.ts",
     "./ai-edit": "./src/domain/ai-edit.ts",
     "./google-profile": "./src/domain/google-profile.ts",
     "./cache": "./src/cache/index.ts"
@@ -50,7 +47,6 @@
     "axios": "catalog:",
     "next": "catalog:",
     "pino": "catalog:",
-    "stripe": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

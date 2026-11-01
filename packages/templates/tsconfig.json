@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "extends": "@shared/typescript-config/base.json",
+  "include": ["src/**/*.ts", "src/**/*.d.ts"]
+}

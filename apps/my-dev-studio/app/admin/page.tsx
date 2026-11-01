@@ -11,8 +11,8 @@ export default async function AdminPage() {
     const { repository } = await requireWorkspace();
     snapshot = await repository.read();
   } catch {
-    redirect("/admin/login");
+    redirect("/login");
   }
-  if (!snapshot?.username) redirect("/admin/login?error=setup");
+  if (!snapshot?.username) redirect("/login?error=setup");
   redirect(editCvPath(snapshot.username));
 }

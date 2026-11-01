@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { PGlite } from "@electric-sql/pglite";
 
-import { createEmptyProfile } from "@shared/lib/user-profile";
+import { createEmptyProfile } from "../../services/user-profile";
 
 const admin = "00000000-0000-4000-8000-000000000000";
 const alice = "11111111-1111-4111-8111-111111111111";

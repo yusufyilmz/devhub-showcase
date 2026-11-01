@@ -1,7 +1,7 @@
 "use client";
 
-import { NotFound } from "@shared/ui/not-found";
+import { NotFoundPage } from "@shared/ui/layout";
 
 export default function ErrorRoute(): React.JSX.Element {
-  return <NotFound />;
+  return <NotFoundPage />;
 }

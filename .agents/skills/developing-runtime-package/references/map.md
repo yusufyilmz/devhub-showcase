@@ -11,7 +11,7 @@ Package `@shared/runtime` in `packages/runtime`.
 | `@shared/runtime/clipboard`     | `src/clipboard/index.ts`     |
 | `@shared/runtime/browser`       | `src/browser/index.ts`       |
 | `@shared/runtime/notifications` | `src/notifications/index.ts` |
-| `@shared/runtime/stores`        | `src/stores/index.ts`        |
+| `@shared/runtime/user`          | `src/user/index.ts`          |
 
 ## Files
 
@@ -43,7 +43,7 @@ Package `@shared/runtime` in `packages/runtime`.
 
 ## Root versus stores entry
 
-`src/index.ts` exports the hooks and the user-config store helpers. Import chat and profile stores from `@shared/runtime/stores` unless you have just added them to the root barrel.
+`src/index.ts` exports the hooks and the user-config store helpers. Import chat and profile stores from `@shared/runtime/user` unless you have just added them to the root barrel.
 
 ## Checks
 

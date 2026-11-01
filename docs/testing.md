@@ -70,7 +70,7 @@ Use existing fixtures and test helpers. Add regression coverage for behavior cha
 ## Focused runs
 
 ```sh
-pnpm exec vitest run --project unit packages/components/src/studio/admin/admin-login.test.tsx
+pnpm exec vitest run --project unit apps/my-dev-studio/features/home/home-page.test.tsx
 pnpm exec vitest run packages/lib/src/supabase/rls/managed-rls.test.ts
 pnpm exec playwright test e2e/home --project=desktop-chromium
 pnpm test:watch
@@ -81,7 +81,7 @@ Rebuild before testing changed application code with Playwright. Targeted tests 
 
 ## Browser environment
 
-Playwright specs live under `e2e/` in a folder for the page they cover: `home` (`/`), `portfolio` (`/[username]`), `edit` (`/[username]/edit`), `admin/login`, `admin/billing`, `admin/portfolios`, and `examples` (`/p/examples`). A flow that edits and then checks the published profile stays in `edit`. `e2e/fixture-server.mjs` stays at the e2e root.
+Playwright specs live under `e2e/` in a folder for the page they cover: `home` (`/`), `portfolio` (`/[username]`), `edit` (`/[username]/edit`), `login`, `admin/billing`, `admin/portfolios`, and `examples` (`/p/examples`). A flow that edits and then checks the published profile stays in `edit`. `e2e/fixture-server.mjs` stays at the e2e root.
 
 The Playwright configuration owns three servers and does not reuse existing ones:
 

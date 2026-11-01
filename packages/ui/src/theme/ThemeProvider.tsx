@@ -8,7 +8,7 @@ import {
   USER_CONFIG_STORAGE_KEY,
   type UserConfigMode,
   useUserConfigStore,
-} from "@shared/runtime/stores";
+} from "@shared/runtime/user";
 
 import { ThemeContext } from "./theme-toggle";
 

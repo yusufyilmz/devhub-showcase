@@ -2,7 +2,7 @@
 
 1. Inspect git status and the current branch. Keep unrelated changes. Read `AGENTS.md` and the source you will edit.
 2. Use the Node and pnpm versions in the root `package.json`. Run `pnpm install --frozen-lockfile` when dependencies are missing.
-3. Change a persisted field in the type, validator, save and import boundary, and renderer together. Preserve documents that omit the field. Keep shared presentation in `packages/components` and data access in `apps/my-dev-studio/features`.
+3. Change a persisted field in the type, validator, save and import boundary, and renderer together. Preserve documents that omit the field. Keep shared presentation in `packages/ui` and data access in `apps/my-dev-studio/features`.
 4. Run `pnpm check`. That covers TypeScript, Biome, formatting, complexity, docs, skills, and package exports. `pnpm format` writes formatting. `pnpm lint:fix` applies safe lint fixes. Do not disable rules or raise thresholds to hide failures.
 5. Run `pnpm test` for Vitest. Add tests for validation, ownership, serialization, and defaults when the change affects them.
 6. Build the app with `pnpm --filter my-dev-studio build`. `pnpm build` builds the whole workspace, which is what CI does.

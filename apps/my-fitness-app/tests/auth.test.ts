@@ -1,99 +1,131 @@
-import { afterEach, beforeEach, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const auth = vi.hoisted(() => ({
+  exchangeCodeForSession: vi.fn(),
   getUser: vi.fn(),
   signInWithPassword: vi.fn(),
   signOut: vi.fn(),
 }));
+const bearer = vi.hoisted(() => ({
+  getUser: vi.fn(),
+}));
+vi.mock("@shared/auth/server", () => ({
+  createClient: async () => ({ auth }),
+}));
 vi.mock("../lib/supabase/server", () => ({
-  createSupabaseRequestClient: () => ({ auth }),
+  createSupabaseRequestClient: () => ({ auth: bearer }),
 }));
 
-import { POST } from "../app/api/session/route";
+import { POST } from "../app/api/auth/session/route";
+import { GET } from "../app/auth/callback/route";
 import { requestIdentity } from "../lib/auth";
 
 const owner = "00000000-0000-4000-8000-000000000001";
-beforeEach(() => {
-  vi.resetAllMocks();
-  vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://test.supabase.co");
-  vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "test-key");
-  vi.stubEnv("WORKSPACE_OWNER_ID", owner);
-  vi.stubEnv("APP_URL", "https://fitness.example");
-});
-afterEach(() => vi.unstubAllEnvs());
-it("only accepts user identity returned by Supabase token verification", async () => {
-  auth.getUser.mockResolvedValue({
-    data: { user: { id: owner } },
-    error: null,
+
+describe("Fitness auth", () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://test.supabase.co");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "test-key");
+    vi.stubEnv("WORKSPACE_OWNER_ID", owner);
+    vi.stubEnv("APP_URL", "https://fitness.example");
+    auth.getUser.mockResolvedValue({
+      data: { user: { email_confirmed_at: "today", id: owner } },
+      error: null,
+    });
+    auth.signInWithPassword.mockResolvedValue({ error: null });
+    auth.signOut.mockResolvedValue({ error: null });
+    auth.exchangeCodeForSession.mockResolvedValue({ error: null });
   });
-  const result = await requestIdentity(
-    new Request("https://fitness.example", {
-      headers: { Authorization: "Bearer real-token" },
-    }),
-  );
-  expect(auth.getUser).toHaveBeenCalledExactlyOnceWith("real-token");
-  expect(result.user?.id).toBe(owner);
-  auth.getUser.mockResolvedValue({
-    data: { user: null },
-    error: new Error("invalid token"),
+  afterEach(() => vi.unstubAllEnvs());
+
+  it("only accepts user identity returned by Supabase token verification", async () => {
+    bearer.getUser.mockResolvedValue({
+      data: { user: { id: owner } },
+      error: null,
+    });
+    const result = await requestIdentity(
+      new Request("https://fitness.example", {
+        headers: { Authorization: "Bearer real-token" },
+      }),
+    );
+    expect(bearer.getUser).toHaveBeenCalledExactlyOnceWith("real-token");
+    expect(auth.getUser).not.toHaveBeenCalled();
+    expect(result.user?.id).toBe(owner);
+    bearer.getUser.mockResolvedValue({
+      data: { user: null },
+      error: new Error("invalid token"),
+    });
+    expect(
+      (
+        await requestIdentity(
+          new Request("https://fitness.example", {
+            headers: { Authorization: "Bearer forged-owner-token" },
+          }),
+        )
+      ).user,
+    ).toBeNull();
   });
-  expect(
-    (
-      await requestIdentity(
-        new Request("https://fitness.example", {
-          headers: { Authorization: "Bearer forged-owner-token" },
+
+  it("reads the shared cookie session when the request has no bearer token", async () => {
+    const result = await requestIdentity(new Request("https://fitness.example"));
+    expect(auth.getUser).toHaveBeenCalledOnce();
+    expect(bearer.getUser).not.toHaveBeenCalled();
+    expect(result.user?.id).toBe(owner);
+  });
+
+  it("keeps an anonymous request anonymous when the cookie has no user", async () => {
+    auth.getUser.mockResolvedValue({ data: { user: null }, error: null });
+    expect((await requestIdentity(new Request("https://fitness.example"))).user).toBeNull();
+    expect(bearer.getUser).not.toHaveBeenCalled();
+  });
+
+  it("owner login stores the session in the shared cookie and does not return tokens", async () => {
+    const response = await POST(
+      new Request("https://fitness.example/api/auth/session", {
+        body: JSON.stringify({
+          email: "owner@example.com",
+          password: "private-password",
         }),
-      )
-    ).user,
-  ).toBeNull();
-});
-it("anonymous requests do not create an auth session", async () => {
-  expect((await requestIdentity(new Request("https://fitness.example"))).user).toBeNull();
-  expect(auth.getUser).not.toHaveBeenCalled();
-});
-it("owner login returns a remembered session without returning or storing a password", async () => {
-  auth.signInWithPassword.mockResolvedValue({
-    data: {
-      session: { access_token: "access", refresh_token: "refresh" },
-      user: { id: owner },
-    },
-    error: null,
-  });
-  const response = await POST(
-    new Request("https://fitness.example/api/session", {
-      body: JSON.stringify({
-        email: "owner@example.com",
-        password: "private-password",
+        headers: { origin: "https://fitness.example" },
+        method: "POST",
       }),
-      headers: { origin: "https://fitness.example" },
-      method: "POST",
-    }),
-  );
-  expect(response.status).toBe(200);
-  expect(await response.json()).toEqual({
-    session: { access_token: "access", refresh_token: "refresh" },
+    );
+    expect(response.status).toBe(200);
+    const body = await response.json();
+    expect(body).toEqual({ ok: true });
+    expect(JSON.stringify(body)).not.toContain("private-password");
+    expect(body.session).toBeUndefined();
+    expect(response.headers.get("cache-control")).toContain("no-store");
   });
-  expect(response.headers.get("cache-control")).toContain("no-store");
-});
-it("a valid login for another account does not receive editing session tokens", async () => {
-  auth.signInWithPassword.mockResolvedValue({
-    data: {
-      session: { access_token: "access", refresh_token: "refresh" },
-      user: { id: "another-user" },
-    },
-    error: null,
-  });
-  const response = await POST(
-    new Request("https://fitness.example/api/session", {
-      body: JSON.stringify({
-        email: "other@example.com",
-        password: "private-password",
+
+  it("keeps a confirmed non-owner session so a studio login is not cleared", async () => {
+    auth.getUser.mockResolvedValue({
+      data: { user: { email_confirmed_at: "today", id: "another-user" } },
+      error: null,
+    });
+    const response = await POST(
+      new Request("https://fitness.example/api/auth/session", {
+        body: JSON.stringify({
+          email: "other@example.com",
+          password: "private-password",
+        }),
+        headers: { origin: "https://fitness.example" },
+        method: "POST",
       }),
-      headers: { origin: "https://fitness.example" },
-      method: "POST",
-    }),
-  );
-  expect(response.status).toBe(403);
-  expect((await response.json()).session).toBeUndefined();
-  expect(auth.signOut).toHaveBeenCalledOnce();
+    );
+    expect(response.status).toBe(200);
+    expect(auth.signOut).not.toHaveBeenCalled();
+  });
+
+  it("sends Google back to this app and ignores a requested redirect", async () => {
+    const response = await GET(
+      new Request("https://fitness.example/auth/callback?code=valid-code&next=//evil.example", {
+        headers: { "x-forwarded-host": "evil.example" },
+      }),
+    );
+    expect(auth.exchangeCodeForSession).toHaveBeenCalledWith("valid-code");
+    expect(response.headers.get("location")).toBe("https://fitness.example/");
+    expect(response.headers.get("cache-control")).toBe("no-store");
+  });
 });

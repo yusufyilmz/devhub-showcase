@@ -1,6 +1,6 @@
 import { Footer, Header } from "@shared/ui/components";
 
-import { getPublishedProfile } from "@/features/portfolio/published-profile";
+import { getPublishedProfile } from "@/features/portfolio/profiles/published-profile";
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const { profile } = await getPublishedProfile();

@@ -1,4 +1,4 @@
-import { FitnessApp } from "../fitness-app";
+import { FitnessApp } from "../../features/fitness/fitness-app";
 export const metadata = {
   robots: { follow: false, index: false },
   title: "Shared workspace • Yusuf Fitness OS",

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "@shared/ui/button";
-import { Card } from "@shared/ui/card";
+import { Card } from "@shared/ui/cards";
 import { Input } from "@shared/ui/input";
 
 function ThemeGallery() {

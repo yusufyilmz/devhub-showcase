@@ -18,6 +18,7 @@ export class HttpWorkspaceGateway implements WorkspaceGateway {
   async load() {
     const response = await fetch("/api/state", {
       cache: "no-store",
+      credentials: this.forceReadOnly ? "omit" : "same-origin",
       headers: this.forceReadOnly ? {} : await this.auth(),
     });
     if (!response.ok) {
@@ -35,6 +36,7 @@ export class HttpWorkspaceGateway implements WorkspaceGateway {
       throw new Error("This workspace is read-only. Sign in as the owner to make changes.");
     const response = await fetch("/api/state", {
       body: JSON.stringify({ revision, state }),
+      credentials: "same-origin",
       headers: { "Content-Type": "application/json", ...(await this.auth()) },
       method: "PUT",
     });

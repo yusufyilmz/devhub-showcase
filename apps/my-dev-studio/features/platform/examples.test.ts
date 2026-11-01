@@ -3,16 +3,16 @@ import { resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
+import { portfolioTypes } from "@shared/config";
+import { profileSchema } from "@shared/lib/profile";
+
+import { getPagePresentation } from "@/features/platform/page-presentation";
 import {
   examplePath,
   exampleViewProfile,
   getExampleForPath,
   portfolioExamples,
-} from "@shared/components/studio";
-import { portfolioTypes } from "@shared/config";
-import { profileSchema } from "@shared/lib/profile";
-
-import { getPagePresentation } from "@/features/platform/page-presentation";
+} from "@/features/studio";
 
 describe("Examples", () => {
   it("provides two valid, independent fictional profiles for every layout", () => {

@@ -38,13 +38,7 @@ Redis rate limits are `@shared/cache`. This package's `src/cache` is a different
 
 ## Billing
 
-| Export                           | File                        |
-| -------------------------------- | --------------------------- |
-| `@shared/lib/billing`            | `src/billing/index.ts`      |
-| `@shared/lib/billing-repository` | `src/billing/repository.ts` |
-| `@shared/lib/stripe`             | `src/billing/stripe.ts`     |
-
-Also in that folder: `status.ts`, `messages.ts`, and the billing tests. App checkout and webhooks stay in `apps/my-dev-studio/features/billing`.
+Billing lives in `@shared/billing`. See [packages/billing/CATALOG.md](../../../../packages/billing/CATALOG.md). App checkout and webhooks stay in `apps/my-dev-studio/features/billing`.
 
 ## Errors from profile access
 

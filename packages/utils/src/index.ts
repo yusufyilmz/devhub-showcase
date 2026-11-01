@@ -15,6 +15,7 @@ export { fetchTimeout } from "./helpers/fetchTimeout";
 export { flatten, flattenFlat, unflattenObject } from "./helpers/flatten";
 export { formatDateRange } from "./helpers/format-date";
 export { capitalizeFirstLetter } from "./helpers/format-text";
+export { formatTimestamp } from "./helpers/format-timestamp";
 export { isMobile } from "./helpers/isMobile";
 export { NullsToUndefined } from "./helpers/nullsToUndefined";
 export { sleepMs } from "./helpers/sleepMs";

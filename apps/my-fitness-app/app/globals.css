@@ -1120,10 +1120,78 @@ textarea {
   background: transparent;
   border: 0;
 }
-.login {
+.login,
+.login-page {
   max-width: 450px;
   padding: 35px;
   margin: 12vh auto;
+}
+.login-page .auth-login {
+  max-width: none;
+  padding: 0;
+  margin: 0;
+}
+.login-page .auth-login h1 {
+  margin: 20px 0;
+  font-size: 32px;
+  line-height: 1.15;
+}
+.login-page .auth-login > p:not(.eyebrow) {
+  margin-bottom: 25px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.login-page .auth-login form {
+  display: grid;
+  gap: 16px;
+  margin-top: 28px;
+}
+.login-page .google-login-form {
+  margin-top: 0;
+}
+.login-page .studio-google,
+.login-page .studio-primary {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 46px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+.login-page .studio-google {
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.login-page .studio-primary {
+  color: var(--on-primary);
+  background: var(--green);
+  border: 0;
+}
+.login-page .login-separator {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+.login-page .login-separator::before,
+.login-page .login-separator::after {
+  flex: 1;
+  height: 1px;
+  content: "";
+  background: var(--line);
+}
+.login-page .form-error {
+  margin: 0;
+  font-size: 12px;
+  color: var(--danger);
+}
+.login-page .auth-login > a {
+  font-size: 12px;
+  color: var(--muted);
 }
 .login .eyebrow {
   margin: 55px 0 15px;
@@ -1554,7 +1622,8 @@ textarea {
     font-size: 11px;
     white-space: nowrap;
   }
-  .login {
+  .login,
+  .login-page {
     margin: 8vh auto;
   }
   .weight-form {

@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { validateWorkspace, type Workspace, workspaceSchema } from "@/lib/domain/workspace";
+import { watchSession } from "@/lib/supabase/browser";
 
 import type { WorkspaceGateway } from "./gateway";
 export function useTaskWorkspace(gateway: WorkspaceGateway, initial: Workspace) {
@@ -36,8 +37,9 @@ export function useTaskWorkspace(gateway: WorkspaceGateway, initial: Workspace) 
       if (gateway.readOnly && !lock.current && !document.hidden) run(load());
     };
     const authChanged = (event: StorageEvent) => {
-      if (event.key === "fitness-os-session" || event.key === null) run(load());
+      if (event.key === null || event.key.includes("-auth-token")) run(load());
     };
+    const stopSessionWatch = watchSession(() => run(load()));
     const timer = setInterval(refresh, 30000);
     window.addEventListener("focus", refresh);
     document.addEventListener("visibilitychange", refresh);
@@ -48,6 +50,7 @@ export function useTaskWorkspace(gateway: WorkspaceGateway, initial: Workspace) 
       window.removeEventListener("focus", refresh);
       document.removeEventListener("visibilitychange", refresh);
       window.removeEventListener("storage", authChanged);
+      stopSessionWatch();
     };
   }, [gateway]);
   useEffect(() => {

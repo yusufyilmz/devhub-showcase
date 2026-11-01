@@ -48,7 +48,7 @@
     "@biomejs/biome": "catalog:",
     "@electric-sql/pglite": "catalog:",
     "@playwright/test": "catalog:",
-    "@shared/cv": "workspace:*",
+    "@shared/templates": "workspace:*",
     "@storybook/addon-vitest": "catalog:",
     "@testing-library/dom": "catalog:",
     "@testing-library/react": "catalog:",

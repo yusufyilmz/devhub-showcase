@@ -7,16 +7,15 @@ const nextConfig = {
   transpilePackages: [
     "@shared/ui",
     "@shared/auth",
-    "@shared/components",
+    "@shared/ui",
     "@shared/config",
-    "@shared/content",
     "@shared/lib",
     "@shared/assistant",
     "@shared/cache",
     "@shared/runtime",
-    "@shared/design-system",
+    "@shared/ui",
     "@shared/utils",
-    "@shared/cv",
+    "@shared/templates",
   ],
   webpack(config) {
     // Use the compiler entry without Handlebars' Node require.extensions hook.

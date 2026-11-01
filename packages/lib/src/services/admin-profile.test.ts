@@ -1,13 +1,13 @@
 import { describe, expect, it, vi } from "vitest";
 
 import { profile } from "@shared/config";
-import { getPortfolioResources } from "@shared/lib/portfolio";
-import { ProfileService } from "@shared/lib/profile-service";
 
 import { createCVModel } from "../../../assistant/src/models/cv-model";
 import { formatAllCV } from "../../../assistant/src/services/formatter";
 import { profileSchema } from "../domain/profile";
 import type { ProfileRepository } from "../repositories/profile-repository";
+import { getPortfolioResources } from "./portfolio";
+import { ProfileService } from "./profile-service";
 
 function repository(owner = true): ProfileRepository {
   return {

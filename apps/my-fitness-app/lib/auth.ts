@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { createClient } from "@shared/auth/server";
+
 import { supabaseConfigured } from "./supabase/config";
 import { createSupabaseRequestClient } from "./supabase/server";
 export const configured = supabaseConfigured;
@@ -11,10 +13,18 @@ export function workspaceOwnerId() {
 export async function requestIdentity(request: Request) {
   const authorization = request.headers.get("authorization");
   const token = authorization?.startsWith("Bearer ") ? authorization.slice(7) : undefined;
-  const client = createSupabaseRequestClient(token);
-  if (!token) return { client, user: null };
-  const { data, error } = await client.auth.getUser(token);
-  return { client, user: error ? null : data.user };
+  if (token) {
+    const client = createSupabaseRequestClient(token);
+    const { data, error } = await client.auth.getUser(token);
+    return { client, user: error ? null : data.user };
+  }
+  try {
+    const client = await createClient();
+    const { data, error } = await client.auth.getUser();
+    return { client, user: error ? null : data.user };
+  } catch {
+    return { client: createSupabaseRequestClient(), user: null };
+  }
 }
 export function sameOrigin(request: Request) {
   const expected = process.env.APP_URL?.replace(/\/$/, "");

@@ -16,7 +16,6 @@
     "typecheck": "tsc --noEmit --pretty"
   },
   "dependencies": {
-    "@shared/components": "workspace:*",
     "@shared/config": "workspace:*",
     "@shared/lib": "workspace:*",
     "@shared/runtime": "workspace:*",
@@ -30,7 +29,6 @@
     "zustand": "catalog:"
   },
   "devDependencies": {
-    "@shared/design-system": "workspace:*",
     "@shared/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",

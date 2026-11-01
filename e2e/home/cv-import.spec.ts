@@ -22,5 +22,5 @@ test("homepage showcases working section previews, templates and CV import", asy
     false,
   );
   await page.getByRole("link", { name: "Start with your CV" }).click();
-  await expect(page).toHaveURL("/admin/login");
+  await expect(page).toHaveURL("/login");
 });

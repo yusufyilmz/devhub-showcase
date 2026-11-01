@@ -1,6 +1,5 @@
-import { getPortfolioExample } from "@shared/components/studio";
-
-import { cvResponse } from "@/features/portfolio/cv-response";
+import { cvResponse } from "@/features/portfolio/cv/cv-response";
+import { getPortfolioExample } from "@/features/studio";
 
 export const runtime = "nodejs";
 

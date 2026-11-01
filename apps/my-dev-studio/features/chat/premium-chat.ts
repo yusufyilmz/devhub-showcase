@@ -1,14 +1,13 @@
 import { z } from "zod";
 
 import { PortfolioChatModel } from "@shared/assistant";
+import { entitlementSchema, entitlementSummary, runPremiumOperation } from "@shared/billing";
+import { billingServiceClient } from "@shared/billing/client";
+import { type BillingClient, PremiumUsageRepository } from "@shared/billing/server";
 import { allowPortfolioChat } from "@shared/cache";
-import { entitlementSchema, entitlementSummary, runPremiumOperation } from "@shared/lib/billing";
-import { type BillingClient, PremiumUsageRepository } from "@shared/lib/billing-repository";
 import { buildPublicPortfolioKnowledge } from "@shared/lib/portfolio-knowledge";
 import { readPublicProfileByUsername } from "@shared/lib/published-profile";
 import { usernameSchema } from "@shared/lib/username";
-
-import { billingServiceClient } from "@/features/billing/client";
 
 export const premiumChatInput = z
   .object({
@@ -58,6 +57,7 @@ export async function premiumChatAvailable(profileId: string) {
   }
 }
 export async function answerPremiumChat(raw: unknown, signal: AbortSignal) {
+  signal.throwIfAborted();
   const input = premiumChatInput.parse(raw);
   const snapshot = await readPublicProfileByUsername(input.username);
   if (!snapshot?.id || snapshot.id === "main") throw new Error("Unavailable");
@@ -80,6 +80,7 @@ export async function answerPremiumChat(raw: unknown, signal: AbortSignal) {
       feature: "portfolio_chat",
       profileId: snapshot.id,
       requestId: input.requestId,
+      signal,
     },
     () => new PortfolioChatModel().answer(knowledge, input.message, signal),
   );

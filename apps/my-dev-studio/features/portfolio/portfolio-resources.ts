@@ -4,7 +4,7 @@ import { createServerClient } from "@shared/lib/supabase";
 import type { PageResources } from "@shared/lib/types";
 import { logger } from "@shared/utils/logger";
 
-import { getPublishedProfile } from "./published-profile";
+import { getPublishedProfile } from "./profiles/published-profile";
 
 export const loadPageResources = async (): Promise<PageResources> => {
   const { profile } = await getPublishedProfile();

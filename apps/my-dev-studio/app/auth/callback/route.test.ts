@@ -54,7 +54,7 @@ describe("Callback", () => {
     "handles cancelled or missing authorization: %s",
     async (query) => {
       const response = await GET(new Request(`${origin}/auth/callback${query}`));
-      expect(response.headers.get("location")).toBe(`${origin}/admin/login?error=google_failed`);
+      expect(response.headers.get("location")).toBe(`${origin}/login?error=google_failed`);
       expect(mocks.exchange).not.toHaveBeenCalled();
     },
   );
@@ -69,14 +69,14 @@ describe("Callback", () => {
     mocks.owner.mockRejectedValue(new ProfileAccessError());
     expect(
       (await GET(new Request(`${origin}/auth/callback?code=valid`))).headers.get("location"),
-    ).toBe(`${origin}/admin/login?error=not_owner`);
+    ).toBe(`${origin}/login?error=not_owner`);
     expect(mocks.signOut).toHaveBeenCalledWith({ scope: "local" });
   });
   it("clears the session when workspace storage is unavailable", async () => {
     mocks.owner.mockRejectedValue(new Error("missing table"));
     expect(
       (await GET(new Request(`${origin}/auth/callback?code=valid`))).headers.get("location"),
-    ).toBe(`${origin}/admin/login?error=setup`);
+    ).toBe(`${origin}/login?error=setup`);
     expect(mocks.signOut).toHaveBeenCalledWith({ scope: "local" });
   });
 });

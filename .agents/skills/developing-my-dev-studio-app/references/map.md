@@ -16,7 +16,8 @@ App package `my-dev-studio` in `apps/my-dev-studio`.
 | `app/[username]/share.png/route.tsx`        | Share image                                      |
 | `app/[username]/icon.svg/route.ts`          | Icon                                             |
 | `app/admin/page.tsx`                        | Studio entry                                     |
-| `app/admin/login/page.tsx`                  | Login                                            |
+| `app/login/page.tsx`                        | Sign in (Google and email)                       |
+| `app/admin/login/page.tsx`                  | Redirects to `/login`                            |
 | `app/admin/billing/page.tsx`                | Billing page                                     |
 | `app/admin/layout.tsx`                      | Admin layout                                     |
 | `app/admin/portfolios/page.tsx`             | Managed list                                     |

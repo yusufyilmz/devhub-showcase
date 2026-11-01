@@ -33,6 +33,7 @@ export const copy = {
   structuredData,
 };
 
+export { homeFaq } from "./home/faq";
 export type { Language, PortfolioMessages } from "./portfolio/languages";
 export {
   formatPortfolioPeriod,
@@ -48,11 +49,12 @@ export {
 } from "./portfolio/portfolio-sections";
 export type { CvLayout, PortfolioType } from "./portfolio/portfolio-types";
 export { cvLayouts, portfolioTypes } from "./portfolio/portfolio-types";
-export type { ColorMode, PortfolioTheme } from "./portfolio/themes";
+export type { ColorMode, PortfolioAccentId, PortfolioTheme } from "./portfolio/themes";
 export {
   getPortfolioThemeVariables,
   getPreviewAccent,
   getThemePalette,
+  portfolioAccentIds,
   portfolioAccents,
   portfolioThemes,
 } from "./portfolio/themes";

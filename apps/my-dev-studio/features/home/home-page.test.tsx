@@ -20,7 +20,7 @@ describe("HomePage", () => {
     vi.unstubAllGlobals();
   });
   const guest = {
-    href: "/admin/login",
+    href: "/login",
     label: "Create your portfolio",
     signedIn: false,
   };
@@ -30,7 +30,7 @@ describe("HomePage", () => {
     for (const link of screen.getAllByRole("link", {
       name: /Create your portfolio/,
     }))
-      expect(link.getAttribute("href")).toBe("/admin/login");
+      expect(link.getAttribute("href")).toBe("/login");
     expect(screen.getByRole("link", { name: /See a real portfolio/ }).getAttribute("href")).toBe(
       "/yusufyilmz",
     );

@@ -1,7 +1,4 @@
-import {
-  type GoogleProfileCategory,
-  googleProfilePermissions,
-} from "@shared/auth/google-profile-scopes";
+import { type GoogleProfileCategory, googleProfilePermissions } from "@shared/auth/google-provider";
 import { reviewGooglePerson } from "@shared/lib/google-profile";
 
 export function googleProfileClientId() {

@@ -65,18 +65,17 @@ See [testing](docs/testing.md) for browser prerequisites and coverage limitation
 
 Next.js App Router and React run in a pnpm/Turborepo workspace. TypeScript, Biome, Tailwind CSS and MUI support the application. External dependency versions live in [pnpm-workspace.yaml](pnpm-workspace.yaml); internal dependencies use `workspace:*`.
 
-| Location                                   | Responsibility                                                |
-| ------------------------------------------ | ------------------------------------------------------------- |
-| `apps/web`                                 | Routes, server adapters, metadata and application composition |
-| `packages/content`                         | Domain content, profile types, themes and section metadata    |
-| `packages/lib`                             | Validation, services, repositories and persistence            |
-| `packages/auth`                            | Shared authentication integration                             |
-| `packages/components`, `packages/sections` | Portable UI and section renderer/editor pairs                 |
-| `packages/ui`                              | Existing portfolio presentation and adapters                  |
-| `packages/cv`, `packages/chat`             | PDF generation and AI chat                                    |
-| `packages/cache`, `packages/log`           | Redis adapter and logging                                     |
-| `supabase/migrations`                      | Reviewed schema and access-policy history                     |
-| `tests`, `e2e`                             | Vitest and Playwright suites                                  |
+| Location                         | Responsibility                                                |
+| -------------------------------- | ------------------------------------------------------------- |
+| `apps/web`                       | Routes, server adapters, metadata and application composition |
+| `packages/content`               | Domain content, profile types, themes and section metadata    |
+| `packages/lib`                   | Validation, services, repositories and persistence            |
+| `packages/auth`                  | Shared authentication integration                             |
+| `packages/ui`                    | Controls, sections, studio and portfolio surfaces, global CSS |
+| `packages/cv`, `packages/chat`   | PDF generation and AI chat                                    |
+| `packages/cache`, `packages/log` | Redis adapter and logging                                     |
+| `supabase/migrations`            | Reviewed schema and access-policy history                     |
+| `tests`, `e2e`                   | Vitest and Playwright suites                                  |
 
 Supabase is the persistence integration. Prisma is not used. Install, check and build commands do not apply migrations. The published main profile, when configured, supplies the original portfolio content and chat context; bundled content supplies the supported fallback. Named private or missing profiles must never fall back to another person's data.
 

@@ -2,14 +2,10 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
   client: vi.fn(),
-  projects: vi.fn(),
   referrals: vi.fn(),
   warn: vi.fn(),
 }));
 vi.mock("@shared/lib/services", () => ({
-  ProjectService: class {
-    getAll = mocks.projects;
-  },
   ReferralService: class {
     getAll = mocks.referrals;
   },
@@ -17,7 +13,7 @@ vi.mock("@shared/lib/services", () => ({
 vi.mock("@shared/lib/supabase", () => ({ createServerClient: mocks.client }));
 vi.mock("@shared/utils/logger", () => ({ logger: { warn: mocks.warn } }));
 
-vi.mock("@/features/portfolio/published-profile", async () => {
+vi.mock("@/features/portfolio/profiles/published-profile", async () => {
   const { profile } = await import("@shared/config");
   return {
     getPublishedProfile: async () => ({ profile, revision: 1, updatedAt: "" }),
@@ -43,7 +39,7 @@ describe("PortfolioLoader", () => {
     mocks.referrals.mockResolvedValue([]);
     const result = await loadPageResources();
     expect(result.projects.map((item) => item.id)).toEqual(["fitness-os", "devhub"]);
-    expect(mocks.projects).not.toHaveBeenCalled();
+    expect(mocks.referrals).toHaveBeenCalled();
   });
   it("keeps the portfolio usable when a configured backend fails", async () => {
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://test.supabase.co");

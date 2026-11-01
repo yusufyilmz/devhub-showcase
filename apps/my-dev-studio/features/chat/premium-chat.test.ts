@@ -19,13 +19,13 @@ vi.mock("@shared/assistant", () => ({
   },
 }));
 vi.mock("@shared/lib/published-profile", () => ({ readPublicProfileByUsername: mocks.read }));
-vi.mock("@shared/lib/billing-repository", () => ({
+vi.mock("@shared/billing/server", () => ({
   PremiumUsageRepository: class {
     reserve = mocks.reserve;
     finish = mocks.finish;
   },
 }));
-vi.mock("@/features/billing/client", () => ({
+vi.mock("@shared/billing/client", () => ({
   billingServiceClient: () => ({
     from: (table: string) => {
       const query = {
@@ -43,8 +43,8 @@ vi.mock("@/features/billing/client", () => ({
                     account_id: mocks.owner,
                     chat_limit: 100,
                     editor_limit: 10,
-                    period_end: "2099-01-01T00:00:00Z",
-                    period_start: "2020-01-01T00:00:00Z",
+                    period_end: "2099-01-01T00:00:00+00:00",
+                    period_start: "2020-01-01T00:00:00+00:00",
                     plan: "pro",
                     status: mocks.status,
                   },
@@ -61,7 +61,7 @@ import { answerPremiumChat, premiumChatAvailable } from "@/features/chat/premium
 
 const input = {
   message: "What are Alex's skills?",
-  requestId: "44444444-4444-4444-8444-444444444444",
+  requestId: "44444444-4444-4444-8444-444444444441",
   sessionId: "33333333-3333-4333-8333-333333333333",
   username: "alex",
 };
@@ -128,6 +128,22 @@ describe("PremiumChat", () => {
     mocks.answer.mockRejectedValue(new Error("provider timeout"));
     await expect(answerPremiumChat(input, new AbortController().signal)).rejects.toThrow();
     expect(mocks.answer).toHaveBeenCalledTimes(1);
+    expect(mocks.finish).toHaveBeenCalledWith(input.requestId, "failed");
+  });
+  it("does not read profiles, reserve or call the provider after cancellation", async () => {
+    await expect(answerPremiumChat(input, AbortSignal.abort())).rejects.toThrow();
+    expect(mocks.read).not.toHaveBeenCalled();
+    expect(mocks.reserve).not.toHaveBeenCalled();
+    expect(mocks.answer).not.toHaveBeenCalled();
+  });
+  it("does not invoke the provider when the deadline expires during reservation", async () => {
+    const controller = new AbortController();
+    mocks.reserve.mockImplementation(async () => {
+      controller.abort();
+      return true;
+    });
+    await expect(answerPremiumChat(input, controller.signal)).rejects.toThrow();
+    expect(mocks.answer).not.toHaveBeenCalled();
     expect(mocks.finish).toHaveBeenCalledWith(input.requestId, "failed");
   });
 });

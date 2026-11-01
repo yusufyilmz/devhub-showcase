@@ -12,7 +12,7 @@ This foundation introduces the composition concepts without copying PageForge im
 
 ## Shared model and boundaries
 
-The registry and JSON model live in @shared/config. The shared validator is exported from @shared/lib/section. The portfolio app composes the renderer dispatcher; reusable views live in @shared/components and section renderer/editor pairs live in @shared/components/sections. Shared content does not import React, Next.js, authentication or database clients.
+The registry and JSON model live in @shared/config. The shared validator is exported from @shared/lib/section. The portfolio app composes the renderer dispatcher; reusable views live in @shared/ui and section renderer/editor pairs live in @shared/ui/sections. Shared content does not import React, Next.js, authentication or database clients.
 
 A normalized section contains:
 
@@ -51,7 +51,7 @@ See [the source migration map](../reference/pageforge-section-migration.md) for 
 
 ## Shared view primitives
 
-The section-views entrypoint in @shared/components provides SectionGrid (cards or gallery), SectionAccordion, SectionTabs and SectionCarousel. Each takes a label and stable, uniquely identified items with a title and React content. The existing @shared/components timeline and cards remain available; they are not duplicated.
+The section-views entrypoint in @shared/ui provides SectionGrid (cards or gallery), SectionAccordion, SectionTabs and SectionCarousel. Each takes a label and stable, uniquely identified items with a title and React content. The existing @shared/ui timeline and cards remain available; they are not duplicated.
 
 Tabs support arrow keys, Home and End. Accordions use native details/summary. Carousels use scroll snap, swipe and manual controls without autoplay; arrow movement respects reduced motion and accepts localized control labels. These primitives contain no authentication, fetching or portfolio data access. Callers must supply only authorized content.
 
@@ -71,11 +71,11 @@ The Section order editor supports pointer/touch dragging, move buttons and handl
 
 An explicit order applies across all four portfolio layouts. The introduction, contact area, footer and original testimonials retain fixed positions; empty sections are skipped. Reset removes the override: Designer defaults to projects first, other layouts to About. Changing layout preserves an explicit order until reset. PDF order remains controlled by its own format.
 
-The reusable SortableList and moveItem exports in @shared/components/sortable-list accept uniquely identified items and delegate persistence to the caller. They contain no portfolio/auth logic and announce position changes accessibly.
+The reusable SortableList and moveItem exports in @shared/ui/sortable-list accept uniquely identified items and delegate persistence to the caller. They contain no portfolio/auth logic and announce position changes accessibly.
 
 ## Custom sections
 
-The Custom sections editor creates named portfolio sections with list as the default view. Cards, accordion, tabs and carousel reuse @shared/components. Each section has visibility and an ordered collection of titled plain-text items with optional HTTP or HTTPS links. HTML and executable component configuration are not accepted. Text is escaped by React; draft previews also omit unsafe links.
+The Custom sections editor creates named portfolio sections with list as the default view. Cards, accordion, tabs and carousel reuse @shared/ui. Each section has visibility and an ordered collection of titled plain-text items with optional HTTP or HTTPS links. HTML and executable component configuration are not accepted. Text is escaped by React; draft previews also omit unsafe links.
 
 Custom section IDs use a custom- prefix and a UUID. Item IDs are UUIDs. Duplicating creates independent section and item IDs while retaining content and display choices. Removing a section also removes its ordering reference. Normal save, discard, revision checks, portfolio ownership and managed editing apply.
 
@@ -97,13 +97,13 @@ References for YouTube behavior: [official embed guidance](https://support.googl
 
 ## Complete library and templates
 
-All 42 PageForge section families now have explicit renderer/editor folders in @shared/components/sections, alongside native custom/services/social sections. New sectionType and compatible options/source fields extend custom sections without changing legacy instances. The source mapping and integration boundaries are listed in [the PageForge migration map](../reference/pageforge-section-migration.md).
+All 42 PageForge section families now have explicit renderer/editor folders in @shared/ui/sections, alongside native custom/services/social sections. New sectionType and compatible options/source fields extend custom sections without changing legacy instances. The source mapping and integration boundaries are listed in [the PageForge migration map](../reference/pageforge-section-migration.md).
 
 Templates are versioned JSON and are saved separately to an account-private library with owner RLS and optimistic revisions. Export defaults to configuration only. Native and compatible PageForge imports are reviewed before applying fresh section/item IDs to a draft; identity, sharing and CV content remain independent. Profile-source bindings are resolved from the current canonical document and public project filtering applies independently of the built-in project section selection.
 
 ## Component reuse and stories
 
-Homepage sections now live alongside the section variants in `packages/components/src/sections/variants/home-section`. App features import them through `@shared/components/sections`; the old containers entry point is removed. The existing published section schema and registry are unchanged.
+Homepage sections live in `packages/ui/src/sections/home-section`. App features import them through `@shared/ui/sections`; the old containers entry point is removed. The existing published section schema and registry are unchanged.
 
 The homepage catalog derives its 47 names from `authorableSectionTypes`, with a labelled search field, category filters, result count and empty state. It uses the shared Input, Label, Badge, Button and Card controls. Shared section grids, native accordions, carousels and masonry views use Card surfaces; tab and carousel actions use Button. Native details behavior and existing tab keyboard behavior are preserved.
 

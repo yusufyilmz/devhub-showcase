@@ -11,7 +11,7 @@ export const authHandlers = createAuthHandlers({
   callbackPath: "/auth/callback",
   createClient: createServerClient,
   isAccessError: (error) => error instanceof ProfileAccessError,
-  loginPath: "/admin/login",
+  loginPath: "/login",
   setupErrorMessage: "Portfolio storage is not ready. Check the Supabase setup.",
   successPath: "/admin",
 });

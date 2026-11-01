@@ -17,7 +17,7 @@ describe("Edit", () => {
     await expect(
       EditPage({ params: Promise.resolve({ username: "alice" }) }),
     ).rejects.toMatchObject({
-      digest: expect.stringContaining(";/admin/login;"),
+      digest: expect.stringContaining(";/login;"),
     });
   });
 

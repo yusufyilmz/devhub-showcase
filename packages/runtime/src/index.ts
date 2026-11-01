@@ -30,10 +30,10 @@ export {
   USER_CONFIG_STORAGE_KEY,
   USER_CONFIG_STORAGE_VERSION,
   userConfigThemeScript,
-} from "./stores/userConfigPersistence";
-export type { StoredUser, UserConfigMode } from "./stores/userConfigStore";
+} from "./user/userConfigPersistence";
+export type { StoredUser, UserConfigMode } from "./user/userConfigStore";
 export {
   userConfigActions,
   userconfigSelectors,
   useUserConfigStore,
-} from "./stores/userConfigStore";
+} from "./user/userConfigStore";

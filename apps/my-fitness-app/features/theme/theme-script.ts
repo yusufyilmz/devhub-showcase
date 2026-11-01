@@ -1,1 +1,5 @@
-export const themeBootstrap = `try{var t=localStorage.getItem("fitness-os-theme");document.documentElement.dataset.theme=t==="light"?"light":"dark"}catch{document.documentElement.dataset.theme="dark"}`;
+import { userConfigThemeScript } from "@shared/runtime/user";
+
+export const FITNESS_LEGACY_THEME_KEY = "fitness-os-theme";
+
+export const themeBootstrap = userConfigThemeScript(FITNESS_LEGACY_THEME_KEY, "dark");

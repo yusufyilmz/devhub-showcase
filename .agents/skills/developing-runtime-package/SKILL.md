@@ -9,7 +9,7 @@ description: Change shared browser hooks and client stores in @shared/runtime. U
 
 Read [the file map](references/map.md) and [packages/runtime/CATALOG.md](../../../packages/runtime/CATALOG.md).
 
-The caller passes the URL. A studio screen in `@shared/components` receives that URL, or a request function, from `apps/my-dev-studio/features`. Do not hard-code `/api/admin/profile` or any other app path in this package.
+The caller passes the URL. A studio screen in `@shared/ui` receives that URL, or a request function, from `apps/my-dev-studio/features`. Do not hard-code `/api/admin/profile` or any other app path in this package.
 
 ## Hooks
 
@@ -34,7 +34,7 @@ A 401 or 403 from the server is an authorization result. The hook may surface th
 | Profile store     | `src/stores/profileStore.ts`    | Draft state on the client   |
 | User config store | `src/stores/userConfigStore.ts` | Sidebar and chat dimensions |
 
-The root export currently re-exports the user-config helpers (`useUserConfigStore`, `getSidebarCollapsed`, `getChatDimensions`) plus the hooks. Chat and profile stores are exported from `@shared/runtime/stores`. Check `src/stores/index.ts` and `src/index.ts` before importing a store from the package root.
+The root export currently re-exports the user-config helpers (`useUserConfigStore`, `getSidebarCollapsed`, `getChatDimensions`) plus the hooks. Chat and profile stores are exported from `@shared/runtime/user`. `@shared/runtime/user-config` exports the storage key and `userConfigThemeScript` without the client store, so a server layout can render the before-paint script. Check `src/stores/index.ts` and `src/index.ts` before importing a store from the package root.
 
 The profile store is a draft cache. The saved document is whatever `ProfileService` last wrote. Do not treat the store as proof of publication or ownership. Hydrate it from the snapshot the app loaded. Discard it when the server returns `ProfileConflictError` rather than pushing the stale draft over the newer revision.
 
@@ -61,6 +61,6 @@ When a hook backs an editor control, exercise that control in the browser: type,
 
 ## Related skills
 
-- [Developing the components package](../developing-components-package/SKILL.md)
+- [Developing the UI package](../developing-ui-package/SKILL.md)
 - [Developing the utils package](../developing-utils-package/SKILL.md)
 - [Developing the MyDevStudio app](../developing-my-dev-studio-app/SKILL.md)

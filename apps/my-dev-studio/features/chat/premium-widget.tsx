@@ -2,7 +2,7 @@
 
 import type { ComponentProps } from "react";
 
-import { PremiumWidget as PremiumWidgetView } from "@shared/components/chat";
+import { PremiumWidget as PremiumWidgetView } from "@shared/assistant/chat";
 
 import { handlePremiumChatAction } from "../../app/actions";
 
@@ -14,6 +14,7 @@ export function PremiumWidget(
   const { username, ...rest } = props;
   return (
     <PremiumWidgetView
+      username={username}
       {...rest}
       handleSendMessage={(message, sessionId) =>
         handlePremiumChatAction(username, message, sessionId, crypto.randomUUID())

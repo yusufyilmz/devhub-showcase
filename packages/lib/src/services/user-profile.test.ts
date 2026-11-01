@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
-import type { SupabaseDbClient } from "@shared/lib/types";
-import { createEmptyProfile, ensureUserProfile } from "@shared/lib/user-profile";
+import type { SupabaseDbClient } from "../types";
+import { createEmptyProfile, ensureUserProfile } from "./user-profile";
 
 describe("personal workspace", () => {
   it("starts with the signed in identity and no facts copied from the site owner", () => {

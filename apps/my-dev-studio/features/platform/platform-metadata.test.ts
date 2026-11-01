@@ -11,7 +11,7 @@ describe("PlatformMetadata", () => {
   it("brands platform routes separately from personal portfolios and editors", () => {
     for (const path of [
       "/",
-      "/admin/login",
+      "/login",
       "/admin/portfolios",
       "/admin/portfolios/record",
       "/p/examples",

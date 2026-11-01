@@ -1,6 +1,6 @@
 import { readPublicProfile } from "@shared/lib/published-profile";
 
-import { cvResponse } from "@/features/portfolio/cv-response";
+import { cvResponse } from "@/features/portfolio/cv/cv-response";
 
 export const runtime = "nodejs";
 

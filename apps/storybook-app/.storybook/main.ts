@@ -28,7 +28,6 @@ const config: StorybookConfig = {
     "../src/**/*.mdx",
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
     "../../../packages/ui/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    "../../../packages/components/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
   async viteFinal(config) {
     config.resolve ??= {};

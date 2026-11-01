@@ -15,11 +15,13 @@ Changes do not write portfolio settings or use the portfolio theme storage key.
 pnpm --filter storybook-app build-storybook
 ```
 
-Stories load the semantic `@shared/design-system/globals.css` entry. The old
-portfolio stylesheet is an explicit `@shared/design-system/legacy.css` entry
+Stories load `@shared/ui/foundation.css` (tokens + Tailwind, no portfolio bundle).
+Full app CSS is `@shared/ui/app.css` / `@shared/ui/globals.css`. Portfolio-only
+styles are `@shared/ui/portfolio/bundle.css` (shim: `@shared/ui/legacy.css`).
+See `packages/ui/src/styles/STYLES.md`.
 used by the Next.js app during migration. It is not loaded into primitive stories.
-See [the design system catalog](../../packages/design-system/CATALOG.md).
+See [the design system catalog](../../packages/ui/CATALOG.md).
 
-Stories belong beside their components in `packages/ui` or `packages/components`.
+Stories belong beside their components in `packages/ui`.
 The `dev` and `build` commands still target the separate Vite shell; use the
 Storybook commands above for the component explorer.

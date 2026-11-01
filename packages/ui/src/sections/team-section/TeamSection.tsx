@@ -1,0 +1,6 @@
+import { SectionPresentation } from "../presenter";
+import type { SectionProps } from "../types";
+
+export function TeamSection(props: SectionProps) {
+  return <SectionPresentation {...props} type="team" />;
+}

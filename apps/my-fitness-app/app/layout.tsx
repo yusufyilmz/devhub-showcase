@@ -3,6 +3,7 @@ import "./themes.css";
 
 import type { Metadata, Viewport } from "next";
 
+import { FitnessTheme } from "@/features/theme/theme-provider";
 import { themeBootstrap } from "@/features/theme/theme-script";
 export const metadata: Metadata = {
   appleWebApp: {
@@ -28,7 +29,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {/* biome-ignore lint/security/noDangerouslySetInnerHtml: This is a static first-party theme bootstrap, with no user-supplied content. */}
         <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
       </head>
-      <body>{children}</body>
+      <body>
+        <FitnessTheme>{children}</FitnessTheme>
+      </body>
     </html>
   );
 }
