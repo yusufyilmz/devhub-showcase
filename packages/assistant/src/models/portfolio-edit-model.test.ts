@@ -4,6 +4,7 @@ import { profile } from "@shared/config";
 import { buildOwnerPortfolioKnowledge } from "@shared/lib/portfolio-knowledge";
 
 import { PortfolioEditModel } from "./portfolio-edit-model";
+import { studioAgentInstructions } from "./studio-agent-prompt";
 
 describe("AiEditModel", () => {
   it("uses bounded structured output and validates the response without tools or storage", async () => {
@@ -26,6 +27,7 @@ describe("AiEditModel", () => {
     });
     expect((await model.propose(knowledge, "Shorten my title")).changes[0]?.field).toBe("title");
     expect(create.mock.calls[0]?.[0]).toMatchObject({
+      instructions: studioAgentInstructions,
       max_output_tokens: 12000,
       store: false,
       text: { format: { strict: true, type: "json_schema" } },
