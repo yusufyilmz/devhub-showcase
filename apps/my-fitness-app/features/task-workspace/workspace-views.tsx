@@ -12,17 +12,17 @@ import {
   ShoppingBasket,
 } from "lucide-react";
 
+import { TaskService } from "@shared/services/fitness/task";
+import type { AgendaEvent } from "@shared/services/schedule";
+import { ScheduleService } from "@shared/services/schedule";
+import type { Workspace } from "@shared/services/types";
+import { createTask, dateLabel, shiftDate, type Task } from "@shared/services/types";
+import { ThemeToggle } from "@shared/ui/theme";
+
 import { DayAgenda } from "@/features/agenda/day-agenda";
 import { TaskDetails } from "@/features/agenda/task-details";
 import { TaskTree } from "@/features/task-tree/task-tree";
-import { ThemeToggle } from "@/features/theme/theme-toggle";
 import { WeeklyPlanner } from "@/features/weekly-planner/weekly-planner";
-import { dateLabel, shiftDate } from "@/lib/domain/dates";
-import { createTask, type Task } from "@/lib/domain/task";
-import type { Workspace } from "@/lib/domain/workspace";
-import type { AgendaEvent } from "@/lib/services/agenda-service";
-import { ScheduleService } from "@/lib/services/schedule-service";
-import { TaskService } from "@/lib/services/task-service";
 
 import { CalendarView } from "./calendar-view";
 import { SettingsView } from "./settings-view";

@@ -3,9 +3,9 @@ import { connection } from "next/server";
 import { cache } from "react";
 
 import { profile } from "@shared/config";
-import { validateProfile } from "@shared/lib/profile";
-import { ProfileNotFoundError, type ProfileSnapshot } from "@shared/lib/profile-errors";
-import { readPublishedProfile } from "@shared/lib/published-profile";
+import { validateProfile } from "@shared/lib/profiles";
+import { ProfileNotFoundError, type ProfileSnapshot } from "@shared/services/profile";
+import { readPublishedProfile } from "@shared/services/published-profile";
 
 export const getPublishedProfile = cache(async (): Promise<ProfileSnapshot> => {
   if (process.env.NEXT_PUBLIC_SUPABASE_URL) await connection();

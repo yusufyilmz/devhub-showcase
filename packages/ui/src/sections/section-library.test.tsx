@@ -16,7 +16,7 @@ import {
   resolveSectionSource,
 } from "@shared/config";
 import { importPageForge, parseSectionFile } from "@shared/lib/pageforge-import";
-import { profileSchema } from "@shared/lib/profile";
+import { profileSchema } from "@shared/lib/profiles";
 import { customSectionSchema } from "@shared/lib/section";
 import {
   applySectionTemplate,

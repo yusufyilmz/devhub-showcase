@@ -5,7 +5,7 @@ import {
   applyGoogleProfile,
   type GoogleImportField,
   type GoogleProfileReview,
-} from "@shared/lib/google-profile";
+} from "@shared/lib/profiles";
 
 import { Button } from "../buttons";
 import { Field } from "../forms";

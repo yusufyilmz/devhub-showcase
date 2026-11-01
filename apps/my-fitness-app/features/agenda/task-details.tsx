@@ -1,8 +1,9 @@
 "use client";
 import { ArrowLeft } from "lucide-react";
 
+import type { Task } from "@shared/services/types";
+
 import { TaskBranch, type TaskTreeProps } from "@/features/task-tree/task-tree";
-import type { Task } from "@/lib/domain/task";
 
 import { dayHref } from "./use-agenda-navigation";
 export function TaskDetails({

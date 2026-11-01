@@ -5,7 +5,8 @@ import "./management.css";
 import { useState } from "react";
 
 import { type PortfolioProfile, type PortfolioType, portfolioTypes } from "@shared/config";
-import { createEmptyProfile } from "@shared/lib/user-profile";
+import { urls } from "@shared/config/urls";
+import { createEmptyProfile } from "@shared/lib/profiles";
 import { useStudioRequest } from "@shared/runtime/studio";
 import { Button } from "@shared/ui/button";
 
@@ -53,7 +54,7 @@ export function CreatePortfolio({ onCreated }: { onCreated: (id: string) => void
         portfolioType: type,
         templateChosen: true,
       };
-      const response = await request("/api/admin/managed", {
+      const response = await request(urls.next.studio.managed(), {
         body: JSON.stringify({ profile, username }),
         headers: { "Content-Type": "application/json" },
         method: "POST",

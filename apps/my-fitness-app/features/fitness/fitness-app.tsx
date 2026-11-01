@@ -1,10 +1,11 @@
 "use client";
 import { useState } from "react";
 
+import { seedWorkspace } from "@shared/services/db/seed";
+
 import { HttpWorkspaceGateway } from "@/features/task-workspace/gateway";
 import { TaskWorkspace } from "@/features/task-workspace/task-workspace";
 import { useTaskWorkspace } from "@/features/task-workspace/use-task-workspace";
-import { seedWorkspace } from "@/lib/domain/seed";
 
 export function FitnessApp({ readOnly = false }: { readOnly?: boolean }) {
   const [initial] = useState(seedWorkspace);

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import type { PortfolioProfile } from "@shared/config";
+import { urls } from "@shared/config/urls";
 import { MAX_CV_BYTES } from "@shared/lib/cv-file";
 import {
   applyCvDraft,
@@ -38,7 +39,7 @@ export function CvImportEditor({
   const pending = useRef<AbortController | null>(null);
   useEffect(() => {
     const controller = new AbortController();
-    request("/api/admin/cv-import", { signal: controller.signal })
+    request(urls.next.studio.cvImport(), { signal: controller.signal })
       .then((response) => response.json())
       .then((result) => {
         if (!controller.signal.aborted) setEnabled(result.enabled === true);
@@ -188,7 +189,11 @@ async function requestCvExtraction(request: StudioRequest, file: File, signal: A
   if (!file.size || file.size > MAX_CV_BYTES) throw new Error("Choose a nonempty CV up to 3 MB.");
   const form = new FormData();
   form.set("cv", file);
-  const response = await request("/api/admin/cv-import", { body: form, method: "POST", signal });
+  const response = await request(urls.next.studio.cvImport(), {
+    body: form,
+    method: "POST",
+    signal,
+  });
   const result = await response.json();
   if (!response.ok) throw new Error(result.error || "Could not process this CV.");
   const extracted = cvExtractionSchema.parse(result);

@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
-import type { ProfileSnapshot } from "@shared/lib/profile-errors";
-import { editCvPath } from "@shared/lib/username";
+import { editCvPath } from "@shared/lib/profiles";
+import type { ProfileSnapshot } from "@shared/services/profile";
 
 import { requireWorkspace } from "@/features/admin/admin-auth";
 

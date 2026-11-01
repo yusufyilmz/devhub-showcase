@@ -1,4 +1,4 @@
-import { ProfileAccessError } from "@shared/lib/profile-errors";
+import { ProfileAccessError } from "@shared/services/profile";
 
 import { requireWorkspace } from "@/features/admin/admin-auth";
 import { cvResponse } from "@/features/portfolio/cv/cv-response";

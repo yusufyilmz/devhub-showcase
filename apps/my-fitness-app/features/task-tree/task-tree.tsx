@@ -11,10 +11,9 @@ import {
   SkipForward,
 } from "lucide-react";
 
-import type { Task } from "@/lib/domain/task";
-import type { Workspace } from "@/lib/domain/workspace";
-import { TaskService } from "@/lib/services/task-service";
-import { quantityLabel } from "@/lib/services/weekly-planning-service";
+import { TaskService } from "@shared/services/fitness/task";
+import { quantityLabel } from "@shared/services/meal";
+import type { Task, Workspace } from "@shared/services/types";
 
 const service = new TaskService();
 export interface TaskTreeProps {

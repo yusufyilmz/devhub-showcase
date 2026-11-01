@@ -81,10 +81,7 @@ export default defineConfig({
         find: "@fixtures",
         replacement: fileURLToPath(new URL("./tools/__fixtures__", import.meta.url)),
       },
-      {
-        find: "@shared/config",
-        replacement: fileURLToPath(new URL("./packages/config/src/index.ts", import.meta.url)),
-      },
+      ...exportAliases("config").sort((a, b) => b.find.length - a.find.length),
       {
         find: "@shared/cache",
         replacement: fileURLToPath(new URL("./packages/cache/src/index.ts", import.meta.url)),
@@ -109,6 +106,11 @@ export default defineConfig({
           new URL("./packages/billing/src/server/repository.ts", import.meta.url),
         ),
       },
+      ...exportAliases("services").sort((a, b) => b.find.length - a.find.length),
+      {
+        find: /^@shared\/services\/db\/(.*)$/,
+        replacement: `${fileURLToPath(new URL("./packages/services/src/fitness/db/", import.meta.url))}$1`,
+      },
       ...Object.entries(
         JSON.parse(readFileSync(new URL("./packages/lib/package.json", import.meta.url), "utf8"))
           .exports as Record<string, string>,
@@ -123,9 +125,9 @@ export default defineConfig({
         ),
       },
       {
-        find: "@shared/lib/portfolio",
+        find: "@shared/services/portfolio",
         replacement: fileURLToPath(
-          new URL("./packages/lib/src/services/portfolio/index.ts", import.meta.url),
+          new URL("./packages/services/src/portfolio/index.ts", import.meta.url),
         ),
       },
       {
@@ -141,7 +143,7 @@ export default defineConfig({
   test: {
     coverage: {
       include: [
-        "packages/lib/src/services/portfolio/**",
+        "packages/services/src/portfolio/**",
         "packages/lib/src/utils/date/**",
         "packages/assistant/src/services/formatter/**",
       ],

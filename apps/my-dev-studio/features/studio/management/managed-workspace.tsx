@@ -4,7 +4,8 @@ import "./management.css";
 
 import { useState } from "react";
 
-import type { ProfileSnapshot } from "@shared/lib/profile-errors";
+import { urls } from "@shared/config/urls";
+import type { ProfileSnapshot } from "@shared/services/profile";
 
 import { ProfileEditor } from "../profile-editor";
 import { TransferPortfolio } from "./transfer-portfolio";
@@ -26,7 +27,7 @@ export function ManagedWorkspace({
         initial={initial}
         managed
         onSaved={(saved) => setRevision(saved.revision)}
-        saveUrl={`/api/admin/managed/${id}`}
+        saveUrl={urls.next.studio.managedPortfolio(id)}
       />
       <div className="studio managed-transfer">
         <TransferPortfolio id={id} onTransferred={onTransferred} revision={revision} />

@@ -1,6 +1,8 @@
 ---
 name: developing-storybook-app
-description: Develop Storybook in apps/storybook-app. Use when changing Storybook config, Next.js aliases, the PageShell preview decorator, story discovery globs, or how stories from packages/ui are loaded.
+description: Develop Storybook in apps/storybook-app. Use when changing
+  Storybook config, Next.js aliases, the PageShell preview decorator, story
+  discovery globs, or how stories from packages/ui are loaded.
 ---
 
 # Developing the Storybook app

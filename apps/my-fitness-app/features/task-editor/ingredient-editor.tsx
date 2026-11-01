@@ -1,7 +1,7 @@
 "use client";
 import { Plus, X } from "lucide-react";
 
-import type { MealIngredient } from "@/lib/domain/nutrition";
+import type { MealIngredient } from "@shared/services/types";
 
 interface Props {
   items: MealIngredient[];

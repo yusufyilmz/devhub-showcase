@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { ProfileAccessError } from "@shared/lib/profile-errors";
+import { ProfileAccessError } from "@shared/services/profile";
 
 const mocks = vi.hoisted(() => ({
   exchange: vi.fn(),

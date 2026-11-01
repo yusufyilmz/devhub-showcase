@@ -1,6 +1,9 @@
 ---
 name: developing-runtime-package
-description: Change shared browser hooks and client stores in @shared/runtime. Use when editing useFetch, debounced requests, clipboard, viewport or outside-click hooks, notifications, or the chat, profile, and user-config stores in packages/runtime.
+description: Change shared browser hooks and client stores in @shared/runtime.
+  Use when editing useFetch, debounced requests, clipboard, viewport or
+  outside-click hooks, notifications, or the chat, profile, and user-config
+  stores in packages/runtime.
 ---
 
 # Developing the runtime package

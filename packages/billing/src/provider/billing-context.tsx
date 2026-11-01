@@ -12,6 +12,8 @@ import {
 
 import { z } from "zod";
 
+import { urls } from "@shared/config/urls";
+
 import type { AccountStatus } from "../components/account-overview";
 import { billingSummarySchema } from "../features/premium-status";
 import type { BillingRequest } from "../types";
@@ -52,8 +54,8 @@ export function useAccountStatus() {
     setLoading(true);
     showError("");
     Promise.all([
-      request("/api/admin/profile", { cache: "no-store", signal: controller.signal }),
-      request("/api/admin/billing", { cache: "no-store", signal: controller.signal }),
+      request(urls.next.studio.profile(), { cache: "no-store", signal: controller.signal }),
+      request(urls.next.billing.root(), { cache: "no-store", signal: controller.signal }),
     ])
       .then(async ([profile, billing]) => {
         if (!profile.ok || !billing.ok) throw new Error("Unavailable");

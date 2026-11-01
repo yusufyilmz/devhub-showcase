@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { supabaseConfig } from ".";
+import { supabaseConfig, supabaseConfigured } from ".";
 
 describe("SupabaseConfig", () => {
   afterEach(() => vi.unstubAllEnvs());
@@ -19,6 +19,17 @@ describe("SupabaseConfig", () => {
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "legacy");
     expect(supabaseConfig().key).toBe("legacy");
   });
+  it("reports when public Supabase env vars are present", () => {
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://example.supabase.co");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "publishable");
+    expect(supabaseConfigured()).toBe(true);
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "legacy");
+    expect(supabaseConfigured()).toBe(true);
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "");
+    expect(supabaseConfigured()).toBe(false);
+  });
+
   it("rejects missing configuration without leaking secrets", () => {
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "");
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "private-test-value");

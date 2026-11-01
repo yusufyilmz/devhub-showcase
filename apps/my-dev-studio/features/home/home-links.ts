@@ -1,8 +1,8 @@
 import { cache } from "react";
 
-import { readPublicProfile } from "@shared/lib/published-profile";
+import { cvPath, editCvPath } from "@shared/lib/profiles";
 import { createServerClient } from "@shared/lib/supabase";
-import { cvPath, editCvPath } from "@shared/lib/username";
+import { readPublicProfile } from "@shared/services/published-profile";
 import type { PageAction } from "@shared/ui/sections";
 
 export type { PageAction };

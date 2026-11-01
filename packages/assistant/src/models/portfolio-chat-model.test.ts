@@ -5,7 +5,7 @@ import {
   buildOwnerPortfolioKnowledge,
   buildPublicPortfolioKnowledge,
   type PublicPortfolioKnowledge,
-} from "@shared/lib/portfolio-knowledge";
+} from "@shared/lib/profiles";
 
 import { createCVModel } from "./cv-model";
 import { PortfolioChatModel } from "./portfolio-chat-model";

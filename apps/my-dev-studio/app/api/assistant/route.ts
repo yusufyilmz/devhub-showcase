@@ -10,9 +10,12 @@ import {
   premiumAiConfigured,
 } from "@shared/billing/server";
 import { allowStudioAssistant } from "@shared/cache";
-import { aiEditRequestSchema, serializeAiEditContext } from "@shared/lib/ai-edit";
-import { buildOwnerPortfolioKnowledge } from "@shared/lib/portfolio-knowledge";
-import { ProfileAccessError, ProfileConflictError } from "@shared/lib/profile-errors";
+import {
+  aiEditRequestSchema,
+  buildOwnerPortfolioKnowledge,
+  serializeAiEditContext,
+} from "@shared/lib/profiles";
+import { ProfileAccessError, ProfileConflictError } from "@shared/services/profile";
 
 import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
 

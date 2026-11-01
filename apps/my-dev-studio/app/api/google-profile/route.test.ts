@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { ProfileAccessError } from "@shared/lib/profile-errors";
+import { ProfileAccessError } from "@shared/services/profile";
 
 import { GET, POST } from "./route";
 

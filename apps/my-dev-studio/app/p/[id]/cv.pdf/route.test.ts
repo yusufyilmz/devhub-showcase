@@ -4,7 +4,7 @@ const mocks = vi.hoisted(() => ({
   published: vi.fn(),
   render: vi.fn(),
 }));
-vi.mock("@shared/lib/published-profile", () => ({
+vi.mock("@shared/services/published-profile", () => ({
   readPublicProfile: mocks.published,
 }));
 vi.mock("@/features/portfolio/cv-response", () => ({ cvResponse: mocks.render }));

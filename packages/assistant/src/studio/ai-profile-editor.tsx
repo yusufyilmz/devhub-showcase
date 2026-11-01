@@ -2,17 +2,18 @@
 
 import { useEffect, useState } from "react";
 
+import { urls } from "@shared/config/urls";
 import {
   buildOwnerPortfolioKnowledge,
   buildPublicPortfolioKnowledge,
   type OwnerPortfolioKnowledge,
   type PublicPortfolioKnowledge,
-} from "@shared/lib/portfolio-knowledge";
+} from "@shared/lib/profiles";
 import { useStudioRequest } from "@shared/runtime/studio";
 import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 
-export function AiProfileEditor({ readUrl = "/api/admin/profile" }: { readUrl?: string }) {
+export function AiProfileEditor({ readUrl = urls.next.studio.profile() }: { readUrl?: string }) {
   const request = useStudioRequest();
   const [data, setData] = useState<{
     owner: OwnerPortfolioKnowledge;

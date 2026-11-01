@@ -1,14 +1,17 @@
 "use client";
 import { useMemo, useState } from "react";
 
+import {
+  type AgendaEvent,
+  AgendaService,
+  ScheduleService,
+  TaskService,
+} from "@shared/services/schedule";
+import type { Task, Workspace } from "@shared/services/types";
+import { dateKey } from "@shared/services/types";
+
 import { useAgendaNavigation } from "@/features/agenda/use-agenda-navigation";
 import { TaskEditor, type TaskEditorTarget } from "@/features/task-editor/task-editor";
-import { dateKey } from "@/lib/domain/dates";
-import type { Task } from "@/lib/domain/task";
-import type { Workspace } from "@/lib/domain/workspace";
-import { type AgendaEvent, AgendaService } from "@/lib/services/agenda-service";
-import { ScheduleService } from "@/lib/services/schedule-service";
-import { TaskService } from "@/lib/services/task-service";
 
 import { useTaskReminders } from "./use-reminders";
 import type { WorkspaceController } from "./use-task-workspace";

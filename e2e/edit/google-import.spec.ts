@@ -1,5 +1,10 @@
 import { expect, test } from "@playwright/test";
 
+import { urls } from "@shared/config/urls";
+
+const profileApi = urls.next.studio.profile();
+const googleProfileApi = urls.next.studio.googleProfile();
+
 test("new owner chooses Google details, reviews fields and applies without saving", async ({
   page,
   context,
@@ -28,7 +33,7 @@ test("new owner chooses Google details, reviews fields and applies without savin
       contentType: "text/javascript",
     }),
   );
-  await page.route("**/api/admin/google-profile", (route) => {
+  await page.route(`**${googleProfileApi}`, (route) => {
     if (route.request().method() === "POST") {
       expect(route.request().postDataJSON()).toEqual({
         categories: ["basic"],
@@ -44,7 +49,7 @@ test("new owner chooses Google details, reviews fields and applies without savin
   });
   let saves = 0;
   page.on("request", (request) => {
-    if (request.url().endsWith("/api/admin/profile") && request.method() === "PUT") saves++;
+    if (request.url().endsWith(profileApi) && request.method() === "PUT") saves++;
   });
   await page.goto(`/${device}-google-owner/edit`);
   await page.getByRole("button", { name: "Start from Google profile" }).click();
@@ -64,7 +69,7 @@ test("new owner chooses Google details, reviews fields and applies without savin
   await page.getByRole("button", { exact: true, name: "Profile" }).click();
   await expect(page.getByLabel("Full name", { exact: true })).toHaveValue("Alex Google Demo");
   expect(saves).toBe(0);
-  expect((await (await page.request.get("/api/admin/profile")).json()).profile.name).toBe(
+  expect((await (await page.request.get(profileApi)).json()).profile.name).toBe(
     "Google Import Owner",
   );
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(

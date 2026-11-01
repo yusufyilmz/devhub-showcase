@@ -1,23 +1,26 @@
 import { NextResponse } from "next/server";
 
-import { configured, requestIdentity, sameOrigin, workspaceOwnerId } from "@/lib/auth";
-import { database } from "@/lib/db/client";
-import { loadLegacyWorkspace } from "@/lib/migrations/load-legacy-workspace";
-import { DrizzleWorkspaceRepository } from "@/lib/repositories/drizzle-workspace-repository";
-import { RevisionConflictError } from "@/lib/repositories/workspace-repository";
+import { database } from "@shared/services/db/client";
+import { loadLegacyWorkspace } from "@shared/services/fitness";
 import {
+  InvalidWorkspaceError,
   OwnerAccessRequiredError,
+  RevisionConflictError,
   WorkspaceAccessService,
   WorkspaceNotPublishedError,
-} from "@/lib/services/workspace-access-service";
-import { InvalidWorkspaceError, WorkspaceService } from "@/lib/services/workspace-service";
+  WorkspaceRepository,
+  WorkspaceService,
+} from "@shared/services/workspace";
+
+import { configured, requestIdentity, sameOrigin, workspaceOwnerId } from "@/lib/auth";
+
 export const dynamic = "force-dynamic";
 const headers = { "Cache-Control": "private, no-store", Vary: "Authorization" };
 async function context(request: Request) {
   if (!configured() || !process.env.SUPABASE_DB_URL || !process.env.WORKSPACE_OWNER_ID) return null;
   const ownerId = workspaceOwnerId();
   const { user, client } = await requestIdentity(request);
-  const repo = new DrizzleWorkspaceRepository(database(), (id) => loadLegacyWorkspace(client, id));
+  const repo = new WorkspaceRepository(database(), (id) => loadLegacyWorkspace(client, id));
   return {
     access: new WorkspaceAccessService(ownerId, repo),
     service: new WorkspaceService(repo),

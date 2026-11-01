@@ -5,9 +5,8 @@ import { entitlementSchema, entitlementSummary, runPremiumOperation } from "@sha
 import { billingServiceClient } from "@shared/billing/client";
 import { type BillingClient, PremiumUsageRepository } from "@shared/billing/server";
 import { allowPortfolioChat } from "@shared/cache";
-import { buildPublicPortfolioKnowledge } from "@shared/lib/portfolio-knowledge";
-import { readPublicProfileByUsername } from "@shared/lib/published-profile";
-import { usernameSchema } from "@shared/lib/username";
+import { buildPublicPortfolioKnowledge, usernameSchema } from "@shared/lib/profiles";
+import { readPublicProfileByUsername } from "@shared/services/published-profile";
 
 export const premiumChatInput = z
   .object({

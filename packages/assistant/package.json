@@ -29,6 +29,7 @@
     "@shared/config": "workspace:*",
     "@shared/lib": "workspace:*",
     "@shared/runtime": "workspace:*",
+    "@shared/services": "workspace:*",
     "@shared/ui": "workspace:*",
     "@shared/utils": "workspace:*",
     "class-variance-authority": "catalog:",

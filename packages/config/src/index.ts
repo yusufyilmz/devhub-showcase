@@ -15,6 +15,7 @@ import { notFoundPage } from "./copy/site-copy/notFoundPage";
 import { notifications } from "./copy/site-copy/notifications";
 import { project } from "./copy/site-copy/project";
 import { structuredData } from "./copy/site-copy/structured-data";
+import { loginSites } from "./copy/sites";
 
 export const copy = {
   aboutSection,
@@ -25,6 +26,7 @@ export const copy = {
   errorPage,
   footer,
   header,
+  loginSites,
   metadata,
   navbar,
   notFoundPage,
@@ -33,6 +35,7 @@ export const copy = {
   structuredData,
 };
 
+export type { LoginSiteId } from "./copy/sites";
 export { homeFaq } from "./home/faq";
 export type { Language, PortfolioMessages } from "./portfolio/languages";
 export {

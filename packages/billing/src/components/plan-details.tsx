@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 import { z } from "zod";
 
+import { urls } from "@shared/config/urls";
+
 import { useBillingRequest } from "../provider/billing-context";
 
 const planSchema = z.object({
@@ -22,7 +24,7 @@ export function StudioPlanDetails() {
   const [failed, setFailed] = useState(false);
   useEffect(() => {
     const controller = new AbortController();
-    request("/api/billing/pricing", { signal: controller.signal })
+    request(urls.next.billing.pricing(), { signal: controller.signal })
       .then(async (response) => {
         if (!response.ok) throw new Error("Unavailable");
         const value = planSchema.parse(await response.json());

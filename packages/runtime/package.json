@@ -27,12 +27,9 @@
     "types:check": "pnpm typecheck"
   },
   "dependencies": {
-    "@shared/config": "workspace:*",
     "@shared/lib": "workspace:*",
     "@shared/utils": "workspace:*",
-    "@supabase/ssr": "catalog:",
     "react": "catalog:",
-    "zod": "catalog:",
     "zustand": "catalog:"
   },
   "devDependencies": {

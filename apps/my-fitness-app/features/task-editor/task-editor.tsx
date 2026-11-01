@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 
 import { ArrowDown, ArrowUp, Trash2, X } from "lucide-react";
 
-import { createTask, defaultDetails, type Task, type TaskKind } from "@/lib/domain/task";
-import type { Workspace } from "@/lib/domain/workspace";
-import { TaskService } from "@/lib/services/task-service";
+import { TaskService } from "@shared/services/fitness/task";
+import type { Workspace } from "@shared/services/types";
+import { createTask, defaultDetails, type Task, type TaskKind } from "@shared/services/types";
 
 import { IngredientEditor } from "./ingredient-editor";
 export interface TaskEditorTarget {

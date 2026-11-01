@@ -4,10 +4,11 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 
 import { AiAssistantEditor, AiProfileEditor } from "@shared/assistant/studio";
 import { type PortfolioProfile, portfolioTypes } from "@shared/config";
-import type { ProfileSnapshot } from "@shared/lib/profile-errors";
-import { cvPath, editCvPath } from "@shared/lib/username";
+import { urls } from "@shared/config/urls";
+import { cvPath, editCvPath } from "@shared/lib/profiles";
 import { useStudioRequest } from "@shared/runtime/studio";
 import { useUserConfigStore } from "@shared/runtime/user";
+import type { ProfileSnapshot } from "@shared/services/profile";
 import { CvImportEditor, CvSettingsEditor } from "@shared/templates/studio";
 import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
@@ -69,8 +70,8 @@ function clean(profile: PortfolioProfile): PortfolioProfile {
 }
 export function ProfileEditor({
   initial,
-  saveUrl = "/api/admin/profile",
-  downloadHref = "/api/admin/cv",
+  saveUrl = urls.next.studio.profile(),
+  downloadHref = urls.next.studio.cv(),
   managed = false,
   onSaved,
 }: {
@@ -200,7 +201,7 @@ export function ProfileEditor({
               if (dirty && !window.confirm("Leave without publishing your changes?")) return;
               setBusy(true);
               try {
-                const response = await request("/api/admin/session", {
+                const response = await request(urls.next.auth.session(), {
                   method: "DELETE",
                 });
                 if (!response.ok) throw new Error("Could not sign out.");

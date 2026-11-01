@@ -5,8 +5,6 @@ export {
   NotFoundError,
   ValidationError,
 } from "./errors";
-export { ProjectService, projectFormatter } from "./services/resources/supabase/project";
-export { ReferralService } from "./services/resources/supabase/referral";
 export type {
   Achievement,
   Achievements,

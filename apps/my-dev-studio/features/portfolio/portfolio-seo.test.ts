@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { getNameInitials, profile } from "@shared/config";
-import { listPublishedPortfolioLinks } from "@shared/lib/published-profile";
+import { listPublishedPortfolioLinks } from "@shared/services/published-profile";
 
 import { portfolioUrl, siteUrl } from "@/features/platform/site-url";
 import { portfolioIcon } from "@/features/portfolio/portfolio-branding";

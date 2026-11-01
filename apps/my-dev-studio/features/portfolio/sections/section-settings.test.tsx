@@ -11,7 +11,7 @@ import {
   profile,
   selectPortfolioContent,
 } from "@shared/config";
-import { profileSchema } from "@shared/lib/profile";
+import { profileSchema } from "@shared/lib/profiles";
 
 import { RegisteredSections } from "@/features/portfolio/sections";
 import { ProfileEditor } from "@/features/studio";

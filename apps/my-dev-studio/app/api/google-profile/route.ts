@@ -1,7 +1,7 @@
 import { ZodError, z } from "zod";
 
 import { googleProfileCategories } from "@shared/auth/google-provider";
-import { ProfileAccessError } from "@shared/lib/profile-errors";
+import { ProfileAccessError } from "@shared/services/profile";
 
 import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
 import {

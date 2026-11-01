@@ -1,6 +1,9 @@
 ---
 name: developing-assistant-package
-description: Change portfolio chat, owner edit proposals, and CV import models in @shared/assistant. Use when editing an assistant model, prompt, formatter, classifier, processor, summarizer, or fixed assistant message in packages/assistant.
+description: Change portfolio chat, owner edit proposals, and CV import models
+  in @shared/assistant. Use when editing an assistant model, prompt, formatter,
+  classifier, processor, summarizer, or fixed assistant message in
+  packages/assistant.
 ---
 
 # Developing the assistant package
@@ -20,7 +23,7 @@ Read [the file map](references/map.md) and [packages/assistant/CATALOG.md](../..
 
 `MessageProcessor` classifies a chat reply. Fixed strings live in `src/messages`: greeting, failure, goodbye, out of topic, referral, and the related helpers. Change a fixed string there instead of duplicating it in the app.
 
-Public chat context comes from `@shared/lib/portfolio-knowledge`. The public projection and the owner projection are different. Do not put private owner knowledge into the visitor model. The app reads the published snapshot for a public request. Do not cache another user's document into the prompt.
+Public chat context comes from `@shared/lib/profiles`. The public projection and the owner projection are different. Do not put private owner knowledge into the visitor model. The app reads the published snapshot for a public request. Do not cache another user's document into the prompt.
 
 ## Route responsibilities
 
@@ -31,7 +34,7 @@ Keep these in the app even if the model file is the file you are editing:
 | Confirmed owner for edit and CV import | `features/admin` and `@shared/auth`                                           |
 | Visitor chat access                    | `features/chat`                                                               |
 | Attempt limits                         | `@shared/cache` `allowPortfolioChat`, `allowStudioAssistant`, `allowCvImport` |
-| Proposal schema                        | `@shared/lib/ai-edit`                                                         |
+| Proposal schema                        | `@shared/lib/profiles`                                                        |
 | CV file size and type                  | `@shared/lib/cv-file`                                                         |
 | Reviewed CV fields                     | `@shared/lib/cv-import`                                                       |
 | Saving                                 | `ProfileService` in the app's save route                                      |

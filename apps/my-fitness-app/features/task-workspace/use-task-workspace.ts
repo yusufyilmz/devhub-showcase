@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-import { validateWorkspace, type Workspace, workspaceSchema } from "@/lib/domain/workspace";
-import { watchSession } from "@/lib/supabase/browser";
+import { validateWorkspace, type Workspace, workspaceSchema } from "@shared/services/types";
+
+import { watchSession } from "@/lib/browser-session";
 
 import type { WorkspaceGateway } from "./gateway";
 export function useTaskWorkspace(gateway: WorkspaceGateway, initial: Workspace) {

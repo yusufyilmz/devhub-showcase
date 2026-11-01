@@ -2,6 +2,8 @@ import os from "node:os";
 
 import pino, { type Logger, type LoggerOptions } from "pino";
 
+export type { Logger, LoggerOptions };
+
 const createLogger = (hostname: string): Logger => {
   const options: LoggerOptions = {
     base: {

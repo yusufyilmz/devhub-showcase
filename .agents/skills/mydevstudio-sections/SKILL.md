@@ -1,6 +1,9 @@
 ---
 name: mydevstudio-sections
-description: Extend MyDevStudio portfolio sections, compositions, hero backgrounds and social work showcases. Use for renderer registration, section settings, custom sections, ordering, previews and legacy profile compatibility.
+description: Extend MyDevStudio portfolio sections, compositions, hero
+  backgrounds and social work showcases. Use for renderer registration, section
+  settings, custom sections, ordering, previews and legacy profile
+  compatibility.
 ---
 
 # MyDevStudio sections

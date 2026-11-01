@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
-import { readPublicProfile, readPublicProfileByUsername } from "@shared/lib/published-profile";
+import { readPublicProfile, readPublicProfileByUsername } from "@shared/services/published-profile";
 
 export const getPublicProfile = cache(async (id: string) => {
   const snapshot = await readPublicProfile(id);

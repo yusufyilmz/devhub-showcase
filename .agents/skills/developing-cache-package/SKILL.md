@@ -1,6 +1,8 @@
 ---
 name: developing-cache-package
-description: Change Redis rate limits and the cache client in @shared/cache. Use when editing visitor chat limits, CV import limits, studio assistant limits, Redis key names, or RedisCacheClient in packages/cache.
+description: Change Redis rate limits and the cache client in @shared/cache. Use
+  when editing visitor chat limits, CV import limits, studio assistant limits,
+  Redis key names, or RedisCacheClient in packages/cache.
 ---
 
 # Developing the cache package

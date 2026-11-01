@@ -18,7 +18,7 @@ vi.mock("@shared/assistant", () => ({
     answer = mocks.answer;
   },
 }));
-vi.mock("@shared/lib/published-profile", () => ({ readPublicProfileByUsername: mocks.read }));
+vi.mock("@shared/services/published-profile", () => ({ readPublicProfileByUsername: mocks.read }));
 vi.mock("@shared/billing/server", () => ({
   PremiumUsageRepository: class {
     reserve = mocks.reserve;

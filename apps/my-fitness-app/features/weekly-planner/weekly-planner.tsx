@@ -3,12 +3,12 @@ import { useMemo, useState } from "react";
 
 import { RefreshCw, ShoppingBasket } from "lucide-react";
 
+import { TaskService } from "@shared/services/fitness/task";
+import { MealPlanningService, WeeklyPlanningService } from "@shared/services/meal";
+import type { Workspace } from "@shared/services/types";
+import { dateLabel, monday } from "@shared/services/types";
+
 import { TaskTree } from "@/features/task-tree/task-tree";
-import { dateLabel, monday } from "@/lib/domain/dates";
-import type { Workspace } from "@/lib/domain/workspace";
-import { MealPlanningService } from "@/lib/services/meal-planning-service";
-import { TaskService } from "@/lib/services/task-service";
-import { WeeklyPlanningService } from "@/lib/services/weekly-planning-service";
 
 const meals = new MealPlanningService();
 const weekly = new WeeklyPlanningService();

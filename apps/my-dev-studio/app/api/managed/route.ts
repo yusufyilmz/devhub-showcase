@@ -1,7 +1,6 @@
 import { z } from "zod";
 
-import { profileSchema } from "@shared/lib/profile";
-import { usernameSchema } from "@shared/lib/username";
+import { profileSchema, usernameSchema } from "@shared/lib/profiles";
 
 import { sameOrigin } from "@/features/admin/admin-auth";
 import { managedFailure, privateHeaders, readManagedBody } from "@/features/management/managed-api";

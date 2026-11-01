@@ -8,6 +8,7 @@ import {
   type SavedSectionTemplate,
   type SectionTemplateFile,
 } from "@shared/config";
+import { urls } from "@shared/config/urls";
 import { importPageForge, parseSectionFile } from "@shared/lib/pageforge-import";
 import {
   applySectionTemplate,
@@ -53,7 +54,7 @@ export function SectionTemplatesEditor({
   const [busy, setBusy] = useState(false);
   useEffect(() => {
     let cancelled = false;
-    request("/api/admin/section-templates")
+    request(urls.next.studio.sectionTemplates())
       .then(async (response) => {
         const result = await response.json();
         if (!response.ok) throw new Error(result.error);
@@ -76,7 +77,7 @@ export function SectionTemplatesEditor({
     setBusy(true);
     showError("");
     try {
-      const response = await request("/api/admin/section-templates", {
+      const response = await request(urls.next.studio.sectionTemplates(), {
         body: JSON.stringify({ revision, templates: next }),
         headers: { "Content-Type": "application/json" },
         method: "PUT",

@@ -1,6 +1,8 @@
 ---
 name: developing-trello-package
-description: Change the Trello board UI and client in @shared/trello. Use when editing Trello services, board hooks, the board store, or board, card, list, and comment screens in packages/trello.
+description: Change the Trello board UI and client in @shared/trello. Use when
+  editing Trello services, board hooks, the board store, or board, card, list,
+  and comment screens in packages/trello.
 ---
 
 # Developing the Trello package

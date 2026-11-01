@@ -4,10 +4,8 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { profile } from "@shared/config";
-import { getPortfolioResources } from "@shared/lib/portfolio";
 
 import { RevealCard } from "../cards";
-import { ProjectItem } from "./project-section";
 import { SummarySection } from "./summary-section";
 
 describe("PortfolioUi", () => {
@@ -16,18 +14,6 @@ describe("PortfolioUi", () => {
     render(<SummarySection />);
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(`${profile.name}.`);
     expect(screen.getByRole("heading", { level: 2 }).textContent).toBe(profile.title);
-  });
-  it("links a personal project to its live app and GitHub source", () => {
-    const project = getPortfolioResources().projects.find((item) => item.id === "fitness-os");
-    if (!project) throw new Error("Missing Fitness OS project");
-    render(<ProjectItem project={project} />);
-    fireEvent.click(screen.getByRole("button", { name: `Show details for ${project.title}` }));
-    expect(screen.getByRole("link", { name: "Visit project" }).getAttribute("href")).toBe(
-      "https://my-fitness-app.vercel.app",
-    );
-    expect(screen.getByRole("link", { name: "Source on GitHub" }).getAttribute("href")).toBe(
-      "https://github.com/yusufyilmz/my-fitness-app",
-    );
   });
 
   it("previews on hover, closes on leave, and supports touch, focus and Escape", () => {

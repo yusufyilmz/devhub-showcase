@@ -21,9 +21,10 @@
   },
   "dependencies": {
     "@shared/auth": "workspace:*",
+    "@shared/config": "workspace:*",
     "@shared/runtime": "workspace:*",
+    "@shared/services": "workspace:*",
     "@shared/ui": "workspace:*",
-    "@supabase/supabase-js": "catalog:",
     "drizzle-orm": "catalog:",
     "lucide-react": "catalog:",
     "next": "catalog:",

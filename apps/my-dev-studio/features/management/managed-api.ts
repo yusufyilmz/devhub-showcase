@@ -4,7 +4,7 @@ import {
   ProfileAccessError,
   ProfileConflictError,
   ProfileUsernameError,
-} from "@shared/lib/profile-errors";
+} from "@shared/services/profile";
 
 export async function readManagedBody(request: Request): Promise<unknown> {
   const text = await request.text();

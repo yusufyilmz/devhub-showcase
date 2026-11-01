@@ -1,4 +1,4 @@
-import type { ProfileSnapshot } from "@shared/lib/profile-errors";
+import type { ProfileSnapshot } from "@shared/services/profile";
 
 import { getExampleForPath } from "@/features/studio";
 

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { urls } from "@shared/config/urls";
 import { useStudioRequest } from "@shared/runtime/studio";
 import { Button } from "@shared/ui/button";
 
@@ -29,7 +30,7 @@ export function TransferPortfolio({
     setBusy(true);
     showError("");
     try {
-      const response = await request(`/api/admin/managed/${id}/transfer`, {
+      const response = await request(urls.next.studio.managedTransfer(id), {
         body: JSON.stringify({ email, revision }),
         headers: { "Content-Type": "application/json" },
         method: "POST",

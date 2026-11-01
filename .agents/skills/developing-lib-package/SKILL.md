@@ -1,6 +1,10 @@
 ---
 name: developing-lib-package
-description: Change validation, repositories, Supabase access, billing records, and domain services in @shared/lib. Use when editing a Zod schema, profile save, published read, username rule, section template import, CV import review, Google profile review, portfolio knowledge, Stripe sandbox client, or RLS policy test in packages/lib.
+description: Change validation, repositories, Supabase access, billing records,
+  and domain services in @shared/lib. Use when editing a Zod schema, profile
+  save, published read, username rule, section template import, CV import
+  review, Google profile review, portfolio knowledge, Stripe sandbox client, or
+  RLS policy test in packages/lib.
 ---
 
 # Developing the lib package
@@ -38,7 +42,7 @@ Username rules live in `src/domain/username.ts`: lowercase letters, numbers, sin
 
 ## Repositories and Supabase
 
-`ProfileRepository` in `src/repositories/profile-repository.ts` is the contract. `src/repositories/supabase-profile-repository.ts` is the Supabase implementation and the `@shared/lib/profile-repository` export. Keep owner isolation in the query and in RLS. Tests under `src/supabase/rls` describe policy behavior. They do not connect to production and they do not run migrations.
+`ProfileRepository` in `src/repositories/profile-repository.ts` is the contract. `src/repositories/supabase-profile-repository.ts` is the Supabase implementation and the `@shared/services/profile-repository` export. Keep owner isolation in the query and in RLS. Tests under `src/supabase/rls` describe policy behavior. They do not connect to production and they do not run migrations.
 
 There is no Prisma client. Do not add one.
 
@@ -60,7 +64,7 @@ Entitlements, summaries, Stripe sandbox client, and repository code live in `@sh
 
 ## Add a public entry point
 
-`package.json` `exports` lists exact files. There is a root `main` of `src/index.ts`, but callers should use the subpath that matches the catalog, such as `@shared/lib/profile` or `@shared/lib/username`. When you add a module:
+`package.json` `exports` lists exact files. There is a root `main` of `src/index.ts`, but callers should use the subpath that matches the catalog, such as `@shared/lib/profile` or `@shared/lib/profiles`. When you add a module:
 
 1. Export from a stable file under `src/domain`, `src/services`, `src/repositories`, or `src/supabase`.
 2. Add the subpath to `exports`.

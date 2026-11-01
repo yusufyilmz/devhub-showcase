@@ -8,7 +8,7 @@ The task is the common domain entity. A parent-child relationship expresses cate
 
 React components render these models and call services; they do not contain SQL. The workspace hook handles loading, saving, undo and visible errors. The `WorkspaceGateway` HTTP implementation is read-only by default. It unlocks local mutation controls only when the server confirms owner permissions. `WorkspaceAccessService` binds public reads and authorized writes to the configured `WORKSPACE_OWNER_ID`; a browser cannot choose the persistence owner. Supabase Auth verifies the shared cookie session, or a bearer token, on the server before identity is used. Public reads use a read-only repeatable-read transaction and never seed, import or update records. Only owner loads may initialize the workspace.
 
-Repository contracts separate storage from application behavior. `DrizzleWorkspaceRepository` coordinates a transaction; task and planning repositories map their own records. Dependencies are passed through constructors rather than looked up inside domain rules. New persistence adapters can implement the same contracts without changing scheduling or shopping logic.
+Repository contracts separate storage from application behavior. `WorkspaceRepository` coordinates a transaction; task and planning repositories map their own records. Dependencies are passed through constructors rather than looked up inside domain rules. New persistence adapters can implement the same contracts without changing scheduling or shopping logic.
 
 ## Relational storage
 

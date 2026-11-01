@@ -213,8 +213,6 @@
     "react-resizable-panels": "^2.1.9",
     "recharts": "^2.15.4",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^3.7.0",
-    "uuid": "catalog:",
     "vaul": "^1.1.2",
     "zod": "catalog:",
     "zustand": "catalog:"

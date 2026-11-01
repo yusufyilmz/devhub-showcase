@@ -1,6 +1,8 @@
 ---
 name: developing-cv-package
-description: Render CV PDFs in @shared/templates. Use when changing pdfmake output, the Handlebars CV template, CV layout metrics, accent colors, or which profile fields appear in a downloaded CV in packages/cv.
+description: Render CV PDFs in @shared/templates. Use when changing pdfmake
+  output, the Handlebars CV template, CV layout metrics, accent colors, or which
+  profile fields appear in a downloaded CV in packages/cv.
 ---
 
 # Developing the CV package

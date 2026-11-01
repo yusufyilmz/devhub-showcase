@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { cvPath } from "@shared/lib/username";
+import { cvPath } from "@shared/lib/profiles";
 
 import { getPublicProfile } from "@/features/portfolio/profiles/public-profile";
 

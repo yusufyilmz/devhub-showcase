@@ -10,8 +10,8 @@ import {
   type SectionRendererId,
   selectPortfolioContent,
 } from "@shared/config";
-import { getPortfolioResources } from "@shared/lib/portfolio";
 import type { ChatMessage } from "@shared/lib/types";
+import { getPortfolioResources } from "@shared/services/portfolio";
 import { Footer } from "@shared/ui/footer";
 import { Header } from "@shared/ui/header";
 import { HeroSurface, ScrollButton, Section } from "@shared/ui/layout";

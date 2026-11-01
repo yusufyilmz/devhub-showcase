@@ -1,6 +1,9 @@
 ---
 name: mydevstudio-business
-description: Implement or review MyDevStudio business behavior. Use for onboarding, portfolios, usernames, owner editing, publication, managed profiles, transfers, language/theme choices, CV downloads and privacy boundaries.
+description: Implement or review MyDevStudio business behavior. Use for
+  onboarding, portfolios, usernames, owner editing, publication, managed
+  profiles, transfers, language/theme choices, CV downloads and privacy
+  boundaries.
 ---
 
 # MyDevStudio business

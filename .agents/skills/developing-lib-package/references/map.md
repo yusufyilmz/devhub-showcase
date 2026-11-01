@@ -4,35 +4,35 @@ Package `@shared/lib` in `packages/lib`. Import a catalogued subpath.
 
 ## Domain
 
-| Export                            | File                                |
-| --------------------------------- | ----------------------------------- |
-| `@shared/lib/profile`             | `src/domain/profile.ts`             |
-| `@shared/lib/username`            | `src/domain/username.ts`            |
-| `@shared/lib/section`             | `src/domain/section.ts`             |
-| `@shared/lib/section-templates`   | `src/domain/section-templates.ts`   |
-| `@shared/lib/pageforge-import`    | `src/domain/pageforge-import.ts`    |
-| `@shared/lib/cv-import`           | `src/domain/cv-import.ts`           |
-| `@shared/lib/cv-file`             | `src/domain/cv-file.ts`             |
-| `@shared/lib/ai-edit`             | `src/domain/ai-edit.ts`             |
-| `@shared/lib/google-profile`      | `src/domain/google-profile.ts`      |
-| `@shared/lib/portfolio-knowledge` | `src/domain/portfolio-knowledge.ts` |
+| Export                          | File                                |
+| ------------------------------- | ----------------------------------- |
+| `@shared/lib/profile`           | `src/domain/profile.ts`             |
+| `@shared/lib/profiles`          | `src/domain/username.ts`            |
+| `@shared/lib/section`           | `src/domain/section.ts`             |
+| `@shared/lib/section-templates` | `src/domain/section-templates.ts`   |
+| `@shared/lib/pageforge-import`  | `src/domain/pageforge-import.ts`    |
+| `@shared/lib/cv-import`         | `src/domain/cv-import.ts`           |
+| `@shared/lib/cv-file`           | `src/domain/cv-file.ts`             |
+| `@shared/lib/profiles`          | `src/domain/ai-edit.ts`             |
+| `@shared/lib/profiles`          | `src/domain/google-profile.ts`      |
+| `@shared/lib/profiles`          | `src/domain/portfolio-knowledge.ts` |
 
 ## Services and persistence
 
-| Export                           | File                                              | Use                                                                              |
-| -------------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `@shared/lib/profile-service`    | `src/services/profile-service.ts`                 | Owner check, parse, revision save                                                |
-| `@shared/lib/published-profile`  | `src/services/published-profile.ts`               | Public read                                                                      |
-| `@shared/lib/user-profile`       | `src/services/user-profile.ts`                    | Owner provisioning                                                               |
-| `@shared/lib/profile-repository` | `src/repositories/supabase-profile-repository.ts` | Supabase repository                                                              |
-| `@shared/lib/profile-errors`     | `src/repositories/profile-repository.ts`          | Access, conflict, setup, not-found, username errors and the repository interface |
-| `@shared/lib/portfolio`          | `src/services/portfolio`                          | Portfolio resources                                                              |
-| `@shared/lib/services`           | `src/services/index.ts`                           | Service barrel                                                                   |
-| `@shared/lib/supabase`           | `src/supabase`                                    | Clients                                                                          |
-| `@shared/lib/types`              | `src/types`                                       | Database and chat types                                                          |
-| `@shared/lib/errors`             | `src/errors`                                      | Generic request errors                                                           |
-| `@shared/lib/utils`              | `src/utils`                                       | Date and domain helpers                                                          |
-| `@shared/lib/cache`              | `src/cache`                                       | Service-worker cache manager, not Redis                                          |
+| Export                                | File                                              | Use                                                                              |
+| ------------------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `@shared/services/profile-service`    | `src/services/profile-service.ts`                 | Owner check, parse, revision save                                                |
+| `@shared/services/published-profile`  | `src/services/published-profile.ts`               | Public read                                                                      |
+| `@shared/services/user-profile`       | `src/services/user-profile.ts`                    | Owner provisioning                                                               |
+| `@shared/services/profile-repository` | `src/repositories/supabase-profile-repository.ts` | Supabase repository                                                              |
+| `@shared/services/profile`            | `src/repositories/profile-repository.ts`          | Access, conflict, setup, not-found, username errors and the repository interface |
+| `@shared/services/portfolio`          | `src/services/portfolio`                          | Portfolio resources                                                              |
+| `@shared/services/studio`             | `src/services/index.ts`                           | Service barrel                                                                   |
+| `@shared/lib/supabase`                | `src/supabase`                                    | Clients                                                                          |
+| `@shared/lib/types`                   | `src/types`                                       | Database and chat types                                                          |
+| `@shared/lib/errors`                  | `src/errors`                                      | Generic request errors                                                           |
+| `@shared/lib/utils`                   | `src/utils`                                       | Date and domain helpers                                                          |
+| `@shared/lib/cache`                   | `src/cache`                                       | Service-worker cache manager, not Redis                                          |
 
 Redis rate limits are `@shared/cache`. This package's `src/cache` is a different helper. Do not store rate-limit counters here.
 

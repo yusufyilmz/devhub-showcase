@@ -1,6 +1,9 @@
 ---
 name: developing-config-package
-description: Change profile types, themes, languages, CV layout choices, and section metadata in @shared/config. Use when adding a persisted profile field, theme, portfolio type, authorable section, section composition, or site copy that describes the profile document in packages/config.
+description: Change profile types, themes, languages, CV layout choices, and
+  section metadata in @shared/config. Use when adding a persisted profile field,
+  theme, portfolio type, authorable section, section composition, or site copy
+  that describes the profile document in packages/config.
 ---
 
 # Developing the config package

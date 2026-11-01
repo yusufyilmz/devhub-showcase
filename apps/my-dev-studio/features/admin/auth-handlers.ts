@@ -1,6 +1,6 @@
 import { createAuthHandlers } from "@shared/auth/handlers";
-import { ProfileAccessError } from "@shared/lib/profile-errors";
 import { createServerClient } from "@shared/lib/supabase";
+import { ProfileAccessError } from "@shared/services/profile";
 
 import { requireWorkspace } from "./admin-auth";
 

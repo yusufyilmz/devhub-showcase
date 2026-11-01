@@ -1,6 +1,10 @@
 ---
 name: developing-ui-package
-description: Develop controls, sections, studio and portfolio surfaces, theme, notifications, and global CSS in @shared/ui. Use when changing packages/ui, a button, form control, overlay, toast, stylesheet, theme token, section renderer or editor, PageShell, HeroSurface, or a studio screen that must stay free of route handlers.
+description: Develop controls, sections, studio and portfolio surfaces, theme,
+  notifications, and global CSS in @shared/ui. Use when changing packages/ui, a
+  button, form control, overlay, toast, stylesheet, theme token, section
+  renderer or editor, PageShell, HeroSurface, or a studio screen that must stay
+  free of route handlers.
 ---
 
 # Developing the UI package

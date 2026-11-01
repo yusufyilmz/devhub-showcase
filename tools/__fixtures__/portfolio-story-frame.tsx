@@ -3,7 +3,7 @@ import "@shared/ui/sections.css";
 
 import type { CSSProperties, ReactNode } from "react";
 
-import { type ColorMode, getThemePalette, portfolioAccents } from "../../packages/config";
+import { type ColorMode, getThemePalette, portfolioAccents } from "@shared/config";
 
 /** A scoped portfolio palette; never load legacy global resets into primitive stories. */
 export function PortfolioStoryFrame({

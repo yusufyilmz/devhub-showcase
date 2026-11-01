@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-import type { ProfileSnapshot } from "@shared/lib/profile-errors";
+import type { ProfileSnapshot } from "@shared/services/profile";
 
 import { ManagedWorkspace as ManagedWorkspaceView } from "@/features/studio";
 

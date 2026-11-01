@@ -3,6 +3,8 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
+import { urls } from "@shared/config/urls";
+
 import { StudioPlanDetails } from "./plan-details";
 
 describe("PricingUi", () => {
@@ -31,7 +33,7 @@ describe("PricingUi", () => {
     expect(
       await screen.findByText(new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))),
     ).toBeTruthy();
-    expect(fetchMock.mock.calls[0]?.[0]).toBe("/api/billing/pricing");
+    expect(fetchMock.mock.calls[0]?.[0]).toBe(urls.next.billing.pricing());
     expect(await screen.findByText(/100 visitor chat attempts/)).toBeTruthy();
   });
   it("keeps a useful free-plan message when pricing is unavailable", async () => {

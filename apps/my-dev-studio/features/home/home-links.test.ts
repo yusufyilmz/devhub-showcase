@@ -14,7 +14,7 @@ vi.mock("@shared/lib/supabase", () => ({
     from: mocks.from,
   }),
 }));
-vi.mock("@shared/lib/published-profile", () => ({
+vi.mock("@shared/services/published-profile", () => ({
   readPublicProfile: mocks.publicProfile,
 }));
 

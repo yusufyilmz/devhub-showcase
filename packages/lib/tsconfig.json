@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@shared/lib/*": ["./src/*"]
+    },
     "types": ["node"]
   },
   "exclude": ["node_modules", "dist"],

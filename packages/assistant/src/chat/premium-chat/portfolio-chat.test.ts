@@ -5,7 +5,7 @@ import { profile } from "@shared/config";
 import { requireLegacyChat } from "../portfolio-chat";
 
 const mocks = vi.hoisted(() => ({ limit: vi.fn(), read: vi.fn() }));
-vi.mock("@shared/lib/published-profile", () => ({ readPublicProfileByUsername: mocks.read }));
+vi.mock("@shared/services/published-profile", () => ({ readPublicProfileByUsername: mocks.read }));
 vi.mock("@shared/cache", () => ({ allowPortfolioChat: mocks.limit }));
 
 const session = "11111111-1111-4111-8111-111111111111";

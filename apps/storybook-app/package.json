@@ -19,7 +19,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@shared/runtime": "workspace:*",
     "@shared/ui": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
     "postcss": "catalog:",

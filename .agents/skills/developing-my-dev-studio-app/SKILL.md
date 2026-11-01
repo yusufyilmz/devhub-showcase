@@ -1,6 +1,9 @@
 ---
 name: developing-my-dev-studio-app
-description: Develop the Next.js app in apps/my-dev-studio. Use when adding a route, API handler, feature data-access module, page metadata, sitemap entry, or app-only admin, billing, chat, home, management, platform, or portfolio behavior.
+description: Develop the Next.js app in apps/my-dev-studio. Use when adding a
+  route, API handler, feature data-access module, page metadata, sitemap entry,
+  or app-only admin, billing, chat, home, management, platform, or portfolio
+  behavior.
 ---
 
 # Developing the MyDevStudio app

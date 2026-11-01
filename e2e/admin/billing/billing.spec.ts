@@ -1,5 +1,10 @@
 import { expect, test } from "@playwright/test";
 
+import { urls } from "@shared/config/urls";
+
+const profileApi = urls.next.studio.profile();
+const billingApi = urls.next.billing.root();
+
 async function signIn(context: import("@playwright/test").BrowserContext, id: string) {
   const exp = Math.floor(Date.now() / 1000) + 3600;
   const token = [
@@ -37,11 +42,11 @@ test("owner sees separate AI readiness and refreshes without changing publicatio
       ? "94949494-9494-4494-8494-949494949491"
       : "94949494-9494-4494-8494-949494949490",
   );
-  await page.route("**/api/admin/profile", (route) =>
+  await page.route(`**${profileApi}`, (route) =>
     route.fulfill({ json: { id: "alpha", isPublic: false } }),
   );
   let saved = false;
-  await page.route("**/api/admin/billing", async (route) => {
+  await page.route(`**${billingApi}`, async (route) => {
     if (route.request().method() === "PUT") {
       expect(route.request().postDataJSON()).toEqual({ chatEnabled: true, profileId: "alpha" });
       saved = true;
@@ -49,7 +54,7 @@ test("owner sees separate AI readiness and refreshes without changing publicatio
     }
     return route.fulfill({ json: { ...summary, chatEnabled: saved } });
   });
-  await page.route("**/api/billing/pricing", (route) =>
+  await page.route(`**${urls.next.billing.pricing()}`, (route) =>
     route.fulfill({ json: { available: false }, status: 503 }),
   );
   await page.goto("/admin/billing");
@@ -75,10 +80,10 @@ test("checkout return alone never displays active Pro and portal errors explain 
       ? "95959595-9595-4595-8595-959595959591"
       : "95959595-9595-4595-8595-959595959590",
   );
-  await page.route("**/api/admin/profile", (route) =>
+  await page.route(`**${profileApi}`, (route) =>
     route.fulfill({ json: { id: "alpha", isPublic: false } }),
   );
-  await page.route("**/api/admin/billing", (route) =>
+  await page.route(`**${billingApi}`, (route) =>
     route.fulfill({
       json: {
         ...summary,
@@ -89,7 +94,7 @@ test("checkout return alone never displays active Pro and portal errors explain 
       },
     }),
   );
-  await page.route("**/api/billing/portal", (route) =>
+  await page.route(`**${urls.next.billing.action("portal")}`, (route) =>
     route.fulfill({
       json: { code: "no_subscription", error: "hidden provider detail" },
       status: 503,

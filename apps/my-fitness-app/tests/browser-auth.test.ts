@@ -7,7 +7,9 @@ const mocks = vi.hoisted(() => ({
 }));
 vi.mock("@shared/auth/client", () => ({ createClient: mocks.createClient }));
 
-import { authorizationHeaders, signOut } from "../lib/supabase/browser";
+import { urls } from "@shared/config/urls";
+
+import { authorizationHeaders, signOut } from "../lib/browser-session";
 
 describe("Fitness browser session", () => {
   afterEach(() => {
@@ -40,7 +42,9 @@ describe("Fitness browser session", () => {
     });
     expect(mocks.createClient).toHaveBeenCalledOnce();
     await signOut();
-    expect(fetchMock).toHaveBeenCalledExactlyOnceWith("/api/auth/session", { method: "DELETE" });
+    expect(fetchMock).toHaveBeenCalledExactlyOnceWith(urls.next.auth.session(), {
+      method: "DELETE",
+    });
     expect(mocks.signOut).toHaveBeenCalledExactlyOnceWith({ scope: "local" });
   });
 });

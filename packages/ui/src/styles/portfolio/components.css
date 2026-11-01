@@ -1,39 +1,5 @@
-:root {
-  --bg-rgb: 9 15 26;
-  --surface-rgb: 16 25 41;
-  --surface-soft-rgb: 22 34 52;
-  --text-rgb: 234 241 249;
-  --muted-rgb: 160 177 198;
-  --border-rgb: 43 60 81;
-  --accent-rgb: 103 216 231;
-  --danger-rgb: 255 148 153;
-  --shadow-rgb: 0 0 0;
-  color-scheme: dark;
-}
-:root[data-theme="light"] {
-  --bg-rgb: 246 248 251;
-  --surface-rgb: 255 255 255;
-  --surface-soft-rgb: 236 242 248;
-  --text-rgb: 25 42 61;
-  --muted-rgb: 83 105 129;
-  --border-rgb: 207 220 231;
-  --accent-rgb: 13 110 132;
-  --danger-rgb: 168 36 56;
-  --shadow-rgb: 60 84 110;
-  color-scheme: light;
-}
-:root[data-accent="violet"] {
-  --accent-rgb: 184 165 255;
-}
-:root[data-theme="light"][data-accent="violet"] {
-  --accent-rgb: 111 69 177;
-}
-:root[data-accent="emerald"] {
-  --accent-rgb: 98 220 183;
-}
-:root[data-theme="light"][data-accent="emerald"] {
-  --accent-rgb: 14 113 86;
-}
+@import "../foundation/platform-rgb.css";
+
 * {
   box-sizing: border-box;
 }

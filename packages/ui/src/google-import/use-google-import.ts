@@ -10,7 +10,8 @@ import {
   loadGoogleConsent,
   requestGoogleProfileConsent,
 } from "@shared/auth/google-provider";
-import { type GoogleProfileReview, googleProfileReviewSchema } from "@shared/lib/google-profile";
+import { urls } from "@shared/config/urls";
+import { type GoogleProfileReview, googleProfileReviewSchema } from "@shared/lib/profiles";
 import { type StudioRequest, useStudioRequest } from "@shared/runtime/studio";
 
 const setupSchema = z.object({ clientId: z.string().nullable(), enabled: z.boolean() });
@@ -29,7 +30,7 @@ export function useGoogleImport() {
   useEffect(() => {
     mounted.current = true;
     const controller = new AbortController();
-    request("/api/admin/google-profile", { cache: "no-store", signal: controller.signal })
+    request(urls.next.studio.googleProfile(), { cache: "no-store", signal: controller.signal })
       .then(async (response) => {
         if (!response.ok) throw new Error("Unavailable");
         return setupSchema.parse(await response.json());
@@ -135,7 +136,7 @@ async function readSelectedDetails(
   categories: GoogleProfileCategory[],
   signal: AbortSignal,
 ) {
-  const response = await request("/api/admin/google-profile", {
+  const response = await request(urls.next.studio.googleProfile(), {
     body: JSON.stringify({ categories, token }),
     headers: { "Content-Type": "application/json" },
     method: "POST",

@@ -3,6 +3,8 @@
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
+import { urls } from "@shared/config/urls";
+
 import { type BillingSummary, entitlementSummary } from "../index";
 import { AccountOverview } from "./account-overview";
 import { ChatSettings } from "./chat-settings";
@@ -71,7 +73,7 @@ describe("AccountOverview", () => {
     );
     expect(
       fetchMock.mock.calls.every(([url]) =>
-        ["/api/admin/billing", "/api/admin/profile"].includes(String(url)),
+        [urls.next.billing.root(), urls.next.studio.profile()].includes(String(url)),
       ),
     ).toBe(true);
   });

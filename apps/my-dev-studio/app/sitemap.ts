@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { listPublishedPortfolioLinks } from "@shared/lib/published-profile";
+import { listPublishedPortfolioLinks } from "@shared/services/published-profile";
 
 import { portfolioUrl, siteUrl } from "@/features/platform/site-url";
 

@@ -1,5 +1,10 @@
 import { expect, test } from "@playwright/test";
 
+import { urls } from "@shared/config/urls";
+
+const profileApi = urls.next.studio.profile();
+const assistantApi = urls.next.studio.assistant();
+
 test("owner reviews AI suggestions before changing a draft and can undo without saving", async ({
   page,
   context,
@@ -20,9 +25,9 @@ test("owner reviews AI suggestions before changing a draft and can undo without 
       value: `base64-${Buffer.from(JSON.stringify({ access_token: token, expires_at: exp, expires_in: 3600, refresh_token: "fixture-refresh", token_type: "bearer", user: { email: "ai-owner@example.test", id } })).toString("base64url")}`,
     },
   ]);
-  const original = (await (await page.request.get("/api/admin/profile")).json()).profile.title;
+  const original = (await (await page.request.get(profileApi)).json()).profile.title;
   // Isolate UI review behavior. The real route's ownership/quotas/provider are covered by unit tests.
-  await page.route("**/api/admin/assistant", async (route) => {
+  await page.route(`**${assistantApi}`, async (route) => {
     if (route.request().method() === "GET")
       return route.fulfill({ json: { enabled: true, limit: 10, usage: 0 } });
     return route.fulfill({
@@ -39,7 +44,7 @@ test("owner reviews AI suggestions before changing a draft and can undo without 
   });
   let saves = 0;
   page.on("request", (request) => {
-    if (request.url().endsWith("/api/admin/profile") && request.method() === "PUT") saves++;
+    if (request.url().endsWith(profileApi) && request.method() === "PUT") saves++;
   });
   await page.goto(`/${device}-ai-owner/edit`);
   await page.getByRole("button", { exact: true, name: "AI assistant" }).click();
@@ -56,12 +61,10 @@ test("owner reviews AI suggestions before changing a draft and can undo without 
   await page.getByRole("button", { exact: true, name: "Apply selected changes to draft" }).click();
   await expect(page.getByText(/Applied to your draft/)).toBeVisible();
   expect(saves).toBe(0);
-  expect((await (await page.request.get("/api/admin/profile")).json()).profile.title).toBe(
-    original,
-  );
+  expect((await (await page.request.get(profileApi)).json()).profile.title).toBe(original);
   await page.getByRole("button", { exact: true, name: "Undo AI changes" }).click();
   await page.getByRole("button", { exact: true, name: "Profile" }).click();
   await expect(page.getByLabel("Professional title")).toHaveValue(original);
   await context.clearCookies();
-  expect((await page.request.get("/api/admin/assistant")).status()).toBe(403);
+  expect((await page.request.get(assistantApi)).status()).toBe(403);
 });

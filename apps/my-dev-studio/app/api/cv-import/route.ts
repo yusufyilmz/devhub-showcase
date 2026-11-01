@@ -7,8 +7,8 @@ import {
   MAX_CV_BYTES,
   validateCvFile,
 } from "@shared/lib/cv-file";
-import { ProfileAccessError } from "@shared/lib/profile-errors";
 import { createServerClient } from "@shared/lib/supabase";
+import { ProfileAccessError } from "@shared/services/profile";
 
 import { sameOrigin } from "@/features/admin/admin-auth";
 

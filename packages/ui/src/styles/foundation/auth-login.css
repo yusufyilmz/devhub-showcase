@@ -1,0 +1,148 @@
+/* Shared sign-in shell for MyDevStudio, Fitness OS, and Storybook. Uses portfolio RGB tokens. */
+.auth-login > .eyebrow {
+  margin: 0 0 12px;
+  font:
+    500 11px / 1.6 var(--font-geist-mono, ui-monospace),
+    monospace;
+  color: rgb(var(--accent-rgb));
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+.auth-login h1 span {
+  color: rgb(var(--accent-rgb));
+}
+.auth-login label {
+  display: grid;
+  gap: 9px;
+  font-size: 12px;
+  color: rgb(var(--muted-rgb));
+}
+.auth-login .google-login-form {
+  padding: 0;
+  margin-bottom: 0;
+  background: transparent;
+  border: 0;
+}
+.login-page {
+  max-width: 450px;
+  padding: 35px;
+  margin: 12vh auto;
+}
+.login-page .auth-login {
+  max-width: none;
+  padding: 0;
+  margin: 0;
+}
+.login-brand {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.login-brand .brand {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.login-page .auth-login h1 {
+  margin: 20px 0;
+  font-size: 32px;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+.login-page .auth-login > p:not(.eyebrow) {
+  margin-bottom: 25px;
+  line-height: 1.6;
+  color: rgb(var(--muted-rgb));
+}
+.login-page .auth-login form {
+  display: grid;
+  gap: 16px;
+  padding: 0;
+  margin-top: 28px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.login-page .google-login-form {
+  margin-top: 0;
+}
+.auth-login :is(input:not([type="checkbox"]), textarea, select) {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  font: inherit;
+  color: rgb(var(--text-rgb));
+  outline: none;
+  background: rgb(var(--surface-soft-rgb));
+  border: 1px solid rgb(var(--border-rgb));
+  border-radius: 7px;
+}
+.auth-login :is(input:not([type="checkbox"]), textarea, select):focus {
+  border-color: rgb(var(--accent-rgb));
+  box-shadow: 0 0 0 3px rgb(var(--accent-rgb) / 0.18);
+}
+.login-page .studio-google,
+.login-page .studio-primary {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 46px;
+  padding-inline: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+.login-page .studio-google {
+  color: rgb(var(--text-rgb));
+  background: rgb(var(--surface-rgb));
+  border: 1px solid rgb(var(--border-rgb));
+  box-shadow: none;
+}
+.login-page .studio-google:hover:not(:disabled) {
+  background: rgb(var(--surface-soft-rgb));
+  transform: none;
+}
+.login-page .studio-primary {
+  color: rgb(var(--bg-rgb));
+  background: rgb(var(--accent-rgb));
+  border: 0;
+  box-shadow: 0 5px 24px rgb(var(--accent-rgb) / 0.12);
+}
+.login-page .login-separator {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 0;
+  font-size: 12px;
+  color: rgb(var(--muted-rgb));
+}
+.login-page .login-separator::before,
+.login-page .login-separator::after {
+  flex: 1;
+  height: 1px;
+  content: "";
+  background: rgb(var(--border-rgb));
+}
+.login-page .form-error {
+  margin: 0;
+  font-size: 12px;
+  color: rgb(var(--danger-rgb));
+}
+.login-page .auth-login > a {
+  font-size: 12px;
+  color: rgb(var(--muted-rgb));
+}
+@media (max-width: 640px) {
+  .login-page {
+    margin: 8vh auto;
+  }
+  .auth-login :is(input:not([type="checkbox"]), textarea, select) {
+    font-size: 16px;
+  }
+}

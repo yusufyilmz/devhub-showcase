@@ -1,4 +1,4 @@
-import { readPublicProfileByUsername } from "@shared/lib/published-profile";
+import { readPublicProfileByUsername } from "@shared/services/published-profile";
 
 import { cvResponse } from "@/features/portfolio/cv/cv-response";
 

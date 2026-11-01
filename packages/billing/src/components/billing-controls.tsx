@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { urls } from "@shared/config/urls";
 import { Button } from "@shared/ui/button";
 
 import { billingErrorMessage } from "../constants/messages";
@@ -17,7 +18,7 @@ export function BillingControls() {
     setBusy(true);
     showError("");
     try {
-      const response = await request(`/api/billing/${action}`, { method: "POST" });
+      const response = await request(urls.next.billing.action(action), { method: "POST" });
       const data = await response.json();
       if (!response.ok) {
         showError(billingErrorMessage(data.code));

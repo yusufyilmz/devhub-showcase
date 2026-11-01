@@ -4,27 +4,17 @@
   "private": true,
   "exports": {
     "./utils": "./src/utils/index.ts",
-    "./services": "./src/services/index.ts",
     "./types": "./src/types/index.ts",
     "./errors": "./src/errors/index.ts",
     "./supabase": "./src/supabase/index.ts",
-    "./portfolio": "./src/services/portfolio/index.ts",
-    "./profile": "./src/domain/profile.ts",
-    "./profile-repository": "./src/repositories/supabase-profile-repository.ts",
-    "./profile-service": "./src/services/profile-service.ts",
-    "./profile-errors": "./src/repositories/profile-repository.ts",
-    "./published-profile": "./src/services/published-profile.ts",
-    "./user-profile": "./src/services/user-profile.ts",
-    "./username": "./src/domain/username.ts",
+    "./profiles": "./src/profiles/index.ts",
     "./section": "./src/domain/section.ts",
     "./section-templates": "./src/domain/section-templates.ts",
     "./pageforge-import": "./src/domain/pageforge-import.ts",
     "./cv-import": "./src/domain/cv-import.ts",
     "./cv-file": "./src/domain/cv-file.ts",
-    "./portfolio-knowledge": "./src/domain/portfolio-knowledge.ts",
-    "./ai-edit": "./src/domain/ai-edit.ts",
-    "./google-profile": "./src/domain/google-profile.ts",
-    "./cache": "./src/cache/index.ts"
+    "./cache": "./src/cache/index.ts",
+    "./date": "./src/date/index.ts"
   },
   "main": "src/index.ts",
   "scripts": {
@@ -40,13 +30,11 @@
   },
   "dependencies": {
     "@shared/auth": "workspace:*",
-    "@shared/cache": "workspace:*",
     "@shared/config": "workspace:*",
     "@shared/utils": "workspace:*",
     "@supabase/supabase-js": "catalog:",
     "axios": "catalog:",
     "next": "catalog:",
-    "pino": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

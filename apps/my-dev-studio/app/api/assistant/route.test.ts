@@ -40,7 +40,7 @@ vi.mock("@shared/billing/server", () => ({
     ),
 }));
 
-import { ProfileAccessError } from "@shared/lib/profile-errors";
+import { ProfileAccessError } from "@shared/services/profile";
 
 import { GET, POST } from "./route";
 

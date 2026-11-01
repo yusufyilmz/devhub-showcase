@@ -21,10 +21,7 @@
     "@shared/runtime": "workspace:*",
     "@shared/ui": "workspace:*",
     "handlebars": "catalog:",
-    "pdfmake": "catalog:",
-    "react": "catalog:",
-    "react-dom": "catalog:",
-    "zod": "catalog:"
+    "pdfmake": "catalog:"
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",

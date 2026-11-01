@@ -5,7 +5,7 @@ import {
   ProfileConflictError,
   ProfileSetupError,
   ProfileUsernameError,
-} from "@shared/lib/profile-errors";
+} from "@shared/services/profile";
 
 import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
 

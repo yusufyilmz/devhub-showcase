@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@shared/cache": ["../cache/src/index.ts"],
+      "@shared/lib/*": ["../lib/src/*"]
+    },
+    "types": ["node"]
+  },
+  "exclude": ["node_modules", "dist"],
+  "extends": "@shared/typescript-config/base.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx", "../lib/src/date/index.ts"]
+}

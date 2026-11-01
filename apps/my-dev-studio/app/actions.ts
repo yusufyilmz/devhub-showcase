@@ -6,7 +6,6 @@ import {
   MessageProcessor,
   PortfolioChatModel,
 } from "@shared/assistant";
-import { ReferralService, ReviewService } from "@shared/lib/services";
 import { createServerClient } from "@shared/lib/supabase";
 import {
   type ChatMessage,
@@ -15,6 +14,7 @@ import {
   type ReviewWithReferrals,
 } from "@shared/lib/types";
 import { isCategoryReferralCategory } from "@shared/lib/utils";
+import { ReferralService, ReviewService } from "@shared/services/studio";
 import { logger } from "@shared/utils/logger";
 
 import { requireAdmin } from "@/features/admin/admin-auth";

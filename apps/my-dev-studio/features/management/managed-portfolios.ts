@@ -2,16 +2,16 @@ import { z } from "zod";
 
 import { requireConfirmedUser } from "@shared/auth";
 import type { PortfolioProfile } from "@shared/config";
-import { saveProfileSchema } from "@shared/lib/profile";
+import { saveProfileSchema } from "@shared/lib/profiles";
+import { createServerClient } from "@shared/lib/supabase";
+import type { Json, SupabaseDbClient } from "@shared/lib/types";
 import {
   ProfileAccessError,
   ProfileConflictError,
   ProfileSetupError,
   ProfileUsernameError,
-} from "@shared/lib/profile-errors";
-import { SupabaseProfileRepository } from "@shared/lib/profile-repository";
-import { createServerClient } from "@shared/lib/supabase";
-import type { Json, SupabaseDbClient } from "@shared/lib/types";
+  SupabaseProfileRepository,
+} from "@shared/services/profile";
 
 export const managedId = z.uuid();
 export async function isPortfolioAdmin(client: SupabaseDbClient) {

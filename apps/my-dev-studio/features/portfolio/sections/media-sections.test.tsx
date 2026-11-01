@@ -6,7 +6,7 @@ import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/re
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { type CustomSection, getSocialWork, profile, sectionCompositions } from "@shared/config";
-import { profileSchema } from "@shared/lib/profile";
+import { profileSchema } from "@shared/lib/profiles";
 
 import { CustomPortfolioSection, HeroSurface, WorkMedia } from "@/features/portfolio/sections";
 import { ProfileEditor } from "@/features/studio";

@@ -16,9 +16,9 @@ Open `http://localhost:3002` after completing Supabase setup below. The dev serv
 
 ## Light and dark themes
 
-The original dashboard layout is preserved. Use the sun/moon button in the top bar (or on the login page) to switch between light and dark. Dark is the default when no preference is saved. The choice is the same `buzzy-userconfig-store` record MyDevStudio writes with `useUserConfigStore` (`activeMode`: `light`, `dark`, or `system`), so one origin keeps one theme. An older `fitness-os-theme` value is read only when that record has no mode. The choice is restored before paint, kept across reloads, and synchronized across tabs. Dark uses the Devhub navy/cyan palette, with a cool-white companion palette for light. Both work in the public preview.
+Use the theme control in the top bar or on the login page. Fitness uses the same `PageShell`, `ThemeProvider`, and `ThemeToggle` as MyDevStudio platform routes, with storage key `mydevstudio-theme` and the shared `mydevstudio-userconfig-store` record (`activeMode`: `light`, `dark`, or `system`). On the same site origin, one choice applies to both apps; local dev on different ports (`3001` / `3002`) keeps separate storage until both run on one host.
 
-Colors are centralized in `app/themes.css`; responsive layout stays in `app/globals.css`. Theme controls live in `features/theme` and do not change workspace data.
+Shared styling loads `@shared/ui/styles.css`. Dashboard layout and components live in `app/globals.css`.
 
 ## Supabase setup
 

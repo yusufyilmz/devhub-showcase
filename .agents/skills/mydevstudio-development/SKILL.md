@@ -1,6 +1,8 @@
 ---
 name: mydevstudio-development
-description: Develop, test and review MyDevStudio changes. Use for workspace setup, package boundaries, dependencies, scripts, lint, type checks, production builds, Playwright and GitHub Actions failures.
+description: Develop, test and review MyDevStudio changes. Use for workspace
+  setup, package boundaries, dependencies, scripts, lint, type checks,
+  production builds, Playwright and GitHub Actions failures.
 ---
 
 # MyDevStudio development

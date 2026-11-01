@@ -1,6 +1,6 @@
 "use client";
-import type { Workspace } from "@/lib/domain/workspace";
-import { type AgendaEvent, AgendaService } from "@/lib/services/agenda-service";
+import { type AgendaEvent, AgendaService } from "@shared/services/schedule";
+import type { Workspace } from "@shared/services/types";
 
 import { EventRow } from "./event-row";
 

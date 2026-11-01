@@ -2,6 +2,8 @@ import { readFileSync } from "node:fs";
 
 import { expect, test } from "@playwright/test";
 
+import { urls } from "@shared/config/urls";
+
 test("owner creates a library section, saves a template, exports content, reviews PageForge import and publishes only after save", async ({
   page,
   context,
@@ -112,7 +114,7 @@ test("owner creates a library section, saves a template, exports content, review
     path: info.outputPath("templates-editor.png"),
   });
   await context.clearCookies();
-  expect((await page.request.get("/api/admin/section-templates")).status()).toBe(403);
+  expect((await page.request.get(urls.next.studio.sectionTemplates())).status()).toBe(403);
   await page.goto(`/${device}-library-owner`);
   await expect(page.getByRole("heading", { exact: true, name: "Independent plan" })).toBeVisible();
   await expect(page.getByRole("heading", { exact: true, name: "Imported art" })).toBeVisible();

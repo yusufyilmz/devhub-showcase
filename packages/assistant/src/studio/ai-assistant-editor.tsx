@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 
 import type { PortfolioProfile } from "@shared/config";
-import { type AiEditProposal, aiEditProposalSchema, applyAiEdit } from "@shared/lib/ai-edit";
+import { urls } from "@shared/config/urls";
+import { type AiEditProposal, aiEditProposalSchema, applyAiEdit } from "@shared/lib/profiles";
 import { useStudioRequest } from "@shared/runtime/studio";
 import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
@@ -45,7 +46,7 @@ function AssistantWorkspace({ profile, profileId, revision, onChange }: Props) {
   const controller = useRef<AbortController | null>(null);
   useEffect(() => {
     const request = new AbortController();
-    studioRequest("/api/admin/assistant", { signal: request.signal })
+    studioRequest(urls.next.studio.assistant(), { signal: request.signal })
       .then(async (response) => {
         if (!response.ok) throw new Error("Unavailable");
         setAvailability(await response.json());
@@ -70,7 +71,7 @@ function AssistantWorkspace({ profile, profileId, revision, onChange }: Props) {
     controller.current = new AbortController();
     const baseline = JSON.stringify(profile);
     try {
-      const response = await studioRequest("/api/admin/assistant", {
+      const response = await studioRequest(urls.next.studio.assistant(), {
         body: JSON.stringify({
           draft: profile,
           message,

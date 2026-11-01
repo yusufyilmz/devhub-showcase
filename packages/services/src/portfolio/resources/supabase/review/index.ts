@@ -1,0 +1,65 @@
+import type { ResourceService } from "@shared/lib/types";
+import { ReviewState, type ReviewWithReferrals, type SupabaseDbClient } from "@shared/lib/types";
+import { keysToCamelCase } from "@shared/lib/utils";
+import type { Logger } from "@shared/utils/logger";
+
+export class ReviewService implements ResourceService<ReviewWithReferrals> {
+  private logger: Logger;
+  private readonly dbClient: SupabaseDbClient;
+
+  constructor(logger: Logger, dbClient: SupabaseDbClient) {
+    this.logger = logger;
+    this.dbClient = dbClient;
+  }
+
+  async getAll(): Promise<ReviewWithReferrals[]> {
+    const { data, error } = await this.dbClient.from("reviews").select("*");
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return keysToCamelCase<ReviewWithReferrals[]>(data);
+  }
+
+  async update(
+    id: string,
+    {
+      state,
+    }: {
+      state: ReviewState;
+    },
+  ): Promise<ReviewWithReferrals> {
+    const { data, error } = await this.dbClient
+      .from("reviews")
+      .update({
+        state,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      this.logger.error({ error }, "Error updating review");
+      throw new Error(error.message);
+    }
+
+    return keysToCamelCase<ReviewWithReferrals>(data);
+  }
+
+  async getPendingReviews(): Promise<ReviewWithReferrals[]> {
+    const { data, error } = await this.dbClient
+      .from("reviews")
+      .select(`
+      *,
+      referral:referrals(*)
+    `)
+      .eq("state", ReviewState.PENDING);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return keysToCamelCase<ReviewWithReferrals[]>(data);
+  }
+}

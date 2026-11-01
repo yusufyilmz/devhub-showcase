@@ -7,11 +7,14 @@ import { test } from "vitest";
 import { PGlite } from "@electric-sql/pglite";
 import { drizzle } from "drizzle-orm/pglite";
 
-import type { Database } from "../lib/db/client";
-import * as schema from "../lib/db/schema";
-import { DrizzleWorkspaceRepository } from "../lib/repositories/drizzle-workspace-repository";
-import { RevisionConflictError } from "../lib/repositories/workspace-repository";
-import { WeeklyPlanningService } from "../lib/services/weekly-planning-service";
+import type { Database } from "@shared/services/db/client";
+import * as schema from "@shared/services/db/schema";
+
+import { WeeklyPlanningService } from "../../../packages/services/src/meal";
+import {
+  RevisionConflictError,
+  WorkspaceRepository,
+} from "../../../packages/services/src/workspace";
 
 const owner = "00000000-0000-4000-8000-000000000001";
 const other = "00000000-0000-4000-8000-000000000002";
@@ -32,7 +35,7 @@ test("real SQL migrations, ORM roundtrip, conflicts, rollback and owner isolatio
     // Both adapters expose Drizzle's PostgreSQL query/transaction interface. This
     // test uses embedded PostgreSQL, while production uses Supabase's pooler.
     const db = drizzle(engine, { schema }) as unknown as Database;
-    const repository = new DrizzleWorkspaceRepository(db);
+    const repository = new WorkspaceRepository(db);
     assert.equal(await repository.find(owner), null);
     const first = await repository.load(owner);
     assert.equal((await repository.find(owner))?.revision, 0);

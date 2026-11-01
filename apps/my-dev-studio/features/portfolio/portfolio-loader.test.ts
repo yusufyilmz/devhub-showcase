@@ -5,7 +5,7 @@ const mocks = vi.hoisted(() => ({
   referrals: vi.fn(),
   warn: vi.fn(),
 }));
-vi.mock("@shared/lib/services", () => ({
+vi.mock("@shared/services/studio", () => ({
   ReferralService: class {
     getAll = mocks.referrals;
   },

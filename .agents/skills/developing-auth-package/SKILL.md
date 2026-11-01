@@ -1,6 +1,9 @@
 ---
 name: developing-auth-package
-description: Change Supabase session helpers and Google sign-in in @shared/auth. Use when editing requireConfirmedUser, createAuthHandlers, the browser or server client, session middleware, origin checks, or Google profile consent and People API scopes in packages/auth.
+description: Change Supabase session helpers and Google sign-in in @shared/auth.
+  Use when editing requireConfirmedUser, createAuthHandlers, the browser or
+  server client, session middleware, origin checks, or Google profile consent
+  and People API scopes in packages/auth.
 ---
 
 # Developing the auth package
@@ -39,7 +42,7 @@ Public Supabase URL and key are read in `src/config.ts`. Names of public configu
 
 ## Google profile import
 
-`src/google-consent.ts` is the one-time consent gate for importing a Google profile. `src/google-profile-scopes.ts` lists profile categories and People API scopes. Reviewing which fields may be copied onto a portfolio is `@shared/lib/google-profile`. The app route is `app/api/admin/google-profile`. Change the scope list, the consent flag, the reviewed field mapping, and the route together.
+`src/google-consent.ts` is the one-time consent gate for importing a Google profile. `src/google-profile-scopes.ts` lists profile categories and People API scopes. Reviewing which fields may be copied onto a portfolio is `@shared/lib/profiles`. The app route is `app/api/admin/google-profile`. Change the scope list, the consent flag, the reviewed field mapping, and the route together.
 
 Do not request a broader scope than the import uses. Do not store the provider token in a portfolio document or a log line.
 

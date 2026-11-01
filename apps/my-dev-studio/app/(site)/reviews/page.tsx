@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 
-import { ReviewService } from "@shared/lib/services";
 import { createServerClient } from "@shared/lib/supabase";
 import type { ReviewWithReferrals, SupabaseDbClient } from "@shared/lib/types";
+import { ReviewService } from "@shared/services/studio";
 import { ReviewSection } from "@shared/ui/sections";
 import { logger } from "@shared/utils/logger";
 

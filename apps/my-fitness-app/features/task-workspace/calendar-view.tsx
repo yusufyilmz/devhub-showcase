@@ -1,8 +1,9 @@
 "use client";
+import { ScheduleService } from "@shared/services/schedule";
+import type { Workspace } from "@shared/services/types";
+import { dateLabel } from "@shared/services/types";
+
 import { CalendarGrid, type CalendarGridProps } from "@/features/calendar/calendar-grid";
-import { dateLabel } from "@/lib/domain/dates";
-import type { Workspace } from "@/lib/domain/workspace";
-import { ScheduleService } from "@/lib/services/schedule-service";
 
 const schedule = new ScheduleService();
 interface Props {

@@ -4,7 +4,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { portfolioTypes } from "@shared/config";
-import { profileSchema } from "@shared/lib/profile";
+import { profileSchema } from "@shared/lib/profiles";
 
 import { getPagePresentation } from "@/features/platform/page-presentation";
 import {

@@ -2,14 +2,14 @@ import { runInNewContext } from "node:vm";
 
 import { describe, expect, it } from "vitest";
 
-import { USER_CONFIG_STORAGE_KEY } from "@shared/runtime/user";
+import { USER_CONFIG_STORAGE_KEY, userConfigThemeScript } from "@shared/runtime/user";
 
-import { FITNESS_LEGACY_THEME_KEY, themeBootstrap } from "../features/theme/theme-script";
+const platformThemeBootstrap = userConfigThemeScript("mydevstudio-theme", "light");
 
 function paint(records: Record<string, string>, prefersDark = true) {
   const document = { documentElement: { dataset: {} as { theme?: string } } };
   const localStorage = { getItem: (key: string) => records[key] ?? null };
-  runInNewContext(themeBootstrap, {
+  runInNewContext(platformThemeBootstrap, {
     document,
     localStorage,
     matchMedia: () => ({ matches: prefersDark }),
@@ -17,7 +17,7 @@ function paint(records: Record<string, string>, prefersDark = true) {
   return document.documentElement.dataset.theme;
 }
 
-describe("Fitness theme", () => {
+describe("platform theme bootstrap", () => {
   it("uses the shared user-config record before paint", () => {
     expect(
       paint({
@@ -25,13 +25,13 @@ describe("Fitness theme", () => {
           state: { activeMode: "light", user: null },
           version: 2,
         }),
-        [FITNESS_LEGACY_THEME_KEY]: "dark",
+        "mydevstudio-theme": "dark",
       }),
     ).toBe("light");
   });
 
-  it("reads the older fitness key only when the shared record has no mode", () => {
-    expect(paint({ [FITNESS_LEGACY_THEME_KEY]: "light" })).toBe("light");
+  it("reads the platform theme key when the shared record has no mode", () => {
+    expect(paint({ "mydevstudio-theme": "dark" })).toBe("dark");
   });
 
   it("follows the device when the shared mode is system", () => {

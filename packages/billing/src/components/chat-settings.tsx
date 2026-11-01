@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { urls } from "@shared/config/urls";
 import { Button } from "@shared/ui/button";
 
 import { useAccountStatus, useBillingRequest } from "../provider/billing-context";
@@ -48,7 +49,7 @@ function AssignmentControls({ data, refresh }: { data: AccountStatus; refresh: (
     setBusy(true);
     showError("");
     try {
-      const result = await request("/api/admin/billing", {
+      const result = await request(urls.next.billing.root(), {
         body: JSON.stringify({ chatEnabled, profileId }),
         headers: { "Content-Type": "application/json" },
         method: "PUT",

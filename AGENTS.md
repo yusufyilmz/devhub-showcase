@@ -13,7 +13,8 @@ Workspace members are `apps/*`, `packages/*`, and `tools/*`. The Next.js app pac
 | `apps/storybook-app`  | `storybook-app`     | Storybook for `packages/ui`                                                     |
 | `packages/ui`         | `@shared/ui`        | Controls, sections, studio and portfolio surfaces, theme, and global CSS        |
 | `packages/config`     | `@shared/config`    | Profile types, themes, and section , Page copy, including the home FAQ metadata |
-| `packages/lib`        | `@shared/lib`       | Validation, repositories, Supabase access, and domain services                  |
+| `packages/lib`        | `@shared/lib`       | Validation, schemas, Supabase helpers, and shared types                         |
+| `packages/services`   | `@shared/services`  | Domain services and repositories (studio profile, portfolio, fitness workspace) |
 | `packages/auth`       | `@shared/auth`      | Session helpers and Google sign-in                                              |
 | `packages/cv`         | `@shared/templates` | CV PDF rendering                                                                |
 | `packages/assistant`  | `@shared/assistant` | Portfolio and editing assistants                                                |
@@ -35,6 +36,23 @@ App routes stay in `apps/my-dev-studio/app`. App-only data access stays in `apps
 | `portfolio`  | Published and public profiles, metadata, branding, CV responses, page resources |
 
 Import portable UI from `@shared/ui`. Do not add a feature file that only re-exports a shared component. Do not move auth, database access, or route handlers into `packages/ui`. Pass fetching and navigation in from the app.
+
+## Lib and services
+
+`@shared/services` owns service and repository implementations, grouped by domain under `packages/services/src` (for example `profile/`, `portfolio/`, `fitness/`). See [packages/services/CATALOG.md](packages/services/CATALOG.md).
+
+`@shared/lib` owns validators, profile and section domain modules, Supabase client helpers, and shared database or chat types. See [packages/lib/CATALOG.md](packages/lib/CATALOG.md).
+
+Do not add a file in one package that only re-exports another package’s implementation, especially through relative paths into a sibling folder (for example `packages/lib/src/repositories/profile-repository.ts` that contains `export * from "../../../services/src/..."`). That creates a hidden dependency, breaks package boundaries, and invites cyclic workspace deps. Import the owning package export instead (`@shared/services/profile`, `@shared/services/profile-repository`, and so on). When code moves from lib to services, update `package.json` exports and call sites in the same change; do not leave compatibility shims in lib.
+
+### Package export paths
+
+In each workspace package’s `package.json` `exports`, prefer shallow public entry points. Use at most **two** path segments after the package name:
+
+- One segment: `@shared/lib/types`, `@shared/services/profile`, `@shared/services/fitness`
+- Two segments: `@shared/services/fitness/workspace`, `@shared/services/db/client` (with `./db/*` mapping to files under `src/fitness/db/`)
+
+Do **not** add deep export keys or tsconfig path aliases such as `@shared/lib/types/supabase/database.types` or `@shared/services/fitness/task/service/task-service`. Put modules behind a domain barrel (`src/fitness/task/index.ts` exported as `./fitness/task`) or the package root barrel (`./types`, `./fitness`). Import `Database`, `Json`, and row types from `@shared/lib/types`, not from generated file paths.
 
 ## Reuse shared UI
 
@@ -61,6 +79,7 @@ flowchart TD
   kind -->|Page copy| contentPkg["packages/content"]
   kind -->|Profile shape, theme, or section metadata| config["packages/config"]
   kind -->|Validation, repository, or Supabase| lib["packages/lib"]
+  kind -->|Domain service or repository impl| servicesPkg["packages/services"]
   kind -->|Sign-in or session helper| auth["packages/auth"]
   kind -->|CV PDF| cv["packages/cv"]
   kind -->|Assistant model| assistant["packages/assistant"]
@@ -130,19 +149,20 @@ When the change is inside one package or app, also read that package skill:
 
 Use [features](docs/features.md), [architecture](docs/architecture.md), [conventions](docs/conventions.md), [testing](docs/testing.md), and [DESIGN.md](DESIGN.md). Check the matching catalog before adding a public export:
 
-| Package     | Catalog                                                        | Check it before adding                        |
-| ----------- | -------------------------------------------------------------- | --------------------------------------------- |
-| `ui`        | [packages/ui/CATALOG.md](packages/ui/CATALOG.md)               | A control, section, surface, or stylesheet    |
-| `config`    | [packages/config/CATALOG.md](packages/config/CATALOG.md)       | A profile field, theme, or section metadata   |
-| `content`   | [packages/content/CATALOG.md](packages/content/CATALOG.md)     | Page copy                                     |
-| `lib`       | [packages/lib/CATALOG.md](packages/lib/CATALOG.md)             | Validation, a repository, or a domain service |
-| `auth`      | [packages/auth/CATALOG.md](packages/auth/CATALOG.md)           | A sign-in or session helper                   |
-| `cv`        | [packages/cv/CATALOG.md](packages/templates/CATALOG.md)        | CV PDF rendering                              |
-| `assistant` | [packages/assistant/CATALOG.md](packages/assistant/CATALOG.md) | An assistant model or message                 |
-| `cache`     | [packages/cache/CATALOG.md](packages/cache/CATALOG.md)         | A cache client or rate limit                  |
-| `runtime`   | [packages/runtime/CATALOG.md](packages/runtime/CATALOG.md)     | A shared browser or fetch helper              |
-| `utils`     | [packages/utils/CATALOG.md](packages/utils/CATALOG.md)         | A logger or generic helper                    |
-| `trello`    | [packages/trello/CATALOG.md](packages/trello/CATALOG.md)       | Trello board UI or a Trello client            |
+| Package     | Catalog                                                        | Check it before adding                      |
+| ----------- | -------------------------------------------------------------- | ------------------------------------------- |
+| `ui`        | [packages/ui/CATALOG.md](packages/ui/CATALOG.md)               | A control, section, surface, or stylesheet  |
+| `config`    | [packages/config/CATALOG.md](packages/config/CATALOG.md)       | A profile field, theme, or section metadata |
+| `content`   | [packages/content/CATALOG.md](packages/content/CATALOG.md)     | Page copy                                   |
+| `lib`       | [packages/lib/CATALOG.md](packages/lib/CATALOG.md)             | Validation, a schema, or a Supabase helper  |
+| `services`  | [packages/services/CATALOG.md](packages/services/CATALOG.md)   | A domain service or repository              |
+| `auth`      | [packages/auth/CATALOG.md](packages/auth/CATALOG.md)           | A sign-in or session helper                 |
+| `cv`        | [packages/cv/CATALOG.md](packages/templates/CATALOG.md)        | CV PDF rendering                            |
+| `assistant` | [packages/assistant/CATALOG.md](packages/assistant/CATALOG.md) | An assistant model or message               |
+| `cache`     | [packages/cache/CATALOG.md](packages/cache/CATALOG.md)         | A cache client or rate limit                |
+| `runtime`   | [packages/runtime/CATALOG.md](packages/runtime/CATALOG.md)     | A shared browser or fetch helper            |
+| `utils`     | [packages/utils/CATALOG.md](packages/utils/CATALOG.md)         | A logger or generic helper                  |
+| `trello`    | [packages/trello/CATALOG.md](packages/trello/CATALOG.md)       | Trello board UI or a Trello client          |
 
 ## Data and security
 

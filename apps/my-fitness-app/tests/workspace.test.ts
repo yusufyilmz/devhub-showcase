@@ -2,16 +2,18 @@ import assert from "node:assert/strict";
 
 import { afterEach, test, vi } from "vitest";
 
-import { HttpWorkspaceGateway } from "../features/task-workspace/gateway";
-import { seedWorkspace } from "../lib/domain/seed";
-import { convertV1Workspace } from "../lib/migrations/convert-v1-workspace";
-import { makeDay as v1Day } from "../lib/migrations/v1-model";
-import { seed as seedV1 } from "../lib/migrations/v1-seed";
+import { convertV1Workspace } from "@shared/services/db/migrations/convert-v1-workspace";
+import { makeDay as v1Day } from "@shared/services/db/migrations/v1-model";
+import { seed as seedV1 } from "@shared/services/db/migrations/v1-seed";
+import { seedWorkspace } from "@shared/services/db/seed";
+
 import {
+  type BaseWorkspaceRepository,
+  InvalidWorkspaceError,
   RevisionConflictError,
-  type WorkspaceRepository,
-} from "../lib/repositories/workspace-repository";
-import { InvalidWorkspaceError, WorkspaceService } from "../lib/services/workspace-service";
+  WorkspaceService,
+} from "../../../packages/services/src/workspace";
+import { HttpWorkspaceGateway } from "../features/task-workspace/gateway";
 
 afterEach(() => vi.unstubAllGlobals());
 test("shared read-only gateway fetches live data and rejects writes", async () => {
@@ -46,7 +48,7 @@ test("server-verified owner permissions unlock the live gateway", async () => {
 });
 test("service validation and authenticated owner identity cross the repository boundary", async () => {
   const calls: string[] = [];
-  const repo: WorkspaceRepository = {
+  const repo: BaseWorkspaceRepository = {
     load: async (id) => {
       calls.push(id);
       return { revision: 0, state: seedWorkspace() };
@@ -63,7 +65,7 @@ test("service validation and authenticated owner identity cross the repository b
   assert.deepEqual(calls, ["owner-a", "owner-a"]);
 });
 test("service propagates revision conflicts without retrying stale writes", async () => {
-  const repo: WorkspaceRepository = {
+  const repo: BaseWorkspaceRepository = {
     load: async () => ({ revision: 4, state: seedWorkspace() }),
     save: async () => {
       throw new RevisionConflictError();

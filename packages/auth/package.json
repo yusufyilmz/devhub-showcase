@@ -25,6 +25,7 @@
     "types:check": "pnpm typecheck"
   },
   "dependencies": {
+    "@shared/config": "workspace:*",
     "@supabase/ssr": "catalog:",
     "@supabase/supabase-js": "catalog:",
     "next": "catalog:",

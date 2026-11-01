@@ -2,7 +2,7 @@
 
 import type { PortfolioProfile } from "@shared/config";
 import { applyCvDraft, type CvImportGroup, cvImportGroups } from "@shared/lib/cv-import";
-import { profileSchema } from "@shared/lib/profile";
+import { profileSchema } from "@shared/lib/profiles";
 import { Button } from "@shared/ui/button";
 import { Field, LinesField } from "@shared/ui/forms";
 import {

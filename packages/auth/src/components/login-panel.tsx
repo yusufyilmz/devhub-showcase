@@ -14,6 +14,8 @@ export function LoginPanel({
   backHref = "/",
   backLabel = "← Back",
   contentId = "auth-content",
+  brand,
+  brandActions,
 }: {
   initialError?: string;
   googleAction: string;
@@ -26,10 +28,12 @@ export function LoginPanel({
   backHref?: string;
   backLabel?: string;
   contentId?: string;
+  brand?: string;
+  brandActions?: ReactNode;
 }) {
   const [error, showError] = useState(initialError);
   const [busy, setBusy] = useState(false);
-  return (
+  const panel = (
     <main className="auth-login" id={contentId}>
       <p className="eyebrow">{eyebrow}</p>
       <h1>{title}</h1>
@@ -110,5 +114,19 @@ export function LoginPanel({
       </form>
       <a href={backHref}>{backLabel}</a>
     </main>
+  );
+
+  if (!brand) {
+    return panel;
+  }
+
+  return (
+    <div className="login-page">
+      <div className="login-brand">
+        <span className="brand">{brand}</span>
+        {brandActions}
+      </div>
+      {panel}
+    </div>
   );
 }
