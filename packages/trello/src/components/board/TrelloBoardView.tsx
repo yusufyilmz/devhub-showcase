@@ -2,12 +2,12 @@
 
 import { type FC, useCallback, useEffect, useState } from "react";
 
-import { Button } from "@shared/ui/Button";
-import { Card } from "@shared/ui/Card";
+import { Button } from "@shared/ui/button";
+import { Card } from "@shared/ui/card";
 import { Flex } from "@shared/ui/flex";
-import { Input } from "@shared/ui/Input";
 import { IconButton } from "@shared/ui/icon-button";
-import { Typography } from "@shared/ui/Typography";
+import { Input } from "@shared/ui/input";
+import { Typography } from "@shared/ui/typography";
 
 import type { BoardService } from "../../services/BoardService";
 import type { TrelloBoard, TrelloCard, TrelloList } from "../../types";

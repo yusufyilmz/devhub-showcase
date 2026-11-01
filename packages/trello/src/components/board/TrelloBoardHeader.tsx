@@ -5,10 +5,10 @@ import type { CSSProperties, FC } from "react";
 import { cn } from "cn";
 import { shallow } from "zustand/shallow";
 
-import { Avatar, AvatarFallback } from "@shared/ui/Avatar";
+import { Avatar, AvatarFallback } from "@shared/ui/avatar";
 import { Button } from "@shared/ui/button";
 import { Flex, FlexCol } from "@shared/ui/flex";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@shared/ui/Select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@shared/ui/select";
 import { Typography } from "@shared/ui/typography";
 
 import { trelloActions, trelloSelectors, useTrelloStore } from "../../stores/trelloStore";

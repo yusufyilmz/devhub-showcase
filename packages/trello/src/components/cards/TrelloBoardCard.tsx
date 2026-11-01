@@ -2,12 +2,12 @@
 
 import { type FC, type MouseEvent, useState } from "react";
 
-import { Badge } from "@shared/ui/Badge";
-import { Button } from "@shared/ui/Button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@shared/ui/Dialog";
+import { Badge } from "@shared/ui/badge";
+import { Button } from "@shared/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@shared/ui/dialog";
 import { Flex } from "@shared/ui/flex";
 import { IconButton } from "@shared/ui/icon-button";
-import { Typography } from "@shared/ui/Typography";
+import { Typography } from "@shared/ui/typography";
 
 import { TRELLO_LABEL_COLORS } from "../../constants";
 import type { TrelloBoardCardProps } from "../../types";

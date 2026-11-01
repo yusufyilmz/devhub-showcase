@@ -2,13 +2,13 @@
 
 import { type FC, useState } from "react";
 
-import { Button } from "@shared/ui/Button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@shared/ui/Dialog";
+import { Button } from "@shared/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@shared/ui/dialog";
 import { Flex } from "@shared/ui/flex";
-import { Input } from "@shared/ui/Input";
-import { Spinner } from "@shared/ui/Spinner";
-import { Textarea } from "@shared/ui/Textarea";
-import { Typography } from "@shared/ui/Typography";
+import { Input } from "@shared/ui/input";
+import { Spinner } from "@shared/ui/spinner";
+import { Textarea } from "@shared/ui/textarea";
+import { Typography } from "@shared/ui/typography";
 
 import { useTrelloBoards } from "../../hooks/useTrelloBoards";
 import type { BoardService } from "../../services/BoardService";
