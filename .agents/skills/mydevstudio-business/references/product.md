@@ -1,25 +1,27 @@
 # Product rules and workflow
 
-MyDevStudio lets each account create a portfolio website and downloadable CV from a canonical profile document. It is not only a CV generator. Google sign-in is backed by Supabase Auth. Anonymous visitors can read published portfolios; signing in does not give permission to edit another user's portfolio.
+MyDevStudio lets each account create a portfolio website and a downloadable CV from one profile document. It is not only a CV generator. Google sign-in uses Supabase Auth. Anonymous visitors can read published portfolios. Signing in does not allow editing another person's portfolio.
 
-| Route or concept   | Contract                                                                |
-| ------------------ | ----------------------------------------------------------------------- |
-| /                  | Product homepage and fictional layout examples                          |
-| /{username}        | Public portfolio only when published                                    |
-| /{username}/edit   | Owner's protected editor                                                |
-| /{username}/cv.pdf | Public CV only for a published portfolio                                |
-| /admin             | Authenticated editor entry point                                        |
-| /admin/portfolios  | Membership-restricted portfolio management                              |
-| /p/examples/{slug} | Fictional examples, not real accounts or discoverable personal profiles |
+| Route or concept     | Contract                                             |
+| -------------------- | ---------------------------------------------------- |
+| `/`                  | Product homepage and fictional layout examples       |
+| `/{username}`        | Public portfolio only when that profile is published |
+| `/{username}/edit`   | That owner's protected editor                        |
+| `/{username}/cv.pdf` | Public CV only for a published portfolio             |
+| `/admin`             | Authenticated editor entry                           |
+| `/admin/portfolios`  | Membership-restricted portfolio management           |
+| `/p/examples/{slug}` | Fictional examples, not real accounts                |
 
-New users choose a layout, edit their own details and explicitly publish. Saving private edits does not grant public access. Missing and private profiles return 404 to public readers. Username changes change public links. Preserve existing reserved-name validation.
+Routes live in `apps/my-dev-studio/app`. Data access for those routes lives in `apps/my-dev-studio/features`.
 
-The editor holds a draft until Save changes. Save includes the original revision for conflict detection. Reload or discard must not silently overwrite a newer saved version. Server handlers enforce identity, authorization, validation and origin controls; UI visibility is not an authorization boundary. Profiles are persisted in the existing JSON document, with row ownership and publication enforced by repository logic and RLS.
+New users choose a layout, edit their own details, and publish explicitly. Saving a private edit does not make the portfolio public. Missing and private profiles return 404 to public readers. Changing a username changes the public link. Keep the existing reserved-name validation.
 
-Managed portfolios are temporary records handled by authorized managers, not fake shared login accounts. Managers can import/edit/publish and transfer to a verified recipient through the existing protected workflow. Transfer changes who can edit; preserve the recipient's existing content and the main portfolio restrictions. Never substitute a service role key or public email allowlist for membership checks.
+The editor holds a draft until Save changes. Save sends the original revision so a conflict can be detected. Reload or discard must not overwrite a newer saved version. Server handlers enforce identity, authorization, validation, and origin checks. Hiding a control is not authorization. Profiles are stored as the existing JSON document. Row ownership and publication are enforced by repository logic and RLS.
 
-Portfolio type (Engineer, Designer, Consultant, Minimal), theme, color mode, accent and language are separate preferences. English, Spanish and Turkish localize interface labels and dates, not authored prose. CV language and Classic/Editorial/Compact layout are independent. PDFs read the canonical profile through packages/cv. Portfolio-only item selections, hidden sections, custom sections and hero/media options do not automatically change PDF inclusion.
+Managed portfolios are temporary records for authorized managers. They are not shared logins. Managers can import, edit, publish, and transfer to a verified recipient through the existing protected workflow. Transfer changes who can edit. It must not replace the recipient's existing content or bypass the main portfolio restrictions. Do not use a service-role key or a public email allowlist in place of the membership check.
 
-Public project views must exclude projects marked private, including preview adapters. Custom content is escaped text with validated links. Remote images/media are loaded by the visitor, never fetched by the app server from arbitrary user URLs. Social showcases contain selected public work, not synchronized account feeds.
+Portfolio type (Engineer, Designer, Consultant, Minimal), theme, color mode, accent, and language are separate preferences. English, Spanish, and Turkish change interface labels and dates, not the owner's prose. CV language and Classic, Editorial, and Compact layouts are independent. PDFs read the canonical profile through `packages/cv`. Portfolio-only selections, hidden sections, custom sections, and hero media do not automatically change what the PDF includes.
 
-Before changing a rule, read packages/lib/src/domain/profile.ts, profile services/repositories, apps/web/app route handlers, apps/web/features/admin and docs/features/section-system.md. For auth/RLS or migrations, inspect the actual current policies and use the Supabase guidance rather than guessing. Use fictional identities in tests and public PR examples.
+Public project views exclude projects marked private, including preview adapters. Custom content is escaped text with validated links. Remote images and media load in the visitor's browser. The app server does not fetch arbitrary user URLs. Social showcases are selected public work, not synchronized account feeds.
+
+Before changing a rule, read `packages/lib/src/domain/profile.ts`, the profile services and repositories, the matching route under `apps/my-dev-studio/app`, and the feature module under `apps/my-dev-studio/features`. For auth, RLS, or migrations, read the current policies. Use fictional identities in tests and public PR examples.

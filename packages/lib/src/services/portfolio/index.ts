@@ -1,4 +1,4 @@
-import { profile as initialProfile, type PortfolioProfile } from "@shared/content";
+import { profile as initialProfile, type PortfolioProfile } from "@shared/config";
 
 import type { PageResources, Skill } from "../../types";
 

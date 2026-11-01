@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import {
   type AuthorableSectionType,
   authorableSections,
@@ -6,10 +8,10 @@ import {
   MAX_CUSTOM_SECTIONS,
   type PortfolioProfile,
   type SectionTemplateFile,
-} from "@shared/content";
-import { z } from "zod";
+} from "@shared/config";
 
 import { customSectionSchema } from "./section";
+
 export const sectionTemplateFileSchema = z
   .object({
     format: z.literal("mydevstudio.sections"),

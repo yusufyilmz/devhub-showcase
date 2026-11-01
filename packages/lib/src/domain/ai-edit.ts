@@ -1,5 +1,6 @@
-import type { PortfolioProfile } from "@shared/content";
 import { z } from "zod";
+
+import type { PortfolioProfile } from "@shared/config";
 
 import { profileSchema, validateProfile } from "./profile";
 

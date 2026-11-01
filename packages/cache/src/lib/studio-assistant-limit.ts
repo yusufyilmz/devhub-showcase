@@ -1,4 +1,5 @@
 import { Redis } from "@upstash/redis";
+
 export const studioLimitScript = `
 local personal=redis.call('INCR',KEYS[1])
 if personal==1 then redis.call('EXPIRE',KEYS[1],3600) end

@@ -18,12 +18,40 @@ CI installs Chromium with `--with-deps` on Linux. For an app-only production bui
 | Check                | What it establishes                                                               |
 | -------------------- | --------------------------------------------------------------------------------- |
 | `pnpm check`         | Biome checks, complexity limits and root/workspace types                          |
-| `pnpm test`          | Vitest tests under `tests/**/*.test.{ts,tsx}`                                     |
+| `pnpm test`          | Colocated Vitest tests under `packages/**` and `apps/my-dev-studio/**`            |
 | `pnpm test:coverage` | V8 coverage for configured portfolio services, date utilities and chat formatting |
 | `pnpm build`         | Workspace type/build tasks and production Next.js compilation                     |
 | `pnpm test:e2e`      | Desktop Chromium and Pixel 7 emulation against production output                  |
 
 Coverage is a selected source subset, not a whole-repository percentage. A green suite does not certify live Google OAuth, real provider requests, production database policies or real iPhone/Safari behavior.
+
+## Colocated unit tests
+
+A unit test sits in the same folder as the source it covers and uses that file's base name.
+
+| Source                     | Unit test                       | Story, when the component has one  |
+| -------------------------- | ------------------------------- | ---------------------------------- |
+| `admin-login.tsx`          | `admin-login.test.tsx`          | `admin-login.stories.tsx`          |
+| `admin-profile-editor.tsx` | `admin-profile-editor.test.tsx` | `admin-profile-editor.stories.tsx` |
+| `ai-assistant-editor.tsx`  | `ai-assistant-editor.test.tsx`  | `ai-assistant-editor.stories.tsx`  |
+| `user-profile.ts`          | `user-profile.test.ts`          | —                                  |
+| `route.ts`                 | `route.test.ts`                 | —                                  |
+
+Do not add a new suite under a central `tests/ui` or `tests/unit` folder. `tests/support` stays for Vitest setup and shared mocks.
+
+Every unit test file starts with `describe`. Setup hooks and `it` cases belong inside that suite. Component helpers used by the tests stay at module scope, outside `describe`.
+
+```tsx
+describe("AdminLogin", () => {
+  afterEach(() => {
+    cleanup();
+  });
+
+  it("offers Google sign in independently of the password form", () => {
+    // ...
+  });
+});
+```
 
 ## Choose meaningful tests
 
@@ -42,9 +70,9 @@ Use existing fixtures and test helpers. Add regression coverage for behavior cha
 ## Focused runs
 
 ```sh
-pnpm exec vitest run tests/user-profile.test.ts
-pnpm exec vitest run tests/managed-rls.test.ts
-pnpm exec playwright test e2e/home.spec.ts --project=desktop-chromium
+pnpm exec vitest run --project unit packages/components/src/studio/admin/admin-login.test.tsx
+pnpm exec vitest run packages/lib/src/supabase/rls/managed-rls.test.ts
+pnpm exec playwright test e2e/home --project=desktop-chromium
 pnpm test:watch
 pnpm test:e2e:ui
 ```
@@ -52,6 +80,8 @@ pnpm test:e2e:ui
 Rebuild before testing changed application code with Playwright. Targeted tests help diagnosis; run the appropriate broader checks before claiming the change is verified.
 
 ## Browser environment
+
+Playwright specs live under `e2e/` in a folder for the page they cover: `home` (`/`), `portfolio` (`/[username]`), `edit` (`/[username]/edit`), `admin/login`, `admin/billing`, `admin/portfolios`, and `examples` (`/p/examples`). A flow that edits and then checks the published profile stays in `edit`. `e2e/fixture-server.mjs` stays at the e2e root.
 
 The Playwright configuration owns three servers and does not reuse existing ones:
 

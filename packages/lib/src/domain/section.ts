@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import {
   authorableSections,
   authorableSectionTypes,
@@ -7,8 +9,7 @@ import {
   type PortfolioSectionId,
   sectionCompositionIds,
   sectionRegistry,
-} from "@shared/content";
-import { z } from "zod";
+} from "@shared/config";
 
 function definition<Kind extends PortfolioSectionId>(kind: Kind) {
   return z

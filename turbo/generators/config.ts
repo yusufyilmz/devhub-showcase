@@ -2,8 +2,9 @@ import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 
-import { cvHelpers, renderCv } from "@shared/cv";
 import type { PlopTypes } from "@turbo/gen";
+
+import { cvHelpers, renderCv } from "@shared/cv";
 
 import {
   readPublicProfile,
@@ -67,6 +68,11 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       {
         path: "packages/{{dashCase packageName}}/src/index.ts",
         templateFile: "templates/package/index.ts.hbs",
+        type: "add",
+      },
+      {
+        path: "packages/{{dashCase packageName}}/tsdown.config.ts",
+        templateFile: "templates/package/tsdown.config.ts.hbs",
         type: "add",
       },
       {

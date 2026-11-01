@@ -12,7 +12,7 @@ This foundation introduces the composition concepts without copying PageForge im
 
 ## Shared model and boundaries
 
-The registry and JSON model live in @shared/content. The shared validator is exported from @shared/lib/section. The portfolio app composes the renderer dispatcher; reusable views live in @shared/components and section renderer/editor pairs live in @shared/sections. Shared content does not import React, Next.js, authentication or database clients.
+The registry and JSON model live in @shared/config. The shared validator is exported from @shared/lib/section. The portfolio app composes the renderer dispatcher; reusable views live in @shared/components and section renderer/editor pairs live in @shared/components/sections. Shared content does not import React, Next.js, authentication or database clients.
 
 A normalized section contains:
 
@@ -97,6 +97,6 @@ References for YouTube behavior: [official embed guidance](https://support.googl
 
 ## Complete library and templates
 
-All 42 PageForge section families now have explicit renderer/editor folders in @shared/sections, alongside native custom/services/social sections. New sectionType and compatible options/source fields extend custom sections without changing legacy instances. The source mapping and integration boundaries are listed in [the PageForge migration map](../reference/pageforge-section-migration.md).
+All 42 PageForge section families now have explicit renderer/editor folders in @shared/components/sections, alongside native custom/services/social sections. New sectionType and compatible options/source fields extend custom sections without changing legacy instances. The source mapping and integration boundaries are listed in [the PageForge migration map](../reference/pageforge-section-migration.md).
 
 Templates are versioned JSON and are saved separately to an account-private library with owner RLS and optimistic revisions. Export defaults to configuration only. Native and compatible PageForge imports are reviewed before applying fresh section/item IDs to a draft; identity, sharing and CV content remain independent. Profile-source bindings are resolved from the current canonical document and public project filtering applies independently of the built-in project section selection.

@@ -1,4 +1,4 @@
-import { copy } from "@shared/content";
+import { copy } from "@shared/config";
 import { type ChatMessage, ChatRole, type ReferralMessage } from "@shared/lib/types";
 
 export const referralWelcomeMessage: ReferralMessage = {

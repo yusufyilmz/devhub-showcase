@@ -1,0 +1,47 @@
+{
+  "name": "storybook-app",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b && vite build",
+    "build-storybook": "storybook build",
+    "dev": "vite",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome lint .",
+    "lint:check": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "storybook:clean": "node -e \"const fs=require('node:fs'); for (const path of ['node_modules/.cache','node_modules/.vite']) fs.rmSync(path,{recursive:true,force:true})\"",
+    "storybook:kill": "node -e \"const {execSync}=require('node:child_process'); let ids=''; try { ids=execSync('lsof -nP -tiTCP:6006 -sTCP:LISTEN',{encoding:'utf8'}).trim(); } catch {} for (const id of ids.split(/\\s+/).filter(Boolean)) { try { process.kill(Number(id)); } catch {} }\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@shared/components": "workspace:*",
+    "@shared/design-system": "workspace:*",
+    "@shared/runtime": "workspace:*",
+    "@shared/ui": "workspace:*",
+    "@tailwindcss/postcss": "catalog:",
+    "postcss": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tailwindcss": "catalog:"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "catalog:",
+    "@storybook/addon-a11y": "catalog:",
+    "@storybook/addon-docs": "catalog:",
+    "@storybook/addon-vitest": "catalog:",
+    "@storybook/react-vite": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "@vitest/browser-playwright": "catalog:",
+    "storybook": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}

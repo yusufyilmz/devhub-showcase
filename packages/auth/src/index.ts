@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+
 export type AuthClient = Pick<SupabaseClient, "auth">;
 export class AuthAccessError extends Error {
   constructor() {

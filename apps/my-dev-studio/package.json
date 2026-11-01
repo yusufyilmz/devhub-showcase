@@ -1,0 +1,50 @@
+{
+  "name": "my-dev-studio",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "next build --webpack",
+    "clean": "node -e \"require('node:fs').rmSync('.next',{recursive:true,force:true})\"",
+    "demo:seed": "node --env-file-if-exists=.env.local scripts/seed-demo.mjs",
+    "dev": "next dev --webpack",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome lint .",
+    "lint:check": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "types:check": "pnpm typecheck"
+  },
+  "dependencies": {
+    "@shared/assistant": "workspace:*",
+    "@shared/auth": "workspace:*",
+    "@shared/cache": "workspace:*",
+    "@shared/components": "workspace:*",
+    "@shared/config": "workspace:*",
+    "@shared/cv": "workspace:*",
+    "@shared/lib": "workspace:*",
+    "@shared/runtime": "workspace:*",
+    "@shared/ui": "workspace:*",
+    "@shared/utils": "workspace:*",
+    "@supabase/supabase-js": "catalog:",
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@shared/design-system": "workspace:*",
+    "@shared/typescript-config": "workspace:*",
+    "@tailwindcss/postcss": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "postcss": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "node": ">=24.15.0 <25"
+  }
+}

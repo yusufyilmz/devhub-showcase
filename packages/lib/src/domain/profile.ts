@@ -1,5 +1,6 @@
-import { MAX_CUSTOM_SECTIONS, type PortfolioProfile, portfolioSectionIds } from "@shared/content";
 import { z } from "zod";
+
+import { MAX_CUSTOM_SECTIONS, type PortfolioProfile, portfolioSectionIds } from "@shared/config";
 
 import { customSectionSchema, portfolioEntryIdSchema, sectionSettingsSchema } from "./section";
 import { usernameSchema } from "./username";

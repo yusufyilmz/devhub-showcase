@@ -1,4 +1,4 @@
-import { formatPortfolioPeriod, type Language } from "@shared/content";
+import { formatPortfolioPeriod, type Language } from "@shared/config";
 
 export function formatDateRange(
   startDate: Date | string,

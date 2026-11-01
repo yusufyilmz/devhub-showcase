@@ -3,11 +3,12 @@ import { existsSync, readFileSync } from "node:fs";
 const root = JSON.parse(readFileSync("package.json", "utf8"));
 const scripts = ["check", "test", "test:e2e", "build", "format", "lint:fix", "typecheck"];
 const paths = [
-  "apps/web/package.json",
-  "packages/content/package.json",
+  "apps/my-dev-studio/package.json",
+  "apps/storybook-app/package.json",
+  "packages/config/package.json",
   "packages/lib/package.json",
   "packages/components/package.json",
-  "packages/sections/package.json",
+  "packages/ui/package.json",
   "packages/auth/package.json",
   "packages/cv/package.json",
   "pnpm-workspace.yaml",

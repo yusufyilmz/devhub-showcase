@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+export { type BillingErrorCode, billingErrorMessage, billingMessages } from "./messages";
 export { type BillingSummary, billingSummarySchema, premiumFeatureStatus } from "./status";
 
 export const featureSchema = z.enum(["portfolio_chat", "studio_assistant"]);

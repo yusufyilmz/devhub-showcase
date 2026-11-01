@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 export const reservedUsernames = [
   "admin",
   "api",

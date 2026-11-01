@@ -1,5 +1,6 @@
-import { profile } from "@shared/content";
 import { createClient } from "@supabase/supabase-js";
+
+import { profile } from "@shared/config";
 
 import { validateProfile } from "../domain/profile";
 import { usernameSchema } from "../domain/username";
