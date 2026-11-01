@@ -152,6 +152,8 @@ surface, border and focus ring all resolve from the same portfolio palette.
 Icons inherit `currentColor`; use a 24px icon inside the 44px large control.
 `IconButtonWithLink` renders one link rather than nesting a button inside it.
 
+`Section`, `Header` and `Footer` accept `asChild` to compose an existing semantic element without adding a second wrapper. Use this variant for page compositions while keeping their content and navigation in the section package. Shared section grids, accordions and carousels default to semantic Card surfaces; existing portfolio consumers pass `surface="portfolio"` explicitly.
+
 Portfolio sections, editors, and chat exported from `@shared/ui`. Visual rules for the shared section frame live in the root [DESIGN.md](../../DESIGN.md).
 
 ## Entry points

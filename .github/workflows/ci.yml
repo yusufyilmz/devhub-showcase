@@ -33,6 +33,9 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
+      - name: Full lint diagnostics on failure
+        if: failure()
+        run: pnpm exec biome check . --diagnostic-level=error --max-diagnostics=none
       - run: pnpm test
       - name: Build Storybook
         run: pnpm --filter storybook-app build-storybook

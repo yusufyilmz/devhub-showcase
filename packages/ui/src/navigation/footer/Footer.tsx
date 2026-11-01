@@ -1,3 +1,7 @@
+import type { ReactNode } from "react";
+
+import { Slot } from "@radix-ui/react-slot";
+
 import {
   profile as fallback,
   getNameInitials,
@@ -5,7 +9,16 @@ import {
   type PortfolioProfile,
 } from "@shared/config";
 
-export function Footer({ profile = fallback }: { profile?: PortfolioProfile }) {
+export function Footer({
+  profile = fallback,
+  asChild = false,
+  children,
+}: {
+  profile?: PortfolioProfile;
+  asChild?: boolean;
+  children?: ReactNode;
+}) {
+  if (asChild) return <Slot>{children}</Slot>;
   const text = getPortfolioCopy(profile.portfolioLanguage);
   return (
     <footer className="site-footer">
