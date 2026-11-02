@@ -1,9 +1,21 @@
 import { expect, test } from "@playwright/test";
 
+import { themePreferenceOptions } from "../../packages/runtime/src/user/themePreferences";
+
 test("appearance settings persist across reloads and mode changes", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Appearance controls" }).hover();
   await page.getByRole("button", { exact: true, name: "Theme settings" }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog.locator("select, details")).toHaveCount(0);
+  for (const [key, values] of Object.entries(themePreferenceOptions)) {
+    await expect(dialog.locator(`[data-options="${key}"] button`)).toHaveCount(values.length + 1);
+  }
+  await page.getByRole("button", { exact: true, name: "Theme: pink" }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-brand", "pink");
+  await page.getByRole("button", { exact: true, name: "Border: thick" }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-border", "thick");
+  await page.getByRole("button", { exact: true, name: "Border: Page default" }).click();
   await page.getByRole("button", { exact: true, name: "Spacing: spacious" }).click();
   await page.getByRole("button", { exact: true, name: "Accent: violet" }).click();
   await page.getByRole("button", { exact: true, name: "Corners: pill" }).click();

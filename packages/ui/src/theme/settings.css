@@ -1,35 +1,3 @@
-.theme-settings-panel {
-  display: grid;
-  gap: 16px;
-  width: min(360px, calc(100vw - 32px));
-  max-height: min(640px, 75dvh);
-  padding: 20px;
-  overflow-y: auto;
-  color: rgb(var(--text-rgb));
-  background: rgb(var(--surface-rgb));
-  border: 1px solid rgb(var(--border-rgb));
-  border-radius: 16px;
-  box-shadow: 0 16px 48px rgb(var(--shadow-rgb) / 0.18);
-}
-.theme-settings-field {
-  display: grid;
-  grid-template-columns: minmax(90px, 1fr) minmax(0, 1.4fr);
-  gap: 12px;
-  align-items: center;
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: capitalize;
-}
-.theme-settings-field select {
-  width: 100%;
-  min-height: 36px;
-  padding: 6px 10px;
-  font-size: 13px;
-  color: rgb(var(--text-rgb));
-  background: rgb(var(--surface-soft-rgb));
-  border: 1px solid rgb(var(--border-rgb));
-  border-radius: 8px;
-}
 .appearance-launcher {
   position: relative;
   display: flex;
@@ -151,20 +119,6 @@
 .appearance-sample[data-value="pill"] {
   border-radius: 40px;
 }
-.appearance-advanced {
-  padding-top: 16px;
-  font-size: 13px;
-  border-top: 1px solid rgb(var(--border-rgb));
-}
-.appearance-advanced summary {
-  color: rgb(var(--muted-rgb));
-  cursor: pointer;
-}
-.appearance-advanced > div {
-  display: grid;
-  gap: 12px;
-  margin-top: 16px;
-}
 @media (prefers-reduced-motion: reduce) {
   .appearance-quick-actions {
     transition: none;
@@ -173,4 +127,173 @@
 
 .appearance-sample[data-value="sans"] {
   font-family: var(--font-geist-sans, system-ui), sans-serif;
+}
+/* Every persisted preference uses the same compact visual tile. */
+.appearance-dialog {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(760px, calc(100vw - 32px));
+  max-width: 760px;
+  height: min(820px, 85dvh);
+  overflow: hidden;
+}
+.appearance-visual-options {
+  align-content: start;
+  min-height: 0;
+  padding: 3px 8px 8px 3px;
+  overflow-y: auto;
+}
+.appearance-group legend {
+  text-transform: capitalize;
+}
+.appearance-options {
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  gap: 8px;
+}
+.appearance-choice {
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 6px;
+  min-width: 0;
+  aspect-ratio: 1;
+  padding: 8px;
+  font-size: 11px;
+  line-height: 1.3;
+  border-radius: 10px;
+}
+.appearance-sample {
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  font-size: 24px;
+}
+.appearance-sample[data-value=""] {
+  color: rgb(var(--muted-rgb));
+}
+.appearance-sample[data-kind="border"] {
+  border: calc(var(--preview-rank) * 1px) solid rgb(var(--accent-rgb));
+}
+.appearance-sample[data-kind="border"][data-value="none"] {
+  border: 0;
+}
+.appearance-sample[data-kind="blur"] {
+  filter: blur(calc((var(--preview-rank) - 1) * 0.4px));
+}
+.appearance-sample[data-kind="shadow"] {
+  place-self: center;
+  width: 75%;
+  height: 70%;
+  box-shadow: 0 calc(var(--preview-rank) * 1px) calc(var(--preview-rank) * 2px)
+    rgb(var(--shadow-rgb) / 0.25);
+}
+.appearance-sample[data-kind="shadow"][data-value="none"] {
+  box-shadow: none;
+}
+.appearance-sample[data-kind="opacity"] {
+  opacity: calc(1 - var(--preview-rank) * 0.12);
+}
+.appearance-sample[data-kind="tracking"][data-value="wide"] {
+  letter-spacing: 5px;
+}
+.appearance-sample[data-kind="container"] {
+  justify-self: center;
+  width: calc(35% + var(--preview-rank) * 20%);
+}
+.appearance-sample[data-kind="gradient"][data-value="subtle"] {
+  background: linear-gradient(135deg, rgb(var(--accent-rgb) / 0.1), rgb(var(--accent-rgb) / 0.35));
+}
+.appearance-sample[data-kind="gradient"][data-value="vivid"] {
+  background: linear-gradient(135deg, var(--clr-violet-600), var(--clr-cyan-600));
+}
+.appearance-sample[data-kind="perspective"][data-value="normal"] {
+  transform: perspective(80px) rotateY(20deg);
+}
+.appearance-sample[data-kind="perspective"][data-value="dramatic"] {
+  transform: perspective(80px) rotateY(40deg);
+}
+.appearance-sample[data-kind="radius"] {
+  border-radius: min(40px, calc(var(--preview-rank) * 4px));
+}
+.appearance-sample[data-kind="radius"][data-value="none"],
+.appearance-sample[data-kind="radius"][data-value="square"] {
+  border-radius: 0;
+}
+.appearance-sample[data-kind="scale"] {
+  font-size: calc(14px + var(--preview-rank) * 2px);
+}
+.appearance-sample[data-kind="spacing"] {
+  letter-spacing: calc(var(--preview-rank) * 1px);
+}
+.appearance-sample[data-kind="line-height"] {
+  line-height: calc(0.8 + var(--preview-rank) * 0.2);
+  text-decoration: underline overline;
+  text-underline-offset: calc(var(--preview-rank) * 1px);
+}
+.appearance-sample[data-kind="mode"] {
+  position: relative;
+  display: grid;
+  gap: 3px;
+  align-content: start;
+  padding: 6px;
+  background: #f6f8fb;
+  border: 1px solid rgb(var(--border-rgb));
+}
+.appearance-sample[data-kind="mode"] i {
+  width: 75%;
+  height: 3px;
+  background: #536981;
+  border-radius: 2px;
+}
+.appearance-sample[data-kind="mode"][data-value="dark"] {
+  background: #101929;
+}
+.appearance-sample[data-kind="mode"][data-value="dark"] i {
+  background: #a0b1c6;
+}
+.appearance-sample[data-kind="mode"][data-value="system"] {
+  background: linear-gradient(90deg, #f6f8fb 50%, #101929 50%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .appearance-choice:hover
+    .appearance-sample[data-kind="animation"]:not([data-value="none"]):not([data-value=""]) {
+    animation: appearance-preview 700ms ease-in-out alternate 2;
+  }
+  .appearance-sample[data-kind="transition"] {
+    transition: transform calc(100ms + var(--preview-rank) * 100ms) ease;
+  }
+  .appearance-choice:hover
+    .appearance-sample[data-kind="transition"]:not([data-value="none"]):not([data-value=""]) {
+    transform: translateY(-4px);
+  }
+}
+@keyframes appearance-preview {
+  to {
+    transform: translateY(-5px);
+  }
+}
+.appearance-dialog > [data-slot="dialog-close"] {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 4px;
+  color: rgb(var(--muted-rgb));
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+}
+.appearance-dialog > [data-slot="dialog-close"] svg {
+  width: 16px;
+  height: 16px;
+}
+.appearance-dialog > [data-slot="button"] {
+  align-self: end;
+  justify-self: start;
+  height: 36px;
+  min-height: 36px;
+  padding: 8px 12px;
+  font-size: 12px;
+  border-radius: 8px;
 }
