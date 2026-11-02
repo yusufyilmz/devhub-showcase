@@ -2,7 +2,7 @@ import "../../sections/sections.css";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { SectionTabs } from "./SectionElements";
+import { SectionTabs } from "./SectionTabs";
 
 const items = [
   {

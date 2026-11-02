@@ -2,7 +2,7 @@ import "../../sections/sections.css";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { SectionGrid } from "./SectionElements";
+import { SectionGrid } from "./SectionGrid";
 
 const items = [
   {
@@ -19,8 +19,10 @@ const meta = {
   tags: ["autodocs"],
   title: "UI/Section/SectionGrid",
 } satisfies Meta<typeof SectionGrid>;
+
 export default meta;
 type Story = StoryObj<typeof meta>;
+
 export const Default: Story = {};
 export const Empty: Story = { args: { items: [] } };
 export const LongTitles: Story = {

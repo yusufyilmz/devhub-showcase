@@ -126,3 +126,16 @@ export function RevealCard({ language = "en", ...props }: LocalizedRevealCardPro
   };
   return <RevealCardBase {...props} labels={labels} />;
 }
+
+// <span className={revealCardCopyStyles.element5}>
+// {expanded ? labels.fullDetails : labels.hoverDetails}
+// </span>
+// <span className={revealCardCopyStyles.element6}>
+// {expanded ? labels.tapClose : labels.tapDetails}
+// </span>
+// <span className={revealCardCopyStyles.element7}>
+// {expanded ? labels.fullDetails : labels.keyboardDetails}
+// </span>
+// <span aria-hidden="true" className={revealCardCopyStyles.element8}>
+// ↗
+// </span>

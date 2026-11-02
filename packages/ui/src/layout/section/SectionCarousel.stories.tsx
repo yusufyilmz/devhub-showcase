@@ -2,7 +2,7 @@ import "../../sections/sections.css";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { SectionCarousel } from "./SectionElements";
+import { SectionCarousel } from "./SectionCarousel";
 
 const items = [
   {

@@ -7,11 +7,7 @@ import { Card } from "./Card";
 describe("Card semantic composition", () => {
   afterEach(cleanup);
   it("keeps empty type equivalent to the original surface and does not leak type to the DOM", () => {
-    render(
-      <Card aria-label="Plain card" type="">
-        Body
-      </Card>,
-    );
+    render(<Card aria-label="Plain card">Body</Card>);
     const card = screen.getByLabelText("Plain card");
     expect(card.dataset.slot).toBe("card");
     expect(card.hasAttribute("type")).toBe(false);

@@ -15,15 +15,11 @@ import {
   SectionTabs,
 } from "../../layout";
 import { configuredSectionInlineStyle1, configuredSectionStyles } from "./styles";
-import type {
-  ConfiguredSectionOptions,
-  ConfiguredSectionOptions2,
-  SectionViewOptions,
-} from "./types";
+import type { ConfiguredSectionOptions, SectionViewOptions } from "./types";
 
 function sectionItems(profile: PortfolioProfile, kind: PortfolioSection["kind"]): SectionItem[] {
   const text = getPortfolioCopy(profile.portfolioLanguage);
-  const period = (start: string, end: ConfiguredSectionOptions2) =>
+  const period = (start: string, end: string | null) =>
     formatPortfolioPeriod(start, end, profile.portfolioLanguage);
   switch (kind) {
     case "about":

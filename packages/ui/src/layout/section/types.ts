@@ -1,6 +1,8 @@
 import type React from "react";
 import type { ReactNode } from "react";
 
+import type { CardProps } from "../../cards";
+
 export type SectionItem = { id: string; title: string; content: ReactNode };
 
 export interface SectionHeaderProps {
@@ -54,33 +56,6 @@ export interface SectionHeaderProps {
   variant?: "standard" | "card" | "minimal";
 }
 
-export type SectionGridOptions = {
-  items: SectionItem[];
-  label: string;
-  variant?: "cards" | "gallery";
-  surface?: "semantic" | "portfolio";
-};
-
-export type SectionAccordionOptions = {
-  items: SectionItem[];
-  label: string;
-  surface?: "semantic" | "portfolio";
-};
-
-export type SectionTabsOptions = {
-  items: SectionItem[];
-  label: string;
-  surface?: "semantic" | "portfolio";
-};
-
-export type SectionCarouselOptions = {
-  items: SectionItem[];
-  label: string;
-  previousLabel?: string;
-  nextLabel?: string;
-  surface?: "semantic" | "portfolio";
-};
-
 import type { PropsWithChildren } from "react";
 
 export type SectionSurfaceProps = PropsWithChildren<{
@@ -91,3 +66,30 @@ export type SectionSurfaceProps = PropsWithChildren<{
   eyebrow?: string;
   asChild?: boolean;
 }>;
+
+export type CardType = CardProps["type"];
+
+export type SectionCollectionOptions = {
+  items: SectionItem[];
+  label: string;
+  surface?: "semantic" | "portfolio";
+  type?: CardType;
+  sectionId?: SectionSurfaceProps["sectionId"];
+};
+
+export type SectionGridOptions = SectionCollectionOptions & {
+  variant?: "cards" | "gallery";
+};
+
+export type SectionAccordionOptions = SectionCollectionOptions;
+export type SectionTabsOptions = SectionCollectionOptions;
+
+export type SectionCarouselOptions = SectionCollectionOptions & {
+  previousLabel?: string;
+  nextLabel?: string;
+};
+
+export type SectionItemCardOptions = Pick<SectionCollectionOptions, "surface" | "type"> & {
+  item: SectionItem;
+  accordion?: boolean;
+};

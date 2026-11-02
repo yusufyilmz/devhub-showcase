@@ -31,6 +31,11 @@ export type AppearanceCardAccentConfig = {
   borderRadius?: string | number;
 };
 
+export type HoverCardProps = React.ComponentProps<typeof HoverCardPrimitive.Root> & {
+  trigger?: React.ReactElement;
+  contentProps?: React.ComponentProps<typeof HoverCardPrimitive.Content>;
+};
+
 export interface AppearanceCardProps extends Omit<BaseCardProps, "children"> {
   accent?: boolean | AppearanceCardAccentConfig;
   /**
@@ -210,17 +215,24 @@ export interface VariantCardProps
   transitionDuration?: number;
 }
 
+export type CardType =
+  | "reveal"
+  | "variants"
+  | "appearance"
+  | "hover"
+  | "tilt"
+  | "animated"
+  | "content"
+  | undefined;
+
 export type CardProps =
-  | (BaseCardProps & { type?: "" | "tilt" | "animated" })
+  | (BaseCardProps & { type?: undefined })
+  | (BaseCardProps & { type: "tilt" | "animated" })
   | (RevealCardProps & { type: "reveal"; language?: Language })
   | (VariantCardProps & { type: "variants" })
   | (ContentCardProps & { type: "content" })
   | (AppearanceCardProps & { type: "appearance" })
-  | (React.ComponentProps<typeof HoverCardPrimitive.Root> & {
-      type: "hover";
-      trigger?: React.ReactElement;
-      contentProps?: React.ComponentProps<typeof HoverCardPrimitive.Content>;
-    });
+  | (HoverCardProps & { type: "hover" });
 
 export interface CardActionItem {
   label: string;

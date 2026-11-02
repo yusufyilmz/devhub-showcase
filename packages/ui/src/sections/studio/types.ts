@@ -6,8 +6,7 @@ import type {
   SectionRendererId,
 } from "@shared/config";
 
-import type { SectionItem } from "../../layout";
-import type { SectionItem as SectionItem2 } from "../../layout/section";
+import type { SectionItem } from "../../layout/section/types";
 
 export type ConfiguredSectionOptions = {
   profile: PortfolioProfile;
@@ -29,7 +28,7 @@ export type CustomPortfolioSectionOptions = {
 
 export type CustomViewOptions = {
   renderer: CustomSection["renderer"];
-  items: SectionItem2[];
+  items: SectionItem[];
   label: string;
 };
 
@@ -60,5 +59,3 @@ export type SectionTemplatesEditorOptions = {
   profile: PortfolioProfile;
   onChange: (profile: PortfolioProfile) => void;
 };
-
-export type ConfiguredSectionOptions2 = string | null;

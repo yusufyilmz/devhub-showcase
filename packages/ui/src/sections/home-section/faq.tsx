@@ -24,6 +24,7 @@ export function HomeFAQSection() {
             }))}
             label="Common questions"
             surface="portfolio"
+            type="reveal"
           />
         </div>
       </section>
