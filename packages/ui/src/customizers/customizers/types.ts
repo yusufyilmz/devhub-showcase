@@ -19,11 +19,11 @@ export interface ComponentCustomizerProps
 
 export type ThemeOption = "light" | "dark" | "system";
 
-export type BrandOption = "white" | "sand" | "aqua";
+export type BrandOption = (typeof themePreferenceOptions.brand)[number];
 
-export type ShadowOption = "none" | "soft" | "medium" | "strong";
+export type ShadowOption = (typeof themePreferenceOptions.shadow)[number];
 
-export type SpacingOption = "compact" | "comfortable" | "relaxed" | "spacious";
+export type SpacingOption = (typeof themePreferenceOptions.spacing)[number];
 
 export type ScaleOption = "90" | "95" | "100" | "105" | "110";
 
@@ -52,3 +52,5 @@ export type ThemeCustomizerOptions = {
   options: SelectOption[];
   onChange: (value: string) => void;
 };
+
+import type { themePreferenceOptions } from "@shared/runtime/user";

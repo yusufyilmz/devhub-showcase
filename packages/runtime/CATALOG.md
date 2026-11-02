@@ -1,5 +1,10 @@
 # Runtime catalog
 
+The user store persists validated themePreferences alongside activeMode and the
+display user. Preferences include density, brand/accent, border, shadow, radius,
+scale, typography and motion choices. Legacy ui-theme and data-* preferences
+migrate into the canonical record; clearing the display user retains appearance.
+
 Browser helpers for `@shared/runtime`. These hooks do not choose an API URL or authorize a user.
 
 | Export                          | Path                                  | Use                                             |

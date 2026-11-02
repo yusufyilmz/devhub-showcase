@@ -28,12 +28,47 @@ function Page({
 }
 
 describe("Shared document theme", () => {
+  it("restores appearance before paint and preserves it when mode changes", () => {
+    useUserConfigStore.getState().setThemePreferences({
+      accent: "violet",
+      brand: "aqua",
+      radius: "pill",
+      scale: "110",
+      spacing: "compact",
+    });
+    runInNewContext(userConfigThemeScript("legacy", "dark"), {
+      document,
+      localStorage,
+      matchMedia: window.matchMedia,
+    });
+    expect(document.documentElement.dataset.spacing).toBe("compact");
+    expect(document.documentElement.style.getPropertyValue("--text-scale")).toBe("1.1");
+    render(<Page storageKey="legacy" />);
+    expect(document.documentElement.dataset.accent).toBe("violet");
+    fireEvent.click(screen.getByRole("button", { name: "Switch to light theme" }));
+    expect(document.documentElement.dataset.spacing).toBe("compact");
+    expect(document.documentElement.dataset.brand).toBe("aqua");
+    act(() => useUserConfigStore.setState({ themePreferences: { spacing: "spacious" } }));
+    expect(document.documentElement.dataset.spacing).toBe("spacious");
+    act(() => useUserConfigStore.setState({ themePreferences: {} }));
+    expect(document.documentElement.dataset.accent).toBe("cyan");
+  });
+  it("migrates old customizer appearance keys into the canonical record", () => {
+    localStorage.setItem("data-spacing", "spacious");
+    localStorage.setItem("data-brand", "sand");
+    render(<Page storageKey="legacy" />);
+    expect(useUserConfigStore.getState().themePreferences).toEqual({
+      brand: "sand",
+      spacing: "spacious",
+    });
+    expect(localStorage.getItem("data-spacing")).toBeNull();
+  });
   let dark: boolean;
   let change: (() => void) | undefined;
   beforeEach(() => {
     dark = false;
     change = undefined;
-    useUserConfigStore.setState({ activeMode: null, user: null });
+    useUserConfigStore.setState({ activeMode: null, themePreferences: {}, user: null });
     localStorage.clear();
     vi.stubGlobal("matchMedia", () => ({
       addEventListener: (_: string, cb: () => void) => {
@@ -84,10 +119,19 @@ describe("Shared document theme", () => {
   });
   it("accepts preference changes from another tab", () => {
     render(<Page storageKey="legacy" />);
-    const newValue = JSON.stringify({ state: { activeMode: "light", user: null }, version: 2 });
+    const newValue = JSON.stringify({
+      state: {
+        activeMode: "light",
+        themePreferences: { accent: "emerald", spacing: "spacious" },
+        user: null,
+      },
+      version: 2,
+    });
     localStorage.setItem(USER_CONFIG_STORAGE_KEY, newValue);
     fireEvent(window, new StorageEvent("storage", { key: USER_CONFIG_STORAGE_KEY, newValue }));
     expect(document.documentElement.dataset.theme).toBe("light");
+    expect(document.documentElement.dataset.spacing).toBe("spacious");
+    expect(document.documentElement.dataset.accent).toBe("emerald");
   });
   it("still toggles when local storage is blocked", () => {
     vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
