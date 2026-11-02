@@ -3,7 +3,8 @@ import type { ThemeStore } from "./types";
 export type { ThemeStore } from "./types";
 
 import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+
+import { useUserConfigStore } from "@shared/runtime/user";
 
 import type {
   AnimationStyle,
@@ -50,38 +51,30 @@ export const initialState: ThemeConfig = {
   weight: "normal" as WeightStyle,
 };
 
-export const themeStore = create<ThemeStore>()(
-  persist(
-    (set) => ({
-      ...initialState,
-      reset: () => set(initialState),
-      setAnimation: (animation: AnimationStyle) => set({ animation }),
-      setBlur: (blur: BlurStyle) => set({ blur }),
-      setBorder: (border: BorderStyle) => set({ borders: border }),
-      setBrand: (brand: Brand) => set({ brand: brand }),
-      setContainer: (container: ContainerStyle) => set({ container }),
-      setFont: (font: FontStyle) => set({ font }),
-      setFontSize: (fontSize: FontSizeStyle) => set({ fontSize }),
-      setGradient: (gradient: GradientStyle) => set({ gradient: gradient }),
-      setLineHeight: (lineHeight: LineHeightStyle) => set({ lineHeight }),
-      setOpacity: (opacity: OpacityStyle) => set({ opacity }),
-      setPerspective: (perspective: PerspectiveStyle) => set({ perspective }),
-      setRadius: (radius: RadiusStyle) => set({ radius }),
-      setScale: (scale: ScaleStyle) => set({ scale }),
-      setSettings: (settings: Partial<ThemeConfig>) => set({ ...settings }),
-      setShadow: (shadow: ShadowStyle) => set({ shadow: shadow }),
-      setSpacing: (spacing: SpacingStyle) => set({ spacing }),
-      setTheme: (theme: ThemeMode) => set({ theme: theme }),
-      setTracking: (tracking: TrackingStyle) => set({ tracking }),
-      setTransition: (transition: TransitionStyle) => set({ transition }),
-      setWeight: (weight: WeightStyle) => set({ weight: weight }),
-    }),
-    {
-      name: "ui-theme",
-      storage: createJSONStorage(() => localStorage),
-    },
-  ),
-);
+export const themeStore = create<ThemeStore>()(() => ({
+  ...initialState,
+  reset: () => commitTheme(initialState),
+  setAnimation: (animation: AnimationStyle) => commitTheme({ animation }),
+  setBlur: (blur: BlurStyle) => commitTheme({ blur }),
+  setBorder: (border: BorderStyle) => commitTheme({ borders: border }),
+  setBrand: (brand: Brand) => commitTheme({ brand: brand }),
+  setContainer: (container: ContainerStyle) => commitTheme({ container }),
+  setFont: (font: FontStyle) => commitTheme({ font }),
+  setFontSize: (fontSize: FontSizeStyle) => commitTheme({ fontSize }),
+  setGradient: (gradient: GradientStyle) => commitTheme({ gradient: gradient }),
+  setLineHeight: (lineHeight: LineHeightStyle) => commitTheme({ lineHeight }),
+  setOpacity: (opacity: OpacityStyle) => commitTheme({ opacity }),
+  setPerspective: (perspective: PerspectiveStyle) => commitTheme({ perspective }),
+  setRadius: (radius: RadiusStyle) => commitTheme({ radius }),
+  setScale: (scale: ScaleStyle) => commitTheme({ scale }),
+  setSettings: (settings: Partial<ThemeConfig>) => commitTheme({ ...settings }),
+  setShadow: (shadow: ShadowStyle) => commitTheme({ shadow: shadow }),
+  setSpacing: (spacing: SpacingStyle) => commitTheme({ spacing }),
+  setTheme: (theme: ThemeMode) => commitTheme({ theme: theme }),
+  setTracking: (tracking: TrackingStyle) => commitTheme({ tracking }),
+  setTransition: (transition: TransitionStyle) => commitTheme({ transition }),
+  setWeight: (weight: WeightStyle) => commitTheme({ weight: weight }),
+}));
 
 export const themeSelectors = {
   border: (state: ThemeStore) => state.borders,
@@ -116,3 +109,42 @@ export const getThemeSettings = (): ThemeConfig => {
     ...themeStore.getState(),
   };
 };
+
+// Keep the public themeStore API while the user store owns persistence.
+const preferenceKey = (key: string) =>
+  ({
+    borders: "border",
+    container: "container",
+    fontSize: "font-size",
+    lineHeight: "line-height",
+  })[key] ?? key;
+function commitTheme(settings: Partial<ThemeConfig>) {
+  themeStore.setState(settings);
+  const changes = Object.fromEntries(
+    Object.entries(settings)
+      .filter(([key]) => key !== "theme")
+      .map(([key, value]) => [preferenceKey(key), value]),
+  );
+  if (Object.keys(changes).length) useUserConfigStore.getState().setThemePreferences(changes);
+  if (settings.theme) useUserConfigStore.getState().setActiveMode(settings.theme);
+}
+useUserConfigStore.subscribe((state) => {
+  const settings = Object.fromEntries(
+    Object.keys(initialState)
+      .filter(
+        (key) =>
+          key !== "theme" &&
+          state.themePreferences[preferenceKey(key) as keyof typeof state.themePreferences] !==
+            undefined,
+      )
+      .map((key) => [
+        key,
+        state.themePreferences[preferenceKey(key) as keyof typeof state.themePreferences],
+      ]),
+  );
+  themeStore.setState({
+    ...initialState,
+    ...settings,
+    ...(state.activeMode ? { theme: state.activeMode } : {}),
+  } as Partial<ThemeConfig>);
+});

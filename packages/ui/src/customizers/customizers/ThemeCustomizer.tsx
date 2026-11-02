@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 import { cn } from "cn";
 
+import { themePreferenceOptions, useUserConfigStore } from "@shared/runtime/user";
+
 import { Button } from "../../buttons/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../cards";
 import { Typography } from "../../display/typography";
@@ -31,47 +33,35 @@ export const themeOptions: SelectOption[] = [
   { label: "System", value: "system" },
 ];
 
-export const brandOptions: SelectOption[] = [
-  { label: "White", value: "white" },
-  { label: "Sand", value: "sand" },
-  { label: "Aqua", value: "aqua" },
-];
+export const brandOptions: SelectOption[] = themePreferenceOptions.brand.map((value) => ({
+  label: value,
+  value,
+}));
 
-export const borderOptions: SelectOption[] = [
-  { label: "None", value: "none" },
-  { label: "Thin", value: "thin" },
-  { label: "Base", value: "base" },
-  { label: "Thick", value: "thick" },
-];
+export const borderOptions: SelectOption[] = themePreferenceOptions.border.map((value) => ({
+  label: value,
+  value,
+}));
 
-export const shadowOptions: SelectOption[] = [
-  { label: "None", value: "none" },
-  { label: "Soft", value: "soft" },
-  { label: "Medium", value: "medium" },
-  { label: "Strong", value: "strong" },
-];
+export const shadowOptions: SelectOption[] = themePreferenceOptions.shadow.map((value) => ({
+  label: value,
+  value,
+}));
 
-export const spacingOptions: SelectOption[] = [
-  { label: "Compact", value: "compact" },
-  { label: "Comfortable", value: "comfortable" },
-  { label: "Relaxed", value: "relaxed" },
-  { label: "Spacious", value: "spacious" },
-];
+export const spacingOptions: SelectOption[] = themePreferenceOptions.spacing.map((value) => ({
+  label: value,
+  value,
+}));
 
-export const radiusOptions: SelectOption[] = [
-  { label: "Square", value: "square" },
-  { label: "Small", value: "small" },
-  { label: "Base", value: "base" },
-  { label: "Rounded", value: "rounded" },
-  { label: "Pill", value: "pill" },
-];
+export const radiusOptions: SelectOption[] = themePreferenceOptions.radius.map((value) => ({
+  label: value,
+  value,
+}));
 
-export const transitionOptions: SelectOption[] = [
-  { label: "None", value: "none" },
-  { label: "Base", value: "base" },
-  { label: "Smooth", value: "smooth" },
-  { label: "Bouncy", value: "bouncy" },
-];
+export const transitionOptions: SelectOption[] = themePreferenceOptions.transition.map((value) => ({
+  label: value,
+  value,
+}));
 
 export const scaleOptions: SelectOption[] = [
   { label: "90% (Compact)", value: "90" },
@@ -102,6 +92,12 @@ const SelectField = ({ label, value, options, onChange }: ThemeCustomizerOptions
   </div>
 );
 
+function defaultAttribute(key: string, fallback: string) {
+  return typeof document === "undefined"
+    ? fallback
+    : (document.documentElement.getAttribute(`data-${key}`) ?? fallback);
+}
+
 export function ThemeCustomizer({
   className,
   onThemeChange,
@@ -116,35 +112,28 @@ export function ThemeCustomizer({
   showReset = true,
   ...props
 }: ThemeCustomizerProps) {
-  const [theme, setTheme] = useState<ThemeOption>("system");
-  const [brand, setBrand] = useState<BrandOption>(() => {
-    if (typeof document === "undefined") {
-      return "white";
-    }
-    const fromRoot = document.documentElement.getAttribute("data-brand");
-    if (fromRoot && brandOptions.some((option) => option.value === fromRoot)) {
-      return fromRoot as BrandOption;
-    }
-    return "white";
-  });
-  const [border, setBorder] = useState("base");
-  const [shadow, setShadow] = useState<ShadowOption>("soft");
-  const [spacing, setSpacing] = useState<SpacingOption>(() => {
-    if (typeof document === "undefined") {
-      return "comfortable";
-    }
-    const fromRoot = document.documentElement.getAttribute("data-spacing");
-    return spacingOptions.some((option) => option.value === fromRoot)
-      ? (fromRoot as SpacingOption)
-      : "comfortable";
-  });
-  const [radius, setRadius] = useState(() => {
-    if (typeof document === "undefined") {
-      return "base";
-    }
-    return document.documentElement.getAttribute("data-radius") ?? "base";
-  });
-  const [transition, setTransition] = useState("smooth");
+  const preferences = useUserConfigStore((state) => state.themePreferences);
+  const theme = useUserConfigStore((state) => state.activeMode) ?? "system";
+  const setTheme = (value: ThemeOption) => useUserConfigStore.getState().setActiveMode(value);
+  const brand = (preferences.brand ?? defaultAttribute("brand", "white")) as BrandOption;
+  const border = preferences.border ?? defaultAttribute("border", "base");
+  const shadow = (preferences.shadow ?? defaultAttribute("shadow", "soft")) as ShadowOption;
+  const spacing = (preferences.spacing ??
+    defaultAttribute("spacing", "comfortable")) as SpacingOption;
+  const radius = preferences.radius ?? defaultAttribute("radius", "base");
+  const transition = preferences.transition ?? defaultAttribute("transition", "smooth");
+  const setBrand = (value: BrandOption) =>
+    useUserConfigStore.getState().setThemePreferences({ brand: value });
+  const setBorder = (value: string) =>
+    useUserConfigStore.getState().setThemePreferences({ border: value });
+  const setShadow = (value: ShadowOption) =>
+    useUserConfigStore.getState().setThemePreferences({ shadow: value });
+  const setSpacing = (value: SpacingOption) =>
+    useUserConfigStore.getState().setThemePreferences({ spacing: value });
+  const setRadius = (value: string) =>
+    useUserConfigStore.getState().setThemePreferences({ radius: value });
+  const setTransition = (value: string) =>
+    useUserConfigStore.getState().setThemePreferences({ transition: value });
   const [showCodePanel, setShowCodePanel] = useState(showCode);
 
   // Apply theme changes to document
@@ -165,14 +154,6 @@ export function ThemeCustomizer({
     root.setAttribute("data-radius", radius);
     root.setAttribute("data-transition", transition);
 
-    // Store in localStorage
-    localStorage.setItem("data-theme", theme);
-    localStorage.setItem("data-brand", brand);
-    localStorage.setItem("data-border", border);
-    localStorage.setItem("data-shadow", shadow);
-    localStorage.setItem("data-spacing", spacing);
-    localStorage.setItem("data-radius", radius);
-    localStorage.setItem("data-transition", transition);
     return () => media.removeEventListener("change", applyMode);
   }, [theme, brand, border, shadow, spacing, radius, transition]);
 

@@ -1,5 +1,11 @@
 # UI catalog
 
+ThemeToggle keeps its quick mode switch and includes a Theme settings popover.
+Appearance choices are validated and persisted in the shared user configuration
+alongside mode and display user. ThemeProvider applies them before/after hydration
+and synchronizes storage events. ThemeCustomizer uses the same preferences;
+themeStore remains a compatibility API without a second persistence key.
+
 Application controls use Button, Input, Textarea and NativeSelect. NativeSelect
 is available from @shared/ui/native-select and preserves native option, optgroup,
 multiple-selection and form semantics. Login presentation is owned by
