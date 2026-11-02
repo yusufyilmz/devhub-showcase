@@ -1,8 +1,10 @@
+"use client";
+
 import { forwardRef, type ReactNode } from "react";
 
 import { cn } from "cn";
 
-import { Card } from "./Card";
+import { CardBase as Card } from "./CardBase";
 
 const GRADIENT_MAP = {
   default: "bg-card",

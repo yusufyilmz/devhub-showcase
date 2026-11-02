@@ -1,39 +1,66 @@
-import "./surfaces.css";
+import "./card-effects.css";
 
 import type * as React from "react";
 
-import { Slot } from "@radix-ui/react-slot";
 import { cn } from "cn";
 
-type CardProps = React.ComponentProps<"div"> & {
-  asChild?: boolean;
-  surface?: "semantic" | "portfolio";
-  interaction?: "static" | "lift";
-  layout?: "stack" | "plain";
-};
+import { AppearanceCard, type AppearanceCardProps } from "./AppearanceCard";
+import { type BaseCardProps, CardBase } from "./CardBase";
+import { ContentCard, type ContentCardProps } from "./ContentCard";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./HoverCard";
+import { RevealCard } from "./RevealCard";
+import { VariantCard, type VariantCardProps } from "./VariantCard";
 
-function Card({
-  className,
-  asChild = false,
-  surface = "semantic",
-  interaction = "lift",
-  layout = "stack",
-  ...props
-}: CardProps) {
-  const Comp = asChild ? Slot : "div";
-  return (
-    <Comp
-      className={cn(
-        "ui-card rounded-xl border bg-card text-card-foreground",
-        layout === "stack" && "flex flex-col gap-md py-md",
-        className,
-      )}
-      data-interaction={interaction}
-      data-slot="card"
-      data-surface={surface}
-      {...props}
-    />
-  );
+export type CardProps =
+  | (BaseCardProps & { type?: "" | "tilt" | "animated" })
+  | (React.ComponentProps<typeof RevealCard> & { type: "reveal" })
+  | (VariantCardProps & { type: "variants" })
+  | (ContentCardProps & { type: "content" })
+  | (AppearanceCardProps & { type: "appearance" })
+  | (React.ComponentProps<typeof HoverCard> & {
+      type: "hover";
+      trigger?: React.ReactElement;
+      contentProps?: React.ComponentProps<typeof HoverCardContent>;
+    });
+
+function Card(props: CardProps) {
+  switch (props.type) {
+    case "reveal": {
+      const { type: _type, ...options } = props;
+      return <RevealCard {...options} />;
+    }
+    case "variants": {
+      const { type: _type, ...options } = props;
+      return <VariantCard {...options} />;
+    }
+    case "content": {
+      const { type: _type, ...options } = props;
+      return <ContentCard {...options} />;
+    }
+    case "appearance": {
+      const { type: _type, ...options } = props;
+      return <AppearanceCard {...options} />;
+    }
+    case "hover": {
+      const { type: _type, trigger, contentProps, children, ...options } = props;
+      return (
+        <HoverCard {...options}>
+          {trigger ? (
+            <>
+              <HoverCardTrigger asChild>{trigger}</HoverCardTrigger>
+              <HoverCardContent {...contentProps}>{children}</HoverCardContent>
+            </>
+          ) : (
+            children
+          )}
+        </HoverCard>
+      );
+    }
+    default: {
+      const { type, ...options } = props;
+      return <CardBase {...options} data-card-type={type || undefined} />;
+    }
+  }
 }
 
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {

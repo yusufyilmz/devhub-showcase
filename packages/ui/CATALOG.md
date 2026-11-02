@@ -1,5 +1,12 @@
 # UI catalog
 
+Card accepts a discriminated type prop: omitted or empty preserves the base
+surface; reveal, variants, hover, content and appearance use the existing
+specialized components and their props. Tilt and animated use the base surface
+with reduced-motion-aware effects. Reveal requires title and heading; content
+requires title. Hover accepts a trigger element or explicit HoverCardTrigger /
+HoverCardContent children. CardProps is exported from @shared/ui/cards.
+
 Component styles live beside their owning UI domain. Portfolio skins are in
 src/portfolio/portfolio.css; section skins in src/sections/sections.css; navigation
 in src/navigation/chrome.css; chat styles in src/display/chat; example styles in

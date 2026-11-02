@@ -1,12 +1,14 @@
 "use client";
 
+import "./reveal-card.css";
+
 import type { ComponentProps } from "react";
 import { type ReactNode, useId, useRef, useState } from "react";
 
 import { getPortfolioCopy, type Language } from "@shared/config";
 
 import { Button } from "../buttons/button/Button";
-import { Card } from "./Card";
+import { CardBase as Card } from "./CardBase";
 
 const defaultLabels = {
   fullDetails: "Full details",
