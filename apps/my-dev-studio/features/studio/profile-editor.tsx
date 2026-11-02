@@ -2,6 +2,7 @@
 
 import "@shared/ui/components.css";
 
+import dynamic from "next/dynamic";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 
 import { AiAssistantEditor, AiProfileEditor } from "@shared/assistant/studio";
@@ -24,6 +25,7 @@ import {
   ProfileFields,
   usePortfolioHistory,
 } from "@shared/ui/portfolio";
+import { ResponsivePortfolioPreview } from "@shared/ui/portfolio-preview";
 import {
   EducationEditor,
   ExperienceEditor,
@@ -38,6 +40,10 @@ import {
   SectionTemplatesEditor,
 } from "@shared/ui/sections/studio";
 import { AppearanceEditor } from "@shared/ui/theme/studio";
+
+const PreviewContent = dynamic(() =>
+  import("./preview-content").then((module) => module.PreviewContent),
+);
 
 const tabs = [
   "Profile",
@@ -304,6 +310,7 @@ export function ProfileEditor({
             tab={tab}
           />
         </fieldset>
+        <DraftPreview profile={draft} username={username} />
         <footer className="editor-footer">
           <p>Save your edits to update your CV. Public sharing is optional.</p>
           <Button
@@ -533,3 +540,11 @@ const editors = {
   Skills: SkillsEditor,
   Templates: SectionTemplatesEditor,
 };
+
+function DraftPreview({ profile, username }: { profile: PortfolioProfile; username: string }) {
+  return (
+    <ResponsivePortfolioPreview appearance={profile.appearance}>
+      <PreviewContent profile={profile} username={username} />
+    </ResponsivePortfolioPreview>
+  );
+}

@@ -13,6 +13,8 @@ export * from "./list";
 export * from "./logo-cloud";
 export * from "./map";
 export * from "./media";
+export type { ResponsivePortfolioPreviewProps } from "./portfolio-preview";
+export { ResponsivePortfolioPreview } from "./portfolio-preview";
 export * from "./table";
 export * from "./timeline";
 export * from "./typography";

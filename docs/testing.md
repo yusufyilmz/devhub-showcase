@@ -13,7 +13,7 @@ pnpm exec playwright install chromium
 pnpm test:e2e
 ```
 
-CI installs Chromium with `--with-deps` on Linux. For an app-only production build, use `NODE_ENV=production pnpm --filter web build`; CI uses the full workspace build.
+CI installs Chromium with `--with-deps` on Linux. For an app-only production build, use `NODE_ENV=production pnpm --filter my-dev-studio build`; CI uses the full workspace build.
 
 | Check                | What it establishes                                                               |
 | -------------------- | --------------------------------------------------------------------------------- |
@@ -102,6 +102,26 @@ Each test has a fresh browser context. The local transport returns checked-in pu
 Coverage includes homepage navigation and metadata, keyboard preview tabs, themes, layout/language combinations, CV downloads, owner editing and save/reload behavior, private and unknown profiles, managed publication/transfer, custom sections/media/templates, SEO and sitemap exclusions. CV extraction scenarios use a fictional intercepted provider response, not paid requests.
 
 Use localhost consistently as configured because origin checks depend on the application origin. Do not redirect fixture traffic to a real database. Mobile Chromium emulation is not a real iPhone test.
+
+## Critical journey regression map
+
+All browser paths below run in both desktop Chromium and Pixel 7 emulation with isolated synthetic owners.
+
+| Journey                                   | Browser suite under `e2e/`                             | Required outcomes                                                                                                                           |
+| ----------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Choose layout, edit, publish, download CV | `edit/portfolio-types.spec.ts`                         | Save/reload, locale/layout selection, private before publishing, public afterward                                                           |
+| Import and review CV                      | `edit/cv-import.spec.ts`                               | Consent, review, excluded fields, explicit apply/save, anonymous denial, published PDF                                                      |
+| Google import                             | `edit/google-import.spec.ts`                           | Selected permissions, review, draft preservation; fictional provider response                                                               |
+| AI editing                                | `edit/ai-editor.spec.ts`, `edit/ai-foundation.spec.ts` | Proposals do not autosave; denied access and undo                                                                                           |
+| Draft history and completion              | `edit/editor-guidance.spec.ts`                         | Checklist updates, undo/redo, explicit save and reload                                                                                      |
+| Responsive private preview                | `edit/responsive-preview.spec.ts`                      | Exact viewport widths, no internal overflow, live layout changes, keyboard reorder, no autosave, private content excluded, anonymous denial |
+| Premium features                          | `admin/billing/billing.spec.ts`                        | Usage/status rendering and denied or unavailable configuration; no live payment                                                             |
+| Managed portfolios                        | `admin/portfolios/managed-portfolios.spec.ts`          | Explicit publication, transfer and ownership boundaries                                                                                     |
+| Unknown/private pages                     | `portfolio/missing.spec.ts`, `portfolio/seo.spec.ts`   | No fallback profile or private metadata leakage                                                                                             |
+
+Route/service unit tests separately verify invalid input, stale revisions, quotas and provider failures. Browser provider responses are fixtures; green results do not validate live OAuth, billing, email delivery or database policies. Keep the main-only, non-blocking browser workflow unchanged.
+
+The editor's **Preview your draft** uses the real portfolio renderers in a sandboxed iframe at 375, 768 or 1280 pixels. Wider canvases scroll inside the editor. It excludes hidden sections and private projects, never saves or publishes, and disables external links, downloads, forms and appearance controls. Embedded scripts are intentionally unavailable; this is a layout preview, not a second running application. Closing the preview releases its document; opening it restores the current draft. Font/style assets come from the app itself and no draft is included in an iframe URL or document string.
 
 ## Diagnose failures
 
