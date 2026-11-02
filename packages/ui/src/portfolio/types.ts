@@ -38,3 +38,24 @@ export type EditorGuidanceProps = {
   canRedo: boolean;
   disabled?: boolean;
 };
+
+export type { SetupStep } from "./recovery/types";
+export type GuidedOnboardingProps = {
+  profession?: PortfolioType;
+  onProfessionChange?: (profession: PortfolioType) => void;
+  profile: PortfolioProfile;
+  onChange: (profile: PortfolioProfile) => void;
+  onContinue: () => void;
+  onImport: () => void;
+  onGoogleImport: () => void;
+  managed: boolean;
+  children?: import("react").ReactNode;
+};
+export type SetupNavigationProps = {
+  disabled?: boolean;
+  step: import("./recovery/types").SetupStep;
+  onStep: (step: import("./recovery/types").SetupStep) => void;
+  onImport: () => void;
+  onManual: () => void;
+};
+export type ProposalComparisonProps = { before: unknown; after: unknown };

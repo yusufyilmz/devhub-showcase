@@ -1,5 +1,11 @@
 export { EditorGuidance } from "./editor-guidance";
+export { GuidedOnboarding, SetupNavigation } from "./guided-onboarding";
 export { LanguageSettingsEditor } from "./language-settings-editor";
 export { PortfolioTypePicker } from "./portfolio-type-picker";
 export { ProfileFields } from "./profile-fields";
+export { ProposalComparison } from "./proposal-comparison";
+export { DraftRecovery } from "./recovery/DraftRecovery";
+export { clearDraftRecovery, recoveryPrefix } from "./recovery/storage";
+export type { SetupStep } from "./recovery/types";
+export { useDraftRecovery } from "./recovery/use-draft-recovery";
 export { usePortfolioHistory } from "./use-portfolio-history";

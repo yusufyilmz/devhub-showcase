@@ -14,18 +14,19 @@ Start with the hub guides, then dig into feature or reference pages as needed. P
 
 ## Features
 
-| Guide                                                        | Read it for                                      |
-| ------------------------------------------------------------ | ------------------------------------------------ |
-| [Personal workspaces](features/multiuser-cvs.md)             | Profile setup, publication and private downloads |
-| [Google login](features/google-login.md)                     | Supabase Google OAuth and workspace access       |
-| [Managed portfolios](features/managed-portfolios.md)         | Administrator portfolios and ownership transfer  |
-| [CV import](features/cv-import.md)                           | Optional CV extraction into portfolio drafts     |
-| [Section system](features/section-system.md)                 | Section registry, ordering and compositions      |
-| [Section templates](features/section-templates.md)           | Private template library and import/export       |
-| [AI foundation](features/portfolio-ai-foundation.md)         | Public/owner knowledge and chat boundaries       |
-| [Premium access](features/premium-access.md)                 | Entitlements and usage reservations              |
-| [Premium portfolio chat](features/premium-portfolio-chat.md) | Owner-enabled public chat widget                 |
-| [Stripe billing](features/stripe-billing.md)                 | Test-only checkout, portal and webhooks          |
+| Guide                                                        | Read it for                                          |
+| ------------------------------------------------------------ | ---------------------------------------------------- |
+| [Personal workspaces](features/multiuser-cvs.md)             | Profile setup, publication and private downloads     |
+| [Google login](features/google-login.md)                     | Supabase Google OAuth and workspace access           |
+| [Managed portfolios](features/managed-portfolios.md)         | Administrator portfolios and ownership transfer      |
+| [CV import](features/cv-import.md)                           | Optional CV extraction into portfolio drafts         |
+| [Editor workflow](features/editor-workflow.md)               | Guided setup, tab-local recovery and AI field review |
+| [Section system](features/section-system.md)                 | Section registry, ordering and compositions          |
+| [Section templates](features/section-templates.md)           | Private template library and import/export           |
+| [AI foundation](features/portfolio-ai-foundation.md)         | Public/owner knowledge and chat boundaries           |
+| [Premium access](features/premium-access.md)                 | Entitlements and usage reservations                  |
+| [Premium portfolio chat](features/premium-portfolio-chat.md) | Owner-enabled public chat widget                     |
+| [Stripe billing](features/stripe-billing.md)                 | Test-only checkout, portal and webhooks              |
 
 ## Reference
 

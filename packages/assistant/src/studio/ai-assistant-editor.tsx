@@ -14,6 +14,7 @@ import { Card } from "@shared/ui/cards";
 import { StudioChatScreen } from "@shared/ui/display";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
+import { ProposalComparison } from "@shared/ui/portfolio";
 import { Textarea as LibraryTextarea } from "@shared/ui/textarea";
 
 type Props = {
@@ -154,11 +155,11 @@ function AssistantWorkspace({ profile, profileId, revision, onChange, chat }: Pr
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error);
-      const proposal = aiEditProposalSchema.parse(data.proposal);
+      const proposal = proposalForRevision(data, revision);
       applyAiEdit(profile, proposal);
       setReview({ baseline, proposal, revision });
       recordTurn("assistant", proposal.summary);
-      setSelected(proposal.changes.map((change) => change.field));
+      setSelected([]);
       setAvailability((previous) =>
         previous ? { ...previous, usage: previous.usage + 1 } : previous,
       );
@@ -328,8 +329,26 @@ function ProposalReview({
           Your draft or saved revision changed. Generate a fresh proposal before applying.
         </p>
       )}
+      <p>
+        Accept the fields you want. Unchecked fields are rejected and stay unchanged. Applying only
+        updates this draft.
+      </p>
+      <p>
+        {selected.length} of {review.proposal.changes.length} fields accepted
+      </p>
+      <Button
+        disabled={stale}
+        onClick={() => setSelected(review.proposal.changes.map((change) => change.field))}
+        type="button"
+        variant="outline"
+      >
+        Accept all proposed changes
+      </Button>
+      <Button disabled={stale} onClick={() => setSelected([])} type="button" variant="outline">
+        Reject all proposed changes
+      </Button>
       {review.proposal.changes.map((change) => (
-        <div key={change.field}>
+        <div className="proposal-change" key={change.field}>
           <LibraryLabel unstyled>
             <LibraryInput
               checked={selected.includes(change.field)}
@@ -347,15 +366,7 @@ function ProposalReview({
             {change.field}
           </LibraryLabel>
           <p>{change.reason}</p>
-          <details>
-            <summary>Compare before and after</summary>
-            <p>Before</p>
-            <pre className="ai-profile-json">{JSON.stringify(profile[change.field], null, 2)}</pre>
-            <p>Proposed</p>
-            <pre className="ai-profile-json">
-              {JSON.stringify(JSON.parse(change.value), null, 2)}
-            </pre>
-          </details>
+          <ProposalComparison after={JSON.parse(change.value)} before={profile[change.field]} />
         </div>
       ))}
       <Button
@@ -371,4 +382,10 @@ function ProposalReview({
       </Button>
     </section>
   );
+}
+
+function proposalForRevision(data: { revision?: number; proposal: unknown }, revision: number) {
+  if (data.revision !== revision)
+    throw new Error("The proposal revision does not match this draft. Generate a fresh proposal.");
+  return aiEditProposalSchema.parse(data.proposal);
 }

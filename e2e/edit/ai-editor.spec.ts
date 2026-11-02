@@ -58,6 +58,7 @@ test("owner reviews AI suggestions before changing a draft and can undo without 
     .locator(".editor-card")
     .filter({ has: page.getByRole("heading", { exact: true, name: "Private AI assistant" }) })
     .screenshot({ path: info.outputPath("ai-edit-review.png") });
+  await page.getByRole("button", { exact: true, name: "Accept all proposed changes" }).click();
   await page.getByRole("button", { exact: true, name: "Apply selected changes to draft" }).click();
   await expect(page.getByText(/Applied to your draft/)).toBeVisible();
   expect(saves).toBe(0);

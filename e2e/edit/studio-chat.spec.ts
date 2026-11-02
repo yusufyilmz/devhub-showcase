@@ -48,6 +48,7 @@ test("full-screen Studio chat reviews, applies and explicitly saves a proposal",
   await page.getByRole("button", { exact: true, name: "Send message" }).click();
   await expect(page.getByRole("heading", { name: "Review proposed changes" })).toBeVisible();
   expect(saves).toBe(0);
+  await page.getByRole("button", { exact: true, name: "Accept all proposed changes" }).click();
   await page.getByRole("button", { exact: true, name: "Apply selected changes to draft" }).click();
   expect(saves).toBe(0);
   await page.getByRole("button", { exact: true, name: "Save changes" }).click();
