@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import type { PortfolioProfile } from "@shared/config";
 
+import { assistantTaskSchema, writingSource } from "./assistant-task";
 import { profileSchema, validateProfile } from "./profile";
 
 export const aiEditFields = [
@@ -40,6 +41,19 @@ export const aiEditProposalSchema = z
           .strict(),
       )
       .max(12),
+    feedback: z
+      .array(
+        z
+          .object({
+            field: z.enum(aiEditFields),
+            issue: z.string().min(1).max(1000),
+            needsInput: z.boolean(),
+            recommendation: z.string().min(1).max(1500),
+          })
+          .strict(),
+      )
+      .max(12)
+      .optional(),
     summary: z.string().min(1).max(3000),
   })
   .strict()
@@ -56,8 +70,22 @@ export const aiEditRequestSchema = z
     profileId: z.string().min(1).max(100),
     requestId: z.uuid(),
     revision: z.number().int().min(1),
+    task: assistantTaskSchema.optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((input, context) => {
+    if (input.task?.kind !== "writing") return;
+    try {
+      if (!writingSource(input.draft, input.task).text.trim())
+        throw new Error("Add source text before requesting a rewrite.");
+    } catch (error) {
+      context.addIssue({
+        code: "custom",
+        message: error instanceof Error ? error.message : "Invalid writing source",
+        path: ["task"],
+      });
+    }
+  });
 export const aiEditJsonSchema = {
   additionalProperties: false,
   properties: {
@@ -78,9 +106,24 @@ export const aiEditJsonSchema = {
       },
       type: "array",
     },
+    feedback: {
+      items: {
+        additionalProperties: false,
+        properties: {
+          field: { enum: [...aiEditFields], type: "string" },
+          issue: { type: "string" },
+          needsInput: { type: "boolean" },
+          recommendation: { type: "string" },
+        },
+        required: ["field", "issue", "recommendation", "needsInput"],
+        type: "object",
+      },
+      maxItems: 12,
+      type: "array",
+    },
     summary: { type: "string" },
   },
-  required: ["summary", "changes"],
+  required: ["summary", "changes", "feedback"],
   type: "object",
 };
 /** Revalidate selected changes and the complete result. No database writes. */

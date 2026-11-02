@@ -83,6 +83,13 @@ const aiOwners = ["desktop", "mobile"].map((device, index) => ({
   owner_id: `83838383-8383-4383-8383-83838383838${index}`,
   username: `${device}-ai-owner`,
 }));
+const assistantToolOwners = aiOwners.map((owner, index) => ({
+  ...owner,
+  document: { ...owner.document, summary: "Builds accessible interfaces." },
+  id: `66666666-6666-4666-8666-66666666666${index}`,
+  owner_id: `67676767-6767-4767-8767-67676767676${index}`,
+  username: `${index ? "mobile" : "desktop"}-assistant-tools`,
+}));
 const workflowOwners = starters.map((owner, index) => ({
   ...owner,
   document: structuredClone(owner.document),
@@ -385,6 +392,7 @@ const rows = [
   ...guidanceOwners,
   ...previewOwners,
   ...workflowOwners,
+  ...assistantToolOwners,
   ...chatOwners,
   ...billingOwners,
   ...googleOwners,
@@ -452,6 +460,7 @@ function fixtureOwner(request) {
       ...guidanceOwners,
       ...previewOwners,
       ...workflowOwners,
+      ...assistantToolOwners,
       ...chatOwners,
       ...billingOwners,
       ...googleOwners,

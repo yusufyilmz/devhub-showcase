@@ -98,6 +98,15 @@ describe("PremiumChat", () => {
     expect(mocks.answer.mock.calls[0]?.[0].audience).toBe("public");
     expect(mocks.finish).toHaveBeenCalledWith(input.requestId, "succeeded");
   });
+  it("withholds an answer if publication changes or is withdrawn during generation", async () => {
+    mocks.answer.mockImplementationOnce(async () => {
+      mocks.read.mockResolvedValue(null);
+      return "Previously published information";
+    });
+    await expect(answerPremiumChat(input, new AbortController().signal)).rejects.toThrow(
+      "published portfolio changed",
+    );
+  });
   it("denies disabled chat, unpaid accounts, missing profiles and exhausted quotas", async () => {
     mocks.enabled = false;
     await expect(answerPremiumChat(input, new AbortController().signal)).rejects.toThrow();

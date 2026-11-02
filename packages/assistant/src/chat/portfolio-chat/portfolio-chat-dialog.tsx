@@ -5,11 +5,13 @@ import "@shared/ui/portfolio-chat.css";
 import { useEffect, useId, useRef, useState } from "react";
 
 import { Button as LibraryButton } from "@shared/ui/button";
+import { PublishedSources } from "@shared/ui/portfolio";
 
 import { ChatPanel, type ChatPanelMessage } from "../assistant-chat/chat-panel";
 
 type Message = ChatPanelMessage & { role: "user" | "assistant" };
 export type PortfolioChatProps = {
+  sources?: { label: string; href: string }[];
   identity: string;
   revision: number;
   name: string;
@@ -57,6 +59,7 @@ function loadMessages(key: string): Message[] {
   }
 }
 function ChatDialog({
+  sources = [],
   identity,
   revision,
   name,
@@ -108,7 +111,7 @@ function ChatDialog({
     } catch {
       if (!controller.current.signal.aborted)
         setError(
-          "The assistant is unavailable or its allowance has been reached. Please try later.",
+          "The assistant is unavailable, the published portfolio changed, or its allowance was reached. Reload this page to refresh published information, or try later.",
         );
     } finally {
       setBusy(false);
@@ -116,6 +119,7 @@ function ChatDialog({
   }
   return (
     <dialog aria-labelledby={label} className="portfolio-chat-panel" onCancel={close} ref={dialog}>
+      <PublishedSources sources={sources} />
       <ChatPanel
         busy={busy}
         closeLabel="Close portfolio assistant"

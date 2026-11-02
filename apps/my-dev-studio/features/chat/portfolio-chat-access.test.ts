@@ -6,7 +6,7 @@ const mocks = vi.hoisted(() => ({ limit: vi.fn(), read: vi.fn() }));
 vi.mock("@shared/services/published-profile", () => ({ readPublicProfileByUsername: mocks.read }));
 vi.mock("@shared/cache", () => ({ allowPortfolioChat: mocks.limit }));
 
-import { requireLegacyChat } from "@/features/chat/portfolio-chat";
+import { assertCurrentPublication, requireLegacyChat } from "@/features/chat/portfolio-chat";
 
 const session = "11111111-1111-4111-8111-111111111111";
 
@@ -57,6 +57,14 @@ describe("PortfolioChatAccess", () => {
         username: "alex",
       });
       await expect(requireLegacyChat("alex", session)).rejects.toThrow("not available");
+    });
+    it("rechecks publication after generation without consuming another allowance", async () => {
+      await assertCurrentPublication("alex", "main", 1);
+      expect(mocks.limit).not.toHaveBeenCalled();
+      mocks.read.mockResolvedValue(null);
+      await expect(assertCurrentPublication("alex", "main", 1)).rejects.toThrow(
+        "published portfolio changed",
+      );
     });
     it("rejects invalid identities and fails closed on quota/configuration errors", async () => {
       await expect(requireLegacyChat("admin", session)).rejects.toThrow();

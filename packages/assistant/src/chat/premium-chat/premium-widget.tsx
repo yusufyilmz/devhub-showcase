@@ -10,8 +10,10 @@ export function PremiumWidgetView({
   id,
   name,
   revision,
+  sources,
   handleSendMessage,
 }: {
+  sources?: { label: string; href: string }[];
   id: string;
   name: string;
   revision: number;
@@ -28,6 +30,7 @@ export function PremiumWidgetView({
         if (signal.aborted) throw new DOMException("Aborted", "AbortError");
         return answer;
       }}
+      sources={sources}
     />
   );
 }

@@ -361,6 +361,9 @@ export function ProfileEditor({
           <EditorBody
             managed={managed}
             onChange={setDraft}
+            onNavigate={(next) => {
+              if (tabs.includes(next as typeof tab)) setTab(next as typeof tab);
+            }}
             profile={draft}
             readUrl={saveUrl}
             snapshot={saved}
@@ -395,6 +398,7 @@ export function ProfileEditor({
 }
 
 function EditorBody({
+  onNavigate,
   tab,
   snapshot,
   managed,
@@ -402,6 +406,7 @@ function EditorBody({
   profile,
   onChange,
 }: {
+  onNavigate: (tab: string) => void;
   tab: (typeof tabs)[number];
   snapshot: ProfileSnapshot;
   managed: boolean;
@@ -414,6 +419,7 @@ function EditorBody({
       <AiAssistantEditor
         managed={managed}
         onChange={onChange}
+        onNavigate={onNavigate}
         profile={profile}
         profileId={snapshot.id}
         revision={snapshot.revision}

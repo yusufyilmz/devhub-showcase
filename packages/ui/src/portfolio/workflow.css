@@ -54,3 +54,12 @@
 .draft-recovery-summary summary {
   cursor: pointer;
 }
+.published-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.published-sources .ui-button {
+  font-size: 12px;
+}

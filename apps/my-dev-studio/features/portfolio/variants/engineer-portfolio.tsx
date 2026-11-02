@@ -10,6 +10,7 @@ import {
   type SectionRendererId,
   selectPortfolioContent,
 } from "@shared/config";
+import { publicChatSources } from "@shared/lib/profiles";
 import type { ChatMessage } from "@shared/lib/types";
 import { getPortfolioResources } from "@shared/services/portfolio";
 import { Footer } from "@shared/ui/footer";
@@ -112,6 +113,14 @@ export function EngineerPortfolioView({
               handleSendMessage={handleSendMessage}
               identity={chatIdentity}
               leading={ownerLink}
+              sources={publicChatSources({
+                id: chatIdentity.id,
+                isPublic: true,
+                profile: canonicalProfile,
+                revision: chatIdentity.revision,
+                updatedAt: "",
+                username: chatIdentity.username,
+              })}
             />
           )}
         </>

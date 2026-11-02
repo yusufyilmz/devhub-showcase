@@ -12,6 +12,7 @@ import { PortfolioChatProvider } from "@shared/ui/providers";
 import { ChatPopupContainer } from "./ChatPopupContainer";
 
 type ChatSectionProps = {
+  sources?: { label: string; href: string }[];
   handleSendMessage: (
     input: ChatMessage,
     sessionId: string,
@@ -30,6 +31,7 @@ export const ChatSection = ({
 );
 const ChatControls: React.FC<ChatSectionProps & { leading?: React.ReactNode }> = ({
   handleSendMessage,
+  sources,
   leading,
 }) => {
   const [type, setType] = useState<ChatType>("cv");
@@ -79,6 +81,7 @@ const ChatControls: React.FC<ChatSectionProps & { leading?: React.ReactNode }> =
         <ChatPopupContainer
           closeChat={closeChat}
           handleSendMessage={handleSendMessage}
+          sources={sources}
           type={type}
         />
       )}

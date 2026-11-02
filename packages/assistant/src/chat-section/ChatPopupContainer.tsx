@@ -4,6 +4,7 @@ import { useEffect, useId, useState } from "react";
 
 import { type ChatMessage, ChatRole, type ChatType } from "@shared/lib/types";
 import { useChatMessages, useChatState } from "@shared/runtime/chat";
+import { PublishedSources } from "@shared/ui/portfolio";
 
 import { ChatPanel, type ChatPanelMessage } from "../chat/assistant-chat/chat-panel";
 
@@ -14,10 +15,16 @@ interface ChatPopupProps {
     sessionId: string,
     onDelta?: (text: string) => void,
   ) => Promise<ChatMessage>;
+  sources?: { label: string; href: string }[];
   type: ChatType;
 }
 
-export const ChatPopupContainer = ({ handleSendMessage, type, closeChat }: ChatPopupProps) => {
+export const ChatPopupContainer = ({
+  handleSendMessage,
+  type,
+  closeChat,
+  sources = [],
+}: ChatPopupProps) => {
   const sessionId = useChatState((state) => state.sessionId);
   const addMessage = useChatState((state) => state.addMessage);
   const messages = useChatMessages(type);
@@ -79,6 +86,7 @@ export const ChatPopupContainer = ({ handleSendMessage, type, closeChat }: ChatP
         className="chat-panel relative h-[100vh] w-[100vw] bg-background p-6 shadow-2xl md:h-[32rem] md:w-96 md:rounded-lg"
         role="dialog"
       >
+        {type === "cv" && <PublishedSources sources={sources} />}
         <ChatPanel
           busy={isTyping}
           closeLabel="Close chat"
