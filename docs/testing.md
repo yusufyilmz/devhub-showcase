@@ -103,6 +103,8 @@ Coverage includes homepage navigation and metadata, keyboard preview tabs, theme
 
 Use localhost consistently as configured because origin checks depend on the application origin. Do not redirect fixture traffic to a real database. Mobile Chromium emulation is not a real iPhone test.
 
+Step-by-step actions and expected results for onboarding, recovery, AI review and portfolio sections are in the [manual editor test guide](testing/manual-editor-checks.md). New PRs use the [repository PR template](../.github/pull_request_template.md) to record each change, its test steps and actual results.
+
 ## Critical journey regression map
 
 All browser paths below run in both desktop Chromium and Pixel 7 emulation with isolated synthetic owners.

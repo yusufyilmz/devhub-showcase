@@ -22,4 +22,6 @@ A proposal must match the requested saved revision. A changed draft or revision 
 
 `e2e/edit/editor-workflow.spec.ts` exercises profession/layout choice, manual entry, failed import, reload recovery, back navigation, review and a conflicting second-tab save on desktop Chromium and Pixel 7 emulation. AI editor and studio chat browser tests explicitly accept proposed fields before application. Colocated unit tests cover recovery expiry, malformed records, incomplete input, retry, page-exit flushing, sign-out stopping, mixed AI decisions and stale revisions. Tests use synthetic accounts and intercepted provider responses.
 
+For numbered actions and expected results for each task and portfolio sections, use the [manual editor test guide](../testing/manual-editor-checks.md). Record actual outcomes in the [PR template](../../.github/pull_request_template.md).
+
 The main-only, non-blocking browser workflow remains unchanged. No new environment variables or migrations are required. Production smoke checks remain a separate step after merge and deployment.
