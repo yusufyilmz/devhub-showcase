@@ -17,6 +17,9 @@ import type { AgendaEvent } from "@shared/services/schedule";
 import { ScheduleService } from "@shared/services/schedule";
 import type { Workspace } from "@shared/services/types";
 import { createTask, dateLabel, shiftDate, type Task } from "@shared/services/types";
+import { Button as LibraryButton } from "@shared/ui/button";
+import { Input as LibraryInput } from "@shared/ui/input";
+import { Label as LibraryLabel } from "@shared/ui/label";
 import { ThemeToggle } from "@shared/ui/theme";
 
 import { DayAgenda } from "@/features/agenda/day-agenda";
@@ -248,15 +251,16 @@ function WorkspaceSidebar({
       <span className="eyebrow nav-label">YOUR DAILY PRACTICE</span>
       <nav>
         {navigation.map(({ name: label, icon: Icon }) => (
-          <button
+          <LibraryButton
             className={tab === label ? "active" : ""}
             key={label}
             onClick={() => setTab(label)}
             type="button"
+            variant="unstyled"
           >
             <Icon size={20} />
             <span>{label}</span>
-          </button>
+          </LibraryButton>
         ))}
       </nav>
       <div className="sidebar-bottom">
@@ -342,16 +346,17 @@ function PageHeading({
         <h1>{headingTitle({ date, name, selectedTitle, tab, taskId, today })}</h1>
         <p>{headingSummary(tab)}</p>
       </div>
-      <label className="date-control">
+      <LibraryLabel className="date-control" unstyled>
         Active date
-        <input
+        <LibraryInput
           onChange={(event) => {
             if (event.target.value) setDate(event.target.value);
           }}
           type="date"
+          unstyled
           value={date}
         />
-      </label>
+      </LibraryLabel>
     </div>
   );
 }
@@ -393,9 +398,9 @@ function ErrorBanner({ message, onDismiss }: { message: string; onDismiss: () =>
   return (
     <div className="error floating-error" role="alert">
       {message}
-      <button className="text-btn" onClick={onDismiss} type="button">
+      <LibraryButton className="text-btn" onClick={onDismiss} type="button" variant="unstyled">
         Dismiss
-      </button>
+      </LibraryButton>
     </div>
   );
 }
@@ -471,37 +476,49 @@ function TodayView({
               }}
             />
           </div>
-          <button
+          <LibraryButton
             className="text-btn"
             disabled={readOnly || busy}
             onClick={() => update((current) => logWater(current, date), "250 ml logged")}
             type="button"
+            variant="unstyled"
           >
             <Plus size={15} />
             250 ml water
-          </button>
+          </LibraryButton>
         </section>
       </div>
       <div className="section-heading">
         <h2>Your daily agenda</h2>
         <div className="row">
-          <button className="text-btn" onClick={() => setDate(shiftDate(date, -1))} type="button">
+          <LibraryButton
+            className="text-btn"
+            onClick={() => setDate(shiftDate(date, -1))}
+            type="button"
+            variant="unstyled"
+          >
             Previous
-          </button>
-          <button className="text-btn" onClick={() => setDate(shiftDate(date, 1))} type="button">
+          </LibraryButton>
+          <LibraryButton
+            className="text-btn"
+            onClick={() => setDate(shiftDate(date, 1))}
+            type="button"
+            variant="unstyled"
+          >
             Next
-          </button>
-          <button
+          </LibraryButton>
+          <LibraryButton
             className="outline"
             disabled={readOnly || busy || !dayRoot}
             onClick={() => {
               if (dayRoot) onAdd(dayRoot);
             }}
             type="button"
+            variant="unstyled"
           >
             <Plus size={16} />
             Add task
-          </button>
+          </LibraryButton>
         </div>
       </div>
       <DayAgenda
@@ -557,9 +574,14 @@ function TodayActivity({
     return (
       <section className="card">
         <p>This activity is no longer on this date. It may have been moved or regenerated.</p>
-        <button className="outline" onClick={() => openDay(date)} type="button">
+        <LibraryButton
+          className="outline"
+          onClick={() => openDay(date)}
+          type="button"
+          variant="unstyled"
+        >
           Back to agenda
-        </button>
+        </LibraryButton>
       </section>
     );
   }
@@ -598,33 +620,36 @@ function TasksView({
     <>
       <div className="section-heading">
         <div className="tabs wrap">
-          <button
+          <LibraryButton
             className={templateRoot === null ? "selected" : ""}
             onClick={() => setTemplateRoot(null)}
             type="button"
+            variant="unstyled"
           >
             All plans
-          </button>
+          </LibraryButton>
           {roots.map((task) => (
-            <button
+            <LibraryButton
               className={templateRoot === task.id ? "selected" : ""}
               key={task.id}
               onClick={() => setTemplateRoot(task.id)}
               type="button"
+              variant="unstyled"
             >
               {task.title}
-            </button>
+            </LibraryButton>
           ))}
         </div>
-        <button
+        <LibraryButton
           className="outline"
           disabled={readOnly || busy}
           onClick={() => setTarget({})}
           type="button"
+          variant="unstyled"
         >
           <Plus size={15} />
           New task
-        </button>
+        </LibraryButton>
       </div>
       <TaskTree
         parentId={templateRoot}

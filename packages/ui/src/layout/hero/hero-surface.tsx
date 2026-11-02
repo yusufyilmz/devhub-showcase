@@ -4,6 +4,7 @@ import "../../portfolio/portfolio.css";
 
 import { useEffect, useRef, useState } from "react";
 
+import { Button as LibraryButton } from "../../buttons/button/Button";
 import { heroSurfaceStyles } from "./styles";
 import type { HeroSurfaceOptions } from "./types";
 
@@ -73,7 +74,7 @@ export function HeroSurface({
       <div className={heroSurfaceStyles.element6} />
       <div className={heroSurfaceStyles.element7}>{children}</div>
       {media.kind === "video" && (
-        <button
+        <LibraryButton
           className={heroSurfaceStyles.element8}
           onClick={() => {
             const node = video.current;
@@ -81,9 +82,10 @@ export function HeroSurface({
             else node?.pause();
           }}
           type="button"
+          variant="unstyled"
         >
           {playing ? labels.pause : labels.play}
-        </button>
+        </LibraryButton>
       )}
     </div>
   );

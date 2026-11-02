@@ -9,6 +9,7 @@ export * from "./input-otp";
 export * from "./label";
 export { LinesField } from "./lines-field";
 export * from "./login-form";
+export { NativeSelect } from "./native-select";
 export * from "./radio-button";
 export * from "./radio-group";
 export * from "./select";

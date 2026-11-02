@@ -1,6 +1,7 @@
 /** Adapted from Once UI (MIT). Copyright (c) 2024-2025 Once UI. */
 "use client";
 
+import { Button as LibraryButton } from "../../buttons/button/Button";
 import { chipStyles } from "./styles";
 import type { ChipOptions } from "./types";
 export function Chip({ label, selected = true, onRemove, onClick }: ChipOptions) {
@@ -12,21 +13,27 @@ export function Chip({ label, selected = true, onRemove, onClick }: ChipOptions)
   return (
     <span className={classes}>
       {onClick ? (
-        <button className={chipStyles.element1} onClick={onClick} type="button">
+        <LibraryButton
+          className={chipStyles.element1}
+          onClick={onClick}
+          type="button"
+          variant="unstyled"
+        >
           {label}
-        </button>
+        </LibraryButton>
       ) : (
         label
       )}
       {onRemove ? (
-        <button
+        <LibraryButton
           aria-label={`Remove ${label}`}
           className={chipStyles.element2}
           onClick={onRemove}
           type="button"
+          variant="unstyled"
         >
           ×
-        </button>
+        </LibraryButton>
       ) : null}
     </span>
   );

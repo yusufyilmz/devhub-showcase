@@ -4,6 +4,8 @@ import { useState } from "react";
 
 import { Button } from "../../buttons";
 import { Card } from "../../cards";
+import { Input as LibraryInput } from "../../forms/input/Input";
+import { Label as LibraryLabel } from "../../forms/label/Label";
 import { LinesField } from "../../forms/lines-field";
 import { skillsEditorStyles } from "./styles";
 import type { SkillGroupOptions, SkillsEditorOptions } from "./types";
@@ -15,17 +17,18 @@ function SkillGroup({ name, skills, rename, change, remove }: SkillGroupOptions)
       <article className={skillsEditorStyles.element1}>
         <Card asChild layout="plain" surface="portfolio">
           <div className={skillsEditorStyles.element2}>
-            <label className={skillsEditorStyles.element3}>
+            <LibraryLabel className={skillsEditorStyles.element3} unstyled>
               Group name
-              <input
+              <LibraryInput
                 onBlur={() => {
                   rename(label.trim());
                   setLabel(name);
                 }}
                 onChange={(event) => setLabel(event.target.value)}
+                unstyled
                 value={label}
               />
-            </label>
+            </LibraryLabel>
             <Button
               className={skillsEditorStyles.element4}
               onClick={() => {

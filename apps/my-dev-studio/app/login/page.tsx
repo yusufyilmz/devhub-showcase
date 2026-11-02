@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
-import { SiteLoginScreen } from "@shared/auth/components";
 import { ThemeToggle } from "@shared/ui/components";
+import { SiteLoginScreen } from "@shared/ui/site-login";
 
 export const metadata: Metadata = {
   robots: { follow: false, index: false },

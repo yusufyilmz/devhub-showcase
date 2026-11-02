@@ -2,6 +2,7 @@
 import { ChevronRight } from "lucide-react";
 
 import type { AgendaEvent } from "@shared/services/schedule";
+import { Input as LibraryInput } from "@shared/ui/input";
 
 import { dayHref } from "./use-agenda-navigation";
 export const eventDragType = "application/x-fitness-event";
@@ -24,13 +25,14 @@ export function EventRow({ event, readOnly, busy, compact, onOpen, onStatus }: E
         e.dataTransfer.effectAllowed = "move";
       }}
     >
-      <input
+      <LibraryInput
         aria-label={`Complete ${task.title}`}
         checked={status === "done"}
         className="event-checkbox"
         disabled={readOnly || busy}
         onChange={() => onStatus(event)}
         type="checkbox"
+        unstyled
       />
       <a
         className="event-link"

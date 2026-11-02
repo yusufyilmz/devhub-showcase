@@ -15,7 +15,8 @@ import { CvImportEditor, CvSettingsEditor } from "@shared/templates/studio";
 import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 import { GoogleImportEditor } from "@shared/ui/google-import";
-import { Input } from "@shared/ui/input";
+import { Input, Input as LibraryInput } from "@shared/ui/input";
+import { Label as LibraryLabel } from "@shared/ui/label";
 import { LanguageSettingsEditor, PortfolioTypePicker, ProfileFields } from "@shared/ui/portfolio";
 import {
   EducationEditor,
@@ -415,7 +416,9 @@ function SharingSettings({
   return (
     <Card asChild layout="plain" surface="portfolio">
       <div className="editor-card studio-sharing">
-        <label htmlFor="cv-username">Username</label>
+        <LibraryLabel htmlFor="cv-username" unstyled>
+          Username
+        </LibraryLabel>
         <Input
           disabled={busy}
           id="cv-username"
@@ -433,15 +436,16 @@ function SharingSettings({
             : `Your editor: /${username || "username"}/edit.`}{" "}
           Changing your username changes the public link.
         </p>
-        <label>
-          <input
+        <LibraryLabel unstyled>
+          <LibraryInput
             checked={isPublic}
             disabled={busy}
             onChange={(event) => setIsPublic(event.target.checked)}
             type="checkbox"
+            unstyled
           />{" "}
           Publish my profile and CV at a public link
-        </label>
+        </LibraryLabel>
         <p>
           {isPublic
             ? "Anyone with the link can read your published contact and career details."

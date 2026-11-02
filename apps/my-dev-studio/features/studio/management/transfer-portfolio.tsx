@@ -5,6 +5,8 @@ import { useState } from "react";
 import { urls } from "@shared/config/urls";
 import { useStudioRequest } from "@shared/runtime/studio";
 import { Button } from "@shared/ui/button";
+import { Input as LibraryInput } from "@shared/ui/input";
+import { Label as LibraryLabel } from "@shared/ui/label";
 
 export function TransferPortfolio({
   id,
@@ -52,16 +54,17 @@ export function TransferPortfolio({
         transferring.
       </p>
       <form className="managed-fields" onSubmit={transfer}>
-        <label className="editor-field">
+        <LibraryLabel className="editor-field" unstyled>
           Owner account email
-          <input
+          <LibraryInput
             disabled={busy}
             onChange={(event) => setEmail(event.target.value)}
             required
             type="email"
+            unstyled
             value={email}
           />
-        </label>
+        </LibraryLabel>
         <Button className="studio-secondary" disabled={busy} type="submit" variant="outline">
           {busy ? "Transferring…" : "Transfer portfolio"}
         </Button>

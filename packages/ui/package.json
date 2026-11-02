@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./site-login": "./src/forms/site-login/index.ts",
+    "./native-select": "./src/forms/native-select.tsx",
     "./auth-login.css": "./src/forms/login-form/auth-login.css",
     "./utils": "./src/utils/index.ts",
     "./components": "./src/components/index.ts",

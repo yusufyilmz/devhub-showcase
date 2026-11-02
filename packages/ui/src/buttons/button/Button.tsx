@@ -2,9 +2,8 @@ import "../../cards/surfaces.css";
 
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { Slot } from "@radix-ui/react-slot";
-import { cn } from "cn";
 
-import { buttonVariants } from "./styles";
+import { buttonClasses, buttonVariants } from "./styles";
 import type { ButtonIconOptions, ButtonOptions } from "./types";
 
 function ButtonIcon({ icon, position }: ButtonIconOptions) {
@@ -13,6 +12,14 @@ function ButtonIcon({ icon, position }: ButtonIconOptions) {
       {icon}
     </span>
   );
+}
+
+function nativeButtonProps(options: Pick<ButtonOptions, "asChild" | "type" | "variant">) {
+  if (options.asChild) return {};
+  return {
+    type:
+      options.type ?? (options.variant === "unstyled" ? ("submit" as const) : ("button" as const)),
+  };
 }
 
 function Button({
@@ -28,7 +35,7 @@ function Button({
   children,
   ...props
 }: ButtonOptions) {
-  const classes = cn(buttonVariants({ className, size, variant }));
+  const classes = buttonClasses({ className, size, variant });
   const content = (
     <>
       {startIcon && !asChild ? <ButtonIcon icon={startIcon} position="inline-start" /> : null}
@@ -59,7 +66,13 @@ function Button({
   const Comp = asChild ? Slot : ButtonPrimitive;
 
   return (
-    <Comp className={classes} data-slot="button" data-variant={variant} {...props}>
+    <Comp
+      className={classes}
+      data-slot="button"
+      data-variant={variant}
+      {...props}
+      {...nativeButtonProps({ asChild, type: props.type, variant })}
+    >
       {asChild ? children : content}
     </Comp>
   );

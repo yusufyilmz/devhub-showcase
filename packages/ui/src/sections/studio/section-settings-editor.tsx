@@ -11,6 +11,9 @@ import {
 
 import { Button } from "../../buttons";
 import { Card } from "../../cards";
+import { Input as LibraryInput } from "../../forms/input/Input";
+import { Label as LibraryLabel } from "../../forms/label/Label";
+import { NativeSelect as LibraryNativeSelect } from "../../forms/native-select";
 import { ConfiguredSection } from "./configured-section";
 import { sectionSettingsEditorInlineStyle1, sectionSettingsEditorStyles } from "./styles";
 import type { SectionSettingsEditorOptions } from "./types";
@@ -47,16 +50,19 @@ export function SectionSettingsEditor({ profile, onChange }: SectionSettingsEdit
           return (
             <fieldset className={sectionSettingsEditorStyles.element2} key={kind}>
               <legend>{sectionRegistry[kind].name}</legend>
-              <label>
-                <input
+              <LibraryLabel unstyled>
+                <LibraryInput
                   checked={settings.visible ?? true}
                   onChange={(event) => update(kind, { ...settings, visible: event.target.checked })}
                   type="checkbox"
+                  unstyled
                 />{" "}
                 Show section
-              </label>
-              <label htmlFor={`section-display-${kind}`}>Display style</label>
-              <select
+              </LibraryLabel>
+              <LibraryLabel htmlFor={`section-display-${kind}`} unstyled>
+                Display style
+              </LibraryLabel>
+              <LibraryNativeSelect
                 id={`section-display-${kind}`}
                 onChange={(event) =>
                   update(kind, {
@@ -64,6 +70,7 @@ export function SectionSettingsEditor({ profile, onChange }: SectionSettingsEdit
                     renderer: event.target.value || undefined,
                   } as PortfolioSectionSettings[typeof kind])
                 }
+                unstyled
                 value={settings.renderer ?? ""}
               >
                 <option value="">Layout default</option>
@@ -72,12 +79,12 @@ export function SectionSettingsEditor({ profile, onChange }: SectionSettingsEdit
                     {names[sectionRendererViews[renderer]] ?? renderer}
                   </option>
                 ))}
-              </select>
+              </LibraryNativeSelect>
               {items.length > 0 && (
                 <fieldset>
                   <legend>Included content</legend>
-                  <label>
-                    <input
+                  <LibraryLabel unstyled>
+                    <LibraryInput
                       checked={settings.itemIds === undefined}
                       onChange={(event) =>
                         update(kind, {
@@ -86,12 +93,13 @@ export function SectionSettingsEditor({ profile, onChange }: SectionSettingsEdit
                         })
                       }
                       type="checkbox"
+                      unstyled
                     />{" "}
                     All items, including future additions
-                  </label>
+                  </LibraryLabel>
                   {items.map((item) => (
-                    <label key={item.id} style={sectionSettingsEditorInlineStyle1}>
-                      <input
+                    <LibraryLabel key={item.id} style={sectionSettingsEditorInlineStyle1} unstyled>
+                      <LibraryInput
                         checked={settings.itemIds?.includes(item.id) ?? true}
                         onChange={(event) => {
                           const selected = settings.itemIds ?? items.map(({ id }) => id);
@@ -103,9 +111,10 @@ export function SectionSettingsEditor({ profile, onChange }: SectionSettingsEdit
                           });
                         }}
                         type="checkbox"
+                        unstyled
                       />{" "}
                       {item.title}
-                    </label>
+                    </LibraryLabel>
                   ))}
                 </fieldset>
               )}

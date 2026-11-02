@@ -109,6 +109,20 @@
     "enabled": true,
     "rules": {
       "a11y": {
+        "noLabelWithoutControl": {
+          "level": "error",
+          "options": {
+            "inputComponents": [
+              "Input",
+              "Textarea",
+              "NativeSelect",
+              "LibraryInput",
+              "LibraryTextarea",
+              "LibraryNativeSelect"
+            ],
+            "labelComponents": ["LibraryLabel"]
+          }
+        },
         "noStaticElementInteractions": "off",
         "noSvgWithoutTitle": "off",
         "preset": "recommended",

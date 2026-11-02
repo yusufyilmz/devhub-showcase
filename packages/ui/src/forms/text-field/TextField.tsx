@@ -7,7 +7,9 @@ import { cn } from "cn";
 import { IconButton } from "../../buttons/icon-button";
 import { Typography } from "../../display/typography";
 import { Flex, FlexCenter, FlexCol } from "../../layout/flex";
+import { Input as LibraryInput } from "../input/Input";
 import { Label } from "../label";
+import { Textarea as LibraryTextarea } from "../textarea/Textarea";
 import { helperTextVariants, textFieldStyles, textFieldVariants } from "./styles";
 import type {
   FieldLabelOptions,
@@ -86,7 +88,7 @@ export function TextField({
       <Flex className={textFieldStyles.element1}>
         {leftIcon && <FlexCenter className={textFieldStyles.element2}>{leftIcon}</FlexCenter>}
 
-        <input
+        <LibraryInput
           aria-describedby={currentHelperText ? helperId : undefined}
           aria-invalid={currentState === "error" ? "true" : "false"}
           className={cn(
@@ -98,6 +100,7 @@ export function TextField({
             className,
           )}
           id={inputId}
+          unstyled
           {...props}
         />
 
@@ -146,7 +149,7 @@ export function TextArea({
     <FlexCol className={cn(textFieldStyles.textArea, containerClassName)} gap="xs">
       <FieldLabel className={labelClassName} htmlFor={inputId} label={label} required={required} />
 
-      <textarea
+      <LibraryTextarea
         aria-describedby={currentHelperText ? helperId : undefined}
         aria-invalid={currentState === "error" ? "true" : "false"}
         className={cn(
@@ -159,6 +162,7 @@ export function TextArea({
           className,
         )}
         id={inputId}
+        unstyled
         {...props}
       />
 

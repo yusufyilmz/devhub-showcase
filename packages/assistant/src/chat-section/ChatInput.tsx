@@ -7,6 +7,7 @@ import { copy } from "@shared/config";
 import type { ChatType } from "@shared/lib/types";
 import { IconButton } from "@shared/ui/icon-button";
 import { SendIcon } from "@shared/ui/icons";
+import { Input as LibraryInput } from "@shared/ui/input";
 
 type ChatInputProps = {
   handleSendMessage: (input: string) => void;
@@ -46,7 +47,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
 
   return (
     <div className="flex items-center space-x-2">
-      <input
+      <LibraryInput
         className="grow p-2 border rounded-lg"
         disabled={chatFinished}
         onChange={(e) => setInput(e.target.value)}
@@ -54,6 +55,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         onKeyUp={handleKeyUp}
         placeholder={copy.chat[chatFinished ? "end" : type].placeholder}
         type="text"
+        unstyled
         value={input}
       />
       <IconButton

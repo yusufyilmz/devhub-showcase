@@ -12,6 +12,8 @@ import {
 import { useStudioRequest } from "@shared/runtime/studio";
 import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
+import { Input as LibraryInput } from "@shared/ui/input";
+import { Label as LibraryLabel } from "@shared/ui/label";
 
 export function AiProfileEditor({ readUrl = urls.next.studio.profile() }: { readUrl?: string }) {
   const request = useStudioRequest();
@@ -62,14 +64,15 @@ export function AiProfileEditor({ readUrl = urls.next.studio.profile() }: { read
         >
           Reload saved AI profile
         </Button>
-        <label className="editor-checkbox">
-          <input
+        <LibraryLabel className="editor-checkbox" unstyled>
+          <LibraryInput
             checked={privateView}
             onChange={(event) => setPrivateView(event.target.checked)}
             type="checkbox"
+            unstyled
           />{" "}
           Show private owner knowledge
-        </label>
+        </LibraryLabel>
         {error && <p role="alert">{error}</p>}
         {!data && !error && <p role="status">Loading saved knowledge…</p>}
         {data && (

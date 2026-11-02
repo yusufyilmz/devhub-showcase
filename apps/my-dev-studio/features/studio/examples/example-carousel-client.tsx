@@ -4,6 +4,7 @@ import "@shared/ui/examples.css";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 
 import { type PortfolioType, portfolioTypes } from "@shared/config";
+import { Button as LibraryButton } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 import { GalleryLightbox } from "@shared/ui/dialog";
 
@@ -88,39 +89,47 @@ export function ExampleCarouselClient({
       </div>
       <div className="example-toolbar">
         <fieldset aria-label="Filter portfolio examples" className="example-filters">
-          <button aria-pressed={filter === "all"} onClick={() => choose("all")} type="button">
+          <LibraryButton
+            aria-pressed={filter === "all"}
+            onClick={() => choose("all")}
+            type="button"
+            variant="unstyled"
+          >
             All layouts
-          </button>
+          </LibraryButton>
           {portfolioTypes.map((type) => (
-            <button
+            <LibraryButton
               aria-pressed={filter === type.id}
               key={type.id}
               onClick={() => choose(type.id)}
               type="button"
+              variant="unstyled"
             >
               {type.name}
-            </button>
+            </LibraryButton>
           ))}
         </fieldset>
         <div className="example-controls">
-          <button
+          <LibraryButton
             aria-controls={id}
             aria-label="Previous portfolio examples"
             disabled={position === 0}
             onClick={() => move(-1)}
             type="button"
+            variant="unstyled"
           >
             ←
-          </button>
-          <button
+          </LibraryButton>
+          <LibraryButton
             aria-controls={id}
             aria-label="Next portfolio examples"
             disabled={atEnd}
             onClick={() => move(1)}
             type="button"
+            variant="unstyled"
           >
             →
-          </button>
+          </LibraryButton>
         </div>
       </div>
       <ul

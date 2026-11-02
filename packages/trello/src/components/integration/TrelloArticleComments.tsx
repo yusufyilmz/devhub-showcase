@@ -2,6 +2,7 @@
 
 import { type FC, useEffect, useState } from "react";
 
+import { Button as LibraryButton } from "@shared/ui/button";
 import { Typography } from "@shared/ui/typography";
 import { logger } from "@shared/utils/client-logger";
 
@@ -136,7 +137,7 @@ export const TrelloArticleComments: FC<TrelloArticleCommentsProps> = ({
     return (
       <Stack gap="sm" style={{ padding: "16px" }}>
         <Typography color="destructive">Failed to load comments: {initError}</Typography>
-        <button
+        <LibraryButton
           onClick={() => window.location.reload()}
           style={{
             background: "white",
@@ -145,9 +146,10 @@ export const TrelloArticleComments: FC<TrelloArticleCommentsProps> = ({
             cursor: "pointer",
             padding: "8px 16px",
           }}
+          variant="unstyled"
         >
           Retry
-        </button>
+        </LibraryButton>
       </Stack>
     );
   }

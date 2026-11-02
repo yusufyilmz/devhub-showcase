@@ -1,3 +1,4 @@
+import { Button as LibraryButton } from "../../buttons/button/Button";
 import { Alert, AlertDescription, AlertTitle } from "../alert";
 import { notificationStyles } from "./styles";
 import type { SnackbarNotificationProps } from "./types";
@@ -15,9 +16,14 @@ export const SnackbarNotification: React.FC<SnackbarNotificationProps> = ({
       <Alert variant={severity === "error" ? "destructive" : "default"}>
         <AlertTitle className={notificationStyles.element2}>{severity}</AlertTitle>
         <AlertDescription>{message}</AlertDescription>
-        <button className={notificationStyles.element3} onClick={onClose} type="button">
+        <LibraryButton
+          className={notificationStyles.element3}
+          onClick={onClose}
+          type="button"
+          variant="unstyled"
+        >
           Close
-        </button>
+        </LibraryButton>
       </Alert>
     </div>
   );

@@ -1,5 +1,6 @@
 import { cn } from "cn";
 
+import { Button as LibraryButton } from "../../buttons/button/Button";
 import { notFoundStyles } from "./styles";
 import type { NotFoundProps } from "./types";
 
@@ -28,9 +29,14 @@ export function NotFound({
             {buttonText}
           </LinkComponent>
         ) : (
-          <button className={buttonClasses} onClick={onReturnHome} type="button">
+          <LibraryButton
+            className={buttonClasses}
+            onClick={onReturnHome}
+            type="button"
+            variant="unstyled"
+          >
             {buttonText}
-          </button>
+          </LibraryButton>
         )}
       </div>
     </div>

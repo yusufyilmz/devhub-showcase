@@ -10,6 +10,7 @@ import { LocationMap } from "../../display/map";
 import { WorkMedia } from "../../display/media";
 import { ContactForm } from "../../forms/contact-form";
 import { Input } from "../../forms/input";
+import { Label as LibraryLabel } from "../../forms/label/Label";
 import { Textarea } from "../../forms/textarea";
 import { HeroSurface } from "../../layout/hero";
 import type { SectionItem } from "../../layout/section";
@@ -169,14 +170,14 @@ export function SpecialView({
       return options.email ? (
         preview ? (
           <div className={presenterStyles.element6}>
-            <label htmlFor="email">
+            <LibraryLabel htmlFor="email" unstyled>
               {text.formEmail}
               <Input disabled id="email" type="email" />
-            </label>
-            <label htmlFor="message">
+            </LibraryLabel>
+            <LibraryLabel htmlFor="message" unstyled>
               {text.formMessage}
               <Textarea disabled id="message" rows={4} />
-            </label>
+            </LibraryLabel>
             <Button disabled id="open-email" type="button">
               {text.formOpenEmail}
             </Button>

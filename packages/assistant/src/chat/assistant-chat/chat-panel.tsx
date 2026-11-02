@@ -1,5 +1,8 @@
 "use client";
 
+import { Button as LibraryButton } from "@shared/ui/button";
+import { Label as LibraryLabel } from "@shared/ui/label";
+
 import { ChatBubble } from "./chat-bubble";
 import { ChatInput } from "./chat-input";
 import { ChatList, ChatListEmpty, ChatListItem } from "./chat-list";
@@ -58,9 +61,9 @@ export function ChatPanel({
         <h2 className="text-lg font-semibold" id={titleId}>
           {title}
         </h2>
-        <button aria-label={closeLabel} onClick={onClose} type="button">
+        <LibraryButton aria-label={closeLabel} onClick={onClose} type="button" variant="unstyled">
           {closeLabel}
-        </button>
+        </LibraryButton>
       </header>
       {notice && <p className="text-sm text-muted-foreground">{notice}</p>}
       <ChatList
@@ -98,9 +101,9 @@ export function ChatPanel({
       </ChatList>
       {busy && <p role="status">{busyLabel}</p>}
       {error && <p role="alert">{error}</p>}
-      <label className="sr-only" htmlFor={inputId}>
+      <LibraryLabel className="sr-only" htmlFor={inputId} unstyled>
         {inputLabel}
-      </label>
+      </LibraryLabel>
       <ChatInput
         disabled={busy}
         id={inputId}
@@ -112,9 +115,9 @@ export function ChatPanel({
         value={value}
       />
       {onClear && (
-        <button disabled={busy} onClick={onClear} type="button">
+        <LibraryButton disabled={busy} onClick={onClear} type="button" variant="unstyled">
           {clearLabel}
-        </button>
+        </LibraryButton>
       )}
     </div>
   );

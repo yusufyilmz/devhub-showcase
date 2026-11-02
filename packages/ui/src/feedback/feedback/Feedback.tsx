@@ -1,5 +1,6 @@
 /** Adapted from Once UI (MIT). Copyright (c) 2024-2025 Once UI. */
 
+import { Button as LibraryButton } from "../../buttons/button/Button";
 import { feedbackClassName, feedbackStyles, variants } from "./styles";
 import type { FeedbackOptions } from "./types";
 
@@ -18,14 +19,15 @@ export function Feedback({
         {children}
       </div>
       {onClose ? (
-        <button
+        <LibraryButton
           aria-label="Dismiss"
           className={feedbackStyles.element4}
           onClick={onClose}
           type="button"
+          variant="unstyled"
         >
           ×
-        </button>
+        </LibraryButton>
       ) : null}
     </div>
   );

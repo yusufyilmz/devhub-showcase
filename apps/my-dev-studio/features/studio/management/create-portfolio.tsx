@@ -9,6 +9,9 @@ import { urls } from "@shared/config/urls";
 import { createEmptyProfile } from "@shared/lib/profiles";
 import { useStudioRequest } from "@shared/runtime/studio";
 import { Button } from "@shared/ui/button";
+import { Input as LibraryInput } from "@shared/ui/input";
+import { Label as LibraryLabel } from "@shared/ui/label";
+import { NativeSelect as LibraryNativeSelect } from "@shared/ui/native-select";
 
 function errorMessage(reason: unknown) {
   return reason instanceof Error ? reason.message : "Could not process the portfolio.";
@@ -77,53 +80,65 @@ export function CreatePortfolio({ onCreated }: { onCreated: (id: string) => void
       <form onSubmit={create}>
         <fieldset className="managed-fields" disabled={busy}>
           <legend className="sr-only">New managed portfolio</legend>
-          <label className="editor-field">
+          <LibraryLabel className="editor-field" unstyled>
             Import portfolio JSON
-            <input
+            <LibraryInput
               accept=".json,application/json"
               onChange={(event) => readImport(event.target.files?.[0])}
               type="file"
+              unstyled
             />
-          </label>
+          </LibraryLabel>
           {imported && (
             <p role="status">
               Imported {imported.name}. Existing project images and links will be preserved.
             </p>
           )}
-          <label className="editor-field">
+          <LibraryLabel className="editor-field" unstyled>
             Name
-            <input
+            <LibraryInput
               maxLength={200}
               onChange={(event) => setName(event.target.value)}
               required
+              unstyled
               value={name}
             />
-          </label>
-          <label className="editor-field">
+          </LibraryLabel>
+          <LibraryLabel className="editor-field" unstyled>
             Username
-            <input
+            <LibraryInput
               maxLength={50}
               minLength={3}
               onChange={(event) => setUsername(event.target.value.toLowerCase())}
               pattern="[a-z0-9]+(-[a-z0-9]+)*"
               required
+              unstyled
               value={username}
             />
-          </label>
-          <label className="editor-field">
+          </LibraryLabel>
+          <LibraryLabel className="editor-field" unstyled>
             Contact email
-            <input onChange={(event) => setEmail(event.target.value)} type="email" value={email} />
-          </label>
-          <label className="editor-field">
+            <LibraryInput
+              onChange={(event) => setEmail(event.target.value)}
+              type="email"
+              unstyled
+              value={email}
+            />
+          </LibraryLabel>
+          <LibraryLabel className="editor-field" unstyled>
             Portfolio layout
-            <select onChange={(event) => setType(event.target.value as PortfolioType)} value={type}>
+            <LibraryNativeSelect
+              onChange={(event) => setType(event.target.value as PortfolioType)}
+              unstyled
+              value={type}
+            >
               {portfolioTypes.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
                 </option>
               ))}
-            </select>
-          </label>
+            </LibraryNativeSelect>
+          </LibraryLabel>
           <p>
             New portfolios are private. A missing email uses pending@example.com until you replace
             it. Review imported contact details before publishing.

@@ -12,7 +12,9 @@ import { CodeBlock } from "../../display/code";
 import { Typography } from "../../display/typography";
 import { Checkbox } from "../../forms/checkbox";
 import { Input } from "../../forms/input";
+import { Input as LibraryInput } from "../../forms/input/Input";
 import { Label } from "../../forms/label";
+import { Label as LibraryLabel } from "../../forms/label/Label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../forms/select";
 import { FlexBetween, FlexCenter, FlexCol, FlexRow } from "../../layout/flex";
 import { componentCustomizerStyles, customizerVariants } from "./styles";
@@ -61,14 +63,14 @@ export function ComponentCustomizer({
     switch (type) {
       case "boolean":
         return (
-          <label className={componentCustomizerStyles.element1}>
-            <input type="hidden" value={value} />
+          <LibraryLabel className={componentCustomizerStyles.element1} unstyled>
+            <LibraryInput type="hidden" unstyled value={value} />
             <Checkbox
               checked={Boolean(value)}
               onCheckedChange={(checked) => handlePropChange(key, checked === true)}
             />
             {key}
-          </label>
+          </LibraryLabel>
         );
       case "string":
         return (

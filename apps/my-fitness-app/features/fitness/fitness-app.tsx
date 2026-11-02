@@ -2,6 +2,7 @@
 import { useState } from "react";
 
 import { seedWorkspace } from "@shared/services/db/seed";
+import { Button as LibraryButton } from "@shared/ui/button";
 
 import { HttpWorkspaceGateway } from "@/features/task-workspace/gateway";
 import { TaskWorkspace } from "@/features/task-workspace/task-workspace";
@@ -22,9 +23,14 @@ export function FitnessApp({ readOnly = false }: { readOnly?: boolean }) {
       <main className="login">
         <h1>Could not load your workspace.</h1>
         <p role="alert">{controller.error}</p>
-        <button className="primary" onClick={() => location.reload()} type="button">
+        <LibraryButton
+          className="primary"
+          onClick={() => location.reload()}
+          type="button"
+          variant="unstyled"
+        >
           Retry
-        </button>
+        </LibraryButton>
         <a className="text-btn space-top" href="/login">
           Owner sign in
         </a>

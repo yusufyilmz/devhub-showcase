@@ -3,6 +3,8 @@ import { applyGoogleProfile, type GoogleImportField } from "@shared/lib/profiles
 
 import { Button } from "../buttons";
 import { Field } from "../forms";
+import { Input as LibraryInput } from "../forms/input/Input";
+import { Label as LibraryLabel } from "../forms/label/Label";
 import { googleImportReviewStyles } from "./styles";
 import type { GoogleImportReviewOptions } from "./types";
 
@@ -60,8 +62,8 @@ export function GoogleImportReview({
       )}
       {review.suggestions.map((suggestion, index) => (
         <div key={suggestion.field}>
-          <label>
-            <input
+          <LibraryLabel unstyled>
+            <LibraryInput
               checked={selected.includes(suggestion.field)}
               onChange={(event) =>
                 onSelect(
@@ -71,9 +73,10 @@ export function GoogleImportReview({
                 )
               }
               type="checkbox"
+              unstyled
             />{" "}
             Replace {labels[suggestion.field]}
-          </label>
+          </LibraryLabel>
           <p>Current: {profile[suggestion.field] || "Not set"}</p>
           <Field
             label={`Google ${labels[suggestion.field]}`}

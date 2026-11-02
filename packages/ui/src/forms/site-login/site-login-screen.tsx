@@ -1,6 +1,6 @@
 "use client";
 
-import "@shared/ui/auth-login.css";
+import "../login-form/auth-login.css";
 
 import type { ReactNode } from "react";
 

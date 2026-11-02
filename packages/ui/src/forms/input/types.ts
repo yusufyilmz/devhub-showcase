@@ -6,5 +6,5 @@ export interface InputProps extends React.ComponentProps<"input"> {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
   type?: string;
-  value?: string;
+  unstyled?: boolean;
 }

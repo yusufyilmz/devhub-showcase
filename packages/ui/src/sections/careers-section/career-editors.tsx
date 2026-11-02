@@ -2,6 +2,8 @@
 
 import { CollectionEditor } from "../../editors/collection-editor";
 import { Field, SelectField } from "../../forms";
+import { Input as LibraryInput } from "../../forms/input/Input";
+import { Label as LibraryLabel } from "../../forms/label/Label";
 import { LinesField } from "../../forms/lines-field";
 import { careerEditorsStyles } from "./styles";
 import type { Props } from "./types";
@@ -146,14 +148,15 @@ export function ProjectsEditor({ profile, onChange }: Props) {
             onChange={(skills) => change({ ...item, skills })}
             value={item.skills}
           />
-          <label className={careerEditorsStyles.element1}>
-            <input
+          <LibraryLabel className={careerEditorsStyles.element1} unstyled>
+            <LibraryInput
               checked={item.public}
               onChange={(event) => change({ ...item, public: event.target.checked })}
               type="checkbox"
+              unstyled
             />
             Show in the public projects section
-          </label>
+          </LibraryLabel>
         </>
       )}
       title="Projects"

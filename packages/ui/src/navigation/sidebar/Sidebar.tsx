@@ -9,6 +9,7 @@ import { PanelLeftIcon } from "lucide-react";
 import { useIsMobile } from "@shared/runtime/browser";
 
 import { Button } from "../../buttons/button";
+import { Button as LibraryButton } from "../../buttons/button/Button";
 import { Skeleton } from "../../feedback/skeleton";
 import { Input } from "../../forms/input";
 import { Separator } from "../../layout/seperator";
@@ -251,7 +252,7 @@ function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
   const { toggleSidebar } = useSidebar();
 
   return (
-    <button
+    <LibraryButton
       aria-label="Toggle Sidebar"
       className={cn(
         sidebarStyles.sidebarRail,
@@ -267,6 +268,7 @@ function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
       onClick={toggleSidebar}
       tabIndex={-1}
       title="Toggle Sidebar"
+      variant="unstyled"
       {...props}
     />
   );

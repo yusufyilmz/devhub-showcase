@@ -1,12 +1,13 @@
 /** Adapted from Once UI (MIT). Copyright (c) 2024-2025 Once UI. */
 "use client";
 
+import { Button as LibraryButton } from "../button/Button";
 import { toggleButtonClassName } from "./styles";
 import type { ToggleButtonOptions } from "./types";
 
 export function ToggleButton({ label, selected = false, onClick, children }: ToggleButtonOptions) {
   return (
-    <button
+    <LibraryButton
       aria-pressed={selected}
       className={toggleButtonClassName(
         selected
@@ -15,8 +16,9 @@ export function ToggleButton({ label, selected = false, onClick, children }: Tog
       )}
       onClick={onClick}
       type="button"
+      variant="unstyled"
     >
       {label || children}
-    </button>
+    </LibraryButton>
   );
 }

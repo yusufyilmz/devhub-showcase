@@ -4,7 +4,7 @@ import { cn } from "cn";
 import { shallow } from "zustand/shallow";
 
 import { Alert, AlertDescription } from "@shared/ui/alert";
-import { Button } from "@shared/ui/button";
+import { Button, Button as LibraryButton } from "@shared/ui/button";
 import { Flex, FlexCol } from "@shared/ui/flex";
 import { TextField } from "@shared/ui/text-field";
 import { Typography } from "@shared/ui/typography";
@@ -274,7 +274,7 @@ export const TrelloBoard: FC<TrelloBoardProps> = ({
                     value={editTitle}
                   />
                 ) : (
-                  <button
+                  <LibraryButton
                     className={cn(
                       "rounded-md px-3 py-2 text-left transition-colors",
                       showActions && "hover:bg-white/10 cursor-pointer",
@@ -283,11 +283,12 @@ export const TrelloBoard: FC<TrelloBoardProps> = ({
                     onClick={() => showActions && setIsEditingTitle(true)}
                     title={showActions ? "Click to edit board name" : undefined}
                     type="button"
+                    variant="unstyled"
                   >
                     <Heading className="m-0 text-2xl text-white" level={1}>
                       {board.name}
                     </Heading>
-                  </button>
+                  </LibraryButton>
                 )}
 
                 <BoardStats

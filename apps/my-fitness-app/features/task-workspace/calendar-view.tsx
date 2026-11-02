@@ -2,6 +2,9 @@
 import { ScheduleService } from "@shared/services/schedule";
 import type { Workspace } from "@shared/services/types";
 import { dateLabel } from "@shared/services/types";
+import { Button as LibraryButton } from "@shared/ui/button";
+import { Label as LibraryLabel } from "@shared/ui/label";
+import { NativeSelect as LibraryNativeSelect } from "@shared/ui/native-select";
 
 import { CalendarGrid, type CalendarGridProps } from "@/features/calendar/calendar-grid";
 
@@ -58,9 +61,14 @@ export function CalendarView({
       <section className="card">
         <div className="section-heading">
           <h2>{dateLabel(date)}</h2>
-          <button className="outline" onClick={() => openDay(date)} type="button">
+          <LibraryButton
+            className="outline"
+            onClick={() => openDay(date)}
+            type="button"
+            variant="unstyled"
+          >
             Open day
-          </button>
+          </LibraryButton>
         </div>
         <form
           key={date + selectedDiet + selectedWorkout}
@@ -80,9 +88,14 @@ export function CalendarView({
           }}
         >
           <div className="form-grid">
-            <label>
+            <LibraryLabel unstyled>
               Diet task
-              <select defaultValue={selectedDiet} disabled={readOnly || busy} name="diet">
+              <LibraryNativeSelect
+                defaultValue={selectedDiet}
+                disabled={readOnly || busy}
+                name="diet"
+                unstyled
+              >
                 {workspace.tasks
                   .filter((t) => t.scope === "template" && t.kind === "diet" && !t.archived)
                   .map((t) => (
@@ -90,14 +103,15 @@ export function CalendarView({
                       {t.title}
                     </option>
                   ))}
-              </select>
-            </label>
-            <label>
+              </LibraryNativeSelect>
+            </LibraryLabel>
+            <LibraryLabel unstyled>
               Gym subtask
-              <select
+              <LibraryNativeSelect
                 defaultValue={override ? (override.workoutTaskId ?? "") : selectedWorkout}
                 disabled={readOnly || busy}
                 name="workout"
+                unstyled
               >
                 <option value="">Rest day</option>
                 {workspace.tasks
@@ -107,12 +121,17 @@ export function CalendarView({
                       {t.title}
                     </option>
                   ))}
-              </select>
-            </label>
+              </LibraryNativeSelect>
+            </LibraryLabel>
           </div>
-          <button className="primary" disabled={readOnly || busy} type="submit">
+          <LibraryButton
+            className="primary"
+            disabled={readOnly || busy}
+            type="submit"
+            variant="unstyled"
+          >
             Save this day
-          </button>
+          </LibraryButton>
           <p className="hint">
             This override does not restart the rotation. Days with existing logs cannot be replaced.
           </p>

@@ -9,6 +9,7 @@ import {
 } from "@shared/services/schedule";
 import type { Task, Workspace } from "@shared/services/types";
 import { dateKey } from "@shared/services/types";
+import { Button as LibraryButton } from "@shared/ui/button";
 
 import { useAgendaNavigation } from "@/features/agenda/use-agenda-navigation";
 import { TaskEditor, type TaskEditorTarget } from "@/features/task-editor/task-editor";
@@ -117,9 +118,14 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
             <div className="toast" role="status">
               {controller.message}
               {controller.undo ? (
-                <button disabled={busy} onClick={controller.undo} type="button">
+                <LibraryButton
+                  disabled={busy}
+                  onClick={controller.undo}
+                  type="button"
+                  variant="unstyled"
+                >
                   Undo
-                </button>
+                </LibraryButton>
               ) : null}
             </div>
           ) : null}

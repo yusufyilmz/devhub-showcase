@@ -5,6 +5,19 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { Button } from "./Button";
 
 describe("Shared button composition", () => {
+  it("preserves native form-submit defaults and explicit control types for unstyled skins", () => {
+    render(
+      <>
+        <Button variant="unstyled">Save</Button>
+        <Button type="button" variant="unstyled">
+          Cancel
+        </Button>
+      </>,
+    );
+    expect(screen.getByRole("button", { name: "Save" }).getAttribute("type")).toBe("submit");
+    expect(screen.getByRole("button", { name: "Cancel" }).getAttribute("type")).toBe("button");
+    expect(screen.getByRole("button", { name: "Save" }).className).not.toContain("ui-button");
+  });
   afterEach(cleanup);
   it("preserves anchor attributes and handlers used by page actions", () => {
     const click = vi.fn((event: { preventDefault: () => void }) => event.preventDefault());
