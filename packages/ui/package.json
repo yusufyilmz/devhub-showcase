@@ -141,6 +141,8 @@
     "./careers-section": "./src/sections/careers-section/index.tsx",
     "./sections/studio": "./src/sections/studio/index.ts",
     "./portfolio": "./src/portfolio/index.ts",
+    "./portfolio-preview": "./src/display/portfolio-preview/index.ts",
+    "./portfolio-preview.css": "./src/display/portfolio-preview/preview.css",
     "./theme/studio": "./src/theme/studio/index.ts",
     "./google-import": "./src/google-import/index.ts"
   },

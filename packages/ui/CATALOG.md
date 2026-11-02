@@ -176,23 +176,24 @@ Public components exported from `packages/ui/src/components/index.ts`. Import th
 
 ## Content
 
-| Component                                                        | Folder                   | Use                                   |
-| ---------------------------------------------------------------- | ------------------------ | ------------------------------------- |
-| `Typography`                                                     | `typography`             | Type styles from `h1` through caption |
-| `Code`, `InlineCode`                                             | `code`, `inline-code`    | Code samples                          |
-| `Kbd`                                                            | `kbd`                    | Keyboard key                          |
-| `List`, `ListItem`                                               | `list`                   | Text list                             |
-| `Table`                                                          | `table`                  | Static table                          |
-| `DataTable`                                                      | `data-table`             | Sortable data table                   |
-| `Chart`                                                          | `chart`                  | Charts                                |
-| `Timeline` and its item parts                                    | `timeline`               | Vertical timeline                     |
-| `Avatar`, `AvatarGroup`                                          | `avatar`, `avatar-group` | People marks                          |
-| `LogoCloud`                                                      | `logo-cloud`             | Logo row                              |
-| `Carousel`                                                       | `carousel`               | Horizontal media sequence             |
-| `IFramePreview`                                                  | `iframe-preview`         | Embedded preview                      |
-| `Map`                                                            | `map`                    | Map embed                             |
-| `Chat` and its header, input, and message parts                  | `chat`                   | Portfolio chat                        |
-| Icons (`ArrowBackIcon`, `CloseIcon`, `GitHubIcon`, and the rest) | `icons`                  | Shared icons                          |
+| Component                                                        | Folder                   | Use                                                               |
+| ---------------------------------------------------------------- | ------------------------ | ----------------------------------------------------------------- |
+| `Typography`                                                     | `typography`             | Type styles from `h1` through caption                             |
+| `Code`, `InlineCode`                                             | `code`, `inline-code`    | Code samples                                                      |
+| `Kbd`                                                            | `kbd`                    | Keyboard key                                                      |
+| `List`, `ListItem`                                               | `list`                   | Text list                                                         |
+| `Table`                                                          | `table`                  | Static table                                                      |
+| `DataTable`                                                      | `data-table`             | Sortable data table                                               |
+| `Chart`                                                          | `chart`                  | Charts                                                            |
+| `Timeline` and its item parts                                    | `timeline`               | Vertical timeline                                                 |
+| `Avatar`, `AvatarGroup`                                          | `avatar`, `avatar-group` | People marks                                                      |
+| `LogoCloud`                                                      | `logo-cloud`             | Logo row                                                          |
+| `Carousel`                                                       | `carousel`               | Horizontal media sequence                                         |
+| `IFramePreview`                                                  | `iframe-preview`         | Embedded preview                                                  |
+| `ResponsivePortfolioPreview`                                     | `portfolio-preview`      | Private, sandboxed draft viewport at mobile/tablet/desktop widths |
+| `Map`                                                            | `map`                    | Map embed                                                         |
+| `Chat` and its header, input, and message parts                  | `chat`                   | Portfolio chat                                                    |
+| Icons (`ArrowBackIcon`, `CloseIcon`, `GitHubIcon`, and the rest) | `icons`                  | Shared icons                                                      |
 
 ## Studio tools
 

@@ -83,6 +83,13 @@ const aiOwners = ["desktop", "mobile"].map((device, index) => ({
   owner_id: `83838383-8383-4383-8383-83838383838${index}`,
   username: `${device}-ai-owner`,
 }));
+const previewOwners = aiOwners.map((owner, index) => ({
+  ...owner,
+  document: { ...owner.document, portfolioType: "engineer" },
+  id: `63636363-6363-4363-8363-63636363636${index}`,
+  owner_id: `62626262-6262-4262-8262-62626262626${index}`,
+  username: `${index ? "mobile" : "desktop"}-preview-owner`,
+}));
 const guidanceOwners = aiOwners.map((owner, index) => ({
   ...owner,
   id: `60606060-6060-4060-8060-60606060606${index}`,
@@ -369,6 +376,7 @@ const rows = [
   ...cvImportOwners,
   ...aiOwners,
   ...guidanceOwners,
+  ...previewOwners,
   ...chatOwners,
   ...billingOwners,
   ...googleOwners,
@@ -434,6 +442,7 @@ function fixtureOwner(request) {
       ...cvImportOwners,
       ...aiOwners,
       ...guidanceOwners,
+      ...previewOwners,
       ...chatOwners,
       ...billingOwners,
       ...googleOwners,
