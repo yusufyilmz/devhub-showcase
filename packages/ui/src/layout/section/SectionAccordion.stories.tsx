@@ -1,4 +1,4 @@
-import "../../styles/portfolio/sections.css";
+import "../../sections/sections.css";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 

@@ -1,5 +1,12 @@
 # UI catalog
 
+Component styles live beside their owning UI domain. Portfolio skins are in
+src/portfolio/portfolio.css; section skins in src/sections/sections.css; navigation
+in src/navigation/chrome.css; chat styles in src/display/chat; example styles in
+src/sections/home-section; login styles in src/forms/login-form. Existing CSS export
+paths remain supported by the global bundles and forwarding imports. Tokens,
+themes, layouts and shared foundation rules remain centralized.
+
 HomeChatLauncher in src/sections/home-section/chat-launcher.tsx composes the shared
 ChatComposer and opens the authenticated Studio assistant below the capabilities strip.
 ChatComposer and StudioChatScreen from @shared/ui/display provide the compact icon

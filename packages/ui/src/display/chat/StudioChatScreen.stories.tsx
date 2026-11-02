@@ -1,4 +1,4 @@
-import "../../styles/portfolio/assistant.css";
+import "./studio-chat.css";
 
 import { useState } from "react";
 

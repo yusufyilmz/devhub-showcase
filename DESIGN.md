@@ -203,6 +203,16 @@ Styles and tokens live in `packages/ui/src/styles`. Components in `packages/ui` 
 
 ## Stylesheet architecture
 
+Component styles are now colocated: portfolio skins in
+`packages/ui/src/portfolio/portfolio.css`, section skins in
+`packages/ui/src/sections/sections.css`, navigation in
+`packages/ui/src/navigation/chrome.css`, chat in `packages/ui/src/display/chat`,
+examples in `packages/ui/src/sections/home-section`, and login in
+`packages/ui/src/forms/login-form`. The older directory map below describes the
+original organization; these colocated paths take precedence. Global bundles
+retain their loading order and public CSS imports. Themes, tokens, layout CSS,
+resets and shared foundation rules remain centralized.
+
 Two stacks share one component library. **Foundation** is the token + Tailwind layer (`data-brand`, `data-theme`, appearance). **Portfolio** is the RGB palette model for published pages (`data-portfolio-theme`, section frames, site chrome). Storybook and token-only hosts load foundation only so toolbar brands are not overridden by portfolio remaps.
 
 ### Entry points

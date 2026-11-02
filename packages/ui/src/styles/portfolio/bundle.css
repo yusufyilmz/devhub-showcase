@@ -1,9 +1,9 @@
 /* Published portfolios and studio surfaces that use the RGB palette model. */
-@import "./components.css";
-@import "./sections.css";
-@import "./chat.css";
-@import "./assistant.css";
+@import "../../portfolio/portfolio.css";
+@import "../../sections/sections.css";
+@import "../../display/chat/portfolio-chat.css";
+@import "../../display/chat/studio-chat.css";
 @import "./layouts.css";
 @import "./presets.css";
-@import "./chrome.css";
+@import "../../navigation/chrome.css";
 @import "./semantic-bridge.css";

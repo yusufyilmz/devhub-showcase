@@ -142,6 +142,7 @@
   },
   "main": "./src/index.ts",
   "files": [
+    "src/**/*.css",
     "src/styles/*.css",
     "src/styles/tokens",
     "postcss.config.js"

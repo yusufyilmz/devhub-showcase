@@ -5,7 +5,7 @@
 @import "./foundation/platform-rgb.css";
 @import "./foundation/product-tokens.css";
 @import "./foundation/surfaces.css";
-@import "./foundation/auth-login.css";
+@import "../forms/login-form/auth-login.css";
 
 @source "../../../../apps/my-dev-studio/app";
 @source "../../../../apps/my-fitness-app/app";
