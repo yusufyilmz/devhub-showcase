@@ -15,31 +15,29 @@ function SkillGroup({ name, skills, rename, change, remove }: SkillGroupOptions)
   return (
     <Card asChild layout="plain" surface="portfolio">
       <article className={skillsEditorStyles.element1}>
-        <Card asChild layout="plain" surface="portfolio">
-          <div className={skillsEditorStyles.element2}>
-            <LibraryLabel className={skillsEditorStyles.element3} unstyled>
-              Group name
-              <LibraryInput
-                onBlur={() => {
-                  rename(label.trim());
-                  setLabel(name);
-                }}
-                onChange={(event) => setLabel(event.target.value)}
-                unstyled
-                value={label}
-              />
-            </LibraryLabel>
-            <Button
-              className={skillsEditorStyles.element4}
-              onClick={() => {
-                if (window.confirm(`Remove ${name}?`)) remove();
+        <div className={skillsEditorStyles.element2}>
+          <LibraryLabel className={skillsEditorStyles.element3} unstyled>
+            Group name
+            <LibraryInput
+              onBlur={() => {
+                rename(label.trim());
+                setLabel(name);
               }}
-              type="button"
-            >
-              Remove group
-            </Button>
-          </div>
-        </Card>
+              onChange={(event) => setLabel(event.target.value)}
+              unstyled
+              value={label}
+            />
+          </LibraryLabel>
+          <Button
+            className={skillsEditorStyles.element4}
+            onClick={() => {
+              if (window.confirm(`Remove ${name}?`)) remove();
+            }}
+            type="button"
+          >
+            Remove group
+          </Button>
+        </div>
         <LinesField label={`${name} skills`} onChange={change} value={skills} />
       </article>
     </Card>

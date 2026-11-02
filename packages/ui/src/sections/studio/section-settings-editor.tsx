@@ -1,4 +1,6 @@
 "use client";
+import "../../portfolio/portfolio.css";
+import "./settings.css";
 
 import {
   getPortfolioSections,

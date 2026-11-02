@@ -41,3 +41,5 @@ export function BillingSettings({
     </BillingProvider>
   );
 }
+
+import "./billing.css";

@@ -1,5 +1,9 @@
 # UI catalog
 
+PageShell marks product documents with `data-platform="mydevstudio"` so shared
+controls use the same surface and foreground palette as the surrounding studio.
+Editor toolbar rows remain plain layout containers rather than elevated Cards.
+
 ThemeToggle keeps its quick mode switch and includes a Theme settings popover.
 Appearance choices are validated and persisted in the shared user configuration
 alongside mode and display user. ThemeProvider applies them before/after hydration

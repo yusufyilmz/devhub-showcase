@@ -59,6 +59,20 @@ test("owner sees separate AI readiness and refreshes without changing publicatio
   );
   await page.goto("/admin/billing");
   await expect(page.getByRole("heading", { name: "Pro is active" })).toBeVisible();
+  const headingSize = await page
+    .locator("h1")
+    .evaluate((node) => Number.parseFloat(getComputedStyle(node).fontSize));
+  const bodySize = await page
+    .locator("main p")
+    .first()
+    .evaluate((node) => Number.parseFloat(getComputedStyle(node).fontSize));
+  expect(headingSize).toBeGreaterThan(bodySize * 1.5);
+  await page.screenshot({ fullPage: true, path: `/tmp/studio-billing-${info.project.name}.png` });
+  await page.getByRole("button", { name: "Switch to light theme" }).click();
+  await page.screenshot({
+    fullPage: true,
+    path: `/tmp/studio-billing-light-${info.project.name}.png`,
+  });
   await expect(page.getByText(/5 \/ 5 attempts used. 0 remaining/)).toBeVisible();
   await expect(page.getByText(/Your portfolio is private/)).toBeVisible();
   await page.getByRole("button", { name: "Enable portfolio AI chat" }).click();

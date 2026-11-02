@@ -45,45 +45,43 @@ export function CollectionEditor<T extends CollectionEditorItem>({
       {items.map((item, index) => (
         <Card asChild key={item.id} layout="plain" surface="portfolio">
           <article className={collectionEditorStyles.element5}>
-            <Card asChild layout="plain" surface="portfolio">
-              <div className={collectionEditorStyles.element6}>
-                <h3>{getTitle(item) || "New item"}</h3>
-                <div className={collectionEditorStyles.element7}>
-                  <Button
-                    aria-label={`Move ${getTitle(item)} up`}
-                    disabled={index === 0}
-                    onClick={() => onChange(moveItem(items, index, index - 1))}
-                    type="button"
-                  >
-                    ↑
-                  </Button>
-                  <Button
-                    aria-label={`Move ${getTitle(item)} down`}
-                    disabled={index === items.length - 1}
-                    onClick={() => onChange(moveItem(items, index, index + 1))}
-                    type="button"
-                  >
-                    ↓
-                  </Button>
-                  <Button
-                    className={collectionEditorStyles.element8}
-                    onClick={() => {
-                      if (
-                        window.confirm(
-                          `Remove ${getTitle(item) || "this item"}? Changes take effect when you save.`,
-                        )
-                      ) {
-                        if (onRemove) onRemove(item);
-                        else onChange(items.filter((row) => row.id !== item.id));
-                      }
-                    }}
-                    type="button"
-                  >
-                    Remove
-                  </Button>
-                </div>
+            <div className={collectionEditorStyles.element6}>
+              <h3>{getTitle(item) || "New item"}</h3>
+              <div className={collectionEditorStyles.element7}>
+                <Button
+                  aria-label={`Move ${getTitle(item)} up`}
+                  disabled={index === 0}
+                  onClick={() => onChange(moveItem(items, index, index - 1))}
+                  type="button"
+                >
+                  ↑
+                </Button>
+                <Button
+                  aria-label={`Move ${getTitle(item)} down`}
+                  disabled={index === items.length - 1}
+                  onClick={() => onChange(moveItem(items, index, index + 1))}
+                  type="button"
+                >
+                  ↓
+                </Button>
+                <Button
+                  className={collectionEditorStyles.element8}
+                  onClick={() => {
+                    if (
+                      window.confirm(
+                        `Remove ${getTitle(item) || "this item"}? Changes take effect when you save.`,
+                      )
+                    ) {
+                      if (onRemove) onRemove(item);
+                      else onChange(items.filter((row) => row.id !== item.id));
+                    }
+                  }}
+                  type="button"
+                >
+                  Remove
+                </Button>
               </div>
-            </Card>
+            </div>
             <div className={collectionEditorStyles.element9}>
               {render(item, (changed) =>
                 onChange(items.map((row) => (row.id === item.id ? changed : row))),

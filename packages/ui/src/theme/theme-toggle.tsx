@@ -1,6 +1,7 @@
 "use client";
 
 import "../navigation/chrome.css";
+import "./settings.css";
 
 import { createContext, useContext } from "react";
 
@@ -35,11 +36,20 @@ export function ThemeToggle({
       </LibraryButton>
       <Popover>
         <PopoverTrigger asChild>
-          <LibraryButton aria-label="Theme settings" type="button" variant="ghost">
+          <LibraryButton
+            aria-label="Theme settings"
+            className="theme-toggle"
+            type="button"
+            variant="unstyled"
+          >
             ⚙
           </LibraryButton>
         </PopoverTrigger>
-        <PopoverContent aria-label="Theme settings" className={themeSettingsStyles.panel}>
+        <PopoverContent
+          align="end"
+          aria-label="Theme settings"
+          className={themeSettingsStyles.panel}
+        >
           <LibraryLabel className={themeSettingsStyles.field}>
             Mode
             <LibraryNativeSelect

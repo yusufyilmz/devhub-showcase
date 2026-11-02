@@ -1,0 +1,32 @@
+.theme-settings-panel {
+  display: grid;
+  gap: 16px;
+  width: min(360px, calc(100vw - 32px));
+  max-height: min(640px, 75dvh);
+  padding: 20px;
+  overflow-y: auto;
+  color: rgb(var(--text-rgb));
+  background: rgb(var(--surface-rgb));
+  border: 1px solid rgb(var(--border-rgb));
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgb(var(--shadow-rgb) / 0.18);
+}
+.theme-settings-field {
+  display: grid;
+  grid-template-columns: minmax(90px, 1fr) minmax(0, 1.4fr);
+  gap: 12px;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+.theme-settings-field select {
+  width: 100%;
+  min-height: 36px;
+  padding: 6px 10px;
+  font-size: 13px;
+  color: rgb(var(--text-rgb));
+  background: rgb(var(--surface-soft-rgb));
+  border: 1px solid rgb(var(--border-rgb));
+  border-radius: 8px;
+}

@@ -103,6 +103,7 @@ export function PageShell({
   return (
     <html
       data-accent={appearance.accent}
+      data-platform="mydevstudio"
       data-portfolio-theme={portfolioTheme}
       data-theme={appearance.defaultTheme === "light" ? "light" : "dark"}
       lang={documentLanguage}

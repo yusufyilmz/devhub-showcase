@@ -1,5 +1,8 @@
 # Billing catalog
 
+BillingSettings imports its colocated billing stylesheet, which owns the bounded
+page layout, heading hierarchy, explanatory text spacing, and usage-card styling.
+
 Stripe sandbox billing, entitlements, and studio subscription UI for `@shared/billing`. Import a specific entry point.
 
 | Export                       | Path                      | Use                                                          |
