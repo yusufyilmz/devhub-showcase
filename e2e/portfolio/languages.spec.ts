@@ -12,6 +12,7 @@ for (const language of ["es", "tr"] as const) {
       await expect(page.locator("html")).toHaveAttribute("lang", language);
       await expect(page.getByRole("heading", { exact: true, name: text.experience })).toBeVisible();
       await expect(page.getByRole("heading", { exact: true, name: text.about })).toBeVisible();
+      await page.getByRole("button", { name: "Appearance controls" }).hover();
       await expect(page.getByRole("button", { name: text.switchLight })).toBeVisible();
       if (type === "engineer") {
         await expect(page.locator(".reveal-toggle").first()).toHaveAttribute(
