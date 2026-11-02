@@ -1,5 +1,12 @@
 # UI catalog
 
+`@shared/ui/section-navigator` provides SectionNavigator, enabled once by
+PageProviders. It discovers visible main-content sections with their own h1/h2,
+follows document order, and updates after content changes. Mark a non-section
+container with `data-page-section` to include it. Optional `sections` supplies
+explicit `{ id, title, description }` entries targeting existing DOM ids. The rail
+hides with fewer than two sections and offers hover/focus previews and anchor links.
+
 PageShell marks product documents with `data-platform="mydevstudio"` so shared
 controls use the same surface and foreground palette as the surrounding studio.
 Editor toolbar rows remain plain layout containers rather than elevated Cards.

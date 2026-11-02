@@ -10,6 +10,7 @@
     "./components": "./src/components/index.ts",
     "./overlays": "./src/overlays/index.ts",
     "./navigation": "./src/navigation/index.ts",
+    "./section-navigator": "./src/navigation/section-navigator/index.ts",
     "./display": "./src/display/index.ts",
     "./layout": "./src/layout/index.ts",
     "./theme": "./src/theme/index.ts",

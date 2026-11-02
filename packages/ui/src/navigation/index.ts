@@ -8,6 +8,7 @@ export * from "./navbar";
 export { MobileMenu } from "./navbar/MobileMenu";
 export * from "./page-header";
 export * from "./pagination";
+export * from "./section-navigator";
 export * from "./sidebar";
 export * from "./site-header";
 export * from "./team-switcher";
