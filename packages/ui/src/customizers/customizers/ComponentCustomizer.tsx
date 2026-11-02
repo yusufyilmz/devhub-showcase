@@ -3,7 +3,6 @@
 import * as React from "react";
 import { useState } from "react";
 
-import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 
 import { Button } from "../../buttons/button";
@@ -16,42 +15,8 @@ import { Input } from "../../forms/input";
 import { Label } from "../../forms/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../forms/select";
 import { FlexBetween, FlexCenter, FlexCol, FlexRow } from "../../layout/flex";
-
-const customizerVariants = cva(
-  "w-full max-w-4xl mx-auto p-6 bg-[var(--background)] border border-[var(--border)] rounded-lg shadow-lg",
-  {
-    defaultVariants: {
-      size: "md",
-      theme: "auto",
-    },
-    variants: {
-      size: {
-        full: "max-w-none",
-        lg: "max-w-6xl",
-        md: "max-w-4xl",
-        sm: "max-w-2xl",
-      },
-      theme: {
-        auto: "bg-[var(--background)] text-[var(--foreground)]",
-        dark: "bg-gray-900 text-white",
-        light: "bg-white text-gray-900",
-      },
-    },
-  },
-);
-
-export interface ComponentCustomizerProps
-  extends React.ComponentProps<"div">,
-    VariantProps<typeof customizerVariants> {
-  children: React.ReactNode;
-  componentDescription?: string;
-  componentName: string;
-  onPropsChange?: (props: Record<string, any>) => void;
-  propsConfig?: Record<string, any>;
-  showCode?: boolean;
-  showProps?: boolean;
-  showTheme?: boolean;
-}
+import { componentCustomizerStyles, customizerVariants } from "./styles";
+import type { ComponentCustomizerProps } from "./types";
 
 export function ComponentCustomizer({
   componentName,
@@ -96,7 +61,7 @@ export function ComponentCustomizer({
     switch (type) {
       case "boolean":
         return (
-          <label className="flex items-center gap-2 text-foreground">
+          <label className={componentCustomizerStyles.element1}>
             <input type="hidden" value={value} />
             <Checkbox
               checked={Boolean(value)}
@@ -108,9 +73,9 @@ export function ComponentCustomizer({
       case "string":
         return (
           <FlexCol gap="sm">
-            <Label className="text-[var(--foreground)]">{key}</Label>
+            <Label className={componentCustomizerStyles.element2}>{key}</Label>
             <Input
-              className="h-8 bg-[var(--background)] border-[var(--border)] text-[var(--foreground)]"
+              className={componentCustomizerStyles.element3}
               onChange={(e) => handlePropChange(key, e.target.value)}
               placeholder={`Enter ${key}...`}
               value={value || ""}
@@ -120,9 +85,9 @@ export function ComponentCustomizer({
       case "number":
         return (
           <FlexCol gap="sm">
-            <Label className="text-[var(--foreground)]">{key}</Label>
+            <Label className={componentCustomizerStyles.element4}>{key}</Label>
             <Input
-              className="h-8 bg-[var(--background)] border-[var(--border)] text-[var(--foreground)]"
+              className={componentCustomizerStyles.element5}
               onChange={(e) => handlePropChange(key, Number(e.target.value))}
               placeholder={`Enter ${key}...`}
               type="number"
@@ -133,9 +98,9 @@ export function ComponentCustomizer({
       case "select":
         return (
           <FlexCol gap="sm">
-            <Label className="text-[var(--foreground)]">{key}</Label>
+            <Label className={componentCustomizerStyles.element6}>{key}</Label>
             <Select onValueChange={(next) => handlePropChange(key, next)} value={value || ""}>
-              <SelectTrigger className="bg-[var(--background)] border-[var(--border)] text-[var(--foreground)]">
+              <SelectTrigger className={componentCustomizerStyles.element7}>
                 <SelectValue placeholder={`Select ${key}...`} />
               </SelectTrigger>
               <SelectContent>
@@ -151,9 +116,9 @@ export function ComponentCustomizer({
       default:
         return (
           <FlexCol gap="sm">
-            <Label className="text-[var(--foreground)]">{key}</Label>
+            <Label className={componentCustomizerStyles.element8}>{key}</Label>
             <Input
-              className="h-8 bg-[var(--background)] border-[var(--border)] text-[var(--foreground)]"
+              className={componentCustomizerStyles.element9}
               onChange={(e) => handlePropChange(key, e.target.value)}
               placeholder={`Enter ${key}...`}
               value={value || ""}
@@ -169,11 +134,11 @@ export function ComponentCustomizer({
       <FlexCol gap="md">
         <FlexBetween>
           <FlexCol gap="sm">
-            <Typography className="font-bold text-[var(--foreground)]" variant="h3">
+            <Typography className={componentCustomizerStyles.element10} variant="h3">
               {componentName} Customizer
             </Typography>
             {componentDescription && (
-              <Typography className="text-[var(--muted-foreground)]" variant="body2">
+              <Typography className={componentCustomizerStyles.element11} variant="body2">
                 {componentDescription}
               </Typography>
             )}
@@ -216,14 +181,14 @@ export function ComponentCustomizer({
 
       <FlexRow align="start" gap="lg">
         {/* Main Content */}
-        <FlexCol className="flex-1" gap="lg">
+        <FlexCol className={componentCustomizerStyles.element12} gap="lg">
           {/* Live Preview */}
-          <Card className="p-6 bg-[var(--card)] border-[var(--border)]">
+          <Card className={componentCustomizerStyles.element13}>
             <CardHeader>
-              <CardTitle className="text-[var(--foreground)]">Live Preview</CardTitle>
+              <CardTitle className={componentCustomizerStyles.element14}>Live Preview</CardTitle>
             </CardHeader>
             <CardContent>
-              <FlexCenter className="min-h-[200px] border-2 border-dashed border-[var(--border)] rounded-lg p-4 bg-[var(--muted)]/20">
+              <FlexCenter className={componentCustomizerStyles.element15}>
                 {React.cloneElement(children as React.ReactElement, customProps)}
               </FlexCenter>
             </CardContent>
@@ -231,12 +196,14 @@ export function ComponentCustomizer({
 
           {/* Code Panel */}
           {showCodePanel && (
-            <Card className="p-6 bg-[var(--card)] border-[var(--border)]">
+            <Card className={componentCustomizerStyles.element16}>
               <CardHeader>
                 <FlexBetween>
-                  <CardTitle className="text-[var(--foreground)]">Generated Code</CardTitle>
+                  <CardTitle className={componentCustomizerStyles.element17}>
+                    Generated Code
+                  </CardTitle>
                   <Button
-                    className="bg-[var(--background)] border-[var(--border)] text-[var(--foreground)] hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]"
+                    className={componentCustomizerStyles.element18}
                     onClick={() => navigator.clipboard.writeText(generateCode())}
                     size="sm"
                     variant="outline"
@@ -246,7 +213,7 @@ export function ComponentCustomizer({
                 </FlexBetween>
               </CardHeader>
               <CardContent>
-                <CodeBlock className="bg-[var(--muted)] p-4 rounded-md overflow-x-auto text-sm text-[var(--muted-foreground)]">
+                <CodeBlock className={componentCustomizerStyles.element19}>
                   {generateCode()}
                 </CodeBlock>
               </CardContent>
@@ -256,9 +223,9 @@ export function ComponentCustomizer({
 
         {/* Props Panel */}
         {showPropsPanel && (
-          <Card className="w-80 p-6 bg-[var(--card)] border-[var(--border)]">
+          <Card className={componentCustomizerStyles.element20}>
             <CardHeader>
-              <CardTitle className="text-[var(--foreground)]">Props</CardTitle>
+              <CardTitle className={componentCustomizerStyles.element21}>Props</CardTitle>
             </CardHeader>
             <CardContent>
               <FlexCol gap="md">
@@ -350,3 +317,5 @@ export function TypographyCustomizer({
     </ComponentCustomizer>
   );
 }
+
+export type { ComponentCustomizerProps } from "./types";

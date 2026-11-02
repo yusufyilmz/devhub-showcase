@@ -1,20 +1,11 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { selectFieldStyles } from "./styles";
+import type { EmptyStateOptions, SelectFieldOptions } from "./types";
 
-export function SelectField({
-  label,
-  value,
-  onChange,
-  children,
-}: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  children: ReactNode;
-}) {
+export function SelectField({ label, value, onChange, children }: SelectFieldOptions) {
   return (
-    <label className="editor-field">
+    <label className={selectFieldStyles.element1}>
       <span>{label}</span>
       <select onChange={(event) => onChange(event.target.value)} value={value}>
         {children}
@@ -22,6 +13,6 @@ export function SelectField({
     </label>
   );
 }
-export function EmptyState({ children }: { children: ReactNode }) {
-  return <div className="editor-empty">{children}</div>;
+export function EmptyState({ children }: EmptyStateOptions) {
+  return <div className={selectFieldStyles.element2}>{children}</div>;
 }

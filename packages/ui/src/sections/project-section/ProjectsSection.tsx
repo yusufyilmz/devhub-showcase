@@ -1,16 +1,12 @@
 import type React from "react";
 
-import { getPortfolioCopy, type Language } from "@shared/config";
-import type { ProjectWithCompanyAndSkills } from "@shared/lib/types";
+import { getPortfolioCopy } from "@shared/config";
 
 import { List, ListItem } from "../../display/list";
 import { Section } from "../../layout/section";
 import { ProjectItem } from "./ProjectItem";
-
-interface ProjectsSectionProps {
-  language?: Language;
-  projects: ProjectWithCompanyAndSkills[];
-}
+import { projectsSectionStyles } from "./styles";
+import type { ProjectsSectionProps } from "./types";
 
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   projects = [],
@@ -19,16 +15,16 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   const text = getPortfolioCopy(language);
   return (
     <Section
-      className="mt-8"
+      className={projectsSectionStyles.element1}
       eyebrow={text.projects}
       sectionId="projects"
       subtitle={text.projectsSubtitle}
       title={text.projects}
     >
-      <div className="flex h-full no-scrollbar">
-        <List className="overflow-y-auto mt-2 md:mt-8 no-scrollbar w-full" divider>
+      <div className={projectsSectionStyles.element2}>
+        <List className={projectsSectionStyles.element3} divider>
           {projects.map((project) => (
-            <ListItem className="pl-0 md:pl-4 py-8" key={project.id}>
+            <ListItem className={projectsSectionStyles.element4} key={project.id}>
               <ProjectItem language={language} project={project} />
             </ListItem>
           ))}

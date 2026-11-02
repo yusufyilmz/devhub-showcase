@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { copy } from "@shared/config";
 
 import { Button } from "../button";
+import { homeButtonStyles } from "./styles";
 
 export const HomeButton = () => {
   const { replace } = useRouter();
@@ -12,7 +13,7 @@ export const HomeButton = () => {
   return (
     <Button
       aria-label="Go to home"
-      className="rounded-lg"
+      className={homeButtonStyles.element1}
       onClick={() => replace("/")}
       variant="outline"
     >

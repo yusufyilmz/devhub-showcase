@@ -1,5 +1,7 @@
 "use client";
 
+import "@shared/ui/portfolio-chat.css";
+
 import { useEffect, useId, useRef, useState } from "react";
 
 import { ChatPanel, type ChatPanelMessage } from "../assistant-chat/chat-panel";

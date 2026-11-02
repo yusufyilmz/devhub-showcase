@@ -1,6 +1,5 @@
 "use client";
 
-import type React from "react";
 import { useState } from "react";
 
 import { cn } from "cn";
@@ -9,6 +8,8 @@ import { Button } from "../../buttons/button/Button";
 import { Typography } from "../../display/typography/Typography";
 import { Badge } from "../../feedback/badge/Badge";
 import { Flex, FlexRow } from "../flex/Flex";
+import { colorSchemeClasses, sectionHeaderStyles } from "./styles";
+import type { SectionHeaderProps } from "./types";
 
 // Simple Chevron Down icon as SVG
 const ChevronDownIcon = () => (
@@ -26,66 +27,6 @@ const ChevronDownIcon = () => (
     <polyline points="6 9 12 15 18 9" />
   </svg>
 );
-
-export interface SectionHeaderProps {
-  /**
-   * Optional badge content (number or text)
-   */
-  badge?: string | number;
-  /**
-   * Additional className
-   */
-  className?: string;
-  /**
-   * Whether the section is collapsible
-   * @default false
-   */
-  collapsible?: boolean;
-  /**
-   * Color scheme for the header
-   * @default 'primary'
-   */
-  colorScheme?: "primary" | "secondary" | "success" | "warning" | "error" | "info";
-  /**
-   * Whether the section is expanded (only used if collapsible)
-   * @default true
-   */
-  defaultExpanded?: boolean;
-  /**
-   * Icon to display
-   */
-  icon: React.ReactNode;
-  /**
-   * Click handler for the entire header
-   */
-  onClick?: () => void;
-  /**
-   * Callback when expand state changes
-   */
-  onExpandChange?: (expanded: boolean) => void;
-  /**
-   * Optional subtitle
-   */
-  subtitle?: string;
-  /**
-   * Section title
-   */
-  title: string;
-  /**
-   * Visual variant
-   * @default 'standard'
-   */
-  variant?: "standard" | "card" | "minimal";
-}
-
-const colorSchemeClasses = {
-  error: "text-destructive bg-destructive/5 border-destructive/20",
-  info: "text-info bg-info/5 border-info/20",
-  primary: "text-primary bg-primary/5 border-primary/20",
-  secondary: "text-secondary bg-secondary/5 border-secondary/20",
-  success: "text-success bg-success/5 border-success/20",
-  warning: "text-warning bg-warning/5 border-warning/20",
-};
 
 export const SectionHeader = ({
   icon,
@@ -113,22 +54,30 @@ export const SectionHeader = ({
 
   const getContainerClasses = () => {
     const baseClasses = cn(
-      "flex items-center gap-3 transition-all",
-      (onClick || collapsible) && "cursor-pointer",
+      sectionHeaderStyles.baseClasses,
+      (onClick || collapsible) && sectionHeaderStyles.baseClasses2,
     );
 
     switch (variant) {
       case "card":
         return cn(
           baseClasses,
-          "p-4 rounded-lg border",
+          sectionHeaderStyles.getContainerClasses,
           colorSchemeClasses[colorScheme],
-          "hover:bg-opacity-80",
+          sectionHeaderStyles.getContainerClasses2,
         );
       case "minimal":
-        return cn(baseClasses, "py-2 px-0", "hover:opacity-80");
+        return cn(
+          baseClasses,
+          sectionHeaderStyles.getContainerClasses3,
+          sectionHeaderStyles.getContainerClasses4,
+        );
       default:
-        return cn(baseClasses, "p-4 pb-2 border-b border-border/40", "hover:bg-accent/50");
+        return cn(
+          baseClasses,
+          sectionHeaderStyles.getContainerClasses5,
+          sectionHeaderStyles.getContainerClasses6,
+        );
     }
   };
 
@@ -137,7 +86,7 @@ export const SectionHeader = ({
       {/* Icon */}
       <div
         className={cn(
-          "flex items-center justify-center",
+          sectionHeaderStyles.sectionHeader,
           colorSchemeClasses[colorScheme].split(" ")[0],
         )}
       >
@@ -145,13 +94,13 @@ export const SectionHeader = ({
       </div>
 
       {/* Content */}
-      <Flex className="flex-1" direction="column" gap="sm">
+      <Flex className={sectionHeaderStyles.element1} direction="column" gap="sm">
         <FlexRow align="center" gap="sm">
           <Typography
             className={cn(
-              "font-semibold text-sm tracking-wide",
-              variant === "standard" && "uppercase",
-              "transition-colors",
+              sectionHeaderStyles.sectionHeader2,
+              variant === "standard" && sectionHeaderStyles.sectionHeader3,
+              sectionHeaderStyles.sectionHeader4,
             )}
             variant="subtitle2"
           >
@@ -159,14 +108,17 @@ export const SectionHeader = ({
           </Typography>
 
           {badge && (
-            <Badge className={cn("text-xs", colorSchemeClasses[colorScheme])} variant="secondary">
+            <Badge
+              className={cn(sectionHeaderStyles.sectionHeader5, colorSchemeClasses[colorScheme])}
+              variant="secondary"
+            >
               {badge}
             </Badge>
           )}
         </FlexRow>
 
         {subtitle && (
-          <Typography className="text-muted-foreground" variant="caption">
+          <Typography className={sectionHeaderStyles.element2} variant="caption">
             {subtitle}
           </Typography>
         )}
@@ -175,7 +127,10 @@ export const SectionHeader = ({
       {/* Expand/Collapse Button */}
       {collapsible && (
         <Button
-          className={cn("shrink-0 transition-transform", expanded && "rotate-180")}
+          className={cn(
+            sectionHeaderStyles.sectionHeader6,
+            expanded && sectionHeaderStyles.sectionHeader7,
+          )}
           size="icon"
           variant="ghost"
         >
@@ -189,3 +144,5 @@ export const SectionHeader = ({
 SectionHeader.displayName = "SectionHeader";
 
 export default SectionHeader;
+
+export type { SectionHeaderProps } from "./types";

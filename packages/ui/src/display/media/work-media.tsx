@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+
+import { workMediaStyles } from "./styles";
+import type { WorkMediaOptions } from "./types";
 /** No platform request or player is created until the visitor asks to load it. */
 export function WorkMedia({
   title,
@@ -8,17 +11,11 @@ export function WorkMedia({
   youtubeId,
   loadLabel = "Load YouTube video",
   unloadLabel = "Unload video",
-}: {
-  title: string;
-  imageUrl?: string;
-  youtubeId?: string;
-  loadLabel?: string;
-  unloadLabel?: string;
-}) {
+}: WorkMediaOptions) {
   const [loaded, setLoaded] = useState(false);
   const video = youtubeId && /^[a-zA-Z0-9_-]{11}$/.test(youtubeId) ? youtubeId : null;
   return (
-    <div className="work-media">
+    <div className={workMediaStyles.element1}>
       {imageUrl && (/^https?:\/\//i.test(imageUrl) || /^\/(?!\/)/.test(imageUrl)) && (
         <img
           alt={title}

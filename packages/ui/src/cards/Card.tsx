@@ -1,66 +1,72 @@
+import "./card-effects.css";
+
 import type * as React from "react";
 
-import { Slot } from "@radix-ui/react-slot";
 import { cn } from "cn";
 
-type CardProps = React.ComponentProps<"div"> & {
-  asChild?: boolean;
-  surface?: "semantic" | "portfolio";
-  interaction?: "static" | "lift";
-  layout?: "stack" | "plain";
-};
+import { AppearanceCard } from "./AppearanceCard";
+import { CardBase } from "./CardBase";
+import { ContentCard } from "./ContentCard";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./HoverCard";
+import { RevealCard } from "./RevealCard";
+import { cardStyles } from "./styles";
+import type { CardProps } from "./types";
+import { VariantCard } from "./VariantCard";
 
-function Card({
-  className,
-  asChild = false,
-  surface = "semantic",
-  interaction = "lift",
-  layout = "stack",
-  ...props
-}: CardProps) {
-  const Comp = asChild ? Slot : "div";
-  return (
-    <Comp
-      className={cn(
-        "ui-card rounded-xl border bg-card text-card-foreground",
-        layout === "stack" && "flex flex-col gap-md py-md",
-        className,
-      )}
-      data-interaction={interaction}
-      data-slot="card"
-      data-surface={surface}
-      {...props}
-    />
-  );
+function Card(props: CardProps) {
+  switch (props.type) {
+    case "reveal": {
+      const { type: _type, ...options } = props;
+      return <RevealCard {...options} />;
+    }
+    case "variants": {
+      const { type: _type, ...options } = props;
+      return <VariantCard {...options} />;
+    }
+    case "content": {
+      const { type: _type, ...options } = props;
+      return <ContentCard {...options} />;
+    }
+    case "appearance": {
+      const { type: _type, ...options } = props;
+      return <AppearanceCard {...options} />;
+    }
+    case "hover": {
+      const { type: _type, trigger, contentProps, children, ...options } = props;
+      return (
+        <HoverCard {...options}>
+          {trigger ? (
+            <>
+              <HoverCardTrigger asChild>{trigger}</HoverCardTrigger>
+              <HoverCardContent {...contentProps}>{children}</HoverCardContent>
+            </>
+          ) : (
+            children
+          )}
+        </HoverCard>
+      );
+    }
+    default: {
+      const { type, ...options } = props;
+      return <CardBase {...options} data-card-type={type || undefined} />;
+    }
+  }
 }
 
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div
-      className={cn(
-        "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-xs px-md has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-md",
-        className,
-      )}
-      data-slot="card-header"
-      {...props}
-    />
+    <div className={cn(cardStyles.cardHeader, className)} data-slot="card-header" {...props} />
   );
 }
 
 function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      className={cn("text-base font-semibold leading-none", className)}
-      data-slot="card-title"
-      {...props}
-    />
-  );
+  return <div className={cn(cardStyles.cardTitle, className)} data-slot="card-title" {...props} />;
 }
 
 function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn("text-muted-foreground text-sm", className)}
+      className={cn(cardStyles.cardDescription, className)}
       data-slot="card-description"
       {...props}
     />
@@ -69,26 +75,21 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
 
 function CardAction({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div
-      className={cn("col-start-2 row-span-2 row-start-1 self-start justify-self-end", className)}
-      data-slot="card-action"
-      {...props}
-    />
+    <div className={cn(cardStyles.cardAction, className)} data-slot="card-action" {...props} />
   );
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<"div">) {
-  return <div className={cn("px-md", className)} data-slot="card-content" {...props} />;
+  return (
+    <div className={cn(cardStyles.cardContent, className)} data-slot="card-content" {...props} />
+  );
 }
 
 function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div
-      className={cn("flex items-center px-md [.border-t]:pt-md", className)}
-      data-slot="card-footer"
-      {...props}
-    />
+    <div className={cn(cardStyles.cardFooter, className)} data-slot="card-footer" {...props} />
   );
 }
 
+export type { CardProps } from "./types";
 export { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle };

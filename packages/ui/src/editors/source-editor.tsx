@@ -1,20 +1,12 @@
 "use client";
 
-import {
-  type AuthorableSectionType,
-  authorableSections,
-  type SectionSourceField,
-} from "@shared/config";
+import { authorableSections, type SectionSourceField } from "@shared/config";
 
 import { SelectField } from "../forms";
-import type { SectionEditorProps } from "../sections/types";
+import { sourceEditorStyles } from "./styles";
+import type { SourceEditorOptions } from "./types";
 
-export function SourceEditor({
-  section,
-  type,
-  onChange,
-  sourceItems,
-}: SectionEditorProps & { type: AuthorableSectionType }) {
+export function SourceEditor({ section, type, onChange, sourceItems }: SourceEditorOptions) {
   const fields: readonly string[] = authorableSections[type].sources;
   if (!fields.length) return null;
   const source = section.source;
@@ -58,7 +50,7 @@ export function SourceEditor({
             All current and future items
           </label>
           {choices.map((item) => (
-            <label className="section-source-choice" key={item.id}>
+            <label className={sourceEditorStyles.element1} key={item.id}>
               <input
                 checked={source.itemIds?.includes(item.id) ?? true}
                 onChange={(event) => {

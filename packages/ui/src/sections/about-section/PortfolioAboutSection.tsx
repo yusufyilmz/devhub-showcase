@@ -9,6 +9,7 @@ import { InfoIcon } from "../../display/icons";
 import { List, ListItem } from "../../display/list";
 import { Typography } from "../../display/typography";
 import { Popover, PopoverContent, PopoverTrigger } from "../../overlays/popover";
+import { portfolioAboutSectionStyles } from "./styles";
 
 export const PortfolioAboutSection = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -25,26 +26,26 @@ export const PortfolioAboutSection = () => {
   const id = open ? "about-popover" : undefined;
 
   return (
-    <div className="-mt-1">
+    <div className={portfolioAboutSectionStyles.element1}>
       <Popover open={open}>
         <PopoverTrigger asChild>
           <IconButton
             aria-haspopup="true"
             aria-label="About project"
-            className="icon-button"
+            className={portfolioAboutSectionStyles.element2}
             onMouseEnter={handlePopoverOpen}
             onMouseLeave={handlePopoverClose}
           >
             <InfoIcon />
           </IconButton>
         </PopoverTrigger>
-        <PopoverContent className="pointer-events-none w-auto max-w-[500px]" id={id} side="bottom">
-          <section className="max-w-[500px] p-8" id="about-development">
+        <PopoverContent className={portfolioAboutSectionStyles.element3} id={id} side="bottom">
+          <section className={portfolioAboutSectionStyles.element4} id="about-development">
             <Typography variant="h5">{copy.aboutSection.title}</Typography>
             <Typography variant="body1">{copy.aboutSection.description}</Typography>
-            <List className="p-1 border-none shadow-none">
+            <List className={portfolioAboutSectionStyles.element5}>
               {copy.aboutSection.technologies.map((tech) => (
-                <ListItem className="p-0 m-0" key={tech.name}>
+                <ListItem className={portfolioAboutSectionStyles.element6} key={tech.name}>
                   <Typography variant="body2">
                     <strong>{tech.name}:</strong> {tech.details}
                   </Typography>

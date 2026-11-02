@@ -203,6 +203,17 @@ Styles and tokens live in `packages/ui/src/styles`. Components in `packages/ui` 
 
 ## Stylesheet architecture
 
+Component styles are now colocated: portfolio skins in
+`packages/ui/src/portfolio/portfolio.css`, section skins in
+`packages/ui/src/sections/sections.css`, navigation in
+`packages/ui/src/navigation/chrome.css`, chat in `packages/ui/src/display/chat`,
+examples in `packages/ui/src/sections/home-section`, and login in
+`packages/ui/src/forms/login-form`. The older directory map below describes the
+original organization; these colocated paths take precedence. Components import
+their own styles; global bundles no longer import component skins. Public CSS
+forwarding imports remain available. Themes, tokens, layout CSS,
+and resets remain centralized. Shared surface rules load from cards and controls.
+
 Two stacks share one component library. **Foundation** is the token + Tailwind layer (`data-brand`, `data-theme`, appearance). **Portfolio** is the RGB palette model for published pages (`data-portfolio-theme`, section frames, site chrome). Storybook and token-only hosts load foundation only so toolbar brands are not overridden by portfolio remaps.
 
 ### Entry points
@@ -484,7 +495,7 @@ Example gallery previews are rendered portfolio content, not lazy iframes.
 
 Use `@shared/ui/card`, `@shared/ui/button`, `@shared/ui/input` and
 `@shared/ui/textarea` in product compositions. Elevation and focus styling live in
-`packages/ui/src/styles/foundation/surfaces.css`, imported by `foundation.css`.
+`packages/ui/src/cards/surfaces.css`, imported by cards, buttons, inputs and textareas.
 Cards use `interaction="lift"` by default for shared depth, an accent edge and
 hover feedback. Use `interaction="static"` for a preview frame or nested surface
 that should stay still. Lift is limited to fine hover pointers, with matching

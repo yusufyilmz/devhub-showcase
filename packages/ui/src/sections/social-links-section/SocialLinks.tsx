@@ -1,13 +1,15 @@
-import { profile as fallback, getPortfolioCopy, type PortfolioProfile } from "@shared/config";
+import { profile as fallback, getPortfolioCopy } from "@shared/config";
 
 import { IconButtonWithLink } from "../../buttons/icon-button";
 import { EmailIcon, GitHubIcon, LinkedInIcon, PhoneIcon } from "../../display/icons";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../overlays/tooltip";
+import { socialLinksStyles } from "./styles";
+import type { SocialLinksOptions } from "./types";
 
-export const SocialLinks = ({ profile = fallback }: { profile?: PortfolioProfile }) => {
+export const SocialLinks = ({ profile = fallback }: SocialLinksOptions) => {
   const text = getPortfolioCopy(profile.portfolioLanguage);
   return (
-    <div className="flex justify-center gap-4 mt-4">
+    <div className={socialLinksStyles.element1}>
       {profile.linkedin && (
         <Tooltip>
           <TooltipTrigger asChild>

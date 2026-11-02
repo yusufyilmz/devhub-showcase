@@ -1,20 +1,23 @@
 "use client";
 
-import { type ReactNode, useState } from "react";
+import { useState } from "react";
 
 import { Button } from "../../buttons/button";
 import { Card } from "../../cards";
+import { libraryPickerStyles } from "./styles";
+import type { LibraryPickerOptions } from "./types";
 
-export function LibraryPicker({
-  items,
-}: {
-  items: { id: string; title: string; description: string; content: ReactNode }[];
-}) {
+export function LibraryPicker({ items }: LibraryPickerOptions) {
   const [selected, setSelected] = useState(items[0]?.id);
   return (
-    <Card className="home-library-demo" interaction="static" layout="plain" surface="portfolio">
-      <fieldset className="home-library-buttons">
-        <legend className="sr-only">Section examples</legend>
+    <Card
+      className={libraryPickerStyles.element1}
+      interaction="static"
+      layout="plain"
+      surface="portfolio"
+    >
+      <fieldset className={libraryPickerStyles.element2}>
+        <legend className={libraryPickerStyles.element3}>Section examples</legend>
         {items.map((item, index) => (
           <Button
             aria-controls={`home-section-${item.id}`}
@@ -25,7 +28,7 @@ export function LibraryPicker({
             type="button"
             variant="ghost"
           >
-            <span className="home-library-number">0{index + 1}</span>
+            <span className={libraryPickerStyles.element4}>0{index + 1}</span>
             <span>
               <strong>{item.title}</strong>
               <small>{item.description}</small>
@@ -37,12 +40,12 @@ export function LibraryPicker({
       {items.map((item) => (
         <section
           aria-label={`${item.title} section example`}
-          className="home-library-preview"
+          className={libraryPickerStyles.element5}
           hidden={selected !== item.id}
           id={`home-section-${item.id}`}
           key={item.id}
         >
-          <div className="home-library-preview-bar">
+          <div className={libraryPickerStyles.element6}>
             <span>
               <i />
               <i />
@@ -50,10 +53,10 @@ export function LibraryPicker({
             </span>
             <span>LIVE SECTION PREVIEW</span>
           </div>
-          <div className="home-library-preview-content">{item.content}</div>
+          <div className={libraryPickerStyles.element7}>{item.content}</div>
         </section>
       ))}
-      <p className="home-sample-note">
+      <p className={libraryPickerStyles.element8}>
         Fictional content. These are the same section renderers used in portfolios.
       </p>
     </Card>

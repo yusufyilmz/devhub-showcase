@@ -1,8 +1,8 @@
-import "../../styles/portfolio/sections.css";
+import "../../sections/sections.css";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { SectionCarousel } from "./SectionElements";
+import { SectionCarousel } from "./SectionCarousel";
 
 const items = [
   {
@@ -27,7 +27,7 @@ export const LongTitles: Story = {
   args: {
     items: items.map((item) => ({
       ...item,
-      title: item.title + " with a longer title to check wrapping on small screens",
+      title: `${item.title} with a longer title to check wrapping on small screens`,
     })),
   },
 };

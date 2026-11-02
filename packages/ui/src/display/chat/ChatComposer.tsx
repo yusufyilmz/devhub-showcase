@@ -1,11 +1,15 @@
 "use client";
 
+import "./studio-chat.css";
+
 import { useId } from "react";
 
 import { ArrowUp, Square } from "lucide-react";
 
 import { Button } from "../../buttons/button";
 import { Textarea } from "../../forms/textarea";
+import { chatComposerStyles } from "./styles";
+import type { ChatComposerOptions } from "./types";
 
 export function ChatComposer({
   value,
@@ -15,25 +19,17 @@ export function ChatComposer({
   disabled = false,
   onStop,
   placeholder = "Ask Studio to help with your portfolio…",
-}: {
-  value: string;
-  onChange: (value: string) => void;
-  onSubmit: () => void;
-  busy?: boolean;
-  disabled?: boolean;
-  onStop?: () => void;
-  placeholder?: string;
-}) {
+}: ChatComposerOptions) {
   const id = useId();
   return (
     <form
-      className="studio-chat-composer"
+      className={chatComposerStyles.element1}
       onSubmit={(event) => {
         event.preventDefault();
         if (!busy && !disabled && value.trim()) onSubmit();
       }}
     >
-      <label className="sr-only" htmlFor={id}>
+      <label className={chatComposerStyles.element2} htmlFor={id}>
         Your message
       </label>
       <Textarea
@@ -53,7 +49,7 @@ export function ChatComposer({
       />
       <Button
         aria-label={busy ? "Stop generating" : "Send message"}
-        className="studio-chat-send"
+        className={chatComposerStyles.element3}
         disabled={busy ? !onStop : disabled || !value.trim()}
         onClick={busy ? onStop : undefined}
         type={busy ? "button" : "submit"}

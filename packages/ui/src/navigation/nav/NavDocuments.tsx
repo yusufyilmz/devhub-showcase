@@ -1,6 +1,6 @@
 "use client";
 
-import { type Icon, IconDots, IconFolder, IconShare3, IconTrash } from "@tabler/icons-react";
+import { IconDots, IconFolder, IconShare3, IconTrash } from "@tabler/icons-react";
 
 import {
   DropdownMenu,
@@ -18,20 +18,14 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "../sidebar/Sidebar";
+import { navDocumentsStyles } from "./styles";
+import type { NavDocumentsOptions } from "./types";
 
-export function NavDocuments({
-  items,
-}: {
-  items: {
-    name: string;
-    url: string;
-    icon: Icon;
-  }[];
-}) {
+export function NavDocuments({ items }: NavDocumentsOptions) {
   const { isMobile } = useSidebar();
 
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+    <SidebarGroup className={navDocumentsStyles.element1}>
       <SidebarGroupLabel>Documents</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
@@ -44,14 +38,14 @@ export function NavDocuments({
             </SidebarMenuButton>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuAction className="data-[state=open]:bg-accent rounded-sm" showOnHover>
+                <SidebarMenuAction className={navDocumentsStyles.element2} showOnHover>
                   <IconDots />
-                  <span className="sr-only">More</span>
+                  <span className={navDocumentsStyles.element3}>More</span>
                 </SidebarMenuAction>
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 align={isMobile ? "end" : "start"}
-                className="w-24 rounded-lg"
+                className={navDocumentsStyles.element4}
                 side={isMobile ? "bottom" : "right"}
               >
                 <DropdownMenuItem>
@@ -72,8 +66,8 @@ export function NavDocuments({
           </SidebarMenuItem>
         ))}
         <SidebarMenuItem>
-          <SidebarMenuButton className="text-sidebar-foreground/70">
-            <IconDots className="text-sidebar-foreground/70" />
+          <SidebarMenuButton className={navDocumentsStyles.element5}>
+            <IconDots className={navDocumentsStyles.element6} />
             <span>More</span>
           </SidebarMenuButton>
         </SidebarMenuItem>

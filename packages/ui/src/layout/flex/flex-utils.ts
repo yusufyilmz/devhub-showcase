@@ -1,33 +1,22 @@
 /** biome-ignore-all lint/complexity/noExcessiveCognitiveComplexity: scripts */
 
+import type {
+  FlexAxisAlignment,
+  FlexDirection,
+  FlexSpacingInput,
+  LayoutSizeToken,
+  SpacingToken,
+} from "./types";
+
+export type {
+  FlexAxisAlignment,
+  FlexDirection,
+  FlexSpacingInput,
+  LayoutSizeToken,
+  SpacingToken,
+} from "./types";
+
 import type { CSSProperties } from "react";
-
-export type FlexDirection = "row" | "column" | "row-reverse" | "column-reverse";
-
-export type SpacingToken =
-  | "none"
-  | "xs"
-  | "sm"
-  | "md"
-  | "lg"
-  | "xl"
-  | "2xl"
-  | "3xl"
-  | "4xl"
-  | "5xl";
-
-export type FlexAxisAlignment =
-  | "start"
-  | "center"
-  | "end"
-  | "between"
-  | "around"
-  | "evenly"
-  | "stretch"
-  | "baseline"
-  | "space-between"
-  | "space-around"
-  | "space-evenly";
 
 const spacingVar = (token: SpacingToken) =>
   token === "none" ? "0" : `var(--spacing-${token === "2xl" ? "2xl" : token})`;
@@ -207,8 +196,6 @@ function resolveHorizontalVertical(
   };
 }
 
-export type LayoutSizeToken = "full" | "fit" | "screen" | "auto" | "min" | "max";
-
 const widthLayoutClass: Record<LayoutSizeToken, string> = {
   auto: "w-auto",
   fit: "w-fit",
@@ -305,34 +292,6 @@ export function flexGapStyle(
   }
   return spacingVar(gap ?? "md");
 }
-
-export type FlexSpacingInput = {
-  padding?: SpacingToken;
-  paddingLeft?: SpacingToken;
-  paddingRight?: SpacingToken;
-  paddingTop?: SpacingToken;
-  paddingBottom?: SpacingToken;
-  paddingX?: SpacingToken;
-  paddingY?: SpacingToken;
-  margin?: SpacingToken;
-  marginLeft?: SpacingToken;
-  marginRight?: SpacingToken;
-  marginTop?: SpacingToken;
-  marginBottom?: SpacingToken;
-  marginX?: SpacingToken;
-  marginY?: SpacingToken;
-  m?: SpacingToken;
-  mt?: SpacingToken;
-  mb?: SpacingToken;
-  ml?: SpacingToken;
-  mr?: SpacingToken;
-  mx?: SpacingToken;
-  my?: SpacingToken;
-  top?: SpacingToken;
-  right?: SpacingToken;
-  bottom?: SpacingToken;
-  left?: SpacingToken;
-};
 
 function spacingCSSValue(token: SpacingToken | undefined): string | undefined {
   if (!token) {

@@ -6,6 +6,7 @@ import type { FC } from "react";
 import { Button } from "../../buttons/button";
 import { Typography } from "../../display/typography";
 import { Flex } from "../../layout/flex";
+import { errorPageStyles } from "./styles";
 
 export const ErrorPage: FC = () => {
   const router = useRouter();
@@ -15,8 +16,8 @@ export const ErrorPage: FC = () => {
   };
 
   return (
-    <Flex className="text-center" mt="lg">
-      <Typography className="text-destructive" variant="h2">
+    <Flex className={errorPageStyles.element1} mt="lg">
+      <Typography className={errorPageStyles.element2} variant="h2">
         Oops! Something went wrong.
       </Typography>
       <Typography variant="body1">

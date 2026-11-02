@@ -6,8 +6,10 @@ import { useCallback, useState } from "react";
 import { NotificationContext, type NotificationType } from "@shared/runtime/notifications";
 
 import { Alert, AlertDescription } from "../feedback/alert";
+import { notificationProviderStyles } from "./styles";
+import type { NotificationProviderProps } from "./types";
 
-export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const NotificationProvider: React.FC<NotificationProviderProps> = ({ children }) => {
   const [notification, setNotification] = useState({
     message: "",
     open: false,
@@ -48,11 +50,15 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
       {children}
       {notification.open && (
         <Alert
-          className="fixed bottom-4 left-1/2 max-w-xs -translate-x-1/2 shadow-lg"
+          className={notificationProviderStyles.element1}
           variant={notification.severity === "error" ? "destructive" : "default"}
         >
           <AlertDescription>{notification.message}</AlertDescription>
-          <button className="col-start-2 text-sm" onClick={handleClose} type="button">
+          <button
+            className={notificationProviderStyles.element2}
+            onClick={handleClose}
+            type="button"
+          >
             Close
           </button>
         </Alert>

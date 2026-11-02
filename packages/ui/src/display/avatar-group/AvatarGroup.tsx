@@ -1,15 +1,14 @@
 /** Adapted from Once UI (MIT). Copyright (c) 2024-2025 Once UI. */
-import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
 
-export function AvatarGroup({
-  avatars,
-}: {
-  avatars: { src?: string; alt?: string; value?: string }[];
-}) {
+import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
+import { avatarGroupStyles } from "./styles";
+import type { AvatarGroupOptions } from "./types";
+
+export function AvatarGroup({ avatars }: AvatarGroupOptions) {
   return (
-    <div className="flex -space-x-2">
+    <div className={avatarGroupStyles.element1}>
       {avatars.map((avatar) => (
-        <Avatar className="ring-2 ring-background" key={avatar.src ?? avatar.value}>
+        <Avatar className={avatarGroupStyles.element2} key={avatar.src ?? avatar.value}>
           {avatar.src ? <AvatarImage alt={avatar.alt ?? ""} src={avatar.src} /> : null}
           <AvatarFallback>{avatar.value ?? avatar.alt?.slice(0, 1)}</AvatarFallback>
         </Avatar>

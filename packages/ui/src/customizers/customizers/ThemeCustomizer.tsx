@@ -11,21 +11,16 @@ import { Alert } from "../../feedback/alert";
 import { Input } from "../../forms/input";
 import { TextField } from "../../forms/text-field";
 import { FlexBetween, FlexCol, FlexRow } from "../../layout/flex";
-
-export type ThemeOption = "light" | "dark" | "system";
-
-export type BrandOption = "white" | "sand" | "aqua";
-
-export type ShadowOption = "none" | "soft" | "medium" | "strong";
-
-export type SpacingOption = "compact" | "comfortable" | "relaxed" | "spacious";
-
-export type ScaleOption = "90" | "95" | "100" | "105" | "110";
-
-type SelectOption = {
-  value: string;
-  label: string;
-};
+import { themeCustomizerStyles } from "./styles";
+import type {
+  BrandOption,
+  SelectOption,
+  ShadowOption,
+  SpacingOption,
+  ThemeCustomizerOptions,
+  ThemeCustomizerProps,
+  ThemeOption,
+} from "./types";
 
 export const themeOptions: SelectOption[] = [
   { label: "Light", value: "light" },
@@ -83,38 +78,14 @@ export const scaleOptions: SelectOption[] = [
   { label: "110% (Extra Large)", value: "110" },
 ];
 
-export interface ThemeCustomizerProps {
-  className?: string;
-  onBorderChange?: (border: string) => void;
-  onBrandChange?: (brand: BrandOption) => void;
-  onRadiusChange?: (radius: string) => void;
-  onShadowChange?: (shadow: ShadowOption) => void;
-  onSpacingChange?: (spacing: SpacingOption) => void;
-  onThemeChange?: (theme: ThemeOption) => void;
-  onTransitionChange?: (transition: string) => void;
-  showCode?: boolean;
-  showPreview?: boolean;
-  showReset?: boolean;
-}
-
-const SelectField = ({
-  label,
-  value,
-  options,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  options: SelectOption[];
-  onChange: (value: string) => void;
-}) => (
-  <div className="space-y-2">
-    <label className="text-sm font-medium text-foreground">
+const SelectField = ({ label, value, options, onChange }: ThemeCustomizerOptions) => (
+  <div className={themeCustomizerStyles.element1}>
+    <label className={themeCustomizerStyles.element2}>
       <input type="hidden" value={value} />
       {label}
     </label>
     <select
-      className="w-full px-3 py-2 border border-[var(--border)] rounded-md bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+      className={themeCustomizerStyles.element3}
       onChange={(e) => onChange(e.target.value)}
       value={value}
     >
@@ -265,14 +236,14 @@ Object.entries(themeConfig).forEach(([key, value]) => {
   };
 
   return (
-    <div className={cn("w-full max-w-6xl mx-auto p-lg space-y-8", className)} {...props}>
+    <div className={cn(themeCustomizerStyles.themeCustomizer, className)} {...props}>
       {/* Header */}
       <FlexBetween>
         <div>
-          <Typography className="font-bold mb-2" variant="h2">
+          <Typography className={themeCustomizerStyles.element4} variant="h2">
             Theme Customizer
           </Typography>
-          <Typography className="text-[var(--muted-foreground)]" variant="body1">
+          <Typography className={themeCustomizerStyles.element5} variant="body1">
             Customize your design system's appearance and behavior
           </Typography>
         </div>
@@ -292,7 +263,7 @@ Object.entries(themeConfig).forEach(([key, value]) => {
 
       <FlexRow align="start" gap="lg">
         {/* Controls */}
-        <FlexCol className="flex-1" gap="lg">
+        <FlexCol className={themeCustomizerStyles.element6} gap="lg">
           {/* Theme & Brand */}
           <Card>
             <CardHeader>
@@ -301,7 +272,7 @@ Object.entries(themeConfig).forEach(([key, value]) => {
             </CardHeader>
             <CardContent>
               <FlexRow gap="md">
-                <div className="flex-1">
+                <div className={themeCustomizerStyles.element7}>
                   <SelectField
                     label="Theme"
                     onChange={(value) => handleThemeChange(value as ThemeOption)}
@@ -309,7 +280,7 @@ Object.entries(themeConfig).forEach(([key, value]) => {
                     value={theme}
                   />
                 </div>
-                <div className="flex-1">
+                <div className={themeCustomizerStyles.element8}>
                   <SelectField
                     label="Brand Color"
                     onChange={(value) => handleBrandChange(value as BrandOption)}
@@ -329,7 +300,7 @@ Object.entries(themeConfig).forEach(([key, value]) => {
             </CardHeader>
             <CardContent>
               <FlexRow gap="md">
-                <div className="flex-1">
+                <div className={themeCustomizerStyles.element9}>
                   <SelectField
                     label="Border Style"
                     onChange={handleBorderChange}
@@ -337,7 +308,7 @@ Object.entries(themeConfig).forEach(([key, value]) => {
                     value={border}
                   />
                 </div>
-                <div className="flex-1">
+                <div className={themeCustomizerStyles.element10}>
                   <SelectField
                     label="Shadow Style"
                     onChange={(value) => handleShadowChange(value as ShadowOption)}
@@ -346,8 +317,8 @@ Object.entries(themeConfig).forEach(([key, value]) => {
                   />
                 </div>
               </FlexRow>
-              <FlexRow className="mt-4" gap="md">
-                <div className="flex-1">
+              <FlexRow className={themeCustomizerStyles.element11} gap="md">
+                <div className={themeCustomizerStyles.element12}>
                   <SelectField
                     label="Spacing"
                     onChange={(value) => handleSpacingChange(value as SpacingOption)}
@@ -355,7 +326,7 @@ Object.entries(themeConfig).forEach(([key, value]) => {
                     value={spacing}
                   />
                 </div>
-                <div className="flex-1">
+                <div className={themeCustomizerStyles.element13}>
                   <SelectField
                     label="Border Radius"
                     onChange={(value) => handleRadiusChange(value)}
@@ -394,7 +365,7 @@ Object.entries(themeConfig).forEach(([key, value]) => {
                 <FlexCol gap="md">
                   {/* Buttons */}
                   <div>
-                    <Typography className="mb-2" variant="h6">
+                    <Typography className={themeCustomizerStyles.element14} variant="h6">
                       Buttons
                     </Typography>
                     <FlexRow gap="sm">
@@ -408,19 +379,19 @@ Object.entries(themeConfig).forEach(([key, value]) => {
 
                   {/* Cards */}
                   <div>
-                    <Typography className="mb-2" variant="h6">
+                    <Typography className={themeCustomizerStyles.element15} variant="h6">
                       Cards
                     </Typography>
                     <FlexRow gap="md">
-                      <Card className="p-4">
+                      <Card className={themeCustomizerStyles.element16}>
                         <Typography variant="h6">Card Title</Typography>
-                        <Typography className="text-[var(--muted-foreground)]" variant="body2">
+                        <Typography className={themeCustomizerStyles.element17} variant="body2">
                           This is a sample card with your theme applied.
                         </Typography>
                       </Card>
-                      <Card className="p-4 shadow-lg">
+                      <Card className={themeCustomizerStyles.element18}>
                         <Typography variant="h6">Elevated Card</Typography>
-                        <Typography className="text-[var(--muted-foreground)]" variant="body2">
+                        <Typography className={themeCustomizerStyles.element19} variant="body2">
                           This card has enhanced shadows.
                         </Typography>
                       </Card>
@@ -429,13 +400,13 @@ Object.entries(themeConfig).forEach(([key, value]) => {
 
                   {/* Form Elements */}
                   <div>
-                    <Typography className="mb-2" variant="h6">
+                    <Typography className={themeCustomizerStyles.element20} variant="h6">
                       Form Elements
                     </Typography>
-                    <FlexCol className="max-w-md" gap="sm">
+                    <FlexCol className={themeCustomizerStyles.element21} gap="sm">
                       <Input placeholder="Enter your name..." />
                       <TextField placeholder="Enter a message..." />
-                      <Button className="w-fit" variant="outline">
+                      <Button className={themeCustomizerStyles.element22} variant="outline">
                         Submit
                       </Button>
                     </FlexCol>
@@ -443,7 +414,7 @@ Object.entries(themeConfig).forEach(([key, value]) => {
 
                   {/* Alerts */}
                   <div>
-                    <Typography className="mb-2" variant="h6">
+                    <Typography className={themeCustomizerStyles.element23} variant="h6">
                       Alerts
                     </Typography>
                     <FlexCol gap="sm">
@@ -463,17 +434,17 @@ Object.entries(themeConfig).forEach(([key, value]) => {
 
         {/* Code Panel */}
         {showCodePanel && (
-          <Card className="w-96">
+          <Card className={themeCustomizerStyles.element24}>
             <CardHeader>
               <CardTitle>Generated Code</CardTitle>
               <CardDescription>Copy this code to apply your theme</CardDescription>
             </CardHeader>
             <CardContent>
-              <pre className="bg-[var(--muted)] p-4 rounded-md overflow-x-auto text-sm">
+              <pre className={themeCustomizerStyles.element25}>
                 <code>{generateCode()}</code>
               </pre>
               <Button
-                className="w-full mt-4"
+                className={themeCustomizerStyles.element26}
                 onClick={() => navigator.clipboard.writeText(generateCode())}
                 size="sm"
                 variant="outline"
@@ -487,3 +458,12 @@ Object.entries(themeConfig).forEach(([key, value]) => {
     </div>
   );
 }
+
+export type {
+  BrandOption,
+  ScaleOption,
+  ShadowOption,
+  SpacingOption,
+  ThemeCustomizerProps,
+  ThemeOption,
+} from "./types";

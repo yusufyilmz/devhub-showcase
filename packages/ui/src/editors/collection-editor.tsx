@@ -1,10 +1,10 @@
 "use client";
 
-import type { ReactNode } from "react";
-
 import { Button } from "../buttons";
 import { Card } from "../cards";
 import { EmptyState } from "../forms";
+import { collectionEditorStyles } from "./styles";
+import type { CollectionEditorItem, CollectionEditorProps } from "./types";
 
 export function moveItem<T>(items: T[], from: number, to: number): T[] {
   if (from < 0 || from >= items.length || to < 0 || to >= items.length || from === to) return items;
@@ -14,7 +14,7 @@ export function moveItem<T>(items: T[], from: number, to: number): T[] {
   result.splice(to, 0, item);
   return result;
 }
-export function CollectionEditor<T extends { id: string }>({
+export function CollectionEditor<T extends CollectionEditorItem>({
   title,
   items,
   onChange,
@@ -23,25 +23,16 @@ export function CollectionEditor<T extends { id: string }>({
   getTitle,
   onRemove,
   maxItems,
-}: {
-  title: string;
-  items: T[];
-  onChange: (items: T[]) => void;
-  create: () => T;
-  render: (item: T, change: (item: T) => void) => ReactNode;
-  getTitle: (item: T) => string;
-  onRemove?: (item: T) => void;
-  maxItems?: number;
-}) {
+}: CollectionEditorProps<T>) {
   return (
-    <section className="editor-collection">
-      <div className="editor-section-heading">
+    <section className={collectionEditorStyles.element1}>
+      <div className={collectionEditorStyles.element2}>
         <div>
-          <p className="eyebrow">MAKE IT YOURS</p>
+          <p className={collectionEditorStyles.element3}>MAKE IT YOURS</p>
           <h2>{title}</h2>
         </div>
         <Button
-          className="studio-secondary"
+          className={collectionEditorStyles.element4}
           disabled={maxItems !== undefined && items.length >= maxItems}
           onClick={() => onChange([...items, create()])}
           type="button"
@@ -53,11 +44,11 @@ export function CollectionEditor<T extends { id: string }>({
       {items.length === 0 && <EmptyState>Nothing here yet. Add your first item above.</EmptyState>}
       {items.map((item, index) => (
         <Card asChild key={item.id} layout="plain" surface="portfolio">
-          <article className="editor-card">
+          <article className={collectionEditorStyles.element5}>
             <Card asChild layout="plain" surface="portfolio">
-              <div className="editor-card-heading">
+              <div className={collectionEditorStyles.element6}>
                 <h3>{getTitle(item) || "New item"}</h3>
-                <div className="editor-actions">
+                <div className={collectionEditorStyles.element7}>
                   <Button
                     aria-label={`Move ${getTitle(item)} up`}
                     disabled={index === 0}
@@ -75,7 +66,7 @@ export function CollectionEditor<T extends { id: string }>({
                     ↓
                   </Button>
                   <Button
-                    className="danger-button"
+                    className={collectionEditorStyles.element8}
                     onClick={() => {
                       if (
                         window.confirm(
@@ -93,7 +84,7 @@ export function CollectionEditor<T extends { id: string }>({
                 </div>
               </div>
             </Card>
-            <div className="editor-fields">
+            <div className={collectionEditorStyles.element9}>
               {render(item, (changed) =>
                 onChange(items.map((row) => (row.id === item.id ? changed : row))),
               )}

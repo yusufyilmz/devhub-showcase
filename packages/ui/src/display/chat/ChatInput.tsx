@@ -8,21 +8,8 @@ import { Button } from "../../buttons/button";
 import { TextField } from "../../forms/text-field";
 import { FlexCol, FlexRow } from "../../layout/flex";
 import { Typography } from "../typography";
-
-export interface ChatInputProps {
-  className?: string;
-  disabled?: boolean;
-  fullWidth?: boolean;
-  maxLength?: number;
-  onChange: (value: string) => void;
-  onClear?: () => void;
-  onKeyPress?: (e: React.KeyboardEvent) => void;
-  onSend: () => void;
-  placeholder?: string;
-  showCharacterCount?: boolean;
-  showClearButton?: boolean;
-  value: string;
-}
+import { chatInputStyles } from "./styles";
+import type { ChatInputProps } from "./types";
 
 export function ChatInput({
   value,
@@ -55,18 +42,14 @@ export function ChatInput({
 
   return (
     <div
-      className={cn(
-        "w-full p-[var(--spacing-lg)] bg-gradient-to-r from-[var(--background)] to-[var(--card)] backdrop-blur-xl shadow-[var(--shadow-sm)] relative overflow-hidden",
-        fullWidth && "w-full",
-        className,
-      )}
+      className={cn(chatInputStyles.chatInput, fullWidth && chatInputStyles.chatInput2, className)}
     >
       {/* Subtle background pattern */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary)]/5 to-transparent opacity-30" />
-      <FlexCol className="w-full relative z-10" gap="sm">
+      <div className={chatInputStyles.element1} />
+      <FlexCol className={chatInputStyles.element2} gap="sm">
         <FlexRow align="end" gap="sm">
           <TextField
-            className="resize-none min-h-[120px] rounded-[var(--radius-lg)] border-2 border-[var(--border)] focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all duration-300 bg-[var(--background)]/90 backdrop-blur-sm shadow-[var(--shadow-sm)]"
+            className={chatInputStyles.element3}
             disabled={disabled}
             fullWidth
             maxLength={maxLength}
@@ -76,12 +59,12 @@ export function ChatInput({
             value={value}
           />
           <Button
-            className="px-[var(--spacing-lg)] py-[var(--spacing-md)] rounded-[var(--radius-lg)] shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)] transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-[var(--primary)] to-[var(--primary)]/90 hover:from-[var(--primary)]/90 hover:to-[var(--primary)]/80"
+            className={chatInputStyles.element4}
             disabled={!canSend}
             onClick={onSend}
             size="lg"
           >
-            <Typography className="font-semibold text-[var(--primary-foreground)]" variant="body2">
+            <Typography className={chatInputStyles.element5} variant="body2">
               Send
             </Typography>
           </Button>
@@ -90,14 +73,14 @@ export function ChatInput({
         {value && (
           <FlexRow align="center" justify="between">
             {showCharacterCount && (
-              <Typography className="text-[var(--muted-foreground)]" variant="caption">
+              <Typography className={chatInputStyles.element6} variant="caption">
                 {value.length}/{maxLength}
               </Typography>
             )}
             {showClearButton && (
               <FlexRow gap="xs">
                 <Button
-                  className="text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                  className={chatInputStyles.element7}
                   onClick={handleClear}
                   size="sm"
                   variant="ghost"
@@ -112,3 +95,5 @@ export function ChatInput({
     </div>
   );
 }
+
+export type { ChatInputProps } from "./types";

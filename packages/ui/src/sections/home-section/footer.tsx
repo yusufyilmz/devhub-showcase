@@ -1,14 +1,15 @@
 import { Button } from "../../buttons/button";
 import { Brand } from "../../navigation/brand";
 import { Footer } from "../../navigation/footer/Footer";
-import type { PageAction } from "./action";
+import { footerStyles } from "./styles";
+import type { HomeFooterOptions } from "./types";
 
-export function HomeFooter({ action }: { action: PageAction }) {
+export function HomeFooter({ action }: HomeFooterOptions) {
   return (
     <Footer asChild>
-      <footer className="home-container home-footer">
+      <footer className={footerStyles.element1}>
         <Brand />
-        <p className="home-footer-copy">For the work you do. And the person behind it.</p>
+        <p className={footerStyles.element2}>For the work you do. And the person behind it.</p>
         <div>
           <Button
             href="https://github.com/yusufyilmz/devhub-showcase"

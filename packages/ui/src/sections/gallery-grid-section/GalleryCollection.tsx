@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 
-import type { CustomSection } from "@shared/config";
-
 import { Button } from "../../buttons/button";
 import { GalleryLightbox } from "../../overlays/dialog";
+import { galleryCollectionStyles } from "./styles";
+import type { GalleryCollectionOptions } from "./types";
 
-export function GalleryCollection({ section }: { section: CustomSection }) {
+export function GalleryCollection({ section }: GalleryCollectionOptions) {
   const [index, setIndex] = useState<number | null>(null);
   const items = section.items.filter(
     (item) => item.imageUrl && /^https?:\/\//i.test(item.imageUrl),
@@ -17,7 +17,7 @@ export function GalleryCollection({ section }: { section: CustomSection }) {
   );
   return (
     <>
-      <div className="gallery-lightbox-grid">
+      <div className={galleryCollectionStyles.element1}>
         {items.map((item, itemIndex) => (
           <Button
             aria-label={`View ${item.title}`}

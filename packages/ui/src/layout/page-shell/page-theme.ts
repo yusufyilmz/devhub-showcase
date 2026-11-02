@@ -1,13 +1,10 @@
+import type { PageAppearance } from "./types";
+
+export type { PageAppearance } from "./types";
+
 import type { CSSProperties } from "react";
 
-import {
-  getPortfolioThemeVariables,
-  getPreviewAccent,
-  type PortfolioProfile,
-  type PortfolioTheme,
-} from "@shared/config";
-
-export type PageAppearance = NonNullable<PortfolioProfile["appearance"]>;
+import { getPortfolioThemeVariables, getPreviewAccent, type PortfolioTheme } from "@shared/config";
 
 export function getPublicThemeStyle(
   theme: PortfolioTheme | undefined,

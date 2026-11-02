@@ -3,18 +3,14 @@
 import { useRouter } from "next/navigation";
 
 import { copy } from "@shared/config";
-import { ReviewState, type ReviewWithReferrals } from "@shared/lib/types";
+import { ReviewState } from "@shared/lib/types";
 import { useNotification } from "@shared/runtime/notifications";
 
 import { Button } from "../../buttons/button";
+import { reviewButtonStyles } from "./styles";
+import type { ReviewButtonOptions } from "./types";
 
-export const ReviewButton = ({
-  handleReview,
-  id,
-}: {
-  id: string;
-  handleReview: (id: string, status: ReviewState) => Promise<ReviewWithReferrals | undefined>;
-}) => {
+export const ReviewButton = ({ handleReview, id }: ReviewButtonOptions) => {
   const { showError, showInfo } = useNotification();
   const router = useRouter();
   const onReview = async (id: string, status: ReviewState): Promise<void> => {
@@ -44,10 +40,10 @@ export const ReviewButton = ({
   };
 
   return (
-    <div className="flex w-full gap-4">
+    <div className={reviewButtonStyles.element1}>
       <Button
         aria-label="Reject"
-        className="w-full"
+        className={reviewButtonStyles.element2}
         onClick={() => onReview(id, ReviewState.REJECTED)}
         variant="outline"
       >
@@ -55,7 +51,7 @@ export const ReviewButton = ({
       </Button>
       <Button
         aria-label="Approve"
-        className="w-full"
+        className={reviewButtonStyles.element3}
         onClick={() => onReview(id, ReviewState.APPROVED)}
         variant="outline"
       >

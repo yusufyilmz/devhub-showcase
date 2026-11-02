@@ -1,0 +1,25 @@
+export const drawerStyles = {
+  drawer: "fixed inset-0 z-40 bg-black/40",
+  drawer2:
+    "fixed z-50 border border-gray-200 bg-white shadow-xl dark:border-neutral-800 dark:bg-neutral-900",
+  drawerContent:
+    "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 flex flex-col gap-4 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+  drawerContent2:
+    "data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right inset-y-0 right-0 h-full w-3/4 border-l sm:max-w-sm",
+  drawerContent3:
+    "data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left inset-y-0 left-0 h-full w-3/4 border-r sm:max-w-sm",
+  drawerContent4:
+    "data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top inset-x-0 top-0 h-auto border-b",
+  drawerContent5:
+    "data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom inset-x-0 bottom-0 h-auto border-t",
+  drawerDescription: "text-muted-foreground text-sm",
+  drawerFooter: "mt-auto flex flex-col gap-2 p-4",
+  drawerHeader: "flex flex-col gap-1.5 p-4",
+  drawerOverlay:
+    "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
+  drawerTitle: "text-foreground font-semibold",
+  element1:
+    "ring-offset-background focus:ring-ring data-[state=open]:bg-secondary absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none",
+  element2: "size-4",
+  element3: "sr-only",
+} as const;

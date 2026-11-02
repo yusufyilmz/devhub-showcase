@@ -3,31 +3,12 @@
 import * as React from "react";
 
 import { cn } from "cn";
-import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react";
+import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { Button } from "../../buttons/button/Button";
-
-type CarouselApi = UseEmblaCarouselType[1];
-type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
-type CarouselOptions = UseCarouselParameters[0];
-type CarouselPlugin = UseCarouselParameters[1];
-
-type CarouselProps = {
-  opts?: CarouselOptions;
-  plugins?: CarouselPlugin;
-  orientation?: "horizontal" | "vertical";
-  setApi?: (api: CarouselApi) => void;
-};
-
-type CarouselContextProps = {
-  carouselRef: ReturnType<typeof useEmblaCarousel>[0];
-  api: ReturnType<typeof useEmblaCarousel>[1];
-  scrollPrev: () => void;
-  scrollNext: () => void;
-  canScrollPrev: boolean;
-  canScrollNext: boolean;
-} & CarouselProps;
+import { carouselStyles } from "./styles";
+import type { CarouselApi, CarouselContextProps, CarouselOptions2 } from "./types";
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
 
@@ -49,7 +30,7 @@ function Carousel({
   className,
   children,
   ...props
-}: React.ComponentProps<"section"> & CarouselProps) {
+}: CarouselOptions2) {
   const [carouselRef, api] = useEmblaCarousel(
     {
       ...opts,
@@ -118,7 +99,7 @@ function Carousel({
     >
       <section
         aria-label="carousel"
-        className={cn("relative", className)}
+        className={cn(carouselStyles.carousel, className)}
         data-slot="carousel"
         onKeyDownCapture={handleKeyDown}
         {...props}
@@ -133,9 +114,15 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   const { carouselRef, orientation } = useCarousel();
 
   return (
-    <div className="overflow-hidden" data-slot="carousel-content" ref={carouselRef}>
+    <div className={carouselStyles.element1} data-slot="carousel-content" ref={carouselRef}>
       <div
-        className={cn("flex", orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col", className)}
+        className={cn(
+          carouselStyles.carouselContent,
+          orientation === "horizontal"
+            ? carouselStyles.carouselContent2
+            : carouselStyles.carouselContent3,
+          className,
+        )}
         {...props}
       />
     </div>
@@ -148,8 +135,8 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "min-w-0 shrink-0 grow-0 basis-full",
-        orientation === "horizontal" ? "pl-4" : "pt-4",
+        carouselStyles.carouselItem,
+        orientation === "horizontal" ? carouselStyles.carouselItem2 : carouselStyles.carouselItem3,
         className,
       )}
       data-slot="carousel-item"
@@ -169,10 +156,10 @@ function CarouselPrevious({
   return (
     <Button
       className={cn(
-        "absolute size-8 rounded-full",
+        carouselStyles.carouselPrevious,
         orientation === "horizontal"
-          ? "top-1/2 -left-12 -translate-y-1/2"
-          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+          ? carouselStyles.carouselPrevious2
+          : carouselStyles.carouselPrevious3,
         className,
       )}
       data-slot="carousel-previous"
@@ -183,7 +170,7 @@ function CarouselPrevious({
       {...props}
     >
       <ArrowLeft />
-      <span className="sr-only">Previous slide</span>
+      <span className={carouselStyles.element2}>Previous slide</span>
     </Button>
   );
 }
@@ -199,10 +186,8 @@ function CarouselNext({
   return (
     <Button
       className={cn(
-        "absolute size-8 rounded-full",
-        orientation === "horizontal"
-          ? "top-1/2 -right-12 -translate-y-1/2"
-          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+        carouselStyles.carouselNext,
+        orientation === "horizontal" ? carouselStyles.carouselNext2 : carouselStyles.carouselNext3,
         className,
       )}
       data-slot="carousel-next"
@@ -213,7 +198,7 @@ function CarouselNext({
       {...props}
     >
       <ArrowRight />
-      <span className="sr-only">Next slide</span>
+      <span className={carouselStyles.element3}>Next slide</span>
     </Button>
   );
 }

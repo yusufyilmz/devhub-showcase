@@ -1,4 +1,3 @@
-import type React from "react";
 import type { ChangeEvent } from "react";
 
 import { cn } from "cn";
@@ -6,71 +5,13 @@ import { cn } from "cn";
 import { Typography } from "../../display/typography";
 import { FlexCol, FlexRow } from "../../layout/flex";
 import { Switch } from "./Switch";
-
-export interface StyledSwitchProps {
-  /**
-   * Whether the switch is checked
-   */
-  checked: boolean;
-  /**
-   * Additional className
-   */
-  className?: string;
-  /**
-   * Color scheme for the switch
-   * @default 'primary'
-   */
-  colorScheme?: "primary" | "secondary" | "success" | "warning" | "error";
-  /**
-   * Description text below the label
-   */
-  description?: string;
-  /**
-   * Whether the switch is disabled
-   */
-  disabled?: boolean;
-  /**
-   * Icon to display next to the label
-   */
-  icon?: React.ReactNode;
-  /**
-   * Main label text
-   */
-  label: string;
-  /**
-   * Change handler
-   */
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  /**
-   * Visual variant of the switch container
-   * @default 'standard'
-   */
-  variant?: "standard" | "card" | "minimal";
-}
-
-const colorSchemeClasses = {
-  error: "data-[state=checked]:bg-destructive",
-  primary: "data-[state=checked]:bg-primary",
-  secondary: "data-[state=checked]:bg-secondary",
-  success: "data-[state=checked]:bg-success",
-  warning: "data-[state=checked]:bg-warning",
-};
-
-const colorSchemeBgClasses = {
-  error: "bg-destructive/5 border-destructive/20",
-  primary: "bg-primary/5 border-primary/20",
-  secondary: "bg-secondary/5 border-secondary/20",
-  success: "bg-success/5 border-success/20",
-  warning: "bg-warning/5 border-warning/20",
-};
-
-const colorSchemeTextClasses = {
-  error: "text-destructive",
-  primary: "text-primary",
-  secondary: "text-secondary",
-  success: "text-success",
-  warning: "text-warning",
-};
+import {
+  colorSchemeBgClasses,
+  colorSchemeClasses,
+  colorSchemeTextClasses,
+  styledSwitchStyles,
+} from "./styles";
+import type { StyledSwitchProps } from "./types";
 
 export const StyledSwitch = ({
   icon,
@@ -87,17 +28,17 @@ export const StyledSwitch = ({
     switch (variant) {
       case "card":
         return cn(
-          "p-4 rounded-xl border transition-all",
+          styledSwitchStyles.getContainerClasses,
           checked
-            ? cn(colorSchemeBgClasses[colorScheme], "hover:bg-opacity-80")
-            : "bg-card border-border hover:border-border/80 hover:bg-accent/50",
+            ? cn(colorSchemeBgClasses[colorScheme], styledSwitchStyles.getContainerClasses3)
+            : styledSwitchStyles.getContainerClasses2,
         );
       case "minimal":
         return "py-2 px-0";
       default:
         return cn(
-          "p-3 rounded-lg transition-all",
-          checked ? colorSchemeBgClasses[colorScheme] : "hover:bg-accent/50",
+          styledSwitchStyles.getContainerClasses4,
+          checked ? colorSchemeBgClasses[colorScheme] : styledSwitchStyles.getContainerClasses5,
         );
     }
   };
@@ -129,13 +70,13 @@ export const StyledSwitch = ({
   return (
     <div className={cn(getContainerClasses(), className)}>
       <FlexRow align="start" gap="md" justify="between">
-        <FlexCol className="flex-1" gap="sm">
+        <FlexCol className={styledSwitchStyles.element1} gap="sm">
           <FlexRow align="center" gap="sm">
             {icon && (
               <div
                 className={cn(
-                  "flex items-center",
-                  checked ? colorSchemeTextClasses[colorScheme] : "text-muted-foreground",
+                  styledSwitchStyles.styledSwitch,
+                  checked ? colorSchemeTextClasses[colorScheme] : styledSwitchStyles.styledSwitch2,
                 )}
               >
                 {icon}
@@ -143,8 +84,8 @@ export const StyledSwitch = ({
             )}
             <Typography
               className={cn(
-                "font-semibold text-sm",
-                checked ? colorSchemeTextClasses[colorScheme] : "text-foreground",
+                styledSwitchStyles.styledSwitch3,
+                checked ? colorSchemeTextClasses[colorScheme] : styledSwitchStyles.styledSwitch4,
               )}
               variant="subtitle2"
             >
@@ -152,7 +93,7 @@ export const StyledSwitch = ({
             </Typography>
           </FlexRow>
           {description && (
-            <Typography className="text-muted-foreground leading-relaxed" variant="caption">
+            <Typography className={styledSwitchStyles.element2} variant="caption">
               {description}
             </Typography>
           )}
@@ -172,3 +113,5 @@ export const StyledSwitch = ({
 StyledSwitch.displayName = "StyledSwitch";
 
 export default StyledSwitch;
+
+export type { StyledSwitchProps } from "./types";

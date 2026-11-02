@@ -116,6 +116,12 @@ Tailwind and PostCSS use `catalog:`. Do not add a second CSS framework. A new st
 
 ## Imports and dependencies
 
+Keep component contracts in a colocated `types.ts` and reusable variants, class
+maps, and style helpers in `styles.ts`. Use type-only imports in type modules.
+Style modules must not import component implementations. Preserve existing public
+type and variant exports when extracting them. Components import their own CSS;
+tokens, themes, layouts, and global resets remain centralized.
+
 ```ts
 import { Button } from "@shared/ui/button";
 import { ThemeProvider } from "@shared/ui/theme";

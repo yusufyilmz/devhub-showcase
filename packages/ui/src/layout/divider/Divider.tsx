@@ -1,9 +1,8 @@
 import { cn } from "cn";
 
-interface DividerProps {
-  className?: string;
-}
+import { dividerStyles } from "./styles";
+import type { DividerProps } from "./types";
 
 export const Divider = ({ className }: DividerProps) => {
-  return <hr className={cn("my-[var(--spacing-lg)] border-t border-[var(--border)]", className)} />;
+  return <hr className={cn(dividerStyles.divider, className)} />;
 };

@@ -14,12 +14,12 @@ test("existing public chat uses a scoped greeting and session-only history", asy
   await expect(page.locator(".chat-panel")).toContainText("Which projects are public?");
   expect(
     await page.evaluate(() =>
-      Object.keys(sessionStorage).some((key) => key.startsWith("mydevstudio:chat:public:v1:main:")),
+      Object.keys(sessionStorage).some((key) => key.startsWith("my-dev-studio-chat-store:")),
     ),
   ).toBe(true);
   expect(
     await page.evaluate(() =>
-      Object.keys(localStorage).some((key) => key.startsWith("mydevstudio:chat:")),
+      Object.keys(localStorage).some((key) => key.startsWith("my-dev-studio-chat-store:")),
     ),
   ).toBe(false);
 });

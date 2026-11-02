@@ -1,16 +1,13 @@
 import { Card, RevealCardBase } from "../../cards";
 import { Section } from "../../layout/section";
+import { featuresStyles } from "./styles";
 
 export function HomeFeaturesSection() {
   return (
     <Section asChild>
-      <section
-        aria-labelledby="features-title"
-        className="home-container home-features"
-        id="features"
-      >
-        <div className="home-section-intro">
-          <p className="home-eyebrow">MORE THAN A DOCUMENT</p>
+      <section aria-labelledby="features-title" className={featuresStyles.element1} id="features">
+        <div className={featuresStyles.element2}>
+          <p className={featuresStyles.element3}>MORE THAN A DOCUMENT</p>
           <h2 id="features-title">
             A portfolio first.
             <br />
@@ -21,19 +18,19 @@ export function HomeFeaturesSection() {
             and keep everything connected.
           </p>
         </div>
-        <div className="home-feature-grid">
+        <div className={featuresStyles.element4}>
           <RevealCardBase
             brief="Share what you’ve built, what you’ve learned and where you want to go. Your projects and experience take center stage."
-            className="home-feature-card home-feature-main"
+            className={featuresStyles.element5}
             heading={
               <>
-                <span className="home-feature-index">01 / YOUR OWN CORNER</span>
+                <span className={featuresStyles.element6}>01 / YOUR OWN CORNER</span>
                 <h3>
                   A link that’s
                   <br />
                   yours to share.
                 </h3>
-                <div className="home-url-demo">
+                <div className={featuresStyles.element7}>
                   <span aria-hidden="true">↗</span>
                   <div>
                     <small>YOUR PERSONAL LINK</small>
@@ -50,7 +47,7 @@ export function HomeFeaturesSection() {
               Give each project its context, bring your experience together, and let visitors
               explore the details at their own pace.
             </p>
-            <ul className="home-feature-details">
+            <ul className={featuresStyles.element8}>
               <li>Your own shareable portfolio link</li>
               <li>Projects, experience and the story behind them</li>
               <li>A private draft until you choose to publish</li>
@@ -58,11 +55,11 @@ export function HomeFeaturesSection() {
           </RevealCardBase>
           <RevealCardBase
             brief="Choose Studio, Paper, Graphite or Bloom. Pair any layout with your favorite theme, accent and light or dark mode."
-            className="home-feature-card"
+            className={featuresStyles.element9}
             heading={
               <>
-                <span className="home-feature-index">02 / MAKE IT YOURS</span>
-                <div aria-hidden="true" className="home-style-demo">
+                <span className={featuresStyles.element10}>02 / MAKE IT YOURS</span>
+                <div aria-hidden="true" className={featuresStyles.element11}>
                   <span />
                   <span />
                   <span />
@@ -79,25 +76,25 @@ export function HomeFeaturesSection() {
               Find a starting point that feels right, then make the details your own. Your content
               stays with you when you change the look.
             </p>
-            <ul className="home-feature-details">
+            <ul className={featuresStyles.element12}>
               <li>Four themes, each with its own character</li>
               <li>Engineer, Designer, Consultant, Minimal, Trainer and Content creator layouts</li>
               <li>Separate portfolio and CV language settings</li>
             </ul>
           </RevealCardBase>
-          <Card className="home-feature-card home-feature-wide" layout="plain" surface="portfolio">
-            <div aria-hidden="true" className="home-file-icon">
+          <Card className={featuresStyles.element13} layout="plain" surface="portfolio">
+            <div aria-hidden="true" className={featuresStyles.element14}>
               <span>CV</span>↗
             </div>
             <div>
-              <span className="home-feature-index">03 / ALWAYS CONNECTED</span>
+              <span className={featuresStyles.element15}>03 / ALWAYS CONNECTED</span>
               <h3>One update. Both ready.</h3>
               <p>
                 Your CV comes from your saved portfolio details. Choose its Classic, Editorial or
                 Compact format and sections, then download a PDF when the opportunity comes.
               </p>
             </div>
-            <span className="home-file-tag">Portfolio + PDF</span>
+            <span className={featuresStyles.element16}>Portfolio + PDF</span>
           </Card>
         </div>
       </section>

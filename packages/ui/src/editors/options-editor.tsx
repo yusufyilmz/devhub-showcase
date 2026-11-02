@@ -1,23 +1,16 @@
-import {
-  type AuthorableSectionType,
-  authorableSections,
-  type SectionOptions,
-} from "@shared/config";
+import { authorableSections, type SectionOptions } from "@shared/config";
 
 import { Field, SelectField } from "../forms";
-import type { SectionEditorProps } from "../sections/types";
+import { optionsEditorStyles } from "./styles";
+import type { OptionsEditorOptions } from "./types";
 
-export function OptionsEditor({
-  section,
-  type,
-  onChange,
-}: SectionEditorProps & { type: AuthorableSectionType }) {
+export function OptionsEditor({ section, type, onChange }: OptionsEditorOptions) {
   const view = authorableSections[type].view;
   const options = section.options ?? {};
   const change = (patch: Partial<SectionOptions>) =>
     onChange({ ...section, options: { ...options, ...patch } });
   return (
-    <div className="editor-fields">
+    <div className={optionsEditorStyles.element1}>
       <Field
         label="Section description"
         multiline

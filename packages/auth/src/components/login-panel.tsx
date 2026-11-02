@@ -1,5 +1,7 @@
 "use client";
 
+import "@shared/ui/auth-login.css";
+
 import { type ReactNode, useState } from "react";
 
 export function LoginPanel({

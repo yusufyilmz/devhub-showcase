@@ -2,18 +2,20 @@
 
 import { useId } from "react";
 
-import { getPortfolioCopy, type Language } from "@shared/config";
+import { getPortfolioCopy } from "@shared/config";
 
 import { Button } from "../../buttons/button";
 import { Input } from "../input";
 import { Textarea } from "../textarea";
+import { contactFormStyles } from "./styles";
+import type { ContactFormOptions } from "./types";
 
-export function ContactForm({ email, language }: { email: string; language?: Language }) {
+export function ContactForm({ email, language }: ContactFormOptions) {
   const text = getPortfolioCopy(language);
   const id = useId();
   return (
     <form
-      className="section-contact-form"
+      className={contactFormStyles.element1}
       onSubmit={(event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);

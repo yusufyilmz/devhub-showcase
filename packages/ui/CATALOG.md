@@ -1,5 +1,28 @@
 # UI catalog
 
+Component contracts live in colocated types.ts files. Reusable variants, class
+maps and style helpers live in styles.ts; components import them directly.
+Existing component entry points continue to re-export their public types and
+variants. Type modules use type-only imports, and style modules do not import
+component implementations. Card variants share BaseCardProps and compose
+CardBase rather than importing the Card dispatcher.
+
+Card accepts a discriminated type prop: omitted or empty preserves the base
+surface; reveal, variants, hover, content and appearance use the existing
+specialized components and their props. Tilt and animated use the base surface
+with reduced-motion-aware effects. Reveal requires title and heading; content
+requires title. Hover accepts a trigger element or explicit HoverCardTrigger /
+HoverCardContent children. CardProps is exported from @shared/ui/cards.
+
+Component styles live beside their owning UI domain. Portfolio skins are in
+src/portfolio/portfolio.css; section skins in src/sections/sections.css; navigation
+in src/navigation/chrome.css; chat styles in src/display/chat; example styles in
+src/sections/home-section; login styles in src/forms/login-form. Existing CSS export
+paths remain supported by forwarding imports. Components import their own styles;
+the global bundles do not import these component styles. Tokens,
+themes, layouts and global resets remain centralized. Shared surface rules live
+in src/cards/surfaces.css and are imported by cards and controls.
+
 HomeChatLauncher in src/sections/home-section/chat-launcher.tsx composes the shared
 ChatComposer and opens the authenticated Studio assistant below the capabilities strip.
 ChatComposer and StudioChatScreen from @shared/ui/display provide the compact icon

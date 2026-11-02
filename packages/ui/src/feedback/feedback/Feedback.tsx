@@ -1,12 +1,7 @@
 /** Adapted from Once UI (MIT). Copyright (c) 2024-2025 Once UI. */
-import type { ReactNode } from "react";
 
-const variants = {
-  danger: "border-red-500/40 bg-red-500/10",
-  info: "border-sky-500/40 bg-sky-500/10",
-  success: "border-emerald-500/40 bg-emerald-500/10",
-  warning: "border-amber-400/40 bg-amber-400/10",
-};
+import { feedbackClassName, feedbackStyles, variants } from "./styles";
+import type { FeedbackOptions } from "./types";
 
 export function Feedback({
   variant = "info",
@@ -14,27 +9,18 @@ export function Feedback({
   description,
   children,
   onClose,
-}: {
-  variant?: keyof typeof variants;
-  title?: string;
-  description?: string;
-  children?: ReactNode;
-  onClose?: () => void;
-}) {
+}: FeedbackOptions) {
   return (
-    <div
-      className={`flex w-full gap-3 rounded-xl border p-4 text-textColor-primary ${variants[variant]}`}
-      role="alert"
-    >
-      <div className="flex-1">
-        {title ? <p className="font-medium">{title}</p> : null}
-        {description ? <p className="text-sm text-textColor-secondary">{description}</p> : null}
+    <div className={feedbackClassName(variants[variant])} role="alert">
+      <div className={feedbackStyles.element1}>
+        {title ? <p className={feedbackStyles.element2}>{title}</p> : null}
+        {description ? <p className={feedbackStyles.element3}>{description}</p> : null}
         {children}
       </div>
       {onClose ? (
         <button
           aria-label="Dismiss"
-          className="text-textColor-secondary"
+          className={feedbackStyles.element4}
           onClick={onClose}
           type="button"
         >

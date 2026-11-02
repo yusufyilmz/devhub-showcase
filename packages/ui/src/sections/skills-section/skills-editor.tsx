@@ -2,32 +2,20 @@
 
 import { useState } from "react";
 
-import type { PortfolioProfile } from "@shared/config";
-
 import { Button } from "../../buttons";
 import { Card } from "../../cards";
 import { LinesField } from "../../forms/lines-field";
+import { skillsEditorStyles } from "./styles";
+import type { SkillGroupOptions, SkillsEditorOptions } from "./types";
 
-function SkillGroup({
-  name,
-  skills,
-  rename,
-  change,
-  remove,
-}: {
-  name: string;
-  skills: string[];
-  rename: (name: string) => void;
-  change: (skills: string[]) => void;
-  remove: () => void;
-}) {
+function SkillGroup({ name, skills, rename, change, remove }: SkillGroupOptions) {
   const [label, setLabel] = useState(name);
   return (
     <Card asChild layout="plain" surface="portfolio">
-      <article className="editor-card">
+      <article className={skillsEditorStyles.element1}>
         <Card asChild layout="plain" surface="portfolio">
-          <div className="editor-card-heading">
-            <label className="editor-field">
+          <div className={skillsEditorStyles.element2}>
+            <label className={skillsEditorStyles.element3}>
               Group name
               <input
                 onBlur={() => {
@@ -39,7 +27,7 @@ function SkillGroup({
               />
             </label>
             <Button
-              className="danger-button"
+              className={skillsEditorStyles.element4}
               onClick={() => {
                 if (window.confirm(`Remove ${name}?`)) remove();
               }}
@@ -54,23 +42,17 @@ function SkillGroup({
     </Card>
   );
 }
-export function SkillsEditor({
-  profile,
-  onChange,
-}: {
-  profile: PortfolioProfile;
-  onChange: (profile: PortfolioProfile) => void;
-}) {
+export function SkillsEditor({ profile, onChange }: SkillsEditorOptions) {
   const [error, showError] = useState("");
   return (
     <section>
-      <div className="editor-section-heading">
+      <div className={skillsEditorStyles.element5}>
         <div>
-          <p className="eyebrow">THE TOOLBOX</p>
+          <p className={skillsEditorStyles.element6}>THE TOOLBOX</p>
           <h2>Skills</h2>
         </div>
         <Button
-          className="studio-secondary"
+          className={skillsEditorStyles.element7}
           onClick={() => {
             let n = 1;
             while (profile.skills[`Skill group ${n}`]) n++;
@@ -86,7 +68,7 @@ export function SkillsEditor({
         </Button>
       </div>
       {error && (
-        <p className="form-error" role="alert">
+        <p className={skillsEditorStyles.element8} role="alert">
           {error}
         </p>
       )}

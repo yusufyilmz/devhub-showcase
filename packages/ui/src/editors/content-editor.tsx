@@ -1,27 +1,15 @@
 "use client";
 
-import {
-  type AuthorableSectionType,
-  authorableSections,
-  type CustomSection,
-  getSectionRenderers,
-} from "@shared/config";
+import { authorableSections, type CustomSection, getSectionRenderers } from "@shared/config";
 
 import { Field, LinesField, SelectField } from "../forms";
-import type { SectionEditorProps } from "../sections/types";
 import { CollectionEditor } from "./collection-editor";
 import { OptionsEditor } from "./options-editor";
 import { SourceEditor } from "./source-editor";
+import { contentEditorStyles } from "./styles";
+import type { ItemFieldsOptions, SectionContentEditorOptions } from "./types";
 
-function ItemFields({
-  item,
-  onChange,
-  view,
-}: {
-  item: CustomSection["items"][number];
-  onChange: (item: CustomSection["items"][number]) => void;
-  view: string;
-}) {
+function ItemFields({ item, onChange, view }: ItemFieldsOptions) {
   return (
     <>
       <Field
@@ -95,12 +83,10 @@ export function SectionContentEditor({
   type,
   onChange,
   sourceItems,
-}: SectionEditorProps & {
-  type: AuthorableSectionType;
-}) {
+}: SectionContentEditorOptions) {
   const definition = authorableSections[type];
   return (
-    <div className="section-library-editor">
+    <div className={contentEditorStyles.element1}>
       <OptionsEditor onChange={onChange} section={section} type={type} />
       <SelectField
         label="Section display"

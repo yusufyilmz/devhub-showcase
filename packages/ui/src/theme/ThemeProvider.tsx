@@ -11,8 +11,8 @@ import {
 } from "@shared/runtime/user";
 
 import { ThemeContext } from "./theme-toggle";
+import type { ResolvedTheme, ThemeProviderOptions } from "./types";
 
-type ResolvedTheme = "light" | "dark";
 function resolveTheme(theme: UserConfigMode): ResolvedTheme {
   return theme === "system"
     ? window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -27,14 +27,7 @@ export function ThemeProvider({
   defaultTheme,
   portfolioTheme,
   storageKey,
-}: {
-  accent: "cyan" | "violet" | "emerald";
-  children: React.ReactNode;
-  defaultTheme: UserConfigMode;
-  portfolioTheme?: string;
-  /** Read only to migrate a preference written by an older version. */
-  storageKey: string;
-}) {
+}: ThemeProviderOptions) {
   const [mode, setMode] = useState<ResolvedTheme>(defaultTheme === "light" ? "light" : "dark");
   useEffect(() => {
     void useUserConfigStore.persist.rehydrate();

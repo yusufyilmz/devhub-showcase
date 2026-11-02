@@ -127,7 +127,7 @@ The generator does not overwrite existing output. See [personal workspaces](docs
 
 ## CI and deployment
 
-[The workflow](.github/workflows/ci.yml) runs frozen installation, `pnpm check`, `pnpm test`, `pnpm build`, Chromium installation and `pnpm test:e2e` in the `Verify` job. Browser reports are retained for seven days.
+[CI / CD](.github/workflows/ci.yml) runs frozen installation, `pnpm check`, `pnpm test`, the Storybook build and `pnpm build` in the `Verify` job. [Browser tests](.github/workflows/e2e.yml) run separately only on pushes to the production branch, `main`. Their job is non-blocking and deployment does not depend on it. Browser reports are retained for seven days.
 
 Production deployment runs after verification on non-PR pushes to `main`. Two jobs deploy in parallel: MyDevStudio (`VERCEL_PROJECT_ID`) and Fitness OS (`VERCEL_FITNESS_PROJECT_ID`), both using `VERCEL_TOKEN` and `VERCEL_ORG_ID`. Each job pulls production configuration, builds, and deploys prebuilt output. Application variables belong in deployment configuration. See `apps/my-dev-studio/vercel.json` and `apps/my-fitness-app/vercel.json`.
 

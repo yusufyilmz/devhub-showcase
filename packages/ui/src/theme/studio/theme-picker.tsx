@@ -1,50 +1,31 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { portfolioThemes } from "@shared/config";
 
-import {
-  type ColorMode,
-  getPortfolioThemeVariables,
-  getPreviewAccent,
-  type PortfolioProfile,
-  type PortfolioTheme,
-  portfolioThemes,
-} from "@shared/config";
+import { themePickerStyles, themePreviewStyle } from "./styles";
+import type { ThemePickerOptions } from "./types";
 
-type Accent = NonNullable<PortfolioProfile["appearance"]>["accent"];
-export function themePreviewStyle(theme: PortfolioTheme, accent: Accent): CSSProperties {
-  return {
-    ...getPortfolioThemeVariables(theme),
-    ...getPreviewAccent(accent),
-  } as CSSProperties;
-}
-export function ThemePicker({
-  value,
-  accent,
-  mode,
-  onChange,
-}: {
-  value: PortfolioTheme;
-  accent: Accent;
-  mode: ColorMode;
-  onChange: (value: PortfolioTheme) => void;
-}) {
+export function ThemePicker({ value, accent, mode, onChange }: ThemePickerOptions) {
   return (
-    <fieldset className="theme-picker">
+    <fieldset className={themePickerStyles.element1}>
       <legend>Portfolio theme</legend>
-      <div className="theme-picker-grid">
+      <div className={themePickerStyles.element2}>
         {portfolioThemes.map((theme) => (
-          <label className="theme-choice" data-selected={value === theme.id} key={theme.id}>
+          <label
+            className={themePickerStyles.element3}
+            data-selected={value === theme.id}
+            key={theme.id}
+          >
             <span
               aria-hidden="true"
-              className="theme-preview theme-thumbnail"
+              className={themePickerStyles.element4}
               data-portfolio-theme={theme.id}
               data-theme={mode}
               style={themePreviewStyle(theme.id, accent)}
             >
               <b>Aa. Your story.</b>
               <i />
-              <span className="theme-mini-cards">
+              <span className={themePickerStyles.element5}>
                 <i />
                 <i />
               </span>
@@ -64,3 +45,5 @@ export function ThemePicker({
     </fieldset>
   );
 }
+
+export { themePreviewStyle } from "./styles";

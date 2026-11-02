@@ -7,18 +7,8 @@ import { Badge } from "../../feedback/badge";
 import { FlexCol, FlexRow } from "../../layout/flex";
 import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
 import { Typography } from "../typography";
-
-export interface ChatHeaderProps {
-  avatar?: string;
-  className?: string;
-  fullWidth?: boolean;
-  messageCount?: number;
-  onInfo?: () => void;
-  onSettings?: () => void;
-  status?: "online" | "offline" | "away" | "busy";
-  subtitle?: string;
-  title?: string;
-}
+import { chatHeaderStyles } from "./styles";
+import type { ChatHeaderProps } from "./types";
 
 export function ChatHeader({
   title = "Chat Room",
@@ -34,30 +24,30 @@ export function ChatHeader({
   return (
     <div
       className={cn(
-        "w-full p-[var(--spacing-lg)] bg-gradient-to-r from-[var(--background)] to-[var(--card)] backdrop-blur-xl shadow-[var(--shadow-sm)] relative overflow-hidden",
-        fullWidth && "w-full",
+        chatHeaderStyles.chatHeader,
+        fullWidth && chatHeaderStyles.chatHeader2,
         className,
       )}
     >
       {/* Subtle background pattern */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary)]/5 to-transparent opacity-50" />
-      <FlexRow align="center" className="w-full relative z-10" gap="md">
-        <Avatar className="ring-2 ring-[var(--primary)]/20 shadow-[var(--shadow-md)]">
+      <div className={chatHeaderStyles.element1} />
+      <FlexRow align="center" className={chatHeaderStyles.element2} gap="md">
+        <Avatar className={chatHeaderStyles.element3}>
           {avatar ? <AvatarImage alt="" src={avatar} /> : null}
           <AvatarFallback>💬</AvatarFallback>
         </Avatar>
 
-        <FlexCol className="flex-1">
-          <Typography className="text-[var(--foreground)] font-bold" variant="h6">
+        <FlexCol className={chatHeaderStyles.element4}>
+          <Typography className={chatHeaderStyles.element5} variant="h6">
             {title}
           </Typography>
           {subtitle && (
-            <Typography className="text-[var(--muted-foreground)] text-sm" variant="caption">
+            <Typography className={chatHeaderStyles.element6} variant="caption">
               {subtitle}
             </Typography>
           )}
           {messageCount !== undefined && (
-            <Typography className="text-[var(--muted-foreground)] text-xs" variant="caption">
+            <Typography className={chatHeaderStyles.element7} variant="caption">
               {messageCount} messages
             </Typography>
           )}
@@ -68,7 +58,7 @@ export function ChatHeader({
 
           {onInfo && (
             <Button
-              className="text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+              className={chatHeaderStyles.element8}
               onClick={onInfo}
               size="sm"
               variant="ghost"
@@ -79,7 +69,7 @@ export function ChatHeader({
 
           {onSettings && (
             <Button
-              className="text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+              className={chatHeaderStyles.element9}
               onClick={onSettings}
               size="sm"
               variant="ghost"
@@ -92,3 +82,5 @@ export function ChatHeader({
     </div>
   );
 }
+
+export type { ChatHeaderProps } from "./types";

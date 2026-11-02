@@ -1,15 +1,10 @@
-import type { ReactNode } from "react";
-
-interface CardBodyProps {
-  children?: ReactNode;
-  className?: string;
-  title?: string;
-}
+import { cardBodyClassName, cardBodyStyles } from "./styles";
+import type { CardBodyProps } from "./types";
 
 export function CardBody({ title, children, className }: CardBodyProps) {
   return (
-    <div className={`p-0 md:p-4 ${className}`}>
-      {title && <h2 className="text-xl font-semibold mb-2">{title}</h2>}
+    <div className={cardBodyClassName(className)}>
+      {title && <h2 className={cardBodyStyles.element1}>{title}</h2>}
       {children}
     </div>
   );

@@ -11,7 +11,6 @@ import {
   getSectionItems,
   getSectionRenderers,
   MAX_CUSTOM_SECTIONS,
-  type PortfolioProfile,
   resolveSectionSource,
   type SectionComposition,
 } from "@shared/config";
@@ -20,6 +19,8 @@ import { Button } from "../../buttons";
 import { Field, SelectField } from "../../forms";
 import { EditSection } from "../editors/editors";
 import { CustomPortfolioSection } from "./custom-portfolio-section";
+import { customSectionsEditorStyles } from "./styles";
+import type { CustomSectionsEditorOptions, SectionEditorOptions } from "./types";
 
 const legacyType = (section: CustomSection): AuthorableSectionType =>
   section.sectionType ??
@@ -51,13 +52,7 @@ function createSection(type: AuthorableSectionType): CustomSection {
     visible: true,
   };
 }
-export function CustomSectionsEditor({
-  profile,
-  onChange,
-}: {
-  profile: PortfolioProfile;
-  onChange: (profile: PortfolioProfile) => void;
-}) {
+export function CustomSectionsEditor({ profile, onChange }: CustomSectionsEditorOptions) {
   const [starter, setStarter] = useState<AuthorableSectionType>("custom");
   const sections = profile.customSections ?? [];
   function change(customSections: CustomSection[]) {
@@ -97,7 +92,7 @@ export function CustomSectionsEditor({
         ))}
       </SelectField>
       <Button
-        className="studio-primary"
+        className={customSectionsEditorStyles.element1}
         disabled={sections.length >= MAX_CUSTOM_SECTIONS}
         onClick={() => change([...sections, createSection(starter)])}
         type="button"
@@ -155,13 +150,7 @@ function SectionEditor({
   onChange,
   onDuplicate,
   onRemove,
-}: {
-  section: CustomSection;
-  profile: PortfolioProfile;
-  onChange: (section: CustomSection) => void;
-  onDuplicate?: () => void;
-  onRemove: () => void;
-}) {
+}: SectionEditorOptions) {
   const type = legacyType(section);
   const sourceItems = {
     about: [{ id: "about", title: "About" }],
@@ -172,7 +161,7 @@ function SectionEditor({
     skills: getSectionItems(profile, "skills"),
   };
   return (
-    <fieldset className="editor-card">
+    <fieldset className={customSectionsEditorStyles.element2}>
       <legend>{section.title || "New section"}</legend>
       <Field
         label="Section name"
@@ -213,9 +202,9 @@ function SectionEditor({
         section={{ ...section, sectionType: type }}
         sourceItems={sourceItems}
       />
-      <div className="editor-actions">
+      <div className={customSectionsEditorStyles.element3}>
         <Button
-          className="studio-secondary"
+          className={customSectionsEditorStyles.element4}
           disabled={!onDuplicate}
           onClick={onDuplicate}
           type="button"
@@ -223,7 +212,7 @@ function SectionEditor({
         >
           Duplicate section
         </Button>
-        <Button className="danger-button" onClick={onRemove} type="button">
+        <Button className={customSectionsEditorStyles.element5} onClick={onRemove} type="button">
           Remove section
         </Button>
       </div>

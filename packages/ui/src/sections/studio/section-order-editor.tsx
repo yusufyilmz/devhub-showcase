@@ -1,26 +1,17 @@
 "use client";
 
-import {
-  getPortfolioEntries,
-  type PortfolioEntryId,
-  type PortfolioProfile,
-  portfolioSectionLabels,
-} from "@shared/config";
+import { getPortfolioEntries, type PortfolioEntryId, portfolioSectionLabels } from "@shared/config";
 
 import { Button } from "../../buttons";
 import { Card } from "../../cards";
 import { SortableList } from "../../editors/sortable-list";
+import { sectionOrderEditorStyles } from "./styles";
+import type { SectionOrderEditorOptions } from "./types";
 
-export function SectionOrderEditor({
-  profile,
-  onChange,
-}: {
-  profile: PortfolioProfile;
-  onChange: (profile: PortfolioProfile) => void;
-}) {
+export function SectionOrderEditor({ profile, onChange }: SectionOrderEditorOptions) {
   return (
     <Card asChild layout="plain" surface="portfolio">
-      <section className="editor-card">
+      <section className={sectionOrderEditorStyles.element1}>
         <h2>Portfolio section order</h2>
         <p>
           Choose how visitors read your story. The introduction and contact area stay in place.
@@ -35,7 +26,7 @@ export function SectionOrderEditor({
           onChange={(ids) => onChange({ ...profile, sectionSequence: ids as PortfolioEntryId[] })}
         />
         <Button
-          className="studio-secondary"
+          className={sectionOrderEditorStyles.element2}
           disabled={!profile.sectionOrder && !profile.sectionSequence}
           onClick={() => {
             const { sectionOrder: _order, sectionSequence: _sequence, ...rest } = profile;

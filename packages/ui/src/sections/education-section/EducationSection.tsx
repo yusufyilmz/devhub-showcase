@@ -1,16 +1,12 @@
 import type React from "react";
 
-import { getPortfolioCopy, type Language } from "@shared/config";
-import type { Education } from "@shared/lib/types";
+import { getPortfolioCopy } from "@shared/config";
 
 import { Timeline } from "../../display/timeline";
 import { Section } from "../../layout/section";
 import { EducationItem } from "./EducationItem";
-
-interface EducationsSectionProps {
-  educations: Education[];
-  language?: Language;
-}
+import { educationSectionStyles } from "./styles";
+import type { EducationsSectionProps } from "./types";
 
 export const EducationsSection: React.FC<EducationsSectionProps> = ({
   educations = [],
@@ -24,7 +20,7 @@ export const EducationsSection: React.FC<EducationsSectionProps> = ({
       subtitle={text.educationSubtitle}
       title={text.education}
     >
-      <div className="flex items-center md:min-h-[calc(100vh-4rem)]">
+      <div className={educationSectionStyles.element1}>
         <Timeline>
           {educations.map((education) => (
             <EducationItem education={education} key={education.id} language={language} />

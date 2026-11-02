@@ -3,7 +3,6 @@
 import {
   getPortfolioSections,
   getSectionItems,
-  type PortfolioProfile,
   type PortfolioSectionId,
   type PortfolioSectionSettings,
   sectionRegistry,
@@ -13,6 +12,8 @@ import {
 import { Button } from "../../buttons";
 import { Card } from "../../cards";
 import { ConfiguredSection } from "./configured-section";
+import { sectionSettingsEditorInlineStyle1, sectionSettingsEditorStyles } from "./styles";
+import type { SectionSettingsEditorOptions } from "./types";
 
 const names: Record<string, string> = {
   accordion: "Accordion",
@@ -24,13 +25,7 @@ const names: Record<string, string> = {
   tabs: "Tabs",
   timeline: "Timeline",
 };
-export function SectionSettingsEditor({
-  profile,
-  onChange,
-}: {
-  profile: PortfolioProfile;
-  onChange: (profile: PortfolioProfile) => void;
-}) {
+export function SectionSettingsEditor({ profile, onChange }: SectionSettingsEditorOptions) {
   function update(kind: PortfolioSectionId, value: PortfolioSectionSettings[PortfolioSectionId]) {
     onChange({
       ...profile,
@@ -39,7 +34,7 @@ export function SectionSettingsEditor({
   }
   return (
     <Card asChild layout="plain" surface="portfolio">
-      <section className="editor-card">
+      <section className={sectionSettingsEditorStyles.element1}>
         <h2>Section display settings</h2>
         <p>
           Choose a display and the content for each section. Hidden sections and private projects
@@ -50,7 +45,7 @@ export function SectionSettingsEditor({
           const settings = profile.sectionSettings?.[kind] ?? {};
           const items = getSectionItems(profile, kind);
           return (
-            <fieldset className="editor-card" key={kind}>
+            <fieldset className={sectionSettingsEditorStyles.element2} key={kind}>
               <legend>{sectionRegistry[kind].name}</legend>
               <label>
                 <input
@@ -95,7 +90,7 @@ export function SectionSettingsEditor({
                     All items, including future additions
                   </label>
                   {items.map((item) => (
-                    <label key={item.id} style={{ display: "block" }}>
+                    <label key={item.id} style={sectionSettingsEditorInlineStyle1}>
                       <input
                         checked={settings.itemIds?.includes(item.id) ?? true}
                         onChange={(event) => {
@@ -125,7 +120,7 @@ export function SectionSettingsEditor({
                 </details>
               )}
               <Button
-                className="studio-secondary"
+                className={sectionSettingsEditorStyles.element3}
                 onClick={() => {
                   const next = { ...profile.sectionSettings };
                   delete next[kind];

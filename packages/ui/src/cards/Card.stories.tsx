@@ -22,6 +22,41 @@ const meta = {
 } satisfies Meta<typeof Card>;
 
 export default meta;
+export const CardTypes = {
+  render: () => (
+    <div className="grid max-w-3xl gap-6 sm:grid-cols-2">
+      <Card
+        brief="A short introduction"
+        heading={<h3>Case study</h3>}
+        title="Case study"
+        type="reveal"
+      >
+        The full story, revealed on focus, hover or activation.
+      </Card>
+      <Card type="variants" variant="glass">
+        Glass variant
+      </Card>
+      <Card appearance="muted" type="appearance">
+        Muted appearance
+      </Card>
+      <Card
+        description="Content card with a title and description."
+        title="A new chapter"
+        type="content"
+        variant="solid"
+      />
+      <Card trigger={<a href="#project">Preview a project</a>} type="hover">
+        Additional project details
+      </Card>
+      <Card type="tilt">
+        <CardContent>A subtle, motion-aware tilt.</CardContent>
+      </Card>
+      <Card type="animated">
+        <CardContent>A short entrance animation.</CardContent>
+      </Card>
+    </div>
+  ),
+};
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {

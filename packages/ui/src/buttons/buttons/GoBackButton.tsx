@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { copy } from "@shared/config";
 
 import { Button } from "../button";
+import { goBackButtonStyles } from "./styles";
 
 export const GoBackButton = () => {
   const router = useRouter();
@@ -12,7 +13,7 @@ export const GoBackButton = () => {
   return (
     <Button
       aria-label="Go back"
-      className="rounded-lg"
+      className={goBackButtonStyles.element1}
       onClick={() => router.back()}
       variant="outline"
     >

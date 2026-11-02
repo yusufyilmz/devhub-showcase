@@ -1,10 +1,10 @@
-import { forwardRef, type MouseEvent } from "react";
+import { forwardRef } from "react";
 
 import { cn } from "cn";
 
 import { Button } from "../button";
-
-export type ActionButtonColor = "primary" | "warning" | "danger" | "success" | "info";
+import { actionButtonStyles } from "./styles";
+import type { ActionButtonColor, ActionButtonProps } from "./types";
 
 const colorSchemeMap: Record<ActionButtonColor, string> = {
   danger: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
@@ -29,16 +29,6 @@ const ghostColorSchemeMap: Record<ActionButtonColor, string> = {
   success: "text-success hover:bg-success/10",
   warning: "text-warning hover:bg-warning/10",
 };
-
-export interface ActionButtonProps extends Omit<React.ComponentProps<typeof Button>, "variant"> {
-  colorScheme?: ActionButtonColor;
-  fullWidth?: boolean;
-  href?: string;
-  loading?: boolean;
-  onClick?: (e: MouseEvent<HTMLElement>) => void;
-  target?: string;
-  variant?: "contained" | "outlined" | "ghost";
-}
 
 export const ActionButton = forwardRef<HTMLButtonElement, ActionButtonProps>(
   (
@@ -68,12 +58,12 @@ export const ActionButton = forwardRef<HTMLButtonElement, ActionButtonProps>(
     };
 
     const baseClasses = cn(
-      "transition-all duration-200 ease-out font-semibold shadow-sm",
-      "hover:-translate-y-0.5 hover:shadow-md",
-      "active:translate-y-0 active:shadow-sm",
-      fullWidth && "w-full",
-      variant === "outlined" && "border-2 bg-transparent shadow-none",
-      variant === "ghost" && "shadow-none",
+      actionButtonStyles.baseClasses,
+      actionButtonStyles.baseClasses2,
+      actionButtonStyles.baseClasses3,
+      fullWidth && actionButtonStyles.baseClasses4,
+      variant === "outlined" && actionButtonStyles.baseClasses5,
+      variant === "ghost" && actionButtonStyles.baseClasses6,
       getColorClasses(),
       className,
     );
@@ -105,3 +95,5 @@ export const ActionButton = forwardRef<HTMLButtonElement, ActionButtonProps>(
 ActionButton.displayName = "ActionButton";
 
 export default ActionButton;
+
+export type { ActionButtonColor, ActionButtonProps } from "./types";

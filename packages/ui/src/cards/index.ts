@@ -10,6 +10,7 @@ export {
   CardDescription,
   CardFooter,
   CardHeader,
+  type CardProps,
   CardTitle,
 } from "./Card";
 export { CardActions } from "./CardActions";

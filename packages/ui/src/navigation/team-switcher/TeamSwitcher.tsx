@@ -14,16 +14,10 @@ import {
   DropdownMenuTrigger,
 } from "../../overlays/dropdown-menu/DropdownMenu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "../sidebar/Sidebar";
+import { teamSwitcherStyles } from "./styles";
+import type { TeamSwitcherOptions } from "./types";
 
-export function TeamSwitcher({
-  teams,
-}: {
-  teams: {
-    name: string;
-    logo: React.ElementType;
-    plan: string;
-  }[];
-}) {
+export function TeamSwitcher({ teams }: TeamSwitcherOptions) {
   const { isMobile } = useSidebar();
   const [activeTeam, setActiveTeam] = React.useState(teams[0]);
 
@@ -36,46 +30,43 @@ export function TeamSwitcher({
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-              size="lg"
-            >
-              <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                <activeTeam.logo className="size-4" />
+            <SidebarMenuButton className={teamSwitcherStyles.element1} size="lg">
+              <div className={teamSwitcherStyles.element2}>
+                <activeTeam.logo className={teamSwitcherStyles.element3} />
               </div>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{activeTeam.name}</span>
-                <span className="truncate text-xs">{activeTeam.plan}</span>
+              <div className={teamSwitcherStyles.element4}>
+                <span className={teamSwitcherStyles.element5}>{activeTeam.name}</span>
+                <span className={teamSwitcherStyles.element6}>{activeTeam.plan}</span>
               </div>
-              <ChevronsUpDown className="ml-auto" />
+              <ChevronsUpDown className={teamSwitcherStyles.element7} />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="start"
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+            className={teamSwitcherStyles.element8}
             side={isMobile ? "bottom" : "right"}
             sideOffset={4}
           >
-            <DropdownMenuLabel className="text-muted-foreground text-xs">Teams</DropdownMenuLabel>
+            <DropdownMenuLabel className={teamSwitcherStyles.element9}>Teams</DropdownMenuLabel>
             {teams.map((team, index) => (
               <DropdownMenuItem
-                className="gap-2 p-2"
+                className={teamSwitcherStyles.element10}
                 key={team.name}
                 onClick={() => setActiveTeam(team)}
               >
-                <div className="flex size-6 items-center justify-center rounded-md border">
-                  <team.logo className="size-3.5 shrink-0" />
+                <div className={teamSwitcherStyles.element11}>
+                  <team.logo className={teamSwitcherStyles.element12} />
                 </div>
                 {team.name}
                 <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2 p-2">
-              <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
-                <Plus className="size-4" />
+            <DropdownMenuItem className={teamSwitcherStyles.element13}>
+              <div className={teamSwitcherStyles.element14}>
+                <Plus className={teamSwitcherStyles.element15} />
               </div>
-              <div className="text-muted-foreground font-medium">Add team</div>
+              <div className={teamSwitcherStyles.element16}>Add team</div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

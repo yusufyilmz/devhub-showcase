@@ -2,17 +2,11 @@
 
 import { useState } from "react";
 
-import type { Language } from "@shared/config";
 import { getPortfolioCopy } from "@shared/config";
 
 import { Button } from "../../buttons/button";
-
-export interface LocationMapProps {
-  language?: Language;
-  latitude: number;
-  longitude: number;
-  title: string;
-}
+import { locationMapStyles } from "./styles";
+import type { LocationMapProps } from "./types";
 
 export function LocationMap({ latitude, longitude, title, language }: LocationMapProps) {
   const text = getPortfolioCopy(language);
@@ -25,7 +19,7 @@ export function LocationMap({ latitude, longitude, title, language }: LocationMa
   if (!valid) return null;
   const url = `https://www.openstreetmap.org/export/embed.html?bbox=${Math.max(-180, longitude - 0.01)},${Math.max(-90, latitude - 0.01)},${Math.min(180, longitude + 0.01)},${Math.min(90, latitude + 0.01)}&layer=mapnik&marker=${latitude},${longitude}`;
   return (
-    <div className="section-location">
+    <div className={locationMapStyles.element1}>
       {loaded ? (
         <iframe loading="lazy" referrerPolicy="no-referrer" src={url} title={title} />
       ) : (
@@ -43,3 +37,5 @@ export function LocationMap({ latitude, longitude, title, language }: LocationMa
     </div>
   );
 }
+
+export type { LocationMapProps } from "./types";

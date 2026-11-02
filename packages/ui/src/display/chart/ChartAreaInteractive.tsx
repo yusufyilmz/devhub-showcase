@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "../../forms/select/Select";
 import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "./Chart";
+import { chartAreaInteractiveStyles } from "./styles";
 
 export const description = "An interactive area chart";
 
@@ -152,16 +153,16 @@ export function ChartAreaInteractive() {
   });
 
   return (
-    <Card className="@container/card">
+    <Card className={chartAreaInteractiveStyles.element1}>
       <CardHeader>
         <CardTitle>Total Visitors</CardTitle>
         <CardDescription>
-          <span className="hidden @[540px]/card:block">Total for the last 3 months</span>
-          <span className="@[540px]/card:hidden">Last 3 months</span>
+          <span className={chartAreaInteractiveStyles.element2}>Total for the last 3 months</span>
+          <span className={chartAreaInteractiveStyles.element3}>Last 3 months</span>
         </CardDescription>
         <CardAction>
           <ToggleGroup
-            className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
+            className={chartAreaInteractiveStyles.element4}
             onValueChange={setTimeRange}
             type="single"
             value={timeRange}
@@ -174,27 +175,27 @@ export function ChartAreaInteractive() {
           <Select onValueChange={setTimeRange} value={timeRange}>
             <SelectTrigger
               aria-label="Select a value"
-              className="flex w-40 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate @[767px]/card:hidden"
+              className={chartAreaInteractiveStyles.element5}
               size="sm"
             >
               <SelectValue placeholder="Last 3 months" />
             </SelectTrigger>
-            <SelectContent className="rounded-xl">
-              <SelectItem className="rounded-lg" value="90d">
+            <SelectContent className={chartAreaInteractiveStyles.element6}>
+              <SelectItem className={chartAreaInteractiveStyles.element7} value="90d">
                 Last 3 months
               </SelectItem>
-              <SelectItem className="rounded-lg" value="30d">
+              <SelectItem className={chartAreaInteractiveStyles.element8} value="30d">
                 Last 30 days
               </SelectItem>
-              <SelectItem className="rounded-lg" value="7d">
+              <SelectItem className={chartAreaInteractiveStyles.element9} value="7d">
                 Last 7 days
               </SelectItem>
             </SelectContent>
           </Select>
         </CardAction>
       </CardHeader>
-      <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-        <ChartContainer className="aspect-auto h-[250px] w-full" config={chartConfig}>
+      <CardContent className={chartAreaInteractiveStyles.element10}>
+        <ChartContainer className={chartAreaInteractiveStyles.element11} config={chartConfig}>
           <AreaChart data={filteredData}>
             <defs>
               <linearGradient id="fillDesktop" x1="0" x2="0" y1="0" y2="1">

@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+import { mouseCircleInlineStyle1, mouseCircleStyles } from "./styles";
+
 export const MouseCircle = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -15,14 +17,8 @@ export const MouseCircle = () => {
 
   return (
     <div
-      className="w-0 h-0 pointer-events-none shadow-[0_0_100px_50px_rgba(30,144,255,0.4)]"
-      style={{
-        left: position.x,
-        position: "fixed",
-        top: position.y,
-        transform: "translate(-50%, -50%)",
-        zIndex: 50,
-      }}
+      className={mouseCircleStyles.element1}
+      style={mouseCircleInlineStyle1(position.x, position.y)}
     ></div>
   );
 };

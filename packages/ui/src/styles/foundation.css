@@ -4,11 +4,10 @@
 @import "./foundation/theme-aliases.css";
 @import "./foundation/platform-rgb.css";
 @import "./foundation/product-tokens.css";
-@import "./foundation/surfaces.css";
-@import "./foundation/auth-login.css";
 
 @source "../../../../apps/my-dev-studio/app";
 @source "../../../../apps/my-fitness-app/app";
 @source "../../../../apps/my-dev-studio/features";
 @source "../../../../apps/storybook-app/src";
 @source "..";
+@source "../../../assistant/src";

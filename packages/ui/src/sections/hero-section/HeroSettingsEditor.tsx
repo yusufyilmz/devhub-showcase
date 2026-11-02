@@ -8,14 +8,10 @@ import { Button } from "../../buttons";
 import { Card } from "../../cards";
 import { Field, SelectField } from "../../forms";
 import { HeroSurface } from "../../layout/hero";
+import { heroSettingsEditorInlineStyle1, heroSettingsEditorStyles } from "./styles";
+import type { HeroSettingsEditorOptions } from "./types";
 
-export function HeroSettingsEditor({
-  profile,
-  onChange,
-}: {
-  profile: PortfolioProfile;
-  onChange: (profile: PortfolioProfile) => void;
-}) {
+export function HeroSettingsEditor({ profile, onChange }: HeroSettingsEditorOptions) {
   const [preview, setPreview] = useState(false);
   const text = getPortfolioCopy(profile.portfolioLanguage);
   const hero = profile.hero;
@@ -38,7 +34,7 @@ export function HeroSettingsEditor({
   };
   return (
     <Card asChild layout="plain" surface="portfolio">
-      <section className="editor-card">
+      <section className={heroSettingsEditorStyles.element1}>
         <h2>Hero background</h2>
         <p>
           Use an image or a muted video behind your introduction. Video respects reduced motion and
@@ -106,7 +102,7 @@ export function HeroSettingsEditor({
                   }}
                   media={hero}
                 >
-                  <div style={{ paddingBlock: "4rem" }}>
+                  <div style={heroSettingsEditorInlineStyle1}>
                     <h2>{profile.name}</h2>
                     <p>{profile.title}</p>
                     <p>{profile.summary}</p>
@@ -114,7 +110,12 @@ export function HeroSettingsEditor({
                 </HeroSurface>
               )}
             </details>
-            <Button className="studio-secondary" onClick={clear} type="button" variant="outline">
+            <Button
+              className={heroSettingsEditorStyles.element2}
+              onClick={clear}
+              type="button"
+              variant="outline"
+            >
               Remove hero background
             </Button>
           </>

@@ -1,28 +1,30 @@
-import { copy, profile as fallback, getPortfolioCopy, type PortfolioProfile } from "@shared/config";
+import { copy, profile as fallback, getPortfolioCopy } from "@shared/config";
 
 import { Button } from "../../buttons/button";
 import { PdfIcon } from "../../display/icons";
 import { Typography } from "../../display/typography";
 import { Section } from "../../layout/section";
 import { SocialLinks } from "../social-links-section/SocialLinks";
+import { aboutMeSectionStyles } from "./styles";
+import type { AboutMeSectionOptions } from "./types";
 
 const { id } = copy.header.sections.aboutMe;
 
-export const AboutMeSection = ({ profile = fallback }: { profile?: PortfolioProfile }) => {
+export const AboutMeSection = ({ profile = fallback }: AboutMeSectionOptions) => {
   const text = getPortfolioCopy(profile.portfolioLanguage);
   return (
     <Section eyebrow={text.about} sectionId={id} subtitle={text.aboutSubtitle} title={text.about}>
-      <div className="about-content">
-        <div className="flex flex-col gap-4 text-lg">
+      <div className={aboutMeSectionStyles.element1}>
+        <div className={aboutMeSectionStyles.element2}>
           {profile.about.map((paragraph) => (
-            <Typography className="text-main-slate" key={paragraph}>
+            <Typography className={aboutMeSectionStyles.element3} key={paragraph}>
               {paragraph}
             </Typography>
           ))}
-          <div className="flex justify-center">
+          <div className={aboutMeSectionStyles.element4}>
             <Button
               aria-label={text.resume}
-              className="whitespace-pre-wrap shine-effect flex items-center text-white px-6 py-3 rounded-lg shadow-sm transition"
+              className={aboutMeSectionStyles.element5}
               endIcon={<PdfIcon />}
               href={profile.cvUrl ?? "/cv.pdf"}
               rel="noopener noreferrer"

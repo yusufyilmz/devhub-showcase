@@ -2,112 +2,34 @@
 
 import Image from "next/image";
 import type React from "react";
-import { forwardRef, type ReactNode } from "react";
+import { forwardRef } from "react";
 
-import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 
-import { Card } from "./Card";
+import { CardBase as Card } from "./CardBase";
+import {
+  contentCardStyle,
+  contentCardStyles,
+  contentCardVariants,
+  overlayVariants,
+  titleSizeClass,
+} from "./styles";
+import type {
+  AuthorAvatarOptions,
+  ContentCardCopyOptions,
+  ContentCardProps,
+  OverlayAuthorOptions,
+  SplitAuthorOptions,
+  StackedAuthorOptions,
+} from "./types";
 
-const contentCardVariants = cva(
-  "cursor-pointer overflow-hidden relative flex flex-col justify-between transition-all duration-300 ease-in-out group/card",
-  {
-    defaultVariants: {
-      layout: "overlay",
-      size: "md",
-      variant: "default",
-    },
-    variants: {
-      layout: {
-        overlay: "justify-between",
-        split: "justify-center",
-        stacked: "justify-start gap-4",
-      },
-      size: {
-        lg: "h-96 p-6 rounded-2xl max-w-md",
-        md: "h-80 p-4 rounded-xl max-w-sm",
-        sm: "h-64 p-3 rounded-lg max-w-xs",
-        xl: "h-[28rem] p-8 rounded-3xl max-w-lg",
-      },
-      variant: {
-        default: "bg-cover bg-center shadow-xl",
-        gradient: "bg-gradient-to-br shadow-xl",
-        minimal: "bg-transparent border border-border/50 shadow-sm",
-        solid: "bg-background border border-border shadow-lg",
-      },
-    },
-  },
-);
-
-const overlayVariants = cva("absolute inset-0 transition-all duration-300", {
-  defaultVariants: {
-    overlay: "medium",
-  },
-  variants: {
-    overlay: {
-      gradient: "bg-gradient-to-t from-black/80 via-black/20 to-transparent",
-      heavy: "bg-black/60 group-hover/card:bg-black/80",
-      light: "bg-black/20 group-hover/card:bg-black/40",
-      medium: "bg-black/40 group-hover/card:bg-black/60",
-      none: "opacity-0",
-    },
-  },
-});
-
-export interface Author {
-  avatar?: string;
-  name: string;
-  subtitle?: string;
-}
-
-export interface ContentCardProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "title">,
-    VariantProps<typeof contentCardVariants> {
-  author?: Author;
-  backgroundColor?: string;
-  backgroundImage?: string;
-  children?: ReactNode;
-  className?: string;
-  description?: string;
-  metadata?: string;
-  onCardClick?: () => void;
-  overlay?: VariantProps<typeof overlayVariants>["overlay"];
-  title: string;
-}
-
-function contentCardStyle(
-  style: React.CSSProperties | undefined,
-  backgroundImage: string | undefined,
-  backgroundColor: string | undefined,
-  variant: ContentCardProps["variant"],
-): React.CSSProperties {
-  const cardStyle: React.CSSProperties = { ...style };
-  if (backgroundImage && variant === "default") {
-    cardStyle.backgroundImage = `url(${backgroundImage})`;
-  }
-  if (backgroundColor && variant === "solid") {
-    cardStyle.backgroundColor = backgroundColor;
-  }
-  if (variant === "gradient") {
-    cardStyle.backgroundImage =
-      backgroundColor || "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
-  }
-  return cardStyle;
-}
-
-function titleSizeClass(size: ContentCardProps["size"]) {
-  if (size === "sm") return "text-lg";
-  if (size === "md") return "text-xl";
-  return "text-2xl";
-}
-
-function AuthorAvatar({ author, compact = false }: { author: Author; compact?: boolean }) {
+function AuthorAvatar({ author, compact = false }: AuthorAvatarOptions) {
   if (!author.avatar) return null;
   if (compact) {
     return (
       <Image
         alt={`${author.name} avatar`}
-        className="h-8 w-8 rounded-full border border-white/20 object-cover"
+        className={contentCardStyles.element1}
         height={32}
         src={author.avatar}
         width={32}
@@ -117,7 +39,7 @@ function AuthorAvatar({ author, compact = false }: { author: Author; compact?: b
   return (
     <Image
       alt={`${author.name} avatar`}
-      className="h-10 w-10 rounded-full border-2 border-white/20 object-cover"
+      className={contentCardStyles.element2}
       height={40}
       src={author.avatar}
       width={40}
@@ -125,81 +47,57 @@ function AuthorAvatar({ author, compact = false }: { author: Author; compact?: b
   );
 }
 
-function OverlayAuthor({
-  author,
-  metadata,
-  subtitleColor,
-  textColor,
-}: {
-  author: Author;
-  metadata?: string;
-  subtitleColor: string;
-  textColor: string;
-}) {
+function OverlayAuthor({ author, metadata, subtitleColor, textColor }: OverlayAuthorOptions) {
   return (
-    <div className="relative z-10 flex items-center space-x-3">
+    <div className={contentCardStyles.element3}>
       <AuthorAvatar author={author} />
-      <div className="flex flex-col">
-        <p className={cn("relative z-10 font-medium text-sm", textColor)}>{author.name}</p>
+      <div className={contentCardStyles.element4}>
+        <p className={cn(contentCardStyles.overlayAuthor, textColor)}>{author.name}</p>
         {author.subtitle && (
-          <p className={cn("relative z-10 text-xs", subtitleColor)}>{author.subtitle}</p>
+          <p className={cn(contentCardStyles.overlayAuthor2, subtitleColor)}>{author.subtitle}</p>
         )}
       </div>
       {metadata && (
-        <div className="ml-auto">
-          <p className={cn("text-xs", subtitleColor)}>{metadata}</p>
+        <div className={contentCardStyles.element5}>
+          <p className={cn(contentCardStyles.overlayAuthor3, subtitleColor)}>{metadata}</p>
         </div>
       )}
     </div>
   );
 }
 
-function StackedAuthor({
-  author,
-  metadata,
-  subtitleColor,
-  textColor,
-}: {
-  author: Author;
-  metadata?: string;
-  subtitleColor: string;
-  textColor: string;
-}) {
+function StackedAuthor({ author, metadata, subtitleColor, textColor }: StackedAuthorOptions) {
   return (
-    <div className="flex items-center space-x-3">
+    <div className={contentCardStyles.element6}>
       <AuthorAvatar author={author} />
-      <div className="flex flex-1 flex-col">
-        <p className={cn("font-medium text-sm", textColor)}>{author.name}</p>
-        {author.subtitle && <p className={cn("text-xs", subtitleColor)}>{author.subtitle}</p>}
+      <div className={contentCardStyles.element7}>
+        <p className={cn(contentCardStyles.stackedAuthor, textColor)}>{author.name}</p>
+        {author.subtitle && (
+          <p className={cn(contentCardStyles.stackedAuthor2, subtitleColor)}>{author.subtitle}</p>
+        )}
       </div>
-      {metadata && <p className={cn("text-xs", subtitleColor)}>{metadata}</p>}
+      {metadata && (
+        <p className={cn(contentCardStyles.stackedAuthor3, subtitleColor)}>{metadata}</p>
+      )}
     </div>
   );
 }
 
-function SplitAuthor({
-  author,
-  metadata,
-  subtitleColor,
-  textColor,
-}: {
-  author?: Author;
-  metadata?: string;
-  subtitleColor: string;
-  textColor: string;
-}) {
+function SplitAuthor({ author, metadata, subtitleColor, textColor }: SplitAuthorOptions) {
   return (
-    <div className="flex items-center justify-between pt-2">
+    <div className={contentCardStyles.element8}>
       {author && (
-        <div className="flex items-center space-x-2">
+        <div className={contentCardStyles.element9}>
           <AuthorAvatar author={author} compact />
           <div>
-            <p className={cn("font-medium text-xs", textColor)}>{author.name}</p>
-            {author.subtitle && <p className={cn("text-xs", subtitleColor)}>{author.subtitle}</p>}
+            <p className={cn(contentCardStyles.splitAuthor, textColor)}>{author.name}</p>
+            {author.subtitle && (
+              <p className={cn(contentCardStyles.splitAuthor2, subtitleColor)}>{author.subtitle}</p>
+            )}
           </div>
         </div>
       )}
-      {metadata && <p className={cn("text-xs", subtitleColor)}>{metadata}</p>}
+      {metadata && <p className={cn(contentCardStyles.splitAuthor3, subtitleColor)}>{metadata}</p>}
     </div>
   );
 }
@@ -210,23 +108,17 @@ function ContentCardCopy({
   subtitleColor,
   textColor,
   title,
-}: {
-  description?: string;
-  size: ContentCardProps["size"];
-  subtitleColor: string;
-  textColor: string;
-  title: string;
-}) {
+}: ContentCardCopyOptions) {
   return (
-    <div className="space-y-2">
-      <h1 className={cn("relative z-10 font-bold leading-tight", titleSizeClass(size), textColor)}>
+    <div className={contentCardStyles.element10}>
+      <h1 className={cn(contentCardStyles.contentCardCopy, titleSizeClass(size), textColor)}>
         {title}
       </h1>
       {description && (
         <p
           className={cn(
-            "relative z-10 font-normal leading-relaxed",
-            size === "sm" ? "text-xs" : "text-sm",
+            contentCardStyles.contentCardCopy2,
+            size === "sm" ? contentCardStyles.contentCardCopy3 : contentCardStyles.contentCardCopy4,
             subtitleColor,
           )}
         >
@@ -270,7 +162,7 @@ export const ContentCard = forwardRef<HTMLDivElement, ContentCardProps>(
     };
 
     return (
-      <div className="group/card w-full" ref={ref}>
+      <div className={contentCardStyles.element11} ref={ref}>
         <Card
           className={cn(contentCardVariants({ layout, size, variant }), className)}
           onClick={onCardClick}
@@ -289,7 +181,14 @@ export const ContentCard = forwardRef<HTMLDivElement, ContentCardProps>(
               textColor={textColor}
             />
           )}
-          <div className={cn("relative z-10", layout === "stacked" ? "space-y-4" : "space-y-2")}>
+          <div
+            className={cn(
+              contentCardStyles.contentCard,
+              layout === "stacked"
+                ? contentCardStyles.contentCard2
+                : contentCardStyles.contentCard3,
+            )}
+          >
             {author && layout === "stacked" && (
               <StackedAuthor
                 author={author}
@@ -305,7 +204,7 @@ export const ContentCard = forwardRef<HTMLDivElement, ContentCardProps>(
               textColor={textColor}
               title={title}
             />
-            {children && <div className="relative z-10">{children}</div>}
+            {children && <div className={contentCardStyles.element12}>{children}</div>}
             {layout === "split" && (author || metadata) && (
               <SplitAuthor
                 author={author}
@@ -322,3 +221,5 @@ export const ContentCard = forwardRef<HTMLDivElement, ContentCardProps>(
 );
 
 ContentCard.displayName = "ContentCard";
+
+export type { Author, ContentCardProps } from "./types";

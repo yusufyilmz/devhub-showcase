@@ -1,11 +1,6 @@
 import { Alert, AlertDescription, AlertTitle } from "../alert";
-
-interface SnackbarNotificationProps {
-  message: string;
-  onClose: () => void;
-  open: boolean;
-  severity: "success" | "error" | "warning" | "info";
-}
+import { notificationStyles } from "./styles";
+import type { SnackbarNotificationProps } from "./types";
 
 export const SnackbarNotification: React.FC<SnackbarNotificationProps> = ({
   message,
@@ -16,11 +11,11 @@ export const SnackbarNotification: React.FC<SnackbarNotificationProps> = ({
   if (!open) return null;
 
   return (
-    <div className="fixed right-4 bottom-4 z-50 w-full max-w-sm">
+    <div className={notificationStyles.element1}>
       <Alert variant={severity === "error" ? "destructive" : "default"}>
-        <AlertTitle className="capitalize">{severity}</AlertTitle>
+        <AlertTitle className={notificationStyles.element2}>{severity}</AlertTitle>
         <AlertDescription>{message}</AlertDescription>
-        <button className="col-start-2 justify-self-end text-sm" onClick={onClose} type="button">
+        <button className={notificationStyles.element3} onClick={onClose} type="button">
           Close
         </button>
       </Alert>

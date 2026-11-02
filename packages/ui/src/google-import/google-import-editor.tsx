@@ -7,27 +7,24 @@ import {
   googleProfileCategories,
   googleProfilePermissions,
 } from "@shared/auth/google-provider";
-import type { PortfolioProfile } from "@shared/config";
 import { applyGoogleProfile, type GoogleImportField } from "@shared/lib/profiles";
 
 import { Button } from "../buttons";
 import { Card } from "../cards";
 import { GoogleImportReview } from "./google-import-review";
+import { googleImportEditorStyles } from "./styles";
+import type { GoogleImportEditorOptions, GoogleImportWorkspaceOptions } from "./types";
 import { useGoogleImport } from "./use-google-import";
 
 export function GoogleImportEditor({
   profile,
   onChange,
   managed = false,
-}: {
-  profile: PortfolioProfile;
-  onChange: (profile: PortfolioProfile) => void;
-  managed?: boolean;
-}) {
+}: GoogleImportEditorOptions) {
   if (managed)
     return (
       <Card asChild layout="plain" surface="portfolio">
-        <section className="editor-card">
+        <section className={googleImportEditorStyles.element1}>
           <h2>Import from Google</h2>
           <p>Google import is available in your own portfolio workspace.</p>
         </section>
@@ -35,13 +32,7 @@ export function GoogleImportEditor({
     );
   return <GoogleImportWorkspace onChange={onChange} profile={profile} />;
 }
-function GoogleImportWorkspace({
-  profile,
-  onChange,
-}: {
-  profile: PortfolioProfile;
-  onChange: (profile: PortfolioProfile) => void;
-}) {
+function GoogleImportWorkspace({ profile, onChange }: GoogleImportWorkspaceOptions) {
   const state = useGoogleImport();
   const [categories, setCategories] = useState<GoogleProfileCategory[]>(["basic"]);
   const [consent, setConsent] = useState(false);
@@ -49,7 +40,7 @@ function GoogleImportWorkspace({
   const [message, setMessage] = useState("");
   return (
     <Card asChild layout="plain" surface="portfolio">
-      <section aria-labelledby="google-import-title" className="editor-card">
+      <section aria-labelledby="google-import-title" className={googleImportEditorStyles.element2}>
         <h2 id="google-import-title">Import from Google</h2>
         <p>
           Choose details from a Google account to help fill your portfolio. Google may not have
@@ -68,7 +59,7 @@ function GoogleImportWorkspace({
         <fieldset disabled={state.busy || !state.clientId}>
           <legend>Details to request from Google</legend>
           {googleProfileCategories.map((category) => (
-            <label className="editor-checkbox" key={category}>
+            <label className={googleImportEditorStyles.element3} key={category}>
               <input
                 checked={categories.includes(category)}
                 onChange={(event) => {
@@ -85,7 +76,7 @@ function GoogleImportWorkspace({
               {googleProfilePermissions[category].label}
             </label>
           ))}
-          <label className="editor-checkbox">
+          <label className={googleImportEditorStyles.element4}>
             <input
               checked={consent}
               onChange={(event) => {
@@ -100,7 +91,7 @@ function GoogleImportWorkspace({
         {state.preparing && <p role="status">Preparing Google permission screen…</p>}
         {consent && !state.oauth && !state.preparing && state.clientId && (
           <Button
-            className="studio-secondary"
+            className={googleImportEditorStyles.element5}
             onClick={state.prepare}
             type="button"
             variant="outline"
@@ -109,7 +100,7 @@ function GoogleImportWorkspace({
           </Button>
         )}
         <Button
-          className="studio-primary"
+          className={googleImportEditorStyles.element6}
           disabled={!consent || !state.oauth || !state.clientId || !categories.length || state.busy}
           onClick={() => {
             setMessage("");
@@ -122,7 +113,7 @@ function GoogleImportWorkspace({
         </Button>
         {(state.busy || state.review) && (
           <Button
-            className="studio-secondary"
+            className={googleImportEditorStyles.element7}
             onClick={() => {
               state.cancel();
               setSelected([]);
