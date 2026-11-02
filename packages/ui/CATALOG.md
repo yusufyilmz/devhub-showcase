@@ -13,7 +13,9 @@ Editor toolbar rows remain plain layout containers rather than elevated Cards.
 
 ThemeToggle shows a single palette icon. Hover, focus, or tap reveals mode and
 appearance actions. Theme settings opens a dialog with accent swatches, typeface
-samples, spacing and corner previews; remaining controls are under More preferences.
+samples, and square preview tiles for every supported preference. All mode,
+accent, theme color, typography, spacing, border, shadow and motion choices are
+visible in the scrolling grid; each group has its own Page default reset tile.
 Geist Sans is the consistent product default; serif and monospace choices apply
 to body copy, headings and controls through the same persisted font preference.
 Appearance choices are validated and persisted in the shared user configuration
