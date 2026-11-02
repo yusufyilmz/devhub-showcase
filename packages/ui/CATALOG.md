@@ -4,7 +4,11 @@ PageShell marks product documents with `data-platform="mydevstudio"` so shared
 controls use the same surface and foreground palette as the surrounding studio.
 Editor toolbar rows remain plain layout containers rather than elevated Cards.
 
-ThemeToggle keeps its quick mode switch and includes a Theme settings popover.
+ThemeToggle shows a single palette icon. Hover, focus, or tap reveals mode and
+appearance actions. Theme settings opens a dialog with accent swatches, typeface
+samples, spacing and corner previews; remaining controls are under More preferences.
+Geist Sans is the consistent product default; serif and monospace choices apply
+to body copy, headings and controls through the same persisted font preference.
 Appearance choices are validated and persisted in the shared user configuration
 alongside mode and display user. ThemeProvider applies them before/after hydration
 and synchronizes storage events. ThemeCustomizer uses the same preferences;

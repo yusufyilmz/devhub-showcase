@@ -68,6 +68,7 @@ test("owner sees separate AI readiness and refreshes without changing publicatio
     .evaluate((node) => Number.parseFloat(getComputedStyle(node).fontSize));
   expect(headingSize).toBeGreaterThan(bodySize * 1.5);
   await page.screenshot({ fullPage: true, path: `/tmp/studio-billing-${info.project.name}.png` });
+  await page.getByRole("button", { name: "Appearance controls" }).hover();
   await page.getByRole("button", { name: "Switch to light theme" }).click();
   await page.screenshot({
     fullPage: true,

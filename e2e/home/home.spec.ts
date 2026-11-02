@@ -42,6 +42,7 @@ test("preview supports keyboard tabs and accent selection", async ({ page }) => 
 
 test("theme choice persists across homepage, studio navigation and reload", async ({ page }) => {
   await page.goto("/");
+  await page.getByRole("button", { name: "Appearance controls" }).hover();
   await page.getByRole("button", { name: "Switch to dark theme" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await page.getByRole("link", { exact: true, name: "Sign in" }).first().click();
@@ -55,6 +56,7 @@ test("theme choice persists across homepage, studio navigation and reload", asyn
   );
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await page.getByRole("button", { name: "Appearance controls" }).hover();
   await page.getByRole("button", { name: "Switch to light theme" }).click();
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
@@ -118,8 +120,10 @@ test("portfolio preview stays straight and matches the active theme and accent",
   const rgb = (value: string) => `rgb(${value.replaceAll(" ", ", ")})`;
   await expect(page.locator(".home-preview-wrap")).toHaveCSS("transform", "none");
   for (const mode of ["dark", "light", "dark"] as const) {
-    if (mode !== (await page.locator("html").getAttribute("data-theme")))
+    if (mode !== (await page.locator("html").getAttribute("data-theme"))) {
+      await page.getByRole("button", { name: "Appearance controls" }).hover();
       await page.getByRole("button", { name: `Switch to ${mode} theme` }).click();
+    }
     const palette = getThemePalette("studio", mode);
     await expect(preview).toHaveCSS("background-color", rgb(palette.surface));
     await expect(preview).toHaveCSS("color", rgb(palette.text));

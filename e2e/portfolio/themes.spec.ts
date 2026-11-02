@@ -12,6 +12,7 @@ for (const { id: theme } of portfolioThemes) {
         "background-color",
         rgb(getThemePalette(theme, "dark").bg),
       );
+      await page.getByRole("button", { name: "Appearance controls" }).hover();
       await page.getByRole("button", { name: "Switch to light theme" }).click();
       await expect(page.locator("body")).toHaveCSS(
         "background-color",
@@ -45,6 +46,7 @@ test("device mode changes keep the selected theme and respect a visitor override
   await page.emulateMedia({ colorScheme: "dark" });
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await expect(page.locator("html")).toHaveAttribute("data-portfolio-theme", "paper");
+  await page.getByRole("button", { name: "Appearance controls" }).hover();
   await page.getByRole("button", { name: "Switch to light theme" }).click();
   await page.emulateMedia({ colorScheme: "light" });
   await page.emulateMedia({ colorScheme: "dark" });

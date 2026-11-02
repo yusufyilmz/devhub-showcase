@@ -8,6 +8,7 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
   context,
 }, testInfo) => {
   await page.goto("/");
+  await page.getByRole("button", { name: "Appearance controls" }).hover();
   await page.getByRole("button", { name: "Switch to dark theme" }).click();
   const index = testInfo.project.name.startsWith("mobile") ? 1 : 0;
   const device = index ? "mobile" : "desktop";
