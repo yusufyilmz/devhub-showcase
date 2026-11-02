@@ -11,8 +11,10 @@ test("reveal controls stay readable on hover and activation pins the open card",
   await page.goto("/studio-engineer");
   const toggle = page.locator(".reveal-toggle").first();
   for (const mode of ["dark", "light"] as const) {
-    if ((await page.locator("html").getAttribute("data-theme")) !== mode)
+    if ((await page.locator("html").getAttribute("data-theme")) !== mode) {
+      await page.getByRole("button", { name: "Appearance controls" }).hover();
       await page.getByRole("button", { name: `Switch to ${mode} theme` }).click();
+    }
     await toggle.scrollIntoViewIfNeeded();
     await toggle.click();
     await expect(toggle).toHaveAttribute("aria-expanded", "true");
@@ -56,8 +58,10 @@ test("portfolio icon controls use matching foreground and surface colors in both
 }, info) => {
   await page.goto("/yusufyilmz");
   for (const mode of ["dark", "light"] as const) {
-    if ((await page.locator("html").getAttribute("data-theme")) !== mode)
+    if ((await page.locator("html").getAttribute("data-theme")) !== mode) {
+      await page.getByRole("button", { name: "Appearance controls" }).hover();
       await page.getByRole("button", { name: `Switch to ${mode} theme` }).click();
+    }
     const palette = getThemePalette("studio", mode);
     const labels = ["Resume Chat", "Referral Chat", "Scroll to next section"];
     if (info.project.name.startsWith("mobile")) labels.push("Menu");

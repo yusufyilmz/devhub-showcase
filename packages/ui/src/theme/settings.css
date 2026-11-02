@@ -1,0 +1,176 @@
+.theme-settings-panel {
+  display: grid;
+  gap: 16px;
+  width: min(360px, calc(100vw - 32px));
+  max-height: min(640px, 75dvh);
+  padding: 20px;
+  overflow-y: auto;
+  color: rgb(var(--text-rgb));
+  background: rgb(var(--surface-rgb));
+  border: 1px solid rgb(var(--border-rgb));
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgb(var(--shadow-rgb) / 0.18);
+}
+.theme-settings-field {
+  display: grid;
+  grid-template-columns: minmax(90px, 1fr) minmax(0, 1.4fr);
+  gap: 12px;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+.theme-settings-field select {
+  width: 100%;
+  min-height: 36px;
+  padding: 6px 10px;
+  font-size: 13px;
+  color: rgb(var(--text-rgb));
+  background: rgb(var(--surface-soft-rgb));
+  border: 1px solid rgb(var(--border-rgb));
+  border-radius: 8px;
+}
+.appearance-launcher {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.appearance-quick-actions {
+  position: absolute;
+  right: 100%;
+  display: flex;
+  visibility: hidden;
+  gap: 6px;
+  padding-right: 8px;
+  pointer-events: none;
+  opacity: 0;
+}
+.appearance-launcher:hover .appearance-quick-actions,
+.appearance-launcher:focus-within .appearance-quick-actions,
+.appearance-launcher[data-expanded] .appearance-quick-actions {
+  visibility: visible;
+  pointer-events: auto;
+  opacity: 1;
+}
+.appearance-dialog {
+  width: min(600px, calc(100vw - 32px));
+  max-width: 600px;
+  max-height: 85dvh;
+  padding: 28px;
+  overflow-y: auto;
+  color: rgb(var(--text-rgb));
+  background: rgb(var(--surface-rgb));
+  border: 1px solid rgb(var(--border-rgb));
+  border-radius: 20px;
+}
+.appearance-dialog header {
+  padding-right: 24px;
+}
+.appearance-dialog [data-slot="dialog-title"] {
+  margin-bottom: 8px;
+  font-size: 24px;
+  font-weight: 650;
+}
+.appearance-dialog [data-slot="dialog-description"] {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgb(var(--muted-rgb));
+}
+.appearance-visual-options {
+  display: grid;
+  gap: 24px;
+}
+.appearance-group {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+.appearance-group legend {
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.appearance-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.appearance-choice {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  font-size: 12px;
+  color: rgb(var(--muted-rgb));
+  text-transform: capitalize;
+  background: transparent;
+  border: 1px solid rgb(var(--border-rgb));
+  border-radius: 12px;
+}
+.appearance-choice:hover {
+  background: rgb(var(--surface-soft-rgb));
+}
+.appearance-choice[aria-pressed="true"] {
+  color: rgb(var(--text-rgb));
+  border-color: rgb(var(--accent-rgb));
+  box-shadow: 0 0 0 1px rgb(var(--accent-rgb));
+}
+.appearance-sample {
+  display: grid;
+  place-items: center;
+  min-height: 54px;
+  font-size: 28px;
+  color: rgb(var(--text-rgb));
+  background: rgb(var(--surface-soft-rgb));
+  border-radius: 7px;
+}
+.appearance-sample[data-value="cyan"] {
+  background: #67d8e7;
+}
+.appearance-sample[data-value="violet"] {
+  background: #b8a5ff;
+}
+.appearance-sample[data-value="emerald"] {
+  background: #67d6a0;
+}
+.appearance-sample[data-value="serif"] {
+  font-family: Georgia, serif;
+}
+.appearance-sample[data-value="mono"] {
+  font-family: ui-monospace, monospace;
+}
+.appearance-sample[data-value="compact"] {
+  letter-spacing: -8px;
+}
+.appearance-sample[data-value="spacious"] {
+  letter-spacing: 6px;
+}
+.appearance-sample[data-value="square"] {
+  border-radius: 0;
+}
+.appearance-sample[data-value="pill"] {
+  border-radius: 40px;
+}
+.appearance-advanced {
+  padding-top: 16px;
+  font-size: 13px;
+  border-top: 1px solid rgb(var(--border-rgb));
+}
+.appearance-advanced summary {
+  color: rgb(var(--muted-rgb));
+  cursor: pointer;
+}
+.appearance-advanced > div {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .appearance-quick-actions {
+    transition: none;
+  }
+}
+
+.appearance-sample[data-value="sans"] {
+  font-family: var(--font-geist-sans, system-ui), sans-serif;
+}

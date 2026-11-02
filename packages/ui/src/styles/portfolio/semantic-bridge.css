@@ -1,4 +1,5 @@
-/* Map portfolio RGB vars to shadcn semantics on published portfolio roots only. */
+/* Product and published pages share the same paired RGB surfaces and ink. */
+:root[data-platform="mydevstudio"][data-theme],
 :root[data-portfolio-theme][data-theme],
 :root[data-portfolio-theme][data-theme][data-brand] {
   --background: rgb(var(--bg-rgb));

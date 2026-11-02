@@ -13,6 +13,7 @@ test("shared semantic utilities resolve the active palette in both color modes",
     fullPage: true,
     path: testInfo.outputPath("engineer-dark.png"),
   });
+  await page.getByRole("button", { name: "Appearance controls" }).hover();
   await page.getByRole("button", { name: "Switch to light theme" }).click();
   await expect(skill).toHaveCSS("color", "rgb(111, 69, 177)");
   await expect(skill).toHaveCSS("background-color", "rgb(236, 242, 248)");

@@ -19,8 +19,8 @@ export const sectionOrderEditorStyles = {
 } as const;
 
 export const sectionSettingsEditorStyles = {
-  element1: "editor-card",
-  element2: "editor-card",
+  element1: "editor-card section-settings-editor",
+  element2: "section-settings-group",
   element3: "studio-secondary",
 } as const;
 
