@@ -3,6 +3,9 @@
   initial-value: 0deg;
   inherits: false;
 }
+.reveal-card {
+  padding: var(--spacing-md);
+}
 .reveal-card::before {
   position: absolute;
   inset: 0;
