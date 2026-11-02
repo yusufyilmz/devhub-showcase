@@ -6,7 +6,8 @@ in src/navigation/chrome.css; chat styles in src/display/chat; example styles in
 src/sections/home-section; login styles in src/forms/login-form. Existing CSS export
 paths remain supported by forwarding imports. Components import their own styles;
 the global bundles do not import these component styles. Tokens,
-themes, layouts and shared foundation rules remain centralized.
+themes, layouts and global resets remain centralized. Shared surface rules live
+in src/cards/surfaces.css and are imported by cards and controls.
 
 HomeChatLauncher in src/sections/home-section/chat-launcher.tsx composes the shared
 ChatComposer and opens the authenticated Studio assistant below the capabilities strip.

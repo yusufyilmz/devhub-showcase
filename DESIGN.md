@@ -212,7 +212,7 @@ examples in `packages/ui/src/sections/home-section`, and login in
 original organization; these colocated paths take precedence. Components import
 their own styles; global bundles no longer import component skins. Public CSS
 forwarding imports remain available. Themes, tokens, layout CSS,
-resets and shared foundation rules remain centralized.
+and resets remain centralized. Shared surface rules load from cards and controls.
 
 Two stacks share one component library. **Foundation** is the token + Tailwind layer (`data-brand`, `data-theme`, appearance). **Portfolio** is the RGB palette model for published pages (`data-portfolio-theme`, section frames, site chrome). Storybook and token-only hosts load foundation only so toolbar brands are not overridden by portfolio remaps.
 
