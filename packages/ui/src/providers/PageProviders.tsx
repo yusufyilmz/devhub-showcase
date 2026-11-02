@@ -1,3 +1,4 @@
+import { SectionNavigator } from "../navigation/section-navigator";
 import { ThemeProvider } from "../theme";
 import { NotificationProvider } from "./NotificationProvider";
 import { StudioRequestProvider } from "./StudioRequestProvider";
@@ -19,7 +20,10 @@ export function PageProviders({
       storageKey={storageKey}
     >
       <NotificationProvider>
-        <StudioRequestProvider request={request}>{children}</StudioRequestProvider>
+        <StudioRequestProvider request={request}>
+          {children}
+          <SectionNavigator />
+        </StudioRequestProvider>
       </NotificationProvider>
     </ThemeProvider>
   );
