@@ -73,7 +73,7 @@ export function RevealCardBase({
           aria-label={`${expanded ? labels.hideDetails : labels.showDetails} ${title}`}
           className={revealCardStyles.element4}
           onClick={() => {
-            const next = pointerIntent.current ?? !expanded;
+            const next = pointerIntent.current ?? !pinned.current;
             pointerIntent.current = null;
             pinned.current = next;
             setExpanded(next);
@@ -82,7 +82,7 @@ export function RevealCardBase({
             pointerIntent.current = null;
           }}
           onPointerDown={() => {
-            pointerIntent.current = !expanded;
+            pointerIntent.current = !pinned.current;
           }}
           type="button"
           variant="ghost"

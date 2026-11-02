@@ -111,7 +111,7 @@ Use localhost consistently as configured because origin checks depend on the app
 4. Rebuild stale production output and confirm the required ports are available.
 5. Fix the cause and rerun affected checks. Keep unrelated failures visible in the PR.
 
-Traces and screenshots can contain page content; use synthetic data and do not commit generated reports. CI uploads the browser report and traces for seven days, including failed runs when the job is not cancelled.
+Traces and screenshots can contain page content; use synthetic data and do not commit generated reports. The separate [browser workflow](../.github/workflows/e2e.yml) runs only on pushes to `main`, the production branch. Its non-blocking job uploads the browser report and traces for seven days, including failed runs when the job is not cancelled. Browser tests do not run on pull requests or manual CI dispatches and are not a deployment dependency.
 
 ## Report results precisely
 

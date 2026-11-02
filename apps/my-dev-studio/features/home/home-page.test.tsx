@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { HomePage } from "./home-page";
@@ -58,11 +58,17 @@ describe("HomePage", () => {
     );
   });
 
-  it("uses native expandable questions and explains publishing and PDF contact visibility", () => {
+  it("reveals answers and explains publishing and PDF contact visibility", () => {
     render(<HomePage action={guest} exampleHref={null} />);
-    expect(
-      screen.getByText("Is my portfolio public as soon as I sign up?").closest("details"),
-    ).toBeTruthy();
+    const toggle = screen.getByRole("button", {
+      name: "Show details for Is my portfolio public as soon as I sign up?",
+    });
+    expect(toggle.getAttribute("aria-expanded")).toBe("false");
+    fireEvent.click(toggle);
+    expect(toggle.getAttribute("aria-expanded")).toBe("true");
+    const answer = document.getElementById(toggle.getAttribute("aria-controls") ?? "");
+    expect(answer?.getAttribute("aria-hidden")).toBe("false");
+    expect(answer?.textContent).toContain("Your portfolio starts private");
     expect(screen.getByText(/Your portfolio starts private/)).toBeTruthy();
     expect(screen.getByText(/PDF contact settings affect the PDF only/)).toBeTruthy();
   });

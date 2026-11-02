@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { SectionAccordion, SectionCarousel, SectionGrid, SectionTabs } from ".";
@@ -21,11 +21,17 @@ describe("SectionViews", () => {
       key: "ArrowRight",
     });
     expect(screen.getByRole("tab", { name: "Second" }).getAttribute("aria-selected")).toBe("true");
-    expect(screen.getByRole("tabpanel").textContent).toBe("Second content");
+    const secondPanel = screen.getByRole("tabpanel", { name: "Second" });
+    expect(within(secondPanel).getByText("Second content")).toBeTruthy();
+    expect(secondPanel.getAttribute("aria-labelledby")).toBe(
+      screen.getByRole("tab", { name: "Second" }).id,
+    );
     fireEvent.keyDown(screen.getByRole("tab", { name: "Second" }), {
       key: "Home",
     });
-    expect(screen.getByRole("tabpanel").textContent).toBe("First content");
+    expect(
+      within(screen.getByRole("tabpanel", { name: "First" })).getByText("First content"),
+    ).toBeTruthy();
   });
   it("uses native disclosure controls and semantic lists for grids", () => {
     const { unmount } = render(<SectionAccordion items={items} label="FAQ" />);
@@ -38,7 +44,10 @@ describe("SectionViews", () => {
     const { rerender } = render(<SectionTabs items={items} label="Work" />);
     fireEvent.click(screen.getByRole("tab", { name: "Second" }));
     rerender(<SectionTabs items={items.slice(0, 1)} label="Work" />);
-    expect(screen.getByRole("tabpanel").textContent).toBe("First content");
+    expect(
+      within(screen.getByRole("tabpanel", { name: "First" })).getByText("First content"),
+    ).toBeTruthy();
+    expect(screen.getByRole("tab", { name: "First" }).getAttribute("aria-selected")).toBe("true");
     rerender(<SectionCarousel items={[]} label="Work" />);
     expect(screen.queryByRole("button")).toBeNull();
   });

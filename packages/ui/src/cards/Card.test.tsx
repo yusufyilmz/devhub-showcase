@@ -24,6 +24,26 @@ describe("Card semantic composition", () => {
     expect(toggle.getAttribute("aria-expanded")).toBe("true");
     expect(document.querySelectorAll('[data-slot="card"]')).toHaveLength(1);
   });
+  it("pins a reveal already opened by focus until a second activation or Escape", () => {
+    render(
+      <Card heading={<h3>Project</h3>} title="Project" type="reveal">
+        Details
+      </Card>,
+    );
+    const toggle = screen.getByRole("button", { name: "Show details for Project" });
+    fireEvent.focus(toggle);
+    expect(toggle.getAttribute("aria-expanded")).toBe("true");
+    fireEvent.pointerDown(toggle);
+    fireEvent.click(toggle);
+    fireEvent.blur(toggle);
+    expect(toggle.getAttribute("aria-expanded")).toBe("true");
+    fireEvent.click(toggle);
+    expect(toggle.getAttribute("aria-expanded")).toBe("false");
+    fireEvent.focus(toggle);
+    fireEvent.click(toggle);
+    fireEvent.keyDown(toggle, { key: "Escape" });
+    expect(toggle.getAttribute("aria-expanded")).toBe("false");
+  });
   it("routes appearance, variant and content options to the existing components", () => {
     const { rerender } = render(
       <Card appearance="muted" aria-label="Appearance" type="appearance">

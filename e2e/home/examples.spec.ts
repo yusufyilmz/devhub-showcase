@@ -1,10 +1,12 @@
 import { expect, test } from "@playwright/test";
 
+import { portfolioExamples } from "../../apps/my-dev-studio/features/studio/examples/data";
+
 test("carousel filters, navigates in both directions and opens a full demo", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/#examples");
   const gallery = page.locator("#examples");
-  await expect(gallery.locator(".example-card")).toHaveCount(8);
+  await expect(gallery.locator(".example-card")).toHaveCount(portfolioExamples.length);
   await gallery.screenshot({
     path: test.info().outputPath("homepage-gallery.png"),
   });
@@ -14,8 +16,15 @@ test("carousel filters, navigates in both directions and opens a full demo", asy
   await gallery.getByRole("button", { name: "Previous portfolio examples" }).click();
   await expect.poll(() => track.evaluate((el) => el.scrollLeft)).toBeLessThan(3);
   await gallery.getByRole("button", { exact: true, name: "Designer" }).click();
-  await expect(gallery.locator(".example-card")).toHaveCount(2);
+  await expect(gallery.locator(".example-card")).toHaveCount(
+    portfolioExamples.filter((item) => item.profile.portfolioType === "designer").length,
+  );
   await gallery.getByRole("link", { name: /Explore Maya Chen/ }).click();
+  const preview = page.getByRole("dialog");
+  await expect(
+    preview.getByRole("heading", { exact: true, level: 2, name: "Maya Chen" }),
+  ).toBeVisible();
+  await preview.getByRole("link", { name: "Open full page" }).click();
   await expect(page).toHaveURL("/p/examples/maya-chen");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Maya");
   await page.getByRole("link", { name: "All examples" }).click();

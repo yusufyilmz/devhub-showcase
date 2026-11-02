@@ -48,7 +48,7 @@ test("theme choice persists across homepage, studio navigation and reload", asyn
   await expect(page).toHaveURL("/login");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(9, 15, 26)");
-  await expect(page.locator(".admin-shell")).toHaveCSS("background-color", "rgb(9, 15, 26)");
+  await expect(page.getByRole("main")).toHaveClass("auth-login");
   await expect(page.getByRole("button", { name: "Open studio →" })).toHaveCSS(
     "background-color",
     "rgb(103, 216, 231)",
@@ -62,10 +62,11 @@ test("theme choice persists across homepage, studio navigation and reload", asyn
 
 test("FAQs expand and the layout fits the viewport", async ({ page }) => {
   await page.goto("/");
-  const question = page
-    .locator("summary")
-    .filter({ hasText: "Is my portfolio public as soon as I sign up?" });
+  const question = page.getByRole("button", {
+    name: /details for Is my portfolio public as soon as I sign up\?/,
+  });
   await question.click();
+  await expect(question).toHaveAttribute("aria-expanded", "true");
   await expect(page.getByText(/Your portfolio starts private/)).toBeVisible();
   const overflow = await page.evaluate(
     () => document.documentElement.scrollWidth > window.innerWidth,
