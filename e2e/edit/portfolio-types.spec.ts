@@ -55,12 +55,16 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
     path: testInfo.outputPath("type-picker.png"),
   });
   await page.getByRole("button", { name: "Use this layout" }).click();
-  await expect(page.getByLabel("Full name")).toHaveValue("New Portfolio Owner");
+  await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
+    "New Portfolio Owner",
+  );
   await expect(page.getByLabel("Publish my profile and CV at a public link")).not.toBeChecked();
   await page.getByRole("button", { name: "Save changes" }).click();
   await expect(page.getByRole("status")).toContainText("Saved");
   await page.reload();
-  await expect(page.getByLabel("Full name")).toHaveValue("New Portfolio Owner");
+  await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
+    "New Portfolio Owner",
+  );
   await page.getByRole("button", { exact: true, name: "Layout" }).click();
   await expect(page.getByRole("radio", { name: /Designer/ })).toBeChecked();
   await page.getByRole("button", { exact: true, name: "PDF" }).click();

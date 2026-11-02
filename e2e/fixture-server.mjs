@@ -83,6 +83,12 @@ const aiOwners = ["desktop", "mobile"].map((device, index) => ({
   owner_id: `83838383-8383-4383-8383-83838383838${index}`,
   username: `${device}-ai-owner`,
 }));
+const guidanceOwners = aiOwners.map((owner, index) => ({
+  ...owner,
+  id: `60606060-6060-4060-8060-60606060606${index}`,
+  owner_id: `61616161-6161-4161-8161-61616161616${index}`,
+  username: `${index ? "mobile" : "desktop"}-guidance-owner`,
+}));
 const billingOwners = [
   "94949494-9494-4494-8494-949494949490",
   "94949494-9494-4494-8494-949494949491",
@@ -362,6 +368,7 @@ const rows = [
   ...customOwners,
   ...cvImportOwners,
   ...aiOwners,
+  ...guidanceOwners,
   ...chatOwners,
   ...billingOwners,
   ...googleOwners,
@@ -426,6 +433,7 @@ function fixtureOwner(request) {
       ...customOwners,
       ...cvImportOwners,
       ...aiOwners,
+      ...guidanceOwners,
       ...chatOwners,
       ...billingOwners,
       ...googleOwners,

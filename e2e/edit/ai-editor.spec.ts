@@ -64,7 +64,9 @@ test("owner reviews AI suggestions before changing a draft and can undo without 
   expect((await (await page.request.get(profileApi)).json()).profile.title).toBe(original);
   await page.getByRole("button", { exact: true, name: "Undo AI changes" }).click();
   await page.getByRole("button", { exact: true, name: "Profile" }).click();
-  await expect(page.getByLabel("Professional title")).toHaveValue(original);
+  await expect(page.getByRole("textbox", { exact: true, name: "Professional title" })).toHaveValue(
+    original,
+  );
   await context.clearCookies();
   expect((await page.request.get(assistantApi)).status()).toBe(403);
 });
