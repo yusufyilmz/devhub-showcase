@@ -1,5 +1,14 @@
 # UI catalog
 
+`@shared/ui/portfolio` includes EditorGuidance and usePortfolioHistory for owner
+editors. The advisory checklist derives essential/recommended items from the
+draft and routes through a caller-supplied navigation callback. Session history
+covers the portfolio document, groups typing within 700 ms in the same field,
+and retains up to 100 actions. New edits clear redo; save/discard reset history.
+Ctrl/Cmd+Z and Shift+Ctrl/Cmd+Z work outside text controls and dialogs; native
+text undo remains available inside inputs. History shortcuts pause while saving.
+Username and publication controls are outside document history.
+
 `@shared/ui/section-navigator` provides SectionNavigator, enabled once by
 PageProviders. It discovers visible main-content sections with their own h1/h2,
 follows document order, and updates after content changes. Mark a non-section

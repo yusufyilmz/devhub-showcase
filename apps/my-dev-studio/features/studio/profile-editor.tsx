@@ -17,7 +17,13 @@ import { Card } from "@shared/ui/cards";
 import { GoogleImportEditor } from "@shared/ui/google-import";
 import { Input, Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
-import { LanguageSettingsEditor, PortfolioTypePicker, ProfileFields } from "@shared/ui/portfolio";
+import {
+  EditorGuidance,
+  LanguageSettingsEditor,
+  PortfolioTypePicker,
+  ProfileFields,
+  usePortfolioHistory,
+} from "@shared/ui/portfolio";
 import {
   EducationEditor,
   ExperienceEditor,
@@ -88,11 +94,14 @@ export function ProfileEditor({
 }) {
   const [saved, setSaved] = useState(initial);
   const [username, setUsername] = useState(initial.username ?? "");
-  const [draft, setDraft] = useState(initial.profile);
+  const [busy, setBusy] = useState(false);
+  const { draft, setDraft, resetDraft, undo, redo, canUndo, canRedo } = usePortfolioHistory(
+    initial.profile,
+    busy,
+  );
   const [isPublic, setIsPublic] = useState(initial.isPublic ?? false);
   const [tab, setTab] = useState<(typeof tabs)[number]>(initialTab);
   const request = useStudioRequest();
-  const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [error, showError] = useState("");
   const dirty =
@@ -130,7 +139,7 @@ export function ProfileEditor({
         window.history.replaceState(null, "", editCvPath(result.username));
       setUsername(result.username ?? username);
       setSaved(result);
-      setDraft(result.profile);
+      resetDraft(result.profile);
       setIsPublic(result.isPublic ?? isPublic);
       setMessage("Saved. Your CV now uses these details.");
       onSaved?.(result);
@@ -150,14 +159,14 @@ export function ProfileEditor({
         draft={draft}
         managed={managed}
         onGoogleImport={() => {
-          setDraft({ ...draft, templateChosen: true });
+          resetDraft({ ...draft, templateChosen: true });
           setTab("Import Google");
         }}
         onImport={() => {
-          setDraft({ ...draft, templateChosen: true });
+          resetDraft({ ...draft, templateChosen: true });
           setTab("Import CV");
         }}
-        setDraft={setDraft}
+        setDraft={resetDraft}
       />
     );
   return (
@@ -222,6 +231,26 @@ export function ProfileEditor({
             Sign out
           </Button>
         </div>
+        <EditorGuidance
+          canRedo={canRedo}
+          canUndo={canUndo}
+          disabled={busy}
+          onNavigate={(next, label) => {
+            setTab(next);
+            requestAnimationFrame(() => {
+              const target = Array.from(
+                document.querySelectorAll<HTMLLabelElement>("#admin-content label"),
+              ).find((node) => node.querySelector("span")?.textContent === label);
+              const input = target?.querySelector<HTMLElement>("input, textarea");
+              const heading = document.querySelector<HTMLElement>(".editor-section-heading h2");
+              (input ?? heading)?.scrollIntoView({ behavior: "auto", block: "center" });
+              input?.focus({ preventScroll: true });
+            });
+          }}
+          profile={draft}
+          redo={redo}
+          undo={undo}
+        />
         <SharingSettings
           busy={busy}
           downloadHref={downloadHref}
@@ -282,7 +311,7 @@ export function ProfileEditor({
             disabled={!dirty || busy}
             onClick={() => {
               if (window.confirm("Discard unpublished changes?")) {
-                setDraft(saved.profile);
+                resetDraft(saved.profile);
                 setUsername(saved.username ?? "");
                 setIsPublic(saved.isPublic ?? false);
                 showError("");
