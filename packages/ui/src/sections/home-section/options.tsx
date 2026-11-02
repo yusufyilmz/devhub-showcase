@@ -1,3 +1,5 @@
+import "./examples.css";
+
 import { cvLayouts, portfolioThemes } from "@shared/config";
 
 import { Card } from "../../cards";

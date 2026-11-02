@@ -1,5 +1,7 @@
 "use client";
 
+import "@shared/ui/components.css";
+
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 
 import { AiAssistantEditor, AiProfileEditor } from "@shared/assistant/studio";

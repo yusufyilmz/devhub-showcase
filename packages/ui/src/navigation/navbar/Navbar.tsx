@@ -1,3 +1,5 @@
+import "../chrome.css";
+
 import {
   profile as fallback,
   getNameInitials,

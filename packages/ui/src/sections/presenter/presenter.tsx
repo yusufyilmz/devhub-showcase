@@ -1,3 +1,5 @@
+import "../sections.css";
+
 import type { ReactNode } from "react";
 
 import {

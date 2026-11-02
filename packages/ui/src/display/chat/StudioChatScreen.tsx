@@ -1,5 +1,7 @@
 "use client";
 
+import "./studio-chat.css";
+
 import { type ReactNode, useEffect, useRef } from "react";
 
 import { MessageSquare, PanelLeftClose, Plus } from "lucide-react";

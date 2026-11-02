@@ -1,3 +1,5 @@
+import "../../portfolio/portfolio.css";
+
 import type { PropsWithChildren } from "react";
 
 import { Slot } from "@radix-ui/react-slot";

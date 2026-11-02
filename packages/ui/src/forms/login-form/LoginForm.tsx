@@ -1,3 +1,5 @@
+import "./auth-login.css";
+
 import { cn } from "cn";
 
 import { Button } from "../../buttons/button/Button";

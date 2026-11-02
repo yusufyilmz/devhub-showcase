@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./auth-login.css": "./src/forms/login-form/auth-login.css",
     "./utils": "./src/utils/index.ts",
     "./components": "./src/components/index.ts",
     "./overlays": "./src/overlays/index.ts",

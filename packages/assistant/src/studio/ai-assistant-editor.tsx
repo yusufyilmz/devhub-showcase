@@ -1,5 +1,7 @@
 "use client";
 
+import "@shared/ui/components.css";
+
 import type { ReactNode } from "react";
 import { type ComponentProps, useEffect, useRef, useState } from "react";
 

@@ -1,3 +1,5 @@
+import "../chrome.css";
+
 import type { ReactNode } from "react";
 
 import { Slot } from "@radix-ui/react-slot";

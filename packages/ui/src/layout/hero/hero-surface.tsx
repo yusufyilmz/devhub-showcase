@@ -1,5 +1,7 @@
 "use client";
 
+import "../../portfolio/portfolio.css";
+
 import { type ReactNode, useEffect, useRef, useState } from "react";
 
 export type HeroMedia = {

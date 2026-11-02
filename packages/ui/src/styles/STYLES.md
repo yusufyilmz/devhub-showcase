@@ -10,7 +10,12 @@ Use this file when you are already in `packages/ui/src/styles` and need a quick 
 - **Component styles:** colocated with their owning UI domain: `../portfolio/portfolio.css`,
   `../sections/sections.css`, `../navigation/chrome.css`, `../display/chat/*.css`,
   `../sections/home-section/examples.css`, and `../forms/login-form/auth-login.css`.
-- **Global bundle:** `portfolio/bundle.css` preserves the established cascade order.
+- **Global bundle:** `portfolio/bundle.css` loads layout, presets and the semantic bridge only.
+- **Loading:** components import their own styles. Global entry points do not load
+  portfolio skins, section skins, navigation, chat or login CSS.
+- **Scope:** these remain ordinary CSS files with globally scoped selectors.
+  Component-owned imports control ownership/loading; use CSS Modules if selector
+  isolation is needed.
 - **Centralized styles:** tokens, themes, layout CSS, global resets and shared foundation surfaces.
 
 Root-level `*.css` files beside this document are compatibility shims; see DESIGN.md for the mapping.

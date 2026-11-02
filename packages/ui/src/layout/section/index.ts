@@ -1,3 +1,5 @@
+import "../../sections/sections.css";
+
 export { Section } from "./Section";
 export {
   SectionAccordion,

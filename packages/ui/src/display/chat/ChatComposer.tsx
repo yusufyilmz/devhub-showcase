@@ -1,5 +1,7 @@
 "use client";
 
+import "./studio-chat.css";
+
 import { useId } from "react";
 
 import { ArrowUp, Square } from "lucide-react";

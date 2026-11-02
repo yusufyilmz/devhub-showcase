@@ -1,5 +1,7 @@
 "use client";
 
+import "@shared/ui/auth-login.css";
+
 import type { ReactNode } from "react";
 
 import { copy, type LoginSiteId } from "@shared/config";
