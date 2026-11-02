@@ -31,7 +31,7 @@ test("owner can inspect private and public knowledge from the latest saved revis
   await page.getByLabel("Show private owner knowledge").check();
   await expect(page.locator(".ai-profile-json")).toContainText("Confidential project");
   await page.getByRole("button", { exact: true, name: "Profile" }).click();
-  await page.getByLabel("Full name").fill("Alex Updated");
+  await page.getByRole("textbox", { exact: true, name: "Full name" }).fill("Alex Updated");
   await page.getByLabel("Publish my profile and CV at a public link").check();
   await page.getByRole("button", { exact: true, name: "Save changes" }).click();
   await expect(

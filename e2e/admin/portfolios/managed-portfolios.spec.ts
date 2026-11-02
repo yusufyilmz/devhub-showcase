@@ -86,19 +86,23 @@ test("an administrator creates, edits, publishes, hides and transfers an importe
   await page.getByRole("button", { name: "Create private portfolio" }).click();
   await expect(page).toHaveURL(/\/admin\/portfolios\/[a-f0-9-]+$/);
   const editorUrl = page.url();
-  await expect(page.getByLabel("Full name")).toHaveValue("Creative Import");
+  await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
+    "Creative Import",
+  );
   await expect(page.getByLabel("Publish my profile and CV at a public link")).not.toBeChecked();
   const privatePdf = await page.request.get(`${editorUrl}/cv.pdf`);
   expect(privatePdf.status()).toBe(200);
   expect((await privatePdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
-  await page.getByLabel("Full name").fill("Creative Managed");
+  await page.getByRole("textbox", { exact: true, name: "Full name" }).fill("Creative Managed");
   await page.getByLabel("Username", { exact: true }).fill(`managed-portfolio-${n}`);
   await page.getByLabel("Publish my profile and CV at a public link").check();
   await page.getByRole("button", { name: "Save changes" }).click();
   await expect(page.locator(".editor-success")).toContainText("Saved");
   await expect(page).toHaveURL(editorUrl);
   await page.reload();
-  await expect(page.getByLabel("Full name")).toHaveValue("Creative Managed");
+  await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
+    "Creative Managed",
+  );
   await page.getByRole("button", { exact: true, name: "AI profile" }).click();
   await expect(page.locator(".ai-profile-json")).toContainText("Creative Managed");
   await page.getByRole("button", { exact: true, name: "Profile" }).click();
@@ -135,7 +139,9 @@ test("an administrator creates, edits, publishes, hides and transfers an importe
   await context.clearCookies();
   await signIn(context, `88888888-8888-4888-8888-88888888888${n}`, `recipient${n}@example.test`);
   await page.goto(`/managed-portfolio-${n}/edit`);
-  await expect(page.getByLabel("Full name")).toHaveValue("Creative Managed");
+  await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
+    "Creative Managed",
+  );
   expect((await page.goto("/admin/portfolios"))?.status()).toBe(404);
   await visitor.close();
 });

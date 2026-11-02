@@ -51,10 +51,14 @@ test("owner reviews a CV, cancels safely, applies edits and explicitly saves bef
     "temporarily unavailable",
   );
   await page.getByRole("button", { name: "Process CV" }).click();
-  await expect(page.getByLabel("Full name")).toHaveValue("Alex Rivera");
+  await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
+    "Alex Rivera",
+  );
   await page.getByRole("button", { name: "Cancel import" }).click();
   await page.getByRole("button", { exact: true, name: "Profile" }).click();
-  await expect(page.getByLabel("Full name")).toHaveValue("CV Import Owner");
+  await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
+    "CV Import Owner",
+  );
   await page.getByRole("button", { exact: true, name: "Import CV" }).click();
   await page.getByLabel("Your CV file").setInputFiles({
     buffer: Buffer.from("%PDF-1.7\nFictional CV"),
@@ -63,8 +67,10 @@ test("owner reviews a CV, cancels safely, applies edits and explicitly saves bef
   });
   await page.getByLabel("Send this CV to OpenAI").check();
   await page.getByRole("button", { name: "Process CV" }).click();
-  await expect(page.getByLabel("Full name")).toHaveValue("Alex Rivera");
-  await page.getByLabel("Full name").fill("Alex Reviewed");
+  await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
+    "Alex Rivera",
+  );
+  await page.getByRole("textbox", { exact: true, name: "Full name" }).fill("Alex Reviewed");
   await page.getByLabel("Replace Projects", { exact: true }).uncheck();
   await page.locator(".cv-import-panel").screenshot({ path: info.outputPath("cv-review.png") });
   await page.getByRole("button", { name: "Apply reviewed details to draft" }).click();
@@ -75,7 +81,9 @@ test("owner reviews a CV, cancels safely, applies edits and explicitly saves bef
     page.getByText("Saved. Your CV now uses these details.", { exact: true }),
   ).toContainText("Saved.");
   await page.reload();
-  await expect(page.getByLabel("Full name")).toHaveValue("Alex Reviewed");
+  await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
+    "Alex Reviewed",
+  );
   await expect(page.getByLabel("Publish my profile and CV at a public link")).not.toBeChecked();
   await page.getByLabel("Publish my profile and CV at a public link").check();
   await page.getByRole("button", { exact: true, name: "Save changes" }).click();
