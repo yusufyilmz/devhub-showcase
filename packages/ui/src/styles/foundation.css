@@ -4,7 +4,6 @@
 @import "./foundation/theme-aliases.css";
 @import "./foundation/platform-rgb.css";
 @import "./foundation/product-tokens.css";
-@import "./foundation/surfaces.css";
 
 @source "../../../../apps/my-dev-studio/app";
 @source "../../../../apps/my-fitness-app/app";

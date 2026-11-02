@@ -1,3 +1,5 @@
+import "../../cards/surfaces.css";
+
 import type * as React from "react";
 
 import { cn } from "cn";

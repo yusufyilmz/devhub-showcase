@@ -16,6 +16,7 @@ Use this file when you are already in `packages/ui/src/styles` and need a quick 
 - **Scope:** these remain ordinary CSS files with globally scoped selectors.
   Component-owned imports control ownership/loading; use CSS Modules if selector
   isolation is needed.
-- **Centralized styles:** tokens, themes, layout CSS, global resets and shared foundation surfaces.
+- **Shared control styles:** `../cards/surfaces.css`, imported by cards and controls.
+- **Centralized styles:** tokens, themes, layout CSS and global resets.
 
 Root-level `*.css` files beside this document are compatibility shims; see DESIGN.md for the mapping.
