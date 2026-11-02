@@ -5,6 +5,8 @@ import { applyCvDraft, type CvImportGroup, cvImportGroups } from "@shared/lib/cv
 import { profileSchema } from "@shared/lib/profiles";
 import { Button } from "@shared/ui/button";
 import { Field, LinesField } from "@shared/ui/forms";
+import { Input as LibraryInput } from "@shared/ui/input";
+import { Label as LibraryLabel } from "@shared/ui/label";
 import {
   EducationEditor,
   ExperienceEditor,
@@ -87,8 +89,8 @@ export function CvImportReview({
       </ul>
       <div className="cv-import-groups">
         {cvImportGroups.map((group) => (
-          <label key={group}>
-            <input
+          <LibraryLabel key={group} unstyled>
+            <LibraryInput
               checked={selected.includes(group)}
               onChange={(event) =>
                 onSelect(
@@ -98,9 +100,10 @@ export function CvImportReview({
                 )
               }
               type="checkbox"
+              unstyled
             />{" "}
             Replace {labels[group]}
-          </label>
+          </LibraryLabel>
         ))}
       </div>
       {cvImportGroups

@@ -1,5 +1,13 @@
 # UI catalog
 
+Application controls use Button, Input, Textarea and NativeSelect. NativeSelect
+is available from @shared/ui/native-select and preserves native option, optgroup,
+multiple-selection and form semantics. Login presentation is owned by
+@shared/ui/site-login; auth retains session handlers and provider consent.
+Existing custom skins can use Button variant="unstyled" or the unstyled prop
+on fields; these retain shared behavior without applying a second visual skin.
+Unstyled buttons preserve native submit defaults; styled buttons default to button.
+
 Component contracts live in colocated types.ts files. Reusable variants, class
 maps and style helpers live in styles.ts; components import them directly.
 Existing component entry points continue to re-export their public types and

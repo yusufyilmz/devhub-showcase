@@ -4,6 +4,7 @@ import "../navigation/chrome.css";
 
 import { createContext, useContext } from "react";
 
+import { Button as LibraryButton } from "../buttons/button/Button";
 import { themeToggleStyles } from "./styles";
 import type { ThemeToggleOptions } from "./types";
 
@@ -14,14 +15,15 @@ export function ThemeToggle({
 }: ThemeToggleOptions) {
   const { mode, toggle } = useContext(ThemeContext);
   return (
-    <button
+    <LibraryButton
       aria-label={mode === "dark" ? labels.light : labels.dark}
       className={themeToggleStyles.element1}
       onClick={toggle}
       title={mode === "dark" ? labels.light : labels.dark}
       type="button"
+      variant="unstyled"
     >
       <span aria-hidden="true">{mode === "dark" ? "☀" : "☾"}</span>
-    </button>
+    </LibraryButton>
   );
 }

@@ -3,6 +3,8 @@
 import { authorableSections, type SectionSourceField } from "@shared/config";
 
 import { SelectField } from "../forms";
+import { Input as LibraryInput } from "../forms/input/Input";
+import { Label as LibraryLabel } from "../forms/label/Label";
 import { sourceEditorStyles } from "./styles";
 import type { SourceEditorOptions } from "./types";
 
@@ -33,8 +35,8 @@ export function SourceEditor({ section, type, onChange, sourceItems }: SourceEdi
       </SelectField>
       {source && (
         <>
-          <label>
-            <input
+          <LibraryLabel unstyled>
+            <LibraryInput
               checked={!source.itemIds}
               onChange={(event) =>
                 onChange({
@@ -46,12 +48,13 @@ export function SourceEditor({ section, type, onChange, sourceItems }: SourceEdi
                 })
               }
               type="checkbox"
+              unstyled
             />{" "}
             All current and future items
-          </label>
+          </LibraryLabel>
           {choices.map((item) => (
-            <label className={sourceEditorStyles.element1} key={item.id}>
-              <input
+            <LibraryLabel className={sourceEditorStyles.element1} key={item.id} unstyled>
+              <LibraryInput
                 checked={source.itemIds?.includes(item.id) ?? true}
                 onChange={(event) => {
                   const selected = source.itemIds ?? choices.map(({ id }) => id);
@@ -66,9 +69,10 @@ export function SourceEditor({ section, type, onChange, sourceItems }: SourceEdi
                   });
                 }}
                 type="checkbox"
+                unstyled
               />{" "}
               {item.title}
-            </label>
+            </LibraryLabel>
           ))}
           <p>Sources use this profile’s saved fields. Private projects stay excluded publicly.</p>
         </>

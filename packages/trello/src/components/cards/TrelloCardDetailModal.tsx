@@ -4,7 +4,7 @@ import { type FC, type ReactNode, useEffect, useRef, useState } from "react";
 
 import { cn } from "cn";
 
-import { Button } from "@shared/ui/button";
+import { Button, Button as LibraryButton } from "@shared/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@shared/ui/dialog";
 import { Flex, FlexCol } from "@shared/ui/flex";
 import { IconButton } from "@shared/ui/icon-button";
@@ -124,7 +124,7 @@ function CardDetailHeader({
                 value={editName}
               />
             ) : (
-              <button
+              <LibraryButton
                 className="hover:bg-muted/60 w-full rounded-md px-2 py-1.5 text-left transition-colors"
                 onClick={() => {
                   setEditName(card.name || "");
@@ -132,11 +132,12 @@ function CardDetailHeader({
                 }}
                 title="Click to edit title"
                 type="button"
+                variant="unstyled"
               >
                 <Heading className="text-2xl leading-snug" level={2} style={{ margin: 0 }}>
                   {card.name || "Untitled Card"}
                 </Heading>
-              </button>
+              </LibraryButton>
             )}
 
             <Typography className="mt-1 pl-2" color="muted" variant="caption">
@@ -243,7 +244,7 @@ function CardDescriptionSection({
           </Flex>
         </FlexCol>
       ) : (
-        <button
+        <LibraryButton
           className={cn(
             "border-border bg-muted/40 hover:border-primary/30 hover:bg-muted w-full rounded-lg border-2 border-transparent p-4 text-left transition-all",
             !card.desc && "flex min-h-20 items-center justify-center",
@@ -253,6 +254,7 @@ function CardDescriptionSection({
             setIsEditingDesc(true);
           }}
           type="button"
+          variant="unstyled"
         >
           {card.desc ? (
             <MarkdownRenderer markdown={card.desc} />
@@ -261,7 +263,7 @@ function CardDescriptionSection({
               Add a more detailed description...
             </Typography>
           )}
-        </button>
+        </LibraryButton>
       )}
     </section>
   );

@@ -2,6 +2,8 @@
 
 import { portfolioThemes } from "@shared/config";
 
+import { Input as LibraryInput } from "../../forms/input/Input";
+import { Label as LibraryLabel } from "../../forms/label/Label";
 import { themePickerStyles, themePreviewStyle } from "./styles";
 import type { ThemePickerOptions } from "./types";
 
@@ -11,10 +13,11 @@ export function ThemePicker({ value, accent, mode, onChange }: ThemePickerOption
       <legend>Portfolio theme</legend>
       <div className={themePickerStyles.element2}>
         {portfolioThemes.map((theme) => (
-          <label
+          <LibraryLabel
             className={themePickerStyles.element3}
             data-selected={value === theme.id}
             key={theme.id}
+            unstyled
           >
             <span
               aria-hidden="true"
@@ -30,16 +33,17 @@ export function ThemePicker({ value, accent, mode, onChange }: ThemePickerOption
                 <i />
               </span>
             </span>
-            <input
+            <LibraryInput
               checked={value === theme.id}
               name="portfolio-theme"
               onChange={() => onChange(theme.id)}
               type="radio"
+              unstyled
               value={theme.id}
             />
             <strong>{theme.name}</strong>
             <span>{theme.description}</span>
-          </label>
+          </LibraryLabel>
         ))}
       </div>
     </fieldset>

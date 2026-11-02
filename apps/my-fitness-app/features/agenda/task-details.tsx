@@ -2,6 +2,9 @@
 import { ArrowLeft } from "lucide-react";
 
 import type { Task } from "@shared/services/types";
+import { Button as LibraryButton } from "@shared/ui/button";
+import { Input as LibraryInput } from "@shared/ui/input";
+import { Label as LibraryLabel } from "@shared/ui/label";
 
 import { TaskBranch, type TaskTreeProps } from "@/features/task-tree/task-tree";
 
@@ -53,29 +56,36 @@ export function TaskDetails({
             items before moving them.
           </p>
           <div className="form-grid">
-            <label>
+            <LibraryLabel unstyled>
               Date
-              <input
+              <LibraryInput
                 defaultValue={task.date ?? date}
                 disabled={treeProps.readOnly || treeProps.busy}
                 name="date"
                 required
                 type="date"
+                unstyled
               />
-            </label>
-            <label>
+            </LibraryLabel>
+            <LibraryLabel unstyled>
               Time
-              <input
+              <LibraryInput
                 defaultValue={task.time ?? ""}
                 disabled={treeProps.readOnly || treeProps.busy}
                 name="time"
                 type="time"
+                unstyled
               />
-            </label>
+            </LibraryLabel>
           </div>
-          <button className="primary" disabled={treeProps.readOnly || treeProps.busy} type="submit">
+          <LibraryButton
+            className="primary"
+            disabled={treeProps.readOnly || treeProps.busy}
+            type="submit"
+            variant="unstyled"
+          >
             Save date and time
-          </button>
+          </LibraryButton>
         </form>
       )}
       {task.scope === "generated" && (

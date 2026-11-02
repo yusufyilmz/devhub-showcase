@@ -1,7 +1,5 @@
 export type * from "@shared/assistant/studio";
 export * from "@shared/assistant/studio";
-export type * from "@shared/auth/components";
-export { AdminLogin } from "@shared/auth/components";
 export type * from "@shared/billing/components";
 export * from "@shared/billing/components";
 export type * from "@shared/billing/provider";
@@ -42,6 +40,8 @@ export {
 } from "@shared/ui/sections";
 export type * from "@shared/ui/sections/studio";
 export * from "@shared/ui/sections/studio";
+export type * from "@shared/ui/site-login";
+export { AdminLogin } from "@shared/ui/site-login";
 export type * from "@shared/ui/theme/studio";
 export { AppearanceEditor, ThemePicker, ThemePreview } from "@shared/ui/theme/studio";
 

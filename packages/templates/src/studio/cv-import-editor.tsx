@@ -16,6 +16,8 @@ import {
 import { type StudioRequest, useStudioRequest } from "@shared/runtime/studio";
 import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
+import { Input as LibraryInput } from "@shared/ui/input";
+import { Label as LibraryLabel } from "@shared/ui/label";
 
 import { CvImportReview } from "./cv-import-review";
 
@@ -91,10 +93,10 @@ export function CvImportEditor({
             CV import is not available right now. You can still add your details in the editor.
           </p>
         )}
-        <label className="cv-upload-label" htmlFor="cv-upload">
+        <LibraryLabel className="cv-upload-label" htmlFor="cv-upload" unstyled>
           Your CV file
-        </label>
-        <input
+        </LibraryLabel>
+        <LibraryInput
           accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
           disabled={busy || !enabled}
           id="cv-upload"
@@ -105,20 +107,22 @@ export function CvImportEditor({
             setMessage("");
           }}
           type="file"
+          unstyled
         />
         <p>
           PDF, DOCX or UTF-8 text, up to 3 MB. Scanned PDFs may need a clearer copy. Original files
           are not saved to your account.
         </p>
-        <label className="editor-checkbox">
-          <input
+        <LibraryLabel className="editor-checkbox" unstyled>
+          <LibraryInput
             checked={consent}
             disabled={busy}
             onChange={(event) => setConsent(event.target.checked)}
             type="checkbox"
+            unstyled
           />{" "}
           Send this CV to OpenAI to extract my portfolio details.
-        </label>
+        </LibraryLabel>
         <p>
           The file is sent for this request. OpenAI’s API data retention policies apply. Review the
           result for mistakes before saving.

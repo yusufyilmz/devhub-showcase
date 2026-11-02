@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { Button as LibraryButton } from "../../buttons/button/Button";
 import { workMediaStyles } from "./styles";
 import type { WorkMediaOptions } from "./types";
 /** No platform request or player is created until the visitor asks to load it. */
@@ -36,14 +37,14 @@ export function WorkMedia({
               src={`https://www.youtube-nocookie.com/embed/${video}`}
               title={title}
             />
-            <button onClick={() => setLoaded(false)} type="button">
+            <LibraryButton onClick={() => setLoaded(false)} type="button" variant="unstyled">
               {unloadLabel}
-            </button>
+            </LibraryButton>
           </>
         ) : (
-          <button onClick={() => setLoaded(true)} type="button">
+          <LibraryButton onClick={() => setLoaded(true)} type="button" variant="unstyled">
             {loadLabel}: {title}
-          </button>
+          </LibraryButton>
         ))}
     </div>
   );

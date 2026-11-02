@@ -5,6 +5,10 @@ import { Plus, X } from "lucide-react";
 
 import { TaskService } from "@shared/services/fitness/task";
 import type { Workspace } from "@shared/services/types";
+import { Button as LibraryButton } from "@shared/ui/button";
+import { Input as LibraryInput } from "@shared/ui/input";
+import { Label as LibraryLabel } from "@shared/ui/label";
+import { NativeSelect as LibraryNativeSelect } from "@shared/ui/native-select";
 
 import { signOut } from "@/lib/browser-session";
 
@@ -47,45 +51,49 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
             }, "Preferences saved");
           }}
         >
-          <label>
+          <LibraryLabel unstyled>
             Name
-            <input
+            <LibraryInput
               defaultValue={workspace.settings.name}
               disabled={disabled}
               name="name"
               required
+              unstyled
             />
-          </label>
-          <label>
+          </LibraryLabel>
+          <LibraryLabel unstyled>
             Timezone
-            <input
+            <LibraryInput
               defaultValue={workspace.settings.timezone}
               disabled={disabled}
               name="timezone"
               required
+              unstyled
             />
-          </label>
-          <label>
+          </LibraryLabel>
+          <LibraryLabel unstyled>
             Diet rotation starts
-            <input
+            <LibraryInput
               defaultValue={workspace.settings.rotationStart}
               disabled={disabled}
               name="start"
               required
               type="date"
+              unstyled
             />
-          </label>
+          </LibraryLabel>
           <p className="hint">Rotation sequence</p>
           {rotation.map((id, index) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: These are editable rotation slots; the same diet can appear in multiple positions.
             <div className="row rotation-step" key={index}>
               <span>{index + 1}</span>
-              <select
+              <LibraryNativeSelect
                 aria-label={`Rotation step ${index + 1}`}
                 disabled={disabled}
                 onChange={(e) =>
                   setRotation(rotation.map((value, i) => (i === index ? e.target.value : value)))
                 }
+                unstyled
                 value={id}
               >
                 {diets.map((d) => (
@@ -93,19 +101,20 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
                     {d.title}
                   </option>
                 ))}
-              </select>
-              <button
+              </LibraryNativeSelect>
+              <LibraryButton
                 aria-label={`Remove rotation step ${index + 1}`}
                 className="icon-btn"
                 disabled={disabled || rotation.length === 1}
                 onClick={() => setRotation(rotation.filter((_, i) => i !== index))}
                 type="button"
+                variant="unstyled"
               >
                 <X size={16} />
-              </button>
+              </LibraryButton>
             </div>
           ))}
-          <button
+          <LibraryButton
             className="text-btn"
             disabled={disabled}
             onClick={() => {
@@ -113,14 +122,15 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
               if (diet) setRotation([...rotation, diet.id]);
             }}
             type="button"
+            variant="unstyled"
           >
             <Plus size={15} />
             Add rotation step
-          </button>
+          </LibraryButton>
           <div className="form-grid">
-            <label>
+            <LibraryLabel unstyled>
               Water target (ml)
-              <input
+              <LibraryInput
                 defaultValue={workspace.settings.waterTarget}
                 disabled={disabled}
                 max="20000"
@@ -128,11 +138,12 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
                 name="water"
                 required
                 type="number"
+                unstyled
               />
-            </label>
-            <label>
+            </LibraryLabel>
+            <LibraryLabel unstyled>
               Protein target (g)
-              <input
+              <LibraryInput
                 defaultValue={workspace.settings.proteinTarget}
                 disabled={disabled}
                 max="500"
@@ -140,12 +151,13 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
                 name="protein"
                 required
                 type="number"
+                unstyled
               />
-            </label>
+            </LibraryLabel>
           </div>
-          <label>
+          <LibraryLabel unstyled>
             Reminder lead (minutes)
-            <input
+            <LibraryInput
               defaultValue={workspace.settings.leadMinutes}
               disabled={disabled}
               max="120"
@@ -153,11 +165,17 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
               name="lead"
               required
               type="number"
+              unstyled
             />
-          </label>
-          <button className="primary full" disabled={disabled} type="submit">
+          </LibraryLabel>
+          <LibraryButton
+            className="primary full"
+            disabled={disabled}
+            type="submit"
+            variant="unstyled"
+          >
             Save preferences
-          </button>
+          </LibraryButton>
         </form>
       </section>
       <section className="card">
@@ -166,7 +184,7 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
           Open-app reminders for meal, supplement, water and workout tasks. They stop when the app
           is closed.
         </p>
-        <button
+        <LibraryButton
           className="outline"
           disabled={disabled}
           onClick={async () => {
@@ -190,9 +208,10 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
             );
           }}
           type="button"
+          variant="unstyled"
         >
           {workspace.settings.reminders ? "Disable" : "Enable"} reminders
-        </button>
+        </LibraryButton>
         <h2 className="space-top">Weight history</h2>
         <form
           onSubmit={(e) => {
@@ -210,9 +229,9 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
             );
           }}
         >
-          <label>
+          <LibraryLabel unstyled>
             Weight for {date} (kg)
-            <input
+            <LibraryInput
               disabled={disabled}
               max="400"
               min="20"
@@ -220,11 +239,12 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
               required
               step="0.1"
               type="number"
+              unstyled
             />
-          </label>
-          <button className="outline" disabled={disabled} type="submit">
+          </LibraryLabel>
+          <LibraryButton className="outline" disabled={disabled} type="submit" variant="unstyled">
             Log weight
-          </button>
+          </LibraryButton>
         </form>
         {workspace.weights
           .slice()
@@ -234,7 +254,7 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
             <div className="row weight-entry" key={w.date}>
               <span>{w.date}</span>
               <strong>{w.value} kg</strong>
-              <button
+              <LibraryButton
                 aria-label={`Remove weight ${w.date}`}
                 className="icon-btn"
                 disabled={disabled}
@@ -249,9 +269,10 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
                     );
                 }}
                 type="button"
+                variant="unstyled"
               >
                 <X size={14} />
-              </button>
+              </LibraryButton>
             </div>
           ))}
       </section>
@@ -262,7 +283,7 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
             ? "You are viewing the owner’s live workspace. Sign in as the owner to edit."
             : "Task records and logs are saved in your Supabase project."}
         </p>
-        <button
+        <LibraryButton
           className="outline"
           onClick={() => {
             const url = URL.createObjectURL(
@@ -277,11 +298,12 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
             URL.revokeObjectURL(url);
           }}
           type="button"
+          variant="unstyled"
         >
           Export backup
-        </button>
+        </LibraryButton>
         {!readOnly && (
-          <button
+          <LibraryButton
             className="text-btn space-top"
             onClick={async () => {
               try {
@@ -292,9 +314,10 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
               }
             }}
             type="button"
+            variant="unstyled"
           >
             Sign out
-          </button>
+          </LibraryButton>
         )}
       </section>
     </div>

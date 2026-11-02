@@ -17,6 +17,8 @@ import {
 
 import { Button } from "../../buttons";
 import { Field, SelectField } from "../../forms";
+import { Input as LibraryInput } from "../../forms/input/Input";
+import { Label as LibraryLabel } from "../../forms/label/Label";
 import { EditSection } from "../editors/editors";
 import { CustomPortfolioSection } from "./custom-portfolio-section";
 import { customSectionsEditorStyles } from "./styles";
@@ -189,14 +191,15 @@ function SectionEditor({
           </option>
         ))}
       </SelectField>
-      <label>
-        <input
+      <LibraryLabel unstyled>
+        <LibraryInput
           checked={section.visible}
           onChange={(event) => onChange({ ...section, visible: event.target.checked })}
           type="checkbox"
+          unstyled
         />{" "}
         Show custom section
-      </label>
+      </LibraryLabel>
       <EditSection
         onChange={onChange}
         section={{ ...section, sectionType: type }}

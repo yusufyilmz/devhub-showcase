@@ -12,6 +12,9 @@ import { useStudioRequest } from "@shared/runtime/studio";
 import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 import { StudioChatScreen } from "@shared/ui/display";
+import { Input as LibraryInput } from "@shared/ui/input";
+import { Label as LibraryLabel } from "@shared/ui/label";
+import { Textarea as LibraryTextarea } from "@shared/ui/textarea";
 
 type Props = {
   profile: PortfolioProfile;
@@ -246,13 +249,16 @@ function AssistantWorkspace({ profile, profileId, revision, onChange, chat }: Pr
             required. <a href="/admin/billing">Manage subscription and assignment</a>.
           </p>
         )}
-        <label htmlFor="ai-studio-message">What would you like to change?</label>
-        <textarea
+        <LibraryLabel htmlFor="ai-studio-message" unstyled>
+          What would you like to change?
+        </LibraryLabel>
+        <LibraryTextarea
           disabled={busy}
           id="ai-studio-message"
           maxLength={4000}
           onChange={(event) => setMessage(event.target.value)}
           rows={4}
+          unstyled
           value={message}
         />
         <Button
@@ -324,8 +330,8 @@ function ProposalReview({
       )}
       {review.proposal.changes.map((change) => (
         <div key={change.field}>
-          <label>
-            <input
+          <LibraryLabel unstyled>
+            <LibraryInput
               checked={selected.includes(change.field)}
               disabled={stale}
               onChange={(event) =>
@@ -336,9 +342,10 @@ function ProposalReview({
                 )
               }
               type="checkbox"
+              unstyled
             />
             {change.field}
-          </label>
+          </LibraryLabel>
           <p>{change.reason}</p>
           <details>
             <summary>Compare before and after</summary>

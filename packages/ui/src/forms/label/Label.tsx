@@ -1,16 +1,15 @@
 "use client";
 
-import type * as React from "react";
-
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { cn } from "cn";
 
 import { labelStyles } from "./styles";
+import type { LabelProps } from "./types";
 
-function Label({ className, ...props }: React.ComponentProps<typeof LabelPrimitive.Root>) {
+function Label({ className, unstyled = false, ...props }: LabelProps) {
   return (
     <LabelPrimitive.Root
-      className={cn(labelStyles.label, className)}
+      className={unstyled ? className : cn(labelStyles.label, className)}
       data-slot="label"
       {...props}
     />

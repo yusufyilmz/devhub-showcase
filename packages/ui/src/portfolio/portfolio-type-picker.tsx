@@ -2,6 +2,8 @@
 
 import { portfolioTypes } from "@shared/config";
 
+import { Input as LibraryInput } from "../forms/input/Input";
+import { Label as LibraryLabel } from "../forms/label/Label";
 import { portfolioTypePickerStyles } from "./styles";
 import type { PortfolioTypePickerOptions } from "./types";
 
@@ -15,16 +17,18 @@ export function PortfolioTypePicker({ value, onChange }: PortfolioTypePickerOpti
       </p>
       <div className={portfolioTypePickerStyles.element2}>
         {portfolioTypes.map((type) => (
-          <label
+          <LibraryLabel
             className={portfolioTypePickerStyles.element3}
             data-selected={value === type.id}
             key={type.id}
+            unstyled
           >
-            <input
+            <LibraryInput
               checked={value === type.id}
               name="portfolio-type"
               onChange={() => onChange(type.id)}
               type="radio"
+              unstyled
               value={type.id}
             />
             <span
@@ -43,7 +47,7 @@ export function PortfolioTypePicker({ value, onChange }: PortfolioTypePickerOpti
             <strong>{type.name}</strong>
             <span>{type.description}</span>
             <small>{type.audience}</small>
-          </label>
+          </LibraryLabel>
         ))}
       </div>
     </fieldset>

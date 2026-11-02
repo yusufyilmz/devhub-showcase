@@ -5,6 +5,7 @@ import { useCallback, useState } from "react";
 
 import { NotificationContext, type NotificationType } from "@shared/runtime/notifications";
 
+import { Button as LibraryButton } from "../buttons/button/Button";
 import { Alert, AlertDescription } from "../feedback/alert";
 import { notificationProviderStyles } from "./styles";
 import type { NotificationProviderProps } from "./types";
@@ -54,13 +55,14 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
           variant={notification.severity === "error" ? "destructive" : "default"}
         >
           <AlertDescription>{notification.message}</AlertDescription>
-          <button
+          <LibraryButton
             className={notificationProviderStyles.element2}
             onClick={handleClose}
             type="button"
+            variant="unstyled"
           >
             Close
-          </button>
+          </LibraryButton>
         </Alert>
       )}
     </NotificationContext.Provider>

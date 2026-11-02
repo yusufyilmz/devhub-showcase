@@ -7,6 +7,7 @@ import { useId } from "react";
 import { ArrowUp, Square } from "lucide-react";
 
 import { Button } from "../../buttons/button";
+import { Label as LibraryLabel } from "../../forms/label/Label";
 import { Textarea } from "../../forms/textarea";
 import { chatComposerStyles } from "./styles";
 import type { ChatComposerOptions } from "./types";
@@ -29,9 +30,9 @@ export function ChatComposer({
         if (!busy && !disabled && value.trim()) onSubmit();
       }}
     >
-      <label className={chatComposerStyles.element2} htmlFor={id}>
+      <LibraryLabel className={chatComposerStyles.element2} htmlFor={id} unstyled>
         Your message
-      </label>
+      </LibraryLabel>
       <Textarea
         disabled={busy}
         id={id}

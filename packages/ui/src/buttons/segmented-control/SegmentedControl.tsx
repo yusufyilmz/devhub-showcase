@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 
+import { Button as LibraryButton } from "../button/Button";
 import { segmentedControlClassName, segmentedControlStyles } from "./styles";
 import type { SegmentedControlOptions } from "./types";
 
@@ -17,7 +18,7 @@ export function SegmentedControl({
   return (
     <div className={segmentedControlStyles.element1}>
       {buttons.map((button) => (
-        <button
+        <LibraryButton
           aria-pressed={current === button.value}
           className={segmentedControlClassName(
             current === button.value
@@ -30,9 +31,10 @@ export function SegmentedControl({
             onToggle(button.value);
           }}
           type="button"
+          variant="unstyled"
         >
           {button.label}
-        </button>
+        </LibraryButton>
       ))}
     </div>
   );

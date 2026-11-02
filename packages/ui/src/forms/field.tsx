@@ -3,6 +3,7 @@
 import { useId } from "react";
 
 import { Input } from "./input";
+import { Label as LibraryLabel } from "./label/Label";
 import { Textarea } from "./textarea";
 import type { FieldOptions } from "./types";
 
@@ -17,7 +18,11 @@ export function Field({
 }: FieldOptions) {
   const fieldId = useId();
   return (
-    <label className={multiline ? "editor-field full-width" : "editor-field"} htmlFor={fieldId}>
+    <LibraryLabel
+      className={multiline ? "editor-field full-width" : "editor-field"}
+      htmlFor={fieldId}
+      unstyled
+    >
       <span>{label}</span>
       {multiline ? (
         <Textarea
@@ -37,6 +42,6 @@ export function Field({
         />
       )}{" "}
       {hint && <small>{hint}</small>}
-    </label>
+    </LibraryLabel>
   );
 }

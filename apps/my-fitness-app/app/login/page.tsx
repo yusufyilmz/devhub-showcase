@@ -1,4 +1,4 @@
-import { SiteLoginScreen } from "@shared/auth/components";
+import { SiteLoginScreen } from "@shared/ui/site-login";
 import { ThemeToggle } from "@shared/ui/theme";
 
 export default async function LoginPage({

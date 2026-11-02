@@ -9,6 +9,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../..
 import { Typography } from "../../display/typography";
 import { Alert } from "../../feedback/alert";
 import { Input } from "../../forms/input";
+import { Input as LibraryInput } from "../../forms/input/Input";
+import { Label as LibraryLabel } from "../../forms/label/Label";
+import { NativeSelect as LibraryNativeSelect } from "../../forms/native-select";
 import { TextField } from "../../forms/text-field";
 import { FlexBetween, FlexCol, FlexRow } from "../../layout/flex";
 import { themeCustomizerStyles } from "./styles";
@@ -80,13 +83,14 @@ export const scaleOptions: SelectOption[] = [
 
 const SelectField = ({ label, value, options, onChange }: ThemeCustomizerOptions) => (
   <div className={themeCustomizerStyles.element1}>
-    <label className={themeCustomizerStyles.element2}>
-      <input type="hidden" value={value} />
+    <LibraryLabel className={themeCustomizerStyles.element2} unstyled>
+      <LibraryInput type="hidden" unstyled value={value} />
       {label}
-    </label>
-    <select
+    </LibraryLabel>
+    <LibraryNativeSelect
       className={themeCustomizerStyles.element3}
       onChange={(e) => onChange(e.target.value)}
+      unstyled
       value={value}
     >
       {options.map((option) => (
@@ -94,7 +98,7 @@ const SelectField = ({ label, value, options, onChange }: ThemeCustomizerOptions
           {option.label}
         </option>
       ))}
-    </select>
+    </LibraryNativeSelect>
   </div>
 );
 

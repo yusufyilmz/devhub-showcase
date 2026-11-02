@@ -2,6 +2,9 @@
 import { Plus, X } from "lucide-react";
 
 import type { MealIngredient } from "@shared/services/types";
+import { Button as LibraryButton } from "@shared/ui/button";
+import { Input as LibraryInput } from "@shared/ui/input";
+import { Label as LibraryLabel } from "@shared/ui/label";
 
 interface Props {
   items: MealIngredient[];
@@ -21,9 +24,9 @@ export function IngredientEditor({ mealTaskId, items, onChange }: Props) {
       {items.map((item) => (
         <div className="ingredient-input" key={item.id}>
           <div className="row">
-            <label>
+            <LibraryLabel unstyled>
               Name
-              <input
+              <LibraryInput
                 onChange={(e) =>
                   patch(item.id, {
                     ingredientKey: e.target.value.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
@@ -31,22 +34,24 @@ export function IngredientEditor({ mealTaskId, items, onChange }: Props) {
                   })
                 }
                 required
+                unstyled
                 value={item.name}
               />
-            </label>
-            <button
+            </LibraryLabel>
+            <LibraryButton
               aria-label={`Remove ${item.name}`}
               className="icon-btn danger"
               onClick={() => onChange(items.filter((i) => i.id !== item.id))}
               type="button"
+              variant="unstyled"
             >
               <X size={16} />
-            </button>
+            </LibraryButton>
           </div>
           <div className="form-grid three">
-            <label>
+            <LibraryLabel unstyled>
               Minimum
-              <input
+              <LibraryInput
                 min="0"
                 onChange={(e) => {
                   const v = e.target.value === "" ? null : Number(e.target.value);
@@ -57,12 +62,13 @@ export function IngredientEditor({ mealTaskId, items, onChange }: Props) {
                 }}
                 step="any"
                 type="number"
+                unstyled
                 value={item.quantityMin ?? ""}
               />
-            </label>
-            <label>
+            </LibraryLabel>
+            <LibraryLabel unstyled>
               Maximum
-              <input
+              <LibraryInput
                 min="0"
                 onChange={(e) => {
                   const v = e.target.value === "" ? null : Number(e.target.value);
@@ -73,51 +79,60 @@ export function IngredientEditor({ mealTaskId, items, onChange }: Props) {
                 }}
                 step="any"
                 type="number"
+                unstyled
                 value={item.quantityMax ?? ""}
               />
-            </label>
-            <label>
+            </LibraryLabel>
+            <LibraryLabel unstyled>
               Unit
-              <input
+              <LibraryInput
                 onChange={(e) => patch(item.id, { unit: e.target.value })}
                 required
+                unstyled
                 value={item.unit}
               />
-            </label>
+            </LibraryLabel>
           </div>
-          <label>
+          <LibraryLabel unstyled>
             Group
-            <input
+            <LibraryInput
               onChange={(e) => patch(item.id, { groupId: e.target.value })}
               required
+              unstyled
               value={item.groupId}
             />
-          </label>
+          </LibraryLabel>
           <div className="row checkbox-row">
-            <label>
-              <input
+            <LibraryLabel unstyled>
+              <LibraryInput
                 checked={item.isChoice}
                 onChange={(e) => patch(item.id, { isChoice: e.target.checked })}
                 type="checkbox"
+                unstyled
               />
               Choice
-            </label>
-            <label>
-              <input
+            </LibraryLabel>
+            <LibraryLabel unstyled>
+              <LibraryInput
                 checked={item.optional}
                 onChange={(e) => patch(item.id, { optional: e.target.checked })}
                 type="checkbox"
+                unstyled
               />
               Optional
-            </label>
+            </LibraryLabel>
           </div>
-          <label>
+          <LibraryLabel unstyled>
             Note
-            <input onChange={(e) => patch(item.id, { note: e.target.value })} value={item.note} />
-          </label>
+            <LibraryInput
+              onChange={(e) => patch(item.id, { note: e.target.value })}
+              unstyled
+              value={item.note}
+            />
+          </LibraryLabel>
         </div>
       ))}
-      <button
+      <LibraryButton
         className="outline"
         onClick={() =>
           onChange([
@@ -139,10 +154,11 @@ export function IngredientEditor({ mealTaskId, items, onChange }: Props) {
           ])
         }
         type="button"
+        variant="unstyled"
       >
         <Plus size={16} />
         Add ingredient
-      </button>
+      </LibraryButton>
     </section>
   );
 }

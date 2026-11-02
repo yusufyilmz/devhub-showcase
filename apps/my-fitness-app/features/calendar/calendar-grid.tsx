@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { type AgendaEvent, AgendaService } from "@shared/services/schedule";
 import type { Workspace } from "@shared/services/types";
 import { dateKey, dateLabel, monday, shiftDate } from "@shared/services/types";
+import { Button as LibraryButton } from "@shared/ui/button";
 
 import { EventRow, eventDragType } from "@/features/agenda/event-row";
 import { dayHref } from "@/features/agenda/use-agenda-navigation";
@@ -107,40 +108,49 @@ export function CalendarGrid({
         </h2>
         <div className="row">
           <div className="tabs">
-            <button
+            <LibraryButton
               className={mode === "month" ? "selected" : ""}
               onClick={() => setMode("month")}
               type="button"
+              variant="unstyled"
             >
               Month
-            </button>
-            <button
+            </LibraryButton>
+            <LibraryButton
               className={mode === "week" ? "selected" : ""}
               onClick={() => setMode("week")}
               type="button"
+              variant="unstyled"
             >
               Week
-            </button>
+            </LibraryButton>
           </div>
-          <button className="text-btn" onClick={() => setDate(today)} type="button">
+          <LibraryButton
+            className="text-btn"
+            onClick={() => setDate(today)}
+            type="button"
+            variant="unstyled"
+          >
             Today
-          </button>
-          <button
+          </LibraryButton>
+          <LibraryButton
             aria-label={`Previous ${mode}`}
             className="icon-btn"
             onClick={() => page(-1)}
             type="button"
+            variant="unstyled"
           >
             <ChevronLeft size={18} />
-          </button>
-          <button
+          </LibraryButton>
+          <LibraryButton
             aria-label={`Next ${mode}`}
             className="icon-btn"
             onClick={() => page(1)}
             type="button"
+            variant="unstyled"
           >
             <ChevronRight size={18} />
-          </button>
+          </LibraryButton>
         </div>
       </div>
       <p className="hint calendar-help">

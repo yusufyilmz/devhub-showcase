@@ -37,7 +37,7 @@ The folder `src/layout/seperator` is spelled that way on purpose. Renaming it ch
 
 Named portfolio actions such as `DownloadCVButton` live in `src/buttons/buttons`. A new generic action stays generic. An action that needs profile data, a download route, or owner state receives that route as a prop.
 
-`LoginForm` lives in `src/forms/login-form`. The sign-in panel is `@shared/ui/login` in `@shared/auth`. Session handlers stay in the auth package and the app.
+`LoginForm` lives in `src/forms/login-form`. Shared sign-in presentation is `@shared/ui/site-login` in `src/forms/site-login`. Session handlers stay in the auth package and the app.
 
 ## Change a section
 

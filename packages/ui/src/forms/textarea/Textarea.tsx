@@ -1,14 +1,17 @@
 import "../../cards/surfaces.css";
 
-import type * as React from "react";
-
 import { cn } from "cn";
 
 import { textareaStyles } from "./styles";
+import type { TextareaProps } from "./types";
 
-function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
+function Textarea({ className, unstyled = false, ...props }: TextareaProps) {
   return (
-    <textarea className={cn(textareaStyles.textarea, className)} data-slot="textarea" {...props} />
+    <textarea
+      className={unstyled ? className : cn(textareaStyles.textarea, className)}
+      data-slot="textarea"
+      {...props}
+    />
   );
 }
 

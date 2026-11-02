@@ -7,6 +7,8 @@ import { getPortfolioCopy, type PortfolioProfile } from "@shared/config";
 import { Button } from "../../buttons";
 import { Card } from "../../cards";
 import { Field, SelectField } from "../../forms";
+import { Input as LibraryInput } from "../../forms/input/Input";
+import { Label as LibraryLabel } from "../../forms/label/Label";
 import { HeroSurface } from "../../layout/hero";
 import { heroSettingsEditorInlineStyle1, heroSettingsEditorStyles } from "./styles";
 import type { HeroSettingsEditorOptions } from "./types";
@@ -40,14 +42,15 @@ export function HeroSettingsEditor({ profile, onChange }: HeroSettingsEditorOpti
           Use an image or a muted video behind your introduction. Video respects reduced motion and
           includes a pause control. Use media you have permission to publish.
         </p>
-        <label>
-          <input
+        <LibraryLabel unstyled>
+          <LibraryInput
             checked={Boolean(hero)}
             onChange={(event) => (event.target.checked ? update({}) : clear())}
             type="checkbox"
+            unstyled
           />{" "}
           Use hero background
-        </label>
+        </LibraryLabel>
         {hero && (
           <>
             <SelectField

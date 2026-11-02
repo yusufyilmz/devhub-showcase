@@ -1,8 +1,12 @@
 "use client";
 
-import "@shared/ui/auth-login.css";
+import "../login-form/auth-login.css";
 
 import { type ReactNode, useState } from "react";
+
+import { Button as LibraryButton } from "../../buttons/button/Button";
+import { Input as LibraryInput } from "../input/Input";
+import { Label as LibraryLabel } from "../label/Label";
 
 export function LoginPanel({
   initialError = "",
@@ -49,7 +53,7 @@ export function LoginPanel({
           setBusy(true);
         }}
       >
-        <button className="studio-google" disabled={busy} type="submit">
+        <LibraryButton className="studio-google" disabled={busy} type="submit" variant="unstyled">
           <svg aria-hidden="true" height="20" viewBox="0 0 24 24" width="20">
             <path
               d="M21.6 12.23c0-.71-.06-1.39-.18-2.05H12v3.88h5.38a4.6 4.6 0 0 1-2 3.02v2.51h3.24c1.9-1.75 2.98-4.33 2.98-7.36Z"
@@ -69,7 +73,7 @@ export function LoginPanel({
             />
           </svg>
           Continue with Google
-        </button>
+        </LibraryButton>
         <span className="login-separator">or sign in with email</span>
       </form>
       <form
@@ -97,17 +101,23 @@ export function LoginPanel({
           }
         }}
       >
-        <label>
+        <LibraryLabel unstyled>
           Email
-          <input autoComplete="username" name="email" required type="email" />
-        </label>
-        <label>
+          <LibraryInput autoComplete="username" name="email" required type="email" unstyled />
+        </LibraryLabel>
+        <LibraryLabel unstyled>
           Password
-          <input autoComplete="current-password" name="password" required type="password" />
-        </label>
-        <button className="studio-primary" disabled={busy} type="submit">
+          <LibraryInput
+            autoComplete="current-password"
+            name="password"
+            required
+            type="password"
+            unstyled
+          />
+        </LibraryLabel>
+        <LibraryButton className="studio-primary" disabled={busy} type="submit" variant="unstyled">
           {busy ? "Signing in…" : submitLabel}
-        </button>
+        </LibraryButton>
         {error && (
           <p className="form-error" role="alert">
             {error}

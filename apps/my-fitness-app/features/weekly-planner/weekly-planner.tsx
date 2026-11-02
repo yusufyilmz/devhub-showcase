@@ -7,6 +7,9 @@ import { TaskService } from "@shared/services/fitness/task";
 import { MealPlanningService, WeeklyPlanningService } from "@shared/services/meal";
 import type { Workspace } from "@shared/services/types";
 import { dateLabel, monday } from "@shared/services/types";
+import { Button as LibraryButton } from "@shared/ui/button";
+import { Label as LibraryLabel } from "@shared/ui/label";
+import { NativeSelect as LibraryNativeSelect } from "@shared/ui/native-select";
 
 import { TaskTree } from "@/features/task-tree/task-tree";
 
@@ -41,17 +44,18 @@ export function WeeklyPlanner({ workspace, date, readOnly, busy, update }: Props
             {plan.length} meals · {unresolved} ingredient choices to make
           </p>
         </div>
-        <button
+        <LibraryButton
           className="primary"
           disabled={readOnly || busy}
           onClick={() =>
             update((s) => weekly.generate(s, start), "Weekly cooking and shopping tasks generated")
           }
           type="button"
+          variant="unstyled"
         >
           <RefreshCw size={15} />
           {saved ? "Regenerate" : "Save weekly tasks"}
-        </button>
+        </LibraryButton>
       </section>
       {!saved && (
         <p className="notice">
@@ -68,18 +72,19 @@ export function WeeklyPlanner({ workspace, date, readOnly, busy, update }: Props
       )}
       <div className="tabs wrap">
         {(["shopping", "cooking", "choices"] as const).map((m) => (
-          <button
+          <LibraryButton
             className={mode === m ? "selected" : ""}
             key={m}
             onClick={() => setMode(m)}
             type="button"
+            variant="unstyled"
           >
             {m === "shopping"
               ? "Shopping checklist"
               : m === "cooking"
                 ? "Meals to prepare"
                 : "Choose ingredients"}
-          </button>
+          </LibraryButton>
         ))}
       </div>
       {mode !== "choices" ? (
@@ -115,9 +120,9 @@ export function WeeklyPlanner({ workspace, date, readOnly, busy, update }: Props
               <p className="hint">{meal.diet}</p>
               {meal.choices.length ? (
                 meal.choices.map((choice) => (
-                  <label key={choice.groupId}>
+                  <LibraryLabel key={choice.groupId} unstyled>
                     {choice.groupId}
-                    <select
+                    <LibraryNativeSelect
                       disabled={readOnly || busy}
                       onChange={(e) => {
                         const value = e.target.value;
@@ -135,6 +140,7 @@ export function WeeklyPlanner({ workspace, date, readOnly, busy, update }: Props
                           return weekly.generate(next, start);
                         }, "Ingredient choice saved; weekly tasks refreshed");
                       }}
+                      unstyled
                       value={choice.selected ?? ""}
                     >
                       <option value="">Choose one…</option>
@@ -143,8 +149,8 @@ export function WeeklyPlanner({ workspace, date, readOnly, busy, update }: Props
                           {o.name}
                         </option>
                       ))}
-                    </select>
-                  </label>
+                    </LibraryNativeSelect>
+                  </LibraryLabel>
                 ))
               ) : (
                 <p>No alternatives to choose.</p>

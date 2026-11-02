@@ -11,6 +11,8 @@ import { applyGoogleProfile, type GoogleImportField } from "@shared/lib/profiles
 
 import { Button } from "../buttons";
 import { Card } from "../cards";
+import { Input as LibraryInput } from "../forms/input/Input";
+import { Label as LibraryLabel } from "../forms/label/Label";
 import { GoogleImportReview } from "./google-import-review";
 import { googleImportEditorStyles } from "./styles";
 import type { GoogleImportEditorOptions, GoogleImportWorkspaceOptions } from "./types";
@@ -59,8 +61,8 @@ function GoogleImportWorkspace({ profile, onChange }: GoogleImportWorkspaceOptio
         <fieldset disabled={state.busy || !state.clientId}>
           <legend>Details to request from Google</legend>
           {googleProfileCategories.map((category) => (
-            <label className={googleImportEditorStyles.element3} key={category}>
-              <input
+            <LibraryLabel className={googleImportEditorStyles.element3} key={category} unstyled>
+              <LibraryInput
                 checked={categories.includes(category)}
                 onChange={(event) => {
                   state.setReview(null);
@@ -72,21 +74,23 @@ function GoogleImportWorkspace({ profile, onChange }: GoogleImportWorkspaceOptio
                   );
                 }}
                 type="checkbox"
+                unstyled
               />{" "}
               {googleProfilePermissions[category].label}
-            </label>
+            </LibraryLabel>
           ))}
-          <label className={googleImportEditorStyles.element4}>
-            <input
+          <LibraryLabel className={googleImportEditorStyles.element4} unstyled>
+            <LibraryInput
               checked={consent}
               onChange={(event) => {
                 setConsent(event.target.checked);
                 if (event.target.checked && !state.oauth) state.prepare();
               }}
               type="checkbox"
+              unstyled
             />{" "}
             Let MyDevStudio read my selected Google profile details for review.
-          </label>
+          </LibraryLabel>
         </fieldset>
         {state.preparing && <p role="status">Preparing Google permission screen…</p>}
         {consent && !state.oauth && !state.preparing && state.clientId && (

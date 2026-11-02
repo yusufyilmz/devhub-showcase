@@ -14,6 +14,9 @@ import {
 import { TaskService } from "@shared/services/fitness/task";
 import { quantityLabel } from "@shared/services/meal";
 import type { Task, Workspace } from "@shared/services/types";
+import { Button as LibraryButton } from "@shared/ui/button";
+import { Input as LibraryInput } from "@shared/ui/input";
+import { Label as LibraryLabel } from "@shared/ui/label";
 
 const service = new TaskService();
 export interface TaskTreeProps {
@@ -105,14 +108,15 @@ function ExpandControl({
 }) {
   if (!hasChildren) return <span className="leaf-dot" />;
   return (
-    <button
+    <LibraryButton
       aria-label={`${expanded ? "Collapse" : "Expand"} ${title}`}
       className="icon-btn"
       onClick={onToggle}
       type="button"
+      variant="unstyled"
     >
       {expanded ? <ChevronDown size={17} /> : <ChevronRight size={17} />}
-    </button>
+    </LibraryButton>
   );
 }
 
@@ -213,37 +217,40 @@ function TaskActions({
         </span>
       ) : null}
       {canAdd ? (
-        <button
+        <LibraryButton
           aria-label={`Add subtask to ${task.title}`}
           className="icon-btn"
           disabled={readOnly || busy}
           onClick={onAdd}
           type="button"
+          variant="unstyled"
         >
           <Plus size={16} />
-        </button>
+        </LibraryButton>
       ) : null}
       {task.scope !== "generated" && task.kind !== "day" ? (
-        <button
+        <LibraryButton
           aria-label={`Edit ${task.title}`}
           className="icon-btn"
           disabled={readOnly || busy}
           onClick={onEdit}
           type="button"
+          variant="unstyled"
         >
           <Pencil size={15} />
-        </button>
+        </LibraryButton>
       ) : null}
       {task.scope !== "template" && task.kind !== "set" ? (
-        <button
+        <LibraryButton
           aria-label={`Complete ${task.title}`}
           className={`check ${status === "done" ? "checked" : ""}`}
           disabled={readOnly || busy}
           onClick={() => onStatus(task, status === "done" ? "pending" : "done")}
           type="button"
+          variant="unstyled"
         >
           <Check size={17} />
-        </button>
+        </LibraryButton>
       ) : null}
     </div>
   );
@@ -283,9 +290,9 @@ function SetLog({
       </span>
       {task.scope === "template" ? null : (
         <>
-          <label>
+          <LibraryLabel unstyled>
             Reps
-            <input
+            <LibraryInput
               aria-label={`${task.title} reps`}
               defaultValue={task.details.actualReps ?? task.details.targetReps}
               disabled={readOnly || busy}
@@ -294,11 +301,12 @@ function SetLog({
               name="reps"
               required
               type="number"
+              unstyled
             />
-          </label>
-          <label>
+          </LibraryLabel>
+          <LibraryLabel unstyled>
             kg
-            <input
+            <LibraryInput
               aria-label={`${task.title} weight`}
               defaultValue={task.details.weightKg ?? lastWeight ?? ""}
               disabled={readOnly || busy}
@@ -308,16 +316,18 @@ function SetLog({
               required
               step="0.5"
               type="number"
+              unstyled
             />
-          </label>
-          <button
+          </LibraryLabel>
+          <LibraryButton
             aria-label={`Log ${task.title}`}
             className={`check ${task.status === "done" ? "checked" : ""}`}
             disabled={readOnly || busy}
             type="submit"
+            variant="unstyled"
           >
             <Check size={17} />
-          </button>
+          </LibraryButton>
         </>
       )}
     </form>
@@ -337,25 +347,27 @@ function LeafActions({
 }) {
   return (
     <div className="leaf-actions">
-      <button
+      <LibraryButton
         className="text-btn"
         disabled={readOnly || busy}
         onClick={() => onStatus(task, task.status === "skipped" ? "pending" : "skipped")}
         type="button"
+        variant="unstyled"
       >
         <SkipForward size={13} />
         {task.status === "skipped" ? "Unskip" : "Skip"}
-      </button>
+      </LibraryButton>
       {task.status === "done" ? (
-        <button
+        <LibraryButton
           className="text-btn"
           disabled={readOnly || busy}
           onClick={() => onStatus(task, "pending")}
           type="button"
+          variant="unstyled"
         >
           <RotateCcw size={12} />
           Reopen
-        </button>
+        </LibraryButton>
       ) : null}
     </div>
   );

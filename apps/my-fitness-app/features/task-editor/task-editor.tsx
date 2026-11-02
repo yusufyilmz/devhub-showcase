@@ -6,6 +6,11 @@ import { ArrowDown, ArrowUp, Trash2, X } from "lucide-react";
 import { TaskService } from "@shared/services/fitness/task";
 import type { Workspace } from "@shared/services/types";
 import { createTask, defaultDetails, type Task, type TaskKind } from "@shared/services/types";
+import { Button as LibraryButton } from "@shared/ui/button";
+import { Input as LibraryInput } from "@shared/ui/input";
+import { Label as LibraryLabel } from "@shared/ui/label";
+import { NativeSelect as LibraryNativeSelect } from "@shared/ui/native-select";
+import { Textarea as LibraryTextarea } from "@shared/ui/textarea";
 
 import { IngredientEditor } from "./ingredient-editor";
 export interface TaskEditorTarget {
@@ -96,11 +101,12 @@ export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }
   }
   return (
     <div className="overlay">
-      <button
+      <LibraryButton
         aria-label="Close task editor"
         className="sheet-backdrop"
         onClick={onClose}
         type="button"
+        variant="unstyled"
       />
       <section
         aria-label="Task editor"
@@ -110,24 +116,31 @@ export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }
       >
         <div className="section-heading">
           <h2>{target.task ? "Edit task" : "Add subtask"}</h2>
-          <button aria-label="Close editor" className="icon-btn" onClick={onClose} type="button">
+          <LibraryButton
+            aria-label="Close editor"
+            className="icon-btn"
+            onClick={onClose}
+            type="button"
+            variant="unstyled"
+          >
             <X />
-          </button>
+          </LibraryButton>
         </div>
         <form onSubmit={submit}>
-          <label>
+          <LibraryLabel unstyled>
             Title
-            <input
+            <LibraryInput
               maxLength={200}
               onChange={(e) => setDraft({ ...draft, title: e.target.value })}
               required
+              unstyled
               value={draft.title}
             />
-          </label>
+          </LibraryLabel>
           <div className="form-grid">
-            <label>
+            <LibraryLabel unstyled>
               Type
-              <select
+              <LibraryNativeSelect
                 disabled={!!target.task}
                 onChange={(e) =>
                   setDraft({
@@ -136,6 +149,7 @@ export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }
                     kind: e.target.value as TaskKind,
                   })
                 }
+                unstyled
                 value={draft.kind}
               >
                 {kinds.map((k) => (
@@ -143,29 +157,31 @@ export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }
                     {k}
                   </option>
                 ))}
-              </select>
-            </label>
-            <label>
+              </LibraryNativeSelect>
+            </LibraryLabel>
+            <LibraryLabel unstyled>
               Time
-              <input
+              <LibraryInput
                 onChange={(e) => setDraft({ ...draft, time: e.target.value || null })}
                 type="time"
+                unstyled
                 value={draft.time ?? ""}
               />
-            </label>
+            </LibraryLabel>
           </div>
-          <label>
+          <LibraryLabel unstyled>
             Instructions / rest / drop-set notes
-            <textarea
+            <LibraryTextarea
               onChange={(e) => setDraft({ ...draft, notes: e.target.value })}
               rows={3}
+              unstyled
               value={draft.notes}
             />
-          </label>
+          </LibraryLabel>
           {draft.details.type === "meal" && (
-            <label>
+            <LibraryLabel unstyled>
               Water with meal (ml)
-              <input
+              <LibraryInput
                 max="10000"
                 min="0"
                 onChange={(e) =>
@@ -175,14 +191,15 @@ export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }
                   })
                 }
                 type="number"
+                unstyled
                 value={draft.details.waterMl}
               />
-            </label>
+            </LibraryLabel>
           )}
           {draft.details.type === "water" && (
-            <label>
+            <LibraryLabel unstyled>
               Water (ml)
-              <input
+              <LibraryInput
                 max="10000"
                 min="0"
                 onChange={(e) =>
@@ -192,14 +209,15 @@ export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }
                   })
                 }
                 type="number"
+                unstyled
                 value={draft.details.ml}
               />
-            </label>
+            </LibraryLabel>
           )}
           {draft.details.type === "set" && (
-            <label>
+            <LibraryLabel unstyled>
               Target reps
-              <input
+              <LibraryInput
                 max="200"
                 min="1"
                 onChange={(e) => {
@@ -213,15 +231,16 @@ export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }
                     });
                 }}
                 type="number"
+                unstyled
                 value={draft.details.targetReps}
               />
-            </label>
+            </LibraryLabel>
           )}
           {draft.details.type === "dose" && (
             <div className="form-grid">
-              <label>
+              <LibraryLabel unstyled>
                 Amount
-                <input
+                <LibraryInput
                   min="0"
                   onChange={(e) => {
                     if (draft.details.type === "dose")
@@ -235,12 +254,13 @@ export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }
                   }}
                   step="any"
                   type="number"
+                  unstyled
                   value={draft.details.amount}
                 />
-              </label>
-              <label>
+              </LibraryLabel>
+              <LibraryLabel unstyled>
                 Unit
-                <input
+                <LibraryInput
                   onChange={(e) => {
                     if (draft.details.type === "dose")
                       setDraft({
@@ -248,9 +268,10 @@ export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }
                         details: { ...draft.details, unit: e.target.value },
                       });
                   }}
+                  unstyled
                   value={draft.details.unit}
                 />
-              </label>
+              </LibraryLabel>
             </div>
           )}
           {draft.scope === "template" &&
@@ -259,16 +280,17 @@ export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }
                 <p className="hint">Repeat on weekdays</p>
                 <div className="days-picker">
                   {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((label, i) => (
-                    <label key={label}>
-                      <input
+                    <LibraryLabel key={label} unstyled>
+                      <LibraryInput
                         checked={days.includes(i)}
                         onChange={(e) =>
                           setDays(e.target.checked ? [...days, i] : days.filter((d) => d !== i))
                         }
                         type="checkbox"
+                        unstyled
                       />
                       {label}
-                    </label>
+                    </LibraryLabel>
                   ))}
                 </div>
               </>
@@ -281,37 +303,39 @@ export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }
               ? "Template changes affect future days that have not been saved. Weekly lists will be marked for refresh."
               : "This edits only this scheduled task. Its template stays unchanged."}
           </p>
-          <button className="primary full" disabled={busy} type="submit">
+          <LibraryButton className="primary full" disabled={busy} type="submit" variant="unstyled">
             Save task
-          </button>
+          </LibraryButton>
         </form>
         {target.task && (
           <div className="sheet-actions">
             <div className="row">
-              <button
+              <LibraryButton
                 className="text-btn"
                 disabled={busy}
                 onClick={async () => {
                   if (await onSave(tasks.reorder(workspace, draft.id, -1), "Task moved")) onClose();
                 }}
                 type="button"
+                variant="unstyled"
               >
                 <ArrowUp size={15} />
                 Move up
-              </button>
-              <button
+              </LibraryButton>
+              <LibraryButton
                 className="text-btn"
                 disabled={busy}
                 onClick={async () => {
                   if (await onSave(tasks.reorder(workspace, draft.id, 1), "Task moved")) onClose();
                 }}
                 type="button"
+                variant="unstyled"
               >
                 <ArrowDown size={15} />
                 Move down
-              </button>
+              </LibraryButton>
             </div>
-            <button
+            <LibraryButton
               className="text-btn danger"
               disabled={busy}
               onClick={async () => {
@@ -326,10 +350,11 @@ export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }
                 }
               }}
               type="button"
+              variant="unstyled"
             >
               <Trash2 size={15} />
               Archive
-            </button>
+            </LibraryButton>
           </div>
         )}
       </section>

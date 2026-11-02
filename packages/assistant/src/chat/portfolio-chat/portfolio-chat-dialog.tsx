@@ -4,6 +4,8 @@ import "@shared/ui/portfolio-chat.css";
 
 import { useEffect, useId, useRef, useState } from "react";
 
+import { Button as LibraryButton } from "@shared/ui/button";
+
 import { ChatPanel, type ChatPanelMessage } from "../assistant-chat/chat-panel";
 
 type Message = ChatPanelMessage & { role: "user" | "assistant" };
@@ -17,9 +19,14 @@ export function PortfolioChat(props: PortfolioChatProps) {
   const [open, setOpen] = useState(false);
   return (
     <div className="portfolio-chat">
-      <button className="portfolio-chat-launch" onClick={() => setOpen(true)} type="button">
+      <LibraryButton
+        className="portfolio-chat-launch"
+        onClick={() => setOpen(true)}
+        type="button"
+        variant="unstyled"
+      >
         Ask about {props.name}
-      </button>
+      </LibraryButton>
       {open && (
         <ChatDialog
           key={`${props.identity}:${props.revision}`}

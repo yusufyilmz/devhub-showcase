@@ -3,6 +3,8 @@
 
 import { useId } from "react";
 
+import { Input as LibraryInput } from "../input/Input";
+import { Label as LibraryLabel } from "../label/Label";
 import { radioButtonClassName, radioButtonStyles } from "./styles";
 import type { RadioButtonOptions } from "./types";
 
@@ -16,8 +18,12 @@ export function RadioButton({
 }: RadioButtonOptions) {
   const id = useId();
   return (
-    <label className={radioButtonClassName(disabled ? "opacity-50" : "")} htmlFor={id}>
-      <input
+    <LibraryLabel
+      className={radioButtonClassName(disabled ? "opacity-50" : "")}
+      htmlFor={id}
+      unstyled
+    >
+      <LibraryInput
         checked={isChecked}
         className={radioButtonStyles.element1}
         disabled={disabled}
@@ -25,9 +31,10 @@ export function RadioButton({
         name={name}
         onChange={onToggle}
         type="radio"
+        unstyled
         value={value}
       />
       {label}
-    </label>
+    </LibraryLabel>
   );
 }

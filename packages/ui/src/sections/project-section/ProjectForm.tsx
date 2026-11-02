@@ -4,6 +4,7 @@ import type React from "react";
 import { useEffect, useState } from "react";
 
 import { Button } from "../../buttons/button";
+import { Label as LibraryLabel } from "../../forms/label/Label";
 import { TextField } from "../../forms/text-field";
 import { Textarea } from "../../forms/textarea";
 import { projectFormStyles } from "./styles";
@@ -51,7 +52,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
         required
         value={formData.title}
       />
-      <label className={projectFormStyles.element3} htmlFor="description">
+      <LibraryLabel className={projectFormStyles.element3} htmlFor="description" unstyled>
         Description
         <Textarea
           name="description"
@@ -60,7 +61,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
           rows={4}
           value={formData.description}
         />
-      </label>
+      </LibraryLabel>
       <TextField
         className={projectFormStyles.element4}
         label="Project Link"

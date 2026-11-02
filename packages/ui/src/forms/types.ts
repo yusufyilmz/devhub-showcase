@@ -27,3 +27,4 @@ export type SelectFieldOptions = {
 export type EmptyStateOptions = { children: ReactNode };
 
 export type EmptyStateOptions2 = { children: ReactNode };
+export type NativeSelectProps = React.ComponentProps<"select"> & { unstyled?: boolean };

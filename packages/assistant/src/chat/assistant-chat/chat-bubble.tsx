@@ -8,6 +8,7 @@ import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 
+import { Button as LibraryButton } from "@shared/ui/button";
 import { AppearanceCard } from "@shared/ui/cards";
 import { convertSystemProps, extractSystemProps, type SystemProps } from "@shared/ui/utils";
 
@@ -160,7 +161,7 @@ export const ChatBubbleReactions = React.forwardRef<HTMLDivElement, ChatBubbleRe
         {...props}
       >
         {reactions.map(({ emoji, count, active }) => (
-          <button
+          <LibraryButton
             className={cn(
               "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs border transition-all duration-200",
               "hover:scale-110 hover:-translate-y-0.5",
@@ -170,12 +171,13 @@ export const ChatBubbleReactions = React.forwardRef<HTMLDivElement, ChatBubbleRe
             )}
             key={emoji}
             onClick={() => onReactionClick?.(emoji)}
+            variant="unstyled"
           >
             <span className="text-base leading-none">{emoji}</span>
             <span className={cn("font-medium", active ? "text-primary" : "text-muted-foreground")}>
               {count}
             </span>
-          </button>
+          </LibraryButton>
         ))}
       </div>
     );

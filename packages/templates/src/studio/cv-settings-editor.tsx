@@ -3,6 +3,8 @@
 import { type CvLayout, cvLayouts, type PortfolioProfile } from "@shared/config";
 import { Card } from "@shared/ui/cards";
 import { SelectField } from "@shared/ui/forms";
+import { Input as LibraryInput } from "@shared/ui/input";
+import { Label as LibraryLabel } from "@shared/ui/label";
 
 const defaults: NonNullable<PortfolioProfile["cvSettings"]> = {
   fontSize: 9,
@@ -62,14 +64,15 @@ export function CvSettingsEditor({
             ["includeLanguages", "Include languages"],
           ] as const
         ).map(([key, label]) => (
-          <label key={key}>
-            <input
+          <LibraryLabel key={key} unstyled>
+            <LibraryInput
               checked={settings[key]}
               onChange={(event) => update({ [key]: event.target.checked })}
               type="checkbox"
+              unstyled
             />{" "}
             {label}
-          </label>
+          </LibraryLabel>
         ))}
         <p>
           Your Appearance accent also applies to the PDF. These settings are saved only to your CV.

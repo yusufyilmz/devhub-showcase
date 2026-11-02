@@ -19,6 +19,8 @@ import { useStudioRequest } from "@shared/runtime/studio";
 import { Button } from "../../buttons";
 import { Card } from "../../cards";
 import { Field, SelectField } from "../../forms";
+import { Input as LibraryInput } from "../../forms/input/Input";
+import { Label as LibraryLabel } from "../../forms/label/Label";
 import { CustomPortfolioSection } from "./custom-portfolio-section";
 import { sectionTemplatesEditorStyles } from "./styles";
 import type { SectionTemplatesEditorOptions } from "./types";
@@ -123,14 +125,15 @@ export function SectionTemplatesEditor({ profile, onChange }: SectionTemplatesEd
           and profile bindings by default.
         </p>
         <Field label="Template name" onChange={setName} value={name} />
-        <label>
-          <input
+        <LibraryLabel unstyled>
+          <LibraryInput
             checked={includeContent}
             onChange={(event) => setIncludeContent(event.target.checked)}
             type="checkbox"
+            unstyled
           />{" "}
           Include authored content, media and bindings
-        </label>
+        </LibraryLabel>
         <div className={sectionTemplatesEditorStyles.element2}>
           <Button
             className={sectionTemplatesEditorStyles.element3}
@@ -190,9 +193,9 @@ export function SectionTemplatesEditor({ profile, onChange }: SectionTemplatesEd
           type="url"
           value={assetBase}
         />
-        <label>
+        <LibraryLabel unstyled>
           Import sections JSON
-          <input
+          <LibraryInput
             accept=".json,application/json"
             onChange={async (event) => {
               const file = event.target.files?.[0];
@@ -208,8 +211,9 @@ export function SectionTemplatesEditor({ profile, onChange }: SectionTemplatesEd
               }
             }}
             type="file"
+            unstyled
           />
-        </label>
+        </LibraryLabel>
         <Field label="Paste sections JSON" multiline onChange={setJson} value={json} />
         <Button disabled={!json.trim()} onClick={() => inspect(json)} type="button">
           Review import

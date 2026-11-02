@@ -28,7 +28,7 @@
   --color-textColor-link: rgb(var(--accent-rgb));
   --color-textColor-error: rgb(var(--danger-rgb));
   --color-button-primary: rgb(var(--accent-rgb));
-  --color-button-light: rgb(var(--text-rgb));
+  --color-button-light: var(--primary-foreground);
   --color-backgroundColor-primary: rgb(var(--bg-rgb));
   --color-backgroundColor-darkNavy: rgb(var(--bg-rgb));
   --color-backgroundColor-lightestNavy: rgb(var(--surface-rgb));

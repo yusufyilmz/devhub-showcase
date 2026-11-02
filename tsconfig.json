@@ -44,7 +44,7 @@
       "@shared/ui/forms": ["./packages/ui/src/forms/index.ts"],
       "@shared/ui/google-import": ["./packages/ui/src/google-import/index.ts"],
       "@shared/ui/layout": ["./packages/ui/src/layout/index.ts"],
-      "@shared/ui/login": ["./packages/auth/src/components/login-panel.tsx"],
+      "@shared/ui/login": ["./packages/ui/src/forms/site-login/login-panel.tsx"],
       "@shared/ui/navigation": ["./packages/ui/src/navigation/index.ts"],
       "@shared/ui/overlays": ["./packages/ui/src/overlays/index.ts"],
       "@shared/ui/page": ["./packages/ui/src/page/index.ts"],
