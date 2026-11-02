@@ -1,8 +1,7 @@
 import Link from "next/link";
 import type React from "react";
 
-import { getPortfolioCopy, type Language } from "@shared/config";
-import type { ExperienceWithCompanyProjectAndSkills } from "@shared/lib/types";
+import { getPortfolioCopy } from "@shared/config";
 import { formatDateRange } from "@shared/lib/utils";
 
 import { CardBody } from "../../cards";
@@ -12,11 +11,8 @@ import { Typography } from "../../display/typography";
 import { Divider } from "../../layout/divider";
 import { RevealCard } from "../../layout/reveal-card";
 import { SkillItem } from "../skills-section/SkillItem";
-
-type ExperienceProps = {
-  language?: Language;
-  experience: ExperienceWithCompanyProjectAndSkills;
-};
+import { experienceItemStyles } from "./styles";
+import type { ExperienceProps } from "./types";
 
 export const ExperienceItem: React.FC<ExperienceProps> = ({ experience, language = "en" }) => {
   const text = getPortfolioCopy(language);
@@ -24,25 +20,22 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience, language
   const uniqueSkills = new Set(skills.map((skill) => skill.name));
 
   return (
-    <TimelineItem className="w-full">
-      <TimelineHeader className="h-4">
+    <TimelineItem className={experienceItemStyles.element1}>
+      <TimelineHeader className={experienceItemStyles.element2}>
         <TimelineIcon />
-        <Typography className="text-xs font-light pb-0 text-main-light-slate mt-2">
+        <Typography className={experienceItemStyles.element3}>
           {formatDateRange(experience.startedAt, experience.finishedAt, language)}
         </Typography>
       </TimelineHeader>
-      <TimelineBody className="ml-0 mr-0 my-8 md:mx-8">
+      <TimelineBody className={experienceItemStyles.element4}>
         <RevealCard
           brief={experience.achievements[0]}
-          className="experience-card group"
+          className={experienceItemStyles.element5}
           heading={
-            <CardBody className="pb-0 flex flex-col gap-2">
-              <Typography
-                className="text-2xl font-bold text-textColor-light group-hover:underline group-hover:text-main-blue"
-                variant="h3"
-              >
+            <CardBody className={experienceItemStyles.element6}>
+              <Typography className={experienceItemStyles.element7} variant="h3">
                 <Link
-                  className="focus:outline-hidden focus:ring-2 focus:ring-main-blue"
+                  className={experienceItemStyles.element8}
                   href={experience.company?.link ?? "#"}
                   rel="noopener noreferrer"
                   target="_blank"
@@ -50,7 +43,7 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience, language
                   {experience.company?.name}
                 </Link>
               </Typography>
-              <Typography className="font-semibold text-textColor-secondary" variant="h4">
+              <Typography className={experienceItemStyles.element9} variant="h4">
                 {experience.role}
               </Typography>
             </CardBody>
@@ -59,26 +52,26 @@ export const ExperienceItem: React.FC<ExperienceProps> = ({ experience, language
           language={language}
           title={experience.company?.name ?? experience.role}
         >
-          <Divider className="bg-main-light-slate" />
-          <CardBody className="pt-0">
-            <List className="list-disc list-inside text-main-white">
+          <Divider className={experienceItemStyles.element10} />
+          <CardBody className={experienceItemStyles.element11}>
+            <List className={experienceItemStyles.element12}>
               {experience.achievements.map((achievement) => (
                 <ListItem key={achievement}>
-                  <Typography className="text-textColor-lightSlate font-light" variant="overline">
+                  <Typography className={experienceItemStyles.element13} variant="overline">
                     {achievement}
                   </Typography>
                 </ListItem>
               ))}
             </List>
           </CardBody>
-          <CardBody className="pt-0">
-            <div className="flex justify-start flex-wrap gap-2">
+          <CardBody className={experienceItemStyles.element14}>
+            <div className={experienceItemStyles.element15}>
               {[...uniqueSkills].map((skill) => skill && <SkillItem key={skill} name={skill} />)}
             </div>
           </CardBody>
-          <CardBody className="pt-0 pl-0">
+          <CardBody className={experienceItemStyles.element16}>
             {experience.projects.length > 0 && (
-              <div className="reveal-projects">
+              <div className={experienceItemStyles.element17}>
                 <h4>{text.selectedProjects}</h4>
                 {experience.projects.map((project) => (
                   <div key={project.id}>

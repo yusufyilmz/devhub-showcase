@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 
 import {
-  type PortfolioProfile,
   resolveSectionSource,
   type SavedSectionTemplate,
   type SectionTemplateFile,
@@ -21,6 +20,8 @@ import { Button } from "../../buttons";
 import { Card } from "../../cards";
 import { Field, SelectField } from "../../forms";
 import { CustomPortfolioSection } from "./custom-portfolio-section";
+import { sectionTemplatesEditorStyles } from "./styles";
+import type { SectionTemplatesEditorOptions } from "./types";
 
 function download(document: SectionTemplateFile) {
   const url = URL.createObjectURL(
@@ -32,13 +33,7 @@ function download(document: SectionTemplateFile) {
   link.click();
   URL.revokeObjectURL(url);
 }
-export function SectionTemplatesEditor({
-  profile,
-  onChange,
-}: {
-  profile: PortfolioProfile;
-  onChange: (profile: PortfolioProfile) => void;
-}) {
+export function SectionTemplatesEditor({ profile, onChange }: SectionTemplatesEditorOptions) {
   const request = useStudioRequest();
   const [name, setName] = useState("My section template");
   const [includeContent, setIncludeContent] = useState(false);
@@ -120,7 +115,7 @@ export function SectionTemplatesEditor({
   }
   return (
     <Card asChild layout="plain" surface="portfolio">
-      <section className="editor-card template-library">
+      <section className={sectionTemplatesEditorStyles.element1}>
         <h2>Section templates and import/export</h2>
         <p>
           Templates contain authorable sections. Identity, publication, CV content and account
@@ -136,9 +131,9 @@ export function SectionTemplatesEditor({
           />{" "}
           Include authored content, media and bindings
         </label>
-        <div className="editor-actions">
+        <div className={sectionTemplatesEditorStyles.element2}>
           <Button
-            className="studio-secondary"
+            className={sectionTemplatesEditorStyles.element3}
             disabled={loading || busy || !name.trim() || templates.length >= 5}
             onClick={() =>
               attempt(() => persist([...templates, { ...snapshot(), id: crypto.randomUUID() }]))
@@ -149,7 +144,7 @@ export function SectionTemplatesEditor({
             Save section template
           </Button>
           <Button
-            className="studio-secondary"
+            className={sectionTemplatesEditorStyles.element4}
             disabled={!name.trim()}
             onClick={() => attempt(() => download(snapshot()))}
             type="button"
@@ -163,7 +158,7 @@ export function SectionTemplatesEditor({
           your published portfolio. Applying a template changes only the portfolio draft. Exports
           with content can contain personal information; share those files only intentionally.
         </p>
-        <ul className="template-library-list">
+        <ul className={sectionTemplatesEditorStyles.element5}>
           {templates.map((template) => (
             <li key={template.id}>
               {template.name} · {template.sections.length} sections
@@ -222,7 +217,7 @@ export function SectionTemplatesEditor({
         {error && <p role="alert">{error}</p>}
         {review && (
           <Card asChild layout="plain" surface="portfolio">
-            <section aria-label="Import review" className="editor-card">
+            <section aria-label="Import review" className={sectionTemplatesEditorStyles.element6}>
               <h3>Review: {review.name}</h3>
               <p>
                 {review.sections.length} sections ·{" "}
@@ -266,7 +261,7 @@ export function SectionTemplatesEditor({
                 <option value="replace">Replace custom sections</option>
               </SelectField>
               <Button
-                className="studio-primary"
+                className={sectionTemplatesEditorStyles.element7}
                 onClick={() =>
                   attempt(() => {
                     if (

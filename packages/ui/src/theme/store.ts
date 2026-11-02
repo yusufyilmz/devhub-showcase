@@ -1,3 +1,7 @@
+import type { ThemeStore } from "./types";
+
+export type { ThemeStore } from "./types";
+
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
@@ -45,32 +49,6 @@ export const initialState: ThemeConfig = {
   transition: "smooth" as TransitionStyle,
   weight: "normal" as WeightStyle,
 };
-
-interface ThemeActions {
-  reset: () => void;
-  setAnimation: (animation: AnimationStyle) => void;
-  setBlur: (blur: BlurStyle) => void;
-  setBorder: (border: BorderStyle) => void;
-  setBrand: (brand: Brand) => void;
-  setContainer: (container: ContainerStyle) => void;
-  setFont: (font: FontStyle) => void;
-  setFontSize: (fontSize: FontSizeStyle) => void;
-  setGradient: (gradient: GradientStyle) => void;
-  setLineHeight: (lineHeight: LineHeightStyle) => void;
-  setOpacity: (opacity: OpacityStyle) => void;
-  setPerspective: (perspective: PerspectiveStyle) => void;
-  setRadius: (radius: RadiusStyle) => void;
-  setScale: (scale: ScaleStyle) => void;
-  setSettings: (settings: Partial<ThemeConfig>) => void;
-  setShadow: (shadow: ShadowStyle) => void;
-  setSpacing: (spacing: SpacingStyle) => void;
-  setTheme: (theme: ThemeMode) => void;
-  setTracking: (tracking: TrackingStyle) => void;
-  setTransition: (transition: TransitionStyle) => void;
-  setWeight: (weight: WeightStyle) => void;
-}
-
-export type ThemeStore = ThemeConfig & ThemeActions;
 
 export const themeStore = create<ThemeStore>()(
   persist(

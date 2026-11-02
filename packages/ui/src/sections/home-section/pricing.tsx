@@ -1,20 +1,15 @@
 import { Button } from "../../buttons/button";
 import { Card } from "../../cards";
 import { Section } from "../../layout/section";
-import type { PageAction } from "./action";
+import { pricingStyles } from "./styles";
+import type { HomePricingSectionOptions } from "./types";
 
-export function HomePricingSection({
-  action,
-  children,
-}: {
-  action: PageAction;
-  children?: React.ReactNode;
-}) {
+export function HomePricingSection({ action, children }: HomePricingSectionOptions) {
   return (
     <Section asChild>
-      <section aria-labelledby="pricing-title" className="home-container home-pricing" id="pricing">
-        <div className="home-section-intro">
-          <p className="home-eyebrow">YOUR STUDIO, YOUR CHOICE</p>
+      <section aria-labelledby="pricing-title" className={pricingStyles.element1} id="pricing">
+        <div className={pricingStyles.element2}>
+          <p className={pricingStyles.element3}>YOUR STUDIO, YOUR CHOICE</p>
           <h2 id="pricing-title">
             Start free.
             <br />
@@ -25,11 +20,11 @@ export function HomePricingSection({
             visitors.
           </p>
         </div>
-        <div className="home-plan-grid">
+        <div className={pricingStyles.element4}>
           <Card asChild layout="plain" surface="portfolio">
-            <article className="home-plan">
+            <article className={pricingStyles.element5}>
               <h3>Free</h3>
-              <p className="home-plan-price">Free</p>
+              <p className={pricingStyles.element6}>Free</p>
               <p>A home for your work.</p>
               <ul>
                 <li>Your portfolio website and downloadable CV</li>
@@ -38,18 +33,14 @@ export function HomePricingSection({
                 <li>Private drafts and explicit publication</li>
                 <li>CV import when the extraction service is available</li>
               </ul>
-              <Button
-                className="home-button home-button-secondary"
-                href={action.href}
-                variant="outline"
-              >
+              <Button className={pricingStyles.element7} href={action.href} variant="outline">
                 {action.label}
               </Button>
             </article>
           </Card>
           <Card asChild layout="plain" surface="portfolio">
-            <article className="home-plan home-plan-pro">
-              <p className="home-eyebrow">SANDBOX PREVIEW</p>
+            <article className={pricingStyles.element8}>
+              <p className={pricingStyles.element9}>SANDBOX PREVIEW</p>
               <h3>Pro</h3>
               {children}
               <ul>
@@ -60,7 +51,7 @@ export function HomePricingSection({
                 <li>Usage tracking and subscription management</li>
               </ul>
               <Button
-                className="home-button home-button-primary"
+                className={pricingStyles.element10}
                 href={action.signedIn ? "/admin/billing" : "/login"}
               >
                 {action.signedIn ? "Try Pro sandbox" : "Sign in to try Pro"}
@@ -68,7 +59,7 @@ export function HomePricingSection({
             </article>
           </Card>
         </div>
-        <p className="home-plan-note">
+        <p className={pricingStyles.element11}>
           Pro is currently a test environment. Use test cards; no real payments are enabled.
           Allowances count reserved attempts, including failed or uncertain requests. AI can make
           mistakes: review edits before saving. You choose whether to enable public chat.

@@ -13,16 +13,10 @@ import {
   DropdownMenuTrigger,
 } from "../../overlays/dropdown-menu/DropdownMenu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "../sidebar/Sidebar";
+import { navUserStyles } from "./styles";
+import type { NavUserOptions } from "./types";
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}) {
+export function NavUser({ user }: NavUserOptions) {
   const { isMobile } = useSidebar();
 
   return (
@@ -30,36 +24,33 @@ export function NavUser({
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-              size="lg"
-            >
-              <Avatar className="h-8 w-8 rounded-lg">
+            <SidebarMenuButton className={navUserStyles.element1} size="lg">
+              <Avatar className={navUserStyles.element2}>
                 <AvatarImage alt={user.name} src={user.avatar} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className={navUserStyles.element3}>CN</AvatarFallback>
               </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+              <div className={navUserStyles.element4}>
+                <span className={navUserStyles.element5}>{user.name}</span>
+                <span className={navUserStyles.element6}>{user.email}</span>
               </div>
-              <ChevronsUpDown className="ml-auto size-4" />
+              <ChevronsUpDown className={navUserStyles.element7} />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="end"
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+            className={navUserStyles.element8}
             side={isMobile ? "bottom" : "right"}
             sideOffset={4}
           >
-            <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
+            <DropdownMenuLabel className={navUserStyles.element9}>
+              <div className={navUserStyles.element10}>
+                <Avatar className={navUserStyles.element11}>
                   <AvatarImage alt={user.name} src={user.avatar} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className={navUserStyles.element12}>CN</AvatarFallback>
                 </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                <div className={navUserStyles.element13}>
+                  <span className={navUserStyles.element14}>{user.name}</span>
+                  <span className={navUserStyles.element15}>{user.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>

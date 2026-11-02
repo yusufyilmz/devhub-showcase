@@ -1,25 +1,23 @@
 import type React from "react";
 
-import type { Skill } from "@shared/lib/types";
 import { capitalizeFirstLetter } from "@shared/lib/utils";
 
 import { Card, CardBody } from "../../cards";
 import { Typography } from "../../display/typography";
 import { Divider } from "../../layout/divider";
 import { SkillItem } from "./SkillItem";
+import { skillCategoryItemStyles } from "./styles";
+import type { SkillCategoryItemProps } from "./types";
 
-export const SkillCategoryItem: React.FC<{ name: string; skills: Skill[] }> = ({
-  name,
-  skills,
-}) => {
+export const SkillCategoryItem: React.FC<SkillCategoryItemProps> = ({ name, skills }) => {
   return (
-    <Card className="section-card" surface="portfolio">
-      <CardBody className="flex flex-col">
-        <Typography className="text-left font-semibold text-main-white mb-3 text-2xl" variant="h3">
+    <Card className={skillCategoryItemStyles.element1} surface="portfolio">
+      <CardBody className={skillCategoryItemStyles.element2}>
+        <Typography className={skillCategoryItemStyles.element3} variant="h3">
           {capitalizeFirstLetter(name)}
         </Typography>
-        <Divider className="bg-main-light-slate mb-6 mt-0" />
-        <div className="flex justify-start flex-wrap gap-2">
+        <Divider className={skillCategoryItemStyles.element4} />
+        <div className={skillCategoryItemStyles.element5}>
           {skills.map((skill) =>
             skill?.name ? (
               <SkillItem

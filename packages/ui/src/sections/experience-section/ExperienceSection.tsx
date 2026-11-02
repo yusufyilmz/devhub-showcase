@@ -1,16 +1,11 @@
-import { getPortfolioCopy, type Language } from "@shared/config";
-import type { ExperienceWithCompanyProjectAndSkills } from "@shared/lib/types";
+import { getPortfolioCopy } from "@shared/config";
 
 import { Section } from "../../layout/section";
 import { ExperienceList } from "./ExperienceList";
+import { experienceSectionStyles } from "./styles";
+import type { ExperienceSectionOptions } from "./types";
 
-export function ExperienceSection({
-  experiences,
-  language = "en",
-}: {
-  experiences: ExperienceWithCompanyProjectAndSkills[];
-  language?: Language;
-}) {
+export function ExperienceSection({ experiences, language = "en" }: ExperienceSectionOptions) {
   const text = getPortfolioCopy(language);
   return (
     <Section
@@ -19,7 +14,7 @@ export function ExperienceSection({
       subtitle={text.experienceSubtitle}
       title={text.experience}
     >
-      <div className="mt-8">
+      <div className={experienceSectionStyles.element1}>
         <ExperienceList experiences={experiences} language={language} />
       </div>
     </Section>

@@ -2,25 +2,16 @@
 
 import "../../portfolio/portfolio.css";
 
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export type HeroMedia = {
-  kind: "image" | "video";
-  url: string;
-  poster?: string;
-  position: "center" | "top" | "bottom";
-  overlay: "soft" | "strong";
-};
+import { heroSurfaceStyles } from "./styles";
+import type { HeroSurfaceOptions } from "./types";
 
 export function HeroSurface({
   media,
   children,
   labels = { pause: "Pause background video", play: "Play background video" },
-}: {
-  media?: HeroMedia;
-  children: ReactNode;
-  labels?: { play: string; pause: string };
-}) {
+}: HeroSurfaceOptions) {
   const video = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const mediaUrl = media?.url;
@@ -40,14 +31,14 @@ export function HeroSurface({
     };
   }, [media?.kind, mediaUrl]);
   if (!media || !/^https?:\/\//i.test(media.url))
-    return <div className="hero-surface-plain">{children}</div>;
+    return <div className={heroSurfaceStyles.element1}>{children}</div>;
   const position = { objectPosition: media.position };
   return (
-    <div className="hero-surface" data-overlay={media.overlay}>
+    <div className={heroSurfaceStyles.element2} data-overlay={media.overlay}>
       {media.kind === "image" ? (
         <img
           alt=""
-          className="hero-surface-media"
+          className={heroSurfaceStyles.element3}
           referrerPolicy="no-referrer"
           src={media.url}
           style={position}
@@ -57,7 +48,7 @@ export function HeroSurface({
           {media.poster && /^https?:\/\//i.test(media.poster) && (
             <img
               alt=""
-              className="hero-surface-media"
+              className={heroSurfaceStyles.element4}
               referrerPolicy="no-referrer"
               src={media.poster}
               style={position}
@@ -65,7 +56,7 @@ export function HeroSurface({
           )}
           <video
             aria-hidden="true"
-            className="hero-surface-media hero-surface-video"
+            className={heroSurfaceStyles.element5}
             loop
             muted
             onPause={() => setPlaying(false)}
@@ -79,11 +70,11 @@ export function HeroSurface({
           />
         </>
       )}
-      <div className="hero-surface-shade" />
-      <div className="hero-surface-content">{children}</div>
+      <div className={heroSurfaceStyles.element6} />
+      <div className={heroSurfaceStyles.element7}>{children}</div>
       {media.kind === "video" && (
         <button
-          className="hero-surface-toggle"
+          className={heroSurfaceStyles.element8}
           onClick={() => {
             const node = video.current;
             if (node?.paused) node.play().catch(() => {});
@@ -97,3 +88,5 @@ export function HeroSurface({
     </div>
   );
 }
+
+export type { HeroMedia } from "./types";

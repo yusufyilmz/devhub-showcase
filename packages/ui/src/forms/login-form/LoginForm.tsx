@@ -6,20 +6,21 @@ import { Button } from "../../buttons/button/Button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../cards";
 import { Input } from "../input/Input";
 import { Label } from "../label/Label";
+import { loginFormStyles } from "./styles";
 
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn(loginFormStyles.loginForm, className)} {...props}>
       <Card>
-        <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome back</CardTitle>
+        <CardHeader className={loginFormStyles.element1}>
+          <CardTitle className={loginFormStyles.element2}>Welcome back</CardTitle>
           <CardDescription>Login with your Apple or Google account</CardDescription>
         </CardHeader>
         <CardContent>
           <form>
-            <div className="grid gap-6">
-              <div className="flex flex-col gap-4">
-                <Button className="w-full" variant="outline">
+            <div className={loginFormStyles.element3}>
+              <div className={loginFormStyles.element4}>
+                <Button className={loginFormStyles.element5} variant="outline">
                   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <title>Apple</title>
                     <path
@@ -29,7 +30,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                   </svg>
                   Login with Apple
                 </Button>
-                <Button className="w-full" variant="outline">
+                <Button className={loginFormStyles.element6} variant="outline">
                   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <title>Google</title>
                     <path
@@ -40,35 +41,30 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                   Login with Google
                 </Button>
               </div>
-              <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
-                <span className="bg-card text-muted-foreground relative z-10 px-2">
-                  Or continue with
-                </span>
+              <div className={loginFormStyles.element7}>
+                <span className={loginFormStyles.element8}>Or continue with</span>
               </div>
-              <div className="grid gap-6">
-                <div className="grid gap-3">
+              <div className={loginFormStyles.element9}>
+                <div className={loginFormStyles.element10}>
                   <Label htmlFor="email">Email</Label>
                   <Input id="email" placeholder="hello@sathittham.com" required type="email" />
                 </div>
-                <div className="grid gap-3">
-                  <div className="flex items-center">
+                <div className={loginFormStyles.element11}>
+                  <div className={loginFormStyles.element12}>
                     <Label htmlFor="password">Password</Label>
-                    <a
-                      className="ml-auto text-sm underline-offset-4 hover:underline"
-                      href="/forgot-password"
-                    >
+                    <a className={loginFormStyles.element13} href="/forgot-password">
                       Forgot your password?
                     </a>
                   </div>
                   <Input id="password" required type="password" />
                 </div>
-                <Button className="w-full" type="submit">
+                <Button className={loginFormStyles.element14} type="submit">
                   Login
                 </Button>
               </div>
-              <div className="text-center text-sm">
+              <div className={loginFormStyles.element15}>
                 Don&apos;t have an account?{" "}
-                <a className="underline underline-offset-4" href="/signup">
+                <a className={loginFormStyles.element16} href="/signup">
                   Sign up
                 </a>
               </div>
@@ -76,7 +72,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
           </form>
         </CardContent>
       </Card>
-      <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
+      <div className={loginFormStyles.element17}>
         By clicking continue, you agree to our <a href="/terms">Terms of Service</a> and{" "}
         <a href="/privacy">Privacy Policy</a>.
       </div>

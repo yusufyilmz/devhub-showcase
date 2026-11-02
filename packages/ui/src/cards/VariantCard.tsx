@@ -2,203 +2,25 @@
 
 import * as React from "react";
 
-import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 
 import { convertSystemProps, extractSystemProps, type SystemProps } from "../utils/system-props";
+import {
+  variantCardInlineStyle1,
+  variantCardStyle,
+  variantCardStyles,
+  variantCardVariants,
+} from "./styles";
+import type {
+  VariantCardAccentConfig as AccentConfig,
+  ResolveVariantAccentOptions,
+  VariantCardProps,
+} from "./types";
 
-const variantCardVariants = cva(
-  "relative transition-all duration-300 ease-out border border-solid",
-  {
-    defaultVariants: {
-      rounded: "default",
-      shadow: "default",
-      size: "default",
-      variant: "default",
-    },
-    variants: {
-      rounded: {
-        default: "rounded-lg",
-        full: "rounded-2xl",
-        lg: "rounded-xl",
-        none: "rounded-none",
-        sm: "rounded-sm",
-      },
-      shadow: {
-        default: "shadow-md",
-        lg: "shadow-lg",
-        none: "",
-        sm: "shadow-sm",
-        xl: "shadow-xl",
-      },
-      size: {
-        compact: "p-2 sm:p-2.5 md:p-3",
-        default: "p-4 sm:p-5 md:p-6",
-        lg: "p-5 sm:p-6 md:p-8",
-        sm: "p-3",
-        spacious: "p-6 sm:p-8 md:p-10",
-      },
-      variant: {
-        default: "bg-card text-card-foreground border-border",
-        elevated: "bg-card text-card-foreground border-border shadow-lg",
-        glass:
-          "bg-card/60 text-card-foreground border-border/50 backdrop-blur-xl backdrop-saturate-120",
-        gradient: "bg-gradient-to-br from-card to-muted text-card-foreground border-border",
-        subtle: "bg-card/90 text-card-foreground border-border/70",
-      },
-    },
-  },
-);
-
-type AccentConfig = {
-  gradient?: string;
-  position?: "top" | "bottom" | "left" | "right";
-  size?: number;
-  colors?: [string, string, string];
-};
-
-export interface VariantCardProps
-  extends Omit<
-      React.HTMLAttributes<HTMLDivElement>,
-      keyof VariantProps<typeof variantCardVariants> | keyof SystemProps
-    >,
-    VariantProps<typeof variantCardVariants>,
-    Omit<SystemProps, "shadow"> {
-  /**
-   * Show accent border/gradient
-   * @default false
-   */
-  accent?: boolean | AccentConfig;
-
-  /**
-   * Allow overflow for effects like shadows/glows
-   * @default false
-   */
-  allowOverflow?: boolean;
-
-  children?: React.ReactNode;
-
-  /**
-   * Enable fade-in animation
-   * @default false
-   */
-  fadeIn?: boolean;
-
-  /**
-   * Fade-in delay in ms
-   * @default 0
-   */
-  fadeInDelay?: number;
-
-  /**
-   * Enable floating animation
-   * @default false
-   */
-  float?: boolean;
-
-  /**
-   * Full width
-   * @default false
-   */
-  fullWidth?: boolean;
-
-  /**
-   * Custom glow color (uses primary by default)
-   */
-  glowColor?: string;
-
-  /**
-   * Enable glow effect on hover
-   * @default false
-   */
-  glowOnHover?: boolean;
-
-  /**
-   * Enable hover effects
-   * @default false
-   */
-  hoverable?: boolean;
-
-  /**
-   * Scale factor on hover
-   * @default 1.02
-   */
-  hoverScale?: number;
-
-  /**
-   * Translate Y on hover (negative moves up)
-   * @default -4
-   */
-  hoverTranslateY?: number;
-
-  /**
-   * Overlay opacity (0-1)
-   * @default 0.05
-   */
-  overlayOpacity?: number;
-
-  /**
-   * Pattern overlay
-   * @default false
-   */
-  pattern?: "dots" | "grid" | "none";
-
-  /**
-   * Enable pulse animation
-   * @default false
-   */
-  pulse?: boolean;
-
-  /**
-   * Transition duration in ms
-   * @default 300
-   */
-  transitionDuration?: number;
-}
-
-function resolveVariantAccent(accent: boolean | AccentConfig | undefined): AccentConfig | null {
+function resolveVariantAccent(accent: ResolveVariantAccentOptions): AccentConfig | null {
   if (typeof accent !== "boolean") return accent ?? null;
   if (accent) return {};
   return null;
-}
-
-function variantCardStyle(options: {
-  allowOverflow: boolean;
-  fadeIn: boolean;
-  finalGlowColor: string;
-  fullWidth: boolean;
-  glowOnHover: boolean;
-  hoverScale: number;
-  hoverTranslateY: number;
-  hoverable: boolean;
-  isVisible: boolean;
-  patternStyles: React.CSSProperties;
-  style?: React.CSSProperties;
-  systemStyles: React.CSSProperties;
-  transitionDuration: number;
-}): React.CSSProperties {
-  return {
-    ...options.systemStyles,
-    ...options.style,
-    opacity: options.isVisible ? 1 : 0,
-    overflow: options.allowOverflow ? "visible" : "hidden",
-    transform: options.isVisible ? "translateY(0)" : "translateY(10px)",
-    transition: options.fadeIn
-      ? `opacity ${options.transitionDuration}ms ease-out, transform ${options.transitionDuration}ms ease-out, all ${options.transitionDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`
-      : `all ${options.transitionDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`,
-    transitionDuration: `${options.transitionDuration}ms`,
-    width: options.fullWidth ? "100%" : undefined,
-    ...options.patternStyles,
-    ...(options.hoverable &&
-      ({
-        "--hover-scale": options.hoverScale.toString(),
-        "--hover-translate-y": `${options.hoverTranslateY}px`,
-      } as React.CSSProperties)),
-    ...(options.glowOnHover &&
-      ({
-        "--glow-color": options.finalGlowColor,
-      } as React.CSSProperties)),
-  };
 }
 
 export const VariantCard = React.forwardRef<HTMLDivElement, VariantCardProps>(
@@ -351,7 +173,10 @@ export const VariantCard = React.forwardRef<HTMLDivElement, VariantCardProps>(
         {accentConfig && (
           <div
             aria-hidden="true"
-            className={cn("pointer-events-none absolute z-10", hoverable && "group-hover:h-[6px]")}
+            className={cn(
+              variantCardStyles.variantCard,
+              hoverable && variantCardStyles.variantCard2,
+            )}
             style={getAccentStyles()}
           />
         )}
@@ -359,16 +184,19 @@ export const VariantCard = React.forwardRef<HTMLDivElement, VariantCardProps>(
         {pattern !== "none" && (
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-0"
-            style={{
-              background: "var(--muted)",
-              mixBlendMode: "multiply",
-              opacity: overlayOpacity,
-            }}
+            className={variantCardStyles.element1}
+            style={variantCardInlineStyle1(overlayOpacity)}
           />
         )}
 
-        <div className={cn("relative z-10", pattern !== "none" && "relative")}>{children}</div>
+        <div
+          className={cn(
+            variantCardStyles.variantCard3,
+            pattern !== "none" && variantCardStyles.variantCard4,
+          )}
+        >
+          {children}
+        </div>
       </div>
     );
   },
@@ -385,7 +213,7 @@ export const VariantCardHeader = React.forwardRef<
 
   return (
     <div
-      className={cn("mb-4 flex flex-col space-y-1.5", className)}
+      className={cn(variantCardStyles.variantCardHeader, className)}
       ref={ref}
       style={systemStyles}
       {...otherProps}
@@ -405,10 +233,7 @@ export const VariantCardTitle = React.forwardRef<
 
   return (
     <h3
-      className={cn(
-        "text-2xl font-semibold leading-none tracking-tight text-foreground",
-        className,
-      )}
+      className={cn(variantCardStyles.variantCardTitle, className)}
       ref={ref}
       style={systemStyles}
       {...otherProps}
@@ -428,7 +253,7 @@ export const VariantCardDescription = React.forwardRef<
 
   return (
     <p
-      className={cn("text-sm text-muted-foreground", className)}
+      className={cn(variantCardStyles.variantCardDescription, className)}
       ref={ref}
       style={systemStyles}
       {...otherProps}
@@ -447,7 +272,12 @@ export const VariantCardContent = React.forwardRef<
   const systemStyles = convertSystemProps(systemProps);
 
   return (
-    <div className={cn("pt-0", className)} ref={ref} style={systemStyles} {...otherProps}>
+    <div
+      className={cn(variantCardStyles.variantCardContent, className)}
+      ref={ref}
+      style={systemStyles}
+      {...otherProps}
+    >
       {children}
     </div>
   );
@@ -463,7 +293,7 @@ export const VariantCardFooter = React.forwardRef<
 
   return (
     <div
-      className={cn("flex items-center pt-4", className)}
+      className={cn(variantCardStyles.variantCardFooter, className)}
       ref={ref}
       style={systemStyles}
       {...otherProps}
@@ -475,3 +305,5 @@ export const VariantCardFooter = React.forwardRef<
 VariantCardFooter.displayName = "VariantCardFooter";
 
 export default VariantCard;
+
+export type { VariantCardProps } from "./types";

@@ -1,3 +1,5 @@
+import type { UserConfigMode } from "@shared/runtime/user";
+
 export const THEME_MODES = ["light", "dark", "system"] as const;
 export type ThemeMode = (typeof THEME_MODES)[number];
 
@@ -134,4 +136,49 @@ export interface ThemeConfig {
   tracking: TrackingStyle;
   transition: TransitionStyle;
   weight: WeightStyle;
+}
+
+export type ResolvedTheme = "light" | "dark";
+
+export type ThemeToggleOptions = {
+  labels?: { light: string; dark: string };
+};
+
+export type ThemeProviderOptions = {
+  accent: "cyan" | "violet" | "emerald";
+  children: React.ReactNode;
+  defaultTheme: UserConfigMode;
+  portfolioTheme?: string;
+  /** Read only to migrate a preference written by an older version. */
+  storageKey: string;
+};
+
+export interface ThemeActions {
+  reset: () => void;
+  setAnimation: (animation: AnimationStyle) => void;
+  setBlur: (blur: BlurStyle) => void;
+  setBorder: (border: BorderStyle) => void;
+  setBrand: (brand: Brand) => void;
+  setContainer: (container: ContainerStyle) => void;
+  setFont: (font: FontStyle) => void;
+  setFontSize: (fontSize: FontSizeStyle) => void;
+  setGradient: (gradient: GradientStyle) => void;
+  setLineHeight: (lineHeight: LineHeightStyle) => void;
+  setOpacity: (opacity: OpacityStyle) => void;
+  setPerspective: (perspective: PerspectiveStyle) => void;
+  setRadius: (radius: RadiusStyle) => void;
+  setScale: (scale: ScaleStyle) => void;
+  setSettings: (settings: Partial<ThemeConfig>) => void;
+  setShadow: (shadow: ShadowStyle) => void;
+  setSpacing: (spacing: SpacingStyle) => void;
+  setTheme: (theme: ThemeMode) => void;
+  setTracking: (tracking: TrackingStyle) => void;
+  setTransition: (transition: TransitionStyle) => void;
+  setWeight: (weight: WeightStyle) => void;
+}
+
+export type ThemeStore = ThemeConfig & ThemeActions;
+
+export interface UiThemeSyncOptions {
+  target?: HTMLElement | null;
 }

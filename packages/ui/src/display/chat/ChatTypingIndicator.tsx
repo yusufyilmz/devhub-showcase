@@ -4,12 +4,12 @@ import { cn } from "cn";
 
 import { Flex, FlexRow } from "../../layout/flex";
 import { Typography } from "../typography";
-
-export interface ChatTypingIndicatorProps {
-  className?: string;
-  isVisible?: boolean;
-  users: string[];
-}
+import {
+  chatTypingIndicatorInlineStyle1,
+  chatTypingIndicatorInlineStyle2,
+  chatTypingIndicatorStyles,
+} from "./styles";
+import type { ChatTypingIndicatorProps } from "./types";
 
 export function ChatTypingIndicator({
   users,
@@ -19,37 +19,34 @@ export function ChatTypingIndicator({
   if (!isVisible || users.length === 0) return null;
 
   return (
-    <Flex className={cn("justify-start mb-6", className)} fullWidth>
-      <Flex
-        className="max-w-[70%] rounded-[var(--radius-lg)] px-[var(--spacing-md)] py-[var(--spacing-md)] bg-[var(--card)] text-[var(--foreground)] shadow-[var(--shadow-md)] border border-[var(--border)]/50 relative overflow-hidden"
-        fullWidth
-      >
+    <Flex className={cn(chatTypingIndicatorStyles.chatTypingIndicator, className)} fullWidth>
+      <Flex className={chatTypingIndicatorStyles.element1} fullWidth>
         {/* Subtle background pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)]/5 to-transparent opacity-50" />
-        <FlexRow align="center" className="relative z-10" gap="sm">
+        <div className={chatTypingIndicatorStyles.element2} />
+        <FlexRow align="center" className={chatTypingIndicatorStyles.element3} gap="sm">
           <FlexRow gap="xs">
             <Flex
-              className="bg-[var(--primary)] animate-bounce"
+              className={chatTypingIndicatorStyles.element4}
               height="xs"
               radius="full"
               width="xs"
             />
             <Flex
-              className="bg-[var(--primary)] animate-bounce"
+              className={chatTypingIndicatorStyles.element5}
               height="xs"
               radius="full"
-              style={{ animationDelay: "0.1s" }}
+              style={chatTypingIndicatorInlineStyle1}
               width="xs"
             />
             <Flex
-              className="bg-[var(--primary)] animate-bounce"
+              className={chatTypingIndicatorStyles.element6}
               height="xs"
               radius="full"
-              style={{ animationDelay: "0.2s" }}
+              style={chatTypingIndicatorInlineStyle2}
               width="xs"
             />
           </FlexRow>
-          <Typography className="text-[var(--muted-foreground)] font-medium" variant="body2">
+          <Typography className={chatTypingIndicatorStyles.element7} variant="body2">
             {users.length === 1
               ? `${users[0]} is typing...`
               : `${users.length} people are typing...`}
@@ -59,3 +56,5 @@ export function ChatTypingIndicator({
     </Flex>
   );
 }
+
+export type { ChatTypingIndicatorProps } from "./types";

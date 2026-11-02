@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 
 import { Flex, FlexCenter, FlexCol } from "../../layout/flex";
@@ -11,71 +10,8 @@ import { ChatHeader } from "./ChatHeader";
 import { ChatInput } from "./ChatInput";
 import { ChatMessageBubble } from "./ChatMessageBubble";
 import { ChatTypingIndicator } from "./ChatTypingIndicator";
-
-const chatVariants = cva("relative overflow-hidden backdrop-blur-xl", {
-  defaultVariants: {
-    shadow: "md",
-    size: "md",
-    variant: "default",
-  },
-  variants: {
-    shadow: {
-      lg: "shadow-[var(--shadow-2xl)]",
-      md: "shadow-[var(--shadow-xl)]",
-      none: "shadow-none",
-      sm: "shadow-[var(--shadow-md)]",
-      xl: "shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]",
-    },
-    size: {
-      lg: "rounded-[var(--radius-2xl)]",
-      md: "rounded-[var(--radius-xl)]",
-      sm: "rounded-[var(--radius-lg)]",
-    },
-    variant: {
-      card: "bg-gradient-to-br from-[var(--card)] to-[var(--card)]/80 border border-[var(--border)] shadow-[var(--shadow-2xl)]",
-      default:
-        "bg-gradient-to-br from-[var(--background)] to-[var(--card)] border border-[var(--border)] shadow-[var(--shadow-xl)]",
-      ghost: "bg-transparent",
-    },
-  },
-});
-
-export interface ChatProps extends React.ComponentProps<"div">, VariantProps<typeof chatVariants> {
-  fullHeight?: boolean;
-  fullWidth?: boolean;
-}
-
-export interface ChatMessage {
-  content: string;
-  id: string;
-  isOwn?: boolean;
-  sender: {
-    id: string;
-    name: string;
-    avatar?: string;
-    status?: "online" | "offline" | "away" | "busy";
-  };
-  status?: "sending" | "sent" | "delivered" | "read" | "failed";
-  timestamp: Date;
-  type?: "text" | "image" | "file" | "system";
-}
-
-export interface ChatProps extends React.ComponentProps<"div">, VariantProps<typeof chatVariants> {
-  currentUser?: {
-    id: string;
-    name: string;
-    avatar?: string;
-  };
-  fullHeight?: boolean;
-  fullWidth?: boolean;
-  maxLength?: number;
-  messages: ChatMessage[];
-  onSendMessage?: (content: string) => void;
-  onTyping?: (isTyping: boolean) => void;
-  placeholder?: string;
-  showTypingIndicator?: boolean;
-  typingUsers?: string[];
-}
+import { chatStyles, chatVariants } from "./styles";
+import type { ChatProps } from "./types";
 
 export function Chat({
   className,
@@ -133,9 +69,9 @@ export function Chat({
     <div
       className={cn(
         chatVariants({ shadow, size, variant }),
-        "flex flex-col h-full w-full",
-        fullWidth && "w-full",
-        fullHeight && "h-full",
+        chatStyles.chat,
+        fullWidth && chatStyles.chat2,
+        fullHeight && chatStyles.chat3,
         className,
       )}
       {...props}
@@ -143,7 +79,7 @@ export function Chat({
       {/* Chat component with improved layout */}
       {/* Chat Header */}
       <ChatHeader
-        className="border-b border-[var(--border)]"
+        className={chatStyles.element1}
         fullWidth
         messageCount={messages.length}
         status="online"
@@ -152,29 +88,21 @@ export function Chat({
       />
 
       {/* Messages Area */}
-      <div className="flex-1 p-[var(--spacing-lg)] overflow-y-auto bg-gradient-to-b from-[var(--muted)]/20 to-[var(--background)]">
-        <FlexCol className="min-h-0" gap="sm">
+      <div className={chatStyles.element2}>
+        <FlexCol className={chatStyles.element3} gap="sm">
           {messages.length === 0 ? (
-            <FlexCenter className="h-48">
+            <FlexCenter className={chatStyles.element4}>
               <FlexCol align="center" gap="md">
-                <Flex
-                  className="bg-gradient-to-br from-[var(--primary)]/10 to-[var(--primary)]/20 shadow-[var(--shadow-md)]"
-                  height="xl"
-                  radius="full"
-                  width="xl"
-                >
-                  <Typography className="text-[var(--primary)]" variant="h4">
+                <Flex className={chatStyles.element5} height="xl" radius="full" width="xl">
+                  <Typography className={chatStyles.element6} variant="h4">
                     💬
                   </Typography>
                 </Flex>
                 <FlexCol align="center" gap="sm">
-                  <Typography className="text-[var(--foreground)] font-bold" variant="h6">
+                  <Typography className={chatStyles.element7} variant="h6">
                     No messages yet
                   </Typography>
-                  <Typography
-                    className="text-[var(--muted-foreground)] text-center"
-                    variant="body2"
-                  >
+                  <Typography className={chatStyles.element8} variant="body2">
                     Start the conversation and connect with your team!
                   </Typography>
                 </FlexCol>
@@ -204,7 +132,7 @@ export function Chat({
 
       {/* Message Input */}
       <ChatInput
-        className="border-t border-[var(--border)]"
+        className={chatStyles.element9}
         fullWidth
         maxLength={maxLength}
         onChange={handleInputChange}
@@ -218,3 +146,5 @@ export function Chat({
     </div>
   );
 }
+
+export type { ChatMessage, ChatProps } from "./types";

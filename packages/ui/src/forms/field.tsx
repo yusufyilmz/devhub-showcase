@@ -4,6 +4,7 @@ import { useId } from "react";
 
 import { Input } from "./input";
 import { Textarea } from "./textarea";
+import type { FieldOptions } from "./types";
 
 export function Field({
   label,
@@ -13,15 +14,7 @@ export function Field({
   multiline = false,
   hint,
   required = false,
-}: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  type?: string;
-  multiline?: boolean;
-  hint?: string;
-  required?: boolean;
-}) {
+}: FieldOptions) {
   const fieldId = useId();
   return (
     <label className={multiline ? "editor-field full-width" : "editor-field"} htmlFor={fieldId}>

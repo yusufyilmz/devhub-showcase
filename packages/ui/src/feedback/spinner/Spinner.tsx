@@ -4,10 +4,8 @@ import type React from "react";
 
 import { cn } from "cn";
 
-export type SpinnerProps = {
-  size?: number;
-  className?: string;
-};
+import { spinnerStyles } from "./styles";
+import type { SpinnerProps } from "./types";
 
 export const Spinner = ({ size = 24, className }: SpinnerProps) => {
   const style: React.CSSProperties = {
@@ -17,12 +15,11 @@ export const Spinner = ({ size = 24, className }: SpinnerProps) => {
   return (
     <div
       aria-label="loading"
-      className={cn(
-        "inline-block animate-spin rounded-full border-2 border-gray-300 border-t-blue-500",
-        className,
-      )}
+      className={cn(spinnerStyles.spinner, className)}
       role="status"
       style={style}
     />
   );
 };
+
+export type { SpinnerProps } from "./types";

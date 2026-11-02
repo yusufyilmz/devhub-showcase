@@ -8,16 +8,12 @@ import { Button } from "../../buttons";
 import { Card } from "../../cards";
 import { SelectField } from "../../forms";
 import { HeroSettingsEditor } from "../../sections/hero-section/HeroSettingsEditor";
+import { appearanceEditorStyles } from "./styles";
 import { ThemePicker } from "./theme-picker";
 import { ThemePreview } from "./theme-preview";
+import type { AppearanceEditorOptions } from "./types";
 
-export function AppearanceEditor({
-  profile,
-  onChange,
-}: {
-  profile: PortfolioProfile;
-  onChange: (profile: PortfolioProfile) => void;
-}) {
+export function AppearanceEditor({ profile, onChange }: AppearanceEditorOptions) {
   const appearance = profile.appearance ?? {
     accent: "cyan",
     defaultTheme: "dark",
@@ -29,22 +25,22 @@ export function AppearanceEditor({
     onChange({ ...profile, appearance: { ...appearance, ...change } });
   return (
     <section>
-      <div className="editor-section-heading">
+      <div className={appearanceEditorStyles.element1}>
         <div>
-          <p className="eyebrow">SET THE MOOD</p>
+          <p className={appearanceEditorStyles.element2}>SET THE MOOD</p>
           <h2>Appearance</h2>
           <p>Choose the feel of your portfolio. Layout, language and CV format stay independent.</p>
         </div>
       </div>
       <Card asChild layout="plain" surface="portfolio">
-        <div className="editor-card">
+        <div className={appearanceEditorStyles.element3}>
           <ThemePicker
             accent={appearance.accent}
             mode={previewMode}
             onChange={(theme) => update({ theme })}
             value={appearance.theme ?? "studio"}
           />
-          <div className="editor-fields">
+          <div className={appearanceEditorStyles.element4}>
             <SelectField
               label="Default color mode"
               onChange={(value) => {
@@ -67,10 +63,10 @@ export function AppearanceEditor({
               <option value="emerald">Fresh emerald</option>
             </SelectField>
           </div>
-          <div className="theme-preview-tools">
+          <div className={appearanceEditorStyles.element5}>
             <h3>Try it with your story</h3>
-            <fieldset className="theme-preview-modes">
-              <legend className="sr-only">Preview color mode</legend>
+            <fieldset className={appearanceEditorStyles.element6}>
+              <legend className={appearanceEditorStyles.element7}>Preview color mode</legend>
               {(["light", "dark"] as const).map((mode) => (
                 <Button
                   aria-pressed={previewMode === mode}
@@ -84,7 +80,7 @@ export function AppearanceEditor({
             </fieldset>
           </div>
           <ThemePreview mode={previewMode} profile={profile} />
-          <p className="theme-preview-note">
+          <p className={appearanceEditorStyles.element8}>
             Preview controls only change this example. Save changes to apply your theme, accent and
             default mode to your portfolio. Visitors can still choose light or dark mode for
             themselves. Your PDF keeps its own layout and the selected accent.

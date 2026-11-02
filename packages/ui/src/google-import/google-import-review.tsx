@@ -1,14 +1,10 @@
 "use client";
-
-import type { PortfolioProfile } from "@shared/config";
-import {
-  applyGoogleProfile,
-  type GoogleImportField,
-  type GoogleProfileReview,
-} from "@shared/lib/profiles";
+import { applyGoogleProfile, type GoogleImportField } from "@shared/lib/profiles";
 
 import { Button } from "../buttons";
 import { Field } from "../forms";
+import { googleImportReviewStyles } from "./styles";
+import type { GoogleImportReviewOptions } from "./types";
 
 const labels: Record<GoogleImportField, string> = {
   birthDate: "Birthdate",
@@ -26,14 +22,7 @@ export function GoogleImportReview({
   onSelect,
   onChange,
   onApply,
-}: {
-  profile: PortfolioProfile;
-  review: GoogleProfileReview;
-  selected: GoogleImportField[];
-  onSelect: (fields: GoogleImportField[]) => void;
-  onChange: (review: GoogleProfileReview) => void;
-  onApply: () => void;
-}) {
+}: GoogleImportReviewOptions) {
   let valid = true;
   try {
     applyGoogleProfile(profile, review, selected);
@@ -105,7 +94,7 @@ export function GoogleImportReview({
         <p role="alert">Check the selected values before applying. Your draft has not changed.</p>
       )}
       <Button
-        className="studio-primary"
+        className={googleImportReviewStyles.element1}
         disabled={!valid || selected.length === 0}
         onClick={onApply}
         type="button"

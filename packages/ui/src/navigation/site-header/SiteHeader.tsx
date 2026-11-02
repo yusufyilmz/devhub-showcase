@@ -1,18 +1,19 @@
 import { Button } from "../../buttons/button/Button";
 import { Separator } from "../../layout/seperator/Seperator";
 import { SidebarTrigger } from "../sidebar/Sidebar";
+import { siteHeaderStyles } from "./styles";
 
 export function SiteHeader() {
   return (
-    <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
-      <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
-        <SidebarTrigger className="-ml-1" />
-        <Separator className="mx-2 data-[orientation=vertical]:h-4" orientation="vertical" />
-        <h1 className="text-base font-medium">Documents</h1>
-        <div className="ml-auto flex items-center gap-2">
-          <Button asChild className="hidden sm:flex" size="sm" variant="ghost">
+    <header className={siteHeaderStyles.element1}>
+      <div className={siteHeaderStyles.element2}>
+        <SidebarTrigger className={siteHeaderStyles.element3} />
+        <Separator className={siteHeaderStyles.element4} orientation="vertical" />
+        <h1 className={siteHeaderStyles.element5}>Documents</h1>
+        <div className={siteHeaderStyles.element6}>
+          <Button asChild className={siteHeaderStyles.element7} size="sm" variant="ghost">
             <a
-              className="dark:text-foreground"
+              className={siteHeaderStyles.element8}
               href="https://github.com/sathittham/monorepo-vite-next-tailwind4-shadcn"
               rel="noopener noreferrer"
               target="_blank"

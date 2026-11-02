@@ -10,27 +10,21 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../../layout/accordion";
-
-type ProjectListProps = {
-  projects: { id: string; title: string; description?: string }[];
-};
+import { projectListStyles } from "./styles";
+import type { ProjectListProps } from "./types";
 
 export const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
   return (
-    <Accordion className="animate-mount" collapsible type="single">
+    <Accordion className={projectListStyles.element1} collapsible type="single">
       <AccordionItem value="projects">
-        <AccordionTrigger className="bg-transparent">
-          <Typography className="text-textColor-light">Projects</Typography>
+        <AccordionTrigger className={projectListStyles.element2}>
+          <Typography className={projectListStyles.element3}>Projects</Typography>
         </AccordionTrigger>
         <AccordionContent>
-          <div className="flex flex-col gap-2">
+          <div className={projectListStyles.element4}>
             {projects.map((project) => (
-              <div
-                className="flex items-center gap-1 text-sm text-main-light-slate hover:underline hover:text-button-primary transition-colors duration-200"
-                id={project.id}
-                key={project.id}
-              >
-                <ExternalLinkIcon className="w-4 h-4 text-main-light-slate" />
+              <div className={projectListStyles.element5} id={project.id} key={project.id}>
+                <ExternalLinkIcon className={projectListStyles.element6} />
                 <span>
                   {project.title}
                   {project.description ? `: ${project.description}` : ""}

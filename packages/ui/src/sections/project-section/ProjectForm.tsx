@@ -3,18 +3,11 @@
 import type React from "react";
 import { useEffect, useState } from "react";
 
-import type { Project } from "@shared/lib/types";
-
 import { Button } from "../../buttons/button";
 import { TextField } from "../../forms/text-field";
 import { Textarea } from "../../forms/textarea";
-
-interface ProjectFormProps {
-  action: string;
-  initialData?: Project;
-  isSubmitting: boolean;
-  onSubmit: (_e: unknown) => void;
-}
+import { projectFormStyles } from "./styles";
+import type { ProjectFormProps } from "./types";
 
 export const ProjectForm: React.FC<ProjectFormProps> = ({
   onSubmit,
@@ -49,16 +42,16 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
   };
 
   return (
-    <form className="flex flex-col gap-4 p-6 bg-white rounded-lg shadow-lg" onSubmit={handleSubmit}>
+    <form className={projectFormStyles.element1} onSubmit={handleSubmit}>
       <TextField
-        className="mb-4"
+        className={projectFormStyles.element2}
         label="Project Title"
         name="title"
         onChange={handleChange}
         required
         value={formData.title}
       />
-      <label className="mb-4 flex flex-col gap-1 text-sm" htmlFor="description">
+      <label className={projectFormStyles.element3} htmlFor="description">
         Description
         <Textarea
           name="description"
@@ -69,14 +62,19 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
         />
       </label>
       <TextField
-        className="mb-4"
+        className={projectFormStyles.element4}
         label="Project Link"
         name="link"
         onChange={handleChange}
         required
         value={formData.link}
       />
-      <Button aria-label={action} className="w-full" disabled={isSubmitting} variant="default">
+      <Button
+        aria-label={action}
+        className={projectFormStyles.element5}
+        disabled={isSubmitting}
+        variant="default"
+      >
         {action}
       </Button>
     </form>

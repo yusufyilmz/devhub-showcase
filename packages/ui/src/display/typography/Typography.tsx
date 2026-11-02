@@ -1,99 +1,7 @@
-import type * as React from "react";
-
-import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 
-const typographyVariants = cva("text-[var(--foreground)]", {
-  defaultVariants: {
-    align: "left",
-    color: "default",
-    decoration: "none",
-    transform: "none",
-    truncate: "none",
-    variant: "body1",
-    weight: "normal",
-  },
-  variants: {
-    align: {
-      center: "text-center",
-      justify: "text-justify",
-      left: "text-left",
-      right: "text-right",
-    },
-    color: {
-      accent: "text-[var(--accent-foreground)]",
-      card: "text-[var(--card-foreground)]",
-      default: "text-[var(--foreground)]",
-      destructive: "text-[var(--destructive)]",
-      info: "text-[var(--info)]",
-      muted: "text-[var(--muted-foreground)]",
-      popover: "text-[var(--popover-foreground)]",
-      primary: "text-[var(--primary)]",
-      secondary: "text-[var(--secondary-foreground)]",
-      success: "text-[var(--success)]",
-      warning: "text-[var(--warning)]",
-    },
-    decoration: {
-      "line-through": "line-through",
-      none: "no-underline",
-      overline: "overline",
-      underline: "underline",
-    },
-    transform: {
-      capitalize: "capitalize",
-      lowercase: "lowercase",
-      none: "normal-case",
-      uppercase: "uppercase",
-    },
-    truncate: {
-      none: "",
-      truncate: "truncate",
-      "truncate-2": "line-clamp-2",
-      "truncate-3": "line-clamp-3",
-      "truncate-4": "line-clamp-4",
-      "truncate-5": "line-clamp-5",
-    },
-    variant: {
-      body1: "text-base leading-relaxed",
-      body2: "text-sm leading-relaxed",
-      caption: "text-xs leading-normal",
-      code: "font-mono text-sm bg-[var(--muted)] px-1.5 py-0.5 rounded",
-      destructive: "text-[var(--destructive)]",
-      h1: "text-4xl font-bold leading-tight tracking-tight",
-      h2: "text-3xl font-bold leading-tight tracking-tight",
-      h3: "text-2xl font-semibold leading-tight tracking-tight",
-      h4: "text-xl font-semibold leading-tight tracking-tight",
-      h5: "text-lg font-semibold leading-tight tracking-tight",
-      h6: "text-base font-semibold leading-tight tracking-tight",
-      info: "text-[var(--info)]",
-      large: "text-lg leading-relaxed",
-      lead: "text-lg leading-relaxed font-medium",
-      muted: "text-[var(--muted-foreground)]",
-      overline: "text-xs font-medium uppercase tracking-wide leading-normal",
-      small: "text-sm leading-normal",
-      subtitle1: "text-lg leading-relaxed",
-      subtitle2: "text-base leading-relaxed",
-      success: "text-[var(--success)]",
-      warning: "text-[var(--warning)]",
-    },
-    weight: {
-      black: "font-black",
-      bold: "font-bold",
-      extrabold: "font-extrabold",
-      light: "font-light",
-      medium: "font-medium",
-      normal: "font-normal",
-      semibold: "font-semibold",
-      thin: "font-thin",
-    },
-  },
-});
-
-export interface TypographyProps
-  extends Omit<React.ComponentProps<"p">, "color">,
-    VariantProps<typeof typographyVariants> {
-  as?: React.ElementType;
-}
+import { typographyVariants } from "./styles";
+import type { TypographyProps } from "./types";
 
 export function Typography({
   className,
@@ -201,3 +109,5 @@ export function Lead({ className, ...props }: Omit<TypographyProps, "variant">) 
 export function Muted({ className, ...props }: Omit<TypographyProps, "variant">) {
   return <Typography className={className} color="muted" variant="body2" {...props} />;
 }
+
+export type { TypographyProps } from "./types";

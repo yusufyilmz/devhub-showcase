@@ -1,12 +1,10 @@
 import type React from "react";
 
+import { downloadCVButtonStyles } from "./styles";
+
 export const DownloadCVButton: React.FC = () => {
   return (
-    <a
-      className="w-full inline-block bg-button-primary text-white hover:bg-gray-800 px-6 py-3 rounded-lg shadow-sm transition"
-      download="Yusuf_Yilmaz_CV.pdf"
-      href="/cv.pdf"
-    >
+    <a className={downloadCVButtonStyles.element1} download="Yusuf_Yilmaz_CV.pdf" href="/cv.pdf">
       Download CV
     </a>
   );

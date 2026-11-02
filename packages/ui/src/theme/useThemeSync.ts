@@ -1,12 +1,12 @@
 "use client";
 
+import type { UiThemeSyncOptions } from "./types";
+
+export type { UiThemeSyncOptions } from "./types";
+
 import { useEffect } from "react";
 
 import { themeStore } from "./store";
-
-export interface UiThemeSyncOptions {
-  target?: HTMLElement | null;
-}
 
 export function useUiThemeSync({ target }: UiThemeSyncOptions = {}) {
   const settings = themeStore((state) => ({

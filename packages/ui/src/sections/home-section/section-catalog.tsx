@@ -9,9 +9,11 @@ import { Card } from "../../cards";
 import { Badge } from "../../feedback/badge";
 import { Input } from "../../forms/input";
 import { Label } from "../../forms/label";
+import { sectionCatalogStyles } from "./styles";
+import type { Group } from "./types";
 
 const groups = ["All", "Story", "Work", "Media", "Connect"] as const;
-type Group = (typeof groups)[number];
+
 function category(type: (typeof authorableSectionTypes)[number]): Exclude<Group, "All"> {
   const view = authorableSections[type].view;
   if (["gallery", "video", "clients"].includes(view)) return "Media";
@@ -34,10 +36,10 @@ export function SectionCatalog() {
   );
   return (
     <Card asChild interaction="static" layout="plain" surface="portfolio">
-      <section aria-labelledby={`${id}-title`} className="home-library-catalog section-catalog">
-        <div className="section-catalog-heading">
+      <section aria-labelledby={`${id}-title`} className={sectionCatalogStyles.element1}>
+        <div className={sectionCatalogStyles.element2}>
           <div>
-            <p className="home-eyebrow">FIND YOUR NEXT SECTION</p>
+            <p className={sectionCatalogStyles.element3}>FIND YOUR NEXT SECTION</p>
             <h3 id={`${id}-title`}>Browse all {authorableSectionTypes.length} section types</h3>
             <p>
               From a first introduction to your latest work. Find a place for every part of your
@@ -46,7 +48,7 @@ export function SectionCatalog() {
           </div>
           <Badge variant="secondary">{authorableSectionTypes.length} ways to tell your story</Badge>
         </div>
-        <div className="section-catalog-search">
+        <div className={sectionCatalogStyles.element4}>
           <Label htmlFor={`${id}-search`}>Find a section</Label>
           <Input
             id={`${id}-search`}
@@ -56,8 +58,8 @@ export function SectionCatalog() {
             value={query}
           />
         </div>
-        <fieldset className="section-catalog-filters">
-          <legend className="sr-only">Section categories</legend>
+        <fieldset className={sectionCatalogStyles.element5}>
+          <legend className={sectionCatalogStyles.element6}>Section categories</legend>
           {groups.map((item) => (
             <Button
               aria-pressed={group === item}
@@ -70,19 +72,19 @@ export function SectionCatalog() {
             </Button>
           ))}
         </fieldset>
-        <p aria-live="polite" className="section-catalog-count">
+        <p aria-live="polite" className={sectionCatalogStyles.element7}>
           {matches.length} of {authorableSectionTypes.length} section types
         </p>
         <ul
           aria-label="Available section types"
-          className="section-catalog-grid"
+          className={sectionCatalogStyles.element8}
           data-expanded={expanded || Boolean(search) || group !== "All"}
           id={`${id}-results`}
         >
           {matches.map((type) => (
             <Card asChild interaction="static" key={type} layout="plain" surface="portfolio">
               <li>
-                <span aria-hidden="true" className="section-catalog-icon">
+                <span aria-hidden="true" className={sectionCatalogStyles.element9}>
                   {authorableSections[type].name.slice(0, 1)}
                 </span>
                 <div>
@@ -97,7 +99,7 @@ export function SectionCatalog() {
           <Button
             aria-controls={`${id}-results`}
             aria-expanded={expanded}
-            className="section-catalog-reveal"
+            className={sectionCatalogStyles.element10}
             onClick={() => setExpanded(!expanded)}
             type="button"
             variant="ghost"
@@ -107,7 +109,7 @@ export function SectionCatalog() {
           </Button>
         )}
         {matches.length === 0 && (
-          <div className="section-catalog-empty">
+          <div className={sectionCatalogStyles.element11}>
             <p>No sections match your search.</p>
             <Button
               onClick={() => {

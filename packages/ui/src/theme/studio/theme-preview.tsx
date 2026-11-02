@@ -1,26 +1,28 @@
 "use client";
 
-import { type ColorMode, getPortfolioCopy, type PortfolioProfile } from "@shared/config";
+import { getPortfolioCopy } from "@shared/config";
 
+import { themePreviewStyles } from "./styles";
 import { themePreviewStyle } from "./theme-picker";
+import type { ThemePreviewOptions } from "./types";
 
-export function ThemePreview({ profile, mode }: { profile: PortfolioProfile; mode: ColorMode }) {
+export function ThemePreview({ profile, mode }: ThemePreviewOptions) {
   const theme = profile.appearance?.theme ?? "studio";
   const accent = profile.appearance?.accent ?? "cyan";
   const text = getPortfolioCopy(profile.portfolioLanguage);
   return (
     <section
       aria-label="Portfolio theme preview"
-      className="theme-preview"
+      className={themePreviewStyles.element1}
       data-portfolio-theme={theme}
       data-theme={mode}
       style={themePreviewStyle(theme, accent)}
     >
-      <p className="folio-eyebrow">{profile.location}</p>
-      <h3 className="theme-preview-title">{profile.name}</h3>
-      <p className="theme-preview-role">{profile.title}</p>
-      <p className="theme-preview-summary">{profile.summary}</p>
-      <div className="theme-preview-card">
+      <p className={themePreviewStyles.element2}>{profile.location}</p>
+      <h3 className={themePreviewStyles.element3}>{profile.name}</h3>
+      <p className={themePreviewStyles.element4}>{profile.title}</p>
+      <p className={themePreviewStyles.element5}>{profile.summary}</p>
+      <div className={themePreviewStyles.element6}>
         <strong>{text.experience}</strong>
         <p>{profile.experiences[0]?.position ?? "Your experience will appear here."}</p>
       </div>

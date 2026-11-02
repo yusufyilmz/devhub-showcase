@@ -1,20 +1,10 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { defaultStudioRequest, StudioRequestContext } from "@shared/runtime/studio";
 
-import {
-  defaultStudioRequest,
-  type StudioRequest,
-  StudioRequestContext,
-} from "@shared/runtime/studio";
+import type { StudioRequestProviderOptions } from "./types";
 
-export function StudioRequestProvider({
-  children,
-  request,
-}: {
-  children: ReactNode;
-  request?: StudioRequest;
-}) {
+export function StudioRequestProvider({ children, request }: StudioRequestProviderOptions) {
   return (
     <StudioRequestContext.Provider value={request ?? defaultStudioRequest}>
       {children}

@@ -2,14 +2,8 @@ import type * as React from "react";
 
 import { cn } from "cn";
 
-interface EmptyStateProps {
-  children?: React.ReactNode;
-  className?: string;
-  description?: string;
-  height?: string;
-  icon?: React.ReactNode;
-  title?: string;
-}
+import { emptyStateInlineStyle1, emptyStateStyles } from "./styles";
+import type { EmptyStateProps } from "./types";
 
 export function EmptyState({
   className,
@@ -20,22 +14,20 @@ export function EmptyState({
   height = "50vh",
   ...props
 }: EmptyStateProps) {
-  const defaultIcon = <InboxIcon className="w-10 h-10 text-gray-500 dark:text-gray-400" />;
+  const defaultIcon = <InboxIcon className={emptyStateStyles.element1} />;
 
   return (
     <div
-      className={cn("flex flex-col items-center justify-center gap-6", className)}
-      style={{ height }}
+      className={cn(emptyStateStyles.emptyState, className)}
+      style={emptyStateInlineStyle1(height)}
       {...props}
     >
-      <div className="flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full dark:bg-gray-800">
-        {icon || defaultIcon}
+      <div className={emptyStateStyles.element2}>{icon || defaultIcon}</div>
+      <div className={emptyStateStyles.element3}>
+        <h2 className={emptyStateStyles.element4}>{title}</h2>
+        <p className={emptyStateStyles.element5}>{description}</p>
       </div>
-      <div className="space-y-2 text-center">
-        <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
-        <p className="text-gray-500 dark:text-gray-400">{description}</p>
-      </div>
-      {children && <div className="mt-4">{children}</div>}
+      {children && <div className={emptyStateStyles.element6}>{children}</div>}
     </div>
   );
 }

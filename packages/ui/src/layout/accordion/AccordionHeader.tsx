@@ -1,15 +1,8 @@
 import type React from "react";
-import type { ReactNode } from "react";
 
 import { Button } from "../../buttons/button";
-
-type AccordionHeaderProps = {
-  isOpen: boolean;
-  onClick: () => void;
-  expandIcon?: ReactNode;
-  children?: ReactNode;
-  className?: string;
-};
+import { accordionHeaderClassName, accordionHeaderClassName2 } from "./styles";
+import type { AccordionHeaderProps } from "./types";
 
 export const AccordionHeader: React.FC<AccordionHeaderProps> = ({
   children,
@@ -22,14 +15,12 @@ export const AccordionHeader: React.FC<AccordionHeaderProps> = ({
     <Button
       aria-expanded={isOpen}
       aria-label="accordion header"
-      className={`flex items-center flex-row justify-between w-full font-medium text-main-white border-b border-main-light-slate ${className}`}
+      className={accordionHeaderClassName(className)}
       onClick={onClick}
       variant="text"
     >
       {children}
-      <span
-        className={`transform transition-transform ${isOpen ? "rotate-180 -translate-y-2" : ""}`}
-      >
+      <span className={accordionHeaderClassName2(isOpen ? "rotate-180 -translate-y-2" : "")}>
         {expandIcon}
       </span>
     </Button>

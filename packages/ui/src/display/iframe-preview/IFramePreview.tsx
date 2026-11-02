@@ -5,10 +5,8 @@ import type React from "react";
 import { useState } from "react";
 
 import { Spinner } from "../../feedback/spinner";
-
-interface IFramePreviewProps {
-  url: string;
-}
+import { iFramePreviewStyles } from "./styles";
+import type { IFramePreviewProps } from "./types";
 
 export const IFramePreview: React.FC<IFramePreviewProps> = ({ url }) => {
   const [loading, setLoading] = useState(true);
@@ -26,13 +24,13 @@ export const IFramePreview: React.FC<IFramePreviewProps> = ({ url }) => {
   const IFrame = url ? (
     <a
       aria-label="Open website preview"
-      className="block overflow-y-auto"
+      className={iFramePreviewStyles.element1}
       href={url}
       rel="noopener noreferrer"
       target="_blank"
     >
       <iframe
-        className="w-full h-[100vh] transition-opacity duration-500 opacity-100 pointer-events-none"
+        className={iFramePreviewStyles.element2}
         id="iframe"
         onError={handleError}
         onLoad={handleLoad}
@@ -44,19 +42,19 @@ export const IFramePreview: React.FC<IFramePreviewProps> = ({ url }) => {
   ) : null;
 
   return (
-    <div className="border rounded-lg shadow-lg overflow-hidden cursor-pointer relative">
+    <div className={iFramePreviewStyles.element3}>
       {loading && !error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white/50">
+        <div className={iFramePreviewStyles.element4}>
           <Spinner />
         </div>
       )}
       {!error ? (
         IFrame
       ) : (
-        <div className="flex flex-col items-center justify-center p-4">
-          <p className="text-red-500">Unable to load the website preview.</p>
+        <div className={iFramePreviewStyles.element5}>
+          <p className={iFramePreviewStyles.element6}>Unable to load the website preview.</p>
           <Link
-            className="text-main-blue hover:underline"
+            className={iFramePreviewStyles.element7}
             href={url}
             rel="noopener noreferrer"
             target="_blank"

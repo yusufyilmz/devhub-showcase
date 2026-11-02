@@ -2,13 +2,14 @@
 
 import "./reveal-card.css";
 
-import type { ComponentProps } from "react";
-import { type ReactNode, useId, useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 
-import { getPortfolioCopy, type Language } from "@shared/config";
+import { getPortfolioCopy } from "@shared/config";
 
 import { Button } from "../buttons/button/Button";
 import { CardBase as Card } from "./CardBase";
+import { revealCardBaseClassName, revealCardStyles } from "./styles";
+import type { LocalizedRevealCardProps, RevealCardProps } from "./types";
 
 const defaultLabels = {
   fullDetails: "Full details",
@@ -19,15 +20,6 @@ const defaultLabels = {
   tapClose: "Tap to close",
   tapDetails: "Tap for details",
 };
-interface RevealCardProps {
-  brief?: string | null;
-  children: ReactNode;
-  className?: string;
-  heading: ReactNode;
-  id?: string;
-  labels?: typeof defaultLabels;
-  title: string;
-}
 
 export function RevealCardBase({
   id,
@@ -46,7 +38,7 @@ export function RevealCardBase({
   return (
     <Card asChild interaction="lift" layout="plain" surface="portfolio">
       <article
-        className={`section-card reveal-card ${className}`}
+        className={revealCardBaseClassName(className)}
         data-expanded={expanded}
         id={id}
         onBlurCapture={(event) => {
@@ -69,17 +61,17 @@ export function RevealCardBase({
             setExpanded(false);
         }}
       >
-        <div className="reveal-heading">{heading}</div>
+        <div className={revealCardStyles.element1}>{heading}</div>
         {brief && (
-          <div aria-hidden={expanded} className="reveal-preview">
-            <p className="reveal-brief">{brief}</p>
+          <div aria-hidden={expanded} className={revealCardStyles.element2}>
+            <p className={revealCardStyles.element3}>{brief}</p>
           </div>
         )}
         <Button
           aria-controls={detailsId}
           aria-expanded={expanded}
           aria-label={`${expanded ? labels.hideDetails : labels.showDetails} ${title}`}
-          className="reveal-toggle"
+          className={revealCardStyles.element4}
           onClick={() => {
             const next = pointerIntent.current ?? !expanded;
             pointerIntent.current = null;
@@ -95,31 +87,33 @@ export function RevealCardBase({
           type="button"
           variant="ghost"
         >
-          <span className="reveal-hint-desktop">
+          <span className={revealCardStyles.element5}>
             {expanded ? labels.fullDetails : labels.hoverDetails}
           </span>
-          <span className="reveal-hint-touch">
+          <span className={revealCardStyles.element6}>
             {expanded ? labels.tapClose : labels.tapDetails}
           </span>
-          <span className="reveal-hint-keyboard">
+          <span className={revealCardStyles.element7}>
             {expanded ? labels.fullDetails : labels.keyboardDetails}
           </span>
-          <span aria-hidden="true" className="reveal-chevron">
+          <span aria-hidden="true" className={revealCardStyles.element8}>
             ↗
           </span>
         </Button>
-        <div aria-hidden={!expanded} className="reveal-details" id={detailsId} inert={!expanded}>
-          <div className="reveal-details-inner">{children}</div>
+        <div
+          aria-hidden={!expanded}
+          className={revealCardStyles.element9}
+          id={detailsId}
+          inert={!expanded}
+        >
+          <div className={revealCardStyles.element10}>{children}</div>
         </div>
       </article>
     </Card>
   );
 }
 
-export function RevealCard({
-  language = "en",
-  ...props
-}: ComponentProps<typeof RevealCardBase> & { language?: Language }) {
+export function RevealCard({ language = "en", ...props }: LocalizedRevealCardProps) {
   const text = getPortfolioCopy(language);
   const labels = {
     fullDetails: text.fullDetails,

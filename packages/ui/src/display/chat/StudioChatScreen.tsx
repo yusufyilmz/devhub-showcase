@@ -2,13 +2,15 @@
 
 import "./studio-chat.css";
 
-import { type ReactNode, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import { MessageSquare, PanelLeftClose, Plus } from "lucide-react";
 
 import { Button } from "../../buttons/button";
 import { ThemeToggle } from "../../theme";
 import { ChatComposer } from "./ChatComposer";
+import { studioChatScreenStyles } from "./styles";
+import type { StudioChatScreenOptions } from "./types";
 
 export function StudioChatScreen({
   message,
@@ -25,22 +27,7 @@ export function StudioChatScreen({
   status,
   actions,
   editorHref,
-}: {
-  message: string;
-  onMessageChange: (message: string) => void;
-  onSubmit: () => void;
-  onReset: () => void;
-  onStop: () => void;
-  busy: boolean;
-  disabled: boolean;
-  messages: { id: number; role: "user" | "assistant"; text: string }[];
-  review?: ReactNode;
-  notice?: ReactNode;
-  error?: string;
-  status?: string;
-  actions?: ReactNode;
-  editorHref: string;
-}) {
+}: StudioChatScreenOptions) {
   const started = messages.length > 0;
   const thread = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -49,35 +36,38 @@ export function StudioChatScreen({
     if (node) node.scrollTo({ behavior: "instant", top: node.scrollHeight });
   }, [messages]);
   return (
-    <main className="studio-chat-screen" id="admin-content">
-      <aside className="studio-chat-sidebar">
-        <a className="studio-chat-brand" href="/">
+    <main className={studioChatScreenStyles.element1} id="admin-content">
+      <aside className={studioChatScreenStyles.element2}>
+        <a className={studioChatScreenStyles.element3} href="/">
           mydevstudio<span>.</span>
         </a>
         <Button disabled={busy} onClick={onReset} variant="ghost">
           <Plus size={18} /> New chat
         </Button>
-        <p className="studio-chat-sidebar-label">YOUR WORKSPACE</p>
-        <span className="studio-chat-current">
+        <p className={studioChatScreenStyles.element4}>YOUR WORKSPACE</p>
+        <span className={studioChatScreenStyles.element5}>
           <MessageSquare size={16} /> Portfolio & CV
         </span>
         <a href={editorHref}>Open portfolio editor ↗</a>
         <a href="/">Back to home</a>
-        <p className="studio-chat-sidebar-note">
+        <p className={studioChatScreenStyles.element6}>
           Your draft stays private until you choose to publish.
         </p>
       </aside>
-      <section aria-label="Studio assistant conversation" className="studio-chat-main">
-        <header className="studio-chat-topbar">
+      <section
+        aria-label="Studio assistant conversation"
+        className={studioChatScreenStyles.element7}
+      >
+        <header className={studioChatScreenStyles.element8}>
           <span>
-            Studio <span className="studio-chat-subtitle">Portfolio & CV</span>
+            Studio <span className={studioChatScreenStyles.element9}>Portfolio & CV</span>
           </span>
           <div>
             {actions}
             <ThemeToggle />
           </div>
         </header>
-        <details className="studio-chat-mobile-nav">
+        <details className={studioChatScreenStyles.element10}>
           <summary>
             <PanelLeftClose size={18} /> Workspace
           </summary>
@@ -87,39 +77,45 @@ export function StudioChatScreen({
           <a href={editorHref}>Portfolio editor ↗</a>
           <a href="/">Home</a>
         </details>
-        <div className="studio-chat-body" data-started={started}>
+        <div className={studioChatScreenStyles.element11} data-started={started}>
           {started ? (
             <div
               aria-busy={busy}
               aria-label="Conversation"
               aria-live="polite"
-              className="studio-chat-thread"
+              className={studioChatScreenStyles.element12}
               ref={thread}
               role="log"
             >
               {messages.map((item) => (
-                <article className="studio-chat-message" data-role={item.role} key={item.id}>
-                  <span className="sr-only">{item.role === "user" ? "You" : "Studio"}</span>
+                <article
+                  className={studioChatScreenStyles.element13}
+                  data-role={item.role}
+                  key={item.id}
+                >
+                  <span className={studioChatScreenStyles.element14}>
+                    {item.role === "user" ? "You" : "Studio"}
+                  </span>
                   <p>{item.text}</p>
                 </article>
               ))}
               {busy && (
-                <p className="studio-chat-progress" role="status">
+                <p className={studioChatScreenStyles.element15} role="status">
                   Preparing your proposal…
                 </p>
               )}
               {review}
             </div>
           ) : (
-            <div className="studio-chat-welcome">
-              <span className="studio-chat-eyebrow">YOUR STORY, NEXT CHAPTER</span>
+            <div className={studioChatScreenStyles.element16}>
+              <span className={studioChatScreenStyles.element17}>YOUR STORY, NEXT CHAPTER</span>
               <h1>What would you like to create?</h1>
               <p>A portfolio that sounds like you. A CV that goes with it.</p>
             </div>
           )}
-          <div className="studio-chat-compose-area">
+          <div className={studioChatScreenStyles.element18}>
             {error && (
-              <p className="studio-chat-error" role="alert">
+              <p className={studioChatScreenStyles.element19} role="alert">
                 {error}
               </p>
             )}
@@ -133,7 +129,7 @@ export function StudioChatScreen({
               value={message}
             />
             {!started && (
-              <div className="studio-chat-suggestions">
+              <div className={studioChatScreenStyles.element20}>
                 {[
                   "Refine my professional summary",
                   "Make my project descriptions clearer",
@@ -149,7 +145,7 @@ export function StudioChatScreen({
                 ))}
               </div>
             )}
-            <div className="studio-chat-notice">{notice}</div>
+            <div className={studioChatScreenStyles.element21}>{notice}</div>
           </div>
         </div>
       </section>

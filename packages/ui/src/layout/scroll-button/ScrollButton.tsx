@@ -5,10 +5,8 @@ import { useEffect, useState } from "react";
 
 import { IconButton } from "../../buttons/icon-button/IconButton";
 import { ArrowDownwardIcon } from "../../display/icons/Icons";
-
-type ScrollButtonProps = {
-  sectionIds: string[];
-};
+import { scrollButtonStyles } from "./styles";
+import type { ScrollButtonProps } from "./types";
 
 export const ScrollButton: React.FC<ScrollButtonProps> = ({ sectionIds }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -53,10 +51,10 @@ export const ScrollButton: React.FC<ScrollButtonProps> = ({ sectionIds }) => {
   if (currentIndex === sectionIds.length - 1) return null;
 
   return (
-    <div className="fixed bottom-4 inset-x-0 flex justify-center animate-bounce z-50">
+    <div className={scrollButtonStyles.element1}>
       <IconButton
         aria-label="Scroll to next section"
-        className="rounded-full"
+        className={scrollButtonStyles.element2}
         onClick={scrollToNextSection}
         size="lg"
         surface="portfolio"

@@ -1,11 +1,12 @@
 import type React from "react";
 
 import { DownloadCVButton } from "../../buttons/buttons";
+import { cVSectionStyles } from "./styles";
 
 export const CVSection: React.FC = () => {
   return (
-    <section className="w-full bg-main-light" id="cv">
-      <div className="max-w-6xl mx-auto text-center">
+    <section className={cVSectionStyles.element1} id="cv">
+      <div className={cVSectionStyles.element2}>
         <DownloadCVButton />
       </div>
     </section>

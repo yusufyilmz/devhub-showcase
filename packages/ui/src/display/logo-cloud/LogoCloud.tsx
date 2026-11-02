@@ -1,18 +1,17 @@
 /** Adapted from Once UI (MIT). Copyright (c) 2024-2025 Once UI. */
-export function LogoCloud({ logos }: { logos: { src: string; alt: string; href?: string }[] }) {
+import { logoCloudStyles } from "./styles";
+import type { LogoCloudOptions } from "./types";
+export function LogoCloud({ logos }: LogoCloudOptions) {
   return (
-    <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-6">
+    <ul className={logoCloudStyles.element1}>
       {logos.map((logo) => (
-        <li
-          className="grid place-items-center rounded-xl bg-backgroundColor-card px-6 py-5"
-          key={logo.src}
-        >
+        <li className={logoCloudStyles.element2} key={logo.src}>
           {logo.href ? (
             <a href={logo.href}>
-              <img alt={logo.alt} className="max-h-8 w-auto object-contain" src={logo.src} />
+              <img alt={logo.alt} className={logoCloudStyles.element3} src={logo.src} />
             </a>
           ) : (
-            <img alt={logo.alt} className="max-h-8 w-auto object-contain" src={logo.src} />
+            <img alt={logo.alt} className={logoCloudStyles.element4} src={logo.src} />
           )}
         </li>
       ))}

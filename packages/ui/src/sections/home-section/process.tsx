@@ -1,23 +1,20 @@
 import { Card } from "../../cards";
 import { Section } from "../../layout/section";
+import { processStyles } from "./styles";
 
 export function HomeProcessSection() {
   return (
     <Section asChild>
-      <section
-        aria-labelledby="process-title"
-        className="home-container home-process"
-        id="how-it-works"
-      >
-        <div className="home-section-intro">
-          <p className="home-eyebrow">START WITH WHAT YOU HAVE</p>
+      <section aria-labelledby="process-title" className={processStyles.element1} id="how-it-works">
+        <div className={processStyles.element2}>
+          <p className={processStyles.element3}>START WITH WHAT YOU HAVE</p>
           <h2 id="process-title">
             From a blank page
             <br />
             to <span>your own place.</span>
           </h2>
         </div>
-        <ol className="home-steps">
+        <ol className={processStyles.element4}>
           <Card asChild layout="plain" surface="portfolio">
             <li>
               <span>01</span>

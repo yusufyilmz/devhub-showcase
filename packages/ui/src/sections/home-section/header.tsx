@@ -2,15 +2,16 @@ import { Button } from "../../buttons/button";
 import { Brand } from "../../navigation/brand";
 import { Header } from "../../navigation/header/Header";
 import { ThemeToggle } from "../../theme";
-import type { PageAction } from "./action";
+import { headerStyles } from "./styles";
+import type { HomeHeaderOptions } from "./types";
 
-export function HomeHeader({ action }: { action: PageAction }) {
+export function HomeHeader({ action }: HomeHeaderOptions) {
   return (
     <Header asChild>
-      <header className="home-header">
-        <div className="home-container home-header-inner">
+      <header className={headerStyles.element1}>
+        <div className={headerStyles.element2}>
           <Brand />
-          <nav aria-label="Main navigation" className="home-nav">
+          <nav aria-label="Main navigation" className={headerStyles.element3}>
             <Button href="#examples" variant="link">
               Examples
             </Button>
@@ -27,9 +28,9 @@ export function HomeHeader({ action }: { action: PageAction }) {
               Questions
             </Button>
           </nav>
-          <div className="home-header-actions">
+          <div className={headerStyles.element4}>
             <ThemeToggle />
-            <Button className="home-signin" href={action.href} variant="outline">
+            <Button className={headerStyles.element5} href={action.href} variant="outline">
               {action.signedIn ? "My studio" : "Sign in"} <span aria-hidden="true">↗</span>
             </Button>
           </div>

@@ -1,31 +1,34 @@
-import { profile as fallback, getPortfolioCopy, type PortfolioProfile } from "@shared/config";
+import { profile as fallback, getPortfolioCopy } from "@shared/config";
 
-export function SummarySection({ profile = fallback }: { profile?: PortfolioProfile }) {
+import { summarySectionStyles } from "./styles";
+import type { SummarySectionOptions } from "./types";
+
+export function SummarySection({ profile = fallback }: SummarySectionOptions) {
   const text = getPortfolioCopy(profile.portfolioLanguage);
   const firstYear = profile.experiences.map((item) => item.start.slice(0, 4)).sort()[0];
   return (
-    <section className="portfolio-hero" id="summary">
-      <div aria-hidden="true" className="hero-orbit" />
-      <div className="hero-copy">
-        <p className="eyebrow">
-          <span className="status-dot" />
+    <section className={summarySectionStyles.element1} id="summary">
+      <div aria-hidden="true" className={summarySectionStyles.element2} />
+      <div className={summarySectionStyles.element3}>
+        <p className={summarySectionStyles.element4}>
+          <span className={summarySectionStyles.element5} />
           {profile.location}
         </p>
         <h1>
           {profile.name}
-          <span className="accent-period">.</span>
+          <span className={summarySectionStyles.element6}>.</span>
         </h1>
         <h2>{profile.title}</h2>
-        <p className="hero-intro">{profile.summary}</p>
-        <div className="hero-actions">
-          <a className="studio-primary" href="#projects">
+        <p className={summarySectionStyles.element7}>{profile.summary}</p>
+        <div className={summarySectionStyles.element8}>
+          <a className={summarySectionStyles.element9} href="#projects">
             {text.exploreWork} <span aria-hidden="true">↗</span>
           </a>
-          <a className="studio-secondary" href={`mailto:${profile.email}`}>
+          <a className={summarySectionStyles.element10} href={`mailto:${profile.email}`}>
             {text.letsTalk}
           </a>
         </div>
-        <div className="hero-details">
+        <div className={summarySectionStyles.element11}>
           <span>
             {firstYear ? (
               <>
@@ -40,7 +43,7 @@ export function SummarySection({ profile = fallback }: { profile?: PortfolioProf
           </span>
         </div>
       </div>
-      <a className="hero-scroll" href="#about-me">
+      <a className={summarySectionStyles.element12} href="#about-me">
         {text.scroll} <span aria-hidden="true">↓</span>
       </a>
     </section>

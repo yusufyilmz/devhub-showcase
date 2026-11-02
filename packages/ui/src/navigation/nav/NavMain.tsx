@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight, type LucideIcon } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 import {
   Collapsible,
@@ -17,21 +17,10 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "../sidebar/Sidebar";
+import { navMainStyles } from "./styles";
+import type { NavMainOptions } from "./types";
 
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string;
-    url: string;
-    icon?: LucideIcon;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      url: string;
-    }[];
-  }[];
-}) {
+export function NavMain({ items }: NavMainOptions) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -39,7 +28,7 @@ export function NavMain({
         {items.map((item) => (
           <Collapsible
             asChild
-            className="group/collapsible"
+            className={navMainStyles.element1}
             defaultOpen={item.isActive}
             key={item.title}
           >
@@ -48,7 +37,7 @@ export function NavMain({
                 <SidebarMenuButton tooltip={item.title}>
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
-                  <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  <ChevronRight className={navMainStyles.element2} />
                 </SidebarMenuButton>
               </CollapsibleTrigger>
               <CollapsibleContent>

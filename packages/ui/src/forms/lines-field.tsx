@@ -1,18 +1,9 @@
 "use client";
 
 import { Field } from "./field";
+import type { LinesFieldOptions } from "./types";
 
-export function LinesField({
-  label,
-  value,
-  onChange,
-  hint,
-}: {
-  label: string;
-  value: string[];
-  onChange: (value: string[]) => void;
-  hint?: string;
-}) {
+export function LinesField({ label, value, onChange, hint }: LinesFieldOptions) {
   return (
     <Field
       hint={hint ?? "One item per line."}

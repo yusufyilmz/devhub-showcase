@@ -1,10 +1,13 @@
 import type React from "react";
 
-export const PageHeader: React.FC<{ title: string; subtitle: string }> = ({ title, subtitle }) => (
-  <div className="z-50 sticky top-0 w-full text-center">
-    <div className="flex items-center flex-col text-textColor-light justify-center text-center mx-8">
-      <h2 className="text-4xl font-bold mb-2">{title}</h2>
-      <p className="text-lg text-textColor-lightSlate italic">{subtitle}</p>
+import { pageHeaderStyles } from "./styles";
+import type { PageHeaderProps } from "./types";
+
+export const PageHeader: React.FC<PageHeaderProps> = ({ title, subtitle }) => (
+  <div className={pageHeaderStyles.element1}>
+    <div className={pageHeaderStyles.element2}>
+      <h2 className={pageHeaderStyles.element3}>{title}</h2>
+      <p className={pageHeaderStyles.element4}>{subtitle}</p>
     </div>
   </div>
 );

@@ -1,0 +1,18 @@
+export const carouselStyles = {
+  carousel: "relative",
+  carouselContent: "flex",
+  carouselContent2: "-ml-4",
+  carouselContent3: "-mt-4 flex-col",
+  carouselItem: "min-w-0 shrink-0 grow-0 basis-full",
+  carouselItem2: "pl-4",
+  carouselItem3: "pt-4",
+  carouselNext: "absolute size-8 rounded-full",
+  carouselNext2: "top-1/2 -right-12 -translate-y-1/2",
+  carouselNext3: "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+  carouselPrevious: "absolute size-8 rounded-full",
+  carouselPrevious2: "top-1/2 -left-12 -translate-y-1/2",
+  carouselPrevious3: "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+  element1: "overflow-hidden",
+  element2: "sr-only",
+  element3: "sr-only",
+} as const;

@@ -1,5 +1,12 @@
 # UI catalog
 
+Component contracts live in colocated types.ts files. Reusable variants, class
+maps and style helpers live in styles.ts; components import them directly.
+Existing component entry points continue to re-export their public types and
+variants. Type modules use type-only imports, and style modules do not import
+component implementations. Card variants share BaseCardProps and compose
+CardBase rather than importing the Card dispatcher.
+
 Card accepts a discriminated type prop: omitted or empty preserves the base
 surface; reveal, variants, hover, content and appearance use the existing
 specialized components and their props. Tilt and animated use the base surface

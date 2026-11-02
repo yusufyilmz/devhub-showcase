@@ -1,13 +1,12 @@
 "use client";
 
-import { type CSSProperties, type ReactNode, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
-import type { PortfolioTheme } from "@shared/config";
-import type { StudioRequest } from "@shared/runtime/studio";
 import { userConfigThemeScript } from "@shared/runtime/user";
 
 import { PageProviders } from "../../providers";
-import { getPublicThemeStyle, type PageAppearance } from "./page-theme";
+import { getPublicThemeStyle } from "./page-theme";
+import type { EmbeddedDocumentOptions, PageShellOptions } from "./types";
 
 function safeJson(value: unknown) {
   return JSON.stringify(value).replace(/</g, "\\u003c");
@@ -22,16 +21,7 @@ function EmbeddedDocument({
   storageKey,
   themeStyle,
   request,
-}: {
-  appearance: PageAppearance;
-  bodyClassName?: string;
-  children: ReactNode;
-  documentLanguage: string;
-  portfolioTheme?: PortfolioTheme;
-  storageKey: string;
-  themeStyle?: CSSProperties;
-  request?: StudioRequest;
-}) {
+}: EmbeddedDocumentOptions) {
   useEffect(() => {
     const root = document.documentElement;
     const previous = {
@@ -83,18 +73,7 @@ export function PageShell({
   storageKey,
   structuredData,
   request,
-}: {
-  appearance: PageAppearance;
-  bodyClassName?: string;
-  children: ReactNode;
-  documentLanguage: string;
-  /** Storybook and other hosts that already own `html` and `body`. */
-  embed?: boolean;
-  portfolioTheme?: PortfolioTheme;
-  storageKey: string;
-  structuredData?: unknown;
-  request?: StudioRequest;
-}) {
+}: PageShellOptions) {
   const themeStyle = useMemo(
     () => getPublicThemeStyle(portfolioTheme, appearance.accent),
     [appearance.accent, portfolioTheme],

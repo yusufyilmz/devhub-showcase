@@ -1,12 +1,7 @@
 import type React from "react";
 
-type FontSize = "small" | "medium" | "large" | "xlarge";
-
-interface IconProps {
-  className?: string;
-  d?: string;
-  fontSize?: FontSize;
-}
+import { iconsClassName, iconsInlineStyle1 } from "./styles";
+import type { FontSize, IconProps } from "./types";
 
 const sizeMap: Record<FontSize, string> = {
   large: "32px",
@@ -21,10 +16,10 @@ const Icon: React.FC<IconProps> = ({ d, className = "", fontSize = "medium" }) =
   return (
     <svg
       aria-hidden="true"
-      className={`w-6 h-6 ${className}`}
+      className={iconsClassName(className)}
       fill="currentColor"
       focusable="false"
-      style={{ height: iconSize, width: iconSize }}
+      style={iconsInlineStyle1(iconSize, iconSize)}
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
     >

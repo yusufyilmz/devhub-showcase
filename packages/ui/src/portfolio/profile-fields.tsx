@@ -4,27 +4,23 @@ import type { PortfolioProfile } from "@shared/config";
 
 import { Card } from "../cards";
 import { Field, LinesField } from "../forms";
+import { profileFieldsStyles } from "./styles";
+import type { ProfileFieldsOptions, ProfileFieldsOptions2 } from "./types";
 
-export function ProfileFields({
-  profile,
-  onChange,
-}: {
-  profile: PortfolioProfile;
-  onChange: (profile: PortfolioProfile) => void;
-}) {
-  const update = (key: keyof PortfolioProfile, value: string | string[]) =>
+export function ProfileFields({ profile, onChange }: ProfileFieldsOptions) {
+  const update = (key: keyof PortfolioProfile, value: ProfileFieldsOptions2) =>
     onChange({ ...profile, [key]: value });
   return (
     <section>
-      <div className="editor-section-heading">
+      <div className={profileFieldsStyles.element1}>
         <div>
-          <p className="eyebrow">THE INTRODUCTION</p>
+          <p className={profileFieldsStyles.element2}>THE INTRODUCTION</p>
           <h2>Your profile</h2>
           <p>The details people see first.</p>
         </div>
       </div>
       <Card asChild layout="plain" surface="portfolio">
-        <div className="editor-card editor-fields">
+        <div className={profileFieldsStyles.element3}>
           <Field
             label="Full name"
             onChange={(v) => update("name", v)}

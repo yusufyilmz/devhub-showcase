@@ -1,24 +1,25 @@
 "use client";
 
-import { type PortfolioType, portfolioTypes } from "@shared/config";
+import { portfolioTypes } from "@shared/config";
 
-export function PortfolioTypePicker({
-  value,
-  onChange,
-}: {
-  value: PortfolioType;
-  onChange: (type: PortfolioType) => void;
-}) {
+import { portfolioTypePickerStyles } from "./styles";
+import type { PortfolioTypePickerOptions } from "./types";
+
+export function PortfolioTypePicker({ value, onChange }: PortfolioTypePickerOptions) {
   return (
-    <fieldset className="type-picker">
+    <fieldset className={portfolioTypePickerStyles.element1}>
       <legend>Choose your portfolio layout</legend>
       <p>
         The same information, presented your way. You can change this later without losing your
         content.
       </p>
-      <div className="type-picker-grid">
+      <div className={portfolioTypePickerStyles.element2}>
         {portfolioTypes.map((type) => (
-          <label className="type-choice" data-selected={value === type.id} key={type.id}>
+          <label
+            className={portfolioTypePickerStyles.element3}
+            data-selected={value === type.id}
+            key={type.id}
+          >
             <input
               checked={value === type.id}
               name="portfolio-type"
@@ -26,10 +27,14 @@ export function PortfolioTypePicker({
               type="radio"
               value={type.id}
             />
-            <span aria-hidden="true" className="type-thumbnail" data-type={type.id}>
-              <span className="type-thumb-title" />
-              <span className="type-thumb-subtitle" />
-              <span className="type-thumb-blocks">
+            <span
+              aria-hidden="true"
+              className={portfolioTypePickerStyles.element4}
+              data-type={type.id}
+            >
+              <span className={portfolioTypePickerStyles.element5} />
+              <span className={portfolioTypePickerStyles.element6} />
+              <span className={portfolioTypePickerStyles.element7}>
                 <i />
                 <i />
                 <i />

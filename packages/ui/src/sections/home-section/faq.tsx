@@ -1,20 +1,21 @@
 import { homeFaq } from "@shared/config";
 
 import { Section, SectionAccordion } from "../../layout/section";
+import { faqStyles } from "./styles";
 
 export function HomeFAQSection() {
   return (
     <Section asChild>
-      <section aria-labelledby="questions-title" className="home-container home-faq" id="questions">
-        <div className="home-section-intro">
-          <p className="home-eyebrow">A FEW THINGS TO KNOW</p>
+      <section aria-labelledby="questions-title" className={faqStyles.element1} id="questions">
+        <div className={faqStyles.element2}>
+          <p className={faqStyles.element3}>A FEW THINGS TO KNOW</p>
           <h2 id="questions-title">
             Make yourself
             <br />
             <span>at home.</span>
           </h2>
         </div>
-        <div className="home-faq-list">
+        <div className={faqStyles.element4}>
           <SectionAccordion
             items={homeFaq.map(([question, answer]) => ({
               content: <p>{answer}</p>,

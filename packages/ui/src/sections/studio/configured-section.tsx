@@ -3,7 +3,6 @@ import {
   getPortfolioCopy,
   type PortfolioProfile,
   type PortfolioSection,
-  type SectionRendererId,
   sectionRendererViews,
   selectPortfolioContent,
 } from "@shared/config";
@@ -15,10 +14,16 @@ import {
   type SectionItem,
   SectionTabs,
 } from "../../layout";
+import { configuredSectionInlineStyle1, configuredSectionStyles } from "./styles";
+import type {
+  ConfiguredSectionOptions,
+  ConfiguredSectionOptions2,
+  SectionViewOptions,
+} from "./types";
 
 function sectionItems(profile: PortfolioProfile, kind: PortfolioSection["kind"]): SectionItem[] {
   const text = getPortfolioCopy(profile.portfolioLanguage);
-  const period = (start: string, end: string | null) =>
+  const period = (start: string, end: ConfiguredSectionOptions2) =>
     formatPortfolioPeriod(start, end, profile.portfolioLanguage);
   switch (kind) {
     case "about":
@@ -46,7 +51,7 @@ function sectionItems(profile: PortfolioProfile, kind: PortfolioSection["kind"])
                 loading="lazy"
                 referrerPolicy="no-referrer"
                 src={item.coverImage}
-                style={{ height: "auto", maxWidth: "100%" }}
+                style={configuredSectionInlineStyle1}
                 width={800}
               />
             )}
@@ -109,13 +114,7 @@ function sectionItems(profile: PortfolioProfile, kind: PortfolioSection["kind"])
       }));
   }
 }
-export function ConfiguredSection({
-  profile,
-  section,
-}: {
-  profile: PortfolioProfile;
-  section: PortfolioSection;
-}) {
+export function ConfiguredSection({ profile, section }: ConfiguredSectionOptions) {
   if (!section.settings.visible) return null;
   const items = sectionItems(selectPortfolioContent(profile), section.kind);
   if (!items.length) return null;
@@ -124,7 +123,7 @@ export function ConfiguredSection({
   const props = { items, label };
   return (
     <section
-      className="folio-section configured-section"
+      className={configuredSectionStyles.element1}
       id={
         profile.portfolioType === "engineer" || !profile.portfolioType
           ? ({
@@ -145,19 +144,11 @@ export function ConfiguredSection({
     </section>
   );
 }
-function SectionView({
-  renderer,
-  items,
-  label,
-}: {
-  renderer: SectionRendererId;
-  items: SectionItem[];
-  label: string;
-}) {
+function SectionView({ renderer, items, label }: SectionViewOptions) {
   const view = sectionRendererViews[renderer];
   if (view === "timeline")
     return (
-      <ol className="configured-timeline">
+      <ol className={configuredSectionStyles.element2}>
         {items.map((item) => (
           <li key={item.id}>
             <h3>{item.title}</h3>

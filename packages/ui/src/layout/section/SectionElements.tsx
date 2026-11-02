@@ -1,25 +1,25 @@
 "use client";
 
-import { type ReactNode, useId, useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 
 import { Button } from "../../buttons/button";
 import { Card } from "../../cards";
-
-export type SectionItem = { id: string; title: string; content: ReactNode };
+import { sectionElementsStyles, sectionGridClassName } from "./styles";
+import type {
+  SectionAccordionOptions,
+  SectionCarouselOptions,
+  SectionGridOptions,
+  SectionTabsOptions,
+} from "./types";
 
 export function SectionGrid({
   items,
   label,
   variant = "cards",
   surface = "semantic",
-}: {
-  items: SectionItem[];
-  label: string;
-  variant?: "cards" | "gallery";
-  surface?: "semantic" | "portfolio";
-}) {
+}: SectionGridOptions) {
   return (
-    <ul aria-label={label} className={`section-view-grid section-view-${variant}`}>
+    <ul aria-label={label} className={sectionGridClassName(variant)}>
       {items.map((item) => (
         <Card asChild key={item.id} layout="plain" surface={surface}>
           <li>
@@ -31,17 +31,9 @@ export function SectionGrid({
     </ul>
   );
 }
-export function SectionAccordion({
-  items,
-  label,
-  surface = "semantic",
-}: {
-  items: SectionItem[];
-  label: string;
-  surface?: "semantic" | "portfolio";
-}) {
+export function SectionAccordion({ items, label, surface = "semantic" }: SectionAccordionOptions) {
   return (
-    <section aria-label={label} className="section-view-accordion">
+    <section aria-label={label} className={sectionElementsStyles.element1}>
       {items.map((item) => (
         <Card asChild interaction="static" key={item.id} layout="plain" surface={surface}>
           <details>
@@ -53,14 +45,7 @@ export function SectionAccordion({
     </section>
   );
 }
-export function SectionTabs({
-  items,
-  label,
-}: {
-  items: SectionItem[];
-  label: string;
-  surface?: "semantic" | "portfolio";
-}) {
+export function SectionTabs({ items, label }: SectionTabsOptions) {
   const [selected, setSelected] = useState("");
   const id = useId();
   const buttons = useRef<Array<HTMLButtonElement | null>>([]);
@@ -77,7 +62,7 @@ export function SectionTabs({
     }
   }
   return (
-    <section aria-label={label} className="section-view-tabs">
+    <section aria-label={label} className={sectionElementsStyles.element2}>
       <div aria-label={label} role="tablist">
         {items.map((item, n) => (
           <Button
@@ -130,13 +115,7 @@ export function SectionCarousel({
   previousLabel = "Previous items",
   nextLabel = "Next items",
   surface = "semantic",
-}: {
-  items: SectionItem[];
-  label: string;
-  previousLabel?: string;
-  nextLabel?: string;
-  surface?: "semantic" | "portfolio";
-}) {
+}: SectionCarouselOptions) {
   const list = useRef<HTMLUListElement>(null);
   const id = useId();
   function move(direction: number) {
@@ -151,8 +130,8 @@ export function SectionCarousel({
   }
   if (!items.length) return null;
   return (
-    <section aria-label={label} className="section-view-carousel">
-      <div className="section-view-controls">
+    <section aria-label={label} className={sectionElementsStyles.element3}>
+      <div className={sectionElementsStyles.element4}>
         <Button
           aria-controls={id}
           aria-label={previousLabel}
@@ -178,3 +157,5 @@ export function SectionCarousel({
     </section>
   );
 }
+
+export type { SectionItem } from "./types";

@@ -1,25 +1,15 @@
 import "../chrome.css";
 
-import type { ReactNode } from "react";
-
 import { Slot } from "@radix-ui/react-slot";
 
-import type { PortfolioProfile } from "@shared/config";
-
 import { Navbar } from "../navbar/Navbar";
+import { headerStyles } from "./styles";
+import type { HeaderOptions } from "./types";
 
-export function Header({
-  profile,
-  asChild = false,
-  children,
-}: {
-  profile?: PortfolioProfile;
-  asChild?: boolean;
-  children?: ReactNode;
-}) {
+export function Header({ profile, asChild = false, children }: HeaderOptions) {
   if (asChild) return <Slot>{children}</Slot>;
   return (
-    <header className="site-header">
+    <header className={headerStyles.element1}>
       <Navbar profile={profile} />
     </header>
   );

@@ -1,8 +1,9 @@
 import "../../portfolio/portfolio.css";
 
-import type { PropsWithChildren } from "react";
-
 import { Slot } from "@radix-ui/react-slot";
+
+import { sectionClassName, sectionStyles } from "./styles";
+import type { SectionSurfaceProps } from "./types";
 
 export function Section({
   children,
@@ -12,23 +13,16 @@ export function Section({
   className = "",
   eyebrow,
   asChild = false,
-}: PropsWithChildren<{
-  sectionId?: string;
-  title?: string;
-  subtitle?: string;
-  className?: string;
-  eyebrow?: string;
-  asChild?: boolean;
-}>) {
+}: SectionSurfaceProps) {
   if (asChild) return <Slot className={className}>{children}</Slot>;
   return (
-    <section className={`portfolio-section ${className}`} id={sectionId}>
-      <div className="section-heading">
-        <p className="eyebrow">{eyebrow ?? sectionId?.replaceAll("-", " ")}</p>
+    <section className={sectionClassName(className)} id={sectionId}>
+      <div className={sectionStyles.element1}>
+        <p className={sectionStyles.element2}>{eyebrow ?? sectionId?.replaceAll("-", " ")}</p>
         <h2>{title}</h2>
         <p>{subtitle}</p>
       </div>
-      <div className="section-content">{children}</div>
+      <div className={sectionStyles.element3}>{children}</div>
     </section>
   );
 }

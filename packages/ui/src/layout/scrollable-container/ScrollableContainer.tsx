@@ -3,16 +3,15 @@
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
-import type { CVCategoryType } from "@shared/lib/types";
-
 import { IconButton } from "../../buttons/icon-button/IconButton";
 import { CARD_IDS } from "../../constants/cards";
 import { ArrowBackIcon, ArrowForwardIcon } from "../../display/icons/Icons";
-
-interface ScrollableContainerProps extends React.HTMLAttributes<HTMLDivElement> {
-  category?: CVCategoryType;
-  children: React.ReactNode;
-}
+import {
+  scrollableContainerInlineStyle1,
+  scrollableContainerInlineStyle2,
+  scrollableContainerStyles,
+} from "./styles";
+import type { ScrollableContainerProps } from "./types";
 
 export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
   children,
@@ -68,11 +67,11 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
   }, []);
 
   return (
-    <div className="relative flex align-top scrollbar-hide overflow-hidden">
+    <div className={scrollableContainerStyles.element1}>
       {showLeftArrow && (
         <div
-          className="absolute z-10 left-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
-          style={{ top: `${containerHeight / 2}px` }}
+          className={scrollableContainerStyles.element2}
+          style={scrollableContainerInlineStyle1(`${containerHeight / 2}px`)}
         >
           <IconButton aria-label="Scroll left" onClick={scrollLeft}>
             <ArrowBackIcon />
@@ -80,7 +79,7 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
         </div>
       )}
       <div
-        className="w-full gap-8 no-scrollbar flex flex-row justify-start overflow-x-auto scrollbar-hide whitespace-nowrap p-4 max-w-full"
+        className={scrollableContainerStyles.element3}
         onScroll={handleScroll}
         ref={scrollContainerRef}
         {...props}
@@ -89,8 +88,8 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
       </div>
       {showRightArrow && (
         <div
-          className="absolute z-10 right-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
-          style={{ top: `${containerHeight / 2}px` }}
+          className={scrollableContainerStyles.element4}
+          style={scrollableContainerInlineStyle2(`${containerHeight / 2}px`)}
         >
           <IconButton aria-label="Scroll right" onClick={scrollRight}>
             <ArrowForwardIcon />

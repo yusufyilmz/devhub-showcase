@@ -1,31 +1,19 @@
 import "../chrome.css";
 
-import type { ReactNode } from "react";
-
 import { Slot } from "@radix-ui/react-slot";
 
-import {
-  profile as fallback,
-  getNameInitials,
-  getPortfolioCopy,
-  type PortfolioProfile,
-} from "@shared/config";
+import { profile as fallback, getNameInitials, getPortfolioCopy } from "@shared/config";
 
-export function Footer({
-  profile = fallback,
-  asChild = false,
-  children,
-}: {
-  profile?: PortfolioProfile;
-  asChild?: boolean;
-  children?: ReactNode;
-}) {
+import { footerStyles } from "./styles";
+import type { FooterOptions } from "./types";
+
+export function Footer({ profile = fallback, asChild = false, children }: FooterOptions) {
   if (asChild) return <Slot>{children}</Slot>;
   const text = getPortfolioCopy(profile.portfolioLanguage);
   return (
-    <footer className="site-footer">
+    <footer className={footerStyles.element1}>
       <div>
-        <a className="brand-mark" href="#summary">
+        <a className={footerStyles.element2} href="#summary">
           {getNameInitials(profile.name)}
           <span>.</span>
         </a>

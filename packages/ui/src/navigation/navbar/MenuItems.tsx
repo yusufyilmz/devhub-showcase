@@ -1,14 +1,10 @@
-import { getPortfolioCopy, type Language } from "@shared/config";
+import { getPortfolioCopy } from "@shared/config";
 
 import { Button } from "../../buttons/button";
+import { menuItemsStyles } from "./styles";
+import type { MenuItemsOptions } from "./types";
 
-export function MenuItems({
-  language = "en",
-  hiddenLinks = [],
-}: {
-  language?: Language;
-  hiddenLinks?: string[];
-}) {
+export function MenuItems({ language = "en", hiddenLinks = [] }: MenuItemsOptions) {
   const text = getPortfolioCopy(language);
   const items = [
     ["#about-me", text.about],
@@ -23,12 +19,7 @@ export function MenuItems({
       {items
         .filter(([id]) => !hiddenLinks.includes(id ?? ""))
         .map(([id, title]) => (
-          <Button
-            asChild
-            className="text-main-white border-none whitespace-pre"
-            key={id}
-            variant="text"
-          >
+          <Button asChild className={menuItemsStyles.element1} key={id} variant="text">
             <a aria-label={title} href={id}>
               {title}
             </a>

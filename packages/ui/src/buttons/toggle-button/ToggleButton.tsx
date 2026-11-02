@@ -1,27 +1,18 @@
 /** Adapted from Once UI (MIT). Copyright (c) 2024-2025 Once UI. */
 "use client";
 
-import type { ReactNode } from "react";
+import { toggleButtonClassName } from "./styles";
+import type { ToggleButtonOptions } from "./types";
 
-export function ToggleButton({
-  label,
-  selected = false,
-  onClick,
-  children,
-}: {
-  label?: ReactNode;
-  selected?: boolean;
-  onClick?: () => void;
-  children?: ReactNode;
-}) {
+export function ToggleButton({ label, selected = false, onClick, children }: ToggleButtonOptions) {
   return (
     <button
       aria-pressed={selected}
-      className={`rounded-lg px-3 py-1.5 text-sm ${
+      className={toggleButtonClassName(
         selected
           ? "bg-button-primary text-button-light"
-          : "text-textColor-secondary hover:bg-backgroundColor-lightestNavy"
-      }`}
+          : "text-textColor-secondary hover:bg-backgroundColor-lightestNavy",
+      )}
       onClick={onClick}
       type="button"
     >

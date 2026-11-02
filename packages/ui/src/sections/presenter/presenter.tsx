@@ -2,13 +2,7 @@ import "../sections.css";
 
 import type { ReactNode } from "react";
 
-import {
-  type AuthorableSectionType,
-  authorableSections,
-  type CustomSection,
-  getPortfolioCopy,
-  getSocialWork,
-} from "@shared/config";
+import { authorableSections, getPortfolioCopy, getSocialWork } from "@shared/config";
 
 import { Button } from "../../buttons/button";
 import { Card } from "../../cards";
@@ -21,23 +15,27 @@ import { HeroSurface } from "../../layout/hero";
 import type { SectionItem } from "../../layout/section";
 import { SectionAccordion, SectionCarousel, SectionGrid, SectionTabs } from "../../layout/section";
 import { GalleryCollection } from "../gallery-grid-section/GalleryCollection";
-import type { SectionProps } from "../types";
+import {
+  collectionViewClassName,
+  presenterInlineStyle1,
+  presenterStyles,
+  sectionPresentationClassName,
+} from "./styles";
+import type {
+  CollectionViewOptions,
+  ItemContentOptions,
+  ItemMediaOptions,
+  SectionPresentationOptions,
+  SpecialViewOptions,
+} from "./types";
 
 const safeLink = (url: string) => /^https?:\/\//i.test(url);
-function ItemMedia({
-  item,
-  video,
-  language,
-}: {
-  item: CustomSection["items"][number];
-  video: boolean;
-  language?: SectionProps["language"];
-}) {
+function ItemMedia({ item, video, language }: ItemMediaOptions) {
   const text = getPortfolioCopy(language);
   const work = getSocialWork(item.url);
   return video && safeLink(item.url) && /\.(mp4|webm|ogg)(\?|$)/i.test(item.url) ? (
     <video
-      className="section-native-video"
+      className={presenterStyles.element1}
       controls
       playsInline
       poster={item.imageUrl && safeLink(item.imageUrl) ? item.imageUrl : undefined}
@@ -61,30 +59,20 @@ function ItemMedia({
     />
   );
 }
-export function ItemContent({
-  item,
-  quote = false,
-  video = false,
-  language,
-}: {
-  item: CustomSection["items"][number];
-  quote?: boolean;
-  video?: boolean;
-  language?: SectionProps["language"];
-}) {
+export function ItemContent({ item, quote = false, video = false, language }: ItemContentOptions) {
   const prose = item.body
     .split(/\n\s*\n/)
     .filter(Boolean)
     .map((paragraph, index) => (
-      <p key={`${item.id}-${index}`} style={{ whiteSpace: "pre-line" }}>
+      <p key={`${item.id}-${index}`} style={presenterInlineStyle1}>
         {paragraph}
       </p>
     ));
   return (
     <>
       <ItemMedia item={item} language={language} video={video} />
-      {item.value && <p className="section-item-value">{item.value}</p>}
-      {item.period && <p className="section-item-period">{item.period}</p>}
+      {item.value && <p className={presenterStyles.element2}>{item.value}</p>}
+      {item.period && <p className={presenterStyles.element3}>{item.period}</p>}
       {quote ? <blockquote>{prose}</blockquote> : prose}
       {item.details?.length ? (
         <ul>
@@ -102,11 +90,7 @@ export function ItemContent({
     </>
   );
 }
-export function CollectionView({
-  section,
-  type,
-  language,
-}: SectionProps & { type: AuthorableSectionType }) {
+export function CollectionView({ section, type, language }: CollectionViewOptions) {
   const view = authorableSections[type].view;
   if (
     type === "gallery-grid" &&
@@ -136,7 +120,7 @@ export function CollectionView({
     );
   if (section.renderer === "masonry")
     return (
-      <div className="section-masonry">
+      <div className={presenterStyles.element4}>
         {items.map((item) => (
           <Card asChild key={item.id} layout="plain" surface="portfolio">
             <article>
@@ -149,7 +133,7 @@ export function CollectionView({
     );
   if (["steps", "timeline"].includes(section.renderer))
     return (
-      <ol className={`section-${section.renderer}`}>
+      <ol className={collectionViewClassName(section.renderer)}>
         {items.map((item) => (
           <li key={item.id}>
             <h3>{item.title}</h3>
@@ -159,7 +143,7 @@ export function CollectionView({
       </ol>
     );
   return (
-    <div className="section-prose">
+    <div className={presenterStyles.element5}>
       {items.map((item) => (
         <Card asChild key={item.id} layout="plain" surface="portfolio">
           <article>
@@ -177,14 +161,14 @@ export function SpecialView({
   anchors,
   language,
   preview,
-}: SectionProps & { type: AuthorableSectionType }): ReactNode {
+}: SpecialViewOptions): ReactNode {
   const text = getPortfolioCopy(language);
   const options = section.options ?? {};
   switch (authorableSections[type].view) {
     case "contact":
       return options.email ? (
         preview ? (
-          <div className="section-contact-form">
+          <div className={presenterStyles.element6}>
             <label htmlFor="email">
               {text.formEmail}
               <Input disabled id="email" type="email" />
@@ -226,7 +210,7 @@ export function SpecialView({
       );
     case "newsletter":
       return options.actionUrl && safeLink(options.actionUrl) ? (
-        <Button className="section-action" href={options.actionUrl}>
+        <Button className={presenterStyles.element7} href={options.actionUrl}>
           {text.subscribe} ↗
         </Button>
       ) : null;
@@ -242,7 +226,7 @@ export function SectionPresentation({
   anchors,
   language,
   preview,
-}: SectionProps & { type: AuthorableSectionType }) {
+}: SectionPresentationOptions) {
   if (!section.visible) return null;
   const view = authorableSections[type].view;
   if (
@@ -254,7 +238,7 @@ export function SectionPresentation({
   const frame = (
     <section
       aria-labelledby={`${section.id}-heading`}
-      className={`folio-section configured-section library-section composition-${section.composition ?? type} section-type-${type} section-view-${view}`}
+      className={sectionPresentationClassName(section.composition ?? type, type, view)}
       data-alignment={section.options?.alignment ?? "left"}
       data-columns={section.options?.columns ?? 3}
       data-section-type={type}
@@ -262,7 +246,7 @@ export function SectionPresentation({
     >
       <h2 id={`${section.id}-heading`}>{section.title}</h2>
       {section.options?.description && (
-        <p className="section-description">{section.options.description}</p>
+        <p className={presenterStyles.element8}>{section.options.description}</p>
       )}
       <SpecialView
         anchors={anchors}

@@ -1,17 +1,14 @@
 "use client";
 
-import type { PortfolioProfile } from "@shared/config";
-
 import { CollectionEditor } from "../../editors/collection-editor";
 import { Field, SelectField } from "../../forms";
 import { LinesField } from "../../forms/lines-field";
+import { careerEditorsStyles } from "./styles";
+import type { Props } from "./types";
 
 const newId = () => crypto.randomUUID();
 const today = () => new Date().toISOString().slice(0, 10);
-type Props = {
-  profile: PortfolioProfile;
-  onChange: (profile: PortfolioProfile) => void;
-};
+
 export function ExperienceEditor({ profile, onChange }: Props) {
   return (
     <CollectionEditor
@@ -149,7 +146,7 @@ export function ProjectsEditor({ profile, onChange }: Props) {
             onChange={(skills) => change({ ...item, skills })}
             value={item.skills}
           />
-          <label className="editor-checkbox full-width">
+          <label className={careerEditorsStyles.element1}>
             <input
               checked={item.public}
               onChange={(event) => change({ ...item, public: event.target.checked })}

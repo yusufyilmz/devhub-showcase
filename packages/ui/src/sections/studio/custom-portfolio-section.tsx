@@ -1,4 +1,4 @@
-import { type CustomSection, getPortfolioCopy, getSocialWork, type Language } from "@shared/config";
+import { getPortfolioCopy, getSocialWork } from "@shared/config";
 
 import { WorkMedia } from "../../display/media";
 import {
@@ -9,18 +9,15 @@ import {
   SectionTabs,
 } from "../../layout/section";
 import { RenderSection } from "../renderers";
+import { customPortfolioSectionClassName, customPortfolioSectionInlineStyle1 } from "./styles";
+import type { CustomPortfolioSectionOptions, CustomViewOptions } from "./types";
 
 export function CustomPortfolioSection({
   section,
   language,
   anchors,
   preview,
-}: {
-  section: CustomSection;
-  language?: Language;
-  preview?: boolean;
-  anchors?: { id: string; title: string }[];
-}) {
+}: CustomPortfolioSectionOptions) {
   if (section.sectionType)
     return (
       <RenderSection anchors={anchors} language={language} preview={preview} section={section} />
@@ -44,7 +41,7 @@ export function CustomPortfolioSection({
             <p
               className={section.composition === "testimonials" ? "testimonial-quote" : undefined}
               key={`${item.id}-${index}`}
-              style={{ whiteSpace: "pre-line" }}
+              style={customPortfolioSectionInlineStyle1}
             >
               {paragraph}
             </p>
@@ -59,7 +56,7 @@ export function CustomPortfolioSection({
   return (
     <section
       aria-labelledby={`${section.id}-heading`}
-      className={`folio-section configured-section composition-${section.composition ?? "custom"}`}
+      className={customPortfolioSectionClassName(section.composition ?? "custom")}
       id={section.id}
     >
       <h2 id={`${section.id}-heading`}>{section.title}</h2>
@@ -67,15 +64,7 @@ export function CustomPortfolioSection({
     </section>
   );
 }
-function CustomView({
-  renderer,
-  items,
-  label,
-}: {
-  renderer: CustomSection["renderer"];
-  items: SectionItem[];
-  label: string;
-}) {
+function CustomView({ renderer, items, label }: CustomViewOptions) {
   switch (renderer) {
     case "gallery":
     case "masonry":

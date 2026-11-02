@@ -1,11 +1,7 @@
 import type React from "react";
-import type { ReactNode } from "react";
 
-interface ListItemProps {
-  children: ReactNode;
-  className?: string;
-  onClick?: () => void;
-}
+import { listItemClassName, listItemStyles } from "./styles";
+import type { ListItemProps } from "./types";
 
 export const ListItem: React.FC<ListItemProps> = ({
   children,
@@ -14,9 +10,9 @@ export const ListItem: React.FC<ListItemProps> = ({
   ...props
 }) => {
   return (
-    <li className={`p-2 cursor-pointer transition duration-200 ${className}`} {...props}>
+    <li className={listItemClassName(className)} {...props}>
       {onClick ? (
-        <button className="w-full text-left" onClick={onClick} type="button">
+        <button className={listItemStyles.element1} onClick={onClick} type="button">
           {children}
         </button>
       ) : (

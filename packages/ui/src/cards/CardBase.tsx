@@ -1,16 +1,10 @@
 import "./surfaces.css";
 
-import type * as React from "react";
-
 import { Slot } from "@radix-ui/react-slot";
 import { cn } from "cn";
 
-export type BaseCardProps = React.ComponentProps<"div"> & {
-  asChild?: boolean;
-  surface?: "semantic" | "portfolio";
-  interaction?: "static" | "lift";
-  layout?: "stack" | "plain";
-};
+import { cardBaseStyles } from "./styles";
+import type { BaseCardProps } from "./types";
 
 export function CardBase({
   className,
@@ -24,8 +18,8 @@ export function CardBase({
   return (
     <Comp
       className={cn(
-        "ui-card rounded-xl border bg-card text-card-foreground",
-        layout === "stack" && "flex flex-col gap-md py-md",
+        cardBaseStyles.cardBase,
+        layout === "stack" && cardBaseStyles.cardBase2,
         className,
       )}
       data-interaction={interaction}
@@ -35,3 +29,5 @@ export function CardBase({
     />
   );
 }
+
+export type { BaseCardProps } from "./types";

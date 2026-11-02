@@ -2,29 +2,12 @@
 
 import "./gallery-lightbox.css";
 
-import type { ReactNode } from "react";
-
 import { Button } from "../../buttons/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "./Dialog";
+import { galleryLightboxStyles } from "./styles";
+import type { GalleryLightboxOptions } from "./types";
 
-export type GalleryLightboxItem = {
-  id: string;
-  title: string;
-  description?: string;
-  thumbnail: ReactNode;
-  content: ReactNode;
-  href?: string;
-};
-
-export function GalleryLightbox({
-  items,
-  index,
-  onIndexChange,
-}: {
-  items: GalleryLightboxItem[];
-  index: number | null;
-  onIndexChange: (index: number | null) => void;
-}) {
+export function GalleryLightbox({ items, index, onIndexChange }: GalleryLightboxOptions) {
   const active = index === null ? undefined : items[index];
   const move = (direction: number) => {
     if (index !== null) onIndexChange(Math.max(0, Math.min(items.length - 1, index + direction)));
@@ -38,7 +21,7 @@ export function GalleryLightbox({
     >
       {active && (
         <DialogContent
-          className="gallery-lightbox"
+          className={galleryLightboxStyles.element1}
           onKeyDown={(event) => {
             if (
               event.target instanceof HTMLElement &&
@@ -52,20 +35,20 @@ export function GalleryLightbox({
           }}
           showCloseButton={false}
         >
-          <header className="gallery-lightbox-heading">
-            <span className="gallery-lightbox-eyebrow">THE GALLERY</span>
+          <header className={galleryLightboxStyles.element2}>
+            <span className={galleryLightboxStyles.element3}>THE GALLERY</span>
             <DialogTitle>{active.title}</DialogTitle>
             <DialogDescription>{active.description || "Gallery preview"}</DialogDescription>
             <DialogClose asChild>
-              <Button aria-label="Close" className="gallery-lightbox-close" variant="ghost">
+              <Button aria-label="Close" className={galleryLightboxStyles.element4} variant="ghost">
                 ✕
               </Button>
             </DialogClose>
           </header>
-          <div className="gallery-lightbox-stage" key={active.id}>
+          <div className={galleryLightboxStyles.element5} key={active.id}>
             {active.content}
           </div>
-          <nav aria-label="Gallery navigation" className="gallery-lightbox-controls">
+          <nav aria-label="Gallery navigation" className={galleryLightboxStyles.element6}>
             <Button
               aria-label="Previous item"
               disabled={index === 0}
@@ -91,20 +74,20 @@ export function GalleryLightbox({
               </Button>
             )}
           </nav>
-          <nav aria-label="Gallery thumbnails" className="gallery-lightbox-thumbnails">
+          <nav aria-label="Gallery thumbnails" className={galleryLightboxStyles.element7}>
             {items.map((item, itemIndex) => (
               <Button
                 aria-label={`Show ${item.title}`}
                 aria-pressed={itemIndex === index}
-                className="gallery-lightbox-thumbnail"
+                className={galleryLightboxStyles.element8}
                 key={item.id}
                 onClick={() => onIndexChange(itemIndex)}
                 variant="outline"
               >
-                <span aria-hidden="true" className="gallery-lightbox-thumbnail-art">
+                <span aria-hidden="true" className={galleryLightboxStyles.element9}>
                   {item.thumbnail}
                 </span>
-                <span className="gallery-lightbox-thumbnail-name">{item.title}</span>
+                <span className={galleryLightboxStyles.element10}>{item.title}</span>
               </Button>
             ))}
           </nav>
@@ -113,3 +96,5 @@ export function GalleryLightbox({
     </Dialog>
   );
 }
+
+export type { GalleryLightboxItem } from "./types";

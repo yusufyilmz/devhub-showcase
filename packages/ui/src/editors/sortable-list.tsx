@@ -3,6 +3,8 @@
 import { type PointerEvent, useEffect, useId, useRef, useState } from "react";
 
 import { Button } from "../buttons";
+import { sortableListStyles } from "./styles";
+import type { Drag, Item, SortableListOptions } from "./types";
 
 export function moveItem<T>(items: readonly T[], from: number, to: number): T[] {
   const next = [...items];
@@ -11,17 +13,8 @@ export function moveItem<T>(items: readonly T[], from: number, to: number): T[] 
   if (item !== undefined) next.splice(to, 0, item);
   return next;
 }
-type Item = { id: string; label: string };
-type Drag = { id: string; items: Item[]; pointerId: number };
-export function SortableList({
-  items,
-  onChange,
-  label,
-}: {
-  items: Item[];
-  onChange: (ids: string[]) => void;
-  label: string;
-}) {
+
+export function SortableList({ items, onChange, label }: SortableListOptions) {
   const root = useRef<HTMLOListElement>(null);
   const active = useRef<Drag | null>(null);
   const [preview, setPreview] = useState<Item[] | null>(null);
@@ -97,14 +90,14 @@ export function SortableList({
       root.current.releasePointerCapture(current.pointerId);
   }
   return (
-    <div className="sortable-panel">
+    <div className={sortableListStyles.element1}>
       <p id={helpId}>
         Drag a handle to reorder. You can also use the move buttons, or focus a handle and use the
         arrow keys. Press Escape to cancel a drag.
       </p>
       <ol
         aria-label={label}
-        className="sortable-list"
+        className={sortableListStyles.element2}
         onLostPointerCapture={() => finish(true)}
         onPointerCancel={() => finish(true)}
         onPointerMove={drag}
@@ -120,7 +113,7 @@ export function SortableList({
             <Button
               aria-describedby={helpId}
               aria-label={`Reorder ${item.label}`}
-              className="sortable-handle"
+              className={sortableListStyles.element3}
               onKeyDown={(event) => {
                 if (event.key === "Escape") {
                   finish(true);
@@ -143,13 +136,13 @@ export function SortableList({
             >
               <span aria-hidden="true">⠿</span>
             </Button>
-            <span aria-hidden="true" className="sortable-number">
+            <span aria-hidden="true" className={sortableListStyles.element4}>
               {index + 1}
             </span>
-            <span className="sortable-label">{item.label}</span>
+            <span className={sortableListStyles.element5}>{item.label}</span>
             <Button
               aria-label={`Move ${item.label} up`}
-              className="sortable-move"
+              className={sortableListStyles.element6}
               disabled={index === 0}
               onClick={() => move(item.id, index - 1)}
               type="button"
@@ -158,7 +151,7 @@ export function SortableList({
             </Button>
             <Button
               aria-label={`Move ${item.label} down`}
-              className="sortable-move"
+              className={sortableListStyles.element7}
               disabled={index === items.length - 1}
               onClick={() => move(item.id, index + 1)}
               type="button"
@@ -168,7 +161,7 @@ export function SortableList({
           </li>
         ))}
       </ol>
-      <p aria-live="polite" className="sortable-announcement" role="status">
+      <p aria-live="polite" className={sortableListStyles.element8} role="status">
         {announcement}
       </p>
     </div>

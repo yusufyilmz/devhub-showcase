@@ -1,29 +1,27 @@
 import type React from "react";
 
-import { getPortfolioCopy, type Language } from "@shared/config";
-import type { Skill } from "@shared/lib/types";
+import { getPortfolioCopy } from "@shared/config";
 
 import { List, ListItem } from "../../display/list";
 import { Section } from "../../layout/section";
 import { SkillCategoryItem } from "./SkillCategoryItem";
+import { skillSectionStyles } from "./styles";
+import type { SkillSectionProps } from "./types";
 
-export const SkillSection: React.FC<{
-  skills: Record<string, Skill[]>;
-  language?: Language;
-}> = ({ skills = {}, language = "en" }) => {
+export const SkillSection: React.FC<SkillSectionProps> = ({ skills = {}, language = "en" }) => {
   const text = getPortfolioCopy(language);
   return (
     <Section
-      className="mt-8"
+      className={skillSectionStyles.element1}
       eyebrow={text.skills}
       sectionId="skills"
       subtitle={text.skillsSubtitle}
       title={text.skills}
     >
-      <div className="flex h-full">
-        <List className="overflow-y-auto mt-2 no-scrollbar w-full mb-10">
+      <div className={skillSectionStyles.element2}>
+        <List className={skillSectionStyles.element3}>
           {Object.entries(skills).map(([category, skills]) => (
-            <ListItem className="pl-0 md:pl-4 py-4" key={category}>
+            <ListItem className={skillSectionStyles.element4} key={category}>
               <SkillCategoryItem name={category} skills={skills} />
             </ListItem>
           ))}

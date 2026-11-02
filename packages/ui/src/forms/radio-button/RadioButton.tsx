@@ -3,6 +3,9 @@
 
 import { useId } from "react";
 
+import { radioButtonClassName, radioButtonStyles } from "./styles";
+import type { RadioButtonOptions } from "./types";
+
 export function RadioButton({
   name,
   value,
@@ -10,23 +13,13 @@ export function RadioButton({
   onToggle,
   disabled,
   label,
-}: {
-  name: string;
-  value: string;
-  isChecked?: boolean;
-  onToggle?: () => void;
-  disabled?: boolean;
-  label?: string;
-}) {
+}: RadioButtonOptions) {
   const id = useId();
   return (
-    <label
-      className={`inline-flex items-center gap-3 text-sm ${disabled ? "opacity-50" : ""}`}
-      htmlFor={id}
-    >
+    <label className={radioButtonClassName(disabled ? "opacity-50" : "")} htmlFor={id}>
       <input
         checked={isChecked}
-        className="size-4 accent-[rgb(var(--accent-rgb))]"
+        className={radioButtonStyles.element1}
         disabled={disabled}
         id={id}
         name={name}

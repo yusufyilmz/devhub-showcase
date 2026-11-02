@@ -1,25 +1,26 @@
 import { Button } from "../../buttons/button";
 import { Section } from "../../layout/section";
-import type { PageAction } from "./action";
+import { finalStyles } from "./styles";
+import type { HomeCTASectionOptions } from "./types";
 
-export function HomeCTASection({ action }: { action: PageAction }) {
+export function HomeCTASection({ action }: HomeCTASectionOptions) {
   return (
     <Section asChild>
-      <section className="home-container home-final">
-        <div className="home-final-inner">
-          <p className="home-eyebrow">YOUR WORK IS ALREADY THERE.</p>
+      <section className={finalStyles.element1}>
+        <div className={finalStyles.element2}>
+          <p className={finalStyles.element3}>YOUR WORK IS ALREADY THERE.</p>
           <h2>
             Give it a place
             <br />
-            to live<span className="home-final-period">.</span>
+            to live<span className={finalStyles.element4}>.</span>
           </h2>
           <p>Start with your story. Make the rest yours.</p>
-          <Button className="home-button home-button-primary" href={action.href}>
+          <Button className={finalStyles.element5} href={action.href}>
             {action.label} <span aria-hidden="true">↗</span>
           </Button>
-          <span className="home-final-note">Your portfolio. Your pace.</span>
+          <span className={finalStyles.element6}>Your portfolio. Your pace.</span>
         </div>
-        <span aria-hidden="true" className="home-final-glyph">
+        <span aria-hidden="true" className={finalStyles.element7}>
           ↗
         </span>
       </section>

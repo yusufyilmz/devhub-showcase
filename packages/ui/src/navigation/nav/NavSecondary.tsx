@@ -1,9 +1,5 @@
 "use client";
 
-import type * as React from "react";
-
-import type { Icon } from "@tabler/icons-react";
-
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -11,17 +7,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "../sidebar/Sidebar";
+import type { NavSecondaryOptions } from "./types";
 
-export function NavSecondary({
-  items,
-  ...props
-}: {
-  items: {
-    title: string;
-    url: string;
-    icon: Icon;
-  }[];
-} & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+export function NavSecondary({ items, ...props }: NavSecondaryOptions) {
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>

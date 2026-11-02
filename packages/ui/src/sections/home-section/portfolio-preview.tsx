@@ -13,6 +13,11 @@ import {
 } from "@shared/config";
 
 import { Button } from "../../buttons/button";
+import {
+  portfolioPreviewClassName,
+  portfolioPreviewInlineStyle1,
+  portfolioPreviewStyles,
+} from "./styles";
 
 const views = ["Portfolio", "CV"] as const;
 function tabIndexForKey(key: string, index: number) {
@@ -32,9 +37,9 @@ export function PortfolioPreview() {
   const id = useId();
   const tabs = useRef<Array<HTMLButtonElement | null>>([]);
   return (
-    <div className="home-preview-wrap" id="preview">
-      <div className="home-preview-tools">
-        <div aria-label="Example views" className="home-preview-tabs" role="tablist">
+    <div className={portfolioPreviewStyles.element1} id="preview">
+      <div className={portfolioPreviewStyles.element2}>
+        <div aria-label="Example views" className={portfolioPreviewStyles.element3} role="tablist">
           {views.map((item, index) => (
             <Button
               aria-controls={`${id}-panel`}
@@ -63,10 +68,10 @@ export function PortfolioPreview() {
             </Button>
           ))}
         </div>
-        <span className="home-preview-caption">Your story, two ways</span>
+        <span className={portfolioPreviewStyles.element4}>Your story, two ways</span>
       </div>
       <div
-        className="home-preview-browser"
+        className={portfolioPreviewStyles.element5}
         data-portfolio-theme={theme}
         data-preview-accent={accent}
         style={
@@ -76,8 +81,8 @@ export function PortfolioPreview() {
           } as CSSProperties
         }
       >
-        <div className="home-preview-chrome">
-          <span aria-hidden="true" className="home-window-dots">
+        <div className={portfolioPreviewStyles.element6}>
+          <span aria-hidden="true" className={portfolioPreviewStyles.element7}>
             <i />
             <i />
             <i />
@@ -87,30 +92,32 @@ export function PortfolioPreview() {
         </div>
         <div
           aria-labelledby={`${id}-${view}-tab`}
-          className="home-preview-panel"
+          className={portfolioPreviewStyles.element8}
           id={`${id}-panel`}
           role="tabpanel"
           // biome-ignore lint/a11y/noNoninteractiveTabindex: Tab panel content needs a keyboard focus destination.
           tabIndex={0}
         >
           {view === "Portfolio" ? (
-            <div className="home-sample-site">
-              <div className="home-sample-nav">
+            <div className={portfolioPreviewStyles.element9}>
+              <div className={portfolioPreviewStyles.element10}>
                 <strong>
                   yn<span>.</span>
                 </strong>
                 <span>About&nbsp;&nbsp; Work&nbsp;&nbsp; Contact</span>
               </div>
-              <div className="home-sample-intro">
-                <div aria-hidden="true" className="home-sample-avatar">
+              <div className={portfolioPreviewStyles.element11}>
+                <div aria-hidden="true" className={portfolioPreviewStyles.element12}>
                   yn
                 </div>
                 <p>HELLO, I’M</p>
                 <h2>
                   Your name<span>.</span>
                 </h2>
-                <p className="home-sample-role">Developer. Designer. A little of both.</p>
-                <p className="home-sample-bio">
+                <p className={portfolioPreviewStyles.element13}>
+                  Developer. Designer. A little of both.
+                </p>
+                <p className={portfolioPreviewStyles.element14}>
                   A few words about what you do,
                   <br />
                   and what makes it yours.
@@ -125,15 +132,15 @@ export function PortfolioPreview() {
                   Preview your CV <span aria-hidden="true">↗</span>
                 </Button>
               </div>
-              <div className="home-sample-work">
+              <div className={portfolioPreviewStyles.element15}>
                 <span>SELECTED WORK</span>
                 <span>01 / 02</span>
               </div>
-              <div className="home-sample-projects">
+              <div className={portfolioPreviewStyles.element16}>
                 <div>
                   <img
                     alt="Illustrative interface project"
-                    className="home-project-art"
+                    className={portfolioPreviewStyles.element17}
                     height={400}
                     src="/examples/atlas-interface.svg"
                     width={600}
@@ -144,7 +151,7 @@ export function PortfolioPreview() {
                 <div>
                   <img
                     alt="Illustrative brand identity project"
-                    className="home-project-art"
+                    className={portfolioPreviewStyles.element18}
                     height={400}
                     src="/examples/orbit-brand.svg"
                     width={600}
@@ -153,22 +160,24 @@ export function PortfolioPreview() {
                   <small>A little room to grow</small>
                 </div>
               </div>
-              <div className="home-sample-footer">
+              <div className={portfolioPreviewStyles.element19}>
                 <span>Built around you.</span>
                 <span>GitHub&nbsp; / &nbsp;LinkedIn</span>
               </div>
             </div>
           ) : (
-            <div className="home-sample-cv">
-              <div className="home-cv-paper">
-                <p className="home-cv-label">YOUR DOWNLOADABLE CV</p>
+            <div className={portfolioPreviewStyles.element20}>
+              <div className={portfolioPreviewStyles.element21}>
+                <p className={portfolioPreviewStyles.element22}>YOUR DOWNLOADABLE CV</p>
                 <h2>Your name</h2>
                 <p>Software engineer</p>
-                <div className="home-cv-contact">Your email · Your location · Your website</div>
+                <div className={portfolioPreviewStyles.element23}>
+                  Your email · Your location · Your website
+                </div>
                 <h3>Profile</h3>
                 <p>Your professional summary, in your own words.</p>
                 <h3>Experience</h3>
-                <div className="home-cv-role">
+                <div className={portfolioPreviewStyles.element24}>
                   <strong>Your latest role</strong>
                   <span>Present</span>
                 </div>
@@ -183,24 +192,26 @@ export function PortfolioPreview() {
                 <p>Your work, the tools you used, and its impact.</p>
                 <h3>Skills & education</h3>
                 <p>Your expertise and the path that brought you here.</p>
-                <div className="home-cv-footnote">One story. Ready for the next opportunity.</div>
+                <div className={portfolioPreviewStyles.element25}>
+                  One story. Ready for the next opportunity.
+                </div>
               </div>
             </div>
           )}
         </div>
       </div>
-      <div className="home-preview-bottom">
+      <div className={portfolioPreviewStyles.element26}>
         <span>Try an accent</span>
-        <fieldset className="home-preview-colors home-preview-accents">
-          <legend className="sr-only">Preview accent color</legend>
+        <fieldset className={portfolioPreviewStyles.element27}>
+          <legend className={portfolioPreviewStyles.element28}>Preview accent color</legend>
           {portfolioAccentIds.map((item) => (
             <Button
               aria-label={`Preview in ${item}`}
               aria-pressed={accent === item}
-              className="home-accent"
+              className={portfolioPreviewStyles.element29}
               key={item}
               onClick={() => setAccent(item)}
-              style={{ backgroundColor: accentSwatchColor(item) }}
+              style={portfolioPreviewInlineStyle1(accentSwatchColor(item))}
               title={item}
               type="button"
             >
@@ -208,13 +219,13 @@ export function PortfolioPreview() {
             </Button>
           ))}
         </fieldset>
-        <fieldset className="home-preview-colors home-preview-themes">
-          <legend className="sr-only">Preview theme</legend>
+        <fieldset className={portfolioPreviewStyles.element30}>
+          <legend className={portfolioPreviewStyles.element31}>Preview theme</legend>
           {portfolioThemes.map((item) => (
             <Button
               aria-label={`Preview the ${item.name} theme`}
               aria-pressed={theme === item.id}
-              className={`home-accent home-accent-${item.id}`}
+              className={portfolioPreviewClassName(item.id)}
               key={item.id}
               onClick={() => setTheme(item.id)}
               title={item.name}
@@ -224,7 +235,7 @@ export function PortfolioPreview() {
             </Button>
           ))}
         </fieldset>
-        <span className="home-preview-note">Illustrative preview</span>
+        <span className={portfolioPreviewStyles.element32}>Illustrative preview</span>
       </div>
     </div>
   );

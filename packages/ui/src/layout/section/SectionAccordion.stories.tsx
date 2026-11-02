@@ -27,7 +27,7 @@ export const LongTitles: Story = {
   args: {
     items: items.map((item) => ({
       ...item,
-      title: item.title + " with a longer title to check wrapping on small screens",
+      title: `${item.title} with a longer title to check wrapping on small screens`,
     })),
   },
 };

@@ -2,20 +2,16 @@
 
 import { useState } from "react";
 
-import { getPortfolioCopy, type Language } from "@shared/config";
+import { getPortfolioCopy } from "@shared/config";
 
 import { IconButton } from "../../buttons/icon-button/IconButton";
 import { MenuIcon } from "../../display/icons/Icons";
 import { Drawer } from "../../overlays/drawer";
 import { MenuItems } from "./MenuItems";
+import { mobileMenuStyles } from "./styles";
+import type { MobileMenuOptions } from "./types";
 
-export function MobileMenu({
-  language = "en",
-  hiddenLinks = [],
-}: {
-  language?: Language;
-  hiddenLinks?: string[];
-}) {
+export function MobileMenu({ language = "en", hiddenLinks = [] }: MobileMenuOptions) {
   const text = getPortfolioCopy(language);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,7 +24,7 @@ export function MobileMenu({
       <IconButton
         aria-expanded={isOpen}
         aria-label={text.menu}
-        className="md:hidden"
+        className={mobileMenuStyles.element1}
         onClick={toggleMenu}
         size="lg"
         surface="portfolio"
@@ -37,12 +33,9 @@ export function MobileMenu({
         <MenuIcon fontSize="medium" />
       </IconButton>
       <Drawer anchor="right" onClose={toggleMenu} open={isOpen}>
-        <div
-          className="bg-main-dark h-full flex flex-col justify-start p-4 align-middle"
-          role="presentation"
-        >
+        <div className={mobileMenuStyles.element2} role="presentation">
           <MenuItems hiddenLinks={hiddenLinks} language={language} />
-          <a className="studio-primary" href="/login">
+          <a className={mobileMenuStyles.element3} href="/login">
             {text.createCv}
           </a>
         </div>
