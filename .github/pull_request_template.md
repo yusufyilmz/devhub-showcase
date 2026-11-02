@@ -14,19 +14,22 @@
 ## How to test each change
 
 <!-- Repeat this section for each task or independently testable change. -->
+<!-- Every step must include a clickable full URL and its route path. Replace PREVIEW-HOST with the actual deployment hostname; do not invent routes for tabs. -->
 <!-- Give exact routes, visible control names, fixture/account requirements and expected results. -->
 <!-- Replace the example rows. Do not mark an instruction as tested until you run it. -->
 
 **Task / change:**
 **Environment / preview URL:**
+**Clickable entry URL:**
+**Route path (for example `/test-owner/edit`):**
 **Account, fixture and configuration needed:**
 
-| Step | Action                                                      | Expected result                             | Actual result / evidence |
-| ---- | ----------------------------------------------------------- | ------------------------------------------- | ------------------------ |
-| 1    | Open the affected route with the stated account or fixture. | Describe the initial state.                 | Not run                  |
-| 2    | Perform the primary action using the visible control name.  | Describe the resulting UI and saved data.   | Not run                  |
-| 3    | Reload, go back, or retry a failure as relevant.            | Describe preservation or recovery behavior. | Not run                  |
-| 4    | Verify access and public/private behavior when relevant.    | Describe what an owner and visitor can see. | Not run                  |
+| Step | Clickable URL                                       | Route path         | Action                                                      | Expected result                             | Actual result / evidence |
+| ---- | --------------------------------------------------- | ------------------ | ----------------------------------------------------------- | ------------------------------------------- | ------------------------ |
+| 1    | [Open screen](https://PREVIEW-HOST/test-owner/edit) | `/test-owner/edit` | Open the affected route with the stated account or fixture. | Describe the initial state.                 | Not run                  |
+| 2    | [Open screen](https://PREVIEW-HOST/test-owner/edit) | `/test-owner/edit` | Perform the primary action using the visible control name.  | Describe the resulting UI and saved data.   | Not run                  |
+| 3    | [Open screen](https://PREVIEW-HOST/test-owner/edit) | `/test-owner/edit` | Reload, go back, or retry a failure as relevant.            | Describe preservation or recovery behavior. | Not run                  |
+| 4    | [Open screen](https://PREVIEW-HOST/test-owner/edit) | `/test-owner/edit` | Verify access and public/private behavior when relevant.    | Describe what an owner and visitor can see. | Not run                  |
 
 ## Section and visual checks
 
