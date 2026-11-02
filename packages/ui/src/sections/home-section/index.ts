@@ -1,5 +1,6 @@
 export type { PageAction } from "./action";
 export { HomeCapabilitiesSection } from "./capabilities";
+export { HomeChatLauncher } from "./chat-launcher";
 export { HomeFAQSection } from "./faq";
 export { HomeFeaturesSection } from "./features";
 export { HomeCTASection } from "./final";

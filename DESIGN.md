@@ -467,6 +467,21 @@ Portfolio sections in `packages/ui` share one frame, `.library-section`, styled 
 
 ## Shared surface implementation
 
+### Assistant surfaces
+
+The homepage composer sits beneath the capabilities strip at a maximum width of
+800px. Use ChatComposer, a single rounded surface with one icon-only arrow action;
+its accessible name is Send message. Do not nest the old chat textarea panel in
+the homepage hero. StudioChatScreen provides the full-page conversation layout:
+a quiet workspace sidebar, a centered empty state, and a bottom composer once
+the conversation starts. Use semantic background, card, foreground, border and
+muted tokens, shared spacing and radius tokens, and the small elevation token.
+The mobile layout replaces the sidebar with an explicit workspace disclosure.
+
+HeroSurface supplies the shared low-contrast orbit treatment when no image or
+video is configured. Authored media keeps its existing overlay behavior.
+Example gallery previews are rendered portfolio content, not lazy iframes.
+
 Use `@shared/ui/card`, `@shared/ui/button`, `@shared/ui/input` and
 `@shared/ui/textarea` in product compositions. Elevation and focus styling live in
 `packages/ui/src/styles/foundation/surfaces.css`, imported by `foundation.css`.

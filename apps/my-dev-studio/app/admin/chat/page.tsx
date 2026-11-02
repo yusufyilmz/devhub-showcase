@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { requireWorkspace } from "@/features/admin/admin-auth";
-import { ProfileEditor } from "@/features/studio";
+import { StudioChat } from "@/features/chat/studio-chat";
 
 export const metadata = {
   robots: { follow: false, index: false },
@@ -17,5 +17,5 @@ export default async function ChatPage() {
   }
   const snapshot = await workspace.repository.read();
   if (!snapshot) redirect("/admin");
-  return <ProfileEditor initial={snapshot} initialTab="AI assistant" />;
+  return <StudioChat initial={snapshot} />;
 }

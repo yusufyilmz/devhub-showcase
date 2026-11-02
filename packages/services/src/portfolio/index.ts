@@ -29,7 +29,7 @@ export function getPortfolioResources(profile: PortfolioProfile = initialProfile
     ),
     description: item.description,
     id: item.id,
-    imageUrl: null,
+    imageUrl: item.coverImage ?? null,
     link: item.url,
     public: item.public,
     role:

@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { getPortfolioCopy, type Language } from "@shared/config";
 import type { ProjectWithCompanyAndSkills } from "@shared/lib/types";
 
+import { WorkMedia } from "../../display/media";
 import { RevealCard } from "../../layout/reveal-card";
 import { SkillItem } from "../skills-section/SkillItem";
 
@@ -21,6 +21,7 @@ export function ProjectItem({
       className="project-card"
       heading={
         <>
+          {project.imageUrl && <WorkMedia imageUrl={project.imageUrl} title={project.title} />}
           <h3>{project.title}</h3>
           {project.role && <p className="reveal-subtitle">{project.role}</p>}
         </>
@@ -29,16 +30,6 @@ export function ProjectItem({
       language={language}
       title={project.title}
     >
-      {project.imageUrl && (
-        <div className="relative aspect-video mb-5">
-          <Image
-            alt={`${project.title} project image`}
-            className="object-contain"
-            fill
-            src={project.imageUrl}
-          />
-        </div>
-      )}
       <p className="reveal-description">{project.description}</p>
       <div className="flex flex-wrap gap-2 mt-4">
         {project.skills.map(

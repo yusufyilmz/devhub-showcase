@@ -37,7 +37,8 @@ export function HeroSurface({
       node.pause();
     };
   }, [media?.kind, mediaUrl]);
-  if (!media || !/^https?:\/\//i.test(media.url)) return <>{children}</>;
+  if (!media || !/^https?:\/\//i.test(media.url))
+    return <div className="hero-surface-plain">{children}</div>;
   const position = { objectPosition: media.position };
   return (
     <div className="hero-surface" data-overlay={media.overlay}>

@@ -874,6 +874,35 @@ button:disabled {
   border-radius: 24px;
   isolation: isolate;
 }
+.hero-surface-plain {
+  position: relative;
+  isolation: isolate;
+}
+.hero-surface-plain::before {
+  position: absolute;
+  top: 4%;
+  right: 0;
+  z-index: -1;
+  width: min(48vw, 640px);
+  aspect-ratio: 1;
+  pointer-events: none;
+  content: "";
+  border: 1px solid rgb(var(--accent-rgb) / 0.08);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 64px rgb(var(--accent-rgb) / 0.025),
+    0 0 0 128px rgb(var(--accent-rgb) / 0.015);
+}
+.hero-surface-plain .hero-orbit {
+  display: none;
+}
+@media (max-width: 767px) {
+  .hero-surface-plain::before {
+    top: 15%;
+    width: 60vw;
+    opacity: 0.6;
+  }
+}
 .hero-surface-media,
 .hero-surface-shade {
   position: absolute;

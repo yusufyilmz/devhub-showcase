@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 
 import { ThemeToggle } from "@shared/ui/theme";
 
@@ -9,7 +10,8 @@ export const metadata: Metadata = {
   robots: { follow: false, index: false },
   title: "Portfolio studio",
 };
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  if ((await headers()).get("x-profile-path") === "/admin/chat") return children;
   return (
     <StudioShell
       brand={

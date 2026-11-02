@@ -2,6 +2,45 @@
 .home-options {
   padding-block: 5rem;
 }
+.example-preview-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.example-rendered-preview {
+  position: absolute;
+  inset: 0;
+  width: 125%;
+  height: 125%;
+  overflow: auto;
+  color: rgb(var(--text-rgb));
+  text-align: left;
+  background: rgb(var(--bg-rgb));
+  transform: scale(0.8);
+  transform-origin: top left;
+}
+.example-rendered-preview > .folio,
+.example-rendered-preview > main {
+  min-height: 100%;
+}
+.example-rendered-preview .site-header {
+  position: relative;
+}
+.example-rendered-preview :where(.folio, .portfolio-inner) {
+  padding-inline: var(--spacing-md);
+}
+.example-rendered-preview :where(.hero, .folio-intro) {
+  min-height: auto;
+  padding-block: var(--spacing-lg);
+}
+.example-rendered-preview :where(h1) {
+  font-size: clamp(32px, 5vw, 64px);
+}
+.example-rendered-preview .work-media img {
+  display: block;
+  width: 100%;
+}
 .example-toolbar,
 .example-caption,
 .example-controls,
