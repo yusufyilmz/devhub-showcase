@@ -75,7 +75,9 @@ export function CvSettingsEditor({
           </LibraryLabel>
         ))}
         <p>
-          Your Appearance accent also applies to the PDF. These settings are saved only to your CV.
+          ATS-friendly layouts use a single text column and visible URLs. Compatibility varies by
+          applicant tracking system; no layout guarantees acceptance. Your Appearance accent applies
+          to the other PDF layouts. These settings are saved only to your CV.
         </p>
       </section>
     </Card>

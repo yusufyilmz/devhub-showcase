@@ -44,6 +44,17 @@ export const portfolioTypes = [
 ] as const;
 export type PortfolioType = (typeof portfolioTypes)[number]["id"];
 export const cvLayouts = [
+  {
+    description:
+      "Single-column text with clear headings and visible URLs; compatibility varies by ATS.",
+    id: "ats",
+    name: "ATS-friendly",
+  },
+  {
+    description: "The same logical reading order with tighter spacing for longer careers.",
+    id: "ats-compact",
+    name: "ATS-friendly compact",
+  },
   { description: "The original balanced CV.", id: "classic", name: "Classic" },
   {
     description: "A larger name and generous spacing.",

@@ -54,6 +54,7 @@ function ItemMedia({ item, video, language }: ItemMediaOptions) {
     <WorkMedia
       imageUrl={item.imageUrl}
       loadLabel={text.loadVideo}
+      sourceUrl={work ? item.url : undefined}
       title={item.title}
       unloadLabel={text.unloadVideo}
       youtubeId={video && work?.provider === "youtube" ? work.id : undefined}
@@ -87,7 +88,7 @@ export function ItemContent({ item, quote = false, video = false, language }: It
           <code>{item.code}</code>
         </pre>
       )}
-      {safeLink(item.url) && <a href={item.url}>{item.title} ↗</a>}
+      {safeLink(item.url) && !getSocialWork(item.url) && <a href={item.url}>{item.title} ↗</a>}
     </>
   );
 }

@@ -75,3 +75,8 @@ export type AssistantFeedbackProps = {
 };
 
 export type PublishedSourcesProps = { sources: { label: string; href: string }[] };
+
+export type TemplatePickerProps = {
+  profile: PortfolioProfile;
+  onChange: (profile: PortfolioProfile) => void;
+};

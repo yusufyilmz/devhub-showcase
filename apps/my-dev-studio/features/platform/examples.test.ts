@@ -16,14 +16,15 @@ import {
 
 describe("Examples", () => {
   it("provides two valid, independent fictional profiles for every layout", () => {
-    expect(portfolioExamples).toHaveLength(12);
-    expect(new Set(portfolioExamples.map((item) => item.slug)).size).toBe(12);
+    expect(portfolioExamples).toHaveLength(16);
+    expect(new Set(portfolioExamples.map((item) => item.slug)).size).toBe(16);
     for (const type of portfolioTypes)
       expect(
-        portfolioExamples.filter((item) => item.profile.portfolioType === type.id),
-      ).toHaveLength(2);
+        portfolioExamples.filter((item) => item.profile.portfolioType === type.id).length,
+      ).toBeGreaterThanOrEqual(2);
     for (const item of portfolioExamples) {
-      expect(profileSchema.safeParse(item.profile).success).toBe(true);
+      const parsed = profileSchema.safeParse(item.profile);
+      expect(parsed.success, `${item.slug}: ${JSON.stringify(parsed.error?.issues)}`).toBe(true);
       expect(item.profile.email).toMatch(/@example.com$/);
       expect(item.profile.projects.every((project) => project.public)).toBe(true);
       for (const cover of Object.values(item.covers))

@@ -42,6 +42,10 @@ test("section browser reveals more rows only after explicit activation", async (
 });
 
 const demos = [
+  ["lena-park", "Lena Park", "designer", "paper", "en"],
+  ["noah-bell", "Noah Bell", "consultant", "graphite", "en"],
+  ["ada-woods", "Ada Woods", "minimal", "bloom", "en"],
+  ["robin-lane", "Robin Lane", "creator", "paper", "en"],
   ["avery-morgan", "Avery Morgan", "engineer", "studio", "en"],
   ["maya-chen", "Maya Chen", "designer", "paper", "en"],
   ["alex-rivera", "Alex Rivera", "consultant", "graphite", "en"],

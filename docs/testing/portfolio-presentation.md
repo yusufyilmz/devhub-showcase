@@ -1,0 +1,29 @@
+# Profession templates, CV layouts and media
+
+Tasks 12, 27 and 30 build on the existing layout and section systems. Nine curated presets arrange existing content as galleries, carousels, tabs, cards and timelines. Four additional fictional examples cover photographer, freelancer, student and retail audiences; existing examples cover engineering, design, consulting, training and writing. Example artwork is illustrative, not actual client photography. Sample maps and coaching statistics are fictional and never copied into owner documents.
+
+Template selection changes portfolio type, section renderer and order only. It retains content, private projects, hidden sections, item selection, authored custom sections, theme and independent PDF settings. Selection updates the draft; saving remains explicit. Existing custom sections follow the new built-in sequence in their prior relative order.
+
+The ATS-friendly and ATS-friendly compact PDFs use one selectable text column, visible URLs, explicit headings and career-first reading order. Existing inclusion switches apply. Compatibility varies by applicant tracking system; no guarantee is made. Classic, Compact and Editorial remain available.
+
+YouTube players use validated IDs and privacy-enhanced URLs only after a visitor selects Load. The original link stays available during loading and playback, including blocked or unavailable videos. Cross-origin playback errors cannot always be detected, so the fallback is always present. Instagram and Pinterest remain curated cards with canonical original links and no third-party scripts. Failed images show readable fallback text. Changed sources reset loading consent.
+
+Provider references: [YouTube embedding](https://support.google.com/youtube/answer/171780), [Pinterest widgets](https://help.pinterest.com/en/business/article/build-a-website-widget). This implementation deliberately uses curated Pinterest links rather than injecting widget scripts.
+
+## Manual review
+
+Use these route paths on the PR preview host. Replace test-owner with a disposable account. Production links below identify the screens; they do not contain unreleased changes. No new environment variables or migrations are required.
+
+| Step | Clickable URL                                                      | Route path               | Action                                                                                                          | Expected result                                                                                |
+| ---- | ------------------------------------------------------------------ | ------------------------ | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| 1    | [Editor](https://mydevstudio.vercel.app/test-owner/edit)           | `/test-owner/edit`       | Open Layout and use the photographer preset with an existing private project and hidden section.                | Carousel presentation; authored content and visibility retained; nothing saved automatically.  |
+| 2    | [Editor](https://mydevstudio.vercel.app/test-owner/edit)           | `/test-owner/edit`       | Switch to Student, then Consultant; inspect preview and discard.                                                | Different order and composition; original content and PDF preferences retained.                |
+| 3    | [Photography](https://mydevstudio.vercel.app/p/examples/lena-park) | `/p/examples/lena-park`  | Inspect the carousel at mobile and desktop widths.                                                              | Visible artwork, usable controls and no page overflow.                                         |
+| 4    | [Freelance](https://mydevstudio.vercel.app/p/examples/noah-bell)   | `/p/examples/noah-bell`  | Inspect case studies and the optional map.                                                                      | Expandable work and a city-level fictional map, loaded only on request.                        |
+| 5    | [Student](https://mydevstudio.vercel.app/p/examples/ada-woods)     | `/p/examples/ada-woods`  | Inspect section order and download sample CV.                                                                   | Education precedes projects; a valid sample PDF downloads.                                     |
+| 6    | [Retail](https://mydevstudio.vercel.app/p/examples/robin-lane)     | `/p/examples/robin-lane` | Inspect collection carousel and store experience.                                                               | Distinct collection emphasis and working sample CV link.                                       |
+| 7    | [Editor](https://mydevstudio.vercel.app/test-owner/edit)           | `/test-owner/edit`       | In PDF select each ATS-friendly option, save, download the saved CV and select/copy its text.                   | Single column, visible URLs, logical section order; independent portfolio layout retained.     |
+| 8    | [Public CV](https://mydevstudio.vercel.app/test-owner/cv.pdf)      | `/test-owner/cv.pdf`     | On a disposable published profile, compare PDF and chosen exclusion settings.                                   | Omitted contact fields/private projects stay excluded.                                         |
+| 9    | [Editor](https://mydevstudio.vercel.app/test-owner/edit)           | `/test-owner/edit`       | Add a YouTube section and curated Instagram/Pinterest work; test a missing image and blocked player in preview. | Context and original links remain usable; player loads only after consent and can be unloaded. |
+
+Automated tests use synthetic profiles and local fixture servers. They do not validate live provider availability or every external ATS.

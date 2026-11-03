@@ -50,6 +50,7 @@ export {
   portfolioSectionIds,
   portfolioSectionLabels,
 } from "./portfolio/portfolio-sections";
+export { applyPortfolioTemplate, portfolioTemplates } from "./portfolio/portfolio-templates";
 export type { CvLayout, PortfolioType } from "./portfolio/portfolio-types";
 export { cvLayouts, portfolioTypes } from "./portfolio/portfolio-types";
 export type { ColorMode, PortfolioAccentId, PortfolioTheme } from "./portfolio/themes";

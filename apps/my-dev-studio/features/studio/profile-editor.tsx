@@ -29,6 +29,7 @@ import {
   recoveryPrefix,
   SetupNavigation,
   type SetupStep,
+  TemplatePicker,
   useDraftRecovery,
   usePortfolioHistory,
 } from "@shared/ui/portfolio";
@@ -519,6 +520,7 @@ function LayoutEditor({
           onChange={(portfolioType) => onChange({ ...profile, portfolioType })}
           value={profile.portfolioType ?? "engineer"}
         />
+        <TemplatePicker onChange={onChange} profile={profile} />
         <p>Your CV layout is chosen separately in the PDF section.</p>
       </section>
     </Card>

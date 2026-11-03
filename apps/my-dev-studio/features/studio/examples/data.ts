@@ -1,4 +1,10 @@
-import type { Language, PortfolioProfile, PortfolioTheme, PortfolioType } from "@shared/config";
+import {
+  applyPortfolioTemplate,
+  type Language,
+  type PortfolioProfile,
+  type PortfolioTheme,
+  type PortfolioType,
+} from "@shared/config";
 
 type Seed = {
   slug: string;
@@ -353,7 +359,162 @@ export const portfolioExamples: PortfolioExample[] = [
     title: "Fitness creator",
     type: "creator",
   }),
+  example({
+    category: "Stories in natural light",
+    company: "Lightfield Studio",
+    covers: ["form-study.svg", "orbit-brand.svg"],
+    focus: "Fictional travel and portrait assignments, framed around everyday detail.",
+    name: "Lena Park",
+    projects: [
+      "Quiet city",
+      "A fictional city portrait series exploring light and public spaces.",
+      "People at work",
+      "A sample documentary portrait assignment for an independent magazine.",
+    ],
+    skills: ["Portraits", "Editorial", "Lighting", "Art direction"],
+    slug: "lena-park",
+    summary: "I photograph people and places for independent editorial teams.",
+    theme: "paper",
+    title: "Editorial photographer",
+    type: "designer",
+  }),
+  example({
+    category: "Small teams, considered websites",
+    company: "Bell Practice",
+    focus: "A fictional practice balancing discovery, design and maintainable delivery.",
+    name: "Noah Bell",
+    projects: [
+      "Local studio",
+      "A fictional booking website for a neighbourhood ceramics studio.",
+      "Open archive",
+      "A sample searchable archive for a community arts organisation.",
+    ],
+    skills: ["Web design", "Development", "Accessibility", "Workshops"],
+    slug: "noah-bell",
+    summary: "I design and build accessible websites for independent businesses.",
+    theme: "graphite",
+    title: "Independent creative developer",
+    type: "consultant",
+  }),
+  example({
+    category: "Learning by making",
+    company: "Example University",
+    focus:
+      "These fictional student projects show research questions, prototypes and lessons learned.",
+    name: "Ada Woods",
+    projects: [
+      "Campus guide",
+      "A fictional course project mapping accessible campus routes.",
+      "Shared shelf",
+      "A sample prototype for exchanging books within a student community.",
+    ],
+    skills: ["Prototyping", "Research", "JavaScript", "Collaboration"],
+    slug: "ada-woods",
+    summary: "I explore accessible interaction through coursework and small experiments.",
+    theme: "bloom",
+    title: "Design and computing student",
+    type: "minimal",
+  }),
+  example({
+    category: "Collections with a point of view",
+    company: "Common Goods",
+    covers: ["orbit-brand.svg", "form-study.svg"],
+    focus:
+      "A fictional collection journal connecting seasonal stories, materials and store presentation.",
+    name: "Robin Lane",
+    projects: [
+      "Spring collection",
+      "A fictional store window concept built around reusable display materials.",
+      "Everyday objects",
+      "A sample curated collection with styling notes and a simple in-store display.",
+    ],
+    skills: ["Visual merchandising", "Styling", "Customer experience", "Product curation"],
+    slug: "robin-lane",
+    summary: "I create thoughtful store displays and help people find pieces that work for them.",
+    theme: "paper",
+    title: "Retail stylist and visual merchandiser",
+    type: "creator",
+  }),
 ];
+const templateByType = {
+  consultant: "consultant",
+  creator: "retail",
+  designer: "designer",
+  engineer: "engineer",
+  minimal: "blogger",
+  trainer: "trainer",
+} as const;
+const specialTemplates: Record<string, string> = {
+  "ada-woods": "student",
+  "lena-park": "photographer",
+  "noah-bell": "freelancer",
+};
+for (const item of portfolioExamples) {
+  const template =
+    specialTemplates[item.slug] ?? templateByType[item.profile.portfolioType ?? "engineer"];
+  item.profile = applyPortfolioTemplate(item.profile, template);
+  if (item.slug === "ada-woods")
+    item.profile.education = [
+      {
+        degree: "BSc",
+        end: "2027-06-30",
+        field: "Design and computing",
+        id: "course",
+        institution: "Example University",
+        start: "2024-09-01",
+        url: "https://example.com",
+      },
+    ];
+  if (item.profile.portfolioType === "trainer") {
+    item.profile.customSections = [
+      {
+        id: "custom-12121212-1212-4212-8212-121212121212",
+        items: [
+          {
+            body: "Fictional example program; adapted to each person.",
+            id: "14141414-1414-4414-8414-141414141414",
+            title: "Strength sessions",
+            url: "",
+            value: "3",
+          },
+          {
+            body: "A sample schedule, not a promised outcome.",
+            id: "15151515-1515-4515-8515-151515151515",
+            title: "Recovery days",
+            url: "",
+            value: "2",
+          },
+        ],
+        renderer: "cards",
+        sectionType: "stats",
+        title: "A sample coaching week",
+        visible: true,
+      },
+    ];
+  }
+  if (template === "freelancer" || template === "retail") {
+    item.profile.customSections = [
+      {
+        id: "custom-13131313-1313-4313-8313-131313131313",
+        items: [],
+        options: {
+          description: "Fictional studio location shown at city level.",
+          latitude: 41.3874,
+          longitude: 2.1686,
+        },
+        renderer: "list",
+        sectionType: "map",
+        title: "Based in Barcelona",
+        visible: true,
+      },
+    ];
+  }
+  item.profile.sectionSequence = [
+    ...(item.profile.sectionOrder ?? []),
+    ...(item.profile.customSections ?? []).map((section) => section.id),
+  ];
+}
+
 export const examplePath = (slug: string) => `/p/examples/${slug}`;
 export const getPortfolioExample = (slug: string) =>
   portfolioExamples.find((item) => item.slug === slug);

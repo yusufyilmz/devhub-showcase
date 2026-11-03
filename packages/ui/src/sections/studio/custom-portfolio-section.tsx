@@ -30,6 +30,7 @@ export function CustomPortfolioSection({
         <WorkMedia
           imageUrl={item.imageUrl}
           loadLabel={text.loadVideo}
+          sourceUrl={getSocialWork(item.url) ? item.url : undefined}
           title={item.title}
           unloadLabel={text.unloadVideo}
           youtubeId={section.composition === "youtube" ? getSocialWork(item.url)?.id : undefined}
@@ -46,7 +47,9 @@ export function CustomPortfolioSection({
               {paragraph}
             </p>
           ))}
-        {/^https?:\/\//i.test(item.url) && <a href={item.url}>{item.title} ↗</a>}
+        {/^https?:\/\//i.test(item.url) && !getSocialWork(item.url) && (
+          <a href={item.url}>{item.title} ↗</a>
+        )}
       </>
     ),
     id: item.id,
