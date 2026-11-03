@@ -1,6 +1,6 @@
 # Publishing policies — work in progress
 
-This draft group covers roadmap tasks 14 (username redirects), 15 (visibility) and 16 (scheduled publishing). It builds on PR #84. Only the redirect portion is implemented at this checkpoint. Password/unlisted visibility and scheduling are not implemented or ready to deploy. Keep the group in draft until all acceptance criteria are verified.
+This draft group covers roadmap tasks 14 (username redirects), 15 (visibility) and 16 (scheduled publishing). It builds on PR #84. Redirects and public/unlisted discovery are implemented at this checkpoint. Password-protected access and scheduling are not implemented or ready to deploy. Keep the group in draft until all acceptance criteria are verified.
 
 ## Retained username rules
 
@@ -32,10 +32,26 @@ Use a disposable migrated account and replace the names/preview hostname. These 
 
 ## Remaining work in this same group
 
-- Public/unlisted/password-protected policy, including discovery, metadata, downloads, alternate routes, access verification expiry and revocation.
+- Password-protected policy across alternate content routes, access verification expiry and revocation.
 - Explicitly reviewed immutable scheduled snapshots, timezone display/conversion, cancellation/replacement, idempotent execution, retry/failure recovery and authorization-change handling.
 - Complete group regression and configuration/rollout instructions.
 
 ## Redirect checkpoint verification
 
 `pnpm check`, 480 unit tests (447 shared/app and 33 fitness), the app production build, and eight focused desktop/mobile browser tests passed. The focused browser cases cover repeated renames across page/CV/icon/share-image routes, withdrawal, missing destinations and canonical branding/metadata. Local PGlite tests execute alias guards, retention, collision denial and account cleanup. This is checkpoint evidence for redirects; it does not verify the remaining visibility or scheduling work.
+
+## Public and unlisted checkpoint
+
+The Field visibility tab now includes Portfolio discovery. Missing values preserve public discovery. Unlisted is still accessible to anyone with its URL; it is not private or password protected. Save and explicitly publish the policy to change live discovery. Saving a later draft does not change the current publication's indexing policy.
+
+`20261103150000_unlisted_publications.sql` derives discovery visibility from each website/CV snapshot. Sitemap reads explicitly select public snapshots only. Unlisted pages use noindex/nofollow metadata, and unlisted CV responses request noindex/nofollow with private/no-store caching. Icon/share-image responses already request no indexing. Search engines and existing downloaded/cached third-party copies are outside application control.
+
+| Step | Clickable URL                                            | Route path           | Action                                                             | Expected result                                               |
+| ---- | -------------------------------------------------------- | -------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------- |
+| 10   | [Editor](https://mydevstudio.vercel.app/test-owner/edit) | `/test-owner/edit`   | Select Unlisted in Field visibility, then save without publishing. | Existing sitemap entry and public policy stay unchanged.      |
+| 11   | [Editor](https://mydevstudio.vercel.app/test-owner/edit) | `/test-owner/edit`   | Review and confirm publication of the saved policy.                | The reviewed unlisted snapshot becomes live.                  |
+| 12   | [Sitemap](https://mydevstudio.vercel.app/sitemap.xml)    | `/sitemap.xml`       | Inspect after publication.                                         | The unlisted username is absent.                              |
+| 13   | [Portfolio](https://mydevstudio.vercel.app/test-owner)   | `/test-owner`        | Open directly while signed out and inspect robots metadata.        | Portfolio remains available by link and requests no indexing. |
+| 14   | [CV](https://mydevstudio.vercel.app/test-owner/cv.pdf)   | `/test-owner/cv.pdf` | Download while signed out and inspect response headers.            | 200 PDF with noindex/nofollow and private/no-store.           |
+
+Updated checkpoint verification passed: `pnpm check`, 484 unit tests (451 shared/app and 33 fitness), the app production build, and eight focused desktop/mobile browser cases. The publication browser helper now waits for the current request to finish rather than accepting an earlier visible Published status. Password protection and scheduling remain pending; no production migration has been applied.

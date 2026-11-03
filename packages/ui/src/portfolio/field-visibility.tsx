@@ -3,6 +3,7 @@ import { type ContactField, contactFields, type PortfolioProfile } from "@shared
 
 import { Input } from "../forms/input";
 import { Label } from "../forms/label";
+import { SelectField } from "../forms/select-field";
 import { fieldVisibilityStyles } from "./styles";
 import type { FieldVisibilityOptions } from "./types";
 
@@ -42,6 +43,26 @@ export function FieldVisibilityEditor({
         review any contact details you wrote in descriptions, images or other authored text
         separately.
       </p>
+      {surfaces.includes("website") && (
+        <>
+          <SelectField
+            label="Portfolio discovery"
+            onChange={(value) => {
+              if (value === "public" || value === "unlisted")
+                onChange({ ...profile, publicationVisibility: value });
+            }}
+            value={profile.publicationVisibility ?? "public"}
+          >
+            <option value="public">Public · discoverable</option>
+            <option value="unlisted">Unlisted · accessible by link</option>
+          </SelectField>
+          <p>
+            Unlisted portfolios remain available to anyone with the link. They are excluded from our
+            sitemap and request no search indexing. Save and explicitly publish to change the live
+            setting.
+          </p>
+        </>
+      )}
       {surfaces.map((surface) => (
         <fieldset key={surface}>
           <legend>
