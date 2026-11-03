@@ -195,12 +195,17 @@ Public components exported from `packages/ui/src/components/index.ts`. Import th
 | `Chat` and its header, input, and message parts                  | `chat`                   | Portfolio chat                                                    |
 | Icons (`ArrowBackIcon`, `CloseIcon`, `GitHubIcon`, and the rest) | `icons`                  | Shared icons                                                      |
 
+`@shared/ui/portfolio` also exports `GuidedOnboarding`, `SetupNavigation`, `DraftRecovery`, `useDraftRecovery` and `ProposalComparison`. These reuse editor controls and the token-based `portfolio-workflow.css` stylesheet; recovery is scoped to the current browser tab.
+
 ## Studio tools
 
-| Component                                | Folder                                     | Use                               |
-| ---------------------------------------- | ------------------------------------------ | --------------------------------- |
-| `ThemeCustomizer`, `ComponentCustomizer` | `theme-customizer`, `component-customizer` | Live theme and component controls |
-| `MouseCircle`                            | `mouse-circle`                             | Pointer decoration                |
+| Component                                | Folder                                     | Use                                            |
+| ---------------------------------------- | ------------------------------------------ | ---------------------------------------------- |
+| `ThemeCustomizer`, `ComponentCustomizer` | `theme-customizer`, `component-customizer` | Live theme and component controls              |
+| `MouseCircle`                            | `mouse-circle`                             | Pointer decoration                             |
+| `GuidedOnboarding`, `SetupNavigation`    | `portfolio`                                | Resumable profession, layout and review steps  |
+| `DraftRecovery`, `useDraftRecovery`      | `portfolio/recovery`                       | Tab-local recovery and revision reconciliation |
+| `ProposalComparison`                     | `portfolio`                                | Readable current/proposed field values         |
 
 ### Shared product surfaces
 

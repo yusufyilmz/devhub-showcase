@@ -3,10 +3,10 @@
 import "@shared/ui/components.css";
 
 import dynamic from "next/dynamic";
-import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { AiAssistantEditor, AiProfileEditor } from "@shared/assistant/studio";
-import { type PortfolioProfile, portfolioTypes } from "@shared/config";
+import { type PortfolioProfile, type PortfolioType, portfolioTypes } from "@shared/config";
 import { urls } from "@shared/config/urls";
 import { cvPath, editCvPath } from "@shared/lib/profiles";
 import { useStudioRequest } from "@shared/runtime/studio";
@@ -19,10 +19,17 @@ import { GoogleImportEditor } from "@shared/ui/google-import";
 import { Input, Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
 import {
+  clearDraftRecovery,
+  DraftRecovery,
   EditorGuidance,
+  GuidedOnboarding,
   LanguageSettingsEditor,
   PortfolioTypePicker,
   ProfileFields,
+  recoveryPrefix,
+  SetupNavigation,
+  type SetupStep,
+  useDraftRecovery,
   usePortfolioHistory,
 } from "@shared/ui/portfolio";
 import { ResponsivePortfolioPreview } from "@shared/ui/portfolio-preview";
@@ -98,6 +105,9 @@ export function ProfileEditor({
   onSaved?: (snapshot: ProfileSnapshot) => void;
   initialTab?: (typeof tabs)[number];
 }) {
+  const userId = useUserConfigStore((state) => state.user?.id);
+  const [profession, setProfession] = useState<PortfolioType>(defaultProfession(initial.profile));
+  const [step, setStep] = useState<SetupStep>(initialSetup(initial.profile));
   const [saved, setSaved] = useState(initial);
   const [username, setUsername] = useState(initial.username ?? "");
   const [busy, setBusy] = useState(false);
@@ -114,6 +124,20 @@ export function ProfileEditor({
     JSON.stringify(draft) !== JSON.stringify(saved.profile) ||
     isPublic !== (saved.isPublic ?? false) ||
     username !== (saved.username ?? "");
+  const recovery = useDraftRecovery({
+    dirty,
+    onRestore: (value) => {
+      resetDraft(value.profile);
+      setUsername(value.username);
+      setIsPublic(value.isPublic);
+      if (tabs.includes(value.tab as typeof tab)) setTab(value.tab as typeof tab);
+      setStep(value.step);
+      setProfession(defaultProfession(value.profile, value.profession));
+    },
+    revision: saved.revision,
+    storageKey: recoveryKey(userId, initial.id, saveUrl),
+    value: { isPublic, profession, profile: draft, step, tab, username },
+  });
   useEffect(() => {
     const warn = (event: BeforeUnloadEvent) => {
       if (dirty) {
@@ -125,6 +149,7 @@ export function ProfileEditor({
     return () => window.removeEventListener("beforeunload", warn);
   }, [dirty]);
   async function publish() {
+    if (recovery.stale) return;
     setBusy(true);
     showError("");
     setMessage("");
@@ -139,11 +164,11 @@ export function ProfileEditor({
         headers: { "Content-Type": "application/json" },
         method: "PUT",
       });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error);
+      const result = await readSaveResponse(response, recovery.conflict);
       if (!managed && result.username && result.username !== saved.username)
         window.history.replaceState(null, "", editCvPath(result.username));
       setUsername(result.username ?? username);
+      recovery.saved(result.revision);
       setSaved(result);
       resetDraft(result.profile);
       setIsPublic(result.isPublic ?? isPublic);
@@ -159,21 +184,32 @@ export function ProfileEditor({
       setBusy(false);
     }
   }
-  if (draft.templateChosen === false)
+  function beginDetails(nextTab: typeof tab = "Profile") {
+    resetDraft({
+      ...draft,
+      cvLayout: onboardingCvLayout(draft),
+      templateChosen: true,
+    });
+    setTab(nextTab);
+    setStep("details");
+  }
+  if (step === "template")
     return (
-      <PortfolioOnboarding
-        draft={draft}
+      <GuidedOnboarding
         managed={managed}
-        onGoogleImport={() => {
-          resetDraft({ ...draft, templateChosen: true });
-          setTab("Import Google");
+        onChange={resetDraft}
+        onContinue={() => beginDetails()}
+        onGoogleImport={() => beginDetails("Import Google")}
+        onImport={() => beginDetails("Import CV")}
+        onProfessionChange={(value) => {
+          setProfession(value);
+          resetDraft({ ...draft, portfolioType: value });
         }}
-        onImport={() => {
-          resetDraft({ ...draft, templateChosen: true });
-          setTab("Import CV");
-        }}
-        setDraft={resetDraft}
-      />
+        profession={profession}
+        profile={draft}
+      >
+        <DraftRecovery disabled={busy} recovery={recovery} />
+      </GuidedOnboarding>
     );
   return (
     <main className="studio" id="admin-content">
@@ -206,7 +242,11 @@ export function ProfileEditor({
                 View public profile ↗
               </Button>
             )}
-            <Button className="studio-primary" disabled={busy || !dirty} type="submit">
+            <Button
+              className="studio-primary"
+              disabled={busy || !dirty || recovery.stale}
+              type="submit"
+            >
               {busy ? "Saving…" : "Save changes"}
             </Button>
           </div>
@@ -225,6 +265,12 @@ export function ProfileEditor({
                   method: "DELETE",
                 });
                 if (!response.ok) throw new Error("Could not sign out.");
+                try {
+                  recovery.stop();
+                  clearDraftRecovery();
+                } catch {
+                  /* Browser storage may be disabled. */
+                }
                 useUserConfigStore.getState().clearUser();
                 window.location.assign("/login");
               } catch (reason) {
@@ -237,6 +283,17 @@ export function ProfileEditor({
             Sign out
           </Button>
         </div>
+        <DraftRecovery disabled={busy} recovery={recovery} />
+        <SetupNavigation
+          disabled={busy}
+          onImport={() => setTab("Import CV")}
+          onManual={() => setTab("Profile")}
+          onStep={(next) => {
+            setStep(next);
+            if (next === "review") setTab("Profile");
+          }}
+          step={step}
+        />
         <EditorGuidance
           canRedo={canRedo}
           canUndo={canUndo}
@@ -318,6 +375,7 @@ export function ProfileEditor({
             disabled={!dirty || busy}
             onClick={() => {
               if (window.confirm("Discard unpublished changes?")) {
+                recovery.discard();
                 resetDraft(saved.profile);
                 setUsername(saved.username ?? "");
                 setIsPublic(saved.isPublic ?? false);
@@ -368,68 +426,6 @@ function EditorBody({
   return <Editor onChange={onChange} profile={profile} />;
 }
 
-function PortfolioOnboarding({
-  draft,
-  onImport,
-  onGoogleImport,
-  managed,
-  setDraft,
-}: {
-  draft: PortfolioProfile;
-  onImport: () => void;
-  onGoogleImport: () => void;
-  managed: boolean;
-  setDraft: Dispatch<SetStateAction<PortfolioProfile>>;
-}) {
-  return (
-    <main className="studio type-onboarding" id="admin-content">
-      <p className="eyebrow">START WITH YOUR STYLE</p>
-      <h1>
-        A home for <span>your work.</span>
-      </h1>
-      <p>
-        Pick a starting layout, then add your details. Your portfolio stays private until you
-        publish it.
-      </p>
-      <Button className="studio-secondary" onClick={onImport} type="button" variant="outline">
-        Start from a CV
-      </Button>
-      {!managed && (
-        <Button
-          className="studio-secondary"
-          onClick={onGoogleImport}
-          type="button"
-          variant="outline"
-        >
-          Start from Google profile
-        </Button>
-      )}
-      <PortfolioTypePicker
-        onChange={(portfolioType) => setDraft({ ...draft, portfolioType })}
-        value={draft.portfolioType ?? "engineer"}
-      />
-      <Button
-        className="studio-primary"
-        onClick={() =>
-          setDraft({
-            ...draft,
-            cvLayout:
-              portfolioTypes.find((type) => type.id === (draft.portfolioType ?? "engineer"))
-                ?.cvLayout ?? "classic",
-            templateChosen: true,
-          })
-        }
-        type="button"
-      >
-        Use this layout
-      </Button>
-      <p>
-        Save changes in the editor to keep your selection. Your information is never replaced by
-        sample content.
-      </p>
-    </main>
-  );
-}
 function SharingSettings({
   saved,
   username,
@@ -546,5 +542,33 @@ function DraftPreview({ profile, username }: { profile: PortfolioProfile; userna
     <ResponsivePortfolioPreview appearance={profile.appearance}>
       <PreviewContent profile={profile} username={username} />
     </ResponsivePortfolioPreview>
+  );
+}
+
+function initialSetup(profile: PortfolioProfile): SetupStep {
+  return profile.templateChosen === false ? "template" : "done";
+}
+function recoveryKey(userId: string | undefined, profileId: string | undefined, saveUrl: string) {
+  return userId ? `${recoveryPrefix}${userId}:${profileId ?? saveUrl}` : "";
+}
+async function readSaveResponse(
+  response: Response,
+  conflict: () => void,
+): Promise<ProfileSnapshot> {
+  const result = await response.json();
+  if (response.status === 409) conflict();
+  if (!response.ok) throw new Error(result.error ?? "Could not save. Your changes are still here.");
+  return result;
+}
+
+function defaultProfession(profile: PortfolioProfile, profession?: PortfolioType): PortfolioType {
+  return profession ?? profile.portfolioType ?? "engineer";
+}
+
+function onboardingCvLayout(profile: PortfolioProfile) {
+  if (profile.templateChosen && profile.cvLayout) return profile.cvLayout;
+  return (
+    portfolioTypes.find((type) => type.id === (profile.portfolioType ?? "engineer"))?.cvLayout ??
+    "classic"
   );
 }

@@ -141,6 +141,7 @@
     "./careers-section": "./src/sections/careers-section/index.tsx",
     "./sections/studio": "./src/sections/studio/index.ts",
     "./portfolio": "./src/portfolio/index.ts",
+    "./portfolio-workflow.css": "./src/portfolio/workflow.css",
     "./portfolio-preview": "./src/display/portfolio-preview/index.ts",
     "./portfolio-preview.css": "./src/display/portfolio-preview/preview.css",
     "./theme/studio": "./src/theme/studio/index.ts",
