@@ -10,7 +10,7 @@ export async function ManagementLink() {
   if (!admin) return null;
   return (
     <a aria-label="Manage portfolios" className={manageLinkClass} href="/admin/portfolios">
-      <DashboardIcon fontSize="xlarge" />
+      <DashboardIcon fontSize="small" />
     </a>
   );
 }

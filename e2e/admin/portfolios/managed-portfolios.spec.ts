@@ -146,3 +146,42 @@ test("an administrator creates, edits, publishes, hides and transfers an importe
   expect((await page.goto("/admin/portfolios"))?.status()).toBe(404);
   await visitor.close();
 });
+
+test("admin appearance controls stay separate and compact", async ({ page, context }, info) => {
+  const n = info.project.name.startsWith("mobile") ? 1 : 0;
+  await signIn(context, `99999999-9999-4999-8999-99999999999${n}`, `manager${n}@example.test`);
+  await page.goto("/admin/portfolios");
+  const launcher = page.getByRole("button", { name: "Appearance controls" });
+  const management = page.getByRole("link", { exact: true, name: "Manage portfolios" });
+  const settings = page.getByRole("button", { exact: true, name: "Theme settings" });
+  await launcher.click();
+  await expect(settings).toBeVisible();
+  const a = await management.boundingBox();
+  const b = await settings.boundingBox();
+  expect(a).not.toBeNull();
+  expect(b).not.toBeNull();
+  if (a && b) expect(a.y + a.height <= b.y).toBe(true);
+  await settings.click();
+  await page.getByRole("button", { exact: true, name: "Font size: 6xl" }).click();
+  await page.getByRole("button", { exact: true, name: "Spacing: spacious" }).click();
+  await page.getByRole("button", { exact: true, name: "Theme: violet" }).click();
+  await expect(page.getByRole("dialog")).toBeInViewport();
+  await page.keyboard.press("Escape");
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("data-font-size", "6xl");
+  await expect(launcher).toHaveCSS("width", "40px");
+  await expect(management).toHaveCSS("width", "40px");
+  await expect(management.locator("svg")).toHaveCSS("width", "16px");
+  await launcher.click();
+  await expect(settings).toHaveCSS("width", "40px");
+  const header = await page.locator(".admin-brand").boundingBox();
+  expect(header).not.toBeNull();
+  if (header) expect(header.height).toBeLessThan(220);
+  await expect(
+    page.getByRole("heading", { exact: true, name: "Manage portfolios" }),
+  ).toBeInViewport();
+  await page.screenshot({ path: `/tmp/admin-controls-${info.project.name}.png` });
+  await settings.click();
+  await page.getByRole("button", { name: "Reset appearance" }).click();
+  await page.keyboard.press("Escape");
+});
