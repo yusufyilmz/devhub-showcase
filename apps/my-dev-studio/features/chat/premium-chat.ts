@@ -83,5 +83,13 @@ export async function answerPremiumChat(raw: unknown, signal: AbortSignal) {
     },
     () => new PortfolioChatModel().answer(knowledge, input.message, signal),
   );
+  const latest = await readPublicProfileByUsername(input.username);
+  if (
+    !latest?.isPublic ||
+    latest.id !== snapshot.id ||
+    latest.revision !== snapshot.revision ||
+    !(await premiumChatAccount(snapshot.id))
+  )
+    throw new Error("The published portfolio changed. Reload before asking again.");
   return { answer, revision: snapshot.revision };
 }

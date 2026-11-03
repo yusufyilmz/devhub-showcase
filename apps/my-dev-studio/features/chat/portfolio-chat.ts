@@ -25,3 +25,14 @@ export async function requireLegacyChat(username: string, sessionId: string) {
     throw new Error("Portfolio chat limit reached. Please try later.");
   return { knowledge, snapshot };
 }
+
+/** Recheck permission after a non-streaming answer without reserving another attempt. */
+export async function assertCurrentPublication(
+  username: string,
+  id: string | undefined,
+  revision: number,
+) {
+  const latest = await readPublicProfileByUsername(username);
+  if (!latest?.isPublic || latest.id !== id || latest.revision !== revision)
+    throw new Error("The published portfolio changed. Reload before asking again.");
+}

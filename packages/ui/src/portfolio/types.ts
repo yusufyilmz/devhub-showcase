@@ -1,4 +1,5 @@
 import type { PortfolioProfile, PortfolioType } from "@shared/config";
+import type { AssistantTaskOptions } from "@shared/lib/profiles";
 
 export type LanguageSettingsEditorOptions = {
   profile: PortfolioProfile;
@@ -59,3 +60,18 @@ export type SetupNavigationProps = {
   onManual: () => void;
 };
 export type ProposalComparisonProps = { before: unknown; after: unknown };
+
+export type AssistantToolsProps = {
+  profile: PortfolioProfile;
+  value: AssistantTaskOptions | undefined;
+  onChange: (value: AssistantTaskOptions | undefined) => void;
+  disabled?: boolean;
+};
+
+export type AssistantFeedbackProps = {
+  feedback: NonNullable<import("@shared/lib/profiles").AiEditProposal["feedback"]>;
+  onNavigate?: (tab: string) => void;
+  editorHref?: string;
+};
+
+export type PublishedSourcesProps = { sources: { label: string; href: string }[] };

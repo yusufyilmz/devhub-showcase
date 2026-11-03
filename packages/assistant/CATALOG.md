@@ -1,5 +1,7 @@
 # Assistant catalog
 
+Focused writing and section feedback run through PortfolioEditModel. The focused-assistant helper sends selected source text only and reconstructs validated proposals. See docs/features/assistant-guidance.md for review, configuration and publication snapshot behavior.
+
 Provider configuration and optional text streaming live in
 src/services/provider.ts (AssistantService). Model classes own task context and
 validation; use the service for provider access, not a second business workflow.

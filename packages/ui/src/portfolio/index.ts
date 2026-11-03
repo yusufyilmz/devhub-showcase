@@ -1,3 +1,4 @@
+export { AssistantFeedback, AssistantTools, PublishedSources } from "./assistant-tools";
 export { EditorGuidance } from "./editor-guidance";
 export { GuidedOnboarding, SetupNavigation } from "./guided-onboarding";
 export { LanguageSettingsEditor } from "./language-settings-editor";

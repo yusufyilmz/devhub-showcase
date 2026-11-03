@@ -91,6 +91,7 @@ export async function POST(request: Request) {
           buildOwnerPortfolioKnowledge({ ...snapshot, profile: input.draft }),
           input.message,
           signal,
+          input.task,
         ),
     );
     await service.requireOwner(user.id);

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { publicChatSources } from "@shared/lib/profiles";
+
 import { OwnerEditLink } from "@/features/admin/owner-edit-link";
 import { premiumChatAvailable } from "@/features/chat/premium-chat";
 import { PremiumWidget } from "@/features/chat/premium-widget";
@@ -21,7 +23,20 @@ export default async function PublicCvPage({ params }: Props) {
   const { profile: saved, id, revision } = await getUsernameProfile(username);
   const widget =
     id && (await premiumChatAvailable(id)) ? (
-      <PremiumWidget id={id} name={saved.name} revision={revision} username={username} />
+      <PremiumWidget
+        id={id}
+        name={saved.name}
+        revision={revision}
+        sources={publicChatSources({
+          id,
+          isPublic: true,
+          profile: saved,
+          revision,
+          updatedAt: "",
+          username,
+        })}
+        username={username}
+      />
     ) : null;
   if (saved.portfolioType && saved.portfolioType !== "engineer")
     return (

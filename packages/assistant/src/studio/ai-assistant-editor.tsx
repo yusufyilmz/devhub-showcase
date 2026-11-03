@@ -7,17 +7,23 @@ import { type ComponentProps, useEffect, useRef, useState } from "react";
 
 import type { PortfolioProfile } from "@shared/config";
 import { urls } from "@shared/config/urls";
-import { type AiEditProposal, aiEditProposalSchema, applyAiEdit } from "@shared/lib/profiles";
+import {
+  type AiEditProposal,
+  type AssistantTaskOptions,
+  aiEditProposalSchema,
+  applyAiEdit,
+} from "@shared/lib/profiles";
 import { useStudioRequest } from "@shared/runtime/studio";
 import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 import { StudioChatScreen } from "@shared/ui/display";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
-import { ProposalComparison } from "@shared/ui/portfolio";
+import { AssistantFeedback, AssistantTools, ProposalComparison } from "@shared/ui/portfolio";
 import { Textarea as LibraryTextarea } from "@shared/ui/textarea";
 
 type Props = {
+  onNavigate?: (tab: string) => void;
   profile: PortfolioProfile;
   profileId?: string;
   revision: number;
@@ -85,13 +91,14 @@ export function AiAssistantEditor(props: Props) {
     );
   return <AssistantWorkspace {...props} />;
 }
-function AssistantWorkspace({ profile, profileId, revision, onChange, chat }: Props) {
+function AssistantWorkspace({ profile, profileId, revision, onChange, chat, onNavigate }: Props) {
   const studioRequest = useStudioRequest();
   const [availability, setAvailability] = useState<{
     enabled: boolean;
     usage: number;
     limit: number;
   } | null>(null);
+  const [task, setTask] = useState<AssistantTaskOptions | undefined>();
   const [message, setMessage] = useState("");
   const [error, showError] = useState("");
   const [status, setStatus] = useState("");
@@ -132,7 +139,7 @@ function AssistantWorkspace({ profile, profileId, revision, onChange, chat }: Pr
     if (role === "user") setMessage("");
   }
   async function generate() {
-    if (!profileId || !message.trim() || busy) return;
+    if (!canGenerate(profileId, message, task, busy)) return;
     setBusy(true);
     showError("");
     setStatus("");
@@ -144,10 +151,11 @@ function AssistantWorkspace({ profile, profileId, revision, onChange, chat }: Pr
       const response = await studioRequest(urls.next.studio.assistant(), {
         body: JSON.stringify({
           draft: profile,
-          message,
+          message: message.trim() || "Review the selected assistant task.",
           profileId,
           requestId: crypto.randomUUID(),
           revision,
+          task,
         }),
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -211,6 +219,8 @@ function AssistantWorkspace({ profile, profileId, revision, onChange, chat }: Pr
               <ProposalReview
                 apply={apply}
                 discard={() => setReview(null)}
+                editorHref={chat?.editorHref}
+                onNavigate={onNavigate}
                 profile={profile}
                 review={review}
                 selected={selected}
@@ -250,6 +260,17 @@ function AssistantWorkspace({ profile, profileId, revision, onChange, chat }: Pr
             required. <a href="/admin/billing">Manage subscription and assignment</a>.
           </p>
         )}
+        <AssistantTools
+          disabled={busy}
+          onChange={(next) => {
+            setTask(next);
+            setReview(null);
+            setSelected([]);
+            showError("");
+          }}
+          profile={profile}
+          value={task}
+        />
         <LibraryLabel htmlFor="ai-studio-message" unstyled>
           What would you like to change?
         </LibraryLabel>
@@ -264,7 +285,7 @@ function AssistantWorkspace({ profile, profileId, revision, onChange, chat }: Pr
         />
         <Button
           className="studio-primary"
-          disabled={busy || !availability?.enabled || !message.trim() || !profileId}
+          disabled={!availability?.enabled || !canGenerate(profileId, message, task, busy)}
           onClick={generate}
           type="button"
         >
@@ -277,6 +298,7 @@ function AssistantWorkspace({ profile, profileId, revision, onChange, chat }: Pr
           <ProposalReview
             apply={apply}
             discard={() => setReview(null)}
+            onNavigate={onNavigate}
             profile={profile}
             review={review}
             selected={selected}
@@ -304,6 +326,8 @@ function AssistantWorkspace({ profile, profileId, revision, onChange, chat }: Pr
   );
 }
 function ProposalReview({
+  onNavigate,
+  editorHref,
   review,
   selected,
   setSelected,
@@ -312,6 +336,8 @@ function ProposalReview({
   apply,
   discard,
 }: {
+  onNavigate?: (tab: string) => void;
+  editorHref?: string;
   review: Review;
   selected: string[];
   setSelected: (selected: string[]) => void;
@@ -324,6 +350,11 @@ function ProposalReview({
     <section>
       <h3>Review proposed changes</h3>
       <p>{review.proposal.summary}</p>
+      <AssistantFeedback
+        editorHref={editorHref}
+        feedback={review.proposal.feedback ?? []}
+        onNavigate={onNavigate}
+      />
       {stale && (
         <p role="alert">
           Your draft or saved revision changed. Generate a fresh proposal before applying.
@@ -388,4 +419,14 @@ function proposalForRevision(data: { revision?: number; proposal: unknown }, rev
   if (data.revision !== revision)
     throw new Error("The proposal revision does not match this draft. Generate a fresh proposal.");
   return aiEditProposalSchema.parse(data.proposal);
+}
+
+function canGenerate(
+  profileId: string | undefined,
+  message: string,
+  task: AssistantTaskOptions | undefined,
+  busy: boolean,
+) {
+  const sourceReady = task?.kind !== "writing" || task.field === "summary" || Boolean(task.itemId);
+  return Boolean(profileId && (message.trim() || task) && !busy && sourceReady);
 }

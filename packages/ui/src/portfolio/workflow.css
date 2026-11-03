@@ -54,3 +54,14 @@
 .draft-recovery-summary summary {
   cursor: pointer;
 }
+.published-sources {
+  display: flex;
+  flex-shrink: 0;
+  gap: 6px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+}
+.published-sources .ui-button {
+  flex-shrink: 0;
+  font-size: 12px;
+}

@@ -1,5 +1,7 @@
 # Lib catalog
 
+The profiles entry point exports assistantTaskSchema, writingSource, writingProposal and publicChatSources. Focused proposals preserve unrelated records and reject changed numeric/URL facts; public source links derive from the permitted projection. Feedback metadata remains optional for legacy proposal compatibility.
+
 Validation, Supabase helpers, and shared types for `@shared/lib`. Domain services and repositories live in `@shared/services`. Import a specific entry point. Authorization stays in the app feature that calls these modules.
 
 | Export                          | Path                                | Use                                                       |

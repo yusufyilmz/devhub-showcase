@@ -1,5 +1,7 @@
 # UI catalog
 
+AssistantTools, AssistantFeedback and PublishedSources are exported from @shared/ui/portfolio. They provide task, tone and length selection, section feedback navigation and validated internal public source links. Types live in portfolio/types.ts and token styles in workflow.css.
+
 `@shared/ui/portfolio` includes EditorGuidance and usePortfolioHistory for owner
 editors. The advisory checklist derives essential/recommended items from the
 draft and routes through a caller-supplied navigation callback. Session history

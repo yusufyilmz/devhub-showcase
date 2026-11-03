@@ -16,6 +16,9 @@ export {
   serializeAiEditContext,
   validateAiEdit,
 } from "./ai-edit";
+export type { AssistantTaskOptions } from "./assistant-task";
+export { assistantTaskSchema, writingProposal, writingSource } from "./assistant-task";
+export { publicChatSources } from "./chat-sources";
 export { createEmptyProfile } from "./empty-profiles";
 export {
   applyGoogleProfile,

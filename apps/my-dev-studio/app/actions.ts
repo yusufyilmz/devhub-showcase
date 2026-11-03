@@ -18,7 +18,11 @@ import { ReferralService, ReviewService } from "@shared/services/studio";
 import { logger } from "@shared/utils/logger";
 
 import { requireAdmin } from "@/features/admin/admin-auth";
-import { portfolioChatInput, requireLegacyChat } from "@/features/chat/portfolio-chat";
+import {
+  assertCurrentPublication,
+  portfolioChatInput,
+  requireLegacyChat,
+} from "@/features/chat/portfolio-chat";
 import { answerPremiumChat } from "@/features/chat/premium-chat";
 
 export async function handlePremiumChatAction(
@@ -50,6 +54,7 @@ export async function handleSendMessageAction(
         input.content,
         AbortSignal.timeout(45000),
       );
+      await assertCurrentPublication(username, snapshot.id, snapshot.revision);
       return {
         category: "unknown",
         content,
