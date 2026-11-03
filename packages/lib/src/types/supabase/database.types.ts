@@ -499,6 +499,10 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
+      resolve_published_username: {
+        Args: { requested_username: string };
+        Returns: Array<{ id: string; username: string }>;
+      };
       set_portfolio_publication: {
         Args: { profile_id: string; expected_revision: number; publish: boolean };
         Returns: number;

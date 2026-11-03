@@ -13,7 +13,7 @@ export async function GET(
   { params }: { params: Promise<{ username: string }> },
 ) {
   const { username } = await params;
-  const { profile } = await getUsernameProfile(username);
+  const { profile } = await getUsernameProfile(username, "/share.png");
   const accent = brandColor(profile);
   return new ImageResponse(
     <div
