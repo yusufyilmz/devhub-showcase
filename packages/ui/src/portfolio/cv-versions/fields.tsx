@@ -1,5 +1,6 @@
 "use client";
 import { type CvLayout, cvLayouts, type Language } from "@shared/config";
+import { normalizeCvProfile } from "@shared/lib/profiles";
 
 import { Button } from "../../buttons/button";
 import { Field, SelectField } from "../../forms";
@@ -7,7 +8,7 @@ import type { CvVersionFieldsProps } from "./types";
 export function CvVersionFields({ variant, onChange }: CvVersionFieldsProps) {
   const profile = variant.profile;
   const update = (change: Partial<typeof profile>) =>
-    onChange({ ...variant, profile: { ...profile, ...change } });
+    onChange({ ...variant, profile: normalizeCvProfile({ ...profile, ...change }) });
   return (
     <section aria-label="CV version content" className="editor-fields">
       <Field

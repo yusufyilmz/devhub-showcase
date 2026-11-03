@@ -26,6 +26,7 @@ export {
   cvLibraryWriteSchema,
   cvSectionOrder,
   cvVariantSchema,
+  normalizeCvProfile,
   suggestCvEvidence,
   tailorCvVariant,
 } from "./cv-variants";

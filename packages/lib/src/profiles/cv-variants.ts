@@ -34,6 +34,19 @@ export const cvLibrarySchema = z
 export const cvLibraryWriteSchema = z
   .object({ revision: z.number().int().min(0), variants: cvLibrarySchema })
   .strict();
+export function normalizeCvProfile(profile: PortfolioProfile): PortfolioProfile {
+  const copy = structuredClone(profile);
+  delete copy.customSections;
+  delete copy.sectionSettings;
+  delete copy.sectionOrder;
+  delete copy.sectionSequence;
+  delete copy.hero;
+  const ids = new Set(copy.experiences.map((item) => item.id));
+  copy.projects = copy.projects.map((item) =>
+    item.experienceId && !ids.has(item.experienceId) ? { ...item, experienceId: null } : item,
+  );
+  return copy;
+}
 export function createCvVariant(
   profile: PortfolioProfile,
   sourceRevision: number,
@@ -43,7 +56,7 @@ export function createCvVariant(
     id: crypto.randomUUID(),
     name,
     order: [...cvSectionOrder],
-    profile: structuredClone(profile),
+    profile: normalizeCvProfile(profile),
     sourceRevision,
   });
 }
@@ -105,6 +118,6 @@ export function tailorCvVariant(
     ...source,
     id: crypto.randomUUID(),
     name: `${source.name.slice(0, 80)} · tailored`,
-    profile,
+    profile: normalizeCvProfile(profile),
   };
 }

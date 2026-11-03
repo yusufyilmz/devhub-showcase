@@ -27,6 +27,21 @@ describe("private CV versions", () => {
       expect(source.profile.experiences).toContainEqual(item);
     expect(suggestCvEvidence(source.profile, "unobtainiumquantumqualification")).toEqual([]);
   });
+  it("detaches excluded employment and omits website-only selection rules", () => {
+    const base = createCvVariant(
+      { ...profile, sectionSettings: { projects: { itemIds: [profile.projects[0]!.id] } } },
+      1,
+      "Selection",
+    );
+    const project = base.profile.projects.find((item) => item.experienceId);
+    if (!project) throw new Error("Fixture needs an associated project");
+    const next = tailorCvVariant(base, [
+      { field: "projects", id: project.id, matched: ["test"], title: project.name },
+    ]);
+    expect(next.profile.projects[0]?.experienceId).toBeNull();
+    expect(next.profile.sectionSettings).toBeUndefined();
+    expect(cvLibraryWriteSchema.safeParse({ revision: 0, variants: [next] }).success).toBe(true);
+  });
   it("validates IDs, per-version ordering and bounded unique libraries", () => {
     const version = createCvVariant(profile, 1, "Default");
     expect(cvLibraryWriteSchema.safeParse({ revision: 0, variants: [version] }).success).toBe(true);
