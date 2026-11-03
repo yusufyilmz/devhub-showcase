@@ -1,5 +1,7 @@
 # UI catalog
 
+CvVersionsEditor accepts load/save/download callbacks and edits independent private CV snapshots. Version fields and job evidence review live in portfolio/cv-versions; save failures retain local edits while the screen remains open.
+
 TemplatePicker provides nine presentation-only profession presets under @shared/ui/portfolio. WorkMedia supplies consent-based YouTube loading, persistent original links and image-failure context. Styles and types are colocated.
 
 AssistantTools, AssistantFeedback and PublishedSources are exported from @shared/ui/portfolio. They provide task, tone and length selection, section feedback navigation and validated internal public source links. Types live in portfolio/types.ts and token styles in workflow.css.

@@ -19,6 +19,17 @@ export {
 export type { AssistantTaskOptions } from "./assistant-task";
 export { assistantTaskSchema, writingProposal, writingSource } from "./assistant-task";
 export { publicChatSources } from "./chat-sources";
+export type { CvVariant } from "./cv-variants";
+export {
+  createCvVariant,
+  cvLibrarySchema,
+  cvLibraryWriteSchema,
+  cvSectionOrder,
+  cvVariantSchema,
+  normalizeCvProfile,
+  suggestCvEvidence,
+  tailorCvVariant,
+} from "./cv-variants";
 export { createEmptyProfile } from "./empty-profiles";
 export {
   applyGoogleProfile,

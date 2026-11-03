@@ -53,6 +53,8 @@ const PreviewContent = dynamic(() =>
   import("./preview-content").then((module) => module.PreviewContent),
 );
 
+import { PrivateCvVersions } from "./cv-versions";
+
 const tabs = [
   "Profile",
   "Import CV",
@@ -72,6 +74,7 @@ const tabs = [
   "Templates",
   "Appearance",
   "PDF",
+  "CV versions",
 ] as const;
 function clean(profile: PortfolioProfile): PortfolioProfile {
   const lines = (values: string[]) => values.filter((value) => value.trim());
@@ -415,6 +418,14 @@ function EditorBody({
   profile: PortfolioProfile;
   onChange: (profile: PortfolioProfile) => void;
 }) {
+  if (tab === "CV versions")
+    return managed ? (
+      <Card>
+        CV versions belong to your own account workspace. Open your personal editor to manage them.
+      </Card>
+    ) : (
+      <PrivateCvVersions profile={profile} sourceRevision={snapshot.revision} />
+    );
   if (tab === "AI assistant")
     return (
       <AiAssistantEditor
