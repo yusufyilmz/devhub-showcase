@@ -45,7 +45,7 @@ export const profileSchema = z
       .optional(),
     customSections: z.array(customSectionSchema).max(MAX_CUSTOM_SECTIONS).optional(),
     cvLanguage: z.enum(["en", "es", "tr"]).default("en"),
-    cvLayout: z.enum(["classic", "editorial", "compact"]).default("classic"),
+    cvLayout: z.enum(["classic", "editorial", "compact", "ats", "ats-compact"]).default("classic"),
     cvSettings: z
       .object({
         fontSize: z.union([z.literal(9), z.literal(10), z.literal(11)]),

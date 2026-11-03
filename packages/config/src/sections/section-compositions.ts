@@ -52,10 +52,12 @@ export const sectionCompositionIds = [
 export function getSocialWork(url: string) {
   try {
     const parsed = new URL(url);
-    if (parsed.protocol !== "https:" || parsed.username || parsed.password) return null;
+    if (parsed.protocol !== "https:" || parsed.username || parsed.password || parsed.port)
+      return null;
     const host = parsed.hostname.toLowerCase();
     let video: string | null = null;
-    if (host === "youtu.be") video = parsed.pathname.split("/")[1] ?? null;
+    if (host === "youtu.be")
+      video = /^\/([a-zA-Z0-9_-]{11})\/?$/.exec(parsed.pathname)?.[1] ?? null;
     if (["youtube.com", "www.youtube.com", "m.youtube.com"].includes(host))
       video =
         parsed.pathname === "/watch"

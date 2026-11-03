@@ -1,5 +1,7 @@
 # CV catalog
 
+ATS-friendly and ATS-friendly compact use a linear text-only reading order with visible URLs and the existing inclusion settings. See docs/testing/portfolio-presentation.md for verification and limitations.
+
 PDF rendering for `@shared/templates`. The caller supplies the profile and decides who may download it.
 
 | Export                           | Path                    | Use                                     |

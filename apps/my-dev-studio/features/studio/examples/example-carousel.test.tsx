@@ -20,7 +20,7 @@ describe("ExampleCarousel", () => {
     );
     HTMLElement.prototype.scrollTo = vi.fn();
     render(<ExampleCarousel />);
-    expect(screen.getAllByRole("link")).toHaveLength(12);
+    expect(screen.getAllByRole("link")).toHaveLength(16);
     for (const name of [
       "Engineer",
       "Designer",
@@ -30,9 +30,10 @@ describe("ExampleCarousel", () => {
       "Content creator",
     ]) {
       fireEvent.click(screen.getByRole("button", { name }));
-      expect(screen.getAllByRole("link")).toHaveLength(2);
+      const count = ["Engineer", "Trainer"].includes(name) ? 2 : 3;
+      expect(screen.getAllByRole("link")).toHaveLength(count);
       expect(screen.getByRole("button", { name }).getAttribute("aria-pressed")).toBe("true");
-      expect(screen.getByRole("status").textContent).toBe("1 / 2 examples");
+      expect(screen.getByRole("status").textContent).toBe(`1 / ${count} examples`);
       expect(
         screen
           .getByRole("button", { name: "Previous portfolio examples" })
@@ -40,6 +41,6 @@ describe("ExampleCarousel", () => {
       ).toBe(true);
     }
     fireEvent.click(screen.getByRole("button", { name: "All layouts" }));
-    expect(screen.getAllByRole("link")).toHaveLength(12);
+    expect(screen.getAllByRole("link")).toHaveLength(16);
   });
 });

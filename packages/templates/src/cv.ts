@@ -5,6 +5,8 @@ import type { TDocumentDefinitions } from "pdfmake/interfaces";
 
 import { formatPortfolioPeriod, getPortfolioCopy, type PortfolioProfile } from "@shared/config";
 
+import { atsContent } from "./ats-content";
+
 // The server and Plop share an in-memory font filesystem; no host font paths.
 const virtualfs = (
   pdfmake as typeof pdfmake & {
@@ -32,6 +34,20 @@ export const cvHelpers = {
 };
 
 const cvFormats = {
+  ats: {
+    cvLineHeight: 1.2,
+    cvNameSize: 23,
+    cvPageMargins: [44, 40, 44, 44],
+    cvSectionMargin: [0, 14, 0, 5],
+    cvTitleSize: 12,
+  },
+  "ats-compact": {
+    cvLineHeight: 1.08,
+    cvNameSize: 23,
+    cvPageMargins: [36, 30, 36, 36],
+    cvSectionMargin: [0, 10, 0, 4],
+    cvTitleSize: 12,
+  },
   classic: {
     cvLineHeight: 1.2,
     cvNameSize: 25,
@@ -101,7 +117,14 @@ export function createCvDefinition(
   const json = render
     ? render(template, data)
     : engine.compile(template, { noEscape: true, strict: true })(data);
-  const definition = JSON.parse(json) as TDocumentDefinitions;
+  const definition: TDocumentDefinitions = profile.cvLayout?.startsWith("ats")
+    ? {
+        content: atsContent(data),
+        defaultStyle: { font: "Roboto", fontSize: data.cvFontSize, lineHeight: data.cvLineHeight },
+        pageMargins: data.cvPageMargins as [number, number, number, number],
+        pageSize: data.cvPageSize,
+      }
+    : (JSON.parse(json) as TDocumentDefinitions);
   definition.info = {
     author: profile.name,
     creator: "DevHub CV template",

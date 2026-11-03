@@ -44,3 +44,18 @@ for (const type of ["engineer", "designer", "consultant", "minimal"]) {
       .screenshot({ path: info.outputPath("social-work.png") });
   });
 }
+
+test("blocked media retains readable context and the original link", async ({ page }) => {
+  await page.route("https://www.youtube-nocookie.com/**", (route) => route.abort());
+  await page.goto("/media-designer");
+  const films = page.locator(".composition-youtube");
+  await expect(films.getByRole("link", { name: /Open original/ })).toHaveAttribute(
+    "href",
+    "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+  );
+  await films.getByRole("button", { name: "Load YouTube video: Studio film" }).click();
+  await expect(films.getByRole("status")).toContainText(/blocked|unavailable/);
+  await expect(films.getByRole("link", { name: /Open original/ })).toBeVisible();
+  await films.getByRole("button", { name: "Unload video" }).click();
+  await expect(films.locator("iframe")).toHaveCount(0);
+});

@@ -1,5 +1,7 @@
 # Config catalog
 
+portfolioTemplates and applyPortfolioTemplate configure profession compositions without copying sample facts or altering privacy/PDF settings. cvLayouts includes ATS-friendly and ATS-friendly compact.
+
 Profile shape, themes, copy, and section metadata for `@shared/config`. This package does not read a database or authorize a request.
 
 | Export                     | Path            | Use                                                        |
