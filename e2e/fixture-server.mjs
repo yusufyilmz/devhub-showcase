@@ -428,6 +428,7 @@ function publishSnapshot(entry) {
     revision: entry.revision,
     updated_at: entry.updated_at,
     username: entry.username,
+    visibility: entry.document.publicationVisibility ?? "public",
   };
   publications.set(entry.id, {
     ...common,
@@ -525,7 +526,7 @@ function visibleRow(entry, owner) {
   );
 }
 function matchesRow(entry, url) {
-  return ["id", "username", "owner_id", "managed_by", "revision", "is_public"].every(
+  return ["id", "username", "owner_id", "managed_by", "revision", "is_public", "visibility"].every(
     (key) =>
       !url.searchParams.has(key) ||
       url.searchParams.get(key) === `eq.${entry[key]}` ||

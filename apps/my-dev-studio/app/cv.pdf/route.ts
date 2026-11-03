@@ -23,6 +23,9 @@ export async function GET() {
         "Content-Type": "application/pdf",
         "X-Content-Type-Options": "nosniff",
         "X-Profile-Revision": String(snapshot.revision),
+        ...(snapshot.profile.publicationVisibility === "unlisted"
+          ? { "X-Robots-Tag": "noindex, nofollow" }
+          : {}),
       },
     });
   } catch (error) {

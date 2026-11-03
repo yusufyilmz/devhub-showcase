@@ -26,4 +26,16 @@ describe("independent output fields", () => {
     expect(next.cvSettings.showPhone).toBe(false);
     expect(next.websiteFields).toBe(profile.websiteFields);
   });
+  it("changes discovery only as a draft setting and does not expose it in a CV-only editor", () => {
+    const onChange = vi.fn();
+    const view = render(<FieldVisibilityEditor onChange={onChange} profile={profile} />);
+    fireEvent.change(screen.getByRole("combobox", { name: "Portfolio discovery" }), {
+      target: { value: "unlisted" },
+    });
+    expect(onChange).toHaveBeenCalledWith({ ...profile, publicationVisibility: "unlisted" });
+    view.rerender(
+      <FieldVisibilityEditor onChange={onChange} profile={profile} surfaces={["cv"]} />,
+    );
+    expect(screen.queryByRole("combobox", { name: "Portfolio discovery" })).toBeNull();
+  });
 });

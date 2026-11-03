@@ -57,6 +57,23 @@ test("private saves, explicit snapshots, independent fields, rename and withdraw
   expect((await visitor.request.get(`http://localhost:3100/${username}/cv.pdf`)).status()).toBe(
     200,
   );
+  await page.getByRole("combobox", { name: "Portfolio discovery" }).selectOption("unlisted");
+  await page.getByRole("button", { exact: true, name: "Save changes" }).click();
+  await expect(page.locator(".editor-success")).toContainText("Saved privately");
+  const locationTag = `<loc>http://localhost:3100/${username}</loc>`;
+  expect(await (await visitor.request.get("http://localhost:3100/sitemap.xml")).text()).toContain(
+    locationTag,
+  );
+  await confirmPublication(page);
+  expect(
+    await (await visitor.request.get("http://localhost:3100/sitemap.xml")).text(),
+  ).not.toContain(locationTag);
+  await publicPage.reload();
+  await expect(publicPage.getByRole("heading", { level: 1 })).toContainText("Publication Owner");
+  await expect(publicPage.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+  const unlistedCv = await visitor.request.get(`http://localhost:3100/${username}/cv.pdf`);
+  expect(unlistedCv.status()).toBe(200);
+  expect(unlistedCv.headers()["x-robots-tag"]).toContain("noindex");
   await page.getByRole("button", { exact: true, name: "Profile" }).click();
   await page.getByRole("textbox", { exact: true, name: "Full name" }).fill("Private next revision");
   await page.getByLabel("Username", { exact: true }).fill(`${username}-renamed`);

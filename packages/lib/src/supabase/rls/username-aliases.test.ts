@@ -26,6 +26,9 @@ describe("retained published username aliases", () => {
         readFileSync("supabase/migrations/20261103140000_retained_username_aliases.sql", "utf8"),
       );
       await db.exec(
+        readFileSync("supabase/migrations/20261103150000_unlisted_publications.sql", "utf8"),
+      );
+      await db.exec(
         `set role authenticated;select set_config('request.jwt.claim.sub','${a}',false)`,
       );
       await db.query(
@@ -33,10 +36,36 @@ describe("retained published username aliases", () => {
       );
       await db.query("select public.set_portfolio_publication('first',2,true)");
       await db.query(
-        "update public.portfolio_profiles set username='latest-owner',revision=3 where id='first'",
+        "update public.portfolio_profiles set username='latest-owner',document=jsonb_set(document,'{publicationVisibility}','\"unlisted\"'::jsonb),revision=3 where id='first'",
       );
+      expect(
+        (await db.query("select visibility from public.portfolio_publications where id='first'"))
+          .rows,
+      ).toEqual([{ visibility: "public" }]);
       await db.query("select public.set_portfolio_publication('first',3,true)");
+      expect(
+        (await db.query("select visibility from public.portfolio_publications where id='first'"))
+          .rows,
+      ).toEqual([{ visibility: "unlisted" }]);
+      expect(
+        (await db.query("select visibility from public.portfolio_public_cvs where id='first'"))
+          .rows,
+      ).toEqual([{ visibility: "unlisted" }]);
       await db.exec("reset role;set role anon");
+      expect(
+        (
+          await db.query(
+            "select username from public.portfolio_publications where visibility='public'",
+          )
+        ).rows,
+      ).toEqual([]);
+      expect(
+        (
+          await db.query(
+            "select username from public.portfolio_publications where username='latest-owner'",
+          )
+        ).rows,
+      ).toEqual([{ username: "latest-owner" }]);
       for (const username of ["first-owner", "next-owner", "latest-owner"]) {
         expect(
           (await db.query("select * from public.resolve_published_username($1)", [username])).rows,

@@ -137,4 +137,13 @@ describe("DemoProfile", () => {
       ).toBe(true);
     expect(saved.hero?.kind).toBe("image");
   });
+  it("accepts explicit public/unlisted policy and rejects unavailable protection modes", () => {
+    expect(
+      validateProfile({ ...profile, publicationVisibility: "unlisted" }).publicationVisibility,
+    ).toBe("unlisted");
+    expect(validateProfile(profile).publicationVisibility).toBeUndefined();
+    expect(profileSchema.safeParse({ ...profile, publicationVisibility: "password" }).success).toBe(
+      false,
+    );
+  });
 });

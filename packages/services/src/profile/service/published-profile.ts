@@ -77,6 +77,7 @@ export async function listPublishedPortfolioLinks(): Promise<
     const { data, error } = await client
       .from("portfolio_publications")
       .select("username, updated_at")
+      .eq("visibility", "public")
       .order("username")
       .range(offset, offset + 999);
     if (error) throw new ProfileSetupError();

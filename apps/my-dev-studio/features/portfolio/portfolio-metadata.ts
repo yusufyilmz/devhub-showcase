@@ -32,7 +32,10 @@ export function portfolioMetadata(profile: PortfolioProfile, username: string): 
       type: "profile",
       url: canonical,
     },
-    robots: { follow: true, index: true },
+    robots: {
+      follow: profile.publicationVisibility !== "unlisted",
+      index: profile.publicationVisibility !== "unlisted",
+    },
     title,
     twitter: {
       card: "summary_large_image",

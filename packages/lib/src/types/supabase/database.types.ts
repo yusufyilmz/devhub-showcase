@@ -1,6 +1,7 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 type PublicationRow = {
+  visibility: "public" | "unlisted";
   id: string;
   username: string;
   document: Json;
@@ -9,8 +10,8 @@ type PublicationRow = {
 };
 type PublicationTable = {
   Row: PublicationRow;
-  Insert: PublicationRow;
-  Update: Partial<PublicationRow>;
+  Insert: Omit<PublicationRow, "visibility">;
+  Update: Partial<Omit<PublicationRow, "visibility">>;
   Relationships: [];
 };
 
