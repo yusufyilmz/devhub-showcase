@@ -51,8 +51,10 @@ export {
 export {
   type EditableProfile,
   profileSchema,
+  publicProfileSchema,
   saveProfileSchema,
   validateProfile,
+  validatePublicProfile,
 } from "./profile";
 export type { ProfileSnapshot } from "./profile-snapshot";
 export {

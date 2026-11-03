@@ -1,6 +1,7 @@
 import type { Language } from "../portfolio/languages";
 import type { PortfolioSectionId } from "../portfolio/portfolio-sections";
 import type { CvLayout, PortfolioType } from "../portfolio/portfolio-types";
+import type { OutputFields } from "../portfolio/public-projection";
 import type { PortfolioTheme } from "../portfolio/themes";
 import type { CustomSection, PortfolioEntryId } from "../sections/custom-sections";
 import type { PortfolioSectionSettings } from "../sections/section-registry";
@@ -36,6 +37,7 @@ export interface PortfolioProfile {
   };
   birthDate?: string;
   customSections?: CustomSection[];
+  cvFields?: OutputFields;
   cvLanguage?: Language;
   cvLayout?: CvLayout;
   cvSettings?: {
@@ -84,6 +86,7 @@ export interface PortfolioProfile {
   templateChosen?: boolean;
   title: string;
   website: string;
+  websiteFields?: OutputFields;
 }
 export const profile: PortfolioProfile = {
   about: [

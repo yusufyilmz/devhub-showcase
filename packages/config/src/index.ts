@@ -53,6 +53,8 @@ export {
 export { applyPortfolioTemplate, portfolioTemplates } from "./portfolio/portfolio-templates";
 export type { CvLayout, PortfolioType } from "./portfolio/portfolio-types";
 export { cvLayouts, portfolioTypes } from "./portfolio/portfolio-types";
+export type { ContactField, OutputFields } from "./portfolio/public-projection";
+export { contactFields, projectPublicProfile } from "./portfolio/public-projection";
 export type { ColorMode, PortfolioAccentId, PortfolioTheme } from "./portfolio/themes";
 export {
   getPortfolioThemeVariables,

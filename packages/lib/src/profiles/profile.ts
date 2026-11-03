@@ -9,6 +9,17 @@ import {
 } from "../domain/section";
 import { usernameSchema } from "./username";
 
+const outputFields = z
+  .object({
+    email: z.boolean().optional(),
+    github: z.boolean().optional(),
+    linkedin: z.boolean().optional(),
+    location: z.boolean().optional(),
+    phone: z.boolean().optional(),
+    website: z.boolean().optional(),
+  })
+  .strict();
+
 const text = (max = 200) => z.string().trim().min(1, "This field is required").max(max);
 const safeUrl = z.url().refine((value) => /^https?:\/\//i.test(value), "Use an http or https URL");
 const optionalUrl = safeUrl.nullable();
@@ -44,6 +55,7 @@ export const profileSchema = z
       )
       .optional(),
     customSections: z.array(customSectionSchema).max(MAX_CUSTOM_SECTIONS).optional(),
+    cvFields: outputFields.optional(),
     cvLanguage: z.enum(["en", "es", "tr"]).default("en"),
     cvLayout: z.enum(["classic", "editorial", "compact", "ats", "ats-compact"]).default("classic"),
     cvSettings: z
@@ -156,6 +168,7 @@ export const profileSchema = z
     templateChosen: z.boolean().default(true),
     title: text(),
     website: z.union([safeUrl, z.literal("")]),
+    websiteFields: outputFields.optional(),
   })
   .superRefine((value, ctx) => {
     for (const key of ["experiences", "projects", "education", "languages"] as const) {
@@ -198,6 +211,14 @@ export const profileSchema = z
         });
     });
   });
+export const publicProfileSchema = profileSchema.safeExtend({
+  email: z.union([z.email(), z.literal("")]),
+  location: z.string().max(200),
+});
+export function validatePublicProfile(value: unknown): PortfolioProfile {
+  return publicProfileSchema.parse(value);
+}
+
 export type EditableProfile = z.infer<typeof profileSchema>;
 export function validateProfile(value: unknown): PortfolioProfile {
   return profileSchema.parse(value);

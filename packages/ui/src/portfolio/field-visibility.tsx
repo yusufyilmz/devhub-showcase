@@ -1,0 +1,61 @@
+"use client";
+import { type ContactField, contactFields, type PortfolioProfile } from "@shared/config";
+
+import { Input } from "../forms/input";
+import { Label } from "../forms/label";
+import { fieldVisibilityStyles } from "./styles";
+import type { ProfileFieldsOptions } from "./types";
+
+function visible(profile: PortfolioProfile, surface: "website" | "cv", key: ContactField) {
+  const fields = surface === "website" ? profile.websiteFields : profile.cvFields;
+  if (fields?.[key] === false) return false;
+  if (surface === "cv" && key === "email") return profile.cvSettings?.showEmail !== false;
+  if (surface === "cv" && key === "phone") return profile.cvSettings?.showPhone !== false;
+  return true;
+}
+export function FieldVisibilityEditor({ profile, onChange }: ProfileFieldsOptions) {
+  function update(surface: "website" | "cv", key: ContactField, checked: boolean) {
+    const field = surface === "website" ? "websiteFields" : "cvFields";
+    const next = { ...profile, [field]: { ...profile[field], [key]: checked } };
+    if (surface === "cv" && (key === "email" || key === "phone"))
+      next.cvSettings = {
+        fontSize: 9,
+        includeLanguages: true,
+        includeProjects: true,
+        pageSize: "A4",
+        showEmail: true,
+        showPhone: true,
+        ...profile.cvSettings,
+        [key === "email" ? "showEmail" : "showPhone"]: checked,
+      };
+    onChange(next);
+  }
+  return (
+    <section aria-label="Output field visibility" className="editor-card editor-fields">
+      <h2>Choose what each output includes</h2>
+      <p>
+        Website and CV choices are independent. These controls hide structured contact fields;
+        review any contact details you wrote in descriptions, images or other authored text
+        separately.
+      </p>
+      {(["website", "cv"] as const).map((surface) => (
+        <fieldset key={surface}>
+          <legend>
+            {surface === "website" ? "Website contact details" : "CV contact details"}
+          </legend>
+          {contactFields.map((key) => (
+            <Label className={fieldVisibilityStyles.checkbox} key={key} unstyled>
+              <Input
+                checked={visible(profile, surface, key)}
+                onChange={(event) => update(surface, key, event.target.checked)}
+                type="checkbox"
+                unstyled
+              />
+              Include {key} on {surface}
+            </Label>
+          ))}
+        </fieldset>
+      ))}
+    </section>
+  );
+}

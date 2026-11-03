@@ -19,3 +19,5 @@ export const profileFieldsStyles = {
   element2: "eyebrow",
   element3: "editor-card editor-fields",
 } as const;
+
+export const fieldVisibilityStyles = { checkbox: "editor-checkbox" } as const;

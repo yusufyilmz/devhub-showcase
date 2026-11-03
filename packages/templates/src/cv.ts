@@ -3,7 +3,12 @@ import pdfmake from "pdfmake";
 import fonts from "pdfmake/build/vfs_fonts.js";
 import type { TDocumentDefinitions } from "pdfmake/interfaces";
 
-import { formatPortfolioPeriod, getPortfolioCopy, type PortfolioProfile } from "@shared/config";
+import {
+  formatPortfolioPeriod,
+  getPortfolioCopy,
+  type PortfolioProfile,
+  projectPublicProfile,
+} from "@shared/config";
 
 import { atsContent } from "./ats-content";
 import { orderCvContent } from "./cv-order";
@@ -72,6 +77,7 @@ const cvFormats = {
   },
 };
 export function createCvData(profile: PortfolioProfile) {
+  profile = projectPublicProfile(profile, "cv");
   return {
     ...profile,
     labels: getPortfolioCopy(profile.cvLanguage),

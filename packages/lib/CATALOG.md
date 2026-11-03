@@ -1,5 +1,7 @@
 # Lib catalog
 
+publicProfileSchema accepts deliberately redacted contact strings while retaining profile integrity checks. Public visitor knowledge uses the publishable website projection instead of the raw owner document.
+
 The profiles entry exports CvVariant validation, bounded private library writes, independent snapshot creation and local evidence matching. Owner-only CV variants are stored separately from published profile documents.
 
 The profiles entry point exports assistantTaskSchema, writingSource, writingProposal and publicChatSources. Focused proposals preserve unrelated records and reject changed numeric/URL facts; public source links derive from the permitted projection. Feedback metadata remains optional for legacy proposal compatibility.

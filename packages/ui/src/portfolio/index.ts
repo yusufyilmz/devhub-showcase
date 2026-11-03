@@ -1,6 +1,7 @@
 export { AssistantFeedback, AssistantTools, PublishedSources } from "./assistant-tools";
 export { CvVersionsEditor } from "./cv-versions/editor";
 export { EditorGuidance } from "./editor-guidance";
+export { FieldVisibilityEditor } from "./field-visibility";
 export { GuidedOnboarding, SetupNavigation } from "./guided-onboarding";
 export { LanguageSettingsEditor } from "./language-settings-editor";
 export { PortfolioTypePicker } from "./portfolio-type-picker";
@@ -10,5 +11,6 @@ export { DraftRecovery } from "./recovery/DraftRecovery";
 export { clearDraftRecovery, recoveryPrefix } from "./recovery/storage";
 export type { SetupStep } from "./recovery/types";
 export { useDraftRecovery } from "./recovery/use-draft-recovery";
+export { RevisionHistory } from "./revision-history/editor";
 export { TemplatePicker } from "./template-picker";
 export { usePortfolioHistory } from "./use-portfolio-history";

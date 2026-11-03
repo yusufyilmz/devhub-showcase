@@ -22,6 +22,7 @@ import {
   clearDraftRecovery,
   DraftRecovery,
   EditorGuidance,
+  FieldVisibilityEditor,
   GuidedOnboarding,
   LanguageSettingsEditor,
   PortfolioTypePicker,
@@ -54,6 +55,7 @@ const PreviewContent = dynamic(() =>
 );
 
 import { PrivateCvVersions } from "./cv-versions";
+import { OwnerRevisionHistory } from "./revision-history";
 
 const tabs = [
   "Profile",
@@ -75,6 +77,8 @@ const tabs = [
   "Appearance",
   "PDF",
   "CV versions",
+  "Revision history",
+  "Field visibility",
 ] as const;
 function clean(profile: PortfolioProfile): PortfolioProfile {
   const lines = (values: string[]) => values.filter((value) => value.trim());
@@ -418,6 +422,12 @@ function EditorBody({
   profile: PortfolioProfile;
   onChange: (profile: PortfolioProfile) => void;
 }) {
+  if (tab === "Revision history")
+    return managed ? (
+      <Card>Use the managed portfolio history controls for this record.</Card>
+    ) : (
+      <OwnerRevisionHistory onChange={onChange} profile={profile} revision={snapshot.revision} />
+    );
   if (tab === "CV versions")
     return managed ? (
       <Card>
@@ -543,6 +553,7 @@ const editors = {
   "Custom sections": CustomSectionsEditor,
   Education: EducationEditor,
   Experience: ExperienceEditor,
+  "Field visibility": FieldVisibilityEditor,
   "Import CV": CvImportEditor,
   "Language settings": LanguageSettingsEditor,
   Languages: LanguagesEditor,
