@@ -67,3 +67,5 @@ Use a disposable account and replace the hostname with the PR preview. These pro
 ## Verification results
 
 Local verification for this group passed: `pnpm check`, 472 unit tests (439 shared/app and 33 fitness), the production app build, and all 198 desktop/mobile browser tests. Database tests execute the migration in PGlite and exercise owner/current-manager authorization, direct-write denial, independent projection parity, stale/null revisions and withdrawal. Browser tests use disposable local transport fixtures, not production accounts or a deployed Supabase migration. Production rollout and real-account post-deployment verification remain outstanding.
+
+CI subsequently exposed an optional `Request` parameter that fresh Next.js route validation rejects. The endpoint now requires `Request`; a clean workspace `pnpm build` passed all 15 build tasks, and three new endpoint tests cover ordinary saved reads, workspace-scoped published knowledge and signed-out denial.

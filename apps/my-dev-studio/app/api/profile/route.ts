@@ -10,13 +10,13 @@ import { readPublicProfile } from "@shared/services/published-profile";
 
 import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
 
-export async function GET(request?: Request) {
+export async function GET(request: Request) {
   try {
     const { repository } = await requireWorkspace();
     const snapshot = await repository.read();
     if (!snapshot) throw new ProfileSetupError();
     const publishedSnapshot =
-      request && new URL(request.url).searchParams.get("knowledge") === "1" && snapshot.id
+      new URL(request.url).searchParams.get("knowledge") === "1" && snapshot.id
         ? await readPublicProfile(snapshot.id)
         : undefined;
     return Response.json(
