@@ -72,6 +72,7 @@ export const urls = {
       managedPortfolio: (id: string) => `/api/managed/${id}`,
       managedTransfer: (id: string) => `/api/managed/${id}/transfer`,
       profile: () => "/api/profile",
+      profileHistory: () => "/api/profile-history",
       sectionTemplates: () => "/api/section-templates",
     },
   },
