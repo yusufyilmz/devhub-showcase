@@ -7,7 +7,7 @@ export async function GET(
   _request: Request,
   { params }: { params: Promise<{ username: string }> },
 ) {
-  const { profile } = await getUsernameProfile((await params).username);
+  const { profile } = await getUsernameProfile((await params).username, "/icon.svg");
   return new Response(portfolioIcon(profile), {
     headers: {
       "Cache-Control": "private, no-store",

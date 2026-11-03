@@ -30,3 +30,5 @@ Supabase clients and schema: `@shared/auth/*`, `@shared/lib/supabase`, `@shared/
 | `@shared/services/fitness/meal`      | `src/fitness/meal/index.ts`      | Meal planning                            |
 
 Public profile reads use separate explicit website/CV snapshots. Canonical repository saves remain private; the legacy publication argument does not publish.
+
+`resolvePublishedUsername` in `@shared/services/published-profile` resolves a retained alias directly to a current published username; it returns no private profile document or account identity.

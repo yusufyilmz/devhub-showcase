@@ -416,8 +416,13 @@ const rows = [
 ];
 const templateLibraries = new Map();
 const publications = new Map();
+const usernameAliases = new Map();
 const publicCvs = new Map();
 function publishSnapshot(entry) {
+  const previous = publications.get(entry.id);
+  if (previous && previous.username !== entry.username)
+    usernameAliases.set(previous.username, entry.id);
+  usernameAliases.delete(entry.username);
   const common = {
     id: entry.id,
     revision: entry.revision,
@@ -461,6 +466,8 @@ createServer(async (request, response) => {
     );
     return;
   }
+  if (url.pathname === "/rest/v1/rpc/resolve_published_username")
+    return resolveUsernameRequest(request, response);
   if (url.pathname === "/rest/v1/rpc/set_portfolio_publication")
     return publicationRequest(request, response, owner);
   if (["/rest/v1/portfolio_publications", "/rest/v1/portfolio_public_cvs"].includes(url.pathname))
@@ -556,18 +563,8 @@ async function profileRequest(request, response, url, owner) {
   if (request.method === "POST" && owner?.manager)
     return createManagedRequest(request, response, owner);
 
-  if (request.method === "PATCH" && ownsRow(found, owner)) {
-    const chunks = [];
-    for await (const chunk of request) chunks.push(chunk);
-    const update = JSON.parse(Buffer.concat(chunks).toString());
-    if ("is_public" in update)
-      return response
-        .writeHead(403)
-        .end(JSON.stringify({ message: "Publication requires its dedicated action" }));
-    Object.assign(found, update);
-    response.end(JSON.stringify(found));
-    return;
-  }
+  if (request.method === "PATCH" && ownsRow(found, owner))
+    return saveProfileRequest(request, response, found);
 
   response.writeHead(405).end(JSON.stringify({ message: "Unsupported fixture request" }));
 }
@@ -680,6 +677,8 @@ async function publicationRequest(request, response, owner) {
     return response.writeHead(409).end(JSON.stringify({ code: "40001" }));
   if (input.publish) publishSnapshot(found);
   else {
+    const previous = publications.get(found.id);
+    if (previous) usernameAliases.set(previous.username, found.id);
     publications.delete(found.id);
     publicCvs.delete(found.id);
   }
@@ -695,4 +694,38 @@ function publicSnapshotRequest(response, url) {
       JSON.stringify(entries.map(({ username, updated_at }) => ({ updated_at, username }))),
     );
   else response.end(JSON.stringify(entries[0] ?? null));
+}
+
+function usernameTaken(username, id) {
+  return (
+    rows.some((entry) => entry.username === username && entry.id !== id) ||
+    [...publications.values()].some((entry) => entry.username === username && entry.id !== id) ||
+    (usernameAliases.has(username) && usernameAliases.get(username) !== id)
+  );
+}
+async function resolveUsernameRequest(request, response) {
+  const chunks = [];
+  for await (const chunk of request) chunks.push(chunk);
+  const { requested_username } = JSON.parse(Buffer.concat(chunks).toString());
+  const published =
+    [...publications.values()].find((entry) => entry.username === requested_username) ??
+    publications.get(usernameAliases.get(requested_username));
+  response.end(
+    JSON.stringify(published ? [{ id: published.id, username: published.username }] : []),
+  );
+}
+
+async function saveProfileRequest(request, response, found) {
+  const chunks = [];
+  for await (const chunk of request) chunks.push(chunk);
+  const update = JSON.parse(Buffer.concat(chunks).toString());
+  if ("is_public" in update)
+    return response
+      .writeHead(403)
+      .end(JSON.stringify({ message: "Publication requires its dedicated action" }));
+  if (update.username && usernameTaken(update.username, found.id))
+    return response.writeHead(409).end(JSON.stringify({ code: "23505" }));
+  Object.assign(found, update);
+  response.end(JSON.stringify(found));
+  return;
 }

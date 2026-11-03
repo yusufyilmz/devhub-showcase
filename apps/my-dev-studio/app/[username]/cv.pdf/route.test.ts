@@ -3,9 +3,11 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({
   publicRead: vi.fn(),
   render: vi.fn(),
+  resolve: vi.fn(),
 }));
 vi.mock("@shared/services/published-profile", () => ({
   readPublicProfileByUsername: mocks.publicRead,
+  resolvePublishedUsername: mocks.resolve,
 }));
 vi.mock("@/features/portfolio/cv-response", () => ({ cvResponse: mocks.render }));
 
@@ -20,6 +22,16 @@ describe("CvPdf", () => {
       params: Promise.resolve({ username: "alice" }),
     });
     expect(response.status).toBe(404);
+    expect(mocks.render).not.toHaveBeenCalled();
+  });
+  it("redirects an eligible previous username directly to the current CV route", async () => {
+    mocks.publicRead.mockResolvedValue(null);
+    mocks.resolve.mockResolvedValue({ id: "same-profile", username: "current-owner" });
+    const response = await GET(new Request("https://example.com/old-owner/cv.pdf"), {
+      params: Promise.resolve({ username: "old-owner" }),
+    });
+    expect(response.status).toBe(308);
+    expect(response.headers.get("location")).toBe("https://example.com/current-owner/cv.pdf");
     expect(mocks.render).not.toHaveBeenCalled();
   });
 });
