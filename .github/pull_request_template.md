@@ -14,11 +14,13 @@
 ## How to test each change
 
 <!-- Repeat this section for each task or independently testable change. -->
+<!-- Required: update docs/testing/manual/index.md and the dedicated feature guide using docs/testing/manual/template.md. Keep incomplete features and unexecuted steps explicit. -->
 <!-- Every step must include a clickable full URL and its route path. Replace PREVIEW-HOST with the actual deployment hostname; do not invent routes for tabs. -->
 <!-- Give exact routes, visible control names, fixture/account requirements and expected results. -->
 <!-- Replace the example rows. Do not mark an instruction as tested until you run it. -->
 
 **Task / change:**
+**Manual guide and index entry:** <!-- Link docs/testing/manual/<feature>.md and its index row; required for each feature. -->
 **Environment / preview URL:**
 **Clickable entry URL:**
 **Route path (for example `/test-owner/edit`):**
