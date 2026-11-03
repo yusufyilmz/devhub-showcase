@@ -66,6 +66,7 @@ export const urls = {
       assistant: () => "/api/assistant",
       cv: () => "/api/cv",
       cvImport: () => "/api/cv-import",
+      cvVariants: () => "/api/cv-variants",
       googleProfile: () => "/api/google-profile",
       managed: () => "/api/managed",
       managedPortfolio: (id: string) => `/api/managed/${id}`,

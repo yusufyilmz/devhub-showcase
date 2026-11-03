@@ -6,6 +6,7 @@ import type { TDocumentDefinitions } from "pdfmake/interfaces";
 import { formatPortfolioPeriod, getPortfolioCopy, type PortfolioProfile } from "@shared/config";
 
 import { atsContent } from "./ats-content";
+import { orderCvContent } from "./cv-order";
 
 // The server and Plop share an in-memory font filesystem; no host font paths.
 const virtualfs = (
@@ -149,6 +150,9 @@ export async function renderCv(
   profile: PortfolioProfile,
   template: string,
   render?: Parameters<typeof createCvDefinition>[2],
+  order?: string[],
 ): Promise<Buffer> {
-  return pdfmake.createPdf(createCvDefinition(profile, template, render)).getBuffer();
+  const definition = createCvDefinition(profile, template, render);
+  orderCvContent(definition, createCvData(profile), order);
+  return pdfmake.createPdf(definition).getBuffer();
 }

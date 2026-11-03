@@ -3,6 +3,12 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export interface Database {
   public: {
     Tables: {
+      portfolio_cv_variants: {
+        Row: { owner_id: string; variants: Json; revision: number; updated_at: string };
+        Insert: { owner_id: string; variants: Json; revision?: number; updated_at?: string };
+        Update: { variants?: Json; revision?: number; updated_at?: string };
+        Relationships: [];
+      };
       portfolio_section_templates: {
         Row: {
           owner_id: string;
