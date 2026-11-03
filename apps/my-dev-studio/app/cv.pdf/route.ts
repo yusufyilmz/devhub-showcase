@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const snapshot = await getPublishedProfile();
+    const snapshot = await getPublishedProfile("cv");
     const pdf = await renderCv(snapshot.profile, template);
     const name =
       snapshot.profile.name.replace(/[^a-zA-Z0-9]+/g, "_").replace(/^_|_$/g, "") || "Profile";

@@ -7,7 +7,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
-  const snapshot = await readPublicProfile((await context.params).id);
+  const snapshot = await readPublicProfile((await context.params).id, "cv");
   if (!snapshot)
     return new Response("CV not found.", {
       headers: { "Cache-Control": "no-store" },

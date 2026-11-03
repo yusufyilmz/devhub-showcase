@@ -2,6 +2,8 @@ import { type BrowserContext, expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
+import { confirmPublication } from "../../support/publication";
+
 async function signIn(context: BrowserContext, id: string, email: string) {
   const exp = Math.floor(Date.now() / 1000) + 3600;
   const token = [
@@ -89,14 +91,14 @@ test("an administrator creates, edits, publishes, hides and transfers an importe
   await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
     "Creative Import",
   );
-  await expect(page.getByLabel("Publish my profile and CV at a public link")).not.toBeChecked();
+  await expect(page.getByText("Your saved draft is private until you publish it.")).toBeVisible();
   const privatePdf = await page.request.get(`${editorUrl}/cv.pdf`);
   expect(privatePdf.status()).toBe(200);
   expect((await privatePdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
   await page.getByRole("textbox", { exact: true, name: "Full name" }).fill("Creative Managed");
   await page.getByLabel("Username", { exact: true }).fill(`managed-portfolio-${n}`);
-  await page.getByLabel("Publish my profile and CV at a public link").check();
   await page.getByRole("button", { name: "Save changes" }).click();
+  await confirmPublication(page);
   await expect(page.locator(".editor-success")).toContainText("Saved");
   await expect(page).toHaveURL(editorUrl);
   await page.reload();
@@ -115,9 +117,8 @@ test("an administrator creates, edits, publishes, hides and transfers an importe
   const publicPage = await visitor.newPage();
   await publicPage.goto(`http://localhost:3100/managed-portfolio-${n}`);
   await expect(publicPage.getByRole("heading", { level: 1 })).toContainText("Creative Managed");
-  await page.getByLabel("Publish my profile and CV at a public link").uncheck();
-  await page.getByRole("button", { name: "Save changes" }).click();
-  await expect(page.locator(".editor-success")).toContainText("Saved");
+  await page.getByRole("button", { exact: true, name: "Withdraw public website and CV" }).click();
+  await expect(page.getByText("Your saved draft is private until you publish it.")).toBeVisible();
   expect((await publicPage.reload())?.status()).toBe(404);
   await page.getByLabel("Owner account email").fill("missing@example.test");
   page.once("dialog", (dialog) => dialog.accept());

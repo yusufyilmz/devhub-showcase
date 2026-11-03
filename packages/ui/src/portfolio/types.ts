@@ -16,6 +16,10 @@ export type ProfileFieldsOptions = {
   onChange: (profile: PortfolioProfile) => void;
 };
 
+export type FieldVisibilityOptions = ProfileFieldsOptions & {
+  surfaces?: readonly ("website" | "cv")[];
+};
+
 export type ProfileFieldsOptions2 = string | string[];
 
 export type CompletionItem = {

@@ -4,7 +4,7 @@ import { type ContactField, contactFields, type PortfolioProfile } from "@shared
 import { Input } from "../forms/input";
 import { Label } from "../forms/label";
 import { fieldVisibilityStyles } from "./styles";
-import type { ProfileFieldsOptions } from "./types";
+import type { FieldVisibilityOptions } from "./types";
 
 function visible(profile: PortfolioProfile, surface: "website" | "cv", key: ContactField) {
   const fields = surface === "website" ? profile.websiteFields : profile.cvFields;
@@ -13,7 +13,11 @@ function visible(profile: PortfolioProfile, surface: "website" | "cv", key: Cont
   if (surface === "cv" && key === "phone") return profile.cvSettings?.showPhone !== false;
   return true;
 }
-export function FieldVisibilityEditor({ profile, onChange }: ProfileFieldsOptions) {
+export function FieldVisibilityEditor({
+  profile,
+  onChange,
+  surfaces = ["website", "cv"],
+}: FieldVisibilityOptions) {
   function update(surface: "website" | "cv", key: ContactField, checked: boolean) {
     const field = surface === "website" ? "websiteFields" : "cvFields";
     const next = { ...profile, [field]: { ...profile[field], [key]: checked } };
@@ -38,7 +42,7 @@ export function FieldVisibilityEditor({ profile, onChange }: ProfileFieldsOption
         review any contact details you wrote in descriptions, images or other authored text
         separately.
       </p>
-      {(["website", "cv"] as const).map((surface) => (
+      {surfaces.map((surface) => (
         <fieldset key={surface}>
           <legend>
             {surface === "website" ? "Website contact details" : "CV contact details"}

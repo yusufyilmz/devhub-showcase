@@ -1,0 +1,36 @@
+.publication-controls {
+  display: grid;
+  gap: var(--spacing-s);
+  width: 100%;
+  min-width: 0;
+}
+.publication-controls h3 {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+.publication-controls p {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: rgb(var(--muted-rgb));
+}
+.publication-controls > button,
+.publication-controls > a,
+.publication-controls > div > button {
+  justify-self: start;
+}
+.publication-controls > div {
+  display: grid;
+  gap: var(--spacing-s);
+  min-width: 0;
+}
+.publication-controls details {
+  min-width: 0;
+  padding-block: var(--spacing-xs);
+  font-size: var(--text-sm);
+}
+.publication-controls summary {
+  font-weight: 600;
+  cursor: pointer;
+}

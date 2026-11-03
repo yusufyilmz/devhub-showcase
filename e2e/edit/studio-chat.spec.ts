@@ -51,8 +51,13 @@ test("full-screen Studio chat reviews, applies and explicitly saves a proposal",
   await page.getByRole("button", { exact: true, name: "Accept all proposed changes" }).click();
   await page.getByRole("button", { exact: true, name: "Apply selected changes to draft" }).click();
   expect(saves).toBe(0);
-  await page.getByRole("button", { exact: true, name: "Save changes" }).click();
-  await expect(page.getByText("Changes saved.", { exact: true })).toBeVisible();
+  await page.getByRole("button", { exact: true, name: "Save draft" }).click();
+  await expect(
+    page.getByText(
+      "Saved privately. Publish from the editor to update your public website and CV.",
+      { exact: true },
+    ),
+  ).toBeVisible();
   expect(saves).toBe(1);
   const result = await (await page.request.get(profileApi)).json();
   expect(result.profile.title).toBe("Frontend engineer");

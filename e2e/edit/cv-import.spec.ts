@@ -3,6 +3,8 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
+import { confirmPublication } from "../support/publication";
+
 const cvImportApi = urls.next.studio.cvImport();
 
 test("owner reviews a CV, cancels safely, applies edits and explicitly saves before publishing", async ({
@@ -78,18 +80,16 @@ test("owner reviews a CV, cancels safely, applies edits and explicitly saves bef
   expect((await page.request.get(`/${device}-cv-importer`)).status()).toBe(404);
   await page.getByRole("button", { exact: true, name: "Save changes" }).click();
   await expect(
-    page.getByText("Saved. Your CV now uses these details.", { exact: true }),
-  ).toContainText("Saved.");
+    page.getByText("Saved privately. Review publication to update your public website and CV.", {
+      exact: true,
+    }),
+  ).toContainText("Saved privately.");
   await page.reload();
   await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
     "Alex Reviewed",
   );
-  await expect(page.getByLabel("Publish my profile and CV at a public link")).not.toBeChecked();
-  await page.getByLabel("Publish my profile and CV at a public link").check();
-  await page.getByRole("button", { exact: true, name: "Save changes" }).click();
-  await expect(
-    page.getByText("Saved. Your CV now uses these details.", { exact: true }),
-  ).toContainText("Saved.");
+  await expect(page.getByText("Your saved draft is private until you publish it.")).toBeVisible();
+  await confirmPublication(page);
   await context.clearCookies();
   expect(
     (

@@ -49,13 +49,12 @@ export class SupabaseProfileRepository implements ProfileRepository {
     if (error) throw new ProfileSetupError();
     return Boolean(data);
   }
-  async save(profile: PortfolioProfile, revision: number, isPublic?: boolean, username?: string) {
+  async save(profile: PortfolioProfile, revision: number, _isPublic?: boolean, username?: string) {
     const { data, error } = await this.client
       .from("portfolio_profiles")
       .update({
         document: profile as unknown as Json,
         ...(username === undefined ? {} : { username }),
-        ...(isPublic === undefined ? {} : { is_public: isPublic }),
         revision: revision + 1,
         updated_at: new Date().toISOString(),
       })

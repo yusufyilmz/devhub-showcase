@@ -7,6 +7,7 @@ export { LanguageSettingsEditor } from "./language-settings-editor";
 export { PortfolioTypePicker } from "./portfolio-type-picker";
 export { ProfileFields } from "./profile-fields";
 export { ProposalComparison } from "./proposal-comparison";
+export { PublicationControls } from "./publication/editor";
 export { DraftRecovery } from "./recovery/DraftRecovery";
 export { clearDraftRecovery, recoveryPrefix } from "./recovery/storage";
 export type { SetupStep } from "./recovery/types";

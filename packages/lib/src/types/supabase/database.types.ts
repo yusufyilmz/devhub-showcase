@@ -1,8 +1,24 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
+type PublicationRow = {
+  id: string;
+  username: string;
+  document: Json;
+  revision: number;
+  updated_at: string;
+};
+type PublicationTable = {
+  Row: PublicationRow;
+  Insert: PublicationRow;
+  Update: Partial<PublicationRow>;
+  Relationships: [];
+};
+
 export interface Database {
   public: {
     Tables: {
+      portfolio_publications: PublicationTable;
+      portfolio_public_cvs: PublicationTable;
       portfolio_profile_history: {
         Row: { profile_id: string; revision: number; document: Json; created_at: string };
         Insert: { profile_id: string; revision: number; document: Json; created_at?: string };
@@ -483,6 +499,10 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
+      set_portfolio_publication: {
+        Args: { profile_id: string; expected_revision: number; publish: boolean };
+        Returns: number;
+      };
       is_portfolio_admin: { Args: Record<string, never>; Returns: boolean };
       transfer_managed_portfolio: {
         Args: {

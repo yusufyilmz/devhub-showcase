@@ -7,28 +7,33 @@ import { useStudioRequest } from "@shared/runtime/studio";
 import { RevisionHistory } from "@shared/ui/portfolio";
 export function OwnerRevisionHistory({
   profile,
+  managedId,
   revision,
   onChange,
 }: {
+  managedId?: string;
   profile: PortfolioProfile;
   revision: number;
   onChange: (profile: PortfolioProfile) => void;
 }) {
   const request = useStudioRequest();
+  const endpoint = managedId
+    ? urls.next.studio.managedHistory(managedId)
+    : urls.next.studio.profileHistory();
   const load = useCallback(async () => {
-    const response = await request(urls.next.studio.profileHistory());
+    const response = await request(endpoint);
     const data = await response.json();
     if (!response.ok) throw new Error(data.error);
     return data;
-  }, [request]);
+  }, [request, endpoint]);
   const read = useCallback(
     async (value: number) => {
-      const response = await request(`${urls.next.studio.profileHistory()}?revision=${value}`);
+      const response = await request(`${endpoint}?revision=${value}`);
       const data = await response.json();
       if (!response.ok) throw new Error(data.error);
       return data;
     },
-    [request],
+    [request, endpoint],
   );
   return (
     <RevisionHistory

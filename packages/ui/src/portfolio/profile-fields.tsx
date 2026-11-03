@@ -53,7 +53,7 @@ export function ProfileFields({ profile, onChange }: ProfileFieldsOptions) {
             value={profile.phone}
           />
           <Field
-            hint="Stored as profile data if set and potentially public when published. Current page and CV layouts do not display it."
+            hint="Stored privately if set. Birthdate is excluded from public website and CV snapshots."
             label="Birthdate (optional)"
             onChange={(value) => {
               onChange({ ...profile, birthDate: value || undefined });
@@ -80,7 +80,7 @@ export function ProfileFields({ profile, onChange }: ProfileFieldsOptions) {
             value={profile.linkedin}
           />
           <Field
-            hint="/cv.pdf generates your CV from published information. An HTTPS URL overrides it."
+            hint="Private source CV link. Public CV downloads use the last explicitly published CV snapshot."
             label="CV link"
             onChange={(v) => update("cvUrl", v)}
             value={profile.cvUrl ?? "/cv.pdf"}

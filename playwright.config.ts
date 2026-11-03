@@ -17,7 +17,7 @@ export default defineConfig({
   },
   webServer: [
     {
-      command: "node e2e/fixture-server.mjs",
+      command: "pnpm exec tsx e2e/fixture-server.mjs",
       reuseExistingServer: false,
       url: "http://127.0.0.1:3101/health",
     },

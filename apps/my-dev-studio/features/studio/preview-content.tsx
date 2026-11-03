@@ -1,5 +1,5 @@
 "use client";
-import type { PortfolioProfile } from "@shared/config";
+import { type PortfolioProfile, projectPublicProfile } from "@shared/config";
 
 import { PortfolioLayout } from "../portfolio/sections/portfolio-layout";
 import { EngineerPortfolioView } from "../portfolio/variants/engineer-portfolio";
@@ -11,6 +11,7 @@ export function PreviewContent({
   profile: PortfolioProfile;
   username: string;
 }) {
+  profile = projectPublicProfile(profile, "website");
   if (!profile.portfolioType || profile.portfolioType === "engineer")
     return (
       <EngineerPortfolioView

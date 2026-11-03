@@ -34,7 +34,12 @@ describe("CV versions editor", () => {
     fireEvent.change(screen.getByRole("textbox", { name: /Version title/ }), {
       target: { value: "Independent draft" },
     });
+    fireEvent.click(screen.getByRole("checkbox", { name: "Include phone on cv" }));
+    expect(screen.queryByRole("checkbox", { name: "Include phone on website" })).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: "Save CV versions" }));
+    const library = save.mock.calls[0]?.[0];
+    expect(library.variants.at(-1).profile.cvFields.phone).toBe(false);
+    expect(library.variants[0].profile.cvFields).toBe(profile.cvFields);
     await screen.findByRole("alert");
     expect(screen.getByRole("textbox", { name: /Version title/ }).getAttribute("value")).toBe(
       "Independent draft",

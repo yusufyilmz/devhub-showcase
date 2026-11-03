@@ -35,7 +35,6 @@ export function StudioChat({ initial }: { initial: ProfileSnapshot }) {
     try {
       const response = await request(urls.next.studio.profile(), {
         body: JSON.stringify({
-          isPublic: saved.isPublic ?? false,
           profile: draft,
           revision: saved.revision,
           ...(saved.username ? { username: saved.username } : {}),
@@ -47,7 +46,7 @@ export function StudioChat({ initial }: { initial: ProfileSnapshot }) {
       if (!response.ok) throw new Error(result.error || "Could not save your draft.");
       setSaved(result);
       setDraft(result.profile);
-      setStatus("Changes saved.");
+      setStatus("Saved privately. Publish from the editor to update your public website and CV.");
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "Could not save.");
     } finally {
@@ -59,7 +58,7 @@ export function StudioChat({ initial }: { initial: ProfileSnapshot }) {
       chat={{
         actions: (
           <Button disabled={!dirty || saving} onClick={save} variant="outline">
-            {saving ? "Saving…" : saved.isPublic ? "Save to published portfolio" : "Save changes"}
+            {saving ? "Saving…" : "Save draft"}
           </Button>
         ),
         editorHref: saved.username ? editCvPath(saved.username) : "/admin",
