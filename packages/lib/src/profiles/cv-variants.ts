@@ -34,7 +34,7 @@ export const cvLibrarySchema = z
 export const cvLibraryWriteSchema = z
   .object({ revision: z.number().int().min(0), variants: cvLibrarySchema })
   .strict();
-export function normalizeCvProfile(profile: PortfolioProfile): PortfolioProfile {
+export function normalizeCvProfile<T extends PortfolioProfile>(profile: T): T {
   const copy = structuredClone(profile);
   delete copy.customSections;
   delete copy.sectionSettings;
