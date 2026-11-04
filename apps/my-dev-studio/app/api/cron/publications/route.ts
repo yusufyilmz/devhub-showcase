@@ -4,8 +4,10 @@ import { createClient } from "@supabase/supabase-js";
 
 import type { Database } from "@shared/lib/types";
 
+import { monitored } from "@/features/platform/operation-monitoring";
+
 const headers = { "Cache-Control": "private, no-store" };
-export async function GET(request: Request) {
+async function get(request: Request) {
   const secret = process.env.CRON_SECRET;
   const received = Buffer.from(request.headers.get("authorization") ?? "");
   const expected = Buffer.from(`Bearer ${secret}`);
@@ -34,3 +36,5 @@ export async function GET(request: Request) {
     );
   }
 }
+
+export const GET = monitored("publication.worker", get);

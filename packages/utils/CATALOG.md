@@ -2,13 +2,14 @@
 
 Logging and generic helpers for `@shared/utils`. Domain validation stays in `@shared/lib`.
 
-| Export                        | Path                   | Use                                 |
-| ----------------------------- | ---------------------- | ----------------------------------- |
-| `@shared/utils`               | `src/index.ts`         | URLs, dates, ids, and debug helpers |
-| `@shared/utils/logger`        | `src/logger`           | Server logger                       |
-| `@shared/utils/client-logger` | `src/logger/client.ts` | Browser logger                      |
-| `@shared/utils/cli-logger`    | `src/logger/cli.ts`    | CLI logger                          |
-| `@shared/utils/i18n`          | `src/i18n`             | Shared i18n helpers                 |
+| Export                        | Path                   | Use                                                  |
+| ----------------------------- | ---------------------- | ---------------------------------------------------- |
+| `@shared/utils`               | `src/index.ts`         | URLs, dates, ids, and debug helpers                  |
+| `@shared/utils/monitoring`    | `src/monitoring.ts`    | Opaque operation IDs and allowlisted terminal events |
+| `@shared/utils/logger`        | `src/logger`           | Server logger                                        |
+| `@shared/utils/client-logger` | `src/logger/client.ts` | Browser logger                                       |
+| `@shared/utils/cli-logger`    | `src/logger/cli.ts`    | CLI logger                                           |
+| `@shared/utils/i18n`          | `src/i18n`             | Shared i18n helpers                                  |
 
 | Symbol                                     | Use               |
 | ------------------------------------------ | ----------------- |

@@ -48,12 +48,9 @@ export class ClassifierService {
     try {
       const filteredUserInput = this.extractNounsAndAdjectives(userInput.toLowerCase());
 
-      this.logger.debug({ filteredUserInput }, "Important words extracted from user input");
-
       for (const questionCategory of Object.values(this.categories)) {
         const totalWeight = questionCategory.keywords.reduce((acc, categoryKeyword) => {
           if (filteredUserInput.includes(categoryKeyword.word)) {
-            this.logger.debug({ categoryKeyword }, "Matching keyword for category");
             return acc + categoryKeyword.weight;
           }
           return acc;

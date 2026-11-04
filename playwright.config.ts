@@ -25,6 +25,8 @@ export default defineConfig({
       command: "pnpm --filter my-dev-studio start --hostname 127.0.0.1 --port 3100",
       env: {
         CRON_SECRET: "fixture-only-scheduler-secret-32-characters",
+        MONITORING_WEBHOOK_SECRET: "",
+        MONITORING_WEBHOOK_URL: "",
         NEXT_PUBLIC_SITE_URL: "http://localhost:3100",
         NEXT_PUBLIC_SUPABASE_ANON_KEY: "e2e-public-placeholder",
         NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: "e2e-public-placeholder",
@@ -32,6 +34,7 @@ export default defineConfig({
         OPENAI_API_KEY: "",
         REDIS_TOKEN: "",
         REDIS_URL: "",
+        STRIPE_SECRET_KEY: "",
         SUPABASE_SERVICE_ROLE_KEY: "fixture-scheduler-service",
       },
       reuseExistingServer: false,
@@ -41,6 +44,8 @@ export default defineConfig({
     {
       command: "pnpm --filter my-dev-studio start --hostname 127.0.0.1 --port 3102",
       env: {
+        MONITORING_WEBHOOK_SECRET: "",
+        MONITORING_WEBHOOK_URL: "",
         NEXT_PUBLIC_SITE_URL: "http://localhost:3102",
         NEXT_PUBLIC_SUPABASE_ANON_KEY: "",
         NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: "",
@@ -48,6 +53,7 @@ export default defineConfig({
         OPENAI_API_KEY: "",
         REDIS_TOKEN: "",
         REDIS_URL: "",
+        STRIPE_SECRET_KEY: "",
       },
       reuseExistingServer: false,
       timeout: 120_000,

@@ -1,20 +1,31 @@
 # Observability
 
-## Decision and implementation status
+## Implemented request correlation
 
-Use the existing **Pino** logging as the free baseline. Adopt **Sentry Developer** as the recommended hosted error-monitoring option when configuring monitoring for this project. This guide defines the framework and rollout; it does not install a Sentry SDK or provision an account.
+The server logger is `@shared/utils/logger` (`packages/utils/src/logger/index.ts`), using existing Pino configuration. Operation instrumentation uses `@shared/utils/monitoring`; app configuration and response boundaries are in `apps/my-dev-studio/features/platform/operation-monitoring.ts`. No additional logging library or hosted vendor account is installed.
 
-| Capability           | Current status                                                 |
-| -------------------- | -------------------------------------------------------------- |
-| Server logs          | Pino is installed in `packages/log` and `packages/lib/src/log` |
-| Log level            | Both entry points honor `LOG_LEVEL`                            |
-| Application identity | Both use `APPLICATION_NAME`                                    |
+Publication mutations (owner/manager), schedule changes, the HTTP worker, checkout, portal, signed billing webhooks, owner AI editing and visitor chat generate fresh server UUIDs. Incoming correlation headers and AI usage request IDs are not trusted as diagnostic IDs. Completed HTTP responses include `X-Request-ID`; JSON server errors append the reference to the existing safe error text. Streaming errors carry the reference in the terminal event. Paid-chat actions return a safe error envelope so production server-action error masking does not hide the reference; the client displays only its validated UUID, never upstream exception text.
 
-pnpm exec playwright install chromium
-| Distributed traces, dashboards and alerts | Proposed below; not active merely by merging this guide |
-| Automatic telemetry redaction | Not configured in the existing logger factories; callers must allowlist safe fields |
+Events contain only `event`, `requestId`, fixed `operation`, `outcome`, HTTP-like `status` and monotonic `durationMs`. Request objects, URLs, IDs of accounts/profiles, cookies, headers, bodies, prompts, CVs, model output and exceptions are never accepted as event context. Existing classifier input/keyword debug logs and referral raw-error logging were removed. This is not a blanket guarantee about every unrelated legacy logging call.
 
-The two existing logger factories are not identical: `packages/log` includes environment and ISO timestamps, string levels and pretty development output; the lib logger retains Pino defaults. Do not assume one schema across both. Use the entry point already used by the affected package and normalize fields in a separately tested implementation when needed.
+## Optional failure destination
+
+Without collector variables, events go to structured server logs. Configure these **server-only** deployment values to forward failures:
+
+- `MONITORING_WEBHOOK_URL`: operator-controlled HTTPS JSON receiver; credentials in the URL and redirects are rejected.
+- `MONITORING_WEBHOOK_SECRET`: random value of at least 32 characters, also configured on the receiver. Never use a public-prefixed variable.
+
+Only terminal failures are forwarded; successes, rejected requests and client cancellations stay in logs. Each POST sends `X-Monitoring-Signature`, the hexadecimal HMAC-SHA256 of its exact raw JSON body. Verify with constant-time comparison before accepting. Treat request IDs as correlation values, not identity or authorization. Deduplicate deliveries by request ID; notification credentials belong in the receiver. Separate preview/production destinations and restrict access/retention. The endpoint is trusted operator configuration and must not be supplied by app users.
+
+Delivery has a two-second deadline, refuses redirects, discards the response body and makes no automatic retries. Failure logs only `monitoring.delivery_failed` and the request ID, never the endpoint, secret or exception. Monitoring cannot repeat or change a payment/publication operation. This is best effort, not a durable queue or an exactly-once notification guarantee.
+
+**Configuration and hosted receipt remain unverified.** No collector, alert destination, Sentry SDK or notification rule is activated by this PR. The local tests inspect controlled outgoing events; they do not prove a deployed alert was received. Follow the [manual guide](testing/manual/operation-monitoring.md) and record receiver/notification evidence before calling task 03 production verified. Native Supabase cron bypasses this HTTP instrumentation; inspect its own run history.
+
+## Ownership and alert rules
+
+The repository/deployment maintainer owns initial triage and must nominate a backup when configuring the receiver. Route each failure to that operational channel using operation/release environment from the separate destination. Notify for the first billing/publication failure in a five-minute window, then group repeats by operation; for AI use five failures in ten minutes. Tune against measured traffic and watch collector delivery failures in server logs. These are configuration instructions, not installed rules.
+
+For each alert: copy its request ID, locate the matching `operation.completed` event in restricted deployment logs, inspect status/duration and deployment time, then follow the incident workflow below. Never request prompts or private profile documents. For billing, replay only the signed sandbox event through the existing receipt/lease path; for publication, refresh revision/state before an explicit retry. Never auto-publish or grant Pro from an alert. Confirm recovery using a fictional account, then acknowledge the grouped alert and record the cause.
 
 ## Free service comparison
 

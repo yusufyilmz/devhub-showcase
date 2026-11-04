@@ -38,8 +38,8 @@ export class ReferralService {
         timestamp: Date.now(),
         type: "referral",
       };
-    } catch (error) {
-      this.logger.info({ error }, "Error processing user message.");
+    } catch {
+      this.logger.error("Referral message processing failed");
       return {
         ...failureMessage,
         category: "error",

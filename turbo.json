@@ -1,6 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalEnv": ["CRON_SECRET"],
+  "globalPassThroughEnv": ["MONITORING_WEBHOOK_URL", "MONITORING_WEBHOOK_SECRET"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

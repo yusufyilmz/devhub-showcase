@@ -18,6 +18,7 @@ import {
 import { ProfileAccessError, ProfileConflictError } from "@shared/services/profile";
 
 import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
+import { monitored } from "@/features/platform/operation-monitoring";
 
 export const maxDuration = 60;
 const headers = { "Cache-Control": "private, no-store" };
@@ -49,7 +50,7 @@ export async function GET() {
     return failure(error);
   }
 }
-export async function POST(request: Request) {
+async function post(request: Request) {
   if (!sameOrigin(request))
     return Response.json({ error: "Invalid origin." }, { headers, status: 403 });
   const signal = AbortSignal.any([request.signal, AbortSignal.timeout(45000)]);
@@ -140,3 +141,5 @@ async function readBody(request: Request) {
   }
   return Buffer.concat(chunks).toString("utf8");
 }
+
+export const POST = monitored("ai.edit", post);

@@ -16,9 +16,11 @@ export function PremiumWidget(
     <PremiumWidgetView
       username={username}
       {...rest}
-      handleSendMessage={(message, sessionId) =>
-        handlePremiumChatAction(username, message, sessionId, crypto.randomUUID())
-      }
+      handleSendMessage={async (targetUsername, message, sessionId, requestId) => {
+        const result = await handlePremiumChatAction(targetUsername, message, sessionId, requestId);
+        if ("error" in result) throw new Error(result.error);
+        return result.answer;
+      }}
     />
   );
 }

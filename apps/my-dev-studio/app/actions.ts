@@ -24,18 +24,27 @@ import {
   requireLegacyChat,
 } from "@/features/chat/portfolio-chat";
 import { answerPremiumChat } from "@/features/chat/premium-chat";
+import { operationSpan } from "@/features/platform/operation-monitoring";
 
 export async function handlePremiumChatAction(
   username: string,
   message: string,
   sessionId: string,
   requestId: string,
-): Promise<string> {
-  const result = await answerPremiumChat(
-    { message, requestId, sessionId, username },
-    AbortSignal.timeout(45000),
-  );
-  return result.answer;
+): Promise<{ answer: string } | { error: string }> {
+  const span = operationSpan("ai.premium_chat");
+  try {
+    const result = await answerPremiumChat(
+      { message, requestId, sessionId, username },
+      AbortSignal.timeout(45000),
+    );
+    await span.finish(200);
+    return { answer: result.answer };
+  } catch {
+    await span.finish(503);
+    // Return a safe error envelope because production hides server action exception messages.
+    return { error: `Chat unavailable. Please try again. Reference: ${span.requestId}` };
+  }
 }
 
 export async function handleSendMessageAction(
@@ -44,6 +53,7 @@ export async function handleSendMessageAction(
   sessionId: string,
 ): Promise<ChatMessage> {
   if (!message?.content) return failureMessage;
+  const span = operationSpan("ai.chat");
 
   try {
     const input = portfolioChatInput.parse(message);
@@ -55,6 +65,7 @@ export async function handleSendMessageAction(
         AbortSignal.timeout(45000),
       );
       await assertCurrentPublication(username, snapshot.id, snapshot.revision);
+      await span.finish(200);
       return {
         category: "unknown",
         content,
@@ -82,12 +93,16 @@ export async function handleSendMessageAction(
 
     const botReply = await messageProcessor.processUserMessage(normalizedMessage);
 
-    return botReply;
+    const failed = botReply.category === "error";
+    await span.finish(failed ? 503 : 200);
+    return failed
+      ? { ...botReply, content: `${botReply.content} Reference: ${span.requestId}` }
+      : botReply;
   } catch {
-    logger.error("Portfolio chat request failed");
+    await span.finish(503);
     return {
       category: "error",
-      content: failureMessage.content,
+      content: `${failureMessage.content} Reference: ${span.requestId}`,
       role: ChatRole.System,
       timestamp: Date.now(),
       type: message.type === "referral" ? "referral" : "cv",
