@@ -33,3 +33,7 @@ The remaining sections were prepared from the dedicated guides below. Once the u
 ## Reliability group follow-up
 
 Task [01 — Billing reliability](https://app.notion.com/40bbddaed4fe81bb9c77ee4e54b1a82b) and task 02 are In Review with [PR #88](https://github.com/yusufyilmz/devhub-showcase/pull/88). This branch implements its remaining guidance/event gaps and adds actual PostgreSQL contention coverage shared with [02 — AI usage reliability](https://app.notion.com/40bbddaed4fe81fc8702c165a6be08be). Their task-body testing sections must link the [billing reliability guide](manual/billing-reliability.md) once the Notion workspace block limit is resolved. No content-creation retry was attempted for this group. Existing PR #59/#60 AI cancellation/UI work is retained.
+
+## Monitoring group follow-up
+
+[03 — Production monitoring](https://app.notion.com/40bbddaed4fe81daad66f72a6974569d) now has request correlation, safe operation events and an optional collector implementation on `feat/operation-monitoring`, stacked on PR #88. Add its [manual testing section](manual/operation-monitoring.md) to the task once the workspace block limit is resolved. Hosted receiver/alert receipt remains Not run. Existing task content was preserved; no new content-write retry was attempted.

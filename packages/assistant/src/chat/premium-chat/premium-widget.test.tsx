@@ -41,4 +41,23 @@ describe("PremiumWidget", () => {
     await screen.findByLabelText("Your question");
     expect(screen.queryByText("Other person's question")).toBeNull();
   });
+  it("shows only an opaque support reference and never the raw upstream error", async () => {
+    const reference = "11111111-1111-4111-8111-111111111111";
+    const send = vi
+      .fn()
+      .mockRejectedValue(new Error(`private prompt secret Reference: ${reference}`));
+    render(<PortfolioChat identity="alpha" name="Alex" revision={2} send={send} />);
+    fireEvent.click(screen.getByRole("button", { name: "Ask about Alex" }));
+    fireEvent.change(await screen.findByLabelText("Your question"), {
+      target: { value: "Skills?" },
+    });
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: "Send question" }).hasAttribute("disabled")).toBe(
+        false,
+      ),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Send question" }));
+    expect(await screen.findByText(new RegExp(reference))).toBeTruthy();
+    expect(screen.queryByText(/private prompt secret/)).toBeNull();
+  });
 });

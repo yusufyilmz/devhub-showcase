@@ -1,8 +1,10 @@
 import { billingGateway, synchronize } from "@shared/billing/server";
 
+import { monitored } from "@/features/platform/operation-monitoring";
+
 export const runtime = "nodejs";
 
-export async function POST(request: Request) {
+async function post(request: Request) {
   let gateway: ReturnType<typeof billingGateway>;
   try {
     gateway = billingGateway();
@@ -46,3 +48,5 @@ export async function POST(request: Request) {
     return new Response("Retry billing synchronization", { status: 503 });
   }
 }
+
+export const POST = monitored("billing.webhook", post);

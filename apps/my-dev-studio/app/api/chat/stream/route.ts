@@ -4,6 +4,7 @@ import { PortfolioChatModel } from "@shared/assistant";
 
 import { sameOrigin } from "@/features/admin/admin-auth";
 import { requireLegacyChat } from "@/features/chat/portfolio-chat";
+import { operationSpan } from "@/features/platform/operation-monitoring";
 
 export const maxDuration = 60;
 const inputSchema = z.object({
@@ -13,9 +14,12 @@ const inputSchema = z.object({
 });
 
 export async function POST(request: Request) {
-  const headers = { "Cache-Control": "private, no-store" };
-  if (!sameOrigin(request))
+  const span = operationSpan("ai.chat");
+  const headers = { "Cache-Control": "private, no-store", "X-Request-ID": span.requestId };
+  if (!sameOrigin(request)) {
+    await span.finish(403);
     return Response.json({ error: "Invalid origin." }, { headers, status: 403 });
+  }
   const controller = new AbortController();
   const signal = AbortSignal.any([request.signal, controller.signal, AbortSignal.timeout(45000)]);
   try {
@@ -40,6 +44,7 @@ export async function POST(request: Request) {
     const stream = new ReadableStream({
       cancel() {
         controller.abort();
+        return span.finish(499, true);
       },
       start(output) {
         const send = (event: unknown) => {
@@ -47,8 +52,18 @@ export async function POST(request: Request) {
         };
         new PortfolioChatModel()
           .answer(knowledge, input.message, signal, (text) => send({ text, type: "delta" }))
-          .then((answer) => send({ answer, type: "done" }))
-          .catch(() => send({ error: "Chat unavailable. Please try again.", type: "error" }))
+          .then(async (answer) => {
+            send({ answer, type: "done" });
+            await span.finish(200, signal.aborted);
+          })
+          .catch(async () => {
+            send({
+              error: `Chat unavailable. Please try again. Reference: ${span.requestId}`,
+              requestId: span.requestId,
+              type: "error",
+            });
+            await span.finish(503, request.signal.aborted || controller.signal.aborted);
+          })
           .finally(() => {
             if (!controller.signal.aborted) output.close();
           });
@@ -58,6 +73,7 @@ export async function POST(request: Request) {
       headers: { ...headers, "Content-Type": "application/x-ndjson", "X-Accel-Buffering": "no" },
     });
   } catch {
+    await span.finish(400, request.signal.aborted);
     return Response.json(
       { error: "Chat unavailable or request invalid." },
       { headers, status: 400 },

@@ -1,3 +1,4 @@
+import { monitored } from "@/features/platform/operation-monitoring";
 import {
   changePublication,
   publicationStatus,
@@ -5,6 +6,8 @@ import {
 export async function GET() {
   return publicationStatus();
 }
-export async function POST(request: Request) {
+async function post(request: Request) {
   return changePublication(request);
 }
+
+export const POST = monitored("publication.change", post);

@@ -77,4 +77,14 @@ describe("public chat streaming", () => {
     await response.body!.cancel();
     expect(generationSignal?.aborted).toBe(true);
   });
+  it("correlates a provider failure after headers without exposing the question or upstream error", async () => {
+    answer.mockRejectedValue(new Error("private prompt and provider token"));
+    const response = await POST(request(valid));
+    const event = JSON.parse((await response.text()).trim());
+    expect(event.type).toBe("error");
+    expect(event.requestId).toBe(response.headers.get("X-Request-ID"));
+    expect(event.error).toContain(event.requestId);
+    expect(JSON.stringify(event)).not.toContain("private prompt");
+    expect(JSON.stringify(event)).not.toContain(valid.message);
+  });
 });
