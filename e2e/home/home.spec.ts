@@ -116,6 +116,10 @@ test("portfolio preview stays straight and matches the active theme and accent",
   page,
 }, info) => {
   await page.goto("/");
+  await page.getByRole("button", { name: "Appearance controls" }).hover();
+  await page.getByRole("button", { exact: true, name: "Theme settings" }).click();
+  await page.getByRole("button", { exact: true, name: "Accent: emerald" }).click();
+  await page.keyboard.press("Escape");
   const preview = page.locator(".home-preview-browser");
   const rgb = (value: string) => `rgb(${value.replaceAll(" ", ", ")})`;
   await expect(page.locator(".home-preview-wrap")).toHaveCSS("transform", "none");
@@ -131,13 +135,23 @@ test("portfolio preview stays straight and matches the active theme and accent",
       "background-color",
       rgb(palette.soft),
     );
+    const cvTab = page.getByRole("tab", { exact: true, name: "CV" });
+    await expect(cvTab).toHaveCSS("color", rgb(palette.text));
+    await expect(cvTab).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+    const previewCv = page.getByRole("button", { name: "Preview your CV" });
     for (const accent of portfolioAccentIds) {
       await page.getByRole("button", { name: `Preview in ${accent}` }).click();
       await expect(page.locator(".home-sample-intro h2 span")).toHaveCSS(
         "color",
         rgb(portfolioAccents[accent][mode]),
       );
+      await expect(previewCv).toHaveCSS("background-color", rgb(portfolioAccents[accent][mode]));
+      await expect(previewCv).toHaveCSS("color", rgb(palette.surface));
     }
+    await cvTab.click();
+    await expect(cvTab).toHaveCSS("background-color", rgb(palette.soft));
+    await expect(cvTab).toHaveCSS("color", rgb(palette.text));
+    await cvTab.press("Home");
     await page
       .locator(".home-preview-wrap")
       .screenshot({ path: info.outputPath(`homepage-preview-${mode}.png`) });

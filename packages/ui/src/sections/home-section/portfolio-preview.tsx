@@ -63,6 +63,7 @@ export function PortfolioPreview() {
               role="tab"
               tabIndex={view === item ? 0 : -1}
               type="button"
+              variant="unstyled"
             >
               {item}
             </Button>
@@ -128,6 +129,7 @@ export function PortfolioPreview() {
                     tabs.current[1]?.focus();
                   }}
                   type="button"
+                  variant="unstyled"
                 >
                   Preview your CV <span aria-hidden="true">↗</span>
                 </Button>
