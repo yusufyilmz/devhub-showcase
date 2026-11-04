@@ -9,7 +9,7 @@ import { profile } from "@shared/config";
 const owner = "11111111-1111-4111-8111-111111111111";
 const other = "22222222-2222-4222-8222-222222222222";
 const digest = `scrypt-v1$${"a".repeat(32)}$${"b".repeat(64)}`;
-async function database() {
+async function database(installPassword = true) {
   const db = new PGlite();
   await db.exec(`create schema auth;create schema private;create role anon;create role authenticated;create role service_role;
  grant usage on schema public,auth,private to anon,authenticated,service_role;
@@ -24,8 +24,10 @@ async function database() {
     "20261103150000_unlisted_publications",
     "20261104090000_scheduled_publication",
     "20261104094250_password_protected_publications",
-  ])
+  ]) {
+    if (!installPassword && name.endsWith("password_protected_publications")) continue;
     await db.exec(readFileSync(`supabase/migrations/${name}.sql`, "utf8"));
+  }
   await db.query(
     "insert into public.portfolio_profiles(id,username,document,revision,is_public,owner_id) values('test','test-owner',$1,1,false,$2)",
     [{ ...profile, publicationVisibility: "password" }, owner],
@@ -151,6 +153,27 @@ describe("password-protected publication database boundary", () => {
       await expect(
         db.query("select public.reserve_portfolio_access_attempt($1)", ["a".repeat(64)]),
       ).rejects.toThrow();
+    } finally {
+      await db.close();
+    }
+  });
+  it("runs the one-time manual setup with ledger recording and rejects reruns", async () => {
+    const db = await database(false);
+    try {
+      await db.exec(
+        "reset role; create schema supabase_migrations; create table supabase_migrations.schema_migrations(version text primary key,name text,statements text[]);",
+      );
+      const setup = readFileSync("supabase/rollout/password-setup.sql", "utf8");
+      await db.exec(setup);
+      expect(
+        (
+          await db.query(
+            "select version from supabase_migrations.schema_migrations where name='password_protected_publications'",
+          )
+        ).rows,
+      ).toEqual([{ version: "20261104094250" }]);
+      await expect(db.exec(setup)).rejects.toThrow("Password setup already exists");
+      await db.exec("rollback");
     } finally {
       await db.close();
     }

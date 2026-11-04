@@ -12,6 +12,10 @@
 | 2    | [Supabase SQL Editor](https://supabase.com/dashboard/project/_/sql/new) | `/dashboard/project/_/sql/new` | In that disposable database, read both snapshot tables as anonymous, unrelated authenticated and owner roles. Attempt direct reads of the password table and record RPC.   | Anonymous/unrelated roles see no protected documents or password record; owner review remains available.                                                       | Not run                  |
 | 3    | [Supabase SQL Editor](https://supabase.com/dashboard/project/_/sql/new) | `/dashboard/project/_/sql/new` | Test server-role reads with the current access version, republish/withdraw or transfer, then retry the old version. Test the persistent attempt limiter.                   | Old grants cannot read new/revoked snapshots. Withdrawal/transfer removes password records. Ordinary app roles cannot invoke privileged reads or limiter RPCs. | Not run                  |
 
+## One-time production migration fallback
+
+The user approved the password migration, but the connector confirmation expired without executing. Open the [verified project SQL Editor](https://supabase.com/dashboard/project/quepwjalwkfzxyqhtyby/sql/new), path `/dashboard/project/quepwjalwkfzxyqhtyby/sql/new`, and run the complete [password setup script](../../../supabase/rollout/password-setup.sql) once. It requires the existing publication prerequisites, records the migration version and reports access grants. It does not publish or change profile documents. Expected results: password storage ready `true`, anonymous password-record access `false`, ordinary-user privileged snapshot access `false`, server snapshot access `true`. Do not rerun the earlier publication setup bundle.
+
 ## Remaining verification before review
 
 - Rotation, expiry, transfer, withdrawal, unknown/private names, anonymous Data API and direct URL browser tests.

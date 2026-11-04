@@ -38,12 +38,12 @@ Use the native database worker via `20261104093457_enable_publication_cron.sql`.
 
 After applying it, verify the active job and a successful run in [Supabase Cron](https://supabase.com/dashboard/project/quepwjalwkfzxyqhtyby/integrations/cron/overview), path `/dashboard/project/quepwjalwkfzxyqhtyby/integrations/cron/overview`. Do not enable a second HTTP scheduler at the same time. Disabling only this worker uses `cron.unschedule('mydevstudio-publication-worker')`; do not drop the extension, which could remove other jobs.
 
-The user will add server-only `SUPABASE_SERVICE_ROLE_KEY` and a random `CRON_SECRET` of at least 32 characters in Vercel. These are required by the app's schedule-creation check and authenticated HTTP worker alternative. Native cron does not need the keys in its command. New environment variables require a fresh deployment to take effect.
+Read-only Vercel metadata now confirms `SUPABASE_SERVICE_ROLE_KEY` exists for Production, Preview and Development. `CRON_SECRET` is absent; the user still needs to add a random server-only value of at least 32 characters for Production and Preview. These are required by the app's schedule-creation check and authenticated HTTP worker alternative. Native cron does not need the keys in its command. New environment variables require a fresh deployment to take effect.
 
 ## Remaining verification
 
 - Publication/alias/unlisted/scheduling/cron setup is verified as above.
-- Apply the separate password migration only after the completed code and access checks are ready for rollout.
+- The user approved the separate password migration after code checks passed, but its connector confirmation expired without execution. Run the one-time [password setup script](../../supabase/rollout/password-setup.sql) in the same verified project SQL Editor; it records the source version and reports grants. Do not rerun the publication setup.
 - Do not create or publish a real user's scheduled revision solely as a test.
 - After credentials and a reviewed deployment, follow the [scheduled publication manual guide](manual/scheduled-publication.md) using disposable content.
 
