@@ -176,6 +176,7 @@ await test("isolated PostgreSQL billing concurrency and receipts", async () => {
     );
     assert.equal(duplicates.filter((value) => value === "t").length, 1);
     assert.equal(await sql("select count(*) from public.billing_usage"), "1");
+    assert.equal(await reserve("portfolio_chat", id), "f");
     assert.equal(await reserve("studio_assistant", randomUUID(), "another-portfolio"), "f");
     await sql("update public.billing_assignments set chat_enabled=false");
     assert.equal(await reserve("portfolio_chat"), "f");
