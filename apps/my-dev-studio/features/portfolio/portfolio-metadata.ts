@@ -33,8 +33,8 @@ export function portfolioMetadata(profile: PortfolioProfile, username: string): 
       url: canonical,
     },
     robots: {
-      follow: profile.publicationVisibility !== "unlisted",
-      index: profile.publicationVisibility !== "unlisted",
+      follow: !profile.publicationVisibility || profile.publicationVisibility === "public",
+      index: !profile.publicationVisibility || profile.publicationVisibility === "public",
     },
     title,
     twitter: {

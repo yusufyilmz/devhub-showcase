@@ -14,7 +14,8 @@ export async function cvResponse(snapshot: ProfileSnapshot) {
       "Content-Type": "application/pdf",
       "X-Content-Type-Options": "nosniff",
       "X-Profile-Revision": String(snapshot.revision),
-      ...(snapshot.profile.publicationVisibility === "unlisted"
+      ...(snapshot.profile.publicationVisibility === "unlisted" ||
+      snapshot.profile.publicationVisibility === "password"
         ? { "X-Robots-Tag": "noindex, nofollow" }
         : {}),
     },

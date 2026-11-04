@@ -1,5 +1,7 @@
 # UI catalog
 
+PasswordGate (`@shared/ui/portfolio`) is the generic protected-portfolio password form. It accepts an unlock callback; authorization, cookies and navigation stay in the app. Types and token styles live beside it.
+
 RevisionHistory provides explicit inspect/review/restore callbacks with stale-draft protection. FieldVisibilityEditor edits independent website/CV contact choices; types/tests/stories are colocated.
 
 CvVersionsEditor accepts load/save/download callbacks and edits independent private CV snapshots. Version fields and job evidence review live in portfolio/cv-versions; save failures retain local edits while the screen remains open.

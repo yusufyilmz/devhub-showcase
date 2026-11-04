@@ -3,8 +3,11 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ProfileAccessError } from "@shared/services/profile";
 
 const mocks = vi.hoisted(() => ({
+  hash: vi.fn(),
   managed: vi.fn(),
   origin: vi.fn(),
+  read: vi.fn(),
+  reserve: vi.fn(),
   rpc: vi.fn(),
   workspace: vi.fn(),
 }));
@@ -13,6 +16,14 @@ vi.mock("@/features/admin/admin-auth", () => ({
   sameOrigin: mocks.origin,
 }));
 vi.mock("@/features/management/managed-portfolios", () => ({ managedRepository: mocks.managed }));
+
+vi.mock("../access/password", () => ({
+  accessAttemptBucket: () => "bucket",
+  hashPortfolioPassword: mocks.hash,
+}));
+vi.mock("../access/server-access", () => ({
+  portfolioAccessServer: () => ({ client: { rpc: mocks.reserve }, secret: "test" }),
+}));
 
 import { changePublication } from "./publication-api";
 
@@ -26,9 +37,16 @@ describe("explicit publication authorization", () => {
     vi.resetAllMocks();
     mocks.origin.mockReturnValue(true);
     mocks.rpc.mockResolvedValue({ data: 5, error: null });
+    mocks.reserve.mockResolvedValue({ data: true, error: null });
+    mocks.hash.mockResolvedValue("salted-digest");
+    mocks.read.mockResolvedValue({
+      id: "authorized-id",
+      profile: { publicationVisibility: "password" },
+      revision: 5,
+    });
     const context = {
       client: { rpc: mocks.rpc },
-      repository: { read: async () => ({ id: "authorized-id", revision: 5 }) },
+      repository: { read: mocks.read },
     };
     mocks.workspace.mockResolvedValue(context);
     mocks.managed.mockResolvedValue(context);
@@ -67,5 +85,23 @@ describe("explicit publication authorization", () => {
     mocks.workspace.mockRejectedValue(new ProfileAccessError());
     expect((await changePublication(request({ publish: true, revision: 5 }))).status).toBe(403);
     expect(mocks.rpc).not.toHaveBeenCalled();
+  });
+  it("hashes only after permission, mode, revision and attempt checks", async () => {
+    const input = { password: "fictional-password", publish: true, revision: 5 };
+    expect((await changePublication(request({ ...input, revision: 4 }))).status).toBe(409);
+    expect(mocks.hash).not.toHaveBeenCalled();
+    expect((await changePublication(request(input))).status).toBe(200);
+    expect(mocks.rpc).toHaveBeenCalledWith("publish_portfolio_with_password", {
+      expected_revision: 5,
+      password_digest: "salted-digest",
+      profile_id: "authorized-id",
+    });
+    mocks.hash.mockClear();
+    mocks.reserve.mockResolvedValue({ data: false, error: null });
+    expect((await changePublication(request(input))).status).toBe(429);
+    expect(mocks.hash).not.toHaveBeenCalled();
+    mocks.read.mockResolvedValue({ id: "authorized-id", profile: {}, revision: 5 });
+    expect((await changePublication(request(input))).status).toBe(400);
+    expect(mocks.hash).not.toHaveBeenCalled();
   });
 });

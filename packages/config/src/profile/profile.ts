@@ -78,7 +78,7 @@ export interface PortfolioProfile {
   portfolioLanguage?: Language;
   portfolioType?: PortfolioType;
   projects: ProfileProject[];
-  publicationVisibility?: "public" | "unlisted";
+  publicationVisibility?: "public" | "unlisted" | "password";
   sectionOrder?: PortfolioSectionId[];
   sectionSequence?: PortfolioEntryId[];
   sectionSettings?: PortfolioSectionSettings;

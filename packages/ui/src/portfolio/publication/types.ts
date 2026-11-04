@@ -16,7 +16,7 @@ export type PublicationProps = {
   dirty: boolean;
   disabled: boolean;
   load: () => Promise<PublicationStatus>;
-  change: (publish: boolean, revision: number) => Promise<void>;
+  change: (publish: boolean, revision: number, password?: string) => Promise<void>;
   scheduling?: PublicationScheduling;
   onChanged: (published: boolean) => void;
 };

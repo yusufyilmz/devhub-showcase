@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { projectPublicProfile } from "@shared/config";
 
 import { Button } from "../../buttons/button";
+import { TextField } from "../../forms/text-field";
 import { ProposalComparison } from "../proposal-comparison";
 import { PublicationSchedule } from "./schedule";
 import { publicationStyles } from "./styles";
@@ -26,6 +27,7 @@ export function PublicationControls({
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [review, setReview] = useState(false);
+  const [password, setPassword] = useState("");
   useEffect(() => {
     let active = true;
     setStatus(null);
@@ -47,7 +49,10 @@ export function PublicationControls({
     setError("");
     let changed = false;
     try {
-      await change(publish, revision);
+      if (publish && password && profile.publicationVisibility === "password")
+        await change(publish, revision, password);
+      else await change(publish, revision);
+      setPassword("");
       changed = true;
       onChanged(publish);
       setStatus(await load());
@@ -70,13 +75,7 @@ export function PublicationControls({
   return (
     <div className={publicationStyles.root}>
       <h3>Public website and CV</h3>
-      <p>
-        {status?.published
-          ? `Published revision ${status.published.revision}. Saving edits keeps this public version unchanged.`
-          : status
-            ? "Your saved draft is private until you publish it."
-            : "Checking publication status. Refresh if it is unavailable."}
-      </p>
+      <p>{publicationMessage(status)}</p>
       {status?.published && (
         <Button
           href={`/${status.published.username}`}
@@ -123,7 +122,7 @@ export function PublicationControls({
           <p>
             Publish saved revision {revision}? Only permitted website and CV fields will be copied
             to public snapshots. Review Field visibility and Preview before confirming. Publishing
-            makes those snapshots available to anyone with the link.
+            applies the saved access policy to both snapshots.
           </p>
           <details>
             <summary>Review website snapshot changes</summary>
@@ -139,15 +138,38 @@ export function PublicationControls({
               before={status?.publishedCv ?? null}
             />
           </details>
-          <Button disabled={blocked} onClick={() => update(true)} type="button">
+          {profile.publicationVisibility === "password" && (
+            <TextField
+              autoComplete="new-password"
+              helperText="Use 12–128 characters. Leave blank to keep the current password if one is set. Republishing ends previous visitor sessions."
+              label="Publication password"
+              maxLength={128}
+              onChange={(event) => setPassword(event.target.value)}
+              type="password"
+              value={password}
+            />
+          )}
+          <Button
+            disabled={blocked || (password.length > 0 && password.length < 12)}
+            onClick={() => update(true)}
+            type="button"
+          >
             Confirm publication
           </Button>
-          <Button disabled={busy} onClick={() => setReview(false)} type="button" variant="outline">
+          <Button
+            disabled={busy}
+            onClick={() => {
+              setReview(false);
+              setPassword("");
+            }}
+            type="button"
+            variant="outline"
+          >
             Cancel publication
           </Button>
         </div>
       )}
-      {scheduling && (
+      {scheduling && profile.publicationVisibility !== "password" && (
         <PublicationSchedule
           blocked={blocked}
           key={`${revision}-${status?.published?.updated_at ?? "private"}`}
@@ -164,4 +186,12 @@ export function PublicationControls({
       )}
     </div>
   );
+}
+
+function publicationMessage(status: PublicationStatus | null) {
+  if (status?.published)
+    return `Published revision ${status.published.revision}. Saving edits keeps this public version unchanged.`;
+  return status
+    ? "Your saved draft is private until you publish it."
+    : "Checking publication status. Refresh if it is unavailable.";
 }

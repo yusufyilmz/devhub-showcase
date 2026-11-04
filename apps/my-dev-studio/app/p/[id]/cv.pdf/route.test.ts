@@ -9,6 +9,10 @@ vi.mock("@shared/services/published-profile", () => ({
 }));
 vi.mock("@/features/portfolio/cv-response", () => ({ cvResponse: mocks.render }));
 
+vi.mock("@/features/portfolio/access/server-access", () => ({
+  readProtectedProfile: vi.fn().mockResolvedValue(null),
+}));
+
 import { GET } from "./route";
 
 describe("CvPdf", () => {

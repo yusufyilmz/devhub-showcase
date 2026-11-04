@@ -6,8 +6,17 @@ import { ProfileAccessError } from "@shared/services/profile";
 import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
 import { managedRepository } from "@/features/management/managed-portfolios";
 
+import { accessAttemptBucket, hashPortfolioPassword } from "../access/password";
+import { portfolioAccessServer } from "../access/server-access";
+
 const headers = { "Cache-Control": "private, no-store" };
-const inputSchema = z.object({ publish: z.boolean(), revision: z.number().int().min(1) }).strict();
+const inputSchema = z
+  .object({
+    password: z.string().min(12).max(128).optional(),
+    publish: z.boolean(),
+    revision: z.number().int().min(1),
+  })
+  .strict();
 async function workspace(id?: string) {
   return id ? managedRepository(id) : requireWorkspace();
 }
@@ -62,22 +71,42 @@ export async function changePublication(request: Request, id?: string) {
     const snapshot = await repository.read();
     if (!snapshot?.id)
       return Response.json({ error: "Profile unavailable." }, { headers, status: 404 });
-    const result = await client.rpc("set_portfolio_publication", {
-      expected_revision: input.revision,
-      profile_id: snapshot.id,
-      publish: input.publish,
-    });
-    if (result.error?.code === "40001" || result.error?.code === "23505")
+    if (input.password && (!input.publish || snapshot.profile.publicationVisibility !== "password"))
       return Response.json(
-        {
-          error:
-            "The saved revision or public URL changed. Refresh publication status before trying again.",
-        },
+        { error: "Save password access mode before setting a publication password." },
+        { headers, status: 400 },
+      );
+    if (input.password && snapshot.revision !== input.revision)
+      return Response.json(
+        { error: "The saved revision changed. Refresh before publishing." },
         { headers, status: 409 },
       );
-    if (result.error?.code === "42501") throw new ProfileAccessError();
-    if (result.error) throw new Error("storage");
-    return Response.json({ isPublic: input.publish, revision: result.data }, { headers });
+    let digest: string | undefined;
+    if (input.password) {
+      const server = portfolioAccessServer();
+      const reserved = await server.client.rpc("reserve_portfolio_access_attempt", {
+        request_bucket: accessAttemptBucket(snapshot.id, "owner-publication", server.secret),
+      });
+      if (reserved.error) throw new Error("storage");
+      if (reserved.data !== true)
+        return Response.json(
+          { error: "Too many password changes. Try again later." },
+          { headers: { ...headers, "Retry-After": "300" }, status: 429 },
+        );
+      digest = await hashPortfolioPassword(input.password);
+    }
+    const result = digest
+      ? await client.rpc("publish_portfolio_with_password", {
+          expected_revision: input.revision,
+          password_digest: digest,
+          profile_id: snapshot.id,
+        })
+      : await client.rpc("set_portfolio_publication", {
+          expected_revision: input.revision,
+          profile_id: snapshot.id,
+          publish: input.publish,
+        });
+    return publicationResult(result, input.publish);
   } catch (error) {
     return failure(error);
   }
@@ -91,4 +120,26 @@ function failure(error: unknown) {
     { error: "Publication storage is unavailable. Your saved draft is unchanged." },
     { headers, status: 503 },
   );
+}
+
+function publicationResult(
+  result: { data: unknown; error: { code?: string } | null },
+  publish: boolean,
+) {
+  if (result.error?.code === "22023")
+    return Response.json(
+      { error: "A publication password is required. Use 12–128 characters." },
+      { headers, status: 400 },
+    );
+  if (result.error?.code === "40001" || result.error?.code === "23505")
+    return Response.json(
+      {
+        error:
+          "The saved revision or public URL changed. Refresh publication status before trying again.",
+      },
+      { headers, status: 409 },
+    );
+  if (result.error?.code === "42501") throw new ProfileAccessError();
+  if (result.error) throw new Error("storage");
+  return Response.json({ isPublic: publish, revision: result.data }, { headers });
 }

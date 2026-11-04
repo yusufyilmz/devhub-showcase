@@ -6,6 +6,7 @@ const mocks = vi.hoisted(() => ({
   resolve: vi.fn(),
 }));
 vi.mock("@shared/services/published-profile", () => ({
+  readPortfolioAccessStatus: vi.fn().mockResolvedValue(null),
   readPublicProfileByUsername: mocks.publicRead,
   resolvePublishedUsername: mocks.resolve,
 }));

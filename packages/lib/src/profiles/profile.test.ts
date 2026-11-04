@@ -142,8 +142,8 @@ describe("DemoProfile", () => {
       validateProfile({ ...profile, publicationVisibility: "unlisted" }).publicationVisibility,
     ).toBe("unlisted");
     expect(validateProfile(profile).publicationVisibility).toBeUndefined();
-    expect(profileSchema.safeParse({ ...profile, publicationVisibility: "password" }).success).toBe(
-      false,
-    );
+    expect(
+      profileSchema.safeParse({ ...profile, publicationVisibility: "unsupported" }).success,
+    ).toBe(false);
   });
 });

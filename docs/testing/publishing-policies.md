@@ -1,6 +1,6 @@
 # Publishing policies — work in progress
 
-This draft group covers roadmap tasks 14 (username redirects), 15 (visibility) and 16 (scheduled publishing). It builds on PR #84. Redirects, public/unlisted discovery and reviewed scheduled snapshots are implemented at this checkpoint. Password-protected access remains unfinished. Scheduled execution requires migration and worker configuration before rollout. Keep the group in draft until all acceptance criteria are verified.
+This draft group covers roadmap tasks 14 (username redirects), 15 (visibility) and 16 (scheduled publishing). It builds on PR #84. Redirects, public/unlisted discovery and reviewed scheduled snapshots are implemented at this checkpoint. Password-protected access is now implemented and locally verified; its separate migration remains pending. Publication/alias/unlisted/scheduling/native-cron migrations are verified live, including successful minute-level worker runs. Server credential and deployed application-flow checks remain pending. Keep the group in draft until all acceptance criteria are verified.
 
 ## Retained username rules
 
@@ -10,7 +10,7 @@ An alias belongs to its portfolio for that portfolio's lifetime, including perio
 
 Aliases resolve by portfolio ID directly to the current published username, rather than to another alias. Withdrawing publication leaves reservations in place but removes the destination from public resolution. Repeated renames therefore do not create server-side redirect chains. Page, CV, icon and share-image routes preserve the resource suffix when redirecting; canonical metadata uses the current URL. Private documents and account identities are not returned by alias lookup.
 
-`20261103140000_retained_username_aliases.sql` creates the private alias table and namespace guards. A preflight rejects existing collisions between another portfolio's draft username and a published URL rather than silently reassigning ownership. Resolve such collisions explicitly in a disposable environment before rollout. Transactional advisory locks serialize competing namespace claims. The migration has not been applied to production.
+`20261103140000_retained_username_aliases.sql` creates the private alias table and namespace guards. A preflight rejects existing collisions between another portfolio's draft username and a published URL rather than silently reassigning ownership. Resolve such collisions explicitly in a disposable environment before rollout. Transactional advisory locks serialize competing namespace claims. The migration is recorded in the live ledger; see [rollout evidence](publication-rollout.md).
 
 The implementation uses the supported [Next.js permanent redirect API](https://nextjs.org/docs/app/api-reference/functions/permanentRedirect). In a streaming render, Next.js can emit a client redirect; route-handler responses use HTTP 308. CV redirect responses explicitly disable caching so future renames do not leave stale intermediate targets.
 
@@ -32,7 +32,7 @@ Use a disposable migrated account and replace the names/preview hostname. These 
 
 ## Remaining work in this same group
 
-- Password-protected policy across alternate content routes, access verification expiry and revocation.
+- Apply the separate password migration and verify protected access on a reviewed deployment.
 - Production scheduler configuration and deployed verification of the scheduled-publication checkpoint.
 - Complete group regression and configuration/rollout instructions.
 

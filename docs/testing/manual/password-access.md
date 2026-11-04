@@ -1,10 +1,10 @@
-# Password-protected access — task 15 preparation
+# Password-protected access — task 15
 
-**Scope/status:** Work in progress. Database access rules, password hashing and signed-grant utilities are prepared and tested locally. Owner publication controls, the visitor password screen/API and all route integrations remain unfinished. The app still rejects the password visibility value. Do not deploy the password migration as a completed feature.
+**Scope/status:** In progress. Owner publication review, visitor verification, signed browser grants and protected page/CV/image reads are implemented. Local flow verification is underway; hosted migration and deployment verification remain pending. Keep the PR draft until the full privacy checks pass.
 
 **Prerequisites:** Use a disposable database with the publication/alias/visibility/scheduling migrations. The password migration is `20261104094250_password_protected_publications.sql`; it has not been applied to production. Use fictional profile documents and passwords. Follow the [shared setup rules](index.md#before-you-start).
 
-**Manual result:** Not run. Automated local PGlite/crypto checks are separate evidence; they do not prove a deployed password flow.
+**Manual result:** Hosted/manual steps not run. Desktop and mobile local browser flows passed for owner publication, locked resources, wrong/correct password, verified page/CV/generated images, and republishing invalidation. Automated local PGlite/crypto/API checks are separate evidence; they do not prove deployed password protection.
 
 | Step | Clickable URL                                                           | Route path                     | Action                                                                                                                                                                     | Expected result                                                                                                                                                | Actual result / evidence |
 | ---- | ----------------------------------------------------------------------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
@@ -12,11 +12,8 @@
 | 2    | [Supabase SQL Editor](https://supabase.com/dashboard/project/_/sql/new) | `/dashboard/project/_/sql/new` | In that disposable database, read both snapshot tables as anonymous, unrelated authenticated and owner roles. Attempt direct reads of the password table and record RPC.   | Anonymous/unrelated roles see no protected documents or password record; owner review remains available.                                                       | Not run                  |
 | 3    | [Supabase SQL Editor](https://supabase.com/dashboard/project/_/sql/new) | `/dashboard/project/_/sql/new` | Test server-role reads with the current access version, republish/withdraw or transfer, then retry the old version. Test the persistent attempt limiter.                   | Old grants cannot read new/revoked snapshots. Withdrawal/transfer removes password records. Ordinary app roles cannot invoke privileged reads or limiter RPCs. | Not run                  |
 
-## Remaining work before review
+## Remaining verification before review
 
-- Owner password entry in explicit publication review, with revision/permission checks and secure hashing.
-- Visitor verification endpoint, signed HttpOnly cookie issuance, throttling and a shared-library password screen.
-- Page, metadata, named/legacy PDF, icon/share-image and chat route checks that cannot bypass access verification.
 - Rotation, expiry, transfer, withdrawal, unknown/private names, anonymous Data API and direct URL browser tests.
 - Separate public/unlisted/scheduling regressions and deployed configuration instructions.
 
@@ -28,3 +25,20 @@ Server grants use a key derived with a distinct signing domain from the server-o
 - [Salted hashing and grant tampering/expiry tests](../../../apps/my-dev-studio/features/portfolio/access/password.test.ts)
 
 Return to the [manual testing index](index.md).
+
+## Visitor and owner flow
+
+Use `desktop-protected-owner` (desktop) or `mobile-protected-owner` (mobile) on the local fixture server; replace the username and host with a disposable preview account for manual testing.
+
+| Step | Clickable URL                                                                    | Route path                                      | Action                                                                                                                                     | Expected result                                                                                                                                        | Actual result / evidence |
+| ---- | -------------------------------------------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ |
+| 4    | [Owner editor](http://localhost:3100/desktop-protected-owner/edit)               | `/desktop-protected-owner/edit`                 | Save Password access in Field visibility. Select Review publication, enter a 12–128 character password, review both snapshots and confirm. | Website and CV publish together; the password is hashed on the server and does not appear in either document.                                          | Not run                  |
+| 5    | [Portfolio](http://localhost:3100/desktop-protected-owner)                       | `/desktop-protected-owner`                      | Open in a fresh signed-out browser. Check the page source and generated assets.                                                            | Generic password gate; no name, summary, private JSON-LD, CV or generated image is exposed.                                                            | Not run                  |
+| 6    | [Password gate](http://localhost:3100/desktop-protected-owner/access)            | `/desktop-protected-owner/access`               | Try an incorrect password, then the correct one.                                                                                           | Generic denial followed by the portfolio. The HttpOnly, SameSite=Lax cookie expires in one hour; HTTPS production cookies are Secure.                  | Not run                  |
+| 7    | [CV](http://localhost:3100/desktop-protected-owner/cv.pdf)                       | `/desktop-protected-owner/cv.pdf`               | Open before and after unlocking; repeat for `/p/PROFILE_ID/cv.pdf`, `/USERNAME/icon.svg` and `/USERNAME/share.png`.                        | Locked resources return 404. Unlocked resources use the verified published snapshot and no-store caching.                                              | Not run                  |
+| 8    | [Owner editor](http://localhost:3100/desktop-protected-owner/edit)               | `/desktop-protected-owner/edit`                 | Republish with a blank password, then retry the previous visitor session. Repeat after withdrawal and transfer in a disposable account.    | Republishing keeps the current password but revokes old grants. Withdrawal/transfer removes password credentials; a new owner must set a new password. | Not run                  |
+| 9    | [Unlock API](http://localhost:3100/api/portfolio-access/desktop-protected-owner) | `/api/portfolio-access/desktop-protected-owner` | POST incorrect passwords repeatedly; try another origin and malformed/oversized bodies.                                                    | Persistent attempt limits, origin checks and size validation deny requests; responses contain no password digest or snapshot.                          | Not run                  |
+
+Protected mode currently supports immediate publication only. Scheduling controls and visitor chat are unavailable for protected portfolios. Existing pending jobs are cancelled by immediate publication. Publicly hosted or external image URLs remain accessible at their source; the page gate cannot revoke a third-party URL.
+
+The limiter hashes the portfolio/address bucket and stores no plaintext IP. Forwarded addresses are best effort; an independent database-wide ceiling limits expensive password checks even when a caller varies headers. This ceiling can temporarily delay legitimate requests during abuse. Rotating the server service credential invalidates all browser grants. Do not expose that credential in client configuration.

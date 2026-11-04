@@ -48,6 +48,7 @@ export async function readProtectedProfile(
   if (error) throw new ProfileSetupError();
   if (!data) return null;
   const row = protectedSnapshotSchema.parse(data);
+  if (row.id !== id) throw new ProfileSetupError();
   return {
     id: row.id,
     isPublic: true,

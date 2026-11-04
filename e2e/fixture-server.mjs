@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { createServer } from "node:http";
 
 import { projectPublicProfile } from "../packages/config/src/portfolio/public-projection.ts";
@@ -107,6 +108,17 @@ const scheduleOwners = publicationOwners.map((owner, index) => ({
   id: `84848484-8484-4484-8484-84848484848${index}`,
   owner_id: `85858585-8585-4585-8585-85858585858${index}`,
   username: `${index ? "mobile" : "desktop"}-schedule-owner`,
+}));
+const passwordOwners = publicationOwners.map((owner, index) => ({
+  ...structuredClone(owner),
+  document: {
+    ...structuredClone(owner.document),
+    name: "Protected Fictional Owner",
+    publicationVisibility: "password",
+  },
+  id: `91919191-9191-4191-8191-91919191919${index}`,
+  owner_id: `92929292-9292-4292-8292-92929292929${index}`,
+  username: `${index ? "mobile" : "desktop"}-protected-owner`,
 }));
 const workflowOwners = starters.map((owner, index) => ({
   ...owner,
@@ -412,6 +424,7 @@ const rows = [
   ...workflowOwners,
   ...publicationOwners,
   ...scheduleOwners,
+  ...passwordOwners,
   ...assistantToolOwners,
   ...chatOwners,
   ...billingOwners,
@@ -423,6 +436,8 @@ const rows = [
 ];
 const templateLibraries = new Map();
 const publications = new Map();
+const passwords = new Map();
+const passwordAttempts = new Map();
 const schedules = new Map();
 const usernameAliases = new Map();
 const publicCvs = new Map();
@@ -477,12 +492,13 @@ createServer(async (request, response) => {
       "cancel_portfolio_schedule",
       "execute_portfolio_schedules",
     ].some((name) => url.pathname === `/rest/v1/rpc/${name}`)
-  )
-    return scheduleRequest(request, response, owner, url.pathname.split("/").at(-1));
-  if (url.pathname === "/rest/v1/rpc/set_portfolio_publication")
-    return publicationRequest(request, response, owner);
+  ) {
+    await scheduleRequest(request, response, owner, url.pathname.split("/").at(-1));
+    return true;
+  }
+  if (await publicationRpcRequest(request, response, owner, url)) return;
   if (["/rest/v1/portfolio_publications", "/rest/v1/portfolio_public_cvs"].includes(url.pathname))
-    return publicSnapshotRequest(response, url);
+    return publicSnapshotRequest(response, url, owner);
   if (url.pathname === "/rest/v1/rpc/is_portfolio_admin") {
     response.end(JSON.stringify(Boolean(owner?.manager)));
     return;
@@ -515,6 +531,7 @@ function fixtureOwner(request) {
       ...workflowOwners,
       ...publicationOwners,
       ...scheduleOwners,
+      ...passwordOwners,
       ...assistantToolOwners,
       ...chatOwners,
       ...billingOwners,
@@ -679,7 +696,7 @@ function ownsRow(found, owner) {
         (owner.manager && found.owner_id === null && found.managed_by === owner.owner_id)),
   );
 }
-async function publicationRequest(request, response, owner) {
+async function publicationRequest(request, response, owner, withPassword = false) {
   const chunks = [];
   for await (const chunk of request) chunks.push(chunk);
   const input = JSON.parse(Buffer.concat(chunks).toString());
@@ -687,6 +704,9 @@ async function publicationRequest(request, response, owner) {
   if (!ownsRow(found, owner)) return response.writeHead(403).end(JSON.stringify({ code: "42501" }));
   if (found.revision !== input.expected_revision)
     return response.writeHead(409).end(JSON.stringify({ code: "40001" }));
+  if (withPassword) input.publish = true;
+  if (!updateFixturePassword(found, input, withPassword))
+    return response.writeHead(400).end(JSON.stringify({ code: "22023" }));
   if (input.publish) publishSnapshot(found);
   else {
     const previous = publications.get(found.id);
@@ -699,10 +719,18 @@ async function publicationRequest(request, response, owner) {
   found.is_public = input.publish;
   response.end(JSON.stringify(found.revision));
 }
-function publicSnapshotRequest(response, url) {
+function publicSnapshotRequest(response, url, owner) {
   const entries = [
     ...(url.pathname.endsWith("portfolio_public_cvs") ? publicCvs : publications).values(),
-  ].filter((entry) => matchesRow(entry, url));
+  ].filter(
+    (entry) =>
+      matchesRow(entry, url) &&
+      (entry.visibility !== "password" ||
+        ownsRow(
+          rows.find((row) => row.id === entry.id),
+          owner,
+        )),
+  );
   if (url.searchParams.get("select") === "username,updated_at")
     response.end(
       JSON.stringify(entries.map(({ username, updated_at }) => ({ updated_at, username }))),
@@ -829,4 +857,72 @@ function cancelFixtureSchedule(profileId, id) {
   const pending = job?.snapshot.id === profileId && job.state === "pending";
   if (pending) job.state = "cancelled";
   return pending;
+}
+
+async function passwordRequest(request, response, action) {
+  const chunks = [];
+  for await (const chunk of request) chunks.push(chunk);
+  const input = JSON.parse(Buffer.concat(chunks).toString());
+  if (action === "portfolio_access_status") {
+    const found = [...publications.values()].find(
+      (entry) => entry.username === input.requested_username && entry.visibility === "password",
+    );
+    return response.end(JSON.stringify(found ? { id: found.id, username: found.username } : null));
+  }
+  if (request.headers.authorization !== "Bearer fixture-scheduler-service")
+    return response.writeHead(403).end(JSON.stringify({ code: "42501" }));
+  if (action === "reserve_portfolio_access_attempt") {
+    const count = (passwordAttempts.get(input.request_bucket) ?? 0) + 1;
+    passwordAttempts.set(input.request_bucket, count);
+    return response.end(JSON.stringify(count <= 5));
+  }
+  const credential = passwords.get(input.profile_id);
+  if (action === "portfolio_password_record")
+    return response.end(JSON.stringify(credential ?? null));
+  const snapshot = (input.surface === "cv" ? publicCvs : publications).get(input.profile_id);
+  return response.end(
+    JSON.stringify(
+      credential?.access_version === input.access_version && snapshot?.visibility === "password"
+        ? snapshot
+        : null,
+    ),
+  );
+}
+
+async function publicationRpcRequest(request, response, owner, url) {
+  if (
+    [
+      "portfolio_access_status",
+      "portfolio_password_record",
+      "read_protected_publication",
+      "reserve_portfolio_access_attempt",
+    ].some((name) => url.pathname === `/rest/v1/rpc/${name}`)
+  ) {
+    await passwordRequest(request, response, url.pathname.split("/").at(-1));
+    return true;
+  }
+  if (
+    [
+      "/rest/v1/rpc/publish_portfolio_with_password",
+      "/rest/v1/rpc/set_portfolio_publication",
+    ].includes(url.pathname)
+  ) {
+    await publicationRequest(
+      request,
+      response,
+      owner,
+      url.pathname.endsWith("publish_portfolio_with_password"),
+    );
+    return true;
+  }
+  return false;
+}
+
+function updateFixturePassword(found, input, withPassword) {
+  if (input.publish && found.document.publicationVisibility === "password") {
+    const digest = withPassword ? input.password_digest : passwords.get(found.id)?.password_digest;
+    if (!digest) return false;
+    passwords.set(found.id, { access_version: randomUUID(), password_digest: digest });
+  } else passwords.delete(found.id);
+  return true;
 }

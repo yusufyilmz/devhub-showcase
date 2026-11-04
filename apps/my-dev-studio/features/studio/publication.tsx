@@ -33,9 +33,9 @@ export function ProfilePublication({
     return result;
   }, [request, endpoint]);
   const change = useCallback(
-    async (publish: boolean, revision: number) => {
+    async (publish: boolean, revision: number, password?: string) => {
       const response = await request(endpoint, {
-        body: JSON.stringify({ publish, revision }),
+        body: JSON.stringify({ publish, revision, ...(password ? { password } : {}) }),
         headers: { "Content-Type": "application/json" },
         method: "POST",
       });

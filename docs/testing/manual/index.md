@@ -52,19 +52,19 @@ For local fixture setup and commands, see [testing and verification](../../testi
 | Private saved revision history — task 10                       | Implemented; history migration required                                                                       | [Open guide](revision-history.md)      |
 | Independent website/CV fields — task 28                        | Implemented; publication migration required for public payload checks                                         | [Open guide](output-fields.md)         |
 | Separate draft save, review, publish and withdraw — task 07    | Implemented; publication snapshot migration required                                                          | [Open guide](publication.md)           |
-| Retained username redirects — task 14                          | Implemented checkpoint in draft PR #86                                                                        | [Open guide](username-redirects.md)    |
-| Public/unlisted discovery — partial task 15                    | Implemented checkpoint in draft PR #86; password protection remains unimplemented                             | [Open guide](unlisted.md)              |
+| Retained username redirects — task 14                          | Implemented in PR #87                                                                                         | [Open guide](username-redirects.md)    |
+| Public/unlisted discovery — partial task 15                    | Public/unlisted implemented in PR #87; protected flow locally verified, separate migration pending            | [Open guide](unlisted.md)              |
 | Published branding, metadata and private/missing responses     | Implemented                                                                                                   | [Open guide](seo.md)                   |
 | Fresh Next.js build and CI regression — task 04 support        | Build fix shipped in PR #84; production verification is separate                                              | [Open guide](ci-build.md)              |
 | Reviewed scheduled snapshots — task 16                         | Implemented checkpoint; migration, worker credentials and recurring scheduler required; production unverified | [Open guide](scheduled-publication.md) |
 
-## Password access preparation
+## Password access
 
-[Password access guide](password-access.md) records the tested database/cryptographic core and the unfinished UI/API/route work. It is not a completed feature.
+[Password access guide](password-access.md) covers owner review, password entry, signed visitor access, protected pages/CVs/generated images and revocation. Local database/API/unit and desktop/mobile flow checks passed. The separate password migration and hosted verification remain pending in PR #87.
 
 ## Work that must not be marked implemented
 
-Password-protected portfolio access remains unfinished in [draft PR #86](https://github.com/yusufyilmz/devhub-showcase/pull/86). Public/unlisted discovery is only part of task 15; unlisted content is accessible by link. Scheduled snapshots are implemented but require the documented worker rollout. Do not claim password protection, live cron execution or production migration verification from local tests.
+Password protection is not yet deployed; its separate migration remains pending in [PR #87](https://github.com/yusufyilmz/devhub-showcase/pull/87). Unlisted content is accessible by link. Publication migrations and the native minute-level scheduler are now verified live, including successful cron runs; this does not prove a deployed user-created scheduled publication or password flow.
 
 Other roadmap work without an implemented feature is not covered by a pretend test flow. Add a real guide and index entry as each feature is implemented. See [publishing-policy progress](../publishing-policies.md) for the current group boundary.
 

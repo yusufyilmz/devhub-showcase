@@ -148,7 +148,7 @@ export const profileSchema = z
         }),
       )
       .max(100),
-    publicationVisibility: z.enum(["public", "unlisted"]).optional(),
+    publicationVisibility: z.enum(["public", "unlisted", "password"]).optional(),
     sectionOrder: z
       .array(z.enum(portfolioSectionIds))
       .length(portfolioSectionIds.length)

@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { z } from "zod";
 
 import { profile, projectPublicProfile } from "@shared/config";
 import { usernameSchema, validateProfile, validatePublicProfile } from "@shared/lib/profiles";
@@ -141,6 +142,7 @@ export async function readPortfolioAccessStatus(
     typeof data !== "object" ||
     Array.isArray(data) ||
     typeof data.id !== "string" ||
+    (data.id !== "main" && !z.uuid().safeParse(data.id).success) ||
     data.username !== username
   )
     return null;

@@ -48,13 +48,14 @@ export function FieldVisibilityEditor({
           <SelectField
             label="Portfolio discovery"
             onChange={(value) => {
-              if (value === "public" || value === "unlisted")
+              if (value === "public" || value === "unlisted" || value === "password")
                 onChange({ ...profile, publicationVisibility: value });
             }}
             value={profile.publicationVisibility ?? "public"}
           >
             <option value="public">Public · discoverable</option>
             <option value="unlisted">Unlisted · accessible by link</option>
+            <option value="password">Password · verified visitors only</option>
           </SelectField>
           <p>
             Unlisted portfolios remain available to anyone with the link. They are excluded from our
@@ -62,6 +63,13 @@ export function FieldVisibilityEditor({
             setting.
           </p>
         </>
+      )}
+      {surfaces.includes("website") && profile.publicationVisibility === "password" && (
+        <p>
+          Set the password when reviewing publication. Visitors must unlock the page and CV. Visitor
+          chat is unavailable in password mode. Images already hosted at public or external URLs
+          remain accessible at their source.
+        </p>
       )}
       {surfaces.map((surface) => (
         <fieldset key={surface}>
