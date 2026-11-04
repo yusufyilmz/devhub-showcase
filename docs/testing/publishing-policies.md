@@ -1,6 +1,6 @@
 # Publishing policies — work in progress
 
-This draft group covers roadmap tasks 14 (username redirects), 15 (visibility) and 16 (scheduled publishing). It builds on PR #84. Redirects and public/unlisted discovery are implemented at this checkpoint. Password-protected access and scheduling are not implemented or ready to deploy. Keep the group in draft until all acceptance criteria are verified.
+This draft group covers roadmap tasks 14 (username redirects), 15 (visibility) and 16 (scheduled publishing). It builds on PR #84. Redirects, public/unlisted discovery and reviewed scheduled snapshots are implemented at this checkpoint. Password-protected access remains unfinished. Scheduled execution requires migration and worker configuration before rollout. Keep the group in draft until all acceptance criteria are verified.
 
 ## Retained username rules
 
@@ -33,7 +33,7 @@ Use a disposable migrated account and replace the names/preview hostname. These 
 ## Remaining work in this same group
 
 - Password-protected policy across alternate content routes, access verification expiry and revocation.
-- Explicitly reviewed immutable scheduled snapshots, timezone display/conversion, cancellation/replacement, idempotent execution, retry/failure recovery and authorization-change handling.
+- Production scheduler configuration and deployed verification of the scheduled-publication checkpoint.
 - Complete group regression and configuration/rollout instructions.
 
 ## Redirect checkpoint verification
@@ -54,4 +54,10 @@ The Field visibility tab now includes Portfolio discovery. Missing values preser
 | 13   | [Portfolio](https://mydevstudio.vercel.app/test-owner)   | `/test-owner`        | Open directly while signed out and inspect robots metadata.        | Portfolio remains available by link and requests no indexing. |
 | 14   | [CV](https://mydevstudio.vercel.app/test-owner/cv.pdf)   | `/test-owner/cv.pdf` | Download while signed out and inspect response headers.            | 200 PDF with noindex/nofollow and private/no-store.           |
 
-Updated checkpoint verification passed: `pnpm check`, 484 unit tests (451 shared/app and 33 fitness), the app production build, and eight focused desktop/mobile browser cases. The publication browser helper now waits for the current request to finish rather than accepting an earlier visible Published status. Password protection and scheduling remain pending; no production migration has been applied.
+Updated checkpoint verification passed: `pnpm check`, 484 unit tests (451 shared/app and 33 fitness), the app production build, and eight focused desktop/mobile browser cases. The publication browser helper now waits for the current request to finish rather than accepting an earlier visible Published status. At that earlier checkpoint, password protection and scheduling were pending. The scheduling implementation is described below; no production migration has been applied.
+
+## Scheduled publication checkpoint
+
+See the [per-feature scheduled publication guide](manual/scheduled-publication.md) for configuration, ten linked manual test steps and recovery semantics. Schedule creation freezes both projected outputs from the authorized saved revision. Later draft edits do not change the job. Cancel/replacement, immediate publish/withdraw and transfers invalidate pending jobs under a shared lock; execution rechecks authorization and commits both outputs atomically. Dates show the browser timezone and exact UTC instant. Private status exposes only metadata, never frozen documents.
+
+`20261104090000_scheduled_publication.sql` is prepared, not applied to production. Configure server-only `CRON_SECRET` and `SUPABASE_SERVICE_ROLE_KEY` and an authenticated recurring worker before relying on due-time publication. No production cron was enabled. Password protection remains unfinished; #86 remains a draft.

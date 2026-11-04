@@ -504,6 +504,16 @@ export interface Database {
         Args: { requested_username: string };
         Returns: Array<{ id: string; username: string }>;
       };
+      portfolio_schedule_status: { Args: { profile_id: string }; Returns: Json };
+      schedule_portfolio_publication: {
+        Args: { profile_id: string; expected_revision: number; run_at: string; timezone: string };
+        Returns: string;
+      };
+      cancel_portfolio_schedule: {
+        Args: { profile_id: string; schedule_id: string };
+        Returns: boolean;
+      };
+      execute_portfolio_schedules: { Args: Record<string, never>; Returns: number };
       set_portfolio_publication: {
         Args: { profile_id: string; expected_revision: number; publish: boolean };
         Returns: number;
