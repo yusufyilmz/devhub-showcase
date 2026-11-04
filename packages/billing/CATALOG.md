@@ -1,5 +1,7 @@
 # Billing catalog
 
+Billing access preserves confirmed past-due/canceled guidance after a grant becomes Free. Stripe reconciliation reads current subscription state; webhook events include delayed payment and pause/resume transitions. `pnpm test:billing:postgres` verifies the existing reservation/lease RPCs through independent connections in a disposable PostgreSQL cluster.
+
 BillingSettings imports its colocated billing stylesheet, which owns the bounded
 page layout, heading hierarchy, explanatory text spacing, and usage-card styling.
 

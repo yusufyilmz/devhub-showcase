@@ -1,6 +1,6 @@
 # Sandbox billing, assignment, quota and readiness screens
 
-**Scope/status:** Sandbox integration; billing-reliability roadmap remains separate.
+**Scope/status:** Sandbox integration. See the [billing reliability guide](billing-reliability.md) for the current-state webhook, failure/cancellation and real PostgreSQL contention checks.
 
 **Prerequisites:** Use Stripe test configuration only, a disposable account and signed test webhooks. No live payment keys.
 

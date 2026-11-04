@@ -58,4 +58,42 @@ describe("Webhook", () => {
     mocks.sync.mockRejectedValue(new Error("busy"));
     expect((await request(body, signature)).status).toBe(503);
   });
+  it.each([
+    "checkout.session.async_payment_succeeded",
+    "checkout.session.async_payment_failed",
+    "customer.subscription.paused",
+    "customer.subscription.resumed",
+  ])("reconciles %s through current Stripe state", async (type) => {
+    const body = JSON.stringify({
+      data: { object: { customer: "cus_test", status: "old-event-status" } },
+      id: "evt_delayed",
+      livemode: false,
+      type,
+    });
+    const signature = createStripe().webhooks.generateTestHeaderString({
+      payload: body,
+      secret: "whsec_test",
+    });
+    expect((await request(body, signature)).status).toBe(200);
+    expect(mocks.sync).toHaveBeenCalledWith("cus_test", "evt_delayed");
+  });
+  it("rejects signed live events and acknowledges unrelated events without granting access", async () => {
+    for (const [livemode, type, expected] of [
+      [true, "customer.subscription.updated", 400],
+      [false, "product.created", 200],
+    ] as const) {
+      const body = JSON.stringify({
+        data: { object: { customer: "cus_test" } },
+        id: "evt_test",
+        livemode,
+        type,
+      });
+      const signature = createStripe().webhooks.generateTestHeaderString({
+        payload: body,
+        secret: "whsec_test",
+      });
+      expect((await request(body, signature)).status).toBe(expected);
+    }
+    expect(mocks.sync).not.toHaveBeenCalled();
+  });
 });

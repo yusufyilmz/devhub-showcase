@@ -29,3 +29,7 @@ The remaining sections were prepared from the dedicated guides below. Once the u
 | 27. ATS friendly CV layouts         | [Open task](https://app.notion.com/40bbddaed4fe81a29e8dd23d00a6394d) | [Steps](manual/cv-layouts.md)            | Pending workspace block limit |
 | 28. Portfolio and CV field controls | [Open task](https://app.notion.com/40bbddaed4fe81c7bdd5e8c18ffb5e3d) | [Steps](manual/output-fields.md)         | Pending workspace block limit |
 | 30. Media integration improvements  | [Open task](https://app.notion.com/40bbddaed4fe815180a3ee3aac472f8f) | [Steps](manual/media.md)                 | Pending workspace block limit |
+
+## Reliability group follow-up
+
+Task [01 — Billing reliability](https://app.notion.com/40bbddaed4fe81bb9c77ee4e54b1a82b) and task 02 are In Review with [PR #88](https://github.com/yusufyilmz/devhub-showcase/pull/88). This branch implements its remaining guidance/event gaps and adds actual PostgreSQL contention coverage shared with [02 — AI usage reliability](https://app.notion.com/40bbddaed4fe81fc8702c165a6be08be). Their task-body testing sections must link the [billing reliability guide](manual/billing-reliability.md) once the Notion workspace block limit is resolved. No content-creation retry was attempted for this group. Existing PR #59/#60 AI cancellation/UI work is retained.

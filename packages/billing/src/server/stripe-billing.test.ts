@@ -77,6 +77,40 @@ describe("StripeBilling", () => {
     list.mockResolvedValue({ data: [{ ...subscription, livemode: true }], has_more: false });
     expect((await billing.state("cus_test")).status).toBe("inactive");
   });
+
+  it("preserves scheduled cancellation until the confirmed end, then reports canceled without granting access", async () => {
+    const active = {
+      cancel_at_period_end: true,
+      created: 100,
+      id: "sub_test",
+      items: {
+        data: [
+          {
+            current_period_end: 300,
+            current_period_start: 100,
+            price: { id: "price_pro" },
+            quantity: 1,
+          },
+        ],
+      },
+      livemode: false,
+      status: "active",
+    };
+    const list = vi.fn().mockResolvedValue({ data: [active], has_more: false });
+    const billing = new StripeBilling(
+      { subscriptions: { list } } as unknown as ConstructorParameters<typeof StripeBilling>[0],
+      config,
+    );
+    expect(await billing.state("cus_test")).toMatchObject({ chat: 100, status: "active" });
+    list.mockResolvedValue({ data: [{ ...active, status: "canceled" }], has_more: false });
+    expect(await billing.state("cus_test")).toMatchObject({
+      chat: 0,
+      editor: 0,
+      status: "canceled",
+    });
+    list.mockResolvedValue({ data: [], has_more: true });
+    await expect(billing.state("cus_test")).rejects.toThrow("review required");
+  });
   it("fences stale webhook workers and atomically commits event receipts with grants", async () => {
     const db = new PGlite();
     const account = "11111111-1111-4111-8111-111111111111";

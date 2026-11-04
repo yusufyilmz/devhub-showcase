@@ -2,7 +2,7 @@ name: CI / CD
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ main, "feat/**" ]
   push:
     branches: [ main ]
   workflow_dispatch:
@@ -41,9 +41,23 @@ jobs:
         run: pnpm --filter storybook-app build-storybook
       - run: pnpm build
 
+  billing-database:
+    name: Billing database concurrency
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24"
+      - name: Verify isolated PostgreSQL allowances and billing leases
+        run: node tools/scripts/test-billing-postgres.mjs
+
   deploy:
     name: Deploy production
-    needs: verify
+    needs: [ verify, billing-database ]
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment: production

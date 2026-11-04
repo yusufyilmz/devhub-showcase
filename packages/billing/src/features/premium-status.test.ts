@@ -77,4 +77,17 @@ describe("PremiumStatus", () => {
       premiumFeatureStatus(billing, { id: "main", isPublic: true }, "portfolio_chat", true),
     ).toBe("legacy");
   });
+  it("retains actionable failure/cancellation guidance after the confirmed grant is Free", () => {
+    for (const status of ["past_due", "canceled"] as const)
+      expect(
+        entitlementSummary(
+          { ...grant, chat_limit: 0, editor_limit: 0, plan: "free", status },
+          start,
+        ),
+      ).toMatchObject({
+        access: status,
+        limits: { portfolio_chat: 0, studio_assistant: 0 },
+        plan: "free",
+      });
+  });
 });
