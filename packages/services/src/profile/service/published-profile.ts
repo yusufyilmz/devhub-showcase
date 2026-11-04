@@ -77,6 +77,7 @@ export async function listPublishedPortfolioLinks(): Promise<
     const { data, error } = await client
       .from("portfolio_publications")
       .select("username, updated_at")
+      .eq("visibility", "public")
       .order("username")
       .range(offset, offset + 999);
     if (error) throw new ProfileSetupError();
@@ -106,4 +107,20 @@ function discoveryClient() {
     },
   });
   return client;
+}
+
+/** Alias lookup never reads a draft or returns an unpublished destination. */
+export async function resolvePublishedUsername(
+  username: string,
+): Promise<{ id: string; username: string } | null> {
+  if (!usernameSchema.safeParse(username).success) return null;
+  const client = discoveryClient();
+  if (!client) return null;
+  const { data, error } = await client.rpc("resolve_published_username", {
+    requested_username: username,
+  });
+  if (error) throw new ProfileSetupError();
+  const resolved = data?.[0];
+  if (!resolved || !usernameSchema.safeParse(resolved.username).success) return null;
+  return resolved;
 }

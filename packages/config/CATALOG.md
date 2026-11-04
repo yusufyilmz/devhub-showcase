@@ -23,3 +23,5 @@ Profile shape, themes, copy, and section metadata for `@shared/config`. This pac
 | `authorableSections`                     | Section families an owner can add               |
 | `sectionRegistry`, `sectionCompositions` | Built-in section order and compositions         |
 | `section-templates` types                | Saved and exported section template shapes      |
+
+`PortfolioProfile.publicationVisibility` stores the draft/publication discovery choice (`public` or `unlisted`); omitted values preserve public discovery. Unlisted is public by link and does not provide password protection.

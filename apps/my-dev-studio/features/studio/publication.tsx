@@ -1,5 +1,5 @@
 "use client";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 import type { PortfolioProfile } from "@shared/config";
 import { urls } from "@shared/config/urls";
@@ -44,6 +44,29 @@ export function ProfilePublication({
     },
     [request, endpoint],
   );
+  const scheduling = useMemo(() => {
+    const scheduleEndpoint = `${endpoint}/schedule`;
+    async function operation(method: string, body?: unknown) {
+      const response = await request(scheduleEndpoint, {
+        method,
+        ...(body === undefined
+          ? {}
+          : { body: JSON.stringify(body), headers: { "Content-Type": "application/json" } }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error);
+      return result.result;
+    }
+    return {
+      cancel: async (scheduleId: string) => {
+        await operation("DELETE", { scheduleId });
+      },
+      create: async (runAt: string, timezone: string, revision: number) => {
+        await operation("POST", { revision, runAt, timezone });
+      },
+      load: () => operation("GET"),
+    };
+  }, [endpoint, request]);
   return (
     <PublicationControls
       change={change}
@@ -54,6 +77,7 @@ export function ProfilePublication({
       onChanged={onChanged}
       profile={profile}
       revision={revision}
+      scheduling={scheduling}
     />
   );
 }

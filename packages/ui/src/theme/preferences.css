@@ -1,3 +1,4 @@
+/* Page text sizes use a readable 12–24px range, not display-heading sizes. */
 :root[data-font-size="xs"] {
   font-size: 12px;
 }
@@ -8,25 +9,25 @@
   font-size: 16px;
 }
 :root[data-font-size="lg"] {
-  font-size: 18px;
+  font-size: 17px;
 }
 :root[data-font-size="xl"] {
-  font-size: 20px;
+  font-size: 18px;
 }
 :root[data-font-size="2xl"] {
-  font-size: 24px;
+  font-size: 19px;
 }
 :root[data-font-size="3xl"] {
-  font-size: 30px;
+  font-size: 20px;
 }
 :root[data-font-size="4xl"] {
-  font-size: 36px;
+  font-size: 21px;
 }
 :root[data-font-size="5xl"] {
-  font-size: 48px;
+  font-size: 22px;
 }
 :root[data-font-size="6xl"] {
-  font-size: 60px;
+  font-size: 24px;
 }
 :root[data-line-height="none"] {
   line-height: 1;
