@@ -1,5 +1,6 @@
 import { createServer } from "node:http";
 
+import { projectPublicProfile } from "../packages/config/src/portfolio/public-projection.ts";
 import { profile } from "../packages/config/src/profile/profile.ts";
 import {
   authorableSectionTypes,
@@ -89,6 +90,17 @@ const assistantToolOwners = aiOwners.map((owner, index) => ({
   id: `66666666-6666-4666-8666-66666666666${index}`,
   owner_id: `67676767-6767-4767-8767-67676767676${index}`,
   username: `${index ? "mobile" : "desktop"}-assistant-tools`,
+}));
+const publicationOwners = aiOwners.map((owner, index) => ({
+  ...owner,
+  document: {
+    ...structuredClone(owner.document),
+    email: `publication${index}@example.test`,
+    name: "Publication Owner",
+  },
+  id: `51515151-5151-4151-8151-51515151515${index}`,
+  owner_id: `52525252-5252-4252-8252-52525252525${index}`,
+  username: `${index ? "mobile" : "desktop"}-publication-owner`,
 }));
 const workflowOwners = starters.map((owner, index) => ({
   ...owner,
@@ -392,6 +404,7 @@ const rows = [
   ...guidanceOwners,
   ...previewOwners,
   ...workflowOwners,
+  ...publicationOwners,
   ...assistantToolOwners,
   ...chatOwners,
   ...billingOwners,
@@ -402,12 +415,30 @@ const rows = [
   ...libraryExamples,
 ];
 const templateLibraries = new Map();
+const publications = new Map();
+const publicCvs = new Map();
+function publishSnapshot(entry) {
+  const common = {
+    id: entry.id,
+    revision: entry.revision,
+    updated_at: entry.updated_at,
+    username: entry.username,
+  };
+  publications.set(entry.id, {
+    ...common,
+    document: projectPublicProfile(entry.document, "website"),
+  });
+  publicCvs.set(entry.id, { ...common, document: projectPublicProfile(entry.document, "cv") });
+}
+rows.filter((entry) => entry.is_public).forEach(publishSnapshot);
 createServer(async (request, response) => {
   const url = new URL(request.url, "http://127.0.0.1:3101");
   response.setHeader("Content-Type", "application/json");
   const resetIndex = ["desktop", "mobile"].indexOf(url.pathname.replace("/__test/reset/", ""));
   if (request.method === "POST" && resetIndex >= 0) {
     Object.assign(starters[resetIndex], structuredClone(initialStarters[resetIndex]));
+    publications.delete(starters[resetIndex].id);
+    publicCvs.delete(starters[resetIndex].id);
     response.end("{}");
     return;
   }
@@ -430,6 +461,10 @@ createServer(async (request, response) => {
     );
     return;
   }
+  if (url.pathname === "/rest/v1/rpc/set_portfolio_publication")
+    return publicationRequest(request, response, owner);
+  if (["/rest/v1/portfolio_publications", "/rest/v1/portfolio_public_cvs"].includes(url.pathname))
+    return publicSnapshotRequest(response, url);
   if (url.pathname === "/rest/v1/rpc/is_portfolio_admin") {
     response.end(JSON.stringify(Boolean(owner?.manager)));
     return;
@@ -460,6 +495,7 @@ function fixtureOwner(request) {
       ...guidanceOwners,
       ...previewOwners,
       ...workflowOwners,
+      ...publicationOwners,
       ...assistantToolOwners,
       ...chatOwners,
       ...billingOwners,
@@ -477,9 +513,8 @@ function fixtureOwner(request) {
 
 function visibleRow(entry, owner) {
   return (
-    entry.is_public ||
-    (owner &&
-      (entry.owner_id === owner.owner_id || (owner.manager && entry.managed_by === owner.owner_id)))
+    owner &&
+    (entry.owner_id === owner.owner_id || (owner.manager && entry.managed_by === owner.owner_id))
   );
 }
 function matchesRow(entry, url) {
@@ -521,15 +556,14 @@ async function profileRequest(request, response, url, owner) {
   if (request.method === "POST" && owner?.manager)
     return createManagedRequest(request, response, owner);
 
-  if (
-    request.method === "PATCH" &&
-    owner &&
-    found &&
-    (found.owner_id === owner.owner_id || (owner.manager && found.managed_by === owner.owner_id))
-  ) {
+  if (request.method === "PATCH" && ownsRow(found, owner)) {
     const chunks = [];
     for await (const chunk of request) chunks.push(chunk);
     const update = JSON.parse(Buffer.concat(chunks).toString());
+    if ("is_public" in update)
+      return response
+        .writeHead(403)
+        .end(JSON.stringify({ message: "Publication requires its dedicated action" }));
     Object.assign(found, update);
     response.end(JSON.stringify(found));
     return;
@@ -626,4 +660,39 @@ async function templateLibraryRequest(request, response, url, owner) {
     return;
   }
   response.end("null");
+}
+
+function ownsRow(found, owner) {
+  return Boolean(
+    found &&
+      owner &&
+      (found.owner_id === owner.owner_id ||
+        (owner.manager && found.owner_id === null && found.managed_by === owner.owner_id)),
+  );
+}
+async function publicationRequest(request, response, owner) {
+  const chunks = [];
+  for await (const chunk of request) chunks.push(chunk);
+  const input = JSON.parse(Buffer.concat(chunks).toString());
+  const found = rows.find((entry) => entry.id === input.profile_id);
+  if (!ownsRow(found, owner)) return response.writeHead(403).end(JSON.stringify({ code: "42501" }));
+  if (found.revision !== input.expected_revision)
+    return response.writeHead(409).end(JSON.stringify({ code: "40001" }));
+  if (input.publish) publishSnapshot(found);
+  else {
+    publications.delete(found.id);
+    publicCvs.delete(found.id);
+  }
+  found.is_public = input.publish;
+  response.end(JSON.stringify(found.revision));
+}
+function publicSnapshotRequest(response, url) {
+  const entries = [
+    ...(url.pathname.endsWith("portfolio_public_cvs") ? publicCvs : publications).values(),
+  ].filter((entry) => matchesRow(entry, url));
+  if (url.searchParams.get("select") === "username,updated_at")
+    response.end(
+      JSON.stringify(entries.map(({ username, updated_at }) => ({ updated_at, username }))),
+    );
+  else response.end(JSON.stringify(entries[0] ?? null));
 }

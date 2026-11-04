@@ -74,7 +74,8 @@ describe("PortfolioSeo", () => {
       expect(links.at(-1)?.username).toBe("final-person");
       const urls = fetcher.mock.calls.map(([input]) => new URL(String(input)));
       expect(urls[0]?.searchParams.get("select")).toBe("username,updated_at");
-      expect(urls[0]?.searchParams.get("is_public")).toBe("eq.true");
+      expect(urls[0]?.pathname).toBe("/rest/v1/portfolio_publications");
+      expect(urls[0]?.searchParams.has("is_public")).toBe(false);
       expect(urls[1]?.searchParams.get("offset")).toBe("1000");
       expect(fetcher.mock.calls[0]?.[1]).toMatchObject({ cache: "no-store" });
       expect(new Headers(fetcher.mock.calls[0]?.[1]?.headers).get("authorization")).toBe(

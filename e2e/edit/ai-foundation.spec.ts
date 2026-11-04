@@ -2,6 +2,8 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
+import { confirmPublication } from "../support/publication";
+
 test("owner can inspect private and public knowledge from the latest saved revision", async ({
   page,
   context,
@@ -32,10 +34,12 @@ test("owner can inspect private and public knowledge from the latest saved revis
   await expect(page.locator(".ai-profile-json")).toContainText("Confidential project");
   await page.getByRole("button", { exact: true, name: "Profile" }).click();
   await page.getByRole("textbox", { exact: true, name: "Full name" }).fill("Alex Updated");
-  await page.getByLabel("Publish my profile and CV at a public link").check();
   await page.getByRole("button", { exact: true, name: "Save changes" }).click();
+  await confirmPublication(page);
   await expect(
-    page.getByText("Saved. Your CV now uses these details.", { exact: true }),
+    page.getByText("Saved privately. Review publication to update your public website and CV.", {
+      exact: true,
+    }),
   ).toBeVisible();
   await page.getByRole("button", { exact: true, name: "AI profile" }).click();
   await expect(page.locator(".ai-profile-json")).toContainText("Alex Updated");

@@ -23,7 +23,15 @@ export function CvSettingsEditor({
 }) {
   const settings = profile.cvSettings ?? defaults;
   const update = (change: Partial<typeof defaults>) =>
-    onChange({ ...profile, cvSettings: { ...settings, ...change } });
+    onChange({
+      ...profile,
+      cvFields: {
+        ...profile.cvFields,
+        ...(change.showEmail === undefined ? {} : { email: change.showEmail }),
+        ...(change.showPhone === undefined ? {} : { phone: change.showPhone }),
+      },
+      cvSettings: { ...settings, ...change },
+    });
   return (
     <Card asChild layout="plain" surface="portfolio">
       <section className="editor-card editor-fields">
@@ -66,7 +74,13 @@ export function CvSettingsEditor({
         ).map(([key, label]) => (
           <LibraryLabel key={key} unstyled>
             <LibraryInput
-              checked={settings[key]}
+              checked={
+                key === "showEmail"
+                  ? settings[key] && profile.cvFields?.email !== false
+                  : key === "showPhone"
+                    ? settings[key] && profile.cvFields?.phone !== false
+                    : settings[key]
+              }
               onChange={(event) => update({ [key]: event.target.checked })}
               type="checkbox"
               unstyled

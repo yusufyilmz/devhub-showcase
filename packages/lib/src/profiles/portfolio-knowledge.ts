@@ -4,8 +4,8 @@ import {
   getPortfolioSections,
   type Language,
   type PortfolioProfile,
+  projectPublicProfile,
   resolveSectionSource,
-  selectPortfolioContent,
 } from "@shared/config";
 
 import type { ProfileSnapshot } from "./profile-snapshot";
@@ -65,7 +65,7 @@ export function buildPublicPortfolioKnowledge(
   snapshot: ProfileSnapshot,
 ): PublicPortfolioKnowledge | null {
   if (!snapshot.isPublic) return null;
-  const profile = selectPortfolioContent(snapshot.profile);
+  const profile = projectPublicProfile(snapshot.profile, "website");
   const { name, title, summary, location, email, phone, website, github, linkedin } = profile;
   const sections = getPortfolioSections(profile)
     .filter((section) => section.settings.visible)
@@ -75,10 +75,10 @@ export function buildPublicPortfolioKnowledge(
       title: section.kind,
     }))
     .filter((section) => section.items.length > 0);
-  const custom = (snapshot.profile.customSections ?? [])
+  const custom = (profile.customSections ?? [])
     .filter((section) => section.visible)
     .map((section) => {
-      const resolved = resolveSectionSource(section, snapshot.profile);
+      const resolved = resolveSectionSource(section, profile);
       return {
         id: section.id,
         items: [

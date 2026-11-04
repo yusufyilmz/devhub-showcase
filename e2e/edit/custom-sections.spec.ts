@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+import { confirmPublication } from "../support/publication";
+
 test("owner saves custom sections, reorders, duplicates and removes them, and visitors see the result", async ({
   page,
   context,
@@ -58,9 +60,9 @@ test("owner saves custom sections, reorders, duplicates and removes them, and vi
     .getByRole("group", { exact: true, name: "Community work" })
     .getByRole("button", { exact: true, name: "Remove section" })
     .click();
-  await page.getByLabel("Publish my profile and CV at a public link").check();
   await page.getByRole("button", { exact: true, name: "Save changes" }).click();
-  await expect(page.getByRole("status")).toContainText("Saved.");
+  await confirmPublication(page);
+  await expect(page.getByRole("status")).toContainText("Saved privately.");
   await expect(page.getByRole("button", { exact: true, name: "Save changes" })).toBeDisabled();
   await page.reload();
   await page.getByRole("button", { exact: true, name: "Custom sections" }).click();

@@ -35,12 +35,19 @@ export function SortableList({ items, onChange, label }: SortableListOptions) {
     return () => window.removeEventListener("keydown", cancel);
   }, []);
   function commit(next: Item[], id: string) {
+    const focusLabel = document.activeElement?.getAttribute("aria-label");
     onChange(next.map((item) => item.id));
     requestAnimationFrame(() => {
+      // Restore lost focus only; never steal focus from the next keyboard action.
+      if (document.activeElement && document.activeElement !== document.body) return;
       const row = Array.from(root.current?.children ?? []).find(
         (element) => (element as HTMLElement).dataset.sortableId === id,
       );
-      row?.querySelector<HTMLButtonElement>(".sortable-handle")?.focus({ preventScroll: true });
+      const button =
+        Array.from(row?.querySelectorAll<HTMLButtonElement>("button") ?? []).find(
+          (node) => node.getAttribute("aria-label") === focusLabel && !node.disabled,
+        ) ?? row?.querySelector<HTMLButtonElement>(".sortable-handle");
+      button?.focus({ preventScroll: true });
     });
     const index = next.findIndex((item) => item.id === id);
     setAnnouncement(`${next[index]?.label} moved to position ${index + 1} of ${next.length}.`);

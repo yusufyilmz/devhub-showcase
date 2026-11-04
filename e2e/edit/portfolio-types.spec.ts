@@ -3,6 +3,8 @@ import { expect, test } from "@playwright/test";
 import { getPortfolioCopy } from "@shared/config";
 import { urls } from "@shared/config/urls";
 
+import { confirmPublication } from "../support/publication";
+
 test("a new owner chooses a layout, saves it and returns to the editor without losing the choice", async ({
   page,
   context,
@@ -58,7 +60,7 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
   await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
     "New Portfolio Owner",
   );
-  await expect(page.getByLabel("Publish my profile and CV at a public link")).not.toBeChecked();
+  await expect(page.getByText("Your saved draft is private until you publish it.")).toBeVisible();
   await page.getByRole("button", { name: "Save changes" }).click();
   await expect(page.getByRole("status")).toContainText("Saved");
   await page.reload();
@@ -222,8 +224,8 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
   await page.getByLabel("Skill group 1 skills").fill("TypeScript");
   await page.getByRole("button", { exact: true, name: "Section order" }).click();
   await page.getByRole("button", { exact: true, name: "Reorder Skills" }).press("Home");
-  await page.getByLabel("Publish my profile and CV at a public link").check();
   await page.getByRole("button", { name: "Save changes" }).click();
+  await confirmPublication(page);
   await expect(page.locator(".editor-success")).toContainText("Saved");
   await page.goto(`/${device}-starter`);
   const publicHeadings = await page.locator(".folio-story .folio-section h2").allTextContents();

@@ -162,6 +162,9 @@ catalogs:
     tsdown:
       specifier: 0.23.4
       version: 0.23.4
+    tsx:
+      specifier: 4.23.15
+      version: 4.23.15
     turbo:
       specifier: 2.11.10
       version: 2.11.10
@@ -263,6 +266,9 @@ importers:
       tsdown:
         specifier: 'catalog:'
         version: 0.23.4(@tsdown/css@0.23.4)(oxc-resolver@11.24.2)(tsx@4.23.15)(typescript@7.0.2)
+      tsx:
+        specifier: 'catalog:'
+        version: 4.23.15
       turbo:
         specifier: 'catalog:'
         version: 2.11.10
@@ -11046,7 +11052,6 @@ snapshots:
       esbuild: 0.28.2
     optionalDependencies:
       fsevents: 2.3.3
-    optional: true
 
   turbo@2.11.10:
     optionalDependencies:

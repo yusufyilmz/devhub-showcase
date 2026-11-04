@@ -1,5 +1,7 @@
 # UI catalog
 
+RevisionHistory provides explicit inspect/review/restore callbacks with stale-draft protection. FieldVisibilityEditor edits independent website/CV contact choices; types/tests/stories are colocated.
+
 CvVersionsEditor accepts load/save/download callbacks and edits independent private CV snapshots. Version fields and job evidence review live in portfolio/cv-versions; save failures retain local edits while the screen remains open.
 
 TemplatePicker provides nine presentation-only profession presets under @shared/ui/portfolio. WorkMedia supplies consent-based YouTube loading, persistent original links and image-failure context. Styles and types are colocated.
@@ -363,3 +365,5 @@ Each content section lives in `src/sections/variants/{name}`. Most export the se
 Import homepage compositions from `@shared/ui/sections`. They live in `src/sections/variants/home-section` and replace the removed `containers` entry point. `HomeHeroSection`, `HomeFeaturesSection`, `HomeOptionsSection`, `HomePricingSection`, `HomeLibrarySection`, `HomeProcessSection`, `HomeFAQSection`, `HomeCTASection` and `HomeCapabilitiesSection` compose shared controls and surfaces. `HomeHeader`, `HomeFooter`, `PortfolioPreview` and `LibraryPicker` support that composition. Session decisions and navigation remain app props.
 
 All 47 registered authorable sections have colocated Default, Compact and Empty stories using fictional fixtures from `src/sections/__fixtures__/section-story.ts`. `SectionCatalog` provides a searchable name/category browser for the same registry, without copying its list into another data source.
+
+`PublicationControls` (`@shared/ui/portfolio`) reviews a saved revision and confirms publication or withdrawal through app-provided callbacks; it never saves the draft.

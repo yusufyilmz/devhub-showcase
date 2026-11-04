@@ -4,6 +4,7 @@ import { normalizeCvProfile } from "@shared/lib/profiles";
 
 import { Button } from "../../buttons/button";
 import { Field, SelectField } from "../../forms";
+import { FieldVisibilityEditor } from "../field-visibility";
 import type { CvVersionFieldsProps } from "./types";
 export function CvVersionFields({ variant, onChange }: CvVersionFieldsProps) {
   const profile = variant.profile;
@@ -42,6 +43,11 @@ export function CvVersionFields({ variant, onChange }: CvVersionFieldsProps) {
           </option>
         ))}
       </SelectField>
+      <FieldVisibilityEditor
+        onChange={(next) => update({ cvFields: next.cvFields, cvSettings: next.cvSettings })}
+        profile={profile}
+        surfaces={["cv"]}
+      />
       <h3>Export order</h3>
       <ol>
         {variant.order.map((key, index) => (

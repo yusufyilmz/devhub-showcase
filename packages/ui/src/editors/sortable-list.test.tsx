@@ -58,6 +58,21 @@ describe("SortableList", () => {
     });
     expect(screen.getAllByRole("listitem")[0]?.textContent).toContain("About");
   });
+  it("does not steal focus when a later keyboard action already chose a control", () => {
+    let frame: FrameRequestCallback | undefined;
+    vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => {
+      frame = callback;
+      return 0;
+    });
+    render(<Harness />);
+    const move = screen.getByRole("button", { name: "Move Projects up" });
+    move.focus();
+    fireEvent.click(move);
+    const next = screen.getByRole("button", { name: "Move About up" });
+    next.focus();
+    frame?.(0);
+    expect(document.activeElement).toBe(next);
+  });
   it("reset clears the override and restores the current layout default", () => {
     const onChange = vi.fn();
     render(

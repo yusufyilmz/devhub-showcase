@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { AiAssistantEditor, AiProfileEditor } from "@shared/assistant/studio";
 import { type PortfolioProfile, type PortfolioType, portfolioTypes } from "@shared/config";
 import { urls } from "@shared/config/urls";
-import { cvPath, editCvPath } from "@shared/lib/profiles";
+import { editCvPath } from "@shared/lib/profiles";
 import { useStudioRequest } from "@shared/runtime/studio";
 import { useUserConfigStore } from "@shared/runtime/user";
 import type { ProfileSnapshot } from "@shared/services/profile";
@@ -16,12 +16,13 @@ import { CvImportEditor, CvSettingsEditor } from "@shared/templates/studio";
 import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 import { GoogleImportEditor } from "@shared/ui/google-import";
-import { Input, Input as LibraryInput } from "@shared/ui/input";
+import { Input } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
 import {
   clearDraftRecovery,
   DraftRecovery,
   EditorGuidance,
+  FieldVisibilityEditor,
   GuidedOnboarding,
   LanguageSettingsEditor,
   PortfolioTypePicker,
@@ -54,6 +55,8 @@ const PreviewContent = dynamic(() =>
 );
 
 import { PrivateCvVersions } from "./cv-versions";
+import { ProfilePublication } from "./publication";
+import { OwnerRevisionHistory } from "./revision-history";
 
 const tabs = [
   "Profile",
@@ -75,6 +78,8 @@ const tabs = [
   "Appearance",
   "PDF",
   "CV versions",
+  "Revision history",
+  "Field visibility",
 ] as const;
 function clean(profile: PortfolioProfile): PortfolioProfile {
   const lines = (values: string[]) => values.filter((value) => value.trim());
@@ -125,15 +130,12 @@ export function ProfileEditor({
   const [message, setMessage] = useState("");
   const [error, showError] = useState("");
   const dirty =
-    JSON.stringify(draft) !== JSON.stringify(saved.profile) ||
-    isPublic !== (saved.isPublic ?? false) ||
-    username !== (saved.username ?? "");
+    JSON.stringify(draft) !== JSON.stringify(saved.profile) || username !== (saved.username ?? "");
   const recovery = useDraftRecovery({
     dirty,
     onRestore: (value) => {
       resetDraft(value.profile);
       setUsername(value.username);
-      setIsPublic(value.isPublic);
       if (tabs.includes(value.tab as typeof tab)) setTab(value.tab as typeof tab);
       setStep(value.step);
       setProfession(defaultProfession(value.profile, value.profession));
@@ -160,7 +162,6 @@ export function ProfileEditor({
     try {
       const response = await request(saveUrl, {
         body: JSON.stringify({
-          isPublic,
           profile: clean(draft),
           revision: saved.revision,
           ...(username ? { username } : {}),
@@ -176,7 +177,7 @@ export function ProfileEditor({
       setSaved(result);
       resetDraft(result.profile);
       setIsPublic(result.isPublic ?? isPublic);
-      setMessage("Saved. Your CV now uses these details.");
+      setMessage("Saved privately. Review publication to update your public website and CV.");
       onSaved?.(result);
     } catch (reason) {
       showError(
@@ -235,17 +236,7 @@ export function ProfileEditor({
             <Button className="studio-secondary" href="/admin/billing" variant="outline">
               Plan and usage
             </Button>
-            {saved.isPublic && saved.id && (
-              <Button
-                className="studio-secondary"
-                href={saved.username ? cvPath(saved.username) : "/"}
-                rel="noopener noreferrer"
-                target="_blank"
-                variant="outline"
-              >
-                View public profile ↗
-              </Button>
-            )}
+
             <Button
               className="studio-primary"
               disabled={busy || !dirty || recovery.stale}
@@ -321,10 +312,21 @@ export function ProfileEditor({
         <SharingSettings
           busy={busy}
           downloadHref={downloadHref}
-          isPublic={isPublic}
           managed={managed}
-          saved={saved}
-          setIsPublic={setIsPublic}
+          publication={
+            <ProfilePublication
+              dirty={dirty}
+              disabled={busy || recovery.stale}
+              id={saved.id}
+              managed={managed}
+              onChanged={(value) => {
+                setIsPublic(value);
+                setSaved((previous) => ({ ...previous, isPublic: value }));
+              }}
+              profile={saved.profile}
+              revision={saved.revision}
+            />
+          }
           setUsername={setUsername}
           username={username}
         />
@@ -418,6 +420,15 @@ function EditorBody({
   profile: PortfolioProfile;
   onChange: (profile: PortfolioProfile) => void;
 }) {
+  if (tab === "Revision history")
+    return (
+      <OwnerRevisionHistory
+        managedId={managed ? snapshot.id : undefined}
+        onChange={onChange}
+        profile={profile}
+        revision={snapshot.revision}
+      />
+    );
   if (tab === "CV versions")
     return managed ? (
       <Card>
@@ -445,20 +456,16 @@ function EditorBody({
 }
 
 function SharingSettings({
-  saved,
   username,
   setUsername,
-  isPublic,
-  setIsPublic,
+  publication,
   busy,
   downloadHref,
   managed,
 }: {
-  saved: ProfileSnapshot;
   username: string;
   setUsername: (value: string) => void;
-  isPublic: boolean;
-  setIsPublic: (value: boolean) => void;
+  publication: React.ReactNode;
   busy: boolean;
   downloadHref: string;
   managed: boolean;
@@ -484,35 +491,12 @@ function SharingSettings({
           {managed
             ? "This temporary portfolio is managed from your admin dashboard."
             : `Your editor: /${username || "username"}/edit.`}{" "}
-          Changing your username changes the public link.
+          The public link changes only when you publish the saved username.
         </p>
-        <LibraryLabel unstyled>
-          <LibraryInput
-            checked={isPublic}
-            disabled={busy}
-            onChange={(event) => setIsPublic(event.target.checked)}
-            type="checkbox"
-            unstyled
-          />{" "}
-          Publish my profile and CV at a public link
-        </LibraryLabel>
-        <p>
-          {isPublic
-            ? "Anyone with the link can read your published contact and career details."
-            : "Your CV is private. Only you can read and download it."}
-        </p>
+        {publication}
         <Button className="studio-secondary" href={downloadHref} variant="outline">
           Download my saved CV
         </Button>
-        {saved.isPublic && saved.id && (
-          <a
-            href={saved.username ? cvPath(saved.username) : `/p/${saved.id}`}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Open share link ↗
-          </a>
-        )}
       </div>
     </Card>
   );
@@ -543,6 +527,7 @@ const editors = {
   "Custom sections": CustomSectionsEditor,
   Education: EducationEditor,
   Experience: ExperienceEditor,
+  "Field visibility": FieldVisibilityEditor,
   "Import CV": CvImportEditor,
   "Language settings": LanguageSettingsEditor,
   Languages: LanguagesEditor,

@@ -6,17 +6,25 @@ import {
   ProfileSetupError,
   ProfileUsernameError,
 } from "@shared/services/profile";
+import { readPublicProfile } from "@shared/services/published-profile";
 
 import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const { repository } = await requireWorkspace();
     const snapshot = await repository.read();
     if (!snapshot) throw new ProfileSetupError();
-    return Response.json(snapshot, {
-      headers: { "Cache-Control": "private, no-store" },
-    });
+    const publishedSnapshot =
+      new URL(request.url).searchParams.get("knowledge") === "1" && snapshot.id
+        ? await readPublicProfile(snapshot.id)
+        : undefined;
+    return Response.json(
+      { ...snapshot, ...(publishedSnapshot === undefined ? {} : { publishedSnapshot }) },
+      {
+        headers: { "Cache-Control": "private, no-store" },
+      },
+    );
   } catch (error) {
     return failure(error);
   }

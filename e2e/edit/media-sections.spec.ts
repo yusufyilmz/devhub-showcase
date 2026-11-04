@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+import { confirmPublication } from "../support/publication";
+
 test("owner saves a video hero and YouTube section and visitors with reduced motion see a paused background", async ({
   page,
   context,
@@ -42,9 +44,9 @@ test("owner saves a video hero and YouTube section and visitors with reduced mot
   await page.getByRole("button", { exact: true, name: "+ Add section items" }).click();
   await page.getByLabel("Item title", { exact: true }).fill("A new film");
   await page.getByLabel("Item link").fill("https://youtu.be/M7lc1UVf-VE");
-  await page.getByLabel("Publish my profile and CV at a public link").check();
   await page.getByRole("button", { exact: true, name: "Save changes" }).click();
-  await expect(page.getByRole("status")).toContainText("Saved.");
+  await confirmPublication(page);
+  await expect(page.getByRole("status")).toContainText("Saved privately.");
   await page.reload();
   await page.getByRole("button", { exact: true, name: "Appearance" }).click();
   await expect(page.getByLabel("Background media URL")).toHaveValue(

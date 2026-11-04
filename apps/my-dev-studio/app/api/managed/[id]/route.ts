@@ -1,3 +1,5 @@
+import { readPublicProfile } from "@shared/services/published-profile";
+
 import { sameOrigin } from "@/features/admin/admin-auth";
 import { managedFailure, privateHeaders, readManagedBody } from "@/features/management/managed-api";
 import {
@@ -17,12 +19,19 @@ export async function PUT(request: Request, context: { params: Promise<{ id: str
   }
 }
 
-export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
+export async function GET(request: Request, context: { params: Promise<{ id: string }> }) {
   try {
     const { repository } = await managedRepository((await context.params).id);
     const snapshot = await repository.read();
+    const publishedSnapshot =
+      new URL(request.url).searchParams.get("knowledge") === "1" && snapshot?.id
+        ? await readPublicProfile(snapshot.id)
+        : undefined;
     return snapshot
-      ? Response.json(snapshot, { headers: privateHeaders })
+      ? Response.json(
+          { ...snapshot, ...(publishedSnapshot === undefined ? {} : { publishedSnapshot }) },
+          { headers: privateHeaders },
+        )
       : Response.json({ error: "Portfolio not found." }, { headers: privateHeaders, status: 404 });
   } catch (error) {
     return managedFailure(error);

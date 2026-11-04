@@ -1,5 +1,7 @@
 # Config catalog
 
+projectPublicProfile builds independent website/CV data projections; contactFields and OutputFields define structured contact exclusions. The public storage boundary is still under construction in PR84.
+
 portfolioTemplates and applyPortfolioTemplate configure profession compositions without copying sample facts or altering privacy/PDF settings. cvLayouts includes ATS-friendly and ATS-friendly compact.
 
 Profile shape, themes, copy, and section metadata for `@shared/config`. This package does not read a database or authorize a request.

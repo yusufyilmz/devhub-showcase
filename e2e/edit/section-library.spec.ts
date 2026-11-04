@@ -4,6 +4,8 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
+import { confirmPublication } from "../support/publication";
+
 test("owner creates a library section, saves a template, exports content, reviews PageForge import and publishes only after save", async ({
   page,
   context,
@@ -101,9 +103,9 @@ test("owner creates a library section, saves a template, exports content, review
   );
   await expect(page.getByRole("region", { name: "Import review" })).toContainText("Imported art");
   await page.getByRole("button", { exact: true, name: "Apply to draft" }).click();
-  await page.getByLabel("Publish my profile and CV at a public link").check();
   await page.getByRole("button", { exact: true, name: "Save changes" }).click();
-  await expect(page.getByRole("status")).toContainText("Saved.");
+  await confirmPublication(page);
+  await expect(page.getByRole("status")).toContainText("Saved privately.");
   await page.reload();
   await page.getByRole("button", { exact: true, name: "Templates" }).click();
   await expect(

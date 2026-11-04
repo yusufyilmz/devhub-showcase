@@ -23,7 +23,7 @@ describe("CvPdf", () => {
         })
       ).status,
     ).toBe(404);
-    expect(mocks.published).toHaveBeenCalledWith("bob");
+    expect(mocks.published).toHaveBeenCalledWith("bob", "cv");
     expect(mocks.render).not.toHaveBeenCalled();
   });
 });

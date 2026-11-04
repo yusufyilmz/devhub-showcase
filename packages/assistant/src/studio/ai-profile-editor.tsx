@@ -28,14 +28,16 @@ export function AiProfileEditor({ readUrl = urls.next.studio.profile() }: { read
     const controller = new AbortController();
     showError("");
     setData(null);
-    request(`${readUrl}?refresh=${refresh}`, { signal: controller.signal })
+    request(`${readUrl}?knowledge=1&refresh=${refresh}`, { signal: controller.signal })
       .then(async (response) => {
         const result = await response.json();
         if (!response.ok) throw new Error(result.error);
         if (!controller.signal.aborted)
           setData({
             owner: buildOwnerPortfolioKnowledge(result),
-            public: buildPublicPortfolioKnowledge(result),
+            public: result.publishedSnapshot
+              ? buildPublicPortfolioKnowledge(result.publishedSnapshot)
+              : null,
           });
       })
       .catch(() => {
@@ -48,8 +50,9 @@ export function AiProfileEditor({ readUrl = urls.next.studio.profile() }: { read
       <section className="editor-card">
         <h2>Your AI profile</h2>
         <p>
-          This knowledge is derived from your saved information. Save draft changes, then reload to
-          inspect the new revision. Building it does not call OpenAI.
+          Private knowledge uses your saved draft. Public knowledge uses the last explicitly
+          published snapshot. Save or publish changes, then reload to inspect the corresponding
+          revision. Building it does not call OpenAI.
         </p>
         <p>
           Public knowledge contains only visible portfolio content. The private owner profile
