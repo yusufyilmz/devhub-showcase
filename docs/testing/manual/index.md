@@ -4,6 +4,8 @@ This is the central manual acceptance-test catalog for work implemented in this 
 
 [Operation monitoring — task 03](operation-monitoring.md): request references and optional safe failure collector; hosted delivery and alert configuration pending.
 
+[Account support — task 32](account-support.md): private operational metadata and audited visitor-chat disable action; migration and hosted checks pending.
+
 ## Before you start
 
 - Use the PR preview that contains the feature and a disposable confirmed account with fictional content. Production-shaped links below are navigation examples, not evidence of deployment or instructions to edit a real portfolio. Replace their hostname with the matching preview; keep the route path.

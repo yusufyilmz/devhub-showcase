@@ -1,3 +1,10 @@
+export type {
+  SupportAccount,
+  SupportProps,
+  SupportReason,
+  SupportSummary,
+} from "./account-support";
+export { AccountSupport } from "./account-support";
 export * from "./avatar";
 export * from "./avatar-group";
 export * from "./carousel";

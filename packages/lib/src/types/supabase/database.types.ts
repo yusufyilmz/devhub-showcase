@@ -500,6 +500,12 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
+      support_accounts: { Args: { after_account?: string }; Returns: Json };
+      support_account_summary: { Args: { target_account: string }; Returns: Json };
+      support_disable_visitor_chat: {
+        Args: { target_account: string; request_id: string; reason: string };
+        Returns: Json;
+      };
       resolve_published_username: {
         Args: { requested_username: string };
         Returns: Array<{ id: string; username: string }>;
