@@ -33,7 +33,7 @@ test("section browser reveals more rows only after explicit activation", async (
   const list = page.getByRole("list", { name: "Available section types" });
   const reveal = page.getByRole("button", { exact: true, name: "Show all section types" });
   await reveal.scrollIntoViewIfNeeded();
-  const expected = info.project.name.startsWith("mobile") ? 6 : 15;
+  const expected = info.project.name.startsWith("mobile") ? 3 : 9;
   await expect(list.locator("li:visible")).toHaveCount(expected);
   await reveal.click();
   await expect(list.locator("li:visible")).toHaveCount(47);

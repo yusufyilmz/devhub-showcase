@@ -9,6 +9,8 @@ import { Card } from "../../cards";
 import { Badge } from "../../feedback/badge";
 import { Input } from "../../forms/input";
 import { Label } from "../../forms/label";
+import { sectionCatalogDescriptions } from "./section-catalog-data";
+import { SectionCatalogPreview } from "./section-catalog-preview";
 import { sectionCatalogStyles } from "./styles";
 import type { Group } from "./types";
 
@@ -32,7 +34,9 @@ export function SectionCatalog() {
   const matches = authorableSectionTypes.filter(
     (type) =>
       (group === "All" || category(type) === group) &&
-      authorableSections[type].name.toLocaleLowerCase().includes(search),
+      `${authorableSections[type].name} ${sectionCatalogDescriptions[type]}`
+        .toLocaleLowerCase()
+        .includes(search),
   );
   return (
     <Card asChild interaction="static" layout="plain" surface="portfolio">
@@ -84,12 +88,11 @@ export function SectionCatalog() {
           {matches.map((type) => (
             <Card asChild interaction="static" key={type} layout="plain" surface="portfolio">
               <li>
-                <span aria-hidden="true" className={sectionCatalogStyles.element9}>
-                  {authorableSections[type].name.slice(0, 1)}
-                </span>
-                <div>
+                <SectionCatalogPreview type={type} />
+                <div className="section-catalog-card-copy">
+                  <span className="section-catalog-card-category">{category(type)}</span>
                   <h4>{authorableSections[type].name}</h4>
-                  <p>{category(type)}</p>
+                  <p>{sectionCatalogDescriptions[type]}</p>
                 </div>
               </li>
             </Card>

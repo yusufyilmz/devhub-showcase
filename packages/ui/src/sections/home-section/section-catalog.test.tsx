@@ -29,6 +29,18 @@ describe("Section catalog", () => {
     expect(within(list).getAllByRole("listitem")).toHaveLength(1);
     expect(within(list).getByRole("heading", { name: "YouTube" })).toBeTruthy();
   });
+  it("shows visual previews and helpful descriptions for every registered section", () => {
+    render(<SectionCatalog />);
+    const list = screen.getByRole("list", { name: "Available section types" });
+    expect(list.querySelectorAll("[data-preview-kind]")).toHaveLength(authorableSectionTypes.length);
+    expect(within(list).getByText("Put your best images together in a visual grid.")).toBeTruthy();
+    fireEvent.change(screen.getByRole("searchbox", { name: "Find a section" }), {
+      target: { value: "visual grid" },
+    });
+    expect(within(list).getAllByRole("listitem")).toHaveLength(1);
+    expect(within(list).getByRole("heading", { name: "Gallery Grid" })).toBeTruthy();
+  });
+
   it("combines category and search filters and restores results from an empty search", () => {
     render(<SectionCatalog />);
     fireEvent.click(screen.getByRole("button", { name: "Connect" }));
