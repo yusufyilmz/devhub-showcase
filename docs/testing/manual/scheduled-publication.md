@@ -1,6 +1,6 @@
 # Reviewed scheduled publication — task 16
 
-**Scope/status:** Implemented checkpoint in draft PR #86. Production execution is not verified. Password protection remains separate and unfinished.
+**Scope/status:** Implemented checkpoint in draft PR #86. Production rollout is tracked in the [rollout record](../publication-rollout.md). Production execution is not verified. Password protection remains separate and unfinished.
 
 **Prerequisites:** Disposable owner and manager accounts; apply the publication, alias, unlisted and `20261104090000_scheduled_publication.sql` migrations to a disposable database. Configure a recurring worker as described below. Use the [shared setup and result rules](index.md#before-you-start) and replace `test-owner`, `PROFILE_ID` and the hostname with your test records and preview. Editor tabs use their parent editor route.
 
@@ -23,9 +23,11 @@
 
 The prepared migration depends on the publication snapshot function. It creates private schedule storage, owner/current-manager RPCs and a worker RPC restricted to `service_role`. It is not applied to production by this PR. Public and unlisted snapshots are supported; unsupported protected modes are rejected.
 
-Set **server-only** `SUPABASE_SERVICE_ROLE_KEY` and `CRON_SECRET` (a random value of at least 32 characters), alongside the existing public Supabase URL. Never prefix either secret with `NEXT_PUBLIC_`. Schedule creation fails closed when these settings are absent. Status/cancellation remain available to authorized owners. The service role is used only by the worker, never by editor requests.
+The app checks these settings before accepting new schedules; the native database worker itself does not send HTTP requests or store either key. Set **server-only** `SUPABASE_SERVICE_ROLE_KEY` and `CRON_SECRET` (a random value of at least 32 characters), alongside the existing public Supabase URL. Never prefix either secret with `NEXT_PUBLIC_`. Schedule creation fails closed when these settings are absent. Status/cancellation remain available to authorized owners. The service role is used only by the worker, never by editor requests.
 
-Configure an authenticated recurring `GET /api/cron/publications` using `Authorization: Bearer <CRON_SECRET>`. Vercel automatically sends this header to configured cron jobs. For a minute-level Vercel scheduler, add the following to the app's `vercel.json` during rollout after checking the plan supports this frequency, or configure an equivalent external scheduler:
+The preferred setup is `20261104093457_enable_publication_cron.sql`, which enables Supabase Cron and runs `public.execute_portfolio_schedules()` every minute inside Postgres. It requires the scheduling migration first and stores no HTTP credentials in the cron command. The job is named `mydevstudio-publication-worker`; inspect its runs in the Supabase Cron dashboard. Ordinary app roles cannot read or manage the cron schema. See the official [Supabase Cron guide](https://supabase.com/docs/guides/cron).
+
+As an alternative, configure an authenticated recurring `GET /api/cron/publications` using `Authorization: Bearer <CRON_SECRET>`. Vercel automatically sends this header to configured cron jobs. For a minute-level Vercel scheduler, add the following to the app's `vercel.json` during rollout after checking the plan supports this frequency, or configure an equivalent external scheduler:
 
 ```json
 {
@@ -33,9 +35,9 @@ Configure an authenticated recurring `GET /api/cron/publications` using `Authori
 }
 ```
 
-No production cron was enabled by this change. Vercel Hobby permits daily jobs; use a plan supporting minute-level jobs or an external scheduler for timely publication. Frequency and timing limitations are documented in [Vercel usage and pricing](https://vercel.com/docs/cron-jobs/usage-and-pricing). Secret authentication, concurrent/duplicate invocation behavior and retry limitations are documented in [Managing Cron Jobs](https://vercel.com/docs/cron-jobs/manage-cron-jobs).
+The repository cron migration must be applied to activate the native database worker. Do not enable both scheduler transports. Vercel Hobby permits daily jobs; use a plan supporting minute-level jobs or an external scheduler for timely publication. Frequency and timing limitations are documented in [Vercel usage and pricing](https://vercel.com/docs/cron-jobs/usage-and-pricing). Secret authentication, concurrent/duplicate invocation behavior and retry limitations are documented in [Managing Cron Jobs](https://vercel.com/docs/cron-jobs/manage-cron-jobs).
 
-Execution processes up to 50 due jobs per invocation, never before their due time. Jobs may run late if the scheduler is delayed, a profile is locked or the batch is full. Transaction failures return 503 and leave pending jobs safe to retry; the next recurring call must retry them because Vercel does not automatically retry failed cron invocations. Per-job authorization, namespace or publication errors roll back both outputs and mark that job failed. Refresh status, correct the issue and review/create a new schedule. Cancellation/replacement/manual publication use the same profile lock as execution. A cancellation that loses to an already committed execution cannot undo that publication; inspect status and explicitly withdraw if needed.
+Execution processes up to 50 due jobs per invocation, never before their due time. Jobs may run late if the scheduler is delayed, a profile is locked or the batch is full. Transaction failures return 503 and leave pending jobs safe to retry; the next recurring call retries them. The native job runs again the next minute; Vercel does not automatically retry a failed HTTP invocation. Per-job authorization, namespace or publication errors roll back both outputs and mark that job failed. Refresh status, correct the issue and review/create a new schedule. Cancellation/replacement/manual publication use the same profile lock as execution. A cancellation that loses to an already committed execution cannot undo that publication; inspect status and explicitly withdraw if needed.
 
 Ownership/management changes cancel pending jobs, even if the old identity is later restored. Workers recheck the current manager membership. Completed, cancelled and failed snapshots expire after 90 days when the worker runs; the editor shows the latest ten records. Account deletion cascades to schedules. The scheduled username is part of the frozen snapshot, but an unpublished draft-only name is not reserved: a later conflicting claim causes a visible failed job rather than replacing another portfolio.
 
