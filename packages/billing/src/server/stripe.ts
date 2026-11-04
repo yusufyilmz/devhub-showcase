@@ -109,7 +109,11 @@ export class StripeBilling {
       (s) => !["canceled", "incomplete_expired"].includes(s.status),
     );
     if (candidates.length > 1) throw new Error("Multiple subscriptions require review.");
-    const subscription = candidates[0];
+    // A terminal subscription still explains why access ended. Sorting its
+    // history is for display only; entitlement decisions use freshly read state.
+    const subscription =
+      candidates[0] ??
+      list.data.filter((s) => s.status === "canceled").sort((a, b) => b.created - a.created)[0];
     const item = subscription?.items.data[0];
     const valid =
       subscription &&
@@ -125,11 +129,7 @@ export class StripeBilling {
       editor: active ? this.config.editor : 0,
       end: new Date(end * 1000).toISOString(),
       start: new Date(start * 1000).toISOString(),
-      status: active
-        ? (subscription.status as "active" | "trialing")
-        : subscription?.status === "past_due"
-          ? "past_due"
-          : "inactive",
+      status: confirmedStatus(subscription?.status, Boolean(active)),
       subscription: subscription?.id ?? null,
     };
   }
@@ -148,4 +148,11 @@ function validateMonthlyTestPrice(price: Stripe.Price) {
     price.billing_scheme !== "per_unit"
   )
     throw new Error("Monthly test price required.");
+}
+
+function confirmedStatus(status: string | undefined, active: boolean): SubscriptionState["status"] {
+  if (active) return status === "trialing" ? "trialing" : "active";
+  if (status === "past_due") return "past_due";
+  if (status === "canceled") return "canceled";
+  return "inactive";
 }

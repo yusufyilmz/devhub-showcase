@@ -33,6 +33,7 @@
     "prepare": "husky",
     "start": "pnpm --filter web start",
     "test": "vitest run --project unit && pnpm --filter my-fitness-app test",
+    "test:billing:postgres": "node tools/scripts/test-billing-postgres.mjs",
     "test:changed": "vitest run --project unit --changed",
     "test:coverage": "vitest run --project unit --coverage",
     "test:e2e": "playwright test",

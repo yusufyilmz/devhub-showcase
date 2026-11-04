@@ -125,3 +125,45 @@ test("checkout return alone never displays active Pro and portal errors explain 
   );
   await expect(page.getByText("hidden provider detail")).toHaveCount(0);
 });
+
+test("confirmed payment failures and cancellation stay actionable without reactivating Pro", async ({
+  page,
+  context,
+}, info) => {
+  await signIn(
+    context,
+    info.project.name.startsWith("mobile")
+      ? "95959595-9595-4595-8595-959595959591"
+      : "95959595-9595-4595-8595-959595959590",
+  );
+  await page.route(`**${profileApi}`, (route) =>
+    route.fulfill({ json: { id: "alpha", isPublic: false } }),
+  );
+  let access = "past_due";
+  await page.route(`**${billingApi}`, (route) => {
+    expect(route.request().method()).toBe("GET");
+    return route.fulfill({
+      json: {
+        ...summary,
+        access,
+        assignedProfileId: null,
+        limits: { portfolio_chat: 0, studio_assistant: 0 },
+        plan: "free",
+      },
+    });
+  });
+  await page.route(`**${urls.next.billing.pricing()}`, (route) =>
+    route.fulfill({ json: {}, status: 503 }),
+  );
+  await page.goto("/admin/billing?checkout=returned");
+  await expect(page.getByRole("heading", { name: "Payment needs attention" })).toBeVisible();
+  await expect(
+    page.getByText("Open Manage subscription to review your test payment method."),
+  ).toBeVisible();
+  await expect(page.getByRole("button", { name: "Use Pro for my portfolio" })).toBeDisabled();
+  await expect(page.getByRole("heading", { name: "Pro is active" })).toHaveCount(0);
+  access = "canceled";
+  await page.getByRole("button", { name: "Refresh status" }).click();
+  await expect(page.getByRole("heading", { name: "Pro subscription canceled" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Pro is active" })).toHaveCount(0);
+});

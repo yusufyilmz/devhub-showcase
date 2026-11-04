@@ -24,9 +24,13 @@ export async function POST(request: Request) {
   if (event.livemode) return new Response("Test events required", { status: 400 });
   const supported = [
     "checkout.session.completed",
+    "checkout.session.async_payment_succeeded",
+    "checkout.session.async_payment_failed",
     "customer.subscription.created",
     "customer.subscription.updated",
     "customer.subscription.deleted",
+    "customer.subscription.paused",
+    "customer.subscription.resumed",
     "invoice.paid",
     "invoice.payment_failed",
   ];

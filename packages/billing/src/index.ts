@@ -30,7 +30,10 @@ export type PlanAccess =
   | "inactive";
 
 function planAccess(record: Entitlement | null, now: number): PlanAccess {
-  if (record?.plan !== "pro") return "free";
+  if (!record) return "free";
+  // A payment failure/cancellation remains actionable even after its grant is Free.
+  if (record.status === "past_due" || record.status === "canceled") return record.status;
+  if (record.plan !== "pro") return "free";
   if (record.status !== "active" && record.status !== "trialing") return record.status;
   if (now < Date.parse(record.period_start)) return "scheduled";
   return now < Date.parse(record.period_end) ? "active" : "expired";
