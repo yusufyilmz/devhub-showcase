@@ -22,7 +22,7 @@ export default async function PublicCvPage({ params }: Props) {
   const { username } = await params;
   const { profile: saved, id, revision } = await getUsernameProfile(username);
   const widget =
-    id && (await premiumChatAvailable(id)) ? (
+    id && saved.publicationVisibility !== "password" && (await premiumChatAvailable(id)) ? (
       <PremiumWidget
         id={id}
         name={saved.name}
@@ -56,7 +56,11 @@ export default async function PublicCvPage({ params }: Props) {
     <>
       {widget}
       <EngineerPortfolio
-        chatIdentity={original && id ? { id, name: saved.name, revision, username } : undefined}
+        chatIdentity={
+          original && id && saved.publicationVisibility !== "password"
+            ? { id, name: saved.name, revision, username }
+            : undefined
+        }
         extras={original}
         ownerLink={<OwnerEditLink floating={!original} username={username} />}
         profile={profile}

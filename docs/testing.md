@@ -2,6 +2,12 @@
 
 Run commands from the repository root using the Node/pnpm versions in [package.json](../package.json). The source of truth is the scripts, [Vitest configuration](../vitest.config.mts), [Playwright configuration](../playwright.config.ts) and [CI workflow](../.github/workflows/ci.yml).
 
+## Manual feature catalog
+
+Start with the [manual testing index](testing/manual/index.md): it contains a dedicated guide for each implemented feature, with prerequisites, numbered actions, clickable links, route paths, expected results and an actual-result/evidence column. Use the [guide template](testing/manual/template.md) for new features. Every feature PR must update its guide and index entry; see [the repository requirement](../AGENTS.md#required-manual-feature-documentation).
+
+The older focused walkthroughs remain linked for deeper cases. For current save/publication behavior, follow the catalog: private saving and confirmed publication are separate actions. Manual runs start Not run; automated evidence does not mark a manual step complete.
+
 ## Standard checks
 
 ```sh

@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { z } from "zod";
 
 import { profile, projectPublicProfile } from "@shared/config";
 import { usernameSchema, validateProfile, validatePublicProfile } from "@shared/lib/profiles";
@@ -77,6 +78,7 @@ export async function listPublishedPortfolioLinks(): Promise<
     const { data, error } = await client
       .from("portfolio_publications")
       .select("username, updated_at")
+      .eq("visibility", "public")
       .order("username")
       .range(offset, offset + 999);
     if (error) throw new ProfileSetupError();
@@ -106,4 +108,43 @@ function discoveryClient() {
     },
   });
   return client;
+}
+
+/** Alias lookup never reads a draft or returns an unpublished destination. */
+export async function resolvePublishedUsername(
+  username: string,
+): Promise<{ id: string; username: string } | null> {
+  if (!usernameSchema.safeParse(username).success) return null;
+  const client = discoveryClient();
+  if (!client) return null;
+  const { data, error } = await client.rpc("resolve_published_username", {
+    requested_username: username,
+  });
+  if (error) throw new ProfileSetupError();
+  const resolved = data?.[0];
+  if (!resolved || !usernameSchema.safeParse(resolved.username).success) return null;
+  return resolved;
+}
+
+/** Only the existence of an explicitly published password gate is public. */
+export async function readPortfolioAccessStatus(
+  username: string,
+): Promise<{ id: string; username: string } | null> {
+  if (!usernameSchema.safeParse(username).success) return null;
+  const client = discoveryClient();
+  if (!client) return null;
+  const { data, error } = await client.rpc("portfolio_access_status", {
+    requested_username: username,
+  });
+  if (error) throw new ProfileSetupError();
+  if (
+    !data ||
+    typeof data !== "object" ||
+    Array.isArray(data) ||
+    typeof data.id !== "string" ||
+    (data.id !== "main" && !z.uuid().safeParse(data.id).success) ||
+    data.username !== username
+  )
+    return null;
+  return { id: data.id, username };
 }

@@ -57,6 +57,23 @@ test("private saves, explicit snapshots, independent fields, rename and withdraw
   expect((await visitor.request.get(`http://localhost:3100/${username}/cv.pdf`)).status()).toBe(
     200,
   );
+  await page.getByRole("combobox", { name: "Portfolio discovery" }).selectOption("unlisted");
+  await page.getByRole("button", { exact: true, name: "Save changes" }).click();
+  await expect(page.locator(".editor-success")).toContainText("Saved privately");
+  const locationTag = `<loc>http://localhost:3100/${username}</loc>`;
+  expect(await (await visitor.request.get("http://localhost:3100/sitemap.xml")).text()).toContain(
+    locationTag,
+  );
+  await confirmPublication(page);
+  expect(
+    await (await visitor.request.get("http://localhost:3100/sitemap.xml")).text(),
+  ).not.toContain(locationTag);
+  await publicPage.reload();
+  await expect(publicPage.getByRole("heading", { level: 1 })).toContainText("Publication Owner");
+  await expect(publicPage.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+  const unlistedCv = await visitor.request.get(`http://localhost:3100/${username}/cv.pdf`);
+  expect(unlistedCv.status()).toBe(200);
+  expect(unlistedCv.headers()["x-robots-tag"]).toContain("noindex");
   await page.getByRole("button", { exact: true, name: "Profile" }).click();
   await page.getByRole("textbox", { exact: true, name: "Full name" }).fill("Private next revision");
   await page.getByLabel("Username", { exact: true }).fill(`${username}-renamed`);
@@ -77,11 +94,33 @@ test("private saves, explicit snapshots, independent fields, rename and withdraw
     `/${username}`,
   );
   await confirmPublication(page);
-  expect((await visitor.request.get(`http://localhost:3100/${username}`)).status()).toBe(404);
+  const oldLink = await visitor.request.get(`http://localhost:3100/${username}`, {
+    maxRedirects: 0,
+  });
+  expect(oldLink.status()).toBe(308);
+
   await publicPage.goto(`/${username}-renamed`);
   await expect(publicPage.getByRole("heading", { level: 1 })).toContainText(
     "Private next revision",
   );
+  const finalUsername = `${username}-final`;
+  await page.getByLabel("Username", { exact: true }).fill(finalUsername);
+  await page.getByRole("button", { exact: true, name: "Save changes" }).click();
+  await expect(page.locator(".editor-success")).toContainText("Saved privately");
+  await confirmPublication(page);
+  for (const alias of [username, `${username}-renamed`]) {
+    for (const suffix of ["", "/cv.pdf", "/icon.svg", "/share.png"]) {
+      const redirect = await visitor.request.get(`http://localhost:3100/${alias}${suffix}`, {
+        maxRedirects: 0,
+      });
+      expect(redirect.status()).toBe(308);
+      const location = redirect.headers().location;
+      if (!location) throw new Error("Alias redirect is missing its destination");
+      expect(new URL(location, "http://localhost:3100").pathname).toBe(
+        `/${finalUsername}${suffix}`,
+      );
+    }
+  }
   await page.getByRole("button", { exact: true, name: "Withdraw public website and CV" }).click();
   await expect(page.getByText("Your saved draft is private until you publish it.")).toBeVisible();
   expect((await visitor.request.get(`http://localhost:3100/${username}-renamed`)).status()).toBe(

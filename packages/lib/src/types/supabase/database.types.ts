@@ -1,6 +1,7 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 type PublicationRow = {
+  visibility: "public" | "unlisted";
   id: string;
   username: string;
   document: Json;
@@ -9,8 +10,8 @@ type PublicationRow = {
 };
 type PublicationTable = {
   Row: PublicationRow;
-  Insert: PublicationRow;
-  Update: Partial<PublicationRow>;
+  Insert: Omit<PublicationRow, "visibility">;
+  Update: Partial<Omit<PublicationRow, "visibility">>;
   Relationships: [];
 };
 
@@ -499,6 +500,31 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
+      resolve_published_username: {
+        Args: { requested_username: string };
+        Returns: Array<{ id: string; username: string }>;
+      };
+      portfolio_access_status: { Args: { requested_username: string }; Returns: Json };
+      portfolio_password_record: { Args: { profile_id: string }; Returns: Json };
+      read_protected_publication: {
+        Args: { profile_id: string; access_version: string; surface: string };
+        Returns: Json;
+      };
+      reserve_portfolio_access_attempt: { Args: { request_bucket: string }; Returns: boolean };
+      publish_portfolio_with_password: {
+        Args: { profile_id: string; expected_revision: number; password_digest: string };
+        Returns: number;
+      };
+      portfolio_schedule_status: { Args: { profile_id: string }; Returns: Json };
+      schedule_portfolio_publication: {
+        Args: { profile_id: string; expected_revision: number; run_at: string; timezone: string };
+        Returns: string;
+      };
+      cancel_portfolio_schedule: {
+        Args: { profile_id: string; schedule_id: string };
+        Returns: boolean;
+      };
+      execute_portfolio_schedules: { Args: Record<string, never>; Returns: number };
       set_portfolio_publication: {
         Args: { profile_id: string; expected_revision: number; publish: boolean };
         Returns: number;

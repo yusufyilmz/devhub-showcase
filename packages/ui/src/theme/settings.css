@@ -5,12 +5,18 @@
 }
 .appearance-quick-actions {
   position: absolute;
-  right: 100%;
+  top: 100%;
+  right: 0;
+  z-index: 110;
   display: flex;
   visibility: hidden;
   gap: 6px;
-  padding-right: 8px;
+  padding: 8px;
   pointer-events: none;
+  background: rgb(var(--surface-rgb));
+  border: 1px solid rgb(var(--border-rgb));
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgb(var(--shadow-rgb) / 0.12);
   opacity: 0;
 }
 .appearance-launcher:hover .appearance-quick-actions,
@@ -296,4 +302,17 @@
   padding: 8px 12px;
   font-size: 12px;
   border-radius: 8px;
+}
+
+/* Keep chrome controls compact even when preference-driven rem spacing grows. */
+.appearance-launcher .theme-toggle {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  min-height: 40px;
+  padding: 0;
+}
+.appearance-launcher .theme-toggle svg {
+  width: 18px;
+  height: 18px;
 }

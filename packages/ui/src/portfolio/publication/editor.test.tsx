@@ -57,4 +57,37 @@ describe("explicit saved revision publication", () => {
       screen.getByRole("button", { name: "Review publication" }).hasAttribute("disabled"),
     ).toBe(true);
   });
+  it("sends a password only during explicit protected publication review", async () => {
+    const change = vi.fn().mockResolvedValue(undefined);
+    const load = vi.fn().mockResolvedValue({ currentRevision: 3, published: null });
+    render(
+      <PublicationControls
+        change={change}
+        dirty={false}
+        disabled={false}
+        load={load}
+        onChanged={vi.fn()}
+        profile={{ ...profile, publicationVisibility: "password" }}
+        revision={3}
+      />,
+    );
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: "Review publication" }).hasAttribute("disabled"),
+      ).toBe(false),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Review publication" }));
+    const field = screen.getByLabelText("Publication password");
+    fireEvent.change(field, { target: { value: "short" } });
+    expect(
+      screen.getByRole("button", { name: "Confirm publication" }).hasAttribute("disabled"),
+    ).toBe(true);
+    fireEvent.change(field, { target: { value: "fictional-portfolio-password" } });
+    expect(change).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Confirm publication" }));
+    await waitFor(() =>
+      expect(change).toHaveBeenCalledWith(true, 3, "fictional-portfolio-password"),
+    );
+    expect(screen.queryByLabelText("Publication password")).toBeNull();
+  });
 });

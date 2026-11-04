@@ -50,6 +50,14 @@ describe("PortfolioSeo", () => {
       });
       expect(getProfileStructuredData()).toMatchObject({ "@type": "WebSite" });
     });
+    it("requests no indexing for unlisted pages without treating them as private", () => {
+      const metadata = portfolioMetadata(
+        { ...profile, publicationVisibility: "unlisted" },
+        "unlisted-owner",
+      );
+      expect(metadata.robots).toEqual({ follow: false, index: false });
+      expect(metadata.alternates?.canonical).toBe(`${siteUrl}/unlisted-owner`);
+    });
     it("paginates anonymous discovery using publication filters and URL columns only", async () => {
       vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://fixture.example");
       vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "fixture-public-key");
@@ -76,6 +84,7 @@ describe("PortfolioSeo", () => {
       expect(urls[0]?.searchParams.get("select")).toBe("username,updated_at");
       expect(urls[0]?.pathname).toBe("/rest/v1/portfolio_publications");
       expect(urls[0]?.searchParams.has("is_public")).toBe(false);
+      expect(urls[0]?.searchParams.get("visibility")).toBe("eq.public");
       expect(urls[1]?.searchParams.get("offset")).toBe("1000");
       expect(fetcher.mock.calls[0]?.[1]).toMatchObject({ cache: "no-store" });
       expect(new Headers(fetcher.mock.calls[0]?.[1]?.headers).get("authorization")).toBe(

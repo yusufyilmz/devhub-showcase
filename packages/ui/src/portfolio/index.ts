@@ -1,3 +1,4 @@
+export { PasswordGate } from "./access/PasswordGate";
 export { AssistantFeedback, AssistantTools, PublishedSources } from "./assistant-tools";
 export { CvVersionsEditor } from "./cv-versions/editor";
 export { EditorGuidance } from "./editor-guidance";

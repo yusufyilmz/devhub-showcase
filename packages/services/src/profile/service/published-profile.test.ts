@@ -2,7 +2,11 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { profile, projectPublicProfile } from "@shared/config";
 
-import { readPublicProfileByUsername, readPublishedProfile } from "./published-profile";
+import {
+  readPublicProfileByUsername,
+  readPublishedProfile,
+  resolvePublishedUsername,
+} from "./published-profile";
 
 describe("published snapshot reads", () => {
   afterEach(() => {
@@ -50,5 +54,25 @@ describe("published snapshot reads", () => {
     vi.stubGlobal("fetch", fetcher);
     await expect(readPublishedProfile()).rejects.toThrow();
     await expect(readPublishedProfile()).rejects.toThrow();
+  });
+  it("looks up one alias without returning private content or a fallback destination", async () => {
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://fixture.example");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "fixture-key");
+    const fetcher = vi
+      .fn()
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify([{ id: "main", username: "current-owner" }])),
+      )
+      .mockResolvedValueOnce(new Response("[]"));
+    vi.stubGlobal("fetch", fetcher);
+    expect(await resolvePublishedUsername("old-owner")).toEqual({
+      id: "main",
+      username: "current-owner",
+    });
+    expect(String(fetcher.mock.calls[0]?.[0])).toContain("/rpc/resolve_published_username");
+    expect(JSON.parse(fetcher.mock.calls[0]?.[1]?.body)).toEqual({
+      requested_username: "old-owner",
+    });
+    expect(await resolvePublishedUsername("withdrawn-owner")).toBeNull();
   });
 });

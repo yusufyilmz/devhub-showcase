@@ -1,5 +1,7 @@
 # UI catalog
 
+PasswordGate (`@shared/ui/portfolio`) is the generic protected-portfolio password form. It accepts an unlock callback; authorization, cookies and navigation stay in the app. Types and token styles live beside it.
+
 RevisionHistory provides explicit inspect/review/restore callbacks with stale-draft protection. FieldVisibilityEditor edits independent website/CV contact choices; types/tests/stories are colocated.
 
 CvVersionsEditor accepts load/save/download callbacks and edits independent private CV snapshots. Version fields and job evidence review live in portfolio/cv-versions; save failures retain local edits while the screen remains open.
@@ -366,4 +368,4 @@ Import homepage compositions from `@shared/ui/sections`. They live in `src/secti
 
 All 47 registered authorable sections have colocated Default, Compact and Empty stories using fictional fixtures from `src/sections/__fixtures__/section-story.ts`. `SectionCatalog` provides a searchable name/category browser for the same registry, without copying its list into another data source.
 
-`PublicationControls` (`@shared/ui/portfolio`) reviews a saved revision and confirms publication or withdrawal through app-provided callbacks; it never saves the draft.
+`PublicationControls` (`@shared/ui/portfolio`) reviews a saved revision and confirms publication or withdrawal through app-provided callbacks; it never saves the draft. Optional scheduling callbacks enable reviewed snapshot scheduling, visible timezone/UTC time, status refresh and cancellation. The app owns authorization, persistence and worker setup.

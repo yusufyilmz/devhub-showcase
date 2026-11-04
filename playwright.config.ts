@@ -24,6 +24,7 @@ export default defineConfig({
     {
       command: "pnpm --filter my-dev-studio start --hostname 127.0.0.1 --port 3100",
       env: {
+        CRON_SECRET: "fixture-only-scheduler-secret-32-characters",
         NEXT_PUBLIC_SITE_URL: "http://localhost:3100",
         NEXT_PUBLIC_SUPABASE_ANON_KEY: "e2e-public-placeholder",
         NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: "e2e-public-placeholder",
@@ -31,6 +32,7 @@ export default defineConfig({
         OPENAI_API_KEY: "",
         REDIS_TOKEN: "",
         REDIS_URL: "",
+        SUPABASE_SERVICE_ROLE_KEY: "fixture-scheduler-service",
       },
       reuseExistingServer: false,
       timeout: 120_000,
