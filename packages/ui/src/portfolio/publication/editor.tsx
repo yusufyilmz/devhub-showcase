@@ -7,6 +7,7 @@ import { projectPublicProfile } from "@shared/config";
 
 import { Button } from "../../buttons/button";
 import { ProposalComparison } from "../proposal-comparison";
+import { PublicationSchedule } from "./schedule";
 import { publicationStyles } from "./styles";
 import type { PublicationProps, PublicationStatus } from "./types";
 
@@ -19,6 +20,7 @@ export function PublicationControls({
   load,
   change,
   onChanged,
+  scheduling,
 }: PublicationProps) {
   const [status, setStatus] = useState<PublicationStatus | null>(null);
   const [error, setError] = useState("");
@@ -144,6 +146,16 @@ export function PublicationControls({
             Cancel publication
           </Button>
         </div>
+      )}
+      {scheduling && (
+        <PublicationSchedule
+          blocked={blocked}
+          key={`${revision}-${status?.published?.updated_at ?? "private"}`}
+          onScheduled={() => setReview(false)}
+          reviewing={review}
+          revision={revision}
+          scheduling={scheduling}
+        />
       )}
       {status?.published && (
         <Button disabled={blocked} onClick={() => update(false)} type="button" variant="outline">
