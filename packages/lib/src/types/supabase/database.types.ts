@@ -504,6 +504,17 @@ export interface Database {
         Args: { requested_username: string };
         Returns: Array<{ id: string; username: string }>;
       };
+      portfolio_access_status: { Args: { requested_username: string }; Returns: Json };
+      portfolio_password_record: { Args: { profile_id: string }; Returns: Json };
+      read_protected_publication: {
+        Args: { profile_id: string; access_version: string; surface: string };
+        Returns: Json;
+      };
+      reserve_portfolio_access_attempt: { Args: { request_bucket: string }; Returns: boolean };
+      publish_portfolio_with_password: {
+        Args: { profile_id: string; expected_revision: number; password_digest: string };
+        Returns: number;
+      };
       portfolio_schedule_status: { Args: { profile_id: string }; Returns: Json };
       schedule_portfolio_publication: {
         Args: { profile_id: string; expected_revision: number; run_at: string; timezone: string };

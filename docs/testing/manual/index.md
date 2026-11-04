@@ -58,6 +58,10 @@ For local fixture setup and commands, see [testing and verification](../../testi
 | Fresh Next.js build and CI regression — task 04 support        | Build fix shipped in PR #84; production verification is separate                                              | [Open guide](ci-build.md)              |
 | Reviewed scheduled snapshots — task 16                         | Implemented checkpoint; migration, worker credentials and recurring scheduler required; production unverified | [Open guide](scheduled-publication.md) |
 
+## Password access preparation
+
+[Password access guide](password-access.md) records the tested database/cryptographic core and the unfinished UI/API/route work. It is not a completed feature.
+
 ## Work that must not be marked implemented
 
 Password-protected portfolio access remains unfinished in [draft PR #86](https://github.com/yusufyilmz/devhub-showcase/pull/86). Public/unlisted discovery is only part of task 15; unlisted content is accessible by link. Scheduled snapshots are implemented but require the documented worker rollout. Do not claim password protection, live cron execution or production migration verification from local tests.

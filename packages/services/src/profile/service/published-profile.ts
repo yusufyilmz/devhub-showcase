@@ -124,3 +124,25 @@ export async function resolvePublishedUsername(
   if (!resolved || !usernameSchema.safeParse(resolved.username).success) return null;
   return resolved;
 }
+
+/** Only the existence of an explicitly published password gate is public. */
+export async function readPortfolioAccessStatus(
+  username: string,
+): Promise<{ id: string; username: string } | null> {
+  if (!usernameSchema.safeParse(username).success) return null;
+  const client = discoveryClient();
+  if (!client) return null;
+  const { data, error } = await client.rpc("portfolio_access_status", {
+    requested_username: username,
+  });
+  if (error) throw new ProfileSetupError();
+  if (
+    !data ||
+    typeof data !== "object" ||
+    Array.isArray(data) ||
+    typeof data.id !== "string" ||
+    data.username !== username
+  )
+    return null;
+  return { id: data.id, username };
+}

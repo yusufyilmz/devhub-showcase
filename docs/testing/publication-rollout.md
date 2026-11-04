@@ -8,7 +8,7 @@ The user authorized applying the pending database migrations and configuring the
 - Vercel: `devhub-showcase`, project `prj_6vMihdg2V3t5405P0RdV4RNmEtpH`.
 - Production: [MyDevStudio](https://mydevstudio.vercel.app/), path `/`.
 - Production commit at inspection: `57c5e1b5c83d936da8b68f8077ae19187043e444`, merged PR #84.
-- Working branch: `feat/publishing-policies`, draft [PR #86](https://github.com/yusufyilmz/devhub-showcase/pull/86).
+- Working branch: `feat/protected-publications`, based on current `main`. PR #86 was merged into `feat/publication-foundation`, so its changes are carried forward in a follow-up PR targeting `main`.
 
 ## Migration state
 
@@ -23,6 +23,12 @@ Apply by migration name and dependency order. The connected migration tool recor
 | `20261103150000_unlisted_publications.sql`     | Pending prerequisite      | Requires publication snapshots.                                                                   |
 | `20261104090000_scheduled_publication.sql`     | Pending prerequisite      | Requires publication snapshots; prepare aliases/visibility first.                                 |
 | `20261104093457_enable_publication_cron.sql`   | Prepared, not applied     | Requires the scheduled worker function.                                                           |
+
+## Manual fallback for expired connector confirmations
+
+The publication confirmation expired repeatedly without executing. Open [the project SQL Editor](https://supabase.com/dashboard/project/quepwjalwkfzxyqhtyby/sql/new), path `/dashboard/project/quepwjalwkfzxyqhtyby/sql/new`, copy the complete [remaining-setup script](../../supabase/rollout/publication-setup.sql), and run it once. It applies the five pending migrations in one transaction, records the repository versions, then reports public snapshot counts and the active cron job. It requires no credentials in the editor. It deliberately excludes unfinished password-protection work.
+
+If it reports that publication setup already exists or is partially applied, stop and inspect state before rerunning. Do not drop existing publication tables or rerun the two already-applied prerequisite migrations.
 
 ## Recurring worker
 
