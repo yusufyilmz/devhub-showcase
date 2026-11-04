@@ -7,6 +7,7 @@ import {
   authorableSectionTypes,
   getSectionRenderers,
 } from "../packages/config/src/sections/authorable-sections.ts";
+import { supportRpcRequest } from "./support/account-support.mjs";
 
 // Test-only transport fixture, never imported by application code. Public
 // records are read only. Two isolated fake accounts can save their own starter.
@@ -496,7 +497,7 @@ createServer(async (request, response) => {
     await scheduleRequest(request, response, owner, url.pathname.split("/").at(-1));
     return true;
   }
-  if (await publicationRpcRequest(request, response, owner, url)) return;
+  if (await extendedRpcRequest(request, response, owner, url)) return;
   if (["/rest/v1/portfolio_publications", "/rest/v1/portfolio_public_cvs"].includes(url.pathname))
     return publicSnapshotRequest(response, url, owner);
   if (url.pathname === "/rest/v1/rpc/is_portfolio_admin") {
@@ -889,7 +890,7 @@ async function passwordRequest(request, response, action) {
   );
 }
 
-async function publicationRpcRequest(request, response, owner, url) {
+async function extendedRpcRequest(request, response, owner, url) {
   if (
     [
       "portfolio_access_status",
@@ -915,7 +916,7 @@ async function publicationRpcRequest(request, response, owner, url) {
     );
     return true;
   }
-  return false;
+  return supportRpcRequest(request, response, owner, url);
 }
 
 function updateFixturePassword(found, input, withPassword) {

@@ -37,3 +37,7 @@ Task [01 — Billing reliability](https://app.notion.com/40bbddaed4fe81bb9c77ee4
 ## Monitoring group follow-up
 
 [03 — Production monitoring](https://app.notion.com/40bbddaed4fe81daad66f72a6974569d) now has request correlation, safe operation events and an optional collector implementation on `feat/operation-monitoring`, stacked on PR #88. Add its [manual testing section](manual/operation-monitoring.md) to the task once the workspace block limit is resolved. Hosted receiver/alert receipt remains Not run. Existing task content was preserved; no new content-write retry was attempted.
+
+## Account support follow-up
+
+[32 — Account support dashboard](https://app.notion.com/40bbddaed4fe81fba324dbd1a833c235) has a metadata-only dashboard and atomic audited chat-disable action on `feat/account-support`, stacked on PR #89. Its [manual guide](manual/account-support.md) is ready for the task-body How-to-test section after the workspace block limit is resolved. No content-write retry was attempted. Task 34 remains pending its own operation registry/retry implementation; no production migration was applied.

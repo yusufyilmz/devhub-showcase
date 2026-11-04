@@ -1,4 +1,7 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
+
+import { Button } from "@shared/ui/button";
 
 import { CreatePortfolio } from "@/features/management/create-portfolio";
 import { requirePortfolioAdmin } from "@/features/management/managed-portfolios";
@@ -31,6 +34,9 @@ export default async function PortfolioManager({
           <h1>Manage portfolios</h1>
           <p>Create temporary portfolios, import content and manage publishing.</p>
         </div>
+        <Button asChild variant="secondary">
+          <Link href="/admin/support">Account support</Link>
+        </Button>
         <a className="studio-secondary" href="/admin">
           My portfolio
         </a>

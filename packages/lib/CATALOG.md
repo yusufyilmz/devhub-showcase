@@ -28,3 +28,5 @@ Validation, Supabase helpers, and shared types for `@shared/lib`. Domain service
 | `@shared/lib/cache`             | `src/cache`                         | Service worker cache manager                              |
 
 Generated Supabase schema lives in `src/types/supabase/database.types.ts` and is exported through `@shared/lib/types` only.
+
+Support RPC types in the Database schema cover bounded metadata listing, account summaries and audited visitor-chat opt-out. Authorization is enforced in the reviewed account-support migration; no private documents are returned.
