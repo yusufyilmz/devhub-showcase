@@ -225,6 +225,9 @@ function TaskActions({
   status: Task["status"];
   task: Task;
 }) {
+  const actionStyle = showLabels
+    ? { size: "sm" as const, variant: "outline" as const }
+    : { className: "icon-btn", variant: "unstyled" as const };
   return (
     <div className="tree-actions">
       {childCount > 0 && task.scope !== "template" ? (
@@ -235,12 +238,10 @@ function TaskActions({
       {canAdd ? (
         <LibraryButton
           aria-label={`Add subtask to ${task.title}`}
-          className={showLabels ? undefined : "icon-btn"}
+          {...actionStyle}
           disabled={readOnly || busy}
           onClick={onAdd}
-          size="sm"
           type="button"
-          variant={showLabels ? "outline" : "unstyled"}
         >
           <Plus aria-hidden="true" size={16} />
           {showLabels && "Add subtask"}
@@ -249,12 +250,10 @@ function TaskActions({
       {task.scope !== "generated" && task.kind !== "day" ? (
         <LibraryButton
           aria-label={`Edit ${task.title}`}
-          className={showLabels ? undefined : "icon-btn"}
+          {...actionStyle}
           disabled={readOnly || busy}
           onClick={onEdit}
-          size="sm"
           type="button"
-          variant={showLabels ? "outline" : "unstyled"}
         >
           <Pencil aria-hidden="true" size={15} />
           {showLabels && "Edit"}
