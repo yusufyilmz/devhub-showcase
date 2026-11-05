@@ -81,6 +81,7 @@ in src/cards/surfaces.css and are imported by cards and controls.
 
 HomeChatLauncher in src/sections/home-section/chat-launcher.tsx composes the shared
 ChatComposer and opens the authenticated Studio assistant below the capabilities strip.
+ChatComposer also accepts optional controls and a message length limit for Fitness.
 ChatComposer and StudioChatScreen from @shared/ui/display provide the compact icon
 composer and responsive assistant shell. They receive callbacks and do not fetch
 or save data. Styles use shared semantic, spacing, elevation and radius tokens.

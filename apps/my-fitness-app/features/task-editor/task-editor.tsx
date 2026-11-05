@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 
 import { ArrowDown, ArrowUp, Trash2 } from "lucide-react";
 
+import type { FitnessSuggestion, TaskEditProposal } from "@shared/assistant/fitness-contract";
 import { TaskService } from "@shared/services/fitness/task";
 import type { Workspace } from "@shared/services/types";
 import { createTask, defaultDetails, type Task, type TaskKind } from "@shared/services/types";
@@ -33,7 +34,10 @@ import { Textarea as LibraryTextarea } from "@shared/ui/textarea";
 
 import { IngredientEditor } from "./ingredient-editor";
 export interface TaskEditorTarget {
+  editDraft?: TaskEditProposal;
   parent?: Task;
+  scheduleDraft?: { time: string; weekdays: number[] };
+  suggestion?: FitnessSuggestion;
   task?: Task;
 }
 interface Props {
@@ -68,26 +72,41 @@ const nextKind = (parent?: Task): TaskKind =>
           ? "exercise"
           : "meal";
 const tasks = new TaskService();
+function initializeEdit(task: Task, edit?: TaskEditProposal, time?: string): Task {
+  const details =
+    task.details.type === "set" && edit?.targetReps != null
+      ? { ...task.details, targetReps: edit.targetReps }
+      : task.details;
+  return {
+    ...task,
+    details,
+    notes: edit?.notes ?? task.notes,
+    time: time ?? task.time,
+    title: edit?.title ?? task.title,
+  };
+}
+
 export function TaskEditor({ workspace, target, busy, error, onClose, onSave, onError }: Props) {
-  const [draft, setDraft] = useState<Task>(
-    () =>
-      target.task ??
-      createTask({
-        date: target.parent?.date ?? null,
-        details: defaultDetails(nextKind(target.parent)),
-        id: crypto.randomUUID(),
-        kind: nextKind(target.parent),
-        parentId: target.parent?.id ?? null,
-        position: tasks.children(workspace.tasks, target.parent?.id ?? null).length,
-        scope: target.parent?.scope ?? "template",
-        title: "",
-      }),
+  const [draft, setDraft] = useState<Task>(() =>
+    target.task
+      ? initializeEdit(target.task, target.editDraft, target.scheduleDraft?.time)
+      : createTask({
+          date: target.parent?.date ?? null,
+          details: defaultDetails(nextKind(target.parent)),
+          id: crypto.randomUUID(),
+          kind: nextKind(target.parent),
+          notes: target.suggestion?.notes ?? "",
+          parentId: target.parent?.id ?? null,
+          position: tasks.children(workspace.tasks, target.parent?.id ?? null).length,
+          scope: target.parent?.scope ?? "template",
+          title: target.suggestion?.title ?? "",
+        }),
   );
   const [ingredients, setIngredients] = useState(
     workspace.ingredients.filter((i) => i.mealTaskId === draft.id),
   );
   const schedule = workspace.schedules.find((s) => s.taskId === draft.id);
-  const [days, setDays] = useState(schedule?.weekdays ?? []);
+  const [days, setDays] = useState(target.scheduleDraft?.weekdays ?? schedule?.weekdays ?? []);
   const previousFocus = useRef<HTMLElement | null>(null);
   const heading = target.task ? "Edit task" : target.parent ? "Add subtask" : "New task";
   async function submit(e: React.FormEvent) {

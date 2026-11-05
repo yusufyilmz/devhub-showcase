@@ -7,7 +7,7 @@ export function dayHref(date: string, taskId?: string) {
   if (taskId) query.set("task", taskId);
   return `?${query.toString()}`;
 }
-export function useAgendaNavigation(today: string) {
+export function useAgendaNavigation(today: string, allowAssistant: boolean) {
   const [view, setView] = useState({
     date: today,
     tab: "Today",
@@ -20,7 +20,9 @@ export function useAgendaNavigation(today: string) {
       const date = parsedDate.success ? parsedDate.data : today;
       const requested = q.get("view");
       const tab =
-        requested && ["Tasks", "Week", "Calendar", "More"].includes(requested)
+        requested &&
+        (["Tasks", "Week", "Calendar", "More"].includes(requested) ||
+          (allowAssistant && requested === "Assistant"))
           ? requested
           : "Today";
       setView({ date, tab, taskId: tab === "Today" ? q.get("task") : null });
@@ -28,7 +30,7 @@ export function useAgendaNavigation(today: string) {
     restore();
     window.addEventListener("popstate", restore);
     return () => window.removeEventListener("popstate", restore);
-  }, [today]);
+  }, [allowAssistant, today]);
   function navigate(next: typeof view) {
     setView(next);
     const query = new URLSearchParams({

@@ -8,13 +8,17 @@ local total=redis.call('INCR',KEYS[2])
 if total==1 then redis.call('EXPIRE',KEYS[2],86400) end
 if total>100 then return 0 end
 return 1`;
-export async function allowStudioAssistant(account: string) {
+async function allowAssistant(scope: string, account: string) {
   const redis = new Redis({ token: process.env.REDIS_TOKEN, url: process.env.REDIS_URL });
   return (
-    (await redis.eval(
-      studioLimitScript,
-      [`studio-assistant:user:${account}`, "studio-assistant:global"],
-      [],
-    )) === 1
+    (await redis.eval(studioLimitScript, [`${scope}:user:${account}`, `${scope}:global`], [])) === 1
   );
+}
+
+export function allowStudioAssistant(account: string) {
+  return allowAssistant("studio-assistant", account);
+}
+
+export function allowFitnessAssistant(account: string) {
+  return allowAssistant("fitness-assistant", account);
 }

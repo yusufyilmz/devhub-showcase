@@ -20,7 +20,9 @@
     "types:check": "pnpm typecheck"
   },
   "dependencies": {
+    "@shared/assistant": "workspace:*",
     "@shared/auth": "workspace:*",
+    "@shared/cache": "workspace:*",
     "@shared/config": "workspace:*",
     "@shared/notifications": "workspace:*",
     "@shared/runtime": "workspace:*",

@@ -15,6 +15,7 @@ export function CvVersionsEditor({
   load,
   save,
   downloadHref,
+  requestInterviewPrep,
 }: CvVersionsProps) {
   const [library, setLibrary] = useState<CvLibrary>({ revision: 0, variants: [] });
   const [selected, setSelected] = useState("");
@@ -139,6 +140,7 @@ export function CvVersionsEditor({
               disabled={busy || library.variants.length >= 8}
               key={variant.id}
               onCreate={add}
+              requestInterviewPrep={requestInterviewPrep}
               variant={variant}
             />
           </fieldset>

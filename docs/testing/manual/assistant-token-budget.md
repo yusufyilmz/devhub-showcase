@@ -1,0 +1,16 @@
+# Assistant token budgeting
+
+**Scope/status:** Implemented for the existing Studio Editor, Portfolio Chat, and CV Import provider requests. The additional assistant prompts are ready to copy from the [rollout](../../features/assistant-rollout.md).
+
+**Prerequisites:** Use a matching preview with a fictional published portfolio, a disposable owner account, and either a stub provider or explicitly configured preview credentials. Use a fictional CV. A live test can consume the configured provider and app allowance. Substitute the preview hostname and disposable username in the links.
+
+**Manual result:** Hosted checks not run.
+
+| Step | Clickable URL                                                  | Route path         | Action                                                                                                   | Expected result                                                                                                              | Actual result / evidence                                                      |
+| ---- | -------------------------------------------------------------- | ------------------ | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| 1    | [Studio chat](https://mydevstudio.vercel.app/admin/chat)       | `/admin/chat`      | Ask for a rewrite with a configured Studio agent. Review the proposed text.                              | The bundled rewrite instructions and external configuration both apply. The proposal is reviewable.                          | Provider fixture covers instruction composition. Hosted check not run.        |
+| 2    | [Studio chat](https://mydevstudio.vercel.app/admin/chat)       | `/admin/chat`      | Use a fictional draft over the local token budget and request feedback. Then retry with a smaller draft. | Oversized text yields the existing assistant error. The smaller request can return a proposal.                               | Provider fixture covers oversized rejection. Hosted check not run.            |
+| 3    | [Public portfolio](https://mydevstudio.vercel.app/test-owner)  | `/test-owner`      | Ask the portfolio assistant a question about a published project, then ask about a private project.      | The answer uses published context and omits private facts.                                                                   | Local model fixtures cover the public context boundary. Hosted check not run. |
+| 4    | [Owner editor](https://mydevstudio.vercel.app/test-owner/edit) | `/test-owner/edit` | Import a fictional CV through the editor.                                                                | The existing review screen shows extracted fields. The tokenizer estimates prompt text while the upload follows file limits. | Provider fixture covers the attachment boundary. Hosted check not run.        |
+
+See the [provider tests](../../../packages/assistant/src/services/provider.test.ts) and [manual testing index](index.md).

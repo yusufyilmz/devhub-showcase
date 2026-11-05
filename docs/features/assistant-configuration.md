@@ -20,13 +20,16 @@ executed. This is configuration reuse, not an Agent Builder workflow runner.
 
 OPENAI_EDITOR_MODEL, OPENAI_CHAT_MODEL and OPENAI_CV_MODEL override saved models.
 Without an agent ID, OPENAI_EDITOR_INSTRUCTIONS, OPENAI_CHAT_INSTRUCTIONS and
-OPENAI_CV_INSTRUCTIONS allow externally managed instructions. Existing bundled
-instructions remain compatibility defaults until each deployment migrates.
+OPENAI_CV_INSTRUCTIONS allow externally managed instructions. Bundled task instructions are appended to external instructions so workflow-specific
+guidance, such as focused writing or section feedback, is still supplied.
 Configured agent lookup failures never silently fall back.
 
 The key needs agents read and Responses write permissions. No paid request was
 made during development; project access and configured model availability must be
 verified in staging. Do not put these values in NEXT_PUBLIC variables.
+
+See the [assistant rollout and prompt pack](assistant-rollout.md) for token budgets
+and copy-ready configuration.
 
 ## Instruction contracts
 

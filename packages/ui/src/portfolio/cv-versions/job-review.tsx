@@ -7,18 +7,24 @@ import { Button } from "../../buttons/button";
 import { Input } from "../../forms/input";
 import { Label } from "../../forms/label";
 import { Textarea } from "../../forms/textarea";
+import { JobInterviewPrep } from "./job-interview-prep";
 import type { CvJobReviewProps } from "./types";
-export function CvJobReview({ variant, onCreate, disabled }: CvJobReviewProps) {
+export function CvJobReview({
+  variant,
+  onCreate,
+  disabled,
+  requestInterviewPrep,
+}: CvJobReviewProps) {
   const [job, setJob] = useState("");
   const [review, setReview] = useState<ReturnType<typeof suggestCvEvidence> | null>(null);
   const [selected, setSelected] = useState<string[]>([]);
+  const choices = review?.filter((item) => selected.includes(`${item.field}:${item.id}`)) ?? [];
   return (
     <section aria-label="Job-specific CV review" className="editor-fields">
       <h3>Find relevant evidence for a job</h3>
       <p>
-        Local keyword matching only: no AI requests, invented qualifications or rewritten
-        achievements. A word match is not proof that a requirement is met. Review the existing
-        evidence yourself; missing requirements stay missing.
+        Review keyword matches against your existing CV. A word match does not establish that you
+        meet a requirement.
       </p>
       <Label>
         Job description
@@ -71,18 +77,20 @@ export function CvJobReview({ variant, onCreate, disabled }: CvJobReviewProps) {
           })}
           <Button
             disabled={disabled || !selected.length}
-            onClick={() =>
-              onCreate(
-                tailorCvVariant(
-                  variant,
-                  review.filter((item) => selected.includes(`${item.field}:${item.id}`)),
-                ),
-              )
-            }
+            onClick={() => onCreate(tailorCvVariant(variant, choices))}
             type="button"
           >
             Create reviewed job version
           </Button>
+          {requestInterviewPrep && choices.length > 0 && (
+            <JobInterviewPrep
+              choices={choices}
+              job={job}
+              key={selected.join("|")}
+              profile={variant.profile}
+              request={requestInterviewPrep}
+            />
+          )}
         </>
       )}
     </section>

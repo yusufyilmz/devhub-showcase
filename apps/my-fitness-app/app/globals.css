@@ -2364,3 +2364,227 @@ textarea::placeholder {
     bottom: calc(78px + env(safe-area-inset-bottom));
   }
 }
+
+.fitness-assistant-trigger[data-slot="button"] {
+  min-height: 36px;
+}
+@media (max-width: 440px) {
+  .fitness-assistant-trigger[data-slot="button"] {
+    line-height: 1.2;
+    white-space: normal;
+  }
+}
+
+.fitness-assistant-proposal,
+.fitness-assistant-proposal li {
+  display: grid;
+  gap: 12px;
+}
+
+.fitness-assistant-form button {
+  height: auto;
+  min-height: 36px;
+  white-space: normal;
+}
+
+.fitness-assistant-proposal li {
+  padding-block: 12px;
+  border-block-start: 1px solid var(--line);
+}
+
+.fitness-assistant-page {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: calc(100dvh - 86px);
+}
+
+.fitness-assistant-page-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-block: 12px;
+}
+
+.fitness-assistant-thread {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  width: min(100%, 46rem);
+  min-width: 0;
+  padding-block: 12px 44px;
+  margin-inline: auto;
+}
+
+.fitness-assistant-thread[data-started="true"] {
+  justify-content: flex-start;
+  padding-bottom: 0;
+}
+
+.fitness-assistant-welcome {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  text-align: center;
+}
+
+.fitness-assistant-welcome svg {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 6px;
+  color: var(--accent);
+}
+
+.fitness-assistant-welcome h1 {
+  font-size: clamp(25px, 4.5vw, 40px);
+  font-weight: 620;
+  line-height: 1.15;
+  letter-spacing: -0.045em;
+}
+
+.fitness-assistant-thread[data-started="true"] .fitness-assistant-welcome {
+  justify-items: start;
+}
+
+.fitness-assistant-thread[data-started="true"] .fitness-assistant-welcome h1 {
+  font-size: 19px;
+  letter-spacing: -0.02em;
+}
+
+.fitness-assistant-welcome p,
+.fitness-assistant-caption {
+  color: var(--muted);
+}
+
+.fitness-assistant-messages:has(.fitness-assistant-user) {
+  display: grid;
+  gap: 22px;
+}
+
+.fitness-assistant-messages:not(:has(.fitness-assistant-user)) {
+  display: none;
+}
+
+.fitness-assistant-turn {
+  display: grid;
+  gap: 14px;
+}
+
+.fitness-assistant-user {
+  justify-self: end;
+  max-width: min(84%, 38rem);
+  padding: 10px 15px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  background: var(--accent-soft);
+  border-radius: 18px 18px 4px 18px;
+}
+
+.fitness-assistant-reply {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.fitness-assistant-compose {
+  display: grid;
+  gap: 12px;
+}
+
+.fitness-assistant-thread[data-started="true"] .fitness-assistant-compose {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  padding-block: 10px;
+  margin-top: auto;
+  background: var(--bg, var(--surface-soft));
+}
+
+.fitness-assistant-compose .studio-chat-composer {
+  padding: 12px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 6%);
+}
+
+.fitness-assistant-compose .studio-chat-composer:focus-within {
+  border-color: var(--accent);
+}
+
+.fitness-assistant-compose .studio-chat-composer textarea.ui-input {
+  min-height: 62px;
+  max-height: 180px;
+  padding: 8px 10px;
+  margin: 0;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+  resize: none;
+  outline: 0;
+  background: transparent;
+  border: 0;
+}
+
+.fitness-assistant-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.fitness-assistant-toolbar label {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin: 0;
+}
+
+.fitness-assistant-toolbar select {
+  width: auto;
+  max-width: min(100%, 13rem);
+  padding: 6px 9px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--surface-soft);
+  border-radius: 10px;
+}
+
+.fitness-assistant-starters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+}
+
+.fitness-assistant-starters button {
+  min-height: 36px;
+  border-radius: 999px;
+}
+
+.fitness-assistant-caption {
+  font-size: 12px;
+  text-align: center;
+}
+
+.fitness-assistant-compose > .fitness-assistant-proposal {
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+@media (max-width: 700px) {
+  .fitness-assistant-page {
+    min-height: calc(100dvh - 128px - env(safe-area-inset-bottom));
+  }
+
+  .fitness-assistant-thread[data-started="true"] .fitness-assistant-compose {
+    bottom: calc(68px + env(safe-area-inset-bottom));
+  }
+}

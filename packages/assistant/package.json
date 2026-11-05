@@ -4,6 +4,8 @@
   "private": true,
   "exports": {
     ".": "./src/index.ts",
+    "./fitness": "./src/models/fitness-assistant.ts",
+    "./fitness-contract": "./src/models/fitness-assistant-contract.ts",
     "./models/*": "./src/models/*",
     "./services/*": "./src/services/*",
     "./chat-section": "./src/chat-section/index.ts",
@@ -35,6 +37,7 @@
     "class-variance-authority": "catalog:",
     "cn": "catalog:",
     "compromise": "catalog:",
+    "js-tiktoken": "catalog:",
     "lucide-react": "catalog:",
     "openai": "catalog:",
     "pino": "catalog:",

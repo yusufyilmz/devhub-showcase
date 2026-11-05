@@ -45,6 +45,18 @@ test("private CV versions recover failed saves and tailor evidence without publi
     revision++;
     return route.fulfill({ json: { revision, variants } });
   });
+  await page.route(`**${urls.next.studio.interviewPrep()}`, (route) => {
+    const input = route.request().postDataJSON();
+    expect(input.evidence).toHaveLength(1);
+    expect(input.job).toContain("TypeScript frontend");
+    return route.fulfill({
+      json: {
+        gaps: ["Confirm production scale."],
+        questions: ["How did you test the frontend?"],
+        summary: "Discuss the selected TypeScript evidence.",
+      },
+    });
+  });
   await page.goto(`/${mobile ? "mobile" : "desktop"}-assistant-tools/edit`);
   await page.getByRole("button", { exact: true, name: "CV versions" }).click();
   await page.getByRole("button", { name: "Create fresh version from profile" }).click();
@@ -72,6 +84,9 @@ test("private CV versions recover failed saves and tailor evidence without publi
     .getByRole("checkbox")
     .first()
     .check();
+  await page.getByRole("button", { name: "Draft interview prep" }).click();
+  await expect(page.getByText("How did you test the frontend?")).toBeVisible();
+  expect(revision).toBe(1);
   await page.getByRole("button", { name: "Create reviewed job version" }).click();
   await page.getByRole("button", { exact: true, name: "Save CV versions" }).click();
   await expect(

@@ -29,6 +29,7 @@ import { ThemeToggle } from "@shared/ui/theme";
 
 import { DayAgenda } from "@/features/agenda/day-agenda";
 import { TaskDetails } from "@/features/agenda/task-details";
+import type { TaskEditorTarget } from "@/features/task-editor/task-editor";
 import { WeeklyPlanner } from "@/features/weekly-planner/weekly-planner";
 
 import { CalendarView } from "./calendar-view";
@@ -57,6 +58,7 @@ type TreeProps = {
 };
 
 export function WorkspaceFrame({
+  assistant,
   busy,
   children,
   date,
@@ -72,6 +74,7 @@ export function WorkspaceFrame({
   taskId,
   today,
 }: {
+  assistant?: ReactNode;
   busy: boolean;
   children: ReactNode;
   date: string;
@@ -91,20 +94,22 @@ export function WorkspaceFrame({
     <div className="app">
       <WorkspaceSidebar name={name} readOnly={readOnly} setTab={setTab} tab={tab} />
       <main className="main">
-        <WorkspaceTopbar busy={busy} readOnly={readOnly} tab={tab} />
+        <WorkspaceTopbar assistant={assistant} busy={busy} readOnly={readOnly} tab={tab} />
         {readOnly ? <ReadOnlyBanner /> : null}
-        <PageHeading
-          date={date}
-          name={name}
-          selectedTitle={selectedTitle}
-          setDate={setDate}
-          tab={tab}
-          taskId={taskId}
-          today={today}
-        />
+        {tab !== "Assistant" && (
+          <PageHeading
+            date={date}
+            name={name}
+            selectedTitle={selectedTitle}
+            setDate={setDate}
+            tab={tab}
+            taskId={taskId}
+            today={today}
+          />
+        )}
         {error ? <ErrorBanner message={error} onDismiss={onDismissError} /> : null}
         {children}
-        <footer>My Fitness Studio · A little better, every day.</footer>
+        {tab !== "Assistant" && <footer>My Fitness Studio · A little better, every day.</footer>}
       </main>
       {overlay}
     </div>
@@ -145,7 +150,7 @@ export function WorkspacePanels({
   selectedTask: Task | null;
   setDate: (date: string) => void;
   setError: (message: string) => void;
-  setTarget: (target: { parent?: Task; task?: Task } | null) => void;
+  setTarget: (target: TaskEditorTarget | null) => void;
   setTemplateRoot: (id: string | null) => void;
   state: Workspace;
   tab: string;
@@ -303,10 +308,12 @@ function ReadOnlyBanner() {
 }
 
 function WorkspaceTopbar({
+  assistant,
   busy,
   readOnly,
   tab,
 }: {
+  assistant?: ReactNode;
   busy: boolean;
   readOnly: boolean;
   tab: string;
@@ -315,6 +322,7 @@ function WorkspaceTopbar({
     <header className="topbar">
       <span className="breadcrumb">My Fitness Studio / {tab}</span>
       <div className="topbar-actions">
+        {assistant}
         <ThemeToggle />
         <Badge role="status" variant="secondary">
           {syncLabel(readOnly, busy)}

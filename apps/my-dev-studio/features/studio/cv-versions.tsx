@@ -38,11 +38,28 @@ export function PrivateCvVersions({
     },
     [request],
   );
+  const requestInterviewPrep = useCallback<
+    NonNullable<React.ComponentProps<typeof CvVersionsEditor>["requestInterviewPrep"]>
+  >(
+    async (input, signal) => {
+      const response = await request(urls.next.studio.interviewPrep(), {
+        body: JSON.stringify({ ...input, requestId: crypto.randomUUID() }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        signal,
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error ?? "Interview prep is unavailable.");
+      return data;
+    },
+    [request],
+  );
   return (
     <CvVersionsEditor
       downloadHref={downloadHref}
       load={load}
       profile={profile}
+      requestInterviewPrep={requestInterviewPrep}
       save={save}
       sourceRevision={sourceRevision}
     />
