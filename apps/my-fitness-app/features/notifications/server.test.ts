@@ -118,7 +118,7 @@ describe("fitness notification routes", () => {
     expect(mocks.enqueueReminder).toHaveBeenCalledWith(
       owner,
       expect.any(String),
-      expect.objectContaining({ title: "Fitness OS" }),
+      expect.objectContaining({ title: "My Fitness Studio" }),
       "https://fcm.googleapis.com/fixture",
     );
   });
@@ -147,7 +147,7 @@ describe("fitness notification routes", () => {
       expect.any(String),
       expect.objectContaining({
         body: "You have a task due. Open the app to see it.",
-        title: "Fitness OS reminder",
+        title: "My Fitness Studio reminder",
       }),
       undefined,
       9,

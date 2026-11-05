@@ -84,4 +84,4 @@ Create/update its guide in this directory and add/update the index row in the sa
 
 [Fitness login and saved workspace compatibility](fitness-login.md): stored exercise/workout compatibility implemented; Google provider configuration and deployed acceptance remain pending.
 
-[Private Fitness workspaces and shared UI](fitness-workspaces.md) covers account isolation, the public demo, and dashboard styling.
+[My Fitness Studio workspaces and shared UI](fitness-workspaces.md) covers account isolation, the public demo, branding, and dashboard styling.

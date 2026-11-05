@@ -1,6 +1,6 @@
-# Fitness OS
+# My Fitness Studio
 
-Fitness OS uses Next.js, Supabase Auth and Drizzle. Each confirmed account gets its own private workspace, stored under its Supabase user ID.
+My Fitness Studio uses Next.js, Supabase Auth and Drizzle. Each confirmed account gets its own private workspace, stored under its Supabase user ID.
 
 ## Run
 
@@ -12,7 +12,7 @@ pnpm install --frozen-lockfile
 pnpm --filter my-fitness-app dev
 ```
 
-Open [Fitness OS](http://localhost:3002/) (`/`) after configuring Supabase. Use [Demo](http://localhost:3002/preview) (`/preview`) to explore fictional activities without an account or database connection.
+Open [My Fitness Studio](http://localhost:3002/) (`/`) after configuring Supabase. Use [Demo](http://localhost:3002/preview) (`/preview`) to explore fictional activities without an account or database connection.
 
 ## Light and dark themes
 

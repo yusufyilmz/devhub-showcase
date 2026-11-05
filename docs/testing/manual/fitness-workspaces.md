@@ -1,4 +1,4 @@
-# Private Fitness workspaces and shared UI
+# My Fitness Studio workspaces and shared UI
 
 **Scope/status.** Each confirmed account can use its own Fitness workspace. Existing accounts retain their records. Public preview uses fictional activities. The daily dashboard, settings, and loading and error states use shared UI components. The existing workspace schema supports this release.
 
@@ -16,3 +16,9 @@
 | 8    | [Device settings](http://localhost:3002/?view=More) | `/?view=More` | With push configured, enable reminders for both accounts on separate devices and schedule fictional tasks for the same minute.                           | Each subscribed device receives its own reminder.                                                                                               | Local worker and SQL fixtures. Live provider and device check not run.               |
 
 See [notification setup](../../notifications.md) for scheduler and device prerequisites and [saved workout compatibility](fitness-login.md) for regression steps for existing records.
+
+| Branding check | Clickable URL                                                  | Route path              | Action                                                                          | Expected result                                                   | Actual result / evidence |
+| -------------- | -------------------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------ |
+| 9              | [Public demo](http://localhost:3002/preview)                   | `/preview`              | Open on desktop and inspect the sidebar and tab title.                          | Both show My Fitness Studio.                                      | Hosted check not run.    |
+| 10             | [Sign in](http://localhost:3002/login)                         | `/login`                | Open the sign-in screen and inspect the brand.                                  | My Fitness Studio appears above the form.                         | Hosted check not run.    |
+| 11             | [Install manifest](http://localhost:3002/manifest.webmanifest) | `/manifest.webmanifest` | Check the full and short names, then install from the browser on a test device. | Full name is My Fitness Studio and short label is Fitness Studio. | Hosted install not run.  |

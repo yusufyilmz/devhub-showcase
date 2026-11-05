@@ -16,9 +16,9 @@
     }
   ],
   "id": "/",
-  "name": "Yusuf Fitness OS",
+  "name": "My Fitness Studio",
   "scope": "/",
-  "short_name": "Fitness OS",
+  "short_name": "Fitness Studio",
   "start_url": "/",
   "theme_color": "#f4f7fb"
 }

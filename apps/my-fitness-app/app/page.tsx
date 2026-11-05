@@ -12,7 +12,7 @@ export default async function Page() {
     return (
       <main className="fitness-state">
         <Alert>
-          <AlertTitle>Fitness OS setup is incomplete</AlertTitle>
+          <AlertTitle>My Fitness Studio setup is incomplete</AlertTitle>
           <AlertDescription>
             The demo is available while the workspace is being set up.
           </AlertDescription>

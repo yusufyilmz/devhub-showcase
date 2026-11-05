@@ -104,7 +104,7 @@ export function WorkspaceFrame({
         />
         {error ? <ErrorBanner message={error} onDismiss={onDismissError} /> : null}
         {children}
-        <footer>Fitness OS · A little better, every day.</footer>
+        <footer>My Fitness Studio · A little better, every day.</footer>
       </main>
       {overlay}
     </div>
@@ -251,7 +251,8 @@ function WorkspaceSidebar({
   return (
     <aside className="sidebar">
       <a className="brand" href={readOnly ? "/preview" : "/"}>
-        <span>↗</span>Fitness OS<span className="brand-dot">.</span>
+        <span aria-hidden="true">↗</span>
+        <span>My Fitness Studio</span>
       </a>
       <span className="eyebrow nav-label">YOUR DAILY PRACTICE</span>
       <nav aria-label="Fitness workspace">
@@ -292,7 +293,7 @@ function ReadOnlyBanner() {
   return (
     <Alert className="fitness-demo-banner">
       <Info aria-hidden="true" />
-      <AlertTitle>Fitness OS demo</AlertTitle>
+      <AlertTitle>My Fitness Studio demo</AlertTitle>
       <AlertDescription>
         Explore a sample day with fictional activities.
         <LibraryButton href="/" variant="outline">
@@ -314,7 +315,7 @@ function WorkspaceTopbar({
 }) {
   return (
     <header className="topbar">
-      <span className="breadcrumb">My workspace / {tab}</span>
+      <span className="breadcrumb">My Fitness Studio / {tab}</span>
       <div className="topbar-actions">
         <ThemeToggle />
         <Badge role="status" variant="secondary">

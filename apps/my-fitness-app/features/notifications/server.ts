@@ -118,7 +118,7 @@ export async function testNotification(request: Request) {
       {
         body: "Notifications are working on this device.",
         id: key,
-        title: "Fitness OS",
+        title: "My Fitness Studio",
         url: "/?view=More",
       },
       input.endpoint,
@@ -199,7 +199,7 @@ async function dispatchAccount(
         {
           body: "You have a task due. Open the app to see it.",
           id: key,
-          title: "Fitness OS reminder",
+          title: "My Fitness Studio reminder",
           url: reminder.url,
         },
         undefined,
