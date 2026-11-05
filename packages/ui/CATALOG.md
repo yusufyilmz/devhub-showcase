@@ -225,7 +225,8 @@ Public components exported from `packages/ui/src/components/index.ts`. Import th
 
 Reveal Cards use `--reveal-duration` and `--reveal-fade-duration` for the
 details transition. Set them on a card's class to adjust its timing. Reduced
-motion removes the transition.
+motion removes the transition. Use `pinOnDetailsClick` when detail controls
+need to retain focus after opening a dialog.
 
 ### Shared product surfaces
 

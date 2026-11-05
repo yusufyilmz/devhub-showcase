@@ -29,6 +29,7 @@ export function RevealCardBase({
   children,
   className = "",
   labels = defaultLabels,
+  pinOnDetailsClick = false,
 }: RevealCardProps) {
   const [expanded, setExpanded] = useState(false);
   const pinned = useRef(false);
@@ -105,6 +106,17 @@ export function RevealCardBase({
           className={revealCardStyles.element9}
           id={detailsId}
           inert={!expanded}
+          onClickCapture={
+            pinOnDetailsClick
+              ? (event) => {
+                  if (
+                    event.target instanceof Element &&
+                    event.target.closest("button, a, input, select, textarea")
+                  )
+                    pinned.current = true;
+                }
+              : undefined
+          }
         >
           <div className={revealCardStyles.element10}>{children}</div>
         </div>

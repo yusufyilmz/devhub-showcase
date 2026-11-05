@@ -96,6 +96,7 @@ export function TaskPlans({
                   </>
                 }
                 key={plan.id}
+                pinOnDetailsClick
                 title={plan.title}
               >
                 <TaskBranch {...tree} parentId={null} planRoot task={plan} workspace={workspace} />
