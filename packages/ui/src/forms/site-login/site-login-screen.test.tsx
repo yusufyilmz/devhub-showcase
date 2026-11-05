@@ -17,6 +17,13 @@ describe("SiteLoginScreen", () => {
     expect(screen.getByText("Open studio →")).toBeTruthy();
   });
 
+  it("shows the local shortcut only when the server explicitly allows it", () => {
+    const { rerender } = render(<SiteLoginScreen site="my-dev-studio" />);
+    expect(screen.queryByRole("button", { name: "Continue as local test user" })).toBeNull();
+    rerender(<SiteLoginScreen site="my-dev-studio" localTestLogin />);
+    expect(screen.getByRole("button", { name: "Continue as local test user" })).toBeTruthy();
+  });
+
   it("maps fitness error codes from site copy", () => {
     render(<SiteLoginScreen errorCode="unconfirmed" site="my-fitness-app" />);
     expect(screen.getByRole("alert").textContent).toBe("Confirm your account before continuing.");
