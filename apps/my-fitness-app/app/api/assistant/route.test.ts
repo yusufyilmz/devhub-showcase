@@ -88,6 +88,27 @@ describe("Fitness assistant route", () => {
     expect(mocks.generate).not.toHaveBeenCalled();
   });
 
+  it("scopes workout and edit requests to the selected plan", async () => {
+    expect((await POST(request({ mode: "TASK_EDIT", taskId: "other" }))).status).toBe(404);
+    expect(
+      (await POST(request({ mode: "WORKOUT", planId: "everyday-meals", taskId: "everyday-meals" })))
+        .status,
+    ).toBe(404);
+    expect(mocks.generate).not.toHaveBeenCalled();
+
+    expect((await POST(request({ mode: "WORKOUT", taskId: "workout" }))).status).toBe(200);
+    expect(mocks.generate).toHaveBeenCalledWith(
+      "WORKOUT",
+      {
+        children: [],
+        goal: "Only mornings",
+        task: { kind: "workout", notes: "", targetReps: null, title: "Walk" },
+      },
+      expect.any(AbortSignal),
+    );
+    expect(mocks.save).not.toHaveBeenCalled();
+  });
+
   it("rejects foreign origins and unauthenticated requests", async () => {
     expect((await POST(request({}, "https://other.example"))).status).toBe(403);
     expect(mocks.context).not.toHaveBeenCalled();

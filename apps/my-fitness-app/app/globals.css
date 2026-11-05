@@ -2365,9 +2365,14 @@ textarea::placeholder {
   }
 }
 
-.fitness-plan-assistant {
-  display: flex;
-  justify-content: flex-end;
+.fitness-assistant-trigger[data-slot="button"] {
+  min-height: 36px;
+}
+@media (max-width: 440px) {
+  .fitness-assistant-trigger[data-slot="button"] {
+    line-height: 1.2;
+    white-space: normal;
+  }
 }
 
 .fitness-assistant-form,

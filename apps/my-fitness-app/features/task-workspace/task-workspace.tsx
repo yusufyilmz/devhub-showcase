@@ -13,6 +13,7 @@ import { Alert, AlertDescription } from "@shared/ui/alert";
 import { Button as LibraryButton } from "@shared/ui/button";
 
 import { useAgendaNavigation } from "@/features/agenda/use-agenda-navigation";
+import { PlanAssistant } from "@/features/assistant/plan-assistant";
 import { TaskEditor, type TaskEditorTarget } from "@/features/task-editor/task-editor";
 
 import { useTaskReminders } from "./use-reminders";
@@ -97,6 +98,20 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
     target?.task?.scope === "scheduled" || target?.parent?.scope === "scheduled" ? day : state;
   return (
     <WorkspaceFrame
+      assistant={
+        !readOnly && (
+          <PlanAssistant
+            busy={busy}
+            date={date}
+            initialPlanId={templateRoot}
+            onReview={setTarget}
+            onSave={save}
+            onWeek={() => setTab("Week")}
+            revision={controller.revision}
+            workspace={state}
+          />
+        )
+      }
       busy={busy}
       date={date}
       error={error}
@@ -153,7 +168,6 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
         openDay={openDay}
         openTask={openTask}
         readOnly={readOnly}
-        revision={controller.revision}
         selectedTask={selectedTask}
         setDate={setDate}
         setError={setError}

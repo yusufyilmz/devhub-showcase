@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 
 import { ArrowDown, ArrowUp, Trash2 } from "lucide-react";
 
-import type { FitnessSuggestion } from "@shared/assistant/fitness-contract";
+import type { FitnessSuggestion, TaskEditProposal } from "@shared/assistant/fitness-contract";
 import { TaskService } from "@shared/services/fitness/task";
 import type { Workspace } from "@shared/services/types";
 import { createTask, defaultDetails, type Task, type TaskKind } from "@shared/services/types";
@@ -34,6 +34,7 @@ import { Textarea as LibraryTextarea } from "@shared/ui/textarea";
 
 import { IngredientEditor } from "./ingredient-editor";
 export interface TaskEditorTarget {
+  editDraft?: TaskEditProposal;
   parent?: Task;
   scheduleDraft?: { time: string; weekdays: number[] };
   suggestion?: FitnessSuggestion;
@@ -71,10 +72,24 @@ const nextKind = (parent?: Task): TaskKind =>
           ? "exercise"
           : "meal";
 const tasks = new TaskService();
+function initializeEdit(task: Task, edit?: TaskEditProposal, time?: string): Task {
+  const details =
+    task.details.type === "set" && edit?.targetReps != null
+      ? { ...task.details, targetReps: edit.targetReps }
+      : task.details;
+  return {
+    ...task,
+    details,
+    notes: edit?.notes ?? task.notes,
+    time: time ?? task.time,
+    title: edit?.title ?? task.title,
+  };
+}
+
 export function TaskEditor({ workspace, target, busy, error, onClose, onSave, onError }: Props) {
   const [draft, setDraft] = useState<Task>(() =>
     target.task
-      ? { ...target.task, time: target.scheduleDraft?.time ?? target.task.time }
+      ? initializeEdit(target.task, target.editDraft, target.scheduleDraft?.time)
       : createTask({
           date: target.parent?.date ?? null,
           details: defaultDetails(nextKind(target.parent)),

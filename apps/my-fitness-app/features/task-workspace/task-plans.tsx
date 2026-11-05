@@ -19,8 +19,6 @@ import {
 } from "@shared/ui/carousel";
 import { NativeSelect } from "@shared/ui/native-select";
 
-import { PlanAssistant } from "@/features/assistant/plan-assistant";
-import type { TaskEditorTarget } from "@/features/task-editor/task-editor";
 import type { TaskTreeProps } from "@/features/task-tree/task-tree";
 
 import { PlanTaskList, subtaskLabel } from "./plan-task-list";
@@ -30,16 +28,12 @@ const carouselOptions = { watchFocus: false };
 
 export function TaskPlans({
   onCreate,
-  onReview,
-  revision,
   selected,
   setSelected,
   state,
   tree,
 }: {
   onCreate: () => void;
-  onReview: (target: TaskEditorTarget) => void;
-  revision: number;
   selected: string | null;
   setSelected: (id: string | null) => void;
   state: Workspace;
@@ -134,19 +128,6 @@ export function TaskPlans({
               ))}
             </CarouselContent>
           </Carousel>
-          {!tree.readOnly && (
-            <div className="fitness-plan-assistant">
-              <PlanAssistant
-                busy={tree.busy}
-                key={plan.id}
-                onReview={onReview}
-                plan={plan}
-                revision={revision}
-                templates={templates}
-                timezone={state.settings.timezone}
-              />
-            </div>
-          )}
           <PlanTaskList {...tree} key={plan.id} plan={plan} templates={templates} />
         </>
       ) : (

@@ -58,6 +58,7 @@ type TreeProps = {
 };
 
 export function WorkspaceFrame({
+  assistant,
   busy,
   children,
   date,
@@ -73,6 +74,7 @@ export function WorkspaceFrame({
   taskId,
   today,
 }: {
+  assistant?: ReactNode;
   busy: boolean;
   children: ReactNode;
   date: string;
@@ -92,7 +94,7 @@ export function WorkspaceFrame({
     <div className="app">
       <WorkspaceSidebar name={name} readOnly={readOnly} setTab={setTab} tab={tab} />
       <main className="main">
-        <WorkspaceTopbar busy={busy} readOnly={readOnly} tab={tab} />
+        <WorkspaceTopbar assistant={assistant} busy={busy} readOnly={readOnly} tab={tab} />
         {readOnly ? <ReadOnlyBanner /> : null}
         <PageHeading
           date={date}
@@ -122,7 +124,6 @@ export function WorkspacePanels({
   openDay,
   openTask,
   readOnly,
-  revision,
   selectedTask,
   setDate,
   setError,
@@ -144,7 +145,6 @@ export function WorkspacePanels({
   openDay: (date: string) => void;
   openTask: (date: string, taskId: string) => void;
   readOnly: boolean;
-  revision: number;
   selectedTask: Task | null;
   setDate: (date: string) => void;
   setError: (message: string) => void;
@@ -189,8 +189,6 @@ export function WorkspacePanels({
     return (
       <TaskPlans
         onCreate={() => setTarget({})}
-        onReview={setTarget}
-        revision={revision}
         selected={templateRoot}
         setSelected={setTemplateRoot}
         state={state}
@@ -308,10 +306,12 @@ function ReadOnlyBanner() {
 }
 
 function WorkspaceTopbar({
+  assistant,
   busy,
   readOnly,
   tab,
 }: {
+  assistant?: ReactNode;
   busy: boolean;
   readOnly: boolean;
   tab: string;
@@ -320,6 +320,7 @@ function WorkspaceTopbar({
     <header className="topbar">
       <span className="breadcrumb">My Fitness Studio / {tab}</span>
       <div className="topbar-actions">
+        {assistant}
         <ThemeToggle />
         <Badge role="status" variant="secondary">
           {syncLabel(readOnly, busy)}
