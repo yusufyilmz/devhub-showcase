@@ -33,8 +33,8 @@ function signIn(user: { id: string; email_confirmed_at?: string; is_anonymous?: 
   mocks.identity.mockResolvedValue({ data: { user }, error: null });
 }
 
-function saveRequest(workspaceId: string, requestOrigin = origin) {
-  return new Request(endpoint, {
+function saveRequest(workspaceId: string, requestOrigin = origin, target = endpoint) {
+  return new Request(target, {
     body: JSON.stringify({ revision: 7, state: starterWorkspace(), workspaceId }),
     headers: { origin: requestOrigin },
     method: "PUT",
@@ -44,6 +44,7 @@ function saveRequest(workspaceId: string, requestOrigin = origin) {
 describe("private Fitness workspace API", () => {
   beforeEach(() => {
     vi.stubEnv("APP_URL", origin);
+    vi.stubEnv("FITNESS_ADDITIONAL_ORIGIN", "");
     vi.stubEnv("SUPABASE_DB_URL", "test");
     vi.clearAllMocks();
     mocks.load.mockImplementation(async (id: string) => {
@@ -93,5 +94,18 @@ describe("private Fitness workspace API", () => {
     expect(mocks.save).not.toHaveBeenCalled();
     expect(await (await PUT(saveRequest(second))).json()).toEqual({ revision: 8 });
     expect(mocks.save).toHaveBeenCalledExactlyOnceWith(second, expect.anything(), 7);
+  });
+
+  it("permits an explicitly configured second origin only for its own same-origin requests", async () => {
+    const alias = "https://new-fitness.example";
+    const aliasEndpoint = `${alias}/api/state`;
+    signIn({ email_confirmed_at: "today", id: second });
+    expect((await PUT(saveRequest(second, alias, aliasEndpoint))).status).toBe(403);
+    vi.stubEnv("FITNESS_ADDITIONAL_ORIGIN", `${alias}/`);
+    expect((await PUT(saveRequest(second, alias))).status).toBe(403);
+    expect((await PUT(saveRequest(second, origin, aliasEndpoint))).status).toBe(403);
+    expect(mocks.save).not.toHaveBeenCalled();
+    expect((await PUT(saveRequest(second, alias, aliasEndpoint))).status).toBe(200);
+    expect((await PUT(saveRequest(second))).status).toBe(200);
   });
 });

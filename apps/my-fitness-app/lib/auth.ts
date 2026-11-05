@@ -27,6 +27,9 @@ export async function requestIdentity(request: Request) {
 }
 
 export function sameOrigin(request: Request) {
-  const expected = process.env.APP_URL?.replace(/\/$/, "");
-  return Boolean(expected && request.headers.get("origin") === expected);
+  const origin = request.headers.get("origin");
+  if (!origin || origin !== new URL(request.url).origin) return false;
+  return [process.env.APP_URL, process.env.FITNESS_ADDITIONAL_ORIGIN].some(
+    (allowed) => allowed?.replace(/\/$/, "") === origin,
+  );
 }

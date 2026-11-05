@@ -42,6 +42,17 @@ On `main`, `.github/workflows/ci.yml` deploys this app after verification when F
 
 Verify `/preview` signed out, `/login`, and saving then refreshing a task when signed in. No live Supabase or hosting credentials are included in the repository.
 
+### Add the branded address
+
+The proposed second address is [myfitnessstudio.vercel.app](https://myfitnessstudio.vercel.app/). Confirm availability in Vercel when attaching it to the existing Fitness project.
+
+1. In [Fitness Supabase URL configuration](https://supabase.com/dashboard/project/dtqqopvrimmlmntnlegx/auth/url-configuration), add `https://myfitnessstudio.vercel.app/auth/callback` to Redirect URLs. Retain the existing callback. Both hosts use the same Fitness Supabase project and its Google provider.
+2. Set the Vercel Production variable `FITNESS_ADDITIONAL_ORIGIN=https://myfitnessstudio.vercel.app`. Keep the current `APP_URL` for existing bookmarks and writes.
+3. Deploy the private workspace release and confirm the original signed-out state endpoint returns HTTP 401.
+4. Add `myfitnessstudio.vercel.app` as a Production domain for the existing project. Verify HTTPS, login, and saving on both domains using the [manual guide](../../docs/testing/manual/fitness-workspaces.md).
+
+The browser establishes a separate session on each hostname. The same Fitness account opens the same records on both.
+
 ## Checks
 
 From the repository root, `pnpm check` covers this app, `pnpm test` runs its Vitest suite after the studio unit project, and `pnpm build` runs `next build` for this package. App-only commands:
