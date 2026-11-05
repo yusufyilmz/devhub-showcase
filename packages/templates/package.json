@@ -24,6 +24,7 @@
     "pdfmake": "catalog:"
   },
   "devDependencies": {
+    "@shared/cli": "workspace:*",
     "@shared/typescript-config": "workspace:*",
     "@types/node": "catalog:",
     "@types/pdfmake": "catalog:",

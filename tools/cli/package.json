@@ -1,0 +1,20 @@
+{
+  "name": "@shared/cli",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./tsdown": "./tsdown/library.ts",
+    "./generators": "./generators/config.ts"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*",
+    "@turbo/gen": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:",
+    "yaml": "catalog:"
+  },
+  "engines": {
+    "node": ">=24.15.0 <25"
+  }
+}

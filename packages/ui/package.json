@@ -157,7 +157,7 @@
   "scripts": {
     "build": "tsdown",
     "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
-    "folders:kebab": "node ../../tools/scripts/kebab-folders.mjs src/buttons src/forms src/feedback src/overlays src/layout src/navigation src/display src/customizers",
+    "folders:kebab": "node ../../tools/cli/scripts/kebab-folders.mjs src/buttons src/forms src/feedback src/overlays src/layout src/navigation src/display src/customizers",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "lint": "biome lint .",
@@ -226,6 +226,7 @@
     "zustand": "catalog:"
   },
   "devDependencies": {
+    "@shared/cli": "workspace:*",
     "@shared/typescript-config": "workspace:*",
     "@storybook/react-vite": "catalog:",
     "@tailwindcss/postcss": "catalog:",

@@ -203,12 +203,18 @@ importers:
       '@playwright/test':
         specifier: 'catalog:'
         version: 1.64.1
+      '@shared/cli':
+        specifier: workspace:*
+        version: link:tools/cli
       '@shared/config':
         specifier: workspace:*
         version: link:packages/config
       '@shared/templates':
         specifier: workspace:*
         version: link:packages/templates
+      '@shared/test':
+        specifier: workspace:*
+        version: link:tools/test
       '@storybook/addon-vitest':
         specifier: 'catalog:'
         version: 10.6.5(@vitest/browser-playwright@5.0.5)(@vitest/browser@5.0.5)(react@19.3.1)(storybook@10.6.5(@types/react@19.3.0)(prettier@3.9.10)(react@19.3.1))(vitest@5.0.5)
@@ -528,6 +534,9 @@ importers:
         specifier: 'catalog:'
         version: 4.6.7
     devDependencies:
+      '@shared/cli':
+        specifier: workspace:*
+        version: link:../../tools/cli
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
@@ -568,6 +577,9 @@ importers:
         specifier: 'catalog:'
         version: 4.6.7
     devDependencies:
+      '@shared/cli':
+        specifier: workspace:*
+        version: link:../../tools/cli
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
@@ -608,6 +620,9 @@ importers:
         specifier: 'catalog:'
         version: 4.6.7
     devDependencies:
+      '@shared/cli':
+        specifier: workspace:*
+        version: link:../../tools/cli
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
@@ -630,6 +645,9 @@ importers:
         specifier: 'catalog:'
         version: 1.40.0
     devDependencies:
+      '@shared/cli':
+        specifier: workspace:*
+        version: link:../../tools/cli
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
@@ -642,6 +660,9 @@ importers:
 
   packages/config:
     devDependencies:
+      '@shared/cli':
+        specifier: workspace:*
+        version: link:../../tools/cli
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
@@ -682,6 +703,9 @@ importers:
         specifier: 'catalog:'
         version: 4.6.7
     devDependencies:
+      '@shared/cli':
+        specifier: workspace:*
+        version: link:../../tools/cli
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
@@ -707,6 +731,9 @@ importers:
         specifier: 'catalog:'
         version: 5.0.16(@types/react@19.3.0)(immer@11.2.9)(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
     devDependencies:
+      '@shared/cli':
+        specifier: workspace:*
+        version: link:../../tools/cli
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
@@ -747,6 +774,9 @@ importers:
         specifier: 'catalog:'
         version: 4.6.7
     devDependencies:
+      '@shared/cli':
+        specifier: workspace:*
+        version: link:../../tools/cli
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
@@ -778,6 +808,9 @@ importers:
         specifier: 'catalog:'
         version: 0.3.13
     devDependencies:
+      '@shared/cli':
+        specifier: workspace:*
+        version: link:../../tools/cli
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
@@ -818,6 +851,9 @@ importers:
         specifier: 'catalog:'
         version: 5.0.16(@types/react@19.3.0)(immer@11.2.9)(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
     devDependencies:
+      '@shared/cli':
+        specifier: workspace:*
+        version: link:../../tools/cli
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
@@ -1017,6 +1053,9 @@ importers:
         specifier: 'catalog:'
         version: 5.0.16(@types/react@19.3.0)(immer@11.2.9)(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
     devDependencies:
+      '@shared/cli':
+        specifier: workspace:*
+        version: link:../../tools/cli
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
@@ -1066,6 +1105,9 @@ importers:
         specifier: 'catalog:'
         version: 6.0.3
     devDependencies:
+      '@shared/cli':
+        specifier: workspace:*
+        version: link:../../tools/cli
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
@@ -1090,6 +1132,39 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 7.0.2
+
+  tools/cli:
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@turbo/gen':
+        specifier: 'catalog:'
+        version: 2.11.10(@types/node@26.6.5)
+      tsdown:
+        specifier: 'catalog:'
+        version: 0.23.4(@tsdown/css@0.23.4)(oxc-resolver@11.24.2)(tsx@4.23.15)(typescript@7.0.2)
+      typescript:
+        specifier: 'catalog:'
+        version: 7.0.2
+      yaml:
+        specifier: 'catalog:'
+        version: 2.9.1
+
+  tools/test:
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.3.0
+      typescript:
+        specifier: 'catalog:'
+        version: 7.0.2
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.5(@types/node@26.6.5)(@vitest/browser-playwright@5.0.5)(@vitest/coverage-v8@5.0.5)(@vitest/ui@5.0.5)(jsdom@30.1.3(@noble/hashes@1.8.0))(vite@8.3.5(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.107.0)(tsx@4.23.15)(yaml@2.9.1))
 
   tools/typescript-config:
     devDependencies:

@@ -32,7 +32,7 @@ import { sectionRenderers } from "./renderers";
 const sectionsRoot = dirname(fileURLToPath(import.meta.url));
 const pageforgeFixture = resolve(
   sectionsRoot,
-  "../../../../tools/__fixtures__/pageforge-sections.json",
+  "../../../../tools/test/fixtures/pageforge-sections.json",
 );
 
 let sequence = 0;

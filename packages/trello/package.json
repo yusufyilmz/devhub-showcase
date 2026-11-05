@@ -25,6 +25,7 @@
     "zustand": "catalog:"
   },
   "devDependencies": {
+    "@shared/cli": "workspace:*",
     "@shared/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",

@@ -2,9 +2,9 @@ import {
   type AuthorableSectionType,
   authorableSections,
   getSectionRenderers,
-} from "../../packages/config/src/sections/authorable-sections";
-import type { CustomSection } from "../../packages/config/src/sections/custom-sections";
-import type { SectionProps } from "../../packages/ui/src/sections/types";
+} from "../../../packages/config/src/sections/authorable-sections";
+import type { CustomSection } from "../../../packages/config/src/sections/custom-sections";
+import type { SectionProps } from "../../../packages/ui/src/sections/types";
 
 export function sectionStory(
   type: AuthorableSectionType,

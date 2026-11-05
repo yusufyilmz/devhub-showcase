@@ -32,7 +32,12 @@ describe("Section catalog", () => {
   it("shows visual previews and helpful descriptions for every registered section", () => {
     render(<SectionCatalog />);
     const list = screen.getByRole("list", { name: "Available section types" });
-    expect(list.querySelectorAll("[data-preview-kind]")).toHaveLength(authorableSectionTypes.length);
+    expect(list.querySelectorAll("[data-preview-kind]")).toHaveLength(
+      authorableSectionTypes.length,
+    );
+    for (const preview of list.querySelectorAll("[data-preview-kind]")) {
+      expect(preview.firstElementChild).not.toBeNull();
+    }
     expect(within(list).getByText("Put your best images together in a visual grid.")).toBeTruthy();
     fireEvent.change(screen.getByRole("searchbox", { name: "Find a section" }), {
       target: { value: "visual grid" },

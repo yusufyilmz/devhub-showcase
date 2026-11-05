@@ -55,18 +55,18 @@ export default defineConfig({
     alias: [
       {
         find: "@fixtures",
-        replacement: fileURLToPath(new URL("./tools/__fixtures__", import.meta.url)),
+        replacement: fileURLToPath(new URL("./tools/test/fixtures", import.meta.url)),
       },
       {
         find: "next/font/google",
         replacement: fileURLToPath(
-          new URL("./tests/support/mocks/next-font-google.ts", import.meta.url),
+          new URL("./tools/test/support/mocks/next-font-google.ts", import.meta.url),
         ),
       },
       {
         find: "next/font/local",
         replacement: fileURLToPath(
-          new URL("./tests/support/mocks/next-font-local.ts", import.meta.url),
+          new URL("./tools/test/support/mocks/next-font-local.ts", import.meta.url),
         ),
       },
       {
@@ -79,7 +79,7 @@ export default defineConfig({
       },
       {
         find: "@fixtures",
-        replacement: fileURLToPath(new URL("./tools/__fixtures__", import.meta.url)),
+        replacement: fileURLToPath(new URL("./tools/test/fixtures", import.meta.url)),
       },
       ...exportAliases("config").sort((a, b) => b.find.length - a.find.length),
       {
@@ -159,7 +159,7 @@ export default defineConfig({
           maxWorkers: 2,
           name: "unit",
           pool: "forks",
-          setupFiles: [path.join(dirname, "tests/support/vitest-setup.ts")],
+          setupFiles: [path.join(dirname, "tools/test/support/vitest-setup.ts")],
         },
       },
       {

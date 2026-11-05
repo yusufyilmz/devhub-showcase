@@ -1,7 +1,5 @@
 /** Opt-in local test sign-in. All checks must pass on the server. */
-export function localTestLoginEnabled(
-  environment: NodeJS.ProcessEnv = process.env,
-): boolean {
+export function localTestLoginEnabled(environment: NodeJS.ProcessEnv = process.env): boolean {
   if (environment.NODE_ENV !== "development" || environment.LOCAL_TEST_LOGIN !== "true")
     return false;
   const supabaseUrl = environment.NEXT_PUBLIC_SUPABASE_URL;

@@ -3,7 +3,7 @@
     "paths": {
       "@/app/*": ["./apps/my-dev-studio/app/*"],
       "@/features/*": ["./apps/my-dev-studio/features/*"],
-      "@fixtures/*": ["./tools/__fixtures__/*"],
+      "@fixtures/*": ["./tools/test/fixtures/*"],
       "@shared/assistant": ["./packages/assistant/src/index.ts"],
       "@shared/assistant/*": ["./packages/assistant/src/*"],
       "@shared/assistant/studio": ["./packages/assistant/src/studio/index.ts"],
@@ -69,7 +69,7 @@
     "packages/**/*.test.tsx",
     "apps/**/*.test.ts",
     "apps/**/*.test.tsx",
-    "tests/support/**/*.ts",
+    "tools/test/support/**/*.ts",
     "vitest.config.mts",
     "turbo/**/*.ts",
     "generators/**/*.ts",
