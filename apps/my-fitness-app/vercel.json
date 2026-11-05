@@ -6,6 +6,6 @@
       "main": false
     }
   },
-  "ignoreCommand": "if [ -z \"$VERCEL_GIT_PREVIOUS_SHA\" ]; then exit 1; fi; git diff --quiet \"$VERCEL_GIT_PREVIOUS_SHA\" HEAD -- . ../../packages ../../tools ../../.github/workflows ../../.github/actions ../../package.json ../../pnpm-lock.yaml ../../pnpm-workspace.yaml ../../turbo.json ../../biome.json ../../.npmrc ../../.node-version ../../.nvmrc ../../.vercelignore ../../.env.development \"../../tsconfig*.json\"",
+  "ignoreCommand": "sh ../../tools/cli/ci/ignore-build.sh",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile"
 }

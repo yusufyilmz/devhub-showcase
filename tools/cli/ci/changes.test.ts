@@ -137,8 +137,14 @@ describe("application deployment selection", () => {
         ignoreCommand: string;
       };
       expect(config.git.deploymentEnabled.main).toBe(false);
+      expect(config.ignoreCommand.length).toBeLessThanOrEqual(256);
       expect(config.buildCommand).toContain(`--filter ${app} build`);
       const { cwd, commit } = repository();
+      mkdirSync(join(cwd, "tools/cli/ci"), { recursive: true });
+      writeFileSync(
+        join(cwd, "tools/cli/ci/ignore-build.sh"),
+        readFileSync("tools/cli/ci/ignore-build.sh"),
+      );
       const base = commit(`apps/${app}/page.tsx`);
       const other = app === "my-dev-studio" ? "my-fitness-app" : "my-dev-studio";
       commit(`apps/${other}/page.tsx`);
