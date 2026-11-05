@@ -24,6 +24,26 @@ export const dateSchema = z.iso.date();
 export const timeSchema = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/);
 export const taskDetailsSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("basic") }),
+  // Existing standalone Fitness OS workspaces store these JSON shapes.
+  z.object({ postponed: z.boolean(), type: z.literal("workout") }),
+  z.object({
+    legacySets: z
+      .array(
+        z.object({
+          actualReps: z.number().int().min(0).max(200).nullable(),
+          archived: z.boolean(),
+          id: z.string(),
+          notes: z.string(),
+          status: z.enum(["pending", "done", "skipped"]),
+          targetReps: z.number().int().min(1).max(200),
+          title: z.string(),
+          weightKg: z.number().min(0).max(1500).nullable(),
+        }),
+      )
+      .max(1000),
+    prescription: z.string().max(4000),
+    type: z.literal("exercise"),
+  }),
   z.object({ type: z.literal("meal"), waterMl: z.number().min(0).max(10000) }),
   z.object({
     actualReps: z.number().int().min(0).max(200).nullable(),
