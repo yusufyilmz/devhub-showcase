@@ -1,9 +1,8 @@
 import { FitnessApp } from "../../features/fitness/fitness-app";
 export const metadata = {
   robots: { follow: false, index: false },
-  title: "Shared workspace • Yusuf Fitness OS",
+  title: "My Fitness Studio demo",
 };
-/** Same live workspace as /, always read-only even when the owner is signed in. */
 export default function PreviewPage() {
-  return <FitnessApp readOnly />;
+  return <FitnessApp demo />;
 }

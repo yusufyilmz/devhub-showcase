@@ -80,7 +80,7 @@
         "NEXT_PUBLIC_SUPABASE_URL",
         "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
         "APP_URL",
-        "WORKSPACE_OWNER_ID"
+        "FITNESS_ADDITIONAL_ORIGIN"
       ],
       "outputs": [".next/**", "!.next/cache/**"],
       "passThroughEnv": [

@@ -10,7 +10,13 @@ import { database } from "@shared/services/db/client";
 import * as schema from "@shared/services/db/schema";
 import { WorkspaceRepository } from "@shared/services/workspace";
 
-import { disableDevice, enqueueReminder, fitnessDeliveryQueue, saveDevice } from "./store";
+import {
+  disableDevice,
+  enqueueReminder,
+  fitnessDeliveryQueue,
+  notificationAccountIds,
+  saveDevice,
+} from "./store";
 
 vi.mock("@shared/services/db/client", () => ({ database: vi.fn() }));
 const owner = "00000000-0000-4000-8000-000000000001";
@@ -160,6 +166,9 @@ describe("notification persistence and privacy", () => {
       await repository.save(owner, first.state, 0);
       await saveDevice(owner, subscription);
       await saveDevice(other, { ...subscription, endpoint: "https://fcm.googleapis.com/other" });
+      expect((await notificationAccountIds()).sort()).toEqual([owner, other]);
+      await disableDevice(other, "https://fcm.googleapis.com/other");
+      expect(await notificationAccountIds()).toEqual([owner]);
       await enqueueReminder(owner, "stale", message, undefined, 1);
       await repository.save(owner, first.state, 1);
       expect(await fitnessDeliveryQueue(owner).claim(10)).toHaveLength(0);

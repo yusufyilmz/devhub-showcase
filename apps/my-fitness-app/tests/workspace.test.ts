@@ -13,30 +13,33 @@ import {
   RevisionConflictError,
   WorkspaceService,
 } from "../../../packages/services/src/workspace";
-import { HttpWorkspaceGateway } from "../features/task-workspace/gateway";
+import { DemoWorkspaceGateway, HttpWorkspaceGateway } from "../features/task-workspace/gateway";
 
 afterEach(() => vi.unstubAllGlobals());
-test("shared read-only gateway fetches live data and rejects writes", async () => {
-  const auth = vi.fn(async () => ({}));
-  const fetcher = vi.fn(async () =>
-    Response.json({ canEdit: true, revision: 3, state: seedWorkspace() }),
-  );
+test("demo uses fictional data without calling the workspace API", async () => {
+  const fetcher = vi.fn();
   vi.stubGlobal("fetch", fetcher);
-  const gateway = new HttpWorkspaceGateway(true, auth);
+  const gateway = new DemoWorkspaceGateway();
   const result = await gateway.load();
-  assert.equal(result.revision, 3);
+  assert.equal(result.state.settings.name, "Sam");
   assert.equal(gateway.readOnly, true);
-  assert.equal(auth.mock.calls.length, 0);
-  await assert.rejects(gateway.save(result.state, 3), /read-only/);
-  assert.equal(fetcher.mock.calls.length, 1);
+  await assert.rejects(gateway.save(), /read-only/);
+  assert.equal(fetcher.mock.calls.length, 0);
 });
 test("server-verified owner permissions unlock the live gateway", async () => {
   const fetcher = vi
     .fn()
-    .mockResolvedValueOnce(Response.json({ canEdit: true, revision: 3, state: seedWorkspace() }))
+    .mockResolvedValueOnce(
+      Response.json({
+        canEdit: true,
+        revision: 3,
+        state: seedWorkspace(),
+        workspaceId: "fixture-owner",
+      }),
+    )
     .mockResolvedValueOnce(Response.json({ revision: 4 }));
   vi.stubGlobal("fetch", fetcher);
-  const gateway = new HttpWorkspaceGateway(false, async () => ({
+  const gateway = new HttpWorkspaceGateway(async () => ({
     Authorization: "Bearer owner-token",
   }));
   assert.equal(gateway.readOnly, true);
@@ -45,6 +48,7 @@ test("server-verified owner permissions unlock the live gateway", async () => {
   assert.equal(await gateway.save(state, 3), 4);
   const request = fetcher.mock.calls[1]?.[1];
   assert.equal(request?.headers.Authorization, "Bearer owner-token");
+  assert.equal(JSON.parse(request?.body).workspaceId, "fixture-owner");
 });
 test("service validation and authenticated owner identity cross the repository boundary", async () => {
   const calls: string[] = [];

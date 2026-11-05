@@ -88,6 +88,16 @@ export function fitnessDeliveryQueue(owner: string, eventKey?: string): Delivery
     },
   };
 }
+export async function notificationAccountIds() {
+  const rows = await database().execute(sql`
+    select distinct user_id from public.notification_devices
+    where app_id=${appId} and enabled
+    union
+    select distinct user_id from public.notification_events
+    where app_id=${appId} and expires_at<now()-interval '1 day'`);
+  return rows.map((row) => String(row.user_id));
+}
+
 export async function cleanNotifications(owner: string) {
   await database().execute(
     sql`update public.notification_deliveries set state='failed',lease=null,lease_until=null where user_id=${owner}::uuid and app_id=${appId} and state='leased' and lease_until<now() and attempts>=3`,

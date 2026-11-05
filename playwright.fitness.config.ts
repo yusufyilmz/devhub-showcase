@@ -24,7 +24,6 @@ export default defineConfig({
       WEB_PUSH_PRIVATE_KEY: "",
       WEB_PUSH_PUBLIC_KEY: "",
       WEB_PUSH_SUBJECT: "",
-      WORKSPACE_OWNER_ID: "00000000-0000-4000-8000-000000000001",
     },
     reuseExistingServer: false,
     timeout: 120000,

@@ -15,6 +15,7 @@ import {
   RevisionConflictError,
   WorkspaceRepository,
 } from "../../../packages/services/src/workspace";
+import { starterWorkspace } from "../features/task-workspace/starter";
 
 const owner = "00000000-0000-4000-8000-000000000001";
 const other = "00000000-0000-4000-8000-000000000002";
@@ -35,7 +36,9 @@ test("real SQL migrations, ORM roundtrip, conflicts, rollback and owner isolatio
     // Both adapters expose Drizzle's PostgreSQL query/transaction interface. This
     // test uses embedded PostgreSQL, while production uses Supabase's pooler.
     const db = drizzle(engine, { schema }) as unknown as Database;
-    const repository = new WorkspaceRepository(db);
+    const repository = new WorkspaceRepository(db, async (id) =>
+      id === other ? starterWorkspace() : null,
+    );
     assert.equal(await repository.find(owner), null);
     const first = await repository.load(owner);
     assert.equal((await repository.find(owner))?.revision, 0);
@@ -51,8 +54,17 @@ test("real SQL migrations, ORM roundtrip, conflicts, rollback and owner isolatio
       generated.tasks.filter((t) => t.kind === "shopping_item").length,
     );
     await assert.rejects(repository.save(owner, first.state, 0), RevisionConflictError);
-    await repository.load(other);
-    assert.equal((await repository.load(other)).state.settings.name, "Yusuf");
+    const newAccount = await repository.load(other);
+    assert.equal(newAccount.state.settings.name, "Athlete");
+    assert.deepEqual(
+      newAccount.state.tasks.map((task) => task.kind),
+      ["diet"],
+    );
+    assert.equal(newAccount.state.weights.length, 0);
+    newAccount.state.settings.name = "Owner B";
+    assert.equal(await repository.save(other, newAccount.state, 0), 1);
+    assert.equal((await repository.load(other)).state.settings.name, "Owner B");
+    assert.equal((await repository.load(owner)).state.settings.name, "Owner A");
     const broken = structuredClone(loaded.state);
     const brokenTask = broken.tasks[0];
     if (!brokenTask) throw new Error("Expected a task.");

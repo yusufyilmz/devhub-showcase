@@ -25,7 +25,6 @@ describe("Fitness auth", () => {
     vi.resetAllMocks();
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://test.supabase.co");
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "test-key");
-    vi.stubEnv("WORKSPACE_OWNER_ID", owner);
     vi.stubEnv("APP_URL", "https://fitness.example");
     auth.getUser.mockResolvedValue({
       data: { user: { email_confirmed_at: "today", id: owner } },

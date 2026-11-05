@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
+  accounts: vi.fn(),
   claim: vi.fn(),
   cleanNotifications: vi.fn(),
   disableDevice: vi.fn(),
@@ -14,10 +15,10 @@ const mocks = vi.hoisted(() => ({
   saveDevice: vi.fn(),
   send: vi.fn(),
 }));
-vi.mock("@/lib/auth", () => ({
+vi.mock("@/lib/auth", async (original) => ({
+  ...(await original<typeof import("@/lib/auth")>()),
   requestIdentity: mocks.identity,
   sameOrigin: mocks.origin,
-  workspaceOwnerId: () => "00000000-0000-4000-8000-000000000001",
 }));
 vi.mock("@shared/services/db/client", () => ({ database: () => ({ execute: mocks.execute }) }));
 vi.mock("@shared/services/workspace", () => ({
@@ -30,6 +31,7 @@ vi.mock("./store", () => ({
   disableDevice: mocks.disableDevice,
   enqueueReminder: mocks.enqueueReminder,
   fitnessDeliveryQueue: () => ({ claim: mocks.claim, finish: mocks.finish }),
+  notificationAccountIds: mocks.accounts,
   saveDevice: mocks.saveDevice,
 }));
 vi.mock("./reminders", () => ({ dueFitnessReminders: mocks.due }));
@@ -38,6 +40,7 @@ vi.mock("web-push", () => ({ default: { sendNotification: mocks.send } }));
 import { dispatchReminders, notificationRequest, testNotification } from "./server";
 
 const owner = "00000000-0000-4000-8000-000000000001";
+const second = "00000000-0000-4000-8000-000000000002";
 const secret = "fixture-cron-secret-at-least-32-characters";
 function request(method: string, body?: unknown) {
   return new Request("https://app.test/api/notifications", {
@@ -53,6 +56,7 @@ describe("fitness notification routes", () => {
     mocks.execute.mockResolvedValue([{ revision: 7 }]);
     mocks.claim.mockResolvedValue([]);
     mocks.find.mockResolvedValue(null);
+    mocks.accounts.mockResolvedValue([owner, second]);
     mocks.due.mockReturnValue([]);
     vi.stubEnv("WEB_PUSH_PUBLIC_KEY", "public-fixture-key");
     vi.stubEnv("WEB_PUSH_PRIVATE_KEY", "private-fixture-key");
@@ -60,7 +64,7 @@ describe("fitness notification routes", () => {
     vi.stubEnv("CRON_SECRET", secret);
   });
   afterEach(() => vi.unstubAllEnvs());
-  it("exposes only the public key and current revision to the confirmed configured owner", async () => {
+  it("exposes only the public key and current revision to a confirmed account", async () => {
     const result = await notificationRequest(request("GET"));
     expect(result.headers.get("cache-control")).toBe("private, no-store");
     expect(await result.json()).toEqual({
@@ -68,7 +72,11 @@ describe("fitness notification routes", () => {
       publicKey: "public-fixture-key",
       revision: 7,
     });
-    for (const user of [null, { email_confirmed_at: "yes", id: "other" }, { id: owner }]) {
+    for (const user of [
+      null,
+      { email_confirmed_at: "yes", id: second, is_anonymous: true },
+      { id: owner },
+    ]) {
       mocks.identity.mockResolvedValue({ user });
       expect((await notificationRequest(request("GET"))).status).toBe(403);
     }
@@ -110,11 +118,11 @@ describe("fitness notification routes", () => {
     expect(mocks.enqueueReminder).toHaveBeenCalledWith(
       owner,
       expect.any(String),
-      expect.objectContaining({ title: "Fitness OS" }),
+      expect.objectContaining({ title: "My Fitness Studio" }),
       "https://fcm.googleapis.com/fixture",
     );
   });
-  it("guards the worker, uses the fixed owner and avoids sensitive reminder text", async () => {
+  it("guards the worker, processes devices across accounts and avoids sensitive reminder text", async () => {
     expect((await dispatchReminders(request("GET"))).status).toBe(403);
     expect(mocks.find).not.toHaveBeenCalled();
     mocks.find.mockResolvedValue({ revision: 9, state: {} });
@@ -133,13 +141,21 @@ describe("fitness notification routes", () => {
     );
     expect(result.status).toBe(200);
     expect(mocks.find).toHaveBeenCalledWith(owner);
+    expect(mocks.find).toHaveBeenCalledWith(second);
     expect(mocks.enqueueReminder).toHaveBeenCalledWith(
       owner,
       expect.any(String),
       expect.objectContaining({
         body: "You have a task due. Open the app to see it.",
-        title: "Fitness OS reminder",
+        title: "My Fitness Studio reminder",
       }),
+      undefined,
+      9,
+    );
+    expect(mocks.enqueueReminder).toHaveBeenCalledWith(
+      second,
+      expect.any(String),
+      expect.anything(),
       undefined,
       9,
     );

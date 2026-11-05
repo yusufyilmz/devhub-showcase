@@ -13,7 +13,7 @@ import { WeeklyPlanner } from "../features/weekly-planner/weekly-planner";
 const noop = () => {
   /* Static markup does not handle interaction. */
 };
-test("shared page waits for live data instead of showing bundled sample plans", () => {
+test("demo loading view contains no personal workout records", () => {
   const html = renderToStaticMarkup(<Preview />);
   assert.match(html, /Getting your tasks ready/);
   assert.doesNotMatch(html, /type="password"/);

@@ -1,41 +1,48 @@
 "use client";
 import { useEffect, useState } from "react";
 
-import { seedWorkspace } from "@shared/services/db/seed";
-import { Button as LibraryButton } from "@shared/ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@shared/ui/alert";
+import { Button } from "@shared/ui/button";
+import { Card } from "@shared/ui/cards";
+import { Skeleton } from "@shared/ui/skeleton";
 
 import { initializeFitnessNotifications } from "@/features/notifications/browser";
-import { HttpWorkspaceGateway } from "@/features/task-workspace/gateway";
+import { DemoWorkspaceGateway, HttpWorkspaceGateway } from "@/features/task-workspace/gateway";
+import { starterWorkspace } from "@/features/task-workspace/starter";
 import { TaskWorkspace } from "@/features/task-workspace/task-workspace";
 import { useTaskWorkspace } from "@/features/task-workspace/use-task-workspace";
 
-export function FitnessApp({ readOnly = false }: { readOnly?: boolean }) {
+export function FitnessApp({ demo = false }: { demo?: boolean }) {
   useEffect(initializeFitnessNotifications, []);
-  const [initial] = useState(seedWorkspace);
-  const [gateway] = useState(() => new HttpWorkspaceGateway(readOnly));
-  const controller = useTaskWorkspace(gateway, initial);
+  const [initial] = useState(starterWorkspace);
+  const [gateway] = useState(() =>
+    demo ? new DemoWorkspaceGateway() : new HttpWorkspaceGateway(),
+  );
+  const controller = useTaskWorkspace(gateway, initial, demo);
   if (controller.loading)
     return (
-      <main className="login">
-        <h1>Getting your tasks ready…</h1>
+      <main aria-busy="true" className="fitness-state">
+        <Card className="fitness-state-card" interaction="static">
+          <h1>Getting your tasks ready…</h1>
+          <Skeleton className="fitness-loading-placeholder" />
+        </Card>
       </main>
     );
   if (!controller.ready)
     return (
-      <main className="login">
-        <h1>Could not load your workspace.</h1>
-        <p role="alert">{controller.error}</p>
-        <LibraryButton
-          className="primary"
-          onClick={() => location.reload()}
-          type="button"
-          variant="unstyled"
-        >
-          Retry
-        </LibraryButton>
-        <a className="text-btn space-top" href="/login">
-          Owner sign in
-        </a>
+      <main className="fitness-state">
+        <Alert variant="destructive">
+          <AlertTitle>Could not load your workspace</AlertTitle>
+          <AlertDescription>{controller.error}</AlertDescription>
+        </Alert>
+        <div className="row">
+          <Button onClick={() => location.reload()} type="button">
+            Retry
+          </Button>
+          <Button href="/login" variant="outline">
+            Sign in
+          </Button>
+        </div>
       </main>
     );
   return <TaskWorkspace controller={controller} />;

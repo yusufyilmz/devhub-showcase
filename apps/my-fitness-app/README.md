@@ -1,6 +1,6 @@
-# Yusuf Fitness OS — task-based edition
+# My Fitness Studio
 
-Next.js app in this monorepo (`apps/my-fitness-app`). It uses TypeScript, pnpm, Supabase Auth, and Drizzle ORM against the shared Supabase project in `supabase/migrations`. Fitness rows use the same `auth.users` id as a portfolio owner. The app still has its own routes and is not part of the MyDevStudio production deploy.
+My Fitness Studio uses Next.js, Supabase Auth and Drizzle. Each confirmed account gets its own private workspace, stored under its Supabase user ID.
 
 ## Run
 
@@ -12,7 +12,7 @@ pnpm install --frozen-lockfile
 pnpm --filter my-fitness-app dev
 ```
 
-Open `http://localhost:3002` after completing Supabase setup below. The dev server uses port 3002 so it can run beside MyDevStudio on port 3000. The same URL shows your live workspace read-only to visitors and unlocks editing when you sign in as its owner. `/preview` always displays that same live data in read-only mode, even if you are signed in. It is no longer a bundled sample and requires your configured Supabase project.
+Open [My Fitness Studio](http://localhost:3002/) (`/`) after configuring Supabase. Use [Demo](http://localhost:3002/preview) (`/preview`) to explore fictional activities without an account or database connection.
 
 ## Light and dark themes
 
@@ -22,22 +22,17 @@ Shared styling loads `@shared/ui/styles.css`. Dashboard layout and components li
 
 ## Supabase setup
 
-1. Use the same Supabase project as MyDevStudio. Copy `.env.example` to `.env.local`.
-2. Set the Supabase URL and publishable key from that project. Set `SUPABASE_DB_URL` to the same project's pooler connection URI, including its database password. Keep this server-only value private; never prefix it with `NEXT_PUBLIC_`.
-3. Apply `supabase/migrations/20261101120000_fitness_task_workspaces.sql` with the rest of the shared migration history. It creates the fitness tables and ties `user_id` to `auth.users`. Do not run a second migrator from this app.
-4. Copy the owner's UUID from Authentication → Users into `WORKSPACE_OWNER_ID` in `.env.local`. That id must already exist in this project's Auth users. Only this user can edit.
-5. Add this app's `/auth/callback` URL to the same Supabase project's Authentication → URL Configuration → Redirect URLs. Locally that is `http://localhost:3002/auth/callback`. Keep the MyDevStudio callback in that list too.
-6. Restart the app and sign in at `/login` with Google or email. The first owner load creates or imports your task workspace. Until this first login, visitors see an initialization message. Share the main website URL after that; visitors need no login.
+1. Copy `.env.example` to `.env.local`. Set the Fitness project's Supabase URL, publishable key and server-only `SUPABASE_DB_URL` pooler URI.
+2. Apply the existing workspace migration, `supabase/migrations/20261101120000_fitness_task_workspaces.sql`, if setting up a fresh database.
+3. Add the exact Fitness callback URL in Supabase Auth. For local development use [Auth callback](http://localhost:3002/auth/callback) (`/auth/callback`).
+4. Configure Google OAuth and allow signup in the Fitness Supabase project for self-service Google accounts. For email/password, provision or invite confirmed users through that project.
+5. Open [Sign in](http://localhost:3002/login) (`/login`). The first workspace load imports the account's legacy data if present, or starts with an empty routine and one editable meal-plan template.
 
-The app verifies bearer tokens with Supabase Auth and compares the verified user ID with `WORKSPACE_OWNER_ID` before every write. Anonymous visitors and other authenticated accounts can only read the configured owner’s workspace. The server ORM uses your pooler credentials, which can bypass RLS; every repository query therefore explicitly scopes data to the configured owner. Anonymous database grants remain revoked: public reads go through the controlled application API. Never expose the database URI to browsers or commit `.env.local`.
+## Private workspaces
 
-## Sharing and remembered login
+The API uses the verified cookie session or bearer token to select the account on each request. Signed-out and unconfirmed requests receive HTTP 401. `GET /api/state` returns the account's snapshot, revision and `workspaceId`. Send that `workspaceId` and revision with `PUT /api/state`. A changed account or stale revision returns HTTP 409. The server selects the row from the verified session. Responses are private and uncached, and database row policies isolate accounts for direct authenticated access.
 
-Anyone with the site URL can view the current task plans, calendar, completion records, shopping lists, and weight history. Visitors cannot change tasks, log sets, drag events, or modify settings. The read-only view refreshes every 30 seconds while visible and when the tab receives focus. The API is uncached and rejects writes unless Supabase verifies the configured owner; UI controls are not the authorization boundary.
-
-Sign-in uses the same Google and email handlers as MyDevStudio. Supabase stores the session in a host cookie (`path=/`, shared by every port on that host), so signing in on MyDevStudio opens this app already signed in, and the reverse is true. Your password is sent only for sign-in and is never saved. The browser’s password manager can fill it using the standard password field. Sign out under More clears that shared cookie on this browser, including the studio session. Other open tabs switch back to read-only after sign-out. A signed-in account that is not `WORKSPACE_OWNER_ID` can view the workspace and cannot edit it. Theme preference stays in the shared user-config record, separate from the session.
-
-The previously used SSR cookies are no longer used for access control. Existing users need to sign in once after this update. This is one shared personal workspace, not a platform where any registered account gets editing rights.
+Open [Demo](http://localhost:3002/preview) (`/preview`) to share a sample day. Sign out under More to clear the Fitness session on that browser. Auth cookies apply to the configured Fitness project and site hostname.
 
 ## Deploy
 
@@ -46,6 +41,17 @@ Create a separate Vercel project for this app. Set its root directory to `apps/m
 On `main`, `.github/workflows/ci.yml` deploys this app after verification when Fitness or shared code changes. The `VERCEL_FITNESS_PROJECT_ID` repository variable selects the existing `yusuf-fitness-os` Vercel project using the monorepo’s deployment credentials. The old private repository’s deployment workflow is retired. See [deployment setup and cutover](../../docs/deployments.md); point the Vercel project root at `apps/my-fitness-app`.
 
 Verify `/preview` signed out, `/login`, and saving then refreshing a task when signed in. No live Supabase or hosting credentials are included in the repository.
+
+### Add the branded address
+
+The proposed second address is [myfitnessstudio.vercel.app](https://myfitnessstudio.vercel.app/). Confirm availability in Vercel when attaching it to the existing Fitness project.
+
+1. In [Fitness Supabase URL configuration](https://supabase.com/dashboard/project/dtqqopvrimmlmntnlegx/auth/url-configuration), add `https://myfitnessstudio.vercel.app/auth/callback` to Redirect URLs. Retain the existing callback. Both hosts use the same Fitness Supabase project and its Google provider.
+2. Set the Vercel Production variable `FITNESS_ADDITIONAL_ORIGIN=https://myfitnessstudio.vercel.app`. Keep the current `APP_URL` for existing bookmarks and writes.
+3. Deploy the private workspace release and confirm the original signed-out state endpoint returns HTTP 401.
+4. Add `myfitnessstudio.vercel.app` as a Production domain for the existing project. Verify HTTPS, login, and saving on both domains using the [manual guide](../../docs/testing/manual/fitness-workspaces.md).
+
+The browser establishes a separate session on each hostname. The same Fitness account opens the same records on both.
 
 ## Checks
 
@@ -108,7 +114,7 @@ Services have separate responsibilities. Domain rules do not import React, Drizz
 
 ## Upgrading
 
-Point `SUPABASE_DB_URL` and the public Supabase keys at the shared project, and set `WORKSPACE_OWNER_ID` to that project's Auth user id. Apply the shared migration before the first owner login. This change does not copy rows from a previous Fitness OS project.
+Keep `SUPABASE_DB_URL` and the public Supabase keys on the existing Fitness project. Each account continues to own its existing rows. The single-owner environment setting can be removed after this release.
 
 If `fitness_workspaces` contains that user's validated v1 JSON, the first authenticated load converts it into the relational task model. Existing meal completion, actual set logs, water logs and weight entries are retained. The old table is left untouched. A failed import does not fall back to an empty workspace.
 
@@ -128,6 +134,6 @@ pnpm build
 
 Prettier and the Node test runner have been replaced by Biome and Vitest. Biome configuration is in `biome.json`, and Vitest configuration is in `vitest.config.mts`. Generated SQL snapshots and the pnpm lockfile are excluded from formatting.
 
-Tests cover public read-only access, owner-only writes, token verification, remembered sessions, trainer conversion, rotation, overrides, historical snapshots, leaf-based progress, alternatives/ranges, deterministic regeneration, revision conflicts, and read-only rendering. Embedded PostgreSQL tests execute the real SQL migrations and ORM roundtrips, rollback, RLS and owner deletion. Live Supabase authentication, your pooler configuration and interactive browser/mobile behavior still need checks in your deployment.
+Tests cover anonymous denial, cross-account isolation, token verification, remembered sessions, trainer conversion, rotation, overrides, historical snapshots, leaf-based progress, alternatives/ranges, deterministic regeneration, revision conflicts, and read-only rendering. Embedded PostgreSQL tests execute the real SQL migrations and ORM roundtrips, rollback, RLS and owner deletion. Live Supabase authentication, your pooler configuration and interactive browser/mobile behavior still need checks in your deployment.
 
-Open-app reminders work with browser permission. Optional background Web Push, authenticated WebSocket updates and PWA installation use the shared `@shared/notifications` package; follow [notification setup](../../docs/notifications.md). Background reminders require the notification migration, VAPID credentials and a minute scheduler. Offline mode serves a public fallback; there is no offline write queue. The shared view intentionally publishes your saved workspace data; it does not publish credentials or session tokens. The personal-app API saves a validated workspace in one transaction; it is not designed for large multi-user workspaces or collaborative editing.
+Open-app reminders work with browser permission. Optional background Web Push, authenticated WebSocket updates and PWA installation use the shared `@shared/notifications` package; follow [notification setup](../../docs/notifications.md). Background reminders require the notification migration, VAPID credentials and a minute scheduler. Offline mode serves a public fallback; there is no offline write queue. The demo uses fictional records. The API saves one account’s validated workspace in one transaction.

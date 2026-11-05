@@ -26,13 +26,13 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Fitness OS",
+    title: "My Fitness Studio",
   },
   description: "Your meals, movement, and daily momentum.",
   icons: { apple: "/icon-180.png", icon: "/icon-192.png" },
   manifest: "/manifest.webmanifest",
   robots: { follow: false, index: false },
-  title: "Yusuf • Fitness OS",
+  title: "My Fitness Studio",
 };
 export const viewport: Viewport = {
   initialScale: 1,

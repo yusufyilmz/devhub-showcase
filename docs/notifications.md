@@ -16,10 +16,10 @@ Existing toast notifications in `@shared/runtime` remain a separate UI concern.
    registers the worker and saves that owner's device subscription. Installation
    and notification consent remain separate actions. Allow open-app reminders
    requests foreground permission even when background keys are not configured.
-3. Every minute, an authenticated worker reads the configured owner's workspace,
+3. Every minute, a secret-authenticated worker checks accounts with enabled devices,
    finds pending meal/supplement/water/workout reminders and queues each logical
    reminder once per enabled device. Open-app reminders remain a fallback.
-4. The worker claims up to ten jobs with two-minute leases, sends Web Push and
+4. The worker claims up to ten jobs per account with two-minute leases, sends Web Push and
    records bounded retries. Completed/edited schedules are rechecked by workspace
    revision before claim. A changed workspace cancels stale reminders implicitly;
    a still-due reminder is refreshed on the next minute run.
@@ -28,10 +28,8 @@ Existing toast notifications in `@shared/runtime` remain a separate UI concern.
 
 Background payloads use a generic title/body, without meal names, notes or dosage.
 Device endpoints and keys have no browser database grants. Authenticated event
-reads are owner-scoped and expire. All app queries also scope the configured owner
-because pooled database credentials can bypass RLS. This remains the existing
-single-owner Fitness OS sharing model; it does not make already public fitness
-pages private.
+reads are account-scoped and expire. API requests and worker queries scope each
+operation to its account because pooled database credentials can bypass RLS.
 
 ## Operator prerequisites
 
@@ -43,8 +41,7 @@ change production. Complete these steps in an approved preview environment first
    Fitness OS workspace migration. Verify `notification_events` is in the existing
    `supabase_realtime` publication; the migration adds it if that publication
    exists. Enable that publication separately if the project has no Realtime setup.
-2. Keep existing `SUPABASE_DB_URL`, Supabase public configuration,
-   `WORKSPACE_OWNER_ID` and exact-origin `APP_URL` set for Fitness OS.
+2. Keep the Fitness project’s `SUPABASE_DB_URL`, Supabase public configuration and exact-origin `APP_URL` set.
 3. Generate a VAPID key pair in a trusted local terminal:
    `pnpm --filter @shared/notifications exec web-push generate-vapid-keys`.
    Set `WEB_PUSH_PUBLIC_KEY`, server-only `WEB_PUSH_PRIVATE_KEY` and
@@ -65,7 +62,7 @@ change production. Complete these steps in an approved preview environment first
    This script is separate from automatic migrations and is never run by tests.
 6. Inspect both job execution and HTTP response status, not just whether cron ran.
    A successful worker response reports aggregate processed/sent/retry/expired/
-   failed counts without subscription details. 403 means missing/wrong/short
+   failed counts without subscription details. `failedAccounts` counts accounts whose worker operations could not finish. 403 means missing/wrong/short
    secret; 503 means configuration, storage or delivery unavailable.
 
 [Supabase's scheduling guidance](https://supabase.com/docs/guides/functions/schedule-functions)

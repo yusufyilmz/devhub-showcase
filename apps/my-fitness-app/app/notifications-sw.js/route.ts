@@ -6,7 +6,7 @@ export function GET() {
       cacheName: "fitness-notifications-v1",
       icon: "/icon-192.png",
       offlineUrl: "/offline.html",
-      title: "Fitness OS",
+      title: "My Fitness Studio",
     }),
     {
       headers: {

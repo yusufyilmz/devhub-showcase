@@ -7,13 +7,13 @@ test.describe("Fitness OS notifications", () => {
     const state = seedWorkspace();
     state.settings.reminders = false;
     await page.route("**/api/state**", (route) =>
-      route.fulfill({ json: { canEdit: true, revision: 0, state } }),
+      route.fulfill({ json: { canEdit: true, revision: 0, state, workspaceId: "fixture-user" } }),
     );
     await page.route("**/api/notifications", (route) =>
       route.fulfill({ json: { configured: false, publicKey: null, revision: 0 } }),
     );
   });
-  test("shows truthful setup state and install guidance in owner and shared views", async ({
+  test("shows truthful setup state and install guidance in private and demo views", async ({
     page,
   }, testInfo) => {
     await page.goto("/?view=More");
