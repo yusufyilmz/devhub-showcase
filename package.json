@@ -21,6 +21,7 @@
     "create-package": "turbo gen create-package",
     "cv:generate": "turbo gen cv",
     "dev": "turbo run dev",
+    "dev:setup": "node tools/scripts/setup-development.mjs",
     "fix:docs": "biome format --write **/*.md && markdownlint-cli2 --fix **/*.md",
     "fix:skills": "node tools/scripts/check-skills.mjs --fix",
     "format": "biome format --write .",

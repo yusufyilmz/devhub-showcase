@@ -49,8 +49,9 @@ make any existing portfolio accessible.
 2. In the local Supabase Studio Auth users screen (usually
    `http://127.0.0.1:54323`), create a **confirmed**, disposable test user
    with an email address and password.
-3. In `apps/my-dev-studio/.env.local` (or the environment file used by your
-   development command), set:
+3. Run `pnpm dev:setup --supabase` from the repository root to create
+   `apps/my-dev-studio/.env.development.local` with the local public key.
+   Existing files are preserved; edit them manually when necessary. Set:
 
    ```dotenv
    NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
@@ -61,7 +62,7 @@ make any existing portfolio accessible.
    ```
 
 4. Restart the Next.js development server, navigate to
-   `http://localhost:3000/login`, and select **Continue as local test user**.
+   `http://localhost:3001/login`, and select **Continue as local test user**.
    It opens the normal studio with a disposable local user's workspace.
 5. Sign out normally when finished. Disable the shortcut by changing
    `LOCAL_TEST_LOGIN=false` or stopping the local Supabase stack.

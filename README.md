@@ -24,10 +24,13 @@ Use Node `>=24.15.0 <25` and `pnpm@11.25.0`, as declared in [package.json](packa
 git clone https://github.com/yusufyilmz/devhub-showcase.git
 cd devhub-showcase
 pnpm install --frozen-lockfile
-pnpm dev
+pnpm dev:setup
+pnpm --filter my-dev-studio dev
 ```
 
-Open <http://localhost:3000>. For optional integrations, copy [.env.example](.env.example) to `apps/web/.env.local` and supply only the services you need. Never commit the resulting file.
+Open <http://localhost:3001>. `pnpm dev:setup` copies the safe root [.env.development](.env.development) defaults to `apps/my-dev-studio/.env.development.local` only when that file does not exist. Repeating the command preserves it byte-for-byte. Next.js loads environment files from the app directory; it does not load root environment files. Exported shell variables, `.env.development.local`, `.env.local`, `.env.development`, then `.env` take precedence in that order during development. Restart the server after edits.
+
+For optional integrations, consult [.env.example](.env.example) and add only the settings you need to the ignored app file. Never commit it. For local authentication, install Docker and the Supabase CLI, run `supabase start` from the repository root, then run `pnpm dev:setup --supabase` before creating the app environment file. This reads only the running local stack's URL and public key; it does not start containers, reset data, link a hosted project or create users. If the file already exists, edit its local Supabase settings manually. See [local login setup](docs/features/google-login.md#local-testing-without-google-oauth) and the [manual setup checks](docs/testing/manual/local-development.md).
 
 | Configuration                                                      | Purpose                                                               |
 | ------------------------------------------------------------------ | --------------------------------------------------------------------- |
