@@ -12,7 +12,7 @@ import {
 import { database } from "@shared/services/db/client";
 import { WorkspaceRepository } from "@shared/services/workspace";
 
-import { requestIdentity, sameOrigin, workspaceOwnerId } from "@/lib/auth";
+import { fitnessUser, requestIdentity, sameOrigin } from "@/lib/auth";
 
 import { dueFitnessReminders } from "./reminders";
 import {
@@ -20,6 +20,7 @@ import {
   disableDevice,
   enqueueReminder,
   fitnessDeliveryQueue,
+  notificationAccountIds,
   saveDevice,
 } from "./store";
 
@@ -30,17 +31,18 @@ export function pushConfiguration() {
   const subject = process.env.WEB_PUSH_SUBJECT;
   return publicKey && privateKey && subject ? { privateKey, publicKey, subject } : null;
 }
-async function owner(request: Request) {
+async function accountId(request: Request) {
   const { user } = await requestIdentity(request);
-  if (!user?.email_confirmed_at || user.id !== workspaceOwnerId()) throw new AccessDenied();
-  return user.id;
+  const account = fitnessUser(user);
+  if (!account) throw new AccessDenied();
+  return account.id;
 }
 class AccessDenied extends Error {}
 export async function notificationRequest(request: Request) {
   if (request.method !== "GET" && !sameOrigin(request))
     return new Response(null, { headers, status: 403 });
   try {
-    const user = await owner(request);
+    const user = await accountId(request);
     const config = pushConfiguration();
     if (request.method === "GET") {
       const rows = await database().execute(
@@ -89,7 +91,7 @@ function notificationFailure(error: unknown) {
     {
       error:
         status === 403
-          ? "Owner access required."
+          ? "Sign in with a confirmed account."
           : "Could not save this device's notification settings.",
     },
     { headers, status },
@@ -99,7 +101,7 @@ function notificationFailure(error: unknown) {
 export async function testNotification(request: Request) {
   if (!sameOrigin(request)) return new Response(null, { headers, status: 403 });
   try {
-    const user = await owner(request);
+    const user = await accountId(request);
     const config = pushConfiguration();
     if (!config) throw new Error("setup");
     const input = z
@@ -142,43 +144,69 @@ export async function testNotification(request: Request) {
     );
   }
 }
-export async function dispatchReminders(request: Request) {
-  const expected = Buffer.from(`Bearer ${process.env.CRON_SECRET ?? ""}`);
+function authorizedWorker(request: Request) {
+  const secret = process.env.CRON_SECRET;
+  if (!secret || secret.length < 32) return false;
+  const expected = Buffer.from(`Bearer ${secret}`);
   const received = Buffer.from(request.headers.get("authorization") ?? "");
-  if (
-    !process.env.CRON_SECRET ||
-    process.env.CRON_SECRET.length < 32 ||
-    expected.length !== received.length ||
-    !timingSafeEqual(expected, received)
-  )
-    return new Response(null, { headers, status: 403 });
+  return expected.length === received.length && timingSafeEqual(expected, received);
+}
+
+export async function dispatchReminders(request: Request) {
+  if (!authorizedWorker(request)) return new Response(null, { headers, status: 403 });
   try {
     const config = pushConfiguration();
     if (!config) throw new Error("setup");
-    const user = workspaceOwnerId();
-    const snapshot = await new WorkspaceRepository(database()).find(user);
-    if (snapshot)
-      for (const reminder of dueFitnessReminders(snapshot.state)) {
-        const key = await stableNotificationId(`fitness-os:${reminder.key}`);
-        await enqueueReminder(
-          user,
-          key,
-          {
-            body: "You have a task due. Open the app to see it.",
-            id: key,
-            title: "Fitness OS reminder",
-            url: reminder.url,
-          },
-          undefined,
-          snapshot.revision,
-        );
+    const accounts = await notificationAccountIds();
+    const repository = new WorkspaceRepository(database());
+    const sender = createPushSender(config);
+    const totals = { expired: 0, failed: 0, processed: 0, retry: 0, sent: 0 };
+    let failedAccounts = 0;
+    for (let offset = 0; offset < accounts.length; offset += 4) {
+      const results = await Promise.allSettled(
+        accounts.slice(offset, offset + 4).map((user) => dispatchAccount(user, repository, sender)),
+      );
+      for (const result of results) {
+        if (result.status === "rejected") {
+          failedAccounts++;
+          continue;
+        }
+        for (const key of Object.keys(totals) as (keyof typeof totals)[])
+          totals[key] += result.value[key];
       }
-    await cleanNotifications(user);
+    }
     return Response.json(
-      await deliverQueuedNotifications(fitnessDeliveryQueue(user), createPushSender(config), 10),
-      { headers },
+      { ...totals, failedAccounts },
+      { headers, status: failedAccounts ? 503 : 200 },
     );
   } catch {
     return Response.json({ error: "Reminder delivery is unavailable." }, { headers, status: 503 });
   }
+}
+
+async function dispatchAccount(
+  user: string,
+  repository: WorkspaceRepository,
+  sender: ReturnType<typeof createPushSender>,
+) {
+  const snapshot = await repository.find(user);
+  if (snapshot) {
+    for (const reminder of dueFitnessReminders(snapshot.state)) {
+      const key = await stableNotificationId(`fitness-os:${reminder.key}`);
+      await enqueueReminder(
+        user,
+        key,
+        {
+          body: "You have a task due. Open the app to see it.",
+          id: key,
+          title: "Fitness OS reminder",
+          url: reminder.url,
+        },
+        undefined,
+        snapshot.revision,
+      );
+    }
+  }
+  await cleanNotifications(user);
+  return deliverQueuedNotifications(fitnessDeliveryQueue(user), sender, 10);
 }

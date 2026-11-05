@@ -1,14 +1,12 @@
-import { z } from "zod";
-
 import { supabaseConfigured } from "@shared/auth/config";
 import { createClient, createRequestClient } from "@shared/auth/server";
 
 export const configured = supabaseConfigured;
 
-export function workspaceOwnerId() {
-  const owner = z.uuid().safeParse(process.env.WORKSPACE_OWNER_ID);
-  if (!owner.success) throw new Error("Set WORKSPACE_OWNER_ID to your Supabase Auth user UUID.");
-  return owner.data;
+export function fitnessUser<T extends { email_confirmed_at?: string; is_anonymous?: boolean }>(
+  user: T | null,
+) {
+  return user?.email_confirmed_at && !user.is_anonymous ? user : null;
 }
 
 export async function requestIdentity(request: Request) {

@@ -6,7 +6,7 @@ import { urls } from "@shared/config/urls";
 
 let client: ReturnType<typeof createClient> | undefined;
 
-/** Cookie session shared with MyDevStudio (same Supabase project and auth cookies). */
+/** Cookie session for the configured Fitness Auth project. */
 export function browserAuth() {
   if (typeof window === "undefined")
     throw new Error("Browser auth is only available in the browser.");
@@ -21,15 +21,14 @@ export async function authorizationHeaders(): Promise<Record<string, string>> {
   return data.session ? { Authorization: `Bearer ${data.session.access_token}` } : {};
 }
 
-export function watchSession(onChange: () => void) {
+export function watchSession(onChange: (userId: string | null) => void) {
   if (!supabaseConfigured() || typeof window === "undefined") return () => undefined;
-  let initial = true;
-  const { data } = browserAuth().auth.onAuthStateChange(() => {
-    if (initial) {
-      initial = false;
-      return;
-    }
-    onChange();
+  let previous: string | null | undefined;
+  const { data } = browserAuth().auth.onAuthStateChange((_event, session) => {
+    const userId = session?.user.id ?? null;
+    const changed = previous !== undefined && previous !== userId;
+    previous = userId;
+    if (changed) onChange(userId);
   });
   return () => data.subscription.unsubscribe();
 }

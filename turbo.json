@@ -76,12 +76,7 @@
     },
     "my-fitness-app#build": {
       "dependsOn": ["^build"],
-      "env": [
-        "NEXT_PUBLIC_SUPABASE_URL",
-        "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
-        "APP_URL",
-        "WORKSPACE_OWNER_ID"
-      ],
+      "env": ["NEXT_PUBLIC_SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "APP_URL"],
       "outputs": [".next/**", "!.next/cache/**"],
       "passThroughEnv": [
         "SUPABASE_DB_URL",

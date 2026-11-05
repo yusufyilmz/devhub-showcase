@@ -6,7 +6,7 @@ import { validateWorkspace, type Workspace, workspaceSchema } from "@shared/serv
 import { watchSession } from "@/lib/browser-session";
 
 import type { WorkspaceGateway } from "./gateway";
-export function useTaskWorkspace(gateway: WorkspaceGateway, initial: Workspace) {
+export function useTaskWorkspace(gateway: WorkspaceGateway, initial: Workspace, demo: boolean) {
   const [state, setState] = useState(initial);
   const [revision, setRevision] = useState(0);
   const [ready, setReady] = useState(false);
@@ -19,17 +19,11 @@ export function useTaskWorkspace(gateway: WorkspaceGateway, initial: Workspace) 
   const currentRevision = useRef(0);
   const remoteRevision = useRef(0);
   useEffect(() => {
+    const pending = new AbortController();
     let active = true;
     let stopLive: () => void = () => undefined;
-    let liveStarted = false;
     function startLive() {
-      if (gateway.readOnly) {
-        stopLive();
-        liveStarted = false;
-        return;
-      }
-      if (liveStarted || !gateway.subscribe) return;
-      liveStarted = true;
+      if (gateway.readOnly || !gateway.subscribe) return;
       stopLive = gateway.subscribe({
         message: (notification) => {
           if (active) setMessage(notification.body);
@@ -46,7 +40,7 @@ export function useTaskWorkspace(gateway: WorkspaceGateway, initial: Workspace) 
     }
     async function load() {
       try {
-        const r = await gateway.load();
+        const r = await gateway.load(pending.signal);
         if (active) {
           setState(r.state);
           setRevision(r.revision);
@@ -62,27 +56,27 @@ export function useTaskWorkspace(gateway: WorkspaceGateway, initial: Workspace) 
       }
     }
     run(load());
-    const refresh = () => {
-      if (gateway.readOnly && !lock.current && !document.hidden) run(load());
+    function openSession(userId: string | null) {
+      active = false;
+      pending.abort();
+      stopLive();
+      setReady(false);
+      setLoading(true);
+      window.location.replace(userId ? window.location.href : "/login");
+    }
+    const stopSessionWatch = demo ? () => undefined : watchSession(openSession);
+    const restorePage = (event: PageTransitionEvent) => {
+      if (!demo && event.persisted) window.location.reload();
     };
-    const authChanged = (event: StorageEvent) => {
-      if (event.key === null || event.key.includes("-auth-token")) run(load());
-    };
-    const stopSessionWatch = watchSession(() => run(load()));
-    const timer = setInterval(refresh, 30000);
-    window.addEventListener("focus", refresh);
-    document.addEventListener("visibilitychange", refresh);
-    window.addEventListener("storage", authChanged);
+    window.addEventListener("pageshow", restorePage);
     return () => {
       active = false;
-      clearInterval(timer);
-      window.removeEventListener("focus", refresh);
-      document.removeEventListener("visibilitychange", refresh);
-      window.removeEventListener("storage", authChanged);
+      pending.abort();
+      window.removeEventListener("pageshow", restorePage);
       stopSessionWatch();
       stopLive();
     };
-  }, [gateway]);
+  }, [demo, gateway]);
   useEffect(() => {
     if (!message) return;
     const timer = setTimeout(() => setMessage(""), 5000);

@@ -6,6 +6,7 @@ import {
   CalendarDays,
   Droplets,
   Home,
+  Info,
   Layers,
   Plus,
   Settings2,
@@ -17,9 +18,13 @@ import type { AgendaEvent } from "@shared/services/schedule";
 import { ScheduleService } from "@shared/services/schedule";
 import type { Workspace } from "@shared/services/types";
 import { createTask, dateLabel, shiftDate, type Task } from "@shared/services/types";
+import { Alert, AlertDescription, AlertTitle } from "@shared/ui/alert";
+import { Badge } from "@shared/ui/badge";
 import { Button as LibraryButton } from "@shared/ui/button";
+import { Card } from "@shared/ui/cards";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
+import { Progress } from "@shared/ui/progress";
 import { ThemeToggle } from "@shared/ui/theme";
 
 import { DayAgenda } from "@/features/agenda/day-agenda";
@@ -86,8 +91,8 @@ export function WorkspaceFrame({
     <div className="app">
       <WorkspaceSidebar name={name} readOnly={readOnly} setTab={setTab} tab={tab} />
       <main className="main">
-        {readOnly ? <ReadOnlyBanner /> : null}
         <WorkspaceTopbar busy={busy} readOnly={readOnly} tab={tab} />
+        {readOnly ? <ReadOnlyBanner /> : null}
         <PageHeading
           date={date}
           name={name}
@@ -249,16 +254,17 @@ function WorkspaceSidebar({
         <span>↗</span>Fitness OS<span className="brand-dot">.</span>
       </a>
       <span className="eyebrow nav-label">YOUR DAILY PRACTICE</span>
-      <nav>
+      <nav aria-label="Fitness workspace">
         {navigation.map(({ name: label, icon: Icon }) => (
           <LibraryButton
+            aria-current={tab === label ? "page" : undefined}
             className={tab === label ? "active" : ""}
             key={label}
             onClick={() => setTab(label)}
             type="button"
-            variant="unstyled"
+            variant="ghost"
           >
-            <Icon size={20} />
+            <Icon aria-hidden="true" size={20} />
             <span>{label}</span>
           </LibraryButton>
         ))}
@@ -274,7 +280,7 @@ function WorkspaceSidebar({
           <span className="avatar">{name.slice(0, 1)}</span>
           <div>
             <strong>{name}</strong>
-            <small>{readOnly ? "Read-only workspace" : "Owner · Editing enabled"}</small>
+            <small>{readOnly ? "Demo workspace" : "Private workspace"}</small>
           </div>
         </div>
       </div>
@@ -284,12 +290,16 @@ function WorkspaceSidebar({
 
 function ReadOnlyBanner() {
   return (
-    <div className="preview-banner">
-      <span>
-        <strong>Read-only workspace</strong> · Live plans and progress.
-      </span>
-      <a href="/login">Sign in to edit →</a>
-    </div>
+    <Alert className="fitness-demo-banner">
+      <Info aria-hidden="true" />
+      <AlertTitle>Fitness OS demo</AlertTitle>
+      <AlertDescription>
+        Explore a sample day with fictional activities.
+        <LibraryButton href="/" variant="outline">
+          Open my workspace
+        </LibraryButton>
+      </AlertDescription>
+    </Alert>
   );
 }
 
@@ -307,19 +317,18 @@ function WorkspaceTopbar({
       <span className="breadcrumb">My workspace / {tab}</span>
       <div className="topbar-actions">
         <ThemeToggle />
-        <span className="sync">
-          <i />
+        <Badge role="status" variant="secondary">
           {syncLabel(readOnly, busy)}
-        </span>
+        </Badge>
       </div>
     </header>
   );
 }
 
 function syncLabel(readOnly: boolean, busy: boolean) {
-  if (readOnly) return "Read-only";
+  if (readOnly) return "Demo";
   if (busy) return "Saving…";
-  return "Owner · Editing";
+  return "Private";
 }
 
 function PageHeading({
@@ -353,7 +362,6 @@ function PageHeading({
             if (event.target.value) setDate(event.target.value);
           }}
           type="date"
-          unstyled
           value={date}
         />
       </LibraryLabel>
@@ -396,12 +404,15 @@ function headingSummary(tab: string) {
 
 function ErrorBanner({ message, onDismiss }: { message: string; onDismiss: () => void }) {
   return (
-    <div className="error floating-error" role="alert">
-      {message}
-      <LibraryButton className="text-btn" onClick={onDismiss} type="button" variant="unstyled">
-        Dismiss
-      </LibraryButton>
-    </div>
+    <Alert className="floating-error" variant="destructive">
+      <AlertTitle>Workspace update</AlertTitle>
+      <AlertDescription>
+        {message}
+        <LibraryButton onClick={onDismiss} type="button" variant="outline">
+          Dismiss
+        </LibraryButton>
+      </AlertDescription>
+    </Alert>
   );
 }
 
@@ -435,86 +446,74 @@ function TodayView({
   return (
     <>
       <div className="overview">
-        <section className="day-summary">
-          <div>
-            <span className="eyebrow">{dateLabel(date)}</span>
-            <h2>Every small step counts.</h2>
-            <p>
-              {progress.done} of {progress.total} leaf tasks completed · {progress.skipped} skipped
-            </p>
-            <span className="light-pill">
-              {state.tasks.find((task) => task.id === scheduleService.dietFor(state, date))?.title}
-            </span>
-          </div>
-          <div
-            className="ring"
-            style={{
-              background: `conic-gradient(var(--ring-fill) ${percent}%,var(--ring-track) 0)`,
-            }}
-          >
-            <div>
-              <strong>
-                {percent}
-                <small>%</small>
-              </strong>
-              <span>COMPLETE</span>
+        <Card asChild className="fitness-metric" interaction="static" layout="plain">
+          <section aria-labelledby="daily-progress-title">
+            <div className="fitness-metric-heading">
+              <h2 id="daily-progress-title">Daily progress</h2>
+              <Badge variant="outline">{dateLabel(date)}</Badge>
             </div>
-          </div>
-        </section>
-        <section className="water-summary">
-          <span className="water-symbol">
-            <Droplets />
-          </span>
-          <span className="eyebrow">KEEP IT FLOWING</span>
-          <h2>
-            {(water / 1000).toFixed(2)} <small>/ {state.settings.waterTarget / 1000} L</small>
-          </h2>
-          <div className="progress">
-            <i
-              style={{
-                width: `${Math.min(100, (water / state.settings.waterTarget) * 100)}%`,
-              }}
+            <div className="fitness-metric-value">
+              {percent}
+              <small>% complete</small>
+            </div>
+            <Progress aria-label="Daily tasks completed" value={percent} />
+            <p>
+              {progress.done} of {progress.total} tasks complete · {progress.skipped} skipped
+            </p>
+          </section>
+        </Card>
+        <Card asChild className="fitness-metric" interaction="static" layout="plain">
+          <section aria-labelledby="hydration-title">
+            <div className="fitness-metric-heading">
+              <h2 id="hydration-title">
+                <Droplets aria-hidden="true" size={18} /> Hydration
+              </h2>
+              <LibraryButton
+                disabled={readOnly || busy}
+                onClick={() => update((current) => logWater(current, date), "250 ml logged")}
+                type="button"
+                variant="outline"
+              >
+                <Plus size={15} />
+                250 ml water
+              </LibraryButton>
+            </div>
+            <div className="fitness-metric-value">
+              {(water / 1000).toFixed(2)}
+              <small>/ {state.settings.waterTarget / 1000} L</small>
+            </div>
+            <Progress
+              aria-label="Daily water goal"
+              value={Math.min(100, (water / state.settings.waterTarget) * 100)}
             />
-          </div>
-          <LibraryButton
-            className="text-btn"
-            disabled={readOnly || busy}
-            onClick={() => update((current) => logWater(current, date), "250 ml logged")}
-            type="button"
-            variant="unstyled"
-          >
-            <Plus size={15} />
-            250 ml water
-          </LibraryButton>
-        </section>
+            <p>Water logged for this day</p>
+          </section>
+        </Card>
       </div>
       <div className="section-heading">
         <h2>Your daily agenda</h2>
         <div className="row">
           <LibraryButton
-            className="text-btn"
             onClick={() => setDate(shiftDate(date, -1))}
             type="button"
-            variant="unstyled"
+            variant="outline"
           >
             Previous
           </LibraryButton>
           <LibraryButton
-            className="text-btn"
             onClick={() => setDate(shiftDate(date, 1))}
             type="button"
-            variant="unstyled"
+            variant="outline"
           >
             Next
           </LibraryButton>
           <LibraryButton
-            className="outline"
             disabled={readOnly || busy || !dayRoot}
             onClick={() => {
               if (dayRoot) onAdd(dayRoot);
             }}
+            size="lg"
             type="button"
-            variant="unstyled"
           >
             <Plus size={16} />
             Add task

@@ -4,35 +4,40 @@ import { database } from "@shared/services/db/client";
 import { loadLegacyWorkspace } from "@shared/services/fitness";
 import {
   InvalidWorkspaceError,
-  OwnerAccessRequiredError,
   RevisionConflictError,
-  WorkspaceAccessService,
-  WorkspaceNotPublishedError,
   WorkspaceRepository,
   WorkspaceService,
 } from "@shared/services/workspace";
 
-import { configured, requestIdentity, sameOrigin, workspaceOwnerId } from "@/lib/auth";
+import { starterWorkspace } from "@/features/task-workspace/starter";
+import { configured, fitnessUser, requestIdentity, sameOrigin } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
-const headers = { "Cache-Control": "private, no-store", Vary: "Authorization" };
+const headers = { "Cache-Control": "private, no-store", Vary: "Authorization, Cookie" };
+
+class SignInRequired extends Error {}
+class SetupRequired extends Error {}
+
 async function context(request: Request) {
-  if (!configured() || !process.env.SUPABASE_DB_URL || !process.env.WORKSPACE_OWNER_ID) return null;
-  const ownerId = workspaceOwnerId();
+  if (!configured() || !process.env.SUPABASE_DB_URL)
+    throw new SetupRequired("Fitness workspace setup is incomplete.");
   const { user, client } = await requestIdentity(request);
-  const repo = new WorkspaceRepository(database(), (id) => loadLegacyWorkspace(client, id));
-  return {
-    access: new WorkspaceAccessService(ownerId, repo),
-    service: new WorkspaceService(repo),
-    user,
-  };
+  const account = fitnessUser(user);
+  if (!account)
+    throw new SignInRequired("Sign in with a confirmed account to open your workspace.");
+  const repository = new WorkspaceRepository(
+    database(),
+    async (id) => (await loadLegacyWorkspace(client, id)) ?? starterWorkspace(),
+  );
+  return { service: new WorkspaceService(repository), userId: account.id };
 }
+
 function failure(error: unknown) {
   const status =
-    error instanceof OwnerAccessRequiredError
-      ? 403
-      : error instanceof WorkspaceNotPublishedError
-        ? 404
+    error instanceof SignInRequired
+      ? 401
+      : error instanceof SetupRequired
+        ? 503
         : error instanceof RevisionConflictError
           ? 409
           : error instanceof InvalidWorkspaceError
@@ -48,29 +53,21 @@ function failure(error: unknown) {
     { headers, status },
   );
 }
+
 export async function GET(request: Request) {
   try {
-    const ctx = await context(request);
-    if (!ctx)
-      return NextResponse.json(
-        { error: "Configure Supabase and WORKSPACE_OWNER_ID first." },
-        { headers, status: 503 },
-      );
-    const canEdit = ctx.access.canEdit(ctx.user?.id);
-    const snapshot = canEdit
-      ? await ctx.service.load(ctx.access.requireOwner(ctx.user?.id))
-      : await ctx.access.readShared();
-    return NextResponse.json({ ...snapshot, canEdit }, { headers });
+    const { service, userId } = await context(request);
+    const snapshot = await service.load(userId);
+    return NextResponse.json({ ...snapshot, canEdit: true, workspaceId: userId }, { headers });
   } catch (error) {
     return failure(error);
   }
 }
+
 export async function PUT(request: Request) {
   if (!sameOrigin(request)) return new Response(null, { headers, status: 403 });
   try {
-    const ctx = await context(request);
-    if (!ctx) return new Response(null, { headers, status: 503 });
-    const ownerId = ctx.access.requireOwner(ctx.user?.id);
+    const { service, userId } = await context(request);
     const raw = await request.text();
     if (raw.length > 5000000) return new Response(null, { headers, status: 413 });
     let input: unknown;
@@ -79,7 +76,18 @@ export async function PUT(request: Request) {
     } catch {
       return new Response(null, { headers, status: 400 });
     }
-    return NextResponse.json({ revision: await ctx.service.save(ownerId, input) }, { headers });
+    // The snapshot ID is a precondition. The verified session always selects the row.
+    if (
+      !input ||
+      typeof input !== "object" ||
+      !("workspaceId" in input) ||
+      input.workspaceId !== userId
+    )
+      return NextResponse.json(
+        { error: "Your session changed. Reload before saving." },
+        { headers, status: 409 },
+      );
+    return NextResponse.json({ revision: await service.save(userId, input) }, { headers });
   } catch (error) {
     return failure(error);
   }

@@ -418,6 +418,9 @@ importers:
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
+      '@tailwindcss/postcss':
+        specifier: 'catalog:'
+        version: 4.3.3
       '@types/node':
         specifier: 'catalog:'
         version: 26.6.5
@@ -427,6 +430,12 @@ importers:
       '@types/react-dom':
         specifier: 'catalog:'
         version: 19.3.0(@types/react@19.3.0)
+      postcss:
+        specifier: 'catalog:'
+        version: 8.5.32
+      tailwindcss:
+        specifier: 'catalog:'
+        version: 4.3.3
       typescript:
         specifier: 'catalog:'
         version: 7.0.2

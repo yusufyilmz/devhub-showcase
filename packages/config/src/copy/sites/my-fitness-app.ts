@@ -1,9 +1,8 @@
 export const myFitnessAppLogin = {
-  backHref: "/",
-  backLabel: "View the shared workspace →",
+  backHref: "/preview",
+  backLabel: "Explore the demo →",
   brand: "↗ Fitness OS",
-  description:
-    "Sign in with the same Google account as MyDevStudio. This browser keeps that session, so opening either app continues where you left off.",
+  description: "Sign in with Google or your Fitness OS account to open your private workspace.",
   errors: {
     google_failed: "Google sign in did not complete. Try again or use your password.",
     setup: "Sign in is unavailable. Check setup or try again.",

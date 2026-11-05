@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   icons: { apple: "/icon-180.png", icon: "/icon-192.png" },
   manifest: "/manifest.webmanifest",
   robots: { follow: false, index: false },
-  title: "Yusuf • Fitness OS",
+  title: "Fitness OS",
 };
 export const viewport: Viewport = {
   initialScale: 1,
