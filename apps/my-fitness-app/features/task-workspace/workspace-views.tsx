@@ -379,7 +379,7 @@ function headingTitle(input: {
   today: string;
 }) {
   if (input.tab === "Today") return todayTitle(input);
-  if (input.tab === "Tasks") return "A place for every step.";
+  if (input.tab === "Tasks") return "Tasks";
   if (input.tab === "Week") return "Plan. Prepare. Show up.";
   if (input.tab === "Calendar") return "A little structure.";
   return "Make it yours.";
@@ -398,7 +398,8 @@ function todayTitle(input: {
 }
 
 function headingSummary(tab: string) {
-  if (tab === "Tasks") return "Plans, meals, workouts and sets—all organized as tasks.";
+  if (tab === "Tasks")
+    return "Organize the plans you reuse for workouts, meals and daily routines.";
   if (tab === "Week") return "Cooking and groceries, derived from the meals on your calendar.";
   return "A clear plan. A few small wins. You’ve got this.";
 }

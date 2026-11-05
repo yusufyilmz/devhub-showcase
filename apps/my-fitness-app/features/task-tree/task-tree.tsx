@@ -46,29 +46,21 @@ export function TaskTree(props: TaskTreeProps) {
     </div>
   );
 }
-export function TaskBranch({
-  planRoot = false,
-  ...props
-}: TaskTreeProps & { task: Task; planRoot?: boolean }) {
+export function TaskBranch(props: TaskTreeProps & { task: Task }) {
   const { task, workspace, readOnly, busy, onEdit, onAdd, onStatus, onSet, depth = 0 } = props;
   const [expanded, setExpanded] = useState(depth < 2);
   const children = service.children(workspace.tasks, task.id);
   const status = service.status(workspace.tasks, task.id);
   return (
-    <article
-      className={`tree-node kind-${task.kind} status-${status}`}
-      data-plan-root={planRoot || undefined}
-    >
+    <article className={`tree-node kind-${task.kind} status-${status}`}>
       <div className="tree-row">
-        {!planRoot && (
-          <ExpandControl
-            expanded={expanded}
-            hasChildren={children.length > 0}
-            onToggle={() => setExpanded(!expanded)}
-            title={task.title}
-          />
-        )}
-        <TaskSummary hideHeading={planRoot} task={task} />
+        <ExpandControl
+          expanded={expanded}
+          hasChildren={children.length > 0}
+          onToggle={() => setExpanded(!expanded)}
+          title={task.title}
+        />
+        <TaskSummary task={task} />
         <TaskActions
           busy={busy}
           canAdd={task.scope !== "generated" && !["set", "supplement", "water"].includes(task.kind)}
@@ -78,7 +70,6 @@ export function TaskBranch({
           onStatus={onStatus}
           progress={service.progress(workspace.tasks, task.id)}
           readOnly={readOnly}
-          showLabels={planRoot}
           status={status}
           task={task}
         />
@@ -95,8 +86,8 @@ export function TaskBranch({
       {task.scope !== "template" && children.length === 0 ? (
         <LeafActions busy={busy} onStatus={onStatus} readOnly={readOnly} task={task} />
       ) : null}
-      {(planRoot || expanded) && children.length > 0 ? (
-        <div className="tree-children" data-indent={depth < 4 ? undefined : "capped"}>
+      {expanded && children.length > 0 ? (
+        <div className="tree-children">
           <TaskTree {...props} depth={depth + 1} parentId={task.id} />
         </div>
       ) : null}
@@ -130,25 +121,21 @@ function ExpandControl({
   );
 }
 
-function TaskSummary({ hideHeading, task }: { hideHeading: boolean; task: Task }) {
+function TaskSummary({ task }: { task: Task }) {
   return (
     <div className="tree-title">
-      {!hideHeading && (
-        <>
-          <span className="eyebrow">
-            {task.kind.replace("_", " ")}
-            {task.time ? ` · ${task.time}` : ""}
-          </span>
-          <strong>{task.title}</strong>
-        </>
-      )}
+      <span className="eyebrow">
+        {task.kind.replace("_", " ")}
+        {task.time ? ` · ${task.time}` : ""}
+      </span>
+      <strong>{task.title}</strong>
       {task.notes ? <p>{task.notes}</p> : null}
       <TaskFacts task={task} />
     </div>
   );
 }
 
-function TaskFacts({ task }: { task: Task }) {
+export function TaskFacts({ task }: { task: Task }) {
   if (task.details.type === "dose") {
     return (
       <span>
@@ -209,7 +196,6 @@ function TaskActions({
   onStatus,
   progress,
   readOnly,
-  showLabels,
   status,
   task,
 }: {
@@ -221,13 +207,9 @@ function TaskActions({
   onStatus: (task: Task, status: Task["status"]) => void;
   progress: { done: number; total: number };
   readOnly: boolean;
-  showLabels: boolean;
   status: Task["status"];
   task: Task;
 }) {
-  const actionStyle = showLabels
-    ? { size: "sm" as const, variant: "outline" as const }
-    : { className: "icon-btn", variant: "unstyled" as const };
   return (
     <div className="tree-actions">
       {childCount > 0 && task.scope !== "template" ? (
@@ -238,25 +220,25 @@ function TaskActions({
       {canAdd ? (
         <LibraryButton
           aria-label={`Add subtask to ${task.title}`}
-          {...actionStyle}
+          className="icon-btn"
           disabled={readOnly || busy}
           onClick={onAdd}
           type="button"
+          variant="unstyled"
         >
           <Plus aria-hidden="true" size={16} />
-          {showLabels && "Add subtask"}
         </LibraryButton>
       ) : null}
       {task.scope !== "generated" && task.kind !== "day" ? (
         <LibraryButton
           aria-label={`Edit ${task.title}`}
-          {...actionStyle}
+          className="icon-btn"
           disabled={readOnly || busy}
           onClick={onEdit}
           type="button"
+          variant="unstyled"
         >
           <Pencil aria-hidden="true" size={15} />
-          {showLabels && "Edit"}
         </LibraryButton>
       ) : null}
       {task.scope !== "template" && task.kind !== "set" ? (

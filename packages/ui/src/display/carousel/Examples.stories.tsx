@@ -8,7 +8,13 @@ import {
   CarouselPrevious,
 } from "./Carousel";
 
-function Example({ width = 560 }: { width?: number }) {
+function Example({
+  placement = "floating",
+  width = 560,
+}: {
+  placement?: "floating" | "inline";
+  width?: number;
+}) {
   return (
     <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
       <Carousel className="mx-10">
@@ -19,8 +25,10 @@ function Example({ width = 560 }: { width?: number }) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <div className={placement === "inline" ? "mt-3 flex justify-end gap-2" : undefined}>
+          <CarouselPrevious placement={placement} />
+          <CarouselNext placement={placement} />
+        </div>
       </Carousel>
     </div>
   );
@@ -31,5 +39,6 @@ const meta = { component: Example, tags: ["autodocs"], title: "UI/carousel" } sa
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
+export const InlineControls: Story = { args: { placement: "inline", width: 320 } };
 export const Narrow: Story = { args: { width: 320 } };
 export const Wide: Story = { args: { width: 960 } };

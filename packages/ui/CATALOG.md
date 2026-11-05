@@ -204,7 +204,7 @@ Public components exported from `packages/ui/src/components/index.ts`. Import th
 | `Timeline` and its item parts                                    | `timeline`               | Vertical timeline                                                 |
 | `Avatar`, `AvatarGroup`                                          | `avatar`, `avatar-group` | People marks                                                      |
 | `LogoCloud`                                                      | `logo-cloud`             | Logo row                                                          |
-| `Carousel`                                                       | `carousel`               | Horizontal media sequence                                         |
+| `Carousel`                                                       | `carousel`               | Swipeable slides with floating or inline controls                 |
 | `IFramePreview`                                                  | `iframe-preview`         | Embedded preview                                                  |
 | `ResponsivePortfolioPreview`                                     | `portfolio-preview`      | Private, sandboxed draft viewport at mobile/tablet/desktop widths |
 | `Map`                                                            | `map`                    | Map embed                                                         |
