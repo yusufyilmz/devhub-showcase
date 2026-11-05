@@ -2,6 +2,7 @@
 
 Private workspace package `@shared/cli`, alongside `@shared/typescript-config`.
 
+- `ci/`: tested app selection, stale-release detection and workflow cost policy. See [deployment setup](../../docs/deployments.md).
 - `scripts/`: repository maintenance and local environment setup. Run root package commands so scripts that use the current directory operate at the repository root.
 - `generators/`: Turbo generator definitions and templates. Root generator commands pass this configuration explicitly.
 - `tsdown/`: shared library build defaults exported as `@shared/cli/tsdown`.
