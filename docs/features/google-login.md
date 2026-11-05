@@ -35,3 +35,40 @@ No new app dependency, service-role key or Google secret in Vercel is needed. Th
 Sign in with two Google accounts and confirm each reaches its own `/{username}/edit` workspace through `/admin`, can save its own CV and remains signed in after a reload. Each must be unable to edit the other account’s profile or moderate site reviews. Verify cancellation, email/password fallback and sign out. Automated tests cover the route flow and authorization rejection, but cannot replace a real provider round trip after credentials are configured.
 
 References: [Supabase Google OAuth](https://supabase.com/docs/guides/auth/social-sign-in/auth-google) and [redirect URL configuration](https://supabase.com/docs/guides/auth/redirect-urls).
+
+## Local testing without Google OAuth
+
+The MyDevStudio login page can show **Continue as local test user** when the app
+is running in development against **local Supabase**. This signs in through
+Supabase's normal email/password flow and still runs the standard confirmed-user
+workspace provisioning and ownership checks. It does not forge a session or
+make any existing portfolio accessible.
+
+1. Start the local Supabase stack (`supabase start`) and run the local
+   database migrations required by MyDevStudio.
+2. In the local Supabase Studio Auth users screen (usually
+   `http://127.0.0.1:54323`), create a **confirmed**, disposable test user
+   with an email address and password.
+3. In `apps/my-dev-studio/.env.local` (or the environment file used by your
+   development command), set:
+
+   ```dotenv
+   NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
+   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<local anon/publishable key from supabase status>
+   LOCAL_TEST_LOGIN=true
+   LOCAL_TEST_EMAIL=<confirmed local test user's email>
+   LOCAL_TEST_PASSWORD=<test user's password>
+   ```
+
+4. Restart the Next.js development server, navigate to
+   `http://localhost:3000/login`, and select **Continue as local test user**.
+   It opens the normal studio with a disposable local user's workspace.
+5. Sign out normally when finished. Disable the shortcut by changing
+   `LOCAL_TEST_LOGIN=false` or stopping the local Supabase stack.
+
+The shortcut is unavailable in production/test builds, when Supabase points
+to a hosted or non-loopback URL, or when the request is not from an exact
+same-origin loopback HTTP origin. It has no service-role dependency. Never add
+these credentials to Vercel, commit them, or copy a real user's credentials
+into this local-only setup. If you want to test the full real OAuth flow,
+continue using **Continue with Google**.
