@@ -1,8 +1,8 @@
 "use client";
 
-import { type FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { Sparkles } from "lucide-react";
+import { Bell, Dumbbell, PencilLine, Plus, ShoppingBasket, Sparkles } from "lucide-react";
 
 import {
   type FitnessAssistantRequest,
@@ -17,17 +17,9 @@ import { TaskService } from "@shared/services/fitness/task";
 import type { Task, Workspace } from "@shared/services/types";
 import { Alert, AlertDescription } from "@shared/ui/alert";
 import { Button } from "@shared/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@shared/ui/dialog";
+import { ChatComposer } from "@shared/ui/display";
 import { Label } from "@shared/ui/label";
 import { NativeSelect } from "@shared/ui/native-select";
-import { Textarea } from "@shared/ui/textarea";
 
 import type { TaskEditorTarget } from "@/features/task-editor/task-editor";
 import { authorizationHeaders } from "@/lib/browser-session";
@@ -74,43 +66,23 @@ type AssistantProps = {
 };
 
 export function PlanAssistant(props: AssistantProps) {
-  const [open, setOpen] = useState(false);
-  return (
-    <Dialog onOpenChange={setOpen} open={open}>
-      <DialogTrigger asChild>
-        <Button
-          className="fitness-assistant-trigger"
-          disabled={props.busy}
-          type="button"
-          variant="outline"
-        >
-          <Sparkles aria-hidden="true" />
-          Fitness assistant
-        </Button>
-      </DialogTrigger>
-      <DialogContent aria-label="Fitness assistant" className="fitness-dialog fitness-task-editor">
-        <DialogHeader>
-          <DialogTitle>Fitness assistant</DialogTitle>
-          <DialogDescription>
-            Plan training, edit tasks, prepare groceries or manage reminders. AI proposals use your
-            request and selected plan details.
-          </DialogDescription>
-        </DialogHeader>
-        {open && (
-          <AssistantForm
-            {...props}
-            key={props.revision}
-            onClose={() => setOpen(false)}
-            onReview={(target) => {
-              setOpen(false);
-              props.onReview(target);
-            }}
-          />
-        )}
-      </DialogContent>
-    </Dialog>
-  );
+  const [chat, setChat] = useState(0);
+  return <AssistantForm {...props} key={chat} onReset={() => setChat((current) => current + 1)} />;
 }
+
+const starters = [
+  {
+    icon: Dumbbell,
+    label: "Build a workout",
+    mode: "WORKOUT",
+    prompt: "Help me build a workout for my available equipment.",
+  },
+  { icon: PencilLine, label: "Edit a task", mode: "TASK_EDIT", prompt: "" },
+  { icon: ShoppingBasket, label: "Make a shopping list", mode: "SHOPPING", prompt: "" },
+  { icon: Bell, label: "Plan a reminder", mode: "NOTIFICATIONS", prompt: "" },
+] as const;
+
+type Turn = { id: string; prompt: string; revision: number; result: Result };
 
 function targetsFor(mode: Mode, subtree: Task[]) {
   if (mode === "WORKOUT") return subtree.filter(workoutTarget);
@@ -120,15 +92,16 @@ function targetsFor(mode: Mode, subtree: Task[]) {
 }
 
 function AssistantForm({
+  busy,
   date,
   initialPlanId,
-  onClose,
+  onReset,
   onReview,
   onSave,
   onWeek,
   revision,
   workspace,
-}: AssistantProps & { onClose: () => void }) {
+}: AssistantProps & { onReset: () => void }) {
   const templates = workspace.tasks.filter((task) => task.scope === "template");
   const plans = tasks.children(templates, null);
   const [planId, setPlanId] = useState(initialPlanId);
@@ -136,18 +109,28 @@ function AssistantForm({
   const [mode, setMode] = useState<Mode>(plan && canSuggestSubtasks(plan) ? "FITNESS" : "SHOPPING");
   const [taskId, setTaskId] = useState("");
   const [goal, setGoal] = useState("");
-  const [result, setResult] = useState<Result>();
+  const [turns, setTurns] = useState<Turn[]>([]);
+  const [submitted, setSubmitted] = useState("");
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
   const request = useRef<AbortController | null>(null);
-  useEffect(() => () => request.current?.abort(), []);
+  const heading = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    heading.current?.focus({ preventScroll: true });
+    return () => {
+      const active = request.current;
+      request.current = null;
+      active?.abort();
+    };
+  }, []);
   const subtree = plan ? planTasks(templates, plan) : [];
   const targets = targetsFor(mode, subtree);
   const task = targets.find((item) => item.id === taskId) ?? targets[0];
   const utility = mode === "SHOPPING" || mode === "SEND";
   const needsTarget = ["WORKOUT", "NOTIFICATIONS", "TASK_EDIT"].includes(mode);
   const ready = Boolean(
-    goal.trim() &&
+    !busy &&
+      goal.trim() &&
       plan &&
       (mode !== "FITNESS" || canSuggestSubtasks(plan)) &&
       (!needsTarget || task),
@@ -156,152 +139,328 @@ function AssistantForm({
   async function saveTraining(target: Task, proposal: WorkoutProposal) {
     try {
       const draft = appendWorkoutDraft(workspace, target.id, proposal);
-      if (!(await onSave(draft, "Workout sets added"))) return false;
-      onClose();
-      return true;
+      return await onSave(draft, "Workout sets added");
     } catch {
       return false;
     }
   }
 
-  async function generate(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function chooseMode(next: Mode, prompt = "") {
+    setMode(next);
+    setTaskId("");
+    setGoal(prompt);
+    setError("");
+  }
+
+  async function generate() {
     if (request.current || !plan || utility || !ready) return;
 
     const controller = new AbortController();
+    const prompt = goal.trim();
     request.current = controller;
-    setResult(undefined);
+    setSubmitted(prompt);
     setError("");
     setPending(true);
     try {
-      setResult(
-        await fetchProposal(
-          { goal, mode, planId: plan.id, revision, taskId: task?.id },
-          plan,
-          task,
-          controller.signal,
-        ),
+      const result = await fetchProposal(
+        { goal: prompt, mode, planId: plan.id, revision, taskId: task?.id },
+        plan,
+        task,
+        controller.signal,
       );
+      controller.signal.throwIfAborted();
+      const turn = { id: crypto.randomUUID(), prompt, result, revision };
+      setTurns((previous) => [...previous.slice(-11), turn]);
+      setGoal("");
     } catch (failure) {
-      if (!controller.signal.aborted)
-        setError(failure instanceof Error ? failure.message : "Could not generate a proposal.");
+      if (controller.signal.aborted) return;
+      setError(failure instanceof Error ? failure.message : "Could not generate a proposal.");
     } finally {
-      request.current = null;
-      if (!controller.signal.aborted) setPending(false);
+      if (request.current === controller) {
+        request.current = null;
+        setPending(false);
+      }
     }
   }
 
+  function stop() {
+    request.current?.abort();
+    request.current = null;
+    setPending(false);
+  }
+
+  const started = turns.length > 0 || pending || Boolean(error);
+
   return (
-    <div className="fitness-assistant-form">
-      <form onSubmit={generate}>
-        <Label unstyled>
-          Assistant
-          <NativeSelect
-            disabled={pending}
-            onChange={(event) => {
-              setMode(event.target.value as Mode);
-              setGoal("");
-              setResult(undefined);
-              setError("");
-            }}
-            unstyled
-            value={mode}
-          >
-            {availableModes(plans).map(({ id, label }) => (
-              <option key={id} value={id}>
-                {label}
-              </option>
-            ))}
-          </NativeSelect>
-        </Label>
-        {!utility && (
-          <PromptFields
-            disabled={pending}
+    <section aria-label="Fitness assistant" className="fitness-assistant-page">
+      <div className="fitness-assistant-page-actions">
+        <Button disabled={busy} onClick={onReset} type="button" variant="ghost">
+          <Plus aria-hidden="true" />
+          New chat
+        </Button>
+      </div>
+      <div className="fitness-assistant-thread" data-started={started || undefined}>
+        <header className="fitness-assistant-welcome">
+          {!started && <Sparkles aria-hidden="true" />}
+          <h1 ref={heading} tabIndex={-1}>
+            {started ? "Fitness assistant" : "What are we working on today?"}
+          </h1>
+          {!started && <p>Plan a workout, make a shopping list, or set a reminder.</p>}
+        </header>
+        <Conversation
+          error={error}
+          onReview={onReview}
+          onSaveTraining={saveTraining}
+          pending={pending}
+          revision={revision}
+          submitted={submitted}
+          timezone={workspace.settings.timezone}
+          turns={turns}
+        />
+        <div className="fitness-assistant-compose">
+          <FitnessComposer
+            busy={busy}
             goal={goal}
             mode={mode}
+            modes={availableModes(plans)}
             needsTarget={needsTarget}
-            onGoal={(value) => {
-              setGoal(value);
-              setResult(undefined);
-            }}
+            onGoal={setGoal}
+            onMode={chooseMode}
             onPlan={(id) => {
               setPlanId(id);
               setTaskId("");
-              setResult(undefined);
-              setError("");
             }}
-            onTask={(id) => {
-              setTaskId(id);
-              setResult(undefined);
-            }}
+            onStop={stop}
+            onSubmit={generate}
+            onTask={setTaskId}
+            pending={pending}
             plan={plan}
             plans={plans}
             ready={ready}
             targets={targets}
             task={task}
+            utility={utility}
           />
-        )}
-      </form>
-      {mode === "SHOPPING" && (
-        <ShoppingDraft
-          date={date}
-          onSave={onSave}
-          onSaved={() => {
-            onClose();
-            onWeek();
-          }}
-          workspace={workspace}
-        />
-      )}
-      {mode === "SEND" && <NotificationNow />}
-      {error && (
-        <Alert role="alert" variant="destructive">
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      )}
-      {result && (
-        <AssistantProposal
-          onReview={onReview}
-          onSaveTraining={saveTraining}
-          result={result}
-          timezone={workspace.settings.timezone}
-        />
-      )}
-    </div>
+          <AssistantUtility
+            date={date}
+            mode={mode}
+            onSave={onSave}
+            onWeek={onWeek}
+            workspace={workspace}
+          />
+          {!started && <StarterActions modes={availableModes(plans)} onChoose={chooseMode} />}
+          <p className="fitness-assistant-caption">
+            AI requests use the selected plan. Review proposals before saving.
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }
 
-function PromptFields({
-  disabled,
+function FitnessComposer({
+  busy,
   goal,
   mode,
+  modes,
   needsTarget,
   onGoal,
+  onMode,
   onPlan,
+  onStop,
+  onSubmit,
   onTask,
+  pending,
   plan,
   plans,
   ready,
   targets,
   task,
+  utility,
+}: Omit<Parameters<typeof PromptContext>[0], "disabled"> & {
+  busy: boolean;
+  goal: string;
+  modes: typeof assistantModes;
+  onGoal: (goal: string) => void;
+  onMode: (mode: Mode) => void;
+  onStop: () => void;
+  onSubmit: () => void;
+  pending: boolean;
+  ready: boolean;
+  utility: boolean;
+}) {
+  const disabled = pending || busy;
+  const picker = (
+    <Label unstyled>
+      <span className="sr-only">Assistant</span>
+      <NativeSelect
+        disabled={disabled}
+        onChange={(event) => onMode(event.target.value as Mode)}
+        unstyled
+        value={mode}
+      >
+        {modes.map(({ id, label }) => (
+          <option key={id} value={id}>
+            {label}
+          </option>
+        ))}
+      </NativeSelect>
+    </Label>
+  );
+  if (utility) return <div className="fitness-assistant-toolbar">{picker}</div>;
+
+  return (
+    <>
+      <ChatComposer
+        busy={pending}
+        controls={
+          <div className="fitness-assistant-toolbar">
+            {picker}
+            <PromptContext
+              disabled={disabled}
+              mode={mode}
+              needsTarget={needsTarget}
+              onPlan={onPlan}
+              onTask={onTask}
+              plan={plan}
+              plans={plans}
+              targets={targets}
+              task={task}
+            />
+          </div>
+        }
+        disabled={!ready}
+        maxLength={1500}
+        onChange={onGoal}
+        onStop={onStop}
+        onSubmit={onSubmit}
+        placeholder={goalLabel(mode)}
+        value={goal}
+      />
+      {needsTarget && !targets.length && (
+        <p className="fitness-assistant-caption">
+          Choose a plan with a task that supports this action.
+        </p>
+      )}
+    </>
+  );
+}
+
+function StarterActions({
+  modes,
+  onChoose,
+}: {
+  modes: typeof assistantModes;
+  onChoose: (mode: Mode, prompt?: string) => void;
+}) {
+  return (
+    <fieldset aria-label="Starter actions" className="fitness-assistant-starters">
+      {starters
+        .filter((starter) => modes.some(({ id }) => id === starter.mode))
+        .map(({ icon: Icon, label, mode, prompt }) => (
+          <Button key={mode} onClick={() => onChoose(mode, prompt)} type="button" variant="outline">
+            <Icon aria-hidden="true" />
+            {label}
+          </Button>
+        ))}
+    </fieldset>
+  );
+}
+
+function AssistantUtility({
+  date,
+  mode,
+  onSave,
+  onWeek,
+  workspace,
+}: Pick<AssistantProps, "date" | "onSave" | "onWeek" | "workspace"> & { mode: Mode }) {
+  if (mode === "SHOPPING")
+    return <ShoppingDraft date={date} onSave={onSave} onSaved={onWeek} workspace={workspace} />;
+  if (mode === "SEND") return <NotificationNow />;
+  return null;
+}
+
+function Conversation({
+  error,
+  onReview,
+  onSaveTraining,
+  pending,
+  revision,
+  submitted,
+  timezone,
+  turns,
+}: {
+  error: string;
+  onReview: (target: TaskEditorTarget) => void;
+  onSaveTraining: (task: Task, proposal: WorkoutProposal) => Promise<boolean>;
+  pending: boolean;
+  revision: number;
+  submitted: string;
+  timezone: string;
+  turns: Turn[];
+}) {
+  const tail = useRef<HTMLDivElement>(null);
+  const latest = turns.at(-1);
+  useEffect(() => {
+    if (latest || pending || error) tail.current?.scrollIntoView({ block: "nearest" });
+  }, [latest, pending, error]);
+
+  return (
+    <div aria-label="Conversation" className="fitness-assistant-messages" role="log">
+      {turns.map((turn) => (
+        <article className="fitness-assistant-turn" key={turn.id}>
+          <p className="fitness-assistant-user">{turn.prompt}</p>
+          <div className="fitness-assistant-reply">
+            {turn === latest && turn.revision === revision && !pending ? (
+              <AssistantProposal
+                onReview={onReview}
+                onSaveTraining={onSaveTraining}
+                result={turn.result}
+                timezone={timezone}
+              />
+            ) : (
+              <p>{turn.result.proposal.summary}</p>
+            )}
+          </div>
+        </article>
+      ))}
+      {(pending || error) && <p className="fitness-assistant-user">{submitted}</p>}
+      {pending && <p role="status">Preparing your proposal…</p>}
+      {error && (
+        <Alert role="alert" variant="destructive">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+      <div ref={tail} />
+    </div>
+  );
+}
+
+function PromptContext({
+  disabled,
+  mode,
+  needsTarget,
+  onPlan,
+  onTask,
+  plan,
+  plans,
+  targets,
+  task,
 }: {
   disabled: boolean;
-  goal: string;
   mode: Mode;
   needsTarget: boolean;
-  onGoal: (value: string) => void;
   onPlan: (id: string) => void;
   onTask: (id: string) => void;
   plan?: Task;
   plans: Task[];
-  ready: boolean;
   targets: Task[];
   task?: Task;
 }) {
   return (
     <>
       <Label unstyled>
-        Source plan
+        <span className="sr-only">Source plan</span>
         <NativeSelect
           disabled={disabled}
           onChange={(event) => onPlan(event.target.value)}
@@ -317,7 +476,9 @@ function PromptFields({
       </Label>
       {needsTarget && targets.length > 0 && (
         <Label unstyled>
-          {mode === "NOTIFICATIONS" ? "Reminder task" : "Target task"}
+          <span className="sr-only">
+            {mode === "NOTIFICATIONS" ? "Reminder task" : "Target task"}
+          </span>
           <NativeSelect
             disabled={disabled}
             onChange={(event) => onTask(event.target.value)}
@@ -332,24 +493,6 @@ function PromptFields({
           </NativeSelect>
         </Label>
       )}
-      {needsTarget && targets.length === 0 && (
-        <p>Choose a plan with a task that supports this action.</p>
-      )}
-      <Label unstyled>
-        {goalLabel(mode)}
-        <Textarea
-          disabled={disabled}
-          maxLength={1500}
-          onChange={(event) => onGoal(event.target.value)}
-          required
-          rows={3}
-          unstyled
-          value={goal}
-        />
-      </Label>
-      <Button className="fitness-new-task" disabled={disabled || !ready} type="submit">
-        {disabled ? "Generating…" : "Generate proposal"}
-      </Button>
     </>
   );
 }
@@ -357,7 +500,7 @@ function PromptFields({
 function goalLabel(mode: Mode) {
   if (mode === "NOTIFICATIONS") return "Timing preferences and quiet hours";
   if (mode === "TASK_EDIT") return "What should change?";
-  return "Goal and constraints";
+  return "Ask about your fitness plan…";
 }
 
 async function fetchProposal(

@@ -4,7 +4,9 @@ import { starterWorkspace } from "../apps/my-fitness-app/features/task-workspace
 import { createTask, defaultDetails } from "../packages/services/src/types/task";
 
 test.describe("Fitness plan assistant", () => {
-  test("reviews task and schedule proposals before saving", async ({ page }) => {
+  test("starts a full-page chat and reviews task and schedule proposals before saving", async ({
+    page,
+  }, info) => {
     const state = starterWorkspace();
     state.tasks.push(
       createTask({ id: "gym", kind: "gym", title: "Movement plan" }),
@@ -45,9 +47,19 @@ test.describe("Fitness plan assistant", () => {
     await page.getByLabel("Choose plan").selectOption("gym");
     const trigger = page.getByRole("button", { name: "Fitness assistant" });
     await trigger.click();
-    const assistant = page.getByRole("dialog", { name: "Fitness assistant" });
-    await assistant.getByLabel("Goal and constraints").fill("A gentle start");
-    await assistant.getByRole("button", { name: "Generate proposal" }).click();
+    const assistant = page.getByRole("region", { name: "Fitness assistant" });
+    await expect(page).toHaveURL(/view=Assistant/);
+    await expect(
+      assistant.getByRole("heading", { name: "What are we working on today?" }),
+    ).toBeVisible();
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await page.screenshot({ path: info.outputPath("fitness-assistant-start.png") });
+    const message = assistant.getByRole("textbox", { name: "Your message" });
+    await message.fill("A gentle start");
+    await message.press("Enter");
+    await expect(assistant.getByRole("log", { name: "Conversation" })).toContainText(
+      "A gentle start",
+    );
     await assistant.getByRole("button", { name: "Review Short warm-up" }).click();
     const add = page.getByRole("dialog", { name: "Add subtask" });
     await expect(add.getByLabel("Title")).toHaveValue("Short warm-up");
@@ -58,14 +70,13 @@ test.describe("Fitness plan assistant", () => {
       expect.objectContaining({ parentId: "gym", title: "Short warm-up" }),
     );
 
-    await trigger.click();
     await assistant
       .getByRole("combobox", { exact: true, name: "Assistant" })
       .selectOption("NOTIFICATIONS");
     await assistant
-      .getByLabel("Timing preferences and quiet hours")
+      .getByRole("textbox", { name: "Your message" })
       .fill("Monday and Wednesday after 9");
-    await assistant.getByRole("button", { name: "Generate proposal" }).click();
+    await assistant.getByRole("button", { name: "Send message" }).click();
     await expect(assistant.getByText("09:15 (UTC)")).toBeVisible();
     await assistant.getByRole("button", { name: "Review schedule" }).click();
     const edit = page.getByRole("dialog", { name: "Edit task" });
@@ -76,6 +87,14 @@ test.describe("Fitness plan assistant", () => {
     expect(writes[1]?.schedules).toContainEqual(
       expect.objectContaining({ taskId: "walk", time: "09:15", weekdays: [1, 3] }),
     );
+    await expect(assistant.getByRole("log")).toContainText("Monday and Wednesday after 9");
+    await assistant.getByRole("button", { name: "New chat" }).click();
+    await expect(
+      assistant.getByRole("heading", { name: "What are we working on today?" }),
+    ).toBeVisible();
+    await expect(assistant.getByRole("log")).toBeHidden();
+    await page.goBack();
+    await expect(page.getByRole("heading", { exact: true, name: "Tasks" })).toBeVisible();
   });
 
   test("uses the workspace header to review a workout, edit it, shop and notify this device", async ({
@@ -152,19 +171,19 @@ test.describe("Fitness plan assistant", () => {
     await context.grantPermissions(["notifications"]);
     await page.goto("/?date=2026-11-05&view=Today");
     const open = page.getByRole("button", { name: "Fitness assistant" });
-    const assistant = page.getByRole("dialog", { name: "Fitness assistant" });
+    const assistant = page.getByRole("region", { name: "Fitness assistant" });
     const mode = assistant.getByRole("combobox", { exact: true, name: "Assistant" });
     await open.click();
-    await mode.selectOption("WORKOUT");
+    await assistant.getByRole("button", { name: "Build a workout" }).click();
     await assistant.getByLabel("Source plan").selectOption("gym");
     await assistant
-      .getByLabel("Goal and constraints")
+      .getByRole("textbox", { name: "Your message" })
       .fill("Dumbbells and a short upper-body workout");
-    await assistant.getByRole("button", { name: "Generate proposal" }).click();
+    await assistant.getByRole("button", { name: "Send message" }).click();
     await expect(assistant.getByText("10 target reps")).toBeVisible();
     expect(writes).toHaveLength(0);
     await assistant.getByRole("button", { name: "Add proposed sets" }).click();
-    await expect(assistant).toBeHidden();
+    await expect(assistant.getByRole("button", { name: "Add proposed sets" })).toBeHidden();
     expect(writes[0]?.tasks).toContainEqual(
       expect.objectContaining({
         details: { actualReps: null, targetReps: 10, type: "set", weightKg: null },
@@ -174,12 +193,13 @@ test.describe("Fitness plan assistant", () => {
 
     const workout = writes[0]?.tasks.find((task) => task.title === "New workout");
     expect(workout).toBeDefined();
-    await open.click();
     await mode.selectOption("TASK_EDIT");
     await assistant.getByLabel("Source plan").selectOption("gym");
     await assistant.getByLabel("Target task").selectOption(workout?.id ?? "");
-    await assistant.getByLabel("What should change?").fill("Rename and add a pacing note");
-    await assistant.getByRole("button", { name: "Generate proposal" }).click();
+    await assistant
+      .getByRole("textbox", { name: "Your message" })
+      .fill("Rename and add a pacing note");
+    await assistant.getByRole("button", { name: "Send message" }).click();
     await assistant.getByRole("button", { name: "Review task edit" }).click();
     const edit = page.getByRole("dialog", { name: "Edit task" });
     await expect(edit.getByLabel("Title")).toHaveValue("Morning strength");
@@ -190,7 +210,6 @@ test.describe("Fitness plan assistant", () => {
       expect.objectContaining({ id: workout?.id, title: "Morning strength" }),
     );
 
-    await open.click();
     await mode.selectOption("SHOPPING");
     await expect(assistant.getByText("Oats", { exact: true })).toBeVisible();
     expect(writes).toHaveLength(2);

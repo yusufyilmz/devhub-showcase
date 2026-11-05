@@ -135,6 +135,16 @@
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-sm);
 }
+.studio-chat-composer[data-has-controls="true"] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.studio-chat-composer[data-has-controls="true"] textarea {
+  grid-column: 1 / -1;
+}
+.studio-chat-composer-controls {
+  min-width: 0;
+}
 .studio-chat-composer:focus-within {
   outline: 2px solid var(--ring);
   outline-offset: 3px;

@@ -13,6 +13,8 @@ import { chatComposerStyles } from "./styles";
 import type { ChatComposerOptions } from "./types";
 
 export function ChatComposer({
+  controls,
+  maxLength = 4000,
   value,
   onChange,
   onSubmit,
@@ -25,6 +27,7 @@ export function ChatComposer({
   return (
     <form
       className={chatComposerStyles.element1}
+      data-has-controls={controls ? true : undefined}
       onSubmit={(event) => {
         event.preventDefault();
         if (!busy && !disabled && value.trim()) onSubmit();
@@ -36,7 +39,7 @@ export function ChatComposer({
       <Textarea
         disabled={busy}
         id={id}
-        maxLength={4000}
+        maxLength={maxLength}
         onChange={(event) => onChange(event.target.value)}
         onKeyDown={(event) => {
           if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) {
@@ -48,6 +51,7 @@ export function ChatComposer({
         rows={1}
         value={value}
       />
+      {controls && <div className="studio-chat-composer-controls">{controls}</div>}
       <Button
         aria-label={busy ? "Stop generating" : "Send message"}
         className={chatComposerStyles.element3}

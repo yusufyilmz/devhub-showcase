@@ -123,6 +123,8 @@ export interface ChatSidebarSection {
 }
 
 export type ChatComposerOptions = {
+  controls?: ReactNode;
+  maxLength?: number;
   value: string;
   onChange: (value: string) => void;
   onSubmit: () => void;

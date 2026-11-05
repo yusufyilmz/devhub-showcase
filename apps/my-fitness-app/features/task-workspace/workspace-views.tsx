@@ -96,18 +96,20 @@ export function WorkspaceFrame({
       <main className="main">
         <WorkspaceTopbar assistant={assistant} busy={busy} readOnly={readOnly} tab={tab} />
         {readOnly ? <ReadOnlyBanner /> : null}
-        <PageHeading
-          date={date}
-          name={name}
-          selectedTitle={selectedTitle}
-          setDate={setDate}
-          tab={tab}
-          taskId={taskId}
-          today={today}
-        />
+        {tab !== "Assistant" && (
+          <PageHeading
+            date={date}
+            name={name}
+            selectedTitle={selectedTitle}
+            setDate={setDate}
+            tab={tab}
+            taskId={taskId}
+            today={today}
+          />
+        )}
         {error ? <ErrorBanner message={error} onDismiss={onDismissError} /> : null}
         {children}
-        <footer>My Fitness Studio · A little better, every day.</footer>
+        {tab !== "Assistant" && <footer>My Fitness Studio · A little better, every day.</footer>}
       </main>
       {overlay}
     </div>

@@ -1,6 +1,8 @@
 "use client";
 import { useMemo, useState } from "react";
 
+import { Sparkles } from "lucide-react";
+
 import {
   type AgendaEvent,
   AgendaService,
@@ -26,7 +28,10 @@ const scheduleService = new ScheduleService();
 export function TaskWorkspace({ controller }: { controller: WorkspaceController }) {
   const { state, readOnly, busy, update, save, error, setError } = controller;
   const today = dateKey(state.settings.timezone);
-  const { tab, date, taskId, setTab, setDate, openDay, openTask } = useAgendaNavigation(today);
+  const { tab, date, taskId, setTab, setDate, openDay, openTask } = useAgendaNavigation(
+    today,
+    !readOnly,
+  );
   const [target, setTarget] = useState<TaskEditorTarget | null>(null);
   const [templateRoot, setTemplateRoot] = useState<string | null>(null);
   useTaskReminders(state, readOnly);
@@ -99,17 +104,17 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
   return (
     <WorkspaceFrame
       assistant={
-        !readOnly && (
-          <PlanAssistant
-            busy={busy}
-            date={date}
-            initialPlanId={templateRoot}
-            onReview={setTarget}
-            onSave={save}
-            onWeek={() => setTab("Week")}
-            revision={controller.revision}
-            workspace={state}
-          />
+        !readOnly &&
+        tab !== "Assistant" && (
+          <LibraryButton
+            className="fitness-assistant-trigger"
+            onClick={() => setTab("Assistant")}
+            type="button"
+            variant="outline"
+          >
+            <Sparkles aria-hidden="true" />
+            Fitness assistant
+          </LibraryButton>
         )
       }
       busy={busy}
@@ -158,28 +163,41 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
       taskId={taskId}
       today={today}
     >
-      <WorkspacePanels
-        busy={busy}
-        date={date}
-        day={day}
-        onAdd={onAdd}
-        onEventStatus={onEventStatus}
-        onMove={onMove}
-        openDay={openDay}
-        openTask={openTask}
-        readOnly={readOnly}
-        selectedTask={selectedTask}
-        setDate={setDate}
-        setError={setError}
-        setTarget={setTarget}
-        setTemplateRoot={setTemplateRoot}
-        state={state}
-        tab={tab}
-        taskId={taskId}
-        templateRoot={templateRoot}
-        treeProps={treeProps}
-        update={update}
-      />
+      {tab === "Assistant" && !readOnly ? (
+        <PlanAssistant
+          busy={busy}
+          date={date}
+          initialPlanId={templateRoot}
+          onReview={setTarget}
+          onSave={save}
+          onWeek={() => setTab("Week")}
+          revision={controller.revision}
+          workspace={state}
+        />
+      ) : (
+        <WorkspacePanels
+          busy={busy}
+          date={date}
+          day={day}
+          onAdd={onAdd}
+          onEventStatus={onEventStatus}
+          onMove={onMove}
+          openDay={openDay}
+          openTask={openTask}
+          readOnly={readOnly}
+          selectedTask={selectedTask}
+          setDate={setDate}
+          setError={setError}
+          setTarget={setTarget}
+          setTemplateRoot={setTemplateRoot}
+          state={state}
+          tab={tab}
+          taskId={taskId}
+          templateRoot={templateRoot}
+          treeProps={treeProps}
+          update={update}
+        />
+      )}
     </WorkspaceFrame>
   );
 }
