@@ -79,3 +79,7 @@ Other roadmap work without an implemented feature is not covered by a pretend te
 ## Adding or changing a feature
 
 Create/update its guide in this directory and add/update the index row in the same PR. Use [the guide template](template.md). Include happy path, save/reload persistence, failure/retry/conflict and permission/public-private checks when applicable. Explain unavailable external setup and leave unexecuted results Not run. Link the guide from the PR's per-feature test section.
+
+## Fitness login compatibility
+
+[Fitness login and saved workspace compatibility](fitness-login.md): stored exercise/workout compatibility implemented; Google provider configuration and deployed acceptance remain pending.

@@ -94,7 +94,10 @@ function assertNoCycle(task: Workspace["tasks"][number], map: TaskMap) {
 }
 
 function assertTaskShape(task: Workspace["tasks"][number]) {
-  if (task.details.type !== (taskDetailTypes[task.kind] ?? "basic"))
+  const standaloneDetails =
+    (task.kind === "exercise" && task.details.type === "exercise") ||
+    (task.kind === "workout" && task.details.type === "workout");
+  if (!standaloneDetails && task.details.type !== (taskDetailTypes[task.kind] ?? "basic"))
     throw new Error(`Invalid details for ${task.kind}.`);
   const templateHasDate = task.scope === "template" && task.date !== null;
   const datedTaskMissingDate = task.scope !== "template" && task.date === null;

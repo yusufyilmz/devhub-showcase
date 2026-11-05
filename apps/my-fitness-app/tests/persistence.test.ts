@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
-import { test } from "vitest";
+import { describe, test } from "vitest";
 
 import { PGlite } from "@electric-sql/pglite";
 import { drizzle } from "drizzle-orm/pglite";
@@ -85,4 +85,73 @@ test("real SQL migrations, ORM roundtrip, conflicts, rollback and owner isolatio
   } finally {
     await engine.close();
   }
+});
+
+describe("standalone stored workspace compatibility", () => {
+  test("exercise and postponed-workout records roundtrip without a database rewrite", async () => {
+    const engine = new PGlite();
+    try {
+      await engine.exec(
+        `create role authenticated;create role anon;create schema auth;create table auth.users(id uuid primary key);create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;insert into auth.users values('${owner}');`,
+      );
+      await engine.exec(
+        readFileSync(
+          new URL(
+            "../../../supabase/migrations/20261101120000_fitness_task_workspaces.sql",
+            import.meta.url,
+          ),
+          "utf8",
+        ),
+      );
+      const repository = new WorkspaceRepository(
+        drizzle(engine, { schema }) as unknown as Database,
+      );
+      const first = await repository.load(owner);
+      const exercise = first.state.tasks.find((task) => task.kind === "exercise")!;
+      const workout = first.state.tasks.find((task) => task.kind === "workout")!;
+      const details = {
+        legacySets: [
+          {
+            actualReps: 10,
+            archived: false,
+            id: "saved-set",
+            notes: "Fictional note",
+            status: "done",
+            targetReps: 12,
+            title: "Set 1",
+            weightKg: 20,
+          },
+        ],
+        prescription: "Fictional prescription",
+        type: "exercise",
+      };
+      await engine.query("update fitness_tasks set details=$1::jsonb where user_id=$2 and id=$3", [
+        JSON.stringify(details),
+        owner,
+        exercise.id,
+      ]);
+      await engine.query("update fitness_tasks set details=$1::jsonb where user_id=$2 and id=$3", [
+        JSON.stringify({ postponed: true, type: "workout" }),
+        owner,
+        workout.id,
+      ]);
+      const loaded = await repository.find(owner);
+      assert.deepEqual(
+        loaded?.state.tasks.find((task) => task.id === exercise.id)?.details,
+        details,
+      );
+      assert.equal(await repository.save(owner, loaded!.state, loaded!.revision), 1);
+      const again = await repository.find(owner);
+      assert.deepEqual(
+        again?.state.tasks.find((task) => task.id === exercise.id)?.details,
+        details,
+      );
+      assert.deepEqual(again?.state.tasks.find((task) => task.id === workout.id)?.details, {
+        postponed: true,
+        type: "workout",
+      });
+    } finally {
+      await engine.close();
+    }
+  });
 });

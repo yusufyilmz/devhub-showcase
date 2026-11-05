@@ -32,3 +32,5 @@ Supabase clients and schema: `@shared/auth/*`, `@shared/lib/supabase`, `@shared/
 Public profile reads use separate explicit website/CV snapshots. Canonical repository saves remain private; the legacy publication argument does not publish.
 
 `resolvePublishedUsername` in `@shared/services/published-profile` resolves a retained alias directly to a current published username; it returns no private profile document or account identity.
+
+Fitness task validation accepts both earlier basic details and standalone exercise prescriptions/set history and postponed-workout details. Repository loads and saves preserve these JSON variants without rewriting the database.
