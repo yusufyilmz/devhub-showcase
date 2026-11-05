@@ -15,7 +15,9 @@
       "type": "image/png"
     }
   ],
+  "id": "/",
   "name": "Yusuf Fitness OS",
+  "scope": "/",
   "short_name": "Fitness OS",
   "start_url": "/",
   "theme_color": "#f4f7fb"

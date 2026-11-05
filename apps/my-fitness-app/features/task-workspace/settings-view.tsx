@@ -10,7 +10,10 @@ import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
 import { NativeSelect as LibraryNativeSelect } from "@shared/ui/native-select";
 
+import { FitnessNotificationSettings } from "@/features/notifications/settings";
 import { signOut } from "@/lib/browser-session";
+
+import { disableFitnessDevice } from "../notifications/browser";
 
 interface Props {
   busy: boolean;
@@ -181,24 +184,13 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
       <section className="card">
         <h2>Reminders</h2>
         <p>
-          Open-app reminders for meal, supplement, water and workout tasks. They stop when the app
-          is closed.
+          Reminders for meal, supplement, water and workout tasks. Enable this device below for
+          background delivery; open-app reminders also work while this page stays open.
         </p>
         <LibraryButton
           className="outline"
           disabled={disabled}
-          onClick={async () => {
-            if (!("Notification" in window)) {
-              onError("This browser does not support notifications.");
-              return;
-            }
-            if (
-              !workspace.settings.reminders &&
-              (await Notification.requestPermission()) !== "granted"
-            ) {
-              onError("Allow notifications in your browser settings.");
-              return;
-            }
+          onClick={() => {
             update(
               (s) => ({
                 ...s,
@@ -212,6 +204,7 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
         >
           {workspace.settings.reminders ? "Disable" : "Enable"} reminders
         </LibraryButton>
+        <FitnessNotificationSettings disabled={disabled} />
         <h2 className="space-top">Weight history</h2>
         <form
           onSubmit={(e) => {
@@ -307,6 +300,7 @@ export function SettingsView({ workspace, readOnly, busy, update, onError, date 
             className="text-btn space-top"
             onClick={async () => {
               try {
+                await disableFitnessDevice().catch(() => undefined);
                 await signOut();
                 location.href = "/";
               } catch (error) {

@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./notification-preferences": "./src/forms/notification-preferences/index.tsx",
     "./site-login": "./src/forms/site-login/index.ts",
     "./native-select": "./src/forms/native-select.tsx",
     "./auth-login.css": "./src/forms/login-form/auth-login.css",

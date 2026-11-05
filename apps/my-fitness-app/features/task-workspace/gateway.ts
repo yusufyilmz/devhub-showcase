@@ -1,12 +1,18 @@
 import { urls } from "@shared/config/urls";
+import type { NotificationMessage } from "@shared/notifications";
 import type { Workspace } from "@shared/services/types";
 import type { WorkspaceSnapshot } from "@shared/services/workspace";
 
+import { subscribeFitnessNotifications } from "@/features/notifications/browser";
 import { authorizationHeaders } from "@/lib/browser-session";
 export interface WorkspaceGateway {
   load(): Promise<WorkspaceSnapshot>;
   readonly readOnly: boolean;
   save(state: Workspace, revision: number): Promise<number>;
+  subscribe?(handlers: {
+    revision: (revision: number) => void;
+    message: (message: NotificationMessage) => void;
+  }): () => void;
 }
 export class HttpWorkspaceGateway implements WorkspaceGateway {
   private writable = false;
@@ -17,6 +23,12 @@ export class HttpWorkspaceGateway implements WorkspaceGateway {
     private readonly forceReadOnly = false,
     private readonly auth: () => Promise<Record<string, string>> = authorizationHeaders,
   ) {}
+  subscribe(handlers: {
+    revision: (revision: number) => void;
+    message: (message: NotificationMessage) => void;
+  }) {
+    return subscribeFitnessNotifications(handlers);
+  }
   async load() {
     const response = await fetch(urls.next.fitness.state(), {
       cache: "no-store",

@@ -76,7 +76,12 @@
         "WORKSPACE_OWNER_ID"
       ],
       "outputs": [".next/**", "!.next/cache/**"],
-      "passThroughEnv": ["SUPABASE_DB_URL"]
+      "passThroughEnv": [
+        "SUPABASE_DB_URL",
+        "WEB_PUSH_PUBLIC_KEY",
+        "WEB_PUSH_PRIVATE_KEY",
+        "WEB_PUSH_SUBJECT"
+      ]
     },
     "start": {
       "cache": false,

@@ -1,14 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { seedWorkspace } from "@shared/services/db/seed";
 import { Button as LibraryButton } from "@shared/ui/button";
 
+import { initializeFitnessNotifications } from "@/features/notifications/browser";
 import { HttpWorkspaceGateway } from "@/features/task-workspace/gateway";
 import { TaskWorkspace } from "@/features/task-workspace/task-workspace";
 import { useTaskWorkspace } from "@/features/task-workspace/use-task-workspace";
 
 export function FitnessApp({ readOnly = false }: { readOnly?: boolean }) {
+  useEffect(initializeFitnessNotifications, []);
   const [initial] = useState(seedWorkspace);
   const [gateway] = useState(() => new HttpWorkspaceGateway(readOnly));
   const controller = useTaskWorkspace(gateway, initial);

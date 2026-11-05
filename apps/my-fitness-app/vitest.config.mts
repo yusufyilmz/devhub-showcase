@@ -45,7 +45,7 @@ export default defineConfig({
   test: {
     clearMocks: true,
     environment: "node",
-    include: ["tests/**/*.test.{ts,tsx}"],
+    include: ["tests/**/*.test.{ts,tsx}", "features/**/*.test.{ts,tsx}"],
     testTimeout: 15000,
   },
 });

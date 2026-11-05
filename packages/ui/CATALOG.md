@@ -1,5 +1,11 @@
 # UI catalog
 
+`@shared/ui/notification-preferences` provides a reusable per-device notification
+settings panel with install guidance, permission/connection status and explicit
+enable/test/disable callbacks. It owns presentation only; applications supply
+authorization, configuration and persistence. Stories cover default, iOS, subscribed
+and missing-setup states.
+
 PasswordGate (`@shared/ui/portfolio`) is the generic protected-portfolio password form. It accepts an unlock callback; authorization, cookies and navigation stay in the app. Types and token styles live beside it.
 
 RevisionHistory provides explicit inspect/review/restore callbacks with stale-draft protection. FieldVisibilityEditor edits independent website/CV contact choices; types/tests/stories are colocated.
