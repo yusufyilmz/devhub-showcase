@@ -153,6 +153,7 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
         openDay={openDay}
         openTask={openTask}
         readOnly={readOnly}
+        revision={controller.revision}
         selectedTask={selectedTask}
         setDate={setDate}
         setError={setError}

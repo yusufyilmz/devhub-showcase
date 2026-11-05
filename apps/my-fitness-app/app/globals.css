@@ -2364,3 +2364,26 @@ textarea::placeholder {
     bottom: calc(78px + env(safe-area-inset-bottom));
   }
 }
+
+.fitness-plan-assistant {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.fitness-assistant-form,
+.fitness-assistant-proposal,
+.fitness-assistant-proposal li {
+  display: grid;
+  gap: 12px;
+}
+
+.fitness-assistant-form button {
+  height: auto;
+  min-height: 36px;
+  white-space: normal;
+}
+
+.fitness-assistant-proposal li {
+  padding-block: 12px;
+  border-block-start: 1px solid var(--line);
+}

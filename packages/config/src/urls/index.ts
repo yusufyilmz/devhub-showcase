@@ -60,6 +60,7 @@ export const urls = {
       myBoards: () => "/api/trello/members/me/boards",
     },
     fitness: {
+      assistant: () => "/api/assistant",
       state: () => "/api/state",
     },
     studio: {
@@ -68,6 +69,7 @@ export const urls = {
       cvImport: () => "/api/cv-import",
       cvVariants: () => "/api/cv-variants",
       googleProfile: () => "/api/google-profile",
+      interviewPrep: () => "/api/assistant/job",
       managed: () => "/api/managed",
       managedHistory: (id: string) => `/api/managed/${id}/history`,
       managedPortfolio: (id: string) => `/api/managed/${id}`,

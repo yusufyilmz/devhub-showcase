@@ -1,36 +1,12 @@
 import { NextResponse } from "next/server";
 
-import { database } from "@shared/services/db/client";
-import { loadLegacyWorkspace } from "@shared/services/fitness";
-import {
-  InvalidWorkspaceError,
-  RevisionConflictError,
-  WorkspaceRepository,
-  WorkspaceService,
-} from "@shared/services/workspace";
+import { InvalidWorkspaceError, RevisionConflictError } from "@shared/services/workspace";
 
-import { starterWorkspace } from "@/features/task-workspace/starter";
-import { configured, fitnessUser, requestIdentity, sameOrigin } from "@/lib/auth";
+import { SetupRequired, SignInRequired, workspaceContext } from "@/features/task-workspace/server";
+import { sameOrigin } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 const headers = { "Cache-Control": "private, no-store", Vary: "Authorization, Cookie" };
-
-class SignInRequired extends Error {}
-class SetupRequired extends Error {}
-
-async function context(request: Request) {
-  if (!configured() || !process.env.SUPABASE_DB_URL)
-    throw new SetupRequired("Fitness workspace setup is incomplete.");
-  const { user, client } = await requestIdentity(request);
-  const account = fitnessUser(user);
-  if (!account)
-    throw new SignInRequired("Sign in with a confirmed account to open your workspace.");
-  const repository = new WorkspaceRepository(
-    database(),
-    async (id) => (await loadLegacyWorkspace(client, id)) ?? starterWorkspace(),
-  );
-  return { service: new WorkspaceService(repository), userId: account.id };
-}
 
 function failure(error: unknown) {
   const status =
@@ -56,7 +32,7 @@ function failure(error: unknown) {
 
 export async function GET(request: Request) {
   try {
-    const { service, userId } = await context(request);
+    const { service, userId } = await workspaceContext(request);
     const snapshot = await service.load(userId);
     return NextResponse.json({ ...snapshot, canEdit: true, workspaceId: userId }, { headers });
   } catch (error) {
@@ -67,7 +43,7 @@ export async function GET(request: Request) {
 export async function PUT(request: Request) {
   if (!sameOrigin(request)) return new Response(null, { headers, status: 403 });
   try {
-    const { service, userId } = await context(request);
+    const { service, userId } = await workspaceContext(request);
     const raw = await request.text();
     if (raw.length > 5000000) return new Response(null, { headers, status: 413 });
     let input: unknown;

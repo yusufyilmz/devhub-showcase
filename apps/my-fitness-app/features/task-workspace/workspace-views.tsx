@@ -29,6 +29,7 @@ import { ThemeToggle } from "@shared/ui/theme";
 
 import { DayAgenda } from "@/features/agenda/day-agenda";
 import { TaskDetails } from "@/features/agenda/task-details";
+import type { TaskEditorTarget } from "@/features/task-editor/task-editor";
 import { WeeklyPlanner } from "@/features/weekly-planner/weekly-planner";
 
 import { CalendarView } from "./calendar-view";
@@ -121,6 +122,7 @@ export function WorkspacePanels({
   openDay,
   openTask,
   readOnly,
+  revision,
   selectedTask,
   setDate,
   setError,
@@ -142,10 +144,11 @@ export function WorkspacePanels({
   openDay: (date: string) => void;
   openTask: (date: string, taskId: string) => void;
   readOnly: boolean;
+  revision: number;
   selectedTask: Task | null;
   setDate: (date: string) => void;
   setError: (message: string) => void;
-  setTarget: (target: { parent?: Task; task?: Task } | null) => void;
+  setTarget: (target: TaskEditorTarget | null) => void;
   setTemplateRoot: (id: string | null) => void;
   state: Workspace;
   tab: string;
@@ -186,6 +189,8 @@ export function WorkspacePanels({
     return (
       <TaskPlans
         onCreate={() => setTarget({})}
+        onReview={setTarget}
+        revision={revision}
         selected={templateRoot}
         setSelected={setTemplateRoot}
         state={state}
