@@ -10,6 +10,10 @@ import { Button } from "../../buttons/button/Button";
 import { carouselStyles } from "./styles";
 import type { CarouselApi, CarouselContextProps, CarouselOptions2 } from "./types";
 
+type CarouselControlProps = React.ComponentProps<typeof Button> & {
+  placement?: "floating" | "inline";
+};
+
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
 
 function useCarousel() {
@@ -48,15 +52,22 @@ function Carousel({
   }, []);
 
   const scrollPrev = React.useCallback(() => {
-    api?.scrollPrev();
+    api?.scrollPrev(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   }, [api]);
 
   const scrollNext = React.useCallback(() => {
-    api?.scrollNext();
+    api?.scrollNext(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   }, [api]);
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (
+        event.defaultPrevented ||
+        (event.target instanceof Element &&
+          event.target.closest("input, select, textarea, [contenteditable]"))
+      )
+        return;
+
       if (event.key === "ArrowLeft") {
         event.preventDefault();
         scrollPrev();
@@ -80,7 +91,7 @@ function Carousel({
     api.on("select", onSelect);
 
     return () => {
-      api?.off("select", onSelect);
+      api.off("select", onSelect).off("reInit", onSelect);
     };
   }, [api, onSelect]);
 
@@ -149,17 +160,19 @@ function CarouselPrevious({
   className,
   variant = "outline",
   size = "icon",
+  placement = "floating",
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: CarouselControlProps) {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel();
 
   return (
     <Button
       className={cn(
-        carouselStyles.carouselPrevious,
-        orientation === "horizontal"
-          ? carouselStyles.carouselPrevious2
-          : carouselStyles.carouselPrevious3,
+        placement === "floating" && carouselStyles.carouselPrevious,
+        placement === "floating" &&
+          (orientation === "horizontal"
+            ? carouselStyles.carouselPrevious2
+            : carouselStyles.carouselPrevious3),
         className,
       )}
       data-slot="carousel-previous"
@@ -179,15 +192,19 @@ function CarouselNext({
   className,
   variant = "outline",
   size = "icon",
+  placement = "floating",
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: CarouselControlProps) {
   const { orientation, scrollNext, canScrollNext } = useCarousel();
 
   return (
     <Button
       className={cn(
-        carouselStyles.carouselNext,
-        orientation === "horizontal" ? carouselStyles.carouselNext2 : carouselStyles.carouselNext3,
+        placement === "floating" && carouselStyles.carouselNext,
+        placement === "floating" &&
+          (orientation === "horizontal"
+            ? carouselStyles.carouselNext2
+            : carouselStyles.carouselNext3),
         className,
       )}
       data-slot="carousel-next"
