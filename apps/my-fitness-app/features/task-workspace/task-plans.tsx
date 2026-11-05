@@ -96,9 +96,10 @@ export function TaskPlans({
                   </>
                 }
                 key={plan.id}
+                pinOnDetailsClick
                 title={plan.title}
               >
-                <TaskBranch {...tree} parentId={null} task={plan} workspace={workspace} />
+                <TaskBranch {...tree} parentId={null} planRoot task={plan} workspace={workspace} />
               </RevealCard>
             );
           })}

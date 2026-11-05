@@ -106,6 +106,7 @@ export interface RevealCardProps {
   heading: ReactNode;
   id?: string;
   labels?: RevealCardLabels;
+  pinOnDetailsClick?: boolean;
   title: string;
 }
 

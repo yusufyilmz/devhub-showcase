@@ -2256,3 +2256,60 @@ textarea::placeholder {
     bottom: calc(78px + env(safe-area-inset-bottom));
   }
 }
+
+/* Keep the plan as the only card. Branches inside it read as one outline. */
+.fitness-plan .reveal-toggle.ui-button[data-slot="button"] {
+  min-height: 36px;
+  padding: 6px 10px;
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.fitness-plan .reveal-toggle.ui-button[data-slot="button"]:hover,
+.fitness-plan .reveal-toggle.ui-button[data-slot="button"]:focus-visible {
+  color: var(--ink);
+  background: var(--surface-soft);
+}
+.fitness-plan .tree-node,
+.fitness-plan .tree-children .tree-node {
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.fitness-plan .task-tree {
+  gap: 0;
+}
+.fitness-plan .tree-row {
+  gap: 8px;
+  align-items: start;
+  padding: 10px 4px;
+  border-block-start: 1px solid var(--line);
+}
+.fitness-plan .tree-row:hover {
+  background: var(--surface-soft);
+}
+.fitness-plan .tree-children {
+  padding: 0;
+  padding-inline-start: 12px;
+  border-inline-start: 1px solid var(--line);
+}
+.fitness-plan [data-plan-root] > .tree-children,
+.fitness-plan .tree-children[data-indent="capped"] {
+  padding: 0;
+  border: 0;
+}
+.fitness-plan [data-plan-root] > .tree-row {
+  flex-wrap: wrap;
+  align-items: center;
+  padding-block: 8px;
+}
+.fitness-plan [data-plan-root] > .tree-row .tree-title:empty {
+  display: none;
+}
+.fitness-plan .tree-actions {
+  flex-shrink: 0;
+}
+.fitness-plan .tree-title strong {
+  font-size: 14px;
+}

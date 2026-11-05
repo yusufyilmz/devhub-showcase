@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 import { starterWorkspace } from "../apps/my-fitness-app/features/task-workspace/starter";
-import { createTask } from "../packages/services/src/types/task";
+import { createTask, defaultDetails } from "../packages/services/src/types/task";
 
 test.describe("Fitness plan cards", () => {
   test("filters plans and opens the existing task editor from a reveal card", async ({
@@ -10,7 +10,16 @@ test.describe("Fitness plan cards", () => {
     const state = starterWorkspace();
     state.tasks.push(
       createTask({ id: "movement", kind: "gym", title: "Movement plan" }),
-      createTask({ id: "walk", kind: "workout", parentId: "movement", title: "Afternoon walk" }),
+      createTask({ id: "walk", kind: "workout", parentId: "movement", title: "Afternoon workout" }),
+      createTask({ id: "pair", kind: "superset", parentId: "walk", title: "Strength pair" }),
+      createTask({ id: "lift", kind: "exercise", parentId: "pair", title: "Kettlebell row" }),
+      createTask({
+        details: defaultDetails("set"),
+        id: "set",
+        kind: "set",
+        parentId: "lift",
+        title: "First set",
+      }),
     );
     let writes = 0;
     await page.route("**/api/state", (route) =>
@@ -48,7 +57,17 @@ test.describe("Fitness plan cards", () => {
       await toggle.focus();
     }
     await expect(toggle).toHaveAttribute("aria-expanded", "true");
-    await expect(plan.getByText("Afternoon walk")).toBeVisible();
+    await expect(plan.getByText("Afternoon workout")).toBeVisible();
+    await expect(plan.getByText("Movement plan", { exact: true })).toHaveCount(1);
+    await plan.getByRole("button", { name: "Expand Strength pair" }).click();
+    await plan.getByRole("button", { name: "Expand Kettlebell row" }).click();
+    await expect(plan.getByText("First set", { exact: true })).toBeVisible();
+    const layers = plan.locator(".tree-node");
+    await expect(layers).toHaveCount(5);
+    for (const layer of await layers.all()) {
+      await expect(layer).toHaveCSS("border-top-width", "0px");
+      await expect(layer).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+    }
     const details = plan.locator(".reveal-details");
     await expect(details).toHaveCSS("transition-duration", "0.65s, 0.65s, 0.43s, 0.65s");
     await page.emulateMedia({ reducedMotion: "reduce" });
@@ -77,6 +96,20 @@ test.describe("Fitness plan cards", () => {
     await saved.getByRole("button", { name: "Undo" }).click();
     await expect(page.getByRole("heading", { exact: true, name: "Movement plan" })).toBeVisible();
     expect(writes).toBe(2);
+
+    await page.getByRole("button", { name: "Appearance controls" }).click();
+    await page.getByRole("button", { name: "Switch to dark theme" }).click();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+    if ((await toggle.getAttribute("aria-expanded")) === "false") await toggle.click();
+    await expect(plan.getByText("Afternoon workout")).toBeVisible();
+    await expect(plan.locator(".tree-node").first()).toHaveCSS(
+      "background-color",
+      "rgba(0, 0, 0, 0)",
+    );
+    await plan.screenshot({
+      animations: "disabled",
+      path: testInfo.outputPath("fitness-plan-rows-dark.png"),
+    });
   });
 
   test("switches between the shared weekly tabs without enabling demo writes", async ({
