@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { RefreshCw, ShoppingBasket } from "lucide-react";
 
@@ -7,9 +7,13 @@ import { TaskService } from "@shared/services/fitness/task";
 import { MealPlanningService, WeeklyPlanningService } from "@shared/services/meal";
 import type { Workspace } from "@shared/services/types";
 import { dateLabel, monday } from "@shared/services/types";
+import { Alert, AlertDescription, AlertTitle } from "@shared/ui/alert";
 import { Button as LibraryButton } from "@shared/ui/button";
+import { Card } from "@shared/ui/cards";
+import { EmptyState } from "@shared/ui/empty-state";
 import { Label as LibraryLabel } from "@shared/ui/label";
 import { NativeSelect as LibraryNativeSelect } from "@shared/ui/native-select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@shared/ui/tabs";
 
 import { TaskTree } from "@/features/task-tree/task-tree";
 
@@ -24,7 +28,6 @@ interface Props {
   workspace: Workspace;
 }
 export function WeeklyPlanner({ workspace, date, readOnly, busy, update }: Props) {
-  const [mode, setMode] = useState<"shopping" | "cooking" | "choices">("shopping");
   const start = monday(date);
   const rootId = `week:${start}`;
   const saved = workspace.tasks.find((t) => t.id === rootId);
@@ -36,129 +39,149 @@ export function WeeklyPlanner({ workspace, date, readOnly, busy, update }: Props
   const unresolved = plan.reduce((sum, m) => sum + m.choices.filter((c) => !c.selected).length, 0);
   return (
     <>
-      <section className="plan-banner">
-        <ShoppingBasket />
-        <div>
-          <strong>Week of {dateLabel(start)}</strong>
-          <p>
-            {plan.length} meals · {unresolved} ingredient choices to make
-          </p>
-        </div>
-        <LibraryButton
-          className="primary"
-          disabled={readOnly || busy}
-          onClick={() =>
-            update((s) => weekly.generate(s, start), "Weekly cooking and shopping tasks generated")
-          }
-          type="button"
-          variant="unstyled"
-        >
-          <RefreshCw size={15} />
-          {saved ? "Regenerate" : "Save weekly tasks"}
-        </LibraryButton>
-      </section>
+      <Card asChild className="fitness-week-summary" interaction="static" layout="plain">
+        <section>
+          <ShoppingBasket aria-hidden="true" />
+          <div>
+            <h2>Week of {dateLabel(start)}</h2>
+            <p>
+              {plan.length} meals · {unresolved} ingredient choices to make
+            </p>
+          </div>
+          <LibraryButton
+            className="fitness-primary"
+            disabled={readOnly || busy}
+            onClick={() =>
+              update(
+                (s) => weekly.generate(s, start),
+                "Weekly cooking and shopping tasks generated",
+              )
+            }
+            size="lg"
+            type="button"
+          >
+            <RefreshCw size={15} />
+            {saved ? "Regenerate" : "Save weekly tasks"}
+          </LibraryButton>
+        </section>
+      </Card>
       {!saved && (
-        <p className="notice">
-          {readOnly
-            ? "Calculated from the owner’s live meal plan. The owner has not saved this week’s checklist yet."
-            : "This is a calculated preview. Save weekly tasks to start checking off cooking and shopping."}
-        </p>
+        <Alert>
+          <AlertTitle>Weekly preview</AlertTitle>
+          <AlertDescription>
+            {readOnly
+              ? "Calculated from the demo meal plan. Weekly tasks are read-only here."
+              : "Save weekly tasks to start checking off cooking and shopping."}
+          </AlertDescription>
+        </Alert>
       )}
       {saved?.details.type === "week" && saved.details.stale && (
-        <p className="notice">
-          Your plan changed. Regenerate to refresh this checklist. Completed items stay checked only
-          when their contents are unchanged.
-        </p>
+        <Alert>
+          <AlertTitle>Weekly checklist needs a refresh</AlertTitle>
+          <AlertDescription>
+            Regenerate the checklist after a plan change. Completed items stay checked when their
+            contents are unchanged.
+          </AlertDescription>
+        </Alert>
       )}
-      <div className="tabs wrap">
-        {(["shopping", "cooking", "choices"] as const).map((m) => (
-          <LibraryButton
-            className={mode === m ? "selected" : ""}
-            key={m}
-            onClick={() => setMode(m)}
-            type="button"
-            variant="unstyled"
-          >
-            {m === "shopping"
-              ? "Shopping checklist"
-              : m === "cooking"
-                ? "Meals to prepare"
-                : "Choose ingredients"}
-          </LibraryButton>
+      <Tabs className="fitness-week-tabs" defaultValue="shopping">
+        <TabsList aria-label="Weekly plan">
+          <TabsTrigger value="shopping">Shopping checklist</TabsTrigger>
+          <TabsTrigger value="cooking">Meals to prepare</TabsTrigger>
+          <TabsTrigger value="choices">Choose ingredients</TabsTrigger>
+        </TabsList>
+        {(["shopping", "cooking"] as const).map((mode) => (
+          <TabsContent key={mode} value={mode}>
+            <TaskTree
+              busy={busy}
+              onAdd={() => {
+                /* Generated week rows are not created from this list. */
+              }}
+              onEdit={() => {
+                /* Generated week rows are edited from the meal plan. */
+              }}
+              onSet={() => {
+                /* Generated week rows do not log workout sets. */
+              }}
+              onStatus={(task, status) =>
+                update(
+                  (s) => tasks.complete(s, task.id, status),
+                  status === "done" ? "Task completed" : "Task updated",
+                )
+              }
+              parentId={`${rootId}:${mode}`}
+              readOnly={readOnly || !saved}
+              workspace={display}
+            />
+          </TabsContent>
         ))}
-      </div>
-      {mode !== "choices" ? (
-        <TaskTree
-          busy={busy}
-          onAdd={() => {
-            /* Generated week rows are not created from this list. */
-          }}
-          onEdit={() => {
-            /* Generated week rows are edited from the meal plan. */
-          }}
-          onSet={() => {
-            /* Generated week rows do not log workout sets. */
-          }}
-          onStatus={(task, status) =>
-            update(
-              (s) => tasks.complete(s, task.id, status),
-              status === "done" ? "Task completed" : "Task updated",
-            )
-          }
-          parentId={`${rootId}:${mode}`}
-          readOnly={readOnly || !saved}
-          workspace={display}
-        />
-      ) : (
-        <div className="meal-grid">
-          {plan.map((meal) => (
-            <section className="card" key={meal.taskId}>
-              <span className="eyebrow">
-                {dateLabel(meal.date)} · {meal.time}
-              </span>
-              <h2>{meal.title}</h2>
-              <p className="hint">{meal.diet}</p>
-              {meal.choices.length ? (
-                meal.choices.map((choice) => (
-                  <LibraryLabel key={choice.groupId} unstyled>
-                    {choice.groupId}
-                    <LibraryNativeSelect
-                      disabled={readOnly || busy}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        update((s) => {
-                          const next = structuredClone(s);
-                          const id = `${meal.date}:${meal.sourceId}:${choice.groupId}`;
-                          next.choices = next.choices.filter((c) => c.id !== id);
-                          next.choices.push({
-                            date: meal.date,
-                            groupId: choice.groupId,
-                            id,
-                            ingredientKey: value,
-                            mealSourceId: meal.sourceId,
-                          });
-                          return weekly.generate(next, start);
-                        }, "Ingredient choice saved; weekly tasks refreshed");
-                      }}
-                      unstyled
-                      value={choice.selected ?? ""}
-                    >
-                      <option value="">Choose one…</option>
-                      {choice.options.map((o) => (
-                        <option key={o.id} value={o.ingredientKey}>
-                          {o.name}
-                        </option>
-                      ))}
-                    </LibraryNativeSelect>
-                  </LibraryLabel>
-                ))
-              ) : (
-                <p>No alternatives to choose.</p>
-              )}
-            </section>
-          ))}
-        </div>
-      )}
+        <TabsContent value="choices">
+          {plan.length === 0 ? (
+            <EmptyState
+              description="Add meals to your plan to choose ingredients here."
+              height="auto"
+              title="No meals this week"
+            />
+          ) : (
+            <div className="meal-grid">
+              {plan.map((meal) => (
+                <Card
+                  asChild
+                  className="fitness-shared-panel"
+                  interaction="static"
+                  key={meal.taskId}
+                  layout="plain"
+                >
+                  <section>
+                    <span className="eyebrow">
+                      {dateLabel(meal.date)} · {meal.time}
+                    </span>
+                    <h2>{meal.title}</h2>
+                    <p className="hint">{meal.diet}</p>
+                    {meal.choices.length ? (
+                      meal.choices.map((choice) => (
+                        <LibraryLabel key={choice.groupId} unstyled>
+                          {choice.groupId}
+                          <LibraryNativeSelect
+                            disabled={readOnly || busy}
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              update((s) => {
+                                const next = structuredClone(s);
+                                const id = `${meal.date}:${meal.sourceId}:${choice.groupId}`;
+                                next.choices = next.choices.filter((c) => c.id !== id);
+                                next.choices.push({
+                                  date: meal.date,
+                                  groupId: choice.groupId,
+                                  id,
+                                  ingredientKey: value,
+                                  mealSourceId: meal.sourceId,
+                                });
+                                return weekly.generate(next, start);
+                              }, "Ingredient choice saved; weekly tasks refreshed");
+                            }}
+                            unstyled
+                            value={choice.selected ?? ""}
+                          >
+                            <option value="">Choose one…</option>
+                            {choice.options.map((o) => (
+                              <option key={o.id} value={o.ingredientKey}>
+                                {o.name}
+                              </option>
+                            ))}
+                          </LibraryNativeSelect>
+                        </LibraryLabel>
+                      ))
+                    ) : (
+                      <p>No alternatives to choose.</p>
+                    )}
+                  </section>
+                </Card>
+              ))}
+            </div>
+          )}
+        </TabsContent>
+      </Tabs>
       <p className="hint space-top">
         Shopping includes only meal ingredients. Supplements and drinking water are not groceries
         here. Optional items are excluded. Salad composition, fruit type, drink amounts, and

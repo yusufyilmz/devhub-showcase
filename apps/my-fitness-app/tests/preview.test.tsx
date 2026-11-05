@@ -53,5 +53,5 @@ test("read-only weekly planner calculates grocery tasks without persistence", ()
   );
   assert.match(html, /Whole eggs/);
   assert.match(html, /23 piece/);
-  assert.match(html, /live meal plan/);
+  assert.match(html, /demo meal plan/);
 });

@@ -9,6 +9,7 @@ import {
 } from "@shared/services/schedule";
 import type { Task, Workspace } from "@shared/services/types";
 import { dateKey } from "@shared/services/types";
+import { Alert, AlertDescription } from "@shared/ui/alert";
 import { Button as LibraryButton } from "@shared/ui/button";
 
 import { useAgendaNavigation } from "@/features/agenda/use-agenda-navigation";
@@ -106,6 +107,7 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
           {target && !readOnly ? (
             <TaskEditor
               busy={busy}
+              error={error}
               key={target.task?.id ?? target.parent?.id ?? "new"}
               onClose={() => setTarget(null)}
               onError={setError}
@@ -115,19 +117,21 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
             />
           ) : null}
           {controller.message ? (
-            <div className="toast" role="status">
-              {controller.message}
-              {controller.undo ? (
-                <LibraryButton
-                  disabled={busy}
-                  onClick={controller.undo}
-                  type="button"
-                  variant="unstyled"
-                >
-                  Undo
-                </LibraryButton>
-              ) : null}
-            </div>
+            <Alert className="fitness-save-status" role="status">
+              <AlertDescription>
+                {controller.message}
+                {controller.undo ? (
+                  <LibraryButton
+                    disabled={busy}
+                    onClick={controller.undo}
+                    type="button"
+                    variant="outline"
+                  >
+                    Undo
+                  </LibraryButton>
+                ) : null}
+              </AlertDescription>
+            </Alert>
           ) : null}
         </>
       }

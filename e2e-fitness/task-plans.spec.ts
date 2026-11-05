@@ -12,8 +12,14 @@ test.describe("Fitness plan cards", () => {
       createTask({ id: "movement", kind: "gym", title: "Movement plan" }),
       createTask({ id: "walk", kind: "workout", parentId: "movement", title: "Afternoon walk" }),
     );
+    let writes = 0;
     await page.route("**/api/state", (route) =>
-      route.fulfill({ json: { canEdit: true, revision: 0, state, workspaceId: "fixture-user" } }),
+      route.fulfill({
+        json:
+          route.request().method() === "PUT"
+            ? { revision: ++writes }
+            : { canEdit: true, revision: 0, state, workspaceId: "fixture-user" },
+      }),
     );
     await page.goto("/?view=Tasks");
 
@@ -49,6 +55,49 @@ test.describe("Fitness plan cards", () => {
     await expect(details).toHaveCSS("transition-duration", "0s");
     await page.screenshot({ path: testInfo.outputPath("fitness-plans-expanded.png") });
     await edit.click();
-    await expect(page.getByRole("heading", { name: "Edit task" })).toBeVisible();
+    const editor = page.getByRole("dialog", { name: "Edit task" });
+    await expect(editor.getByLabel("Title")).toBeFocused();
+    await page.screenshot({ path: testInfo.outputPath("fitness-task-editor.png") });
+    await editor.getByRole("button", { exact: true, name: "Archive" }).click();
+    const confirm = page.getByRole("alertdialog", { name: "Archive this task?" });
+    await expect(confirm).toBeVisible();
+    await confirm.getByRole("button", { name: "Cancel" }).click();
+    await expect(editor).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(editor).toBeHidden();
+    await expect(edit).toBeFocused();
+    expect(writes).toBe(0);
+
+    await edit.click();
+    await editor.getByLabel("Title").fill("Revised movement plan");
+    await editor.getByRole("button", { name: "Save task" }).click();
+    await expect(editor).toBeHidden();
+    await expect(page.getByRole("heading", { name: "Revised movement plan" })).toBeVisible();
+    const saved = page.getByRole("status").filter({ hasText: "Task saved" });
+    await saved.getByRole("button", { name: "Undo" }).click();
+    await expect(page.getByRole("heading", { exact: true, name: "Movement plan" })).toBeVisible();
+    expect(writes).toBe(2);
+  });
+
+  test("switches between the shared weekly tabs without enabling demo writes", async ({
+    page,
+  }, testInfo) => {
+    await page.goto("/preview?view=Week");
+    const list = page.getByRole("tablist", { name: "Weekly plan" });
+    const shopping = list.getByRole("tab", { name: "Shopping checklist" });
+    const cooking = list.getByRole("tab", { name: "Meals to prepare" });
+    const ingredients = list.getByRole("tab", { name: "Choose ingredients" });
+    await expect(shopping).toHaveAttribute("aria-selected", "true");
+    if (testInfo.project.use.hasTouch) await ingredients.tap();
+    else {
+      await shopping.focus();
+      await shopping.press("ArrowRight");
+      await expect(cooking).toHaveAttribute("aria-selected", "true");
+      await cooking.press("ArrowRight");
+    }
+    await expect(ingredients).toHaveAttribute("aria-selected", "true");
+    await expect(page.getByRole("heading", { name: "No meals this week" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Save weekly tasks" })).toBeDisabled();
+    await page.screenshot({ path: testInfo.outputPath("fitness-week-tabs.png") });
   });
 });

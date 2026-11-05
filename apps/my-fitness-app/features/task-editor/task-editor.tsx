@@ -1,12 +1,31 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 
-import { ArrowDown, ArrowUp, Trash2, X } from "lucide-react";
+import { ArrowDown, ArrowUp, Trash2 } from "lucide-react";
 
 import { TaskService } from "@shared/services/fitness/task";
 import type { Workspace } from "@shared/services/types";
 import { createTask, defaultDetails, type Task, type TaskKind } from "@shared/services/types";
+import { Alert, AlertDescription } from "@shared/ui/alert";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@shared/ui/alert-dialog";
 import { Button as LibraryButton } from "@shared/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@shared/ui/dialog";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
 import { NativeSelect as LibraryNativeSelect } from "@shared/ui/native-select";
@@ -19,6 +38,7 @@ export interface TaskEditorTarget {
 }
 interface Props {
   busy: boolean;
+  error: string;
   onClose: () => void;
   onError: (message: string) => void;
   onSave: (workspace: Workspace, label: string) => Promise<boolean>;
@@ -48,7 +68,7 @@ const nextKind = (parent?: Task): TaskKind =>
           ? "exercise"
           : "meal";
 const tasks = new TaskService();
-export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }: Props) {
+export function TaskEditor({ workspace, target, busy, error, onClose, onSave, onError }: Props) {
   const [draft, setDraft] = useState<Task>(
     () =>
       target.task ??
@@ -68,13 +88,8 @@ export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }
   );
   const schedule = workspace.schedules.find((s) => s.taskId === draft.id);
   const [days, setDays] = useState(schedule?.weekdays ?? []);
-  useEffect(() => {
-    const fn = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", fn);
-    return () => document.removeEventListener("keydown", fn);
-  }, [onClose]);
+  const previousFocus = useRef<HTMLElement | null>(null);
+  const heading = target.task ? "Edit task" : target.parent ? "Add subtask" : "New task";
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     try {
@@ -100,32 +115,34 @@ export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }
     }
   }
   return (
-    <div className="overlay">
-      <LibraryButton
-        aria-label="Close task editor"
-        className="sheet-backdrop"
-        onClick={onClose}
-        type="button"
-        variant="unstyled"
-      />
-      <section
-        aria-label="Task editor"
-        aria-modal="true"
-        className="sheet wide-sheet"
-        role="dialog"
+    <Dialog
+      onOpenChange={(open) => {
+        if (!open && !busy) onClose();
+      }}
+      open
+    >
+      <DialogContent
+        className="fitness-dialog fitness-task-editor"
+        onCloseAutoFocus={(event) => {
+          event.preventDefault();
+          previousFocus.current?.focus();
+        }}
+        onOpenAutoFocus={() => {
+          previousFocus.current =
+            document.activeElement instanceof HTMLElement ? document.activeElement : null;
+        }}
       >
-        <div className="section-heading">
-          <h2>{target.task ? "Edit task" : "Add subtask"}</h2>
-          <LibraryButton
-            aria-label="Close editor"
-            className="icon-btn"
-            onClick={onClose}
-            type="button"
-            variant="unstyled"
-          >
-            <X />
-          </LibraryButton>
-        </div>
+        <DialogHeader>
+          <DialogTitle>{heading}</DialogTitle>
+          <DialogDescription>
+            Set the details for this task and save it to your routine.
+          </DialogDescription>
+        </DialogHeader>
+        {error && (
+          <Alert variant="destructive">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
         <form onSubmit={submit}>
           <LibraryLabel unstyled>
             Title
@@ -303,7 +320,7 @@ export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }
               ? "Template changes affect future days that have not been saved. Weekly lists will be marked for refresh."
               : "This edits only this scheduled task. Its template stays unchanged."}
           </p>
-          <LibraryButton className="primary full" disabled={busy} type="submit" variant="unstyled">
+          <LibraryButton className="fitness-primary" disabled={busy} size="lg" type="submit">
             Save task
           </LibraryButton>
         </form>
@@ -311,53 +328,63 @@ export function TaskEditor({ workspace, target, busy, onClose, onSave, onError }
           <div className="sheet-actions">
             <div className="row">
               <LibraryButton
-                className="text-btn"
                 disabled={busy}
                 onClick={async () => {
                   if (await onSave(tasks.reorder(workspace, draft.id, -1), "Task moved")) onClose();
                 }}
                 type="button"
-                variant="unstyled"
+                variant="outline"
               >
                 <ArrowUp size={15} />
                 Move up
               </LibraryButton>
               <LibraryButton
-                className="text-btn"
                 disabled={busy}
                 onClick={async () => {
                   if (await onSave(tasks.reorder(workspace, draft.id, 1), "Task moved")) onClose();
                 }}
                 type="button"
-                variant="unstyled"
+                variant="outline"
               >
                 <ArrowDown size={15} />
                 Move down
               </LibraryButton>
             </div>
-            <LibraryButton
-              className="text-btn danger"
-              disabled={busy}
-              onClick={async () => {
-                if (
-                  !confirm("Archive this task and its subtasks? Saved instances remain unchanged.")
-                )
-                  return;
-                try {
-                  if (await onSave(tasks.archive(workspace, draft.id), "Task archived")) onClose();
-                } catch (e) {
-                  onError((e as Error).message);
-                }
-              }}
-              type="button"
-              variant="unstyled"
-            >
-              <Trash2 size={15} />
-              Archive
-            </LibraryButton>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <LibraryButton disabled={busy} type="button" variant="destructive">
+                  <Trash2 aria-hidden="true" size={15} />
+                  Archive
+                </LibraryButton>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="fitness-dialog fitness-confirmation">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Archive this task?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This also archives its subtasks. Saved instances remain unchanged.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    className="fitness-primary"
+                    onClick={async () => {
+                      try {
+                        if (await onSave(tasks.archive(workspace, draft.id), "Task archived"))
+                          onClose();
+                      } catch (e) {
+                        onError((e as Error).message);
+                      }
+                    }}
+                  >
+                    Archive task
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         )}
-      </section>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

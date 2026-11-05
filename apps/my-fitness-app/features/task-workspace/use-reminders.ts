@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 
-import { stableNotificationId } from "@shared/notifications";
+import { notificationCapabilities, stableNotificationId } from "@shared/notifications";
 import type { Workspace } from "@shared/services/types";
 
 import { fitnessNotifications } from "@/features/notifications/browser";
@@ -11,7 +11,7 @@ export function useTaskReminders(state: Workspace, readOnly: boolean) {
   useEffect(() => {
     if (readOnly || !state.settings.reminders) return;
     const check = async () => {
-      if (typeof Notification === "undefined" || Notification.permission !== "granted") return;
+      if (notificationCapabilities().permission !== "granted") return;
       for (const reminder of dueFitnessReminders(state)) {
         const id = await stableNotificationId(`fitness-os:${reminder.key}`);
         await fitnessNotifications
