@@ -6,17 +6,46 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
+    inputs:
+      application:
+        description: Application to deploy after verification
+        type: choice
+        options: [ all, studio, fitness ]
+        default: all
 
 permissions:
   contents: read
 
+# PR updates replace obsolete verification. Every main push keeps its change
+# selection; cancelling an unrelated push could otherwise miss an app release.
 concurrency:
-  group: portfolio-${{ github.workflow }}-${{ github.ref }}
+  group: ci-${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  changes:
+    name: Select affected apps
+    if: ${{ github.event.repository.private == false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      studio: ${{ steps.apps.outputs.studio }}
+      fitness: ${{ steps.apps.outputs.fitness }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24"
+          package-manager-cache: false
+      - id: apps
+        run: node tools/cli/ci/changes.ts
+
   verify:
     name: Verify
+    if: ${{ github.event.repository.private == false }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
@@ -27,6 +56,8 @@ jobs:
         with:
           persist-credentials: false
       - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          cache: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "24"
@@ -41,81 +72,26 @@ jobs:
         run: pnpm --filter storybook-app build-storybook
       - run: pnpm build
 
-  deploy:
-    name: Deploy production
-    needs: verify
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    runs-on: ubuntu-latest
-    environment: production
-    timeout-minutes: 20
-    env:
+  deploy-studio:
+    name: Deploy Studio
+    needs: [ changes, verify ]
+    if: ${{ github.event.repository.private == false && github.repository == 'yusufyilmz/devhub-showcase' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && needs.changes.outputs.studio == 'true' }}
+    uses: ./.github/workflows/deploy-app.yml
+    with:
+      application: studio
+    secrets:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-      NEXT_TELEMETRY_DISABLED: "1"
-      TURBO_TELEMETRY_DISABLED: "1"
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version: "24"
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - name: Install deployment CLI
-        run: npm install --global vercel@65.4.0
-      - name: Pull production configuration
-        run: vercel pull --yes --environment=production
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      - name: Build production output
-        run: vercel build --prod
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      - name: Deploy verified production output
-        run: vercel deploy --prebuilt --prod
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      DEPLOY_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
-  # deploy-my-fitness-app:
-  #   name: Deploy Fitness OS
-  #   needs: verify
-  #   if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-  #   runs-on: ubuntu-latest
-  #   environment: production
-  #   timeout-minutes: 20
-  #   defaults:
-  #     run:
-  #       working-directory: apps/my-fitness-app
-  #   env:
-  #     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  #     VERCEL_PROJECT_ID: ${{ secrets.VERCEL_FITNESS_PROJECT_ID }}
-  #     NEXT_TELEMETRY_DISABLED: "1"
-  #     TURBO_TELEMETRY_DISABLED: "1"
-  #   steps:
-  #     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-  #       with:
-  #         persist-credentials: false
-  #     - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
-  #     - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-  #       with:
-  #         node-version: "24"
-  #         cache: pnpm
-  #     - name: Install dependencies
-  #       run: pnpm install --frozen-lockfile
-  #       working-directory: .
-  #     - name: Install deployment CLI
-  #       run: npm install --global vercel@65.4.0
-  #     - name: Pull production configuration
-  #       run: vercel pull --yes --environment=production
-  #       env:
-  #         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-  #     - name: Build production output
-  #       run: vercel build --prod
-  #       env:
-  #         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-  #     - name: Deploy verified production output
-  #       run: vercel deploy --prebuilt --prod
-  #       env:
-  #         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  deploy-fitness:
+    name: Deploy Fitness OS
+    needs: [ changes, verify ]
+    if: ${{ github.event.repository.private == false && github.repository == 'yusufyilmz/devhub-showcase' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && needs.changes.outputs.fitness == 'true' }}
+    uses: ./.github/workflows/deploy-app.yml
+    with:
+      application: fitness
+    secrets:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      DEPLOY_PROJECT_ID: ${{ vars.VERCEL_FITNESS_PROJECT_ID }}

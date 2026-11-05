@@ -21,6 +21,8 @@ For local fixture setup and commands, see [testing and verification](../../testi
 
 Fitness OS: [Reusable notifications, background reminders and PWA](notifications.md).
 
+Deployment tooling: [App routing, Fitness cutover and free Actions](deployments.md).
+
 ## Feature guides
 
 | Feature                                                        | Scope/status                                                                                                  | Manual steps                           |

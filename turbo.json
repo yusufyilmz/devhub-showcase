@@ -1,6 +1,13 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalEnv": ["CRON_SECRET"],
+  "globalPassThroughEnv": [
+    "GITHUB_EVENT_NAME",
+    "GITHUB_EVENT_PATH",
+    "GITHUB_OUTPUT",
+    "GITHUB_SHA",
+    "GITHUB_STEP_SUMMARY"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

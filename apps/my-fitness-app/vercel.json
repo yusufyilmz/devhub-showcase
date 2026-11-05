@@ -1,5 +1,11 @@
 {
   "buildCommand": "cd ../.. && pnpm --filter my-fitness-app build",
   "framework": "nextjs",
+  "git": {
+    "deploymentEnabled": {
+      "main": false
+    }
+  },
+  "ignoreCommand": "sh ../../tools/cli/ci/ignore-build.sh",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile"
 }

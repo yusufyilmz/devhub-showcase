@@ -43,7 +43,7 @@ The previously used SSR cookies are no longer used for access control. Existing 
 
 Create a separate Vercel project for this app. Set its root directory to `apps/my-fitness-app`. `vercel.json` installs and builds from the monorepo root with the committed lockfile. Add all variables from `.env.example`, setting `APP_URL` to the exact deployed origin. Apply the migrations before using the authenticated app and configure that origin in Supabase Auth's URL settings. Redeploy after changing environment variables.
 
-On `main`, `.github/workflows/ci.yml` deploys this app after verification using `VERCEL_FITNESS_PROJECT_ID` (same org and token as MyDevStudio). Point the Vercel project root at `apps/my-fitness-app`.
+On `main`, `.github/workflows/ci.yml` deploys this app after verification when Fitness or shared code changes. The `VERCEL_FITNESS_PROJECT_ID` repository variable selects the existing `yusuf-fitness-os` Vercel project using the monorepo’s deployment credentials. The old private repository’s deployment workflow is retired. See [deployment setup and cutover](../../docs/deployments.md); point the Vercel project root at `apps/my-fitness-app`.
 
 Verify `/preview` signed out, `/login`, and saving then refreshing a task when signed in. No live Supabase or hosting credentials are included in the repository.
 

@@ -1,0 +1,78 @@
+name: Deploy one verified app
+
+on:
+  workflow_call:
+    inputs:
+      application:
+        required: true
+        type: string
+    secrets:
+      VERCEL_TOKEN:
+        required: true
+      VERCEL_ORG_ID:
+        required: true
+      DEPLOY_PROJECT_ID:
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    if: ${{ github.event.repository.private == false && github.repository == 'yusufyilmz/devhub-showcase' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 25
+    concurrency:
+      group: deploy-${{ inputs.application }}-production
+      cancel-in-progress: false
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.DEPLOY_PROJECT_ID }}
+      NEXT_TELEMETRY_DISABLED: "1"
+      TURBO_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24"
+          package-manager-cache: false
+      - name: Skip superseded releases of this app
+        id: release
+        env:
+          APPLICATION: ${{ inputs.application }}
+        run: |
+          git fetch --no-tags origin main
+          node tools/cli/ci/changes.ts --current "$APPLICATION"
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        if: steps.release.outputs.current == 'true'
+        with:
+          cache: false
+      - name: Install dependencies
+        if: steps.release.outputs.current == 'true'
+        run: pnpm install --frozen-lockfile
+      - name: Install deployment CLI
+        if: steps.release.outputs.current == 'true'
+        run: npm install --global vercel@65.4.0
+      - name: Pull production configuration
+        if: steps.release.outputs.current == 'true'
+        run: |
+          : "${VERCEL_TOKEN:?Set the VERCEL_TOKEN secret}"
+          : "${VERCEL_ORG_ID:?Set the VERCEL_ORG_ID secret}"
+          : "${VERCEL_PROJECT_ID:?Set the application project ID}"
+          vercel pull --yes --environment=production
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      - name: Build production output
+        if: steps.release.outputs.current == 'true'
+        run: vercel build --prod
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy verified production output
+        if: steps.release.outputs.current == 'true'
+        run: vercel deploy --prebuilt --prod
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}

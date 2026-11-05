@@ -155,7 +155,11 @@ export default defineConfig({
         test: {
           environment: "node",
           exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**", "apps/my-fitness-app/**"],
-          include: ["packages/**/*.test.{ts,tsx}", "apps/**/*.test.{ts,tsx}"],
+          include: [
+            "packages/**/*.test.{ts,tsx}",
+            "apps/**/*.test.{ts,tsx}",
+            "tools/**/*.test.{ts,tsx}",
+          ],
           maxWorkers: 2,
           name: "unit",
           pool: "forks",
