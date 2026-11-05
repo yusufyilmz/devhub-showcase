@@ -16,5 +16,12 @@ export default async function LoginPage({
 }) {
   const { error } = await searchParams;
 
-  return <SiteLoginScreen brandActions={<ThemeToggle />} errorCode={error} localTestLogin={localTestLoginEnabled()} site="my-dev-studio" />;
+  return (
+    <SiteLoginScreen
+      brandActions={<ThemeToggle />}
+      errorCode={error}
+      localTestLogin={localTestLoginEnabled()}
+      site="my-dev-studio"
+    />
+  );
 }
