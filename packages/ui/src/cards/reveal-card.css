@@ -60,9 +60,9 @@
   margin-top: 14px;
   opacity: 1;
   transition:
-    grid-template-rows 450ms cubic-bezier(0.22, 1, 0.36, 1),
-    margin-top 450ms ease,
-    opacity 300ms ease;
+    grid-template-rows var(--reveal-duration, 450ms) cubic-bezier(0.22, 1, 0.36, 1),
+    margin-top var(--reveal-duration, 450ms) ease,
+    opacity var(--reveal-fade-duration, 300ms) ease;
 }
 .reveal-preview > p {
   min-height: 0;
@@ -113,10 +113,10 @@
   margin-top: 0;
   opacity: 0;
   transition:
-    grid-template-rows 450ms cubic-bezier(0.22, 1, 0.36, 1),
-    margin-top 450ms ease,
-    opacity 300ms ease,
-    visibility 450ms;
+    grid-template-rows var(--reveal-duration, 450ms) cubic-bezier(0.22, 1, 0.36, 1),
+    margin-top var(--reveal-duration, 450ms) ease,
+    opacity var(--reveal-fade-duration, 300ms) ease,
+    visibility var(--reveal-duration, 450ms);
 }
 .reveal-details-inner {
   min-height: 0;

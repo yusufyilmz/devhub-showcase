@@ -29,11 +29,11 @@ import { ThemeToggle } from "@shared/ui/theme";
 
 import { DayAgenda } from "@/features/agenda/day-agenda";
 import { TaskDetails } from "@/features/agenda/task-details";
-import { TaskTree } from "@/features/task-tree/task-tree";
 import { WeeklyPlanner } from "@/features/weekly-planner/weekly-planner";
 
 import { CalendarView } from "./calendar-view";
 import { SettingsView } from "./settings-view";
+import { TaskPlans } from "./task-plans";
 import type { WorkspaceController } from "./use-task-workspace";
 
 const navigation = [
@@ -184,14 +184,12 @@ export function WorkspacePanels({
   }
   if (tab === "Tasks") {
     return (
-      <TasksView
-        busy={busy}
-        readOnly={readOnly}
-        setTarget={setTarget}
-        setTemplateRoot={setTemplateRoot}
+      <TaskPlans
+        onCreate={() => setTarget({})}
+        selected={templateRoot}
+        setSelected={setTemplateRoot}
         state={state}
-        templateRoot={templateRoot}
-        treeProps={treeProps}
+        tree={treeProps}
       />
     );
   }
@@ -356,16 +354,18 @@ function PageHeading({
         <h1>{headingTitle({ date, name, selectedTitle, tab, taskId, today })}</h1>
         <p>{headingSummary(tab)}</p>
       </div>
-      <LibraryLabel className="date-control" unstyled>
-        Active date
-        <LibraryInput
-          onChange={(event) => {
-            if (event.target.value) setDate(event.target.value);
-          }}
-          type="date"
-          value={date}
-        />
-      </LibraryLabel>
+      {tab !== "Tasks" && (
+        <LibraryLabel className="date-control" unstyled>
+          Active date
+          <LibraryInput
+            onChange={(event) => {
+              if (event.target.value) setDate(event.target.value);
+            }}
+            type="date"
+            value={date}
+          />
+        </LibraryLabel>
+      )}
     </div>
   );
 }
@@ -595,74 +595,5 @@ function TodayActivity({
       workspace={day}
       {...treeProps}
     />
-  );
-}
-
-function TasksView({
-  busy,
-  readOnly,
-  setTarget,
-  setTemplateRoot,
-  state,
-  templateRoot,
-  treeProps,
-}: {
-  busy: boolean;
-  readOnly: boolean;
-  setTarget: (target: { parent?: Task; task?: Task } | null) => void;
-  setTemplateRoot: (id: string | null) => void;
-  state: Workspace;
-  templateRoot: string | null;
-  treeProps: TreeProps;
-}) {
-  const roots = taskService.children(state.tasks, null).filter((task) => task.scope === "template");
-  return (
-    <>
-      <div className="section-heading">
-        <div className="tabs wrap">
-          <LibraryButton
-            className={templateRoot === null ? "selected" : ""}
-            onClick={() => setTemplateRoot(null)}
-            type="button"
-            variant="unstyled"
-          >
-            All plans
-          </LibraryButton>
-          {roots.map((task) => (
-            <LibraryButton
-              className={templateRoot === task.id ? "selected" : ""}
-              key={task.id}
-              onClick={() => setTemplateRoot(task.id)}
-              type="button"
-              variant="unstyled"
-            >
-              {task.title}
-            </LibraryButton>
-          ))}
-        </div>
-        <LibraryButton
-          className="outline"
-          disabled={readOnly || busy}
-          onClick={() => setTarget({})}
-          type="button"
-          variant="unstyled"
-        >
-          <Plus size={15} />
-          New task
-        </LibraryButton>
-      </div>
-      <TaskTree
-        parentId={templateRoot}
-        workspace={{
-          ...state,
-          tasks: state.tasks.filter((task) => task.scope === "template"),
-        }}
-        {...treeProps}
-      />
-      <p className="hint space-top">
-        Use + to add a subtask and the pencil to edit, reorder, or archive. Meal ingredients and
-        alternatives are edited inside each meal.
-      </p>
-    </>
   );
 }
