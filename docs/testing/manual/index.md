@@ -19,6 +19,8 @@ This is the central manual acceptance-test catalog for work implemented in this 
 
 For local fixture setup and commands, see [testing and verification](../../testing.md). Local Storybook starts with `pnpm --filter storybook-app storybook` at [localhost:6006](http://localhost:6006/), path `/`.
 
+Fitness OS: [Reusable notifications, background reminders and PWA](notifications.md).
+
 ## Feature guides
 
 | Feature                                                        | Scope/status                                                                                                  | Manual steps                           |

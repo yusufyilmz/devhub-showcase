@@ -10,6 +10,10 @@ export * from "./label";
 export { LinesField } from "./lines-field";
 export * from "./login-form";
 export { NativeSelect } from "./native-select";
+export {
+  NotificationPreferences,
+  type NotificationPreferencesProps,
+} from "./notification-preferences";
 export * from "./radio-button";
 export * from "./radio-group";
 export * from "./select";

@@ -16,14 +16,42 @@ export function useTaskWorkspace(gateway: WorkspaceGateway, initial: Workspace) 
   const [message, setMessage] = useState("");
   const [undo, setUndo] = useState<Workspace | null>(null);
   const lock = useRef(false);
+  const currentRevision = useRef(0);
+  const remoteRevision = useRef(0);
   useEffect(() => {
     let active = true;
+    let stopLive: () => void = () => undefined;
+    let liveStarted = false;
+    function startLive() {
+      if (gateway.readOnly) {
+        stopLive();
+        liveStarted = false;
+        return;
+      }
+      if (liveStarted || !gateway.subscribe) return;
+      liveStarted = true;
+      stopLive = gateway.subscribe({
+        message: (notification) => {
+          if (active) setMessage(notification.body);
+        },
+        revision: (revision) => {
+          if (!active || revision <= currentRevision.current) return;
+          remoteRevision.current = revision;
+          if (!lock.current)
+            setError(
+              "Your saved workspace changed on another device. Reload before saving; your current view has not been overwritten.",
+            );
+        },
+      });
+    }
     async function load() {
       try {
         const r = await gateway.load();
         if (active) {
           setState(r.state);
           setRevision(r.revision);
+          currentRevision.current = r.revision;
+          startLive();
           setReady(true);
           setError("");
         }
@@ -52,6 +80,7 @@ export function useTaskWorkspace(gateway: WorkspaceGateway, initial: Workspace) 
       document.removeEventListener("visibilitychange", refresh);
       window.removeEventListener("storage", authChanged);
       stopSessionWatch();
+      stopLive();
     };
   }, [gateway]);
   useEffect(() => {
@@ -71,6 +100,7 @@ export function useTaskWorkspace(gateway: WorkspaceGateway, initial: Workspace) 
       setUndo(remember ? state : null);
       setState(parsed);
       setRevision(r);
+      currentRevision.current = r;
       setMessage(label);
       return true;
     } catch (e) {
@@ -79,6 +109,8 @@ export function useTaskWorkspace(gateway: WorkspaceGateway, initial: Workspace) 
     } finally {
       setBusy(false);
       lock.current = false;
+      if (remoteRevision.current > currentRevision.current)
+        setError("Your saved workspace changed on another device. Reload before saving.");
     }
   }
   function update(action: (state: Workspace) => Workspace, label = "Saved") {

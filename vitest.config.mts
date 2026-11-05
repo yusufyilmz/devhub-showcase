@@ -86,7 +86,7 @@ export default defineConfig({
         find: "@shared/cache",
         replacement: fileURLToPath(new URL("./packages/cache/src/index.ts", import.meta.url)),
       },
-      ...["assistant", "auth", "billing", "runtime", "templates", "ui"]
+      ...["assistant", "auth", "billing", "notifications", "runtime", "templates", "ui"]
         .flatMap((pkg) => exportAliases(pkg))
         .sort((a, b) => b.find.length - a.find.length),
       ...["ui"]

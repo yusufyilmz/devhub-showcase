@@ -1,0 +1,33 @@
+{
+  "name": "@shared/notifications",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts",
+    "./websocket": "./src/websocket.ts",
+    "./server": "./src/server.ts",
+    "./worker": "./src/worker.ts"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "format": "biome format --write .",
+    "lint": "biome lint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "web-push": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@shared/cli": "workspace:*",
+    "@shared/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/web-push": "catalog:",
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "node": ">=24.15.0 <25"
+  }
+}

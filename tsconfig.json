@@ -17,6 +17,8 @@
       "@shared/lib/*": ["./packages/lib/src/*"],
       "@shared/lib/types": ["./packages/lib/src/types/index.ts"],
       "@shared/lib/utils": ["./packages/lib/src/utils/index.ts"],
+      "@shared/notifications": ["./packages/notifications/src/index.ts"],
+      "@shared/notifications/*": ["./packages/notifications/src/*"],
       "@shared/services": ["./packages/services/src/index.ts"],
       "@shared/services/*": ["./packages/services/src/*"],
       "@shared/templates/studio": ["./packages/templates/src/studio/index.ts"],
