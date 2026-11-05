@@ -20,7 +20,7 @@ describe("SiteLoginScreen", () => {
   it("shows the local shortcut only when the server explicitly allows it", () => {
     const { rerender } = render(<SiteLoginScreen site="my-dev-studio" />);
     expect(screen.queryByRole("button", { name: "Continue as local test user" })).toBeNull();
-    rerender(<SiteLoginScreen site="my-dev-studio" localTestLogin />);
+    rerender(<SiteLoginScreen localTestLogin site="my-dev-studio" />);
     expect(screen.getByRole("button", { name: "Continue as local test user" })).toBeTruthy();
   });
 

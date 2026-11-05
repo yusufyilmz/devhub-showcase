@@ -40,8 +40,8 @@ export function SiteLoginScreen({
       description={siteCopy.description}
       eyebrow={siteCopy.eyebrow}
       googleAction={urls.next.auth.google()}
-      localTestLogin={localTestLogin}
       initialError={resolvedError}
+      localTestLogin={localTestLogin}
       sessionEndpoint={urls.next.auth.session()}
       submitLabel={siteCopy.submitLabel}
       successPath={siteCopy.successPath}
