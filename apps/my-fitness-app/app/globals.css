@@ -592,26 +592,6 @@ button svg {
 .legend span {
   color: var(--muted);
 }
-.plan-banner {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  padding: 20px 24px;
-  margin: 20px 0;
-  background: var(--surface-soft);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-}
-.plan-banner > div {
-  flex: 1;
-}
-.plan-banner p {
-  margin-top: 4px;
-  font-size: 11px;
-}
-.plan-banner > svg {
-  color: var(--muted);
-}
 .meal-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -702,15 +682,6 @@ button svg {
 .add-card span {
   font-size: 11px;
   color: var(--muted);
-}
-.notice {
-  padding: 12px 16px;
-  margin: 15px 0;
-  font-size: 12px;
-  color: var(--muted);
-  background: var(--surface-soft);
-  border: 1px solid var(--line);
-  border-radius: 8px;
 }
 .training-banner {
   display: flex;
@@ -855,41 +826,6 @@ footer {
 footer span {
   margin: 0 8px;
 }
-.overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  background: var(--overlay);
-  backdrop-filter: blur(5px);
-}
-.sheet {
-  width: 520px;
-  max-width: 100%;
-  max-height: 90vh;
-  padding: 30px;
-  overflow: auto;
-  background: var(--surface);
-  border-radius: 18px;
-  box-shadow: 0 20px 80px var(--shadow-color);
-}
-.sheet h1 {
-  margin: 15px 0;
-  font-size: 29px;
-}
-.sheet .section-heading {
-  margin-bottom: 20px;
-}
-.sheet-actions {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 15px;
-  margin-top: 20px;
-  border-top: 1px solid var(--line);
-}
 .detail-copy {
   margin: 20px 0 30px;
   color: var(--muted);
@@ -944,9 +880,6 @@ textarea {
   height: 18px;
   accent-color: var(--green);
 }
-.sheet .hint {
-  margin: 10px 0 20px;
-}
 .danger {
   color: var(--muted);
 }
@@ -961,31 +894,6 @@ textarea {
 }
 .error .text-btn {
   margin-left: 12px;
-}
-.toast {
-  position: fixed;
-  bottom: 25px;
-  left: 50%;
-  z-index: 70;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  max-width: 90vw;
-  padding: 14px 20px;
-  font-size: 12px;
-  color: var(--on-primary);
-  background: var(--accent);
-  border-radius: 9px;
-  box-shadow: 0 6px 25px var(--shadow-color);
-  transform: translateX(-50%);
-}
-.toast button {
-  padding: 0 5px;
-  font-size: 12px;
-  color: var(--muted);
-  text-decoration: underline;
-  background: transparent;
-  border: 0;
 }
 .login .eyebrow {
   margin: 55px 0 15px;
@@ -1226,20 +1134,6 @@ textarea {
   .meal-card {
     padding: 22px;
   }
-  .plan-banner {
-    gap: 12px;
-    padding: 16px;
-  }
-  .plan-banner p {
-    font-size: 10px;
-  }
-  .plan-banner > svg {
-    display: none;
-  }
-  .plan-banner .icon-btn {
-    min-width: 28px;
-    padding: 5px;
-  }
   .calendar {
     gap: 4px;
   }
@@ -1312,25 +1206,6 @@ textarea {
   }
   .library-exercise .task-main span {
     font-size: 9px;
-  }
-  .overlay {
-    align-items: flex-end;
-    padding: 15px;
-  }
-  .sheet {
-    max-height: 90dvh;
-    padding: 24px;
-    margin-bottom: env(safe-area-inset-bottom);
-    border-radius: 17px;
-  }
-  .sheet h1 {
-    font-size: 26px;
-  }
-  .toast {
-    bottom: calc(83px + env(safe-area-inset-bottom));
-    padding: 12px 15px;
-    font-size: 11px;
-    white-space: nowrap;
   }
   .login {
     margin: 8vh auto;
@@ -1499,9 +1374,6 @@ button:disabled {
   width: auto;
   margin: 0;
 }
-.wide-sheet {
-  width: 620px;
-}
 .rotation-step {
   margin-bottom: 10px;
 }
@@ -1574,13 +1446,6 @@ button:disabled {
   }
   .leaf-actions {
     padding-left: 23px;
-  }
-  .plan-banner {
-    flex-wrap: wrap;
-  }
-  .plan-banner .primary {
-    width: 100%;
-    font-size: 11px;
   }
   .three {
     gap: 8px;
@@ -1746,19 +1611,6 @@ textarea::placeholder {
 .workout-teaser p {
   color: var(--success);
 }
-.plan-banner {
-  color: var(--accent);
-  background: var(--accent-soft);
-  border-color: var(--line);
-}
-.plan-banner > svg {
-  color: var(--accent);
-}
-.notice {
-  color: var(--warning);
-  background: var(--warning-soft);
-  border-color: var(--line);
-}
 .ingredient-warning {
   color: var(--warning);
 }
@@ -1784,14 +1636,6 @@ textarea::placeholder {
 }
 .purple {
   background: var(--violet);
-}
-.toast {
-  color: var(--hero-ink);
-  background: var(--hero);
-  border: 1px solid var(--line);
-}
-.toast button {
-  color: var(--ring-fill);
 }
 .topbar-actions,
 .login-brand {
@@ -2132,20 +1976,11 @@ textarea::placeholder {
   width: 20px;
   height: 20px;
 }
-.sheet-backdrop {
-  position: fixed;
-  inset: 0;
-  cursor: default;
-  background: transparent;
-  border: 0;
-}
-.sheet {
-  position: relative;
-}
 
 /* Bridge the Fitness palette to the shared UI semantic tokens. */
 .app,
-.fitness-state {
+.fitness-state,
+.fitness-dialog {
   --background: var(--surface);
   --foreground: var(--ink);
   --primary: var(--accent);
@@ -2256,5 +2091,168 @@ textarea::placeholder {
     height: 100%;
     min-height: 56px;
     border-radius: 10px;
+  }
+}
+
+.fitness-plans {
+  display: grid;
+  gap: 18px;
+}
+.fitness-plans-toolbar,
+.fitness-plans-controls,
+.fitness-plan-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+.fitness-plans-toolbar p {
+  margin-top: 4px;
+}
+.fitness-plans-controls {
+  align-items: end;
+  justify-content: flex-start;
+}
+.fitness-plan-filter {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+.fitness-plan-filter select {
+  width: min(12rem, 100%);
+  height: 36px;
+  padding-block: 6px;
+  margin: 0;
+}
+.fitness-new-task {
+  color: var(--on-primary);
+}
+.fitness-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 25rem), 1fr));
+  gap: 16px;
+  align-items: start;
+}
+.fitness-plan-grid:has(> :only-child) {
+  grid-template-columns: minmax(0, 1fr);
+}
+.fitness-plan {
+  --reveal-duration: 650ms;
+  --reveal-fade-duration: 430ms;
+  padding: clamp(16px, 3vw, 24px);
+}
+.fitness-plan-meta {
+  justify-content: flex-start;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.fitness-plan-meta [data-slot="badge"] {
+  text-transform: capitalize;
+}
+.fitness-plan h3,
+.fitness-plan .tree-title {
+  overflow-wrap: anywhere;
+}
+.fitness-plan-empty {
+  padding: 24px;
+}
+
+.fitness-dialog,
+.fitness-shared-panel,
+.fitness-week-summary {
+  padding: clamp(16px, 3vw, 24px);
+}
+.fitness-dialog[data-slot] {
+  max-height: 90dvh;
+  overflow-y: auto;
+  color: var(--ink);
+  background: var(--surface);
+  border-color: var(--line);
+}
+.fitness-task-editor[data-slot] {
+  width: min(calc(100% - 24px), 40rem);
+  max-width: none;
+}
+.fitness-task-editor [data-slot="dialog-header"] {
+  padding-inline-end: 24px;
+}
+.fitness-dialog .sheet-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  padding-top: 15px;
+  margin-top: 0;
+  border-top: 1px solid var(--line);
+}
+.fitness-primary {
+  color: var(--on-primary);
+}
+.fitness-task-editor .fitness-primary {
+  width: 100%;
+}
+.fitness-week-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+.fitness-week-summary > div {
+  flex: 1;
+  min-width: 12rem;
+}
+.fitness-week-summary + [data-slot="alert"] {
+  margin-top: 12px;
+}
+.fitness-week-tabs {
+  margin-top: 16px;
+}
+.fitness-week-tabs [data-slot="tabs-list"] {
+  justify-content: flex-start;
+  width: 100%;
+  height: auto;
+  background: var(--surface-soft);
+}
+.fitness-week-tabs [data-slot="tabs-trigger"] {
+  min-height: 36px;
+  color: var(--muted);
+}
+.fitness-week-tabs [data-slot="tabs-trigger"][data-state="active"] {
+  color: var(--ink);
+  background: var(--surface);
+}
+.fitness-calendar-day {
+  margin-top: 16px;
+}
+.fitness-save-status[data-slot="alert"] {
+  position: fixed;
+  inset: auto auto 24px 50%;
+  z-index: 45;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  transform: translateX(-50%);
+}
+.fitness-save-status [data-slot="alert-description"] {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+@media (max-width: 700px) {
+  .fitness-week-tabs [data-slot="tabs-list"] {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .fitness-week-tabs [data-slot="tabs-trigger"] {
+    height: 100%;
+    min-height: 44px;
+    font-size: 12px;
+    line-height: 1.25;
+    text-align: center;
+    white-space: normal;
+  }
+  .fitness-save-status[data-slot="alert"] {
+    bottom: calc(78px + env(safe-area-inset-bottom));
   }
 }

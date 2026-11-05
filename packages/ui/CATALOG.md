@@ -223,6 +223,10 @@ Public components exported from `packages/ui/src/components/index.ts`. Import th
 | `DraftRecovery`, `useDraftRecovery`      | `portfolio/recovery`                       | Tab-local recovery and revision reconciliation |
 | `ProposalComparison`                     | `portfolio`                                | Readable current/proposed field values         |
 
+Reveal Cards use `--reveal-duration` and `--reveal-fade-duration` for the
+details transition. Set them on a card's class to adjust its timing. Reduced
+motion removes the transition.
+
 ### Shared product surfaces
 
 `Card` supports `asChild`, `layout="stack|plain"`,
