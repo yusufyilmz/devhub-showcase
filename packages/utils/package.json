@@ -44,6 +44,7 @@
     "short-uuid": "catalog:"
   },
   "devDependencies": {
+    "@shared/cli": "workspace:*",
     "@shared/typescript-config": "workspace:*",
     "@types/node": "catalog:",
     "remark": "^15.0.1",

@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { profile } from "@shared/config";
 
-import { extractedCv } from "../../../../tools/__fixtures__/cv-import-fixture";
+import { extractedCv } from "../../../../tools/test/fixtures/cv-import-fixture";
 import { CvImportModel } from "../../../assistant/src/models/cv-import-model";
 import { MAX_CV_BYTES, validateCvFile } from "../domain/cv-file";
 import {

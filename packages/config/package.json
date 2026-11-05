@@ -21,6 +21,7 @@
     "types:check": "pnpm typecheck"
   },
   "devDependencies": {
+    "@shared/cli": "workspace:*",
     "@shared/typescript-config": "workspace:*",
     "@shared/utils": "workspace:*",
     "next": "catalog:",

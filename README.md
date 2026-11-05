@@ -45,6 +45,8 @@ Use [.env.example](.env.example) for current defaults. Do not expose OpenAI, Red
 
 ## Everyday commands
 
+Shared workspace tooling lives in [`tools/cli`](tools/cli/README.md) (`@shared/cli`) and [`tools/test`](tools/test/README.md) (`@shared/test`), alongside the TypeScript configuration package. CLI tooling owns repository scripts, Turbo generators and tsdown defaults. Test tooling owns reusable fixtures, Storybook helpers, setup and framework mocks. See [tooling verification](docs/testing/manual/shared-tooling.md).
+
 Run these from the repository root.
 
 | Command                             | Purpose                                                 |

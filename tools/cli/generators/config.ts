@@ -9,7 +9,7 @@ import { cvHelpers, renderCv } from "@shared/templates";
 import {
   readPublicProfile,
   readPublishedProfile,
-} from "../../packages/services/src/profile/service/published-profile";
+} from "../../../packages/services/src/profile/service/published-profile";
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   for (const [name, helper] of Object.entries(cvHelpers)) plop.setHelper(name, helper);

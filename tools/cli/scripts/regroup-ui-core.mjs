@@ -4,7 +4,7 @@ import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
 const uiSrc = path.join(root, "packages/ui/src");
 const coreDir = path.join(uiSrc, "core");
 
@@ -185,7 +185,7 @@ async function updatePackageExports() {
 
   pkg.exports = exportsField;
   pkg.scripts["folders:kebab"] =
-    "node ../../tools/scripts/kebab-folders.mjs src/buttons src/forms src/feedback src/overlays src/layout src/navigation src/content src/customizers";
+    "node ../../tools/cli/scripts/kebab-folders.mjs src/buttons src/forms src/feedback src/overlays src/layout src/navigation src/content src/customizers";
 
   await writeFile(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`);
 }

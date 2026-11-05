@@ -2,8 +2,8 @@ import { spawnSync } from "node:child_process";
 import { lstat, readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
-const root = fileURLToPath(new URL("../../", import.meta.url));
-const target = new URL("../../apps/my-dev-studio/.env.development.local", import.meta.url);
+const root = fileURLToPath(new URL("../../../", import.meta.url));
+const target = new URL("../../../apps/my-dev-studio/.env.development.local", import.meta.url);
 const args = process.argv.slice(2);
 
 async function localSupabaseDefaults() {
@@ -44,7 +44,7 @@ async function setup() {
   } catch (error) {
     if (error.code !== "ENOENT") throw error;
   }
-  let defaults = await readFile(new URL("../../.env.development", import.meta.url), "utf8");
+  let defaults = await readFile(new URL("../../../.env.development", import.meta.url), "utf8");
   if (args.includes("--supabase")) {
     const local = await localSupabaseDefaults();
     defaults = defaults

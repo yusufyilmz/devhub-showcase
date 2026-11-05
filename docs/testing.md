@@ -43,7 +43,7 @@ A unit test sits in the same folder as the source it covers and uses that file's
 | `user-profile.ts`          | `user-profile.test.ts`          | —                                  |
 | `route.ts`                 | `route.test.ts`                 | —                                  |
 
-Do not add a new suite under a central `tests/ui` or `tests/unit` folder. `tests/support` stays for Vitest setup and shared mocks.
+Do not add a new suite under a central `tests/ui` or `tests/unit` folder. `tools/test/support` stays for Vitest setup and shared mocks.
 
 Every unit test file starts with `describe`. Setup hooks and `it` cases belong inside that suite. Component helpers used by the tests stay at module scope, outside `describe`.
 

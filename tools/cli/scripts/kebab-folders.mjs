@@ -10,8 +10,8 @@
  * `button/Button.tsx`.
  *
  * Usage:
- *   node tools/scripts/kebab-folders.mjs <directory> [--dry-run] [--search <dir>]
- *   node tools/scripts/kebab-folders.mjs --root <directory> [--dry-run] [--search <dir>]
+ *   node tools/cli/scripts/kebab-folders.mjs <directory> [--dry-run] [--search <dir>]
+ *   node tools/cli/scripts/kebab-folders.mjs --root <directory> [--dry-run] [--search <dir>]
  */
 
 import fs from "node:fs";
@@ -48,8 +48,8 @@ function toKebab(name) {
 }
 
 function printHelp() {
-  console.log(`Usage: node tools/scripts/kebab-folders.mjs <directory> [--dry-run] [--search <dir>]
-       node tools/scripts/kebab-folders.mjs --root <directory> [--dry-run] [--search <dir>]
+  console.log(`Usage: node tools/cli/scripts/kebab-folders.mjs <directory> [--dry-run] [--search <dir>]
+       node tools/cli/scripts/kebab-folders.mjs --root <directory> [--dry-run] [--search <dir>]
 
 <directory>  Folder whose child directories are renamed to kebab-case.
 --search     Where to rewrite relative imports. Defaults to the repository root.

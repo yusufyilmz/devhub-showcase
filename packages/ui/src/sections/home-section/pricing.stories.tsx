@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { PortfolioStoryFrame } from "../../../../../tools/__fixtures__/portfolio-story-frame";
+import { PortfolioStoryFrame } from "../../../../../tools/test/fixtures/portfolio-story-frame";
 import { HomePricingSection } from "./pricing";
 
 const action = { href: "/login", label: "Create your portfolio", signedIn: false };

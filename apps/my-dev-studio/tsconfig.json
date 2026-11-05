@@ -3,7 +3,7 @@
     "incremental": true,
     "paths": {
       "@/features/*": ["./features/*"],
-      "@fixtures/*": ["../../tools/__fixtures__/*"]
+      "@fixtures/*": ["../../tools/test/fixtures/*"]
     },
     "plugins": [
       {

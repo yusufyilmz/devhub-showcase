@@ -1,0 +1,20 @@
+{
+  "name": "@shared/test",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./fixtures/*": "./fixtures/*",
+    "./setup": "./support/vitest-setup.ts",
+    "./mocks/*": "./support/mocks/*.ts"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*",
+    "@types/react": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "engines": {
+    "node": ">=24.15.0 <25"
+  }
+}

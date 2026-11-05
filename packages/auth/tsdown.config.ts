@@ -1,3 +1,3 @@
-import { defineLibraryConfig } from "../../tools/tsdown/library.ts";
+import { defineLibraryConfig } from "@shared/cli/tsdown";
 
 export default defineLibraryConfig();

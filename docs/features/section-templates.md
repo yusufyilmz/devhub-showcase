@@ -20,7 +20,7 @@ Applying can append or replace custom sections. Replace requests explicit confir
 
 ## PageForge import
 
-The review accepts a block array, content blocks, grouped sections or a PageConfig content tree containing header, hero, main, sidebar and footer groups. Known underscore aliases and experience/skills/socials/gallery names normalize to the new catalog. The fixture in `tools/__fixtures__/pageforge-sections.json` exercises all 42 source families.
+The review accepts a block array, content blocks, grouped sections or a PageConfig content tree containing header, hero, main, sidebar and footer groups. Known underscore aliases and experience/skills/socials/gallery names normalize to the new catalog. The fixture in `tools/test/fixtures/pageforge-sections.json` exercises all 42 source families.
 
 Supported content becomes typed items, descriptions, links and options. Grouped FAQs and menus flatten into authorable items; images, prices, features, authors and periods map to supported fields. Conversion notes describe external integrations and visual adaptations. Unsupported section types abort the import; scripts, CSS, metadata, auth, endpoints and executable React/MDX are never applied. Review and previews occur before Apply to draft. Publishing remains a separate user choice.
 

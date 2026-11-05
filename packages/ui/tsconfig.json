@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
-      "@fixtures/*": ["../../tools/__fixtures__/*"]
+      "@fixtures/*": ["../../tools/test/fixtures/*"]
     },
     "types": ["node"]
   },
