@@ -19,11 +19,13 @@ export function SiteLoginScreen({
   initialError,
   errorCode,
   brandActions,
+  localTestLogin = false,
 }: {
   site: LoginSiteId;
   initialError?: string;
   errorCode?: string;
   brandActions?: ReactNode;
+  localTestLogin?: boolean;
 }) {
   const siteCopy = copy.loginSites[site];
   const resolvedError = initialError ?? resolveLoginError(siteCopy.errors, errorCode);
@@ -38,6 +40,7 @@ export function SiteLoginScreen({
       description={siteCopy.description}
       eyebrow={siteCopy.eyebrow}
       googleAction={urls.next.auth.google()}
+      localTestLogin={localTestLogin}
       initialError={resolvedError}
       sessionEndpoint={urls.next.auth.session()}
       submitLabel={siteCopy.submitLabel}
