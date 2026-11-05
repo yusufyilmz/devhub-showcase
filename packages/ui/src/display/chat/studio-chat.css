@@ -84,7 +84,7 @@
   flex: 1;
   flex-direction: column;
   gap: var(--spacing-lg);
-  justify-content: center;
+  justify-content: safe center;
   width: min(100%, 820px);
   min-height: 0;
   padding: var(--spacing-lg) var(--spacing-md);
@@ -116,6 +116,7 @@
 }
 .studio-chat-compose-area {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--spacing-sm);
 }
 .studio-chat-body[data-started="true"] .studio-chat-compose-area {

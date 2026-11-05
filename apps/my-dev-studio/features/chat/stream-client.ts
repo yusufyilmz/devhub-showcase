@@ -13,12 +13,14 @@ export async function streamPortfolioAnswer(
   sessionId: string,
   message: string,
   onDelta: (text: string) => void,
+  signal?: AbortSignal,
 ) {
+  const deadline = AbortSignal.timeout(50000);
   const response = await fetch("/api/chat/stream", {
     body: JSON.stringify({ message, sessionId, username }),
     headers: { "Content-Type": "application/json" },
     method: "POST",
-    signal: AbortSignal.timeout(50000),
+    signal: signal ? AbortSignal.any([signal, deadline]) : deadline,
   });
   if (!response.ok || !response.body) throw new Error("Chat unavailable. Please try later.");
   const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();

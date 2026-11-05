@@ -12,6 +12,7 @@ describe("PlatformMetadata", () => {
     for (const path of [
       "/",
       "/login",
+      "/alice/chat",
       "/admin/portfolios",
       "/admin/portfolios/record",
       "/p/examples",

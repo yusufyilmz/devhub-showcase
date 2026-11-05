@@ -1,10 +1,11 @@
+import "@shared/ui/portfolio-chat.css";
+
 import type { Metadata } from "next";
 
-import { publicChatSources } from "@shared/lib/profiles";
+import { Button } from "@shared/ui/button";
 
 import { OwnerEditLink } from "@/features/admin/owner-edit-link";
 import { premiumChatAvailable } from "@/features/chat/premium-chat";
-import { PremiumWidget } from "@/features/chat/premium-widget";
 import { portfolioMetadata } from "@/features/portfolio/portfolio-metadata";
 import { loadPageResources } from "@/features/portfolio/portfolio-resources";
 import { getUsernameProfile } from "@/features/portfolio/profiles/public-profile";
@@ -23,20 +24,15 @@ export default async function PublicCvPage({ params }: Props) {
   const { profile: saved, id, revision } = await getUsernameProfile(username);
   const widget =
     id && saved.publicationVisibility !== "password" && (await premiumChatAvailable(id)) ? (
-      <PremiumWidget
-        id={id}
-        name={saved.name}
-        revision={revision}
-        sources={publicChatSources({
-          id,
-          isPublic: true,
-          profile: saved,
-          revision,
-          updatedAt: "",
-          username,
-        })}
-        username={username}
-      />
+      <div className="portfolio-chat">
+        <Button
+          className="portfolio-chat-launch"
+          href={`/${encodeURIComponent(username)}/chat`}
+          variant="unstyled"
+        >
+          Ask about {saved.name}
+        </Button>
+      </div>
     ) : null;
   if (saved.portfolioType && saved.portfolioType !== "engineer")
     return (

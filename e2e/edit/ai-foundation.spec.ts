@@ -57,5 +57,5 @@ test("owner can inspect private and public knowledge from the latest saved revis
   await context.clearCookies();
   expect((await page.request.get(urls.next.studio.profile())).status()).toBe(403);
   await page.goto(`/${device}-ai-owner`);
-  await expect(page.getByRole("button", { name: "Resume Chat" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Portfolio assistant" })).toHaveCount(0);
 });

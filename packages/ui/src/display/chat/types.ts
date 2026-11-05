@@ -142,11 +142,12 @@ export type StudioChatScreenOptions = {
   onStop: () => void;
   busy: boolean;
   disabled: boolean;
-  messages: { id: number; role: "user" | "assistant"; text: string }[];
+  messages: { id: number | string; role: "user" | "assistant"; text: string }[];
   review?: ReactNode;
   notice?: ReactNode;
   error?: string;
   status?: string;
   actions?: ReactNode;
-  editorHref: string;
+  editorHref?: string;
+  visitor?: { href: string; name: string };
 };

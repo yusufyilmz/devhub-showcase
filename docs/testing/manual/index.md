@@ -2,7 +2,7 @@
 
 Local tooling: [Local development setup and test login](local-development.md).
 
-Workspace tooling: [Shared CLI and test packages](shared-tooling.md).
+Workspace tooling: [Shared CLI and test packages](shared-tooling.md) and [Repository lookup](repository-lookup.md).
 
 This is the central manual acceptance-test catalog for work implemented in this project/chat. Each feature has its own guide with prerequisites, numbered steps, clickable URLs, route paths, expected results and a place to record actual evidence. Related older guides remain useful for deeper scenarios.
 
@@ -54,7 +54,7 @@ Deployment tooling: [App routing, Fitness cutover and free Actions](deployments.
 | Fullscreen Studio chat and provider failure/streaming behavior | Implemented UI; provider access is optional                                                                   | [Open guide](studio-chat.md)            |
 | Fitness assistant, workouts and shopping                       | Optional provider and Redis setup                                                                             | [Open guide](fitness-assistants.md)     |
 | Assistant token budgeting and saved prompt composition         | Implemented; hosted verification pending                                                                      | [Open guide](assistant-token-budget.md) |
-| Visitor chat isolation, streaming and source links — task 21   | Optional configured integration                                                                               | [Open guide](visitor-chat.md)           |
+| Full-page visitor chat, access and published sources — task 21 | Optional configured integration                                                                               | [Open guide](visitor-chat.md)           |
 | Sandbox billing, assignment, quota and readiness screens       | Sandbox integration; billing-reliability roadmap remains separate                                             | [Open guide](billing.md)                |
 | Managed temporary portfolios and transfer                      | Implemented; administrator setup required                                                                     | [Open guide](managed-portfolios.md)     |
 | Private CV versions — task 25                                  | Implemented; private-CV-library migration required                                                            | [Open guide](cv-versions.md)            |

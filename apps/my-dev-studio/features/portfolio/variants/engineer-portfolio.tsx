@@ -113,6 +113,7 @@ export function EngineerPortfolioView({
               handleSendMessage={handleSendMessage}
               identity={chatIdentity}
               leading={ownerLink}
+              portfolioChatHref={`/${encodeURIComponent(chatIdentity.username)}/chat`}
               sources={publicChatSources({
                 id: chatIdentity.id,
                 isPublic: true,
