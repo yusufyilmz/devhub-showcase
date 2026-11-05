@@ -22,6 +22,7 @@ export function LoginPanel({
   contentId = "auth-content",
   brand,
   brandActions,
+  localTestLogin = false,
 }: {
   initialError?: string;
   googleAction: string;
@@ -36,6 +37,7 @@ export function LoginPanel({
   contentId?: string;
   brand?: string;
   brandActions?: ReactNode;
+  localTestLogin?: boolean;
 }) {
   const [error, showError] = useState(initialError);
   const [busy, setBusy] = useState(false);
@@ -124,6 +126,32 @@ export function LoginPanel({
           </p>
         )}
       </form>
+      {localTestLogin && (
+        <div className="local-test-login">
+          <LibraryButton
+            className="studio-primary"
+            disabled={busy}
+            onClick={async () => {
+              showError("");
+              setBusy(true);
+              try {
+                const response = await fetch("/api/auth/local-test", { method: "POST" });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error);
+                window.location.assign(successPath);
+              } catch (reason) {
+                showError(reason instanceof Error ? reason.message : "Local login failed.");
+                setBusy(false);
+              }
+            }}
+            type="button"
+            variant="unstyled"
+          >
+            {busy ? "Signing in…" : "Continue as local test user"}
+          </LibraryButton>
+          <p>Development only · Uses your local Supabase test account</p>
+        </div>
+      )}
       <a href={backHref}>{backLabel}</a>
     </main>
   );
