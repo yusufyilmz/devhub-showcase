@@ -17,12 +17,14 @@ import { HeroSurface } from "../../layout/hero";
 import { Footer } from "../../navigation/footer";
 import { Header } from "../../navigation/header";
 import { ThemeToggle } from "../../theme";
-import { RegisteredSections } from "./registered-sections";
+import { type ArrangePortfolioSections, RegisteredSections } from "./registered-sections";
 
 export function PortfolioLayout({
+  arrange,
   profile,
   username,
 }: {
+  arrange?: ArrangePortfolioSections;
   profile: PortfolioProfile;
   username: string;
 }) {
@@ -81,7 +83,7 @@ export function PortfolioLayout({
           </section>
         </HeroSurface>
         <div className="folio-story">
-          <FolioSections profile={profile} sourceProfile={canonicalProfile} />
+          <FolioSections arrange={arrange} profile={profile} sourceProfile={canonicalProfile} />
           <section className="folio-section folio-contact" id="contact">
             <p className="folio-eyebrow">{text.conversation}</p>
             <h2>{text.contactHeading}</h2>
@@ -158,10 +160,12 @@ function Work({ profile, visual = false }: { profile: PortfolioProfile; visual?:
 }
 
 function FolioSections({
+  arrange,
   profile,
   sourceProfile = profile,
 }: {
   profile: PortfolioProfile;
+  arrange?: ArrangePortfolioSections;
   sourceProfile?: PortfolioProfile;
 }) {
   const text = getPortfolioCopy(profile.portfolioLanguage);
@@ -254,5 +258,5 @@ function FolioSections({
       </section>
     ),
   };
-  return <RegisteredSections profile={sourceProfile} renderers={renderers} />;
+  return <RegisteredSections arrange={arrange} profile={sourceProfile} renderers={renderers} />;
 }

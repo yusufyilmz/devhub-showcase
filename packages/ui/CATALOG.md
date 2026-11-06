@@ -210,6 +210,7 @@ Public components exported from `packages/ui/src/components/index.ts`. Import th
 | `IFramePreview`                                                  | `iframe-preview`         | Embedded preview                                                  |
 | `ResponsivePortfolioPreview`                                     | `portfolio-preview`      | Private, sandboxed draft viewport at mobile/tablet/desktop widths |
 | `Map`                                                            | `map`                    | Map embed                                                         |
+| `ChatBubble`                                                     | `chat-bubble`            | Shared chat and assistant notification surface                    |
 | `AgentCompanion`                                                 | `agent-companion`        | Animated assistant launcher and dismissible in-app notice         |
 | `Chat` and its header, input, and message parts                  | `chat`                   | Portfolio chat                                                    |
 | Icons (`ArrowBackIcon`, `CloseIcon`, `GitHubIcon`, and the rest) | `icons`                  | Shared icons                                                      |

@@ -15,6 +15,8 @@ export type ItemFieldsOptions = {
 };
 
 export type SortableListOptions = {
+  disabled?: boolean;
+  renderContent?: (id: string) => ReactNode;
   items: Item[];
   onChange: (ids: string[]) => void;
   label: string;

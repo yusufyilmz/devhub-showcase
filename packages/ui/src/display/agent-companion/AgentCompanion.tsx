@@ -2,13 +2,15 @@
 
 import "./agent-companion.css";
 
-import { useState } from "react";
+import { type CSSProperties, useState } from "react";
 
 import { cn } from "cn";
-import { X } from "lucide-react";
+import { ArrowLeftRight, X } from "lucide-react";
 
 import { Button } from "../../buttons/button";
+import { ChatBubble } from "../chat-bubble";
 import type { AgentCompanionProps, AgentNotice } from "./types";
+import { useCompanionDock } from "./use-companion-dock";
 
 function AgentAvatar({ agent }: Pick<AgentCompanionProps, "agent">) {
   return (
@@ -42,7 +44,13 @@ function AgentAvatar({ agent }: Pick<AgentCompanionProps, "agent">) {
 
 function NoticeBubble({ notice, dismiss }: { notice: AgentNotice; dismiss: () => void }) {
   return (
-    <div className="agent-notice">
+    <ChatBubble
+      className="agent-notice"
+      enableHover={false}
+      maxWidth="none"
+      size="sm"
+      variant="received"
+    >
       <div className="agent-notice-copy" role={notice.announce === false ? undefined : "status"}>
         <strong>{notice.title}</strong>
         <p>{notice.message}</p>
@@ -57,7 +65,7 @@ function NoticeBubble({ notice, dismiss }: { notice: AgentNotice; dismiss: () =>
       >
         <X aria-hidden="true" size={16} />
       </Button>
-    </div>
+    </ChatBubble>
   );
 }
 
@@ -71,18 +79,44 @@ export function AgentCompanion({
   placement = "floating",
 }: AgentCompanionProps) {
   const [dismissedId, setDismissedId] = useState<string>();
+  const floating = placement === "floating";
+  const dock = useCompanionDock(agent, floating);
+  const opposite = dock.side === "left" ? "right" : "left";
   const visibleNotice = notice && notice.id !== dismissedId ? notice : undefined;
 
   return (
-    <div className={cn("agent-companion", className)} data-agent={agent} data-placement={placement}>
+    <div
+      className={cn("agent-companion", className)}
+      data-agent={agent}
+      data-dragging={dock.offset !== undefined || undefined}
+      data-placement={placement}
+      data-side={floating ? dock.side : undefined}
+      style={
+        dock.offset === undefined
+          ? undefined
+          : ({ "--agent-drag-x": `${dock.offset}px` } as CSSProperties)
+      }
+    >
       {visibleNotice && (
-        <NoticeBubble dismiss={() => setDismissedId(visibleNotice.id)} notice={visibleNotice} />
+        <NoticeBubble
+          dismiss={() => setDismissedId(visibleNotice.id)}
+          key={visibleNotice.id}
+          notice={visibleNotice}
+        />
       )}
       <Button
         aria-label={label}
         className="agent-launcher"
+        draggable={false}
         href={href}
-        onClick={onOpen}
+        onClick={(event) => {
+          if (!dock.suppressDragClick(event)) onOpen?.();
+        }}
+        onLostPointerCapture={dock.cancel}
+        onPointerCancel={dock.cancel}
+        onPointerDown={dock.start}
+        onPointerMove={dock.move}
+        onPointerUp={dock.finish}
         type={href ? undefined : "button"}
         variant="unstyled"
       >
@@ -94,6 +128,18 @@ export function AgentCompanion({
           </span>
         )}
       </Button>
+      {floating && (
+        <Button
+          aria-label={`Move companion to the ${opposite}`}
+          className="agent-dock-toggle"
+          onClick={() => dock.dock(opposite)}
+          title={`Move companion to the ${opposite}`}
+          type="button"
+          variant="unstyled"
+        >
+          <ArrowLeftRight aria-hidden="true" size={15} />
+        </Button>
+      )}
     </div>
   );
 }

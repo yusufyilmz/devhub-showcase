@@ -51,18 +51,17 @@ const ChatControls: React.FC<ChatSectionProps & { leading?: React.ReactNode }> =
 
   return (
     <>
+      {portfolioChatHref && !isOpen && (
+        <AgentCompanion
+          agent="portfolio"
+          className="portfolio-agent-companion"
+          href={portfolioChatHref}
+          label="Portfolio assistant"
+        />
+      )}
       <div className="fixed bottom-6 right-4 flex flex-col items-end gap-3 z-[200] sm:right-8">
         {leading}
-        {portfolioChatHref ? (
-          !isOpen && (
-            <AgentCompanion
-              agent="portfolio"
-              href={portfolioChatHref}
-              label="Portfolio assistant"
-              placement="inline"
-            />
-          )
-        ) : (
+        {!portfolioChatHref && (
           <IconButton
             aria-label={"Resume Chat"}
             className="rounded-full"

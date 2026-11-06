@@ -20,9 +20,13 @@ import { ProjectsSection } from "../../sections/project-section";
 import { ReferralSection } from "../../sections/referral-section";
 import { SkillSection } from "../../sections/skills-section";
 import { SummarySection } from "../../sections/summary-section";
-import { RegisteredSections } from "../published-page/registered-sections";
+import {
+  type ArrangePortfolioSections,
+  RegisteredSections,
+} from "../published-page/registered-sections";
 
 export function EngineerPage({
+  arrange,
   profile,
   sourceProfile = profile,
   resources,
@@ -32,6 +36,7 @@ export function EngineerPage({
   featured = false,
   chat,
 }: {
+  arrange?: ArrangePortfolioSections;
   profile: PortfolioProfile;
   sourceProfile?: PortfolioProfile;
   resources: PageResources;
@@ -82,7 +87,7 @@ export function EngineerPage({
           >
             <SummarySection featured={featured} profile={profile} />
           </HeroSurface>
-          <RegisteredSections profile={sourceProfile} renderers={renderers} />
+          <RegisteredSections arrange={arrange} profile={sourceProfile} renderers={renderers} />
           {extras && <ReferralSection language={profile.portfolioLanguage} referrals={referrals} />}
         </div>
       </main>

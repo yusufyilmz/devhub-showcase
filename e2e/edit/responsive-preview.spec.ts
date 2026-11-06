@@ -99,7 +99,36 @@ test("private draft preview resizes, changes layouts and preserves unsaved edits
     .screenshot({ path: info.outputPath("responsive-draft.png") });
   expect(saves).toBe(0);
   expect((await (await page.request.get(profileApi)).json()).profile.title).toBe(original);
+  await page.getByRole("button", { exact: true, name: "Arrange sections" }).click();
+  const arranged = preview.getByRole("list", { name: "Arrange portfolio sections" });
+  const first = arranged.locator(":scope > [data-sortable-id]").first();
+  await expect(first).toHaveAttribute("data-sortable-id", "languages");
+  await arranged.getByRole("button", { exact: true, name: "Reorder About" }).press("Home");
+  await expect(first).toHaveAttribute("data-sortable-id", "about");
+  await expect(preview.getByText("Confidential project", { exact: true })).toHaveCount(0);
+  expect(saves).toBe(0);
+  await page.getByRole("button", { name: "Save layout draft" }).click();
+  await expect(page.getByRole("status").filter({ hasText: "Saved privately." })).toBeVisible();
+  const saved = (await (await page.request.get(profileApi)).json()).profile;
+  expect(saved.sectionSequence).toContain("experience");
+  expect(saved.sectionSequence).toContain("projects");
+  expect(saved.sectionSequence.indexOf("about")).toBeLessThan(
+    saved.sectionSequence.indexOf("languages"),
+  );
+  expect(saves).toBe(1);
+  await page.goto(
+    `/${mobile ? "mobile" : "desktop"}-preview-owner/edit?view=arrange#portfolio-draft-preview`,
+  );
+  await expect(arranged).toBeVisible();
+  await expect(first).toHaveAttribute("data-sortable-id", "about");
   await context.clearCookies();
+  expect(
+    (
+      await page.request.get(`/${mobile ? "mobile" : "desktop"}-preview-owner/edit?view=arrange`, {
+        maxRedirects: 0,
+      })
+    ).status(),
+  ).toBe(307);
   expect((await page.request.get(`/${mobile ? "mobile" : "desktop"}-preview-owner`)).status()).toBe(
     404,
   );

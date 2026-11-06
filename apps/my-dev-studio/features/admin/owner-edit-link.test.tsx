@@ -44,7 +44,10 @@ describe("OwnerEditLink", () => {
       error: null,
     });
     const link = await OwnerEditLink({ username: "alice" });
-    expect(link?.props.children.props.href).toBe("/alice/edit");
-    expect(link?.props.children.props["aria-label"]).toBe("Edit my CV");
+    const [edit, arrange] = link?.props.children.props.children ?? [];
+    expect(edit?.props.href).toBe("/alice/edit");
+    expect(edit?.props["aria-label"]).toBe("Edit my CV");
+    expect(arrange?.props.href).toBe("/alice/edit?view=arrange#portfolio-draft-preview");
+    expect(arrange?.props["aria-label"]).toBe("Arrange portfolio sections");
   });
 });

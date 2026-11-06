@@ -88,3 +88,47 @@
   border: 0;
   clip-path: inset(50%);
 }
+
+.sortable-list[data-content] {
+  gap: 1rem;
+}
+.sortable-list[data-content] > li {
+  position: relative;
+  display: block;
+  min-width: 0;
+  padding: 0;
+  background: transparent;
+}
+.sortable-list[data-content] > li[data-draggable] {
+  touch-action: auto;
+  cursor: auto;
+  user-select: auto;
+}
+.sortable-list[data-content] .sortable-handle {
+  touch-action: none;
+  cursor: grab;
+}
+.sortable-item-tools {
+  display: flex;
+  gap: 0.375rem;
+  align-items: center;
+  padding: 0.375rem;
+  background: var(--muted);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+.sortable-list[data-content] > li[data-drop]::after {
+  position: absolute;
+  inset-inline: 0;
+  z-index: 1;
+  height: 3px;
+  pointer-events: none;
+  content: "";
+  background: var(--ring);
+  border-radius: 2px;
+}
+.sortable-list[data-content] > li[data-drop="before"]::after {
+  top: -0.5rem;
+}
+.sortable-list[data-content] > li[data-drop="after"]::after {
+  bottom: -0.5rem;
+}

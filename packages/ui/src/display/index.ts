@@ -4,6 +4,7 @@ export * from "./avatar-group";
 export * from "./carousel";
 export * from "./chart";
 export * from "./chat";
+export * from "./chat-bubble";
 export * from "./code";
 export * from "./data-table";
 export * from "./icons";
