@@ -63,10 +63,13 @@ test("portfolio icon controls use matching foreground and surface colors in both
       await page.getByRole("button", { name: `Switch to ${mode} theme` }).click();
     }
     const palette = getThemePalette("studio", mode);
-    const labels = ["Resume Chat", "Referral Chat", "Scroll to next section"];
+    const labels = ["Portfolio assistant", "Referral Chat", "Scroll to next section"];
     if (info.project.name.startsWith("mobile")) labels.push("Menu");
     for (const name of labels) {
-      const control = page.getByRole("button", { exact: true, name });
+      const control = page.getByRole(name === "Portfolio assistant" ? "link" : "button", {
+        exact: true,
+        name,
+      });
       await expect(control).toBeVisible();
       await expect(control).toHaveCSS("background-color", rgb(palette.surface));
       await expect(control).toHaveCSS("color", rgb(palette.text));
@@ -74,7 +77,7 @@ test("portfolio icon controls use matching foreground and surface colors in both
     }
     await page.screenshot({ path: info.outputPath(`portfolio-controls-${mode}.png`) });
   }
-  await page.getByRole("button", { exact: true, name: "Resume Chat" }).click();
+  await page.getByRole("button", { exact: true, name: "Referral Chat" }).click();
   await expect(page.locator(".chat-panel")).toBeVisible();
   await page.getByRole("button", { exact: true, name: "Close chat" }).click();
   if (info.project.name.startsWith("mobile")) {

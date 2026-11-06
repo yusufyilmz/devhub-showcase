@@ -12,6 +12,45 @@ import { ChatComposer } from "./ChatComposer";
 import { studioChatScreenStyles } from "./styles";
 import type { StudioChatScreenOptions } from "./types";
 
+function screenCopy(visitor: StudioChatScreenOptions["visitor"]) {
+  if (visitor) {
+    return {
+      description: "Ask about published experience, projects and skills.",
+      eyebrow: "PORTFOLIO ASSISTANT",
+      heading: `What would you like to know about ${visitor.name}?`,
+      label: "Portfolio assistant",
+      maxLength: 2000,
+      mobileLink: "Back to portfolio",
+      name: visitor.name,
+      placeholder: "Ask about this portfolio…",
+      sidebarLink: "Back to portfolio",
+      sidebarNote: "Answers use published portfolio information.",
+      suggestions: [
+        "What projects are featured?",
+        "What experience is listed?",
+        "Which skills are highlighted?",
+      ],
+      working: "Preparing your answer…",
+    };
+  }
+  return {
+    description: "A portfolio that sounds like you. A CV that goes with it.",
+    eyebrow: "YOUR STORY, NEXT CHAPTER",
+    heading: "What would you like to create?",
+    label: "Studio",
+    mobileLink: "Portfolio editor ↗",
+    name: "Portfolio & CV",
+    sidebarLink: "Open portfolio editor ↗",
+    sidebarNote: "Your draft stays private until you choose to publish.",
+    suggestions: [
+      "Refine my professional summary",
+      "Make my project descriptions clearer",
+      "Help organize my portfolio",
+    ],
+    working: "Preparing your proposal…",
+  };
+}
+
 export function StudioChatScreen({
   message,
   onMessageChange,
@@ -27,8 +66,11 @@ export function StudioChatScreen({
   status,
   actions,
   editorHref,
+  visitor,
 }: StudioChatScreenOptions) {
   const started = messages.length > 0;
+  const workspaceHref = visitor?.href ?? editorHref ?? "/";
+  const copy = screenCopy(visitor);
   const thread = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (messages.length === 0) return;
@@ -46,21 +88,19 @@ export function StudioChatScreen({
         </Button>
         <p className={studioChatScreenStyles.element4}>YOUR WORKSPACE</p>
         <span className={studioChatScreenStyles.element5}>
-          <MessageSquare size={16} /> Portfolio & CV
+          <MessageSquare size={16} /> {copy.name}
         </span>
-        <a href={editorHref}>Open portfolio editor ↗</a>
+        <a href={workspaceHref}>{copy.sidebarLink}</a>
         <a href="/">Back to home</a>
-        <p className={studioChatScreenStyles.element6}>
-          Your draft stays private until you choose to publish.
-        </p>
+        <p className={studioChatScreenStyles.element6}>{copy.sidebarNote}</p>
       </aside>
       <section
-        aria-label="Studio assistant conversation"
+        aria-label={visitor ? "Portfolio assistant conversation" : "Studio assistant conversation"}
         className={studioChatScreenStyles.element7}
       >
         <header className={studioChatScreenStyles.element8}>
           <span>
-            Studio <span className={studioChatScreenStyles.element9}>Portfolio & CV</span>
+            {copy.label} <span className={studioChatScreenStyles.element9}>{copy.name}</span>
           </span>
           <div>
             {actions}
@@ -74,7 +114,7 @@ export function StudioChatScreen({
           <Button disabled={busy} onClick={onReset} variant="ghost">
             New chat
           </Button>
-          <a href={editorHref}>Portfolio editor ↗</a>
+          <a href={workspaceHref}>{copy.mobileLink}</a>
           <a href="/">Home</a>
         </details>
         <div className={studioChatScreenStyles.element11} data-started={started}>
@@ -94,23 +134,23 @@ export function StudioChatScreen({
                   key={item.id}
                 >
                   <span className={studioChatScreenStyles.element14}>
-                    {item.role === "user" ? "You" : "Studio"}
+                    {item.role === "user" ? "You" : copy.label}
                   </span>
                   <p>{item.text}</p>
                 </article>
               ))}
               {busy && (
                 <p className={studioChatScreenStyles.element15} role="status">
-                  Preparing your proposal…
+                  {copy.working}
                 </p>
               )}
               {review}
             </div>
           ) : (
             <div className={studioChatScreenStyles.element16}>
-              <span className={studioChatScreenStyles.element17}>YOUR STORY, NEXT CHAPTER</span>
-              <h1>What would you like to create?</h1>
-              <p>A portfolio that sounds like you. A CV that goes with it.</p>
+              <span className={studioChatScreenStyles.element17}>{copy.eyebrow}</span>
+              <h1>{copy.heading}</h1>
+              <p>{copy.description}</p>
             </div>
           )}
           <div className={studioChatScreenStyles.element18}>
@@ -123,18 +163,16 @@ export function StudioChatScreen({
             <ChatComposer
               busy={busy}
               disabled={disabled}
+              maxLength={copy.maxLength}
               onChange={onMessageChange}
               onStop={onStop}
               onSubmit={onSubmit}
+              placeholder={copy.placeholder}
               value={message}
             />
             {!started && (
               <div className={studioChatScreenStyles.element20}>
-                {[
-                  "Refine my professional summary",
-                  "Make my project descriptions clearer",
-                  "Help organize my portfolio",
-                ].map((suggestion) => (
+                {copy.suggestions.map((suggestion) => (
                   <Button
                     key={suggestion}
                     onClick={() => onMessageChange(suggestion)}

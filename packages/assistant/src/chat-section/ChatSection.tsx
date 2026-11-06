@@ -12,6 +12,7 @@ import { PortfolioChatProvider } from "@shared/ui/providers";
 import { ChatPopupContainer } from "./ChatPopupContainer";
 
 type ChatSectionProps = {
+  portfolioChatHref?: string;
   sources?: { label: string; href: string }[];
   handleSendMessage: (
     input: ChatMessage,
@@ -31,6 +32,7 @@ export const ChatSection = ({
 );
 const ChatControls: React.FC<ChatSectionProps & { leading?: React.ReactNode }> = ({
   handleSendMessage,
+  portfolioChatHref,
   sources,
   leading,
 }) => {
@@ -50,19 +52,33 @@ const ChatControls: React.FC<ChatSectionProps & { leading?: React.ReactNode }> =
     <>
       <div className="fixed bottom-6 right-4 flex flex-col gap-3 z-[200] sm:right-8">
         {leading}
-        <IconButton
-          aria-label={"Resume Chat"}
-          className="rounded-full"
-          onClick={() => {
-            setType("cv");
-            setIsOpen(!isOpen);
-          }}
-          size="lg"
-          surface="portfolio"
-          variant="outline"
-        >
-          <ChatIcon fontSize="medium" />
-        </IconButton>
+        {portfolioChatHref ? (
+          <IconButton
+            asChild
+            className="rounded-full"
+            size="lg"
+            surface="portfolio"
+            variant="outline"
+          >
+            <a aria-label="Portfolio assistant" href={portfolioChatHref}>
+              <ChatIcon fontSize="medium" />
+            </a>
+          </IconButton>
+        ) : (
+          <IconButton
+            aria-label={"Resume Chat"}
+            className="rounded-full"
+            onClick={() => {
+              setType("cv");
+              setIsOpen(!isOpen);
+            }}
+            size="lg"
+            surface="portfolio"
+            variant="outline"
+          >
+            <ChatIcon fontSize="medium" />
+          </IconButton>
+        )}
         <IconButton
           aria-label={"Referral Chat"}
           className="rounded-full"

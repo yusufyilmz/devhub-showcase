@@ -51,7 +51,10 @@ dedicated conversation screen with a workspace sidebar, centered empty state and
 compact composer. It reuses the assistant's validated proposal/review/apply flow.
 Explicit save uses the profile endpoint and saved revision. Saving a published
 portfolio is labeled accordingly. New chat resets the conversation, not the draft.
-The existing portfolio popup remains available.
+The public visitor assistant opens at /{username}/chat for the legacy portfolio
+and eligible Pro portfolios. It uses the shared chat screen, published source
+links, and history scoped to the tab and publication revision. Referral Chat
+opens a dialog on the legacy portfolio.
 
 Homepage examples render their portfolio content on the server and pass it as
 React content into the interactive gallery, avoiding a second iframe page load.
