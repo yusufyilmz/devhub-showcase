@@ -206,6 +206,7 @@
     "@shared/config": "workspace:*",
     "@shared/lib": "workspace:*",
     "@shared/runtime": "workspace:*",
+    "@shared/utils": "workspace:*",
     "@tabler/icons-react": "^3.35.0",
     "@tanstack/react-table": "^8.21.3",
     "class-variance-authority": "catalog:",

@@ -378,7 +378,7 @@ Each content section lives in `src/sections/variants/{name}`. Most export the se
 | `PropertySection`                                       | editor                                                                                                          |
 | `QuickstartSection`                                     | editor                                                                                                          |
 | `ReferralSection`, `ReferralItem`                       |                                                                                                                 |
-| `ReviewSection`, `ReviewButton`                         |                                                                                                                 |
+| `ReviewSection`, `ReviewButton`                         | Studio testimonial queue with pending, empty, load error and per-review decision states                         |
 | `ServicesSection`                                       | editor                                                                                                          |
 | `ShopItemsSection`                                      | editor                                                                                                          |
 | `ShowcaseSection`                                       | editor                                                                                                          |

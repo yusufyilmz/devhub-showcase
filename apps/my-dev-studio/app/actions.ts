@@ -6,24 +6,17 @@ import {
   MessageProcessor,
   PortfolioChatModel,
 } from "@shared/assistant";
-import { createServerClient } from "@shared/lib/supabase";
-import {
-  type ChatMessage,
-  ChatRole,
-  type ReviewState,
-  type ReviewWithReferrals,
-} from "@shared/lib/types";
+import { type ChatMessage, ChatRole } from "@shared/lib/types";
 import { isCategoryReferralCategory } from "@shared/lib/utils";
-import { ReferralService, ReviewService } from "@shared/services/studio";
 import { logger } from "@shared/utils/logger";
 
-import { requireAdmin } from "@/features/admin/admin-auth";
 import {
   assertCurrentPublication,
   portfolioChatInput,
   requireLegacyChat,
 } from "@/features/chat/portfolio-chat";
 import { answerPremiumChat } from "@/features/chat/premium-chat";
+import { savePortfolioReferral } from "@/features/portfolio/portfolio-reviews";
 
 export async function handlePremiumChatAction(
   username: string,
@@ -69,15 +62,8 @@ export async function handleSendMessageAction(
       role: ChatRole.User,
     };
     const messageProcessor = new MessageProcessor(logger, createCVModel(snapshot.profile));
-    if (isCategoryReferralCategory(normalizedMessage.category)) {
-      const client = await createServerClient();
-      const referralService = new ReferralService(logger, client);
-
-      await referralService.saveReferral(
-        normalizedMessage.category,
-        normalizedMessage.content,
-        sessionId,
-      );
+    if (input.type === "referral" && isCategoryReferralCategory(normalizedMessage.category)) {
+      await savePortfolioReferral(normalizedMessage.category, normalizedMessage.content, sessionId);
     }
 
     const botReply = await messageProcessor.processUserMessage(normalizedMessage);
@@ -92,24 +78,5 @@ export async function handleSendMessageAction(
       timestamp: Date.now(),
       type: message.type === "referral" ? "referral" : "cv",
     };
-  }
-}
-
-export async function handleSubmitReviewAction(
-  referralId: string,
-  reviewState: ReviewState,
-): Promise<ReviewWithReferrals | undefined> {
-  try {
-    const { client } = await requireAdmin();
-    const reviewService = new ReviewService(logger, client);
-    const review = await reviewService.update(referralId, {
-      state: reviewState,
-    });
-
-    return review;
-  } catch (error) {
-    logger.error({ error }, "Error on review");
-
-    return undefined;
   }
 }

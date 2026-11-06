@@ -441,7 +441,7 @@ export interface Database {
           contact_info?: string | null;
           created_at?: string;
           feedback?: string | null;
-          id: string;
+          id?: string;
           name?: string | null;
           recommendation?: string | null;
           relationship?: string | null;

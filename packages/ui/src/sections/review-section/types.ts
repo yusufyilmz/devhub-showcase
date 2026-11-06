@@ -1,11 +1,17 @@
 import type { ReviewState, ReviewWithReferrals } from "@shared/lib/types";
 
 export type ReviewSectionProps = {
-  reviews: ReviewWithReferrals[];
-  handleReview: (reviewId: string, status: ReviewState) => Promise<ReviewWithReferrals | undefined>;
+  reviews: ReviewWithReferrals[] | null;
+  handleReview: (
+    reviewId: string,
+    status: ReviewState,
+    updatedAt: string,
+  ) => Promise<"saved" | "conflict" | "error">;
 };
 
 export type ReviewButtonOptions = {
   id: string;
-  handleReview: (id: string, status: ReviewState) => Promise<ReviewWithReferrals | undefined>;
+  name: string;
+  updatedAt: string;
+  handleReview: ReviewSectionProps["handleReview"];
 };
