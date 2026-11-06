@@ -70,6 +70,7 @@ import { OwnerRevisionHistory } from "./revision-history";
 
 const tabs = [
   "Profile",
+  "Reviews",
   "Import CV",
   "Import Google",
   "AI profile",
@@ -117,6 +118,7 @@ export function ProfileEditor({
   onSaved,
   initialTab = "Profile",
   initiallyArranging = false,
+  reviews,
 }: {
   initial: ProfileSnapshot;
   saveUrl?: string;
@@ -125,6 +127,7 @@ export function ProfileEditor({
   onSaved?: (snapshot: ProfileSnapshot) => void;
   initialTab?: (typeof tabs)[number];
   initiallyArranging?: boolean;
+  reviews?: ReactNode;
 }) {
   const userId = useUserConfigStore((state) => state.user?.id);
   const [profession, setProfession] = useState<PortfolioType>(defaultProfession(initial.profile));
@@ -137,6 +140,7 @@ export function ProfileEditor({
     busy,
   );
   const [isPublic, setIsPublic] = useState(initial.isPublic ?? false);
+  const availableTabs = tabs.filter((item) => item !== "Reviews" || reviews);
   const [tab, setTab] = useState<(typeof tabs)[number]>(initialTab);
   const [assistantPrompt, setAssistantPrompt] = useState("");
   const [arrangeRequest, setArrangeRequest] = useState(0);
@@ -150,7 +154,7 @@ export function ProfileEditor({
     onRestore: (value) => {
       resetDraft(value.profile);
       setUsername(value.username);
-      if (tabs.includes(value.tab as typeof tab)) setTab(value.tab as typeof tab);
+      if (availableTabs.includes(value.tab as typeof tab)) setTab(value.tab as typeof tab);
       setStep(value.step);
       setProfession(defaultProfession(value.profile, value.profession));
     },
@@ -355,7 +359,7 @@ export function ProfileEditor({
           username={username}
         />
         <nav aria-label="Editor sections" className="editor-tabs">
-          {tabs.map((item) => (
+          {availableTabs.map((item) => (
             <Button
               aria-current={tab === item ? "page" : undefined}
               key={item}
@@ -396,10 +400,11 @@ export function ProfileEditor({
             managed={managed}
             onChange={setDraft}
             onNavigate={(next) => {
-              if (tabs.includes(next as typeof tab)) setTab(next as typeof tab);
+              if (availableTabs.includes(next as typeof tab)) setTab(next as typeof tab);
             }}
             profile={draft}
             readUrl={saveUrl}
+            reviews={reviews}
             snapshot={saved}
             tab={tab}
           />
@@ -479,18 +484,21 @@ function EditorBody({
   snapshot,
   managed,
   readUrl,
+  reviews,
   profile,
   onChange,
 }: {
   assistantPrompt: string;
   onNavigate: (tab: string) => void;
   tab: (typeof tabs)[number];
+  reviews?: ReactNode;
   snapshot: ProfileSnapshot;
   managed: boolean;
   readUrl: string;
   profile: PortfolioProfile;
   onChange: (profile: PortfolioProfile) => void;
 }) {
+  if (tab === "Reviews") return reviews;
   if (tab === "Revision history")
     return (
       <OwnerRevisionHistory

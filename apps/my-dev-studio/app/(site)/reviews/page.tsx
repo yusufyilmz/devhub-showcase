@@ -1,9 +1,15 @@
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
-import { portfolioReviewPath, reviewWorkspace } from "@/features/reviews/workspace";
+import { editCvPath } from "@shared/lib/profiles";
 
-export default async function ReviewsRedirect() {
-  const workspace = await reviewWorkspace().catch(() => redirect("/login"));
-  if (!workspace) notFound();
-  redirect(portfolioReviewPath(workspace.username));
+import { requireAdmin } from "@/features/admin/admin-auth";
+
+export default async function ReviewsPage() {
+  const workspace = await requireAdmin().catch(() => null);
+  if (!workspace) redirect("/login");
+
+  const snapshot = await workspace.repository.read();
+  if (!snapshot?.username) redirect("/admin");
+
+  redirect(`${editCvPath(snapshot.username)}?tab=reviews`);
 }

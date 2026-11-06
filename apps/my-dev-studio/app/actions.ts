@@ -6,15 +6,8 @@ import {
   MessageProcessor,
   PortfolioChatModel,
 } from "@shared/assistant";
-import { createServerClient } from "@shared/lib/supabase";
-import {
-  type ChatMessage,
-  ChatRole,
-  type ReviewState,
-  type ReviewWithReferrals,
-} from "@shared/lib/types";
+import { type ChatMessage, ChatRole } from "@shared/lib/types";
 import { isCategoryReferralCategory } from "@shared/lib/utils";
-import { ReferralService, ReviewService } from "@shared/services/studio";
 import { logger } from "@shared/utils/logger";
 
 import {
@@ -23,7 +16,6 @@ import {
   requireLegacyChat,
 } from "@/features/chat/portfolio-chat";
 import { answerPremiumChat } from "@/features/chat/premium-chat";
-import { reviewWorkspace } from "@/features/reviews/workspace";
 
 export async function handlePremiumChatAction(
   username: string,
@@ -69,15 +61,8 @@ export async function handleSendMessageAction(
       role: ChatRole.User,
     };
     const messageProcessor = new MessageProcessor(logger, createCVModel(snapshot.profile));
-    if (isCategoryReferralCategory(normalizedMessage.category)) {
-      const client = await createServerClient();
-      const referralService = new ReferralService(logger, client);
-
-      await referralService.saveReferral(
-        normalizedMessage.category,
-        normalizedMessage.content,
-        sessionId,
-      );
+    if (input.type === "referral" && isCategoryReferralCategory(normalizedMessage.category)) {
+      await savePortfolioReferral(normalizedMessage.category, normalizedMessage.content, sessionId);
     }
 
     const botReply = await messageProcessor.processUserMessage(normalizedMessage);
@@ -96,15 +81,13 @@ export async function handleSendMessageAction(
 }
 
 export async function handleSubmitReviewAction(
-  username: string,
-  reviewId: string,
+  referralId: string,
   reviewState: ReviewState,
 ): Promise<ReviewWithReferrals | undefined> {
   try {
-    const workspace = await reviewWorkspace();
-    if (!workspace || workspace.username !== username) return undefined;
-    const reviewService = new ReviewService(logger, workspace.client);
-    const review = await reviewService.update(reviewId, {
+    const { client } = await requireAdmin();
+    const reviewService = new ReviewService(logger, client);
+    const review = await reviewService.update(referralId, {
       state: reviewState,
     });
 

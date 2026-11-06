@@ -1,10 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
+  loadPending: vi.fn(),
   workspace: vi.fn(),
 }));
 vi.mock("@/features/admin/admin-auth", () => ({
   requireWorkspace: mocks.workspace,
+}));
+
+vi.mock("@/features/portfolio/portfolio-reviews", () => ({
+  loadPendingPortfolioReviews: mocks.loadPending,
 }));
 
 import EditPage from "./page";
@@ -45,10 +50,30 @@ describe("Edit", () => {
       params: Promise.resolve({ username: "alice" }),
     });
     expect(result.props.children[1].props.initial).toBe(snapshot);
+    expect(result.props.children[1].props.reviews).toBeUndefined();
+    expect(mocks.loadPending).not.toHaveBeenCalled();
     expect(result.props.children[0].props.user).toEqual({
       email: "alice@example.test",
       id: "owner-id",
       name: "Alice",
     });
+  });
+
+  it("opens the original portfolio's review queue for its owner", async () => {
+    const snapshot = { id: "main", profile: { name: "Alice" }, username: "alice" };
+    const client = {};
+    mocks.workspace.mockResolvedValue({
+      client,
+      repository: { read: async () => snapshot },
+      user: { id: "owner-id" },
+    });
+    mocks.loadPending.mockResolvedValue([]);
+    const result = await EditPage({
+      params: Promise.resolve({ username: "alice" }),
+      searchParams: Promise.resolve({ tab: "reviews" }),
+    });
+    expect(result.props.children[1].props.initialTab).toBe("Reviews");
+    expect(result.props.children[1].props.reviews.props.reviews).toEqual([]);
+    expect(mocks.loadPending).toHaveBeenCalledWith(client);
   });
 });

@@ -4,6 +4,8 @@ import { pageProfile } from "@fixtures/page-profile";
 import { PortfolioStoryFrame } from "@fixtures/portfolio-story-frame";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { noopAsync } from "@shared/utils";
+
 import { Button } from "../../buttons/button";
 import { ReviewSection } from "../../sections/review-section";
 import { ThemeToggle } from "../../theme/theme-toggle";
@@ -80,6 +82,7 @@ export const ManagedPortfolios: Story = {
     ),
   },
 };
+
 export const Reviews: Story = {
   args: {
     children: (
@@ -89,7 +92,13 @@ export const Reviews: Story = {
           eyebrow="Portfolio moderation"
           title="Pending reviews"
         />
-        <ReviewSection handleReview={async () => undefined} reviews={[]} />
+        <ReviewSection
+          handleReview={async () => {
+            await noopAsync();
+            return "saved";
+          }}
+          reviews={[]}
+        />
       </main>
     ),
   },
