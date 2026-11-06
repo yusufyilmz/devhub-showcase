@@ -18,7 +18,7 @@ Open [My Fitness Studio](http://localhost:3002/) (`/`) after configuring Supabas
 
 Use the theme control in the top bar or on the login page. Fitness uses the same `PageShell`, `ThemeProvider`, and `ThemeToggle` as MyDevStudio. Each site stores appearance choices on its own origin using `mydevstudio:theme`.
 
-Shared styling loads `@shared/ui/styles.css`. Dashboard layout and components live in `app/globals.css`.
+The dashboard loads `@shared/ui/fitness.css`, which includes the shared foundation.
 
 ## Supabase setup
 

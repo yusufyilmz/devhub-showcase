@@ -1,4 +1,4 @@
-import "../../cards/surfaces.css";
+import "../../styles/components/cards/surfaces.css";
 
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { Slot } from "@radix-ui/react-slot";

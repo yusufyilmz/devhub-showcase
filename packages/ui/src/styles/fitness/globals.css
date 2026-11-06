@@ -1,4 +1,6 @@
 /* biome-ignore-all lint/style/noDescendingSpecificity: Responsive and theme overrides intentionally refine the component base styles. */
+@import "../foundation.css";
+
 * {
   box-sizing: border-box;
 }

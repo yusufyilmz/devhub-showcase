@@ -1,6 +1,6 @@
 "use client";
 
-import "./collapsible-motion.css";
+import "../../styles/components/layout/collapsible/collapsible-motion.css";
 
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";
 

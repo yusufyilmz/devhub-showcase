@@ -1,4 +1,4 @@
-@import "../display/chat/portfolio-chat.css";
+@import "./components/display/chat/portfolio-chat.css";
 
 .portfolio-agent-companion[data-side="right"] {
   --agent-companion-bottom: max(4.5rem, env(safe-area-inset-bottom));

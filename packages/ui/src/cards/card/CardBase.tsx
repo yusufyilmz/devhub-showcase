@@ -1,4 +1,4 @@
-import "../surfaces.css";
+import "../../styles/components/cards/surfaces.css";
 
 import { Slot } from "@radix-ui/react-slot";
 import { cn } from "cn";

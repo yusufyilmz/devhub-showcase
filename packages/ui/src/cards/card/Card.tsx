@@ -1,4 +1,4 @@
-import "./card-effects.css";
+import "../../styles/components/cards/card/card-effects.css";
 
 import type * as React from "react";
 

@@ -1,4 +1,4 @@
-import "../sections.css";
+import "../../styles/components/sections/sections.css";
 
 import type { ReactNode } from "react";
 

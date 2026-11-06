@@ -1,4 +1,4 @@
-import "../chat/studio-chat.css";
+import "../../styles/components/display/chat/studio-chat.css";
 
 import { useState } from "react";
 

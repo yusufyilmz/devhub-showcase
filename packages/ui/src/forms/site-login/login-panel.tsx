@@ -1,6 +1,6 @@
 "use client";
 
-import "../login-form/auth-login.css";
+import "../../styles/components/forms/login-form/auth-login.css";
 
 import { type ReactNode, useState } from "react";
 

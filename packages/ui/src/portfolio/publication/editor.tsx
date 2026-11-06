@@ -1,5 +1,5 @@
 "use client";
-import "./publication.css";
+import "../../styles/components/portfolio/publication/publication.css";
 
 import { useEffect, useState } from "react";
 

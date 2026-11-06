@@ -1,4 +1,4 @@
-import "./footer.css";
+import "../../styles/components/sections/home-section/footer.css";
 
 import { ArrowUpRight } from "lucide-react";
 

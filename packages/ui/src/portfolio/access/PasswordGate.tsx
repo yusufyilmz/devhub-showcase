@@ -1,6 +1,6 @@
 "use client";
 
-import "./password-gate.css";
+import "../../styles/components/portfolio/access/password-gate.css";
 
 import { useState } from "react";
 

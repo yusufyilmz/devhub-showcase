@@ -1,5 +1,5 @@
 "use client";
-import "./workflow.css";
+import "../styles/components/portfolio/workflow.css";
 
 import { portfolioTypes } from "@shared/config";
 

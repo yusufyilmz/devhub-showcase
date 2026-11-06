@@ -1,4 +1,4 @@
-import "../chrome.css";
+import "../../styles/components/navigation/chrome.css";
 
 import { profile as fallback, getNameInitials, getPortfolioCopy } from "@shared/config";
 

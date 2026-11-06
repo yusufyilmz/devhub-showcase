@@ -1,4 +1,4 @@
-import "./featured-summary.css";
+import "../../styles/components/sections/summary-section/featured-summary.css";
 
 import { ArrowUpRight, Download } from "lucide-react";
 

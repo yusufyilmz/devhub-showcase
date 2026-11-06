@@ -1,4 +1,4 @@
-import "./examples.css";
+import "../../styles/components/sections/home-section/examples.css";
 
 import { cvLayouts, portfolioThemes } from "@shared/config";
 

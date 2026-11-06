@@ -1,4 +1,4 @@
-import "./auth-login.css";
+import "../../styles/components/forms/login-form/auth-login.css";
 
 import { cn } from "cn";
 

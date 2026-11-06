@@ -326,7 +326,7 @@
 /* The studio shares the public palette but keeps editing controls in its own shell. */
 .studio {
   max-width: 1160px;
-  padding: 36px 40px 80px;
+  padding: var(--studio-top, 36px) 40px var(--studio-bottom, 80px);
   margin: auto;
 }
 .palette-samples {
@@ -425,7 +425,7 @@
     gap: 18px;
   }
   .studio {
-    padding: 20px 18px 50px;
+    padding: var(--studio-top, 20px) 18px var(--studio-bottom, 50px);
   }
 }
 @media (prefers-reduced-motion: reduce) {

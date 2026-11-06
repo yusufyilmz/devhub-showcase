@@ -1,6 +1,6 @@
 "use client";
 
-import "./agent-companion.css";
+import "../../styles/components/display/agent-companion/agent-companion.css";
 
 import { type CSSProperties, type RefObject, useMemo, useRef, useState } from "react";
 

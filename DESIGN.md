@@ -203,16 +203,12 @@ Styles and tokens live in `packages/ui/src/styles`. Components in `packages/ui` 
 
 ## Stylesheet architecture
 
-Component styles are now colocated: portfolio skins in
-`packages/ui/src/portfolio/portfolio.css`, section skins in
-`packages/ui/src/sections/sections.css`, navigation in
-`packages/ui/src/navigation/chrome.css`, chat in `packages/ui/src/display/chat`,
-examples in `packages/ui/src/sections/home-section`, and login in
-`packages/ui/src/forms/login-form`. The older directory map below describes the
-original organization; these colocated paths take precedence. Components import
-their own styles; global bundles no longer import component skins. Public CSS
-forwarding imports remain available. Themes, tokens, layout CSS,
-and resets remain centralized. Shared surface rules load from cards and controls.
+Author custom CSS under `packages/ui/src/styles`. Use Tailwind utilities and
+shared UI components for layouts and controls. Keep component-specific CSS
+under `styles/components/`, grouped by UI domain. Components load these sheets
+at their existing import boundaries. The global bundles load tokens, themes,
+layout rules and resets. Fitness and the Storybook demo load their dedicated
+sheets from shared UI exports.
 
 Two stacks share one component library. **Foundation** is the token + Tailwind layer (`data-brand`, `data-theme`, appearance). **Portfolio** is the RGB palette model for published pages (`data-portfolio-theme`, section frames, site chrome). Storybook and token-only hosts load foundation only so toolbar brands are not overridden by portfolio remaps.
 
@@ -236,21 +232,11 @@ packages/ui/src/styles/
   tokens/                 Brand palettes, modes, appearance, @theme extensions
     index.css             Token aggregator (shim: @shared/ui/shadcn.css)
 
-  foundation/
-    theme-aliases.css     Legacy Tailwind color names tied to --bg-rgb
-    surfaces.css          Card elevation, focus, reduced motion
-
-  portfolio/              Published portfolio + RGB studio chrome
-    bundle.css            Imports portfolio sheets + semantic-bridge
-    components.css        Control skins, studio defaults, 767px collapse
-    sections.css          Section frames (.library-section, etc.)
-    layouts.css           Portfolio page layout
-    presets.css           Named portfolio themes on [data-portfolio-theme]
-    chrome.css            Sticky header, portfolio nav
-    chat.css              Visitor chat widget
-    semantic-bridge.css   Maps --bg-rgb → shadcn vars on [data-portfolio-theme] only
-
-  examples.css            Example carousel only
+  foundation/             Theme aliases and shared design tokens
+  components/             Component styles grouped by UI domain
+  portfolio/              Published portfolio layouts, presets and theme bridge
+  fitness/                Fitness foundation and dashboard styles
+  storybook/              Standalone Storybook demo styles
 ```
 
 Older root paths (`styles.css`, `legacy.css`, `layout.css`, `components.css`, `sections.css`, `portfolios.css`, `themes.css`, `portfolio-chat.css`, `theme.css`, `surfaces.css`) re-export the files above. Prefer the names in the entry table for new code.
@@ -261,8 +247,8 @@ Older root paths (`styles.css`, `legacy.css`, `layout.css`, `components.css`, `s
 | ----------------------- | --------------------------------------------------- |
 | New brand or mode token | `tokens/`                                           |
 | Shadcn semantic token   | `tokens/palettes.css` or `tokens/accent-brands.css` |
-| Studio control skin     | `portfolio/components.css`                          |
-| Section layout          | `portfolio/sections.css`                            |
+| Studio control skin     | `components/portfolio/portfolio.css`                |
+| Section layout          | `components/sections/sections.css`                  |
 | Portfolio theme preset  | `portfolio/presets.css`                             |
 | Site header or nav      | `portfolio/chrome.css`                              |
 
@@ -444,7 +430,7 @@ The published page is not a second component library. It is the same type and ac
 
 ## Section library
 
-Portfolio sections in `packages/ui` share one frame, `.library-section`, styled in `packages/ui/src/styles/portfolio/sections.css`. A section does not invent its own palette. It uses the studio canvas, hairline, and accent.
+Portfolio sections in `packages/ui` share one frame, `.library-section`, styled in `packages/ui/src/styles/components/sections/sections.css`. A section does not invent its own palette. It uses the studio canvas, hairline, and accent.
 
 **`library-section`** — Top hairline in `{colors.hairline-studio}`, 56px vertical padding. The heading is `clamp(28px, 3vw, 44px)` with line height 1.15. Body copy is muted with line height 1.8. Links are `{colors.accent}`. Alignment is left unless `data-alignment` is `center` or `right`. The content grid defaults to 3 columns and can be set to 1, 2, or 4 with `data-columns`. Below 700px the grid and masonry collapse to one column.
 
@@ -495,7 +481,7 @@ Example gallery previews are rendered portfolio content, not lazy iframes.
 
 Use `@shared/ui/card`, `@shared/ui/button`, `@shared/ui/input` and
 `@shared/ui/textarea` in product compositions. Elevation and focus styling live in
-`packages/ui/src/cards/surfaces.css`, imported by cards, buttons, inputs and textareas.
+`packages/ui/src/styles/components/cards/surfaces.css`, imported by cards, buttons, inputs and textareas.
 Cards use `interaction="lift"` by default for shared depth, an accent edge and
 hover feedback. Use `interaction="static"` for a preview frame or nested surface
 that should stay still. Lift is limited to fine hover pointers, with matching

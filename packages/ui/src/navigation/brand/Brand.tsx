@@ -1,4 +1,4 @@
-import "./brand.css";
+import "../../styles/components/navigation/brand/brand.css";
 
 import { brandStyles } from "./styles";
 export function Brand() {

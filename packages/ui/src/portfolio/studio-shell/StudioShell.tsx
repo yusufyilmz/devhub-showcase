@@ -1,4 +1,4 @@
-import "../portfolio.css";
+import "../../styles/components/portfolio/portfolio.css";
 
 import type { ReactNode } from "react";
 

@@ -1,7 +1,7 @@
 "use client";
 
-import "../navigation/chrome.css";
-import "./settings.css";
+import "../styles/components/navigation/chrome.css";
+import "../styles/components/theme/settings.css";
 
 import { createContext, useContext, useId, useState } from "react";
 

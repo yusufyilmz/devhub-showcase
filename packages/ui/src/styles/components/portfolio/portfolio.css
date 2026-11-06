@@ -1,4 +1,4 @@
-@import "../styles/foundation/platform-rgb.css";
+@import "../../foundation/platform-rgb.css";
 
 * {
   box-sizing: border-box;
@@ -255,7 +255,7 @@ button:disabled {
   color: rgb(var(--muted-rgb));
 }
 .studio-editor-header {
-  margin-block-end: clamp(1.25rem, 4vw, 2rem);
+  margin-block-end: var(--studio-heading-gap, clamp(1.25rem, 4vw, 2rem));
   background:
     radial-gradient(ellipse at top right, rgb(var(--accent-rgb) / 0.11), transparent 62%),
     rgb(var(--surface-rgb));

@@ -53,7 +53,10 @@ export function TransferPortfolio({
         untouched starter. Edited work is never replaced. Save or discard your editor changes before
         transferring.
       </p>
-      <form className="managed-fields" onSubmit={transfer}>
+      <form
+        className="mt-6 grid min-w-0 gap-4 border-0 p-0 [&_input]:max-w-full [&_select]:max-w-full"
+        onSubmit={transfer}
+      >
         <LibraryLabel className="editor-field" unstyled>
           Owner account email
           <LibraryInput

@@ -1,4 +1,4 @@
-import "../editor-controls.css";
+import "../../styles/components/editors/editor-controls.css";
 
 import { authorableSections, type SectionOptions } from "@shared/config";
 

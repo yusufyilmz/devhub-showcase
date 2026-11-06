@@ -1,5 +1,5 @@
 "use client";
-import "./template-picker.css";
+import "../styles/components/portfolio/template-picker.css";
 
 import { applyPortfolioTemplate, portfolioTemplates } from "@shared/config";
 

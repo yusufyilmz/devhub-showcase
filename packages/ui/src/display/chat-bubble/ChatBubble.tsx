@@ -1,6 +1,6 @@
 "use client";
 
-import "./chat-bubble.css";
+import "../../styles/components/display/chat-bubble/chat-bubble.css";
 
 import React from "react";
 

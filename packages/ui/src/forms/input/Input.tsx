@@ -1,4 +1,4 @@
-import "../../cards/surfaces.css";
+import "../../styles/components/cards/surfaces.css";
 
 import { cn } from "cn";
 

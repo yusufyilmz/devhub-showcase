@@ -70,14 +70,10 @@ with reduced-motion-aware effects. Reveal requires title and heading; content
 requires title. Hover accepts a trigger element or explicit HoverCardTrigger /
 HoverCardContent children. CardProps is exported from @shared/ui/cards.
 
-Component styles live beside their owning UI domain. Portfolio skins are in
-src/portfolio/portfolio.css; section skins in src/sections/sections.css; navigation
-in src/navigation/chrome.css; chat styles in src/display/chat; example styles in
-src/sections/home-section; homepage styles are exported as `@shared/ui/home.css`; login styles in src/forms/login-form. Existing CSS export
-paths remain supported by forwarding imports. Components import their own styles;
-the global bundles do not import these component styles. Tokens,
-themes, layouts and global resets remain centralized. Shared surface rules live
-in src/cards/surfaces.css and are imported by cards and controls.
+Author CSS in `src/styles`. Domain-specific sheets live under
+`src/styles/components/` and load with their owning components. Public CSS
+exports continue to work. Use shared Tailwind utilities for layouts and controls.
+Card and control surfaces load from `src/styles/components/cards/surfaces.css`.
 
 HomeChatLauncher in src/sections/home-section/chat-launcher.tsx composes the shared
 ChatComposer and opens the authenticated Studio assistant below the capabilities strip.

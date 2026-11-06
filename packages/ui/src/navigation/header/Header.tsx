@@ -1,4 +1,4 @@
-import "../chrome.css";
+import "../../styles/components/navigation/chrome.css";
 
 import { Slot } from "@radix-ui/react-slot";
 

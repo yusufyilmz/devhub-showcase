@@ -1,4 +1,4 @@
-import "../../sections/sections.css";
+import "../../styles/components/sections/sections.css";
 
 export { Section } from "./Section";
 export { SectionAccordion } from "./SectionAccordion";

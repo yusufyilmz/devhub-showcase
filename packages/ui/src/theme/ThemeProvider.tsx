@@ -1,5 +1,5 @@
 "use client";
-import "./preferences.css";
+import "../styles/components/theme/preferences.css";
 
 import { useEffect, useRef, useState } from "react";
 
