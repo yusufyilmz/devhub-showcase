@@ -1,5 +1,8 @@
 import { notFound } from "next/navigation";
 
+import { Button } from "@shared/ui/button";
+import { StudioHeading } from "@shared/ui/portfolio";
+
 import { CreatePortfolio } from "@/features/management/create-portfolio";
 import { requirePortfolioAdmin } from "@/features/management/managed-portfolios";
 
@@ -25,16 +28,16 @@ export default async function PortfolioManager({
     .range(page * 50, page * 50 + 50);
   return (
     <main className="studio managed-dashboard" id="admin-content">
-      <div className="studio-heading">
-        <div>
-          <p className="eyebrow">PLATFORM ADMINISTRATION</p>
-          <h1>Manage portfolios</h1>
-          <p>Create temporary portfolios, import content and manage publishing.</p>
-        </div>
-        <a className="studio-secondary" href="/admin">
-          My portfolio
-        </a>
-      </div>
+      <StudioHeading
+        actions={
+          <Button className="studio-secondary" href="/admin" variant="outline">
+            My portfolio
+          </Button>
+        }
+        description="Create temporary portfolios, import content and manage publishing."
+        eyebrow="Platform administration"
+        title="Manage portfolios"
+      />
       <CreatePortfolio />
       <section className="editor-card">
         <h2>Managed portfolios</h2>

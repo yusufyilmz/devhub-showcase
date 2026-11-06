@@ -9,11 +9,11 @@ import { ThemePreview } from "./theme-preview";
 
 const preview: Preview = {
   decorators: [
-    (Story) => {
+    (Story, context) => {
       const [globals, updateGlobals] = useGlobals();
       const mode = globals.mode === "dark" ? "dark" : "light";
       return (
-        <ThemePreview globals={globals}>
+        <ThemePreview fullBleed={context.parameters.pageCanvas === true} globals={globals}>
           <ThemeContext.Provider
             value={{
               mode,

@@ -1,3 +1,5 @@
+import "./brand.css";
+
 import { brandStyles } from "./styles";
 export function Brand() {
   return (

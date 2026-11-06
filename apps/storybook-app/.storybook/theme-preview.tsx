@@ -8,9 +8,11 @@ type ThemeGlobals = Record<string, unknown>;
 export function ThemePreview({
   globals,
   children,
+  fullBleed = false,
 }: {
   globals: ThemeGlobals;
   children: ReactNode;
+  fullBleed?: boolean;
 }) {
   const brand = String(globals.brand ?? "white");
   const mode = globals.mode === "dark" ? "dark" : "light";
@@ -40,7 +42,11 @@ export function ThemePreview({
   }, [brand, mode, radius, spacing]);
   return (
     <div
-      className="min-h-screen bg-background p-lg text-foreground"
+      className={
+        fullBleed
+          ? "min-h-screen bg-background text-foreground"
+          : "min-h-screen bg-background p-lg text-foreground"
+      }
       data-brand={brand}
       data-radius={radius}
       data-spacing={spacing}

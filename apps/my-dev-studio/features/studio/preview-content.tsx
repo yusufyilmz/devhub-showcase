@@ -1,7 +1,7 @@
 "use client";
 import { type PortfolioProfile, projectPublicProfile } from "@shared/config";
+import { PortfolioLayout } from "@shared/ui/portfolio";
 
-import { PortfolioLayout } from "../portfolio/sections/portfolio-layout";
 import { EngineerPortfolioView } from "../portfolio/variants/engineer-portfolio";
 
 export function PreviewContent({

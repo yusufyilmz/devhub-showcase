@@ -1,0 +1,20 @@
+.home-brand {
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 10px;
+  align-items: center;
+  color: rgb(var(--accent-rgb));
+  text-decoration: none;
+}
+.home-brand > :where(span) {
+  font-size: 19px;
+  font-weight: 650;
+  color: rgb(var(--text-rgb));
+  letter-spacing: -0.8px;
+}
+.home-brand-light {
+  font-weight: 400;
+}
+.home-brand :where(b) {
+  color: rgb(var(--accent-rgb));
+}

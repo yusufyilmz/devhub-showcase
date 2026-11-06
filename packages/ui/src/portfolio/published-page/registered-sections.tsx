@@ -7,7 +7,8 @@ import {
   resolveSectionSource,
   type SectionRendererId,
 } from "@shared/config";
-import { ConfiguredSection, CustomPortfolioSection } from "@shared/ui/sections/studio";
+
+import { ConfiguredSection, CustomPortfolioSection } from "../../sections/studio";
 
 /** Server component: only explicit React implementations can render saved content. */
 export function RegisteredSections({

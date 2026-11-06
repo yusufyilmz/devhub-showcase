@@ -9,9 +9,11 @@ import { type ColorMode, getThemePalette, portfolioAccents } from "@shared/confi
 export function PortfolioStoryFrame({
   children,
   mode = "light",
+  fullBleed = false,
 }: {
   children: ReactNode;
   mode?: ColorMode;
+  fullBleed?: boolean;
 }) {
   const palette = getThemePalette("studio", mode);
   const variables = Object.fromEntries(
@@ -26,7 +28,7 @@ export function PortfolioStoryFrame({
     background: "rgb(var(--bg-rgb))",
     color: "rgb(var(--text-rgb))",
     minWidth: 0,
-    padding: "24px",
+    padding: fullBleed ? 0 : "24px",
   } as CSSProperties;
   return <div style={style}>{children}</div>;
 }

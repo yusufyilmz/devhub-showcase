@@ -52,6 +52,7 @@ export {
 } from "./gallery-grid-section";
 export { HeadingSection, HeadingSectionEditor } from "./heading-section";
 export { HeroSection, HeroSectionEditor, HeroSettingsEditor } from "./hero-section";
+export { HomePage } from "./home-page/HomePage";
 export {
   HomeCapabilitiesSection,
   HomeChatLauncher,

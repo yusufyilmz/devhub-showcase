@@ -11,13 +11,6 @@
   border: 1px solid rgb(var(--border-rgb));
   border-radius: 16px;
 }
-.studio-shell h1 {
-  margin: 0 0 16px;
-  font-size: clamp(28px, 4vw, 36px);
-  font-weight: 650;
-  line-height: 1.2;
-  letter-spacing: -0.035em;
-}
 .studio-shell h2 {
   margin: 0 0 12px;
   font-size: 22px;
@@ -34,7 +27,7 @@
   font-size: 16px;
   font-weight: 600;
 }
-.studio-shell p {
+.studio-shell > .editor-card p {
   max-width: 75ch;
   margin: 0 0 16px;
   color: rgb(var(--muted-rgb));

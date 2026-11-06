@@ -13,6 +13,7 @@ import { getPortfolioResources } from "@shared/services/portfolio";
 import { Footer } from "@shared/ui/footer";
 import { Header } from "@shared/ui/header";
 import { HeroSurface } from "@shared/ui/layout";
+import { RegisteredSections } from "@shared/ui/portfolio";
 import { ScrollButton } from "@shared/ui/scroll-button";
 import { Section } from "@shared/ui/section";
 import {
@@ -24,8 +25,6 @@ import {
   SkillSection,
   SummarySection,
 } from "@shared/ui/sections";
-
-import { RegisteredSections } from "./registered-sections";
 
 interface EngineerPortfolioProps {
   chatIdentity?: {

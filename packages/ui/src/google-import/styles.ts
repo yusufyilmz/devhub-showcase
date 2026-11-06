@@ -3,11 +3,9 @@ export const googleImportReviewStyles = {
 } as const;
 
 export const googleImportEditorStyles = {
-  element1: "editor-card",
-  element2: "editor-card",
-  element3: "editor-checkbox",
-  element4: "editor-checkbox",
-  element5: "studio-secondary",
-  element6: "studio-primary",
-  element7: "studio-secondary",
+  consent: "editor-checkbox google-import-consent",
+  option: "editor-checkbox google-import-option",
+  panel: "editor-card google-import-panel",
+  primary: "studio-primary",
+  secondary: "studio-secondary",
 } as const;

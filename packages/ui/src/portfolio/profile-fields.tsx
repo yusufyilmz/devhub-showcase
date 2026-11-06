@@ -16,7 +16,7 @@ export function ProfileFields({ profile, onChange }: ProfileFieldsOptions) {
         <div>
           <p className={profileFieldsStyles.element2}>THE INTRODUCTION</p>
           <h2>Your profile</h2>
-          <p>The details people see first.</p>
+          <p>Add your professional details and write the introduction readers will see first.</p>
         </div>
       </div>
       <Card asChild layout="plain" surface="portfolio">

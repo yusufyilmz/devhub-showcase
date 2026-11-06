@@ -1,0 +1,45 @@
+import type { PortfolioProfile } from "@shared/config";
+
+export const pageProfile: PortfolioProfile = {
+  about: ["I design tools that make complex workflows easier to understand and use."],
+  education: [],
+  email: "alex@example.test",
+  experiences: [
+    {
+      achievements: ["Led discovery and prototyping for a team planning workspace."],
+      company: "Fieldwork Studio",
+      companyUrl: "https://example.com",
+      end: null,
+      id: "fieldwork",
+      position: "Product designer",
+      start: "2023-02-01",
+    },
+  ],
+  github: "",
+  languages: [{ id: "english", language: "English", proficiency: "Fluent" }],
+  linkedin: "",
+  location: "Barcelona, Spain",
+  name: "Alex Morgan",
+  phone: "",
+  portfolioLanguage: "en",
+  portfolioType: "designer",
+  projects: [
+    {
+      company: "Fieldwork Studio",
+      coverImage: "/examples/atlas-interface.svg",
+      description: "A workspace for planning and sharing team projects.",
+      experienceId: "fieldwork",
+      id: "atlas",
+      name: "Atlas",
+      public: true,
+      skills: ["Interaction design", "Prototyping"],
+      sourceUrl: null,
+      url: "https://example.com",
+    },
+  ],
+  skills: { Design: ["Interaction design", "Prototyping"] },
+  summary: "Product designer working on thoughtful tools for teams.",
+  templateChosen: true,
+  title: "Product designer",
+  website: "https://example.com",
+};

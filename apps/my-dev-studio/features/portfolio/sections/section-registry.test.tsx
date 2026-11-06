@@ -13,8 +13,7 @@ import {
 } from "@shared/config";
 import { profileSchema } from "@shared/lib/profiles";
 import { portfolioSectionSchema } from "@shared/lib/section";
-
-import { RegisteredSections } from "@/features/portfolio/sections";
+import { RegisteredSections } from "@shared/ui/portfolio";
 
 describe("SectionRegistry", () => {
   it("defines a valid existing renderer and real content binding for every section in every layout", () => {

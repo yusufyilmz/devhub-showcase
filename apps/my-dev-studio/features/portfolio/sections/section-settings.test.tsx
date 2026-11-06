@@ -12,8 +12,8 @@ import {
   selectPortfolioContent,
 } from "@shared/config";
 import { profileSchema } from "@shared/lib/profiles";
+import { RegisteredSections } from "@shared/ui/portfolio";
 
-import { RegisteredSections } from "@/features/portfolio/sections";
 import { ProfileEditor } from "@/features/studio";
 
 const sampleProject = profile.projects[0];

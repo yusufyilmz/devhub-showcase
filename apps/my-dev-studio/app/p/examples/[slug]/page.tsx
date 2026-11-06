@@ -3,7 +3,8 @@ import "@shared/ui/examples.css";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { PortfolioLayout } from "@/features/portfolio/sections";
+import { PortfolioLayout } from "@shared/ui/portfolio";
+
 import { EngineerPortfolio } from "@/features/portfolio/variants/engineer-portfolio";
 import {
   examplePath,

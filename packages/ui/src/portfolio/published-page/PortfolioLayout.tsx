@@ -1,4 +1,4 @@
-import "@shared/ui/portfolios.css";
+import "../../styles/portfolios.css";
 
 import type { ReactNode } from "react";
 
@@ -10,11 +10,13 @@ import {
   type SectionRendererId,
   selectPortfolioContent,
 } from "@shared/config";
-import { Button } from "@shared/ui/button";
-import { Card } from "@shared/ui/cards";
-import { HeroSurface } from "@shared/ui/layout";
-import { ThemeToggle } from "@shared/ui/theme";
 
+import { Button } from "../../buttons/button";
+import { Card } from "../../cards";
+import { HeroSurface } from "../../layout/hero";
+import { Footer } from "../../navigation/footer";
+import { Header } from "../../navigation/header";
+import { ThemeToggle } from "../../theme";
 import { RegisteredSections } from "./registered-sections";
 
 export function PortfolioLayout({
@@ -37,20 +39,22 @@ export function PortfolioLayout({
       <a className="skip-link" href="#main-content">
         {text.skip}
       </a>
-      <header className="folio-nav">
-        <a className="folio-name" href={`/${username}`}>
-          <span aria-hidden="true" className="folio-monogram">
-            {getNameInitials(profile.name)}
-          </span>
-          {profile.name}
-        </a>
-        <nav aria-label={text.sections}>
-          {projects.length > 0 && <a href="#work">{text.work}</a>}
-          {profile.sectionSettings?.about?.visible !== false && <a href="#about">{text.about}</a>}
-          <a href="#contact">{text.contact}</a>
-        </nav>
-        <ThemeToggle labels={{ dark: text.switchDark, light: text.switchLight }} />
-      </header>
+      <Header asChild>
+        <header className="folio-nav">
+          <a className="folio-name" href={`/${username}`}>
+            <span aria-hidden="true" className="folio-monogram">
+              {getNameInitials(profile.name)}
+            </span>
+            {profile.name}
+          </a>
+          <nav aria-label={text.sections}>
+            {projects.length > 0 && <a href="#work">{text.work}</a>}
+            {profile.sectionSettings?.about?.visible !== false && <a href="#about">{text.about}</a>}
+            <a href="#contact">{text.contact}</a>
+          </nav>
+          <ThemeToggle labels={{ dark: text.switchDark, light: text.switchLight }} />
+        </header>
+      </Header>
       <main className="folio-main" id="main-content">
         <HeroSurface
           labels={{ pause: text.pauseBackground, play: text.playBackground }}
@@ -93,10 +97,12 @@ export function PortfolioLayout({
           </section>
         </div>
       </main>
-      <footer className="folio-footer">
-        <span>{profile.name}</span>
-        <a href="/">{text.madeWith} ↗</a>
-      </footer>
+      <Footer asChild>
+        <footer className="folio-footer">
+          <span>{profile.name}</span>
+          <a href="/">{text.madeWith} ↗</a>
+        </footer>
+      </Footer>
     </div>
   );
 }
