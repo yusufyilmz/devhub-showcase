@@ -78,13 +78,24 @@ try {
 
 const isDev = () => process.env.NODE_ENV === "development";
 
-export enum LogLevel {
-  ERROR = 0,
-  WARN = 1,
-  INFO = 2,
-  DEBUG = 3,
-  TRACE = 4,
-}
+const logLevelValues = {
+  DEBUG: 3,
+  ERROR: 0,
+  INFO: 2,
+  TRACE: 4,
+  WARN: 1,
+} as const;
+
+export type LogLevel = (typeof logLevelValues)[keyof typeof logLevelValues];
+
+export const LogLevel = {
+  ...logLevelValues,
+  [logLevelValues.ERROR]: "ERROR",
+  [logLevelValues.WARN]: "WARN",
+  [logLevelValues.INFO]: "INFO",
+  [logLevelValues.DEBUG]: "DEBUG",
+  [logLevelValues.TRACE]: "TRACE",
+} as const;
 
 export interface LogContext {
   action?: string;
@@ -126,7 +137,8 @@ class Logger {
     // Set log level from environment or default to INFO in dev, ERROR in prod
     const envLogLevel = process.env.NEXT_PUBLIC_LOG_LEVEL;
     if (envLogLevel) {
-      this.logLevel = LogLevel[envLogLevel.toUpperCase() as keyof typeof LogLevel] || LogLevel.INFO;
+      this.logLevel =
+        logLevelValues[envLogLevel.toUpperCase() as keyof typeof logLevelValues] || LogLevel.INFO;
     } else {
       this.logLevel = isDev() ? LogLevel.INFO : LogLevel.ERROR;
     }

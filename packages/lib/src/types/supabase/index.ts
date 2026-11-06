@@ -195,11 +195,13 @@ export interface Review {
   updatedAt: string;
 }
 
-export enum ReviewState {
-  APPROVED = "APPROVED",
-  PENDING = "PENDING",
-  REJECTED = "REJECTED",
-}
+export const ReviewState = {
+  APPROVED: "APPROVED",
+  PENDING: "PENDING",
+  REJECTED: "REJECTED",
+} as const;
+
+export type ReviewState = (typeof ReviewState)[keyof typeof ReviewState];
 
 export type SupabaseDbClient = SupabaseClient<Database>;
 
