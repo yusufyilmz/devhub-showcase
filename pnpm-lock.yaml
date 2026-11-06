@@ -451,6 +451,9 @@ importers:
 
   apps/storybook-app:
     dependencies:
+      '@shared/billing':
+        specifier: workspace:*
+        version: link:../../packages/billing
       '@shared/ui':
         specifier: workspace:*
         version: link:../../packages/ui

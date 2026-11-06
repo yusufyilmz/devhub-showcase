@@ -1,17 +1,17 @@
-import { Footer, Header } from "@shared/ui/components";
+import { StudioShell } from "@shared/ui/portfolio";
+import { ThemeToggle } from "@shared/ui/theme";
 
-import { getPublishedProfile } from "@/features/portfolio/profiles/published-profile";
-
-export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  const { profile } = await getPublishedProfile();
+export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <a className="skip-link" href="#main-content">
-        Skip to content
-      </a>
-      <Header profile={profile} />
+    <StudioShell
+      contentId="main-content"
+      tools={
+        <div className="admin-tools">
+          <ThemeToggle />
+        </div>
+      }
+    >
       {children}
-      <Footer profile={profile} />
-    </>
+    </StudioShell>
   );
 }

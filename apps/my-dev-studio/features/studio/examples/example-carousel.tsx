@@ -1,8 +1,8 @@
 import type { CSSProperties } from "react";
 
 import { getPortfolioThemeVariables, getPreviewAccent } from "@shared/config";
+import { PortfolioLayout } from "@shared/ui/portfolio";
 
-import { PortfolioLayout } from "@/features/portfolio/sections/portfolio-layout";
 import { EngineerPortfolio } from "@/features/portfolio/variants/engineer-portfolio";
 
 import { exampleViewProfile, portfolioExamples } from "./data";

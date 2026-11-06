@@ -1,3 +1,5 @@
+import { StudioHeading } from "@shared/ui/portfolio";
+
 import { BillingProvider } from "../provider/billing-context";
 import type { BillingRequest } from "../types";
 import { BillingControls } from "./billing-controls";
@@ -13,13 +15,14 @@ export function BillingSettings({
 }) {
   return (
     <BillingProvider request={request}>
-      <main className="studio-shell">
+      <main className="studio-shell" id="admin-content">
+        <StudioHeading
+          description="Review your plan and usage. Pro adds optional visitor chat and private editing proposals."
+          eyebrow="Account and billing"
+          title="Subscription settings"
+        />
         <section className="editor-card">
-          <h1>Subscription settings</h1>
-          <p>
-            Stripe test environment. No live payments are enabled. Pro includes optional visitor
-            chat and private editing proposals.
-          </p>
+          <p>Stripe test environment. Use test cards for checkout.</p>
           <p>
             Checkout displays the configured monthly test price. AI allowances count reserved
             attempts, including failed or uncertain provider requests.

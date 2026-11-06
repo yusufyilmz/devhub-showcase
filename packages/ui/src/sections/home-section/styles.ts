@@ -47,11 +47,6 @@ export const finalStyles = {
   element7: "home-final-glyph",
 } as const;
 
-export const footerStyles = {
-  element1: "home-container home-footer",
-  element2: "home-footer-copy",
-} as const;
-
 export const headerStyles = {
   element1: "home-header",
   element2: "home-container home-header-inner",

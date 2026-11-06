@@ -3,13 +3,13 @@ import "@shared/ui/portfolio-chat.css";
 import type { Metadata } from "next";
 
 import { Button } from "@shared/ui/button";
+import { PortfolioLayout } from "@shared/ui/portfolio";
 
 import { OwnerEditLink } from "@/features/admin/owner-edit-link";
 import { premiumChatAvailable } from "@/features/chat/premium-chat";
 import { portfolioMetadata } from "@/features/portfolio/portfolio-metadata";
 import { loadPageResources } from "@/features/portfolio/portfolio-resources";
 import { getUsernameProfile } from "@/features/portfolio/profiles/public-profile";
-import { PortfolioLayout } from "@/features/portfolio/sections";
 import { EngineerPortfolio } from "@/features/portfolio/variants/engineer-portfolio";
 
 export const maxDuration = 60;

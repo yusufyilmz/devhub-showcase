@@ -19,6 +19,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@shared/billing": "workspace:*",
     "@shared/ui": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
     "postcss": "catalog:",

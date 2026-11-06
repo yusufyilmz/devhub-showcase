@@ -396,6 +396,19 @@ Each content section lives in `src/sections/variants/{name}`. Most export the se
 | `WorkExperienceSection`                                 | editor                                                                                                          |
 | `YouTubeSection`                                        | editor                                                                                                          |
 
+## Full-page compositions
+
+`HomePage` in `@shared/ui/sections` renders the homepage sections. The
+app supplies the examples and pricing content. `EngineerPage` and
+`PortfolioLayout` in `@shared/ui/portfolio` render published profile
+layouts and use the same registered section dispatcher. `StudioShell`
+and `StudioHeading` provide the studio navigation, page title and grouped
+footer for editor, billing, management and review screens.
+
+Storybook groups full-page fixture previews under **Pages**. Page stories
+use the same presentations and keep provider data and actions local to
+the fixtures.
+
 ## Homepage sections
 
 Import homepage compositions from `@shared/ui/sections`. They live in `src/sections/variants/home-section` and replace the removed `containers` entry point. `HomeHeroSection`, `HomeFeaturesSection`, `HomeOptionsSection`, `HomePricingSection`, `HomeLibrarySection`, `HomeProcessSection`, `HomeFAQSection`, `HomeCTASection` and `HomeCapabilitiesSection` compose shared controls and surfaces. `HomeHeader`, `HomeFooter`, `PortfolioPreview` and `LibraryPicker` support that composition. Session decisions and navigation remain app props.

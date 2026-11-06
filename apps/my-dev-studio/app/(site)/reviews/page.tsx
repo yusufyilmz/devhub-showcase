@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createServerClient } from "@shared/lib/supabase";
 import type { ReviewWithReferrals, SupabaseDbClient } from "@shared/lib/types";
 import { ReviewService } from "@shared/services/studio";
+import { StudioHeading } from "@shared/ui/portfolio";
 import { ReviewSection } from "@shared/ui/sections";
 import { logger } from "@shared/utils/logger";
 
@@ -32,18 +33,20 @@ export default async function ReviewsPage(): Promise<React.JSX.Element> {
   } catch {
     redirect("/login");
   }
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL)
-    return (
-      <main>
-        <p>Reviews are not configured.</p>
-      </main>
-    );
-  const supabase = await createServerClient();
-  const pendingReviews = await getPageResources(supabase);
-
+  const configured = Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  const pendingReviews = configured ? await getPageResources(await createServerClient()) : [];
   return (
-    <main className="w-full h-[calc(100vh-8rem)] bg-main-primary  flex flex-col justify-center items-center">
-      <ReviewSection handleReview={handleSubmitReviewAction} reviews={pendingReviews} />
+    <main className="studio" id="main-content">
+      <StudioHeading
+        description="Review referrals submitted for the portfolio."
+        eyebrow="Portfolio moderation"
+        title="Pending reviews"
+      />
+      {configured ? (
+        <ReviewSection handleReview={handleSubmitReviewAction} reviews={pendingReviews} />
+      ) : (
+        <p className="editor-card">Reviews are not configured.</p>
+      )}
     </main>
   );
 }

@@ -51,7 +51,6 @@ export type * from "./examples/example-carousel";
 export * from "./examples/example-carousel";
 export type * from "./examples/example-thumbnail";
 export * from "./examples/example-thumbnail";
-export { StudioShell } from "./layout/studio-shell";
 export type * from "./management/create-portfolio";
 export * from "./management/create-portfolio";
 export type * from "./management/managed-workspace";

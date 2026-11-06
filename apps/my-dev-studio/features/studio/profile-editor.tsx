@@ -30,6 +30,7 @@ import {
   recoveryPrefix,
   SetupNavigation,
   type SetupStep,
+  StudioHeading,
   TemplatePicker,
   useDraftRecovery,
   usePortfolioHistory,
@@ -224,60 +225,59 @@ export function ProfileEditor({
           await publish();
         }}
       >
-        <div className="studio-heading">
-          <div>
-            <p className="eyebrow">A SPACE FOR YOUR STORY</p>
-            <h1>
-              Make it <span>yours.</span>
-            </h1>
-            <p>Keep your portfolio as current as your work.</p>
-          </div>
-          <div className="studio-header-actions">
-            <Button className="studio-secondary" href="/admin/billing" variant="outline">
-              Plan and usage
-            </Button>
+        <StudioHeading
+          actions={
+            <>
+              <Button className="studio-secondary" href="/admin/billing" variant="outline">
+                Plan and usage
+              </Button>
 
+              <Button
+                className="studio-primary"
+                disabled={busy || !dirty || recovery.stale}
+                type="submit"
+              >
+                {busy ? "Saving…" : "Save changes"}
+              </Button>
+            </>
+          }
+          description="Update your story, tailor your CV, and preview what you want to share."
+          eyebrow="Portfolio editor"
+          title="Edit your portfolio"
+        >
+          <div className="studio-status">
+            <span className={dirty ? "status-dot unsaved" : "status-dot"} />
+            <span>{dirty ? "You have unsaved changes" : "All changes saved"}</span>
+            <span>Revision {saved.revision}</span>
             <Button
-              className="studio-primary"
-              disabled={busy || !dirty || recovery.stale}
-              type="submit"
+              disabled={busy}
+              onClick={async () => {
+                if (dirty && !window.confirm("Leave without publishing your changes?")) return;
+                setBusy(true);
+                try {
+                  const response = await request(urls.next.auth.session(), {
+                    method: "DELETE",
+                  });
+                  if (!response.ok) throw new Error("Could not sign out.");
+                  try {
+                    recovery.stop();
+                    clearDraftRecovery();
+                  } catch {
+                    /* Browser storage may be disabled. */
+                  }
+                  useUserConfigStore.getState().clearUser();
+                  window.location.assign("/login");
+                } catch (reason) {
+                  showError(reason instanceof Error ? reason.message : "Could not sign out.");
+                  setBusy(false);
+                }
+              }}
+              type="button"
             >
-              {busy ? "Saving…" : "Save changes"}
+              Sign out
             </Button>
           </div>
-        </div>
-        <div className="studio-status">
-          <span className={dirty ? "status-dot unsaved" : "status-dot"} />
-          {dirty ? "You have unsaved changes" : "All changes saved"}
-          <span>Revision {saved.revision}</span>
-          <Button
-            disabled={busy}
-            onClick={async () => {
-              if (dirty && !window.confirm("Leave without publishing your changes?")) return;
-              setBusy(true);
-              try {
-                const response = await request(urls.next.auth.session(), {
-                  method: "DELETE",
-                });
-                if (!response.ok) throw new Error("Could not sign out.");
-                try {
-                  recovery.stop();
-                  clearDraftRecovery();
-                } catch {
-                  /* Browser storage may be disabled. */
-                }
-                useUserConfigStore.getState().clearUser();
-                window.location.assign("/login");
-              } catch (reason) {
-                showError(reason instanceof Error ? reason.message : "Could not sign out.");
-                setBusy(false);
-              }
-            }}
-            type="button"
-          >
-            Sign out
-          </Button>
-        </div>
+        </StudioHeading>
         <DraftRecovery disabled={busy} recovery={recovery} />
         <SetupNavigation
           disabled={busy}
@@ -300,7 +300,7 @@ export function ProfileEditor({
                 document.querySelectorAll<HTMLLabelElement>("#admin-content label"),
               ).find((node) => node.querySelector("span")?.textContent === label);
               const input = target?.querySelector<HTMLElement>("input, textarea");
-              const heading = document.querySelector<HTMLElement>(".editor-section-heading h2");
+              const heading = document.querySelector<HTMLElement>(".editor-body h2");
               (input ?? heading)?.scrollIntoView({ behavior: "auto", block: "center" });
               input?.focus({ preventScroll: true });
             });
@@ -377,8 +377,11 @@ export function ProfileEditor({
           />
         </fieldset>
         <DraftPreview profile={draft} username={username} />
-        <footer className="editor-footer">
-          <p>Save your edits to update your CV. Public sharing is optional.</p>
+        <div className="editor-save-bar">
+          <div>
+            <strong>Your saved draft</strong>
+            <p>Save to update your CV. You can publish your portfolio when you’re ready.</p>
+          </div>
           <Button
             className="studio-secondary"
             disabled={!dirty || busy}
@@ -397,7 +400,7 @@ export function ProfileEditor({
           >
             Discard changes
           </Button>
-        </footer>
+        </div>
       </form>
     </main>
   );

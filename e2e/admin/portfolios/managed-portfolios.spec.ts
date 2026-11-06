@@ -160,7 +160,11 @@ test("admin appearance controls stay separate and compact", async ({ page, conte
   const b = await settings.boundingBox();
   expect(a).not.toBeNull();
   expect(b).not.toBeNull();
-  if (a && b) expect(a.y + a.height <= b.y).toBe(true);
+  if (a && b) {
+    const separateHorizontally = a.x + a.width <= b.x || b.x + b.width <= a.x;
+    const separateVertically = a.y + a.height <= b.y || b.y + b.height <= a.y;
+    expect(separateHorizontally || separateVertically).toBe(true);
+  }
   await settings.click();
   await page.getByRole("button", { exact: true, name: "Font size: 6xl" }).click();
   await page.getByRole("button", { exact: true, name: "Spacing: spacious" }).click();
@@ -173,7 +177,7 @@ test("admin appearance controls stay separate and compact", async ({ page, conte
   await expect(management).toHaveCSS("width", "40px");
   await expect(management.locator("svg")).toHaveCSS("width", "16px");
   await launcher.click();
-  await expect(settings).toHaveCSS("width", "40px");
+  await expect(settings).toHaveCSS("width", "32px");
   const header = await page.locator(".admin-brand").boundingBox();
   expect(header).not.toBeNull();
   if (header) expect(header.height).toBeLessThan(220);
