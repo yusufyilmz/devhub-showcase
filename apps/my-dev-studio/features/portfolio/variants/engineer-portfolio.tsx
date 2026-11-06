@@ -61,6 +61,7 @@ export function EngineerPortfolioView({
     <EngineerPage
       chat={chat}
       extras={extras}
+      featured={extras}
       ownerLink={chat ? undefined : ownerLink}
       profile={profile}
       referrals={referrals}

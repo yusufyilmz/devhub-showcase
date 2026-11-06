@@ -31,3 +31,6 @@ const meta = {
 
 export default meta;
 export const Published: StoryObj<typeof meta> = {};
+export const Spotlight: StoryObj<typeof meta> = {
+  args: { featured: true, profile: { ...meta.args.profile, cvUrl: "/alex-morgan/cv.pdf" } },
+};

@@ -2,7 +2,7 @@ import "@shared/ui/portfolio-chat.css";
 
 import type { Metadata } from "next";
 
-import { Button } from "@shared/ui/button";
+import { AgentCompanion } from "@shared/ui/agent-companion";
 import { PortfolioLayout } from "@shared/ui/portfolio";
 
 import { OwnerEditLink } from "@/features/admin/owner-edit-link";
@@ -22,19 +22,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PublicCvPage({ params }: Props) {
   const { username } = await params;
   const { profile: saved, id, revision } = await getUsernameProfile(username);
+  const original = id === "main";
+  const engineer = !saved.portfolioType || saved.portfolioType === "engineer";
   const widget =
-    id && saved.publicationVisibility !== "password" && (await premiumChatAvailable(id)) ? (
-      <div className="portfolio-chat">
-        <Button
-          className="portfolio-chat-launch"
-          href={`/${encodeURIComponent(username)}/chat`}
-          variant="unstyled"
-        >
-          Ask about {saved.name}
-        </Button>
-      </div>
+    id &&
+    !(original && engineer) &&
+    saved.publicationVisibility !== "password" &&
+    (await premiumChatAvailable(id)) ? (
+      <AgentCompanion
+        agent="portfolio"
+        href={`/${encodeURIComponent(username)}/chat`}
+        label={`Ask about ${saved.name}`}
+      />
     ) : null;
-  if (saved.portfolioType && saved.portfolioType !== "engineer")
+  if (!engineer)
     return (
       <>
         {widget}
@@ -42,7 +43,6 @@ export default async function PublicCvPage({ params }: Props) {
         <PortfolioLayout profile={saved} username={username} />
       </>
     );
-  const original = id === "main";
   const referrals = original ? (await loadPageResources()).referrals : [];
   const profile = {
     ...saved,

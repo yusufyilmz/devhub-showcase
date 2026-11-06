@@ -58,7 +58,6 @@ type TreeProps = {
 };
 
 export function WorkspaceFrame({
-  assistant,
   busy,
   children,
   date,
@@ -74,7 +73,6 @@ export function WorkspaceFrame({
   taskId,
   today,
 }: {
-  assistant?: ReactNode;
   busy: boolean;
   children: ReactNode;
   date: string;
@@ -94,7 +92,7 @@ export function WorkspaceFrame({
     <div className="app">
       <WorkspaceSidebar name={name} readOnly={readOnly} setTab={setTab} tab={tab} />
       <main className="main">
-        <WorkspaceTopbar assistant={assistant} busy={busy} readOnly={readOnly} tab={tab} />
+        <WorkspaceTopbar busy={busy} readOnly={readOnly} tab={tab} />
         {readOnly ? <ReadOnlyBanner /> : null}
         {tab !== "Assistant" && (
           <PageHeading
@@ -308,12 +306,10 @@ function ReadOnlyBanner() {
 }
 
 function WorkspaceTopbar({
-  assistant,
   busy,
   readOnly,
   tab,
 }: {
-  assistant?: ReactNode;
   busy: boolean;
   readOnly: boolean;
   tab: string;
@@ -322,7 +318,6 @@ function WorkspaceTopbar({
     <header className="topbar">
       <span className="breadcrumb">My Fitness Studio / {tab}</span>
       <div className="topbar-actions">
-        {assistant}
         <ThemeToggle />
         <Badge role="status" variant="secondary">
           {syncLabel(readOnly, busy)}
