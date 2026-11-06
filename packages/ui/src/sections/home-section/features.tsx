@@ -1,4 +1,5 @@
-import { Card, RevealCardBase } from "../../cards";
+import { Card } from "../../cards/card/Card";
+import { RevealCardBase } from "../../cards/reveal-card/RevealCard";
 import { Section } from "../../layout/section";
 import { featuresStyles } from "./styles";
 
@@ -20,6 +21,7 @@ export function HomeFeaturesSection() {
         </div>
         <div className={featuresStyles.element4}>
           <RevealCardBase
+            backdrop="accent"
             brief="Share what you’ve built, what you’ve learned and where you want to go. Your projects and experience take center stage."
             className={featuresStyles.element5}
             heading={
@@ -54,6 +56,7 @@ export function HomeFeaturesSection() {
             </ul>
           </RevealCardBase>
           <RevealCardBase
+            backdrop="accent"
             brief="Choose Studio, Paper, Graphite or Bloom. Pair any layout with your favorite theme, accent and light or dark mode."
             className={featuresStyles.element9}
             heading={
@@ -82,7 +85,12 @@ export function HomeFeaturesSection() {
               <li>Separate portfolio and CV language settings</li>
             </ul>
           </RevealCardBase>
-          <Card className={featuresStyles.element13} layout="plain" surface="portfolio">
+          <Card
+            backdrop="accent"
+            className={featuresStyles.element13}
+            layout="plain"
+            surface="portfolio"
+          >
             <div aria-hidden="true" className={featuresStyles.element14}>
               <span>CV</span>↗
             </div>

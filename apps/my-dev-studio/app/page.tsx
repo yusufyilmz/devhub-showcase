@@ -1,4 +1,4 @@
-import "./page.css";
+import "@shared/ui/home.css";
 
 import { getHomeAction, getHomeExample } from "@/features/home/home-links";
 import { HomePage } from "@/features/home/home-page";

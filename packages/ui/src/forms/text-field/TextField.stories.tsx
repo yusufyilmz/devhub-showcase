@@ -22,6 +22,7 @@ const TextFieldDemo: React.FC = () => {
     search: "",
   });
 
+  const [submitted, setSubmitted] = useState(false);
   const [errors, showErrors] = useState<{ [key: string]: string }>({});
 
   const validateEmail = (email: string) => {
@@ -56,9 +57,7 @@ const TextFieldDemo: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      alert("Form submitted successfully!");
-    }
+    setSubmitted(validateForm());
   };
 
   return (
@@ -229,6 +228,7 @@ const TextFieldDemo: React.FC = () => {
         <Card className="p-6">
           <FlexCol gap="md">
             <SearchField
+              aria-label="Search products"
               onChange={(e) => handleInputChange("search", e.target.value)}
               onClear={() => handleInputChange("search", "")}
               placeholder="Search products..."
@@ -249,7 +249,7 @@ const TextFieldDemo: React.FC = () => {
         <Typography variant="h2">Interactive Form</Typography>
 
         <Card className="p-6">
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-4" noValidate onSubmit={handleSubmit}>
             <FlexCol gap="md">
               <TextField
                 error={errors.name as string}
@@ -302,13 +302,11 @@ const TextFieldDemo: React.FC = () => {
               />
 
               <FlexRow gap="md" justify="end">
-                <Button type="button" variant="outline">
-                  Cancel
-                </Button>
                 <Button type="submit" variant="default">
                   Submit
                 </Button>
               </FlexRow>
+              {submitted && <p role="status">Form submitted successfully.</p>}
             </FlexCol>
           </form>
         </Card>
@@ -323,6 +321,7 @@ const TextFieldDemo: React.FC = () => {
             <TextField
               label="Valid Email"
               placeholder="user@example.com"
+              readOnly
               state="success"
               success="Email is valid"
               type="email"
@@ -333,6 +332,7 @@ const TextFieldDemo: React.FC = () => {
               error="Please enter a valid email address"
               label="Invalid Email"
               placeholder="invalid-email"
+              readOnly
               state="error"
               type="email"
               value="invalid-email"
@@ -341,6 +341,7 @@ const TextFieldDemo: React.FC = () => {
             <TextField
               label="Weak Password"
               placeholder="123"
+              readOnly
               state="warning"
               type="password"
               value="123"
@@ -370,7 +371,7 @@ const TextFieldDemo: React.FC = () => {
 const meta = {
   component: TextFieldDemo,
   parameters: { layout: "fullscreen" },
-  title: "Components/TextField",
+  title: "UI/Forms/TextField",
 } satisfies Meta<typeof TextFieldDemo>;
 
 export default meta;

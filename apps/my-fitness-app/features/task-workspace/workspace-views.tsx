@@ -502,7 +502,7 @@ function TodayView({
       </div>
       <div className="section-heading">
         <h2>Your daily agenda</h2>
-        <div className="row">
+        <div className="row fitness-agenda-actions">
           <LibraryButton
             onClick={() => setDate(shiftDate(date, -1))}
             type="button"
@@ -524,8 +524,9 @@ function TodayView({
             }}
             size="lg"
             type="button"
+            variant="secondary"
           >
-            <Plus size={16} />
+            <Plus aria-hidden="true" size={16} />
             Add task
           </LibraryButton>
         </div>

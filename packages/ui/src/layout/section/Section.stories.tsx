@@ -13,7 +13,7 @@ const meta = {
   },
   component: Section,
   tags: ["autodocs"],
-  title: "UI/Section/Frame",
+  title: "UI/Layout/Section/Frame",
 } satisfies Meta<typeof Section>;
 export default meta;
 type Story = StoryObj<typeof meta>;

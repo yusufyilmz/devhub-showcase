@@ -251,7 +251,7 @@ pnpm install`}
 const meta = {
   component: CodeDemo,
   parameters: { layout: "fullscreen" },
-  title: "Components/Code",
+  title: "UI/Display/Code",
 } satisfies Meta<typeof CodeDemo>;
 
 export default meta;

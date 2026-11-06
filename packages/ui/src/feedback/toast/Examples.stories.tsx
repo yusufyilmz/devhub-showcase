@@ -1,28 +1,26 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "../../buttons/button";
-import { Toaster, toast } from "./Toast";
+import { Toaster, toast } from "./index";
 
 function Example({ width = 560 }: { width?: number }) {
   return (
     <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
-      <Toaster>
-        <Button
-          onClick={() =>
-            toast.add({
-              description: "Your changes are private.",
-              title: "Draft saved",
-              type: "success",
-            })
-          }
-        >
-          Show toast
-        </Button>
-      </Toaster>
+      <Toaster closeButton id="storybook-toast" />
+      <Button
+        onClick={() =>
+          toast.success("Draft saved", {
+            description: "Your changes are private.",
+            toasterId: "storybook-toast",
+          })
+        }
+      >
+        Show toast
+      </Button>
     </div>
   );
 }
-const meta = { component: Example, tags: ["autodocs"], title: "UI/toast" } satisfies Meta<
+const meta = { component: Example, tags: ["autodocs"], title: "UI/Feedback/toast" } satisfies Meta<
   typeof Example
 >;
 export default meta;

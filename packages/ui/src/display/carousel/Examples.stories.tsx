@@ -16,12 +16,18 @@ function Example({
   width?: number;
 }) {
   return (
-    <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
-      <Carousel className="mx-10">
+    <div style={{ maxWidth: width, padding: placement === "floating" ? 12 : 0, width: "100%" }}>
+      <Carousel
+        aria-label="Projects"
+        className={placement === "floating" ? "mx-10" : undefined}
+        tabIndex={0}
+      >
         <CarouselContent>
           {["First project", "Second project", "Third project"].map((title) => (
             <CarouselItem key={title}>
-              <div className="rounded-lg border p-12">{title}</div>
+              <div className="grid min-h-32 place-items-center rounded-lg border border-border bg-card p-4 text-center">
+                {title}
+              </div>
             </CarouselItem>
           ))}
         </CarouselContent>
@@ -33,12 +39,14 @@ function Example({
     </div>
   );
 }
-const meta = { component: Example, tags: ["autodocs"], title: "UI/carousel" } satisfies Meta<
-  typeof Example
->;
+const meta = {
+  component: Example,
+  tags: ["autodocs"],
+  title: "UI/Display/carousel",
+} satisfies Meta<typeof Example>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const InlineControls: Story = { args: { placement: "inline", width: 320 } };
-export const Narrow: Story = { args: { width: 320 } };
+export const Narrow: Story = { args: { placement: "inline", width: 320 } };
 export const Wide: Story = { args: { width: 960 } };

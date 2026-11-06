@@ -15,7 +15,7 @@ const meta = {
     layout: "padded",
   },
   tags: ["autodocs"],
-  title: "Navigation/Breadcrumb",
+  title: "UI/Navigation/Breadcrumb",
 } satisfies Meta<typeof Breadcrumb>;
 
 export default meta;

@@ -1,0 +1,21 @@
+[data-slot="tooltip-content"] {
+  transform-origin: var(--radix-tooltip-content-transform-origin);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-slot="tooltip-content"][data-state="instant-open"],
+  [data-slot="tooltip-content"][data-state="delayed-open"] {
+    animation: shared-tooltip-enter 140ms ease-out;
+  }
+}
+
+@keyframes shared-tooltip-enter {
+  from {
+    opacity: 0;
+    scale: 0.96;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}

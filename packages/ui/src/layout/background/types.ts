@@ -8,4 +8,5 @@ export interface BackgroundProps
   extends React.ComponentProps<"div">,
     VariantProps<typeof backgroundVariants> {
   children?: React.ReactNode;
+  effect?: "aurora";
 }

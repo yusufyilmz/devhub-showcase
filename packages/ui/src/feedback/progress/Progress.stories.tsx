@@ -25,7 +25,7 @@ const meta: Meta<typeof Progress> = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  title: "UI/Progress",
+  title: "UI/Feedback/Progress",
 };
 
 export default meta;

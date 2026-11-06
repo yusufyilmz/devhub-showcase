@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { ChatIcon, EditIcon, GitHubIcon, MenuIcon, PhoneIcon, SendIcon } from "./Icons";
 
-const meta = { tags: ["autodocs"], title: "UI/Icons" } satisfies Meta;
+const meta = { tags: ["autodocs"], title: "UI/Display/Icons" } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {

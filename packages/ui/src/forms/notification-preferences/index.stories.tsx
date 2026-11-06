@@ -19,7 +19,7 @@ const meta = {
     supported: true,
   },
   component: NotificationPreferences,
-  title: "Forms/Device notifications",
+  title: "UI/Forms/Device notifications",
 } satisfies Meta<typeof NotificationPreferences>;
 export default meta;
 export const Default: StoryObj<typeof meta> = {};

@@ -49,7 +49,7 @@ const meta: Meta<typeof Accordion> = {
     </Accordion>
   ),
   tags: ["autodocs"],
-  title: "UI/Accordion",
+  title: "UI/Layout/Accordion",
 };
 
 export default meta;

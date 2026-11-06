@@ -14,7 +14,7 @@ const meta = {
   args: { profile: fictional },
   component: Header,
   tags: ["autodocs"],
-  title: "UI/header",
+  title: "UI/Navigation/header",
 } satisfies Meta<typeof Header>;
 export default meta;
 type Story = StoryObj<typeof meta>;

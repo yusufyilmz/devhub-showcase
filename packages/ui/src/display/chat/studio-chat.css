@@ -128,9 +128,9 @@
 }
 .studio-chat-composer {
   display: flex;
-  gap: var(--spacing-s);
+  gap: var(--spacing-xs);
   align-items: end;
-  padding: var(--spacing-s);
+  padding: var(--spacing-xs);
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-2xl);
@@ -144,6 +144,10 @@
   grid-column: 1 / -1;
 }
 .studio-chat-composer-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  align-items: center;
   min-width: 0;
 }
 .studio-chat-composer:focus-within {
@@ -153,14 +157,15 @@
 .studio-chat-composer textarea.ui-input {
   flex: 1;
   min-width: 0;
-  min-height: 40px;
-  max-height: 180px;
-  padding: var(--spacing-s);
+  min-height: 44px;
+  max-height: min(180px, 30dvh);
+  padding: var(--spacing-xs) var(--spacing-s);
   margin: 0;
   font: inherit;
   font-size: var(--text-base);
   line-height: 1.5;
   color: inherit;
+  field-sizing: content;
   resize: none;
   outline: none;
   background: transparent;
@@ -170,11 +175,11 @@
 }
 .studio-chat-composer .studio-chat-send {
   display: grid;
-  flex: 0 0 40px;
+  flex: 0 0 44px;
   place-items: center;
-  width: 40px;
-  min-width: 40px;
-  height: 40px;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
   padding: 0;
   color: var(--primary-foreground);
   background: var(--primary);
@@ -182,8 +187,18 @@
   border-radius: var(--radius-full, 9999px);
   box-shadow: none;
 }
-.studio-chat-send:disabled {
-  opacity: 0.4;
+.studio-chat-composer .studio-chat-send:enabled:hover {
+  background: color-mix(in srgb, var(--primary) 83%, var(--foreground));
+}
+.studio-chat-composer[data-busy="true"] .studio-chat-send {
+  color: var(--foreground);
+  background: var(--muted);
+  border: 1px solid var(--border);
+}
+.studio-chat-composer .studio-chat-send:disabled {
+  color: var(--muted-foreground);
+  background: var(--muted);
+  opacity: 0.65;
 }
 .studio-chat-suggestions {
   display: grid;

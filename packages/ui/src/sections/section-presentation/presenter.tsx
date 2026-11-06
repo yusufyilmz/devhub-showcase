@@ -5,7 +5,6 @@ import type { ReactNode } from "react";
 import { authorableSections, getPortfolioCopy } from "@shared/config";
 
 import { Button } from "../../buttons/button";
-import { CollectionView } from "../../collections/CollectionView";
 import { LocationMap } from "../../display/map";
 import { ContactForm } from "../../forms/contact-form";
 import { Input } from "../../forms/input";
@@ -13,6 +12,7 @@ import { Label as LibraryLabel } from "../../forms/label/Label";
 import { Textarea } from "../../forms/textarea";
 import { HeroSurface } from "../../layout/hero";
 import { safeLink } from "../../utils/safe-link";
+import { CollectionView } from "../collection-view/CollectionView";
 import { presenterStyles, sectionPresentationClassName } from "./styles";
 import type { SectionPresentationOptions, SpecialViewOptions } from "./types";
 

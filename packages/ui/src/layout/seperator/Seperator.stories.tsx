@@ -21,7 +21,7 @@ const meta: Meta<typeof Separator> = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  title: "UI/Separator",
+  title: "UI/Layout/Separator",
 };
 
 export default meta;

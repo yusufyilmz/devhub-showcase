@@ -47,6 +47,7 @@ function MediaContent(props: WorkMediaOptions) {
             Open the original to view it; no account feed or tracking script is loaded here.
           </p>
           <Button
+            className={workMediaStyles.action}
             href={`https://www.${work.provider}.com${work.id}`}
             rel="noopener noreferrer"
             target="_blank"
@@ -87,6 +88,7 @@ function VideoPlayer({
           }
           <p role="status">{status}</p>
           <Button
+            className={workMediaStyles.action}
             onClick={() => {
               setLoaded(false);
               setReady(false);
@@ -102,12 +104,13 @@ function VideoPlayer({
           <p className="media-notice">
             Loading this video connects to YouTube. You can open the original instead.
           </p>
-          <Button onClick={() => setLoaded(true)} type="button" variant="outline">
+          <Button onClick={() => setLoaded(true)} type="button">
             {loadLabel}: {title}
           </Button>
         </>
       )}
       <Button
+        className={workMediaStyles.action}
         href={`https://www.youtube.com/watch?v=${video}`}
         rel="noopener noreferrer"
         target="_blank"

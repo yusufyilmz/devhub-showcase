@@ -1,5 +1,5 @@
 import { Button } from "../../buttons/button";
-import { HeroSurface } from "../../layout/hero";
+import { Background } from "../../layout/background";
 import { Section } from "../../layout/section";
 import { PortfolioPreview } from "./portfolio-preview";
 import { heroStyles } from "./styles";
@@ -7,7 +7,7 @@ import type { HomeHeroSectionOptions } from "./types";
 
 export function HomeHeroSection({ action, exampleHref }: HomeHeroSectionOptions) {
   return (
-    <HeroSurface>
+    <Background className="home-hero-background rounded-none" effect="aurora" variant="transparent">
       <Section asChild>
         <section aria-labelledby="home-title" className={heroStyles.element1}>
           <div className={heroStyles.element2}>
@@ -49,6 +49,6 @@ export function HomeHeroSection({ action, exampleHref }: HomeHeroSectionOptions)
           <PortfolioPreview />
         </section>
       </Section>
-    </HeroSurface>
+    </Background>
   );
 }

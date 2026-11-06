@@ -32,7 +32,7 @@ const meta: Meta<typeof Button> = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  title: "UI/Button",
+  title: "UI/Actions/Button",
 } satisfies Meta<typeof Button>;
 
 export default meta;

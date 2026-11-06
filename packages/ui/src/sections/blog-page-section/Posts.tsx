@@ -1,4 +1,4 @@
-import { CollectionView } from "../../collections/CollectionView";
+import { CollectionView } from "../collection-view/CollectionView";
 import type { SectionProps } from "../types";
 
 export function Posts(props: SectionProps) {

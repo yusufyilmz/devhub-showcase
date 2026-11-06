@@ -1,10 +1,15 @@
 export const alertDialogStyles = {
   alertDialogContent:
-    "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg",
-  alertDialogDescription: "text-muted-foreground text-sm",
-  alertDialogFooter: "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
-  alertDialogHeader: "flex flex-col gap-2 text-center sm:text-left",
+    "fixed top-1/2 left-1/2 z-50 grid w-[calc(100%-1.5rem)] max-h-[calc(100dvh-1.5rem)] -translate-x-1/2 -translate-y-1/2 gap-[1rem] overflow-y-auto rounded-xl border bg-card px-[clamp(1rem,4vw,1.75rem)] py-[clamp(1rem,4vw,1.5rem)] text-card-foreground shadow-xl duration-200 motion-safe:data-[state=open]:animate-in motion-safe:data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+  alertDialogDescription: "text-muted-foreground text-sm leading-relaxed",
+  alertDialogFooter: "flex flex-wrap justify-end gap-[0.5rem]",
+  alertDialogHeader: "flex flex-col gap-[0.375rem]",
   alertDialogOverlay:
-    "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
-  alertDialogTitle: "text-lg font-semibold",
+    "fixed inset-0 z-50 bg-black/50 backdrop-blur-[2px] motion-safe:data-[state=open]:animate-in motion-safe:data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+  alertDialogTitle: "text-lg font-semibold tracking-tight",
+  sizes: {
+    default: "max-w-[30rem]",
+    narrow: "max-w-[21rem]",
+    wide: "max-w-[42rem]",
+  },
 } as const;

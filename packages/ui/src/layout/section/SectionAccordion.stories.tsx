@@ -1,5 +1,3 @@
-import "../../sections/sections.css";
-
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { SectionAccordion } from "./SectionAccordion";
@@ -17,7 +15,7 @@ const meta = {
   args: { items, label: "Selected work" },
   component: SectionAccordion,
   tags: ["autodocs"],
-  title: "UI/Section/SectionAccordion",
+  title: "UI/Layout/Section/SectionAccordion",
 } satisfies Meta<typeof SectionAccordion>;
 export default meta;
 type Story = StoryObj<typeof meta>;

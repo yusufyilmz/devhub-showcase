@@ -1,5 +1,3 @@
-import "../../sections/sections.css";
-
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { SectionCarousel } from "./SectionCarousel";
@@ -17,7 +15,7 @@ const meta = {
   args: { items, label: "Selected work" },
   component: SectionCarousel,
   tags: ["autodocs"],
-  title: "UI/Section/SectionCarousel",
+  title: "UI/Layout/Section/SectionCarousel",
 } satisfies Meta<typeof SectionCarousel>;
 export default meta;
 type Story = StoryObj<typeof meta>;

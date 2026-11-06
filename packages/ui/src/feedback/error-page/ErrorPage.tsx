@@ -1,32 +1,28 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import type { FC } from "react";
+import { CircleAlert } from "lucide-react";
 
-import { Button } from "../../buttons/button";
-import { Typography } from "../../display/typography";
-import { Flex } from "../../layout/flex";
-import { errorPageStyles } from "./styles";
+import { copy } from "@shared/config";
 
-export const ErrorPage: FC = () => {
-  const router = useRouter();
+import { GoBackButton } from "../../buttons/go-back-button/GoBackButton";
+import { HomeButton } from "../../buttons/home-button/HomeButton";
+import { recoveryPageStyles } from "../../layout/page-variants/styles";
 
-  const handleGoBack = () => {
-    router.back();
-  };
-
+export function ErrorPage() {
   return (
-    <Flex className={errorPageStyles.element1} mt="lg">
-      <Typography className={errorPageStyles.element2} variant="h2">
-        Oops! Something went wrong.
-      </Typography>
-      <Typography variant="body1">
-        We're sorry, but we couldn't process your request. Please try again or contact support if
-        the problem persists.
-      </Typography>
-      <Button color="primary" onClick={handleGoBack} variant="default">
-        Go Back
-      </Button>
-    </Flex>
+    <div className={recoveryPageStyles.shell}>
+      <section className={`${recoveryPageStyles.card} [--recovery-tone:var(--destructive)]`}>
+        <span className={recoveryPageStyles.icon}>
+          <CircleAlert aria-hidden="true" className="size-[1.375rem]" />
+        </span>
+        <p className={recoveryPageStyles.label}>Server error</p>
+        <h1 className={recoveryPageStyles.title}>{copy.errorPage.title}</h1>
+        <p className={recoveryPageStyles.description}>{copy.errorPage.message}</p>
+        <div className={recoveryPageStyles.actions}>
+          <GoBackButton className={recoveryPageStyles.button} />
+          <HomeButton className={recoveryPageStyles.button} />
+        </div>
+      </section>
+    </div>
   );
-};
+}

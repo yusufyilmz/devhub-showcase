@@ -101,7 +101,7 @@ export const chatStyles = {
   chat3: "h-full",
   element1: "border-b border-[var(--border)]",
   element2:
-    "flex-1 p-[var(--spacing-lg)] overflow-y-auto bg-gradient-to-b from-[var(--muted)]/20 to-[var(--background)]",
+    "min-h-0 flex-1 p-[var(--spacing-sm)] overflow-y-auto bg-gradient-to-b from-[var(--muted)]/20 to-[var(--background)]",
   element3: "min-h-0",
   element4: "h-48",
   element5:

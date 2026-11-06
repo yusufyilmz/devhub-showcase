@@ -25,7 +25,7 @@ const meta: Meta<typeof Badge> = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  title: "UI/Badge",
+  title: "UI/Feedback/Badge",
 };
 
 export default meta;

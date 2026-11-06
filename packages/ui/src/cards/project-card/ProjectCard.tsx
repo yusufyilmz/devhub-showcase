@@ -1,83 +1,67 @@
 "use client";
 
-import { AvatarGroup, Carousel } from "../../display";
-import { Flex } from "../../layout";
+import { Button } from "../../buttons/button";
+import { AvatarGroup } from "../../display/avatar-group";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../../display/carousel";
+import { CardBase } from "../card/CardBase";
+import type { ProjectCardProps } from "./types";
 
-interface ProjectCardProps {
-  href: string;
-  priority?: boolean;
-  images: string[];
-  title: string;
-  content: string;
-  description: string;
-  avatars: { src: string }[];
-  link: string;
-}
-
-export const ProjectCard: React.FC<ProjectCardProps> = ({
-  href,
-  images = [],
+export function ProjectCard({
   title,
-  content,
   description,
-  avatars,
-  link,
-}) => {
+  images = [],
+  avatars = [],
+  caseStudyHref,
+  projectHref,
+}: ProjectCardProps) {
   return (
-    <Column fillWidth gap="m">
-      <Carousel
-        sizes="(max-width: 960px) 100vw, 960px"
-        images={images.map((image) => ({
-          src: image,
-          alt: title,
-        }))}
-      />
-      <Flex
-        mobileDirection="column"
-        fillWidth
-        paddingX="s"
-        paddingTop="12"
-        paddingBottom="24"
-        gap="l"
-      >
-        {title && (
-          <Flex flex={5}>
-            <Heading as="h2" wrap="balance" variant="heading-strong-xl">
-              {title}
-            </Heading>
-          </Flex>
-        )}
-        {(avatars?.length > 0 || description?.trim() || content?.trim()) && (
-          <Column flex={7} gap="16">
-            {avatars?.length > 0 && <AvatarGroup avatars={avatars} size="m" reverse />}
-            {description?.trim() && (
-              <Typography wrap="balance" variant="body-default-s" onBackground="neutral-weak">
-                {description}
-              </Typography>
+    <CardBase asChild className="gap-4 overflow-hidden p-5" interaction="static">
+      <article>
+        {images.length > 0 && (
+          <Carousel aria-label={`${title} screenshots`} className="relative">
+            <CarouselContent>
+              {images.map(({ src, alt }) => (
+                <CarouselItem key={src}>
+                  {/* biome-ignore lint/performance/noImgElement: The component accepts caller-supplied screenshots. */}
+                  <img
+                    alt={alt}
+                    className="aspect-video w-full rounded-md object-cover"
+                    loading="lazy"
+                    src={src}
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            {images.length > 1 && (
+              <>
+                <CarouselPrevious className="left-2" />
+                <CarouselNext className="right-2" />
+              </>
             )}
-            <Flex gap="24" wrap>
-              {content?.trim() && (
-                <SmartLink
-                  suffixIcon="arrowRight"
-                  style={{ margin: "0", width: "fit-content" }}
-                  href={href}
-                >
-                  <Typography variant="body-default-s">Read case study</Typography>
-                </SmartLink>
-              )}
-              {link && (
-                <SmartLink
-                  suffixIcon="arrowUpRightFromSquare"
-                  style={{ margin: "0", width: "fit-content" }}
-                  href={link}
-                >
-                  <Typography variant="body-default-s">View project</Typography>
-                </SmartLink>
-              )}
-            </Flex>
-          </Column>
+          </Carousel>
         )}
-      </Flex>
-    </Column>
+        <div className="space-y-2">
+          <h3 className="font-semibold text-lg">{title}</h3>
+          {description && <p className="text-muted-foreground text-sm">{description}</p>}
+          {avatars.length > 0 && <AvatarGroup avatars={avatars} />}
+        </div>
+        {(caseStudyHref || projectHref) && (
+          <div className="flex flex-wrap gap-2">
+            {caseStudyHref && (
+              <Button href={caseStudyHref} variant="outline">
+                Read case study
+              </Button>
+            )}
+            {projectHref && <Button href={projectHref}>View project</Button>}
+          </div>
+        )}
+      </article>
+    </CardBase>
   );
-};
+}

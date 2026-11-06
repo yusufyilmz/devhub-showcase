@@ -4,5 +4,5 @@ export {
   ComponentCustomizer,
   type ComponentCustomizerProps,
   TypographyCustomizer,
-} from "./ComponentCustomizer";
-export { ThemeCustomizer, type ThemeCustomizerProps } from "./ThemeCustomizer";
+} from "../component-customizer/ComponentCustomizer";
+export { ThemeCustomizer, type ThemeCustomizerProps } from "../theme-customizer";

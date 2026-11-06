@@ -11,7 +11,7 @@ const meta = {
   args: { logos: [{ alt: "Fictional studio", src: mark }] },
   component: LogoCloud,
   tags: ["autodocs"],
-  title: "UI/Logo cloud",
+  title: "UI/Display/Logo cloud",
 } satisfies Meta<typeof LogoCloud>;
 export default meta;
 type Story = StoryObj<typeof meta>;

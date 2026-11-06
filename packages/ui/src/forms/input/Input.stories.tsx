@@ -20,7 +20,7 @@ const meta: Meta<typeof Input> = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  title: "UI/Input",
+  title: "UI/Forms/Input",
 };
 
 export default meta;

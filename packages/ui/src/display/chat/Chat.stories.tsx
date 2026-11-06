@@ -186,7 +186,7 @@ const ChatDemo: React.FC = () => {
   };
 
   return (
-    <FlexCol className="p-8" gap="xl">
+    <FlexCol className="p-3 sm:p-6" gap="lg">
       {/* Header */}
       <div>
         <Typography className="font-bold mb-4" variant="h1">
@@ -197,6 +197,29 @@ const ChatDemo: React.FC = () => {
           typing indicators, and theme integration.
         </Typography>
       </div>
+
+      {/* Chat Component */}
+      <Card className="p-3 sm:p-5">
+        <Typography className="font-semibold mb-4" variant="h3">
+          Live Chat Demo
+        </Typography>
+        <div className="h-[clamp(38rem,82dvh,54rem)]">
+          <Chat
+            currentUser={currentUser}
+            fullHeight
+            fullWidth
+            maxLength={500}
+            messages={messages}
+            onSendMessage={handleSendMessage}
+            onTyping={handleTyping}
+            placeholder="Type your message here..."
+            shadow="lg"
+            size="lg"
+            typingUsers={typingUsers}
+            variant="card"
+          />
+        </div>
+      </Card>
 
       {/* Features Overview */}
       <Card className="p-6">
@@ -247,29 +270,6 @@ const ChatDemo: React.FC = () => {
             <Typography variant="body2">Simulate Typing</Typography>
           </Button>
         </FlexRow>
-      </Card>
-
-      {/* Chat Component */}
-      <Card className="p-6">
-        <Typography className="font-semibold mb-4" variant="h3">
-          Live Chat Demo
-        </Typography>
-        <div className="h-[600px]">
-          <Chat
-            currentUser={currentUser}
-            fullHeight
-            fullWidth
-            maxLength={500}
-            messages={messages}
-            onSendMessage={handleSendMessage}
-            onTyping={handleTyping}
-            placeholder="Type your message here..."
-            shadow="lg"
-            size="lg"
-            typingUsers={typingUsers}
-            variant="card"
-          />
-        </div>
       </Card>
 
       {/* Individual Components Demo */}
@@ -466,7 +466,7 @@ const ChatDemo: React.FC = () => {
 const meta = {
   component: ChatDemo,
   parameters: { layout: "fullscreen" },
-  title: "Components/Chat",
+  title: "UI/Display/Chat",
 } satisfies Meta<typeof ChatDemo>;
 
 export default meta;

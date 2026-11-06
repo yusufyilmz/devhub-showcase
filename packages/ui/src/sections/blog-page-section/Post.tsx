@@ -1,4 +1,4 @@
-import { ItemContent } from "../../collections/CollectionView";
+import { ItemContent } from "../collection-view/CollectionView";
 import type { PostOptions } from "./types";
 
 export function Post({ item, language }: PostOptions) {
