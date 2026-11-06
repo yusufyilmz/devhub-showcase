@@ -11,7 +11,10 @@ export { ProfileFields } from "./profile-fields";
 export { ProposalComparison } from "./proposal-comparison";
 export { PublicationControls } from "./publication/editor";
 export { PortfolioLayout } from "./published-page/PortfolioLayout";
-export { RegisteredSections } from "./published-page/registered-sections";
+export {
+  type ArrangePortfolioSections,
+  RegisteredSections,
+} from "./published-page/registered-sections";
 export { DraftRecovery } from "./recovery/DraftRecovery";
 export { clearDraftRecovery, recoveryPrefix } from "./recovery/storage";
 export type { SetupStep } from "./recovery/types";

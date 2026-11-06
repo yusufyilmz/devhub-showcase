@@ -9,8 +9,15 @@ export const metadata: Metadata = {
   robots: { follow: false, index: false },
   title: "Edit your CV",
 };
-export default async function EditCvPage({ params }: { params: Promise<{ username: string }> }) {
+export default async function EditCvPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ username: string }>;
+  searchParams?: Promise<{ view?: string }>;
+}) {
   const { username } = await params;
+  const initiallyArranging = (await searchParams)?.view === "arrange";
   let workspace: Awaited<ReturnType<typeof requireWorkspace>>;
   try {
     workspace = await requireWorkspace();
@@ -28,7 +35,7 @@ export default async function EditCvPage({ params }: { params: Promise<{ usernam
           ...(workspace.user.email ? { email: workspace.user.email } : {}),
         }}
       />
-      <ProfileEditor initial={snapshot} />
+      <ProfileEditor initial={snapshot} initiallyArranging={initiallyArranging} />
     </>
   );
 }

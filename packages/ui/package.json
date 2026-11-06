@@ -13,6 +13,7 @@
     "./navigation": "./src/navigation/index.ts",
     "./section-navigator": "./src/navigation/section-navigator/index.ts",
     "./agent-companion": "./src/display/agent-companion/index.ts",
+    "./chat-bubble": "./src/display/chat-bubble/index.ts",
     "./display": "./src/display/index.ts",
     "./layout": "./src/layout/index.ts",
     "./theme": "./src/theme/index.ts",

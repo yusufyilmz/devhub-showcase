@@ -24,7 +24,7 @@ function Preview(props: Pick<AgentCompanionProps, "agent" | "label" | "notice">)
   return (
     <main style={{ padding: "2rem" }}>
       <h1>Assistant companion</h1>
-      <p>Select the character to open its chat.</p>
+      <p>Select the character to open its chat. Drag it side to side to move it.</p>
       {!open && props.notice && (
         <Card id="activity" style={{ marginBlockStart: "1rem", maxWidth: "24rem" }} tabIndex={-1}>
           <CardHeader>

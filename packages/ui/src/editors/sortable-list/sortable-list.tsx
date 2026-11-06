@@ -16,32 +16,73 @@ export function moveItem<T>(items: readonly T[], from: number, to: number): T[] 
   return next;
 }
 
-export function SortableList({ items, onChange, label }: SortableListOptions) {
+function closestRow(rows: Element[], y: number) {
+  const distance = (row: Element) => {
+    const rect = row.getBoundingClientRect();
+    return Math.abs(rect.top + rect.height / 2 - y);
+  };
+  return rows.reduce(
+    (best, row, index) => (distance(row) < distance(rows[best] ?? row) ? index : best),
+    0,
+  );
+}
+
+function insertionIndex(rows: Element[], y: number) {
+  const index = rows.findIndex((row) => {
+    const rect = row.getBoundingClientRect();
+    return y < rect.top + rect.height / 2;
+  });
+  return index === -1 ? rows.length : index;
+}
+
+export function SortableList({
+  disabled,
+  items,
+  onChange,
+  label,
+  renderContent,
+}: SortableListOptions) {
   const root = useRef<HTMLOListElement>(null);
   const active = useRef<Drag | null>(null);
   const [preview, setPreview] = useState<Item[] | null>(null);
+  const [dropIndex, setDropIndex] = useState<number>();
+  const view = useRef<Window | null>(null);
+  const scrollFrame = useRef<number | undefined>(undefined);
   const [announcement, setAnnouncement] = useState("");
   const helpId = useId();
   const visible = preview ?? items;
+
+  function stopScrolling() {
+    if (scrollFrame.current === undefined) return;
+    view.current?.cancelAnimationFrame(scrollFrame.current);
+    scrollFrame.current = undefined;
+  }
   useEffect(() => {
     const cancel = (event: KeyboardEvent) => {
       const current = active.current;
       if (event.key !== "Escape" || !current) return;
       active.current = null;
       setPreview(null);
+      setDropIndex(undefined);
       setAnnouncement("Reorder cancelled.");
       if (root.current?.hasPointerCapture(current.pointerId))
         root.current.releasePointerCapture(current.pointerId);
     };
-    window.addEventListener("keydown", cancel);
-    return () => window.removeEventListener("keydown", cancel);
+    const owner = root.current?.ownerDocument;
+    owner?.addEventListener("keydown", cancel);
+    return () => {
+      owner?.removeEventListener("keydown", cancel);
+      if (scrollFrame.current !== undefined)
+        owner?.defaultView?.cancelAnimationFrame(scrollFrame.current);
+    };
   }, []);
   function commit(next: Item[], id: string) {
-    const focusLabel = document.activeElement?.getAttribute("aria-label");
+    const owner = root.current?.ownerDocument;
+    const focusLabel = owner?.activeElement?.getAttribute("aria-label");
     onChange(next.map((item) => item.id));
     requestAnimationFrame(() => {
       // Restore lost focus only; never steal focus from the next keyboard action.
-      if (document.activeElement && document.activeElement !== document.body) return;
+      if (owner?.activeElement && owner.activeElement !== owner.body) return;
       const row = Array.from(root.current?.children ?? []).find(
         (element) => (element as HTMLElement).dataset.sortableId === id,
       );
@@ -49,55 +90,78 @@ export function SortableList({ items, onChange, label }: SortableListOptions) {
         Array.from(row?.querySelectorAll<HTMLButtonElement>("button") ?? []).find(
           (node) => node.getAttribute("aria-label") === focusLabel && !node.disabled,
         ) ?? row?.querySelector<HTMLButtonElement>(".sortable-handle");
-      button?.focus({ preventScroll: true });
+      button?.focus({ preventScroll: !renderContent });
     });
     const index = next.findIndex((item) => item.id === id);
     setAnnouncement(`${next[index]?.label} moved to position ${index + 1} of ${next.length}.`);
   }
   function move(id: string, target: number) {
     const index = items.findIndex((item) => item.id === id);
-    if (target === index || target < 0 || target >= items.length) return;
+    if (disabled || target === index || target < 0 || target >= items.length) return;
     commit(moveItem(items, index, target), id);
   }
   function start(event: PointerEvent<HTMLLIElement>, id: string) {
-    if (!event.isPrimary || event.button !== 0 || items.length < 2) return;
-    if (
-      event.target instanceof Element &&
-      event.target.closest("button:not(.sortable-handle), a, input, select, textarea")
-    )
-      return;
+    if (disabled || !event.isPrimary || event.button !== 0 || items.length < 2) return;
+    const target = event.target as Element;
+    if (renderContent && !target.closest?.(".sortable-handle")) return;
+    if (target.closest?.("button:not(.sortable-handle), a, input, select, textarea")) return;
+    view.current = event.currentTarget.ownerDocument.defaultView;
     event.currentTarget.querySelector<HTMLButtonElement>(".sortable-handle")?.focus();
     active.current = { id, items: [...items], pointerId: event.pointerId };
     setPreview(items);
     root.current?.setPointerCapture(event.pointerId);
     setAnnouncement("Dragging section. Release to place, or press Escape to cancel.");
   }
+  function updateContentDrop(current: Drag, rows: Element[], y: number) {
+    const source = items.findIndex((item) => item.id === current.id);
+    const index = insertionIndex(rows, y);
+    current.items = moveItem(items, source, index > source ? index - 1 : index);
+    setDropIndex(index === source || index === source + 1 ? undefined : index);
+  }
+
+  function scrollNearEdge(viewport: Window, y: number, rows: Element[], current: Drag) {
+    stopScrolling();
+    const step = y < 70 ? -15 : y > viewport.innerHeight - 70 ? 15 : 0;
+    if (!step) return;
+    if (!renderContent) {
+      viewport.scrollBy(0, step);
+      return;
+    }
+    const tick = () => {
+      scrollFrame.current = undefined;
+      if (active.current !== current) return;
+      const previous = viewport.scrollY;
+      viewport.scrollBy(0, step);
+      if (viewport.scrollY === previous) return;
+      updateContentDrop(current, rows, y);
+      scrollFrame.current = viewport.requestAnimationFrame(tick);
+    };
+    scrollFrame.current = viewport.requestAnimationFrame(tick);
+  }
+
   function drag(event: PointerEvent<HTMLOListElement>) {
     const current = active.current;
     if (!current || current.pointerId !== event.pointerId) return;
     const rows = Array.from(event.currentTarget.children);
-    const target = rows.reduce((best, row, index) => {
-      const center = (element: Element) => {
-        const rect = element.getBoundingClientRect();
-        return rect.top + rect.height / 2;
-      };
-      return Math.abs(center(row) - event.clientY) <
-        Math.abs(center(rows[best] ?? row) - event.clientY)
-        ? index
-        : best;
-    }, 0);
-    const from = current.items.findIndex((item) => item.id === current.id);
-    current.items = moveItem(current.items, from, target);
-    setPreview(current.items);
-    if (event.clientY < 80) window.scrollBy(0, -15);
-    if (event.clientY > window.innerHeight - 80) window.scrollBy(0, 15);
+    if (renderContent) {
+      updateContentDrop(current, rows, event.clientY);
+    } else {
+      const from = current.items.findIndex((item) => item.id === current.id);
+      current.items = moveItem(current.items, from, closestRow(rows, event.clientY));
+      setPreview(current.items);
+    }
+    const viewport = view.current;
+    if (viewport) scrollNearEdge(viewport, event.clientY, rows, current);
   }
+
   function finish(cancel = false) {
     const current = active.current;
     if (!current) return;
+    stopScrolling();
     active.current = null;
     setPreview(null);
-    if (cancel) setAnnouncement("Reorder cancelled.");
+    setDropIndex(undefined);
+    if (cancel || disabled) setAnnouncement("Reorder cancelled.");
     else if (current.items.some((item, index) => item.id !== items[index]?.id))
       commit(current.items, current.id);
     if (root.current?.hasPointerCapture(current.pointerId))
@@ -110,11 +174,14 @@ export function SortableList({ items, onChange, label }: SortableListOptions) {
           ? items.length === 0
             ? "No items to reorder yet."
             : "Add another item to reorder the list."
-          : "Drag anywhere on a row to reorder. You can also use the move buttons or focus a handle and use the arrow keys. Press Escape to cancel a drag."}
+          : renderContent
+            ? "Drag a section by its handle, or use the move buttons and arrow keys. Press Escape to cancel a drag."
+            : "Drag anywhere on a row to reorder. You can also use the move buttons or focus a handle and use the arrow keys. Press Escape to cancel a drag."}
       </p>
       <ol
         aria-label={label}
         className={sortableListStyles.element2}
+        data-content={Boolean(renderContent) || undefined}
         onLostPointerCapture={() => finish(true)}
         onPointerCancel={() => finish(true)}
         onPointerMove={drag}
@@ -123,63 +190,85 @@ export function SortableList({ items, onChange, label }: SortableListOptions) {
         }}
         ref={root}
       >
-        {visible.map((item, index) => (
-          <li
-            data-draggable={items.length > 1 || undefined}
-            data-dragging={active.current?.id === item.id || undefined}
-            data-sortable-id={item.id}
-            key={item.id}
-            onPointerDown={(event) => start(event, item.id)}
-          >
-            <Button
-              aria-describedby={helpId}
-              aria-label={`Reorder ${item.label}`}
-              className={sortableListStyles.element3}
-              onKeyDown={(event) => {
-                if (event.key === "Escape") {
-                  finish(true);
-                  return;
-                }
-                if (active.current) return;
-                const targets: Record<string, number> = {
-                  ArrowDown: index + 1,
-                  ArrowUp: index - 1,
-                  End: items.length - 1,
-                  Home: 0,
-                };
-                const target = targets[event.key];
-                if (target === undefined) return;
-                event.preventDefault();
-                move(item.id, target);
-              }}
-              type="button"
+        {visible.map((item, index) => {
+          const controls = (
+            <>
+              <Button
+                aria-describedby={helpId}
+                aria-label={`Reorder ${item.label}`}
+                className={sortableListStyles.element3}
+                disabled={disabled}
+                onKeyDown={(event) => {
+                  if (event.key === "Escape") {
+                    finish(true);
+                    return;
+                  }
+                  if (active.current) return;
+                  const targets: Record<string, number> = {
+                    ArrowDown: index + 1,
+                    ArrowUp: index - 1,
+                    End: items.length - 1,
+                    Home: 0,
+                  };
+                  const target = targets[event.key];
+                  if (target === undefined) return;
+                  event.preventDefault();
+                  move(item.id, target);
+                }}
+                type="button"
+              >
+                <span aria-hidden="true">⠿</span>
+              </Button>
+              <span aria-hidden="true" className={sortableListStyles.element4}>
+                {index + 1}
+              </span>
+              <span className={sortableListStyles.element5}>{item.label}</span>
+              <Button
+                aria-label={`Move ${item.label} up`}
+                className={sortableListStyles.element6}
+                disabled={disabled || index === 0}
+                onClick={() => move(item.id, index - 1)}
+                type="button"
+              >
+                ↑
+              </Button>
+              <Button
+                aria-label={`Move ${item.label} down`}
+                className={sortableListStyles.element7}
+                disabled={disabled || index === items.length - 1}
+                onClick={() => move(item.id, index + 1)}
+                type="button"
+              >
+                ↓
+              </Button>
+            </>
+          );
+          return (
+            <li
+              data-draggable={(!disabled && items.length > 1) || undefined}
+              data-dragging={active.current?.id === item.id || undefined}
+              data-drop={
+                dropIndex === index
+                  ? "before"
+                  : dropIndex === items.length && index === items.length - 1
+                    ? "after"
+                    : undefined
+              }
+              data-sortable-id={item.id}
+              key={item.id}
+              onPointerDown={(event) => start(event, item.id)}
             >
-              <span aria-hidden="true">⠿</span>
-            </Button>
-            <span aria-hidden="true" className={sortableListStyles.element4}>
-              {index + 1}
-            </span>
-            <span className={sortableListStyles.element5}>{item.label}</span>
-            <Button
-              aria-label={`Move ${item.label} up`}
-              className={sortableListStyles.element6}
-              disabled={index === 0}
-              onClick={() => move(item.id, index - 1)}
-              type="button"
-            >
-              ↑
-            </Button>
-            <Button
-              aria-label={`Move ${item.label} down`}
-              className={sortableListStyles.element7}
-              disabled={index === items.length - 1}
-              onClick={() => move(item.id, index + 1)}
-              type="button"
-            >
-              ↓
-            </Button>
-          </li>
-        ))}
+              {renderContent ? (
+                <>
+                  <div className="sortable-item-tools">{controls}</div>
+                  {renderContent(item.id)}
+                </>
+              ) : (
+                controls
+              )}
+            </li>
+          );
+        })}
       </ol>
       <p aria-live="polite" className={sortableListStyles.element8} role="status">
         {announcement}

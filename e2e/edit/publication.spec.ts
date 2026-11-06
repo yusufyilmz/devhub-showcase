@@ -41,6 +41,18 @@ test("private saves, explicit snapshots, independent fields, rename and withdraw
   await confirmPublication(page);
   await publicPage.goto(`/${username}`);
   await expect(publicPage.getByRole("heading", { level: 1 })).toContainText("Publication Owner");
+  const arrangeName = "Arrange portfolio sections";
+  await expect(publicPage.getByRole("link", { name: arrangeName })).toHaveCount(0);
+  const ownerPortfolio = await context.newPage();
+  await ownerPortfolio.goto(`/${username}`);
+  await ownerPortfolio.getByRole("link", { name: arrangeName }).click();
+  await expect(ownerPortfolio).toHaveURL(/view=arrange#portfolio-draft-preview$/);
+  await expect(
+    ownerPortfolio
+      .frameLocator('iframe[title="Private draft preview"]')
+      .getByRole("list", { name: arrangeName }),
+  ).toBeVisible();
+  await ownerPortfolio.close();
   const web = await (
     await visitor.request.get(
       `http://127.0.0.1:3101/rest/v1/portfolio_publications?id=eq.${profileId}`,

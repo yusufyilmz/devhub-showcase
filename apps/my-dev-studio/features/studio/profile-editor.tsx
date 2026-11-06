@@ -3,10 +3,16 @@
 import "@shared/ui/components.css";
 
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
 import { AiAssistantEditor, AiProfileEditor } from "@shared/assistant/studio";
-import { type PortfolioProfile, type PortfolioType, portfolioTypes } from "@shared/config";
+import {
+  getPortfolioEntries,
+  type PortfolioEntryId,
+  type PortfolioProfile,
+  type PortfolioType,
+  portfolioTypes,
+} from "@shared/config";
 import { urls } from "@shared/config/urls";
 import { editCvPath } from "@shared/lib/profiles";
 import { useStudioRequest } from "@shared/runtime/studio";
@@ -108,6 +114,7 @@ export function ProfileEditor({
   managed = false,
   onSaved,
   initialTab = "Profile",
+  initiallyArranging = false,
 }: {
   initial: ProfileSnapshot;
   saveUrl?: string;
@@ -115,6 +122,7 @@ export function ProfileEditor({
   managed?: boolean;
   onSaved?: (snapshot: ProfileSnapshot) => void;
   initialTab?: (typeof tabs)[number];
+  initiallyArranging?: boolean;
 }) {
   const userId = useUserConfigStore((state) => state.user?.id);
   const [profession, setProfession] = useState<PortfolioType>(defaultProfession(initial.profile));
@@ -146,6 +154,8 @@ export function ProfileEditor({
     storageKey: recoveryKey(userId, initial.id, saveUrl),
     value: { isPublic, profession, profile: draft, step, tab, username },
   });
+  const editorDisabled = busy || recovery.stale;
+  const canSave = dirty && !editorDisabled;
   useEffect(() => {
     const warn = (event: BeforeUnloadEvent) => {
       if (dirty) {
@@ -233,11 +243,7 @@ export function ProfileEditor({
                 Plan and usage
               </Button>
 
-              <Button
-                className="studio-primary"
-                disabled={busy || !dirty || recovery.stale}
-                type="submit"
-              >
+              <Button className="studio-primary" disabled={!canSave} type="submit">
                 {busy ? "Saving…" : "Save changes"}
               </Button>
             </>
@@ -317,7 +323,7 @@ export function ProfileEditor({
           publication={
             <ProfilePublication
               dirty={dirty}
-              disabled={busy || recovery.stale}
+              disabled={editorDisabled}
               id={saved.id}
               managed={managed}
               onChanged={(value) => {
@@ -377,7 +383,19 @@ export function ProfileEditor({
             tab={tab}
           />
         </fieldset>
-        <DraftPreview profile={draft} username={username} />
+        <DraftPreview
+          disabled={editorDisabled}
+          featured={initial.id === "main"}
+          initiallyArranging={initiallyArranging}
+          onChange={setDraft}
+          profile={draft}
+          saveAction={
+            <Button disabled={!canSave} type="submit">
+              Save layout draft
+            </Button>
+          }
+          username={username}
+        />
         <div className="editor-save-bar">
           <div>
             <strong>Your saved draft</strong>
@@ -557,10 +575,50 @@ const editors = {
   Templates: SectionTemplatesEditor,
 };
 
-function DraftPreview({ profile, username }: { profile: PortfolioProfile; username: string }) {
+function DraftPreview({
+  disabled,
+  featured,
+  initiallyArranging,
+  onChange,
+  profile,
+  saveAction,
+  username,
+}: {
+  disabled: boolean;
+  featured: boolean;
+  initiallyArranging: boolean;
+  onChange: (profile: PortfolioProfile) => void;
+  profile: PortfolioProfile;
+  saveAction: ReactNode;
+  username: string;
+}) {
+  const [arranging, setArranging] = useState(initiallyArranging);
+  function arrangeVisibleSections(order: PortfolioEntryId[]) {
+    const moved = new Set(order);
+    const remaining = order.values();
+    const sectionSequence = getPortfolioEntries(profile).map(({ id }) =>
+      moved.has(id) ? (remaining.next().value ?? id) : id,
+    );
+    onChange({ ...profile, sectionSequence });
+  }
+
   return (
-    <ResponsivePortfolioPreview appearance={profile.appearance}>
-      <PreviewContent profile={profile} username={username} />
+    <ResponsivePortfolioPreview
+      appearance={profile.appearance}
+      arrange={{
+        active: arranging,
+        disabled,
+        onToggle: () => setArranging(!arranging),
+        saveAction,
+      }}
+      initiallyOpen={initiallyArranging}
+    >
+      <PreviewContent
+        arrange={arranging ? { disabled, onChange: arrangeVisibleSections } : undefined}
+        featured={featured}
+        profile={profile}
+        username={username}
+      />
     </ResponsivePortfolioPreview>
   );
 }

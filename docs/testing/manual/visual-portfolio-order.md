@@ -1,0 +1,19 @@
+# Drag-and-drop portfolio layout
+
+**Scope and status.** Arrange the sections of the actual portfolio layout
+inside the private draft preview. Saving uses the existing revision check.
+Publishing is a separate action. The introduction, contact area and footer
+retain their positions.
+
+**Prerequisites.** Run the local Playwright fixture and use its disposable
+preview owner. Use a published test portfolio for the owner shortcut and
+a signed-out browser for the access check.
+
+| Step | Clickable URL                                                                                              | Route path                                                         | Action                                                                                                                     | Expected result                                                                                                     | Actual result or evidence                                                                                                              |
+| ---- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | [Published owner fixture](http://localhost:3100/desktop-publication-owner)                                 | `/desktop-publication-owner`                                       | Publish the disposable fixture through the editor, then look for Arrange portfolio sections as a visitor and as its owner. | Only the owner sees the shortcut. It opens the private draft preview in arrangement mode.                           | Passed in the publication fixtures on desktop and mobile. The owner shortcut opened the private arranger and was absent for a visitor. |
+| 2    | [Arrange the draft](http://localhost:3100/desktop-preview-owner/edit?view=arrange#portfolio-draft-preview) | `/desktop-preview-owner/edit?view=arrange#portfolio-draft-preview` | Drag the About handle above another section. Use the move buttons or keyboard on a phone.                                  | The preview reflects the new order. Hidden sections and private projects stay out of the preview.                   | Passed with pointer dragging in the desktop draft preview and keyboard reordering on mobile.                                           |
+| 3    | [Save the draft](http://localhost:3100/desktop-preview-owner/edit?view=arrange#portfolio-draft-preview)    | `/desktop-preview-owner/edit?view=arrange#portfolio-draft-preview` | Click Save layout draft and reopen the editor. Check the public link in a signed-out browser.                              | The saved draft keeps its new order. Hidden entries stay in the saved sequence. The published page stays as it was. | Passed on desktop and mobile. The saved order survived reopening and included hidden IDs. The test portfolio remained private.         |
+| 4    | [Draft access](http://localhost:3100/desktop-preview-owner/edit?view=arrange#portfolio-draft-preview)      | `/desktop-preview-owner/edit?view=arrange#portfolio-draft-preview` | Open the draft link signed out or signed in as a different fixture owner.                                                  | Access follows the existing login and ownership checks.                                                             | Signed-out editor access redirected to login in both browser projects. The other-user shortcut check passed in the unit suite.         |
+
+Return to the [manual testing index](index.md).

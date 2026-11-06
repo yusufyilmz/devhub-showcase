@@ -63,10 +63,13 @@ test("portfolio icon controls use matching foreground and surface colors in both
       await page.getByRole("button", { name: `Switch to ${mode} theme` }).click();
     }
     const palette = getThemePalette("studio", mode);
-    const labels = ["Portfolio assistant", "Referral Chat", "Scroll to next section"];
+    const assistant = page.getByRole("link", { exact: true, name: "Portfolio assistant" });
+    await expect(assistant).toBeVisible();
+    await expect(assistant).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+    const labels = ["Referral Chat", "Scroll to next section"];
     if (info.project.name.startsWith("mobile")) labels.push("Menu");
     for (const name of labels) {
-      const control = page.getByRole(name === "Portfolio assistant" ? "link" : "button", {
+      const control = page.getByRole("button", {
         exact: true,
         name,
       });

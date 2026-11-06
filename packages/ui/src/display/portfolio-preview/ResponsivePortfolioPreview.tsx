@@ -12,11 +12,17 @@ import type { ResponsivePortfolioPreviewProps } from "./types";
 export function ResponsivePortfolioPreview({
   children,
   appearance,
+  arrange,
+  initiallyOpen = false,
 }: ResponsivePortfolioPreviewProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(initiallyOpen);
   const [size, setSize] = useState<keyof typeof previewSizes>("Mobile");
   const [doc, setDocument] = useState<Document | null>(null);
   const frame = useRef<HTMLIFrameElement>(null);
+  useEffect(() => {
+    const loaded = frame.current?.contentDocument;
+    if (open && loaded?.getElementById("portfolio-preview-root")) setDocument(loaded);
+  }, [open]);
   useEffect(() => {
     if (!doc) return;
     const sync = () => preparePreviewFrame(doc, appearance);
@@ -33,15 +39,18 @@ export function ResponsivePortfolioPreview({
   return (
     <details
       className="draft-preview"
+      id="portfolio-draft-preview"
       onToggle={(event) => {
         setOpen(event.currentTarget.open);
         if (!event.currentTarget.open) setDocument(null);
       }}
+      open={open}
     >
       <summary>Preview your draft</summary>
       <p>
-        Private layout preview of unsaved changes. External links, downloads and theme controls are
-        disabled. This does not save or publish.
+        {arrange?.active
+          ? "Drag section handles in the preview to change your draft. Save your changes before reviewing publication."
+          : "Private layout preview of unsaved changes. External links, downloads and theme controls are disabled. This does not save or publish."}
       </p>
       {open && (
         <>
@@ -59,6 +68,20 @@ export function ResponsivePortfolioPreview({
               </Button>
             ))}
           </fieldset>
+          {arrange && (
+            <div className="draft-preview-sizes">
+              <Button
+                aria-pressed={arrange.active}
+                disabled={arrange.disabled}
+                onClick={arrange.onToggle}
+                type="button"
+                variant="outline"
+              >
+                Arrange sections
+              </Button>
+              {arrange.active && arrange.saveAction}
+            </div>
+          )}
           <div className="draft-preview-scroll">
             <iframe
               onLoad={() => setDocument(frame.current?.contentDocument ?? null)}

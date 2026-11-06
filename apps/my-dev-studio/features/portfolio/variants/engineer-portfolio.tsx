@@ -7,12 +7,13 @@ import { type PortfolioProfile, selectPortfolioContent } from "@shared/config";
 import { publicChatSources } from "@shared/lib/profiles";
 import type { ChatMessage } from "@shared/lib/types";
 import { getPortfolioResources } from "@shared/services/portfolio";
-import { EngineerPage } from "@shared/ui/portfolio";
+import { type ArrangePortfolioSections, EngineerPage } from "@shared/ui/portfolio";
 import type { ReferralSection } from "@shared/ui/sections";
 
 import { handleSendMessageAction } from "../../../app/actions";
 
 interface EngineerPortfolioProps {
+  arrange?: ArrangePortfolioSections;
   chatIdentity?: {
     id: string;
     username: string;
@@ -20,6 +21,7 @@ interface EngineerPortfolioProps {
     revision: number;
   };
   extras?: boolean;
+  featured?: boolean;
   handleSendMessage: (
     input: ChatMessage,
     sessionId: string,
@@ -31,10 +33,12 @@ interface EngineerPortfolioProps {
 }
 
 export function EngineerPortfolioView({
+  arrange,
   profile,
   ownerLink,
   referrals = [],
   extras = false,
+  featured = extras,
   chatIdentity,
   handleSendMessage,
 }: EngineerPortfolioProps) {
@@ -59,9 +63,10 @@ export function EngineerPortfolioView({
     ) : null;
   return (
     <EngineerPage
+      arrange={arrange}
       chat={chat}
       extras={extras}
-      featured={extras}
+      featured={featured}
       ownerLink={chat ? undefined : ownerLink}
       profile={profile}
       referrals={referrals}
