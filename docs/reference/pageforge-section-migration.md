@@ -51,7 +51,7 @@ Each folder has a renderer, a matching editor and index.tsx. Shared presenters i
 
 ## Supporting files
 
-Post, Posts and JsonBlogPage become helpers/aliases under blog-page-section; TableOfContents lives under table-of-contents-section; MasonryGrid lives under gallery-grid-section. Their behavior uses the same validated items and current page anchors. SCSS modules are replaced by the package stylesheet using MyDevStudio theme variables.
+Post, Posts and JsonBlogPage become helpers/aliases under blog-page-section; TableOfContents lives under table-of-contents-section; MasonryGridSectionlives under gallery-grid-section. Their behavior uses the same validated items and current page anchors. SCSS modules are replaced by the package stylesheet using MyDevStudio theme variables.
 
 ## Integration boundaries
 

@@ -62,7 +62,7 @@ export const TrelloCard: FC<TrelloCardProps> = ({
   const [showCardModal, setShowCardModal] = useState(false); // ✅ Main card detail modal
 
   // Safety check for card data
-  if (!card || !card.id) {
+  if (!card?.id) {
     logger("TrelloCard").error("TrelloCard: Invalid card data", card);
     return null;
   }

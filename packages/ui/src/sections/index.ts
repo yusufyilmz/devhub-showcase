@@ -48,7 +48,7 @@ export { FeaturesSection, FeaturesSectionEditor } from "./features-section";
 export {
   GalleryGridSection,
   GalleryGridSectionEditor,
-  MasonryGrid,
+  MasonryGridSection,
 } from "./gallery-grid-section";
 export { HeadingSection, HeadingSectionEditor } from "./heading-section";
 export { HeroSection, HeroSectionEditor, HeroSettingsEditor } from "./hero-section";
@@ -81,7 +81,6 @@ export {
 export { PinterestSection, PinterestSectionEditor } from "./pinterest-section";
 export { PlansSection, PlansSectionEditor } from "./plans-section";
 export { PostsGridSection, PostsGridSectionEditor } from "./posts-grid-section";
-export * from "./presenter";
 export { PricingSection, PricingSectionEditor } from "./pricing-section";
 export { ProfileSection, ProfileSectionEditor } from "./profile-section";
 export { ProjectsSection as PortfolioProjectsSection } from "./project-section";
@@ -99,6 +98,7 @@ export { ReferralItem } from "./referral-section/ReferralItem";
 export * from "./renderers";
 export { ReviewSection } from "./review-section";
 export { ReviewButton } from "./review-section/ReviewButton";
+export * from "./section-presentation";
 export { ServicesSection, ServicesSectionEditor } from "./services-section";
 export { ShopItemsSection, ShopItemsSectionEditor } from "./shop-items-section";
 export { ShowcaseSection, ShowcaseSectionEditor } from "./showcase-section";

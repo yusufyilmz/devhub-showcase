@@ -4,63 +4,35 @@ import type { ReactNode } from "react";
 
 import { authorableSections, getPortfolioCopy, getSocialWork } from "@shared/config";
 
-import { Button } from "../../buttons/button";
-import { Card } from "../../cards";
-import { LocationMap } from "../../display/map";
-import { WorkMedia } from "../../display/media";
-import { ContactForm } from "../../forms/contact-form";
-import { Input } from "../../forms/input";
-import { Label as LibraryLabel } from "../../forms/label/Label";
-import { Textarea } from "../../forms/textarea";
-import { HeroSurface } from "../../layout/hero";
-import type { SectionItem } from "../../layout/section";
-import { SectionAccordion, SectionCarousel, SectionGrid, SectionTabs } from "../../layout/section";
-import { GalleryCollection } from "../gallery-grid-section/GalleryCollection";
+import { Button } from "../buttons";
+import { Card } from "../cards";
+import { LocationMap } from "../display";
+import { ItemMedia } from "../display/media/ItemMedia";
+import { ContactForm, Input, Textarea } from "../forms";
+import { Label as LibraryLabel } from "../forms/label/Label";
+import {
+  HeroSurface,
+  SectionAccordion,
+  SectionCarousel,
+  SectionGrid,
+  type SectionItem,
+  SectionTabs,
+} from "../layout";
+import { GalleryCollection } from "../sections/gallery-grid-section/GalleryCollection";
 import {
   collectionViewClassName,
   presenterInlineStyle1,
   presenterStyles,
   sectionPresentationClassName,
-} from "./styles";
+} from "../sections/section-presentation/styles";
 import type {
   CollectionViewOptions,
   ItemContentOptions,
-  ItemMediaOptions,
   SectionPresentationOptions,
   SpecialViewOptions,
-} from "./types";
+} from "../sections/section-presentation/types";
+import { safeLink } from "../utils/safe-link";
 
-const safeLink = (url: string) => /^https?:\/\//i.test(url);
-function ItemMedia({ item, video, language }: ItemMediaOptions) {
-  const text = getPortfolioCopy(language);
-  const work = getSocialWork(item.url);
-  return video && safeLink(item.url) && /\.(mp4|webm|ogg)(\?|$)/i.test(item.url) ? (
-    <video
-      className={presenterStyles.element1}
-      controls
-      playsInline
-      poster={item.imageUrl && safeLink(item.imageUrl) ? item.imageUrl : undefined}
-      preload="none"
-    >
-      <source src={item.url} />
-      <track
-        default
-        kind="captions"
-        label="Captions"
-        src={item.captionsUrl && safeLink(item.captionsUrl) ? item.captionsUrl : undefined}
-      />
-    </video>
-  ) : (
-    <WorkMedia
-      imageUrl={item.imageUrl}
-      loadLabel={text.loadVideo}
-      sourceUrl={work ? item.url : undefined}
-      title={item.title}
-      unloadLabel={text.unloadVideo}
-      youtubeId={video && work?.provider === "youtube" ? work.id : undefined}
-    />
-  );
-}
 export function ItemContent({ item, quote = false, video = false, language }: ItemContentOptions) {
   const prose = item.body
     .split(/\n\s*\n/)
@@ -92,6 +64,7 @@ export function ItemContent({ item, quote = false, video = false, language }: It
     </>
   );
 }
+
 export function CollectionView({ section, type, language }: CollectionViewOptions) {
   const view = authorableSections[type].view;
   if (
@@ -157,6 +130,7 @@ export function CollectionView({ section, type, language }: CollectionViewOption
     </div>
   );
 }
+
 export function SpecialView({
   section,
   type,
@@ -222,6 +196,7 @@ export function SpecialView({
       return <CollectionView language={language} section={section} type={type} />;
   }
 }
+
 export function SectionPresentation({
   section,
   type,

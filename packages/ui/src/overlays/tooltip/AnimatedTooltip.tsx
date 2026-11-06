@@ -1,22 +1,25 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { type ReactNode, useCallback, useRef, useState } from "react";
 
 import { clsx } from "clsx";
 import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
 
-import { animatedTooltipInlineStyle1, animatedTooltipStyles } from "./styles";
-import type { AnimatedTooltipProps, TooltipPlacement, TooltipShiftOptions } from "./types";
+export type TooltipPlacement = "top" | "bottom" | "left" | "right";
+export type TooltipVariant = "default" | "dark" | "light" | "gradient" | "minimal";
 
-function tooltipShift(placement: TooltipPlacement, axis: TooltipShiftOptions) {
-  if (axis === "x") {
-    if (placement === "left") return 10;
-    if (placement === "right") return -10;
-    return 0;
-  }
-  if (placement === "top") return 10;
-  if (placement === "bottom") return -10;
-  return 0;
+export interface AnimatedTooltipProps {
+  children: ReactNode;
+  content: ReactNode;
+  placement?: TooltipPlacement;
+  variant?: TooltipVariant;
+  delay?: number;
+  offset?: number;
+  followCursor?: boolean;
+  disabled?: boolean;
+  className?: string;
+  contentClassName?: string;
+  arrow?: boolean;
 }
 
 export const AnimatedTooltip = ({
@@ -182,14 +185,14 @@ export const AnimatedTooltip = ({
       transition: {
         duration: 0.15,
       },
-      x: tooltipShift(placement, "x"),
-      y: tooltipShift(placement, "y"),
+      x: placement === "left" ? 10 : placement === "right" ? -10 : 0,
+      y: placement === "top" ? 10 : placement === "bottom" ? -10 : 0,
     },
     hidden: {
       opacity: 0,
       scale: 0.8,
-      x: tooltipShift(placement, "x"),
-      y: tooltipShift(placement, "y"),
+      x: placement === "left" ? 10 : placement === "right" ? -10 : 0,
+      y: placement === "top" ? 10 : placement === "bottom" ? -10 : 0,
     },
     visible: {
       opacity: 1,
@@ -197,7 +200,7 @@ export const AnimatedTooltip = ({
       transition: {
         damping: 20,
         stiffness: 260,
-        type: "spring" as const,
+        type: "spring",
       },
       x: 0,
       y: 0,
@@ -206,11 +209,11 @@ export const AnimatedTooltip = ({
 
   return (
     <div
-      className={clsx(animatedTooltipStyles.animatedTooltip, className)}
+      ref={containerRef}
+      className={clsx("relative inline-block", className)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
-      ref={containerRef}
       role="tooltip"
     >
       {children}
@@ -218,14 +221,11 @@ export const AnimatedTooltip = ({
       <AnimatePresence>
         {isVisible && !disabled && (
           <motion.div
-            animate="visible"
             className={clsx(
-              animatedTooltipStyles.animatedTooltip2,
+              "pointer-events-none absolute z-50 whitespace-nowrap rounded-lg px-3 py-2 font-medium text-sm",
               variantStyles[variant],
               contentClassName,
             )}
-            exit="exit"
-            initial="hidden"
             style={
               followCursor
                 ? {
@@ -237,25 +237,28 @@ export const AnimatedTooltip = ({
                 : getPlacementStyles(placement)
             }
             variants={tooltipVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
           >
             {content}
 
             {/* Arrow */}
             {arrow && !followCursor && (
               <div
-                className={animatedTooltipStyles.element1}
-                style={animatedTooltipInlineStyle1(
-                  getArrowStyles(placement),
-                  variant === "gradient" ? "#a855f7" : "currentColor",
-                )}
+                className="absolute h-0 w-0"
+                style={{
+                  ...getArrowStyles(placement),
+                  color: variant === "gradient" ? "#a855f7" : "currentColor",
+                }}
               />
             )}
 
             {/* Gradient overlay for gradient variant */}
             {variant === "gradient" && (
               <>
-                <div className={animatedTooltipStyles.element2} />
-                <div className={animatedTooltipStyles.element3} />
+                <div className="-bottom-px absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
+                <div className="-bottom-px absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-emerald-500 to-transparent blur-sm" />
               </>
             )}
           </motion.div>
@@ -287,5 +290,3 @@ export const useTooltip = (initialVisible = false) => {
     updatePosition,
   };
 };
-
-export type { AnimatedTooltipProps, TooltipPlacement, TooltipVariant } from "./types";

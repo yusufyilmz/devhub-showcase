@@ -151,7 +151,7 @@ async function walk(dir) {
     if (!sourceGroup) continue;
 
     const text = await readFile(full, "utf8");
-    const updated = text.replace(importPattern, (match, quote, dotdot, folder, rest) => {
+    const updated = text.replace(importPattern, (match, quote, _dotdot, folder, rest) => {
       const targetGroup = folderToGroup.get(folder);
       if (!targetGroup || targetGroup === sourceGroup) {
         return match;

@@ -1,7 +1,7 @@
-import { CollectionView } from "../presenter";
+import { CollectionView } from "../../collections/CollectionView";
 import type { SectionProps } from "../types";
 
-export function MasonryGrid(props: SectionProps) {
+export function MasonryGridSection(props: SectionProps) {
   return (
     <CollectionView
       {...props}

@@ -11,7 +11,7 @@ function coerceEnvValue<T extends string | number | boolean>(defaultVal: T, envV
   }
   if (typeof defaultVal === "number") {
     const num = Number(envVal);
-    return (isNaN(num) ? defaultVal : num) as T;
+    return (Number.isNaN(num) ? defaultVal : num) as T;
   }
   return envVal as T;
 }

@@ -2,7 +2,7 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { WorkMedia } from "./work-media";
+import { WorkMedia } from "./WorkMedia";
 
 describe("media consent and recovery", () => {
   afterEach(cleanup);

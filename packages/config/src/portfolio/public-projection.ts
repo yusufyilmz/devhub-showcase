@@ -74,8 +74,9 @@ function pruneCustomSources(profile: PortfolioProfile) {
     .map((section) => {
       if (section.source) {
         section.items = [];
+
         section.source.itemIds = section.source.itemIds?.filter((id) =>
-          allowed[section.source!.field].has(id),
+          allowed[section.source?.field as keyof typeof allowed].has(id),
         );
       }
       if (profile.websiteFields?.email === false && section.options?.email)
