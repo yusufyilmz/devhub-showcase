@@ -15,9 +15,37 @@ type PublicationTable = {
   Relationships: [];
 };
 
+type CompanionFeatureRow = {
+  app: "studio" | "fitness";
+  feature_id: string;
+  category: string;
+  title: string;
+  message: string;
+  context: string | null;
+  position: number;
+};
+type CompanionProgressRow = {
+  user_id: string;
+  app: CompanionFeatureRow["app"];
+  feature_id: string;
+  completed_at: string;
+};
+
 export interface Database {
   public: {
     Tables: {
+      companion_features: {
+        Row: CompanionFeatureRow;
+        Insert: Omit<CompanionFeatureRow, "context"> & { context?: string | null };
+        Update: Partial<CompanionFeatureRow>;
+        Relationships: [];
+      };
+      companion_feature_progress: {
+        Row: CompanionProgressRow;
+        Insert: Omit<CompanionProgressRow, "completed_at">;
+        Update: never;
+        Relationships: [];
+      };
       portfolio_publications: PublicationTable;
       portfolio_public_cvs: PublicationTable;
       portfolio_profile_history: {

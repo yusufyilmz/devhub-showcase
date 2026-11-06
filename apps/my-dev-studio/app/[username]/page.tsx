@@ -7,6 +7,7 @@ import { PortfolioLayout } from "@shared/ui/portfolio";
 
 import { OwnerEditLink } from "@/features/admin/owner-edit-link";
 import { premiumChatAvailable } from "@/features/chat/premium-chat";
+import { portfolioGuide } from "@/features/companion/guides";
 import { portfolioMetadata } from "@/features/portfolio/portfolio-metadata";
 import { loadPageResources } from "@/features/portfolio/portfolio-resources";
 import { getUsernameProfile } from "@/features/portfolio/profiles/public-profile";
@@ -31,6 +32,7 @@ export default async function PublicCvPage({ params }: Props) {
     (await premiumChatAvailable(id)) ? (
       <AgentCompanion
         agent="portfolio"
+        guide={portfolioGuide}
         href={`/${encodeURIComponent(username)}/chat`}
         label={`Ask about ${saved.name}`}
       />

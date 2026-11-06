@@ -16,6 +16,7 @@ Profile shape, themes, copy, and section metadata for `@shared/config`. This pac
 | Area                                     | Use                                             |
 | ---------------------------------------- | ----------------------------------------------- |
 | `profile`, `PortfolioProfile`            | Default profile and the persisted profile shape |
+| Companion feature copy                   | Feature catalog and local fallback for tips     |
 | `copy`                                   | Site, chat, CV, and error copy                  |
 | `languages`, `getPortfolioCopy`          | Portfolio and CV labels                         |
 | `portfolioTypes`, `cvLayouts`            | Layout and PDF format choices                   |

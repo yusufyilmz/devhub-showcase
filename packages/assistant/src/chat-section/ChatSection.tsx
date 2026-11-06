@@ -3,6 +3,7 @@
 import type React from "react";
 import { useState } from "react";
 
+import { portfolioVisitorFeatures } from "@shared/config";
 import type { ChatMessage, ChatType } from "@shared/lib/types";
 import { type ChatIdentity, useChatState } from "@shared/runtime/chat";
 import { AgentCompanion } from "@shared/ui/agent-companion";
@@ -55,6 +56,11 @@ const ChatControls: React.FC<ChatSectionProps & { leading?: React.ReactNode }> =
         <AgentCompanion
           agent="portfolio"
           className="portfolio-agent-companion"
+          guide={{
+            features: portfolioVisitorFeatures,
+            id: "portfolio",
+            title: "Portfolio visitor guide",
+          }}
           href={portfolioChatHref}
           label="Portfolio assistant"
         />

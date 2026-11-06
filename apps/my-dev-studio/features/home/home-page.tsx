@@ -1,6 +1,7 @@
 import { AgentCompanion } from "@shared/ui/agent-companion";
 import { HomePage as HomeComposition, type PageAction } from "@shared/ui/sections";
 
+import { studioHomeGuide } from "@/features/companion/guides";
 import { ExampleCarousel, StudioPlanDetails } from "@/features/studio";
 
 export function HomePage({
@@ -19,7 +20,12 @@ export function HomePage({
         planDetails={<StudioPlanDetails />}
       />
       {action.signedIn && (
-        <AgentCompanion agent="studio" href="/admin/chat" label="Open Studio assistant" />
+        <AgentCompanion
+          agent="studio"
+          guide={studioHomeGuide}
+          href="/admin/chat"
+          label="Open Studio assistant"
+        />
       )}
     </>
   );

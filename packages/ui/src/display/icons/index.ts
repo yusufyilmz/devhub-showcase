@@ -3,6 +3,7 @@ export {
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronUpIcon,
+  Folders as FoldersIcon,
   GripVertical as GripVerticalIcon,
   Loader2Icon,
 } from "lucide-react";

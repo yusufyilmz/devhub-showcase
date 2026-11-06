@@ -17,6 +17,7 @@ import { useAgendaNavigation } from "@/features/agenda/use-agenda-navigation";
 import { PlanAssistant } from "@/features/assistant/plan-assistant";
 import { TaskEditor, type TaskEditorTarget } from "@/features/task-editor/task-editor";
 
+import { fitnessGuide } from "./companion-guide";
 import { useTaskReminders } from "./use-reminders";
 import type { WorkspaceController } from "./use-task-workspace";
 import { WorkspaceFrame, WorkspacePanels } from "./workspace-views";
@@ -114,6 +115,7 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
               <AgentCompanion
                 agent="fitness"
                 className="fitness-agent-companion"
+                guide={fitnessGuide(state, tab, tab === "Assistant" || Boolean(target))}
                 label="Fitness assistant"
                 notice={
                   reminder

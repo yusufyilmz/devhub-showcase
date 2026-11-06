@@ -14,11 +14,15 @@ export function ResponsivePortfolioPreview({
   appearance,
   arrange,
   initiallyOpen = false,
+  openRequest,
 }: ResponsivePortfolioPreviewProps) {
   const [open, setOpen] = useState(initiallyOpen);
   const [size, setSize] = useState<keyof typeof previewSizes>("Mobile");
   const [doc, setDocument] = useState<Document | null>(null);
   const frame = useRef<HTMLIFrameElement>(null);
+  useEffect(() => {
+    if (openRequest) setOpen(true);
+  }, [openRequest]);
   useEffect(() => {
     const loaded = frame.current?.contentDocument;
     if (open && loaded?.getElementById("portfolio-preview-root")) setDocument(loaded);

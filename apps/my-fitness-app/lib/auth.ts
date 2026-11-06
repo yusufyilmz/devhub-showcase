@@ -9,20 +9,20 @@ export function fitnessUser<T extends { email_confirmed_at?: string; is_anonymou
   return user?.email_confirmed_at && !user.is_anonymous ? user : null;
 }
 
-export async function requestIdentity(request: Request) {
+export async function requestIdentity<Database = unknown>(request: Request) {
   const authorization = request.headers.get("authorization");
   const token = authorization?.startsWith("Bearer ") ? authorization.slice(7) : undefined;
   if (token) {
-    const client = createRequestClient(token);
+    const client = createRequestClient<Database>(token);
     const { data, error } = await client.auth.getUser(token);
     return { client, user: error ? null : data.user };
   }
   try {
-    const client = await createClient();
+    const client = await createClient<Database>();
     const { data, error } = await client.auth.getUser();
     return { client, user: error ? null : data.user };
   } catch {
-    return { client: createRequestClient(), user: null };
+    return { client: createRequestClient<Database>(), user: null };
   }
 }
 
