@@ -25,10 +25,10 @@ test("owner reviews saved history and independent field choices without autosave
 
   let writes = 0;
   page.on("request", (request) => {
-    if (request.method() === "PUT" && request.url().endsWith(urls.next.studio.profile())) writes++;
+    if (request.method() === "PUT" && request.url().endsWith(urls.studio.profile())) writes++;
   });
-  const current = await (await page.request.get(urls.next.studio.profile())).json();
-  await page.route(`**${urls.next.studio.profileHistory()}*`, (route) => {
+  const current = await (await page.request.get(urls.studio.profile())).json();
+  await page.route(`**${urls.studio.profileHistory()}*`, (route) => {
     const revision = new URL(route.request().url()).searchParams.get("revision");
     return route.fulfill({
       json: revision

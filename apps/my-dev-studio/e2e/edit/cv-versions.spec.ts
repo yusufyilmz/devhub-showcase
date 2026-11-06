@@ -28,10 +28,10 @@ test("private CV versions recover failed saves and tailor evidence without publi
   let fail = true;
   let profileWrites = 0;
   page.on("request", (request) => {
-    if (request.method() === "PUT" && request.url().endsWith(urls.next.studio.profile()))
+    if (request.method() === "PUT" && request.url().endsWith(urls.studio.profile()))
       profileWrites++;
   });
-  await page.route(`**${urls.next.studio.cvVariants()}`, (route) => {
+  await page.route(`**${urls.studio.cvVariants()}`, (route) => {
     if (route.request().method() === "GET") return route.fulfill({ json: { revision, variants } });
     if (fail) {
       fail = false;
@@ -45,7 +45,7 @@ test("private CV versions recover failed saves and tailor evidence without publi
     revision++;
     return route.fulfill({ json: { revision, variants } });
   });
-  await page.route(`**${urls.next.studio.interviewPrep()}`, (route) => {
+  await page.route(`**${urls.studio.interviewPrep()}`, (route) => {
     const input = route.request().postDataJSON();
     expect(input.evidence).toHaveLength(1);
     expect(input.job).toContain("TypeScript frontend");

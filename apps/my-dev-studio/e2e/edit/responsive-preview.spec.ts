@@ -24,7 +24,7 @@ test("private draft preview resizes, changes layouts and preserves unsaved edits
     },
   ]);
 
-  const profileApi = urls.next.studio.profile();
+  const profileApi = urls.studio.profile();
   const original = (await (await page.request.get(profileApi)).json()).profile.title;
   let saves = 0;
   page.on("request", (request) => {

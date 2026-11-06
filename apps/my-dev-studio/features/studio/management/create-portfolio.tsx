@@ -57,7 +57,7 @@ export function CreatePortfolio({ onCreated }: { onCreated: (id: string) => void
         portfolioType: type,
         templateChosen: true,
       };
-      const response = await request(urls.next.studio.managed(), {
+      const response = await request(urls.studio.managed(), {
         body: JSON.stringify({ profile, username }),
         headers: { "Content-Type": "application/json" },
         method: "POST",

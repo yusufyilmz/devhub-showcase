@@ -22,8 +22,8 @@ test("full-screen Studio chat reviews, applies and explicitly saves a proposal",
       value: `base64-${Buffer.from(JSON.stringify({ access_token: token, expires_at: exp, expires_in: 3600, refresh_token: "fixture-refresh", token_type: "bearer", user: { email: "chat-owner@example.test", id } })).toString("base64url")}`,
     },
   ]);
-  const assistantApi = urls.next.studio.assistant();
-  const profileApi = urls.next.studio.profile();
+  const assistantApi = urls.studio.assistant();
+  const profileApi = urls.studio.profile();
   await page.route(`**${assistantApi}`, async (route) => {
     if (route.request().method() === "GET")
       return route.fulfill({ json: { enabled: true, limit: 10, usage: 0 } });

@@ -1,6 +1,5 @@
 import React from "react";
 
-
 import { cn } from "cn";
 
 import { codeStyles, codeVariants } from "./styles";

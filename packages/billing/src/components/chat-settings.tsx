@@ -49,7 +49,7 @@ function AssignmentControls({ data, refresh }: { data: AccountStatus; refresh: (
     setBusy(true);
     showError("");
     try {
-      const result = await request(urls.next.billing.root(), {
+      const result = await request(urls.billing.root(), {
         body: JSON.stringify({ chatEnabled, profileId }),
         headers: { "Content-Type": "application/json" },
         method: "PUT",

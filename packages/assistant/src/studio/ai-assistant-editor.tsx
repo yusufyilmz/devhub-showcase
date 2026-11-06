@@ -124,7 +124,7 @@ function AssistantWorkspace({
     const pending = chatStorage.takePending();
     if (pending) setMessage(pending.slice(0, 4000));
     const request = new AbortController();
-    studioRequest(urls.next.studio.assistant(), { signal: request.signal })
+    studioRequest(urls.studio.assistant(), { signal: request.signal })
       .then(async (response) => {
         if (!response.ok) throw new Error("Unavailable");
         setAvailability(await response.json());
@@ -155,7 +155,7 @@ function AssistantWorkspace({
     const baseline = JSON.stringify(profile);
     recordTurn("user", message);
     try {
-      const response = await studioRequest(urls.next.studio.assistant(), {
+      const response = await studioRequest(urls.studio.assistant(), {
         body: JSON.stringify({
           draft: profile,
           message: message.trim() || "Review the selected assistant task.",

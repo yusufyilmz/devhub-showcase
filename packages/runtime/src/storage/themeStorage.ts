@@ -2,10 +2,7 @@ import { storage } from "@shared/config/storage";
 import { themeOptions } from "@shared/config/theme";
 
 import { localStorageBase, versionedStorage } from "./browserStorage";
-import {
-  type ThemePreferences,
-  themePreferenceAliases,
-} from "./themePreferences";
+import { type ThemePreferences, themePreferenceAliases } from "./themePreferences";
 
 export type ThemeMode = "light" | "dark" | "system";
 export type ThemeSettings = { activeMode: ThemeMode | null; themePreferences: ThemePreferences };

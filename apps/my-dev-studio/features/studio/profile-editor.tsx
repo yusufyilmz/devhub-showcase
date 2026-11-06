@@ -111,8 +111,8 @@ function clean(profile: PortfolioProfile): PortfolioProfile {
 }
 export function ProfileEditor({
   initial,
-  saveUrl = urls.next.studio.profile(),
-  downloadHref = urls.next.studio.cv(),
+  saveUrl = urls.studio.profile(),
+  downloadHref = urls.studio.cv(),
   managed = false,
   onSaved,
   initialTab = "Profile",
@@ -282,7 +282,7 @@ export function ProfileEditor({
                 if (dirty && !window.confirm("Leave without publishing your changes?")) return;
                 setBusy(true);
                 try {
-                  const response = await request(urls.next.auth.session(), {
+                  const response = await request(urls.auth.session(), {
                     method: "DELETE",
                   });
                   if (!response.ok) throw new Error("Could not sign out.");

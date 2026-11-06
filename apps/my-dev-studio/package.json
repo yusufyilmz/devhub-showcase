@@ -37,6 +37,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@shared/test": "workspace:*",
     "@shared/typescript-config": "workspace:*",
     "@shared/ui": "workspace:*",
     "@tailwindcss/postcss": "catalog:",

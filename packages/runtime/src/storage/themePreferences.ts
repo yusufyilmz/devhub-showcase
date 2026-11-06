@@ -1,8 +1,6 @@
 import { themeOptions } from "@shared/config/theme";
 
-export type ThemePreferences = Partial<
-  Record<keyof typeof themeOptions, string>
->;
+export type ThemePreferences = Partial<Record<keyof typeof themeOptions, string>>;
 
 export const themePreferenceAliases: Record<string, Record<string, string>> = {
   animation: { base: "smooth", elastic: "bouncy" },
@@ -20,9 +18,7 @@ export function cleanThemePreferences(value: unknown): ThemePreferences {
       ([key, entry]) =>
         Object.hasOwn(themeOptions, key) &&
         typeof entry === "string" &&
-        (
-          themeOptions[key as keyof typeof themeOptions] as readonly string[]
-        ).includes(entry),
+        (themeOptions[key as keyof typeof themeOptions] as readonly string[]).includes(entry),
     ),
   );
 }

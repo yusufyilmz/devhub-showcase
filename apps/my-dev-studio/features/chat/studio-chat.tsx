@@ -33,7 +33,7 @@ export function StudioChat({ initial }: { initial: ProfileSnapshot }) {
     setError("");
     setStatus("");
     try {
-      const response = await request(urls.next.studio.profile(), {
+      const response = await request(urls.studio.profile(), {
         body: JSON.stringify({
           profile: draft,
           revision: saved.revision,

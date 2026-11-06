@@ -1,9 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { getNameInitials, profile } from "@shared/config";
+import { getNameInitials, profile, urls } from "@shared/config";
 import { listPublishedPortfolioLinks } from "@shared/services/published-profile";
 
-import { portfolioUrl, siteUrl } from "@/features/platform/site-url";
 import { portfolioIcon } from "@/features/portfolio/portfolio-branding";
 import { portfolioMetadata } from "@/features/portfolio/portfolio-metadata";
 import { getProfileStructuredData } from "@/features/portfolio/profile-structured-data";
@@ -34,19 +33,22 @@ describe("PortfolioSeo", () => {
         website: "https://external.example",
       };
       const metadata = portfolioMetadata(person, "example-owner");
-      expect(metadata.alternates?.canonical).toBe(`${siteUrl}/example-owner`);
+      expect(metadata.alternates?.canonical).toBe(`${urls.studio.siteUrl()}/example-owner`);
       expect(metadata.openGraph).toMatchObject({
-        images: [{ url: `${portfolioUrl("example-owner")}/share.png` }],
-        url: portfolioUrl("example-owner"),
+        images: [{ url: `${urls.studio.portfolioUrl("example-owner")}/share.png` }],
+        url: urls.studio.portfolioUrl("example-owner"),
       });
       expect(metadata.icons).toMatchObject({
-        shortcut: `${portfolioUrl("example-owner")}/icon.svg`,
+        shortcut: `${urls.studio.portfolioUrl("example-owner")}/icon.svg`,
       });
       expect(metadata.twitter).toMatchObject({ card: "summary_large_image" });
-      const structured = getProfileStructuredData(person, portfolioUrl("example-owner"));
+      const structured = getProfileStructuredData(
+        person,
+        urls.studio.portfolioUrl("example-owner"),
+      );
       expect(structured).toMatchObject({
         sameAs: expect.arrayContaining([person.website]),
-        url: portfolioUrl("example-owner"),
+        url: urls.studio.portfolioUrl("example-owner"),
       });
       expect(getProfileStructuredData()).toMatchObject({ "@type": "WebSite" });
     });
@@ -56,7 +58,7 @@ describe("PortfolioSeo", () => {
         "unlisted-owner",
       );
       expect(metadata.robots).toEqual({ follow: false, index: false });
-      expect(metadata.alternates?.canonical).toBe(`${siteUrl}/unlisted-owner`);
+      expect(metadata.alternates?.canonical).toBe(`${urls.studio.siteUrl()}/unlisted-owner`);
     });
     it("paginates anonymous discovery using publication filters and URL columns only", async () => {
       vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://fixture.example");

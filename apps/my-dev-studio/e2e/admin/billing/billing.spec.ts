@@ -2,8 +2,8 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
-const profileApi = urls.next.studio.profile();
-const billingApi = urls.next.billing.root();
+const profileApi = urls.studio.profile();
+const billingApi = urls.billing.root();
 
 async function signIn(context: import("@playwright/test").BrowserContext, id: string) {
   const exp = Math.floor(Date.now() / 1000) + 3600;
@@ -54,7 +54,7 @@ test("owner sees separate AI readiness and refreshes without changing publicatio
     }
     return route.fulfill({ json: { ...summary, chatEnabled: saved } });
   });
-  await page.route(`**${urls.next.billing.pricing()}`, (route) =>
+  await page.route(`**${urls.billing.pricing()}`, (route) =>
     route.fulfill({ json: { available: false }, status: 503 }),
   );
   await page.goto("/admin/billing");
@@ -109,7 +109,7 @@ test("checkout return alone never displays active Pro and portal errors explain 
       },
     }),
   );
-  await page.route(`**${urls.next.billing.action("portal")}`, (route) =>
+  await page.route(`**${urls.billing.action("portal")}`, (route) =>
     route.fulfill({
       json: { code: "no_subscription", error: "hidden provider detail" },
       status: 503,

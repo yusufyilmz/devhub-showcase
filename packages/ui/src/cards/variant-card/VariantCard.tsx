@@ -2,7 +2,6 @@
 
 import React from "react";
 
-
 import { cn } from "cn";
 
 import { convertSystemProps, extractSystemProps, type SystemProps } from "../../utils/system-props";

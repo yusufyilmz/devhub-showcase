@@ -24,7 +24,7 @@ test("checklist follows draft changes and history stays local until save", async
   ]);
   let saves = 0;
   page.on("request", (request) => {
-    if (request.url().endsWith(urls.next.studio.profile()) && request.method() === "PUT") saves++;
+    if (request.url().endsWith(urls.studio.profile()) && request.method() === "PUT") saves++;
   });
   await page.goto(`/${mobile ? "mobile" : "desktop"}-guidance-owner/edit`);
   const summary = page.getByRole("textbox", { exact: true, name: "Short introduction" });

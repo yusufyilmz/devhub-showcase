@@ -2,8 +2,8 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
-const profileApi = urls.next.studio.profile();
-const assistantApi = urls.next.studio.assistant();
+const profileApi = urls.studio.profile();
+const assistantApi = urls.studio.assistant();
 
 test("owner reviews AI suggestions before changing a draft and can undo without saving", async ({
   page,

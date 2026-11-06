@@ -14,8 +14,8 @@ export const storage: Storage = {
   agentCompanion: `${name}:agent-companion`,
   chat: `${name}:chat`,
   draftRecovery: `${name}:draft-recovery`,
+  name,
   theme: `${name}:theme`,
   userConfig: `${name}:user-config`,
   version: 2,
-  name,
 } as const;

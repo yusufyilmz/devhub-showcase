@@ -81,7 +81,7 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
   await page.getByRole("button", { name: "Language settings" }).click();
   await expect(page.getByLabel("Portfolio language")).toHaveValue("es");
   await expect(page.getByRole("combobox", { name: /^CV language/ })).toHaveValue("tr");
-  const savedPdf = await page.request.get(urls.next.studio.cv());
+  const savedPdf = await page.request.get(urls.studio.cv());
   expect(savedPdf.headers()["content-language"]).toBe("tr");
   expect((await savedPdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
   await page.getByRole("button", { exact: true, name: "Appearance" }).click();

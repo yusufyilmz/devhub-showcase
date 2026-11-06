@@ -258,7 +258,7 @@
         "noDuplicateClassMembers": "error",
         "noDuplicateObjectKeys": "error",
         "noDuplicateParameters": "error",
-        "noEmptyBlockStatements": "warn",
+        "noEmptyBlockStatements": "off",
         "noEmptyInterface": "error",
         "noEmptySource": "error",
         "noEvolvingTypes": "warn",

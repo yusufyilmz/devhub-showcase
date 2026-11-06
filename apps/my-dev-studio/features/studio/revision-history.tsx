@@ -17,9 +17,7 @@ export function OwnerRevisionHistory({
   onChange: (profile: PortfolioProfile) => void;
 }) {
   const request = useStudioRequest();
-  const endpoint = managedId
-    ? urls.next.studio.managedHistory(managedId)
-    : urls.next.studio.profileHistory();
+  const endpoint = managedId ? urls.studio.managedHistory(managedId) : urls.studio.profileHistory();
   const load = useCallback(async () => {
     const response = await request(endpoint);
     const data = await response.json();

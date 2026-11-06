@@ -2,6 +2,9 @@
   "name": "@shared/billing",
   "version": "0.0.0",
   "private": true,
+  "sideEffects": [
+    "./src/**/*.css"
+  ],
   "exports": {
     ".": "./src/index.ts",
     "./handler": "./src/handler/index.ts",
@@ -14,6 +17,9 @@
     "./types": "./src/types.ts"
   },
   "main": "./src/index.ts",
+  "files": [
+    "src/**/*.css"
+  ],
   "scripts": {
     "build": "tsdown",
     "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",

@@ -43,8 +43,7 @@ export default async function PortfolioReviewPage({
           handleReview={async (reviewId, status, updatedAt) => {
             const result = await handleSubmitReviewAction(reviewId, status, updatedAt);
             return result ? "saved" : "error";
-          }
-          }
+          }}
           reviews={reviews}
         />
       ) : (

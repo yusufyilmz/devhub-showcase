@@ -5,10 +5,12 @@
   "type": "module",
   "exports": {
     "./fixtures/*": "./fixtures/*",
+    "./playwright": "./support/playwright-config.ts",
     "./setup": "./support/vitest-setup.ts",
-    "./mocks/*": "./support/mocks/*.ts"
+    "./mocks/*": "./mocks/*.ts"
   },
   "devDependencies": {
+    "@playwright/test": "catalog:",
     "@shared/typescript-config": "workspace:*",
     "@types/react": "catalog:",
     "typescript": "catalog:",

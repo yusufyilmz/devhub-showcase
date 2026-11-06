@@ -32,7 +32,7 @@ export function TransferPortfolio({
     setBusy(true);
     showError("");
     try {
-      const response = await request(urls.next.studio.managedTransfer(id), {
+      const response = await request(urls.studio.managedTransfer(id), {
         body: JSON.stringify({ email, revision }),
         headers: { "Content-Type": "application/json" },
         method: "POST",

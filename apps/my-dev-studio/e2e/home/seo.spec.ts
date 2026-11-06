@@ -28,3 +28,21 @@ test("homepage and sign-in keep platform branding without personal structured da
   }
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
 });
+
+test("homepage publishes a branded social image", async ({ page, request }) => {
+  await page.goto("/");
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+    "content",
+    "http://localhost:3100/share.png",
+  );
+  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
+    "content",
+    "summary_large_image",
+  );
+  const image = await request.get("/share.png");
+  expect(image.ok()).toBeTruthy();
+  expect(image.headers()["content-type"]).toContain("image/png");
+  const png = await image.body();
+  expect(png.readUInt32BE(16)).toBe(1200);
+  expect(png.readUInt32BE(20)).toBe(630);
+});

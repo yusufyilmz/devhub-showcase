@@ -26,10 +26,10 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
   const ownerUrl = `/${mobile ? "mobile" : "desktop"}-workflow-owner/edit`;
   let saves = 0;
   page.on("request", (request) => {
-    if (request.method() === "PUT" && request.url().endsWith(urls.next.studio.profile())) saves++;
+    if (request.method() === "PUT" && request.url().endsWith(urls.studio.profile())) saves++;
   });
   page.on("dialog", (dialog) => dialog.accept());
-  await page.route(`**${urls.next.studio.cvImport()}`, (route) => {
+  await page.route(`**${urls.studio.cvImport()}`, (route) => {
     if (route.request().method() === "GET") return route.fulfill({ json: { enabled: true } });
     return route.fulfill({ json: { error: "Import temporarily unavailable" }, status: 503 });
   });
@@ -83,7 +83,7 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
   expect(saves).toBe(0);
   await page.getByRole("button", { exact: true, name: "Finish setup" }).click();
   let failSave = true;
-  await page.route(`**${urls.next.studio.profile()}`, (route) => {
+  await page.route(`**${urls.studio.profile()}`, (route) => {
     if (route.request().method() === "PUT" && failSave) {
       failSave = false;
       return route.fulfill({ json: { error: "Temporary save failure" }, status: 503 });

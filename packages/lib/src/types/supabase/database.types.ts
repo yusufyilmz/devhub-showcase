@@ -34,6 +34,149 @@ type CompanionProgressRow = {
 export interface Database {
   public: {
     Tables: {
+      billing_assignments: {
+        Row: {
+          account_id: string;
+          chat_enabled: boolean;
+          profile_id: string;
+        };
+        Insert: {
+          account_id: string;
+          chat_enabled?: boolean;
+          profile_id: string;
+        };
+        Update: {
+          account_id?: string;
+          chat_enabled?: boolean;
+          profile_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "billing_assignments_account_id_fkey";
+            columns: ["account_id"];
+            isOneToOne: true;
+            referencedRelation: "billing_entitlements";
+            referencedColumns: ["account_id"];
+          },
+          {
+            foreignKeyName: "billing_assignments_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "portfolio_profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      billing_customers: {
+        Row: {
+          account_id: string;
+          checkout_id: string | null;
+          checkout_key: string;
+          customer_id: string | null;
+          lease: string | null;
+          lease_until: string | null;
+        };
+        Insert: {
+          account_id: string;
+          checkout_id?: string | null;
+          checkout_key?: string;
+          customer_id?: string | null;
+          lease?: string | null;
+          lease_until?: string | null;
+        };
+        Update: {
+          account_id?: string;
+          checkout_id?: string | null;
+          checkout_key?: string;
+          customer_id?: string | null;
+          lease?: string | null;
+          lease_until?: string | null;
+        };
+        Relationships: [];
+      };
+      billing_entitlements: {
+        Row: {
+          account_id: string;
+          chat_limit: number;
+          editor_limit: number;
+          period_end: string;
+          period_start: string;
+          plan: string;
+          status: string;
+        };
+        Insert: {
+          account_id: string;
+          chat_limit?: number;
+          editor_limit?: number;
+          period_end: string;
+          period_start: string;
+          plan?: string;
+          status?: string;
+        };
+        Update: {
+          account_id?: string;
+          chat_limit?: number;
+          editor_limit?: number;
+          period_end?: string;
+          period_start?: string;
+          plan?: string;
+          status?: string;
+        };
+        Relationships: [];
+      };
+      billing_events: {
+        Row: {
+          event_id: string;
+          processed_at: string;
+        };
+        Insert: {
+          event_id: string;
+          processed_at?: string;
+        };
+        Update: {
+          event_id?: string;
+          processed_at?: string;
+        };
+        Relationships: [];
+      };
+      billing_usage: {
+        Row: {
+          account_id: string;
+          created_at: string;
+          feature: string;
+          outcome: string;
+          period_start: string;
+          profile_id: string;
+          request_id: string;
+        };
+        Insert: {
+          account_id: string;
+          created_at?: string;
+          feature: string;
+          outcome?: string;
+          period_start: string;
+          profile_id: string;
+          request_id: string;
+        };
+        Update: {
+          account_id?: string;
+          created_at?: string;
+          feature?: string;
+          outcome?: string;
+          period_start?: string;
+          profile_id?: string;
+          request_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "billing_usage_account_id_fkey";
+            columns: ["account_id"];
+            isOneToOne: false;
+            referencedRelation: "billing_entitlements";
+            referencedColumns: ["account_id"];
+          },
+        ];
+      };
       companion_features: {
         Row: CompanionFeatureRow;
         Insert: Omit<CompanionFeatureRow, "context"> & { context?: string | null };
@@ -528,6 +671,28 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
+      claim_billing: {
+        Args: { p_account: string; p_lease: string };
+        Returns: boolean;
+      };
+      commit_billing: {
+        Args: {
+          p_account: string;
+          p_event: string;
+          p_lease: string;
+          p_state: Json;
+        };
+        Returns: boolean;
+      };
+      reserve_premium_usage: {
+        Args: {
+          p_account: string;
+          p_feature: string;
+          p_profile: string;
+          p_request: string;
+        };
+        Returns: boolean;
+      };
       resolve_published_username: {
         Args: { requested_username: string };
         Returns: Array<{ id: string; username: string }>;

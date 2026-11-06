@@ -5,7 +5,7 @@ import { urls } from "@shared/config/urls";
 
 import { confirmPublication } from "../support/publication";
 
-const cvImportApi = urls.next.studio.cvImport();
+const cvImportApi = urls.studio.cvImport();
 
 test("owner reviews a CV, cancels safely, applies edits and explicitly saves before publishing", async ({
   page,

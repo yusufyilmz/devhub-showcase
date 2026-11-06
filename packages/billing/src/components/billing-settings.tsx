@@ -1,3 +1,5 @@
+import "./billing.css";
+
 import { StudioHeading } from "@shared/ui/portfolio";
 
 import { BillingProvider } from "../provider/billing-context";
@@ -44,5 +46,3 @@ export function BillingSettings({
     </BillingProvider>
   );
 }
-
-import "./billing.css";

@@ -32,7 +32,7 @@ test("signed out visitors cannot open management pages or create temporary profi
   page,
 }) => {
   expect((await page.goto("/admin/portfolios"))?.status()).toBe(404);
-  const result = await page.request.post(urls.next.studio.managed(), {
+  const result = await page.request.post(urls.studio.managed(), {
     data: {},
     headers: { Origin: "http://localhost:3100" },
   });
@@ -132,9 +132,7 @@ test("an administrator creates, edits, publishes, hides and transfers an importe
   expect((await page.request.get(`${editorUrl}/cv.pdf`)).status()).toBe(403);
   expect(
     (
-      await page.request.get(
-        editorUrl.replace("/admin/portfolios/", `${urls.next.studio.managed()}/`),
-      )
+      await page.request.get(editorUrl.replace("/admin/portfolios/", `${urls.studio.managed()}/`))
     ).status(),
   ).toBe(403);
   await context.clearCookies();

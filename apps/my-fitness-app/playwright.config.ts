@@ -1,18 +1,8 @@
-import { defineConfig, devices } from "@playwright/test";
+import { generatePlaywrightConfig } from "@shared/test/playwright";
 
-export default defineConfig({
+export default generatePlaywrightConfig("http://localhost:3200", {
   fullyParallel: false,
-  projects: [
-    { name: "desktop-chromium", use: { ...devices["Desktop Chrome"] } },
-    { name: "mobile-chromium", use: { ...devices["Pixel 7"] } },
-  ],
   reporter: "list",
-  testDir: "./e2e-fitness",
-  use: {
-    baseURL: "http://localhost:3200",
-    screenshot: "only-on-failure",
-    trace: "retain-on-failure",
-  },
   webServer: {
     command: "pnpm --filter my-fitness-app start --hostname 127.0.0.1 --port 3200",
     env: {

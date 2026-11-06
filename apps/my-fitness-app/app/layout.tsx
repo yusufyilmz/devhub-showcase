@@ -5,9 +5,15 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 
 import { PageShell } from "@shared/ui/page-shell";
+import { createPageMetadata, createStructuredData } from "@shared/ui/seo";
+
+import { fitnessSeo } from "@/features/seo";
 
 /** Same platform theme record as MyDevStudio (`getPagePresentation` on platform routes). */
-const platformAppearance = { accent: "cyan" as const, defaultTheme: "light" as const };
+const platformAppearance = {
+  accent: "cyan" as const,
+  defaultTheme: "light" as const,
+};
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,19 +27,31 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-
 export const metadata: Metadata = {
+  ...createPageMetadata({
+    canonical: fitnessSeo.canonical,
+    description: fitnessSeo.description,
+    icons: { apple: "/icon-180.png", icon: "/icon-192.png" },
+    image: { alt: fitnessSeo.title, url: fitnessSeo.image },
+    robots: { follow: false, index: false },
+    siteName: fitnessSeo.title,
+    title: fitnessSeo.title,
+  }),
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "My Fitness Studio",
+    title: fitnessSeo.title,
   },
-  description: "Your meals, movement, and daily momentum.",
-  icons: { apple: "/icon-180.png", icon: "/icon-192.png" },
   manifest: "/manifest.webmanifest",
-  robots: { follow: false, index: false },
-  title: "My Fitness Studio",
 };
+
+const structuredData = createStructuredData({
+  "@type": "WebSite",
+  description: fitnessSeo.description,
+  name: fitnessSeo.title,
+  url: fitnessSeo.canonical,
+});
+
 export const viewport: Viewport = {
   initialScale: 1,
   themeColor: "#010d1a",
@@ -46,6 +64,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       appearance={platformAppearance}
       bodyClassName={`${geistSans.variable} ${geistMono.variable} antialiased`}
       documentLanguage="en"
+      structuredData={structuredData}
     >
       {children}
     </PageShell>

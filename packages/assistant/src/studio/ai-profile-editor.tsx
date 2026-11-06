@@ -15,7 +15,7 @@ import { Card } from "@shared/ui/cards";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
 
-export function AiProfileEditor({ readUrl = urls.next.studio.profile() }: { readUrl?: string }) {
+export function AiProfileEditor({ readUrl = urls.studio.profile() }: { readUrl?: string }) {
   const request = useStudioRequest();
   const [data, setData] = useState<{
     owner: OwnerPortfolioKnowledge;

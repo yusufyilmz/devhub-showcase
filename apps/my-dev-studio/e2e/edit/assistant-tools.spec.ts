@@ -25,10 +25,10 @@ test("writing alternatives and section feedback require review and never autosav
 
   let saves = 0;
   page.on("request", (request) => {
-    if (request.method() === "PUT" && request.url().endsWith(urls.next.studio.profile())) saves++;
+    if (request.method() === "PUT" && request.url().endsWith(urls.studio.profile())) saves++;
   });
   let selectedTask: unknown;
-  await page.route(`**${urls.next.studio.assistant()}`, (route) => {
+  await page.route(`**${urls.studio.assistant()}`, (route) => {
     if (route.request().method() === "GET")
       return route.fulfill({ json: { enabled: true, limit: 10, usage: 0 } });
     const body = route.request().postDataJSON();

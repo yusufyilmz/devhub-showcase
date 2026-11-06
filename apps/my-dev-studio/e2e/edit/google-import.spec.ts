@@ -2,8 +2,8 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
-const profileApi = urls.next.studio.profile();
-const googleProfileApi = urls.next.studio.googleProfile();
+const profileApi = urls.studio.profile();
+const googleProfileApi = urls.studio.googleProfile();
 
 test("new owner chooses Google details, reviews fields and applies without saving", async ({
   page,

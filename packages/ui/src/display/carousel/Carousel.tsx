@@ -2,7 +2,6 @@
 
 import React from "react";
 
-
 import { cn } from "cn";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";

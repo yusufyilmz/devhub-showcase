@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@electric-sql/pglite": "catalog:",
+    "@shared/test": "workspace:*",
     "@shared/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",

@@ -1,12 +1,12 @@
 import { randomUUID } from "node:crypto";
 import { createServer } from "node:http";
 
-import { projectPublicProfile } from "../packages/config/src/portfolio/public-projection.ts";
-import { profile } from "../packages/config/src/profile/profile.ts";
+import { projectPublicProfile } from "../../../packages/config/src/portfolio/public-projection.ts";
+import { profile } from "../../../packages/config/src/profile/profile.ts";
 import {
   authorableSectionTypes,
   getSectionRenderers,
-} from "../packages/config/src/sections/authorable-sections.ts";
+} from "../../../packages/config/src/sections/authorable-sections.ts";
 
 // Test-only transport fixture, never imported by application code. Public
 // records are read only. Two isolated fake accounts can save their own starter.

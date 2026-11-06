@@ -92,7 +92,7 @@ previous/next navigation, arrow keys, thumbnails, and optional full-page links.
 Gallery Grid sections use it for authored images; homepage examples use the same
 viewer with first-party fictional portfolio pages.
 
-Public components exported from `packages/ui/src/components/index.ts`. Import them as `@shared/ui/{folder}`. Visual recipes for the pieces that define the product look live in the root [DESIGN.md](../DESIGN.md).
+Public components exported from `packages/ui/src/components/index.ts`. Import them as `@shared/ui/{folder}`. Visual recipes for the pieces that define the product look live in the root [DESIGN.md](../../DESIGN.md).
 
 ## Actions
 
@@ -266,7 +266,7 @@ tokens. `AnimatedTooltip` adds optional pointer tracking.
 
 ## Browser preferences
 
-`ThemeProvider` consumes `useThemeStore` from `@shared/runtime/user`.
+`ThemeProvider` consumes `useUserConfigStore` from `@shared/runtime/user`.
 `ThemeContext` exposes the resolved `mode` and `toggle` when an app keeps its own button.
 The existing runtime store owns the persisted mode and display-only user cache.
 There is no separate UI storage store. Its pre-paint script and provider share
@@ -280,7 +280,7 @@ Icons inherit `currentColor`; use a 24px icon inside the 44px large control.
 
 `Section`, `Header` and `Footer` accept `asChild` to compose an existing semantic element without adding a second wrapper. Use this variant for page compositions while keeping their content and navigation in the section package. Shared section grids, accordions and carousels default to semantic Card surfaces; existing portfolio consumers pass `surface="portfolio"` explicitly.
 
-Portfolio sections, editors, and chat exported from `@shared/ui`. Visual rules for the shared section frame live in the root [DESIGN.md](../DESIGN.md).
+Portfolio sections, editors, and chat exported from `@shared/ui`. Visual rules for the shared section frame live in the root [DESIGN.md](../../DESIGN.md).
 
 ## Entry points
 
@@ -293,6 +293,8 @@ Portfolio sections, editors, and chat exported from `@shared/ui`. Visual rules f
 | `@shared/ui/editor`            | `src/editor`               | Collection, content, options, and source editors             |
 | `@shared/ui/forms`             | `src/forms`                | `Field`, `LinesField`, `SelectField`, `EmptyState`           |
 | `@shared/ui/fields`            | `src/forms/fields.tsx`     | The same form fields                                         |
+| `@shared/ui/seo`               | `src/seo`                  | Canonical, Open Graph, Twitter, and Schema.org metadata      |
+| `@shared/ui/seo/image`         | `src/seo/share-image.tsx`  | Server-side 1200×630 social share image renderer             |
 | `@shared/ui/layout`            | `src/layout`               | `StudioShell`, `PageShell`, `PortfolioLayout`                |
 | `@/features/studio`            | `src/studio`               | Home, studio editors, billing views, and example content     |
 | `@shared/ui/login`             | `src/auth/login-panel.tsx` | `LoginPanel`                                                 |

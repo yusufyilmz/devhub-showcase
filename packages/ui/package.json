@@ -124,6 +124,8 @@
     "./paper": "./src/layout/paper/index.ts",
     "./reveal-card": "./src/layout/reveal-card/index.ts",
     "./brand": "./src/navigation/brand/index.ts",
+    "./seo": "./src/seo/index.ts",
+    "./seo/image": "./src/seo/share-image.tsx",
     "./page-shell": "./src/layout/page-shell/index.ts",
     "./page-variants": "./src/layout/page-variants/index.ts",
     "./page-header": "./src/navigation/page-header/index.ts",

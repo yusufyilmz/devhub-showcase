@@ -1,12 +1,12 @@
 import type { PortfolioProfile } from "@shared/config";
+import { createStructuredData } from "@shared/ui/seo";
 
-import { platformStructuredData } from "@/features/platform/platform";
+import { platformStructuredData } from "../platform/structured-data";
 
 export function getProfileStructuredData(profile?: PortfolioProfile, canonicalUrl?: string) {
   if (!profile) return platformStructuredData;
   const currentRole = profile.experiences.find((item) => !item.end);
-  return {
-    "@context": "https://schema.org",
+  return createStructuredData({
     "@type": "Person",
     alumniOf: profile.education.map((item) => ({
       "@type": "CollegeOrUniversity",
@@ -19,5 +19,5 @@ export function getProfileStructuredData(profile?: PortfolioProfile, canonicalUr
     sameAs: [profile.github, profile.linkedin, profile.website].filter(Boolean),
     url: canonicalUrl ?? profile.website,
     worksFor: currentRole ? { "@type": "Organization", name: currentRole.company } : undefined,
-  };
+  });
 }

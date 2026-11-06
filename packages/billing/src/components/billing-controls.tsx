@@ -18,7 +18,7 @@ export function BillingControls() {
     setBusy(true);
     showError("");
     try {
-      const response = await request(urls.next.billing.action(action), { method: "POST" });
+      const response = await request(urls.billing.action(action), { method: "POST" });
       const data = await response.json();
       if (!response.ok) {
         showError(billingErrorMessage(data.code));

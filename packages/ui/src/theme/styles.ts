@@ -5,9 +5,7 @@ export const themeToggleStyles = {
   element1: "theme-toggle",
 } as const;
 
-export const preferenceGroups = Object.keys(themeOptions) as Array<
-  keyof typeof themeOptions
->;
+export const preferenceGroups = Object.keys(themeOptions) as Array<keyof typeof themeOptions>;
 const preferenceNames: Record<string, string> = {
   brand: "Theme",
   font: "Font",

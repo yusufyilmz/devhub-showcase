@@ -55,7 +55,7 @@ test("owner can inspect private and public knowledge from the latest saved revis
     .filter({ has: page.getByRole("heading", { exact: true, name: "Your AI profile" }) })
     .screenshot({ path: info.outputPath("ai-profile.png") });
   await context.clearCookies();
-  expect((await page.request.get(urls.next.studio.profile())).status()).toBe(403);
+  expect((await page.request.get(urls.studio.profile())).status()).toBe(403);
   await page.goto(`/${device}-ai-owner`);
   await expect(page.getByRole("link", { name: "Portfolio assistant" })).toHaveCount(0);
 });

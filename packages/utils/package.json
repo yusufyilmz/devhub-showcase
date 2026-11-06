@@ -37,7 +37,6 @@
     "types:check": "pnpm typecheck"
   },
   "dependencies": {
-    "beautify-console-log": "^1.3.17",
     "flat": "catalog:",
     "pino": "catalog:",
     "pino-pretty": "catalog:",
@@ -47,6 +46,7 @@
     "@shared/cli": "workspace:*",
     "@shared/typescript-config": "workspace:*",
     "@types/node": "catalog:",
+    "beautify-console-log": "^1.3.17",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
     "remark-html": "^16.0.1",

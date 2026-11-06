@@ -27,7 +27,7 @@ export function ManagedWorkspace({
         initial={initial}
         managed
         onSaved={(saved) => setRevision(saved.revision)}
-        saveUrl={urls.next.studio.managedPortfolio(id)}
+        saveUrl={urls.studio.managedPortfolio(id)}
       />
       <div className="studio managed-transfer">
         <TransferPortfolio id={id} onTransferred={onTransferred} revision={revision} />

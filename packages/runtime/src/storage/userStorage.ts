@@ -1,4 +1,4 @@
-import { storage   } from "@shared/config/storage";
+import { storage } from "@shared/config/storage";
 
 import { localStorageBase, versionedStorage } from "./browserStorage";
 

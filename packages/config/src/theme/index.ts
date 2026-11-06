@@ -1,5 +1,4 @@
 export const themeOptions = {
-  theme: ["light", "dark", "system"],
   accent: ["cyan", "violet", "emerald"],
   animation: ["none", "base", "smooth", "bouncy", "elastic"],
   blur: ["none", "soft", "medium", "strong", "extra", "huge", "gigantic"],
@@ -34,6 +33,7 @@ export const themeOptions = {
   scale: ["small", "base", "large", "90", "95", "100", "105", "110", "120"],
   shadow: ["none", "soft", "subtle", "medium", "strong", "deep"],
   spacing: ["compact", "comfortable", "relaxed", "spacious", "cozy", "wide", "extra"],
+  theme: ["light", "dark", "system"],
   tracking: ["tight", "wide"],
   transition: ["none", "base", "smooth", "bouncy", "elastic"],
   weight: ["light", "normal", "medium", "semibold", "bold"],

@@ -1,20 +1,10 @@
-import { defineConfig, devices } from "@playwright/test";
+import { generatePlaywrightConfig } from "@shared/test/playwright";
 
-export default defineConfig({
+export default generatePlaywrightConfig("http://localhost:3100", {
   forbidOnly: Boolean(process.env.CI),
   fullyParallel: true,
-  projects: [
-    { name: "desktop-chromium", use: { ...devices["Desktop Chrome"] } },
-    { name: "mobile-chromium", use: { ...devices["Pixel 7"] } },
-  ],
   reporter: [["list"], ["html", { open: "never" }]],
   retries: process.env.CI ? 1 : 0,
-  testDir: "./e2e",
-  use: {
-    baseURL: "http://localhost:3100",
-    screenshot: "only-on-failure",
-    trace: "retain-on-failure",
-  },
   webServer: [
     {
       command: "pnpm exec tsx e2e/fixture-server.mjs",
