@@ -13,6 +13,7 @@ import { useStudioRequest } from "@shared/runtime/studio";
 import { useUserConfigStore } from "@shared/runtime/user";
 import type { ProfileSnapshot } from "@shared/services/profile";
 import { CvImportEditor, CvSettingsEditor } from "@shared/templates/studio";
+import { AgentCompanion } from "@shared/ui/agent-companion";
 import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 import { GoogleImportEditor } from "@shared/ui/google-import";
@@ -402,6 +403,18 @@ export function ProfileEditor({
           </Button>
         </div>
       </form>
+      {tab !== "AI assistant" && (
+        <AgentCompanion
+          agent="studio"
+          href="/admin/chat"
+          label="Open Studio assistant"
+          notice={
+            message
+              ? { announce: false, id: `saved:${saved.revision}`, message, title: "Studio update" }
+              : undefined
+          }
+        />
+      )}
     </main>
   );
 }

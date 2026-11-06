@@ -2395,13 +2395,9 @@ textarea::placeholder {
   }
 }
 
-.fitness-assistant-trigger[data-slot="button"] {
-  min-height: 36px;
-}
-@media (max-width: 440px) {
-  .fitness-assistant-trigger[data-slot="button"] {
-    line-height: 1.2;
-    white-space: normal;
+@media (max-width: 700px) {
+  .fitness-agent-companion {
+    --agent-companion-bottom: calc(76px + env(safe-area-inset-bottom));
   }
 }
 

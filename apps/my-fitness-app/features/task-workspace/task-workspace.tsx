@@ -1,8 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
 
-import { Sparkles } from "lucide-react";
-
 import {
   type AgendaEvent,
   AgendaService,
@@ -11,6 +9,7 @@ import {
 } from "@shared/services/schedule";
 import type { Task, Workspace } from "@shared/services/types";
 import { dateKey } from "@shared/services/types";
+import { AgentCompanion } from "@shared/ui/agent-companion";
 import { Alert, AlertDescription } from "@shared/ui/alert";
 import { Button as LibraryButton } from "@shared/ui/button";
 
@@ -34,7 +33,7 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
   );
   const [target, setTarget] = useState<TaskEditorTarget | null>(null);
   const [templateRoot, setTemplateRoot] = useState<string | null>(null);
-  useTaskReminders(state, readOnly);
+  const reminder = useTaskReminders(state, readOnly);
   const day = useMemo(() => scheduleService.ensureDay(state, date), [state, date]);
   const onEdit = (task: Task) => {
     if (!readOnly) setTarget({ task });
@@ -103,20 +102,6 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
     target?.task?.scope === "scheduled" || target?.parent?.scope === "scheduled" ? day : state;
   return (
     <WorkspaceFrame
-      assistant={
-        !readOnly &&
-        tab !== "Assistant" && (
-          <LibraryButton
-            className="fitness-assistant-trigger"
-            onClick={() => setTab("Assistant")}
-            type="button"
-            variant="outline"
-          >
-            <Sparkles aria-hidden="true" />
-            Fitness assistant
-          </LibraryButton>
-        )
-      }
       busy={busy}
       date={date}
       error={error}
@@ -124,6 +109,26 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
       onDismissError={() => setError("")}
       overlay={
         <>
+          {!readOnly && (
+            <div hidden={tab === "Assistant" || Boolean(target)}>
+              <AgentCompanion
+                agent="fitness"
+                className="fitness-agent-companion"
+                label="Fitness assistant"
+                notice={
+                  reminder
+                    ? {
+                        action: { href: reminder.url, label: "View activity" },
+                        id: reminder.key,
+                        message: reminder.taskTitle,
+                        title: "Activity reminder",
+                      }
+                    : undefined
+                }
+                onOpen={() => setTab("Assistant")}
+              />
+            </div>
+          )}
           {target && !readOnly ? (
             <TaskEditor
               busy={busy}

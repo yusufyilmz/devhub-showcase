@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import type { ChatMessage, ChatType } from "@shared/lib/types";
 import { type ChatIdentity, useChatState } from "@shared/runtime/chat";
+import { AgentCompanion } from "@shared/ui/agent-companion";
 import { IconButton } from "@shared/ui/icon-button";
 import { ChatIcon, ReferralIcon } from "@shared/ui/icons";
 import { PortfolioChatProvider } from "@shared/ui/providers";
@@ -50,20 +51,17 @@ const ChatControls: React.FC<ChatSectionProps & { leading?: React.ReactNode }> =
 
   return (
     <>
-      <div className="fixed bottom-6 right-4 flex flex-col gap-3 z-[200] sm:right-8">
+      <div className="fixed bottom-6 right-4 flex flex-col items-end gap-3 z-[200] sm:right-8">
         {leading}
         {portfolioChatHref ? (
-          <IconButton
-            asChild
-            className="rounded-full"
-            size="lg"
-            surface="portfolio"
-            variant="outline"
-          >
-            <a aria-label="Portfolio assistant" href={portfolioChatHref}>
-              <ChatIcon fontSize="medium" />
-            </a>
-          </IconButton>
+          !isOpen && (
+            <AgentCompanion
+              agent="portfolio"
+              href={portfolioChatHref}
+              label="Portfolio assistant"
+              placement="inline"
+            />
+          )
         ) : (
           <IconButton
             aria-label={"Resume Chat"}

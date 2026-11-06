@@ -29,6 +29,7 @@ export function EngineerPage({
   ownerLink,
   referrals = [],
   extras = false,
+  featured = false,
   chat,
 }: {
   profile: PortfolioProfile;
@@ -37,6 +38,7 @@ export function EngineerPage({
   ownerLink?: ReactNode;
   referrals?: ComponentProps<typeof ReferralSection>["referrals"];
   extras?: boolean;
+  featured?: boolean;
   chat?: ReactNode;
 }) {
   const { experiences, projects, skills, educations } = resources;
@@ -72,13 +74,13 @@ export function EngineerPage({
     <>
       <Header profile={profile} />
       {ownerLink}
-      <main className="portfolio-main" id="main-content">
+      <main className="portfolio-main" data-featured={featured || undefined} id="main-content">
         <div className="portfolio-inner">
           <HeroSurface
             labels={{ pause: text.pauseBackground, play: text.playBackground }}
             media={profile.hero}
           >
-            <SummarySection profile={profile} />
+            <SummarySection featured={featured} profile={profile} />
           </HeroSurface>
           <RegisteredSections profile={sourceProfile} renderers={renderers} />
           {extras && <ReferralSection language={profile.portfolioLanguage} referrals={referrals} />}

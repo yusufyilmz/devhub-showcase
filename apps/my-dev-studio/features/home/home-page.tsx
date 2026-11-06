@@ -1,3 +1,4 @@
+import { AgentCompanion } from "@shared/ui/agent-companion";
 import { HomePage as HomeComposition, type PageAction } from "@shared/ui/sections";
 
 import { ExampleCarousel, StudioPlanDetails } from "@/features/studio";
@@ -10,11 +11,16 @@ export function HomePage({
   exampleHref: string | null;
 }) {
   return (
-    <HomeComposition
-      action={action}
-      exampleHref={exampleHref}
-      examples={<ExampleCarousel />}
-      planDetails={<StudioPlanDetails />}
-    />
+    <>
+      <HomeComposition
+        action={action}
+        exampleHref={exampleHref}
+        examples={<ExampleCarousel />}
+        planDetails={<StudioPlanDetails />}
+      />
+      {action.signedIn && (
+        <AgentCompanion agent="studio" href="/admin/chat" label="Open Studio assistant" />
+      )}
+    </>
   );
 }
