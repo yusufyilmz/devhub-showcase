@@ -19,13 +19,6 @@ export const Drawer = ({ open, onClose, anchor = "right", className, children }:
     };
   }, [open]);
 
-  const _translateClosed = {
-    bottom: "translate-y-full",
-    left: "-translate-x-full",
-    right: "translate-x-full",
-    top: "-translate-y-full",
-  }[anchor];
-
   const position = {
     bottom: "bottom-0 left-0 w-full h-80",
     left: "left-0 top-0 h-full w-80",
