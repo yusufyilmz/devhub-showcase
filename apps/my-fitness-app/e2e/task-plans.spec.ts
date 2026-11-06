@@ -186,6 +186,7 @@ test.describe("Fitness plan workspace", () => {
     const planCard = page.getByRole("region", { exact: true, name: "Your plans" });
     const actions = planCard.getByRole("group", { name: "Plan actions" });
     await expect(planCard).toHaveAttribute("data-backdrop", "accent");
+    await expect(planCard).toHaveCSS("background-image", /radial-gradient/);
     await expect(planCard.getByRole("heading", { name: "Everyday meals" })).toBeVisible();
     await expect(planCard.getByText("No subtasks yet.")).toBeVisible();
     await expect(actions.getByRole("button", { name: "New task" })).toBeDisabled();

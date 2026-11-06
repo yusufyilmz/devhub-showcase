@@ -2114,15 +2114,6 @@ textarea::placeholder {
   }
 }
 
-.fitness-plans[data-slot="card"] {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 18px;
-  padding: clamp(14px, 3.5vw, 28px);
-  background-image: linear-gradient(115deg, var(--surface) 15%, var(--accent-soft));
-  border-inline-start-color: var(--accent);
-  box-shadow: none;
-}
 .fitness-plan-content {
   display: grid;
   grid-template-columns: minmax(0, 1fr);

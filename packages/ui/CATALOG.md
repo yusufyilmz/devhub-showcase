@@ -68,7 +68,7 @@ surface; reveal, variants, hover, content and appearance use the existing
 specialized components and their props. Tilt and animated use the base surface
 with reduced-motion-aware effects. Reveal requires title and heading; content
 requires title. Hover accepts a trigger element or explicit HoverCardTrigger /
-HoverCardContent children. CardProps is exported from @shared/ui/cards.
+HoverCardContent children. CardProps is exported from @shared/ui/cards. Use `backdrop="accent"` for the shared gradient and leading accent border, as on the Fitness plans card.
 
 Author CSS in `src/styles`. Domain-specific sheets live under
 `src/styles/components/` and load with their owning components. Public CSS

@@ -96,6 +96,6 @@ Create/update its guide in this directory and add/update the index row in the sa
 
 [My Fitness Studio workspaces and shared UI](fitness-workspaces.md) covers account isolation, the public demo, branding, and dashboard styling.
 
-[Fitness task plans](fitness-task-plans.md) covers the shared plan card, header actions, pagination, task drill-down, and desktop and mobile checks for Tasks.
+[Fitness task plans](fitness-task-plans.md) covers the shared accent-gradient plan card, header actions, pagination, task drill-down, and desktop and mobile checks for Tasks.
 
 [Fitness shared controls and notifications](fitness-shared-ui.md) covers the task editor, weekly tabs, calendar, agenda button states, and reminder permission checks.
