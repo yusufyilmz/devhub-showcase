@@ -17,13 +17,13 @@ import { isCategoryReferralCategory } from "@shared/lib/utils";
 import { ReferralService, ReviewService } from "@shared/services/studio";
 import { logger } from "@shared/utils/logger";
 
-import { requireAdmin } from "@/features/admin/admin-auth";
 import {
   assertCurrentPublication,
   portfolioChatInput,
   requireLegacyChat,
 } from "@/features/chat/portfolio-chat";
 import { answerPremiumChat } from "@/features/chat/premium-chat";
+import { reviewWorkspace } from "@/features/reviews/workspace";
 
 export async function handlePremiumChatAction(
   username: string,
@@ -96,13 +96,15 @@ export async function handleSendMessageAction(
 }
 
 export async function handleSubmitReviewAction(
-  referralId: string,
+  username: string,
+  reviewId: string,
   reviewState: ReviewState,
 ): Promise<ReviewWithReferrals | undefined> {
   try {
-    const { client } = await requireAdmin();
-    const reviewService = new ReviewService(logger, client);
-    const review = await reviewService.update(referralId, {
+    const workspace = await reviewWorkspace();
+    if (!workspace || workspace.username !== username) return undefined;
+    const reviewService = new ReviewService(logger, workspace.client);
+    const review = await reviewService.update(reviewId, {
       state: reviewState,
     });
 
