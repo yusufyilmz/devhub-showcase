@@ -8,7 +8,7 @@
     "./urls": "./src/urls/index.ts",
     "./sections": "./src/sections/index.ts",
     "./profile": "./src/profile/index.ts",
-    "./portfolios": "./src/portfolios/index.ts",
+    "./portfolios": "./src/portfolio/index.ts",
     "./copy": "./src/copy/index.ts",
     "./storage": "./src/storage/index.ts",
     "./theme": "./src/theme/index.ts"

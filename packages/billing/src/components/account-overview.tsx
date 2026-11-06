@@ -30,7 +30,9 @@ export type AccountStatus = {
 export function AccountOverview({ billing, aiConfigured, profile }: AccountStatus) {
   return (
     <section aria-labelledby="account-plan-title">
-      <h3 id="account-plan-title">{planLabels[billing.access]}</h3>
+      <h3 className="mt-5 mb-2 text-lg leading-[1.65] font-semibold" id="account-plan-title">
+        {planLabels[billing.access]}
+      </h3>
       {billing.access === "past_due" && (
         <p>Open Manage subscription to review your test payment method.</p>
       )}
@@ -57,8 +59,8 @@ export function AccountOverview({ billing, aiConfigured, profile }: AccountStatu
         const status = premiumFeatureStatus(billing, profile, feature, aiConfigured);
         return (
           <Card asChild key={feature} layout="plain" surface="portfolio">
-            <section className="account-feature-card">
-              <h4>{label}</h4>
+            <section className="my-4 p-5 shadow-none!">
+              <h4 className="mb-2 text-base leading-[1.65] font-semibold">{label}</h4>
               <p>{featureLabels[status]}</p>
               {status !== "legacy" && (
                 <>
@@ -68,6 +70,7 @@ export function AccountOverview({ billing, aiConfigured, profile }: AccountStatu
                   </p>
                   <progress
                     aria-label={`${label} usage`}
+                    className="h-2 w-full max-w-80 accent-[rgb(var(--accent-rgb))]"
                     max={Math.max(1, billing.limits[feature])}
                     value={Math.min(billing.usage[feature], Math.max(1, billing.limits[feature]))}
                   />
