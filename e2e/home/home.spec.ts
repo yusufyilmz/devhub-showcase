@@ -157,3 +157,28 @@ test("portfolio preview stays straight and matches the active theme and accent",
       .screenshot({ path: info.outputPath(`homepage-preview-${mode}.png`) });
   }
 });
+
+test("homepage effects preserve the backdrop and controls in reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  const backdrop = page.locator('[data-slot="background"][data-effect="aurora"]');
+  const heroTitle = page.getByRole("heading", { level: 1 });
+  await expect(heroTitle).toHaveCSS("animation-name", "home-enter");
+  expect(
+    await backdrop.evaluate((element) => getComputedStyle(element, "::before").backgroundImage),
+  ).toContain("radial-gradient");
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(heroTitle).toHaveCSS("animation-name", "none");
+  expect(
+    await backdrop.evaluate((element) => getComputedStyle(element, "::before").animationName),
+  ).toBe("none");
+  const card = page.locator('#features [data-backdrop="accent"]').first();
+  await expect(card).toHaveCSS("border-inline-start-width", "3px");
+  await expect(card).toHaveCSS("background-image", /linear-gradient/);
+  const details = card.getByRole("button", { name: /details for your own portfolio/ });
+  await details.focus();
+  await expect(details).toHaveAttribute("aria-expanded", "true");
+  await details.press("Escape");
+  await expect(details).toHaveAttribute("aria-expanded", "false");
+});

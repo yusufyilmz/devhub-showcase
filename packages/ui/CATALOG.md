@@ -73,7 +73,7 @@ HoverCardContent children. CardProps is exported from @shared/ui/cards.
 Component styles live beside their owning UI domain. Portfolio skins are in
 src/portfolio/portfolio.css; section skins in src/sections/sections.css; navigation
 in src/navigation/chrome.css; chat styles in src/display/chat; example styles in
-src/sections/home-section; login styles in src/forms/login-form. Existing CSS export
+src/sections/home-section; homepage styles are exported as `@shared/ui/home.css`; login styles in src/forms/login-form. Existing CSS export
 paths remain supported by forwarding imports. Components import their own styles;
 the global bundles do not import these component styles. Tokens,
 themes, layouts and global resets remain centralized. Shared surface rules live
@@ -124,38 +124,38 @@ Public components exported from `packages/ui/src/components/index.ts`. Import th
 
 ## Feedback
 
-| Component                                  | Folder                             | Use                                |
-| ------------------------------------------ | ---------------------------------- | ---------------------------------- |
-| `Alert`                                    | `alert`                            | Inline status message              |
-| `AlertDialog`                              | `alert-dialog`                     | Confirmation that must be answered |
-| `Badge`                                    | `badge`                            | Short status chip                  |
-| `Banner`                                   | `banner`                           | Page-level notice                  |
-| `Chip`, `Tag`                              | `chip`, `tag`                      | Compact labels                     |
-| `Toast`, `Toaster`, `SnackbarNotification` | `toast`, `toaster`, `notification` | Transient messages                 |
-| `Spinner`                                  | `spinner`                          | Waiting state                      |
-| `Skeleton`                                 | `skeleton`                         | Loading placeholder                |
-| `Progress`                                 | `progress`                         | Determinate progress               |
-| `StatusIndicator`                          | `status-indicator`                 | Small presence or state mark       |
-| `EmptyState`                               | `empty-state`                      | No-data state                      |
-| `ErrorPage`                                | `error-page`                       | Full-page error                    |
-| `Feedback`                                 | `feedback`                         | Feedback prompt                    |
+| Component                                  | Folder                            | Use                                         |
+| ------------------------------------------ | --------------------------------- | ------------------------------------------- |
+| `Alert`                                    | `alert`                           | Inline status message                       |
+| `AlertDialog`                              | `alert-dialog`                    | Confirmation that must be answered          |
+| `Badge`                                    | `badge`                           | Short status chip                           |
+| `Banner`                                   | `banner`                          | Page-level notice                           |
+| `Chip`, `Tag`                              | `chip`, `tag`                     | Compact labels                              |
+| `Toaster`, `toast`, `SnackbarNotification` | `toast`, `sonner`, `notification` | Sonner toasts and dismissible notifications |
+| `Spinner`                                  | `spinner`                         | Waiting state                               |
+| `Skeleton`                                 | `skeleton`                        | Loading placeholder                         |
+| `Progress`                                 | `progress`                        | Determinate progress                        |
+| `StatusIndicator`                          | `status-indicator`                | Small presence or state mark                |
+| `EmptyState`                               | `empty-state`                     | No-data state                               |
+| `ErrorPage`                                | `error-page`                      | Full-page error                             |
+| `Feedback`                                 | `feedback`                        | Feedback prompt                             |
 
 ## Overlays
 
-| Component                   | Folder            | Use                           |
-| --------------------------- | ----------------- | ----------------------------- |
-| `Dialog`                    | `dialog`          | Modal panel                   |
-| `RadixDialog` and its parts | `radix-dialog`    | Lower-level dialog primitives |
-| `Drawer`                    | `drawer`          | Edge panel                    |
-| `Sheet`                     | `sheet`           | Side sheet                    |
-| `Popover`                   | `popover`         | Anchored floating panel       |
-| `Tooltip`                   | `tooltip`         | Hover or focus hint           |
-| `HoverCard`                 | `hover-card`      | Rich hover preview            |
-| `DropdownMenu`              | `dropdown-menu`   | Action menu                   |
-| `ContextMenu`               | `context-menu`    | Right-click menu              |
-| `Menubar`                   | `menubar`         | Horizontal menu bar           |
-| `Command`                   | `command`         | Command palette               |
-| `NavigationMenu`            | `navigation-menu` | Disclosure navigation         |
+| Component                    | Folder                        | Use                           |
+| ---------------------------- | ----------------------------- | ----------------------------- |
+| `Dialog`                     | `dialog`                      | Modal panel                   |
+| `RadixDialog` and its parts  | `radix-dialog`                | Lower-level dialog primitives |
+| `Drawer`                     | `drawer`                      | Edge panel                    |
+| `Sheet`                      | `sheet`                       | Side sheet                    |
+| `Popover`                    | `popover`                     | Anchored floating panel       |
+| `Tooltip`, `AnimatedTooltip` | `tooltip`, `animated-tooltip` | Hover or focus hint           |
+| `HoverCard`                  | `hover-card`                  | Rich hover preview            |
+| `DropdownMenu`               | `dropdown-menu`               | Action menu                   |
+| `ContextMenu`                | `context-menu`                | Right-click menu              |
+| `Menubar`                    | `menubar`                     | Horizontal menu bar           |
+| `Command`                    | `command`                     | Command palette               |
+| `NavigationMenu`             | `navigation-menu`             | Disclosure navigation         |
 
 ## Layout and surfaces
 
@@ -164,8 +164,8 @@ Public components exported from `packages/ui/src/components/index.ts`. Import th
 | `Flex` and the row, column, and stack helpers        | `flex`                           | Layout primitive                       |
 | `Card` and its header, body, footer, and title parts | `card`                           | Bordered content surface               |
 | `RevealCard`                                         | `reveal-card`                    | Card with a reveal treatment           |
-| `AppearanceCard`                                     | `cards`                          | Card wrapper with appearance and hover |
-| `VariantCard` and section parts                      | `cards`                          | CVA card surface with layout slots     |
+| `AppearanceCard`                                     | `appearance-card`                | Card wrapper with appearance and hover |
+| `VariantCard` and section parts                      | `variant-card`                   | CVA card surface with layout slots     |
 | `Section`                                            | `section`                        | Page section frame                     |
 | `Divider`                                            | `divider`                        | Horizontal or vertical rule            |
 | `Separator`                                          | `seperator`                      | Radix separator                        |
@@ -239,7 +239,28 @@ Use the portfolio adapter only on existing RGB portfolio/studio surfaces.
 `Button` supports native actions, link actions via `href`, and single-child
 composition via `asChild`. Links preserve accessibility attributes and disabled
 links have no navigation target. Inputs and textareas share the same focus treatment.
-See **UI Components / Card / Product Surfaces** in Storybook.
+See **UI / Cards / Card / Product Surfaces** in Storybook.
+
+Use `Card backdrop="accent"` or the same prop on `RevealCard` for a tinted
+surface and leading accent edge. `Background effect="aurora"` adds an accent
+wash and dotted texture. The homepage pairs them with a short entrance and
+scroll-driven card transitions where supported. Reduced motion keeps the
+backdrop and card styles visible without the entrance effects.
+
+| Card family       | Folder under `src/cards` | Use                                                  |
+| ----------------- | ------------------------ | ---------------------------------------------------- |
+| AnimatedToolsCard | `animated-tools-card`    | Decorative toolkit summary                           |
+| CardSpotlight     | `card-spotlight`         | Pointer-responsive accent on a card                  |
+| ExpandableCards   | `expandable-cards`       | Card list with keyboard-accessible detail dialogs    |
+| FocusCards        | `focus-cards`            | Image grid that highlights the hovered item          |
+| HoverOverlayCard  | `hover-overlay-card`     | Decorative image change with a readable caption      |
+| ProjectCard       | `project-card`           | Project summary, screenshot carousel, team and links |
+| TextRevealCard    | `text-reveal-card`       | Click, tap or keyboard disclosure                    |
+
+`@shared/ui/tooltip` accepts `<Tooltip title="Hint"><Button>Action</Button></Tooltip>`
+or composed `TooltipTrigger` and `TooltipContent` parts. Both use the same
+portal, collision handling, keyboard focus, Escape dismissal and appearance
+tokens. `AnimatedTooltip` adds optional pointer tracking.
 
 ## Browser preferences
 

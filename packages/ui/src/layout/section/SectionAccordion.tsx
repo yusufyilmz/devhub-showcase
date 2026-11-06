@@ -1,3 +1,5 @@
+import "./section-views.css";
+
 import { Section } from "./Section";
 import { SectionItemCard } from "./SectionItemCard";
 import { sectionElementsStyles } from "./styles";

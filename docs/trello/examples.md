@@ -9,9 +9,9 @@ The `ArticleToTrelloButton` component enables seamless conversion of articles to
 ### **In Article Content Component**
 
 ```tsx
-import { articleSelectors, useArticleStore } from "@/modules/article/store/articleStore";
+import { articleSelectors, useArticleStore } from "@/shared/article/store/articleStore";
 // src/modules/article/components/ArticleContent.tsx
-import { ArticleToTrelloButton } from "@/modules/trello/v2/components/integration";
+import { ArticleToTrelloButton } from "@/shared/trello/v2/components/integration";
 
 export const ArticleContent = () => {
   const currentArticle = useArticleStore(articleSelectors.currentArticle);
@@ -35,7 +35,7 @@ export const ArticleContent = () => {
 
 ```tsx
 // src/modules/article/components/ArticleSidebar.tsx
-import { ArticleToTrelloButton } from "@/modules/trello/v2/components/integration";
+import { ArticleToTrelloButton } from "@/shared/trello/v2/components/integration";
 
 export const ArticleSidebar = () => {
   const currentArticle = useArticleStore(articleSelectors.currentArticle);

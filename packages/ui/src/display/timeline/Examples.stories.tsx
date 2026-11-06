@@ -24,9 +24,11 @@ function Example({ width = 560 }: { width?: number }) {
     </div>
   );
 }
-const meta = { component: Example, tags: ["autodocs"], title: "UI/timeline" } satisfies Meta<
-  typeof Example
->;
+const meta = {
+  component: Example,
+  tags: ["autodocs"],
+  title: "UI/Display/timeline",
+} satisfies Meta<typeof Example>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {};

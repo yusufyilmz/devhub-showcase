@@ -16,9 +16,9 @@ A comprehensive typography system that respects the theme and provides semantic 
 import { Typography } from '@shared/ui/components/v2'
 
 // Basic typography
-<Typography variant="h1">Main Heading</Typography>
-<Typography variant="body1">Body text content</Typography>
-<Typography color="muted" variant="caption" >Caption text</Typography>
+<Typography  variant="h1">Main Heading</Typography>
+<Typography  variant="body1">Body text content</Typography>
+<Typography  color="muted" variant="caption" >Caption text</Typography>
 ```
 
 ## Props
@@ -41,32 +41,32 @@ import { Typography } from '@shared/ui/components/v2'
 ### Headings
 
 ```tsx
-<Typography variant="h1">Heading 1</Typography>
-<Typography variant="h2">Heading 2</Typography>
-<Typography variant="h3">Heading 3</Typography>
-<Typography variant="h4">Heading 4</Typography>
-<Typography variant="h5">Heading 5</Typography>
-<Typography variant="h6">Heading 6</Typography>
+<Typography  variant="h1">Heading 1</Typography>
+<Typography  variant="h2">Heading 2</Typography>
+<Typography  variant="h3">Heading 3</Typography>
+<Typography  variant="h4">Heading 4</Typography>
+<Typography  variant="h5">Heading 5</Typography>
+<Typography  variant="h6">Heading 6</Typography>
 ```
 
 ### Body Text
 
 ```tsx
-<Typography variant="body1">Primary body text</Typography>
-<Typography variant="body2">Secondary body text</Typography>
-<Typography variant="lead">Lead paragraph</Typography>
-<Typography variant="large">Large text</Typography>
-<Typography variant="small">Small text</Typography>
+<Typography  variant="body1">Primary body text</Typography>
+<Typography  variant="body2">Secondary body text</Typography>
+<Typography  variant="lead">Lead paragraph</Typography>
+<Typography  variant="large">Large text</Typography>
+<Typography  variant="small">Small text</Typography>
 ```
 
 ### Special Variants
 
 ```tsx
-<Typography variant="caption">Caption text</Typography>
-<Typography variant="overline">Overline text</Typography>
-<Typography variant="subtitle1">Subtitle 1</Typography>
-<Typography variant="subtitle2">Subtitle 2</Typography>
-<Typography variant="code">Code text</Typography>
+<Typography  variant="caption">Caption text</Typography>
+<Typography  variant="overline">Overline text</Typography>
+<Typography  variant="subtitle1">Subtitle 1</Typography>
+<Typography  variant="subtitle2">Subtitle 2</Typography>
+<Typography  variant="code">Code text</Typography>
 ```
 
 ## Convenience Components
@@ -99,46 +99,46 @@ import { Body1, Body2, Caption, Code, Lead, Muted } from '@shared/ui/components/
 ### Color Variants
 
 ```tsx
-<Typography color="default">Default text</Typography>
-<Typography color="muted">Muted text</Typography>
-<Typography color="primary">Primary text</Typography>
-<Typography color="destructive">Error text</Typography>
-<Typography color="success">Success text</Typography>
-<Typography color="warning">Warning text</Typography>
-<Typography color="info">Info text</Typography>
+<Typography  color="default">Default text</Typography>
+<Typography  color="muted">Muted text</Typography>
+<Typography  color="primary">Primary text</Typography>
+<Typography  color="destructive">Error text</Typography>
+<Typography  color="success">Success text</Typography>
+<Typography  color="warning">Warning text</Typography>
+<Typography  color="info">Info text</Typography>
 ```
 
 ### Alignment
 
 ```tsx
-<Typography align="left">Left aligned</Typography>
-<Typography align="center">Center aligned</Typography>
-<Typography align="right">Right aligned</Typography>
-<Typography align="justify">Justified text</Typography>
+<Typography  align="left">Left aligned</Typography>
+<Typography  align="center">Center aligned</Typography>
+<Typography  align="right">Right aligned</Typography>
+<Typography  align="justify">Justified text</Typography>
 ```
 
 ### Weight and Transform
 
 ```tsx
-<Typography weight="bold">Bold text</Typography>
-<Typography weight="light">Light text</Typography>
-<Typography transform="uppercase">UPPERCASE TEXT</Typography>
-<Typography transform="capitalize">capitalized text</Typography>
+<Typography  weight="bold">Bold text</Typography>
+<Typography  weight="light">Light text</Typography>
+<Typography  transform="uppercase">UPPERCASE TEXT</Typography>
+<Typography  transform="capitalize">capitalized text</Typography>
 ```
 
 ### Text Decoration
 
 ```tsx
-<Typography decoration="underline">Underlined text</Typography>
-<Typography decoration="line-through">Strikethrough text</Typography>
+<Typography  decoration="underline">Underlined text</Typography>
+<Typography  decoration="line-through">Strikethrough text</Typography>
 ```
 
 ### Truncation
 
 ```tsx
-<Typography truncate>Single line truncated text</Typography>
-<Typography truncate="truncate-2">Two line truncated text</Typography>
-<Typography truncate="truncate-3">Three line truncated text</Typography>
+<Typography  truncate>Single line truncated text</Typography>
+<Typography  truncate="truncate-2">Two line truncated text</Typography>
+<Typography  truncate="truncate-3">Three line truncated text</Typography>
 ```
 
 ## Real-world Examples
@@ -279,8 +279,8 @@ The component automatically chooses appropriate HTML elements:
 
 ```tsx
 // Use custom HTML elements
-<Typography as="span" variant="h1">Inline heading</Typography>
-<Typography as="div" variant="body1">Block text</Typography>
+<Typography  as="span" variant="h1">Inline heading</Typography>
+<Typography  as="div" variant="body1">Block text</Typography>
 ```
 
 ### Screen Reader Support
@@ -301,7 +301,7 @@ The component automatically chooses appropriate HTML elements:
 <Body1>Main content</Body1>
 
 // ❌ Avoid - non-semantic
-<Typography variant="h1" as="div">Not a heading</Typography>
+<Typography  variant="h1" as="div">Not a heading</Typography>
 ```
 
 ### 2. Consistent Hierarchy
@@ -320,12 +320,12 @@ The component automatically chooses appropriate HTML elements:
 
 ```tsx
 // ✅ Good - semantic colors
-<Typography color="destructive">Error message</Typography>
-<Typography color="success">Success message</Typography>
-<Typography color="muted">Secondary information</Typography>
+<Typography  color="destructive">Error message</Typography>
+<Typography  color="success">Success message</Typography>
+<Typography  color="muted">Secondary information</Typography>
 
 // ❌ Avoid - using colors for decoration only
-<Typography color="primary">Regular text</Typography>
+<Typography  color="primary">Regular text</Typography>
 ```
 
 ### 4. Responsive Typography

@@ -13,13 +13,13 @@
 }
 .work-media iframe {
   aspect-ratio: 16 / 9;
-  border: 1px solid rgb(var(--border-rgb));
+  border: 1px solid var(--border);
 }
 .work-media :where(.media-notice, [role="status"]) {
   margin: 10px 0;
   font-size: 12px;
   line-height: 1.6;
-  color: rgb(var(--muted-rgb));
+  color: var(--muted-foreground);
 }
 .work-media .ui-button {
   max-width: 100%;

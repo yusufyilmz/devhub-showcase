@@ -1,17 +1,30 @@
 import "@shared/ui/foundation.css";
 
 import type { Preview } from "@storybook/react-vite";
+import { useGlobals } from "storybook/preview-api";
 
+import { ThemeContext } from "../../../packages/ui/src/theme/theme-toggle";
 import { BRANDS } from "../../../packages/ui/src/theme/types";
 import { ThemePreview } from "./theme-preview";
 
 const preview: Preview = {
   decorators: [
-    (Story, context) => (
-      <ThemePreview globals={context.globals}>
-        <Story />
-      </ThemePreview>
-    ),
+    (Story) => {
+      const [globals, updateGlobals] = useGlobals();
+      const mode = globals.mode === "dark" ? "dark" : "light";
+      return (
+        <ThemePreview globals={globals}>
+          <ThemeContext.Provider
+            value={{
+              mode,
+              toggle: () => updateGlobals({ mode: mode === "dark" ? "light" : "dark" }),
+            }}
+          >
+            <Story />
+          </ThemeContext.Provider>
+        </ThemePreview>
+      );
+    },
   ],
   globalTypes: {
     brand: {
@@ -42,10 +55,6 @@ const preview: Preview = {
     a11y: { test: "todo" },
     backgrounds: { disable: true },
     controls: { matchers: { color: /(background|color)$/i, date: /Date$/i } },
-    docs: { story: { iframeHeight: 480, inline: false } },
-    viewMode: {
-      docs: { hidden: true },
-    },
   },
 };
 

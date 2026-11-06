@@ -6,8 +6,6 @@ import { buildFlexStyle, isLayoutSizeToken } from "./flex-utils";
 import { buildFlexClassNames } from "./styles";
 import type { FlexProps } from "./types";
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: mirrors Once UI Flex class composition
-
 export const Flex = React.forwardRef<HTMLDivElement, FlexProps>(
   (
     {

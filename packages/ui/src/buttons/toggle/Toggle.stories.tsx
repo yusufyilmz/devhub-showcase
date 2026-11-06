@@ -38,7 +38,7 @@ const meta: Meta<typeof Toggle> = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  title: "UI/Toggle",
+  title: "UI/Actions/Toggle",
 };
 
 export default meta;

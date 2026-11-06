@@ -7,5 +7,6 @@ export interface NotFoundProps {
   homeHref?: string;
   LinkComponent?: React.ComponentType<any>;
   onReturnHome?: () => void;
+  secondaryAction?: React.ReactNode;
   title?: string;
 }

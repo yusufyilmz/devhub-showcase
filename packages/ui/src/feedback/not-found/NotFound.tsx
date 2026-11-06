@@ -1,44 +1,58 @@
 import { cn } from "cn";
+import { Compass, House } from "lucide-react";
 
-import { Button as LibraryButton } from "../../buttons/button/Button";
-import { notFoundStyles } from "./styles";
+import { Button, buttonVariants } from "../../buttons/button/Button";
+import { recoveryPageStyles } from "../../layout/page-variants/styles";
 import type { NotFoundProps } from "./types";
 
 export function NotFound({
   className,
-  title = "404",
-  description = "Looks like you've ventured into the unknown digital realm.",
+  title = "Page not found",
+  description = "This page may have moved or the address may have changed.",
   buttonText = "Return to website",
   onReturnHome,
   homeHref = "/",
   LinkComponent,
+  secondaryAction,
   ...props
 }: NotFoundProps) {
-  const buttonClasses =
-    "inline-flex h-10 items-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300";
+  const homeIcon = <House aria-hidden="true" />;
 
   return (
-    <div className={cn(notFoundStyles.notFound, className)} {...props}>
-      <div className={notFoundStyles.element1}>
-        <div className={notFoundStyles.element2}>
-          <h1 className={notFoundStyles.element3}>{title}</h1>
-          <p className={notFoundStyles.element4}>{description}</p>
+    <div className={cn(recoveryPageStyles.shell, className)} {...props}>
+      <section
+        className={cn(recoveryPageStyles.card, "group/recovery [--recovery-tone:var(--primary)]")}
+      >
+        <span className={cn(recoveryPageStyles.icon, "motion-safe:group-hover/recovery:rotate-12")}>
+          <Compass aria-hidden="true" className="size-[1.375rem]" />
+        </span>
+        <p className={recoveryPageStyles.label}>Error 404</p>
+        <h1 className={recoveryPageStyles.title}>{title}</h1>
+        <p className={recoveryPageStyles.description}>{description}</p>
+        <div className={recoveryPageStyles.actions}>
+          {secondaryAction}
+          {LinkComponent ? (
+            <LinkComponent
+              className={cn(buttonVariants({ variant: "outline" }), recoveryPageStyles.button)}
+              href={homeHref}
+              to={homeHref}
+            >
+              {homeIcon}
+              {buttonText}
+            </LinkComponent>
+          ) : (
+            <Button
+              className={recoveryPageStyles.button}
+              href={onReturnHome ? undefined : homeHref}
+              onClick={onReturnHome}
+              startIcon={homeIcon}
+              variant="outline"
+            >
+              {buttonText}
+            </Button>
+          )}
         </div>
-        {LinkComponent ? (
-          <LinkComponent className={buttonClasses} href={homeHref} to={homeHref}>
-            {buttonText}
-          </LinkComponent>
-        ) : (
-          <LibraryButton
-            className={buttonClasses}
-            onClick={onReturnHome}
-            type="button"
-            variant="unstyled"
-          >
-            {buttonText}
-          </LibraryButton>
-        )}
-      </div>
+      </section>
     </div>
   );
 }

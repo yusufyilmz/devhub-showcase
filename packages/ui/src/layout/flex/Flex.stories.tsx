@@ -3,7 +3,7 @@ import type React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "../../buttons/button";
-import { Card } from "../../cards/Card";
+import { Card } from "../../cards/card/Card";
 import {
   Flex,
   FlexBetween,
@@ -234,7 +234,7 @@ const FlexDemo: React.FC = () => {
 const meta = {
   component: FlexDemo,
   parameters: { layout: "fullscreen" },
-  title: "Components/Flex",
+  title: "UI/Layout/Flex",
 } satisfies Meta<typeof FlexDemo>;
 
 export default meta;

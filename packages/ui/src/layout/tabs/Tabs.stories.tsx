@@ -26,7 +26,7 @@ const meta: Meta<typeof Tabs> = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  title: "UI/Tabs",
+  title: "UI/Layout/Tabs",
 };
 
 export default meta;

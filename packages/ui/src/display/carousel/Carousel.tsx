@@ -121,11 +121,65 @@ function Carousel({
   );
 }
 
+function enableHorizontalWheel(
+  node: HTMLDivElement,
+  api: NonNullable<CarouselApi>,
+  direction: number,
+  scrollNext: () => void,
+  scrollPrev: () => void,
+) {
+  let reset: ReturnType<typeof setTimeout> | undefined;
+
+  function onWheel(event: WheelEvent) {
+    if (event.ctrlKey || Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+    const next = event.deltaX * direction > 0;
+    const canScroll = next ? api.canScrollNext() : api.canScrollPrev();
+    const gestureInProgress = reset !== undefined;
+    if (!gestureInProgress && !canScroll) return;
+
+    event.preventDefault();
+    clearTimeout(reset);
+    reset = setTimeout(() => {
+      reset = undefined;
+    }, 140);
+    if (gestureInProgress) return;
+    (next ? scrollNext : scrollPrev)();
+  }
+
+  node.addEventListener("wheel", onWheel, { passive: false });
+  return () => {
+    clearTimeout(reset);
+    node.removeEventListener("wheel", onWheel);
+  };
+}
+
 function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
-  const { carouselRef, orientation } = useCarousel();
+  const { api, carouselRef, orientation, opts, scrollNext, scrollPrev } = useCarousel();
+  const direction = opts?.direction === "rtl" ? -1 : 1;
+  const viewport = React.useRef<HTMLDivElement>(null);
+  const attachViewport = React.useCallback(
+    (node: HTMLDivElement | null) => {
+      viewport.current = node;
+      carouselRef(node);
+    },
+    [carouselRef],
+  );
+
+  React.useEffect(() => {
+    const node = viewport.current;
+    if (!node || !api || orientation !== "horizontal") return;
+    return enableHorizontalWheel(node, api, direction, scrollNext, scrollPrev);
+  }, [api, direction, orientation, scrollNext, scrollPrev]);
 
   return (
-    <div className={carouselStyles.element1} data-slot="carousel-content" ref={carouselRef}>
+    <div
+      className={cn(
+        carouselStyles.element1,
+        orientation === "horizontal" ? "touch-pan-y" : "touch-pan-x",
+      )}
+      data-slot="carousel-content"
+      ref={attachViewport}
+    >
       <div
         className={cn(
           carouselStyles.carouselContent,

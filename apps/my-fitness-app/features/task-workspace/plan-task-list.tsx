@@ -1,8 +1,8 @@
 "use client";
 
-import { Fragment, useLayoutEffect, useRef, useState } from "react";
+import { Fragment, useLayoutEffect, useRef } from "react";
 
-import { ChevronRight, Pencil, Plus } from "lucide-react";
+import { ChevronRight, Pencil } from "lucide-react";
 
 import { TaskService } from "@shared/services/fitness/task";
 import type { Task } from "@shared/services/types";
@@ -25,7 +25,11 @@ export function subtaskLabel(count: number) {
   return `${count} ${count === 1 ? "subtask" : "subtasks"}`;
 }
 
-function resolvePath(plan: Task, pathIds: string[], templates: Task[]) {
+export function canAddPlanSubtask(task: Task) {
+  return !["set", "supplement", "water"].includes(task.kind);
+}
+
+export function resolvePlanTaskPath(plan: Task, pathIds: string[], templates: Task[]) {
   const path = [plan];
   let current = plan;
   for (const id of pathIds) {
@@ -41,20 +45,22 @@ function resolvePath(plan: Task, pathIds: string[], templates: Task[]) {
 
 export function PlanTaskList({
   busy,
-  onAdd,
+  current,
   onEdit,
+  onNavigate,
+  path,
   plan,
   readOnly,
   templates,
-}: Pick<TaskTreeProps, "busy" | "onAdd" | "onEdit" | "readOnly"> & {
+}: Pick<TaskTreeProps, "busy" | "onEdit" | "readOnly"> & {
+  current: Task;
+  onNavigate: (path: Task[]) => void;
+  path: Task[];
   plan: Task;
   templates: Task[];
 }) {
-  const [pathIds, setPathIds] = useState<string[]>([]);
   const heading = useRef<HTMLHeadingElement>(null);
   const shouldFocus = useRef(false);
-  const path = resolvePath(plan, pathIds, templates);
-  const current = path.at(-1) ?? plan;
 
   useLayoutEffect(() => {
     if (shouldFocus.current) {
@@ -65,11 +71,11 @@ export function PlanTaskList({
 
   const children = tasks.children(templates, current.id);
   const atRoot = current.id === plan.id;
-  const canAdd = !["set", "supplement", "water"].includes(current.kind);
+  const canAdd = canAddPlanSubtask(current);
 
   function navigate(nextPath: Task[]) {
     shouldFocus.current = true;
-    setPathIds(nextPath.slice(1).map((task) => task.id));
+    onNavigate(nextPath);
   }
 
   return (
@@ -101,41 +107,12 @@ export function PlanTaskList({
           </BreadcrumbList>
         </Breadcrumb>
       )}
-      <div className="fitness-plan-tasks-header">
-        <div>
-          {!atRoot && <Badge variant="secondary">{current.kind.replaceAll("_", " ")}</Badge>}
-          <h3 id="fitness-plan-tasks-heading" ref={heading} tabIndex={-1}>
-            {atRoot ? "Plan tasks" : current.title}
-          </h3>
-        </div>
-        <div className="fitness-plan-task-actions">
-          {current.kind !== "day" && (
-            <Button
-              aria-label={`Edit ${current.title}`}
-              disabled={readOnly || busy}
-              onClick={() => onEdit(current)}
-              size="lg"
-              type="button"
-              variant="outline"
-            >
-              <Pencil aria-hidden="true" />
-              {atRoot ? "Edit plan" : "Edit task"}
-            </Button>
-          )}
-          {canAdd && (
-            <Button
-              className="fitness-new-task"
-              disabled={readOnly || busy}
-              onClick={() => onAdd(current)}
-              size="lg"
-              type="button"
-            >
-              <Plus aria-hidden="true" />
-              Add subtask
-            </Button>
-          )}
-        </div>
-      </div>
+      <header className="fitness-plan-tasks-header">
+        {!atRoot && <Badge variant="secondary">{current.kind.replaceAll("_", " ")}</Badge>}
+        <h3 id="fitness-plan-tasks-heading" ref={heading} tabIndex={-1}>
+          {atRoot ? "Plan tasks" : current.title}
+        </h3>
+      </header>
       {current.time && <p className="fitness-plan-notes">Time: {current.time}</p>}
       {current.notes && <p className="fitness-plan-notes">{current.notes}</p>}
       <TaskFacts task={current} />

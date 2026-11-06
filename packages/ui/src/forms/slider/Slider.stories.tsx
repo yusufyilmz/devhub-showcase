@@ -8,7 +8,7 @@ const meta: Meta<typeof Slider> = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  title: "UI/Slider",
+  title: "UI/Forms/Slider",
 };
 
 export default meta;

@@ -20,7 +20,7 @@ const meta: Meta<typeof Label> = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  title: "UI/Label",
+  title: "UI/Forms/Label",
 };
 
 export default meta;

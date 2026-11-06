@@ -71,11 +71,17 @@ test.describe("Fitness plan workspace", () => {
     );
     await page.goto("/?date=2026-11-05&view=Tasks");
 
-    const carousel = page.getByRole("region", { exact: true, name: "Plans" });
+    const planCard = page.getByRole("region", { exact: true, name: "Your plans" });
+    const carousel = planCard.getByRole("region", { exact: true, name: "Plans" });
     const choosePlan = carousel.getByLabel("Choose plan");
-    const previous = carousel.getByRole("button", { name: "Previous plan" });
-    const next = carousel.getByRole("button", { name: "Next plan" });
+    const actions = planCard.getByRole("group", { name: "Plan actions" });
+    const pager = planCard.getByRole("navigation", { name: "Plan pages" });
+    const previous = pager.getByRole("button", { name: "Previous plan" });
+    const next = pager.getByRole("button", { name: "Next plan" });
     const movement = carousel.getByRole("heading", { exact: true, name: "Movement plan" });
+    await expect(planCard).toHaveAttribute("data-backdrop", "accent");
+    await expect(actions.getByRole("button", { name: "New task" })).toBeEnabled();
+    await expect(planCard.getByRole("heading", { name: "Plan tasks" })).toBeVisible();
     await expect(choosePlan).toHaveValue("everyday-meals");
     await expect(previous).toBeDisabled();
     if (testInfo.project.use.hasTouch) await next.tap();
@@ -83,8 +89,11 @@ test.describe("Fitness plan workspace", () => {
     await expect(choosePlan).toHaveValue("movement");
     await expect(next).toBeDisabled();
     await expect(movement).toBeInViewport({ ratio: 0.9 });
-    await expect(carousel.getByRole("heading")).toHaveCount(1);
-    await expect(carousel.getByRole("status")).toHaveText("Plan 2 of 2");
+    await expect(
+      carousel.locator('[data-slot="carousel-content"]').getByRole("heading"),
+    ).toHaveCount(1);
+    await expect(pager.getByRole("status")).toHaveText("Plan 2 of 2");
+    await expect(actions.getByRole("button", { name: "Edit Movement plan" })).toBeEnabled();
 
     if (testInfo.project.use.hasTouch) {
       await swipePlanRight(
@@ -101,16 +110,22 @@ test.describe("Fitness plan workspace", () => {
     await expect(choosePlan).toHaveValue("everyday-meals");
     await choosePlan.selectOption("movement");
     await expect(movement).toBeInViewport({ ratio: 0.9 });
-    await page.screenshot({ path: testInfo.outputPath("fitness-plan-overview.png") });
+    await planCard.screenshot({ path: testInfo.outputPath("fitness-plan-overview.png") });
 
-    const openWorkout = page.getByRole("button", { name: "Open Afternoon workout" });
+    const openWorkout = planCard.getByRole("button", { name: "Open Afternoon workout" });
     await openWorkout.click();
     await expect(page.getByRole("heading", { name: "Afternoon workout" })).toBeFocused();
+    await expect(actions.getByRole("button", { name: "Edit Afternoon workout" })).toBeEnabled();
     await expect(openWorkout).toHaveCount(0);
+
+    await previous.click();
+    await next.click();
+    await expect(openWorkout).toBeVisible();
+    await openWorkout.click();
     await page.getByRole("button", { name: "Open Strength pair" }).click();
     await page.getByRole("button", { name: "Open Kettlebell row" }).click();
     await expect(page.getByRole("list", { name: "Subtasks of Kettlebell row" })).toBeVisible();
-    await page.screenshot({ path: testInfo.outputPath("fitness-plan-drilldown.png") });
+    await planCard.screenshot({ path: testInfo.outputPath("fitness-plan-drilldown.png") });
     await page.getByRole("button", { name: "Open First set" }).click();
     await expect(page.getByText(/Target: \d+ reps/)).toBeVisible();
     await expect(page.getByRole("button", { name: "Add subtask" })).toHaveCount(0);
@@ -163,7 +178,20 @@ test.describe("Fitness plan workspace", () => {
     await expect
       .poll(() => page.evaluate(() => document.documentElement.scrollWidth))
       .toBeLessThanOrEqual(await page.evaluate(() => window.innerWidth));
-    await page.screenshot({ path: testInfo.outputPath("fitness-plan-dark.png") });
+    await planCard.screenshot({ path: testInfo.outputPath("fitness-plan-dark.png") });
+  });
+
+  test("keeps the demo plan and disabled editing controls in the card", async ({ page }) => {
+    await page.goto("/preview?view=Tasks");
+    const planCard = page.getByRole("region", { exact: true, name: "Your plans" });
+    const actions = planCard.getByRole("group", { name: "Plan actions" });
+    await expect(planCard).toHaveAttribute("data-backdrop", "accent");
+    await expect(planCard.getByRole("heading", { name: "Everyday meals" })).toBeVisible();
+    await expect(planCard.getByText("No subtasks yet.")).toBeVisible();
+    await expect(actions.getByRole("button", { name: "New task" })).toBeDisabled();
+    await expect(actions.getByRole("button", { name: "Edit Everyday meals" })).toBeDisabled();
+    await expect(actions.getByRole("button", { name: "Add subtask" })).toBeDisabled();
+    await expect(planCard.getByRole("navigation", { name: "Plan pages" })).toHaveCount(0);
   });
 
   test("switches between the shared weekly tabs without enabling demo writes", async ({

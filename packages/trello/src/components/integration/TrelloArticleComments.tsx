@@ -159,17 +159,17 @@ export const TrelloArticleComments: FC<TrelloArticleCommentsProps> = ({
     <div style={{ width: "100%" }}>
       {/* Comment Stats */}
       <Flex align="center" gap="sm" style={{ marginBottom: "16px", padding: "0 16px" }}>
-        {/* <Typography color="muted">
+        {/* <Typography  color="muted">
           {summaryComments.summary.cnt_text || 0} comment
           {summaryComments.summary.cnt_text !== 1 ? "s" : ""}
         </Typography>
         {(summaryComments.summary.cnt_useful || 0) > 0 && (
-          <Typography color="muted">
+          <Typography  color="muted">
             {summaryComments.summary.cnt_useful} useful
           </Typography>
         )}
         {(summaryComments.summary.cnt_flag || 0) > 0 && (
-          <Typography color="destructive">
+          <Typography  color="destructive">
             {summaryComments.summary.cnt_flag} flag
             {summaryComments.summary.cnt_flag !== 1 ? "s" : ""}
           </Typography>

@@ -257,7 +257,7 @@ function Counter() {
 const meta = {
   component: TypographyDemo,
   parameters: { layout: "fullscreen" },
-  title: "Components/Typography",
+  title: "UI/Display/Typography",
 } satisfies Meta<typeof TypographyDemo>;
 
 export default meta;

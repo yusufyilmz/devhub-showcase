@@ -141,3 +141,18 @@
     transition: none;
   }
 }
+
+.ui-card[data-slot="card"][data-backdrop="accent"] {
+  background-image:
+    radial-gradient(
+      ellipse at 100% 0%,
+      color-mix(in srgb, var(--card-accent) 16%, transparent),
+      transparent 72%
+    ),
+    linear-gradient(
+      125deg,
+      var(--card) 25%,
+      color-mix(in srgb, var(--card) 92%, var(--card-accent))
+    );
+  border-inline-start: 3px solid color-mix(in srgb, var(--card-accent) 72%, var(--border));
+}

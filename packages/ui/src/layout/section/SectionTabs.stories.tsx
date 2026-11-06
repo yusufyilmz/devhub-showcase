@@ -1,5 +1,3 @@
-import "../../sections/sections.css";
-
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { SectionTabs } from "./SectionTabs";
@@ -17,7 +15,7 @@ const meta = {
   args: { items, label: "Selected work" },
   component: SectionTabs,
   tags: ["autodocs"],
-  title: "UI/Section/SectionTabs",
+  title: "UI/Layout/Section/SectionTabs",
 } satisfies Meta<typeof SectionTabs>;
 export default meta;
 type Story = StoryObj<typeof meta>;

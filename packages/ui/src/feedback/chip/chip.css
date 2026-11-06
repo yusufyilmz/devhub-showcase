@@ -1,0 +1,25 @@
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .ui-chip::after {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    content: "";
+    background: linear-gradient(
+      105deg,
+      transparent 25%,
+      color-mix(in srgb, var(--primary) 16%, transparent) 50%,
+      transparent 75%
+    );
+    transform: translateX(-105%);
+  }
+
+  .ui-chip:hover::after {
+    animation: ui-chip-shine 650ms ease-out;
+  }
+}
+
+@keyframes ui-chip-shine {
+  to {
+    transform: translateX(105%);
+  }
+}

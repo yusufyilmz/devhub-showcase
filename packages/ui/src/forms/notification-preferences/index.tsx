@@ -3,10 +3,42 @@ import "./notifications.css";
 
 import { useState } from "react";
 
+import { BellMinus, BellPlus, BellRing, Download, type LucideIcon, Volume2 } from "lucide-react";
+
 import { Button } from "../../buttons/button";
+import { Tooltip } from "../../overlays/tooltip";
 import type { NotificationPreferencesProps } from "./types";
 
 export type { NotificationPreferencesProps } from "./types";
+
+function DeviceAction({
+  disabled,
+  icon: Icon,
+  label,
+  onClick,
+}: {
+  disabled?: boolean;
+  icon: LucideIcon;
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <Tooltip title={label}>
+      <span className="notification-preferences-action">
+        <Button
+          aria-label={label}
+          disabled={disabled}
+          onClick={onClick}
+          size="icon"
+          type="button"
+          variant="outline"
+        >
+          <Icon aria-hidden="true" />
+        </Button>
+      </span>
+    </Tooltip>
+  );
+}
 
 export function NotificationPreferences(props: NotificationPreferencesProps) {
   const onAllowForeground = props.onAllowForeground;
@@ -44,16 +76,6 @@ export function NotificationPreferences(props: NotificationPreferencesProps) {
           installed app. Then enable notifications here.
         </p>
       )}
-      {props.canInstall && (
-        <Button
-          disabled={busy || props.disabled}
-          onClick={() => run(props.onInstall, "Installation prompt opened.")}
-          type="button"
-          variant="unstyled"
-        >
-          Install app
-        </Button>
-      )}
       {!props.configured && (
         <p>Background delivery is not set up yet. Open-app reminders remain available.</p>
       )}
@@ -64,20 +86,26 @@ export function NotificationPreferences(props: NotificationPreferencesProps) {
       </p>
       {error && <p role="alert">{error}</p>}
       {message && <p role="status">{message}</p>}
-      {onAllowForeground &&
-        props.permission !== "granted" &&
-        props.permission !== "unsupported" && (
-          <Button
-            disabled={busy || props.disabled || props.requiresHomeScreen}
-            onClick={() => run(onAllowForeground, "Open-app reminders allowed on this device.")}
-            type="button"
-            variant="unstyled"
-          >
-            Allow open-app reminders
-          </Button>
-        )}
       <div className="notification-preferences-actions">
-        <Button
+        {props.canInstall && (
+          <DeviceAction
+            disabled={busy || props.disabled}
+            icon={Download}
+            label="Install app"
+            onClick={() => run(props.onInstall, "Installation prompt opened.")}
+          />
+        )}
+        {onAllowForeground &&
+          props.permission !== "granted" &&
+          props.permission !== "unsupported" && (
+            <DeviceAction
+              disabled={busy || props.disabled || props.requiresHomeScreen}
+              icon={Volume2}
+              label="Allow open-app reminders"
+              onClick={() => run(onAllowForeground, "Open-app reminders allowed on this device.")}
+            />
+          )}
+        <DeviceAction
           disabled={
             busy ||
             props.disabled ||
@@ -86,33 +114,27 @@ export function NotificationPreferences(props: NotificationPreferencesProps) {
             props.requiresHomeScreen ||
             props.enabled
           }
+          icon={BellPlus}
+          label="Enable notifications on this device"
           onClick={() =>
             run(
               props.onEnable,
               "Device enabled. Scheduled reminders use your reminder preference above.",
             )
           }
-          type="button"
-          variant="unstyled"
-        >
-          Enable notifications on this device
-        </Button>
-        <Button
+        />
+        <DeviceAction
           disabled={busy || props.disabled || !props.enabled}
+          icon={BellRing}
+          label="Send test notification"
           onClick={() => run(props.onTest, "Test sent. Check this device for the notification.")}
-          type="button"
-          variant="unstyled"
-        >
-          Send test notification
-        </Button>
-        <Button
+        />
+        <DeviceAction
           disabled={busy || props.disabled || !props.enabled}
+          icon={BellMinus}
+          label="Disable this device"
           onClick={() => run(props.onDisable, "Notifications disabled on this device.")}
-          type="button"
-          variant="unstyled"
-        >
-          Disable this device
-        </Button>
+        />
       </div>
     </section>
   );

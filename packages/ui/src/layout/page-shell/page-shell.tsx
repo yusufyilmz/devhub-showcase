@@ -4,6 +4,7 @@ import { useEffect, useMemo } from "react";
 
 import { userConfigThemeScript } from "@shared/runtime/user";
 
+import { MouseCircle } from "../../customizers/mouse-circle";
 import { PageProviders } from "../../providers";
 import { getPublicThemeStyle } from "./page-theme";
 import type { EmbeddedDocumentOptions, PageShellOptions } from "./types";
@@ -57,6 +58,7 @@ function EmbeddedDocument({
         request={request}
         storageKey={storageKey}
       >
+        <MouseCircle />
         {children}
       </PageProviders>
     </div>
@@ -124,6 +126,7 @@ export function PageShell({
           request={request}
           storageKey={storageKey}
         >
+          <MouseCircle />
           {children}
         </PageProviders>
       </body>

@@ -32,7 +32,7 @@ Deployment tooling: [App routing, Fitness cutover and free Actions](deployments.
 | Curated profession presets — task 12                           | Implemented                                                                                                   | [Open guide](curated-templates.md)      |
 | Appearance picker, fonts, tokens and stored preferences        | Implemented                                                                                                   | [Open guide](appearance.md)             |
 | Page section rail and hover previews                           | Implemented where the page has navigable sections                                                             | [Open guide](section-navigation.md)     |
-| Shared controls, Card types and section primitives             | Implemented; local Storybook required                                                                         | [Open guide](shared-ui.md)              |
+| Shared controls, feedback, forms and layout                    | Implemented; local Storybook required                                                                         | [Open guide](shared-ui.md)              |
 | Sign-in, owner workspace and access boundaries                 | Implemented; live OAuth needs provider configuration                                                          | [Open guide](authentication.md)         |
 | Guided onboarding — task 05                                    | Implemented                                                                                                   | [Open guide](onboarding.md)             |
 | Completion checklist — task 06                                 | Implemented                                                                                                   | [Open guide](completion.md)             |
@@ -88,6 +88,6 @@ Create/update its guide in this directory and add/update the index row in the sa
 
 [My Fitness Studio workspaces and shared UI](fitness-workspaces.md) covers account isolation, the public demo, branding, and dashboard styling.
 
-[Fitness task plans](fitness-task-plans.md) covers the full-width plan carousel, task drill-down, editing, and desktop and mobile checks for Tasks.
+[Fitness task plans](fitness-task-plans.md) covers the shared plan card, header actions, pagination, task drill-down, and desktop and mobile checks for Tasks.
 
-[Fitness shared controls and notifications](fitness-shared-ui.md) covers the task editor, weekly tabs, calendar, agenda, and reminder permission checks.
+[Fitness shared controls and notifications](fitness-shared-ui.md) covers the task editor, weekly tabs, calendar, agenda button states, and reminder permission checks.

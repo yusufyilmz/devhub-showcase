@@ -8,7 +8,7 @@ const meta: Meta<typeof Textarea> = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  title: "UI/Textarea",
+  title: "UI/Forms/Textarea",
 };
 
 export default meta;

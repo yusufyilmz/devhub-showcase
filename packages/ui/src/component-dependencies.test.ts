@@ -76,7 +76,7 @@ describe("UI component dependency boundaries", () => {
     const primitives = new Set([
       join(root, "forms/input/Input.tsx"),
       join(root, "forms/textarea/Textarea.tsx"),
-      join(root, "forms/native-select.tsx"),
+      join(root, "forms/native-select/native-select.tsx"),
     ]);
     const violations = [...packages, ...apps].filter(
       (file) =>

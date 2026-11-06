@@ -1,9 +1,9 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import type { StorybookConfig } from "@storybook/react-vite";
 
-import { getMonorepoAliases } from "./monorepo-aliases";
+import { getMonorepoAliases } from "./monorepo-aliases.ts";
 
 const storybookDir = fileURLToPath(new URL("./", import.meta.url));
 const fixturesDir = fileURLToPath(new URL("../../../tools/test/fixtures", import.meta.url));
@@ -24,11 +24,10 @@ const config: StorybookConfig = {
     getAbsolutePath("@chromatic-com/storybook"),
     getAbsolutePath("@storybook/addon-vitest"),
     getAbsolutePath("@storybook/addon-a11y"),
-    getAbsolutePath("@storybook/addon-docs"),
   ],
   framework: getAbsolutePath("@storybook/react-vite"),
+  staticDirs: [{ from: "../../my-dev-studio/public/examples", to: "/examples" }],
   stories: [
-    "../src/**/*.mdx",
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
     "../../../packages/ui/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],

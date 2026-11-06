@@ -36,11 +36,11 @@ export const cvLibraryWriteSchema = z
   .strict();
 export function normalizeCvProfile<T extends PortfolioProfile>(profile: T): T {
   const copy = structuredClone(profile);
-  delete copy.customSections;
-  delete copy.sectionSettings;
-  delete copy.sectionOrder;
-  delete copy.sectionSequence;
-  delete copy.hero;
+  copy.customSections = undefined;
+  copy.sectionSettings = undefined;
+  copy.sectionOrder = undefined;
+  copy.sectionSequence = undefined;
+  copy.hero = undefined;
   const ids = new Set(copy.experiences.map((item) => item.id));
   copy.projects = copy.projects.map((item) =>
     item.experienceId && !ids.has(item.experienceId) ? { ...item, experienceId: null } : item,

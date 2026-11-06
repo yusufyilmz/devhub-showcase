@@ -9,7 +9,7 @@ function Example({ width = 560 }: { width?: number }) {
     </div>
   );
 }
-const meta = { component: Example, tags: ["autodocs"], title: "UI/map" } satisfies Meta<
+const meta = { component: Example, tags: ["autodocs"], title: "UI/Display/map" } satisfies Meta<
   typeof Example
 >;
 export default meta;

@@ -1,24 +1,32 @@
 "use client";
 
+import "./sonner.css";
+
+import type { CSSProperties } from "react";
+
+import { cn } from "cn";
 import { useTheme } from "next-themes";
 import { Toaster as Sonner, type ToasterProps } from "sonner";
 
-import { sonnerStyles } from "./styles";
-
-const SonnerToaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme();
+const SonnerToaster = ({ className, style, ...props }: ToasterProps) => {
+  const { resolvedTheme } = useTheme();
 
   return (
     <Sonner
-      className={sonnerStyles.element1}
+      className={cn("ui-toaster", className)}
+      gap={8}
+      mobileOffset={12}
+      offset={12}
       style={
         {
           "--normal-bg": "var(--popover)",
           "--normal-border": "var(--border)",
           "--normal-text": "var(--popover-foreground)",
-        } as React.CSSProperties
+          "--width": "18rem",
+          ...style,
+        } as CSSProperties
       }
-      theme={theme as ToasterProps["theme"]}
+      theme={resolvedTheme === "dark" ? "dark" : "light"}
       {...props}
     />
   );

@@ -1,9 +1,8 @@
 export const iFramePreviewStyles = {
-  element1: "block overflow-y-auto",
-  element2: "w-full h-[100vh] transition-opacity duration-500 opacity-100 pointer-events-none",
-  element3: "border rounded-lg shadow-lg overflow-hidden cursor-pointer relative",
-  element4: "absolute inset-0 flex items-center justify-center bg-white/50",
-  element5: "flex flex-col items-center justify-center p-4",
-  element6: "text-red-500",
-  element7: "text-main-blue hover:underline",
+  container: "overflow-hidden rounded-xl border border-border bg-card shadow-sm",
+  frame: "pointer-events-none block origin-top-left border-0",
+  status:
+    "pointer-events-none absolute inset-0 grid place-items-center bg-background/90 p-4 text-center text-muted-foreground text-sm",
+  toolbar: "flex flex-wrap items-center justify-between gap-2 border-border border-b p-2",
+  viewport: "relative h-[clamp(240px,52vh,500px)] overflow-hidden bg-muted",
 } as const;

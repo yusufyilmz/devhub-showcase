@@ -4,6 +4,8 @@ import "../login-form/auth-login.css";
 
 import { type ReactNode, useState } from "react";
 
+import { ArrowUpRight } from "lucide-react";
+
 import { Button as LibraryButton } from "../../buttons/button/Button";
 import { Input as LibraryInput } from "../input/Input";
 import { Label as LibraryLabel } from "../label/Label";
@@ -163,7 +165,12 @@ export function LoginPanel({
   return (
     <div className="login-page">
       <div className="login-brand">
-        <span className="brand">{brand}</span>
+        <span className="login-brand-name">
+          <span className="login-brand-mark">
+            <ArrowUpRight aria-hidden="true" size={18} />
+          </span>
+          {brand}
+        </span>
         {brandActions}
       </div>
       {panel}

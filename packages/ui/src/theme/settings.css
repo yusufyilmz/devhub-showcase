@@ -5,19 +5,47 @@
 }
 .appearance-quick-actions {
   position: absolute;
-  top: 100%;
-  right: 0;
+  top: 50%;
+  right: 100%;
   z-index: 110;
   display: flex;
   visibility: hidden;
-  gap: 6px;
-  padding: 8px;
+  align-items: center;
   pointer-events: none;
-  background: rgb(var(--surface-rgb));
-  border: 1px solid rgb(var(--border-rgb));
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgb(var(--shadow-rgb) / 0.12);
   opacity: 0;
+  transform: translate(0.25rem, -50%);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+.appearance-launcher[data-side="right"] .appearance-quick-actions {
+  right: auto;
+  left: 100%;
+}
+.appearance-launcher[data-side^="inline"] .appearance-quick-actions {
+  position: static;
+  width: 0;
+  overflow: hidden;
+  transform: none;
+}
+.appearance-launcher[data-side="inline-left"] .appearance-quick-actions {
+  order: -1;
+}
+.appearance-launcher[data-side^="inline"]:is(:hover, :focus-within, [data-expanded])
+  .appearance-quick-actions {
+  width: 64px;
+}
+.appearance-launcher .appearance-quick-actions .theme-toggle {
+  color: var(--foreground);
+  background: var(--background);
+  border: 0;
+}
+.appearance-launcher .appearance-quick-actions .theme-toggle:hover {
+  background: color-mix(in srgb, var(--primary) 12%, var(--background));
+}
+.appearance-launcher .theme-toggle:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
 }
 .appearance-launcher:hover .appearance-quick-actions,
 .appearance-launcher:focus-within .appearance-quick-actions,
@@ -25,6 +53,7 @@
   visibility: visible;
   pointer-events: auto;
   opacity: 1;
+  transform: translate(0, -50%);
 }
 .appearance-dialog {
   width: min(600px, calc(100vw - 32px));
@@ -315,4 +344,11 @@
 .appearance-launcher .theme-toggle svg {
   width: 18px;
   height: 18px;
+}
+
+.appearance-launcher .appearance-quick-actions .theme-toggle {
+  width: 32px;
+  min-width: 32px;
+  height: 36px;
+  min-height: 36px;
 }

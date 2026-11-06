@@ -1,3 +1,4 @@
-export function toggleButtonClassName(...values: unknown[]): string {
-  return `rounded-lg px-3 py-1.5 text-sm ${values[0]}`;
-}
+export const toggleButtonStyles = {
+  button:
+    "border-border text-muted-foreground aria-pressed:border-transparent aria-pressed:bg-primary aria-pressed:text-primary-foreground aria-pressed:hover:bg-primary/85 aria-pressed:hover:text-primary-foreground",
+} as const;

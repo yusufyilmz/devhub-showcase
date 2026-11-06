@@ -222,9 +222,9 @@ export const installHttpFetchDebug = (): (() => void) | undefined => {
       try {
         if (w.__httpDebugInstalled && w.__originalFetch) {
           window.fetch = w.__originalFetch;
-          delete (w as any).__originalFetch;
-          delete (w as any).__httpDebugInstalled;
-          delete (w as any).__originalFetch;
+          (w as any).__originalFetch = undefined;
+          (w as any).__httpDebugInstalled = undefined;
+          (w as any).__originalFetch = undefined;
         }
       } catch {
         // no-op

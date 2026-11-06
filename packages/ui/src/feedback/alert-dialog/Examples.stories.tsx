@@ -7,34 +7,41 @@ import {
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./AlertDialog";
 
-function Example({ width = 560 }: { width?: number }) {
+function Example({ size }: { size?: "default" | "narrow" | "wide" }) {
   return (
-    <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button variant="outline">Open alert-dialog</Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="outline">Review changes</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent size={size}>
+        <AlertDialogHeader>
           <AlertDialogTitle>Review your changes</AlertDialogTitle>
           <AlertDialogDescription>
-            Your draft stays private until you publish.
+            Your draft stays private until you publish. Continue to the preview to see how your
+            portfolio will look to visitors.
           </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction>Continue</AlertDialogAction>
-        </AlertDialogContent>
-      </AlertDialog>
-    </div>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
-const meta = { component: Example, tags: ["autodocs"], title: "UI/alert-dialog" } satisfies Meta<
-  typeof Example
->;
+const meta = {
+  component: Example,
+  tags: ["autodocs"],
+  title: "UI/Feedback/alert-dialog",
+} satisfies Meta<typeof Example>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
-export const Narrow: Story = { args: { width: 320 } };
-export const Wide: Story = { args: { width: 960 } };
+export const Narrow: Story = { args: { size: "narrow" } };
+export const Wide: Story = { args: { size: "wide" } };

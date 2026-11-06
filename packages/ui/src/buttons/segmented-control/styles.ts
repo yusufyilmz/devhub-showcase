@@ -1,7 +1,5 @@
 export const segmentedControlStyles = {
-  element1: "inline-flex rounded-xl border border-main-lightest bg-backgroundColor-card p-1",
+  element1: "inline-flex flex-wrap gap-1 rounded-xl border border-border bg-muted p-1",
+  option:
+    "text-muted-foreground aria-pressed:bg-primary aria-pressed:text-primary-foreground aria-pressed:hover:bg-primary/85 aria-pressed:hover:text-primary-foreground",
 } as const;
-
-export function segmentedControlClassName(...values: unknown[]): string {
-  return `rounded-lg px-3 py-1.5 text-sm ${values[0]}`;
-}

@@ -21,32 +21,13 @@
   flex-wrap: wrap;
   gap: 0.65rem;
 }
-.notification-preferences [data-slot="button"] {
+.notification-preferences-action {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: fit-content;
-  max-width: 100%;
-  min-height: 44px;
-  padding: 0.65rem 1rem;
-  font: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--foreground, rgb(var(--text-rgb, 25 44 64)));
-  text-align: center;
-  white-space: normal;
-  background: var(--background, rgb(var(--surface-rgb, 255 255 255)));
-  border: 1px solid var(--border, rgb(var(--border-rgb, 210 220 230)));
-  border-radius: var(--radius, 8px);
 }
-.notification-preferences [data-slot="button"]:disabled {
-  cursor: not-allowed;
-  opacity: 0.65;
-}
-.notification-preferences [data-slot="button"]:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 3px;
+
+.notification-preferences-action [data-slot="button"] {
+  width: 2.5rem;
+  height: 2.5rem;
 }
 .notification-preferences [role="alert"] {
   color: var(--destructive, #b42318);

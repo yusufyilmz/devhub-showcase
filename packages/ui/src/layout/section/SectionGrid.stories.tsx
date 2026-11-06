@@ -1,5 +1,3 @@
-import "../../sections/sections.css";
-
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { SectionGrid } from "./SectionGrid";
@@ -17,7 +15,7 @@ const meta = {
   args: { items, label: "Selected work" },
   component: SectionGrid,
   tags: ["autodocs"],
-  title: "UI/Section/SectionGrid",
+  title: "UI/Layout/Section/SectionGrid",
 } satisfies Meta<typeof SectionGrid>;
 
 export default meta;

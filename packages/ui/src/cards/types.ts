@@ -17,6 +17,7 @@ import type {
 
 export type BaseCardProps = React.ComponentProps<"div"> & {
   asChild?: boolean;
+  backdrop?: "accent";
   surface?: "semantic" | "portfolio";
   interaction?: "static" | "lift";
   layout?: "stack" | "plain";
@@ -100,6 +101,7 @@ export interface ContentCardProps
 }
 
 export interface RevealCardProps {
+  backdrop?: BaseCardProps["backdrop"];
   brief?: string | null;
   children: ReactNode;
   className?: string;

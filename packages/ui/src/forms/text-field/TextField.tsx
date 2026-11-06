@@ -89,7 +89,9 @@ export function TextField({
         {leftIcon && <FlexCenter className={textFieldStyles.element2}>{leftIcon}</FlexCenter>}
 
         <LibraryInput
-          aria-describedby={currentHelperText ? helperId : undefined}
+          aria-describedby={
+            currentHelperText ? (currentState === "error" ? errorId : helperId) : undefined
+          }
           aria-invalid={currentState === "error" ? "true" : "false"}
           className={cn(
             textFieldVariants({ size, state: currentState, variant }),
@@ -100,6 +102,7 @@ export function TextField({
             className,
           )}
           id={inputId}
+          required={required}
           unstyled
           {...props}
         />
@@ -150,7 +153,9 @@ export function TextArea({
       <FieldLabel className={labelClassName} htmlFor={inputId} label={label} required={required} />
 
       <LibraryTextarea
-        aria-describedby={currentHelperText ? helperId : undefined}
+        aria-describedby={
+          currentHelperText ? (currentState === "error" ? errorId : helperId) : undefined
+        }
         aria-invalid={currentState === "error" ? "true" : "false"}
         className={cn(
           textFieldVariants({ size, state: currentState, variant }),
@@ -162,6 +167,7 @@ export function TextArea({
           className,
         )}
         id={inputId}
+        required={required}
         unstyled
         {...props}
       />

@@ -216,7 +216,7 @@ export function SectionCatalogPreview({ type }: { type: AuthorableSectionType })
   return (
     <div
       aria-hidden="true"
-      className={"section-catalog-preview section-catalog-preview--" + kind}
+      className={`section-catalog-preview section-catalog-preview--${kind}`}
       data-preview-kind={kind}
     >
       {previews[kind]}

@@ -37,7 +37,7 @@ export function appearanceCardClasses({
     GRADIENT_MAP[appearance as AppearanceCardAppearance] ?? GRADIENT_MAP.default;
   return cn(
     appearanceClass,
-    "relative border shadow-sm backdrop-blur-sm",
+    "relative border px-[var(--spacing-md)] shadow-sm backdrop-blur-sm",
     allowOverflow ? "overflow-visible" : "overflow-hidden",
     enableHover && "cursor-pointer transition-all hover:border-primary/30 hover:shadow-md",
     enableHover && interactiveElevation && "hover:shadow-xl",

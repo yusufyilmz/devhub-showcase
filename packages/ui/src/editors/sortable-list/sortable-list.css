@@ -1,0 +1,90 @@
+.sortable-panel {
+  min-width: 0;
+}
+.sortable-panel > p {
+  margin-block: 1rem;
+  line-height: 1.7;
+  color: var(--muted-foreground);
+}
+.sortable-list {
+  display: grid;
+  gap: var(--spacing-xs);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.sortable-list > li {
+  display: flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+  padding: var(--spacing-xs);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+.sortable-list > li[data-draggable] {
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+}
+.sortable-list > li[data-dragging] {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ring) 15%, transparent);
+}
+.sortable-handle,
+.sortable-move {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  font: inherit;
+  color: var(--foreground);
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.sortable-handle {
+  font-size: 1.4rem;
+}
+.sortable-list > li[data-dragging],
+.sortable-list > li[data-dragging] .sortable-handle {
+  cursor: grabbing;
+}
+.sortable-move {
+  cursor: pointer;
+}
+.sortable-move:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+.sortable-number {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+.sortable-label {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.9rem;
+}
+.sortable-list button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+@media (max-width: 480px) {
+  .sortable-list > li {
+    gap: 0.4rem;
+    padding: 0.4rem;
+  }
+}
+
+.sortable-announcement {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip-path: inset(50%);
+}

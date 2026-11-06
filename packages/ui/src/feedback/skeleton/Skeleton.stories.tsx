@@ -17,7 +17,7 @@ const meta: Meta<typeof Skeleton> = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  title: "UI/Skeleton",
+  title: "UI/Feedback/Skeleton",
 };
 
 export default meta;

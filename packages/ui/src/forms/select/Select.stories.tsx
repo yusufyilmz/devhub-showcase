@@ -8,7 +8,7 @@ const meta: Meta<typeof Select> = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  title: "UI/Select",
+  title: "UI/Forms/Select",
 };
 
 export default meta;

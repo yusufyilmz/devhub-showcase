@@ -20,8 +20,8 @@ All Trello hooks now integrate with the `NotificationProvider` following the sam
 #### **Basic Usage (Default notifications):**
 
 ```tsx
-import { useTrelloBoards } from "@/modules/trello/v2/hooks/useTrelloBoards";
-import { TrelloApiService } from "@/modules/trello/v2/services/TrelloApiService";
+import { useTrelloBoards } from "@/shared/trello/v2/hooks/useTrelloBoards";
+import { TrelloApiService } from "@/shared/trello/v2/services/TrelloApiService";
 
 function TrelloBoardsList() {
   const trelloService = new TrelloApiService();
@@ -256,6 +256,7 @@ function ArticleToTrelloConverter({ article }: { article: CurrentArticle }) {
 ### **Notification Positioning:**
 
 All notifications appear in the **top-right corner** via `NotificationProvider` with:
+
 - **Success**: Green background, auto-dismiss after 4 seconds
 - **Error**: Red background, auto-dismiss after 8 seconds (longer for reading)
 - **Info**: Blue background, auto-dismiss after 6 seconds

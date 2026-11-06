@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { ChatComposer } from "../../display/chat/ChatComposer";
+import { ChatComposer } from "../../display/chat-composer/ChatComposer";
 import { Section } from "../../layout/section";
 import { chatLauncherStyles } from "./styles";
 

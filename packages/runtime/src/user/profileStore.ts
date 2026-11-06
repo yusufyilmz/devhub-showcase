@@ -78,7 +78,7 @@ export const useProfileStore = create<ProfileState>()((set, get) => ({
   },
 
   // Actions
-  setPrivateProfile: (privateProfile: PrivateProfile) => {
+  setPrivateProfile: (_privateProfile: PrivateProfile) => {
     const newPrivateProfile = { ...get().privateProfile };
 
     set(() => ({

@@ -14,7 +14,7 @@ const meta = {
   args: { profile: fictional },
   component: Navbar,
   tags: ["autodocs"],
-  title: "UI/navbar",
+  title: "UI/Navigation/navbar",
 } satisfies Meta<typeof Navbar>;
 export default meta;
 type Story = StoryObj<typeof meta>;

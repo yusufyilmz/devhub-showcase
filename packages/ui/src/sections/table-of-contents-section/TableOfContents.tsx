@@ -1,4 +1,4 @@
-import { SpecialView } from "../presenter";
+import { SpecialView } from "../section-presentation";
 import type { SectionProps } from "../types";
 
 export function TableOfContents(props: SectionProps) {
