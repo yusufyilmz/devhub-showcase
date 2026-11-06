@@ -16,7 +16,7 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 
 ## Related evidence and detail
 
-- [e2e/portfolio/languages.spec.ts](../../../e2e/portfolio/languages.spec.ts)
-- [e2e/edit/portfolio-types.spec.ts](../../../e2e/edit/portfolio-types.spec.ts)
+- [e2e/portfolio/languages.spec.ts](../../../apps/my-dev-studio/e2e/portfolio/languages.spec.ts)
+- [e2e/edit/portfolio-types.spec.ts](../../../apps/my-dev-studio/e2e/edit/portfolio-types.spec.ts)
 
 Return to the [manual testing index](index.md).

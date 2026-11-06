@@ -8,7 +8,6 @@ import { PageShell } from "@shared/ui/page-shell";
 
 /** Same platform theme record as MyDevStudio (`getPagePresentation` on platform routes). */
 const platformAppearance = { accent: "cyan" as const, defaultTheme: "light" as const };
-const platformThemeStorageKey = "mydevstudio-theme";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,6 +20,7 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
+
 
 export const metadata: Metadata = {
   appleWebApp: {
@@ -46,7 +46,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       appearance={platformAppearance}
       bodyClassName={`${geistSans.variable} ${geistMono.variable} antialiased`}
       documentLanguage="en"
-      storageKey={platformThemeStorageKey}
     >
       {children}
     </PageShell>

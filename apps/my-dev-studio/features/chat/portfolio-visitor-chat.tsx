@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 
 import type { ChatIdentity } from "@shared/runtime/chat";
+import { chatStorage, type VisitorMessage } from "@shared/runtime/storage";
 import { StudioChatScreen } from "@shared/ui/display";
 import { PublishedSources } from "@shared/ui/portfolio";
 
 import { handlePremiumChatAction } from "../../app/actions";
 import { streamPortfolioAnswer } from "./stream-client";
-import { loadVisitorHistory, type VisitorMessage, visitorHistoryKey } from "./visitor-chat-history";
 
 export function PortfolioVisitorChat({
   identity,
@@ -28,25 +28,20 @@ export function PortfolioVisitorChat({
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
   const request = useRef<AbortController | null>(null);
-  const key = visitorHistoryKey(identity);
+  const key = chatStorage.visitorKey(identity);
 
   useEffect(() => {
-    setMessages(loadVisitorHistory(identity));
+    setMessages(chatStorage.readVisitor(key));
     setSession(crypto.randomUUID());
     return () => {
       const active = request.current;
       request.current = null;
       active?.abort();
     };
-  }, [identity]);
+  }, [key]);
 
   useEffect(() => {
-    if (!session) return;
-    try {
-      sessionStorage.setItem(key, JSON.stringify(messages));
-    } catch {
-      // Storage can be disabled.
-    }
+    if (session) chatStorage.writeVisitor(key, messages);
   }, [key, messages, session]);
 
   async function submit() {

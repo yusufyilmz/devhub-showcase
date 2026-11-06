@@ -3,8 +3,8 @@ import { act, cleanup, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { profile } from "@shared/config";
+import { draftStorage } from "@shared/runtime/storage";
 
-import { clearDraftRecovery, recoveryPrefix } from "./storage";
 import type { RecoveryOptions } from "./types";
 import { useDraftRecovery } from "./use-draft-recovery";
 
@@ -90,10 +90,10 @@ describe("draft autosave", () => {
     }).not.toThrow();
   });
   it("clears only recovery records on sign out and preserves appearance preferences", () => {
-    sessionStorage.setItem(`${recoveryPrefix}owner:one`, "private draft");
-    sessionStorage.setItem(`${recoveryPrefix}owner:two`, "private draft");
+    sessionStorage.setItem(draftStorage.key("owner", "one"), "private draft");
+    sessionStorage.setItem(draftStorage.key("owner", "two"), "private draft");
     sessionStorage.setItem("appearance", "dark");
-    clearDraftRecovery();
+    draftStorage.clear();
     expect(sessionStorage.length).toBe(1);
     expect(sessionStorage.getItem("appearance")).toBe("dark");
   });

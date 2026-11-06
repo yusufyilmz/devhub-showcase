@@ -4,12 +4,12 @@ import "@shared/ui/portfolio-chat.css";
 
 import { useEffect, useId, useRef, useState } from "react";
 
+import { chatStorage, type VisitorMessage } from "@shared/runtime/storage";
 import { Button as LibraryButton } from "@shared/ui/button";
 import { PublishedSources } from "@shared/ui/portfolio";
 
-import { ChatPanel, type ChatPanelMessage } from "../assistant-chat/chat-panel";
+import { ChatPanel } from "../assistant-chat/chat-panel";
 
-type Message = ChatPanelMessage & { role: "user" | "assistant" };
 export type PortfolioChatProps = {
   sources?: { label: string; href: string }[];
   identity: string;
@@ -39,25 +39,6 @@ export function PortfolioChat(props: PortfolioChatProps) {
     </div>
   );
 }
-function loadMessages(key: string): Message[] {
-  try {
-    const parsed: unknown = JSON.parse(sessionStorage.getItem(key) || "[]");
-    if (!Array.isArray(parsed)) return [];
-    return parsed
-      .filter((item): item is Message =>
-        Boolean(
-          item &&
-            typeof item.id === "string" &&
-            ["user", "assistant"].includes(item.role) &&
-            typeof item.text === "string" &&
-            item.text.length <= 12000,
-        ),
-      )
-      .slice(-20);
-  } catch {
-    return [];
-  }
-}
 function ChatDialog({
   sources = [],
   identity,
@@ -70,43 +51,36 @@ function ChatDialog({
   const controller = useRef<AbortController | null>(null);
   const label = useId();
   const inputId = useId();
-  const key = `mydevstudio:premium-chat:v1:${encodeURIComponent(identity)}:${revision}`;
-  const [messages, setMessages] = useState<Message[]>([]);
+  const key = chatStorage.visitorKey({ id: identity, revision });
+  const [messages, setMessages] = useState<VisitorMessage[]>([]);
   const [session, setSession] = useState("");
   const [question, setQuestion] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   useEffect(() => {
     dialog.current?.showModal();
-    setMessages(loadMessages(key));
+    setMessages(chatStorage.readVisitor(key));
     setSession(crypto.randomUUID());
     return () => controller.current?.abort();
   }, [key]);
   useEffect(() => {
-    if (session)
-      try {
-        sessionStorage.setItem(key, JSON.stringify(messages));
-      } catch {
-        /* Storage may be disabled. */
-      }
+    if (session) chatStorage.writeVisitor(key, messages);
   }, [key, messages, session]);
   async function submit(text: string) {
     if (busy || !text.trim() || !session) return;
     setBusy(true);
     setError("");
     setQuestion("");
-    setMessages(
-      (previous) =>
-        [...previous, { id: crypto.randomUUID(), role: "user", text }].slice(-20) as Message[],
+    setMessages((previous) =>
+      [...previous, { id: crypto.randomUUID(), role: "user" as const, text }].slice(-20),
     );
     controller.current = new AbortController();
     try {
       const answer = await send(text, session, controller.current.signal);
-      setMessages(
-        (previous) =>
-          [...previous, { id: crypto.randomUUID(), role: "assistant", text: answer }].slice(
-            -20,
-          ) as Message[],
+      setMessages((previous) =>
+        [...previous, { id: crypto.randomUUID(), role: "assistant" as const, text: answer }].slice(
+          -20,
+        ),
       );
     } catch {
       if (!controller.current.signal.aborted)

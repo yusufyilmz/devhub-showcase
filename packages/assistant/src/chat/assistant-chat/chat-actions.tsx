@@ -3,7 +3,8 @@
  * No business logic - just presentation
  */
 
-import * as React from "react";
+import React from "react";
+
 
 import { cn } from "cn";
 

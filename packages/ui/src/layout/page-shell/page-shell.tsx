@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo } from "react";
 
-import { userConfigThemeScript } from "@shared/runtime/user";
+import { themeBootstrapScript } from "@shared/runtime/storage";
 
 import { MouseCircle } from "../../customizers/mouse-circle";
 import { PageProviders } from "../../providers";
@@ -19,7 +19,6 @@ function EmbeddedDocument({
   children,
   documentLanguage,
   portfolioTheme,
-  storageKey,
   themeStyle,
   request,
 }: EmbeddedDocumentOptions) {
@@ -56,7 +55,6 @@ function EmbeddedDocument({
         defaultTheme={appearance.defaultTheme}
         portfolioTheme={portfolioTheme}
         request={request}
-        storageKey={storageKey}
       >
         <MouseCircle />
         {children}
@@ -72,7 +70,6 @@ export function PageShell({
   documentLanguage,
   embed = false,
   portfolioTheme,
-  storageKey,
   structuredData,
   request,
 }: PageShellOptions) {
@@ -89,7 +86,6 @@ export function PageShell({
         documentLanguage={documentLanguage}
         portfolioTheme={portfolioTheme}
         request={request}
-        storageKey={storageKey}
         themeStyle={themeStyle}
       >
         {children}
@@ -97,10 +93,7 @@ export function PageShell({
     );
   }
 
-  const themeScript = userConfigThemeScript(storageKey, appearance.defaultTheme).replace(
-    /</g,
-    "\\u003c",
-  );
+  const themeScript = themeBootstrapScript(appearance.defaultTheme).replace(/</g, "\\u003c");
 
   return (
     <html
@@ -124,7 +117,6 @@ export function PageShell({
           defaultTheme={appearance.defaultTheme}
           portfolioTheme={portfolioTheme}
           request={request}
-          storageKey={storageKey}
         >
           <MouseCircle />
           {children}

@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { portfolioExamples } from "../../apps/my-dev-studio/features/studio/examples/data";
+import { portfolioExamples } from "../../features/studio/examples/data";
 
 test("carousel filters, navigates in both directions and opens a full demo", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });

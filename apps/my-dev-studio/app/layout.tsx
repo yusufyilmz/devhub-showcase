@@ -31,8 +31,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const platform = await isPlatformPage();
   const snapshot = platform ? null : await getActiveProfile();
   const path = (await headers()).get("x-profile-path") ?? "/";
-  const { profile, documentLanguage, storageKey, appearance, portfolioTheme, example } =
-    getPagePresentation(path, platform, snapshot);
+  const { profile, documentLanguage, appearance, portfolioTheme, example } = getPagePresentation(
+    path,
+    platform,
+    snapshot,
+  );
   const publicPortfolio =
     !example &&
     !path.startsWith("/admin") &&
@@ -50,7 +53,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       bodyClassName={`${geistSans.variable} ${geistMono.variable} antialiased`}
       documentLanguage={documentLanguage}
       portfolioTheme={portfolioTheme}
-      storageKey={storageKey}
       structuredData={structuredData}
     >
       {children}

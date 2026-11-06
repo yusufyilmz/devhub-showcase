@@ -46,6 +46,6 @@ Ownership/management changes cancel pending jobs, even if the old identity is la
 - [Database authorization, immutable snapshot and rollback checks](../../../packages/lib/src/supabase/rls/scheduled-publication.test.ts)
 - [Schedule API authorization checks](../../../apps/my-dev-studio/features/portfolio/publication/schedule-api.test.ts)
 - [Worker authorization and safe failure checks](../../../apps/my-dev-studio/app/api/cron/publications/route.test.ts)
-- [Desktop/mobile review, DST, draft preservation, execution and cancellation](../../../e2e/edit/scheduled-publication.spec.ts)
+- [Desktop/mobile review, DST, draft preservation, execution and cancellation](../../../apps/my-dev-studio/e2e/edit/scheduled-publication.spec.ts)
 
 Return to the [manual testing index](index.md).

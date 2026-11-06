@@ -17,7 +17,7 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 
 ## Related evidence and detail
 
-- [e2e/portfolio/seo.spec.ts](../../../e2e/portfolio/seo.spec.ts)
-- [e2e/home/seo.spec.ts](../../../e2e/home/seo.spec.ts)
+- [e2e/portfolio/seo.spec.ts](../../../apps/my-dev-studio/e2e/portfolio/seo.spec.ts)
+- [e2e/home/seo.spec.ts](../../../apps/my-dev-studio/e2e/home/seo.spec.ts)
 
 Return to the [manual testing index](index.md).

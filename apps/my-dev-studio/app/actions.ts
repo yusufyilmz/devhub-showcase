@@ -6,16 +6,19 @@ import {
   MessageProcessor,
   PortfolioChatModel,
 } from "@shared/assistant";
-import { type ChatMessage, ChatRole } from "@shared/lib/types";
+import { type ChatMessage, ChatRole, type ReviewState } from "@shared/lib/types";
 import { isCategoryReferralCategory } from "@shared/lib/utils";
+import { ReviewService } from "@shared/services/studio";
 import { logger } from "@shared/utils/logger";
 
+import { requireAdmin } from "@/features/admin/admin-auth";
 import {
   assertCurrentPublication,
   portfolioChatInput,
   requireLegacyChat,
 } from "@/features/chat/portfolio-chat";
 import { answerPremiumChat } from "@/features/chat/premium-chat";
+import { savePortfolioReferral } from "@/features/portfolio/portfolio-reviews";
 
 export async function handlePremiumChatAction(
   username: string,
@@ -83,18 +86,20 @@ export async function handleSendMessageAction(
 export async function handleSubmitReviewAction(
   referralId: string,
   reviewState: ReviewState,
-): Promise<ReviewWithReferrals | undefined> {
+  updatedAt: string,
+): Promise<boolean> {
   try {
     const { client } = await requireAdmin();
     const reviewService = new ReviewService(logger, client);
-    const review = await reviewService.update(referralId, {
+    await reviewService.update(referralId, {
       state: reviewState,
+      updatedAt,
     });
 
-    return review;
+    return true;
   } catch (error) {
     logger.error({ error }, "Error on review");
 
-    return undefined;
+    return false;
   }
 }

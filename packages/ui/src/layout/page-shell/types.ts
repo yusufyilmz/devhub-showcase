@@ -9,7 +9,6 @@ export type EmbeddedDocumentOptions = {
   children: ReactNode;
   documentLanguage: string;
   portfolioTheme?: PortfolioTheme;
-  storageKey: string;
   themeStyle?: CSSProperties;
   request?: StudioRequest;
 };
@@ -22,7 +21,6 @@ export type PageShellOptions = {
   /** Storybook and other hosts that already own `html` and `body`. */
   embed?: boolean;
   portfolioTheme?: PortfolioTheme;
-  storageKey: string;
   structuredData?: unknown;
   request?: StudioRequest;
 };

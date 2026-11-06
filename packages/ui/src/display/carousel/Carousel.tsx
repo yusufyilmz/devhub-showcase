@@ -1,6 +1,7 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
+
 
 import { cn } from "cn";
 import useEmblaCarousel from "embla-carousel-react";

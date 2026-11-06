@@ -3,7 +3,6 @@ import { portfolioTypes } from "@shared/config";
 import { isDraftStructure } from "./structure";
 import type { RecoveryRecord } from "./types";
 
-export const recoveryPrefix = "mydevstudio-draft-v1:";
 export const recoveryRetention = 24 * 60 * 60 * 1000;
 
 export function readRecovery(raw: string | null, now = Date.now()): RecoveryRecord | null {
@@ -34,11 +33,5 @@ export function readRecovery(raw: string | null, now = Date.now()): RecoveryReco
     return item;
   } catch {
     return null;
-  }
-}
-export function clearDraftRecovery() {
-  for (let index = sessionStorage.length - 1; index >= 0; index--) {
-    const key = sessionStorage.key(index);
-    if (key?.startsWith(recoveryPrefix)) sessionStorage.removeItem(key);
   }
 }

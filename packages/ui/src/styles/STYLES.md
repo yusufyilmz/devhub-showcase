@@ -1,6 +1,6 @@
 # `@shared/ui` styles
 
-**Canonical overview:** [DESIGN.md — Stylesheet architecture](../../../DESIGN.md#stylesheet-architecture) at the repo root.
+**Canonical overview:** [DESIGN.md — Stylesheet architecture](../../DESIGN.md#stylesheet-architecture) at the repo root.
 
 Use this file when you are already in `packages/ui/src/styles` and need a quick pointer:
 

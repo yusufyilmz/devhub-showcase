@@ -7,7 +7,7 @@ import { createContext, useContext, useId, useState } from "react";
 
 import { Moon, Palette, Sun, SwatchBook } from "lucide-react";
 
-import { useUserConfigStore } from "@shared/runtime/user";
+import { useThemeStore } from "@shared/runtime/user";
 
 import { Button as LibraryButton } from "../buttons/button/Button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../overlays/dialog/Dialog";
@@ -93,7 +93,7 @@ export function ThemeToggle({
         </header>
         <AppearanceOptions />
         <LibraryButton
-          onClick={() => useUserConfigStore.setState({ themePreferences: {} })}
+          onClick={() => useThemeStore.setState({ themePreferences: {} })}
           type="button"
           variant="outline"
         >

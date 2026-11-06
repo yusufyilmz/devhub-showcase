@@ -15,6 +15,7 @@ import {
 } from "@shared/config";
 import { urls } from "@shared/config/urls";
 import { editCvPath } from "@shared/lib/profiles";
+import { draftStorage } from "@shared/runtime/storage";
 import { useStudioRequest } from "@shared/runtime/studio";
 import { useUserConfigStore } from "@shared/runtime/user";
 import type { ProfileSnapshot } from "@shared/services/profile";
@@ -26,7 +27,6 @@ import { GoogleImportEditor } from "@shared/ui/google-import";
 import { Input } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
 import {
-  clearDraftRecovery,
   DraftRecovery,
   EditorGuidance,
   FieldVisibilityEditor,
@@ -34,7 +34,6 @@ import {
   LanguageSettingsEditor,
   PortfolioTypePicker,
   ProfileFields,
-  recoveryPrefix,
   SetupNavigation,
   type SetupStep,
   StudioHeading,
@@ -287,12 +286,8 @@ export function ProfileEditor({
                     method: "DELETE",
                   });
                   if (!response.ok) throw new Error("Could not sign out.");
-                  try {
-                    recovery.stop();
-                    clearDraftRecovery();
-                  } catch {
-                    /* Browser storage may be disabled. */
-                  }
+                  recovery.stop();
+                  draftStorage.clear();
                   useUserConfigStore.getState().clearUser();
                   window.location.assign("/login");
                 } catch (reason) {
@@ -679,7 +674,7 @@ function initialSetup(profile: PortfolioProfile): SetupStep {
   return profile.templateChosen === false ? "template" : "done";
 }
 function recoveryKey(userId: string | undefined, profileId: string | undefined, saveUrl: string) {
-  return userId ? `${recoveryPrefix}${userId}:${profileId ?? saveUrl}` : "";
+  return userId ? draftStorage.key(userId, profileId ?? saveUrl) : "";
 }
 async function readSaveResponse(
   response: Response,

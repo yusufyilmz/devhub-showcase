@@ -28,8 +28,8 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 
 ## Related evidence and detail
 
-- [Admin layout browser regression](../../../e2e/admin/portfolios/managed-portfolios.spec.ts)
-- [e2e/home/theme-preferences.spec.ts](../../../e2e/home/theme-preferences.spec.ts)
-- [e2e/portfolio/themes.spec.ts](../../../e2e/portfolio/themes.spec.ts)
+- [Admin layout browser regression](../../../apps/my-dev-studio/e2e/admin/portfolios/managed-portfolios.spec.ts)
+- [e2e/home/theme-preferences.spec.ts](../../../apps/my-dev-studio/e2e/home/theme-preferences.spec.ts)
+- [e2e/portfolio/themes.spec.ts](../../../apps/my-dev-studio/e2e/portfolio/themes.spec.ts)
 
 Return to the [manual testing index](index.md).

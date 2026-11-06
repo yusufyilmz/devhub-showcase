@@ -17,6 +17,6 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 
 ## Related evidence and detail
 
-- [e2e/admin/portfolios/managed-portfolios.spec.ts](../../../e2e/admin/portfolios/managed-portfolios.spec.ts)
+- [e2e/admin/portfolios/managed-portfolios.spec.ts](../../../apps/my-dev-studio/e2e/admin/portfolios/managed-portfolios.spec.ts)
 
 Return to the [manual testing index](index.md).

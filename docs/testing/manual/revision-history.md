@@ -17,7 +17,7 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 
 ## Related evidence and detail
 
-- [e2e/edit/revision-history.spec.ts](../../../e2e/edit/revision-history.spec.ts)
+- [e2e/edit/revision-history.spec.ts](../../../apps/my-dev-studio/e2e/edit/revision-history.spec.ts)
 - [docs/testing/publication-foundation.md](../../../docs/testing/publication-foundation.md)
 
 Return to the [manual testing index](index.md).

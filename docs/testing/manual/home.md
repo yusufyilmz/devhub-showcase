@@ -18,7 +18,7 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 
 ## Related evidence and detail
 
-- [e2e/home/home.spec.ts](../../../e2e/home/home.spec.ts)
-- [e2e/examples/examples.spec.ts](../../../e2e/examples/examples.spec.ts)
+- [e2e/home/home.spec.ts](../../../apps/my-dev-studio/e2e/home/home.spec.ts)
+- [e2e/examples/examples.spec.ts](../../../apps/my-dev-studio/e2e/examples/examples.spec.ts)
 
 Return to the [manual testing index](index.md).

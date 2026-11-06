@@ -16,9 +16,9 @@ Replace `test-owner` with the disposable account's username.
 
 ## Related verification
 
-- [Google import and consent fixture](../../../e2e/edit/google-import.spec.ts)
-- [Editor save and recovery fixture](../../../e2e/edit/editor-workflow.spec.ts)
-- [Homepage browser checks](../../../e2e/home/home.spec.ts)
+- [Google import and consent fixture](../../../apps/my-dev-studio/e2e/edit/google-import.spec.ts)
+- [Editor save and recovery fixture](../../../apps/my-dev-studio/e2e/edit/editor-workflow.spec.ts)
+- [Homepage browser checks](../../../apps/my-dev-studio/e2e/home/home.spec.ts)
 - [Google import manual guide](google-import.md)
 
 Return to the [manual testing index](index.md).

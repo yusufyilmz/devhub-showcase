@@ -1,6 +1,7 @@
 import { createElement, useEffect, useState } from "react";
 
-import { ChatContext, chatStorageKey, createChatStore } from "@shared/runtime/chat";
+import { ChatContext, createChatStore } from "@shared/runtime/chat";
+import { chatStorage } from "@shared/runtime/storage";
 
 import type { PortfolioChatProviderOptions, PortfolioChatScopeOptions } from "./types";
 
@@ -15,6 +16,6 @@ export function PortfolioChatScope({ identity, children }: PortfolioChatScopeOpt
 export function PortfolioChatProvider(props: PortfolioChatProviderOptions) {
   return createElement(PortfolioChatScope, {
     ...props,
-    key: chatStorageKey(props.identity),
+    key: chatStorage.portfolioKey(props.identity),
   });
 }

@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { chatStorage } from "@shared/runtime/storage";
+
 import { ChatComposer } from "../../display/chat-composer/ChatComposer";
 import { Section } from "../../layout/section";
 import { chatLauncherStyles } from "./styles";
@@ -9,9 +11,7 @@ import { chatLauncherStyles } from "./styles";
 export function HomeChatLauncher() {
   const [message, setMessage] = useState("");
   function open() {
-    try {
-      if (message.trim()) sessionStorage.setItem("studio-assistant-pending", message.trim());
-    } catch {}
+    if (message.trim()) chatStorage.setPending(message.trim());
     window.location.assign("/admin/chat");
   }
   return (

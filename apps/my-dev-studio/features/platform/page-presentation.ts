@@ -1,9 +1,10 @@
+import { storage } from "@shared/config";
 import type { ProfileSnapshot } from "@shared/services/profile";
 
 import { getExampleForPath } from "@/features/studio";
 
 function profileStorageKey(id: string | undefined) {
-  return id && id !== "main" ? `devhub-theme:${id}` : "devhub-theme";
+  return id && id !== "main" ? `${storage.theme}:${id}` : storage.theme;
 }
 export function getPagePresentation(
   path: string,
@@ -18,9 +19,9 @@ export function getPagePresentation(
     defaultTheme: "light" as const,
   };
   const storageKey = example
-    ? `mydevstudio-example-theme:${example.slug}`
+    ? `${storage.theme}:example-theme:${example.slug}`
     : platform || !snapshot
-      ? "mydevstudio-theme"
+      ? storage.theme
       : profileStorageKey(snapshot.id);
   return {
     appearance,

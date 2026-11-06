@@ -1,4 +1,4 @@
-import { homeFaq } from "@shared/config";
+import { copy } from "@shared/config";
 
 import { Section, SectionAccordion } from "../../layout/section";
 import { faqStyles } from "./styles";
@@ -17,7 +17,7 @@ export function HomeFAQSection() {
         </div>
         <div className={faqStyles.element4}>
           <SectionAccordion
-            items={homeFaq.map(([question, answer]) => ({
+            items={copy.faq.map(([question, answer]) => ({
               content: <p>{answer}</p>,
               id: question,
               title: question,

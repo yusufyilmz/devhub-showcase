@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { themePreferenceOptions } from "../../packages/runtime/src/user/themePreferences";
+import { themeOptions } from "../../../../packages/config/src/theme";
 
 test("appearance settings persist across reloads and mode changes", async ({ page }) => {
   await page.goto("/");
@@ -8,7 +8,7 @@ test("appearance settings persist across reloads and mode changes", async ({ pag
   await page.getByRole("button", { exact: true, name: "Theme settings" }).click();
   const dialog = page.getByRole("dialog");
   await expect(dialog.locator("select, details")).toHaveCount(0);
-  for (const [key, values] of Object.entries(themePreferenceOptions)) {
+  for (const [key, values] of Object.entries(themeOptions)) {
     await expect(dialog.locator(`[data-options="${key}"] button`)).toHaveCount(values.length + 1);
   }
   await page.getByRole("button", { exact: true, name: "Theme: pink" }).click();

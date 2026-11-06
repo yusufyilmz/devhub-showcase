@@ -1,13 +1,12 @@
 import type { CSSProperties } from "react";
 
-import { themePreferenceOptions } from "@shared/runtime/user";
-
+import { themeOptions } from "@shared/config/theme";
 export const themeToggleStyles = {
   element1: "theme-toggle",
 } as const;
 
-export const preferenceGroups = Object.keys(themePreferenceOptions) as Array<
-  keyof typeof themePreferenceOptions
+export const preferenceGroups = Object.keys(themeOptions) as Array<
+  keyof typeof themeOptions
 >;
 const preferenceNames: Record<string, string> = {
   brand: "Theme",

@@ -17,7 +17,7 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 
 ## Related evidence and detail
 
-- [e2e/admin/login/login.spec.ts](../../../e2e/admin/login/login.spec.ts)
-- [e2e/portfolio/missing.spec.ts](../../../e2e/portfolio/missing.spec.ts)
+- [e2e/admin/login/login.spec.ts](../../../apps/my-dev-studio/e2e/admin/login/login.spec.ts)
+- [e2e/portfolio/missing.spec.ts](../../../apps/my-dev-studio/e2e/portfolio/missing.spec.ts)
 
 Return to the [manual testing index](index.md).

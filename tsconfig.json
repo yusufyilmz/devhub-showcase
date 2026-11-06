@@ -77,6 +77,7 @@
     "turbo/**/*.ts",
     "generators/**/*.ts",
     "e2e/**/*.ts",
-    "playwright.config.ts"
+    "apps/my-dev-studio/playwright.config.ts",
+    "apps/my-fitness-app/playwright.config.ts"
   ]
 }

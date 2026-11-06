@@ -3,21 +3,14 @@ import "./preferences.css";
 
 import { useEffect, useRef, useState } from "react";
 
-import {
-  completeUserConfigMigration,
-  readLegacyThemePreferences,
-  readLegacyUserConfig,
-  themePreferenceAliases,
-  USER_CONFIG_STORAGE_KEY,
-  type UserConfigMode,
-  useUserConfigStore,
-} from "@shared/runtime/user";
+import { type ThemeMode, themePreferenceAliases, themeStorage } from "@shared/runtime/storage";
+import { useThemeStore } from "@shared/runtime/user";
 
 import "./store";
 import { ThemeContext } from "./theme-toggle";
 import type { ResolvedTheme, ThemeProviderOptions } from "./types";
 
-function resolveTheme(theme: UserConfigMode): ResolvedTheme {
+function resolveTheme(theme: ThemeMode): ResolvedTheme {
   return theme === "system"
     ? window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
@@ -30,7 +23,7 @@ function attributeName(key: string) {
 }
 
 function applyAliases(root: HTMLElement) {
-  const preferences = useUserConfigStore.getState().themePreferences;
+  const preferences = useThemeStore.getState().themePreferences;
   for (const [key, values] of Object.entries(themePreferenceAliases)) {
     const value = preferences[key as keyof typeof preferences];
     if (value && Object.hasOwn(values, value))
@@ -50,7 +43,7 @@ function readAppearanceDefaults(root: HTMLElement): Record<string, string | null
 }
 
 function applyAppearance(root: HTMLElement, defaults: Record<string, string | null>) {
-  const preferences = useUserConfigStore.getState().themePreferences;
+  const preferences = useThemeStore.getState().themePreferences;
   for (const [key, value] of Object.entries(preferences)) {
     if (!(key in defaults)) defaults[key] = root.getAttribute(attributeName(key));
     if (value) root.setAttribute(attributeName(key), value);
@@ -69,28 +62,17 @@ export function ThemeProvider({
   children,
   defaultTheme,
   portfolioTheme,
-  storageKey,
 }: ThemeProviderOptions) {
   const [mode, setMode] = useState<ResolvedTheme>(defaultTheme === "light" ? "light" : "dark");
   const defaultsRef = useRef<Record<string, string | null> | null>(null);
   useEffect(() => {
-    void useUserConfigStore.persist.rehydrate();
-    const legacy = readLegacyUserConfig(storageKey);
-    if (!Object.keys(useUserConfigStore.getState().themePreferences).length) {
-      useUserConfigStore.getState().setThemePreferences(readLegacyThemePreferences());
-    }
-    if (!useUserConfigStore.getState().activeMode) {
-      useUserConfigStore.getState().setActiveMode(legacy.mode ?? defaultTheme);
-      if (!useUserConfigStore.getState().user && legacy.user)
-        useUserConfigStore.getState().setUser(legacy.user);
-    }
-    completeUserConfigMigration();
+    if (!useThemeStore.persist.hasHydrated()) useThemeStore.persist.rehydrate();
     const root = document.documentElement;
     const defaults = defaultsRef.current ?? readAppearanceDefaults(root);
     defaultsRef.current = defaults;
     defaults.accent = accent;
     const apply = () => {
-      const resolved = resolveTheme(useUserConfigStore.getState().activeMode ?? defaultTheme);
+      const resolved = resolveTheme(useThemeStore.getState().activeMode ?? defaultTheme);
       setMode(resolved);
       root.dataset.theme = resolved;
       root.classList.toggle("dark", resolved === "dark");
@@ -100,19 +82,10 @@ export function ThemeProvider({
     apply();
     if (portfolioTheme) root.dataset.portfolioTheme = portfolioTheme;
     else delete root.dataset.portfolioTheme;
-    const unsubscribe = useUserConfigStore.subscribe((state, previous) => {
-      if (
-        state.activeMode !== previous.activeMode ||
-        state.themePreferences !== previous.themePreferences
-      )
-        apply();
-    });
+    const unsubscribe = useThemeStore.subscribe(apply);
     const media = window.matchMedia("(prefers-color-scheme: dark)");
     const syncStorage = (event: StorageEvent) => {
-      if (event.key !== USER_CONFIG_STORAGE_KEY && event.key !== null) return;
-      if (!event.newValue)
-        useUserConfigStore.setState({ activeMode: null, themePreferences: {}, user: null });
-      else void useUserConfigStore.persist.rehydrate();
+      if (event.key === themeStorage.name || event.key === null) useThemeStore.persist.rehydrate();
     };
     media.addEventListener("change", apply);
     window.addEventListener("storage", syncStorage);
@@ -121,8 +94,7 @@ export function ThemeProvider({
       media.removeEventListener("change", apply);
       window.removeEventListener("storage", syncStorage);
     };
-  }, [accent, defaultTheme, portfolioTheme, storageKey]);
-  const toggle = () =>
-    useUserConfigStore.getState().setActiveMode(mode === "dark" ? "light" : "dark");
+  }, [accent, defaultTheme, portfolioTheme]);
+  const toggle = () => useThemeStore.getState().setActiveMode(mode === "dark" ? "light" : "dark");
   return <ThemeContext.Provider value={{ mode, toggle }}>{children}</ThemeContext.Provider>;
 }
