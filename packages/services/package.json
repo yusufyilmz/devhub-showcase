@@ -4,6 +4,7 @@
   "private": true,
   "exports": {
     ".": "./src/index.ts",
+    "./companion-progress": "./src/companion/progress.ts",
     "./studio": "./src/studio/index.ts",
     "./profile": "./src/profile/index.ts",
     "./portfolio": "./src/portfolio/index.ts",

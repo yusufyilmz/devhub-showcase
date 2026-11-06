@@ -58,6 +58,8 @@ import {
 } from "@shared/ui/sections/studio";
 import { AppearanceEditor } from "@shared/ui/theme/studio";
 
+import { studioEditorGuide } from "@/features/companion/guides";
+
 const PreviewContent = dynamic(() =>
   import("./preview-content").then((module) => module.PreviewContent),
 );
@@ -136,6 +138,8 @@ export function ProfileEditor({
   );
   const [isPublic, setIsPublic] = useState(initial.isPublic ?? false);
   const [tab, setTab] = useState<(typeof tabs)[number]>(initialTab);
+  const [assistantPrompt, setAssistantPrompt] = useState("");
+  const [arrangeRequest, setArrangeRequest] = useState(0);
   const request = useStudioRequest();
   const [message, setMessage] = useState("");
   const [error, showError] = useState("");
@@ -201,6 +205,10 @@ export function ProfileEditor({
       setBusy(false);
     }
   }
+  function arrangeLayout() {
+    setArrangeRequest((count) => count + 1);
+    document.getElementById("portfolio-draft-preview")?.scrollIntoView({ block: "start" });
+  }
   function beginDetails(nextTab: typeof tab = "Profile") {
     resetDraft({
       ...draft,
@@ -239,6 +247,15 @@ export function ProfileEditor({
         <StudioHeading
           actions={
             <>
+              <Button
+                className="studio-secondary"
+                disabled={editorDisabled}
+                onClick={arrangeLayout}
+                type="button"
+                variant="outline"
+              >
+                Arrange layout
+              </Button>
               <Button className="studio-secondary" href="/admin/billing" variant="outline">
                 Plan and usage
               </Button>
@@ -342,7 +359,10 @@ export function ProfileEditor({
             <Button
               aria-current={tab === item ? "page" : undefined}
               key={item}
-              onClick={() => setTab(item)}
+              onClick={() => {
+                setAssistantPrompt("");
+                setTab(item);
+              }}
               type="button"
             >
               {item}
@@ -372,6 +392,7 @@ export function ProfileEditor({
         <fieldset className="editor-body" disabled={busy}>
           <legend className="sr-only">{tab} editor</legend>
           <EditorBody
+            assistantPrompt={assistantPrompt}
             managed={managed}
             onChange={setDraft}
             onNavigate={(next) => {
@@ -384,6 +405,7 @@ export function ProfileEditor({
           />
         </fieldset>
         <DraftPreview
+          arrangeRequest={arrangeRequest}
           disabled={editorDisabled}
           featured={initial.id === "main"}
           initiallyArranging={initiallyArranging}
@@ -424,6 +446,19 @@ export function ProfileEditor({
       {tab !== "AI assistant" && (
         <AgentCompanion
           agent="studio"
+          guide={studioEditorGuide({
+            ask: (prompt) => {
+              setAssistantPrompt(prompt);
+              setTab("AI assistant");
+              document.querySelector(".editor-tabs")?.scrollIntoView({ block: "start" });
+            },
+            draft,
+            managed,
+            paused: busy,
+            preview: arrangeLayout,
+            saved,
+            tab,
+          })}
           href="/admin/chat"
           label="Open Studio assistant"
           notice={
@@ -438,6 +473,7 @@ export function ProfileEditor({
 }
 
 function EditorBody({
+  assistantPrompt,
   onNavigate,
   tab,
   snapshot,
@@ -446,6 +482,7 @@ function EditorBody({
   profile,
   onChange,
 }: {
+  assistantPrompt: string;
   onNavigate: (tab: string) => void;
   tab: (typeof tabs)[number];
   snapshot: ProfileSnapshot;
@@ -474,6 +511,7 @@ function EditorBody({
   if (tab === "AI assistant")
     return (
       <AiAssistantEditor
+        initialMessage={assistantPrompt}
         managed={managed}
         onChange={onChange}
         onNavigate={onNavigate}
@@ -576,6 +614,7 @@ const editors = {
 };
 
 function DraftPreview({
+  arrangeRequest,
   disabled,
   featured,
   initiallyArranging,
@@ -584,6 +623,7 @@ function DraftPreview({
   saveAction,
   username,
 }: {
+  arrangeRequest: number;
   disabled: boolean;
   featured: boolean;
   initiallyArranging: boolean;
@@ -593,6 +633,9 @@ function DraftPreview({
   username: string;
 }) {
   const [arranging, setArranging] = useState(initiallyArranging);
+  useEffect(() => {
+    if (arrangeRequest) setArranging(true);
+  }, [arrangeRequest]);
   function arrangeVisibleSections(order: PortfolioEntryId[]) {
     const moved = new Set(order);
     const remaining = order.values();
@@ -612,6 +655,7 @@ function DraftPreview({
         saveAction,
       }}
       initiallyOpen={initiallyArranging}
+      openRequest={arrangeRequest}
     >
       <PreviewContent
         arrange={arranging ? { disabled, onChange: arrangeVisibleSections } : undefined}

@@ -35,6 +35,11 @@ export const copy = {
   structuredData,
 };
 
+export {
+  fitnessCompanionFeatures,
+  portfolioVisitorFeatures,
+  studioCompanionFeatures,
+} from "./copy/companion-features";
 export type { LoginSiteId } from "./copy/sites";
 export { homeFaq } from "./home/faq";
 export type { Language, PortfolioMessages } from "./portfolio/languages";

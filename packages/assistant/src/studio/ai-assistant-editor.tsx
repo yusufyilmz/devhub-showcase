@@ -23,6 +23,7 @@ import { AssistantFeedback, AssistantTools, ProposalComparison } from "@shared/u
 import { Textarea as LibraryTextarea } from "@shared/ui/textarea";
 
 type Props = {
+  initialMessage?: string;
   onNavigate?: (tab: string) => void;
   profile: PortfolioProfile;
   profileId?: string;
@@ -91,7 +92,15 @@ export function AiAssistantEditor(props: Props) {
     );
   return <AssistantWorkspace {...props} />;
 }
-function AssistantWorkspace({ profile, profileId, revision, onChange, chat, onNavigate }: Props) {
+function AssistantWorkspace({
+  profile,
+  profileId,
+  revision,
+  onChange,
+  chat,
+  onNavigate,
+  initialMessage = "",
+}: Props) {
   const studioRequest = useStudioRequest();
   const [availability, setAvailability] = useState<{
     enabled: boolean;
@@ -99,7 +108,7 @@ function AssistantWorkspace({ profile, profileId, revision, onChange, chat, onNa
     limit: number;
   } | null>(null);
   const [task, setTask] = useState<AssistantTaskOptions | undefined>();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(initialMessage);
   const [error, showError] = useState("");
   const [status, setStatus] = useState("");
   const [busy, setBusy] = useState(false);

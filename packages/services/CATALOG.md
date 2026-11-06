@@ -34,3 +34,5 @@ Public profile reads use separate explicit website/CV snapshots. Canonical repos
 `resolvePublishedUsername` in `@shared/services/published-profile` resolves a retained alias directly to a current published username; it returns no private profile document or account identity.
 
 Fitness task validation accepts both earlier basic details and standalone exercise prescriptions/set history and postponed-workout details. Repository loads and saves preserve these JSON variants without rewriting the database.
+
+`@shared/services/companion-progress` reads the companion feature catalog and records private, idempotent completion for the verified account.

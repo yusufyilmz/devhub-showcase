@@ -1,3 +1,5 @@
+import { renderToStaticMarkup } from "react-dom/server";
+
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
@@ -19,8 +21,9 @@ describe("ManagementLink", () => {
   });
   it("offers administrators an icon link to managed portfolios", async () => {
     mocks.requirePortfolioAdmin.mockResolvedValue({ user: { id: "admin" } });
-    const link = await ManagementLink();
-    expect(link?.props.href).toBe("/admin/portfolios");
-    expect(link?.props["aria-label"]).toBe("Manage portfolios");
+    const markup = renderToStaticMarkup(await ManagementLink());
+    expect(markup).toContain('href="/admin/portfolios"');
+    expect(markup).toContain('aria-label="Manage portfolios"');
+    expect(markup).toContain('data-variant="outline"');
   });
 });

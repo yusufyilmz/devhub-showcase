@@ -1,2 +1,2 @@
 export { AgentCompanion } from "./AgentCompanion";
-export type { AgentCompanionProps, AgentNotice } from "./types";
+export type { AgentCompanionProps, AgentFeature, AgentGuide, AgentNotice } from "./types";

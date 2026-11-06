@@ -2,10 +2,12 @@ import { type CSSProperties, useState } from "react";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { fitnessCompanionFeatures, studioCompanionFeatures } from "@shared/config";
+
 import { Button } from "../../buttons/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../cards";
 import { AgentCompanion } from "./AgentCompanion";
-import type { AgentCompanionProps } from "./types";
+import type { AgentCompanionProps, AgentFeature } from "./types";
 
 const meta = {
   args: { agent: "studio", label: "Open Studio assistant" },
@@ -18,7 +20,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-function Preview(props: Pick<AgentCompanionProps, "agent" | "label" | "notice">) {
+function Preview(props: Pick<AgentCompanionProps, "agent" | "guide" | "label" | "notice">) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -56,6 +58,12 @@ export const Portfolio: Story = {
 export const FitnessReminder: Story = {
   args: {
     agent: "fitness",
+    guide: {
+      context: "Today",
+      features: fitnessCompanionFeatures,
+      id: "storybook-fitness-reminder",
+      title: "My Fitness Studio feature guide",
+    },
     label: "Open Fitness assistant",
     notice: {
       action: { href: "#activity", label: "View activity" },
@@ -127,3 +135,51 @@ function MotionPreview() {
 export const Motion: Story = {
   render: () => <MotionPreview />,
 };
+
+export const StudioFeatureGuide: Story = {
+  args: {
+    guide: {
+      context: "Home",
+      features: studioCompanionFeatures,
+      id: "storybook-studio-features",
+      progressHref: "/feature-guide-fixture",
+      progressRequest: demoProgress(studioCompanionFeatures, ["workspace", "examples"]),
+      suggestions: [
+        {
+          action: { href: "#draft", label: "Draft with Studio" },
+          group: "Draft suggestions",
+          id: "missing-intro",
+          message:
+            "If you want, I can help you fill in your short introduction using the details you provide.",
+          title: "Add your short introduction",
+        },
+      ],
+      title: "MyDevStudio feature guide",
+    },
+  },
+};
+
+export const FitnessFeatureGuide: Story = {
+  args: {
+    agent: "fitness",
+    guide: {
+      context: "Today",
+      features: fitnessCompanionFeatures,
+      id: "storybook-fitness-features",
+      progressHref: "/feature-guide-fixture",
+      progressRequest: demoProgress(fitnessCompanionFeatures, ["private", "agenda"]),
+      title: "My Fitness Studio feature guide",
+    },
+    label: "Open Fitness assistant",
+  },
+};
+
+function demoProgress(features: readonly AgentFeature[], initial: string[]): typeof fetch {
+  const completed = new Set(initial);
+  return async (_input, options) => {
+    if (options?.method !== "POST") return Response.json({ completed: [...completed], features });
+    const { ids } = JSON.parse(String(options.body)) as { ids: string[] };
+    for (const id of ids) completed.add(id);
+    return new Response(null, { status: 204 });
+  };
+}
