@@ -22,7 +22,8 @@ export default async function EditCvPage({
   searchParams?: Promise<{ tab?: string | string[]; view?: string }>;
 }) {
   const { username } = await params;
-  const initiallyArranging = (await searchParams)?.view === "arrange";
+  const query = await searchParams;
+  const initiallyArranging = query?.view === "arrange";
   let workspace: Awaited<ReturnType<typeof requireWorkspace>>;
   try {
     workspace = await requireWorkspace();
@@ -32,7 +33,7 @@ export default async function EditCvPage({
   const snapshot = await workspace.repository.read();
   if (!snapshot || snapshot.username !== username) notFound();
   const canModerate = snapshot.id === "main";
-  const openReviews = canModerate && (await searchParams)?.tab === "reviews";
+  const openReviews = canModerate && query?.tab === "reviews";
   return (
     <>
       <UserStorageSync
@@ -45,7 +46,7 @@ export default async function EditCvPage({
       <ProfileEditor
         initial={snapshot}
         initiallyArranging={initiallyArranging}
-        initialTab={openReviews ? "Reviews" : "Profile"}
+        initialTab={openReviews ? "Reviews" : query?.tab === "sections" ? "Sections" : "Profile"}
         reviews={
           canModerate ? (
             <ReviewSection

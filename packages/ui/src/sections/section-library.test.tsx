@@ -257,6 +257,19 @@ describe("SectionLibrary", () => {
     expect(legacyMarkup).toContain("Print study");
   });
 
+  it("renders authored dashboard values and hides an empty dashboard", () => {
+    const Dashboard = sectionRenderers.dashboard;
+    const section = emptySection("dashboard", newId);
+    expect(renderToStaticMarkup(<Dashboard section={section} />)).toBe("");
+    const saved = customSectionSchema.parse({
+      ...section,
+      items: [{ body: "Indexed in June", id: newId(), title: "Reports", url: "", value: "240" }],
+    });
+    const markup = renderToStaticMarkup(<Dashboard section={saved} />);
+    expect(markup).toContain("240");
+    expect(markup).toContain("Indexed in June");
+  });
+
   it("does not nest a real contact form inside an editor preview", () => {
     const section = {
       ...emptySection("contact-form", newId),

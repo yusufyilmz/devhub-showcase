@@ -53,6 +53,7 @@ import {
   CustomSectionsEditor,
   SectionOrderEditor,
   SectionSettingsEditor,
+  SectionsSettings,
   SectionTemplatesEditor,
 } from "@shared/ui/sections/studio";
 import { AppearanceEditor } from "@shared/ui/theme/studio";
@@ -82,6 +83,7 @@ const tabs = [
   "Languages",
   "Language settings",
   "Layout",
+  "Sections",
   "Section order",
   "Section display",
   "Custom sections",
@@ -498,6 +500,7 @@ function EditorBody({
   onChange: (profile: PortfolioProfile) => void;
 }) {
   if (tab === "Reviews") return reviews;
+  if (tab === "Sections") return <SectionsSettings onNavigate={onNavigate} profile={profile} />;
   if (tab === "Revision history")
     return (
       <OwnerRevisionHistory

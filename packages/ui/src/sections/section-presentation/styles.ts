@@ -5,7 +5,6 @@ export const presenterStyles = {
   element2: "section-item-value",
   element3: "section-item-period",
   element5: "section-prose",
-  element7: "section-action",
   element8: "section-description",
 } as const;
 

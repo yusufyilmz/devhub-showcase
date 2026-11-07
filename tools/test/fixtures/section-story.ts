@@ -149,6 +149,30 @@ const content = {
     ],
     title: "From the studio notebook",
   },
+  dashboard: {
+    description: "Key figures from the latest archive release.",
+    items: [
+      {
+        body: "Across all public collections.",
+        period: "June 2026",
+        title: "Reports indexed",
+        value: "240",
+      },
+      {
+        body: "Participating libraries across three cities.",
+        period: "June 2026",
+        title: "Library partners",
+        value: "12",
+      },
+      {
+        body: "New subjects with curated reading lists.",
+        period: "June 2026",
+        title: "Topics covered",
+        value: "18",
+      },
+    ],
+    title: "Atlas project dashboard",
+  },
   faq: {
     description: "Details about booking and working together.",
     items: [
@@ -241,8 +265,18 @@ const content = {
   plans: {
     description: "Choose a format that fits the size of your team.",
     items: [
-      { body: "A focused session for up to six people.", title: "Half-day", value: "3 hours" },
-      { body: "A facilitated workshop and written recap.", title: "Full-day", value: "6 hours" },
+      {
+        body: "A focused session for up to six people.",
+        details: ["Briefing call", "Three-hour workshop", "Action notes"],
+        title: "Half-day",
+        value: "3 hours",
+      },
+      {
+        body: "A facilitated workshop and written recap.",
+        details: ["Briefing call", "Six-hour workshop", "Written recap"],
+        title: "Full-day",
+        value: "6 hours",
+      },
     ],
     title: "Workshop plans",
   },
@@ -259,12 +293,16 @@ const content = {
     items: [
       {
         body: "One small illustration with two revision rounds.",
+        details: ["One concept", "Two revisions", "Web-ready files"],
         title: "Spot illustration",
+        url: "https://example.com/commissions/spot",
         value: "€250",
       },
       {
         body: "Full-page art with print and web files.",
+        details: ["Two concepts", "Two revisions", "Print and web files"],
         title: "Cover illustration",
+        url: "https://example.com/commissions/cover",
         value: "€750",
       },
     ],

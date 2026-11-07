@@ -14,12 +14,12 @@
   gap: 30px;
   align-items: center;
   justify-content: space-between;
-  min-height: 94px;
+  min-height: 72px;
 }
 .home-nav,
 .home-header-actions {
   display: flex;
-  gap: 30px;
+  gap: clamp(0.25rem, 1vw, 1rem);
   align-items: center;
 }
 .home-nav a,
@@ -903,7 +903,7 @@
   }
   .home-header-inner {
     gap: 15px;
-    min-height: 77px;
+    min-height: 64px;
   }
   .home-nav {
     display: none;
@@ -919,8 +919,8 @@
     gap: 10px;
   }
   .home-signin {
-    gap: 15px;
-    padding: 8px 12px;
+    gap: 6px;
+    padding: 8px 10px;
     font-size: 11px;
   }
   .home-header-actions .theme-toggle {

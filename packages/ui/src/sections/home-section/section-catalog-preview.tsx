@@ -9,6 +9,7 @@ const previewKindByView = {
   careers: "links",
   clients: "people",
   contact: "form",
+  dashboard: "stats",
   gallery: "gallery",
   heading: "text",
   hero: "hero",

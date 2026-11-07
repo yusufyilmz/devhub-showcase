@@ -14,12 +14,14 @@ import {
 } from "../../layout";
 import { GalleryCollection } from "../gallery-grid-section/GalleryCollection";
 import { ItemMedia } from "../item-media/ItemMedia";
+import { PlanCards } from "../plans-section/PlanCards";
 import {
   collectionViewClassName,
   presenterInlineStyle1,
   presenterStyles,
 } from "../section-presentation/styles";
 import type { CollectionViewOptions, ItemContentOptions } from "../section-presentation/types";
+import { TestimonialCards } from "../testimonials-section/TestimonialCards";
 
 export function ItemContent({ item, quote = false, video = false, language }: ItemContentOptions) {
   const prose = item.body
@@ -55,6 +57,10 @@ export function ItemContent({ item, quote = false, video = false, language }: It
 
 export function CollectionView({ section, type, language }: CollectionViewOptions) {
   const view = authorableSections[type].view;
+  if (section.renderer === "cards" && view === "pricing")
+    return <PlanCards language={language} section={section} />;
+  if (section.renderer === "cards" && view === "quotes")
+    return <TestimonialCards section={section} />;
   if (
     type === "gallery-grid" &&
     section.renderer === "gallery" &&

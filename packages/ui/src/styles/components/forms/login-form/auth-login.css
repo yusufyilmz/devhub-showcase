@@ -24,25 +24,59 @@
   border: 0;
 }
 .login-page {
-  width: min(100% - 1.5rem, 29rem);
+  width: min(100% - 2rem, 62rem);
   margin: clamp(1rem, 7vh, 5rem) auto;
   color: var(--foreground);
+}
+.login-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 12px 40px rgb(0 0 0 / 0.08);
 }
 .login-page .auth-login {
   max-width: none;
   padding: clamp(1rem, 4vw, 2rem);
   margin: 0;
+  background: var(--card);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.login-visual {
+  display: grid;
+  align-items: end;
+  padding: clamp(1.5rem, 5vw, 3rem);
   background:
     radial-gradient(
       ellipse at top right,
-      color-mix(in srgb, var(--primary) 13%, transparent),
-      transparent 55%
+      color-mix(in srgb, var(--primary) 28%, transparent),
+      transparent 65%
     ),
-    var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  box-shadow: 0 12px 40px rgb(0 0 0 / 0.08);
+    linear-gradient(145deg, var(--muted), var(--card));
+  border-inline-start: 1px solid var(--border);
 }
+.auth-password {
+  position: relative;
+}
+.auth-login .auth-password input:not([type="checkbox"]) {
+  padding-inline-end: 3rem;
+}
+@media (max-width: 760px) {
+  .login-page {
+    max-width: 29rem;
+  }
+  .login-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .login-visual {
+    display: none;
+  }
+}
+
 .login-brand,
 .login-brand-name {
   display: flex;

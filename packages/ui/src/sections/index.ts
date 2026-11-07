@@ -38,6 +38,7 @@ export {
 export { CTASection, CTASectionEditor } from "./cta-section";
 export { CustomSection, CustomSectionEditor } from "./custom-section";
 export { CVSection } from "./cv-section";
+export { DashboardSection, DashboardSectionEditor } from "./dashboard-section";
 export { EducationsSection } from "./education-section";
 export { EducationItem } from "./education-section/EducationItem";
 export { ExperienceSection } from "./experience-section";

@@ -48,7 +48,8 @@ Deployment tooling: [App routing, Fitness cutover and free Actions](deployments.
 | Drag-and-drop portfolio layout                                 | Owner-only arrangement in the responsive draft preview                                                        | [Open guide](visual-portfolio-order.md) |
 | Built-in sections, item selection and order                    | Implemented                                                                                                   | [Open guide](built-in-sections.md)      |
 | Custom section catalog and rich compositions                   | Implemented                                                                                                   | [Open guide](custom-sections.md)        |
-| Storybook section and Studio previews | Implemented with fictional fixtures | [Open guide](storybook-previews.md) |
+| Storybook section and Studio previews                          | Implemented with fictional fixtures                                                                           | [Open guide](storybook-previews.md)     |
+| Portfolio blocks and Sections settings                         | Implemented with local fixture verification                                                                   | [Open guide](portfolio-blocks.md)       |
 | Private section templates and reviewed JSON import/export      | Implemented; template storage must be migrated                                                                | [Open guide](section-templates.md)      |
 | Independent website and CV languages                           | Implemented; authored text is not automatically translated                                                    | [Open guide](language.md)               |
 | PDF settings and ATS layouts — task 27                         | Implemented; ATS compatibility is not guaranteed                                                              | [Open guide](cv-layouts.md)             |

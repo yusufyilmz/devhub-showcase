@@ -20,7 +20,18 @@ function category(type: (typeof authorableSectionTypes)[number]): Exclude<Group,
   const view = authorableSections[type].view;
   if (["gallery", "video", "clients"].includes(view)) return "Media";
   if (["contact", "links", "map", "newsletter", "toc"].includes(view)) return "Connect";
-  if (["cards", "projects", "pricing", "shop", "careers", "statistics", "property"].includes(view))
+  if (
+    [
+      "cards",
+      "dashboard",
+      "projects",
+      "pricing",
+      "shop",
+      "careers",
+      "statistics",
+      "property",
+    ].includes(view)
+  )
     return "Work";
   return "Story";
 }

@@ -10,6 +10,35 @@
   },
   "customSections": [
     {
+      "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000058",
+      "items": [
+        {
+          "body": "Shipped across three fictional client projects.",
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001580",
+          "period": "2026",
+          "title": "Design updates",
+          "url": "",
+          "value": "24"
+        },
+        {
+          "body": "Collaborated on research, design, and delivery.",
+          "id": "d3d3d3d3-d3d3-43d3-83d3-000000001581",
+          "period": "2026",
+          "title": "Project teams",
+          "url": "",
+          "value": "3"
+        }
+      ],
+      "options": {
+        "columns": 2,
+        "description": "Sample metrics from a fictional design practice."
+      },
+      "renderer": "list",
+      "sectionType": "dashboard",
+      "title": "Demo · Dashboard",
+      "visible": true
+    },
+    {
       "id": "custom-d3d3d3d3-d3d3-43d3-83d3-000000000900",
       "items": [
         {

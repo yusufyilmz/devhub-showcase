@@ -14,6 +14,7 @@ export const sectionCatalogDescriptions = {
   "contact-info": "Place your email and contact details in one spot.",
   cta: "Guide visitors toward your most important next step.",
   custom: "Create a flexible section in the layout you prefer.",
+  dashboard: "Present key metrics and supporting details in a portfolio dashboard.",
   faq: "Answer common questions without overwhelming the page.",
   features: "Highlight services, capabilities or product benefits.",
   "gallery-grid": "Put your best images together in a visual grid.",

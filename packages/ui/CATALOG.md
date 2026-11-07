@@ -260,6 +260,8 @@ or composed `TooltipTrigger` and `TooltipContent` parts. Both use the same
 portal, collision handling, keyboard focus, Escape dismissal and appearance
 tokens. `AnimatedTooltip` adds optional pointer tracking.
 
+`SectionsSettings` groups section content, ordering, display, and template controls for the owner editor. Import it from `@shared/ui/sections/studio`.
+
 ## Browser preferences
 
 `ThemeProvider` consumes `useUserConfigStore` from `@shared/runtime/user`.
@@ -358,7 +360,8 @@ Each content section lives in `src/sections/variants/{name}`. Most export the se
 | `ExperienceSection`, `ExperienceItem`, `ExperienceList` |                                                                                                                 |
 | `FAQSection`                                            | editor                                                                                                          |
 | `FeaturesSection`                                       | editor                                                                                                          |
-| `GalleryGridSection`, `MasonryGridSection`                     | editor                                                                                                          |
+| `DashboardSection`                                      | `DashboardSectionEditor`                                                                                        |
+| `GalleryGridSection`, `MasonryGridSection`              | editor                                                                                                          |
 | `HeadingSection`                                        | editor                                                                                                          |
 | `HeroSection`                                           | editor                                                                                                          |
 | `HowToSection`                                          | editor                                                                                                          |

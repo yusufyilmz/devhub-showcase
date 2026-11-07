@@ -14,6 +14,7 @@ import { ContactFormSectionEditor } from "../contact-form-section/ContactFormSec
 import { ContactInfoSectionEditor } from "../contact-info-section/ContactInfoSectionEditor";
 import { CTASectionEditor } from "../cta-section/CTASectionEditor";
 import { CustomSectionEditor } from "../custom-section/CustomSectionEditor";
+import { DashboardSectionEditor } from "../dashboard-section/DashboardSectionEditor";
 import { FAQSectionEditor } from "../faq-section/FAQSectionEditor";
 import { FeaturesSectionEditor } from "../features-section/FeaturesSectionEditor";
 import { GalleryGridSectionEditor } from "../gallery-grid-section/GalleryGridSectionEditor";
@@ -64,6 +65,7 @@ export const sectionEditors = {
   "contact-info": ContactInfoSectionEditor,
   cta: CTASectionEditor,
   custom: CustomSectionEditor,
+  dashboard: DashboardSectionEditor,
   faq: FAQSectionEditor,
   features: FeaturesSectionEditor,
   "gallery-grid": GalleryGridSectionEditor,
