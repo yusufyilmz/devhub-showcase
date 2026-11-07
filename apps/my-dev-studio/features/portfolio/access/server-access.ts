@@ -7,11 +7,13 @@ import { validatePublicProfile } from "@shared/lib/profiles";
 import type { Database } from "@shared/lib/types";
 import { ProfileSetupError, type ProfileSnapshot } from "@shared/services/profile";
 
+import { env } from "@/env";
+
 import { portfolioGrantCookie, verifyPortfolioGrant } from "./password";
 
 export function portfolioAccessServer() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const secret = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const url = env.NEXT_PUBLIC_SUPABASE_URL;
+  const secret = env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !secret) throw new ProfileSetupError();
   const client = createClient<Database>(url, secret, {
     auth: { autoRefreshToken: false, persistSession: false },

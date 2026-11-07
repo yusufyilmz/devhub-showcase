@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { seedWorkspace } from "@shared/services/db/seed";
+import { seedWorkspace } from "@shared/services/fitness";
 
 import { dueFitnessReminders, reminderInstant } from "./reminders";
 

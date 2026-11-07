@@ -1,5 +1,6 @@
 import { createServerClient } from "@shared/lib/supabase";
 
+import { env } from "@/env";
 import { requireWorkspace } from "@/features/admin/admin-auth";
 import { localTestLoginRequestAllowed } from "@/features/admin/local-test-login";
 
@@ -10,8 +11,8 @@ export async function POST(request: Request) {
     return Response.json({ error: "Local test login is unavailable." }, { headers, status: 404 });
   }
 
-  const email = process.env.LOCAL_TEST_EMAIL;
-  const password = process.env.LOCAL_TEST_PASSWORD;
+  const email = env.LOCAL_TEST_EMAIL;
+  const password = env.LOCAL_TEST_PASSWORD;
   if (!email || !password) {
     return Response.json(
       { error: "Set LOCAL_TEST_EMAIL and LOCAL_TEST_PASSWORD for the local test user." },

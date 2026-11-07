@@ -2,8 +2,10 @@ import { type GoogleProfileCategory, googleProfilePermissions } from "@shared/au
 import { urls } from "@shared/config/urls";
 import { reviewGooglePerson } from "@shared/lib/profiles";
 
+import { env } from "@/env";
+
 export function googleProfileClientId() {
-  const value = process.env.GOOGLE_PROFILE_CLIENT_ID || "";
+  const value = env.GOOGLE_PROFILE_CLIENT_ID || "";
   return /^[a-zA-Z0-9-]+\.apps\.googleusercontent\.com$/.test(value) ? value : null;
 }
 export async function boundedText(source: Pick<Request, "body">, limit: number) {

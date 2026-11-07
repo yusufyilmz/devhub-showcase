@@ -4,7 +4,7 @@ import { Fragment, useLayoutEffect, useRef } from "react";
 
 import { ChevronRight, Pencil } from "lucide-react";
 
-import { TaskService } from "@shared/services/fitness/task";
+import { TaskService } from "@shared/services/fitness";
 import type { Task } from "@shared/services/types";
 import { Badge } from "@shared/ui/badge";
 import {

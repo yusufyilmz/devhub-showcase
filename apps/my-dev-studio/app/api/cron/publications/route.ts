@@ -4,9 +4,11 @@ import { createClient } from "@supabase/supabase-js";
 
 import type { Database } from "@shared/lib/types";
 
+import { env } from "@/env";
+
 const headers = { "Cache-Control": "private, no-store" };
 export async function GET(request: Request) {
-  const secret = process.env.CRON_SECRET;
+  const secret = env.CRON_SECRET;
   const received = Buffer.from(request.headers.get("authorization") ?? "");
   const expected = Buffer.from(`Bearer ${secret}`);
   if (
@@ -16,8 +18,8 @@ export async function GET(request: Request) {
     !timingSafeEqual(received, expected)
   )
     return Response.json({ error: "Access denied." }, { headers, status: 403 });
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const url = env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key)
     return Response.json({ error: "Scheduler unavailable." }, { headers, status: 503 });
   try {

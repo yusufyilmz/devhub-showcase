@@ -9,9 +9,10 @@ import {
   deliverQueuedNotifications,
   validatePushSubscription,
 } from "@shared/notifications/server";
-import { database } from "@shared/services/db/client";
+import { database } from "@shared/services/fitness";
 import { WorkspaceRepository } from "@shared/services/workspace";
 
+import { env } from "@/env";
 import { fitnessUser, requestIdentity, sameOrigin } from "@/lib/auth";
 
 import { dueFitnessReminders } from "./reminders";
@@ -26,9 +27,9 @@ import {
 
 const headers = { "Cache-Control": "private, no-store" };
 export function pushConfiguration() {
-  const publicKey = process.env.WEB_PUSH_PUBLIC_KEY;
-  const privateKey = process.env.WEB_PUSH_PRIVATE_KEY;
-  const subject = process.env.WEB_PUSH_SUBJECT;
+  const publicKey = env.WEB_PUSH_PUBLIC_KEY;
+  const privateKey = env.WEB_PUSH_PRIVATE_KEY;
+  const subject = env.WEB_PUSH_SUBJECT;
   return publicKey && privateKey && subject ? { privateKey, publicKey, subject } : null;
 }
 async function accountId(request: Request) {
@@ -145,7 +146,7 @@ export async function testNotification(request: Request) {
   }
 }
 function authorizedWorker(request: Request) {
-  const secret = process.env.CRON_SECRET;
+  const secret = env.CRON_SECRET;
   if (!secret || secret.length < 32) return false;
   const expected = Buffer.from(`Bearer ${secret}`);
   const received = Buffer.from(request.headers.get("authorization") ?? "");

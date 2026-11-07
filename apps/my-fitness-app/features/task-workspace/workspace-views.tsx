@@ -13,7 +13,7 @@ import {
   ShoppingBasket,
 } from "lucide-react";
 
-import { TaskService } from "@shared/services/fitness/task";
+import { TaskService } from "@shared/services/fitness";
 import type { AgendaEvent } from "@shared/services/schedule";
 import { ScheduleService } from "@shared/services/schedule";
 import type { Workspace } from "@shared/services/types";

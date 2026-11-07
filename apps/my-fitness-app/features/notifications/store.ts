@@ -11,7 +11,7 @@ import {
   subscriptionFingerprint,
   validatePushSubscription,
 } from "@shared/notifications/server";
-import { database } from "@shared/services/db/client";
+import { database } from "@shared/services/fitness";
 
 const appId = "fitness-os";
 export async function saveDevice(owner: string, subscription: StoredSubscription) {

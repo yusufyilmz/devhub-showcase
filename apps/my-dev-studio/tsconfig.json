@@ -2,6 +2,7 @@
   "compilerOptions": {
     "incremental": true,
     "paths": {
+      "@/env": ["./env.ts"],
       "@/features/*": ["./features/*"],
       "@fixtures/*": ["../../tools/test/fixtures/*"]
     },

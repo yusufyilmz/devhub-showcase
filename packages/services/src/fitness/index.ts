@@ -17,5 +17,7 @@ export {
   WorkspaceNotPublishedError,
 } from "../workspace/service/workspace-access-service";
 export { InvalidWorkspaceError, WorkspaceService } from "../workspace/service/workspace-service";
+export * from "./db/client";
 export { loadLegacyWorkspace } from "./db/migrations/load-legacy-workspace";
+export * from "./db/schema";
 export { seedWorkspace } from "./db/seed";

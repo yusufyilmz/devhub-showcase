@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { ArrowDown, ArrowUp, Trash2 } from "lucide-react";
 
 import type { FitnessSuggestion, TaskEditProposal } from "@shared/assistant/fitness-contract";
-import { TaskService } from "@shared/services/fitness/task";
+import { TaskService } from "@shared/services/fitness";
 import type { Workspace } from "@shared/services/types";
 import { createTask, defaultDetails, type Task, type TaskKind } from "@shared/services/types";
 import { Alert, AlertDescription } from "@shared/ui/alert";

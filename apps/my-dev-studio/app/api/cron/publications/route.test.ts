@@ -38,3 +38,6 @@ describe("scheduled publication worker", () => {
     expect(await failed.text()).not.toContain("private SQL");
   });
 });
+
+// Keep per-test configuration mutable; production schemas are validated separately.
+vi.mock("../../../../env", () => ({ env: process.env }));

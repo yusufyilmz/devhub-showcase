@@ -8,6 +8,8 @@ import { allowPortfolioChat } from "@shared/cache";
 import { buildPublicPortfolioKnowledge, usernameSchema } from "@shared/lib/profiles";
 import { readPublicProfileByUsername } from "@shared/services/published-profile";
 
+import { env } from "@/env";
+
 export const premiumChatInput = z
   .object({
     message: z.string().trim().min(1).max(2000),
@@ -42,12 +44,7 @@ export async function premiumChatAccount(profileId: string) {
   return summary.plan === "pro" && summary.limits.portfolio_chat > 0 ? account : null;
 }
 export async function premiumChatAvailable(profileId: string) {
-  if (
-    profileId === "main" ||
-    !process.env.OPENAI_API_KEY ||
-    !process.env.REDIS_URL ||
-    !process.env.REDIS_TOKEN
-  )
+  if (profileId === "main" || !env.OPENAI_API_KEY || !env.REDIS_URL || !env.REDIS_TOKEN)
     return false;
   try {
     return Boolean(await premiumChatAccount(profileId));
@@ -62,13 +59,7 @@ export async function answerPremiumChat(raw: unknown, signal: AbortSignal) {
   if (!snapshot?.id || snapshot.id === "main") throw new Error("Unavailable");
   const knowledge = buildPublicPortfolioKnowledge(snapshot);
   const account = await premiumChatAccount(snapshot.id);
-  if (
-    !knowledge ||
-    !account ||
-    !process.env.OPENAI_API_KEY ||
-    !process.env.REDIS_URL ||
-    !process.env.REDIS_TOKEN
-  )
+  if (!knowledge || !account || !env.OPENAI_API_KEY || !env.REDIS_URL || !env.REDIS_TOKEN)
     throw new Error("Unavailable");
   if (!(await allowPortfolioChat(snapshot.id, input.sessionId))) throw new Error("Limit reached");
   const usage = new PremiumUsageRepository(billingServiceClient() as unknown as BillingClient);

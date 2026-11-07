@@ -1,4 +1,6 @@
-const canonical = new URL(process.env.APP_URL || "https://myfitnessstudio.vercel.app").origin;
+import { env } from "@/env";
+
+const canonical = new URL(env.APP_URL || "https://myfitnessstudio.vercel.app").origin;
 
 export const fitnessSeo = {
   canonical,

@@ -1,5 +1,5 @@
 import { type WorkoutProposal, workoutProposalSchema } from "@shared/assistant/fitness-contract";
-import { TaskService } from "@shared/services/fitness/task";
+import { TaskService } from "@shared/services/fitness";
 import { createTask, defaultDetails, type Task, type Workspace } from "@shared/services/types";
 
 import { workoutTarget } from "./plan-context";

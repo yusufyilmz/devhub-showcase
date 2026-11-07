@@ -18,7 +18,7 @@ vi.mock("@shared/auth/server", () => ({
   createClient: async () => ({ auth: { getUser: mocks.identity } }),
   createRequestClient: () => ({ auth: { getUser: mocks.identity } }),
 }));
-vi.mock("@shared/services/db/client", () => ({ database: () => ({}) }));
+vi.mock("@shared/services/fitness", () => ({ database: () => ({}) }));
 vi.mock("@shared/services/workspace", async (importOriginal) => ({
   ...(await importOriginal()),
   WorkspaceRepository: class {
@@ -109,3 +109,6 @@ describe("private Fitness workspace API", () => {
     expect((await PUT(saveRequest(second))).status).toBe(200);
   });
 });
+
+// Keep per-test configuration mutable; production schemas are validated separately.
+vi.mock("../../../env", () => ({ env: process.env }));

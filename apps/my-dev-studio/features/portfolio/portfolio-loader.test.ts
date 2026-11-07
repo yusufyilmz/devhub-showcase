@@ -53,3 +53,6 @@ describe("PortfolioLoader", () => {
     expect(result.projects).toHaveLength(2);
   });
 });
+
+// Keep per-test configuration mutable; production schemas are validated separately.
+vi.mock("../../env", () => ({ env: process.env }));

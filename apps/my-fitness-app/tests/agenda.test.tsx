@@ -3,10 +3,9 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { test } from "vitest";
 
-import { seedWorkspace } from "@shared/services/db/seed";
-import { TaskService } from "@shared/services/fitness/task";
+import { seedWorkspace } from "@shared/services/fitness";
 import { MealPlanningService, WeeklyPlanningService } from "@shared/services/meal";
-import { AgendaService, ScheduleService } from "@shared/services/schedule";
+import { AgendaService, ScheduleService, TaskService } from "@shared/services/schedule";
 import { validateWorkspace, workspaceSchema } from "@shared/services/types";
 
 import { DayAgenda } from "../features/agenda/day-agenda";

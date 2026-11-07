@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { test } from "vitest";
 
-import { seedWorkspace } from "@shared/services/db/seed";
+import { seedWorkspace } from "@shared/services/fitness";
 import { ScheduleService } from "@shared/services/schedule";
 
 import Preview from "../app/preview/page";

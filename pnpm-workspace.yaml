@@ -13,6 +13,7 @@ minimumReleaseAgeExclude:
 
 # External dependency versions are shared by every workspace package.
 catalog:
+  "@t3-oss/env-nextjs": "0.13.11"
   "web-push": "3.6.7"
   "@types/web-push": "3.6.4"
   tsx: "4.23.15"

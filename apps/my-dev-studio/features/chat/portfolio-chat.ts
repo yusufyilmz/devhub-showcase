@@ -4,6 +4,8 @@ import { allowPortfolioChat } from "@shared/cache";
 import { buildPublicPortfolioKnowledge, usernameSchema } from "@shared/lib/profiles";
 import { readPublicProfileByUsername } from "@shared/services/published-profile";
 
+import { env } from "@/env";
+
 export const portfolioChatInput = z.object({
   category: z.string().max(50).optional(),
   content: z.string().trim().min(1).max(2000),
@@ -19,7 +21,7 @@ export async function requireLegacyChat(username: string, sessionId: string) {
   if (snapshot?.id !== "main") throw new Error("Portfolio chat is not available.");
   const knowledge = buildPublicPortfolioKnowledge(snapshot);
   if (!knowledge) throw new Error("Portfolio chat is not available.");
-  if (!process.env.OPENAI_API_KEY || !process.env.REDIS_URL || !process.env.REDIS_TOKEN)
+  if (!env.OPENAI_API_KEY || !env.REDIS_URL || !env.REDIS_TOKEN)
     throw new Error("Portfolio chat is not configured.");
   if (!(await allowPortfolioChat(snapshot.id, sessionId)))
     throw new Error("Portfolio chat limit reached. Please try later.");

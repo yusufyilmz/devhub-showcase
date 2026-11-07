@@ -5,9 +5,9 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { PGlite } from "@electric-sql/pglite";
 import { drizzle } from "drizzle-orm/pglite";
 
-import type { Database } from "@shared/services/db/client";
-import { database } from "@shared/services/db/client";
-import * as schema from "@shared/services/db/schema";
+import type { Database } from "@shared/services/fitness";
+import * as schema from "@shared/services/fitness";
+import { database } from "@shared/services/fitness";
 import { WorkspaceRepository } from "@shared/services/workspace";
 
 import {
@@ -18,7 +18,7 @@ import {
   saveDevice,
 } from "./store";
 
-vi.mock("@shared/services/db/client", () => ({ database: vi.fn() }));
+vi.mock("@shared/services/fitness", () => ({ database: vi.fn() }));
 const owner = "00000000-0000-4000-8000-000000000001";
 const other = "00000000-0000-4000-8000-000000000002";
 const subscription = {

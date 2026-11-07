@@ -4,6 +4,7 @@ import { proposeFitnessChange } from "@shared/assistant/fitness";
 import { fitnessAssistantRequest } from "@shared/assistant/fitness-contract";
 import { allowFitnessAssistant } from "@shared/cache";
 
+import { env } from "@/env";
 import { assistantContext } from "@/features/assistant/plan-context";
 import { SetupRequired, SignInRequired, workspaceContext } from "@/features/task-workspace/server";
 import { sameOrigin } from "@/lib/auth";
@@ -23,7 +24,7 @@ export async function POST(request: Request) {
     if (raw.length > 16_000) return error("The request is too large.", 413);
     const input = fitnessAssistantRequest.safeParse(parseJson(raw));
     if (!input.success) return error("Choose a plan and enter a short request.", 400);
-    if (!process.env.OPENAI_API_KEY || !process.env.REDIS_URL || !process.env.REDIS_TOKEN)
+    if (!env.OPENAI_API_KEY || !env.REDIS_URL || !env.REDIS_TOKEN)
       return error("Fitness assistants are not configured for this deployment.", 503);
 
     const snapshot = await service.load(userId);

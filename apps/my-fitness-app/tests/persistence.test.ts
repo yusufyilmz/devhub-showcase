@@ -7,8 +7,8 @@ import { describe, test } from "vitest";
 import { PGlite } from "@electric-sql/pglite";
 import { drizzle } from "drizzle-orm/pglite";
 
-import type { Database } from "@shared/services/db/client";
-import * as schema from "@shared/services/db/schema";
+import type { Database } from "@shared/services/fitness";
+import * as schema from "@shared/services/fitness";
 import { WeeklyPlanningService } from "@shared/services/meal";
 import { RevisionConflictError, WorkspaceRepository } from "@shared/services/workspace";
 

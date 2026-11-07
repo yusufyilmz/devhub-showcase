@@ -20,7 +20,7 @@ vi.mock("@/lib/auth", async (original) => ({
   requestIdentity: mocks.identity,
   sameOrigin: mocks.origin,
 }));
-vi.mock("@shared/services/db/client", () => ({ database: () => ({ execute: mocks.execute }) }));
+vi.mock("@shared/services/fitness", () => ({ database: () => ({ execute: mocks.execute }) }));
 vi.mock("@shared/services/workspace", () => ({
   WorkspaceRepository: class {
     find = mocks.find;
@@ -162,3 +162,6 @@ describe("fitness notification routes", () => {
     expect(JSON.stringify(mocks.enqueueReminder.mock.calls)).not.toContain("Private");
   });
 });
+
+// Keep per-test configuration mutable; production schemas are validated separately.
+vi.mock("../../env", () => ({ env: process.env }));

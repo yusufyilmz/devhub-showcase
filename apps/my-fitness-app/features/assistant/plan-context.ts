@@ -1,5 +1,5 @@
 import type { FitnessAssistantRequest } from "@shared/assistant/fitness-contract";
-import { TaskService } from "@shared/services/fitness/task";
+import { TaskService } from "@shared/services/fitness";
 import type { Task, Workspace } from "@shared/services/types";
 
 const tasks = new TaskService();

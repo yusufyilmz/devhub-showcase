@@ -2,10 +2,10 @@ import assert from "node:assert/strict";
 
 import { afterEach, test, vi } from "vitest";
 
-import { convertV1Workspace } from "@shared/services/db/migrations/convert-v1-workspace";
-import { makeDay as v1Day } from "@shared/services/db/migrations/v1-model";
-import { seed as seedV1 } from "@shared/services/db/migrations/v1-seed";
-import { seedWorkspace } from "@shared/services/db/seed";
+import { convertV1Workspace } from "@shared/services/db/migrations/convert-v1-workspace.js";
+import { makeDay } from "@shared/services/db/migrations/v1-model.js";
+import { seed } from "@shared/services/db/migrations/v1-seed.js";
+import { seedWorkspace } from "@shared/services/fitness";
 import {
   type BaseWorkspaceRepository,
   InvalidWorkspaceError,
@@ -84,9 +84,9 @@ test("service propagates revision conflicts without retrying stale writes", asyn
   );
 });
 test("legacy JSON migration preserves meal status, actual set logs, water and weights", () => {
-  const v1 = seedV1();
+  const v1 = seed();
   const d = "2026-10-19";
-  v1.days[d] = v1Day(v1, d);
+  v1.days[d] = makeDay(v1, d);
   v1.days[d].status["y1-breakfast"] = "done";
   v1.days[d].sets["hip-abduction-machine:0"] = {
     done: true,

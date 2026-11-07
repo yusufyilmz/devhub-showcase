@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { Plus, X } from "lucide-react";
 
-import { TaskService } from "@shared/services/fitness/task";
+import { TaskService } from "@shared/services/fitness";
 import type { Workspace } from "@shared/services/types";
 import { Button as LibraryButton } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";

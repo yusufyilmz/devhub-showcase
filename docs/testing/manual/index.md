@@ -102,3 +102,5 @@ Create/update its guide in this directory and add/update the index row in the sa
 [Fitness task plans](fitness-task-plans.md) covers the shared accent-gradient plan card, header actions, pagination, task drill-down, and desktop and mobile checks for Tasks.
 
 [Fitness shared controls and notifications](fitness-shared-ui.md) covers the task editor, weekly tabs, calendar, agenda button states, and reminder permission checks.
+
+Environment configuration: [Application environment modules](environment-modules.md).

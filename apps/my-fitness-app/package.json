@@ -29,6 +29,7 @@
     "@shared/runtime": "workspace:*",
     "@shared/services": "workspace:*",
     "@shared/ui": "workspace:*",
+    "@t3-oss/env-nextjs": "catalog:",
     "drizzle-orm": "catalog:",
     "lucide-react": "catalog:",
     "next": "catalog:",

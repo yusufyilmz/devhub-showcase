@@ -1,6 +1,8 @@
 import { supabaseConfigured } from "@shared/auth/config";
 import { createClient, createRequestClient } from "@shared/auth/server";
 
+import { env } from "@/env";
+
 export const configured = supabaseConfigured;
 
 export function fitnessUser<T extends { email_confirmed_at?: string; is_anonymous?: boolean }>(
@@ -29,7 +31,7 @@ export async function requestIdentity<Database = unknown>(request: Request) {
 export function sameOrigin(request: Request) {
   const origin = request.headers.get("origin");
   if (!origin || origin !== new URL(request.url).origin) return false;
-  return [process.env.APP_URL, process.env.FITNESS_ADDITIONAL_ORIGIN].some(
+  return [env.APP_URL, env.FITNESS_ADDITIONAL_ORIGIN].some(
     (allowed) => allowed?.replace(/\/$/, "") === origin,
   );
 }

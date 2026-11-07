@@ -3,7 +3,7 @@ import { useMemo } from "react";
 
 import { RefreshCw, ShoppingBasket } from "lucide-react";
 
-import { TaskService } from "@shared/services/fitness/task";
+import { TaskService } from "@shared/services/fitness";
 import { MealPlanningService, WeeklyPlanningService } from "@shared/services/meal";
 import type { Workspace } from "@shared/services/types";
 import { dateLabel, monday } from "@shared/services/types";

@@ -4,7 +4,7 @@ import { useLayoutEffect, useMemo, useState } from "react";
 
 import { Layers, ListPlus, Pencil, Plus } from "lucide-react";
 
-import { TaskService } from "@shared/services/fitness/task";
+import { TaskService } from "@shared/services/fitness";
 import type { Task, Workspace } from "@shared/services/types";
 import { Badge } from "@shared/ui/badge";
 import { Button } from "@shared/ui/button";

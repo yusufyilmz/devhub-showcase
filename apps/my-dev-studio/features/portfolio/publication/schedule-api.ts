@@ -2,6 +2,7 @@ import { ZodError, z } from "zod";
 
 import { ProfileAccessError } from "@shared/services/profile";
 
+import { env } from "@/env";
 import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
 import { managedRepository } from "@/features/management/managed-portfolios";
 
@@ -29,11 +30,7 @@ async function operation(request: Request, client: ScheduleClient, profileId: st
     });
   }
   const input = scheduleInput.parse(JSON.parse(body));
-  if (
-    !process.env.CRON_SECRET ||
-    process.env.CRON_SECRET.length < 32 ||
-    !process.env.SUPABASE_SERVICE_ROLE_KEY
-  )
+  if (!env.CRON_SECRET || env.CRON_SECRET.length < 32 || !env.SUPABASE_SERVICE_ROLE_KEY)
     throw new Error("Scheduler setup required");
   return client.rpc("schedule_portfolio_publication", {
     expected_revision: input.revision,

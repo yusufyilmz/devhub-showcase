@@ -2,8 +2,7 @@ import assert from "node:assert/strict";
 
 import { test } from "vitest";
 
-import { seedWorkspace } from "@shared/services/db/seed";
-import { TaskService } from "@shared/services/fitness/task";
+import { seedWorkspace, TaskService } from "@shared/services/fitness";
 import {
   MealPlanningService,
   ShoppingListService,

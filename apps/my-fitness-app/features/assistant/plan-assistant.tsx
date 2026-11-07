@@ -13,7 +13,7 @@ import {
   workoutProposalSchema,
 } from "@shared/assistant/fitness-contract";
 import { urls } from "@shared/config/urls";
-import { TaskService } from "@shared/services/fitness/task";
+import { TaskService } from "@shared/services/fitness";
 import type { Task, Workspace } from "@shared/services/types";
 import { Alert, AlertDescription } from "@shared/ui/alert";
 import { Button } from "@shared/ui/button";

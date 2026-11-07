@@ -2,26 +2,33 @@
 
 MyDevStudio is a multiuser portfolio and CV platform in the `devhub-showcase` repository. These instructions apply throughout the repository. Read the files you are changing before editing them, and preserve unrelated work.
 
+## Confirm the checkout
+
+The user's primary local checkout is `/Users/yusufyilmaz/code/freelance/projects/devhub-showcase-1`. Before editing, verify `pwd`, `git rev-parse --show-toplevel`, and `git status --short`. Use this checkout unless the user explicitly selects another checkout or worktree. A ChatGPT project mirror or another folder named `devhub-showcase` is not interchangeable with it.
+
+Preserve existing staged and unstaged work. Apply only the requested changes; do not copy whole files from another checkout without comparing them. Do not stage, commit, or publish changes unless requested. Report verification from the checkout where it actually ran.
+
 ## Apps and packages
 
 Workspace members are `apps/*`, `packages/*`, and `tools/*`. The Next.js app package name is `my-dev-studio`. Shared packages use the `@shared/*` name. There is no `apps/web` package.
 
-| Location              | Name                | Responsibility                                                                  |
-| --------------------- | ------------------- | ------------------------------------------------------------------------------- |
-| `apps/my-dev-studio`  | `my-dev-studio`     | Next.js routes, API handlers, and feature data access                           |
-| `apps/my-fitness-app` | `my-fitness-app`    | Fitness OS app. Task rows share the Supabase project and Auth users             |
-| `apps/storybook-app`  | `storybook-app`     | Storybook for `packages/ui`                                                     |
-| `packages/ui`         | `@shared/ui`        | Controls, sections, studio and portfolio surfaces, theme, and global CSS        |
-| `packages/config`     | `@shared/config`    | Profile types, themes, and section , Page copy, including the home FAQ metadata |
-| `packages/lib`        | `@shared/lib`       | Validation, schemas, Supabase helpers, and shared types                         |
-| `packages/services`   | `@shared/services`  | Domain services and repositories (studio profile, portfolio, fitness workspace) |
-| `packages/auth`       | `@shared/auth`      | Session helpers and Google sign-in                                              |
-| `packages/cv`         | `@shared/templates` | CV PDF rendering                                                                |
-| `packages/assistant`  | `@shared/assistant` | Portfolio and editing assistants                                                |
-| `packages/cache`      | `@shared/cache`     | Cache integrations                                                              |
-| `packages/runtime`    | `@shared/runtime`   | Shared runtime helpers, including notifications                                 |
-| `packages/utils`      | `@shared/utils`     | Logging and other shared utilities                                              |
-| `packages/trello`     | `@shared/trello`    | Trello board UI                                                                 |
+| Location                 | Name                    | Responsibility                                                                  |
+| ------------------------ | ----------------------- | ------------------------------------------------------------------------------- |
+| `apps/my-dev-studio`     | `my-dev-studio`         | Next.js routes, API handlers, and feature data access                           |
+| `apps/my-fitness-app`    | `my-fitness-app`        | Fitness OS app. Task rows share the Supabase project and Auth users             |
+| `apps/storybook-app`     | `storybook-app`         | Storybook for `packages/ui`                                                     |
+| `packages/ui`            | `@shared/ui`            | Controls, sections, studio and portfolio surfaces, theme, and global CSS        |
+| `packages/config`        | `@shared/config`        | Profile types, themes, section metadata, and page copy including the home FAQ   |
+| `packages/lib`           | `@shared/lib`           | Validation, schemas, Supabase helpers, and shared types                         |
+| `packages/services`      | `@shared/services`      | Domain services and repositories (studio profile, portfolio, fitness workspace) |
+| `packages/auth`          | `@shared/auth`          | Session helpers and Google sign-in                                              |
+| `packages/templates`     | `@shared/templates`     | CV PDF rendering                                                                |
+| `packages/notifications` | `@shared/notifications` | Web push delivery and notification helpers                                      |
+| `packages/assistant`     | `@shared/assistant`     | Portfolio and editing assistants                                                |
+| `packages/cache`         | `@shared/cache`         | Cache integrations                                                              |
+| `packages/runtime`       | `@shared/runtime`       | Shared runtime helpers, including notifications                                 |
+| `packages/utils`         | `@shared/utils`         | Logging and other shared utilities                                              |
+| `packages/trello`        | `@shared/trello`        | Trello board UI                                                                 |
 
 App routes stay in `apps/my-dev-studio/app`. App-only data access stays in `apps/my-dev-studio/features/<feature>`. That app has no `lib` folder.
 
@@ -60,7 +67,7 @@ Always build interface from `packages/ui`. Check [packages/ui/CATALOG.md](packag
 
 Do not create one-off components from plain HTML elements in app routes, features, or other packages. Homepage blocks live in `packages/ui/src/sections/home-section` and compose the shared controls.
 
-If the catalog has no component that fits, add it in `packages/ui` and update the catalog in the same change.
+If the catalog has no component that fits, add it in `packages/ui`. The UI catalog is generated: update `packages/ui/src/registry/components.json` and/or `packages/ui/catalog.template.md`, then run `pnpm generate:ui-catalog`. Do not hand-edit `packages/ui/CATALOG.md`; verify with `pnpm check:ui-catalog`.
 
 ## Where code goes
 
@@ -76,12 +83,12 @@ flowchart TD
   access -->|No| visual{Is it a reusable visual component, stylesheet, or token?}
   visual -->|Yes| ui["packages/ui"]
   visual -->|No| kind{What kind of shared code is it?}
-  kind -->|Page copy| contentPkg["packages/content"]
+  kind -->|Page copy| contentPkg["packages/config"]
   kind -->|Profile shape, theme, or section metadata| config["packages/config"]
   kind -->|Validation, repository, or Supabase| lib["packages/lib"]
   kind -->|Domain service or repository impl| servicesPkg["packages/services"]
   kind -->|Sign-in or session helper| auth["packages/auth"]
-  kind -->|CV PDF| cv["packages/cv"]
+  kind -->|CV PDF| cv["packages/templates"]
   kind -->|Assistant model| assistant["packages/assistant"]
   kind -->|Trello board| trello["packages/trello"]
   kind -->|Log or generic helper| utils["packages/utils"]
@@ -112,9 +119,11 @@ A component that needs data receives that data, or a request function, from the 
 
 ## Dev environment
 
-Use the Node and pnpm versions in the root `package.json`. Install with `pnpm install --frozen-lockfile`. External dependencies use `catalog:`. Internal dependencies use `workspace:*`. Change the catalog, the package manifest, and the lockfile together.
+Use the Node and pnpm versions in the root `package.json` (currently Node 24.15+ below 25, and pnpm 11). Check the active versions before installing or running checks. Install with `pnpm install --frozen-lockfile`. External dependencies use `catalog:`. Internal dependencies use `workspace:*`. Change the catalog, the package manifest, and the lockfile together.
 
-- App dev server: `pnpm --filter my-dev-studio dev`
+- Studio dev server: `pnpm --filter my-dev-studio dev` (port 3001)
+- Fitness dev server: `pnpm --filter my-fitness-app dev` (port 3002)
+- Targeted builds: `pnpm build:studio` and `pnpm build:fitness`
 - One package: `pnpm --filter <package-name> <script>`
 - Storybook: `pnpm --filter storybook-app storybook`
 - Clear the Storybook optimizer cache: `pnpm --filter storybook-app storybook:clean`
@@ -135,10 +144,9 @@ When the change is inside one package or app, also read that package skill:
 | -------------------- | ---------------------------------------------------------------------------------------- |
 | `packages/ui`        | [Developing the UI package](.agents/skills/developing-ui-package/SKILL.md)               |
 | `packages/config`    | [Developing the config package](.agents/skills/developing-config-package/SKILL.md)       |
-| `packages/content`   | [Developing the content package](.agents/skills/developing-content-package/SKILL.md)     |
 | `packages/lib`       | [Developing the lib package](.agents/skills/developing-lib-package/SKILL.md)             |
 | `packages/auth`      | [Developing the auth package](.agents/skills/developing-auth-package/SKILL.md)           |
-| `packages/cv`        | [Developing the CV package](.agents/skills/developing-cv-package/SKILL.md)               |
+| `packages/templates` | [Developing the CV package](.agents/skills/developing-cv-package/SKILL.md)               |
 | `packages/assistant` | [Developing the assistant package](.agents/skills/developing-assistant-package/SKILL.md) |
 | `packages/cache`     | [Developing the cache package](.agents/skills/developing-cache-package/SKILL.md)         |
 | `packages/runtime`   | [Developing the runtime package](.agents/skills/developing-runtime-package/SKILL.md)     |
@@ -153,16 +161,31 @@ Use [features](docs/features.md), [architecture](docs/architecture.md), [convent
 | ----------- | -------------------------------------------------------------- | ------------------------------------------- |
 | `ui`        | [packages/ui/CATALOG.md](packages/ui/CATALOG.md)               | A control, section, surface, or stylesheet  |
 | `config`    | [packages/config/CATALOG.md](packages/config/CATALOG.md)       | A profile field, theme, or section metadata |
-| `content`   | [packages/content/CATALOG.md](packages/content/CATALOG.md)     | Page copy                                   |
 | `lib`       | [packages/lib/CATALOG.md](packages/lib/CATALOG.md)             | Validation, a schema, or a Supabase helper  |
 | `services`  | [packages/services/CATALOG.md](packages/services/CATALOG.md)   | A domain service or repository              |
 | `auth`      | [packages/auth/CATALOG.md](packages/auth/CATALOG.md)           | A sign-in or session helper                 |
-| `cv`        | [packages/cv/CATALOG.md](packages/templates/CATALOG.md)        | CV PDF rendering                            |
+| `cv`        | [packages/templates/CATALOG.md](packages/templates/CATALOG.md) | CV PDF rendering                            |
 | `assistant` | [packages/assistant/CATALOG.md](packages/assistant/CATALOG.md) | An assistant model or message               |
 | `cache`     | [packages/cache/CATALOG.md](packages/cache/CATALOG.md)         | A cache client or rate limit                |
 | `runtime`   | [packages/runtime/CATALOG.md](packages/runtime/CATALOG.md)     | A shared browser or fetch helper            |
 | `utils`     | [packages/utils/CATALOG.md](packages/utils/CATALOG.md)         | A logger or generic helper                  |
 | `trello`    | [packages/trello/CATALOG.md](packages/trello/CATALOG.md)       | Trello board UI or a Trello client          |
+
+## Environment configuration
+
+Each app owns a T3/Zod module: `apps/my-dev-studio/env.ts` and `apps/my-fitness-app/env.ts`. Import the matching module in app runtime code instead of reading `process.env` directly. Use relative imports unless the app's TypeScript configuration explicitly supports the alias.
+
+Add settings to the appropriate `server` or `client` schema and the app's `.env.example` together. Public settings also need explicit `process.env.NEXT_PUBLIC_*` entries in `experimental__runtimeEnv` so Next.js can bundle them. Only intentionally public values belong in `client`; credentials stay in `server`.
+
+Copy examples into each app's `.env.local` for local credentials. Never overwrite existing local env files or copy real credentials into examples, logs, or documentation. Next.js loads env files; standalone scripts must load their environment explicitly.
+
+Optional integrations remain optional. Empty strings normalize to `undefined`; flags and numeric limits remain strings. Preserve feature availability checks and existing fallback values. Validation occurs when the module is imported; do not claim explicit build-time validation unless it is wired into the build configuration.
+
+Shared packages must not import either app's env module. Existing package-level env access and standalone tooling have separate lifecycles; migrate them deliberately through package-owned schemas or injected configuration. Tests that vary configuration should mock the app env boundary; keep schema validation tests against the real module. See [environment module verification](docs/testing/manual/environment-modules.md).
+
+## Storybook deployment
+
+Use `pnpm --filter storybook-app build-storybook`; the static output is `apps/storybook-app/storybook-static`. The separate [Pages workflow](.github/workflows/deploy-storybook.yml) builds and deploys on matching pushes to `main` or a manual run from `main`. Pages must use GitHub Actions as its publishing source. Keep deployed stories based on fictional fixtures; do not include production credentials or private data. When changing asset paths, verify both the Storybook manager and iframe under the repository subpath.
 
 ## Data and security
 
@@ -181,9 +204,11 @@ Put each unit test next to the file it covers, with the same base name: `admin-l
 Unit tests start with `describe`. Keep `beforeEach`, `afterEach`, and `it` inside that suite. Helpers that are not tests stay at module scope.
 
 - Full local gate: `pnpm check` and `pnpm test`
-- App types: `pnpm --filter my-dev-studio typecheck`
+- App types: `pnpm --filter my-dev-studio typecheck` and `pnpm --filter my-fitness-app typecheck`
 - One file: `pnpm exec vitest run --project unit packages/ui/src/theme/ThemeProvider.test.tsx`
-- Browser tests: `pnpm test:e2e` after `pnpm exec playwright install chromium`
+- Studio browser tests: `pnpm test:e2e:studio`
+- Fitness browser tests: `pnpm test:e2e:fitness`
+- Install browser dependencies first with `pnpm exec playwright install chromium`. Browser suites live in `apps/my-dev-studio/e2e` and `apps/my-fitness-app/e2e`.
 
 Browser tests use local fixtures, not production accounts. If a required check cannot run, say what blocked it. Do not invent test output.
 
