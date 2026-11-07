@@ -17,7 +17,7 @@ screenshots were visually reviewed on 7 November 2026.
 and all 632 unit tests passed, plus 28 focused component tests. The broad editor and
 managed-portfolio browser run passed 36 cases and skipped the existing duplicate mobile
 review test. Six stale-selector/storage-key failures passed after test updates; the mobile
-Google import result is recorded in the PR. Device defaults, focus, draft retention,
+Google onboarding click still times out because layout content intercepts it. Device defaults, focus, draft retention,
 private saves, failure/retry, layouts and managed editing are covered with local fixtures.
 No deployment or live provider verification is claimed.
 
