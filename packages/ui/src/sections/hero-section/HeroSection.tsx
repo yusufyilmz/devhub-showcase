@@ -1,6 +1,42 @@
-import { SectionPresentation } from "../section-presentation";
-import type { SectionProps } from "../types";
+import "../../styles/components/sections/sections.css";
 
-export function HeroSection(props: SectionProps) {
-  return <SectionPresentation {...props} type="hero" />;
+import { getPortfolioCopy } from "@shared/config";
+import { safeLink } from "@shared/utils";
+
+import { Button } from "../../buttons/button";
+import { WorkMedia } from "../../display/media";
+import { CollectionView } from "../collection-view/CollectionView";
+import type { SectionProps } from "../types";
+import { HeroBlock } from "./HeroBlock";
+
+export function HeroSection({ section, language }: SectionProps) {
+  if (!section.visible) return null;
+  const { actionUrl, alignment, description, mediaUrl } = section.options ?? {};
+  return (
+    <HeroBlock
+      actions={
+        actionUrl && safeLink(actionUrl) ? (
+          <Button href={actionUrl}>{getPortfolioCopy(language).exploreWork} ↗</Button>
+        ) : undefined
+      }
+      className="section-hero-block py-xl"
+      data-alignment={alignment}
+      data-section-type="hero"
+      description={description}
+      headingId={`${section.id}-heading`}
+      id={section.id}
+      title={section.title}
+      visual={
+        mediaUrl && safeLink(mediaUrl) ? (
+          <WorkMedia imageUrl={mediaUrl} title={section.title} />
+        ) : undefined
+      }
+    >
+      {section.items.length > 0 && (
+        <div className="min-w-0 md:col-span-full">
+          <CollectionView language={language} section={section} type="hero" />
+        </div>
+      )}
+    </HeroBlock>
+  );
 }

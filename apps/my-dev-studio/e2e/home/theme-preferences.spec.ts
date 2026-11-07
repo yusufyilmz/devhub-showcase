@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { themeOptions } from "../../../../packages/config/src/theme";
+import { themeOptions } from "@shared/config/theme";
 
 test("appearance settings persist across reloads and mode changes", async ({ page }) => {
   await page.goto("/");

@@ -60,6 +60,12 @@
   font-style: italic;
   border-left: 3px solid rgb(var(--accent-rgb));
 }
+.library-section .section-testimonial-quote {
+  padding-inline-start: 0;
+  margin: 0;
+  font-style: normal;
+  border: 0;
+}
 .library-section pre {
   max-width: 100%;
   padding: 1rem;
@@ -168,4 +174,13 @@
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 8px;
+}
+
+.section-hero-block[data-alignment="center"] > div:first-child {
+  justify-items: center;
+  text-align: center;
+}
+.section-hero-block[data-alignment="right"] > div:first-child {
+  justify-items: end;
+  text-align: right;
 }

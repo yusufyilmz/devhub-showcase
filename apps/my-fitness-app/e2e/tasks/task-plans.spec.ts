@@ -1,6 +1,7 @@
 import { expect, type Locator, type Page, test } from "@playwright/test";
 
-import { createTask, defaultDetails } from "../../../../packages/services/src/types/task";
+import { createTask, defaultDetails } from "@shared/services/types";
+
 import { starterWorkspace } from "../../features/task-workspace/starter";
 
 async function swipePlanRight(page: Page, summary: Locator) {

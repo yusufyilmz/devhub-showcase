@@ -257,6 +257,40 @@ describe("SectionLibrary", () => {
     expect(legacyMarkup).toContain("Print study");
   });
 
+  it("renders shared hero actions from safe saved URLs and keeps hidden sections out", () => {
+    const Hero = sectionRenderers.hero;
+    const section = {
+      ...emptySection("hero", newId),
+      options: { actionUrl: "https://example.test/work" },
+    };
+    expect(renderToStaticMarkup(<Hero section={section} />)).toContain(
+      'href="https://example.test/work"',
+    );
+    expect(renderToStaticMarkup(<Hero section={{ ...section, visible: false }} />)).toBe("");
+    const unsafe = { ...section, options: { actionUrl: "javascript:alert(1)" } };
+    expect(renderToStaticMarkup(<Hero section={unsafe} />)).not.toContain("<a ");
+  });
+
+  it("keeps saved alternate CTA layouts and shows each action once in the shared card layout", () => {
+    const CTA = sectionRenderers.cta;
+    const section = {
+      ...emptySection("cta", newId),
+      items: [
+        {
+          body: "Send your brief and dates",
+          id: newId(),
+          title: "Contact us",
+          url: "https://example.test/contact",
+        },
+      ],
+    };
+    const cards = renderToStaticMarkup(<CTA section={section} />);
+    expect(cards.match(/href="https:\/\/example.test\/contact"/g)).toHaveLength(1);
+    expect(cards).toContain("Send your brief and dates");
+    const list = renderToStaticMarkup(<CTA section={{ ...section, renderer: "list" }} />);
+    expect(list).toContain("section-prose");
+  });
+
   it("renders authored dashboard values and hides an empty dashboard", () => {
     const Dashboard = sectionRenderers.dashboard;
     const section = emptySection("dashboard", newId);

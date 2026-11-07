@@ -9,6 +9,7 @@
     "./auth-login.css": "./src/styles/components/forms/login-form/auth-login.css",
     "./utils": "./src/utils/index.ts",
     "./components": "./src/components/index.ts",
+    "./registry.json": "./src/registry/components.json",
     "./overlays": "./src/overlays/index.ts",
     "./navigation": "./src/navigation/index.ts",
     "./section-navigator": "./src/navigation/section-navigator/index.ts",

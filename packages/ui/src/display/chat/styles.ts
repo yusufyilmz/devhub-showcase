@@ -157,11 +157,11 @@ export const chatSidebarStyles = {
 
 export const studioChatScreenStyles = {
   element1: "studio-chat-screen",
-  element2: "studio-chat-sidebar",
+  element2: "studio-chat-identity",
   element3: "studio-chat-brand",
-  element4: "studio-chat-sidebar-label",
-  element5: "studio-chat-current",
-  element6: "studio-chat-sidebar-note",
+  element4: "studio-chat-topbar-actions",
+  element5: "studio-chat-desktop-actions",
+  element6: "studio-chat-workspace-menu",
   element7: "studio-chat-main",
   element8: "studio-chat-topbar",
   element9: "studio-chat-subtitle",
@@ -177,6 +177,8 @@ export const studioChatScreenStyles = {
   element19: "studio-chat-error",
   element20: "studio-chat-suggestions",
   element21: "studio-chat-notice",
+  element22: "studio-chat-thread-title",
+  element23: "studio-chat-welcome-icon",
 } as const;
 
 export const chatTypingIndicatorInlineStyle1: CSSProperties = { animationDelay: "0.1s" };

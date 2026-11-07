@@ -6,13 +6,13 @@ import { convertV1Workspace } from "@shared/services/db/migrations/convert-v1-wo
 import { makeDay as v1Day } from "@shared/services/db/migrations/v1-model";
 import { seed as seedV1 } from "@shared/services/db/migrations/v1-seed";
 import { seedWorkspace } from "@shared/services/db/seed";
-
 import {
   type BaseWorkspaceRepository,
   InvalidWorkspaceError,
   RevisionConflictError,
   WorkspaceService,
-} from "../../../packages/services/src/workspace";
+} from "@shared/services/workspace";
+
 import { DemoWorkspaceGateway, HttpWorkspaceGateway } from "../features/task-workspace/gateway";
 
 afterEach(() => vi.unstubAllGlobals());

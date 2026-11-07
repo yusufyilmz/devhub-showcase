@@ -1,6 +1,6 @@
 import { type ReactNode, useLayoutEffect } from "react";
 
-import { NotificationProvider, StudioRequestProvider } from "../../../packages/ui/src/providers";
+import { NotificationProvider, StudioRequestProvider } from "@shared/ui/providers";
 
 type ThemeGlobals = Record<string, unknown>;
 

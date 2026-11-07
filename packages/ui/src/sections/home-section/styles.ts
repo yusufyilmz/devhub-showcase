@@ -11,13 +11,6 @@ export const chatLauncherStyles = {
   element2: "home-eyebrow",
 } as const;
 
-export const faqStyles = {
-  element1: "home-container home-faq",
-  element2: "home-section-intro",
-  element3: "home-eyebrow",
-  element4: "home-faq-list",
-} as const;
-
 export const featuresStyles = {
   element1: "home-container home-features",
   element2: "home-section-intro",
@@ -35,24 +28,6 @@ export const featuresStyles = {
   element14: "home-file-icon",
   element15: "home-feature-index",
   element16: "home-file-tag",
-} as const;
-
-export const finalStyles = {
-  element1: "home-container home-final",
-  element2: "home-final-inner",
-  element3: "home-eyebrow",
-  element4: "home-final-period",
-  element5: "home-button home-button-primary",
-  element6: "home-final-note",
-  element7: "home-final-glyph",
-} as const;
-
-export const headerStyles = {
-  element1: "home-header",
-  element2: "home-container home-header-inner",
-  element3: "home-nav",
-  element4: "home-header-actions",
-  element5: "home-signin",
 } as const;
 
 export const portfolioPreviewStyles = {
@@ -91,14 +66,8 @@ export const portfolioPreviewStyles = {
 } as const;
 
 export const heroStyles = {
-  element1: "home-container home-hero",
-  element2: "home-hero-copy",
-  element3: "home-eyebrow",
-  element4: "home-hero-description",
-  element5: "home-hero-actions",
   element6: "home-button home-button-primary",
   element7: "home-example-link",
-  element8: "home-hero-notes",
 } as const;
 
 export const libraryPickerStyles = {
@@ -169,7 +138,6 @@ export const processStyles = {
   element1: "home-container home-process",
   element2: "home-section-intro",
   element3: "home-eyebrow",
-  element4: "home-steps",
 } as const;
 
 export function homeOptionsSectionClassName(...values: unknown[]): string {

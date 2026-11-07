@@ -58,6 +58,15 @@ export function OptionsEditor({ section, type, onChange }: OptionsEditorOptions)
             value={options.email ?? ""}
           />
         )}
+        {["hero", "cta"].includes(type) && (
+          <Field
+            hint="A public URL for the optional call-to-action button."
+            label="Action URL"
+            onChange={(actionUrl) => change({ actionUrl })}
+            type="url"
+            value={options.actionUrl ?? ""}
+          />
+        )}
         {view === "newsletter" && (
           <Field
             hint="Your existing newsletter subscription page. No mailing list is created here."

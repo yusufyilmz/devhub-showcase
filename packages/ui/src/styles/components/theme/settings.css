@@ -10,8 +10,8 @@
   z-index: 110;
   display: flex;
   visibility: hidden;
-  align-items: center;
   gap: 0.25rem;
+  align-items: center;
   pointer-events: none;
   opacity: 0;
   transform: translate(0.25rem, -50%);

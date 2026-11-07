@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { createTask, defaultDetails } from "../../../../packages/services/src/types/task";
+import { createTask, defaultDetails } from "@shared/services/types";
+
 import { starterWorkspace } from "../../features/task-workspace/starter";
 
 test.describe("Fitness plan assistant", () => {

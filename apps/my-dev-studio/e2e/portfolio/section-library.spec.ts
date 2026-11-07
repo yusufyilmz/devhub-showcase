@@ -12,9 +12,11 @@ for (const type of ["engineer", "designer"]) {
     await page.goto(`/library-${type}`);
     await expect(page.locator("[data-section-type]")).toHaveCount(authorableSectionTypes.length);
     for (const sectionType of authorableSectionTypes)
-      await expect(page.locator(`[data-section-type="${sectionType}"] > h2`)).toHaveText(
-        `Library ${sectionType}`,
-      );
+      await expect(
+        page
+          .locator(`[data-section-type="${sectionType}"]`)
+          .getByRole("heading", { exact: true, name: `Library ${sectionType}` }),
+      ).toHaveText(`Library ${sectionType}`);
     await page
       .locator('[data-section-type="map"]')
       .getByRole("button", { name: "Load location map" })

@@ -1,13 +1,20 @@
 import "../../styles/components/sections/examples.css";
 
-import { cvLayouts, portfolioThemes } from "@shared/config";
-import { themeOptions } from "@shared/config/theme";
+import { cvLayouts } from "@shared/config";
 
 import { Card } from "../../cards";
 import { Section } from "../../layout/section";
+import registry from "../../registry/components.json";
 import { homeOptionsSectionClassName, optionsStyles } from "./styles";
 
 export function HomeOptionsSection() {
+  const { attributes, portfolioAccents, presets } = registry.themes;
+  const appearance = [
+    { label: "Accent", options: portfolioAccents },
+    { label: "Spacing", options: attributes.spacing },
+    { label: "Corner radius", options: attributes.radius },
+    { label: "Color mode", options: attributes.theme },
+  ];
   return (
     <Section asChild>
       <section aria-labelledby="options-title" className={optionsStyles.element1}>
@@ -31,7 +38,7 @@ export function HomeOptionsSection() {
               light or dark mode.
             </p>
             <ul className={optionsStyles.element5}>
-              {portfolioThemes.map((theme) => (
+              {presets.map((theme) => (
                 <li key={theme.id}>
                   <span aria-hidden="true" className={homeOptionsSectionClassName(theme.id)}>
                     Aa
@@ -45,7 +52,7 @@ export function HomeOptionsSection() {
             </ul>
             <h4 className="mt-6 text-sm font-semibold">Color palettes</h4>
             <ul aria-label="Available color palettes" className={optionsStyles.element5}>
-              {themeOptions.brand.map((brand) => (
+              {attributes.brand.map((brand) => (
                 <li key={brand}>
                   <span
                     aria-hidden="true"
@@ -59,6 +66,28 @@ export function HomeOptionsSection() {
                 </li>
               ))}
             </ul>
+            <details className="mt-6 rounded-lg border p-s">
+              <summary className="cursor-pointer text-sm font-semibold">
+                More appearance options
+              </summary>
+              <dl className="mt-s grid gap-s">
+                {appearance.map(({ label, options }) => (
+                  <div className="grid gap-xs" key={label}>
+                    <dt className="text-sm font-medium">{label}</dt>
+                    <dd className="flex flex-wrap gap-xs">
+                      {options.map((value) => (
+                        <span
+                          className="rounded-full border px-s py-1 text-xs capitalize"
+                          key={value}
+                        >
+                          {value}
+                        </span>
+                      ))}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </details>
           </Card>
           <Card layout="plain" surface="portfolio">
             <h3>A CV that fits your story.</h3>
