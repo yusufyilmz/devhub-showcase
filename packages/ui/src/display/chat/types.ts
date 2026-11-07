@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import type { VariantProps } from "class-variance-authority";
 
+import type { AgentActivity, AgentCompanionProps } from "../agent-companion/types";
 import type { chatVariants } from "./styles";
 
 export interface ChatHeaderProps {
@@ -123,6 +124,10 @@ export interface ChatSidebarSection {
 }
 
 export type ChatComposerOptions = {
+  companion?: {
+    agent: AgentCompanionProps["agent"];
+    activity?: AgentActivity;
+  };
   controls?: ReactNode;
   maxLength?: number;
   value: string;

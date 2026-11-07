@@ -9,41 +9,12 @@ import { ArrowLeftRight, X } from "lucide-react";
 
 import { Button } from "../../buttons/button";
 import { ChatBubble } from "../chat-bubble";
+import { AgentAvatar } from "./AgentAvatar";
 import { FeatureAction, FeatureGuide } from "./FeatureGuide";
 import type { AgentCompanionProps, AgentFeature, AgentGuide, AgentNotice } from "./types";
 import { useCompanionDock } from "./use-companion-dock";
 import { useFeatureProgress } from "./use-feature-progress";
 import { useFeatureTips } from "./use-feature-tips";
-
-function AgentAvatar({ agent }: Pick<AgentCompanionProps, "agent">) {
-  return (
-    <svg aria-hidden="true" className="agent-avatar" viewBox="0 0 88 88">
-      {agent === "studio" && (
-        <g className="agent-accent">
-          <path d="M44 21V12" />
-          <circle cx="44" cy="9" r="3" />
-        </g>
-      )}
-      {agent === "portfolio" && (
-        <path className="agent-accent" d="M13 34V23h11m40 0h11v11M13 51v11h11m40 0h11V51" />
-      )}
-      {agent === "fitness" && (
-        <path className="agent-accent" d="M9 41h8m54 0h8M11 35v12m66-12v12" />
-      )}
-      <rect className="agent-body" height="22" rx="10" width="36" x="26" y="55" />
-      <path className="agent-limbs" d="m29 60-7 7M36 74v5m16-5v5" />
-      <rect className="agent-body" height="40" rx="17" width="54" x="17" y="20" />
-      <rect className="agent-face" height="27" rx="11" width="42" x="23" y="27" />
-      <g className="agent-eyes">
-        <path d="M31 40q4 5 8 0m10 0q4 5 8 0" />
-      </g>
-      {agent === "studio" && <path className="agent-mark" d="m35 64 4 3-4 3m9 0h8" />}
-      {agent === "portfolio" && <path className="agent-mark" d="M38 64h12m-12 5h8" />}
-      {agent === "fitness" && <path className="agent-mark" d="M33 67h5l3-4 4 8 3-4h7" />}
-      <path className="agent-limbs agent-arm" d="m59 60 7 7" />
-    </svg>
-  );
-}
 
 function NoticeBubble({
   notice,
@@ -128,8 +99,13 @@ function useAgentGuide(guide: AgentGuide | undefined, blocked: boolean) {
   return { bubble, features, guideOpen, progress, setGuideOpen, tips };
 }
 
+function dragStyle(offset: number | undefined): CSSProperties | undefined {
+  return offset === undefined ? undefined : ({ "--agent-drag-x": `${offset}px` } as CSSProperties);
+}
+
 export function AgentCompanion({
   agent,
+  activity = "idle",
   className,
   href,
   guide,
@@ -152,15 +128,12 @@ export function AgentCompanion({
   return (
     <div
       className={cn("agent-companion", className)}
+      data-activity={activity}
       data-agent={agent}
       data-dragging={dock.offset !== undefined || undefined}
       data-placement={placement}
       data-side={floating ? dock.side : undefined}
-      style={
-        dock.offset === undefined
-          ? undefined
-          : ({ "--agent-drag-x": `${dock.offset}px` } as CSSProperties)
-      }
+      style={dragStyle(dock.offset)}
     >
       {currentBubble && (
         <NoticeBubble
@@ -171,30 +144,36 @@ export function AgentCompanion({
           tip={!visibleNotice}
         />
       )}
-      <Button
-        aria-label={label}
-        className="agent-launcher"
-        draggable={false}
-        href={href}
-        onClick={(event) => {
-          if (!dock.suppressDragClick(event)) onOpen?.();
-        }}
-        onLostPointerCapture={dock.cancel}
-        onPointerCancel={dock.cancel}
-        onPointerDown={dock.start}
-        onPointerMove={dock.move}
-        onPointerUp={dock.finish}
-        type={href ? undefined : "button"}
-        variant="unstyled"
-      >
-        <AgentAvatar agent={agent} />
-        {currentBubble && <span aria-hidden="true" className="agent-notice-dot" />}
-        {!currentBubble && (
-          <span aria-hidden="true" className="agent-launcher-label">
-            {label}
-          </span>
-        )}
-      </Button>
+      {placement === "composer" ? (
+        <span aria-label={`${label}: ${activity}`} className="agent-launcher" role="img">
+          <AgentAvatar activity={activity} agent={agent} />
+        </span>
+      ) : (
+        <Button
+          aria-label={label}
+          className="agent-launcher"
+          draggable={false}
+          href={href}
+          onClick={(event) => {
+            if (!dock.suppressDragClick(event)) onOpen?.();
+          }}
+          onLostPointerCapture={dock.cancel}
+          onPointerCancel={dock.cancel}
+          onPointerDown={dock.start}
+          onPointerMove={dock.move}
+          onPointerUp={dock.finish}
+          type={href ? undefined : "button"}
+          variant="unstyled"
+        >
+          <AgentAvatar activity={activity} agent={agent} />
+          {currentBubble && <span aria-hidden="true" className="agent-notice-dot" />}
+          {!currentBubble && (
+            <span aria-hidden="true" className="agent-launcher-label">
+              {label}
+            </span>
+          )}
+        </Button>
+      )}
       <div className="agent-companion-controls">
         {floating && (
           <Button

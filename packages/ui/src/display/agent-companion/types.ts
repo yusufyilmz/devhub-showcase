@@ -6,14 +6,21 @@ export type AgentNotice = {
   action?: { href: string; label: string };
 };
 
+export type AgentActivity = "idle" | "listening" | "thinking" | "writing" | "happy" | "error";
+
 export type AgentCompanionProps = {
+  activity?: AgentActivity;
   agent: "studio" | "portfolio" | "fitness";
   className?: string;
   label: string;
   guide?: AgentGuide;
   notice?: AgentNotice;
-  placement?: "floating" | "inline";
-} & ({ href: string; onOpen?: never } | { href?: never; onOpen: () => void });
+  placement?: "floating" | "inline" | "composer";
+} & (
+  | { href: string; onOpen?: never }
+  | { href?: never; onOpen: () => void }
+  | { placement: "composer"; href?: never; onOpen?: never }
+);
 
 export type AgentFeature = {
   id: string;

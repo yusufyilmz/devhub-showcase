@@ -6,6 +6,24 @@ import { ChatComposer } from "./ChatComposer";
 
 describe("ChatComposer", () => {
   afterEach(cleanup);
+  it("listens on input focus and returns to idle after blur or stopping", () => {
+    const props = {
+      companion: { agent: "fitness" as const },
+      onChange: vi.fn(),
+      onSubmit: vi.fn(),
+      value: "",
+    };
+    const { rerender } = render(<ChatComposer {...props} />);
+    const input = screen.getByRole("textbox");
+    fireEvent.focus(input);
+    expect(screen.getByRole("img", { name: "Assistant: listening" })).toBeTruthy();
+    fireEvent.blur(input);
+    expect(screen.getByRole("img", { name: "Assistant: idle" })).toBeTruthy();
+    rerender(<ChatComposer {...props} busy onStop={vi.fn()} />);
+    expect(screen.getByRole("img", { name: "Assistant: thinking" })).toBeTruthy();
+    rerender(<ChatComposer {...props} />);
+    expect(screen.getByRole("img", { name: "Assistant: idle" })).toBeTruthy();
+  });
   it("uses an accessible icon action and keeps Shift+Enter for multiline messages", () => {
     const submit = vi.fn();
     render(<ChatComposer onChange={vi.fn()} onSubmit={submit} value="Refine my summary" />);

@@ -220,7 +220,9 @@ function AssistantForm({
         <div className="fitness-assistant-compose">
           <FitnessComposer
             busy={busy}
+            error={error}
             goal={goal}
+            hasReply={turns.length > 0}
             mode={mode}
             modes={availableModes(plans)}
             needsTarget={needsTarget}
@@ -260,6 +262,8 @@ function AssistantForm({
 
 function FitnessComposer({
   busy,
+  error,
+  hasReply,
   goal,
   mode,
   modes,
@@ -280,6 +284,8 @@ function FitnessComposer({
 }: Omit<Parameters<typeof PromptContext>[0], "disabled"> & {
   busy: boolean;
   goal: string;
+  error: string;
+  hasReply: boolean;
   modes: typeof assistantModes;
   onGoal: (goal: string) => void;
   onMode: (mode: Mode) => void;
@@ -313,6 +319,7 @@ function FitnessComposer({
     <>
       <ChatComposer
         busy={pending}
+        companion={{ activity: error ? "error" : hasReply ? "happy" : "idle", agent: "fitness" }}
         controls={
           <div className="fitness-assistant-toolbar">
             {picker}

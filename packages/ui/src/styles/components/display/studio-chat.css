@@ -336,3 +336,19 @@
     box-shadow: var(--shadow-md);
   }
 }
+
+.studio-chat-composer-row {
+  display: flex;
+  gap: var(--spacing-xs);
+  align-items: flex-end;
+  min-width: 0;
+}
+.studio-chat-composer-row > .studio-chat-composer {
+  flex: 1;
+  min-width: 0;
+}
+@media (max-width: 767px) {
+  .studio-chat-composer-row > .agent-companion {
+    --agent-launcher-size: 2.75rem;
+  }
+}

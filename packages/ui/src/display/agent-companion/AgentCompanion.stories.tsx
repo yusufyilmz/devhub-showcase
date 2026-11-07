@@ -183,3 +183,37 @@ function demoProgress(features: readonly AgentFeature[], initial: string[]): typ
     return new Response(null, { status: 204 });
   };
 }
+
+function ReactionsPreview() {
+  const [activity, setActivity] = useState<NonNullable<AgentCompanionProps["activity"]>>("idle");
+  return (
+    <main style={{ display: "grid", gap: "2rem", justifyItems: "center", padding: "2rem" }}>
+      <h1>Companion reactions</h1>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+        {(["idle", "listening", "thinking", "writing", "happy", "error"] as const).map((state) => (
+          <Button
+            aria-pressed={activity === state}
+            key={state}
+            onClick={() => setActivity(state)}
+            variant="outline"
+          >
+            {state}
+          </Button>
+        ))}
+      </div>
+      <div style={{ display: "flex", gap: "2rem" }}>
+        {motionCharacters.map(({ agent, label }) => (
+          <AgentCompanion
+            activity={activity}
+            agent={agent}
+            key={agent}
+            label={label}
+            placement="composer"
+          />
+        ))}
+      </div>
+    </main>
+  );
+}
+
+export const Reactions: Story = { render: () => <ReactionsPreview /> };
