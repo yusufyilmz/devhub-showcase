@@ -46,10 +46,10 @@ describe("Examples", () => {
     const demo = getPagePresentation("/p/examples/samir-kaya", true, null);
     expect(demo.documentLanguage).toBe("tr");
     expect(demo.portfolioTheme).toBe("graphite");
-    expect(demo.storageKey).toBe("mydevstudio-example-theme:samir-kaya");
+    expect(demo.storageKey).toBe("mydevstudio:theme:example-theme:samir-kaya");
     const home = getPagePresentation("/", true, null);
     expect(home.profile).toBeUndefined();
     expect(home.portfolioTheme).toBeUndefined();
-    expect(home.storageKey).toBe("mydevstudio-theme");
+    expect(home.storageKey).toBe("mydevstudio:theme");
   });
 });

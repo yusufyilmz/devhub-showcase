@@ -2,6 +2,7 @@
 
 import React from "react";
 
+import { useRender } from "@base-ui/react/use-render";
 import { Slot } from "@radix-ui/react-slot";
 import { cn } from "cn";
 import { PanelLeftIcon } from "lucide-react";
@@ -63,6 +64,10 @@ function SidebarProvider({
   ...props
 }: SidebarProviderOptions) {
   const isMobile = useIsMobile();
+  const mobileWidth =
+    (style as React.CSSProperties & { "--sidebar-width-mobile"?: string })?.[
+      "--sidebar-width-mobile"
+    ] ?? SIDEBAR_WIDTH_MOBILE;
   const [openMobile, setOpenMobile] = React.useState(false);
 
   // This is the internal state of the sidebar.
@@ -72,16 +77,13 @@ function SidebarProvider({
   const setOpen = React.useCallback(
     (value: SidebarOptions) => {
       const openState = typeof value === "function" ? value(open) : value;
-      if (setOpenProp) {
-        setOpenProp(openState);
-      } else {
-        _setOpen(openState);
-      }
+      if (openProp === undefined) _setOpen(openState);
+      setOpenProp?.(openState);
 
       // This sets the cookie to keep the sidebar state.
       document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
     },
-    [setOpenProp, open],
+    [setOpenProp, open, openProp],
   );
 
   // Helper to toggle the sidebar.
@@ -109,6 +111,7 @@ function SidebarProvider({
   const contextValue = React.useMemo<SidebarContextProps>(
     () => ({
       isMobile,
+      mobileWidth,
       open,
       openMobile,
       setOpen,
@@ -116,7 +119,7 @@ function SidebarProvider({
       state,
       toggleSidebar,
     }),
-    [state, open, setOpen, isMobile, openMobile, toggleSidebar],
+    [state, open, setOpen, isMobile, mobileWidth, openMobile, toggleSidebar],
   );
 
   return (
@@ -149,7 +152,8 @@ function Sidebar({
   children,
   ...props
 }: SidebarOptions2) {
-  const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
+  const { isMobile, mobileWidth, state, openMobile, setOpenMobile } = useSidebar();
+  const previousFocus = React.useRef<HTMLElement | null>(null);
 
   if (collapsible === "none") {
     return (
@@ -161,16 +165,28 @@ function Sidebar({
 
   if (isMobile) {
     return (
-      <Sheet onOpenChange={setOpenMobile} open={openMobile} {...props}>
+      <Sheet onOpenChange={setOpenMobile} open={openMobile}>
         <SheetContent
-          className={sidebarStyles.element1}
+          {...props}
+          className={cn(sidebarStyles.element1, className)}
           data-mobile="true"
           data-sidebar="sidebar"
           data-slot="sidebar"
+          onCloseAutoFocus={(event) => {
+            if (previousFocus.current?.isConnected) {
+              event.preventDefault();
+              previousFocus.current.focus();
+            }
+          }}
+          onOpenAutoFocus={() => {
+            previousFocus.current =
+              document.activeElement instanceof HTMLElement ? document.activeElement : null;
+          }}
           side={side}
           style={
             {
-              "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
+              "--sidebar-width": mobileWidth,
+              ...props.style,
             } as React.CSSProperties
           }
         >
@@ -227,22 +243,23 @@ function Sidebar({
 }
 
 function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar } = useSidebar();
+  const { isMobile, open, openMobile, toggleSidebar } = useSidebar();
 
   return (
     <Button
+      aria-expanded={isMobile ? openMobile : open}
       className={cn(sidebarStyles.sidebarTrigger, className)}
       data-sidebar="trigger"
       data-slot="sidebar-trigger"
       onClick={(event) => {
         onClick?.(event);
-        toggleSidebar();
+        if (!event.defaultPrevented) toggleSidebar();
       }}
       size="icon"
       variant="ghost"
       {...props}
     >
-      <PanelLeftIcon />
+      <PanelLeftIcon className="rtl:rotate-180" />
       <span className={sidebarStyles.element6}>Toggle Sidebar</span>
     </Button>
   );
@@ -268,6 +285,7 @@ function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
       onClick={toggleSidebar}
       tabIndex={-1}
       title="Toggle Sidebar"
+      type="button"
       variant="unstyled"
       {...props}
     />
@@ -350,36 +368,48 @@ function SidebarGroup({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function SidebarGroupLabel({ className, asChild = false, ...props }: SidebarGroupLabelOptions) {
-  const Comp = asChild ? Slot : "div";
-
-  return (
-    <Comp
-      className={cn(sidebarStyles.sidebarGroupLabel, sidebarStyles.sidebarGroupLabel2, className)}
-      data-sidebar="group-label"
-      data-slot="sidebar-group-label"
-      {...props}
-    />
-  );
+function SidebarGroupLabel({
+  className,
+  asChild = false,
+  render,
+  ...props
+}: SidebarGroupLabelOptions) {
+  return useRender({
+    defaultTagName: "div",
+    props: {
+      className: cn(sidebarStyles.sidebarGroupLabel, sidebarStyles.sidebarGroupLabel2, className),
+      "data-sidebar": "group-label",
+      "data-slot": "sidebar-group-label",
+      ...props,
+    },
+    render: render ?? (asChild ? <Slot /> : undefined),
+  });
 }
 
-function SidebarGroupAction({ className, asChild = false, ...props }: SidebarGroupActionOptions) {
-  const Comp = asChild ? Slot : "button";
-
-  return (
-    <Comp
-      className={cn(
+function SidebarGroupAction({
+  className,
+  asChild = false,
+  render,
+  ...props
+}: SidebarGroupActionOptions) {
+  return useRender({
+    defaultTagName: "button",
+    props: {
+      className: cn(
         sidebarStyles.sidebarGroupAction,
         // Increases the hit area of the button on mobile.
         sidebarStyles.sidebarGroupAction2,
         sidebarStyles.sidebarGroupAction3,
         className,
-      )}
-      data-sidebar="group-action"
-      data-slot="sidebar-group-action"
-      {...props}
-    />
-  );
+      ),
+      "data-sidebar": "group-action",
+      "data-slot": "sidebar-group-action",
+
+      type: asChild || render ? undefined : "button",
+      ...props,
+    },
+    render: render ?? (asChild ? <Slot /> : undefined),
+  });
 }
 
 function SidebarGroupContent({ className, ...props }: React.ComponentProps<"div">) {
@@ -417,6 +447,7 @@ function SidebarMenuItem({ className, ...props }: React.ComponentProps<"li">) {
 
 function SidebarMenuButton({
   asChild = false,
+  render,
   isActive = false,
   variant = "default",
   size = "default",
@@ -424,19 +455,22 @@ function SidebarMenuButton({
   className,
   ...props
 }: SidebarMenuButtonOptions) {
-  const Comp = asChild ? Slot : "button";
   const { isMobile, state } = useSidebar();
 
-  const button = (
-    <Comp
-      className={cn(sidebarMenuButtonVariants({ size, variant }), className)}
-      data-active={isActive}
-      data-sidebar="menu-button"
-      data-size={size}
-      data-slot="sidebar-menu-button"
-      {...props}
-    />
-  );
+  const button = useRender({
+    defaultTagName: "button",
+    props: {
+      "aria-current": isActive ? "page" : undefined,
+      className: cn(sidebarMenuButtonVariants({ size, variant }), className),
+      "data-active": isActive,
+      "data-sidebar": "menu-button",
+      "data-size": size,
+      "data-slot": "sidebar-menu-button",
+      type: asChild || render ? undefined : "button",
+      ...props,
+    },
+    render: render ?? (asChild ? <Slot /> : undefined),
+  });
 
   if (!tooltip) {
     return button;
@@ -464,14 +498,14 @@ function SidebarMenuButton({
 function SidebarMenuAction({
   className,
   asChild = false,
+  render,
   showOnHover = false,
   ...props
 }: SidebarMenuActionOptions) {
-  const Comp = asChild ? Slot : "button";
-
-  return (
-    <Comp
-      className={cn(
+  return useRender({
+    defaultTagName: "button",
+    props: {
+      className: cn(
         sidebarStyles.sidebarMenuAction,
         // Increases the hit area of the button on mobile.
         sidebarStyles.sidebarMenuAction2,
@@ -481,12 +515,15 @@ function SidebarMenuAction({
         sidebarStyles.sidebarMenuAction6,
         showOnHover && sidebarStyles.sidebarMenuAction7,
         className,
-      )}
-      data-sidebar="menu-action"
-      data-slot="sidebar-menu-action"
-      {...props}
-    />
-  );
+      ),
+      "data-sidebar": "menu-action",
+      "data-slot": "sidebar-menu-action",
+
+      type: asChild || render ? undefined : "button",
+      ...props,
+    },
+    render: render ?? (asChild ? <Slot /> : undefined),
+  });
 }
 
 function SidebarMenuBadge({ className, ...props }: React.ComponentProps<"div">) {
@@ -513,11 +550,6 @@ function SidebarMenuSkeleton({
   showIcon = false,
   ...props
 }: SidebarMenuSkeletonOptions) {
-  // Random width between 50 to 90%.
-  const width = React.useMemo(() => {
-    return `${Math.floor(Math.random() * 40) + 50}%`;
-  }, []);
-
   return (
     <div
       className={cn(sidebarStyles.sidebarMenuSkeleton, className)}
@@ -531,11 +563,7 @@ function SidebarMenuSkeleton({
       <Skeleton
         className={sidebarStyles.element8}
         data-sidebar="menu-skeleton-text"
-        style={
-          {
-            "--skeleton-width": width,
-          } as React.CSSProperties
-        }
+        style={{ "--skeleton-width": "70%" } as React.CSSProperties}
       />
     </div>
   );
@@ -565,30 +593,32 @@ function SidebarMenuSubItem({ className, ...props }: React.ComponentProps<"li">)
 
 function SidebarMenuSubButton({
   asChild = false,
+  render,
   size = "md",
   isActive = false,
   className,
   ...props
 }: SidebarMenuSubButtonOptions) {
-  const Comp = asChild ? Slot : "a";
-
-  return (
-    <Comp
-      className={cn(
+  return useRender({
+    defaultTagName: "a",
+    props: {
+      "aria-current": isActive ? "page" : undefined,
+      className: cn(
         sidebarStyles.sidebarMenuSubButton,
         sidebarStyles.sidebarMenuSubButton2,
         size === "sm" && sidebarStyles.sidebarMenuSubButton3,
         size === "md" && sidebarStyles.sidebarMenuSubButton4,
         sidebarStyles.sidebarMenuSubButton5,
         className,
-      )}
-      data-active={isActive}
-      data-sidebar="menu-sub-button"
-      data-size={size}
-      data-slot="sidebar-menu-sub-button"
-      {...props}
-    />
-  );
+      ),
+      "data-active": isActive,
+      "data-sidebar": "menu-sub-button",
+      "data-size": size,
+      "data-slot": "sidebar-menu-sub-button",
+      ...props,
+    },
+    render: render ?? (asChild ? <Slot /> : undefined),
+  });
 }
 
 export {

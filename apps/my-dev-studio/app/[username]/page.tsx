@@ -25,18 +25,20 @@ export default async function PublicCvPage({ params }: Props) {
   const { profile: saved, id, revision } = await getUsernameProfile(username);
   const original = id === "main";
   const engineer = !saved.portfolioType || saved.portfolioType === "engineer";
-  const widget =
+  const legacyChat = original && engineer && saved.publicationVisibility !== "password";
+  const canChat =
+    !legacyChat &&
     id &&
-    !(original && engineer) &&
     saved.publicationVisibility !== "password" &&
-    (await premiumChatAvailable(id)) ? (
-      <AgentCompanion
-        agent="portfolio"
-        guide={portfolioGuide}
-        href={`/${encodeURIComponent(username)}/chat`}
-        label={`Ask about ${saved.name}`}
-      />
-    ) : null;
+    (await premiumChatAvailable(id));
+  const widget = legacyChat ? null : (
+    <AgentCompanion
+      agent="portfolio"
+      guide={portfolioGuide}
+      href={canChat ? `/${encodeURIComponent(username)}/chat` : "#main-content"}
+      label={canChat ? `Ask about ${saved.name}` : "Explore this portfolio"}
+    />
+  );
   if (!engineer)
     return (
       <>
@@ -54,13 +56,11 @@ export default async function PublicCvPage({ params }: Props) {
     <>
       {widget}
       <EngineerPortfolio
-        chatIdentity={
-          original && id && saved.publicationVisibility !== "password"
-            ? { id, name: saved.name, revision, username }
-            : undefined
-        }
+        chatIdentity={legacyChat && id ? { id, name: saved.name, revision, username } : undefined}
         extras={original}
-        ownerLink={<OwnerEditLink floating={!original} username={username} />}
+        ownerLink={
+          <OwnerEditLink floating={!original} offset={Boolean(widget)} username={username} />
+        }
         profile={profile}
         referrals={referrals}
       />

@@ -1,6 +1,6 @@
 "use client";
 
-import "../../styles/components/overlays/tooltip/tooltip.css";
+import "../../styles/components/overlays/tooltip.css";
 
 import { type ComponentProps, createContext, Fragment, isValidElement, useContext } from "react";
 

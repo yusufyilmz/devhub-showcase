@@ -29,7 +29,7 @@ const config: StorybookConfig = {
   staticDirs: [{ from: "../../my-dev-studio/public/examples", to: "/examples" }],
   stories: [
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    "../../../packages/ui/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    "../../../packages/**/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
   async viteFinal(config) {
     config.resolve ??= {};
@@ -51,6 +51,7 @@ const config: StorybookConfig = {
     config.define = {
       ...config.define,
       "process.env.NEXT_PUBLIC_API_URL": JSON.stringify("http://localhost:3000"),
+      "process.env.NEXT_PUBLIC_PROJECT_URL": JSON.stringify("http://localhost:3000"),
     };
     return config;
   },

@@ -62,7 +62,10 @@ export function CvVersionsEditor({
     }
   }
   return (
-    <section aria-label="Private CV versions" className="editor-card editor-fields">
+    <section
+      aria-label="Private CV versions"
+      className="grid w-full max-w-3xl justify-items-start gap-md rounded-xl border bg-card p-md text-card-foreground"
+    >
       <h2>Private CV versions</h2>
       <p>
         Versions are private snapshots, separate from your portfolio and its public CV. Profile
@@ -78,7 +81,7 @@ export function CvVersionsEditor({
       >
         Create fresh version from profile
       </Button>
-      <fieldset disabled={busy}>
+      <fieldset className="grid w-full min-w-0 gap-s" disabled={busy}>
         <legend>Version selection</legend>
         <SelectField label="Selected CV version" onChange={setSelected} value={selected}>
           <option value="">Choose a version</option>
@@ -124,7 +127,7 @@ export function CvVersionsEditor({
           >
             Remove version
           </Button>
-          <fieldset disabled={busy}>
+          <fieldset className="grid w-full min-w-0 gap-md" disabled={busy}>
             <legend>Version draft</legend>
             <CvVersionFields
               onChange={(next) => {

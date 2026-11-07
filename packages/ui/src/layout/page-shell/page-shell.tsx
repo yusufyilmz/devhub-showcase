@@ -3,15 +3,12 @@
 import { useEffect, useMemo } from "react";
 
 import { themeBootstrapScript } from "@shared/runtime/storage";
+import { safeJson } from "@shared/utils";
 
 import { MouseCircle } from "../../customizers/mouse-circle";
 import { PageProviders } from "../../providers";
 import { getPublicThemeStyle } from "./page-theme";
 import type { EmbeddedDocumentOptions, PageShellOptions } from "./types";
-
-function safeJson(value: unknown) {
-  return JSON.stringify(value).replace(/</g, "\\u003c");
-}
 
 function EmbeddedDocument({
   appearance,

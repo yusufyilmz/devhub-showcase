@@ -1,7 +1,7 @@
 import { getPortfolioCopy, getSocialWork } from "@shared/config";
+import { safeLink } from "@shared/utils";
 
 import { WorkMedia } from "../../display/media/WorkMedia";
-import { safeLink } from "../../utils/safe-link";
 import { presenterStyles } from "../section-presentation/styles";
 import type { ItemMediaOptions } from "../section-presentation/types";
 

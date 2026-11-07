@@ -6,12 +6,16 @@ import {
 import type { ProfileSnapshot } from "@shared/services/profile";
 import type { AgentFeature, AgentGuide } from "@shared/ui/agent-companion";
 
-export const studioHomeGuide: AgentGuide = {
+export const studioPublicGuide: AgentGuide = {
   context: "Home",
   features: studioCompanionFeatures,
   id: "studio",
-  progressHref: "/api/companion-progress",
   title: "MyDevStudio feature guide",
+};
+
+export const studioHomeGuide: AgentGuide = {
+  ...studioPublicGuide,
+  progressHref: "/api/companion-progress",
 };
 
 export const portfolioGuide: AgentGuide = {

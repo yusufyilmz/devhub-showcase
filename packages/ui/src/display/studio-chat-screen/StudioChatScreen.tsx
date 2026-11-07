@@ -1,6 +1,6 @@
 "use client";
 
-import "../../styles/components/display/chat/studio-chat.css";
+import "../../styles/components/display/studio-chat.css";
 
 import { useEffect, useRef } from "react";
 

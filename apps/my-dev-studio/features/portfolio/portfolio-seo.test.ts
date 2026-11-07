@@ -30,10 +30,11 @@ describe("PortfolioSeo", () => {
       const person = {
         ...profile,
         name: "Example Owner",
-        website: "https://external.example",
+        website: "https://external.com",
       };
+
       const metadata = portfolioMetadata(person, "example-owner");
-      expect(metadata.alternates?.canonical).toBe(`${urls.studio.siteUrl()}/example-owner`);
+      expect(metadata.alternates?.canonical).toBe(`${urls.base.studioPublic}/example-owner`);
       expect(metadata.openGraph).toMatchObject({
         images: [{ url: `${urls.studio.portfolioUrl("example-owner")}/share.png` }],
         url: urls.studio.portfolioUrl("example-owner"),
@@ -58,7 +59,7 @@ describe("PortfolioSeo", () => {
         "unlisted-owner",
       );
       expect(metadata.robots).toEqual({ follow: false, index: false });
-      expect(metadata.alternates?.canonical).toBe(`${urls.studio.siteUrl()}/unlisted-owner`);
+      expect(metadata.alternates?.canonical).toBe(`${urls.base.studioPublic}/unlisted-owner`);
     });
     it("paginates anonymous discovery using publication filters and URL columns only", async () => {
       vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://fixture.example");

@@ -1,5 +1,5 @@
 "use client";
-import "../../styles/components/display/portfolio-preview/preview.css";
+import "../../styles/components/display/preview.css";
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";

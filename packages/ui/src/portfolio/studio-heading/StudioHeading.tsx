@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import { Card } from "../../cards";
+
 export function StudioHeading({
   eyebrow,
   title,
@@ -14,16 +16,20 @@ export function StudioHeading({
   children?: ReactNode;
 }) {
   return (
-    <header className="studio-editor-header">
-      <div className="studio-heading">
-        <div>
-          <p className="eyebrow">{eyebrow}</p>
-          <h1>{title}</h1>
-          <p>{description}</p>
+    <Card asChild layout="plain" withAccent withHover={false}>
+      <header className="studio-editor-header">
+        <div className="studio-heading">
+          <div>
+            <p className="eyebrow">{eyebrow}</p>
+            <h1>{title}</h1>
+            <p>{description}</p>
+          </div>
+
+          {actions && <div className="studio-header-actions">{actions}</div>}
         </div>
-        {actions && <div className="studio-header-actions">{actions}</div>}
-      </div>
-      {children}
-    </header>
+
+        {children}
+      </header>
+    </Card>
   );
 }

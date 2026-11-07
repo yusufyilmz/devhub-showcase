@@ -322,3 +322,23 @@ export const AccentBackdrop: Story = {
     </Card>
   ),
 };
+
+export const Shortcuts: Story = {
+  render: () => (
+    <Card
+      className="w-[min(85vw,30rem)]"
+      withBackdrop
+      withFooter={<Button variant="outline">Review draft</Button>}
+      withHeader={
+        <>
+          <CardTitle>Ready to review</CardTitle>
+          <CardDescription>Three new portfolio sections are in your draft.</CardDescription>
+        </>
+      }
+      withScale
+      withShadow={false}
+    >
+      <CardContent>Review the changes before publishing.</CardContent>
+    </Card>
+  ),
+};

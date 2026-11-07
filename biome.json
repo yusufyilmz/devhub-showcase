@@ -201,7 +201,7 @@
         "noGlobalEval": "error"
       },
       "style": {
-        "noDefaultExport": "warn",
+        "noDefaultExport": "off",
         "noInferrableTypes": "warn",
         "noNamespace": "off",
         "noNegationElse": "off",

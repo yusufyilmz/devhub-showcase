@@ -5,7 +5,7 @@ import type { HomeCTASectionOptions } from "./types";
 
 export function HomeCTASection({ action }: HomeCTASectionOptions) {
   return (
-    <Section asChild>
+    <Section asChild className="home-cta mb-lg">
       <section className={finalStyles.element1}>
         <div className={finalStyles.element2}>
           <p className={finalStyles.element3}>YOUR WORK IS ALREADY THERE.</p>
@@ -18,7 +18,9 @@ export function HomeCTASection({ action }: HomeCTASectionOptions) {
           <Button className={finalStyles.element5} href={action.href}>
             {action.label} <span aria-hidden="true">↗</span>
           </Button>
-          <span className={finalStyles.element6}>Your portfolio. Your pace.</span>
+          <span className={finalStyles.element6}>
+            Your portfolio. Your pace.
+          </span>
         </div>
         <span aria-hidden="true" className={finalStyles.element7}>
           ↗

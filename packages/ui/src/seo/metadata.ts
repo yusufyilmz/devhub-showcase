@@ -30,11 +30,24 @@ export function createPageMetadata({
     description,
     icons,
     keywords,
-    metadataBase: new URL("/", canonical),
-    openGraph: { description, images, locale, siteName, title, type, url: canonical },
+    metadataBase: new URL(canonical).toString(),
+    openGraph: {
+      description,
+      images,
+      locale,
+      siteName,
+      title,
+      type,
+      url: canonical,
+    },
     robots,
     title,
-    twitter: { card: images ? "summary_large_image" : "summary", description, images, title },
+    twitter: {
+      card: images ? "summary_large_image" : "summary",
+      description,
+      images,
+      title,
+    },
   };
 }
 

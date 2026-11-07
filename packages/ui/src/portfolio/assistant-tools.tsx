@@ -1,5 +1,5 @@
 "use client";
-import "../styles/components/portfolio/workflow.css";
+import "../styles/portfolio/workflow.css";
 
 import { Button } from "../buttons/button/Button";
 import { SelectField } from "../forms";
@@ -22,8 +22,11 @@ export function AssistantTools({ profile, value, onChange, disabled }: Assistant
           title: `${item.position} · ${item.company}`,
         }));
   return (
-    <fieldset className="editor-fields" disabled={disabled}>
-      <legend>Assistant task</legend>
+    <fieldset
+      className="grid min-w-0 gap-s rounded-xl border bg-card p-md text-card-foreground sm:grid-cols-2"
+      disabled={disabled}
+    >
+      <legend className="px-xs text-base font-semibold">Assistant task</legend>
       <SelectField
         label="What do you want help with?"
         onChange={(kind) =>
@@ -110,10 +113,13 @@ const destinations: Record<string, string> = {
 export function AssistantFeedback({ feedback, onNavigate, editorHref }: AssistantFeedbackProps) {
   if (!feedback.length) return null;
   return (
-    <section aria-label="Portfolio feedback">
+    <section aria-label="Portfolio feedback" className="grid gap-s">
       <h3>Feedback by section</h3>
       {feedback.map((item) => (
-        <article className="proposal-change" key={`${item.field}:${item.issue}`}>
+        <article
+          className="grid justify-items-start gap-s rounded-xl border bg-card p-md text-card-foreground"
+          key={`${item.field}:${item.issue}`}
+        >
           <h4>{item.field}</h4>
           <p>{item.issue}</p>
           <p>{item.recommendation}</p>

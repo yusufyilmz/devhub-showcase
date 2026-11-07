@@ -7,5 +7,5 @@ export const platformSeo = {
   name: "MyDevStudio",
   shareSubtitle: "Build a portfolio, tell your story, and download your CV.",
   shareTitle: "A home for your work",
-  url: urls.studio.siteUrl(),
+  url: urls.studio.siteUrl().toString(),
 };

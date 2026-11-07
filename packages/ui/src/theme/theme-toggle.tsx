@@ -9,10 +9,10 @@ import { Moon, Palette, Sun, SwatchBook } from "lucide-react";
 
 import { useThemeStore } from "@shared/runtime/user";
 
+import { IconButton } from "../buttons";
 import { Button as LibraryButton } from "../buttons/button/Button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../overlays/dialog/Dialog";
 import { AppearanceOptions } from "./AppearanceOptions";
-import { themeToggleStyles } from "./styles";
 import type { ThemeToggleOptions } from "./types";
 
 export const ThemeContext = createContext({ mode: "dark", toggle: () => {} });
@@ -51,37 +51,34 @@ export function ThemeToggle({
         }}
         onPointerEnter={(event) => setSide(quickActionSide(event.currentTarget))}
       >
-        <LibraryButton
+        <IconButton
           aria-controls={actionsId}
           aria-expanded={expanded}
           aria-label="Appearance controls"
-          className="theme-toggle"
+          className="theme-toggle pr-0.5"
           onClick={() => setExpanded((value) => !value)}
           type="button"
-          variant="unstyled"
         >
           <Palette size={18} />
-        </LibraryButton>
+        </IconButton>
         <div className="appearance-quick-actions" id={actionsId}>
-          <LibraryButton
+          <IconButton
             aria-label={mode === "dark" ? labels.light : labels.dark}
-            className={themeToggleStyles.element1}
+            className={"theme-toggle"}
             onClick={toggle}
             title={mode === "dark" ? labels.light : labels.dark}
             type="button"
-            variant="unstyled"
           >
             {mode === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-          </LibraryButton>
-          <LibraryButton
+          </IconButton>
+          <IconButton
             aria-label="Theme settings"
             className="theme-toggle"
             onClick={() => setOpen(true)}
             type="button"
-            variant="unstyled"
           >
             <SwatchBook size={18} />
-          </LibraryButton>
+          </IconButton>
         </div>
       </div>
       <DialogContent className="appearance-dialog">

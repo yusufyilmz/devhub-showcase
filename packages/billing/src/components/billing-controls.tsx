@@ -43,7 +43,7 @@ export function BillingControls() {
   return (
     <>
       <Button
-        className="studio-primary"
+        className="studio-primary mr-2"
         disabled={busy}
         onClick={() => open("checkout")}
         type="button"

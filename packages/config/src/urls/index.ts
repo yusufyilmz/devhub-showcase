@@ -1,8 +1,25 @@
 import { stripTrailingSlash } from "@shared/utils";
+
+function studioSiteUrl(): URL {
+  return new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ||
+      process.env.NEXT_PUBLIC_PROJECT_URL ||
+      "https://mydevstudio.vercel.app",
+  );
+}
+
+function fitnessSiteUrl(): URL {
+  return new URL(process.env.APP_URL || "https://myfitnessstudio.vercel.app");
+}
+
 // Base URLs (normalized, no trailing slash)
 export const BASE_URLS = {
-  api: stripTrailingSlash(process.env.NEXT_PUBLIC_API_URL),
-  public: stripTrailingSlash(process.env.NEXT_PUBLIC_PROJECT_URL || ""),
+  get fitnessPublic() {
+    return stripTrailingSlash(fitnessSiteUrl().origin);
+  },
+  get studioPublic() {
+    return stripTrailingSlash(studioSiteUrl().toString());
+  },
 };
 
 export const urls = {
@@ -11,10 +28,7 @@ export const urls = {
     google: () => "/api/auth/google",
     session: () => "/api/auth/session",
   },
-  base: {
-    api: BASE_URLS.api,
-    public: BASE_URLS.public,
-  },
+  base: BASE_URLS,
   billing: {
     action: (action: "checkout" | "portal") => `/api/billing/${action}`,
     pricing: () => "/api/billing/pricing",
@@ -59,7 +73,7 @@ export const urls = {
   },
   fitness: {
     assistant: () => "/api/assistant",
-    siteUrl: () => new URL(process.env.APP_URL || "https://myfitnessstudio.vercel.app").origin,
+    siteUrl: () => urls.base.fitnessPublic,
     state: () => "/api/state",
   },
   studio: {
@@ -74,12 +88,12 @@ export const urls = {
     managedPortfolio: (id: string) => `/api/managed/${id}`,
     managedPublication: (id: string) => `/api/managed/${id}/publication`,
     managedTransfer: (id: string) => `/api/managed/${id}/transfer`,
-    portfolioUrl: (username: string) => `${urls.base.public}/${encodeURIComponent(username)}`,
+    portfolioUrl: (username: string) => `${urls.base.studioPublic}/${encodeURIComponent(username)}`,
     profile: () => "/api/profile",
     profileHistory: () => "/api/profile-history",
     publication: () => "/api/publication",
     sectionTemplates: () => "/api/section-templates",
-    siteUrl: () => new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://mydevstudio.vercel.app"),
+    siteUrl: () => urls.base.studioPublic,
   },
 
   trello: {

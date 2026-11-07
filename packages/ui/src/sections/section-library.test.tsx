@@ -28,6 +28,7 @@ import {
 import { LocationMap } from "../display/map";
 import { sectionEditors } from "./editors";
 import { sectionRenderers } from "./renderers";
+import { CustomPortfolioSection } from "./studio/custom-portfolio-section";
 
 const sectionsRoot = dirname(fileURLToPath(import.meta.url));
 const pageforgeFixture = resolve(
@@ -227,6 +228,33 @@ describe("SectionLibrary", () => {
     expect(screen.getByRole("link", { name: /OpenStreetMap/ }).getAttribute("href")).toContain(
       "mlat=41.38",
     );
+  });
+
+  it("keeps image items in the selected masonry layout", () => {
+    const section = emptySection("gallery-grid", newId);
+    const items = [
+      {
+        body: "A sample print",
+        id: "print",
+        imageUrl: "https://example.com/print.png",
+        title: "Print study",
+        url: "",
+      },
+    ];
+    const Gallery = sectionRenderers["gallery-grid"];
+    expect(
+      renderToStaticMarkup(<Gallery section={{ ...section, items, renderer: "gallery" }} />),
+    ).toContain('aria-label="View Print study"');
+    const masonry = { ...section, items, options: { columns: 2 }, renderer: "masonry" } as const;
+    const markup = renderToStaticMarkup(<Gallery section={masonry} />);
+    expect(markup).toContain('data-slot="masonry-grid"');
+    expect(markup).toContain("--masonry-columns:2");
+
+    const legacyMarkup = renderToStaticMarkup(
+      <CustomPortfolioSection section={{ ...masonry, sectionType: undefined }} />,
+    );
+    expect(legacyMarkup).toContain('data-slot="masonry-grid"');
+    expect(legacyMarkup).toContain("Print study");
   });
 
   it("does not nest a real contact form inside an editor preview", () => {

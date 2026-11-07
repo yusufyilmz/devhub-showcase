@@ -3,15 +3,12 @@ import "../../styles/components/sections/sections.css";
 import type { ReactNode } from "react";
 
 import { authorableSections, getPortfolioCopy } from "@shared/config";
+import { safeLink } from "@shared/utils";
 
 import { Button } from "../../buttons/button";
 import { LocationMap } from "../../display/map";
 import { ContactForm } from "../../forms/contact-form";
-import { Input } from "../../forms/input";
-import { Label as LibraryLabel } from "../../forms/label/Label";
-import { Textarea } from "../../forms/textarea";
 import { HeroSurface } from "../../layout/hero";
-import { safeLink } from "../../utils/safe-link";
 import { CollectionView } from "../collection-view/CollectionView";
 import { presenterStyles, sectionPresentationClassName } from "./styles";
 import type { SectionPresentationOptions, SpecialViewOptions } from "./types";
@@ -28,24 +25,7 @@ export function SpecialView({
   switch (authorableSections[type].view) {
     case "contact":
       return options.email ? (
-        preview ? (
-          <div className={presenterStyles.element6}>
-            <LibraryLabel htmlFor="email" unstyled>
-              {text.formEmail}
-              <Input disabled id="email" type="email" />
-            </LibraryLabel>
-            <LibraryLabel htmlFor="message" unstyled>
-              {text.formMessage}
-              <Textarea disabled id="message" rows={4} />
-            </LibraryLabel>
-            <Button disabled id="open-email" type="button">
-              {text.formOpenEmail}
-            </Button>
-            <p id="form-email-notice">{text.formEmailNotice}</p>
-          </div>
-        ) : (
-          <ContactForm email={options.email} language={language} />
-        )
+        <ContactForm email={options.email} language={language} preview={preview} />
       ) : null;
     case "map":
       return options.latitude !== undefined && options.longitude !== undefined ? (

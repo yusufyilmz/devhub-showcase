@@ -291,7 +291,7 @@ Portfolio sections, editors, and chat exported from `@shared/ui`. Visual rules f
 | `@shared/ui/fields`            | `src/forms/fields.tsx`     | The same form fields                                         |
 | `@shared/ui/seo`               | `src/seo`                  | Canonical, Open Graph, Twitter, and Schema.org metadata      |
 | `@shared/ui/seo/image`         | `src/seo/share-image.tsx`  | Server-side 1200×630 social share image renderer             |
-| `@shared/ui/layout`            | `src/layout`               | `StudioShell`, `PageShell`, `PortfolioLayout`                |
+| `@shared/ui/layout`            | `src/layout`               | `StudioShell`, `PageShell`, `PortfolioLayout`, `MasonryGrid` |
 | `@/features/studio`            | `src/studio`               | Home, studio editors, billing views, and example content     |
 | `@shared/ui/login`             | `src/auth/login-panel.tsx` | `LoginPanel`                                                 |
 | `@shared/ui/pages`             | `src/pages`                | `ErrorPage`, `NotFoundPage`                                  |
@@ -358,7 +358,7 @@ Each content section lives in `src/sections/variants/{name}`. Most export the se
 | `ExperienceSection`, `ExperienceItem`, `ExperienceList` |                                                                                                                 |
 | `FAQSection`                                            | editor                                                                                                          |
 | `FeaturesSection`                                       | editor                                                                                                          |
-| `GalleryGridSection`, `MasonryGrid`                     | editor                                                                                                          |
+| `GalleryGridSection`, `MasonryGridSection`                     | editor                                                                                                          |
 | `HeadingSection`                                        | editor                                                                                                          |
 | `HeroSection`                                           | editor                                                                                                          |
 | `HowToSection`                                          | editor                                                                                                          |

@@ -58,6 +58,7 @@ import {
 import { AppearanceEditor } from "@shared/ui/theme/studio";
 
 import { studioEditorGuide } from "@/features/companion/guides";
+import { StudioCompanion } from "@/features/companion/studio-companion";
 
 const PreviewContent = dynamic(() =>
   import("./preview-content").then((module) => module.PreviewContent),
@@ -223,21 +224,24 @@ export function ProfileEditor({
   }
   if (step === "template")
     return (
-      <GuidedOnboarding
-        managed={managed}
-        onChange={resetDraft}
-        onContinue={() => beginDetails()}
-        onGoogleImport={() => beginDetails("Import Google")}
-        onImport={() => beginDetails("Import CV")}
-        onProfessionChange={(value) => {
-          setProfession(value);
-          resetDraft({ ...draft, portfolioType: value });
-        }}
-        profession={profession}
-        profile={draft}
-      >
-        <DraftRecovery disabled={busy} recovery={recovery} />
-      </GuidedOnboarding>
+      <>
+        <GuidedOnboarding
+          managed={managed}
+          onChange={resetDraft}
+          onContinue={() => beginDetails()}
+          onGoogleImport={() => beginDetails("Import Google")}
+          onImport={() => beginDetails("Import CV")}
+          onProfessionChange={(value) => {
+            setProfession(value);
+            resetDraft({ ...draft, portfolioType: value });
+          }}
+          profession={profession}
+          profile={draft}
+        >
+          <DraftRecovery disabled={busy} recovery={recovery} />
+        </GuidedOnboarding>
+        <StudioCompanion signedIn />
+      </>
     );
   return (
     <main className="studio" id="admin-content">

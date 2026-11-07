@@ -1,7 +1,9 @@
 // @vitest-environment jsdom
 
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import { themeOptions } from "@shared/config/theme";
 
 import { HomePage } from "./home-page";
 
@@ -36,6 +38,15 @@ describe("HomePage", () => {
     );
     expect(screen.getByText("Illustrative preview")).toBeTruthy();
     expect(screen.getByRole("main").id).toBe("home-content");
+    expect(
+      screen.getByRole("link", { name: "Sign in to use Studio assistant" }).getAttribute("href"),
+    ).toBe("/login");
+    const palettes = screen.getByRole("list", { name: "Available color palettes" });
+    expect(
+      within(palettes)
+        .getAllByRole("listitem")
+        .map((item) => item.querySelector("b")?.textContent),
+    ).toEqual(themeOptions.brand);
   });
   it("routes an authenticated owner to their own editor and uses the published example without a local profile", () => {
     render(
@@ -50,6 +61,9 @@ describe("HomePage", () => {
     );
     expect(screen.getByRole("link", { name: /My studio/ }).getAttribute("href")).toBe(
       "/alice/edit",
+    );
+    expect(screen.getByRole("link", { name: "Open Studio assistant" }).getAttribute("href")).toBe(
+      "/admin/chat",
     );
     for (const link of screen.getAllByRole("link", { name: /Open your studio/ }))
       expect(link.getAttribute("href")).toBe("/alice/edit");

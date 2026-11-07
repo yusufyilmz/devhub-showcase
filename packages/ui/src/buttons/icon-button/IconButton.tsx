@@ -1,5 +1,3 @@
-import "../../styles/components/cards/surfaces.css";
-
 import React from "react";
 
 import { Slot } from "@radix-ui/react-slot";

@@ -1,6 +1,7 @@
-import "../../styles/components/sections/home-section/examples.css";
+import "../../styles/components/sections/examples.css";
 
 import { cvLayouts, portfolioThemes } from "@shared/config";
+import { themeOptions } from "@shared/config/theme";
 
 import { Card } from "../../cards";
 import { Section } from "../../layout/section";
@@ -24,9 +25,10 @@ export function HomeOptionsSection() {
         </div>
         <div className={optionsStyles.element4}>
           <Card layout="plain" surface="portfolio">
-            <h3>Four themes. Your character.</h3>
+            <h3>Your theme. Your character.</h3>
             <p>
-              Mix any layout with any theme, choose an accent, and switch between light and dark.
+              Start with a portfolio theme, then make it yours with a color palette, accent, and
+              light or dark mode.
             </p>
             <ul className={optionsStyles.element5}>
               {portfolioThemes.map((theme) => (
@@ -38,6 +40,22 @@ export function HomeOptionsSection() {
                     <b>{theme.name}</b>
                     <small>{theme.description}</small>
                   </span>
+                </li>
+              ))}
+            </ul>
+            <h4 className="mt-6 text-sm font-semibold">Color palettes</h4>
+            <ul aria-label="Available color palettes" className={optionsStyles.element5}>
+              {themeOptions.brand.map((brand) => (
+                <li key={brand}>
+                  <span
+                    aria-hidden="true"
+                    className="home-theme-swatch rounded-lg bg-primary text-primary-foreground"
+                    data-brand={brand}
+                    data-theme="light"
+                  >
+                    Aa
+                  </span>
+                  <b className="capitalize">{brand}</b>
                 </li>
               ))}
             </ul>

@@ -1,7 +1,7 @@
 /** Adapted from Once UI (MIT). Copyright (c) 2024-2025 Once UI. */
 "use client";
 
-import "../../styles/components/feedback/chip/chip.css";
+import "../../styles/components/feedback/chip.css";
 
 import { cn } from "cn";
 import { X } from "lucide-react";

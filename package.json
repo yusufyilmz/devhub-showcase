@@ -43,14 +43,16 @@
     "supabase:connect": "supabase link",
     "supabase:setup": "sh -c 'pnpm supabase:connect \"$@\" && (supabase status >/dev/null 2>&1 || supabase start || (supabase stop && supabase start)) && pnpm run:migration' --",
     "supabase:typegen": "supabase gen types --linked --lang typescript --schema public  > /tmp/devhub-database.types.ts",
-    "test": "vitest run --project unit && pnpm --filter my-fitness-app test",
+    "test": "vitest run --project unit",
     "test:changed": "vitest run --project unit --changed",
     "test:coverage": "vitest run --project unit --coverage",
     "test:e2e": "pnpm test:e2e:studio",
     "test:e2e:fitness": "pnpm --filter my-fitness-app test:e2e",
     "test:e2e:report": "pnpm --filter my-dev-studio exec playwright show-report",
     "test:e2e:studio": "pnpm --filter my-dev-studio test:e2e",
-    "test:watch": "vitest",
+    "test:fitness": "pnpm --filter my-fitness-app test",
+    "test:studio": "vitest run --project unit",
+    "test:watch": "vitest --watch",
     "typecheck": "turbo run typecheck"
   },
   "lint-staged": {

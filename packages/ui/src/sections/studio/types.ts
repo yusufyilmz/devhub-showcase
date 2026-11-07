@@ -27,6 +27,7 @@ export type CustomPortfolioSectionOptions = {
 };
 
 export type CustomViewOptions = {
+  columns?: NonNullable<CustomSection["options"]>["columns"];
   renderer: CustomSection["renderer"];
   items: SectionItem[];
   label: string;

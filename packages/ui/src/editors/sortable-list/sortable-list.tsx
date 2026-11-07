@@ -1,6 +1,6 @@
 "use client";
 
-import "../../styles/components/editors/sortable-list/sortable-list.css";
+import "../../styles/components/editors/sortable-list.css";
 
 import { type PointerEvent, useEffect, useId, useRef, useState } from "react";
 

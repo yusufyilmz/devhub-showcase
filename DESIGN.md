@@ -247,7 +247,7 @@ Older root paths (`styles.css`, `legacy.css`, `layout.css`, `components.css`, `s
 | ----------------------- | --------------------------------------------------- |
 | New brand or mode token | `tokens/`                                           |
 | Shadcn semantic token   | `tokens/palettes.css` or `tokens/accent-brands.css` |
-| Studio control skin     | `components/portfolio/portfolio.css`                |
+| Studio control skin     | `portfolio/portfolio.css`                           |
 | Section layout          | `components/sections/sections.css`                  |
 | Portfolio theme preset  | `portfolio/presets.css`                             |
 | Site header or nav      | `portfolio/chrome.css`                              |

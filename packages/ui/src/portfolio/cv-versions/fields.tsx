@@ -11,7 +11,7 @@ export function CvVersionFields({ variant, onChange }: CvVersionFieldsProps) {
   const update = (change: Partial<typeof profile>) =>
     onChange({ ...variant, profile: normalizeCvProfile({ ...profile, ...change }) });
   return (
-    <section aria-label="CV version content" className="editor-fields">
+    <section aria-label="CV version content" className="grid min-w-0 gap-s">
       <Field
         label="Version name"
         onChange={(name) => onChange({ ...variant, name })}

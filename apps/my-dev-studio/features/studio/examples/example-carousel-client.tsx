@@ -10,6 +10,7 @@ import { GalleryLightbox } from "@shared/ui/dialog";
 
 import { examplePath, type PortfolioExample } from "./data";
 import { ExampleThumbnail } from "./example-thumbnail";
+import { useExampleAutoplay } from "./use-example-autoplay";
 
 export function ExampleCarouselClient({
   items,
@@ -20,12 +21,14 @@ export function ExampleCarouselClient({
   const [activeExample, setActiveExample] = useState<number | null>(null);
   const [position, setPosition] = useState(0);
   const [atEnd, setAtEnd] = useState(false);
+  const [autoplayPaused, setAutoplayPaused] = useState(false);
   const track = useRef<HTMLUListElement>(null);
   const id = useId();
   const examples = items.filter(
     (item) => filter === "all" || item.profile.portfolioType === filter,
   );
   const count = examples.length;
+  useExampleAutoplay(track, count, autoplayPaused || activeExample !== null);
   useEffect(() => {
     const list = track.current;
     if (!list || count === 0) return;
@@ -110,6 +113,17 @@ export function ExampleCarouselClient({
           ))}
         </fieldset>
         <div className="example-controls">
+          {count > 1 && (
+            <LibraryButton
+              aria-controls={id}
+              aria-label={autoplayPaused ? "Play portfolio examples" : "Pause portfolio examples"}
+              onClick={() => setAutoplayPaused((paused) => !paused)}
+              type="button"
+              variant="unstyled"
+            >
+              <span aria-hidden="true">{autoplayPaused ? "▶" : "Ⅱ"}</span>
+            </LibraryButton>
+          )}
           <LibraryButton
             aria-controls={id}
             aria-label="Previous portfolio examples"

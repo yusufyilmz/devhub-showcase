@@ -91,7 +91,7 @@ function MotionPreview() {
         key={replay}
         style={
           {
-            "--agent-launcher-size": "clamp(3.5rem, 20vw, 6rem)",
+            "--agent-launcher-size": "clamp(3.5rem, 20vw, 8rem)",
             display: "flex",
             flexWrap: "wrap",
             gap: "clamp(0.75rem, 5vw, 2rem)",

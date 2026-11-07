@@ -20,7 +20,7 @@ export function CvJobReview({
   const [selected, setSelected] = useState<string[]>([]);
   const choices = review?.filter((item) => selected.includes(`${item.field}:${item.id}`)) ?? [];
   return (
-    <section aria-label="Job-specific CV review" className="editor-fields">
+    <section aria-label="Job-specific CV review" className="grid min-w-0 gap-s">
       <h3>Find relevant evidence for a job</h3>
       <p>
         Review keyword matches against your existing CV. A word match does not establish that you

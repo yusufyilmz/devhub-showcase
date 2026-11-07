@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
+    "moduleResolution": "bundler",
     "paths": {
       "@fixtures/*": ["../../tools/test/fixtures/*"]
     },
+    "resolvePackageJsonImports": true,
     "types": ["node"]
   },
   "exclude": ["node_modules", "dist"],
   "extends": "@shared/typescript-config/base.json",
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "../utils/src/helpers/safe-json.ts", "../utils/src/helpers/safe-link.ts"]
 }

@@ -1,10 +1,11 @@
 "use client";
-import "../styles/components/portfolio/workflow.css";
+import "../styles/portfolio/workflow.css";
 
 import { portfolioTypes } from "@shared/config";
 
 import { Button } from "../buttons/button/Button";
 import { SelectField } from "../forms";
+import { Flex } from "../layout/flex";
 import { PortfolioTypePicker } from "./portfolio-type-picker";
 import type { GuidedOnboardingProps, SetupNavigationProps } from "./types";
 
@@ -26,8 +27,8 @@ export function GuidedOnboarding({
         A home for <span>your work.</span>
       </h1>
       <p>
-        Choose your profession and a starting layout. Your existing details stay intact. You can go
-        back or change the layout later.
+        Choose your profession and a starting layout. Your existing details stay
+        intact. You can go back or change the layout later.
       </p>
       {children}
       <SelectField
@@ -35,7 +36,11 @@ export function GuidedOnboarding({
         onChange={(value) => {
           if (onProfessionChange)
             onProfessionChange(value as typeof profile.portfolioType & string);
-          else onChange({ ...profile, portfolioType: value as typeof profile.portfolioType });
+          else
+            onChange({
+              ...profile,
+              portfolioType: value as typeof profile.portfolioType,
+            });
         }}
         value={profession ?? profile.portfolioType ?? "engineer"}
       >
@@ -49,20 +54,24 @@ export function GuidedOnboarding({
         onChange={(portfolioType) => onChange({ ...profile, portfolioType })}
         value={profile.portfolioType ?? "engineer"}
       />
-      <Button onClick={onContinue} type="button">
-        Use this layout
-      </Button>
-      <Button onClick={onImport} type="button" variant="outline">
-        Start from a CV
-      </Button>
-      {!managed && (
-        <Button onClick={onGoogleImport} type="button" variant="outline">
-          Start from Google profile
+      <Flex direction="row" gap="md" justify="space-between" paddingX="sm">
+        <Button onClick={onContinue} type="button">
+          Use this layout
         </Button>
-      )}
+        <Flex direction="row" gap="md">
+          <Button onClick={onImport} type="button" variant="outline">
+            Start from a CV
+          </Button>
+          {!managed && (
+            <Button onClick={onGoogleImport} type="button" variant="outline">
+              Start from Google profile
+            </Button>
+          )}
+        </Flex>
+      </Flex>
       <p>
-        Next: import or enter your details, then review before saving or publishing. Autosave stays
-        in this browser tab.
+        Next: import or enter your details, then review before saving or
+        publishing. Autosave stays in this browser tab.
       </p>
     </main>
   );
@@ -99,23 +108,46 @@ export function SetupNavigation({
         </Button>
         {step === "details" && (
           <>
-            <Button disabled={disabled} onClick={onImport} type="button" variant="outline">
+            <Button
+              disabled={disabled}
+              onClick={onImport}
+              type="button"
+              variant="outline"
+            >
               Import a CV
             </Button>
-            <Button disabled={disabled} onClick={onManual} type="button" variant="outline">
+            <Button
+              disabled={disabled}
+              onClick={onManual}
+              type="button"
+              variant="outline"
+            >
               Skip import · enter manually
             </Button>
-            <Button disabled={disabled} onClick={() => onStep("review")} type="button">
+            <Button
+              disabled={disabled}
+              onClick={() => onStep("review")}
+              type="button"
+            >
               Review draft
             </Button>
           </>
         )}
         {step === "review" && (
-          <Button disabled={disabled} onClick={() => onStep("done")} type="button">
+          <Button
+            disabled={disabled}
+            onClick={() => onStep("done")}
+            type="button"
+          >
             Finish setup
           </Button>
         )}
-        <Button disabled={disabled} onClick={() => onStep("done")} type="button" variant="outline">
+        <Button
+          disabled={disabled}
+          onClick={() => onStep("done")}
+          type="button"
+          variant="outline"
+        >
           Continue in full editor
         </Button>
       </div>

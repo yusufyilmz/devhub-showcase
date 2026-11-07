@@ -2,7 +2,6 @@ import { generatePlaywrightConfig } from "@shared/test/playwright";
 
 export default generatePlaywrightConfig("http://localhost:3200", {
   fullyParallel: false,
-  reporter: "list",
   webServer: {
     command: "pnpm --filter my-fitness-app start --hostname 127.0.0.1 --port 3200",
     env: {

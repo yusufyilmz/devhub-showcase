@@ -54,7 +54,7 @@ export function JobInterviewPrep({
   }
 
   return (
-    <section aria-label="Interview preparation" className="editor-fields">
+    <section aria-label="Interview preparation" className="grid min-w-0 gap-s">
       <p>
         Send the listing and up to ten selected evidence items to the AI provider for a private
         interview brief. This uses one Studio Assistant attempt.

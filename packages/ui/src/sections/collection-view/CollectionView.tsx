@@ -1,16 +1,17 @@
 import "../../styles/components/sections/sections.css";
 
 import { authorableSections, getSocialWork } from "@shared/config";
+import { safeLink } from "@shared/utils";
 
 import { Card } from "../../cards";
 import {
+  MasonryGrid,
   SectionAccordion,
   SectionCarousel,
   SectionGrid,
   type SectionItem,
   SectionTabs,
 } from "../../layout";
-import { safeLink } from "../../utils/safe-link";
 import { GalleryCollection } from "../gallery-grid-section/GalleryCollection";
 import { ItemMedia } from "../item-media/ItemMedia";
 import {
@@ -56,6 +57,7 @@ export function CollectionView({ section, type, language }: CollectionViewOption
   const view = authorableSections[type].view;
   if (
     type === "gallery-grid" &&
+    section.renderer === "gallery" &&
     section.items.length > 0 &&
     section.items.every((item) => item.imageUrl && safeLink(item.imageUrl))
   )
@@ -82,16 +84,16 @@ export function CollectionView({ section, type, language }: CollectionViewOption
     );
   if (section.renderer === "masonry")
     return (
-      <div className={presenterStyles.element4}>
+      <MasonryGrid columns={section.options?.columns}>
         {items.map((item) => (
           <Card asChild key={item.id} layout="plain" surface="portfolio">
-            <article>
+            <article className="grid gap-xs p-[1.25rem]">
               <h3>{item.title}</h3>
               {item.content}
             </article>
           </Card>
         ))}
-      </div>
+      </MasonryGrid>
     );
   if (["steps", "timeline"].includes(section.renderer))
     return (

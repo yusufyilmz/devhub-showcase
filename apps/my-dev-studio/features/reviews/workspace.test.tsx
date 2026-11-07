@@ -34,7 +34,7 @@ describe("portfolio reviews route", () => {
   });
 
   it("redirects the legacy route to the current main portfolio username", async () => {
-    await expect(ReviewsRedirect()).rejects.toThrow("Redirect: /current-owner/review");
+    await expect(ReviewsRedirect()).rejects.toThrow("Redirect: /current-owner/edit?tab=review");
   });
 
   it("redirects unauthenticated requests before reading reviews", async () => {

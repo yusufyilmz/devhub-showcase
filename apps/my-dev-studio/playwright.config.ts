@@ -5,6 +5,8 @@ export default generatePlaywrightConfig("http://localhost:3100", {
   fullyParallel: true,
   reporter: [["list"], ["html", { open: "never" }]],
   retries: process.env.CI ? 1 : 0,
+  testDir: "e2e",
+  testMatch: "**/*.spec.{ts,tsx}",
   webServer: [
     {
       command: "pnpm exec tsx e2e/fixture-server.mjs",

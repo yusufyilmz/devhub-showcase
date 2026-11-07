@@ -1,6 +1,6 @@
 "use client";
 
-import "../../styles/components/display/agent-companion/agent-companion.css";
+import "../../styles/components/display/agent-companion.css";
 
 import { type CSSProperties, type RefObject, useMemo, useRef, useState } from "react";
 
@@ -195,33 +195,35 @@ export function AgentCompanion({
           </span>
         )}
       </Button>
-      {floating && (
-        <Button
-          aria-label={`Move companion to the ${opposite}`}
-          className="agent-dock-toggle"
-          onClick={() => dock.dock(opposite)}
-          title={`Move companion to the ${opposite}`}
-          type="button"
-          variant="unstyled"
-        >
-          <ArrowLeftRight aria-hidden="true" size={15} />
-        </Button>
-      )}
-      {guide && (
-        <FeatureGuide
-          completed={progress.completed}
-          enabled={tips.enabled}
-          error={progress.error}
-          features={features}
-          guide={guide}
-          loaded={progress.loaded}
-          onComplete={progress.complete}
-          open={guideOpen}
-          retry={progress.retry}
-          setEnabled={tips.setEnabled}
-          setOpen={setGuideOpen}
-        />
-      )}
+      <div className="agent-companion-controls">
+        {floating && (
+          <Button
+            aria-label={`Move companion to the ${opposite}`}
+            className="agent-dock-toggle"
+            onClick={() => dock.dock(opposite)}
+            title={`Move companion to the ${opposite}`}
+            type="button"
+            variant="unstyled"
+          >
+            <ArrowLeftRight aria-hidden="true" size={15} />
+          </Button>
+        )}
+        {guide && (
+          <FeatureGuide
+            completed={progress.completed}
+            enabled={tips.enabled}
+            error={progress.error}
+            features={features}
+            guide={guide}
+            loaded={progress.loaded}
+            onComplete={progress.complete}
+            open={guideOpen}
+            retry={progress.retry}
+            setEnabled={tips.setEnabled}
+            setOpen={setGuideOpen}
+          />
+        )}
+      </div>
     </div>
   );
 }

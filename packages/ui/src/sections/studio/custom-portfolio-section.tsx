@@ -1,11 +1,13 @@
 import { getPortfolioCopy, getSocialWork } from "@shared/config";
 
 import { WorkMedia } from "../../display/media";
+import { MasonryGrid } from "../../layout/masonry-grid";
 import {
   SectionAccordion,
   SectionCarousel,
   SectionGrid,
   type SectionItem,
+  SectionItemCard,
   SectionTabs,
 } from "../../layout/section";
 import { RenderSection } from "../renderers";
@@ -63,15 +65,22 @@ export function CustomPortfolioSection({
       id={section.id}
     >
       <h2 id={`${section.id}-heading`}>{section.title}</h2>
-      <CustomView renderer={section.renderer} {...props} />
+      <CustomView columns={section.options?.columns} renderer={section.renderer} {...props} />
     </section>
   );
 }
-function CustomView({ renderer, items, label }: CustomViewOptions) {
+function CustomView({ renderer, items, label, columns }: CustomViewOptions) {
   switch (renderer) {
     case "gallery":
-    case "masonry":
       return <SectionGrid {...{ items, label }} variant="gallery" />;
+    case "masonry":
+      return (
+        <MasonryGrid columns={columns}>
+          {items.map((item) => (
+            <SectionItemCard item={item} key={item.id} />
+          ))}
+        </MasonryGrid>
+      );
     case "timeline":
     case "steps":
       return (

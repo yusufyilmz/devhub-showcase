@@ -10,7 +10,7 @@ import { AssistantFeedback, AssistantTools, PublishedSources } from "./assistant
 function Example() {
   const [task, setTask] = useState<AssistantTaskOptions | undefined>();
   return (
-    <>
+    <div className="grid max-w-3xl gap-md">
       <AssistantTools onChange={setTask} profile={profile} value={task} />
       <AssistantFeedback
         editorHref="/alex/edit"
@@ -29,7 +29,7 @@ function Example() {
           { href: "/alex#skills", label: "Skills" },
         ]}
       />
-    </>
+    </div>
   );
 }
 const meta = { component: Example, title: "Studio/Assistant tools" } satisfies Meta<typeof Example>;

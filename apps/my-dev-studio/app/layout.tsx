@@ -7,6 +7,7 @@ import { headers } from "next/headers";
 import { urls } from "@shared/config";
 import { PageShell } from "@shared/ui/page-shell";
 
+import { StudioCompanion } from "@/features/companion/studio-companion";
 import { platformMetadata } from "@/features/platform/metadata";
 import { getPagePresentation } from "@/features/platform/page-presentation";
 import { isPlatformPage } from "@/features/platform/structured-data";
@@ -32,6 +33,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const platform = await isPlatformPage();
   const snapshot = platform ? null : await getActiveProfile();
   const path = (await headers()).get("x-profile-path") ?? "/";
+  const showPublicCompanion =
+    path === "/login" || path.endsWith("/access") || path.startsWith("/p/examples/");
   const { profile, documentLanguage, appearance, portfolioTheme, example } = getPagePresentation(
     path,
     platform,
@@ -57,6 +60,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       structuredData={structuredData}
     >
       {children}
+      {showPublicCompanion && <StudioCompanion onLoginPage={path === "/login"} />}
     </PageShell>
   );
 }

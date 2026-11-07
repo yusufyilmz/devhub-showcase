@@ -1,4 +1,4 @@
-import "../styles/components/portfolio/workflow.css";
+import "../styles/portfolio/workflow.css";
 
 import type { ProposalComparisonProps } from "./types";
 
