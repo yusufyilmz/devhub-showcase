@@ -28,6 +28,7 @@ import {
 import { LocationMap } from "../display/map";
 import { sectionEditors } from "./editors";
 import { sectionRenderers } from "./renderers";
+import { CustomPortfolioSection } from "./studio/custom-portfolio-section";
 
 const sectionsRoot = dirname(fileURLToPath(import.meta.url));
 const pageforgeFixture = resolve(
@@ -227,6 +228,80 @@ describe("SectionLibrary", () => {
     expect(screen.getByRole("link", { name: /OpenStreetMap/ }).getAttribute("href")).toContain(
       "mlat=41.38",
     );
+  });
+
+  it("keeps image items in the selected masonry layout", () => {
+    const section = emptySection("gallery-grid", newId);
+    const items = [
+      {
+        body: "A sample print",
+        id: "print",
+        imageUrl: "https://example.com/print.png",
+        title: "Print study",
+        url: "",
+      },
+    ];
+    const Gallery = sectionRenderers["gallery-grid"];
+    expect(
+      renderToStaticMarkup(<Gallery section={{ ...section, items, renderer: "gallery" }} />),
+    ).toContain('aria-label="View Print study"');
+    const masonry = { ...section, items, options: { columns: 2 }, renderer: "masonry" } as const;
+    const markup = renderToStaticMarkup(<Gallery section={masonry} />);
+    expect(markup).toContain('data-slot="masonry-grid"');
+    expect(markup).toContain("--masonry-columns:2");
+
+    const legacyMarkup = renderToStaticMarkup(
+      <CustomPortfolioSection section={{ ...masonry, sectionType: undefined }} />,
+    );
+    expect(legacyMarkup).toContain('data-slot="masonry-grid"');
+    expect(legacyMarkup).toContain("Print study");
+  });
+
+  it("renders shared hero actions from safe saved URLs and keeps hidden sections out", () => {
+    const Hero = sectionRenderers.hero;
+    const section = {
+      ...emptySection("hero", newId),
+      options: { actionUrl: "https://example.test/work" },
+    };
+    expect(renderToStaticMarkup(<Hero section={section} />)).toContain(
+      'href="https://example.test/work"',
+    );
+    expect(renderToStaticMarkup(<Hero section={{ ...section, visible: false }} />)).toBe("");
+    const unsafe = { ...section, options: { actionUrl: "javascript:alert(1)" } };
+    expect(renderToStaticMarkup(<Hero section={unsafe} />)).not.toContain("<a ");
+  });
+
+  it("keeps saved alternate CTA layouts and shows each action once in the shared card layout", () => {
+    const CTA = sectionRenderers.cta;
+    const section = {
+      ...emptySection("cta", newId),
+      items: [
+        {
+          body: "Send your brief and dates",
+          id: newId(),
+          title: "Contact us",
+          url: "https://example.test/contact",
+        },
+      ],
+    };
+    const cards = renderToStaticMarkup(<CTA section={section} />);
+    expect(cards.match(/href="https:\/\/example.test\/contact"/g)).toHaveLength(1);
+    expect(cards).toContain("Send your brief and dates");
+    const list = renderToStaticMarkup(<CTA section={{ ...section, renderer: "list" }} />);
+    expect(list).toContain("section-prose");
+  });
+
+  it("renders authored dashboard values and hides an empty dashboard", () => {
+    const Dashboard = sectionRenderers.dashboard;
+    const section = emptySection("dashboard", newId);
+    expect(renderToStaticMarkup(<Dashboard section={section} />)).toBe("");
+    const saved = customSectionSchema.parse({
+      ...section,
+      items: [{ body: "Indexed in June", id: newId(), title: "Reports", url: "", value: "240" }],
+    });
+    const markup = renderToStaticMarkup(<Dashboard section={saved} />);
+    expect(markup).toContain("240");
+    expect(markup).toContain("Indexed in June");
   });
 
   it("does not nest a real contact form inside an editor preview", () => {

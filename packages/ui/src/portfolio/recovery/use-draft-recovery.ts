@@ -1,6 +1,8 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { draftStorage } from "@shared/runtime/storage";
+
 import { readRecovery } from "./storage";
 import type { RecoveryOptions, RecoveryRecord, RecoveryStatus } from "./types";
 
@@ -20,17 +22,15 @@ export function useDraftRecovery(options: RecoveryOptions) {
     setCandidate(null);
     setRemoteRevision(latest.current.revision);
     if (!storageKey) return;
-    try {
-      const raw = sessionStorage.getItem(storageKey);
-      const record = readRecovery(raw);
-      if (record && JSON.stringify(record.value) !== JSON.stringify(latest.current.value)) {
-        paused.current = true;
-        setCandidate(record);
-      } else if (raw) sessionStorage.removeItem(storageKey);
-      setStatus("idle");
-    } catch {
-      setStatus("failed");
+    const raw = draftStorage.read(storageKey);
+    const record = readRecovery(raw ?? null);
+    if (record && JSON.stringify(record.value) !== JSON.stringify(latest.current.value)) {
+      paused.current = true;
+      setCandidate(record);
     }
+    const available =
+      raw !== undefined && (!raw || paused.current || draftStorage.remove(storageKey));
+    setStatus(available ? "idle" : "failed");
     ready.current = true;
     const channel = revisionChannel(storageKey);
     const received = (event: MessageEvent) => {
@@ -52,9 +52,9 @@ export function useDraftRecovery(options: RecoveryOptions) {
         value: current.value,
         version: 1,
       });
-      if (raw.length > 250000) throw new Error("Recovery capacity exceeded");
-      sessionStorage.setItem(current.storageKey, raw);
-      setStatus("saved");
+      setStatus(
+        raw.length <= 250000 && draftStorage.write(current.storageKey, raw) ? "saved" : "failed",
+      );
     } catch {
       setStatus("failed");
     }
@@ -78,14 +78,13 @@ export function useDraftRecovery(options: RecoveryOptions) {
     };
   }, [write]);
   const discard = () => {
-    try {
-      sessionStorage.removeItem(storageKey);
-      paused.current = false;
-      setCandidate(null);
-      setStatus("idle");
-    } catch {
+    if (!draftStorage.remove(storageKey)) {
       setStatus("failed");
+      return;
     }
+    paused.current = false;
+    setCandidate(null);
+    setStatus("idle");
   };
   const saved = (nextRevision: number) => {
     discard();

@@ -2,6 +2,9 @@
 @utility gap-xs {
   gap: var(--spacing-xs);
 }
+@utility gap-s {
+  gap: var(--spacing-s);
+}
 @utility gap-sm {
   gap: var(--spacing-sm);
 }
@@ -23,6 +26,9 @@
 
 @utility p-xs {
   padding: var(--spacing-xs);
+}
+@utility p-s {
+  padding: var(--spacing-s);
 }
 @utility p-sm {
   padding: var(--spacing-sm);
@@ -46,6 +52,9 @@
 @utility px-xs {
   padding-inline: var(--spacing-xs);
 }
+@utility px-s {
+  padding-inline: var(--spacing-s);
+}
 @utility px-sm {
   padding-inline: var(--spacing-sm);
 }
@@ -62,6 +71,9 @@
 @utility py-xs {
   padding-block: var(--spacing-xs);
 }
+@utility py-s {
+  padding-block: var(--spacing-s);
+}
 @utility py-sm {
   padding-block: var(--spacing-sm);
 }
@@ -77,6 +89,9 @@
 
 @utility pt-xs {
   padding-top: var(--spacing-xs);
+}
+@utility pt-s {
+  padding-top: var(--spacing-s);
 }
 @utility pt-sm {
   padding-top: var(--spacing-sm);
@@ -146,6 +161,9 @@
 @utility mt-xs {
   margin-top: var(--spacing-xs);
 }
+@utility mt-s {
+  margin-top: var(--spacing-s);
+}
 @utility mt-sm {
   margin-top: var(--spacing-sm);
 }
@@ -158,6 +176,9 @@
 
 @utility mb-xs {
   margin-bottom: var(--spacing-xs);
+}
+@utility mb-s {
+  margin-bottom: var(--spacing-s);
 }
 @utility mb-sm {
   margin-bottom: var(--spacing-sm);

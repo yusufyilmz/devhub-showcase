@@ -12,6 +12,7 @@ import { ContactFormSection } from "../contact-form-section/ContactFormSection";
 import { ContactInfoSection } from "../contact-info-section/ContactInfoSection";
 import { CTASection } from "../cta-section/CTASection";
 import { CustomSection } from "../custom-section/CustomSection";
+import { DashboardSection } from "../dashboard-section/DashboardSection";
 import { FAQSection } from "../faq-section/FAQSection";
 import { FeaturesSection } from "../features-section/FeaturesSection";
 import { GalleryGridSection } from "../gallery-grid-section/GalleryGridSection";
@@ -62,6 +63,7 @@ export const sectionRenderers = {
   "contact-info": ContactInfoSection,
   cta: CTASection,
   custom: CustomSection,
+  dashboard: DashboardSection,
   faq: FAQSection,
   features: FeaturesSection,
   "gallery-grid": GalleryGridSection,

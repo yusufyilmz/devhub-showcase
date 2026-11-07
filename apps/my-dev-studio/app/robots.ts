@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { siteUrl } from "@/features/platform/site-url";
+import { urls } from "@shared/config";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
       disallow: ["/admin", "/api/", "/auth/", "/*/edit", "/p/", "/*/cv.pdf"],
       userAgent: "*",
     },
-    sitemap: `${siteUrl}/sitemap.xml`,
+    sitemap: `${urls.studio.siteUrl().toString()}/sitemap.xml`,
   };
 }
 

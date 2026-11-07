@@ -41,22 +41,26 @@ export function PortfolioLayout({
       <a className="skip-link" href="#main-content">
         {text.skip}
       </a>
-      <Header asChild>
-        <header className="folio-nav">
+      <Header
+        actions={<ThemeToggle labels={{ dark: text.switchDark, light: text.switchLight }} />}
+        brand={
           <a className="folio-name" href={`/${username}`}>
             <span aria-hidden="true" className="folio-monogram">
               {getNameInitials(profile.name)}
             </span>
             {profile.name}
           </a>
-          <nav aria-label={text.sections}>
-            {projects.length > 0 && <a href="#work">{text.work}</a>}
-            {profile.sectionSettings?.about?.visible !== false && <a href="#about">{text.about}</a>}
-            <a href="#contact">{text.contact}</a>
-          </nav>
-          <ThemeToggle labels={{ dark: text.switchDark, light: text.switchLight }} />
-        </header>
-      </Header>
+        }
+        links={[
+          ...(projects.length > 0 ? [{ href: "#work", label: text.work }] : []),
+          ...(profile.sectionSettings?.about?.visible !== false
+            ? [{ href: "#about", label: text.about }]
+            : []),
+          { href: "#contact", label: text.contact },
+        ]}
+        menuLabel={text.menu}
+        navigationLabel={text.sections}
+      />
       <main className="folio-main" id="main-content">
         <HeroSurface
           labels={{ pause: text.pauseBackground, play: text.playBackground }}
@@ -99,12 +103,7 @@ export function PortfolioLayout({
           </section>
         </div>
       </main>
-      <Footer asChild>
-        <footer className="folio-footer">
-          <span>{profile.name}</span>
-          <a href="/">{text.madeWith} ↗</a>
-        </footer>
-      </Footer>
+      <Footer brand={<span>{profile.name}</span>} credit={<a href="/">{text.madeWith} ↗</a>} />
     </div>
   );
 }

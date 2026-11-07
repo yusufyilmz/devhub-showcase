@@ -1,9 +1,9 @@
-import { CollectionView } from "../collection-view/CollectionView";
+import { SectionPresentation } from "../section-presentation";
 import type { SectionProps } from "../types";
 
 export function MasonryGridSection(props: SectionProps) {
   return (
-    <CollectionView
+    <SectionPresentation
       {...props}
       section={{ ...props.section, renderer: "masonry" }}
       type="gallery-grid"

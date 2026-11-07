@@ -5,10 +5,10 @@ import { test } from "vitest";
 
 import { seedWorkspace } from "@shared/services/db/seed";
 import { TaskService } from "@shared/services/fitness/task";
+import { MealPlanningService, WeeklyPlanningService } from "@shared/services/meal";
+import { AgendaService, ScheduleService } from "@shared/services/schedule";
+import { validateWorkspace, workspaceSchema } from "@shared/services/types";
 
-import { MealPlanningService, WeeklyPlanningService } from "../../../packages/services/src/meal";
-import { AgendaService, ScheduleService } from "../../../packages/services/src/schedule";
-import { validateWorkspace, workspaceSchema } from "../../../packages/services/src/types";
 import { DayAgenda } from "../features/agenda/day-agenda";
 import { CalendarGrid } from "../features/calendar/calendar-grid";
 

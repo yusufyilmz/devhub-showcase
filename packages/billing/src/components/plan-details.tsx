@@ -24,7 +24,7 @@ export function StudioPlanDetails() {
   const [failed, setFailed] = useState(false);
   useEffect(() => {
     const controller = new AbortController();
-    request(urls.next.billing.pricing(), { signal: controller.signal })
+    request(urls.billing.pricing(), { signal: controller.signal })
       .then(async (response) => {
         if (!response.ok) throw new Error("Unavailable");
         const value = planSchema.parse(await response.json());

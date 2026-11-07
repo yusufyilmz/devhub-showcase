@@ -1,5 +1,3 @@
-import "../../sections/sections.css";
-
 export { Section } from "./Section";
 export { SectionAccordion } from "./SectionAccordion";
 export { SectionCarousel } from "./SectionCarousel";

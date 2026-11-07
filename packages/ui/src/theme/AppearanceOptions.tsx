@@ -1,6 +1,7 @@
 "use client";
 
-import { themePreferenceOptions, useUserConfigStore } from "@shared/runtime/user";
+import { themeOptions } from "@shared/config/theme";
+import { useThemeStore } from "@shared/runtime/user";
 
 import { Button } from "../buttons/button/Button";
 import {
@@ -11,8 +12,8 @@ import {
 } from "./styles";
 
 export function AppearanceOptions() {
-  const preferences = useUserConfigStore((state) => state.themePreferences);
-  const mode = useUserConfigStore((state) => state.activeMode);
+  const preferences = useThemeStore((state) => state.themePreferences);
+  const mode = useThemeStore((state) => state.activeMode);
   return (
     <div className="appearance-visual-options">
       <fieldset className="appearance-group">
@@ -24,7 +25,7 @@ export function AppearanceOptions() {
               aria-pressed={(mode ?? "system") === value}
               className="appearance-choice"
               key={value}
-              onClick={() => useUserConfigStore.getState().setActiveMode(value)}
+              onClick={() => useThemeStore.getState().setActiveMode(value)}
               type="button"
               variant="unstyled"
             >
@@ -47,16 +48,16 @@ export function AppearanceOptions() {
         <fieldset className="appearance-group" key={key}>
           <legend>{appearanceLabel(key)}</legend>
           <div className="appearance-options" data-options={key}>
-            {["", ...themePreferenceOptions[key]].map((value, index) => (
+            {["", ...(themeOptions[key] ?? [])].map((value, index) => (
               <Button
                 aria-label={`${appearanceLabel(key)}: ${value || "Page default"}`}
                 aria-pressed={(preferences[key] ?? "") === value}
                 className="appearance-choice"
                 key={value}
                 onClick={() => {
-                  if (value) useUserConfigStore.getState().setThemePreferences({ [key]: value });
+                  if (value) useThemeStore.getState().setThemePreferences({ [key]: value });
                   else
-                    useUserConfigStore.setState((state) => ({
+                    useThemeStore.setState((state) => ({
                       themePreferences: Object.fromEntries(
                         Object.entries(state.themePreferences).filter(([name]) => name !== key),
                       ),

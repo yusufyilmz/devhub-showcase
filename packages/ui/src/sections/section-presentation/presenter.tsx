@@ -1,18 +1,19 @@
-import "../sections.css";
+import "../../styles/components/sections/sections.css";
 
 import type { ReactNode } from "react";
 
+import { ArrowUpRight, Mail } from "lucide-react";
+
 import { authorableSections, getPortfolioCopy } from "@shared/config";
+import { safeLink } from "@shared/utils";
 
 import { Button } from "../../buttons/button";
+import { Card } from "../../cards";
 import { LocationMap } from "../../display/map";
 import { ContactForm } from "../../forms/contact-form";
-import { Input } from "../../forms/input";
-import { Label as LibraryLabel } from "../../forms/label/Label";
-import { Textarea } from "../../forms/textarea";
 import { HeroSurface } from "../../layout/hero";
-import { safeLink } from "../../utils/safe-link";
 import { CollectionView } from "../collection-view/CollectionView";
+import { DashboardContent } from "../dashboard-section/DashboardContent";
 import { presenterStyles, sectionPresentationClassName } from "./styles";
 import type { SectionPresentationOptions, SpecialViewOptions } from "./types";
 
@@ -28,24 +29,7 @@ export function SpecialView({
   switch (authorableSections[type].view) {
     case "contact":
       return options.email ? (
-        preview ? (
-          <div className={presenterStyles.element6}>
-            <LibraryLabel htmlFor="email" unstyled>
-              {text.formEmail}
-              <Input disabled id="email" type="email" />
-            </LibraryLabel>
-            <LibraryLabel htmlFor="message" unstyled>
-              {text.formMessage}
-              <Textarea disabled id="message" rows={4} />
-            </LibraryLabel>
-            <Button disabled id="open-email" type="button">
-              {text.formOpenEmail}
-            </Button>
-            <p id="form-email-notice">{text.formEmailNotice}</p>
-          </div>
-        ) : (
-          <ContactForm email={options.email} language={language} />
-        )
+        <ContactForm email={options.email} language={language} preview={preview} />
       ) : null;
     case "map":
       return options.latitude !== undefined && options.longitude !== undefined ? (
@@ -69,10 +53,12 @@ export function SpecialView({
           </ol>
         </nav>
       );
+    case "dashboard":
+      return <DashboardContent section={section} />;
     case "newsletter":
       return options.actionUrl && safeLink(options.actionUrl) ? (
-        <Button className={presenterStyles.element7} href={options.actionUrl}>
-          {text.subscribe} ↗
+        <Button className="w-fit" endIcon={<ArrowUpRight />} href={options.actionUrl}>
+          {text.subscribe}
         </Button>
       ) : null;
     case "heading":
@@ -97,16 +83,48 @@ export function SectionPresentation({
     !["hero", "heading", "contact", "map", "toc", "newsletter"].includes(view)
   )
     return null;
+  const headingId = `${section.id}-heading`;
+  const className = sectionPresentationClassName(section.composition ?? type, type, view);
+  if (view === "newsletter") {
+    return (
+      <section
+        aria-labelledby={headingId}
+        className={className}
+        data-alignment={section.options?.alignment ?? "left"}
+        data-section-type={type}
+        id={section.id}
+      >
+        <Card
+          className="grid gap-md bg-linear-to-br from-primary/10 via-card to-card p-md sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:p-xl"
+          interaction="static"
+          layout="plain"
+        >
+          <div>
+            <Mail aria-hidden="true" className="mb-s size-6 text-primary" />
+            <h2 id={headingId}>{section.title}</h2>
+            {section.options?.description && <p>{section.options.description}</p>}
+          </div>
+          <SpecialView
+            anchors={anchors}
+            language={language}
+            preview={preview}
+            section={section}
+            type={type}
+          />
+        </Card>
+      </section>
+    );
+  }
   const frame = (
     <section
-      aria-labelledby={`${section.id}-heading`}
-      className={sectionPresentationClassName(section.composition ?? type, type, view)}
+      aria-labelledby={headingId}
+      className={className}
       data-alignment={section.options?.alignment ?? "left"}
       data-columns={section.options?.columns ?? 3}
       data-section-type={type}
       id={section.id}
     >
-      <h2 id={`${section.id}-heading`}>{section.title}</h2>
+      <h2 id={headingId}>{section.title}</h2>
       {section.options?.description && (
         <p className={presenterStyles.element8}>{section.options.description}</p>
       )}

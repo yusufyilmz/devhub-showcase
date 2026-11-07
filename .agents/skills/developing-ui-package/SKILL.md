@@ -96,15 +96,15 @@ Styles live in `src/styles`. See [DESIGN.md — Stylesheet architecture](../../.
 | `@shared/ui/shadcn.css`         | `shadcn.css`         | Shim → `tokens/index.css`                                   |
 | `@shared/ui/theme.css`          | `theme.css`          | Shim → `foundation/theme-aliases.css`                       |
 | `@shared/ui/themes.css`         | `themes.css`         | Shim → `portfolio/presets.css`                              |
-| `@shared/ui/components.css`     | `components.css`     | Shim → `portfolio/components.css`                           |
-| `@shared/ui/sections.css`       | `sections.css`       | Shim → `portfolio/sections.css`                             |
+| `@shared/ui/components.css`     | `components.css`     | Shim → `portfolio/portfolio.css`                            |
+| `@shared/ui/sections.css`       | `sections.css`       | Shim → `components/sections/sections.css`                   |
 | `@shared/ui/portfolios.css`     | `portfolios.css`     | Shim → `portfolio/layouts.css`                              |
 | `@shared/ui/layout.css`         | `layout.css`         | Shim → `portfolio/chrome.css`                               |
-| `@shared/ui/portfolio-chat.css` | `portfolio-chat.css` | Shim → `portfolio/chat.css`                                 |
-| `@shared/ui/surfaces.css`       | `surfaces.css`       | Shim → `foundation/surfaces.css`                            |
+| `@shared/ui/portfolio-chat.css` | `portfolio-chat.css` | Shim → `components/display/chat/portfolio-chat.css`         |
+| `@shared/ui/surfaces.css`       | `surfaces.css`       | Shim → `components/cards/surfaces.css`                      |
 | `@shared/ui/postcss.config`     | `postcss.config.js`  | Shared PostCSS config                                       |
 
-Token source files live in `src/styles/tokens`. Portfolio skins live in `src/styles/portfolio`. Put a new brand token in `tokens/`. Put a shared control skin in `portfolio/components.css`. Put section frame rules in `portfolio/sections.css` or `portfolio/layouts.css`. Put chat rules in `portfolio/chat.css`.
+Author custom CSS under `src/styles`. Prefer Tailwind utilities for layout and group component styles under `src/styles/components`. Token source files live in `src/styles/tokens`. Portfolio skins live in `src/styles/portfolio`. Put a new brand token in `tokens/`. Put a shared control skin in `portfolio/portfolio.css`. Put section frame rules in `components/sections/sections.css` or `portfolio/layouts.css`. Put chat rules in `components/display/chat/portfolio-chat.css`.
 
 Adding a theme id requires the id and palette in `@shared/config` `portfolioThemes` and `portfolioAccents`, and the CSS variables in this package. Add a preview swatch only when the studio already shows one for the other accents. CV accent hex values are chosen in `@shared/templates` `createCvData`. Update that file when the accent set changes.
 

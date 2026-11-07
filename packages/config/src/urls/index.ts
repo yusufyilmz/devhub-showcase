@@ -1,85 +1,99 @@
 import { stripTrailingSlash } from "@shared/utils";
+
+function studioSiteUrl(): URL {
+  return new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ||
+      process.env.NEXT_PUBLIC_PROJECT_URL ||
+      "https://mydevstudio.vercel.app",
+  );
+}
+
+function fitnessSiteUrl(): URL {
+  return new URL(process.env.APP_URL || "https://myfitnessstudio.vercel.app");
+}
+
 // Base URLs (normalized, no trailing slash)
 export const BASE_URLS = {
-  api: stripTrailingSlash(process.env.NEXT_PUBLIC_API_URL),
-  public: stripTrailingSlash(process.env.NEXT_PUBLIC_PROJECT_URL || ""),
+  get fitnessPublic() {
+    return stripTrailingSlash(fitnessSiteUrl().origin);
+  },
+  get studioPublic() {
+    return stripTrailingSlash(studioSiteUrl().toString());
+  },
 };
 
 export const urls = {
-  base: {
-    api: BASE_URLS.api,
-    public: BASE_URLS.public,
+  // Next.js internal API (frontend) – always relative
+  auth: {
+    google: () => "/api/auth/google",
+    session: () => "/api/auth/session",
+  },
+  base: BASE_URLS,
+  billing: {
+    action: (action: "checkout" | "portal") => `/api/billing/${action}`,
+    pricing: () => "/api/billing/pricing",
+    root: () => "/api/billing",
+    webhook: () => "/api/billing/webhook",
+  },
+  boards: {
+    board: (boardId: string) => `/api/trello/boards/${boardId}`,
+    boardCards: (boardId: string) => `/api/trello/boards/${boardId}/cards`,
+    boardCustomFields: (boardId: string) => `/api/trello/boards/${boardId}/customFields`,
+    boardLabels: (boardId: string) => `/api/trello/boards/${boardId}/labels`,
+    boardLists: (boardId: string) => `/api/trello/boards/${boardId}/lists`,
+    boardMember: (boardId: string, memberId: string) =>
+      `/api/trello/boards/${boardId}/members/${memberId}`,
+    boardMembers: (boardId: string) => `/api/trello/boards/${boardId}/members`,
+    boards: () => "/api/trello/boards",
+    card: (cardId: string) => `/api/trello/cards/${cardId}`,
+    cardCustomFields: (cardId: string) => `/api/trello/cards/${cardId}/customFieldItems`,
+    cardMove: (cardId: string) => `/api/trello/cards/${cardId}/move`,
+    cards: () => "/api/trello/cards",
+    healthCheck: () => "/api/trello/health",
+    list: (listId: string) => `/api/trello/lists/${listId}`,
+    listArchive: (listId: string) => `/api/trello/lists/${listId}/archive`,
+    listArchiveAllCards: (listId: string) => `/api/trello/lists/${listId}/archiveAllCards`,
+    listCards: (listId: string) => `/api/trello/lists/${listId}/cards`,
+    listCardsFilter: (listId: string, filter: string) =>
+      `/api/trello/lists/${listId}/cards/${filter}`,
+    listClosed: (listId: string) => `/api/trello/lists/${listId}/closed`,
+    listIdBoard: (listId: string) => `/api/trello/lists/${listId}/idBoard`,
+    listMoveAllCards: (listId: string) => `/api/trello/lists/${listId}/moveAllCards`,
+    listName: (listId: string) => `/api/trello/lists/${listId}/name`,
+    lists: () => "/api/trello/lists",
+    member: (memberId: string) => `/api/trello/members/${memberId}`,
+    memberBoards: (memberId: string) => `/api/trello/members/${memberId}/boards`,
+    memberCards: (memberId: string) => `/api/trello/members/${memberId}/cards`,
+    memberMe: () => "/api/trello/members/me",
+    myBoards: () => "/api/trello/members/me/boards",
   },
 
   external: {
     googlePeopleMe: () => "https://people.googleapis.com/v1/people/me",
   },
-
-  // Next.js internal API (frontend) – always relative
-  next: {
-    auth: {
-      google: () => "/api/auth/google",
-      session: () => "/api/auth/session",
-    },
-    billing: {
-      action: (action: "checkout" | "portal") => `/api/billing/${action}`,
-      pricing: () => "/api/billing/pricing",
-      root: () => "/api/billing",
-      webhook: () => "/api/billing/webhook",
-    },
-    boards: {
-      board: (boardId: string) => `/api/trello/boards/${boardId}`,
-      boardCards: (boardId: string) => `/api/trello/boards/${boardId}/cards`,
-      boardCustomFields: (boardId: string) => `/api/trello/boards/${boardId}/customFields`,
-      boardLabels: (boardId: string) => `/api/trello/boards/${boardId}/labels`,
-      boardLists: (boardId: string) => `/api/trello/boards/${boardId}/lists`,
-      boardMember: (boardId: string, memberId: string) =>
-        `/api/trello/boards/${boardId}/members/${memberId}`,
-      boardMembers: (boardId: string) => `/api/trello/boards/${boardId}/members`,
-      boards: () => "/api/trello/boards",
-      card: (cardId: string) => `/api/trello/cards/${cardId}`,
-      cardCustomFields: (cardId: string) => `/api/trello/cards/${cardId}/customFieldItems`,
-      cardMove: (cardId: string) => `/api/trello/cards/${cardId}/move`,
-      cards: () => "/api/trello/cards",
-      healthCheck: () => "/api/trello/health",
-      list: (listId: string) => `/api/trello/lists/${listId}`,
-      listArchive: (listId: string) => `/api/trello/lists/${listId}/archive`,
-      listArchiveAllCards: (listId: string) => `/api/trello/lists/${listId}/archiveAllCards`,
-      listCards: (listId: string) => `/api/trello/lists/${listId}/cards`,
-      listCardsFilter: (listId: string, filter: string) =>
-        `/api/trello/lists/${listId}/cards/${filter}`,
-      listClosed: (listId: string) => `/api/trello/lists/${listId}/closed`,
-      listIdBoard: (listId: string) => `/api/trello/lists/${listId}/idBoard`,
-      listMoveAllCards: (listId: string) => `/api/trello/lists/${listId}/moveAllCards`,
-      listName: (listId: string) => `/api/trello/lists/${listId}/name`,
-      lists: () => "/api/trello/lists",
-      member: (memberId: string) => `/api/trello/members/${memberId}`,
-      memberBoards: (memberId: string) => `/api/trello/members/${memberId}/boards`,
-      memberCards: (memberId: string) => `/api/trello/members/${memberId}/cards`,
-      memberMe: () => "/api/trello/members/me",
-      myBoards: () => "/api/trello/members/me/boards",
-    },
-    fitness: {
-      assistant: () => "/api/assistant",
-      state: () => "/api/state",
-    },
-    studio: {
-      assistant: () => "/api/assistant",
-      cv: () => "/api/cv",
-      cvImport: () => "/api/cv-import",
-      cvVariants: () => "/api/cv-variants",
-      googleProfile: () => "/api/google-profile",
-      interviewPrep: () => "/api/assistant/job",
-      managed: () => "/api/managed",
-      managedHistory: (id: string) => `/api/managed/${id}/history`,
-      managedPortfolio: (id: string) => `/api/managed/${id}`,
-      managedPublication: (id: string) => `/api/managed/${id}/publication`,
-      managedTransfer: (id: string) => `/api/managed/${id}/transfer`,
-      profile: () => "/api/profile",
-      profileHistory: () => "/api/profile-history",
-      publication: () => "/api/publication",
-      sectionTemplates: () => "/api/section-templates",
-    },
+  fitness: {
+    assistant: () => "/api/assistant",
+    siteUrl: () => urls.base.fitnessPublic,
+    state: () => "/api/state",
+  },
+  studio: {
+    assistant: () => "/api/assistant",
+    cv: () => "/api/cv",
+    cvImport: () => "/api/cv-import",
+    cvVariants: () => "/api/cv-variants",
+    googleProfile: () => "/api/google-profile",
+    interviewPrep: () => "/api/assistant/job",
+    managed: () => "/api/managed",
+    managedHistory: (id: string) => `/api/managed/${id}/history`,
+    managedPortfolio: (id: string) => `/api/managed/${id}`,
+    managedPublication: (id: string) => `/api/managed/${id}/publication`,
+    managedTransfer: (id: string) => `/api/managed/${id}/transfer`,
+    portfolioUrl: (username: string) => `${urls.base.studioPublic}/${encodeURIComponent(username)}`,
+    profile: () => "/api/profile",
+    profileHistory: () => "/api/profile-history",
+    publication: () => "/api/publication",
+    sectionTemplates: () => "/api/section-templates",
+    siteUrl: () => urls.base.studioPublic,
   },
 
   trello: {

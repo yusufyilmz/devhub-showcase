@@ -35,15 +35,16 @@ export {
   ContactInfoSection,
   ContactInfoSectionEditor,
 } from "./contact-info-section";
-export { CTASection, CTASectionEditor } from "./cta-section";
+export { CTABlock, type CTABlockProps, CTASection, CTASectionEditor } from "./cta-section";
 export { CustomSection, CustomSectionEditor } from "./custom-section";
 export { CVSection } from "./cv-section";
+export { DashboardSection, DashboardSectionEditor } from "./dashboard-section";
 export { EducationsSection } from "./education-section";
 export { EducationItem } from "./education-section/EducationItem";
 export { ExperienceSection } from "./experience-section";
 export { ExperienceItem } from "./experience-section/ExperienceItem";
 export { ExperienceList } from "./experience-section/ExperienceList";
-export { FAQSection, FAQSectionEditor } from "./faq-section";
+export { FAQBlock, type FAQBlockProps, FAQSection, FAQSectionEditor } from "./faq-section";
 export { FeaturesSection, FeaturesSectionEditor } from "./features-section";
 export {
   GalleryGridSection,
@@ -51,7 +52,13 @@ export {
   MasonryGridSection,
 } from "./gallery-grid-section";
 export { HeadingSection, HeadingSectionEditor } from "./heading-section";
-export { HeroSection, HeroSectionEditor, HeroSettingsEditor } from "./hero-section";
+export {
+  HeroBlock,
+  type HeroBlockProps,
+  HeroSection,
+  HeroSectionEditor,
+  HeroSettingsEditor,
+} from "./hero-section";
 export { HomePage } from "./home-page/HomePage";
 export {
   HomeCapabilitiesSection,

@@ -4,15 +4,14 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsdown",
-    "check-types": "tsc --noEmit --pretty",
-    "clean": "npx rimraf dist",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
     "format": "biome format --write .",
     "format:check": "biome format .",
-    "generate:component": "turbo gen react-component",
     "lint": "biome lint .",
+    "lint:check": "biome lint .",
     "lint:fix": "biome lint --write .",
-    "test": "vitest",
-    "typecheck": "tsc --noEmit --pretty"
+    "typecheck": "tsc --noEmit",
+    "types:check": "pnpm typecheck"
   },
   "dependencies": {
     "@shared/config": "workspace:*",
@@ -31,6 +30,7 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "beautify-console-log": "catalog:",
     "postcss": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:"

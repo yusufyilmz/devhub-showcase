@@ -16,7 +16,6 @@ export type PageProvidersOptions = {
   children: ReactNode;
   defaultTheme: PageAppearance["defaultTheme"];
   portfolioTheme?: PortfolioTheme;
-  storageKey: string;
   request?: StudioRequest;
 };
 

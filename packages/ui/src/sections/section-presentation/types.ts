@@ -11,6 +11,7 @@ export type ItemMediaOptions = {
 export type ItemContentOptions = {
   item: CustomSection["items"][number];
   quote?: boolean;
+  hideLink?: boolean;
   video?: boolean;
   language?: SectionProps["language"];
 };

@@ -1,5 +1,5 @@
-import { Card } from "../../cards";
 import { Section } from "../../layout/section";
+import { StepList } from "../how-to-section/StepList";
 import { processStyles } from "./styles";
 
 export function HomeProcessSection() {
@@ -14,32 +14,33 @@ export function HomeProcessSection() {
             to <span>your own place.</span>
           </h2>
         </div>
-        <ol className={processStyles.element4}>
-          <Card asChild layout="plain" surface="portfolio">
-            <li>
-              <span>01</span>
-              <h3>Open your studio</h3>
-              <p>Sign in with Google and start with your own private space.</p>
-            </li>
-          </Card>
-          <Card asChild layout="plain" surface="portfolio">
-            <li>
-              <span>02</span>
-              <h3>Put your story together</h3>
-              <p>
-                Import and review your CV or add details yourself. Choose sections, a layout, theme
-                and languages for a look that feels right.
-              </p>
-            </li>
-          </Card>
-          <Card asChild layout="plain" surface="portfolio">
-            <li>
-              <span>03</span>
-              <h3>Share it when you’re ready</h3>
-              <p>Choose your username, publish your portfolio and take your CV with you.</p>
-            </li>
-          </Card>
-        </ol>
+        <StepList
+          items={[
+            {
+              content: <p>Sign in with Google and start with your own private space.</p>,
+              id: "open-studio",
+              title: "Open your studio",
+            },
+            {
+              content: (
+                <p>
+                  Import and review your CV or add details yourself. Choose sections, a layout,
+                  theme and languages for a look that feels right.
+                </p>
+              ),
+              id: "build-portfolio",
+              title: "Put your story together",
+            },
+            {
+              content: (
+                <p>Choose your username, publish your portfolio and take your CV with you.</p>
+              ),
+              id: "share-portfolio",
+              title: "Share it when you’re ready",
+            },
+          ]}
+          landing
+        />
       </section>
     </Section>
   );

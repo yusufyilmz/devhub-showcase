@@ -1,6 +1,6 @@
 "use client";
 
-import "./google-import-editor.css";
+import "../styles/components/google-import/google-import-editor.css";
 
 import { useState } from "react";
 

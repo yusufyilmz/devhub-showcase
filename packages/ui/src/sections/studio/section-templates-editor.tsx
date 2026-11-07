@@ -51,7 +51,7 @@ export function SectionTemplatesEditor({ profile, onChange }: SectionTemplatesEd
   const [busy, setBusy] = useState(false);
   useEffect(() => {
     let cancelled = false;
-    request(urls.next.studio.sectionTemplates())
+    request(urls.studio.sectionTemplates())
       .then(async (response) => {
         const result = await response.json();
         if (!response.ok) throw new Error(result.error);
@@ -74,7 +74,7 @@ export function SectionTemplatesEditor({ profile, onChange }: SectionTemplatesEd
     setBusy(true);
     showError("");
     try {
-      const response = await request(urls.next.studio.sectionTemplates(), {
+      const response = await request(urls.studio.sectionTemplates(), {
         body: JSON.stringify({ revision, templates: next }),
         headers: { "Content-Type": "application/json" },
         method: "PUT",

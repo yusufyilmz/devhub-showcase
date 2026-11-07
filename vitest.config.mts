@@ -34,6 +34,8 @@ function exportAliases(folder: string, options: { cssOnly?: boolean; packageName
     });
 }
 
+const servicesRoot = fileURLToPath(new URL("./packages/services/src/", import.meta.url));
+
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   oxc: {
@@ -60,26 +62,18 @@ export default defineConfig({
       {
         find: "next/font/google",
         replacement: fileURLToPath(
-          new URL("./tools/test/support/mocks/next-font-google.ts", import.meta.url),
+          new URL("./tools/test/mocks/next-font-google.ts", import.meta.url),
         ),
       },
       {
         find: "next/font/local",
         replacement: fileURLToPath(
-          new URL("./tools/test/support/mocks/next-font-local.ts", import.meta.url),
+          new URL("./tools/test/mocks/next-font-local.ts", import.meta.url),
         ),
       },
       {
         find: "@/app",
         replacement: fileURLToPath(new URL("./apps/my-dev-studio/app", import.meta.url)),
-      },
-      {
-        find: "@/features",
-        replacement: fileURLToPath(new URL("./apps/my-dev-studio/features", import.meta.url)),
-      },
-      {
-        find: "@fixtures",
-        replacement: fileURLToPath(new URL("./tools/test/fixtures", import.meta.url)),
       },
       ...exportAliases("config").sort((a, b) => b.find.length - a.find.length),
       {
@@ -106,11 +100,15 @@ export default defineConfig({
           new URL("./packages/billing/src/server/repository.ts", import.meta.url),
         ),
       },
-      ...exportAliases("services").sort((a, b) => b.find.length - a.find.length),
       {
-        find: /^@shared\/services\/db\/(.*)$/,
-        replacement: `${fileURLToPath(new URL("./packages/services/src/fitness/db/", import.meta.url))}$1`,
+        find: /^@shared\/services\/db\/(.+)$/,
+        replacement: `${servicesRoot}fitness/db/$1.ts`,
       },
+      {
+        find: "@shared/services/fitness/task",
+        replacement: `${servicesRoot}fitness/task/index.ts`,
+      },
+      ...exportAliases("services").sort((a, b) => b.find.length - a.find.length),
       ...Object.entries(
         JSON.parse(readFileSync(new URL("./packages/lib/package.json", import.meta.url), "utf8"))
           .exports as Record<string, string>,
@@ -139,6 +137,7 @@ export default defineConfig({
         replacement: `${fileURLToPath(new URL("./packages/ui/src/components/", import.meta.url))}$1/index.ts`,
       },
     ],
+    tsconfigPaths: true,
   },
   test: {
     coverage: {
@@ -154,7 +153,7 @@ export default defineConfig({
         extends: true,
         test: {
           environment: "node",
-          exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**", "apps/my-fitness-app/**"],
+          exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**"],
           include: [
             "packages/**/*.test.{ts,tsx}",
             "apps/**/*.test.{ts,tsx}",

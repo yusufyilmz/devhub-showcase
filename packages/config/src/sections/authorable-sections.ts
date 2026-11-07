@@ -16,6 +16,7 @@ export const authorableSections = {
     sources: ["projects", "experiences", "skills", "education", "languages", "about"],
     view: "list",
   },
+  dashboard: { name: "Dashboard", sources: [], view: "dashboard" },
   faq: { name: "FAQ", sources: [], view: "accordion" },
   features: {
     name: "Features",
@@ -85,6 +86,7 @@ export const authorableSectionTypes = [
   "clients",
   "contact-form",
   "contact-info",
+  "dashboard",
   "faq",
   "features",
   "gallery-grid",
@@ -162,7 +164,7 @@ export function getSectionRenderers(type: AuthorableSectionType) {
       "text",
     ] as const;
   const view = authorableSections[type].view;
-  if (["contact", "map", "toc", "hero", "heading", "newsletter"].includes(view))
+  if (["contact", "dashboard", "map", "toc", "hero", "heading", "newsletter"].includes(view))
     return ["list"] as const;
   if (["gallery", "clients"].includes(view))
     return ["gallery", "masonry", "carousel", "cards"] as const;

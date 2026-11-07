@@ -4,6 +4,8 @@ import { headers } from "next/headers";
 import { StudioShell } from "@shared/ui/portfolio";
 import { ThemeToggle } from "@shared/ui/theme";
 
+import { StudioCompanion } from "@/features/companion/studio-companion";
+import { getHomeAction } from "@/features/home/home-links";
 import { ManagementLink } from "@/features/management/management-link";
 
 export const metadata: Metadata = {
@@ -11,7 +13,11 @@ export const metadata: Metadata = {
   title: "Portfolio studio",
 };
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  if ((await headers()).get("x-profile-path") === "/admin/chat") return children;
+  const path = (await headers()).get("x-profile-path") ?? "";
+  if (path === "/admin/chat") return children;
+  const showCompanion =
+    path === "/admin/billing" || path === "/admin/portfolios" || path.endsWith("/review");
+  const signedIn = showCompanion && (await getHomeAction()).signedIn;
   return (
     <StudioShell
       contentId="admin-content"
@@ -23,6 +29,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       }
     >
       {children}
+      {showCompanion && <StudioCompanion signedIn={signedIn} />}
     </StudioShell>
   );
 }

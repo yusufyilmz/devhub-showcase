@@ -24,8 +24,7 @@ export function ProfilePublication({
   onChanged: (published: boolean) => void;
 }) {
   const request = useStudioRequest();
-  const endpoint =
-    managed && id ? urls.next.studio.managedPublication(id) : urls.next.studio.publication();
+  const endpoint = managed && id ? urls.studio.managedPublication(id) : urls.studio.publication();
   const load = useCallback(async () => {
     const response = await request(endpoint);
     const result = await response.json();

@@ -27,7 +27,7 @@ export default async function PortfolioManager({
     .order("updated_at", { ascending: false })
     .range(page * 50, page * 50 + 50);
   return (
-    <main className="studio managed-dashboard" id="admin-content">
+    <main className="studio grid gap-8 [--studio-heading-gap:0px]" id="admin-content">
       <StudioHeading
         actions={
           <Button className="studio-secondary" href="/admin" variant="outline">
@@ -47,22 +47,25 @@ export default async function PortfolioManager({
           </p>
         ) : (
           <>
-            <ul className="managed-records">
+            <ul className="list-none p-0">
               {(data ?? []).slice(0, 50).map((row) => {
                 const profile = row.document as {
                   name?: string;
                   portfolioType?: string;
                 };
                 return (
-                  <li key={row.id}>
+                  <li
+                    className="flex flex-wrap items-center justify-between gap-4 border-b border-[rgb(var(--border-rgb))] py-6"
+                    key={row.id}
+                  >
                     <div>
-                      <h3>{profile.name ?? row.username}</h3>
-                      <p>
+                      <h3 className="mb-2">{profile.name ?? row.username}</h3>
+                      <p className="leading-[1.7] wrap-anywhere text-[rgb(var(--muted-rgb))]">
                         /{row.username} · {profile.portfolioType ?? "engineer"} ·{" "}
                         {row.is_public ? "Published" : "Private draft"}
                       </p>
                     </div>
-                    <div className="managed-actions">
+                    <div className="flex flex-wrap gap-4 [&_a]:text-[rgb(var(--accent-rgb))]">
                       <a href={`/admin/portfolios/${row.id}`}>Edit portfolio ↗</a>
                       {row.is_public && <a href={`/${row.username}`}>Public page ↗</a>}
                     </div>
@@ -71,7 +74,7 @@ export default async function PortfolioManager({
               })}
             </ul>
             {!data?.length && <p>No temporary portfolios yet.</p>}
-            <nav aria-label="Managed portfolio pages">
+            <nav aria-label="Managed portfolio pages" className="mt-4 flex gap-4">
               {page > 0 && <a href={`?page=${page - 1}`}>Previous page</a>}
               {(data?.length ?? 0) > 50 && <a href={`?page=${page + 1}`}>Next page</a>}
             </nav>

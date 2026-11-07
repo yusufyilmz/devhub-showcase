@@ -6,10 +6,12 @@ import {
   MessageProcessor,
   PortfolioChatModel,
 } from "@shared/assistant";
-import { type ChatMessage, ChatRole } from "@shared/lib/types";
+import { type ChatMessage, ChatRole, type ReviewState } from "@shared/lib/types";
 import { isCategoryReferralCategory } from "@shared/lib/utils";
+import { ReviewService } from "@shared/services/studio";
 import { logger } from "@shared/utils/logger";
 
+import { requireAdmin } from "@/features/admin/admin-auth";
 import {
   assertCurrentPublication,
   portfolioChatInput,
@@ -78,5 +80,26 @@ export async function handleSendMessageAction(
       timestamp: Date.now(),
       type: message.type === "referral" ? "referral" : "cv",
     };
+  }
+}
+
+export async function handleSubmitReviewAction(
+  referralId: string,
+  reviewState: ReviewState,
+  updatedAt: string,
+): Promise<boolean> {
+  try {
+    const { client } = await requireAdmin();
+    const reviewService = new ReviewService(logger, client);
+    await reviewService.update(referralId, {
+      state: reviewState,
+      updatedAt,
+    });
+
+    return true;
+  } catch (error) {
+    logger.error({ error }, "Error on review");
+
+    return false;
   }
 }

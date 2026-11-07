@@ -1,6 +1,6 @@
 "use client";
 
-import "../chat/studio-chat.css";
+import "../../styles/components/display/studio-chat.css";
 
 import { useId } from "react";
 

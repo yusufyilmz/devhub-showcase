@@ -1,6 +1,6 @@
 "use client";
 
-import "../editor-controls.css";
+import "../../styles/components/editors/editor-controls.css";
 
 import { authorableSections, type SectionSourceField } from "@shared/config";
 

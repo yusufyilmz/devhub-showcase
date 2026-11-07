@@ -1,5 +1,3 @@
-import "./footer.css";
-
 import { ArrowUpRight } from "lucide-react";
 
 import { Brand } from "../../navigation/brand";
@@ -8,60 +6,42 @@ import type { HomeFooterOptions } from "./types";
 
 export function HomeFooter({ action }: HomeFooterOptions) {
   return (
-    <Footer asChild>
-      <footer className="platform-footer">
-        <div className="platform-footer-inner">
-          <div className="platform-footer-brand">
-            <Brand />
-            <p>Build a portfolio and CV that grow with your work.</p>
-          </div>
-          <nav aria-label="Footer navigation" className="platform-footer-nav">
-            <div>
-              <h2>Studio</h2>
-              <ul>
-                <li>
-                  <a href={action.href}>{action.signedIn ? "Open studio" : "Sign in"}</a>
-                </li>
-                <li>
-                  <a href="/#pricing">Plans</a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h2>Explore</h2>
-              <ul>
-                <li>
-                  <a href="/#examples">Portfolio examples</a>
-                </li>
-                <li>
-                  <a href="/#features">Studio features</a>
-                </li>
-                <li>
-                  <a href="/#how-it-works">How it works</a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h2>Resources</h2>
-              <ul>
-                <li>
-                  <a href="/#questions">Common questions</a>
-                </li>
-                <li>
-                  <a
-                    href="https://github.com/yusufyilmz/devhub-showcase"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    Source on GitHub <ArrowUpRight aria-hidden="true" size={14} />
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-          <p className="platform-footer-credit">© {new Date().getFullYear()} MyDevStudio</p>
-        </div>
-      </footer>
-    </Footer>
+    <Footer
+      brand={<Brand />}
+      credit={`© ${new Date().getFullYear()} MyDevStudio`}
+      description="Build a portfolio and CV that grow with your work."
+      groups={[
+        {
+          links: [
+            { href: action.href, label: action.signedIn ? "Open studio" : "Sign in" },
+            { href: "/#pricing", label: "Plans" },
+          ],
+          title: "Studio",
+        },
+        {
+          links: [
+            { href: "/#examples", label: "Portfolio examples" },
+            { href: "/#features", label: "Studio features" },
+            { href: "/#how-it-works", label: "How it works" },
+          ],
+          title: "Explore",
+        },
+        {
+          links: [
+            { href: "/#questions", label: "Common questions" },
+            {
+              external: true,
+              href: "https://github.com/yusufyilmz/devhub-showcase",
+              label: (
+                <>
+                  Source on GitHub <ArrowUpRight aria-hidden="true" size={14} />
+                </>
+              ),
+            },
+          ],
+          title: "Resources",
+        },
+      ]}
+    />
   );
 }

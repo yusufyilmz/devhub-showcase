@@ -4,20 +4,19 @@ import { test } from "vitest";
 
 import { seedWorkspace } from "@shared/services/db/seed";
 import { TaskService } from "@shared/services/fitness/task";
-
 import {
   MealPlanningService,
   ShoppingListService,
   WeeklyPlanningService,
-} from "../../../packages/services/src/meal";
-import { ScheduleService } from "../../../packages/services/src/schedule";
+} from "@shared/services/meal";
+import { ScheduleService } from "@shared/services/schedule";
 import {
   createTask,
   dateKey,
   monday,
   validateWorkspace,
   workspaceSchema,
-} from "../../../packages/services/src/types";
+} from "@shared/services/types";
 
 const tasks = new TaskService();
 const schedule = new ScheduleService();

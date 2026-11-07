@@ -2,32 +2,24 @@
 
 import { type MouseEvent, type PointerEvent, useEffect, useRef, useState } from "react";
 
+import { companionStorage } from "@shared/runtime/storage";
+
 type Side = "left" | "right";
 type Drag = { pointerId: number; startX: number; left: number; width: number };
 
 export function useCompanionDock(agent: string, floating: boolean) {
-  const storageKey = `agent-companion:${agent}:side`;
   const [side, setSide] = useState<Side>("left");
   const [offset, setOffset] = useState<number>();
   const drag = useRef<Drag>(null);
   const didDrag = useRef(false);
 
   useEffect(() => {
-    if (!floating) return;
-    try {
-      setSide(localStorage.getItem(storageKey) === "right" ? "right" : "left");
-    } catch {
-      // The companion can still move when storage is unavailable.
-    }
-  }, [floating, storageKey]);
+    if (floating) setSide(companionStorage.readSide(agent));
+  }, [agent, floating]);
 
   function dock(next: Side) {
     setSide(next);
-    try {
-      localStorage.setItem(storageKey, next);
-    } catch {
-      // Keep the selected side for this visit.
-    }
+    companionStorage.writeSide(agent, next);
   }
 
   function start(event: PointerEvent<HTMLButtonElement>) {

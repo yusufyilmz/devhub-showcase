@@ -1,6 +1,6 @@
 "use client";
 
-import "../editor-controls.css";
+import "../../styles/components/editors/editor-controls.css";
 
 import { authorableSections, type CustomSection, getSectionRenderers } from "@shared/config";
 
@@ -40,14 +40,22 @@ function ItemFields({ item, onChange, view }: ItemFieldsOptions) {
         type="url"
         value={item.imageUrl ?? ""}
       />
-      {["pricing", "shop", "menu", "property", "statistics"].includes(view) && (
+      {["dashboard", "pricing", "quotes", "shop", "menu", "property", "statistics"].includes(
+        view,
+      ) && (
         <Field
-          label="Price or value"
+          label={
+            view === "quotes"
+              ? "Role or attribution"
+              : view === "dashboard"
+                ? "Metric value"
+                : "Price or value"
+          }
           onChange={(value) => onChange({ ...item, value })}
           value={item.value ?? ""}
         />
       )}
-      {["timeline", "posts", "awards", "careers"].includes(view) && (
+      {["dashboard", "timeline", "posts", "awards", "careers"].includes(view) && (
         <Field
           label="Date or period"
           onChange={(period) => onChange({ ...item, period })}

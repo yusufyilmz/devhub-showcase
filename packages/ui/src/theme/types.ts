@@ -1,5 +1,3 @@
-import type { UserConfigMode } from "@shared/runtime/user";
-
 export const THEME_MODES = ["light", "dark", "system"] as const;
 export type ThemeMode = (typeof THEME_MODES)[number];
 
@@ -147,10 +145,9 @@ export type ThemeToggleOptions = {
 export type ThemeProviderOptions = {
   accent: "cyan" | "violet" | "emerald";
   children: React.ReactNode;
-  defaultTheme: UserConfigMode;
+  defaultTheme: ThemeMode;
   portfolioTheme?: string;
   /** Read only to migrate a preference written by an older version. */
-  storageKey: string;
 };
 
 export interface ThemeActions {

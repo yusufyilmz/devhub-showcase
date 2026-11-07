@@ -17,7 +17,7 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 
 ## Related evidence and detail
 
-- [e2e/edit/cv-versions.spec.ts](../../../e2e/edit/cv-versions.spec.ts)
+- [e2e/edit/cv-versions.spec.ts](../../../apps/my-dev-studio/e2e/edit/cv-versions.spec.ts)
 - [docs/testing/private-cv-versions.md](../../../docs/testing/private-cv-versions.md)
 
 Return to the [manual testing index](index.md).

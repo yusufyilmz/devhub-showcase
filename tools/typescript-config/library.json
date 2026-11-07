@@ -7,7 +7,9 @@
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "noEmit": false,
-    "sourceMap": true
+    "sourceMap": true,
+    "types": ["node"],
+    "verbatimModuleSyntax": false
   },
   "extends": "./base.json"
 }

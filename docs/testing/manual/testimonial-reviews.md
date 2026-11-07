@@ -26,5 +26,5 @@ Preview verification pending.
 
 ## Related checks
 
-- [Browser scenario](../../../e2e/edit/testimonial-reviews.spec.ts)
+- [Browser scenario](../../../apps/my-dev-studio/e2e/edit/testimonial-reviews.spec.ts)
 - [Local database permissions and decision checks](../../../packages/lib/src/supabase/rls/portfolio-reviews.test.ts)

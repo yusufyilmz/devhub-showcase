@@ -16,7 +16,6 @@ export {
   RegisteredSections,
 } from "./published-page/registered-sections";
 export { DraftRecovery } from "./recovery/DraftRecovery";
-export { clearDraftRecovery, recoveryPrefix } from "./recovery/storage";
 export type { SetupStep } from "./recovery/types";
 export { useDraftRecovery } from "./recovery/use-draft-recovery";
 export { RevisionHistory } from "./revision-history/editor";

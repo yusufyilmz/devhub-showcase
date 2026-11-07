@@ -1,7 +1,3 @@
-import { SitesConfigFileSchema } from "./schema";
-import rawConfig from "./sites-config.json";
-import type { SitesConfigFile } from "./types";
-
 /**
  * Utility: coerce env values into correct type (boolean/number/string)
  */
@@ -29,37 +25,3 @@ export function applyEnvOverrides<T extends Record<string, any>>(obj: T): T {
   }
   return merged;
 }
-
-/**
- * Singleton SiteConfigManager
- */
-class SiteConfigManager {
-  private config: SitesConfigFile;
-
-  constructor() {
-    const parsedConfig = SitesConfigFileSchema.parse(rawConfig as unknown as SitesConfigFile);
-    this.config = parsedConfig as SitesConfigFile;
-  }
-
-  /**
-   * Proxy getter so you can do siteConfig.KEY
-   */
-  // public get<K extends keyof SiteConfig>(key: K): SiteConfig[K] {
-  //   return this.merged[key]
-  // }
-
-  /**
-   * Direct access (dot notation, e.g. siteConfig.environment.API_URL)
-   */
-
-  public get branding() {
-    return this.config.shared.environment;
-  }
-  public get environment() {
-    return this.config.shared.environment;
-  }
-}
-
-// ---- EXPORT SINGLETON ----
-// You can pick siteName dynamically (from DOMAIN, subdomain, etc.)
-export const siteConfigManager = new SiteConfigManager();

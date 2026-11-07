@@ -73,7 +73,7 @@ describe("AccountOverview", () => {
     );
     expect(
       fetchMock.mock.calls.every(([url]) =>
-        [urls.next.billing.root(), urls.next.studio.profile()].includes(String(url)),
+        [urls.billing.root(), urls.studio.profile()].includes(String(url)),
       ),
     ).toBe(true);
   });

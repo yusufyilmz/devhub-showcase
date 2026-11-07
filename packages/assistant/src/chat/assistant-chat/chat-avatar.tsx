@@ -3,7 +3,7 @@
  * Extends base Avatar with online status and typing indicator
  */
 
-import * as React from "react";
+import React from "react";
 
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";

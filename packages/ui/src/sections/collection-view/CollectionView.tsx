@@ -1,26 +1,36 @@
-import "../sections.css";
+import "../../styles/components/sections/sections.css";
 
 import { authorableSections, getSocialWork } from "@shared/config";
+import { safeLink } from "@shared/utils";
 
 import { Card } from "../../cards";
 import {
+  MasonryGrid,
   SectionAccordion,
   SectionCarousel,
   SectionGrid,
   type SectionItem,
   SectionTabs,
 } from "../../layout";
-import { safeLink } from "../../utils/safe-link";
 import { GalleryCollection } from "../gallery-grid-section/GalleryCollection";
+import { StepList } from "../how-to-section/StepList";
 import { ItemMedia } from "../item-media/ItemMedia";
+import { PlanCards } from "../plans-section/PlanCards";
 import {
   collectionViewClassName,
   presenterInlineStyle1,
   presenterStyles,
 } from "../section-presentation/styles";
 import type { CollectionViewOptions, ItemContentOptions } from "../section-presentation/types";
+import { TestimonialCards } from "../testimonials-section/TestimonialCards";
 
-export function ItemContent({ item, quote = false, video = false, language }: ItemContentOptions) {
+export function ItemContent({
+  item,
+  quote = false,
+  video = false,
+  language,
+  hideLink = false,
+}: ItemContentOptions) {
   const prose = item.body
     .split(/\n\s*\n/)
     .filter(Boolean)
@@ -47,15 +57,22 @@ export function ItemContent({ item, quote = false, video = false, language }: It
           <code>{item.code}</code>
         </pre>
       )}
-      {safeLink(item.url) && !getSocialWork(item.url) && <a href={item.url}>{item.title} ↗</a>}
+      {!hideLink && safeLink(item.url) && !getSocialWork(item.url) && (
+        <a href={item.url}>{item.title} ↗</a>
+      )}
     </>
   );
 }
 
 export function CollectionView({ section, type, language }: CollectionViewOptions) {
   const view = authorableSections[type].view;
+  if (section.renderer === "cards" && view === "pricing")
+    return <PlanCards language={language} section={section} />;
+  if (section.renderer === "cards" && view === "quotes")
+    return <TestimonialCards section={section} />;
   if (
     type === "gallery-grid" &&
+    section.renderer === "gallery" &&
     section.items.length > 0 &&
     section.items.every((item) => item.imageUrl && safeLink(item.imageUrl))
   )
@@ -82,18 +99,19 @@ export function CollectionView({ section, type, language }: CollectionViewOption
     );
   if (section.renderer === "masonry")
     return (
-      <div className={presenterStyles.element4}>
+      <MasonryGrid columns={section.options?.columns}>
         {items.map((item) => (
           <Card asChild key={item.id} layout="plain" surface="portfolio">
-            <article>
+            <article className="grid gap-xs p-[1.25rem]">
               <h3>{item.title}</h3>
               {item.content}
             </article>
           </Card>
         ))}
-      </div>
+      </MasonryGrid>
     );
-  if (["steps", "timeline"].includes(section.renderer))
+  if (section.renderer === "steps") return <StepList items={items} />;
+  if (section.renderer === "timeline")
     return (
       <ol className={collectionViewClassName(section.renderer)}>
         {items.map((item) => (

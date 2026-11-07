@@ -1,5 +1,3 @@
-import "../../cards/surfaces.css";
-
 import { cn } from "cn";
 
 import { textareaStyles } from "./styles";

@@ -42,7 +42,7 @@ describe("Fitness browser session", () => {
     });
     expect(mocks.createClient).toHaveBeenCalledOnce();
     await signOut();
-    expect(fetchMock).toHaveBeenCalledExactlyOnceWith(urls.next.auth.session(), {
+    expect(fetchMock).toHaveBeenCalledExactlyOnceWith(urls.auth.session(), {
       method: "DELETE",
     });
     expect(mocks.signOut).toHaveBeenCalledExactlyOnceWith({ scope: "local" });

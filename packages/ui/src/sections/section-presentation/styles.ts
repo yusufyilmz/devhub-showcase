@@ -4,10 +4,7 @@ export const presenterStyles = {
   element1: "section-native-video",
   element2: "section-item-value",
   element3: "section-item-period",
-  element4: "section-masonry",
   element5: "section-prose",
-  element6: "section-contact-form",
-  element7: "section-action",
   element8: "section-description",
 } as const;
 

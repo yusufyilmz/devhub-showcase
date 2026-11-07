@@ -1,0 +1,1212 @@
+{
+  "components": {
+    "actions": {
+      "columns": ["Component", "Folder", "Use"],
+      "entries": [
+        {
+          "component": "`Button`",
+          "folder": "`button`",
+          "use": "Primary, secondary, outline, ghost, text, link, and destructive actions"
+        },
+        {
+          "component": "`IconButton`, `IconButtonWithLink`",
+          "folder": "`icon-button`",
+          "use": "Square icon actions"
+        },
+        {
+          "component": "`AddProjectButton`, `DownloadCVButton`, `GoBackButton`, `HomeButton`, `ProjectButton`",
+          "folder": "`buttons`",
+          "use": "Named portfolio actions"
+        },
+        {
+          "component": "`Toggle`, `ToggleButton`, `ToggleGroup`",
+          "folder": "`toggle`, `toggle-button`, `toggle-group`",
+          "use": "On/off and segmented choices"
+        },
+        {
+          "component": "`Switch`",
+          "folder": "`switch`",
+          "use": "Binary setting"
+        },
+        {
+          "component": "`SegmentedControl`",
+          "folder": "`segmented-control`",
+          "use": "A short set of mutually exclusive options"
+        }
+      ]
+    },
+    "card-families": {
+      "columns": ["Card family", "Folder under `src/cards`", "Use"],
+      "entries": [
+        {
+          "card-family": "AnimatedToolsCard",
+          "folder-under-src-cards": "`animated-tools-card`",
+          "use": "Decorative toolkit summary"
+        },
+        {
+          "card-family": "CardSpotlight",
+          "folder-under-src-cards": "`card-spotlight`",
+          "use": "Pointer-responsive accent on a card"
+        },
+        {
+          "card-family": "ExpandableCards",
+          "folder-under-src-cards": "`expandable-cards`",
+          "use": "Card list with keyboard-accessible detail dialogs"
+        },
+        {
+          "card-family": "FocusCards",
+          "folder-under-src-cards": "`focus-cards`",
+          "use": "Image grid that highlights the hovered item"
+        },
+        {
+          "card-family": "HoverOverlayCard",
+          "folder-under-src-cards": "`hover-overlay-card`",
+          "use": "Decorative image change with a readable caption"
+        },
+        {
+          "card-family": "ProjectCard",
+          "folder-under-src-cards": "`project-card`",
+          "use": "Project summary, screenshot carousel, team and links"
+        },
+        {
+          "card-family": "TextRevealCard",
+          "folder-under-src-cards": "`text-reveal-card`",
+          "use": "Click, tap or keyboard disclosure"
+        }
+      ]
+    },
+    "chat": {
+      "columns": ["Component", "Folder", "Use"],
+      "entries": [
+        {
+          "component": "`StudioChatScreen`",
+          "folder": "`display/studio-chat-screen`",
+          "use": "Centered chat screen for Studio and portfolio visitors"
+        },
+        {
+          "component": "`ChatComposer`",
+          "folder": "`display/chat-composer`",
+          "use": "Prompt entry with send, stop and optional controls"
+        },
+        {
+          "component": "`Chat`",
+          "folder": "`display/chat`",
+          "use": "Composable chat panel"
+        },
+        {
+          "component": "`ChatHeader`",
+          "folder": "`display/chat`",
+          "use": "Conversation title and actions"
+        },
+        {
+          "component": "`ChatInput`",
+          "folder": "`display/chat`",
+          "use": "Input for the composable chat panel"
+        },
+        {
+          "component": "`ChatSidebar`",
+          "folder": "`display/chat`",
+          "use": "Grouped conversation navigation"
+        },
+        {
+          "component": "`ChatMessageBubble`",
+          "folder": "`display/chat`",
+          "use": "Individual conversation message"
+        },
+        {
+          "component": "`ChatTypingIndicator`",
+          "folder": "`display/chat`",
+          "use": "Typing indicator"
+        },
+        {
+          "component": "`ChatBubble`",
+          "folder": "`display/chat-bubble`",
+          "use": "Shared message bubble"
+        }
+      ]
+    },
+    "content": {
+      "columns": ["Component", "Folder", "Use"],
+      "entries": [
+        {
+          "component": "`Typography`",
+          "folder": "`typography`",
+          "use": "Type styles from `h1` through caption"
+        },
+        {
+          "component": "`Code`, `InlineCode`",
+          "folder": "`code`, `inline-code`",
+          "use": "Code samples"
+        },
+        {
+          "component": "`Kbd`",
+          "folder": "`kbd`",
+          "use": "Keyboard key"
+        },
+        {
+          "component": "`List`, `ListItem`",
+          "folder": "`list`",
+          "use": "Text list"
+        },
+        {
+          "component": "`Table`",
+          "folder": "`table`",
+          "use": "Static table"
+        },
+        {
+          "component": "`DataTable`",
+          "folder": "`data-table`",
+          "use": "Sortable data table"
+        },
+        {
+          "component": "`Chart`",
+          "folder": "`chart`",
+          "use": "Charts"
+        },
+        {
+          "component": "`Timeline` and its item parts",
+          "folder": "`timeline`",
+          "use": "Vertical timeline"
+        },
+        {
+          "component": "`Avatar`, `AvatarGroup`",
+          "folder": "`avatar`, `avatar-group`",
+          "use": "People marks"
+        },
+        {
+          "component": "`LogoCloud`",
+          "folder": "`logo-cloud`",
+          "use": "Logo row"
+        },
+        {
+          "component": "`Carousel`",
+          "folder": "`carousel`",
+          "use": "Swipeable slides with floating or inline controls"
+        },
+        {
+          "component": "`IFramePreview`",
+          "folder": "`iframe-preview`",
+          "use": "Embedded preview"
+        },
+        {
+          "component": "`ResponsivePortfolioPreview`",
+          "folder": "`portfolio-preview`",
+          "use": "Private, sandboxed draft viewport at mobile/tablet/desktop widths"
+        },
+        {
+          "component": "`Map`",
+          "folder": "`map`",
+          "use": "Map embed"
+        },
+        {
+          "component": "`ChatBubble`",
+          "folder": "`chat-bubble`",
+          "use": "Shared chat and assistant notification surface"
+        },
+        {
+          "component": "`AgentCompanion`",
+          "folder": "`agent-companion`",
+          "use": "Animated assistant launcher and dismissible in-app notice"
+        },
+        {
+          "component": "`Chat` and its header, input, and message parts",
+          "folder": "`chat`",
+          "use": "Portfolio chat"
+        },
+        {
+          "component": "Icons (`ArrowBackIcon`, `CloseIcon`, `GitHubIcon`, and the rest)",
+          "folder": "`icons`",
+          "use": "Shared icons"
+        }
+      ]
+    },
+    "entry-points": {
+      "columns": ["Export", "Path", "Use"],
+      "entries": [
+        {
+          "export": "`@shared/ui/components`",
+          "path": "`src/components/index.ts`",
+          "use": "Shared controls and portfolio section components"
+        },
+        {
+          "export": "`@shared/ui/registry.json`",
+          "path": "`src/registry/components.json`",
+          "use": "Component, section, and theme metadata"
+        },
+        {
+          "export": "`@shared/ui/sections`",
+          "path": "`src/sections/index.ts`",
+          "use": "Section renderers and editors"
+        },
+        {
+          "export": "`@shared/ui/sections/studio`",
+          "path": "`src/sections/studio/index.ts`",
+          "use": "Section settings, ordering, templates, and custom sections"
+        },
+        {
+          "export": "`@shared/ui/forms`",
+          "path": "`src/forms/index.ts`",
+          "use": "Shared form controls and editor fields"
+        },
+        {
+          "export": "`@shared/ui/layout`",
+          "path": "`src/layout/index.ts`",
+          "use": "Layout primitives, section views, and page shells"
+        },
+        {
+          "export": "`@shared/ui/display`",
+          "path": "`src/display/index.ts`",
+          "use": "Media and shared chat presentations"
+        },
+        {
+          "export": "`@shared/ui/chat`",
+          "path": "`src/display/chat/index.ts`",
+          "use": "Chat screen, composer, messages, and supporting controls"
+        },
+        {
+          "export": "`@shared/ui/site-login`",
+          "path": "`src/forms/site-login/index.ts`",
+          "use": "Shared sign-in panels and screens"
+        },
+        {
+          "export": "`@shared/ui/error-page`",
+          "path": "`src/feedback/error-page/index.ts`",
+          "use": "Error page presentation"
+        },
+        {
+          "export": "`@shared/ui/not-found`",
+          "path": "`src/feedback/not-found/index.ts`",
+          "use": "Missing page presentation"
+        },
+        {
+          "export": "`@shared/ui/portfolio`",
+          "path": "`src/portfolio/index.ts`",
+          "use": "Published portfolio layouts and studio tools"
+        },
+        {
+          "export": "`@shared/ui/portfolio-chat.css`",
+          "path": "`src/styles/portfolio-chat.css`",
+          "use": "Styles for the embedded portfolio chat"
+        },
+        {
+          "export": "`@shared/ui/seo`",
+          "path": "`src/seo/index.ts`",
+          "use": "Canonical, Open Graph, Twitter, and Schema.org metadata"
+        },
+        {
+          "export": "`@shared/ui/seo/image`",
+          "path": "`src/seo/share-image.tsx`",
+          "use": "Server-side social share image renderer"
+        }
+      ]
+    },
+    "feedback": {
+      "columns": ["Component", "Folder", "Use"],
+      "entries": [
+        {
+          "component": "`Alert`",
+          "folder": "`alert`",
+          "use": "Inline status message"
+        },
+        {
+          "component": "`AlertDialog`",
+          "folder": "`alert-dialog`",
+          "use": "Confirmation that must be answered"
+        },
+        {
+          "component": "`Badge`",
+          "folder": "`badge`",
+          "use": "Short status chip"
+        },
+        {
+          "component": "`Banner`",
+          "folder": "`banner`",
+          "use": "Page-level notice"
+        },
+        {
+          "component": "`Chip`, `Tag`",
+          "folder": "`chip`, `tag`",
+          "use": "Compact labels"
+        },
+        {
+          "component": "`Toaster`, `toast`, `SnackbarNotification`",
+          "folder": "`toast`, `sonner`, `notification`",
+          "use": "Sonner toasts and dismissible notifications"
+        },
+        {
+          "component": "`Spinner`",
+          "folder": "`spinner`",
+          "use": "Waiting state"
+        },
+        {
+          "component": "`Skeleton`",
+          "folder": "`skeleton`",
+          "use": "Loading placeholder"
+        },
+        {
+          "component": "`Progress`",
+          "folder": "`progress`",
+          "use": "Determinate progress"
+        },
+        {
+          "component": "`StatusIndicator`",
+          "folder": "`status-indicator`",
+          "use": "Small presence or state mark"
+        },
+        {
+          "component": "`EmptyState`",
+          "folder": "`empty-state`",
+          "use": "No-data state"
+        },
+        {
+          "component": "`ErrorPage`",
+          "folder": "`error-page`",
+          "use": "Full-page error"
+        },
+        {
+          "component": "`Feedback`",
+          "folder": "`feedback`",
+          "use": "Feedback prompt"
+        }
+      ]
+    },
+    "forms": {
+      "columns": ["Component", "Folder", "Use"],
+      "entries": [
+        {
+          "component": "`Input`",
+          "folder": "`input`",
+          "use": "Single-line text"
+        },
+        {
+          "component": "`Textarea`",
+          "folder": "`textarea`",
+          "use": "Multi-line text"
+        },
+        {
+          "component": "`TextField`",
+          "folder": "`text-field`",
+          "use": "Labeled field"
+        },
+        {
+          "component": "`Label`",
+          "folder": "`label`",
+          "use": "Field label"
+        },
+        {
+          "component": "`Checkbox`",
+          "folder": "`checkbox`",
+          "use": "Multi-select option"
+        },
+        {
+          "component": "`RadioButton`, `RadioGroup`",
+          "folder": "`radio-button`, `radio-group`",
+          "use": "Single-select option"
+        },
+        {
+          "component": "`Select`",
+          "folder": "`select`",
+          "use": "Option menu"
+        },
+        {
+          "component": "`Slider`",
+          "folder": "`slider`",
+          "use": "Numeric range"
+        },
+        {
+          "component": "`Calendar`",
+          "folder": "`calendar`",
+          "use": "Date selection"
+        },
+        {
+          "component": "`InputOTP`",
+          "folder": "`input-otp`",
+          "use": "One-time code entry"
+        },
+        {
+          "component": "`Form`",
+          "folder": "`form`",
+          "use": "Form layout and validation wiring"
+        },
+        {
+          "component": "`ContactForm`",
+          "folder": "`contact-form`",
+          "use": "Portfolio contact form"
+        }
+      ]
+    },
+    "layout-and-surfaces": {
+      "columns": ["Component", "Folder", "Use"],
+      "entries": [
+        {
+          "component": "`Flex` and the row, column, and stack helpers",
+          "folder": "`flex`",
+          "use": "Layout primitive"
+        },
+        {
+          "component": "`Card` and its header, body, footer, and title parts",
+          "folder": "`card`",
+          "use": "Bordered content surface"
+        },
+        {
+          "component": "`RevealCard`",
+          "folder": "`reveal-card`",
+          "use": "Card with a reveal treatment"
+        },
+        {
+          "component": "`AppearanceCard`",
+          "folder": "`appearance-card`",
+          "use": "Card wrapper with appearance and hover"
+        },
+        {
+          "component": "`VariantCard` and section parts",
+          "folder": "`variant-card`",
+          "use": "CVA card surface with layout slots"
+        },
+        {
+          "component": "`Section`",
+          "folder": "`section`",
+          "use": "Page section frame"
+        },
+        {
+          "component": "`Divider`",
+          "folder": "`divider`",
+          "use": "Horizontal or vertical rule"
+        },
+        {
+          "component": "`Separator`",
+          "folder": "`seperator`",
+          "use": "Radix separator"
+        },
+        {
+          "component": "`AspectRatio`",
+          "folder": "`aspect-ratio`",
+          "use": "Fixed media ratio"
+        },
+        {
+          "component": "`ScrollableContainer`, `ScrollArea`",
+          "folder": "`scrollable-container`",
+          "use": "Overflow region"
+        },
+        {
+          "component": "`ScrollButton`, `ScrollToTop`",
+          "folder": "`scroll-button`, `scroll-to-top`",
+          "use": "Scroll affordances"
+        },
+        {
+          "component": "`Resizable`",
+          "folder": "`resizable`",
+          "use": "Resizable panes"
+        },
+        {
+          "component": "`Accordion`",
+          "folder": "`accordion`",
+          "use": "Collapsible stacked sections"
+        },
+        {
+          "component": "`Collapsible`",
+          "folder": "`collapsible`",
+          "use": "Single disclosure"
+        },
+        {
+          "component": "`Tabs`",
+          "folder": "`tabs`",
+          "use": "Tabbed content"
+        },
+        {
+          "component": "`Background`",
+          "folder": "`background`",
+          "use": "Page background treatment"
+        }
+      ]
+    },
+    "navigation-and-chrome": {
+      "columns": ["Component", "Folder", "Use"],
+      "entries": [
+        {
+          "component": "`Brand`",
+          "folder": "`brand`",
+          "use": "Wordmark home link"
+        },
+        {
+          "component": "`Header`",
+          "folder": "`header`",
+          "use": "Top of page"
+        },
+        {
+          "component": "`Navbar`, `MobileMenu`",
+          "folder": "`navbar`",
+          "use": "Primary navigation"
+        },
+        {
+          "component": "`Footer`",
+          "folder": "`footer`",
+          "use": "Page footer"
+        },
+        {
+          "component": "`PageHeader`",
+          "folder": "`page-header`",
+          "use": "Page title block"
+        },
+        {
+          "component": "`Sidebar`, `AppSidebar`",
+          "folder": "`sidebar`, `app-sidebar`",
+          "use": "Side navigation"
+        },
+        {
+          "component": "`Breadcrumb`",
+          "folder": "`breadcrumb`",
+          "use": "Location trail"
+        },
+        {
+          "component": "`Pagination`",
+          "folder": "`pagination`",
+          "use": "Paged lists"
+        },
+        {
+          "component": "`TeamSwitcher`",
+          "folder": "`team-switcher`",
+          "use": "Workspace switcher"
+        }
+      ]
+    },
+    "overlays": {
+      "columns": ["Component", "Folder", "Use"],
+      "entries": [
+        {
+          "component": "`Dialog`",
+          "folder": "`dialog`",
+          "use": "Modal panel"
+        },
+        {
+          "component": "`RadixDialog` and its parts",
+          "folder": "`radix-dialog`",
+          "use": "Lower-level dialog primitives"
+        },
+        {
+          "component": "`Drawer`",
+          "folder": "`drawer`",
+          "use": "Edge panel"
+        },
+        {
+          "component": "`Sheet`",
+          "folder": "`sheet`",
+          "use": "Side sheet"
+        },
+        {
+          "component": "`Popover`",
+          "folder": "`popover`",
+          "use": "Anchored floating panel"
+        },
+        {
+          "component": "`Tooltip`, `AnimatedTooltip`",
+          "folder": "`tooltip`, `animated-tooltip`",
+          "use": "Hover or focus hint"
+        },
+        {
+          "component": "`HoverCard`",
+          "folder": "`hover-card`",
+          "use": "Rich hover preview"
+        },
+        {
+          "component": "`DropdownMenu`",
+          "folder": "`dropdown-menu`",
+          "use": "Action menu"
+        },
+        {
+          "component": "`ContextMenu`",
+          "folder": "`context-menu`",
+          "use": "Right-click menu"
+        },
+        {
+          "component": "`Menubar`",
+          "folder": "`menubar`",
+          "use": "Horizontal menu bar"
+        },
+        {
+          "component": "`Command`",
+          "folder": "`command`",
+          "use": "Command palette"
+        },
+        {
+          "component": "`NavigationMenu`",
+          "folder": "`navigation-menu`",
+          "use": "Disclosure navigation"
+        }
+      ]
+    },
+    "portfolio-surfaces": {
+      "columns": ["Component", "Folder", "Use"],
+      "entries": [
+        {
+          "component": "`HeroSurface`",
+          "folder": "`portfolio`",
+          "use": "Hero media surface"
+        },
+        {
+          "component": "`WorkMedia`",
+          "folder": "`portfolio`",
+          "use": "Work and profile imagery"
+        },
+        {
+          "component": "`PortfolioChat`",
+          "folder": "`portfolio/chat`",
+          "use": "Published portfolio chat"
+        }
+      ]
+    },
+    "shell-and-editing": {
+      "columns": ["Component", "Folder", "Use"],
+      "entries": [
+        {
+          "component": "`StudioShell`",
+          "folder": "`layout`",
+          "use": "Owner studio frame"
+        },
+        {
+          "component": "Home, editors, billing views, examples",
+          "folder": "`studio`",
+          "use": "Feature UI. App code keeps fetching and navigation"
+        },
+        {
+          "component": "`PageShell`",
+          "folder": "`layout`",
+          "use": "Root document theme, providers, and metadata scripts"
+        },
+        {
+          "component": "`LoginPanel`",
+          "folder": "`auth`",
+          "use": "Sign-in panel"
+        },
+        {
+          "component": "`ErrorPage`, `NotFoundPage`",
+          "folder": "`pages`",
+          "use": "Error and missing-page states"
+        },
+        {
+          "component": "`CollectionEditor`, `SortableList`",
+          "folder": "`editor`",
+          "use": "Reorderable collections"
+        },
+        {
+          "component": "`SectionContentEditor`, `OptionsEditor`, `SourceEditor`",
+          "folder": "`editor`",
+          "use": "Section content, options, and source editing"
+        },
+        {
+          "component": "`Field`, `LinesField`, `SelectField`, `EmptyState`",
+          "folder": "`forms`",
+          "use": "Editor fields"
+        },
+        {
+          "component": "`RenderSection`",
+          "folder": "`sections/renderers`",
+          "use": "Renders a saved section by type"
+        },
+        {
+          "component": "`EditSection`",
+          "folder": "`sections/editors`",
+          "use": "Edits a saved section by type"
+        }
+      ]
+    },
+    "studio-tools": {
+      "columns": ["Component", "Folder", "Use"],
+      "entries": [
+        {
+          "component": "`ThemeCustomizer`, `ComponentCustomizer`",
+          "folder": "`theme-customizer`, `component-customizer`",
+          "use": "Live theme and component controls"
+        },
+        {
+          "component": "`MouseCircle`",
+          "folder": "`mouse-circle`",
+          "use": "Pointer decoration"
+        },
+        {
+          "component": "`GuidedOnboarding`, `SetupNavigation`",
+          "folder": "`portfolio`",
+          "use": "Resumable profession, layout and review steps"
+        },
+        {
+          "component": "`DraftRecovery`, `useDraftRecovery`",
+          "folder": "`portfolio/recovery`",
+          "use": "Tab-local recovery and revision reconciliation"
+        },
+        {
+          "component": "`ProposalComparison`",
+          "folder": "`portfolio`",
+          "use": "Readable current/proposed field values"
+        }
+      ]
+    }
+  },
+  "otherSections": [
+    {
+      "component": "AboutMeSection",
+      "description": "Show the profile introduction on the engineer portfolio."
+    },
+    {
+      "component": "CVSection",
+      "description": "Present the downloadable CV action."
+    },
+    {
+      "component": "EducationsSection",
+      "description": "Display the profile’s education history.",
+      "related": ["EducationItem"]
+    },
+    {
+      "component": "ExperienceSection",
+      "description": "Show the profile’s work experience.",
+      "related": ["ExperienceItem", "ExperienceList"]
+    },
+    {
+      "component": "ReferralSection",
+      "description": "Display approved testimonials from the portfolio review flow.",
+      "related": ["ReferralItem"]
+    },
+    {
+      "component": "ReviewSection",
+      "description": "Review and moderate incoming testimonials.",
+      "notes": "Studio testimonial queue with pending, empty, load error and per-review decision states",
+      "related": ["ReviewButton"]
+    },
+    {
+      "component": "SkillSection",
+      "description": "Group the profile’s skills by category.",
+      "related": ["SkillItem", "SkillCategoryItem"]
+    },
+    {
+      "component": "SummarySection",
+      "description": "Introduce the portfolio owner and their work."
+    }
+  ],
+  "sections": {
+    "about": {
+      "category": "Story",
+      "component": "AboutSection",
+      "description": "Introduce yourself, your values and the work you love.",
+      "name": "About",
+      "notes": "editor",
+      "related": ["PortfolioAboutSection"]
+    },
+    "about-hero": {
+      "category": "Story",
+      "component": "AboutHeroSection",
+      "description": "Open with a personal headline and a strong first impression.",
+      "name": "About Hero",
+      "notes": "editor"
+    },
+    "accordion": {
+      "category": "Story",
+      "component": "AccordionSection",
+      "description": "Keep detailed information tidy in expandable rows.",
+      "name": "Accordion",
+      "notes": "editor"
+    },
+    "awards": {
+      "category": "Story",
+      "component": "AwardsSection",
+      "description": "Celebrate recognitions, certifications and achievements.",
+      "name": "Awards",
+      "notes": "editor"
+    },
+    "blog-page": {
+      "category": "Story",
+      "component": "BlogPageSection",
+      "description": "Share longer articles, insights and writing.",
+      "name": "Blog Page",
+      "notes": "editor",
+      "related": ["JsonBlogPage", "Post", "Posts"]
+    },
+    "calendar-link": {
+      "category": "Connect",
+      "component": "CalendarLinkSection",
+      "description": "Help visitors book time with you in one click.",
+      "name": "Calendar Link",
+      "notes": "editor"
+    },
+    "careers": {
+      "category": "Work",
+      "component": "CareersSection",
+      "description": "Present current roles and opportunities to join you.",
+      "name": "Careers",
+      "notes": "editor"
+    },
+    "clients": {
+      "category": "Media",
+      "component": "ClientsSection",
+      "description": "Show the organizations and people you work with.",
+      "name": "Clients",
+      "notes": "editor"
+    },
+    "contact-form": {
+      "category": "Connect",
+      "component": "ContactFormSection",
+      "description": "Give visitors a simple way to get in touch.",
+      "name": "Contact Form",
+      "notes": "editor"
+    },
+    "contact-info": {
+      "category": "Connect",
+      "component": "ContactInfoSection",
+      "description": "Place your email and contact details in one spot.",
+      "name": "Contact Info",
+      "notes": "editor"
+    },
+    "cta": {
+      "category": "Work",
+      "component": "CTASection",
+      "description": "Feature a primary action and any supporting links in a focused panel.",
+      "name": "CTA",
+      "notes": "editor",
+      "related": ["CTABlock"]
+    },
+    "custom": {
+      "category": "Story",
+      "component": "CustomSection",
+      "description": "Create a flexible section in the layout you prefer.",
+      "name": "Custom",
+      "notes": "editor"
+    },
+    "dashboard": {
+      "category": "Work",
+      "component": "DashboardSection",
+      "description": "Present key metrics and supporting details in a portfolio dashboard.",
+      "name": "Dashboard",
+      "notes": "`DashboardSectionEditor`"
+    },
+    "faq": {
+      "category": "Story",
+      "component": "FAQSection",
+      "description": "Pair a section introduction with expandable answers to common questions.",
+      "name": "FAQ",
+      "notes": "editor",
+      "related": ["FAQBlock"]
+    },
+    "features": {
+      "category": "Work",
+      "component": "FeaturesSection",
+      "description": "Highlight services, capabilities or product benefits.",
+      "name": "Features",
+      "notes": "editor"
+    },
+    "gallery-grid": {
+      "category": "Media",
+      "component": "GalleryGridSection",
+      "description": "Put your best images together in a visual grid.",
+      "name": "Gallery Grid",
+      "notes": "editor",
+      "related": ["MasonryGridSection"]
+    },
+    "heading": {
+      "category": "Story",
+      "component": "HeadingSection",
+      "description": "Start a new chapter with a clear, bold heading.",
+      "name": "Heading",
+      "notes": "editor"
+    },
+    "hero": {
+      "category": "Story",
+      "component": "HeroSection",
+      "description": "Introduce your portfolio with a headline, optional media and an action.",
+      "name": "Hero",
+      "notes": "editor",
+      "related": ["HeroBlock"]
+    },
+    "how-to": {
+      "category": "Story",
+      "component": "HowToSection",
+      "description": "Walk readers through a process step by step.",
+      "name": "How To",
+      "notes": "editor"
+    },
+    "instagram": {
+      "category": "Media",
+      "component": "InstagramSection",
+      "description": "Curate visual posts and link back to your work.",
+      "name": "Instagram",
+      "notes": "editor"
+    },
+    "legal-text": {
+      "category": "Story",
+      "component": "LegalTextSection",
+      "description": "Display policies, terms or other detailed copy.",
+      "name": "Legal Text",
+      "notes": "editor"
+    },
+    "map": {
+      "category": "Connect",
+      "component": "MapSection",
+      "description": "Help visitors find a place with a location block.",
+      "name": "Map",
+      "notes": "editor"
+    },
+    "menu": {
+      "category": "Story",
+      "component": "MenuSection",
+      "description": "Organize offerings into easy-to-scan categories.",
+      "name": "Menu",
+      "notes": "editor"
+    },
+    "newsletter": {
+      "category": "Connect",
+      "component": "NewsletterSection",
+      "description": "Invite visitors to subscribe for updates.",
+      "name": "Newsletter",
+      "notes": "editor"
+    },
+    "pinterest": {
+      "category": "Media",
+      "component": "PinterestSection",
+      "description": "Collect inspiration and visual work in a gallery.",
+      "name": "Pinterest",
+      "notes": "editor"
+    },
+    "plans": {
+      "category": "Work",
+      "component": "PlansSection",
+      "description": "Compare packages and help visitors choose a plan.",
+      "name": "Plans",
+      "notes": "editor"
+    },
+    "posts-grid": {
+      "category": "Story",
+      "component": "PostsGridSection",
+      "description": "Browse articles and updates as compact cards.",
+      "name": "Posts Grid",
+      "notes": "editor"
+    },
+    "pricing": {
+      "category": "Work",
+      "component": "PricingSection",
+      "description": "Make pricing and package details easy to compare.",
+      "name": "Pricing",
+      "notes": "editor"
+    },
+    "profile": {
+      "category": "Story",
+      "component": "ProfileSection",
+      "description": "Show a quick bio, portrait and key details.",
+      "name": "Profile",
+      "notes": "editor"
+    },
+    "projects": {
+      "category": "Work",
+      "component": "ProjectsSection",
+      "description": "Feature your portfolio projects and outcomes.",
+      "name": "Projects",
+      "notes": "editor; `PortfolioProjectsSection`, `ProjectForm`, `ProjectItem`, `ProjectList` are the portfolio project parts"
+    },
+    "property": {
+      "category": "Work",
+      "component": "PropertySection",
+      "description": "Present a space or property with standout details.",
+      "name": "Property",
+      "notes": "editor"
+    },
+    "quickstart": {
+      "category": "Story",
+      "component": "QuickstartSection",
+      "description": "Explain the first steps to getting started.",
+      "name": "Quickstart",
+      "notes": "editor"
+    },
+    "services": {
+      "category": "Work",
+      "component": "ServicesSection",
+      "description": "Introduce your services in a scannable card grid.",
+      "name": "Services",
+      "notes": "editor"
+    },
+    "shop-items": {
+      "category": "Work",
+      "component": "ShopItemsSection",
+      "description": "Show products or downloadable items at a glance.",
+      "name": "Shop Items",
+      "notes": "editor"
+    },
+    "showcase": {
+      "category": "Media",
+      "component": "ShowcaseSection",
+      "description": "Create an image-first highlight of recent work.",
+      "name": "Showcase",
+      "notes": "editor"
+    },
+    "social-links": {
+      "category": "Connect",
+      "component": "SocialLinksSection",
+      "description": "Collect your social channels in one place.",
+      "name": "Social Links",
+      "notes": "editor",
+      "related": ["SocialLinks"]
+    },
+    "stats": {
+      "category": "Work",
+      "component": "StatsSection",
+      "description": "Turn your results and milestones into key numbers.",
+      "name": "Stats",
+      "notes": "editor"
+    },
+    "studies": {
+      "category": "Story",
+      "component": "StudiesSection",
+      "description": "Show learning milestones and qualifications over time.",
+      "name": "Studies",
+      "notes": "editor"
+    },
+    "table-of-contents": {
+      "category": "Connect",
+      "component": "TableOfContentsSection",
+      "description": "Let visitors jump to the sections they need.",
+      "name": "Table Of Contents",
+      "notes": "editor",
+      "related": ["TableOfContents"]
+    },
+    "tabs": {
+      "category": "Story",
+      "component": "TabsSection",
+      "description": "Group related content into switchable panels.",
+      "name": "Tabs",
+      "notes": "editor"
+    },
+    "team": {
+      "category": "Story",
+      "component": "TeamSection",
+      "description": "Introduce the people behind your work.",
+      "name": "Team",
+      "notes": "editor"
+    },
+    "technical-skills": {
+      "category": "Story",
+      "component": "TechnicalSkillsSection",
+      "description": "Display tools, technologies and strengths.",
+      "name": "Technical Skills",
+      "notes": "editor"
+    },
+    "testimonials": {
+      "category": "Story",
+      "component": "TestimonialsSection",
+      "description": "Build trust through words from collaborators.",
+      "name": "Testimonials",
+      "notes": "editor"
+    },
+    "text": {
+      "category": "Story",
+      "component": "TextSection",
+      "description": "Share a simple, readable piece of written content.",
+      "name": "Text",
+      "notes": "editor"
+    },
+    "timeline": {
+      "category": "Story",
+      "component": "TimelineSection",
+      "description": "Tell a story through dates and key milestones.",
+      "name": "Timeline",
+      "notes": "editor"
+    },
+    "video": {
+      "category": "Media",
+      "component": "VideoSection",
+      "description": "Feature a video with a clear preview and play action.",
+      "name": "Video",
+      "notes": "editor"
+    },
+    "work-experience": {
+      "category": "Story",
+      "component": "WorkExperienceSection",
+      "description": "Highlight positions, responsibilities and impact.",
+      "name": "Work Experience",
+      "notes": "editor"
+    },
+    "youtube": {
+      "category": "Media",
+      "component": "YouTubeSection",
+      "description": "Showcase a YouTube video without cluttering the page.",
+      "name": "YouTube",
+      "notes": "editor"
+    }
+  },
+  "themes": {
+    "attributes": {
+      "accent": ["cyan", "violet", "emerald"],
+      "animation": ["none", "base", "smooth", "bouncy", "elastic"],
+      "blur": ["none", "soft", "medium", "strong", "extra", "huge", "gigantic"],
+      "border": ["none", "thin", "base", "thick", "moderate"],
+      "brand": [
+        "white",
+        "sand",
+        "gray",
+        "slate",
+        "red",
+        "orange",
+        "yellow",
+        "moss",
+        "green",
+        "emerald",
+        "aqua",
+        "cyan",
+        "blue",
+        "indigo",
+        "violet",
+        "magenta",
+        "pink"
+      ],
+      "container": ["small", "medium", "large"],
+      "font": ["sans", "serif", "mono"],
+      "font-size": ["xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl"],
+      "gradient": ["none", "subtle", "vivid"],
+      "line-height": ["none", "tight", "snug", "normal", "relaxed", "loose"],
+      "opacity": ["none", "soft", "medium", "strong"],
+      "perspective": ["flat", "normal", "dramatic"],
+      "radius": ["none", "square", "small", "base", "moderate", "rounded", "pill", "circle"],
+      "scale": ["small", "base", "large", "90", "95", "100", "105", "110", "120"],
+      "shadow": ["none", "soft", "subtle", "medium", "strong", "deep"],
+      "spacing": ["compact", "comfortable", "relaxed", "spacious", "cozy", "wide", "extra"],
+      "theme": ["light", "dark", "system"],
+      "tracking": ["tight", "wide"],
+      "transition": ["none", "base", "smooth", "bouncy", "elastic"],
+      "weight": ["light", "normal", "medium", "semibold", "bold"]
+    },
+    "portfolioAccents": [
+      "red",
+      "orange",
+      "yellow",
+      "moss",
+      "green",
+      "emerald",
+      "aqua",
+      "cyan",
+      "blue",
+      "indigo",
+      "violet",
+      "magenta",
+      "pink",
+      "sand",
+      "gray",
+      "slate"
+    ],
+    "presets": [
+      {
+        "description": "The original cool palette and crisp cards.",
+        "id": "studio",
+        "name": "Studio"
+      },
+      {
+        "description": "Warm surfaces, serif titles and a printed feel.",
+        "id": "paper",
+        "name": "Paper"
+      },
+      {
+        "description": "Neutral surfaces, monospaced titles and sharp edges.",
+        "id": "graphite",
+        "name": "Graphite"
+      },
+      {
+        "description": "Soft lavender surfaces, rounded cards and a relaxed feel.",
+        "id": "bloom",
+        "name": "Bloom"
+      }
+    ]
+  }
+}

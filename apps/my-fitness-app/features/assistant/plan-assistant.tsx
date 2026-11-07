@@ -509,7 +509,7 @@ async function fetchProposal(
   task: Task | undefined,
   signal: AbortSignal,
 ): Promise<Result> {
-  const response = await fetch(urls.next.fitness.assistant(), {
+  const response = await fetch(urls.fitness.assistant(), {
     body: JSON.stringify(input),
     headers: { "Content-Type": "application/json", ...(await authorizationHeaders()) },
     method: "POST",

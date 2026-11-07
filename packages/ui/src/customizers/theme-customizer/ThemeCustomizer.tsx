@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 
 import { cn } from "cn";
 
-import { themePreferenceOptions, useUserConfigStore } from "@shared/runtime/user";
+import { themeOptions } from "@shared/config/theme";
+import { useThemeStore } from "@shared/runtime/user";
 
 import { Button } from "../../buttons/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../cards";
@@ -27,38 +28,38 @@ import type {
   ThemeOption,
 } from "../customizers/types";
 
-export const themeOptions: SelectOption[] = [
-  { label: "Light", value: "light" },
-  { label: "Dark", value: "dark" },
-  { label: "System", value: "system" },
-];
+// export const themeOptions: SelectOption[] = [
+//   { label: "Light", value: "light" },
+//   { label: "Dark", value: "dark" },
+//   { label: "System", value: "system" },
+// ];
 
-export const brandOptions: SelectOption[] = themePreferenceOptions.brand.map((value) => ({
+export const brandOptions: SelectOption[] = themeOptions.brand.map((value) => ({
   label: value,
   value,
 }));
 
-export const borderOptions: SelectOption[] = themePreferenceOptions.border.map((value) => ({
+export const borderOptions: SelectOption[] = themeOptions.border.map((value) => ({
   label: value,
   value,
 }));
 
-export const shadowOptions: SelectOption[] = themePreferenceOptions.shadow.map((value) => ({
+export const shadowOptions: SelectOption[] = themeOptions.shadow.map((value) => ({
   label: value,
   value,
 }));
 
-export const spacingOptions: SelectOption[] = themePreferenceOptions.spacing.map((value) => ({
+export const spacingOptions: SelectOption[] = themeOptions.spacing.map((value) => ({
   label: value,
   value,
 }));
 
-export const radiusOptions: SelectOption[] = themePreferenceOptions.radius.map((value) => ({
+export const radiusOptions: SelectOption[] = themeOptions.radius.map((value) => ({
   label: value,
   value,
 }));
 
-export const transitionOptions: SelectOption[] = themePreferenceOptions.transition.map((value) => ({
+export const transitionOptions: SelectOption[] = themeOptions.transition.map((value) => ({
   label: value,
   value,
 }));
@@ -112,9 +113,9 @@ export function ThemeCustomizer({
   showReset = true,
   ...props
 }: ThemeCustomizerProps) {
-  const preferences = useUserConfigStore((state) => state.themePreferences);
-  const theme = useUserConfigStore((state) => state.activeMode) ?? "system";
-  const setTheme = (value: ThemeOption) => useUserConfigStore.getState().setActiveMode(value);
+  const preferences = useThemeStore((state) => state.themePreferences);
+  const theme = useThemeStore((state) => state.activeMode) ?? "system";
+  const setTheme = (value: ThemeOption) => useThemeStore.getState().setActiveMode(value);
   const brand = (preferences.brand ?? defaultAttribute("brand", "white")) as BrandOption;
   const border = preferences.border ?? defaultAttribute("border", "base");
   const shadow = (preferences.shadow ?? defaultAttribute("shadow", "soft")) as ShadowOption;
@@ -123,17 +124,17 @@ export function ThemeCustomizer({
   const radius = preferences.radius ?? defaultAttribute("radius", "base");
   const transition = preferences.transition ?? defaultAttribute("transition", "smooth");
   const setBrand = (value: BrandOption) =>
-    useUserConfigStore.getState().setThemePreferences({ brand: value });
+    useThemeStore.getState().setThemePreferences({ brand: value });
   const setBorder = (value: string) =>
-    useUserConfigStore.getState().setThemePreferences({ border: value });
+    useThemeStore.getState().setThemePreferences({ border: value });
   const setShadow = (value: ShadowOption) =>
-    useUserConfigStore.getState().setThemePreferences({ shadow: value });
+    useThemeStore.getState().setThemePreferences({ shadow: value });
   const setSpacing = (value: SpacingOption) =>
-    useUserConfigStore.getState().setThemePreferences({ spacing: value });
+    useThemeStore.getState().setThemePreferences({ spacing: value });
   const setRadius = (value: string) =>
-    useUserConfigStore.getState().setThemePreferences({ radius: value });
+    useThemeStore.getState().setThemePreferences({ radius: value });
   const setTransition = (value: string) =>
-    useUserConfigStore.getState().setThemePreferences({ transition: value });
+    useThemeStore.getState().setThemePreferences({ transition: value });
   const [showCodePanel, setShowCodePanel] = useState(showCode);
 
   // Apply theme changes to document
@@ -261,7 +262,10 @@ Object.entries(themeConfig).forEach(([key, value]) => {
                   <SelectField
                     label="Theme"
                     onChange={(value) => handleThemeChange(value as ThemeOption)}
-                    options={themeOptions}
+                    options={themeOptions.theme.map((value) => ({
+                      label: value,
+                      value,
+                    }))}
                     value={theme}
                   />
                 </div>

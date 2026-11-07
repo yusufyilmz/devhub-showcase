@@ -1,20 +1,19 @@
-import type { Metadata } from "next";
+import { type PortfolioProfile, urls } from "@shared/config";
+import { createPageMetadata } from "@shared/ui/seo";
 
-import type { PortfolioProfile } from "@shared/config";
+import { platformSeo } from "@/features/platform/seo";
 
-import { portfolioUrl, siteUrl } from "@/features/platform/site-url";
-
-export function portfolioMetadata(profile: PortfolioProfile, username: string): Metadata {
-  const canonical = portfolioUrl(username);
+export function portfolioMetadata(profile: PortfolioProfile, username: string) {
+  const canonical = urls.studio.portfolioUrl(username);
   const title = `${profile.name} | ${profile.title}`;
-  const images = [{ alt: title, height: 630, url: `${canonical}/share.png`, width: 1200 }];
-  return {
-    alternates: { canonical },
+  return createPageMetadata({
+    canonical,
     description: profile.summary,
     icons: {
       icon: [{ type: "image/svg+xml", url: `${canonical}/icon.svg` }],
       shortcut: `${canonical}/icon.svg`,
     },
+    image: { alt: title, url: `${canonical}${platformSeo.imagePath}` },
     keywords: [
       profile.name,
       profile.title,
@@ -22,26 +21,13 @@ export function portfolioMetadata(profile: PortfolioProfile, username: string): 
       "CV",
       ...Object.values(profile.skills).flat().slice(0, 20),
     ],
-    metadataBase: new URL(siteUrl),
-    openGraph: {
-      description: profile.summary,
-      images,
-      locale: { en: "en_US", es: "es_ES", tr: "tr_TR" }[profile.portfolioLanguage ?? "en"],
-      siteName: "MyDevStudio",
-      title,
-      type: "profile",
-      url: canonical,
-    },
+    locale: { en: "en_US", es: "es_ES", tr: "tr_TR" }[profile.portfolioLanguage ?? "en"],
     robots: {
       follow: !profile.publicationVisibility || profile.publicationVisibility === "public",
       index: !profile.publicationVisibility || profile.publicationVisibility === "public",
     },
+    siteName: platformSeo.name,
     title,
-    twitter: {
-      card: "summary_large_image",
-      description: profile.summary,
-      images,
-      title,
-    },
-  };
+    type: "profile",
+  });
 }

@@ -1,86 +1,59 @@
 // @vitest-environment jsdom
+
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { USER_CONFIG_STORAGE_KEY, useUserConfigStore } from "./userConfigStore";
+import { storage } from "@shared/config/storage";
 
-describe("useUserConfigStore persisted browser state", () => {
-  it("persists validated appearance settings independently of mode and display user", async () => {
-    useUserConfigStore.getState().setActiveMode("dark");
-    useUserConfigStore.getState().setThemePreferences({
-      accent: "violet",
-      brand: "aqua",
-      radius: "pill",
-      scale: "110",
-      spacing: "spacious",
-      ...{ unknown: "no" },
-    });
-    useUserConfigStore.getState().setThemePreferences({ border: "invalid" });
-    const serialized = localStorage.getItem(USER_CONFIG_STORAGE_KEY);
-    useUserConfigStore.setState({ themePreferences: {} });
-    localStorage.setItem(USER_CONFIG_STORAGE_KEY, serialized ?? "");
-    await useUserConfigStore.persist.rehydrate();
-    expect(useUserConfigStore.getState().themePreferences).toEqual({
-      accent: "violet",
-      brand: "aqua",
-      radius: "pill",
-      scale: "110",
-      spacing: "spacious",
-    });
-    useUserConfigStore.getState().clearUser();
-    expect(useUserConfigStore.getState().themePreferences.spacing).toBe("spacious");
-    useUserConfigStore.getState().setActiveMode("light");
-    expect(useUserConfigStore.getState().themePreferences.accent).toBe("violet");
-    useUserConfigStore.getState().reset();
-    expect(useUserConfigStore.getState().themePreferences).toEqual({});
-  });
+import { themeStorage, userStorage } from "../storage";
+import { useThemeStore } from "./themeStore";
+import { useUserConfigStore } from "./userConfigStore";
+
+describe("browser user and theme stores", () => {
   beforeEach(() => {
-    useUserConfigStore.setState({ activeMode: null, themePreferences: {}, user: null });
+    useThemeStore.setState({ activeMode: null, themePreferences: {} });
+    useUserConfigStore.getState().clearUser();
     localStorage.clear();
   });
-  it("rehydrates a theme and display user without persisting arbitrary account data", async () => {
-    useUserConfigStore.getState().setActiveMode("light");
-    useUserConfigStore.getState().setUser({
-      email: "owner@example.test",
-      id: "owner",
-      name: "Yusuf",
-      ...{ access_token: "never-store-this" },
+
+  it("persists user and theme in separate records and restores only valid fields", async () => {
+    useThemeStore.getState().setActiveMode("dark");
+    useThemeStore.getState().setThemePreferences({ border: "invalid", spacing: "spacious" });
+    useUserConfigStore.getState().setUser({ id: "owner", name: "Yusuf" });
+
+    expect(JSON.parse(localStorage.getItem(themeStorage.name) ?? "null")).toEqual({
+      state: { activeMode: "dark", themePreferences: { spacing: "spacious" } },
+      version: storage.version,
     });
-    const serialized = localStorage.getItem(USER_CONFIG_STORAGE_KEY);
-    expect(serialized).not.toContain("access_token");
-    useUserConfigStore.setState({ activeMode: null, user: null });
-    localStorage.setItem(USER_CONFIG_STORAGE_KEY, serialized ?? "");
+    expect(JSON.parse(localStorage.getItem(userStorage.name) ?? "null")).toEqual({
+      state: { user: { id: "owner", name: "Yusuf" } },
+      version: storage.version,
+    });
+
+    await useThemeStore.persist.rehydrate();
     await useUserConfigStore.persist.rehydrate();
-    expect(useUserConfigStore.getState().activeMode).toBe("light");
+    expect(useThemeStore.getState().activeMode).toBe("dark");
     expect(useUserConfigStore.getState().user?.name).toBe("Yusuf");
+
     useUserConfigStore.getState().clearUser();
-    expect(useUserConfigStore.getState().user).toBeNull();
-    expect(useUserConfigStore.getState().activeMode).toBe("light");
-  });
-  it("ignores invalid persisted preferences and malformed user fields", async () => {
-    localStorage.setItem(
-      USER_CONFIG_STORAGE_KEY,
-      JSON.stringify({
-        state: { activeMode: "neon", user: { id: 12, name: "Bad record" } },
-        version: 2,
-      }),
-    );
     await useUserConfigStore.persist.rehydrate();
-    expect(useUserConfigStore.getState().activeMode).toBeNull();
     expect(useUserConfigStore.getState().user).toBeNull();
+    expect(useThemeStore.getState().activeMode).toBe("dark");
   });
-  it("migrates the existing key and drops obsolete fields", async () => {
+
+  it("ignores malformed records and unsupported versions", async () => {
     localStorage.setItem(
-      USER_CONFIG_STORAGE_KEY,
+      themeStorage.name,
       JSON.stringify({
-        state: { activeMode: "dark", chatWidth: 600, showNginxStats: true, useVba: true },
+        state: { activeMode: "dark", themePreferences: { brand: "cyan" } },
         version: 1,
       }),
     );
+    localStorage.setItem(userStorage.name, "{invalid-json");
+
+    await useThemeStore.persist.rehydrate();
     await useUserConfigStore.persist.rehydrate();
-    expect(useUserConfigStore.getState().activeMode).toBe("dark");
-    const record = JSON.parse(localStorage.getItem(USER_CONFIG_STORAGE_KEY) ?? "null");
-    expect(record.version).toBe(2);
-    expect(record.state).toEqual({ activeMode: "dark", themePreferences: {}, user: null });
-    expect(useUserConfigStore.getState()).not.toHaveProperty("showNginxStats");
+    expect(useThemeStore.getState().activeMode).toBeNull();
+    expect(useThemeStore.getState().themePreferences).toEqual({});
+    expect(useUserConfigStore.getState().user).toBeNull();
   });
 });

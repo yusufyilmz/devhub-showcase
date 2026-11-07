@@ -8,8 +8,7 @@ import { useStudioRequest } from "@shared/runtime/studio";
 import { CvVersionsEditor } from "@shared/ui/portfolio";
 
 type Library = { variants: ReturnType<typeof cvLibrarySchema.parse>; revision: number };
-const downloadHref = (id: string) =>
-  `${urls.next.studio.cvVariants()}/${encodeURIComponent(id)}/pdf`;
+const downloadHref = (id: string) => `${urls.studio.cvVariants()}/${encodeURIComponent(id)}/pdf`;
 export function PrivateCvVersions({
   profile,
   sourceRevision,
@@ -19,14 +18,14 @@ export function PrivateCvVersions({
 }) {
   const request = useStudioRequest();
   const load = useCallback(async (): Promise<Library> => {
-    const response = await request(urls.next.studio.cvVariants());
+    const response = await request(urls.studio.cvVariants());
     const data = await response.json();
     if (!response.ok) throw new Error(data.error);
     return { revision: data.revision, variants: cvLibrarySchema.parse(data.variants) };
   }, [request]);
   const save = useCallback(
     async (library: Library): Promise<Library> => {
-      const response = await request(urls.next.studio.cvVariants(), {
+      const response = await request(urls.studio.cvVariants(), {
         body: JSON.stringify(library),
         headers: { "Content-Type": "application/json" },
         method: "PUT",
@@ -42,7 +41,7 @@ export function PrivateCvVersions({
     NonNullable<React.ComponentProps<typeof CvVersionsEditor>["requestInterviewPrep"]>
   >(
     async (input, signal) => {
-      const response = await request(urls.next.studio.interviewPrep(), {
+      const response = await request(urls.studio.interviewPrep(), {
         body: JSON.stringify({ ...input, requestId: crypto.randomUUID() }),
         headers: { "Content-Type": "application/json" },
         method: "POST",

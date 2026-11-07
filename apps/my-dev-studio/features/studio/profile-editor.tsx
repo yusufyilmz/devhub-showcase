@@ -15,6 +15,7 @@ import {
 } from "@shared/config";
 import { urls } from "@shared/config/urls";
 import { editCvPath } from "@shared/lib/profiles";
+import { draftStorage } from "@shared/runtime/storage";
 import { useStudioRequest } from "@shared/runtime/studio";
 import { useUserConfigStore } from "@shared/runtime/user";
 import type { ProfileSnapshot } from "@shared/services/profile";
@@ -26,7 +27,6 @@ import { GoogleImportEditor } from "@shared/ui/google-import";
 import { Input } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
 import {
-  clearDraftRecovery,
   DraftRecovery,
   EditorGuidance,
   FieldVisibilityEditor,
@@ -34,7 +34,6 @@ import {
   LanguageSettingsEditor,
   PortfolioTypePicker,
   ProfileFields,
-  recoveryPrefix,
   SetupNavigation,
   type SetupStep,
   StudioHeading,
@@ -54,11 +53,13 @@ import {
   CustomSectionsEditor,
   SectionOrderEditor,
   SectionSettingsEditor,
+  SectionsSettings,
   SectionTemplatesEditor,
 } from "@shared/ui/sections/studio";
 import { AppearanceEditor } from "@shared/ui/theme/studio";
 
 import { studioEditorGuide } from "@/features/companion/guides";
+import { StudioCompanion } from "@/features/companion/studio-companion";
 
 const PreviewContent = dynamic(() =>
   import("./preview-content").then((module) => module.PreviewContent),
@@ -82,6 +83,7 @@ const tabs = [
   "Languages",
   "Language settings",
   "Layout",
+  "Sections",
   "Section order",
   "Section display",
   "Custom sections",
@@ -112,8 +114,8 @@ function clean(profile: PortfolioProfile): PortfolioProfile {
 }
 export function ProfileEditor({
   initial,
-  saveUrl = urls.next.studio.profile(),
-  downloadHref = urls.next.studio.cv(),
+  saveUrl = urls.studio.profile(),
+  downloadHref = urls.studio.cv(),
   managed = false,
   onSaved,
   initialTab = "Profile",
@@ -224,21 +226,24 @@ export function ProfileEditor({
   }
   if (step === "template")
     return (
-      <GuidedOnboarding
-        managed={managed}
-        onChange={resetDraft}
-        onContinue={() => beginDetails()}
-        onGoogleImport={() => beginDetails("Import Google")}
-        onImport={() => beginDetails("Import CV")}
-        onProfessionChange={(value) => {
-          setProfession(value);
-          resetDraft({ ...draft, portfolioType: value });
-        }}
-        profession={profession}
-        profile={draft}
-      >
-        <DraftRecovery disabled={busy} recovery={recovery} />
-      </GuidedOnboarding>
+      <>
+        <GuidedOnboarding
+          managed={managed}
+          onChange={resetDraft}
+          onContinue={() => beginDetails()}
+          onGoogleImport={() => beginDetails("Import Google")}
+          onImport={() => beginDetails("Import CV")}
+          onProfessionChange={(value) => {
+            setProfession(value);
+            resetDraft({ ...draft, portfolioType: value });
+          }}
+          profession={profession}
+          profile={draft}
+        >
+          <DraftRecovery disabled={busy} recovery={recovery} />
+        </GuidedOnboarding>
+        <StudioCompanion signedIn />
+      </>
     );
   return (
     <main className="studio" id="admin-content">
@@ -283,16 +288,12 @@ export function ProfileEditor({
                 if (dirty && !window.confirm("Leave without publishing your changes?")) return;
                 setBusy(true);
                 try {
-                  const response = await request(urls.next.auth.session(), {
+                  const response = await request(urls.auth.session(), {
                     method: "DELETE",
                   });
                   if (!response.ok) throw new Error("Could not sign out.");
-                  try {
-                    recovery.stop();
-                    clearDraftRecovery();
-                  } catch {
-                    /* Browser storage may be disabled. */
-                  }
+                  recovery.stop();
+                  draftStorage.clear();
                   useUserConfigStore.getState().clearUser();
                   window.location.assign("/login");
                 } catch (reason) {
@@ -499,6 +500,7 @@ function EditorBody({
   onChange: (profile: PortfolioProfile) => void;
 }) {
   if (tab === "Reviews") return reviews;
+  if (tab === "Sections") return <SectionsSettings onNavigate={onNavigate} profile={profile} />;
   if (tab === "Revision history")
     return (
       <OwnerRevisionHistory
@@ -679,7 +681,7 @@ function initialSetup(profile: PortfolioProfile): SetupStep {
   return profile.templateChosen === false ? "template" : "done";
 }
 function recoveryKey(userId: string | undefined, profileId: string | undefined, saveUrl: string) {
-  return userId ? `${recoveryPrefix}${userId}:${profileId ?? saveUrl}` : "";
+  return userId ? draftStorage.key(userId, profileId ?? saveUrl) : "";
 }
 async function readSaveResponse(
   response: Response,

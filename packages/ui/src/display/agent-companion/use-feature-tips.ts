@@ -2,6 +2,8 @@
 
 import { type RefObject, useEffect, useState } from "react";
 
+import { companionStorage, type TipSettings } from "@shared/runtime/storage";
+
 import type { AgentFeature, AgentGuide } from "./types";
 
 const firstDelay = 18000;
@@ -25,36 +27,8 @@ export function selectFeatureTip(
   );
 }
 
-type TipSettings = { enabled: boolean; seen: string[]; last: number; day?: string };
 const currentDay = () => new Date().toDateString();
 const defaults: TipSettings = { enabled: true, last: 0, seen: [] };
-
-function readSettings(key: string) {
-  try {
-    const raw = localStorage.getItem(key);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as Partial<TipSettings>;
-    return {
-      day: parsed.day,
-      enabled: parsed.enabled !== false,
-      last: Number(parsed.last) || 0,
-      seen:
-        parsed.day === currentDay() && Array.isArray(parsed.seen)
-          ? parsed.seen.filter((id) => typeof id === "string")
-          : [],
-    };
-  } catch {
-    return null;
-  }
-}
-
-function saveSettings(key: string, value: TipSettings) {
-  try {
-    localStorage.setItem(key, JSON.stringify(value));
-  } catch {
-    // The current companion still works when storage is disabled.
-  }
-}
 
 export function useFeatureTips({
   guide,
@@ -67,7 +41,7 @@ export function useFeatureTips({
   blocked: boolean;
   bubble: RefObject<HTMLDivElement | null>;
 }) {
-  const key = guide && `agent-companion:${guide.id}:feature-tips`;
+  const key = guide && companionStorage.tipsKey(guide.id);
   const { context, features = empty, suggestions = empty, paused } = guide ?? {};
   const [settings, setSettings] = useState(defaults);
   const [readyKey, setReadyKey] = useState<string>();
@@ -76,7 +50,7 @@ export function useFeatureTips({
 
   useEffect(() => {
     if (!key) return;
-    const refresh = () => setSettings(readSettings(key) ?? defaults);
+    const refresh = () => setSettings(companionStorage.readTips(key) ?? defaults);
     const visibility = () => {
       const visible = document.visibilityState === "visible";
       setForeground(visible);
@@ -117,7 +91,7 @@ export function useFeatureTips({
     );
     const timer = window.setTimeout(() => {
       if (document.visibilityState !== "visible") return;
-      const latest = readSettings(key) ?? settings;
+      const latest = companionStorage.readTips(key) ?? settings;
       if (!latest.enabled || Date.now() - latest.last < repeatDelay) {
         setSettings(latest);
         return;
@@ -130,7 +104,7 @@ export function useFeatureTips({
         last: Date.now(),
         seen: [...latest.seen, next.id],
       };
-      saveSettings(key, updated);
+      companionStorage.writeTips(key, updated);
       setSettings(updated);
       setActive({ context, id: next.id });
     }, wait);
@@ -150,8 +124,8 @@ export function useFeatureTips({
     enabled: settings.enabled,
     setEnabled(enabled: boolean) {
       if (!key) return;
-      const updated = { ...(readSettings(key) ?? settings), enabled };
-      saveSettings(key, updated);
+      const updated = { ...(companionStorage.readTips(key) ?? settings), enabled };
+      companionStorage.writeTips(key, updated);
       setSettings(updated);
       if (!enabled) setActive(undefined);
     },

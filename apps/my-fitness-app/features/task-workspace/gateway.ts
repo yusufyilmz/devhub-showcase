@@ -31,7 +31,7 @@ export class HttpWorkspaceGateway implements WorkspaceGateway {
     return subscribeFitnessNotifications(handlers);
   }
   async load(signal?: AbortSignal) {
-    const response = await fetch(urls.next.fitness.state(), {
+    const response = await fetch(urls.fitness.state(), {
       cache: "no-store",
       credentials: "same-origin",
       headers: await this.auth(),
@@ -58,7 +58,7 @@ export class HttpWorkspaceGateway implements WorkspaceGateway {
   async save(state: Workspace, revision: number) {
     const workspaceId = this.workspaceId;
     if (!workspaceId) throw new Error("Sign in to make changes to your workspace.");
-    const response = await fetch(urls.next.fitness.state(), {
+    const response = await fetch(urls.fitness.state(), {
       body: JSON.stringify({ revision, state, workspaceId }),
       credentials: "same-origin",
       headers: { "Content-Type": "application/json", ...(await this.auth()) },

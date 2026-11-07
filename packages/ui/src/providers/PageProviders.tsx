@@ -9,16 +9,10 @@ export function PageProviders({
   children,
   defaultTheme,
   portfolioTheme,
-  storageKey,
   request,
 }: PageProvidersOptions) {
   return (
-    <ThemeProvider
-      accent={accent}
-      defaultTheme={defaultTheme}
-      portfolioTheme={portfolioTheme}
-      storageKey={storageKey}
-    >
+    <ThemeProvider accent={accent} defaultTheme={defaultTheme} portfolioTheme={portfolioTheme}>
       <NotificationProvider>
         <StudioRequestProvider request={request}>
           {children}

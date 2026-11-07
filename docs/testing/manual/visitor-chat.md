@@ -22,7 +22,7 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 
 ## Related evidence and detail
 
-- [e2e/portfolio/chat.spec.ts](../../../e2e/portfolio/chat.spec.ts)
+- [e2e/portfolio/chat.spec.ts](../../../apps/my-dev-studio/e2e/portfolio/chat.spec.ts)
 - [apps/my-dev-studio/app/api/chat/stream/route.test.ts](../../../apps/my-dev-studio/app/api/chat/stream/route.test.ts)
 
 Return to the [manual testing index](index.md).

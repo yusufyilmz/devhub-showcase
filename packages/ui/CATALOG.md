@@ -1,3 +1,5 @@
+<!-- Generated from src/registry/components.json and catalog.template.md. Run pnpm generate:ui-catalog. -->
+
 # UI catalog
 
 `@shared/ui/notification-preferences` provides a reusable per-device notification
@@ -68,22 +70,18 @@ surface; reveal, variants, hover, content and appearance use the existing
 specialized components and their props. Tilt and animated use the base surface
 with reduced-motion-aware effects. Reveal requires title and heading; content
 requires title. Hover accepts a trigger element or explicit HoverCardTrigger /
-HoverCardContent children. CardProps is exported from @shared/ui/cards.
+HoverCardContent children. CardProps is exported from @shared/ui/cards. Use `backdrop="accent"` for the shared gradient and leading accent border, as on the Fitness plans card.
 
-Component styles live beside their owning UI domain. Portfolio skins are in
-src/portfolio/portfolio.css; section skins in src/sections/sections.css; navigation
-in src/navigation/chrome.css; chat styles in src/display/chat; example styles in
-src/sections/home-section; homepage styles are exported as `@shared/ui/home.css`; login styles in src/forms/login-form. Existing CSS export
-paths remain supported by forwarding imports. Components import their own styles;
-the global bundles do not import these component styles. Tokens,
-themes, layouts and global resets remain centralized. Shared surface rules live
-in src/cards/surfaces.css and are imported by cards and controls.
+Author CSS in `src/styles`. Domain-specific sheets live under
+`src/styles/components/` and load with their owning components. Public CSS
+exports continue to work. Use shared Tailwind utilities for layouts and controls.
+Card and control surfaces load from `src/styles/components/cards/surfaces.css`.
 
 HomeChatLauncher in src/sections/home-section/chat-launcher.tsx composes the shared
 ChatComposer and opens the authenticated Studio assistant below the capabilities strip.
 ChatComposer also accepts optional controls and a message length limit for Fitness.
 ChatComposer and StudioChatScreen from @shared/ui/display provide the compact icon
-composer and responsive assistant shell. Visitor mode accepts the portfolio name
+composer and centered assistant thread with starter prompts. Visitor mode accepts the portfolio name
 and back link, with public questions as suggestions. They receive callbacks and do not fetch
 or save data. Styles use shared semantic, spacing, elevation and radius tokens.
 
@@ -93,6 +91,45 @@ Gallery Grid sections use it for authored images; homepage examples use the same
 viewer with first-party fictional portfolio pages.
 
 Public components exported from `packages/ui/src/components/index.ts`. Import them as `@shared/ui/{folder}`. Visual recipes for the pieces that define the product look live in the root [DESIGN.md](../../DESIGN.md).
+
+The component tables, section descriptions and appearance options come from
+[`src/registry/components.json`](src/registry/components.json), also available as
+`@shared/ui/registry.json`. Edit the registry for metadata changes and run
+`pnpm generate:ui-catalog`. Use `pnpm check:ui-catalog` to catch stale output or
+options that no longer match the supported configuration.
+
+## Theme options
+
+| Portfolio theme | ID         | Description                                               |
+| --------------- | ---------- | --------------------------------------------------------- |
+| Studio          | `studio`   | The original cool palette and crisp cards.                |
+| Paper           | `paper`    | Warm surfaces, serif titles and a printed feel.           |
+| Graphite        | `graphite` | Neutral surfaces, monospaced titles and sharp edges.      |
+| Bloom           | `bloom`    | Soft lavender surfaces, rounded cards and a relaxed feel. |
+
+| Attribute          | Values                                                                                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `data-accent`      | `cyan`, `violet`, `emerald`                                                                                                                            |
+| `data-animation`   | `none`, `base`, `smooth`, `bouncy`, `elastic`                                                                                                          |
+| `data-blur`        | `none`, `soft`, `medium`, `strong`, `extra`, `huge`, `gigantic`                                                                                        |
+| `data-border`      | `none`, `thin`, `base`, `thick`, `moderate`                                                                                                            |
+| `data-brand`       | `white`, `sand`, `gray`, `slate`, `red`, `orange`, `yellow`, `moss`, `green`, `emerald`, `aqua`, `cyan`, `blue`, `indigo`, `violet`, `magenta`, `pink` |
+| `data-container`   | `small`, `medium`, `large`                                                                                                                             |
+| `data-font`        | `sans`, `serif`, `mono`                                                                                                                                |
+| `data-font-size`   | `xs`, `sm`, `base`, `lg`, `xl`, `2xl`, `3xl`, `4xl`, `5xl`, `6xl`                                                                                      |
+| `data-gradient`    | `none`, `subtle`, `vivid`                                                                                                                              |
+| `data-line-height` | `none`, `tight`, `snug`, `normal`, `relaxed`, `loose`                                                                                                  |
+| `data-opacity`     | `none`, `soft`, `medium`, `strong`                                                                                                                     |
+| `data-perspective` | `flat`, `normal`, `dramatic`                                                                                                                           |
+| `data-radius`      | `none`, `square`, `small`, `base`, `moderate`, `rounded`, `pill`, `circle`                                                                             |
+| `data-scale`       | `small`, `base`, `large`, `90`, `95`, `100`, `105`, `110`, `120`                                                                                       |
+| `data-shadow`      | `none`, `soft`, `subtle`, `medium`, `strong`, `deep`                                                                                                   |
+| `data-spacing`     | `compact`, `comfortable`, `relaxed`, `spacious`, `cozy`, `wide`, `extra`                                                                               |
+| `data-theme`       | `light`, `dark`, `system`                                                                                                                              |
+| `data-tracking`    | `tight`, `wide`                                                                                                                                        |
+| `data-transition`  | `none`, `base`, `smooth`, `bouncy`, `elastic`                                                                                                          |
+| `data-weight`      | `light`, `normal`, `medium`, `semibold`, `bold`                                                                                                        |
+| Portfolio accents  | `red`, `orange`, `yellow`, `moss`, `green`, `emerald`, `aqua`, `cyan`, `blue`, `indigo`, `violet`, `magenta`, `pink`, `sand`, `gray`, `slate`          |
 
 ## Actions
 
@@ -264,6 +301,8 @@ or composed `TooltipTrigger` and `TooltipContent` parts. Both use the same
 portal, collision handling, keyboard focus, Escape dismissal and appearance
 tokens. `AnimatedTooltip` adds optional pointer tracking.
 
+`SectionsSettings` groups section content, ordering, display, and template controls for the owner editor. Import it from `@shared/ui/sections/studio`.
+
 ## Browser preferences
 
 `ThemeProvider` consumes `useUserConfigStore` from `@shared/runtime/user`.
@@ -280,26 +319,27 @@ Icons inherit `currentColor`; use a 24px icon inside the 44px large control.
 
 `Section`, `Header` and `Footer` accept `asChild` to compose an existing semantic element without adding a second wrapper. Use this variant for page compositions while keeping their content and navigation in the section package. Shared section grids, accordions and carousels default to semantic Card surfaces; existing portfolio consumers pass `surface="portfolio"` explicitly.
 
-Portfolio sections, editors, and chat exported from `@shared/ui`. Visual rules for the shared section frame live in the root [DESIGN.md](../../DESIGN.md).
+Import portfolio sections from `@shared/ui/sections` and chat from `@shared/ui/chat`. Visual rules for the shared section frame live in the root [DESIGN.md](../../DESIGN.md).
 
 ## Entry points
 
-| Export                         | Path                       | Use                                                          |
-| ------------------------------ | -------------------------- | ------------------------------------------------------------ |
-| `@shared/ui`                   | `src/index.ts`             | Shell, fields, portfolio surfaces, and every section variant |
-| `@shared/ui/sections`          | `src/sections/variants`    | Section components and their editors                         |
-| `@shared/ui/section/renderers` | `src/sections/renderers`   | `RenderSection` and the renderer map                         |
-| `@shared/ui/section/editors`   | `src/sections/editors`     | `EditSection` and the editor map                             |
-| `@shared/ui/editor`            | `src/editor`               | Collection, content, options, and source editors             |
-| `@shared/ui/forms`             | `src/forms`                | `Field`, `LinesField`, `SelectField`, `EmptyState`           |
-| `@shared/ui/fields`            | `src/forms/fields.tsx`     | The same form fields                                         |
-| `@shared/ui/layout`            | `src/layout`               | `StudioShell`, `PageShell`, `PortfolioLayout`                |
-| `@/features/studio`            | `src/studio`               | Home, studio editors, billing views, and example content     |
-| `@shared/ui/login`             | `src/auth/login-panel.tsx` | `LoginPanel`                                                 |
-| `@shared/ui/pages`             | `src/pages`                | `ErrorPage`, `NotFoundPage`                                  |
-| `@shared/ui/portfolio`         | `src/portfolio`            | `HeroSurface`, `WorkMedia`                                   |
-| `@shared/ui/portfolio-chat`    | `src/portfolio/chat`       | `PortfolioChat`                                              |
-| `@shared/ui/chat`              | `src/chat`                 | Chat bubbles, input, list, and typing                        |
+| Export                          | Path                               | Use                                                        |
+| ------------------------------- | ---------------------------------- | ---------------------------------------------------------- |
+| `@shared/ui/components`         | `src/components/index.ts`          | Shared controls and portfolio section components           |
+| `@shared/ui/registry.json`      | `src/registry/components.json`     | Component, section, and theme metadata                     |
+| `@shared/ui/sections`           | `src/sections/index.ts`            | Section renderers and editors                              |
+| `@shared/ui/sections/studio`    | `src/sections/studio/index.ts`     | Section settings, ordering, templates, and custom sections |
+| `@shared/ui/forms`              | `src/forms/index.ts`               | Shared form controls and editor fields                     |
+| `@shared/ui/layout`             | `src/layout/index.ts`              | Layout primitives, section views, and page shells          |
+| `@shared/ui/display`            | `src/display/index.ts`             | Media and shared chat presentations                        |
+| `@shared/ui/chat`               | `src/display/chat/index.ts`        | Chat screen, composer, messages, and supporting controls   |
+| `@shared/ui/site-login`         | `src/forms/site-login/index.ts`    | Shared sign-in panels and screens                          |
+| `@shared/ui/error-page`         | `src/feedback/error-page/index.ts` | Error page presentation                                    |
+| `@shared/ui/not-found`          | `src/feedback/not-found/index.ts`  | Missing page presentation                                  |
+| `@shared/ui/portfolio`          | `src/portfolio/index.ts`           | Published portfolio layouts and studio tools               |
+| `@shared/ui/portfolio-chat.css` | `src/styles/portfolio-chat.css`    | Styles for the embedded portfolio chat                     |
+| `@shared/ui/seo`                | `src/seo/index.ts`                 | Canonical, Open Graph, Twitter, and Schema.org metadata    |
+| `@shared/ui/seo/image`          | `src/seo/share-image.tsx`          | Server-side social share image renderer                    |
 
 ## Shell and editing
 
@@ -326,77 +366,80 @@ Portfolio sections, editors, and chat exported from `@shared/ui`. Visual rules f
 
 ## Chat
 
-| Component                                                                     | Folder | Use                    |
-| ----------------------------------------------------------------------------- | ------ | ---------------------- |
-| `ChatPanel`                                                                   | `chat` | Chat panel             |
-| `ChatBubble`, `ChatBubbleGroup`, `ChatBubbleReactions`, `ChatBubbleTimestamp` | `chat` | A message and its meta |
-| `ChatInput`, `ChatInputAction`                                                | `chat` | Composer               |
-| `ChatList`, `ChatListItem`, `ChatListEmpty`, `ChatListSeparator`              | `chat` | Message list           |
-| `ChatAvatar`, `ChatAvatarGroup`                                               | `chat` | Speaker marks          |
-| `ChatTyping`, `ChatTypingText`                                                | `chat` | Typing state           |
-| `ChatMessageActions`, `ChatMessageActionGroup`, `ChatQuickReactions`          | `chat` | Message actions        |
+| Component             | Folder                       | Use                                                    |
+| --------------------- | ---------------------------- | ------------------------------------------------------ |
+| `StudioChatScreen`    | `display/studio-chat-screen` | Centered chat screen for Studio and portfolio visitors |
+| `ChatComposer`        | `display/chat-composer`      | Prompt entry with send, stop and optional controls     |
+| `Chat`                | `display/chat`               | Composable chat panel                                  |
+| `ChatHeader`          | `display/chat`               | Conversation title and actions                         |
+| `ChatInput`           | `display/chat`               | Input for the composable chat panel                    |
+| `ChatSidebar`         | `display/chat`               | Grouped conversation navigation                        |
+| `ChatMessageBubble`   | `display/chat`               | Individual conversation message                        |
+| `ChatTypingIndicator` | `display/chat`               | Typing indicator                                       |
+| `ChatBubble`          | `display/chat-bubble`        | Shared message bubble                                  |
 
 ## Sections
 
-Each content section lives in `src/sections/variants/{name}`. Most export the section and a matching editor. Item, list, and form parts stay in that folder.
+Content sections live in `src/sections/{name}-section`. Most export the section and a matching editor. Item, list, and form parts stay in that folder.
 
-| Section                                                 | Also exports                                                                                                    |
-| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `AboutHeroSection`                                      | editor                                                                                                          |
-| `AboutMeSection`                                        |                                                                                                                 |
-| `AboutSection`, `PortfolioAboutSection`                 | editor                                                                                                          |
-| `AccordionSection`                                      | editor                                                                                                          |
-| `AwardsSection`                                         | editor                                                                                                          |
-| `BlogPageSection`, `JsonBlogPage`, `Post`, `Posts`      | editor                                                                                                          |
-| `CalendarLinkSection`                                   | editor                                                                                                          |
-| `CareersSection`                                        | editor                                                                                                          |
-| `ClientsSection`                                        | editor                                                                                                          |
-| `ContactFormSection`                                    | editor                                                                                                          |
-| `ContactInfoSection`                                    | editor                                                                                                          |
-| `CTASection`                                            | editor                                                                                                          |
-| `CustomSection`                                         | editor                                                                                                          |
-| `CVSection`                                             |                                                                                                                 |
-| `EducationsSection`, `EducationItem`                    |                                                                                                                 |
-| `ExperienceSection`, `ExperienceItem`, `ExperienceList` |                                                                                                                 |
-| `FAQSection`                                            | editor                                                                                                          |
-| `FeaturesSection`                                       | editor                                                                                                          |
-| `GalleryGridSection`, `MasonryGrid`                     | editor                                                                                                          |
-| `HeadingSection`                                        | editor                                                                                                          |
-| `HeroSection`                                           | editor                                                                                                          |
-| `HowToSection`                                          | editor                                                                                                          |
-| `InstagramSection`                                      | editor                                                                                                          |
-| `LegalTextSection`                                      | editor                                                                                                          |
-| `MapSection`                                            | editor                                                                                                          |
-| `MenuSection`                                           | editor                                                                                                          |
-| `NewsletterSection`                                     | editor                                                                                                          |
-| `PinterestSection`                                      | editor                                                                                                          |
-| `PlansSection`                                          | editor                                                                                                          |
-| `PostsGridSection`                                      | editor                                                                                                          |
-| `PricingSection`                                        | editor                                                                                                          |
-| `ProfileSection`                                        | editor                                                                                                          |
-| `ProjectsSection`                                       | editor; `PortfolioProjectsSection`, `ProjectForm`, `ProjectItem`, `ProjectList` are the portfolio project parts |
-| `PropertySection`                                       | editor                                                                                                          |
-| `QuickstartSection`                                     | editor                                                                                                          |
-| `ReferralSection`, `ReferralItem`                       |                                                                                                                 |
-| `ReviewSection`, `ReviewButton`                         | Studio testimonial queue with pending, empty, load error and per-review decision states                         |
-| `ServicesSection`                                       | editor                                                                                                          |
-| `ShopItemsSection`                                      | editor                                                                                                          |
-| `ShowcaseSection`                                       | editor                                                                                                          |
-| `SkillSection`, `SkillItem`, `SkillCategoryItem`        |                                                                                                                 |
-| `SocialLinksSection`, `SocialLinks`                     | editor                                                                                                          |
-| `StatsSection`                                          | editor                                                                                                          |
-| `StudiesSection`                                        | editor                                                                                                          |
-| `SummarySection`                                        |                                                                                                                 |
-| `TableOfContentsSection`, `TableOfContents`             | editor                                                                                                          |
-| `TabsSection`                                           | editor                                                                                                          |
-| `TeamSection`                                           | editor                                                                                                          |
-| `TechnicalSkillsSection`                                | editor                                                                                                          |
-| `TestimonialsSection`                                   | editor                                                                                                          |
-| `TextSection`                                           | editor                                                                                                          |
-| `TimelineSection`                                       | editor                                                                                                          |
-| `VideoSection`                                          | editor                                                                                                          |
-| `WorkExperienceSection`                                 | editor                                                                                                          |
-| `YouTubeSection`                                        | editor                                                                                                          |
+| Section                                                 | Description                                                              | Also exports                                                                                                    |
+| ------------------------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| `AboutHeroSection`                                      | Open with a personal headline and a strong first impression.             | editor                                                                                                          |
+| `AboutMeSection`                                        | Show the profile introduction on the engineer portfolio.                 |                                                                                                                 |
+| `AboutSection`, `PortfolioAboutSection`                 | Introduce yourself, your values and the work you love.                   | editor                                                                                                          |
+| `AccordionSection`                                      | Keep detailed information tidy in expandable rows.                       | editor                                                                                                          |
+| `AwardsSection`                                         | Celebrate recognitions, certifications and achievements.                 | editor                                                                                                          |
+| `BlogPageSection`, `JsonBlogPage`, `Post`, `Posts`      | Share longer articles, insights and writing.                             | editor                                                                                                          |
+| `CalendarLinkSection`                                   | Help visitors book time with you in one click.                           | editor                                                                                                          |
+| `CareersSection`                                        | Present current roles and opportunities to join you.                     | editor                                                                                                          |
+| `ClientsSection`                                        | Show the organizations and people you work with.                         | editor                                                                                                          |
+| `ContactFormSection`                                    | Give visitors a simple way to get in touch.                              | editor                                                                                                          |
+| `ContactInfoSection`                                    | Place your email and contact details in one spot.                        | editor                                                                                                          |
+| `CTASection`, `CTABlock`                                | Feature a primary action and any supporting links in a focused panel.    | editor                                                                                                          |
+| `CustomSection`                                         | Create a flexible section in the layout you prefer.                      | editor                                                                                                          |
+| `CVSection`                                             | Present the downloadable CV action.                                      |                                                                                                                 |
+| `DashboardSection`                                      | Present key metrics and supporting details in a portfolio dashboard.     | `DashboardSectionEditor`                                                                                        |
+| `EducationsSection`, `EducationItem`                    | Display the profile’s education history.                                 |                                                                                                                 |
+| `ExperienceSection`, `ExperienceItem`, `ExperienceList` | Show the profile’s work experience.                                      |                                                                                                                 |
+| `FAQSection`, `FAQBlock`                                | Pair a section introduction with expandable answers to common questions. | editor                                                                                                          |
+| `FeaturesSection`                                       | Highlight services, capabilities or product benefits.                    | editor                                                                                                          |
+| `GalleryGridSection`, `MasonryGridSection`              | Put your best images together in a visual grid.                          | editor                                                                                                          |
+| `HeadingSection`                                        | Start a new chapter with a clear, bold heading.                          | editor                                                                                                          |
+| `HeroSection`, `HeroBlock`                              | Introduce your portfolio with a headline, optional media and an action.  | editor                                                                                                          |
+| `HowToSection`                                          | Walk readers through a process step by step.                             | editor                                                                                                          |
+| `InstagramSection`                                      | Curate visual posts and link back to your work.                          | editor                                                                                                          |
+| `LegalTextSection`                                      | Display policies, terms or other detailed copy.                          | editor                                                                                                          |
+| `MapSection`                                            | Help visitors find a place with a location block.                        | editor                                                                                                          |
+| `MenuSection`                                           | Organize offerings into easy-to-scan categories.                         | editor                                                                                                          |
+| `NewsletterSection`                                     | Invite visitors to subscribe for updates.                                | editor                                                                                                          |
+| `PinterestSection`                                      | Collect inspiration and visual work in a gallery.                        | editor                                                                                                          |
+| `PlansSection`                                          | Compare packages and help visitors choose a plan.                        | editor                                                                                                          |
+| `PostsGridSection`                                      | Browse articles and updates as compact cards.                            | editor                                                                                                          |
+| `PricingSection`                                        | Make pricing and package details easy to compare.                        | editor                                                                                                          |
+| `ProfileSection`                                        | Show a quick bio, portrait and key details.                              | editor                                                                                                          |
+| `ProjectsSection`                                       | Feature your portfolio projects and outcomes.                            | editor; `PortfolioProjectsSection`, `ProjectForm`, `ProjectItem`, `ProjectList` are the portfolio project parts |
+| `PropertySection`                                       | Present a space or property with standout details.                       | editor                                                                                                          |
+| `QuickstartSection`                                     | Explain the first steps to getting started.                              | editor                                                                                                          |
+| `ReferralSection`, `ReferralItem`                       | Display approved testimonials from the portfolio review flow.            |                                                                                                                 |
+| `ReviewSection`, `ReviewButton`                         | Review and moderate incoming testimonials.                               | Studio testimonial queue with pending, empty, load error and per-review decision states                         |
+| `ServicesSection`                                       | Introduce your services in a scannable card grid.                        | editor                                                                                                          |
+| `ShopItemsSection`                                      | Show products or downloadable items at a glance.                         | editor                                                                                                          |
+| `ShowcaseSection`                                       | Create an image-first highlight of recent work.                          | editor                                                                                                          |
+| `SkillSection`, `SkillItem`, `SkillCategoryItem`        | Group the profile’s skills by category.                                  |                                                                                                                 |
+| `SocialLinksSection`, `SocialLinks`                     | Collect your social channels in one place.                               | editor                                                                                                          |
+| `StatsSection`                                          | Turn your results and milestones into key numbers.                       | editor                                                                                                          |
+| `StudiesSection`                                        | Show learning milestones and qualifications over time.                   | editor                                                                                                          |
+| `SummarySection`                                        | Introduce the portfolio owner and their work.                            |                                                                                                                 |
+| `TableOfContentsSection`, `TableOfContents`             | Let visitors jump to the sections they need.                             | editor                                                                                                          |
+| `TabsSection`                                           | Group related content into switchable panels.                            | editor                                                                                                          |
+| `TeamSection`                                           | Introduce the people behind your work.                                   | editor                                                                                                          |
+| `TechnicalSkillsSection`                                | Display tools, technologies and strengths.                               | editor                                                                                                          |
+| `TestimonialsSection`                                   | Build trust through words from collaborators.                            | editor                                                                                                          |
+| `TextSection`                                           | Share a simple, readable piece of written content.                       | editor                                                                                                          |
+| `TimelineSection`                                       | Tell a story through dates and key milestones.                           | editor                                                                                                          |
+| `VideoSection`                                          | Feature a video with a clear preview and play action.                    | editor                                                                                                          |
+| `WorkExperienceSection`                                 | Highlight positions, responsibilities and impact.                        | editor                                                                                                          |
+| `YouTubeSection`                                        | Showcase a YouTube video without cluttering the page.                    | editor                                                                                                          |
 
 ## Full-page compositions
 
@@ -413,8 +456,8 @@ the fixtures.
 
 ## Homepage sections
 
-Import homepage compositions from `@shared/ui/sections`. They live in `src/sections/variants/home-section` and replace the removed `containers` entry point. `HomeHeroSection`, `HomeFeaturesSection`, `HomeOptionsSection`, `HomePricingSection`, `HomeLibrarySection`, `HomeProcessSection`, `HomeFAQSection`, `HomeCTASection` and `HomeCapabilitiesSection` compose shared controls and surfaces. `HomeHeader`, `HomeFooter`, `PortfolioPreview` and `LibraryPicker` support that composition. Session decisions and navigation remain app props.
+Import homepage compositions from `@shared/ui/sections`. They live in `src/sections/home-section` and replace the removed `containers` entry point. `HomeHeroSection`, `HomeFeaturesSection`, `HomeOptionsSection`, `HomePricingSection`, `HomeLibrarySection`, `HomeProcessSection`, `HomeFAQSection`, `HomeCTASection` and `HomeCapabilitiesSection` compose shared controls and surfaces. `HomeHeader`, `HomeFooter`, `PortfolioPreview` and `LibraryPicker` support that composition. Home Hero, FAQ and CTA supply landing-page copy to the same blocks used by authored sections. Header and Footer accept brand, links and actions from the page.
 
-All 47 registered authorable sections have colocated Default, Compact and Empty stories using fictional fixtures from `src/sections/__fixtures__/section-story.ts`. `SectionCatalog` provides a searchable name/category browser for the same registry, without copying its list into another data source.
+All 48 registered authorable sections have colocated Default, Compact and Empty stories using fictional fixtures from `tools/test/fixtures/section-story.ts`. `SectionCatalog` provides a searchable name/category browser for the same registry, using the names, descriptions and categories in the component registry.
 
 `PublicationControls` (`@shared/ui/portfolio`) reviews a saved revision and confirms publication or withdrawal through app-provided callbacks; it never saves the draft. Optional scheduling callbacks enable reviewed snapshot scheduling, visible timezone/UTC time, status refresh and cancellation. The app owns authorization, persistence and worker setup.

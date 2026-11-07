@@ -1,7 +1,5 @@
 "use client";
 
-import "./management.css";
-
 import { useState } from "react";
 
 import { type PortfolioProfile, type PortfolioType, portfolioTypes } from "@shared/config";
@@ -57,7 +55,7 @@ export function CreatePortfolio({ onCreated }: { onCreated: (id: string) => void
         portfolioType: type,
         templateChosen: true,
       };
-      const response = await request(urls.next.studio.managed(), {
+      const response = await request(urls.studio.managed(), {
         body: JSON.stringify({ profile, username }),
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -78,7 +76,10 @@ export function CreatePortfolio({ onCreated }: { onCreated: (id: string) => void
         to a confirmed account.
       </p>
       <form onSubmit={create}>
-        <fieldset className="managed-fields" disabled={busy}>
+        <fieldset
+          className="mt-6 grid min-w-0 gap-4 border-0 p-0 [&_input]:max-w-full [&_select]:max-w-full"
+          disabled={busy}
+        >
           <legend className="sr-only">New managed portfolio</legend>
           <LibraryLabel className="editor-field" unstyled>
             Import portfolio JSON

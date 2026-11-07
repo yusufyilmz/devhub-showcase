@@ -11,8 +11,13 @@ import { AccountOverview, type AccountStatus } from "./account-overview";
 export function ChatSettings() {
   const { data, error, loading, refresh } = useAccountStatus();
   return (
-    <section aria-labelledby="portfolio-ai-settings-title">
-      <h2 id="portfolio-ai-settings-title">Portfolio AI features</h2>
+    <section
+      aria-labelledby="portfolio-ai-settings-title"
+      className="mt-7 border-t border-[rgb(var(--border-rgb))] pt-7"
+    >
+      <h2 className="mb-3 text-[22px] leading-[1.3] font-semibold" id="portfolio-ai-settings-title">
+        Portfolio AI features
+      </h2>
       <p>
         Assign Pro to your portfolio to use the private editing assistant. Visitor chat is a
         separate opt-in and uses only published portfolio information.
@@ -49,7 +54,7 @@ function AssignmentControls({ data, refresh }: { data: AccountStatus; refresh: (
     setBusy(true);
     showError("");
     try {
-      const result = await request(urls.next.billing.root(), {
+      const result = await request(urls.billing.root(), {
         body: JSON.stringify({ chatEnabled, profileId }),
         headers: { "Content-Type": "application/json" },
         method: "PUT",

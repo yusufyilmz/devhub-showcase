@@ -1,7 +1,5 @@
 "use client";
 
-import "./management.css";
-
 import { useState } from "react";
 
 import { urls } from "@shared/config/urls";
@@ -27,9 +25,9 @@ export function ManagedWorkspace({
         initial={initial}
         managed
         onSaved={(saved) => setRevision(saved.revision)}
-        saveUrl={urls.next.studio.managedPortfolio(id)}
+        saveUrl={urls.studio.managedPortfolio(id)}
       />
-      <div className="studio managed-transfer">
+      <div className="studio [--studio-top:0px]">
         <TransferPortfolio id={id} onTransferred={onTransferred} revision={revision} />
       </div>
     </>

@@ -1,10 +1,10 @@
 "use client";
 
-import "../login-form/auth-login.css";
+import "../../styles/components/forms/login-form/auth-login.css";
 
 import { type ReactNode, useState } from "react";
 
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Eye, EyeOff, LockKeyhole } from "lucide-react";
 
 import { Button as LibraryButton } from "../../buttons/button/Button";
 import { Input as LibraryInput } from "../input/Input";
@@ -43,6 +43,7 @@ export function LoginPanel({
 }) {
   const [error, showError] = useState(initialError);
   const [busy, setBusy] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const panel = (
     <main className="auth-login" id={contentId}>
       <p className="eyebrow">{eyebrow}</p>
@@ -109,16 +110,28 @@ export function LoginPanel({
           Email
           <LibraryInput autoComplete="username" name="email" required type="email" unstyled />
         </LibraryLabel>
-        <LibraryLabel unstyled>
-          Password
-          <LibraryInput
-            autoComplete="current-password"
-            name="password"
-            required
-            type="password"
-            unstyled
-          />
-        </LibraryLabel>
+        <div className="auth-password">
+          <LibraryLabel unstyled>
+            Password
+            <LibraryInput
+              autoComplete="current-password"
+              name="password"
+              required
+              type={showPassword ? "text" : "password"}
+              unstyled
+            />
+          </LibraryLabel>
+          <LibraryButton
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            className="absolute right-1 bottom-1"
+            onClick={() => setShowPassword(!showPassword)}
+            size="icon-sm"
+            type="button"
+            variant="ghost"
+          >
+            {showPassword ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}
+          </LibraryButton>
+        </div>
         <LibraryButton className="studio-primary" disabled={busy} type="submit" variant="unstyled">
           {busy ? "Signing in…" : submitLabel}
         </LibraryButton>
@@ -173,7 +186,21 @@ export function LoginPanel({
         </span>
         {brandActions}
       </div>
-      {panel}
+      <div className="login-layout">
+        {panel}
+        <aside aria-label="Workspace access" className="login-visual">
+          <div className="relative grid gap-md">
+            <LockKeyhole aria-hidden="true" className="size-8 text-primary" />
+            <p className="text-sm font-semibold tracking-wide text-primary">{brand}</p>
+            <p className="max-w-xs text-3xl leading-tight font-semibold tracking-tight">
+              Pick up where you left off.
+            </p>
+            <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
+              Sign in to access your saved work and manage your account.
+            </p>
+          </div>
+        </aside>
+      </div>
     </div>
   );
 }

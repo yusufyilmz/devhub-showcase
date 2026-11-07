@@ -1,30 +1,46 @@
-import type React from "react";
+import { Quote } from "lucide-react";
 
-import { Card, CardBody } from "../../cards";
+import { Card } from "../../cards";
 import { referralItemStyles } from "./styles";
-import type { ReferralItemOptions, ReferralItemProps } from "./types";
+import type { ReferralItemProps } from "./types";
 
-const Comment = ({ comment }: ReferralItemOptions) => (
-  <div className={referralItemStyles.element1}>
-    <span className={referralItemStyles.element2}>“</span>
-    {comment}
-  </div>
-);
+export function ReferralItem({ referral, children }: ReferralItemProps) {
+  const name = referral.name || "Anonymous";
 
-export const ReferralItem: React.FC<ReferralItemProps> = ({ referral, children }) => {
   return (
-    <Card className={referralItemStyles.element3} surface="portfolio">
-      <CardBody>
-        {referral.feedback && <Comment comment={referral.feedback} />}
-        {referral.recommendation && <Comment comment={referral.recommendation} />}
-        <div className={referralItemStyles.element4}>
-          <h3 className={referralItemStyles.element5}>{referral.name || "Anonymous"}</h3>
-          <p className={referralItemStyles.element6}>
-            {referral.relationship || "No relationship provided"}
-          </p>
+    <Card
+      asChild
+      className={referralItemStyles.card}
+      interaction="static"
+      layout="plain"
+      surface="portfolio"
+    >
+      <figure>
+        <Quote aria-hidden="true" className="size-6 text-primary" />
+        <div className="grid gap-s">
+          {referral.feedback && (
+            <blockquote className={referralItemStyles.quote}>{referral.feedback}</blockquote>
+          )}
+          {referral.recommendation && (
+            <blockquote className={referralItemStyles.quote}>{referral.recommendation}</blockquote>
+          )}
         </div>
-      </CardBody>
-      {children}
+        {children}
+        <figcaption className="mt-auto flex items-center gap-s border-t pt-s">
+          <span
+            aria-hidden="true"
+            className="grid size-10 shrink-0 place-items-center rounded-full bg-primary/10 font-semibold text-primary"
+          >
+            {name.trim().slice(0, 1).toUpperCase()}
+          </span>
+          <div className="min-w-0">
+            <strong>{name}</strong>
+            {referral.relationship && (
+              <div className="text-sm text-muted-foreground">{referral.relationship}</div>
+            )}
+          </div>
+        </figcaption>
+      </figure>
     </Card>
   );
-};
+}

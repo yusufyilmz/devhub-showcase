@@ -66,9 +66,9 @@ homepage used one column with no horizontal overflow at 390 pixels.
 
 ## Related evidence and detail
 
-- [Homepage browser checks](../../../e2e/home/home.spec.ts)
+- [Homepage browser checks](../../../apps/my-dev-studio/e2e/home/home.spec.ts)
 - [Tooltip keyboard story](../../../packages/ui/src/overlays/tooltip/Tooltip.stories.tsx)
 - [packages/ui/src/cards/card/Card.stories.tsx](../../../packages/ui/src/cards/card/Card.stories.tsx)
-- [e2e/portfolio/section-library.spec.ts](../../../e2e/portfolio/section-library.spec.ts)
+- [e2e/portfolio/section-library.spec.ts](../../../apps/my-dev-studio/e2e/portfolio/section-library.spec.ts)
 
 Return to the [manual testing index](index.md).

@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "allowImportingTsExtensions": false,
-    "noEmit": false,
-    "outDir": "./dist",
-    "rootDir": "./src"
+    "paths": {
+      "@shared/config": ["../config/src/index.ts"],
+      "@shared/runtime": ["../runtime/src/index.ts"],
+      "@shared/ui": ["../ui/src/index.ts"],
+      "@shared/utils": ["../utils/src/index.ts"]
+    },
+    "types": ["node"]
   },
-  "exclude": ["dist", "build", "node_modules"],
-  "extends": "@shared/typescript-config/react-library.json",
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.json", "src/**/*.md"],
-  "types": ["node"]
+  "exclude": ["node_modules", "dist"],
+  "extends": "@shared/typescript-config/base.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

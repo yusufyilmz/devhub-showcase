@@ -34,7 +34,7 @@ export function watchSession(onChange: (userId: string | null) => void) {
 }
 
 export async function signOut() {
-  const response = await fetch(urls.next.auth.session(), { method: "DELETE" });
+  const response = await fetch(urls.auth.session(), { method: "DELETE" });
   if (!response.ok) {
     const result = await response
       .json()

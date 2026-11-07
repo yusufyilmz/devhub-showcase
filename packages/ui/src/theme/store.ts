@@ -4,7 +4,7 @@ export type { ThemeStore } from "./types";
 
 import { create } from "zustand";
 
-import { useUserConfigStore } from "@shared/runtime/user";
+import { useThemeStore } from "@shared/runtime/user";
 
 import type {
   AnimationStyle,
@@ -125,10 +125,10 @@ function commitTheme(settings: Partial<ThemeConfig>) {
       .filter(([key]) => key !== "theme")
       .map(([key, value]) => [preferenceKey(key), value]),
   );
-  if (Object.keys(changes).length) useUserConfigStore.getState().setThemePreferences(changes);
-  if (settings.theme) useUserConfigStore.getState().setActiveMode(settings.theme);
+  if (Object.keys(changes).length) useThemeStore.getState().setThemePreferences(changes);
+  if (settings.theme) useThemeStore.getState().setActiveMode(settings.theme);
 }
-useUserConfigStore.subscribe((state) => {
+useThemeStore.subscribe((state) => {
   const settings = Object.fromEntries(
     Object.keys(initialState)
       .filter(

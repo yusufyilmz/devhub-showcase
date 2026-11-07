@@ -3,8 +3,7 @@ import { readFileSync } from "node:fs";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { profile } from "@shared/config";
-
-import { createCvDefinition, renderCv } from "../../../../packages/templates/src/cv";
+import { createCvDefinition, renderCv } from "@shared/templates";
 
 const template = readFileSync(
   new URL("../../../../packages/templates/templates/cv.json.hbs", import.meta.url),

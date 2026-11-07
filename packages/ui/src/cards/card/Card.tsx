@@ -1,5 +1,3 @@
-import "./card-effects.css";
-
 import type * as React from "react";
 
 import { cn } from "cn";
@@ -9,11 +7,15 @@ import { ContentCard } from "../content-card/ContentCard";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../hover-card/HoverCard";
 import { RevealCard } from "../reveal-card/RevealCard";
 import { cardStyles } from "../styles";
-import type { CardProps } from "../types";
+import type { CardProps, StandardCardProps } from "../types";
 import { VariantCard } from "../variant-card/VariantCard";
 import { CardBase } from "./CardBase";
 
 function Card(props: CardProps) {
+  if ("withReveal" in props) {
+    const { withReveal: _withReveal, ...options } = props;
+    return <RevealCard {...options} />;
+  }
   switch (props.type) {
     case "reveal": {
       const { type: _type, ...options } = props;
@@ -47,10 +49,49 @@ function Card(props: CardProps) {
       );
     }
     default: {
-      const { type, ...options } = props;
-      return <CardBase {...options} data-card-type={type || undefined} />;
+      return <StandardCard {...props} />;
     }
   }
+}
+
+function StandardCard({
+  children,
+  type,
+  backdrop,
+  interaction,
+  withAccent,
+  withBackdrop,
+  withBlur,
+  withFooter,
+  withHeader,
+  withHover,
+  withScale,
+  withShadow,
+  withTilt,
+  ...props
+}: StandardCardProps) {
+  return (
+    <CardBase
+      {...props}
+      backdrop={backdrop ?? (withBackdrop ? "accent" : undefined)}
+      data-card-accent={withAccent || undefined}
+      data-card-blur={withBlur || undefined}
+      data-card-scale={withScale || undefined}
+      data-card-shadow={withShadow === false ? "none" : undefined}
+      data-card-type={type || (withTilt ? "tilt" : undefined)}
+      interaction={interaction ?? (withHover === false ? "static" : undefined)}
+    >
+      {withHeader == null && withFooter == null ? (
+        children
+      ) : (
+        <>
+          {withHeader != null && <CardHeader>{withHeader}</CardHeader>}
+          {children}
+          {withFooter != null && <CardFooter>{withFooter}</CardFooter>}
+        </>
+      )}
+    </CardBase>
+  );
 }
 
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {

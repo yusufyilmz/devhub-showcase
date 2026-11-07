@@ -6,7 +6,12 @@
     ".": "./src/index.ts",
     "./variables": "./src/variables/index.ts",
     "./urls": "./src/urls/index.ts",
-    "./sections": "./src/sections/index.ts"
+    "./sections": "./src/sections/index.ts",
+    "./profile": "./src/profile/index.ts",
+    "./portfolios": "./src/portfolio/index.ts",
+    "./copy": "./src/copy/index.ts",
+    "./storage": "./src/storage/index.ts",
+    "./theme": "./src/theme/index.ts"
   },
   "main": "src/index.ts",
   "scripts": {

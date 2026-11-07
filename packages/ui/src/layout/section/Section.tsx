@@ -1,4 +1,4 @@
-import "../../portfolio/portfolio.css";
+import "../../styles/portfolio/portfolio.css";
 
 import { Slot } from "@radix-ui/react-slot";
 

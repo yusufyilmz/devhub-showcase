@@ -1,6 +1,2 @@
-import { siteConfigManager } from "./manager";
-
-const environments = siteConfigManager.environment;
-const branding = siteConfigManager.branding;
-
-export { branding, environments };
+export const environment = process.env.ENVIRONMENT;
+export const site = process.env.SITE;

@@ -1,7 +1,5 @@
 "use client";
 
-import "./reveal-card.css";
-
 import { useId, useRef, useState } from "react";
 
 import { getPortfolioCopy } from "@shared/config";

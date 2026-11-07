@@ -1,10 +1,11 @@
 "use client";
-import "./workflow.css";
+import "../styles/portfolio/workflow.css";
 
 import { portfolioTypes } from "@shared/config";
 
 import { Button } from "../buttons/button/Button";
 import { SelectField } from "../forms";
+import { Flex } from "../layout/flex";
 import { PortfolioTypePicker } from "./portfolio-type-picker";
 import type { GuidedOnboardingProps, SetupNavigationProps } from "./types";
 
@@ -35,7 +36,11 @@ export function GuidedOnboarding({
         onChange={(value) => {
           if (onProfessionChange)
             onProfessionChange(value as typeof profile.portfolioType & string);
-          else onChange({ ...profile, portfolioType: value as typeof profile.portfolioType });
+          else
+            onChange({
+              ...profile,
+              portfolioType: value as typeof profile.portfolioType,
+            });
         }}
         value={profession ?? profile.portfolioType ?? "engineer"}
       >
@@ -49,17 +54,21 @@ export function GuidedOnboarding({
         onChange={(portfolioType) => onChange({ ...profile, portfolioType })}
         value={profile.portfolioType ?? "engineer"}
       />
-      <Button onClick={onContinue} type="button">
-        Use this layout
-      </Button>
-      <Button onClick={onImport} type="button" variant="outline">
-        Start from a CV
-      </Button>
-      {!managed && (
-        <Button onClick={onGoogleImport} type="button" variant="outline">
-          Start from Google profile
+      <Flex direction="row" gap="md" justify="space-between" paddingX="sm">
+        <Button onClick={onContinue} type="button">
+          Use this layout
         </Button>
-      )}
+        <Flex direction="row" gap="md">
+          <Button onClick={onImport} type="button" variant="outline">
+            Start from a CV
+          </Button>
+          {!managed && (
+            <Button onClick={onGoogleImport} type="button" variant="outline">
+              Start from Google profile
+            </Button>
+          )}
+        </Flex>
+      </Flex>
       <p>
         Next: import or enter your details, then review before saving or publishing. Autosave stays
         in this browser tab.

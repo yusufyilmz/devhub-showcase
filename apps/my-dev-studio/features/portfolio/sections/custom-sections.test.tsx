@@ -15,8 +15,8 @@ import {
 } from "@shared/config";
 import { profileSchema } from "@shared/lib/profiles";
 import { RegisteredSections } from "@shared/ui/portfolio";
+import { CustomPortfolioSection } from "@shared/ui/sections/studio";
 
-import { CustomPortfolioSection } from "@/features/portfolio/sections";
 import { ProfileEditor } from "@/features/studio";
 
 const section: CustomSection = {

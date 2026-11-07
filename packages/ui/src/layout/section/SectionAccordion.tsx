@@ -1,4 +1,4 @@
-import "./section-views.css";
+import "../../styles/components/layout/section-views.css";
 
 import { Section } from "./Section";
 import { SectionItemCard } from "./SectionItemCard";

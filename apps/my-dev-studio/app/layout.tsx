@@ -4,11 +4,13 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { headers } from "next/headers";
 
+import { urls } from "@shared/config";
 import { PageShell } from "@shared/ui/page-shell";
 
+import { StudioCompanion } from "@/features/companion/studio-companion";
+import { platformMetadata } from "@/features/platform/metadata";
 import { getPagePresentation } from "@/features/platform/page-presentation";
-import { isPlatformPage, platformMetadata } from "@/features/platform/platform";
-import { portfolioUrl } from "@/features/platform/site-url";
+import { isPlatformPage } from "@/features/platform/structured-data";
 import { getProfileStructuredData } from "@/features/portfolio/profile-structured-data";
 import { getActiveProfile } from "@/features/portfolio/profiles/active-profile";
 
@@ -31,8 +33,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const platform = await isPlatformPage();
   const snapshot = platform ? null : await getActiveProfile();
   const path = (await headers()).get("x-profile-path") ?? "/";
-  const { profile, documentLanguage, storageKey, appearance, portfolioTheme, example } =
-    getPagePresentation(path, platform, snapshot);
+  const showPublicCompanion =
+    path === "/login" || path.endsWith("/access") || path.startsWith("/p/examples/");
+  const { profile, documentLanguage, appearance, portfolioTheme, example } = getPagePresentation(
+    path,
+    platform,
+    snapshot,
+  );
   const publicPortfolio =
     !example &&
     !path.startsWith("/admin") &&
@@ -41,7 +48,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     snapshot.username;
   const structuredData = getProfileStructuredData(
     publicPortfolio ? profile : undefined,
-    publicPortfolio ? portfolioUrl(snapshot.username as string) : undefined,
+    publicPortfolio ? urls.studio.portfolioUrl(snapshot.username as string) : undefined,
   );
 
   return (
@@ -50,10 +57,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       bodyClassName={`${geistSans.variable} ${geistMono.variable} antialiased`}
       documentLanguage={documentLanguage}
       portfolioTheme={portfolioTheme}
-      storageKey={storageKey}
       structuredData={structuredData}
     >
       {children}
+      {showPublicCompanion && <StudioCompanion onLoginPage={path === "/login"} />}
     </PageShell>
   );
 }

@@ -1,6 +1,6 @@
 # Testing and verification
 
-Run commands from the repository root using the Node/pnpm versions in [package.json](../package.json). The source of truth is the scripts, [Vitest configuration](../vitest.config.mts), [Playwright configuration](../playwright.config.ts) and [CI workflow](../.github/workflows/ci.yml).
+Run commands from the repository root using the Node/pnpm versions in [package.json](../package.json). The source of truth is the scripts, [Vitest configuration](../vitest.config.mts), [Fitness app Playwright configuration](/apps/my-fitness-app/playwright.config.ts) and [Dev studio Playwright configuration](/apps/my-dev-studio/playwright.config.ts) [CI workflow](../.github/workflows/ci.yml).
 
 ## Manual feature catalog
 

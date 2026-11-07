@@ -19,6 +19,8 @@ export { formatTimestamp } from "./helpers/format-timestamp";
 export { isMobile } from "./helpers/isMobile";
 export { noop, noopAsync } from "./helpers/noop";
 export { NullsToUndefined } from "./helpers/nullsToUndefined";
+export { safeJson } from "./helpers/safe-json";
+export { safeLink } from "./helpers/safe-link";
 export { sleepMs } from "./helpers/sleepMs";
 export {
   ensureLeadingSlash,

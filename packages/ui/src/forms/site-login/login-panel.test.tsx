@@ -27,7 +27,12 @@ describe("LoginPanel", () => {
         .closest("form")
         ?.getAttribute("action"),
     ).toBe("/fitness/google");
-    expect(screen.getByLabelText("Password").getAttribute("autoComplete")).toBe("current-password");
+    const password = screen.getByLabelText("Password");
+    expect(password.getAttribute("autoComplete")).toBe("current-password");
+    fireEvent.click(screen.getByRole("button", { name: "Show password" }));
+    expect(password.getAttribute("type")).toBe("text");
+    fireEvent.click(screen.getByRole("button", { name: "Hide password" }));
+    expect(password.getAttribute("type")).toBe("password");
   });
   it("submits password credentials to the configured app and retains an accessible error", async () => {
     const fetcher = vi.fn().mockResolvedValue({

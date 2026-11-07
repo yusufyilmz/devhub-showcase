@@ -41,7 +41,7 @@ export function CvImportEditor({
   const pending = useRef<AbortController | null>(null);
   useEffect(() => {
     const controller = new AbortController();
-    request(urls.next.studio.cvImport(), { signal: controller.signal })
+    request(urls.studio.cvImport(), { signal: controller.signal })
       .then((response) => response.json())
       .then((result) => {
         if (!controller.signal.aborted) setEnabled(result.enabled === true);
@@ -193,7 +193,7 @@ async function requestCvExtraction(request: StudioRequest, file: File, signal: A
   if (!file.size || file.size > MAX_CV_BYTES) throw new Error("Choose a nonempty CV up to 3 MB.");
   const form = new FormData();
   form.set("cv", file);
-  const response = await request(urls.next.studio.cvImport(), {
+  const response = await request(urls.studio.cvImport(), {
     body: form,
     method: "POST",
     signal,

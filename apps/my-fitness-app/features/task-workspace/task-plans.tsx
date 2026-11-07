@@ -166,8 +166,11 @@ export function TaskPlans({
   );
 
   return (
-    <Card asChild backdrop="accent" interaction="static" layout="plain">
-      <section aria-labelledby="fitness-plans-heading" className="fitness-plans">
+    <Card asChild layout="plain" withBackdrop withHover={false}>
+      <section
+        aria-labelledby="fitness-plans-heading"
+        className="fitness-plans grid grid-cols-1 gap-[18px] p-[clamp(14px,3.5vw,28px)]"
+      >
         {plan && current ? (
           <Carousel
             aria-label="Plans"

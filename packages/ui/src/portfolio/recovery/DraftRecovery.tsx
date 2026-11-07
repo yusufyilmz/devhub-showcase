@@ -1,5 +1,5 @@
 "use client";
-import "../workflow.css";
+import "../../styles/portfolio/workflow.css";
 
 import { Button } from "../../buttons/button/Button";
 import type { DraftRecoveryProps } from "./types";

@@ -228,10 +228,25 @@ export type CardType =
   | "content"
   | undefined;
 
+type CardShortcuts = {
+  withAccent?: boolean;
+  withBackdrop?: boolean;
+  withBlur?: boolean;
+  withHover?: boolean;
+  withScale?: boolean;
+  withShadow?: boolean;
+  withTilt?: boolean;
+} & (
+  | { asChild?: boolean; withHeader?: never; withFooter?: never }
+  | { asChild?: false; withHeader?: ReactNode; withFooter?: ReactNode }
+);
+
+export type StandardCardProps = BaseCardProps & CardShortcuts & { type?: "tilt" | "animated" };
+
 export type CardProps =
-  | (BaseCardProps & { type?: undefined })
-  | (BaseCardProps & { type: "tilt" | "animated" })
+  | StandardCardProps
   | (RevealCardProps & { type: "reveal"; language?: Language })
+  | (RevealCardProps & { withReveal: true; type?: undefined; language?: Language })
   | (VariantCardProps & { type: "variants" })
   | (ContentCardProps & { type: "content" })
   | (AppearanceCardProps & { type: "appearance" })

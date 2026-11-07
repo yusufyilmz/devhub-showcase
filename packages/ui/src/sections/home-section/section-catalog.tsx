@@ -2,28 +2,21 @@
 
 import { useId, useState } from "react";
 
-import { authorableSections, authorableSectionTypes } from "@shared/config";
+import { authorableSectionTypes } from "@shared/config";
 
 import { Button } from "../../buttons/button";
 import { Card } from "../../cards";
 import { Badge } from "../../feedback/badge";
 import { Input } from "../../forms/input";
 import { Label } from "../../forms/label";
-import { sectionCatalogDescriptions } from "./section-catalog-data";
+import registry from "../../registry/components.json";
 import { SectionCatalogPreview } from "./section-catalog-preview";
 import { sectionCatalogStyles } from "./styles";
 import type { Group } from "./types";
 
 const groups = ["All", "Story", "Work", "Media", "Connect"] as const;
 
-function category(type: (typeof authorableSectionTypes)[number]): Exclude<Group, "All"> {
-  const view = authorableSections[type].view;
-  if (["gallery", "video", "clients"].includes(view)) return "Media";
-  if (["contact", "links", "map", "newsletter", "toc"].includes(view)) return "Connect";
-  if (["cards", "projects", "pricing", "shop", "careers", "statistics", "property"].includes(view))
-    return "Work";
-  return "Story";
-}
+const sections = authorableSectionTypes.map((id) => ({ id, ...registry.sections[id] }));
 
 export function SectionCatalog() {
   const [query, setQuery] = useState("");
@@ -31,12 +24,10 @@ export function SectionCatalog() {
   const [expanded, setExpanded] = useState(false);
   const id = useId();
   const search = query.trim().toLocaleLowerCase();
-  const matches = authorableSectionTypes.filter(
-    (type) =>
-      (group === "All" || category(type) === group) &&
-      `${authorableSections[type].name} ${sectionCatalogDescriptions[type]}`
-        .toLocaleLowerCase()
-        .includes(search),
+  const matches = sections.filter(
+    ({ category, description, name }) =>
+      (group === "All" || category === group) &&
+      `${name} ${description}`.toLocaleLowerCase().includes(search),
   );
   return (
     <Card asChild interaction="static" layout="plain" surface="portfolio">
@@ -44,13 +35,13 @@ export function SectionCatalog() {
         <div className={sectionCatalogStyles.element2}>
           <div>
             <p className={sectionCatalogStyles.element3}>FIND YOUR NEXT SECTION</p>
-            <h3 id={`${id}-title`}>Browse all {authorableSectionTypes.length} section types</h3>
+            <h3 id={`${id}-title`}>Browse all {sections.length} section types</h3>
             <p>
               From a first introduction to your latest work. Find a place for every part of your
               story.
             </p>
           </div>
-          <Badge variant="secondary">{authorableSectionTypes.length} ways to tell your story</Badge>
+          <Badge variant="secondary">{sections.length} ways to tell your story</Badge>
         </div>
         <div className={sectionCatalogStyles.element4}>
           <Label htmlFor={`${id}-search`}>Find a section</Label>
@@ -77,7 +68,7 @@ export function SectionCatalog() {
           ))}
         </fieldset>
         <p aria-live="polite" className={sectionCatalogStyles.element7}>
-          {matches.length} of {authorableSectionTypes.length} section types
+          {matches.length} of {sections.length} section types
         </p>
         <ul
           aria-label="Available section types"
@@ -85,14 +76,14 @@ export function SectionCatalog() {
           data-expanded={expanded || Boolean(search) || group !== "All"}
           id={`${id}-results`}
         >
-          {matches.map((type) => (
-            <Card asChild interaction="static" key={type} layout="plain" surface="portfolio">
+          {matches.map(({ category, description, id, name }) => (
+            <Card asChild interaction="static" key={id} layout="plain" surface="portfolio">
               <li>
-                <SectionCatalogPreview type={type} />
+                <SectionCatalogPreview type={id} />
                 <div className="section-catalog-card-copy">
-                  <span className="section-catalog-card-category">{category(type)}</span>
-                  <h4>{authorableSections[type].name}</h4>
-                  <p>{sectionCatalogDescriptions[type]}</p>
+                  <span className="section-catalog-card-category">{category}</span>
+                  <h4>{name}</h4>
+                  <p>{description}</p>
                 </div>
               </li>
             </Card>

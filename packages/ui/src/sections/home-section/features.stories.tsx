@@ -1,4 +1,4 @@
-import "./home.css";
+import "../../styles/components/sections/home.css";
 
 import { PortfolioStoryFrame } from "@fixtures/portfolio-story-frame";
 import type { Meta, StoryObj } from "@storybook/react-vite";

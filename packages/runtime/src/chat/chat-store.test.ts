@@ -5,7 +5,8 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { ChatRole } from "@shared/lib/types";
 
-import { chatStorageKey, createChatStore } from "./chat-store";
+import { chatStorage } from "../storage/chatStorage";
+import { createChatStore } from "./chat-store";
 
 const alex = { id: "alex", name: "Alex Example", revision: 1 };
 
@@ -29,7 +30,9 @@ describe("ChatState", () => {
       const next = createChatStore({ ...alex, revision: 2 });
       await next.persist.rehydrate();
       expect(JSON.stringify(next.getState())).not.toContain("First owner only");
-      expect(chatStorageKey(alex)).not.toBe(chatStorageKey({ ...alex, revision: 2 }));
+      expect(chatStorage.portfolioKey(alex)).not.toBe(
+        chatStorage.portfolioKey({ ...alex, revision: 2 }),
+      );
       const same = createChatStore(alex);
       await same.persist.rehydrate();
       expect(JSON.stringify(same.getState())).toContain("First owner only");

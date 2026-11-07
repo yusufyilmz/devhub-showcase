@@ -17,7 +17,7 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 
 ## Related evidence and detail
 
-- [e2e/edit/editor-workflow.spec.ts](../../../e2e/edit/editor-workflow.spec.ts)
+- [e2e/edit/editor-workflow.spec.ts](../../../apps/my-dev-studio/e2e/edit/editor-workflow.spec.ts)
 - [docs/testing/manual-editor-checks.md](../../../docs/testing/manual-editor-checks.md)
 
 Return to the [manual testing index](index.md).

@@ -19,5 +19,6 @@
     "strict": true,
     "target": "ES2025",
     "verbatimModuleSyntax": true
-  }
+  },
+  "files": ["./css.d.ts"]
 }

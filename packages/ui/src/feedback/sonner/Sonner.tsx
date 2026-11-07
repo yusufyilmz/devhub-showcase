@@ -1,6 +1,6 @@
 "use client";
 
-import "./sonner.css";
+import "../../styles/components/feedback/sonner.css";
 
 import type { CSSProperties } from "react";
 

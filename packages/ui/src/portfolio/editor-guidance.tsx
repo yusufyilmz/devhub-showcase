@@ -1,5 +1,5 @@
 "use client";
-import "./editor-guidance.css";
+import "../styles/portfolio/editor-guidance.css";
 
 import { Button } from "../buttons/button/Button";
 import { portfolioCompletion } from "./completion";

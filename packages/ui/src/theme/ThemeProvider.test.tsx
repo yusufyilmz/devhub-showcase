@@ -4,24 +4,16 @@ import { runInNewContext } from "node:vm";
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import {
-  USER_CONFIG_STORAGE_KEY,
-  userConfigThemeScript,
-  useUserConfigStore,
-} from "@shared/runtime/user";
+import { storage } from "@shared/config/storage";
+import { themeBootstrapScript, themeStorage } from "@shared/runtime/storage";
+import { useThemeStore, useUserConfigStore } from "@shared/runtime/user";
 
 import { ThemeProvider } from "./ThemeProvider";
 import { ThemeToggle } from "./theme-toggle";
 
-function Page({
-  storageKey,
-  defaultTheme = "dark",
-}: {
-  storageKey: string;
-  defaultTheme?: "light" | "dark" | "system";
-}) {
+function Page({ defaultTheme = "dark" }: { defaultTheme?: "light" | "dark" | "system" }) {
   return (
-    <ThemeProvider accent="cyan" defaultTheme={defaultTheme} storageKey={storageKey}>
+    <ThemeProvider accent="cyan" defaultTheme={defaultTheme}>
       <ThemeToggle />
     </ThemeProvider>
   );
@@ -29,47 +21,41 @@ function Page({
 
 describe("Shared document theme", () => {
   it("restores appearance before paint and preserves it when mode changes", () => {
-    useUserConfigStore.getState().setThemePreferences({
+    useThemeStore.getState().setThemePreferences({
       accent: "violet",
       brand: "aqua",
       radius: "pill",
       scale: "110",
       spacing: "compact",
     });
-    runInNewContext(userConfigThemeScript("legacy", "dark"), {
+    runInNewContext(themeBootstrapScript("dark"), {
       document,
       localStorage,
       matchMedia: window.matchMedia,
     });
     expect(document.documentElement.dataset.spacing).toBe("compact");
     expect(document.documentElement.style.getPropertyValue("--text-scale")).toBe("1.1");
-    render(<Page storageKey="legacy" />);
+    render(<Page />);
     expect(document.documentElement.dataset.accent).toBe("violet");
     fireEvent.click(screen.getByRole("button", { name: "Switch to light theme" }));
     expect(document.documentElement.dataset.spacing).toBe("compact");
     expect(document.documentElement.dataset.brand).toBe("aqua");
-    act(() => useUserConfigStore.setState({ themePreferences: { spacing: "spacious" } }));
+    act(() => useThemeStore.setState({ themePreferences: { spacing: "spacious" } }));
     expect(document.documentElement.dataset.spacing).toBe("spacious");
-    act(() => useUserConfigStore.setState({ themePreferences: {} }));
+    act(() => useThemeStore.setState({ themePreferences: {} }));
     expect(document.documentElement.dataset.accent).toBe("cyan");
-  });
-  it("migrates old customizer appearance keys into the canonical record", () => {
-    localStorage.setItem("data-spacing", "spacious");
-    localStorage.setItem("data-brand", "sand");
-    render(<Page storageKey="legacy" />);
-    expect(useUserConfigStore.getState().themePreferences).toEqual({
-      brand: "sand",
-      spacing: "spacious",
-    });
-    expect(localStorage.getItem("data-spacing")).toBeNull();
   });
   let dark: boolean;
   let change: (() => void) | undefined;
   beforeEach(() => {
     dark = false;
     change = undefined;
-    useUserConfigStore.setState({ activeMode: null, themePreferences: {}, user: null });
+    useThemeStore.setState({ activeMode: null, themePreferences: {} });
+    useUserConfigStore.getState().clearUser();
     localStorage.clear();
+    document.documentElement.removeAttribute("data-appearance-defaults");
+    document.documentElement.removeAttribute("data-spacing");
+    document.documentElement.removeAttribute("data-brand");
     vi.stubGlobal("matchMedia", () => ({
       addEventListener: (_: string, cb: () => void) => {
         change = cb;
@@ -83,29 +69,22 @@ describe("Shared document theme", () => {
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
   });
-  it("keeps a homepage choice on a differently scoped studio page and before paint", () => {
-    const home = render(<Page storageKey="mydevstudio-theme" />);
+  it("keeps a homepage choice on a different studio page and before paint", () => {
+    const home = render(<Page />);
     fireEvent.click(screen.getByRole("button", { name: "Switch to light theme" }));
     home.unmount();
     document.documentElement.dataset.theme = "dark";
-    runInNewContext(userConfigThemeScript("devhub-theme:owner", "dark"), {
+    runInNewContext(themeBootstrapScript("dark"), {
       document,
       localStorage,
       matchMedia: window.matchMedia,
     });
     expect(document.documentElement.dataset.theme).toBe("light");
-    render(<Page storageKey="devhub-theme:owner" />);
+    render(<Page />);
     expect(screen.getByRole("button", { name: "Switch to dark theme" })).toBeTruthy();
   });
-  it("migrates the existing homepage choice ahead of a conflicting profile preference", () => {
-    localStorage.setItem("mydevstudio-theme", "light");
-    localStorage.setItem("devhub-theme:owner", "dark");
-    render(<Page storageKey="devhub-theme:owner" />);
-    expect(useUserConfigStore.getState().activeMode).toBe("light");
-    expect(document.documentElement.dataset.theme).toBe("light");
-  });
   it("follows the device in system mode and preserves an explicit override", () => {
-    render(<Page defaultTheme="system" storageKey="legacy" />);
+    render(<Page defaultTheme="system" />);
     dark = true;
     // Drive the same callback matchMedia dispatches in a browser.
     act(() => change?.());
@@ -118,17 +97,16 @@ describe("Shared document theme", () => {
     expect(document.documentElement.dataset.theme).toBe("light");
   });
   it("accepts preference changes from another tab", () => {
-    render(<Page storageKey="legacy" />);
+    render(<Page />);
     const newValue = JSON.stringify({
       state: {
         activeMode: "light",
         themePreferences: { accent: "emerald", spacing: "spacious" },
-        user: null,
       },
-      version: 2,
+      version: storage.version,
     });
-    localStorage.setItem(USER_CONFIG_STORAGE_KEY, newValue);
-    fireEvent(window, new StorageEvent("storage", { key: USER_CONFIG_STORAGE_KEY, newValue }));
+    localStorage.setItem(themeStorage.name, newValue);
+    fireEvent(window, new StorageEvent("storage", { key: themeStorage.name, newValue }));
     expect(document.documentElement.dataset.theme).toBe("light");
     expect(document.documentElement.dataset.spacing).toBe("spacious");
     expect(document.documentElement.dataset.accent).toBe("emerald");
@@ -140,26 +118,23 @@ describe("Shared document theme", () => {
     vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
       throw new Error("Blocked");
     });
-    render(<Page storageKey="legacy" />);
+    render(<Page />);
     fireEvent.click(screen.getByRole("button", { name: "Switch to light theme" }));
     expect(document.documentElement.dataset.theme).toBe("light");
   });
-  it("imports the temporary store once without resurrecting a signed-out user", () => {
-    localStorage.setItem(
-      "mydevstudio-storage",
-      JSON.stringify({
-        state: { theme: "light", user: { id: "owner", name: "Yusuf" } },
-        version: 1,
-      }),
-    );
-    const page = render(<Page storageKey="legacy" />);
-    expect(useUserConfigStore.getState().activeMode).toBe("light");
+  it("ignores old theme keys and leaves the cached user alone when the theme is cleared", () => {
+    localStorage.setItem("mydevstudio-theme", "light");
+    localStorage.setItem("data-spacing", "spacious");
+    useUserConfigStore.getState().setUser({ id: "owner", name: "Yusuf" });
+    render(<Page />);
+    expect(document.documentElement.dataset.theme).toBe("dark");
+    expect(useThemeStore.getState().themePreferences).toEqual({});
+
+    fireEvent.click(screen.getByRole("button", { name: "Switch to light theme" }));
+    localStorage.removeItem(themeStorage.name);
+    fireEvent(window, new StorageEvent("storage", { key: themeStorage.name }));
+    expect(document.documentElement.dataset.theme).toBe("dark");
+    expect(localStorage.getItem(themeStorage.name)).toBeNull();
     expect(useUserConfigStore.getState().user?.id).toBe("owner");
-    expect(localStorage.getItem("mydevstudio-storage")).toBeNull();
-    useUserConfigStore.getState().clearUser();
-    page.unmount();
-    render(<Page storageKey="legacy" />);
-    expect(useUserConfigStore.getState().user).toBeNull();
-    expect(useUserConfigStore.getState().activeMode).toBe("light");
   });
 });

@@ -1,5 +1,9 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "rootDir": "./"
+  },
   "exclude": ["node_modules", "dist"],
-  "extends": "@shared/typescript-config/base.json",
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "extends": "@shared/typescript-config/library.json",
+  "include": ["src/**/*.ts"]
 }

@@ -9,12 +9,9 @@ import { drizzle } from "drizzle-orm/pglite";
 
 import type { Database } from "@shared/services/db/client";
 import * as schema from "@shared/services/db/schema";
+import { WeeklyPlanningService } from "@shared/services/meal";
+import { RevisionConflictError, WorkspaceRepository } from "@shared/services/workspace";
 
-import { WeeklyPlanningService } from "../../../packages/services/src/meal";
-import {
-  RevisionConflictError,
-  WorkspaceRepository,
-} from "../../../packages/services/src/workspace";
 import { starterWorkspace } from "../features/task-workspace/starter";
 
 const owner = "00000000-0000-4000-8000-000000000001";

@@ -1,4 +1,4 @@
-import "../editor-controls.css";
+import "../../styles/components/editors/editor-controls.css";
 
 import { authorableSections, type SectionOptions } from "@shared/config";
 
@@ -56,6 +56,15 @@ export function OptionsEditor({ section, type, onChange }: OptionsEditorOptions)
             required
             type="email"
             value={options.email ?? ""}
+          />
+        )}
+        {["hero", "cta"].includes(type) && (
+          <Field
+            hint="A public URL for the optional call-to-action button."
+            label="Action URL"
+            onChange={(actionUrl) => change({ actionUrl })}
+            type="url"
+            value={options.actionUrl ?? ""}
           />
         )}
         {view === "newsletter" && (

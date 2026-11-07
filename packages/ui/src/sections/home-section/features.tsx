@@ -80,7 +80,7 @@ export function HomeFeaturesSection() {
               stays with you when you change the look.
             </p>
             <ul className={featuresStyles.element12}>
-              <li>Four themes, each with its own character</li>
+              <li>Portfolio themes, color palettes and light or dark mode</li>
               <li>Engineer, Designer, Consultant, Minimal, Trainer and Content creator layouts</li>
               <li>Separate portfolio and CV language settings</li>
             </ul>
