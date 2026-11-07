@@ -2,6 +2,8 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
+import { openEditor, selectEditorSection } from "../support/editor";
+
 test("private CV versions recover failed saves and tailor evidence without publishing", async ({
   page,
   context,
@@ -58,7 +60,8 @@ test("private CV versions recover failed saves and tailor evidence without publi
     });
   });
   await page.goto(`/${mobile ? "mobile" : "desktop"}-assistant-tools/edit`);
-  await page.getByRole("button", { exact: true, name: "CV versions" }).click();
+  await openEditor(page);
+  await selectEditorSection(page, "CV versions");
   await page.getByRole("button", { name: "Create fresh version from profile" }).click();
   await page.getByRole("textbox", { name: /Version title/ }).fill("Private version title");
   await page.getByRole("combobox", { name: /Version layout/ }).selectOption("ats");
@@ -94,7 +97,8 @@ test("private CV versions recover failed saves and tailor evidence without publi
   ).toHaveCount(3);
   expect(profileWrites).toBe(0);
   await page.reload();
-  await page.getByRole("button", { exact: true, name: "CV versions" }).click();
+  await openEditor(page);
+  await selectEditorSection(page, "CV versions");
   await expect(
     page.getByRole("combobox", { name: /Selected CV version/ }).locator("option"),
   ).toHaveCount(3);

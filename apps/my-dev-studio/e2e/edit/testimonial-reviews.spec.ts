@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+import { openEditor } from "../support/editor";
+
 test("the original owner can moderate testimonials on desktop and at a narrow width", async ({
   page,
   context,
@@ -48,6 +50,7 @@ test("the original owner can moderate testimonials on desktop and at a narrow wi
   await queue.getByRole("button", { name: "Reject testimonial from Sam Example" }).click();
   await expect(queue.getByText("You’re all caught up")).toBeVisible();
   await page.reload();
+  await openEditor(page);
   await expect(queue.getByText("0 pending")).toBeVisible();
 
   await context.clearCookies();

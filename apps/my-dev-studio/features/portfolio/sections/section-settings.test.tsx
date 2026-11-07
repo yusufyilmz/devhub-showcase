@@ -3,7 +3,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
   getPortfolioSections,
@@ -20,6 +20,13 @@ const sampleProject = profile.projects[0];
 if (!sampleProject) throw new Error("Expected a sample project");
 
 describe("SectionSettings", () => {
+  beforeEach(() => {
+    vi.stubGlobal("matchMedia", () => ({
+      addEventListener: vi.fn(),
+      matches: false,
+      removeEventListener: vi.fn(),
+    }));
+  });
   afterEach(() => {
     cleanup();
     vi.unstubAllGlobals();

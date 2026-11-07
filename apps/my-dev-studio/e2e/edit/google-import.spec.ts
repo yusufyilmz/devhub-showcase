@@ -2,6 +2,8 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
+import { openEditor, selectEditorSection } from "../support/editor";
+
 const profileApi = urls.studio.profile();
 const googleProfileApi = urls.studio.googleProfile();
 
@@ -52,6 +54,7 @@ test("new owner chooses Google details, reviews fields and applies without savin
     if (request.url().endsWith(profileApi) && request.method() === "PUT") saves++;
   });
   await page.goto(`/${device}-google-owner/edit`);
+  await openEditor(page);
   await page.getByRole("button", { name: "Start from Google profile" }).click();
   const read = page.getByRole("button", { name: "Read selected Google details" });
   await expect(read).toBeDisabled();
@@ -66,7 +69,7 @@ test("new owner chooses Google details, reviews fields and applies without savin
   await expect(apply).toBeDisabled();
   await page.getByLabel("Replace Full name").check();
   await apply.click();
-  await page.getByRole("button", { exact: true, name: "Profile" }).click();
+  await selectEditorSection(page, "Profile");
   await expect(page.getByLabel("Full name", { exact: true })).toHaveValue("Alex Google Demo");
   expect(saves).toBe(0);
   expect((await (await page.request.get(profileApi)).json()).profile.name).toBe(

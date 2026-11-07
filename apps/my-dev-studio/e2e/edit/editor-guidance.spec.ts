@@ -2,6 +2,8 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
+import { openDraftTools, openEditor } from "../support/editor";
+
 test("checklist follows draft changes and history stays local until save", async ({
   page,
   context,
@@ -27,9 +29,11 @@ test("checklist follows draft changes and history stays local until save", async
     if (request.url().endsWith(urls.studio.profile()) && request.method() === "PUT") saves++;
   });
   await page.goto(`/${mobile ? "mobile" : "desktop"}-guidance-owner/edit`);
+  await openEditor(page);
   const summary = page.getByRole("textbox", { exact: true, name: "Short introduction" });
   const original = await summary.inputValue();
   await summary.fill("");
+  await openDraftTools(page);
   await page.getByText(/Portfolio checklist/).click();
   const item = page
     .locator(".editor-checklist li")
@@ -49,6 +53,7 @@ test("checklist follows draft changes and history stays local until save", async
   await expect(page.locator(".studio-status")).toContainText("All changes saved");
   await expect(page.getByRole("button", { exact: true, name: "Undo draft change" })).toBeDisabled();
   await page.reload();
+  await openEditor(page);
   await expect(summary).toHaveValue("A clear introduction.");
   await page.screenshot({ fullPage: true, path: info.outputPath("editor-guidance.png") });
 });

@@ -2,6 +2,8 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
+import { openEditor, selectEditorSection } from "../support/editor";
+
 const profileApi = urls.studio.profile();
 const assistantApi = urls.studio.assistant();
 
@@ -47,7 +49,8 @@ test("owner reviews AI suggestions before changing a draft and can undo without 
     if (request.url().endsWith(profileApi) && request.method() === "PUT") saves++;
   });
   await page.goto(`/${device}-ai-owner/edit`);
-  await page.getByRole("button", { exact: true, name: "AI assistant" }).click();
+  await openEditor(page);
+  await selectEditorSection(page, "AI assistant");
   await page.getByLabel("What would you like to change?").fill("Shorten my title");
   await page.getByRole("button", { exact: true, name: "Generate proposal" }).click();
   await expect(page.getByText("A clearer role", { exact: true })).toBeVisible();
@@ -64,7 +67,7 @@ test("owner reviews AI suggestions before changing a draft and can undo without 
   expect(saves).toBe(0);
   expect((await (await page.request.get(profileApi)).json()).profile.title).toBe(original);
   await page.getByRole("button", { exact: true, name: "Undo AI changes" }).click();
-  await page.getByRole("button", { exact: true, name: "Profile" }).click();
+  await selectEditorSection(page, "Profile");
   await expect(page.getByRole("textbox", { exact: true, name: "Professional title" })).toHaveValue(
     original,
   );

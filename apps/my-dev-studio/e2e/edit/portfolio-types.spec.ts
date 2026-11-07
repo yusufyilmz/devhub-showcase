@@ -1,8 +1,10 @@
 import { expect, test } from "@playwright/test";
 
 import { getPortfolioCopy } from "@shared/config";
+import { storage } from "@shared/config/storage";
 import { urls } from "@shared/config/urls";
 
+import { openEditor, selectEditorSection } from "../support/editor";
 import { confirmPublication } from "../support/publication";
 
 test("a new owner chooses a layout, saves it and returns to the editor without losing the choice", async ({
@@ -41,12 +43,13 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
     },
   ]);
   await page.goto(`/${device}-starter/edit`);
+  await openEditor(page);
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await expect
     .poll(() =>
       page.evaluate(
         (key) => JSON.parse(localStorage.getItem(key) ?? "null")?.state?.user?.id,
-        "mydevstudio-userconfig-store",
+        storage.userConfig,
       ),
     )
     .toBe(userId);
@@ -60,31 +63,34 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
   await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
     "New Portfolio Owner",
   );
+  await selectEditorSection(page, "Publishing");
   await expect(page.getByText("Your saved draft is private until you publish it.")).toBeVisible();
   await page.getByRole("button", { name: "Save changes" }).click();
   await expect(page.getByRole("status")).toContainText("Saved");
   await page.reload();
+  await openEditor(page);
   await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
     "New Portfolio Owner",
   );
-  await page.getByRole("button", { exact: true, name: "Layout" }).click();
+  await selectEditorSection(page, "Layout");
   await expect(page.getByRole("radio", { name: /Designer/ })).toBeChecked();
-  await page.getByRole("button", { exact: true, name: "PDF" }).click();
+  await selectEditorSection(page, "PDF");
   await expect(page.getByLabel("CV layout")).toHaveValue("editorial");
-  await page.getByRole("button", { name: "Language settings" }).click();
+  await selectEditorSection(page, "Language settings");
   await page.getByLabel("Portfolio language").selectOption("es");
   await page.getByRole("combobox", { name: /^CV language/ }).selectOption("tr");
   await page.getByRole("button", { name: "Save changes" }).click();
   await expect(page.getByRole("status")).toContainText("Saved");
   await page.reload();
+  await openEditor(page);
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
-  await page.getByRole("button", { name: "Language settings" }).click();
+  await selectEditorSection(page, "Language settings");
   await expect(page.getByLabel("Portfolio language")).toHaveValue("es");
   await expect(page.getByRole("combobox", { name: /^CV language/ })).toHaveValue("tr");
   const savedPdf = await page.request.get(urls.studio.cv());
   expect(savedPdf.headers()["content-language"]).toBe("tr");
   expect((await savedPdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
-  await page.getByRole("button", { exact: true, name: "Appearance" }).click();
+  await selectEditorSection(page, "Appearance");
   await page.getByRole("radio", { name: /Paper/ }).check();
   await page.getByRole("button", { name: "Preview light" }).click();
   const preview = page.getByRole("region", { name: "Portfolio theme preview" });
@@ -102,10 +108,11 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
   await page.getByRole("button", { name: "Save changes" }).click();
   await expect(page.getByRole("status")).toContainText("Saved");
   await page.reload();
-  await page.getByRole("button", { exact: true, name: "Appearance" }).click();
+  await openEditor(page);
+  await selectEditorSection(page, "Appearance");
   await expect(page.getByRole("radio", { name: /Paper/ })).toBeChecked();
   await expect(page.getByLabel("Default color mode")).toHaveValue("system");
-  await page.getByRole("button", { exact: true, name: "Section order" }).click();
+  await selectEditorSection(page, "Section order");
   const sections = page.getByRole("list", { name: "Portfolio section order" });
   await expect
     .poll(() =>
@@ -124,7 +131,8 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
   await page.getByRole("button", { name: "Save changes" }).click();
   await expect(page.locator(".editor-success")).toContainText("Saved");
   await page.reload();
-  await page.getByRole("button", { exact: true, name: "Section order" }).click();
+  await openEditor(page);
+  await selectEditorSection(page, "Section order");
   await expect(sections.locator("li").first()).toHaveAttribute("data-sortable-id", "about");
   // A pointer cancel must not commit the provisional order.
   await sections.scrollIntoViewIfNeeded();
@@ -186,7 +194,8 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
   await page.getByRole("button", { name: "Save changes" }).click();
   await expect(page.locator(".editor-success")).toContainText("Saved");
   await page.reload();
-  await page.getByRole("button", { exact: true, name: "Section order" }).click();
+  await openEditor(page);
+  await selectEditorSection(page, "Section order");
   await expect
     .poll(() =>
       sections
@@ -209,7 +218,8 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
   await page.getByRole("button", { name: "Save changes" }).click();
   await expect(page.locator(".editor-success")).toContainText("Saved");
   await page.reload();
-  await page.getByRole("button", { exact: true, name: "Section order" }).click();
+  await openEditor(page);
+  await selectEditorSection(page, "Section order");
   await expect
     .poll(() =>
       sections
@@ -217,12 +227,12 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
         .evaluateAll((rows) => rows.map((row) => (row as HTMLElement).dataset.sortableId)),
     )
     .toEqual(["projects", "about", "experience", "skills", "education", "languages"]);
-  await page.getByRole("button", { exact: true, name: "Profile" }).click();
-  await page.getByLabel("About paragraphs").fill("An independent test portfolio.");
-  await page.getByRole("button", { exact: true, name: "Skills" }).click();
+  await selectEditorSection(page, "Profile");
+  await page.getByLabel("About you").fill("An independent test portfolio.");
+  await selectEditorSection(page, "Skills");
   await page.getByRole("button", { name: "+ Add group" }).click();
   await page.getByLabel("Skill group 1 skills").fill("TypeScript");
-  await page.getByRole("button", { exact: true, name: "Section order" }).click();
+  await selectEditorSection(page, "Section order");
   await page.getByRole("button", { exact: true, name: "Reorder Skills" }).press("Home");
   await page.getByRole("button", { name: "Save changes" }).click();
   await confirmPublication(page);

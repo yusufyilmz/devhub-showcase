@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+import { openEditor, selectEditorSection } from "../support/editor";
+
 test.use({ timezoneId: "Europe/Madrid" });
 test("reviewed scheduled snapshots survive later edits, execute once, and can be cancelled", async ({
   page,
@@ -28,6 +30,8 @@ test("reviewed scheduled snapshots survive later edits, execute once, and can be
   const visitor = await browser.newContext();
   try {
     await page.goto(`/${username}/edit`);
+    await openEditor(page);
+    await page.getByRole("button", { exact: true, name: "Review & publish" }).click();
     await page.getByRole("button", { exact: true, name: "Review publication" }).click();
     const date = page.getByLabel("Publish date and time (Europe/Madrid)");
     await date.fill("2027-03-28T02:30");
@@ -42,7 +46,7 @@ test("reviewed scheduled snapshots survive later edits, execute once, and can be
     await page.getByRole("button", { name: "Confirm scheduled publication" }).click();
     await expect(page.locator(".publication-schedule")).toContainText("pending");
     expect((await visitor.request.get(`http://localhost:3100/${username}`)).status()).toBe(404);
-    await page.getByRole("button", { exact: true, name: "Profile" }).click();
+    await selectEditorSection(page, "Profile");
     await page
       .getByRole("textbox", { exact: true, name: "Full name" })
       .fill("Later private scheduled draft");
@@ -62,8 +66,10 @@ test("reviewed scheduled snapshots survive later edits, execute once, and can be
     await publicPage.goto(`/${username}`);
     await expect(publicPage.getByRole("heading", { level: 1 })).toContainText("Publication Owner");
     await expect(publicPage.locator("body")).not.toContainText("Later private scheduled draft");
+    await page.getByRole("button", { exact: true, name: "Review & publish" }).click();
     await page.getByRole("button", { name: "Refresh schedule status" }).click();
     await expect(page.locator(".publication-schedule")).toContainText("completed");
+    await page.getByRole("button", { exact: true, name: "Review & publish" }).click();
     await page.getByRole("button", { exact: true, name: "Review publication" }).click();
     await date.fill("2027-01-01T13:00");
     await page.getByRole("button", { name: "Confirm scheduled publication" }).click();

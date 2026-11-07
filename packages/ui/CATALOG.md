@@ -2,6 +2,12 @@
 
 # UI catalog
 
+`EditorWorkspace` and `DraftPreviewPane` (`@shared/ui/portfolio`) provide grouped
+editor navigation, a preview-first workspace, and an accessible edit lightbox.
+The dialog stays inside the caller's save form and preserves draft state on close.
+The preview offers separate website and CV content views. `ResponsivePortfolioPreview`
+defaults to the user's device size and retains explicit size selections.
+
 `@shared/ui/notification-preferences` provides a reusable per-device notification
 settings panel with install guidance, permission/connection status and explicit
 enable/test/disable callbacks. It owns presentation only; applications supply

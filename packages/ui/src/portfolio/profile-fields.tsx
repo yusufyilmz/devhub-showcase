@@ -2,12 +2,12 @@
 
 import type { PortfolioProfile } from "@shared/config";
 
-import { Card } from "../cards";
+import { Button } from "../buttons/button";
 import { Field, LinesField } from "../forms";
 import { profileFieldsStyles } from "./styles";
 import type { ProfileFieldsOptions, ProfileFieldsOptions2 } from "./types";
 
-export function ProfileFields({ profile, onChange }: ProfileFieldsOptions) {
+export function ProfileFields({ profile, onChange, onImprove }: ProfileFieldsOptions) {
   const update = (key: keyof PortfolioProfile, value: ProfileFieldsOptions2) =>
     onChange({ ...profile, [key]: value });
   return (
@@ -19,8 +19,29 @@ export function ProfileFields({ profile, onChange }: ProfileFieldsOptions) {
           <p>Add your professional details and write the introduction readers will see first.</p>
         </div>
       </div>
-      <Card asChild layout="plain" surface="portfolio">
-        <div className={profileFieldsStyles.element3}>
+      <nav aria-label="Profile details" className="editor-profile-navigation">
+        {[
+          ["profile-basics", "Basic details"],
+          ["profile-introduction", "Introduction"],
+          ["profile-contact", "Contact & links"],
+        ].map(([id, label]) => (
+          <Button
+            key={id}
+            onClick={() =>
+              document
+                .getElementById(id ?? "")
+                ?.scrollIntoView({ behavior: "auto", block: "start" })
+            }
+            type="button"
+            variant="outline"
+          >
+            {label}
+          </Button>
+        ))}
+      </nav>
+      <section className="editor-profile-section" id="profile-basics">
+        <h3>Basic details</h3>
+        <div className="editor-fields">
           <Field
             label="Full name"
             onChange={(v) => update("name", v)}
@@ -28,17 +49,47 @@ export function ProfileFields({ profile, onChange }: ProfileFieldsOptions) {
             value={profile.name}
           />
           <Field
-            label="Professional title"
-            onChange={(v) => update("title", v)}
-            required
-            value={profile.title}
-          />
-          <Field
             label="Location"
             onChange={(v) => update("location", v)}
             required
             value={profile.location}
           />
+          <div className="full-width">
+            <Field
+              label="Professional title"
+              onChange={(v) => update("title", v)}
+              required
+              value={profile.title}
+            />
+          </div>
+        </div>
+      </section>
+      <section className="editor-profile-section" id="profile-introduction">
+        <h3>Introduction</h3>
+        <div className="editor-fields">
+          <Field
+            label="Short introduction"
+            multiline
+            onChange={(v) => update("summary", v)}
+            required
+            value={profile.summary}
+          />
+          <LinesField
+            hint="One paragraph per line. These also inform your AI assistant."
+            label="About you"
+            onChange={(v) => update("about", v)}
+            value={profile.about}
+          />
+        </div>
+        {onImprove && (
+          <Button onClick={onImprove} type="button" variant="outline">
+            Improve with AI
+          </Button>
+        )}
+      </section>
+      <section className="editor-profile-section" id="profile-contact">
+        <h3>Contact & links</h3>
+        <div className="editor-fields">
           <Field
             label="Public email"
             onChange={(v) => update("email", v)}
@@ -85,21 +136,8 @@ export function ProfileFields({ profile, onChange }: ProfileFieldsOptions) {
             onChange={(v) => update("cvUrl", v)}
             value={profile.cvUrl ?? "/cv.pdf"}
           />
-          <Field
-            label="Short introduction"
-            multiline
-            onChange={(v) => update("summary", v)}
-            required
-            value={profile.summary}
-          />
-          <LinesField
-            hint="One paragraph per line. These also inform your AI assistant."
-            label="About paragraphs"
-            onChange={(v) => update("about", v)}
-            value={profile.about}
-          />
         </div>
-      </Card>
+      </section>
     </section>
   );
 }

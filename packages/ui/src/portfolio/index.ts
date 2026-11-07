@@ -2,6 +2,8 @@ export { PasswordGate } from "./access/PasswordGate";
 export { AssistantFeedback, AssistantTools, PublishedSources } from "./assistant-tools";
 export { CvVersionsEditor } from "./cv-versions/editor";
 export { EditorGuidance } from "./editor-guidance";
+export { DraftPreviewPane } from "./editor-workspace/draft-preview-pane";
+export { EditorWorkspace } from "./editor-workspace/editor-workspace";
 export { EngineerPage } from "./engineer-page/EngineerPage";
 export { FieldVisibilityEditor } from "./field-visibility";
 export { GuidedOnboarding, SetupNavigation } from "./guided-onboarding";

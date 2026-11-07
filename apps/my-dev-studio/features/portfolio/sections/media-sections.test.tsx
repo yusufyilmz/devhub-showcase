@@ -3,7 +3,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type CustomSection, getSocialWork, profile, sectionCompositions } from "@shared/config";
 import { profileSchema } from "@shared/lib/profiles";
@@ -36,6 +36,13 @@ const section: CustomSection = {
 };
 
 describe("MediaSections", () => {
+  beforeEach(() => {
+    vi.stubGlobal("matchMedia", () => ({
+      addEventListener: vi.fn(),
+      matches: false,
+      removeEventListener: vi.fn(),
+    }));
+  });
   afterEach(() => {
     cleanup();
     vi.unstubAllGlobals();
@@ -198,7 +205,9 @@ describe("MediaSections", () => {
     fireEvent.change(screen.getByLabelText(/^Item link/), {
       target: { value: "https://youtu.be/M7lc1UVf-VE" },
     });
-    fireEvent.click(screen.getByRole("button", { name: "Appearance" }));
+    fireEvent.change(screen.getByRole("combobox", { name: "Editor section" }), {
+      target: { value: "Appearance" },
+    });
     fireEvent.click(screen.getByLabelText("Use hero background"));
     fireEvent.change(screen.getByLabelText(/^Background media URL/), {
       target: { value: hero.url },
