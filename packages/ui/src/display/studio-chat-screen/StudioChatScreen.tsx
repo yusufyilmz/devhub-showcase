@@ -44,6 +44,17 @@ function screenCopy(visitor: StudioChatScreenOptions["visitor"]) {
   };
 }
 
+function chatActivity({
+  busy,
+  error,
+  messages,
+}: Pick<StudioChatScreenOptions, "busy" | "error" | "messages">) {
+  const assistantReply = messages.at(-1)?.role === "assistant";
+  if (busy) return assistantReply ? "writing" : "thinking";
+  if (error) return "error";
+  return assistantReply ? "happy" : "idle";
+}
+
 export function StudioChatScreen({
   message,
   onMessageChange,
@@ -158,6 +169,10 @@ export function StudioChatScreen({
             {status && <p role="status">{status}</p>}
             <ChatComposer
               busy={busy}
+              companion={{
+                activity: chatActivity({ busy, error, messages }),
+                agent: visitor ? "portfolio" : "studio",
+              }}
               disabled={disabled}
               maxLength={copy.maxLength}
               onChange={onMessageChange}

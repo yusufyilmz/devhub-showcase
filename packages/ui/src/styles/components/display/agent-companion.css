@@ -362,3 +362,103 @@
   text-decoration: underline;
   text-underline-offset: 0.15rem;
 }
+
+.agent-companion[data-placement="composer"] {
+  --agent-launcher-size: 3.75rem;
+
+  flex: 0 0 auto;
+  align-self: flex-end;
+  margin-block-end: 0.25rem;
+}
+.agent-companion[data-placement="composer"] .agent-launcher {
+  cursor: default;
+}
+.agent-thoughts,
+.agent-spark {
+  fill: var(--agent-eye);
+  stroke: var(--agent-accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.agent-pencil {
+  fill: var(--agent-eye);
+  stroke: var(--agent-face);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  transform-origin: 60px 58px;
+}
+.agent-companion[data-activity="listening"] .agent-avatar {
+  rotate: -8deg;
+}
+.agent-companion[data-activity="thinking"] .agent-arm {
+  transform: translate(-10px, -13px) rotate(-20deg);
+}
+.agent-companion[data-activity="error"] .agent-avatar {
+  rotate: 6deg;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .agent-companion:not([data-activity="idle"]) .agent-avatar,
+  .agent-companion:not([data-activity="idle"]) .agent-arm {
+    animation: none;
+  }
+  .agent-companion[data-activity="listening"] .agent-avatar {
+    animation: agent-attentive 2.4s ease-in-out infinite;
+  }
+  .agent-companion[data-activity="thinking"] .agent-avatar {
+    animation: agent-ponder 2.8s ease-in-out infinite;
+  }
+  .agent-companion[data-activity="thinking"] .agent-thoughts {
+    animation: agent-thought 1.5s ease-in-out infinite;
+  }
+  .agent-companion[data-activity="writing"] .agent-avatar {
+    animation: agent-attentive 1s ease-in-out infinite;
+  }
+  .agent-companion[data-activity="writing"] :is(.agent-pencil, .agent-arm) {
+    transform-origin: 59px 60px;
+    animation: agent-scribble 350ms ease-in-out infinite alternate;
+  }
+  .agent-companion[data-activity="happy"] .agent-avatar {
+    animation: agent-cheer 650ms ease-out 2;
+  }
+  .agent-companion[data-activity="happy"] .agent-arm {
+    animation: agent-wave 1.8s ease-in-out 2;
+  }
+  .agent-companion[data-activity="error"] .agent-avatar {
+    animation: agent-concern 450ms ease-in-out;
+  }
+}
+@keyframes agent-attentive {
+  50% {
+    translate: 0 -3px;
+  }
+}
+@keyframes agent-ponder {
+  50% {
+    rotate: -9deg;
+    translate: 0 -2px;
+  }
+}
+@keyframes agent-thought {
+  50% {
+    opacity: 0.35;
+  }
+}
+@keyframes agent-scribble {
+  to {
+    rotate: -14deg;
+  }
+}
+@keyframes agent-cheer {
+  50% {
+    rotate: -5deg;
+    translate: 0 -7px;
+  }
+}
+@keyframes agent-concern {
+  25% {
+    translate: -3px 0;
+  }
+  75% {
+    translate: 3px 0;
+  }
+}

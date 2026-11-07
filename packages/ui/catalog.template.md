@@ -227,3 +227,6 @@ Import homepage compositions from `@shared/ui/sections`. They live in `src/secti
 All <!-- registry:section-count --> registered authorable sections have colocated Default, Compact and Empty stories using fictional fixtures from `tools/test/fixtures/section-story.ts`. `SectionCatalog` provides a searchable name/category browser for the same registry, using the names, descriptions and categories in the component registry.
 
 `PublicationControls` (`@shared/ui/portfolio`) reviews a saved revision and confirms publication or withdrawal through app-provided callbacks; it never saves the draft. Optional scheduling callbacks enable reviewed snapshot scheduling, visible timezone/UTC time, status refresh and cancellation. The app owns authorization, persistence and worker setup.
+
+AgentCompanion supports idle, listening, thinking, writing, happy and error reactions.
+Its composer placement is a noninteractive character beside ChatComposer; Studio and visitor chats select reactions from request and streaming state.
