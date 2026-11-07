@@ -12,6 +12,7 @@ export type PortfolioTypePickerOptions = {
 };
 
 export type ProfileFieldsOptions = {
+  onImprove?: () => void;
   profile: PortfolioProfile;
   onChange: (profile: PortfolioProfile) => void;
 };

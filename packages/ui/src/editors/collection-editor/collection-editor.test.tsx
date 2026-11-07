@@ -8,13 +8,14 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { Field } from "../../forms";
 import { CollectionEditor, moveItem } from "./collection-editor";
 
-function WorkoutEditor() {
+function WorkoutEditor({ collapsible = false }: { collapsible?: boolean }) {
   const [items, setItems] = useState([
     { id: "a", name: "Squat" },
     { id: "b", name: "Row" },
   ]);
   return (
     <CollectionEditor
+      collapsible={collapsible}
       create={() => ({ id: "c", name: "Walk" })}
       getTitle={(item) => item.name}
       items={items}
@@ -52,6 +53,26 @@ describe("CollectionEditor", () => {
     expect(screen.queryByRole("heading", { name: "Pull up" })).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: "+ Add workouts" }));
     expect(screen.getByRole("heading", { name: "Walk" })).toBeTruthy();
+  });
+  it("opens only the chosen entry, retains edits and opens a newly added entry", () => {
+    render(<WorkoutEditor collapsible />);
+    const row = screen.getByRole("button", { name: "Edit Row" });
+    fireEvent.click(row);
+    expect(row.getAttribute("aria-expanded")).toBe("true");
+    fireEvent.change(screen.getAllByLabelText("Workout name")[1]!, {
+      target: { value: "Pull up" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Edit Squat" }));
+    expect(screen.getByRole("button", { name: "Edit Pull up" }).getAttribute("aria-expanded")).toBe(
+      "false",
+    );
+    fireEvent.click(screen.getByRole("button", { name: "+ Add workouts" }));
+    expect(screen.getByRole("button", { name: "Close Walk" }).getAttribute("aria-expanded")).toBe(
+      "true",
+    );
+    expect(screen.getByRole("textbox", { name: "Workout name" }).getAttribute("value")).toBe(
+      "Walk",
+    );
   });
   it("keeps collection order for invalid indices", () => {
     const items = ["first", "second"];

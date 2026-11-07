@@ -3,6 +3,8 @@ import { expect, test } from "@playwright/test";
 import { portfolioTypes } from "@shared/config";
 import { urls } from "@shared/config/urls";
 
+import { openEditor, selectEditorSection, showEditorPreview } from "../support/editor";
+
 test("private draft preview resizes, changes layouts and preserves unsaved edits", async ({
   page,
   context,
@@ -31,9 +33,14 @@ test("private draft preview resizes, changes layouts and preserves unsaved edits
     if (request.url().endsWith(profileApi) && request.method() === "PUT") saves++;
   });
   await page.goto(`/${mobile ? "mobile" : "desktop"}-preview-owner/edit`);
-  const title = page.getByRole("textbox", { exact: true, name: "Professional title" });
+  await openEditor(page);
+  const title = page.getByRole("textbox", {
+    exact: true,
+    includeHidden: true,
+    name: "Professional title",
+  });
   await title.fill("Unsaved responsive portfolio");
-  await page.getByText("Preview your draft", { exact: true }).click();
+  await showEditorPreview(page);
   const preview = page.frameLocator('iframe[title="Private draft preview"]');
   await expect(preview.getByText("Unsaved responsive portfolio", { exact: true })).toBeVisible();
   await expect(preview.getByText("Confidential project", { exact: true })).toHaveCount(0);
@@ -59,18 +66,23 @@ test("private draft preview resizes, changes layouts and preserves unsaved edits
           ),
       )
       .toBe(true);
+    await openEditor(page);
     await expect(title).toHaveValue("Unsaved responsive portfolio");
+    await showEditorPreview(page);
   }
-  await page.getByRole("button", { exact: true, name: "Section order" }).click();
+  await selectEditorSection(page, "Section order");
   const moveLanguages = page.getByRole("button", { exact: true, name: "Move Languages up" });
   for (let n = 0; n < 6 && (await moveLanguages.isEnabled()); n++) {
     await moveLanguages.focus();
     await page.keyboard.press("Enter");
   }
+  await showEditorPreview(page);
   await expect(preview.locator(".portfolio-section h2").first()).toHaveText("Languages");
-  await page.getByRole("button", { exact: true, name: "Layout" }).click();
+  await selectEditorSection(page, "Layout");
   for (const type of portfolioTypes.filter((type) => type.id !== "engineer")) {
+    await openEditor(page);
     await page.getByRole("radio", { name: new RegExp(type.name) }).check();
+    await showEditorPreview(page);
     await expect(preview.locator(`[data-portfolio-type="${type.id}"]`)).toBeVisible();
     await expect(preview.getByText("Unsaved responsive portfolio", { exact: true })).toBeVisible();
     for (const [label, width] of [

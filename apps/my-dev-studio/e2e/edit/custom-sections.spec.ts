@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 
+import { openEditor, selectEditorSection } from "../support/editor";
 import { confirmPublication } from "../support/publication";
 
 test("owner saves custom sections, reorders, duplicates and removes them, and visitors see the result", async ({
@@ -33,7 +34,7 @@ test("owner saves custom sections, reorders, duplicates and removes them, and vi
   ]);
   const editor = `/${device}-custom-owner/edit`;
   await page.goto(editor);
-  await page.getByRole("button", { exact: true, name: "Custom sections" }).click();
+  await selectEditorSection(page, "Custom sections");
   await page.getByRole("button", { exact: true, name: "Add custom section" }).click();
   await page.getByLabel("Section name", { exact: true }).fill("Community work");
   await page.getByLabel("Section display").selectOption("accordion");
@@ -44,7 +45,7 @@ test("owner saves custom sections, reorders, duplicates and removes them, and vi
     .fill("Helping new developers learn.\n\nA second paragraph.");
   await page.getByLabel("Item link").fill("https://example.com/mentoring");
   await page.getByRole("button", { exact: true, name: "Duplicate section" }).click();
-  await page.getByRole("button", { exact: true, name: "Section order" }).click();
+  await selectEditorSection(page, "Section order");
   const handle = page.getByRole("button", {
     exact: true,
     name: "Reorder Community work copy",
@@ -54,7 +55,7 @@ test("owner saves custom sections, reorders, duplicates and removes them, and vi
   await expect(
     page.getByRole("list", { name: "Portfolio section order" }).locator("li").first(),
   ).toContainText("Community work copy");
-  await page.getByRole("button", { exact: true, name: "Custom sections" }).click();
+  await selectEditorSection(page, "Custom sections");
   page.once("dialog", (dialog) => dialog.accept());
   await page
     .getByRole("group", { exact: true, name: "Community work" })
@@ -65,7 +66,8 @@ test("owner saves custom sections, reorders, duplicates and removes them, and vi
   await expect(page.getByRole("status")).toContainText("Saved privately.");
   await expect(page.getByRole("button", { exact: true, name: "Save changes" })).toBeDisabled();
   await page.reload();
-  await page.getByRole("button", { exact: true, name: "Custom sections" }).click();
+  await openEditor(page);
+  await selectEditorSection(page, "Custom sections");
   await expect(page.getByLabel("Section name", { exact: true })).toHaveValue("Community work copy");
   await page
     .getByRole("group", { exact: true, name: "Community work copy" })

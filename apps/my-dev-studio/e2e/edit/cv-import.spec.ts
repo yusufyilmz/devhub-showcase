@@ -3,6 +3,7 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
+import { openEditor, selectEditorSection } from "../support/editor";
 import { confirmPublication } from "../support/publication";
 
 const cvImportApi = urls.studio.cvImport();
@@ -40,6 +41,7 @@ test("owner reviews a CV, cancels safely, applies edits and explicitly saves bef
     return route.fulfill({ json: extractedCv });
   });
   await page.goto(`/${device}-cv-importer/edit`);
+  await openEditor(page);
   await page.getByRole("button", { name: "Start from a CV" }).click();
   await page.getByLabel("Your CV file").setInputFiles({
     buffer: Buffer.from("%PDF-1.7\nFictional CV"),
@@ -57,11 +59,11 @@ test("owner reviews a CV, cancels safely, applies edits and explicitly saves bef
     "Alex Rivera",
   );
   await page.getByRole("button", { name: "Cancel import" }).click();
-  await page.getByRole("button", { exact: true, name: "Profile" }).click();
+  await selectEditorSection(page, "Profile");
   await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
     "CV Import Owner",
   );
-  await page.getByRole("button", { exact: true, name: "Import CV" }).click();
+  await selectEditorSection(page, "Import CV");
   await page.getByLabel("Your CV file").setInputFiles({
     buffer: Buffer.from("%PDF-1.7\nFictional CV"),
     mimeType: "application/pdf",
@@ -85,9 +87,11 @@ test("owner reviews a CV, cancels safely, applies edits and explicitly saves bef
     }),
   ).toContainText("Saved privately.");
   await page.reload();
+  await openEditor(page);
   await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
     "Alex Reviewed",
   );
+  await selectEditorSection(page, "Publishing");
   await expect(page.getByText("Your saved draft is private until you publish it.")).toBeVisible();
   await confirmPublication(page);
   await context.clearCookies();

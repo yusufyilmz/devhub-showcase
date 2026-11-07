@@ -3,7 +3,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
   type CustomSection,
@@ -35,6 +35,13 @@ const section: CustomSection = {
 };
 
 describe("CustomSections", () => {
+  beforeEach(() => {
+    vi.stubGlobal("matchMedia", () => ({
+      addEventListener: vi.fn(),
+      matches: false,
+      removeEventListener: vi.fn(),
+    }));
+  });
   afterEach(() => {
     cleanup();
     vi.unstubAllGlobals();
@@ -154,9 +161,13 @@ describe("CustomSections", () => {
       target: { value: "My story" },
     });
     fireEvent.click(screen.getByRole("button", { name: "Duplicate section" }));
-    fireEvent.click(screen.getByRole("button", { name: "Section order" }));
+    fireEvent.change(screen.getByRole("combobox", { name: "Editor section" }), {
+      target: { value: "Section order" },
+    });
     fireEvent.keyDown(screen.getByRole("button", { name: "Reorder Awards copy" }), { key: "Home" });
-    fireEvent.click(screen.getByRole("button", { name: "Custom sections" }));
+    fireEvent.change(screen.getByRole("combobox", { name: "Editor section" }), {
+      target: { value: "Custom sections" },
+    });
     fireEvent.click(
       within(screen.getByRole("group", { name: "Awards" })).getByRole("button", {
         name: "Remove section",

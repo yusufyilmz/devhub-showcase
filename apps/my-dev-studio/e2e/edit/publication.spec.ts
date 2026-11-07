@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 
+import { openEditor, selectEditorSection } from "../support/editor";
 import { confirmPublication } from "../support/publication";
 
 test("private saves, explicit snapshots, independent fields, rename and withdrawal", async ({
@@ -29,9 +30,11 @@ test("private saves, explicit snapshots, independent fields, rename and withdraw
   const visitor = await browser.newContext();
   const publicPage = await visitor.newPage();
   await page.goto(`/${username}/edit`);
-  await page.getByRole("button", { exact: true, name: "Field visibility" }).click();
+  await openEditor(page);
+  await selectEditorSection(page, "Field visibility");
   await page.getByRole("checkbox", { name: "Include email on website" }).uncheck();
   await page.getByRole("checkbox", { name: "Include phone on cv" }).uncheck();
+  await selectEditorSection(page, "Publishing");
   await expect(
     page.getByRole("button", { exact: true, name: "Review publication" }),
   ).toBeDisabled();
@@ -69,6 +72,7 @@ test("private saves, explicit snapshots, independent fields, rename and withdraw
   expect((await visitor.request.get(`http://localhost:3100/${username}/cv.pdf`)).status()).toBe(
     200,
   );
+  await selectEditorSection(page, "Field visibility");
   await page.getByRole("combobox", { name: "Portfolio discovery" }).selectOption("unlisted");
   await page.getByRole("button", { exact: true, name: "Save changes" }).click();
   await expect(page.locator(".editor-success")).toContainText("Saved privately");
@@ -86,8 +90,9 @@ test("private saves, explicit snapshots, independent fields, rename and withdraw
   const unlistedCv = await visitor.request.get(`http://localhost:3100/${username}/cv.pdf`);
   expect(unlistedCv.status()).toBe(200);
   expect(unlistedCv.headers()["x-robots-tag"]).toContain("noindex");
-  await page.getByRole("button", { exact: true, name: "Profile" }).click();
+  await selectEditorSection(page, "Profile");
   await page.getByRole("textbox", { exact: true, name: "Full name" }).fill("Private next revision");
+  await selectEditorSection(page, "Publishing");
   await page.getByLabel("Username", { exact: true }).fill(`${username}-renamed`);
   await page.getByRole("button", { exact: true, name: "Save changes" }).click();
   await expect(page.locator(".editor-success")).toContainText("Saved privately");
@@ -116,6 +121,7 @@ test("private saves, explicit snapshots, independent fields, rename and withdraw
     "Private next revision",
   );
   const finalUsername = `${username}-final`;
+  await selectEditorSection(page, "Publishing");
   await page.getByLabel("Username", { exact: true }).fill(finalUsername);
   await page.getByRole("button", { exact: true, name: "Save changes" }).click();
   await expect(page.locator(".editor-success")).toContainText("Saved privately");

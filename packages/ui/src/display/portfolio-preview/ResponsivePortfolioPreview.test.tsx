@@ -1,17 +1,64 @@
 // @vitest-environment jsdom
 
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ResponsivePortfolioPreview } from "./ResponsivePortfolioPreview";
 
 describe("ResponsivePortfolioPreview", () => {
-  afterEach(cleanup);
+  beforeEach(() => {
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn(() => ({ addEventListener: vi.fn(), matches: false, removeEventListener: vi.fn() })),
+    );
+    vi.stubGlobal("innerWidth", 1440);
+  });
+  afterEach(() => {
+    cleanup();
+    vi.unstubAllGlobals();
+  });
 
   it("does not mount a preview until opened, including empty legacy content", () => {
     render(<ResponsivePortfolioPreview>{null}</ResponsivePortfolioPreview>);
     expect(screen.queryByTitle("Private draft preview")).toBeNull();
     expect(screen.getByText("Preview your draft")).toBeDefined();
+  });
+
+  it("defaults to the desktop viewport on a desktop screen", () => {
+    render(<ResponsivePortfolioPreview initiallyOpen>{null}</ResponsivePortfolioPreview>);
+    expect(
+      screen.getByRole("button", { name: "Desktop · 1280px" }).getAttribute("aria-pressed"),
+    ).toBe("true");
+    expect(screen.getByTitle("Private draft preview").getAttribute("style")).toContain(
+      "width: 1280px",
+    );
+  });
+
+  it("defaults to mobile on a phone and preserves a manually selected viewport", () => {
+    const listeners: (() => void)[] = [];
+    vi.stubGlobal("innerWidth", 390);
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn(() => ({
+        addEventListener: (_: string, listener: () => void) => listeners.push(listener),
+        matches: true,
+        removeEventListener: vi.fn(),
+      })),
+    );
+    const content = <ResponsivePortfolioPreview initiallyOpen>{null}</ResponsivePortfolioPreview>;
+    const view = render(content);
+    expect(
+      screen.getByRole("button", { name: "Mobile · 375px" }).getAttribute("aria-pressed"),
+    ).toBe("true");
+    fireEvent.click(screen.getByRole("button", { name: "Tablet · 768px" }));
+    act(() => {
+      vi.stubGlobal("innerWidth", 1440);
+      for (const listener of listeners) listener();
+    });
+    view.rerender(content);
+    expect(
+      screen.getByRole("button", { name: "Tablet · 768px" }).getAttribute("aria-pressed"),
+    ).toBe("true");
   });
 
   it("blocks preview form submissions from bubbling to the editor save form", async () => {

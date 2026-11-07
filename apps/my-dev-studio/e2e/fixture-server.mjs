@@ -145,6 +145,12 @@ const previewOwners = aiOwners.map((owner, index) => ({
   owner_id: `62626262-6262-4262-8262-62626262626${index}`,
   username: `${index ? "mobile" : "desktop"}-preview-owner`,
 }));
+const workspaceOwners = previewOwners.map((owner, index) => ({
+  ...structuredClone(owner),
+  id: `e1e1e1e1-e1e1-41e1-81e1-e1e1e1e1e1e${index}`,
+  owner_id: `e2e2e2e2-e2e2-42e2-82e2-e2e2e2e2e2e${index}`,
+  username: `${index ? "mobile" : "desktop"}-workspace-owner`,
+}));
 const guidanceOwners = aiOwners.map((owner, index) => ({
   ...owner,
   id: `60606060-6060-4060-8060-60606060606${index}`,
@@ -432,6 +438,7 @@ const rows = [
   ...aiOwners,
   ...guidanceOwners,
   ...previewOwners,
+  ...workspaceOwners,
   ...workflowOwners,
   ...publicationOwners,
   ...scheduleOwners,
@@ -538,6 +545,7 @@ function fixtureOwner(request) {
       ...aiOwners,
       ...guidanceOwners,
       ...previewOwners,
+      ...workspaceOwners,
       ...workflowOwners,
       ...publicationOwners,
       ...scheduleOwners,

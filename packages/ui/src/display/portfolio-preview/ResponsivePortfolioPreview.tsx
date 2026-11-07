@@ -4,6 +4,8 @@ import "../../styles/components/display/preview.css";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
+import { useIsMobile } from "@shared/runtime/browser";
+
 import { Button } from "../../buttons/button/Button";
 import { preparePreviewFrame } from "./frame";
 import { previewDocument, previewSizeLabels, previewSizes, previewWidthStyle } from "./styles";
@@ -17,7 +19,9 @@ export function ResponsivePortfolioPreview({
   openRequest,
 }: ResponsivePortfolioPreviewProps) {
   const [open, setOpen] = useState(initiallyOpen);
-  const [size, setSize] = useState<keyof typeof previewSizes>("Mobile");
+  const isMobile = useIsMobile();
+  const [selectedSize, setSize] = useState<keyof typeof previewSizes | null>(null);
+  const size = selectedSize ?? (isMobile ? "Mobile" : "Desktop");
   const [doc, setDocument] = useState<Document | null>(null);
   const frame = useRef<HTMLIFrameElement>(null);
   useEffect(() => {

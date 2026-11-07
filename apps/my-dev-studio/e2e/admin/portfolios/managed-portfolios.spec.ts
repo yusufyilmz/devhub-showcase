@@ -2,6 +2,7 @@ import { type BrowserContext, expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
+import { openEditor, selectEditorSection, showEditorPreview } from "../../support/editor";
 import { confirmPublication } from "../../support/publication";
 
 async function signIn(context: BrowserContext, id: string, email: string) {
@@ -88,26 +89,31 @@ test("an administrator creates, edits, publishes, hides and transfers an importe
   await page.getByRole("button", { name: "Create private portfolio" }).click();
   await expect(page).toHaveURL(/\/admin\/portfolios\/[a-f0-9-]+$/);
   const editorUrl = page.url();
+  await openEditor(page);
   await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
     "Creative Import",
   );
+  await selectEditorSection(page, "Publishing");
   await expect(page.getByText("Your saved draft is private until you publish it.")).toBeVisible();
   const privatePdf = await page.request.get(`${editorUrl}/cv.pdf`);
   expect(privatePdf.status()).toBe(200);
   expect((await privatePdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
+  await selectEditorSection(page, "Profile");
   await page.getByRole("textbox", { exact: true, name: "Full name" }).fill("Creative Managed");
+  await selectEditorSection(page, "Publishing");
   await page.getByLabel("Username", { exact: true }).fill(`managed-portfolio-${n}`);
   await page.getByRole("button", { name: "Save changes" }).click();
   await confirmPublication(page);
   await expect(page.locator(".editor-success")).toContainText("Saved");
   await expect(page).toHaveURL(editorUrl);
   await page.reload();
+  await openEditor(page);
   await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
     "Creative Managed",
   );
-  await page.getByRole("button", { exact: true, name: "AI profile" }).click();
+  await selectEditorSection(page, "AI profile");
   await expect(page.locator(".ai-profile-json")).toContainText("Creative Managed");
-  await page.getByRole("button", { exact: true, name: "Profile" }).click();
+  await selectEditorSection(page, "Profile");
   await page.screenshot({
     fullPage: true,
     path: info.outputPath("managed-editor.png"),
@@ -117,9 +123,11 @@ test("an administrator creates, edits, publishes, hides and transfers an importe
   const publicPage = await visitor.newPage();
   await publicPage.goto(`http://localhost:3100/managed-portfolio-${n}`);
   await expect(publicPage.getByRole("heading", { level: 1 })).toContainText("Creative Managed");
+  await selectEditorSection(page, "Publishing");
   await page.getByRole("button", { exact: true, name: "Withdraw public website and CV" }).click();
   await expect(page.getByText("Your saved draft is private until you publish it.")).toBeVisible();
   expect((await publicPage.reload())?.status()).toBe(404);
+  await showEditorPreview(page);
   await page.getByLabel("Owner account email").fill("missing@example.test");
   page.once("dialog", (dialog) => dialog.accept());
   await page.getByRole("button", { name: "Transfer portfolio" }).click();
@@ -138,6 +146,7 @@ test("an administrator creates, edits, publishes, hides and transfers an importe
   await context.clearCookies();
   await signIn(context, `88888888-8888-4888-8888-88888888888${n}`, `recipient${n}@example.test`);
   await page.goto(`/managed-portfolio-${n}/edit`);
+  await openEditor(page);
   await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
     "Creative Managed",
   );
