@@ -53,9 +53,11 @@ test("new owner chooses Google details, reviews fields and applies without savin
   page.on("request", (request) => {
     if (request.url().endsWith(profileApi) && request.method() === "PUT") saves++;
   });
-  await page.goto(`/${device}-google-owner/edit`);
+  await page.goto(`/${device}-google-owner/edit`, { waitUntil: "domcontentloaded" });
   await openEditor(page);
-  await page.getByRole("button", { name: "Start from Google profile" }).click();
+  const startImport = page.getByRole("button", { name: "Start from Google profile" });
+  await startImport.evaluate((button) => button.scrollIntoView({ block: "center" }));
+  await startImport.click();
   const read = page.getByRole("button", { name: "Read selected Google details" });
   await expect(read).toBeDisabled();
   await expect(page.getByLabel("Birthdate (optional)", { exact: true })).not.toBeChecked();

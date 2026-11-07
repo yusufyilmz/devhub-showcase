@@ -81,11 +81,9 @@ test("owner reviews a CV, cancels safely, applies edits and explicitly saves bef
   await expect(page.getByText("Applied to your draft.", { exact: false })).toBeVisible();
   expect((await page.request.get(`/${device}-cv-importer`)).status()).toBe(404);
   await page.getByRole("button", { exact: true, name: "Save changes" }).click();
-  await expect(
-    page.getByText("Saved privately. Review publication to update your public website and CV.", {
-      exact: true,
-    }),
-  ).toContainText("Saved privately.");
+  await expect(page.getByRole("status").filter({ hasText: "Saved privately." })).toContainText(
+    "Saved privately.",
+  );
   await page.reload();
   await openEditor(page);
   await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(

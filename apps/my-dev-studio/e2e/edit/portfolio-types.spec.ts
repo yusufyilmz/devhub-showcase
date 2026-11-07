@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 import { getPortfolioCopy } from "@shared/config";
+import { storage } from "@shared/config/storage";
 import { urls } from "@shared/config/urls";
 
 import { openEditor, selectEditorSection } from "../support/editor";
@@ -48,7 +49,7 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
     .poll(() =>
       page.evaluate(
         (key) => JSON.parse(localStorage.getItem(key) ?? "null")?.state?.user?.id,
-        "mydevstudio-userconfig-store",
+        storage.userConfig,
       ),
     )
     .toBe(userId);

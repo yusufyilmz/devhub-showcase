@@ -38,11 +38,7 @@ test("owner can inspect private and public knowledge from the latest saved revis
   await page.getByRole("textbox", { exact: true, name: "Full name" }).fill("Alex Updated");
   await page.getByRole("button", { exact: true, name: "Save changes" }).click();
   await confirmPublication(page);
-  await expect(
-    page.getByText("Saved privately. Review publication to update your public website and CV.", {
-      exact: true,
-    }),
-  ).toBeVisible();
+  await expect(page.getByRole("status").filter({ hasText: "Saved privately." })).toBeVisible();
   await selectEditorSection(page, "AI profile");
   await expect(page.locator(".ai-profile-json")).toContainText("Alex Updated");
   const knowledge = JSON.parse((await page.locator(".ai-profile-json").textContent()) ?? "{}");

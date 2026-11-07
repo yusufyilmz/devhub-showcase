@@ -13,10 +13,13 @@ tablet: 1024px. See [shared setup and result rules](index.md#before-you-start).
 **Manual result:** Interactive manual walkthrough not run. Desktop and mobile browser
 screenshots were visually reviewed on 7 November 2026.
 
-**PR integration verification:** The implementation is integrated with the latest main
-branch. Production build, workspace checks and 28 focused component tests passed.
-Desktop/mobile browser and complete unit results are recorded in the PR.
-Tests use local fixtures; deployment and live provider checks remain pending.
+**PR integration verification — 7 November 2026:** Production build, `pnpm check`
+and all 632 unit tests passed, plus 28 focused component tests. The broad editor and
+managed-portfolio browser run passed 36 cases and skipped the existing duplicate mobile
+review test. Six stale-selector/storage-key failures passed after test updates; the mobile
+Google import result is recorded in the PR. Device defaults, focus, draft retention,
+private saves, failure/retry, layouts and managed editing are covered with local fixtures.
+No deployment or live provider verification is claimed.
 
 | Step | Clickable URL                                                      | Route path                    | Action                                                                                 | Expected result                                                                                                                                        | Actual result / evidence |
 | ---- | ------------------------------------------------------------------ | ----------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ |
@@ -30,14 +33,6 @@ Tests use local fixtures; deployment and live provider checks remain pending.
 | 8    | [Public portfolio](http://localhost:3100/desktop-preview-owner)    | `/desktop-preview-owner`      | Visit while signed out, then open the owner editor using another disposable account.   | Private public page stays unavailable; unauthorized owner edits stay blocked.                                                                          | Not run                  |
 
 ## Device preview and lightbox checks
-
-**Current update verification — 7 November 2026:** Production build, app/UI package type
-checks, 36-file lint check and 12 focused unit tests passed. The broader desktop/mobile
-browser run passed 42 cases and skipped one existing mobile testimonial case. The three
-remaining drag-cancel and modal-navigation cases passed after fixes in a targeted rerun
-of ten scenarios. Device defaults, focus trapping/return, Escape dismissal, draft retention,
-private saves, failure/retry and managed editing are covered. This remains local fixture
-verification; no deployment or live provider verification is claimed.
 
 | Step | Clickable URL                                                      | Route path                    | Action                                                                                     | Expected result                                                                                                                                       | Actual result / evidence                               |
 | ---- | ------------------------------------------------------------------ | ----------------------------- | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
