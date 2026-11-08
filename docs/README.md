@@ -30,9 +30,9 @@ Start with the hub guides, then dig into feature or reference pages as needed. P
 
 ## Reference
 
-| Guide                                                         | Read it for                                |
-| ------------------------------------------------------------- | ------------------------------------------ |
-| [Shared packages](reference/shared-packages.md)               | Reuse boundaries for another app           |
-| [Tailwind](reference/tailwind.md)                             | Shared CSS pipeline and theme tokens       |
-| [Section migration](reference/pageforge-section-migration.md) | PageForge family mapping and compatibility |
-| [Legacy RLS review](reference/legacy-rls-review.md)           | Historical security findings to revalidate |
+| Guide                                                                 | Read it for                                |
+| --------------------------------------------------------------------- | ------------------------------------------ |
+| [Shared packages](reference/shared-packages.md)                       | Reuse boundaries for another app           |
+| [Tailwind](reference/tailwind.md)                                     | Shared CSS pipeline and theme tokens       |
+| [Section migration](reference/pageforge-section-migration.md)         | PageForge family mapping and compatibility |
+| [Portfolio table RLS review](reference/portfolio-table-rls-review.md) | Historical security findings to revalidate |

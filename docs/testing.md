@@ -63,7 +63,7 @@ describe("AdminLogin", () => {
 
 | Change                       | Useful verification                                                               |
 | ---------------------------- | --------------------------------------------------------------------------------- |
-| Profile types and validation | Valid/invalid input, legacy missing fields, save/import round trips               |
+| Profile types and validation | Valid/invalid input, earlier missing fields, save/import round trips              |
 | Ownership and publication    | Anonymous, owner, other user and administrator; private reads and denied writes   |
 | Managed transfer             | Revision conflicts, existing recipient content, access after transfer             |
 | Sections and editor          | Render defaults, serialized settings, keyboard interaction and reload persistence |
@@ -76,8 +76,8 @@ Use existing fixtures and test helpers. Add regression coverage for behavior cha
 ## Focused runs
 
 ```sh
-pnpm exec vitest run --project unit apps/my-dev-studio/features/home/home-page.test.tsx
-pnpm exec vitest run packages/lib/src/supabase/rls/managed-rls.test.ts
+pnpm exec vitest run --project unit apps/my-dev-studio/app/page.test.tsx
+pnpm exec vitest run packages/lib/src/db/rls/managed-rls.test.ts
 pnpm exec playwright test e2e/home --project=desktop-chromium
 pnpm test:watch
 pnpm test:e2e:ui

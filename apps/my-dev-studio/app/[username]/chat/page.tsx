@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation";
 
+import { PortfolioVisitorChat } from "@shared/assistant/visitor-chat";
 import { publicChatSources } from "@shared/lib/profiles";
-import { readPublicProfileByUsername } from "@shared/services/published-profile";
+import { readPublicProfileByUsername } from "@shared/lib/published-profile";
 
-import { PortfolioVisitorChat } from "@/features/chat/portfolio-visitor-chat";
-import { premiumChatAvailable } from "@/features/chat/premium-chat";
+import { handlePremiumChatAction } from "../../actions";
+import { premiumChatAvailable } from "./_access";
 
 export const metadata = {
   robots: { follow: false, index: false },
@@ -20,14 +21,15 @@ export default async function PortfolioChatPage({
   const snapshot = await readPublicProfileByUsername(username);
   if (!snapshot?.id || !snapshot.isPublic || snapshot.profile.publicationVisibility === "password")
     notFound();
-  const legacy = snapshot.id === "main";
-  if (!legacy && !(await premiumChatAvailable(snapshot.id))) notFound();
+  const isMainPortfolio = snapshot.id === "main";
+  if (!isMainPortfolio && !(await premiumChatAvailable(snapshot.id))) notFound();
 
   return (
     <PortfolioVisitorChat
+      answerPremiumChat={handlePremiumChatAction}
       identity={{ id: snapshot.id, name: snapshot.profile.name, revision: snapshot.revision }}
+      isMainPortfolio={isMainPortfolio}
       key={`${snapshot.id}:${snapshot.revision}`}
-      legacy={legacy}
       sources={publicChatSources(snapshot)}
       username={username}
     />

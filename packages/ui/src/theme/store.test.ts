@@ -23,7 +23,7 @@ describe("Theme store compatibility with user preferences", () => {
     expect(localStorage.getItem("ui-theme")).toBeNull();
     expect(localStorage.getItem(themeStorage.name)).toContain("compact");
   });
-  it("updates legacy selectors when canonical settings change without clearing the user", () => {
+  it("updates existing selectors when canonical settings change without clearing the user", () => {
     useUserConfigStore.getState().setUser({ id: "owner", name: "Owner" });
     useThemeStore.getState().setThemePreferences({ border: "thin", font: "mono", radius: "pill" });
     expect(themeStore.getState()).toMatchObject({ borders: "thin", font: "mono", radius: "pill" });

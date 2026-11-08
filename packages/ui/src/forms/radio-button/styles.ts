@@ -1,5 +1,5 @@
 export const radioButtonStyles = {
-  element1: "size-4 accent-[rgb(var(--accent-rgb))]",
+  element1: "size-4 accent-[var(--primary)]",
 } as const;
 
 export function radioButtonClassName(...values: unknown[]): string {

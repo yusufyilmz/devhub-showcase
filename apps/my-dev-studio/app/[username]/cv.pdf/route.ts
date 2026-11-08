@@ -2,10 +2,10 @@ import {
   readPortfolioAccessStatus,
   readPublicProfileByUsername,
   resolvePublishedUsername,
-} from "@shared/services/published-profile";
+} from "@shared/lib/published-profile";
 
-import { readProtectedProfile } from "@/features/portfolio/access/server-access";
-import { cvResponse } from "@/features/portfolio/cv/cv-response";
+import { cvResponse } from "../../api/cv/_response";
+import { readProtectedProfile } from "../access/_session";
 
 export const runtime = "nodejs";
 

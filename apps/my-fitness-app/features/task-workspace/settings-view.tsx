@@ -3,8 +3,8 @@ import { useState } from "react";
 
 import { Plus, X } from "lucide-react";
 
-import { TaskService } from "@shared/services/fitness";
-import type { Workspace } from "@shared/services/types";
+import { TaskService } from "@shared/lib/fitness";
+import type { Workspace } from "@shared/lib/types";
 import { Button as LibraryButton } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 import { Input as LibraryInput } from "@shared/ui/input";

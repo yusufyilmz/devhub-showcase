@@ -1,7 +1,7 @@
 import {
   companionProgressHandlers,
   type FeatureProgressDatabase,
-} from "@shared/services/companion-progress";
+} from "@shared/lib/companion-progress";
 
 import { fitnessUser, requestIdentity, sameOrigin } from "@/lib/auth";
 

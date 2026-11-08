@@ -1,0 +1,59 @@
+.platform-footer {
+  background:
+    radial-gradient(
+      ellipse 65% 50% at 48% 110%,
+      color-mix(in srgb, var(--primary) 20%, transparent),
+      transparent 85%
+    ),
+    var(--card);
+  border-block-start: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+}
+.platform-footer-inner {
+  width: min(1200px, calc(100% - clamp(2rem, 8vw, 5rem)));
+  padding-block: clamp(2.5rem, 5vw, 4.75rem) 1.75rem;
+  margin-inline: auto;
+}
+.platform-footer-brand {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  align-items: center;
+  margin-block-end: clamp(1.75rem, 4vw, 3rem);
+}
+.platform-footer-brand p,
+.platform-footer-credit {
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+}
+.platform-footer-nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.25rem), 1fr));
+  gap: 1.5rem 1rem;
+}
+.platform-footer-nav h2 {
+  margin-block-end: 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 650;
+  color: var(--foreground);
+}
+.platform-footer-nav ul {
+  display: grid;
+  gap: 0.625rem;
+}
+.platform-footer-nav a {
+  display: inline-flex;
+  gap: 0.25rem;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  text-underline-offset: 0.25rem;
+}
+.platform-footer-nav a:hover {
+  color: var(--foreground);
+  text-decoration: underline;
+}
+.platform-footer-credit {
+  padding-block-start: 1rem;
+  margin-block-start: clamp(1.75rem, 4vw, 3rem);
+  border-block-start: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+}

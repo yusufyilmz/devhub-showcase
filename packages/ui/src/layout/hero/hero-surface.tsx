@@ -1,6 +1,6 @@
 "use client";
 
-import "../../styles/portfolio/portfolio.css";
+import "../portfolio/portfolio.css";
 
 import { useEffect, useRef, useState } from "react";
 

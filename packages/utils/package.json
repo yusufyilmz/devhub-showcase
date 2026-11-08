@@ -22,7 +22,15 @@
     "./i18n": {
       "import": "./src/i18n/index.ts",
       "require": "./src/i18n/index.ts"
-    }
+    },
+    "./date": "./src/date/index.ts",
+    "./cache": "./src/cache/index.ts",
+    "./errors": "./src/errors/index.ts",
+    "./types": "./src/types/api.ts",
+    "./api-client": "./src/http/api-client.ts",
+    "./fetcher": "./src/http/fetcher.ts",
+    "./converters": "./src/converters/camel-case.ts",
+    "./axios": "./src/http/axios.ts"
   },
   "main": "src/index.ts",
   "scripts": {
@@ -37,15 +45,18 @@
     "types:check": "pnpm typecheck"
   },
   "dependencies": {
+    "axios": "catalog:",
     "flat": "catalog:",
     "pino": "catalog:",
     "pino-pretty": "catalog:",
+    "react": "catalog:",
     "short-uuid": "catalog:"
   },
   "devDependencies": {
     "@shared/cli": "workspace:*",
     "@shared/typescript-config": "workspace:*",
     "@types/node": "catalog:",
+    "@types/react": "catalog:",
     "beautify-console-log": "^1.3.17",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",

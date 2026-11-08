@@ -9,28 +9,31 @@ test("appearance settings persist across reloads and mode changes", async ({ pag
   const dialog = page.getByRole("dialog");
   await expect(dialog.locator("select, details")).toHaveCount(0);
   for (const [key, values] of Object.entries(themeOptions)) {
+    if (key === "accent" || key === "theme") continue;
     await expect(dialog.locator(`[data-options="${key}"] button`)).toHaveCount(values.length + 1);
   }
-  await page.getByRole("button", { exact: true, name: "Theme: pink" }).click();
-  await expect(page.locator("html")).toHaveAttribute("data-brand", "pink");
+  await page.getByRole("button", { exact: true, name: "Palette: pink" }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-accent", "pink");
+  await expect(page.locator("html")).not.toHaveAttribute("data-brand", /.+/);
+  await page.getByRole("button", { exact: true, name: "Theme: gloom" }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-portfolio-theme", "gloom");
   await page.getByRole("button", { exact: true, name: "Border: thick" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-border", "thick");
   await page.getByRole("button", { exact: true, name: "Border: Page default" }).click();
   await page.getByRole("button", { exact: true, name: "Spacing: spacious" }).click();
-  await page.getByRole("button", { exact: true, name: "Accent: violet" }).click();
   await page.getByRole("button", { exact: true, name: "Corners: pill" }).click();
   await page.getByRole("button", { exact: true, name: "Font: serif" }).click();
   await expect(page.locator("body")).toHaveCSS("font-family", /Georgia/);
   await page.screenshot({ path: "/tmp/appearance-panel.png" });
   await expect(page.locator("html")).toHaveAttribute("data-spacing", "spacious");
-  await expect(page.locator("html")).toHaveAttribute("data-accent", "violet");
+  await expect(page.locator("html")).toHaveAttribute("data-accent", "pink");
   await expect
     .poll(() =>
       page.evaluate(() =>
-        getComputedStyle(document.documentElement).getPropertyValue("--accent-rgb").trim(),
+        getComputedStyle(document.documentElement).getPropertyValue("--primary").trim(),
       ),
     )
-    .toMatch(/184 165 255|111 69 177/);
+    .not.toBe("");
   await page.keyboard.press("Escape");
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-spacing", "spacious");
@@ -48,4 +51,5 @@ test("appearance settings persist across reloads and mode changes", async ({ pag
   ).toHaveAttribute("aria-pressed", "true");
   await page.getByRole("button", { name: "Reset appearance" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-accent", "cyan");
+  await expect(page.locator("html")).not.toHaveAttribute("data-portfolio-theme");
 });

@@ -4,18 +4,20 @@ MyDevStudio is a Next.js App Router application in a pnpm/Turborepo monorepo. Th
 
 ## Workspace ownership
 
-| Package or directory                                   | Owns                                                                       | Keep out                                    |
-| ------------------------------------------------------ | -------------------------------------------------------------------------- | ------------------------------------------- |
-| `apps/my-dev-studio`                                   | Routes, API handlers, feature data access, metadata                        | Duplicated portable UI                      |
-| `apps/storybook-app`                                   | Storybook for `@shared/ui`                                                 | Production routes                           |
-| `packages/config`                                      | Profile types, themes, section metadata, page copy                         | Credentials and private database access     |
-| `packages/lib`                                         | Validators, domain services, repository contracts and Supabase persistence | Route-specific presentation                 |
-| `packages/auth`                                        | Shared browser/server authentication integration                           | Portfolio content ownership decisions in UI |
-| `packages/ui`                                          | Controls, sections, studio and portfolio surfaces, theme, global CSS       | Auth, routes and private repositories       |
-| `packages/templates` (`packages/cv`)                   | PDF normalization, layouts and templates                                   | Public bypasses for private downloads       |
-| `packages/assistant`                                   | Portfolio and editing assistants, chat models                              | Ownership or publication authority          |
-| `packages/cache`, `packages/utils`, `packages/runtime` | Redis, logging, shared browser stores                                      | Secrets or private payloads in telemetry    |
-| `supabase/migrations`                                  | Schema and RLS change history                                              | Implicit execution during app builds        |
+| Package or directory                                   | Owns                                                                                 | Keep out                                    |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------- |
+| `apps/my-dev-studio`                                   | Routes, API handlers, feature data access, metadata                                  | Duplicated portable UI                      |
+| `apps/storybook-app`                                   | Storybook for `@shared/ui`                                                           | Production routes                           |
+| `packages/config`                                      | Profile types, themes, section metadata, page copy                                   | Credentials and private database access     |
+| `packages/lib`                                         | Shared database access, repositories, services, domain models and validation schemas | Route-specific presentation                 |
+| `packages/auth`                                        | Shared browser/server authentication integration                                     | Portfolio content ownership decisions in UI |
+| `packages/ui`                                          | Controls, sections, studio and portfolio surfaces, theme, global CSS                 | Auth, routes and private repositories       |
+| `packages/templates` (`packages/cv`)                   | PDF normalization, layouts and templates                                             | Public bypasses for private downloads       |
+| `packages/assistant`                                   | Portfolio and editing assistants, chat models                                        | Ownership or publication authority          |
+| `packages/cache`, `packages/utils`, `packages/runtime` | Redis, logging, shared browser stores                                                | Secrets or private payloads in telemetry    |
+| `supabase/migrations`                                  | Schema and RLS change history                                                        | Implicit execution during app builds        |
+
+`packages/lib/src` is organized into `db/`, `repositories/`, `services/`, `types/`, and `schemas/`. Within `services/` and `repositories/`, implementations and colocated tests are grouped into domain folders. Database connections and table definitions are shared across domains. App feature adapters bind verified identities, cookies and configuration. Publication/history/access, managed portfolios, resource/review access, Google IO and Fitness notification workflows/persistence live in this package. Chat entitlement/usage orchestration and Fitness assistant context/drafts live in `packages/assistant/src/services`. Existing domain exports remain available, while new direct imports can use `@shared/lib/repositories/profile` or `@shared/lib/services/task`. See the [services catalog](../packages/lib/CATALOG.md).
 
 Shared compiler and Tailwind configuration live in their own packages. Packages expose explicit entry points; external versions are centralized in the workspace catalog.
 
@@ -59,14 +61,14 @@ Section renderers, editors, and controls live in `packages/ui`. Config defines s
 ```mermaid
 flowchart TD
   App["apps/my-dev-studio"] --> Assistant["packages/assistant"]
-  App --> Lib["packages/lib"]
+  App --> Services["packages/lib"]
+  Assistant --> Services
+  Services --> Notifications["packages/notifications"]
+  Services --> Auth
   App --> Auth["packages/auth"]
   App --> Cache["packages/cache"]
-  Assistant --> Lib
   Assistant --> Config["packages/config"]
-  Lib --> Auth
-  Lib --> Cache
-  Lib --> Config
+  Services --> Config
 ```
 
 No shared package imports `apps/my-dev-studio`. Authentication establishes identity; app guards, repositories and RLS decide resource access. See [observability](observability.md) for logging boundaries.
@@ -173,8 +175,8 @@ Supabase is the database/auth integration; Prisma is not used. RLS complements s
 
 See [features](features.md) for user-visible behavior and [shared packages](reference/shared-packages.md) for reuse in another app.
 
-See [security policy](../SECURITY.md), [personal workspaces](features/multiuser-cvs.md) and the [legacy RLS review](reference/legacy-rls-review.md). Browser fixtures do not prove real OAuth or production RLS behavior.
+See [security policy](../SECURITY.md), [personal workspaces](features/multiuser-cvs.md) and the [portfolio table RLS review](reference/portfolio-table-rls-review.md). Browser fixtures do not prove real OAuth or production RLS behavior.
 
 ## Change strategy
 
-Prefer a vertical change across the existing type, validator, repository, adapter and renderer instead of introducing a parallel data model. Preserve legacy documents, absent-field defaults and established package exports. New dependencies require catalog and lockfile changes together. Use [testing](testing.md) to verify the affected boundary and [observability](observability.md) to define useful, non-sensitive failure signals.
+Prefer a vertical change across the existing type, validator, repository, adapter and renderer instead of introducing a parallel data model. Preserve earlier documents, absent-field defaults and established package exports. New dependencies require catalog and lockfile changes together. Use [testing](testing.md) to verify the affected boundary and [observability](observability.md) to define useful, non-sensitive failure signals.

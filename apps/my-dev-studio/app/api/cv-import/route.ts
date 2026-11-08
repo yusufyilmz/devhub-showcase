@@ -1,14 +1,14 @@
 import { CvImportModel } from "@shared/assistant";
 import { requireConfirmedUser } from "@shared/auth";
-import { allowCvImport } from "@shared/cache";
+import { allowCvImport } from "@shared/lib/cache";
 import {
   CV_PROCESS_TIMEOUT_MS,
   CvImportError,
   MAX_CV_BYTES,
   validateCvFile,
 } from "@shared/lib/cv-file";
+import { ProfileAccessError } from "@shared/lib/profile";
 import { createServerClient } from "@shared/lib/supabase";
-import { ProfileAccessError } from "@shared/services/profile";
 
 import { env } from "@/env";
 import { sameOrigin } from "@/features/admin/admin-auth";

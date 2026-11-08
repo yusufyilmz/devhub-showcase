@@ -1,6 +1,6 @@
 import { sameOrigin } from "@shared/auth";
+import { companionProgressHandlers } from "@shared/lib/companion-progress";
 import { createServerClient } from "@shared/lib/supabase";
-import { companionProgressHandlers } from "@shared/services/companion-progress";
 
 export const { GET, POST } = companionProgressHandlers({
   app: "studio",

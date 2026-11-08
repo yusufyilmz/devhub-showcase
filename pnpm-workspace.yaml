@@ -13,6 +13,11 @@ minimumReleaseAgeExclude:
 
 # External dependency versions are shared by every workspace package.
 catalog:
+  "@babel/parser": "7.29.13"
+  "commander": "15.0.0"
+  "remark-gfm": "4.0.1"
+  "remark-parse": "11.0.0"
+  "unified": "11.0.5"
   "@t3-oss/env-nextjs": "0.13.11"
   "web-push": "3.6.7"
   "@types/web-push": "3.6.4"
@@ -57,7 +62,6 @@ catalog:
   "@types/pdfmake": "0.3.3"
   "prettier": "3.9.10"
   "markdownlint-cli2": "0.24.0"
-  "js-yaml": "^2.9.1"
   "yaml": "^2.9.1"
   "husky": "^9.1.7"
   "lint-staged": "^17.6.0"

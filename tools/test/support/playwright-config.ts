@@ -7,7 +7,7 @@ export function generatePlaywrightConfig(baseURL: string, config: PlaywrightTest
         { name: "desktop-chromium", use: { ...devices["Desktop Chrome"] } },
         { name: "mobile-chromium", use: { ...devices["Pixel 7"] } },
       ],
-      reporter: [["list"], ["html", { open: "never", outputFolder: "e2e-report" }]],
+      reporter: [["list"], ["html", { open: "never", outputFolder: "playwright-report" }]],
       testDir: "e2e",
       testMatch: "e2e/**/*.spec.{ts,tsx}",
       use: {

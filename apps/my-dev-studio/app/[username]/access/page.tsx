@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { readPortfolioAccessStatus } from "@shared/services/published-profile";
-
-import { PortfolioPasswordGate } from "@/features/portfolio/access/password-gate-client";
+import { PortfolioPasswordGate } from "@shared/assistant/password-gate";
+import { readPortfolioAccessStatus } from "@shared/lib/published-profile";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {

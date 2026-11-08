@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 
 import { proposeFitnessChange } from "@shared/assistant/fitness";
+import { assistantContext } from "@shared/assistant/fitness-context";
 import { fitnessAssistantRequest } from "@shared/assistant/fitness-contract";
-import { allowFitnessAssistant } from "@shared/cache";
+import { allowFitnessAssistant } from "@shared/lib/cache";
 
 import { env } from "@/env";
-import { assistantContext } from "@/features/assistant/plan-context";
 import { SetupRequired, SignInRequired, workspaceContext } from "@/features/task-workspace/server";
 import { sameOrigin } from "@/lib/auth";
 

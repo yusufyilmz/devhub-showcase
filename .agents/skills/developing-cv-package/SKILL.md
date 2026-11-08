@@ -1,15 +1,15 @@
 ---
 name: developing-cv-package
-description: Render CV PDFs in @shared/templates. Use when changing pdfmake
+description: Render CV PDFs in @shared/assistant/cv. Use when changing pdfmake
   output, the Handlebars CV template, CV layout metrics, accent colors, or which
-  profile fields appear in a downloaded CV in packages/cv.
+  profile fields appear in a downloaded CV in packages/assistant.
 ---
 
 # Developing the CV package
 
-`packages/cv` is `@shared/templates`. It turns a `PortfolioProfile` into PDF bytes. The caller supplies the profile and decides who may download it. This package does not read Supabase, check a session, or choose a public versus private route.
+`packages/assistant` is `@shared/assistant/cv`. It turns a `PortfolioProfile` into PDF bytes. The caller supplies the profile and decides who may download it. This package does not read Supabase, check a session, or choose a public versus private route.
 
-Read [the file map](references/map.md) and [packages/cv/CATALOG.md](../../../packages/templates/CATALOG.md). Download routes live in the app. Read [mydevstudio-business](../mydevstudio-business/SKILL.md) before changing visibility.
+Read [the file map](references/map.md) and [packages/assistant/CATALOG.md](../../../packages/assistant/CATALOG.md). Download routes live in the app. Read [mydevstudio-business](../mydevstudio-business/SKILL.md) before changing visibility.
 
 ## Render path
 
@@ -17,7 +17,7 @@ Read [the file map](references/map.md) and [packages/cv/CATALOG.md](../../../pac
 2. `createCvDefinition` fills `templates/cv.json.hbs` with Handlebars and `cvHelpers`.
 3. `renderCv` returns PDF bytes through pdfmake.
 
-The template source is the export `@shared/templates/template.hbs`, which points at `templates/cv.json.hbs` with types in `src/template.d.ts`. The Plop generator and the website share `cvHelpers.json` so JSON escaping matches. Change the helper and the template together.
+The template source is the export `@shared/assistant/cv.hbs`, which points at `templates/cv.json.hbs` with types in `src/types/cv-template.d.ts`. The Plop generator and the website share `cvHelpers.json` so JSON escaping matches. Change the helper and the template together.
 
 pdfmake uses an in-memory font filesystem. Do not point it at host font files. `setUrlAccessPolicy` and `setLocalAccessPolicy` both return false. A CV is text and links only. Never fetch an image, stylesheet, or other asset named in profile data.
 
@@ -41,21 +41,21 @@ Periods use `formatPortfolioPeriod` from `@shared/config` with `cvLanguage`.
 
 ## Tests
 
-`src/index.test.ts` covers the renderer. Extend it when layout metrics, a visibility flag, or escaping changes. Use a fictional profile. App route tests such as `app/[username]/cv.pdf/route.test.ts` cover authorization and response headers. Run both when the bytes or the route contract change.
+`src/components/cv/render.test.ts` covers the renderer. Extend it when layout metrics, a visibility flag, or escaping changes. Use a fictional profile. App route tests such as `app/[username]/cv.pdf/route.test.ts` cover authorization and response headers. Run both when the bytes or the route contract change.
 
 ```sh
-pnpm --filter @shared/templates typecheck
-pnpm exec vitest run --project unit packages/cv/src/index.test.ts
+pnpm --filter @shared/assistant typecheck
+pnpm exec vitest run --project unit packages/assistant/src/components/cv/render.test.ts
 ```
 
 The root script `pnpm cv:generate` is a generator. Read `turbo/generators` before running it. Do not commit a generated PDF unless the task's deliverable is that file.
 
 ## Dependencies
 
-`@shared/config`, `handlebars`, and `pdfmake` are the runtime dependencies. New external packages use `catalog:`. This package must not depend on `apps/my-dev-studio`, `@shared/auth`, or `@shared/ui`.
+`@shared/config`, `handlebars`, and `pdfmake` are the runtime dependencies. New external packages use `catalog:`. PDF rendering modules must not import app code, auth or UI. Studio components in the same package use shared UI controls through their separate client entry point.
 
 ## Related skills
 
 - [Developing the config package](../developing-config-package/SKILL.md)
-- [Developing the lib package](../developing-lib-package/SKILL.md)
+- [Shared backend development](../mydevstudio-development/SKILL.md)
 - [Developing the MyDevStudio app](../developing-my-dev-studio-app/SKILL.md)

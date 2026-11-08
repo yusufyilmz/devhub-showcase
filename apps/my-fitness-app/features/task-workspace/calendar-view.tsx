@@ -1,7 +1,7 @@
 "use client";
-import { ScheduleService } from "@shared/services/schedule";
-import type { Workspace } from "@shared/services/types";
-import { dateLabel } from "@shared/services/types";
+import { ScheduleService } from "@shared/lib/schedule";
+import type { Workspace } from "@shared/lib/types";
+import { dateLabel } from "@shared/lib/types";
 import { Button as LibraryButton } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 import { Label as LibraryLabel } from "@shared/ui/label";

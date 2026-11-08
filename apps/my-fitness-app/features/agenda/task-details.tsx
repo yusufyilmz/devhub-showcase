@@ -1,7 +1,7 @@
 "use client";
 import { ArrowLeft } from "lucide-react";
 
-import type { Task } from "@shared/services/types";
+import type { Task } from "@shared/lib/types";
 import { Button as LibraryButton } from "@shared/ui/button";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";

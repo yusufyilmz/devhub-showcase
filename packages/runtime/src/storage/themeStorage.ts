@@ -1,3 +1,4 @@
+import { getPortfolioThemeVariables, portfolioThemes } from "@shared/config";
 import { storage } from "@shared/config/storage";
 import { themeOptions } from "@shared/config/theme";
 
@@ -32,10 +33,37 @@ export function themeBootstrapScript(fallback: ThemeMode) {
     const preferences = state?.themePreferences ?? {};
     const options = ${JSON.stringify(themeOptions)};
     const aliases = ${JSON.stringify(themePreferenceAliases)};
+    const portfolioThemes = ${JSON.stringify(
+      Object.fromEntries(
+        portfolioThemes.map((theme) => [theme.id, getPortfolioThemeVariables(theme.id)]),
+      ),
+    )};
     const defaults = {};
     for (const key of Object.keys(options)) {
+      if (key === "theme") continue;
       const value = preferences[key];
       if (!options[key].includes(value)) continue;
+      if (key === "brand") {
+        root.dataset.accent = value;
+        continue;
+      }
+      if (key === "portfolio-theme") {
+        defaults[key] = root.getAttribute("data-portfolio-theme");
+        root.dataset.portfolioTheme = value;
+        for (const [name, variable] of Object.entries(portfolioThemes[value])) {
+          root.style.setProperty(name, variable);
+        }
+        continue;
+      }
+      if (key === "companion") {
+        defaults[key] = root.getAttribute("data-companion");
+        root.dataset.companion = value;
+        root.style.setProperty(
+          "--companion-accent",
+          value === "white" ? "var(--clr-white)" : "var(--clr-" + value + "-600)",
+        );
+        continue;
+      }
       const attribute = "data-" + (key === "container" ? "container-size" : key);
       defaults[key] = root.getAttribute(attribute);
       root.setAttribute(attribute, aliases[key]?.[value] ?? value);

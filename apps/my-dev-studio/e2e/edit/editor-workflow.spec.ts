@@ -40,6 +40,8 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
   await page
     .getByRole("combobox", { name: "What kind of work do you do?" })
     .selectOption("designer");
+  await page.getByRole("button", { exact: true, name: "Next" }).click();
+  await page.getByRole("button", { exact: true, name: "Next" }).click();
   await page.getByRole("button", { exact: true, name: "Use this layout" }).click();
   await page.getByRole("button", { exact: true, name: "Skip import · enter manually" }).click();
   await page
@@ -83,7 +85,7 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
   await expect(page.getByLabel("CV layout")).toHaveValue("compact");
   await page.getByRole("button", { exact: true, name: "Review draft" }).click();
   await expect(
-    page.getByRole("heading", { name: "Step 3 of 3 · Review your portfolio" }),
+    page.getByRole("heading", { name: "Step 5 of 5 · Review your portfolio" }),
   ).toBeVisible();
   expect(saves).toBe(0);
   await page.getByRole("button", { exact: true, name: "Finish setup" }).click();

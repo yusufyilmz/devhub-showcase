@@ -1,9 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 
 import { cn } from "cn";
 
+import {
+  getPortfolioThemeAppearance,
+  getPortfolioThemeVariables,
+  type PortfolioTheme,
+  portfolioThemes,
+} from "@shared/config";
 import { themeOptions } from "@shared/config/theme";
 import { useThemeStore } from "@shared/runtime/user";
 
@@ -17,6 +23,7 @@ import { Label as LibraryLabel } from "../../forms/label/Label";
 import { NativeSelect as LibraryNativeSelect } from "../../forms/native-select";
 import { TextField } from "../../forms/text-field";
 import { FlexBetween, FlexCol, FlexRow } from "../../layout/flex";
+import { companionAccentValue } from "../../theme/styles";
 import { themeCustomizerStyles } from "../customizers/styles";
 import type {
   BrandOption,
@@ -38,6 +45,11 @@ export const brandOptions: SelectOption[] = themeOptions.brand.map((value) => ({
   label: value,
   value,
 }));
+
+export const portfolioThemeOptions: SelectOption[] = [
+  { label: "Page default", value: "" },
+  ...portfolioThemes.map((theme) => ({ label: theme.name, value: theme.id })),
+];
 
 export const borderOptions: SelectOption[] = themeOptions.border.map((value) => ({
   label: value,
@@ -93,6 +105,87 @@ const SelectField = ({ label, value, options, onChange }: ThemeCustomizerOptions
   </div>
 );
 
+function PreferenceSelect({
+  label,
+  preference,
+}: {
+  label: string;
+  preference: keyof typeof themeOptions;
+}) {
+  const value = useThemeStore((state) => state.themePreferences[preference] ?? "");
+  return (
+    <SelectField
+      label={label}
+      onChange={(next) => {
+        if (!next) {
+          useThemeStore.setState((state) => ({
+            themePreferences: Object.fromEntries(
+              Object.entries(state.themePreferences).filter(([name]) => name !== preference),
+            ),
+          }));
+          return;
+        }
+        useThemeStore.getState().setThemePreferences({ [preference]: next });
+      }}
+      options={[
+        { label: "Page default", value: "" },
+        ...themeOptions[preference].map((item) => ({ label: item, value: item })),
+      ]}
+      value={value}
+    />
+  );
+}
+
+function CustomizerGroup({
+  children,
+  description,
+  title,
+}: {
+  children: ReactNode;
+  description: string;
+  title: string;
+}) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <FlexCol gap="md">{children}</FlexCol>
+      </CardContent>
+    </Card>
+  );
+}
+
+const documentPreferences = [
+  "font",
+  "weight",
+  "tracking",
+  "font-size",
+  "line-height",
+  "blur",
+  "opacity",
+  "animation",
+  "perspective",
+  "container",
+  "gradient",
+] as const;
+
+function applyStoredPreferences(
+  root: HTMLElement,
+  preferences: ReturnType<typeof useThemeStore.getState>["themePreferences"],
+) {
+  if (preferences.companion) {
+    root.dataset.companion = preferences.companion;
+    root.style.setProperty("--companion-accent", companionAccentValue(preferences.companion));
+  }
+  for (const key of documentPreferences) {
+    const value = preferences[key];
+    if (value) root.setAttribute(`data-${key}`, value);
+  }
+}
+
 function defaultAttribute(key: string, fallback: string) {
   return typeof document === "undefined"
     ? fallback
@@ -123,6 +216,7 @@ export function ThemeCustomizer({
     defaultAttribute("spacing", "comfortable")) as SpacingOption;
   const radius = preferences.radius ?? defaultAttribute("radius", "base");
   const transition = preferences.transition ?? defaultAttribute("transition", "smooth");
+  const portfolioTheme = preferences["portfolio-theme"] ?? "";
   const setBrand = (value: BrandOption) =>
     useThemeStore.getState().setThemePreferences({ brand: value });
   const setBorder = (value: string) =>
@@ -135,16 +229,47 @@ export function ThemeCustomizer({
     useThemeStore.getState().setThemePreferences({ radius: value });
   const setTransition = (value: string) =>
     useThemeStore.getState().setThemePreferences({ transition: value });
+  const setPortfolioTheme = (value: string) => {
+    if (!value) {
+      useThemeStore.setState((state) => ({
+        themePreferences: Object.fromEntries(
+          Object.entries(state.themePreferences).filter(([name]) => name !== "portfolio-theme"),
+        ),
+      }));
+      return;
+    }
+    useThemeStore.getState().setThemePreferences({
+      ...getPortfolioThemeAppearance(value as PortfolioTheme),
+      "portfolio-theme": value,
+    });
+  };
   const [showCodePanel, setShowCodePanel] = useState(showCode);
+  const rootRef = useRef<HTMLDivElement>(null);
 
-  // Apply theme changes to document
+  // Storybook pins data-theme on the preview shell, which overrides the document.
   useEffect(() => {
     const root = document.documentElement;
     const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const preview = rootRef.current?.closest("[data-theme]");
+    const shell = preview && preview !== root ? preview : null;
+    const previousTheme = shell?.getAttribute("data-theme") ?? null;
+    const previousDark = shell?.classList.contains("dark") ?? false;
+    const previousPortfolioTheme = root.getAttribute("data-portfolio-theme");
+    const portfolioVariables = portfolioTheme
+      ? getPortfolioThemeVariables(portfolioTheme as PortfolioTheme)
+      : null;
+    const previousPortfolioVariables = Object.fromEntries(
+      Object.keys(getPortfolioThemeVariables()).map((name) => [
+        name,
+        root.style.getPropertyValue(name),
+      ]),
+    );
     const applyMode = () => {
       const resolved = theme === "system" ? (media.matches ? "dark" : "light") : theme;
-      root.setAttribute("data-theme", resolved);
-      root.classList.toggle("dark", resolved === "dark");
+      for (const element of shell ? [root, shell] : [root]) {
+        element.setAttribute("data-theme", resolved);
+        element.classList.toggle("dark", resolved === "dark");
+      }
     };
     applyMode();
     media.addEventListener("change", applyMode);
@@ -154,9 +279,28 @@ export function ThemeCustomizer({
     root.setAttribute("data-spacing", spacing);
     root.setAttribute("data-radius", radius);
     root.setAttribute("data-transition", transition);
+    if (portfolioVariables) {
+      root.dataset.portfolioTheme = portfolioTheme;
+      for (const [name, variable] of Object.entries(portfolioVariables))
+        root.style.setProperty(name, variable);
+    }
+    applyStoredPreferences(root, preferences);
 
-    return () => media.removeEventListener("change", applyMode);
-  }, [theme, brand, border, shadow, spacing, radius, transition]);
+    return () => {
+      media.removeEventListener("change", applyMode);
+      if (shell) {
+        if (previousTheme === null) shell.removeAttribute("data-theme");
+        else shell.setAttribute("data-theme", previousTheme);
+        shell.classList.toggle("dark", previousDark);
+      }
+      if (previousPortfolioTheme) root.dataset.portfolioTheme = previousPortfolioTheme;
+      else root.removeAttribute("data-portfolio-theme");
+      for (const [name, variable] of Object.entries(previousPortfolioVariables)) {
+        if (variable) root.style.setProperty(name, variable);
+        else root.style.removeProperty(name);
+      }
+    };
+  }, [theme, brand, border, shadow, spacing, radius, transition, portfolioTheme, preferences]);
 
   const handleThemeChange = (newTheme: ThemeOption) => {
     setTheme(newTheme);
@@ -201,6 +345,7 @@ export function ThemeCustomizer({
     setSpacing("comfortable");
     setRadius("base");
     setTransition("smooth");
+    setPortfolioTheme("");
   };
 
   const generateCode = () => {
@@ -212,7 +357,8 @@ const themeConfig = {
   shadow: "${shadow}",
   spacing: "${spacing}",
   radius: "${radius}",
-  transition: "${transition}"
+  transition: "${transition}",
+  portfolioTheme: "${portfolioTheme}"
 }
 
 // Apply to document
@@ -222,7 +368,7 @@ Object.entries(themeConfig).forEach(([key, value]) => {
   };
 
   return (
-    <div className={cn(themeCustomizerStyles.themeCustomizer, className)} {...props}>
+    <div className={cn(themeCustomizerStyles.themeCustomizer, className)} {...props} ref={rootRef}>
       {/* Header */}
       <FlexBetween>
         <div>
@@ -250,98 +396,96 @@ Object.entries(themeConfig).forEach(([key, value]) => {
       <FlexRow align="start" gap="lg">
         {/* Controls */}
         <FlexCol className={themeCustomizerStyles.element6} gap="lg">
-          {/* Theme & Brand */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Theme & Brand</CardTitle>
-              <CardDescription>Choose your color scheme and brand colors</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <FlexRow gap="md">
-                <div className={themeCustomizerStyles.element7}>
-                  <SelectField
-                    label="Theme"
-                    onChange={(value) => handleThemeChange(value as ThemeOption)}
-                    options={themeOptions.theme.map((value) => ({
-                      label: value,
-                      value,
-                    }))}
-                    value={theme}
-                  />
-                </div>
-                <div className={themeCustomizerStyles.element8}>
-                  <SelectField
-                    label="Brand Color"
-                    onChange={(value) => handleBrandChange(value as BrandOption)}
-                    options={brandOptions}
-                    value={brand}
-                  />
-                </div>
-              </FlexRow>
-            </CardContent>
-          </Card>
-
-          {/* Visual Style */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Visual Style</CardTitle>
-              <CardDescription>Customize borders, shadows, and spacing</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <FlexRow gap="md">
-                <div className={themeCustomizerStyles.element9}>
-                  <SelectField
-                    label="Border Style"
-                    onChange={handleBorderChange}
-                    options={borderOptions}
-                    value={border}
-                  />
-                </div>
-                <div className={themeCustomizerStyles.element10}>
-                  <SelectField
-                    label="Shadow Style"
-                    onChange={(value) => handleShadowChange(value as ShadowOption)}
-                    options={shadowOptions}
-                    value={shadow}
-                  />
-                </div>
-              </FlexRow>
-              <FlexRow className={themeCustomizerStyles.element11} gap="md">
-                <div className={themeCustomizerStyles.element12}>
-                  <SelectField
-                    label="Spacing"
-                    onChange={(value) => handleSpacingChange(value as SpacingOption)}
-                    options={spacingOptions}
-                    value={spacing}
-                  />
-                </div>
-                <div className={themeCustomizerStyles.element13}>
-                  <SelectField
-                    label="Border Radius"
-                    onChange={(value) => handleRadiusChange(value)}
-                    options={radiusOptions}
-                    value={radius}
-                  />
-                </div>
-              </FlexRow>
-            </CardContent>
-          </Card>
-
-          {/* Interactions */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Interactions</CardTitle>
-              <CardDescription>Configure animations and transitions</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <SelectField
-                label="Transition Style"
-                onChange={handleTransitionChange}
-                options={transitionOptions}
-                value={transition}
-              />
-            </CardContent>
-          </Card>
+          <CustomizerGroup description="Color mode, palette, theme, and companion" title="Color">
+            <FlexRow gap="md">
+              <div className={themeCustomizerStyles.element7}>
+                <SelectField
+                  label="Color mode"
+                  onChange={(value) => handleThemeChange(value as ThemeOption)}
+                  options={themeOptions.theme.map((value) => ({
+                    label: value,
+                    value,
+                  }))}
+                  value={theme}
+                />
+              </div>
+              <div className={themeCustomizerStyles.element8}>
+                <SelectField
+                  label="Palette"
+                  onChange={(value) => handleBrandChange(value as BrandOption)}
+                  options={brandOptions}
+                  value={brand}
+                />
+              </div>
+            </FlexRow>
+            <SelectField
+              label="Theme"
+              onChange={setPortfolioTheme}
+              options={portfolioThemeOptions}
+              value={portfolioTheme}
+            />
+            <PreferenceSelect label="Companion" preference="companion" />
+          </CustomizerGroup>
+          <CustomizerGroup description="Typeface, weight, and tracking" title="Font">
+            <PreferenceSelect label="Font" preference="font" />
+            <PreferenceSelect label="Weight" preference="weight" />
+            <PreferenceSelect label="Tracking" preference="tracking" />
+          </CustomizerGroup>
+          <CustomizerGroup description="Type size, spacing, and corners" title="Size">
+            <PreferenceSelect label="Font size" preference="font-size" />
+            <PreferenceSelect label="Line height" preference="line-height" />
+            <PreferenceSelect label="Scale" preference="scale" />
+            <FlexRow gap="md">
+              <div className={themeCustomizerStyles.element12}>
+                <SelectField
+                  label="Spacing"
+                  onChange={(value) => handleSpacingChange(value as SpacingOption)}
+                  options={spacingOptions}
+                  value={spacing}
+                />
+              </div>
+              <div className={themeCustomizerStyles.element13}>
+                <SelectField
+                  label="Corners"
+                  onChange={(value) => handleRadiusChange(value)}
+                  options={radiusOptions}
+                  value={radius}
+                />
+              </div>
+            </FlexRow>
+          </CustomizerGroup>
+          <CustomizerGroup description="Borders, shadows, and clarity" title="Surface">
+            <FlexRow gap="md">
+              <div className={themeCustomizerStyles.element9}>
+                <SelectField
+                  label="Border"
+                  onChange={handleBorderChange}
+                  options={borderOptions}
+                  value={border}
+                />
+              </div>
+              <div className={themeCustomizerStyles.element10}>
+                <SelectField
+                  label="Shadow"
+                  onChange={(value) => handleShadowChange(value as ShadowOption)}
+                  options={shadowOptions}
+                  value={shadow}
+                />
+              </div>
+            </FlexRow>
+            <PreferenceSelect label="Blur" preference="blur" />
+            <PreferenceSelect label="Opacity" preference="opacity" />
+          </CustomizerGroup>
+          <CustomizerGroup description="Animation and depth" title="Motion">
+            <SelectField
+              label="Transition"
+              onChange={handleTransitionChange}
+              options={transitionOptions}
+              value={transition}
+            />
+            <PreferenceSelect label="Animation" preference="animation" />
+            <PreferenceSelect label="Perspective" preference="perspective" />
+          </CustomizerGroup>
 
           {/* Component Preview */}
           {showPreview && (

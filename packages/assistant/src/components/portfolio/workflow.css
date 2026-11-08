@@ -1,0 +1,103 @@
+.proposal-change {
+  padding-block: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.proposal-value {
+  max-height: 16rem;
+  overflow: auto;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+[aria-label="Draft recovery"] h2,
+[aria-label="Guided setup"] h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+[aria-label="Draft recovery"] p,
+[aria-label="Guided setup"] p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.draft-recovery {
+  min-width: 0;
+  padding: 12px 16px;
+  margin-block: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.draft-recovery-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: baseline;
+}
+.draft-recovery-summary strong {
+  font-size: 14px;
+}
+.draft-recovery-summary p,
+.draft-recovery-summary details {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+.draft-recovery-summary details {
+  margin-left: auto;
+}
+.draft-recovery-summary details[open] {
+  flex-basis: 100%;
+}
+.draft-recovery-summary summary {
+  cursor: pointer;
+}
+.setup-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 0;
+  margin: 0 0 24px;
+  list-style: none;
+}
+.setup-steps-count {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.published-sources {
+  display: flex;
+  flex-shrink: 0;
+  gap: 6px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+}
+.published-sources .ui-button {
+  flex-shrink: 0;
+  font-size: 12px;
+}
+.setup-dialog[data-slot="dialog-content"] {
+  width: min(1100px, calc(100vw - 32px));
+  max-width: min(1100px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+}
+.type-onboarding .setup-steps .ui-button {
+  width: auto;
+}
+.type-onboarding [aria-label="How to start"] {
+  display: grid;
+  gap: 12px;
+  margin-block: 8px 20px;
+}
+.type-onboarding [aria-label="How to start"] > div {
+  flex-wrap: wrap;
+}
+@media (max-width: 760px) {
+  .type-picker-grid {
+    grid-template-columns: 1fr;
+  }
+}

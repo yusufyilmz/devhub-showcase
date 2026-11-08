@@ -5,6 +5,6 @@
     "types": ["node"]
   },
   "exclude": ["node_modules", "dist"],
-  "extends": "@shared/typescript-config/react-library.json",
+  "extends": "@shared/typescript-config/library.json",
   "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

@@ -3,10 +3,10 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { ChatRole } from "@shared/lib/types";
 import { createChatStore, useAddMessage, useChatMessages } from "@shared/runtime/chat";
 import { chatStorage } from "@shared/runtime/storage";
 
+import { ChatRole } from "../../../lib/src/types";
 import { PortfolioChatProvider } from "./PortfolioChatProvider";
 
 const alex = { id: "alex", name: "Alex Example", revision: 1 };
@@ -43,7 +43,7 @@ describe("PortfolioChatProvider", () => {
     sessionStorage.clear();
   });
   describe("portfolio-scoped conversation state", () => {
-    it("isolates both portfolio and revision without importing the legacy global history", async () => {
+    it("isolates both portfolio and revision without importing the existing global history", async () => {
       const first = createChatStore(alex);
       first.getState().addMessage({
         category: "unknown",

@@ -2,9 +2,9 @@ import { timingSafeEqual } from "node:crypto";
 
 import { createClient } from "@supabase/supabase-js";
 
-import type { Database } from "@shared/lib/types";
-
 import { env } from "@/env";
+
+import type { Database } from "../../../../../../packages/lib/src/types";
 
 const headers = { "Cache-Control": "private, no-store" };
 export async function GET(request: Request) {

@@ -32,14 +32,14 @@ Open <http://localhost:3001>. `pnpm dev:setup` copies the safe root [.env.develo
 
 For optional integrations, consult [.env.example](.env.example) and add only the settings you need to the ignored app file. Never commit it. For local authentication, install Docker and the Supabase CLI, run `supabase start` from the repository root, then run `pnpm dev:setup --supabase` before creating the app environment file. This reads only the running local stack's URL and public key; it does not start containers, reset data, link a hosted project or create users. If the file already exists, edit its local Supabase settings manually. See [local login setup](docs/features/google-login.md#local-testing-without-google-oauth) and the [manual setup checks](docs/testing/manual/local-development.md).
 
-| Configuration                                                      | Purpose                                                               |
-| ------------------------------------------------------------------ | --------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Authentication and profile storage; legacy anon key remains supported |
-| `NEXT_PUBLIC_SITE_URL`                                             | Canonical origin for links and metadata                               |
-| `OPENAI_API_KEY`, `OPENAI_CHAT_MODEL`, `OPENAI_MODEL`              | Portfolio chat and legacy model configuration                         |
-| `REDIS_URL`, `REDIS_TOKEN`                                         | Required rate-limit storage for AI features                           |
-| `OPENAI_CV_MODEL`, `CV_IMPORT_DAILY_LIMIT`                         | Optional CV extraction model and global import cap                    |
-| `APPLICATION_NAME`, `LOG_LEVEL`                                    | Existing Pino logging                                                 |
+| Configuration                                                      | Purpose                                                        |
+| ------------------------------------------------------------------ | -------------------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Authentication and profile storage; anon key remains supported |
+| `NEXT_PUBLIC_SITE_URL`                                             | Canonical origin for links and metadata                        |
+| `OPENAI_API_KEY`, `OPENAI_CHAT_MODEL`, `OPENAI_MODEL`              | Portfolio chat and portfolio model configuration               |
+| `REDIS_URL`, `REDIS_TOKEN`                                         | Required rate-limit storage for AI features                    |
+| `OPENAI_CV_MODEL`, `CV_IMPORT_DAILY_LIMIT`                         | Optional CV extraction model and global import cap             |
+| `APPLICATION_NAME`, `LOG_LEVEL`                                    | Existing Pino logging                                          |
 
 Use [.env.example](.env.example) for current defaults. Do not expose OpenAI, Redis, deployment or service-role credentials through `NEXT_PUBLIC_` variables.
 
@@ -74,7 +74,6 @@ Next.js App Router and React run in a pnpm/Turborepo workspace. TypeScript, Biom
 | -------------------------------- | ------------------------------------------------------------- |
 | `apps/web`                       | Routes, server adapters, metadata and application composition |
 | `packages/content`               | Domain content, profile types, themes and section metadata    |
-| `packages/lib`                   | Validation, services, repositories and persistence            |
 | `packages/auth`                  | Shared authentication integration                             |
 | `packages/ui`                    | Controls, sections, studio and portfolio surfaces, global CSS |
 | `packages/cv`, `packages/chat`   | PDF generation and AI chat                                    |
@@ -116,7 +115,7 @@ See [docs/README.md](docs/README.md) for the full index.
 | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------ |
 | [Shared packages](docs/reference/shared-packages.md), [section migration](docs/reference/pageforge-section-migration.md) | Reuse boundaries and compatibility         |
 | [Tailwind](docs/reference/tailwind.md)                                                                                   | Shared CSS pipeline and theme tokens       |
-| [Legacy RLS review](docs/reference/legacy-rls-review.md)                                                                 | Historical security findings to revalidate |
+| [Portfolio table RLS review](docs/reference/portfolio-table-rls-review.md)                                               | Historical security findings to revalidate |
 
 ## CV generation
 

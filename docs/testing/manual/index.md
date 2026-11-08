@@ -2,6 +2,12 @@
 
 Local tooling: [Local development setup and test login](local-development.md).
 
+Shared feature ownership: [Assistant, chat, companion and portfolio migration](assistant-package.md).
+
+Route structure: [App route colocation](route-colocation.md).
+
+Workspace catalogs: [Generic catalog generation](catalog-generation.md).
+
 Workspace tooling: [Shared CLI and test packages](shared-tooling.md) and [Repository lookup](repository-lookup.md).
 
 This is the central manual acceptance-test catalog for work implemented in this project/chat. Each feature has its own guide with prerequisites, numbered steps, clickable URLs, route paths, expected results and a place to record actual evidence. Related older guides remain useful for deeper scenarios.

@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-import type { Database } from "./database.types";
+import type { Database } from "../../db/generated/database.types";
 
 export type ExperienceRow = Database["public"]["Tables"]["experiences"]["Row"];
 export type ProjectRow = Database["public"]["Tables"]["projects"]["Row"];

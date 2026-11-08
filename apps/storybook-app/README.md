@@ -17,7 +17,7 @@ pnpm --filter storybook-app build-storybook
 
 Stories load `@shared/ui/foundation.css` (tokens + Tailwind, no portfolio bundle).
 Full app CSS is `@shared/ui/app.css` / `@shared/ui/globals.css`. Portfolio-only
-styles are `@shared/ui/portfolio/bundle.css` (shim: `@shared/ui/legacy.css`).
+styles are `@shared/ui/portfolio/bundle.css`.
 See `packages/ui/src/styles/STYLES.md`.
 used by the Next.js app during migration. It is not loaded into primitive stories.
 See [the design system catalog](../../packages/ui/CATALOG.md).

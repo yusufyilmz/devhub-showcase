@@ -13,7 +13,7 @@ export function ChatSettings() {
   return (
     <section
       aria-labelledby="portfolio-ai-settings-title"
-      className="mt-7 border-t border-[rgb(var(--border-rgb))] pt-7"
+      className="mt-7 border-t border-[var(--border)] pt-7"
     >
       <h2 className="mb-3 text-[22px] leading-[1.3] font-semibold" id="portfolio-ai-settings-title">
         Portfolio AI features

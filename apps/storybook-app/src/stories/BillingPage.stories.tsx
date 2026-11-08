@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { StudioHeading, StudioShell } from "@shared/assistant/portfolio";
 import { BillingSettings } from "@shared/billing/components";
 import type { BillingRequest } from "@shared/billing/types";
-import { StudioShell } from "@shared/ui/portfolio";
 import { ThemeToggle } from "@shared/ui/theme";
 
 const request: BillingRequest = async (input, init) => {
@@ -37,7 +37,16 @@ const request: BillingRequest = async (input, init) => {
 };
 
 const meta = {
-  args: { request },
+  args: {
+    heading: (
+      <StudioHeading
+        description="Review your plan and usage."
+        eyebrow="Account and billing"
+        title="Subscription settings"
+      />
+    ),
+    request,
+  },
   component: BillingSettings,
   decorators: [
     (Story) => (

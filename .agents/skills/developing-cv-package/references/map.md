@@ -1,19 +1,19 @@
 # CV package map
 
-Package `@shared/templates` in `packages/cv`.
+Package `@shared/assistant/cv` in `packages/assistant`.
 
-| Symbol               | Role                                                                          |
-| -------------------- | ----------------------------------------------------------------------------- |
-| `createCvData`       | Profile fields, labels, layout numbers, and visibility flags for the template |
-| `createCvDefinition` | pdfmake document definition                                                   |
-| `renderCv`           | PDF bytes                                                                     |
-| `cvHelpers`          | Handlebars helpers shared with the CLI generator                              |
-| `cvFormats`          | `classic`, `compact`, and `editorial` metrics inside `src/index.ts`           |
+| Symbol               | Role                                                                             |
+| -------------------- | -------------------------------------------------------------------------------- |
+| `createCvData`       | Profile fields, labels, layout numbers, and visibility flags for the template    |
+| `createCvDefinition` | pdfmake document definition                                                      |
+| `renderCv`           | PDF bytes                                                                        |
+| `cvHelpers`          | Handlebars helpers shared with the CLI generator                                 |
+| `cvFormats`          | `classic`, `compact`, and `editorial` metrics inside `src/components/cv/data.ts` |
 
-| Export                           | File                                                        |
-| -------------------------------- | ----------------------------------------------------------- |
-| `@shared/templates`              | `src/index.ts`                                              |
-| `@shared/templates/template.hbs` | `templates/cv.json.hbs` with types from `src/template.d.ts` |
+| Export                     | File                                                                 |
+| -------------------------- | -------------------------------------------------------------------- |
+| `@shared/assistant/cv`     | `src/index.ts`                                                       |
+| `@shared/assistant/cv.hbs` | `templates/cv.json.hbs` with types from `src/types/cv-template.d.ts` |
 
 ## App routes that call the renderer
 
@@ -26,7 +26,7 @@ Package `@shared/templates` in `packages/cv`.
 | `app/admin/portfolios/[id]/cv.pdf/route.ts` | Guarded managed download            |
 | `app/api/admin/cv/route.ts`                 | Authenticated personal download     |
 
-The feature helper is `apps/my-dev-studio/features/portfolio/cv-response.ts`. Change authorization there, not in this package.
+The feature helper is `apps/my-dev-studio/app/api/cv/_response.ts`. Change authorization there, not in this package.
 
 ## Renderer invariants
 
@@ -40,6 +40,15 @@ The feature helper is `apps/my-dev-studio/features/portfolio/cv-response.ts`. Ch
 ## Checks
 
 ```sh
-pnpm --filter @shared/templates typecheck
-pnpm exec vitest run --project unit packages/cv/src/index.test.ts
+pnpm --filter @shared/assistant typecheck
+pnpm exec vitest run --project unit packages/assistant/src/components/cv/render.test.ts
 ```
+
+## Source folders
+
+- `src/components/cv/data.ts` prepares projected profile data and layout metrics.
+- `src/components/cv/definition.ts` owns document definitions and shared Handlebars helpers.
+- `src/components/cv/render.ts` configures safe in-memory fonts and produces PDF bytes.
+- ATS content and section ordering live alongside those modules, with colocated tests.
+- `src/components/studio/import/` contains import/review controls; `src/components/studio/settings/` contains CV settings. Import these through `@shared/assistant/studio`.
+- `src/types/cv-template.d.ts` types the `@shared/assistant/cv.hbs` export.

@@ -1,5 +1,6 @@
 "use client";
 
+import { supabaseConfigured } from "@shared/auth/config";
 import {
   type NotificationMessage,
   notificationCapabilities,
@@ -100,6 +101,13 @@ export function subscribeFitnessNotifications(handlers: {
   message: (message: NotificationMessage) => void;
 }) {
   let active = true;
+  if (!supabaseConfigured()) {
+    updateLiveState("disconnected");
+    return () => {
+      active = false;
+      updateLiveState("disconnected");
+    };
+  }
   updateLiveState("connecting");
   let stop: () => void = () => undefined;
   browserAuth()

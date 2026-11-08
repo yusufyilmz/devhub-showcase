@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
-import { ReviewService } from "@shared/services/studio";
-import { StudioHeading } from "@shared/ui/portfolio";
-import { ReviewSection } from "@shared/ui/sections";
+import { StudioHeading } from "@shared/assistant/portfolio";
+import { ReviewSection } from "@shared/assistant/sections";
+import { ReviewService } from "@shared/lib/studio";
 import { logger } from "@shared/utils/logger";
 
-import { reviewWorkspace } from "@/features/reviews/workspace";
+import { requireAdmin } from "@/features/admin/admin-auth";
 
 import { handleSubmitReviewAction } from "../../actions";
 
@@ -14,6 +14,12 @@ export const metadata: Metadata = {
   robots: { follow: false, index: false },
   title: "Portfolio reviews",
 };
+
+async function reviewWorkspace() {
+  const { client, repository } = await requireAdmin();
+  const portfolio = await repository.read();
+  return portfolio?.username ? { client, username: portfolio.username } : null;
+}
 
 export default async function PortfolioReviewPage({
   params,
@@ -41,6 +47,7 @@ export default async function PortfolioReviewPage({
       {reviews ? (
         <ReviewSection
           handleReview={async (reviewId, status, updatedAt) => {
+            "use server";
             const result = await handleSubmitReviewAction(reviewId, status, updatedAt);
             return result ? "saved" : "error";
           }}

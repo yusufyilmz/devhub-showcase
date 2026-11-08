@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 
+import { dueFitnessReminders } from "@shared/lib/fitness-reminders";
+import type { Workspace } from "@shared/lib/types";
 import { notificationCapabilities, stableNotificationId } from "@shared/notifications";
-import type { Workspace } from "@shared/services/types";
 
 import { fitnessNotifications } from "@/features/notifications/browser";
-import { dueFitnessReminders } from "@/features/notifications/reminders";
 
 export function useTaskReminders(state: Workspace, readOnly: boolean) {
   const [notice, setNotice] = useState<ReturnType<typeof dueFitnessReminders>[number]>();

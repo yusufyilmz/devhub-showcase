@@ -9,7 +9,7 @@ trapped inside the dialog and restored on close. Images keep their aspect ratio.
 This uses the existing section document, visibility, ordering, editor, validation,
 draft preview and save flow. No migration or upload service is required. Image
 URLs must be HTTP or HTTPS. Mixed text/media sections retain their existing view
-so legacy content is not silently omitted. This change does not fetch source URLs
+so earlier content is not silently omitted. This change does not fetch source URLs
 on the server, add downloads, or publish anything automatically.
 
 Homepage portfolio examples use the same viewer: click an example to inspect its

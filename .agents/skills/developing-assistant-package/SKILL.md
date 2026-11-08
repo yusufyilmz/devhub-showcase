@@ -8,7 +8,7 @@ description: Change portfolio chat, owner edit proposals, and CV import models
 
 # Developing the assistant package
 
-`packages/assistant` is `@shared/assistant`. It calls a model provider and returns text or a proposal. It does not authorize a user, rate-limit a caller, or write a profile. The app route does those steps, then uses `@shared/lib` to validate anything that might be saved.
+`packages/assistant` is `@shared/assistant`. It owns models and reusable chat/assistant backend workflows. Workflows validate permitted context, enforce publication and quota checks, and call providers. App routes verify request identity and origin and supply validated configuration; proposals never write profiles automatically.
 
 Read [the file map](references/map.md) and [packages/assistant/CATALOG.md](../../../packages/assistant/CATALOG.md). Read `docs/features/portfolio-ai-foundation.md` before changing what a visitor or an owner can ask. Read [mydevstudio-business](../mydevstudio-business/SKILL.md) for publication boundaries.
 
@@ -29,15 +29,15 @@ Public chat context comes from `@shared/lib/profiles`. The public projection and
 
 Keep these in the app even if the model file is the file you are editing:
 
-| Concern                                | Owner                                                                         |
-| -------------------------------------- | ----------------------------------------------------------------------------- |
-| Confirmed owner for edit and CV import | `features/admin` and `@shared/auth`                                           |
-| Visitor chat access                    | `features/chat`                                                               |
-| Attempt limits                         | `@shared/cache` `allowPortfolioChat`, `allowStudioAssistant`, `allowCvImport` |
-| Proposal schema                        | `@shared/lib/profiles`                                                        |
-| CV file size and type                  | `@shared/lib/cv-file`                                                         |
-| Reviewed CV fields                     | `@shared/lib/cv-import`                                                       |
-| Saving                                 | `ProfileService` in the app's save route                                      |
+| Concern                                | Owner                                                                                          |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Confirmed owner for edit and CV import | `features/admin` and `@shared/auth`                                                            |
+| Visitor chat access                    | `@shared/assistant/chat` and `@shared/assistant/premium-chat`; app adapters bind configuration |
+| Attempt limits                         | `@shared/lib/cache` `allowPortfolioChat`, `allowStudioAssistant`, `allowCvImport`              |
+| Proposal schema                        | `@shared/lib/profiles`                                                                         |
+| CV file size and type                  | `@shared/lib/cv-file`                                                                          |
+| Reviewed CV fields                     | `@shared/lib/cv-import`                                                                        |
+| Saving                                 | `ProfileService` in the app's save route                                                       |
 
 A missing provider key, a limit refusal, or a provider error becomes the supported unavailable response in the route. Do not invent a successful profile update. Do not retry by writing a stale revision.
 
@@ -70,10 +70,18 @@ pnpm exec vitest run --project unit apps/my-dev-studio/app/api/admin/assistant/r
 pnpm exec vitest run --project unit apps/my-dev-studio/app/api/admin/cv-import/route.test.ts
 ```
 
-Run the route test that matches the model you changed. Visitor chat behavior is also covered by `features/chat` tests and `e2e/portfolio` when the public contract changes.
+Run the route test that matches the model you changed. Visitor chat behavior is also covered by colocated `app/api/chat/stream` and `app/[username]/chat` tests and `e2e/portfolio` when the public contract changes.
 
 ## Related skills
 
+- [Shared backend development](../mydevstudio-development/SKILL.md)
 - [Developing the lib package](../developing-lib-package/SKILL.md)
-- [Developing the cache package](../developing-cache-package/SKILL.md)
 - [Developing the MyDevStudio app](../developing-my-dev-studio-app/SKILL.md)
+
+Backend entry points: `@shared/assistant/chat`, `@shared/assistant/premium-chat`, `@shared/assistant/fitness-context`, and `@shared/assistant/workout-draft`. Implementations/tests live under `src/services`. Shared workflows receive configuration callbacks; never import app env modules.
+
+## Shared feature surfaces
+
+This package also owns chat/companion UI, Fitness proposal UI, portfolio and studio workspaces, sections, examples, management UI and CV rendering. Read [the catalog](../../../packages/assistant/CATALOG.md) for current exact entry points. `@shared/assistant/chat` is the server workflow; use `@shared/assistant/chat-ui` for UI. CV modules are under `src/components/cv`, imported as `@shared/assistant/cv`; the removed templates package must not be restored.
+
+App studio/home/reviews/portfolio/platform/chat feature folders are removed. Session, cookie, environment and transport adapters are colocated with the owning pages/routes under `app`. Do not add forwarding modules or import app sources into shared components. Fitness components take authenticated request and notification callbacks; visitor UI takes the premium server action. Keep primitive controls and styles in `@shared/ui`.

@@ -34,12 +34,17 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
 
-      - name: Build fixture-tested application
-        run: pnpm --filter my-dev-studio build
+      - name: Build fixture-tested applications
+        run: pnpm build:studio
+
+      - name: Build studio application
+        run: pnpm build:fitness
 
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Browser tests
-        run: pnpm test:e2e
-        continue-on-error: true
+      - name: Fitness browser tests
+        run: pnpm test:e2e:fitness
+
+      - name: Studio browser tests
+        run: pnpm test:e2e:studio

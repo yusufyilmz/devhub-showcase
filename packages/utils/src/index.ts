@@ -1,3 +1,4 @@
+export { keysToCamelCase, toCamelCase } from "./converters/camel-case";
 export { createUUID } from "./helpers/createUUID";
 export {
   type DataWorkerLog,
@@ -49,3 +50,5 @@ export {
   setSharedOpen,
   subscribe,
 } from "./helpers/wsMetrics";
+export { apiClient } from "./http/api-client";
+export { fetcher } from "./http/fetcher";

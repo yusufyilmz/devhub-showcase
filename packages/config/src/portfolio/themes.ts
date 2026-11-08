@@ -3,21 +3,49 @@ export const portfolioThemes = [
     description: "The original cool palette and crisp cards.",
     id: "studio",
     name: "Studio",
+    swatch: "dark",
   },
   {
     description: "Warm surfaces, serif titles and a printed feel.",
     id: "paper",
     name: "Paper",
+    swatch: "light",
   },
   {
     description: "Neutral surfaces, monospaced titles and sharp edges.",
     id: "graphite",
     name: "Graphite",
+    swatch: "dark",
   },
   {
     description: "Soft lavender surfaces, rounded cards and a relaxed feel.",
     id: "bloom",
     name: "Bloom",
+    swatch: "light",
+  },
+  {
+    description: "Dim plum surfaces, tight corners and a quiet mood.",
+    id: "gloom",
+    name: "Gloom",
+    swatch: "dark",
+  },
+  {
+    description: "Black and ivory, square edges and a heavy serif.",
+    id: "ink",
+    name: "Ink",
+    swatch: "light",
+  },
+  {
+    description: "Sun-warm sand, soft corners and a printed warmth.",
+    id: "dune",
+    name: "Dune",
+    swatch: "light",
+  },
+  {
+    description: "Deep sea navy, compact cards and a steady sans.",
+    id: "harbor",
+    name: "Harbor",
+    swatch: "dark",
   },
 ] as const;
 export type PortfolioTheme = (typeof portfolioThemes)[number]["id"];
@@ -52,6 +80,46 @@ const palettes: Record<PortfolioTheme, Record<ColorMode, Palette>> = {
       text: "44 33 62",
     },
   },
+  dune: {
+    dark: {
+      bg: "30 22 14",
+      border: "98 72 46",
+      muted: "196 170 140",
+      shadow: "0 0 0",
+      soft: "56 42 28",
+      surface: "44 32 20",
+      text: "250 236 216",
+    },
+    light: {
+      bg: "247 240 226",
+      border: "214 186 146",
+      muted: "122 88 58",
+      shadow: "110 70 30",
+      soft: "236 222 198",
+      surface: "255 250 241",
+      text: "58 36 18",
+    },
+  },
+  gloom: {
+    dark: {
+      bg: "14 12 18",
+      border: "62 52 74",
+      muted: "168 158 180",
+      shadow: "0 0 0",
+      soft: "36 30 46",
+      surface: "24 20 30",
+      text: "236 230 242",
+    },
+    light: {
+      bg: "244 242 246",
+      border: "206 198 216",
+      muted: "96 86 110",
+      shadow: "40 30 55",
+      soft: "232 228 238",
+      surface: "255 254 255",
+      text: "28 22 36",
+    },
+  },
   graphite: {
     dark: {
       bg: "19 19 21",
@@ -70,6 +138,46 @@ const palettes: Record<PortfolioTheme, Record<ColorMode, Palette>> = {
       soft: "232 232 234",
       surface: "255 255 255",
       text: "28 28 31",
+    },
+  },
+  harbor: {
+    dark: {
+      bg: "6 18 28",
+      border: "34 68 90",
+      muted: "148 178 196",
+      shadow: "0 0 0",
+      soft: "18 40 56",
+      surface: "12 28 42",
+      text: "226 242 248",
+    },
+    light: {
+      bg: "240 247 250",
+      border: "186 210 222",
+      muted: "64 98 114",
+      shadow: "24 64 84",
+      soft: "224 238 244",
+      surface: "255 255 255",
+      text: "14 40 54",
+    },
+  },
+  ink: {
+    dark: {
+      bg: "12 12 12",
+      border: "70 70 68",
+      muted: "176 176 170",
+      shadow: "0 0 0",
+      soft: "32 32 32",
+      surface: "22 22 22",
+      text: "245 245 242",
+    },
+    light: {
+      bg: "250 249 246",
+      border: "186 184 176",
+      muted: "90 90 86",
+      shadow: "20 20 16",
+      soft: "238 236 230",
+      surface: "255 255 255",
+      text: "16 16 16",
     },
   },
   paper: {
@@ -115,11 +223,15 @@ const palettes: Record<PortfolioTheme, Record<ColorMode, Palette>> = {
 };
 const shape = {
   bloom: { display: "system-ui, sans-serif", radius: "28px", weight: "500" },
+  dune: { display: 'Palatino, "Palatino Linotype", Georgia, serif', radius: "14px", weight: "500" },
+  gloom: { display: "system-ui, sans-serif", radius: "6px", weight: "600" },
   graphite: {
     display: 'ui-monospace, "SFMono-Regular", monospace',
     radius: "2px",
     weight: "500",
   },
+  harbor: { display: "system-ui, sans-serif", radius: "8px", weight: "600" },
+  ink: { display: 'Georgia, "Times New Roman", serif', radius: "0px", weight: "700" },
   paper: {
     display: 'Georgia, "Times New Roman", serif',
     radius: "4px",
@@ -127,6 +239,91 @@ const shape = {
   },
   studio: { display: "system-ui, sans-serif", radius: "16px", weight: "600" },
 };
+const themeAppearance = {
+  bloom: {
+    border: "none",
+    font: "sans",
+    "line-height": "relaxed",
+    radius: "pill",
+    shadow: "soft",
+    spacing: "relaxed",
+    tracking: "tight",
+    weight: "medium",
+  },
+  dune: {
+    border: "thin",
+    font: "serif",
+    "line-height": "relaxed",
+    radius: "rounded",
+    shadow: "soft",
+    spacing: "relaxed",
+    tracking: "tight",
+    weight: "medium",
+  },
+  gloom: {
+    border: "thin",
+    font: "sans",
+    "line-height": "snug",
+    radius: "small",
+    shadow: "strong",
+    spacing: "compact",
+    tracking: "wide",
+    weight: "semibold",
+  },
+  graphite: {
+    border: "base",
+    font: "mono",
+    "line-height": "snug",
+    radius: "square",
+    shadow: "none",
+    spacing: "compact",
+    tracking: "wide",
+    weight: "medium",
+  },
+  harbor: {
+    border: "base",
+    font: "sans",
+    "line-height": "normal",
+    radius: "small",
+    shadow: "medium",
+    spacing: "comfortable",
+    tracking: "tight",
+    weight: "semibold",
+  },
+  ink: {
+    border: "thick",
+    font: "serif",
+    "line-height": "tight",
+    radius: "none",
+    shadow: "none",
+    spacing: "compact",
+    tracking: "wide",
+    weight: "bold",
+  },
+  paper: {
+    border: "thin",
+    font: "serif",
+    "line-height": "relaxed",
+    radius: "small",
+    shadow: "none",
+    spacing: "relaxed",
+    tracking: "tight",
+    weight: "normal",
+  },
+  studio: {
+    border: "thin",
+    font: "sans",
+    "line-height": "normal",
+    radius: "rounded",
+    shadow: "soft",
+    spacing: "comfortable",
+    tracking: "tight",
+    weight: "semibold",
+  },
+} as const satisfies Record<PortfolioTheme, Record<string, string>>;
+export function getPortfolioThemeAppearance(theme: PortfolioTheme) {
+  return themeAppearance[theme];
+}
 export function getThemePalette(theme: PortfolioTheme, mode: ColorMode) {
   return palettes[theme][mode];
 }

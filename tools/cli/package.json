@@ -5,13 +5,28 @@
   "type": "module",
   "exports": {
     "./tsdown": "./tsdown/library.ts",
-    "./generators": "./generators/config.ts"
+    "./generators": "./generators/config.ts",
+    "./lookup": "./lookup/index.ts"
+  },
+  "scripts": {
+    "test": "vitest",
+    "test:lookup": "vitest run --config lookup/vitest.config.ts",
+    "test:watch": "vitest --watch",
+    "typecheck": "tsc --noEmit",
+    "typecheck:lookup": "tsc --project lookup/tsconfig.json --noEmit"
   },
   "devDependencies": {
+    "@babel/parser": "catalog:",
     "@shared/typescript-config": "workspace:*",
     "@turbo/gen": "catalog:",
+    "commander": "catalog:",
+    "js-tiktoken": "catalog:",
+    "remark-gfm": "catalog:",
+    "remark-parse": "catalog:",
     "tsdown": "catalog:",
     "typescript": "catalog:",
+    "unified": "catalog:",
+    "vitest": "catalog:",
     "yaml": "catalog:"
   },
   "engines": {

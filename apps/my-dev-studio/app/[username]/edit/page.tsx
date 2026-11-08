@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
-import { ReviewSection } from "@shared/ui/sections";
+import { ReviewSection } from "@shared/assistant/sections";
+import { ProfileEditor } from "@shared/assistant/studio-workspace";
 
 import { requireWorkspace } from "@/features/admin/admin-auth";
 import { UserStorageSync } from "@/features/admin/user-storage-sync";
-import { loadPendingPortfolioReviews } from "@/features/portfolio/portfolio-reviews";
-import { ProfileEditor } from "@/features/studio";
 
+import { loadPendingPortfolioReviews } from "../review/_service";
 import { submitPortfolioReviewAction } from "./review-actions";
 
 export const metadata: Metadata = {

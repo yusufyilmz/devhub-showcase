@@ -1,6 +1,6 @@
 # Premium access foundation
 
-Step 2 adds account entitlements, explicit portfolio assignments and durable usage reservations. Stripe, pricing/settings UI and premium widget activation remain later steps. Existing CV import and the main portfolio's legacy chat are unchanged.
+Step 2 adds account entitlements, explicit portfolio assignments and durable usage reservations. Stripe, pricing/settings UI and premium widget activation remain later steps. Existing CV import and the main portfolio's main portfolio chat are unchanged.
 
 Missing grants mean Free. Pro requires active/trialing status and a current start-inclusive, end-exclusive billing period. Limits are separate for portfolio_chat and studio_assistant. No prices, trials or paid grants are seeded. A future verified Stripe webhook must provision limits and periods; user metadata and portfolio JSON never grant Pro.
 

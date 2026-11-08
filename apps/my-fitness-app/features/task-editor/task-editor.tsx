@@ -3,10 +3,11 @@ import { useRef, useState } from "react";
 
 import { ArrowDown, ArrowUp, Trash2 } from "lucide-react";
 
-import type { FitnessSuggestion, TaskEditProposal } from "@shared/assistant/fitness-contract";
-import { TaskService } from "@shared/services/fitness";
-import type { Workspace } from "@shared/services/types";
-import { createTask, defaultDetails, type Task, type TaskKind } from "@shared/services/types";
+import type { TaskEditProposal } from "@shared/assistant/fitness-contract";
+import type { TaskEditorTarget } from "@shared/assistant/fitness-ui";
+import { TaskService } from "@shared/lib/fitness";
+import type { Workspace } from "@shared/lib/types";
+import { createTask, defaultDetails, type Task, type TaskKind } from "@shared/lib/types";
 import { Alert, AlertDescription } from "@shared/ui/alert";
 import {
   AlertDialog,
@@ -32,14 +33,10 @@ import { Label as LibraryLabel } from "@shared/ui/label";
 import { NativeSelect as LibraryNativeSelect } from "@shared/ui/native-select";
 import { Textarea as LibraryTextarea } from "@shared/ui/textarea";
 
+export type { TaskEditorTarget } from "@shared/assistant/fitness-ui";
+
 import { IngredientEditor } from "./ingredient-editor";
-export interface TaskEditorTarget {
-  editDraft?: TaskEditProposal;
-  parent?: Task;
-  scheduleDraft?: { time: string; weekdays: number[] };
-  suggestion?: FitnessSuggestion;
-  task?: Task;
-}
+
 interface Props {
   busy: boolean;
   error: string;

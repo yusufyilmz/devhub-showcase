@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { urls } from "@shared/config";
-import { listPublishedPortfolioLinks } from "@shared/services/published-profile";
+import { listPublishedPortfolioLinks } from "@shared/lib/published-profile";
 // No build-time database snapshot or stale entries after unpublishing.
 export const dynamic = "force-dynamic";
 

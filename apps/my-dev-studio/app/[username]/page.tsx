@@ -1,37 +1,39 @@
-import "@shared/ui/portfolio-chat.css";
+import "@shared/assistant/portfolio-chat.css";
 
 import type { Metadata } from "next";
 
-import { AgentCompanion } from "@shared/ui/agent-companion";
-import { PortfolioLayout } from "@shared/ui/portfolio";
+import { AgentCompanion } from "@shared/assistant/agent-companion";
+import { portfolioGuide } from "@shared/assistant/companion-guides";
+import { PortfolioLayout } from "@shared/assistant/portfolio";
+import { createPortfolioMetadata } from "@shared/assistant/portfolio-metadata";
 
 import { OwnerEditLink } from "@/features/admin/owner-edit-link";
-import { premiumChatAvailable } from "@/features/chat/premium-chat";
-import { portfolioGuide } from "@/features/companion/guides";
-import { portfolioMetadata } from "@/features/portfolio/portfolio-metadata";
-import { loadPageResources } from "@/features/portfolio/portfolio-resources";
-import { getUsernameProfile } from "@/features/portfolio/profiles/public-profile";
-import { EngineerPortfolio } from "@/features/portfolio/variants/engineer-portfolio";
+
+import { platformSeo } from "../_site";
+import { EngineerPortfolio } from "./_engineer-portfolio";
+import { getUsernameProfile } from "./_profile";
+import { loadPageResources } from "./_resources";
+import { premiumChatAvailable } from "./chat/_access";
 
 export const maxDuration = 60;
 
 type Props = { params: Promise<{ username: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { profile } = await getUsernameProfile((await params).username);
-  return portfolioMetadata(profile, (await params).username);
+  return createPortfolioMetadata(profile, (await params).username, platformSeo);
 }
 export default async function PublicCvPage({ params }: Props) {
   const { username } = await params;
   const { profile: saved, id, revision } = await getUsernameProfile(username);
   const original = id === "main";
   const engineer = !saved.portfolioType || saved.portfolioType === "engineer";
-  const legacyChat = original && engineer && saved.publicationVisibility !== "password";
+  const mainPortfolioChat = original && engineer && saved.publicationVisibility !== "password";
   const canChat =
-    !legacyChat &&
+    !mainPortfolioChat &&
     id &&
     saved.publicationVisibility !== "password" &&
     (await premiumChatAvailable(id));
-  const widget = legacyChat ? null : (
+  const widget = mainPortfolioChat ? null : (
     <AgentCompanion
       agent="portfolio"
       guide={portfolioGuide}
@@ -56,7 +58,9 @@ export default async function PublicCvPage({ params }: Props) {
     <>
       {widget}
       <EngineerPortfolio
-        chatIdentity={legacyChat && id ? { id, name: saved.name, revision, username } : undefined}
+        chatIdentity={
+          mainPortfolioChat && id ? { id, name: saved.name, revision, username } : undefined
+        }
         extras={original}
         ownerLink={
           <OwnerEditLink floating={!original} offset={Boolean(widget)} username={username} />

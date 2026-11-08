@@ -1,4 +1,4 @@
-import "@shared/ui/storybook-demo-globals.css";
+import "./demo-globals.css";
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";

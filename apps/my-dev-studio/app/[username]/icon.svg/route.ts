@@ -1,5 +1,6 @@
-import { portfolioIcon } from "@/features/portfolio/portfolio-branding";
-import { getUsernameProfile } from "@/features/portfolio/profiles/public-profile";
+import { portfolioIcon } from "@shared/assistant/portfolio-branding";
+
+import { getUsernameProfile } from "../_profile";
 
 export const dynamic = "force-dynamic";
 

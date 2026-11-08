@@ -6,19 +6,17 @@ import {
   MessageProcessor,
   PortfolioChatModel,
 } from "@shared/assistant";
-import { type ChatMessage, ChatRole, type ReviewState } from "@shared/lib/types";
-import { isCategoryReferralCategory } from "@shared/lib/utils";
-import { ReviewService } from "@shared/services/studio";
+import { portfolioChatInput } from "@shared/assistant/chat";
+import { isCategoryReferralCategory } from "@shared/lib/referral-category";
+import { ReviewService } from "@shared/lib/studio";
 import { logger } from "@shared/utils/logger";
 
 import { requireAdmin } from "@/features/admin/admin-auth";
-import {
-  assertCurrentPublication,
-  portfolioChatInput,
-  requireLegacyChat,
-} from "@/features/chat/portfolio-chat";
-import { answerPremiumChat } from "@/features/chat/premium-chat";
-import { savePortfolioReferral } from "@/features/portfolio/portfolio-reviews";
+
+import { type ChatMessage, ChatRole, type ReviewState } from "../../../packages/lib/src/types";
+import { answerPremiumChat } from "./[username]/chat/_access";
+import { savePortfolioReferral } from "./[username]/review/_service";
+import { assertCurrentPublication, requireMainPortfolioChat } from "./api/chat/stream/_access";
 
 export async function handlePremiumChatAction(
   username: string,
@@ -42,7 +40,7 @@ export async function handleSendMessageAction(
 
   try {
     const input = portfolioChatInput.parse(message);
-    const { knowledge, snapshot } = await requireLegacyChat(username, sessionId);
+    const { knowledge, snapshot } = await requireMainPortfolioChat(username, sessionId);
     if (input.type === "cv") {
       const content = await new PortfolioChatModel().answer(
         knowledge,

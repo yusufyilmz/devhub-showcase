@@ -51,10 +51,10 @@ dedicated conversation screen with a workspace sidebar, centered empty state and
 compact composer. It reuses the assistant's validated proposal/review/apply flow.
 Explicit save uses the profile endpoint and saved revision. Saving a published
 portfolio is labeled accordingly. New chat resets the conversation, not the draft.
-The public visitor assistant opens at /{username}/chat for the legacy portfolio
+The public visitor assistant opens at /{username}/chat for the original portfolio
 and eligible Pro portfolios. It uses the shared chat screen, published source
 links, and history scoped to the tab and publication revision. Referral Chat
-opens a dialog on the legacy portfolio.
+opens a dialog on the original portfolio.
 
 Homepage examples render their portfolio content on the server and pass it as
 React content into the interactive gallery, avoiding a second iframe page load.
@@ -63,10 +63,10 @@ The section browser shows three compact rows until its reveal button is activate
 search and category filtering expose all matching results.
 
 POST /api/chat/stream accepts username, sessionId (UUID) and message. It checks
-origin, bounded input, current published profile, legacy access and rate limits.
+origin, bounded input, current published profile, main portfolio access and rate limits.
 Its newline-delimited JSON events are delta (text), done (answer), or error
 (generic error). A done event is required for a successful answer. Cancellation
-aborts the upstream request. This route is only for legacy public chat; premium
+aborts the upstream request. This route is only for main portfolio chat; premium
 chat continues using its existing quota and billing operation. Review mutations
 and structured owner proposals remain non-streaming.
 

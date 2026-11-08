@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { ProfileAccessError } from "@shared/services/profile";
+import { ProfileAccessError } from "@shared/lib/profile";
 
 import { GET, POST } from "./route";
 
@@ -9,8 +9,8 @@ vi.mock("@/features/admin/admin-auth", () => ({
   requireWorkspace: mocks.workspace,
   sameOrigin: (request: Request) => request.headers.get("origin") === "https://example.test",
 }));
-vi.mock("@/features/admin/google-profile-import", async (original) => ({
-  ...(await original<typeof import("@/features/admin/google-profile-import")>()),
+vi.mock("@shared/lib/google-profile", async (original) => ({
+  ...(await original<typeof import("@shared/lib/google-profile")>()),
   readGoogleProfile: mocks.read,
 }));
 

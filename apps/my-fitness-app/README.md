@@ -18,7 +18,7 @@ Open [My Fitness Studio](http://localhost:3002/) (`/`) after configuring Supabas
 
 Use the theme control in the top bar or on the login page. Fitness uses the same `PageShell`, `ThemeProvider`, and `ThemeToggle` as MyDevStudio. Each site stores appearance choices on its own origin using `mydevstudio:theme`.
 
-The dashboard loads `@shared/ui/fitness.css`, which includes the shared foundation.
+The dashboard loads `app/fitness.css`, which includes the shared foundation.
 
 ## Supabase setup
 
@@ -26,7 +26,7 @@ The dashboard loads `@shared/ui/fitness.css`, which includes the shared foundati
 2. Apply the existing workspace migration, `supabase/migrations/20261101120000_fitness_task_workspaces.sql`, if setting up a fresh database.
 3. Add the exact Fitness callback URL in Supabase Auth. For local development use [Auth callback](http://localhost:3002/auth/callback) (`/auth/callback`).
 4. Configure Google OAuth and allow signup in the Fitness Supabase project for self-service Google accounts. For email/password, provision or invite confirmed users through that project.
-5. Open [Sign in](http://localhost:3002/login) (`/login`). The first workspace load imports the account's legacy data if present, or starts with an empty routine and one editable meal-plan template.
+5. Open [Sign in](http://localhost:3002/login) (`/login`). The first workspace load imports the account's v1 data if present, or starts with an empty routine and one editable meal-plan template.
 
 ## Private workspaces
 

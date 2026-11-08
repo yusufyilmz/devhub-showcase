@@ -1,8 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-import { createTask, defaultDetails } from "@shared/services/types";
-
-import { starterWorkspace } from "../../features/task-workspace/starter";
+import { createTask, defaultDetails } from "@shared/lib/types";
+import { starterWorkspace } from "@shared/lib/workspace-defaults";
 
 test.describe("Fitness plan assistant", () => {
   test("starts a full-page chat and reviews task and schedule proposals before saving", async ({

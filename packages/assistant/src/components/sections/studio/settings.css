@@ -1,0 +1,31 @@
+.section-settings-editor > h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  font-weight: 650;
+}
+.section-settings-editor > p {
+  max-width: 70ch;
+  margin: 0 0 24px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--muted-foreground);
+}
+.section-settings-group {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  padding: 20px 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+.section-settings-group legend {
+  padding-right: 12px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.section-settings-group label {
+  font-size: 13px;
+}
+.section-settings-group button {
+  justify-self: start;
+}

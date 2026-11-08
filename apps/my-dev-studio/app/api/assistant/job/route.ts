@@ -8,8 +8,8 @@ import {
   PremiumUsageRepository,
   premiumAiConfigured,
 } from "@shared/billing/server";
-import { allowStudioAssistant } from "@shared/cache";
-import { ProfileAccessError } from "@shared/services/profile";
+import { allowStudioAssistant } from "@shared/lib/cache";
+import { ProfileAccessError } from "@shared/lib/profile";
 
 import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
 

@@ -8,7 +8,7 @@ This group covers roadmap tasks 07, 10 and 28. Draft/public snapshot separation,
 
 `GET /api/profile-history` lists timestamps/revision numbers for the authenticated workspace. `?revision=N` reads one compatible snapshot. Missing/expired entries return 404, incompatible documents return 409, unauthenticated access returns 403, and storage errors leave the draft unchanged. This endpoint does not restore, save or publish anything. A forged profile query parameter cannot change the workspace identity.
 
-Saved profile writes now update only the private canonical document. The legacy `isPublic` save input is accepted but cannot change publication. Owners and current authorized managers publish or withdraw using a separate revision-checked action. The publication review shows the before/after data for both public outputs. Each private CV version also has independent contact-field controls.
+Saved profile writes now update only the private canonical document. The earlier `isPublic` save input is accepted but cannot change publication. Owners and current authorized managers publish or withdraw using a separate revision-checked action. The publication review shows the before/after data for both public outputs. Each private CV version also has independent contact-field controls.
 
 ## Owner review and output controls
 

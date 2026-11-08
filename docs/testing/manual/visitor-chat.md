@@ -1,6 +1,6 @@
 # Full-page visitor chat, access and published sources — task 21
 
-**Scope/status:** Full-page public portfolio assistant. The legacy portfolio streams responses. The Pro visitor assistant requires an eligible, opted-in portfolio.
+**Scope/status:** Full-page public portfolio assistant. The original portfolio streams responses. The Pro visitor assistant requires an eligible, opted-in portfolio.
 
 **Prerequisites:** Use a published, opted-in, Pro-assigned test portfolio with allowance and a configured AI provider. Keep one draft project and one private or password-protected test portfolio.
 
@@ -26,3 +26,5 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 - [apps/my-dev-studio/app/api/chat/stream/route.test.ts](../../../apps/my-dev-studio/app/api/chat/stream/route.test.ts)
 
 Return to the [manual testing index](index.md).
+
+Backend organization: main/Pro chat checks run in `packages/assistant/src/services/main-portfolio-chat.ts` and `premium-portfolio-chat.ts`. Their colocated tests cover publication changes, configuration, rate limits and reservations. App streaming-route tests cover transport, origin and cancellation. This structural change does not constitute deployed/provider verification.

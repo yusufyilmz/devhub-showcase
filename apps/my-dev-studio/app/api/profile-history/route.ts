@@ -1,4 +1,4 @@
-import { readProfileHistory } from "@/features/portfolio/publication/profile-history-api";
+import { readProfileHistory } from "./_handler";
 export async function GET(request: Request) {
   return readProfileHistory(request);
 }

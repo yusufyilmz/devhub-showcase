@@ -1,6 +1,6 @@
 import { createShareImage } from "@shared/ui/seo";
 
-import { platformSeo } from "@/features/platform/seo";
+import { platformSeo } from "../_site";
 
 export function GET() {
   return createShareImage({

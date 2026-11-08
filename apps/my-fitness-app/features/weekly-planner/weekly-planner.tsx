@@ -3,10 +3,10 @@ import { useMemo } from "react";
 
 import { RefreshCw, ShoppingBasket } from "lucide-react";
 
-import { TaskService } from "@shared/services/fitness";
-import { MealPlanningService, WeeklyPlanningService } from "@shared/services/meal";
-import type { Workspace } from "@shared/services/types";
-import { dateLabel, monday } from "@shared/services/types";
+import { TaskService } from "@shared/lib/fitness";
+import { MealPlanningService, WeeklyPlanningService } from "@shared/lib/meal";
+import type { Workspace } from "@shared/lib/types";
+import { dateLabel, monday } from "@shared/lib/types";
 import { Alert, AlertDescription, AlertTitle } from "@shared/ui/alert";
 import { Button as LibraryButton } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";

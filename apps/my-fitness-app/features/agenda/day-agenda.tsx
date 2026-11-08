@@ -1,6 +1,6 @@
 "use client";
-import { type AgendaEvent, AgendaService } from "@shared/services/schedule";
-import type { Workspace } from "@shared/services/types";
+import { type AgendaEvent, AgendaService } from "@shared/lib/schedule";
+import type { Workspace } from "@shared/lib/types";
 import { EmptyState } from "@shared/ui/empty-state";
 
 import { EventRow } from "./event-row";

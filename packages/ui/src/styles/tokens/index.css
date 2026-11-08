@@ -5,8 +5,6 @@
 /* Design tokens: brands, modes, appearance, Tailwind @theme extensions. */
 @import "./primitives.css";
 @import "./palettes.css";
-@import "./brands-chromatic.css";
-@import "./accent-brands.css";
 @import "./theme-modes.css";
 @import "./appearance.css";
 @import "./base.css";

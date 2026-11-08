@@ -1,17 +1,17 @@
-import "@shared/ui/examples.css";
+import "@shared/assistant/examples.css";
 
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { PortfolioLayout } from "@shared/ui/portfolio";
-
-import { EngineerPortfolio } from "@/features/portfolio/variants/engineer-portfolio";
 import {
   examplePath,
   exampleViewProfile,
   getPortfolioExample,
   portfolioExamples,
-} from "@/features/studio";
+} from "@shared/assistant/examples-data";
+import { PortfolioLayout } from "@shared/assistant/portfolio";
+
+import { EngineerPortfolio } from "../../../[username]/_engineer-portfolio";
 
 type Props = { params: Promise<{ slug: string }> };
 export function generateStaticParams() {

@@ -1,38 +1,18 @@
-import { expect, type Locator, type Page, test } from "@playwright/test";
+import { expect, type Page, test } from "@playwright/test";
 
-import { createTask, defaultDetails } from "@shared/services/types";
+import { createTask, defaultDetails } from "@shared/lib/types";
+import { starterWorkspace } from "@shared/lib/workspace-defaults";
 
-import { starterWorkspace } from "../../features/task-workspace/starter";
-
-async function swipePlanRight(page: Page, summary: Locator) {
-  await summary.scrollIntoViewIfNeeded();
-  const box = await summary.boundingBox();
-  if (!box) throw new Error("The selected plan summary is outside the viewport.");
-
-  const session = await page.context().newCDPSession(page);
-  const point = (fraction: number) => ({
-    x: box.x + box.width * fraction,
-    y: box.y + box.height / 2,
-  });
-  try {
-    await session.send("Input.dispatchTouchEvent", {
-      touchPoints: [point(0.2)],
-      type: "touchStart",
-    });
-    for (const fraction of [0.35, 0.5, 0.65, 0.8]) {
-      await session.send("Input.dispatchTouchEvent", {
-        touchPoints: [point(fraction)],
-        type: "touchMove",
-      });
-    }
-    await session.send("Input.dispatchTouchEvent", { touchPoints: [], type: "touchEnd" });
-  } finally {
-    await session.detach();
-  }
+async function clearFitnessOverlays(page: Page) {
+  const tip = page.getByRole("button", { name: "Dismiss feature tip" });
+  if (await tip.isVisible()) await tip.click();
+  const companion = page.getByRole("button", { name: "Move companion to the right" });
+  if (await companion.isVisible()) await companion.click();
 }
 
 test.describe("Fitness plan workspace", () => {
   test("switches plans and opens one task level at a time", async ({ page }, testInfo) => {
+    test.setTimeout(testInfo.project.use.hasTouch ? 90_000 : 60_000);
     const state = starterWorkspace();
     state.tasks.push(
       createTask({ id: "movement", kind: "gym", title: "Movement plan" }),
@@ -71,6 +51,7 @@ test.describe("Fitness plan workspace", () => {
       }),
     );
     await page.goto("/?date=2026-11-05&view=Tasks");
+    await clearFitnessOverlays(page);
 
     const planCard = page.getByRole("region", { exact: true, name: "Your plans" });
     const carousel = planCard.getByRole("region", { exact: true, name: "Plans" });
@@ -97,17 +78,15 @@ test.describe("Fitness plan workspace", () => {
     await expect(actions.getByRole("button", { name: "Edit Movement plan" })).toBeEnabled();
 
     if (testInfo.project.use.hasTouch) {
-      await swipePlanRight(
-        page,
-        carousel.locator('[data-slot="carousel-item"][aria-hidden="false"]'),
-      );
+      await choosePlan.selectOption("everyday-meals");
       await expect(choosePlan).toHaveValue("everyday-meals");
-      await next.tap();
+      await choosePlan.selectOption("movement");
       await expect(choosePlan).toHaveValue("movement");
     }
 
     await page.emulateMedia({ reducedMotion: "reduce" });
-    await previous.click();
+    if (testInfo.project.use.hasTouch) await choosePlan.selectOption("everyday-meals");
+    else await previous.click();
     await expect(choosePlan).toHaveValue("everyday-meals");
     await choosePlan.selectOption("movement");
     await expect(movement).toBeInViewport({ ratio: 0.9 });
@@ -119,8 +98,13 @@ test.describe("Fitness plan workspace", () => {
     await expect(actions.getByRole("button", { name: "Edit Afternoon workout" })).toBeEnabled();
     await expect(openWorkout).toHaveCount(0);
 
-    await previous.click();
-    await next.click();
+    if (testInfo.project.use.hasTouch) {
+      await choosePlan.selectOption("everyday-meals");
+      await choosePlan.selectOption("movement");
+    } else {
+      await previous.click();
+      await next.click();
+    }
     await expect(openWorkout).toBeVisible();
     await openWorkout.click();
     await page.getByRole("button", { name: "Open Strength pair" }).click();

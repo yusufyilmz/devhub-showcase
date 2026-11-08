@@ -201,14 +201,27 @@ Published portfolios read as a dark studio: navy canvas, one cyan accent, Inter 
 
 Styles and tokens live in `packages/ui/src/styles`. Components in `packages/ui` consume those tokens. They do not invent a second palette. The folder map and export names are documented below; day-to-day edits follow the “where to edit” table.
 
+## AI lookup guide
+
+Before reading the full design reference, run these commands from the repository root:
+
+```sh
+pnpm --silent lookup design "spacing" --limit 1 --max-tokens 1000
+pnpm --silent lookup design "typography" --limit 1
+pnpm --silent lookup catalog "button" --package @shared/ui --limit 2
+```
+
+Use a few specific keywords: text searches require every query word to match. Results retain source references, parent prerequisites and named global constraints. Follow `hasMore` with `--cursor '<cursor>'` using the same query and filters. Retrieve a result or oversized-record locator with `pnpm --silent lookup section '<id>' --max-tokens 4000`. Increase the budget when a complete section does not fit; a budget failure does not mean the design rule is absent. Read the relevant design rules and mandatory instructions before implementation.
+
+See the [AI quick start](.ai/README.md) and [full CLI usage](tools/cli/README.md#token-bounded-repository-lookup).
+
 ## Stylesheet architecture
 
-Author custom CSS under `packages/ui/src/styles`. Use Tailwind utilities and
-shared UI components for layouts and controls. Keep component-specific CSS
-under `styles/components/`, grouped by UI domain. Components load these sheets
-at their existing import boundaries. The global bundles load tokens, themes,
-layout rules and resets. Fitness and the Storybook demo load their dedicated
-sheets from shared UI exports.
+Keep tokens and the foundation layer in `packages/ui/src/styles`. Use Tailwind
+utilities and shared UI components for layouts and controls. Put component CSS
+next to the component that loads it. The global bundles load tokens, themes,
+layout rules and resets. Fitness styles live with the Fitness app. The
+Storybook demo shell lives with the Storybook app.
 
 Two stacks share one component library. **Foundation** is the token + Tailwind layer (`data-brand`, `data-theme`, appearance). **Portfolio** is the RGB palette model for published pages (`data-portfolio-theme`, section frames, site chrome). Storybook and token-only hosts load foundation only so toolbar brands are not overridden by portfolio remaps.
 
@@ -218,39 +231,33 @@ Two stacks share one component library. **Foundation** is the token + Tailwind l
 | --------------------------- | ----------------------------------------------------------- |
 | `@shared/ui/foundation.css` | Tailwind, design tokens, shared surfaces. **Storybook.**    |
 | `@shared/ui/app.css`        | Foundation + portfolio bundle. **MyDevStudio root layout.** |
-| `@shared/ui/globals.css`    | Same as `app.css` (compatibility shim).                     |
+| `@shared/ui/globals.css`    | Same file as `app.css`.                                     |
 
-Lazy or partial loads: `@shared/ui/portfolio/bundle.css` (portfolio CSS without the foundation `@source` setup), `@shared/ui/examples.css` (example carousel pages).
+Lazy or partial loads: `@shared/ui/portfolio/bundle.css` (portfolio CSS without the foundation `@source` setup), `@shared/assistant/examples.css` (example carousel pages).
 
 ### Repository layout
 
 ```tree
 packages/ui/src/styles/
-  app.css                 Full app (foundation + portfolio)
+  app.css                 Full app (foundation + portfolio bundle)
   foundation.css          Tailwind + tokens + shared surfaces
-
   tokens/                 Brand palettes, modes, appearance, @theme extensions
-    index.css             Token aggregator (shim: @shared/ui/shadcn.css)
-
+    index.css             Token aggregator (export: @shared/ui/shadcn.css)
   foundation/             Theme aliases and shared design tokens
-  components/             Component styles grouped by UI domain
-  portfolio/              Published portfolio layouts, presets and theme bridge
-  fitness/                Fitness foundation and dashboard styles
-  storybook/              Standalone Storybook demo styles
 ```
 
-Older root paths (`styles.css`, `legacy.css`, `layout.css`, `components.css`, `sections.css`, `portfolios.css`, `themes.css`, `portfolio-chat.css`, `theme.css`, `surfaces.css`) re-export the files above. Prefer the names in the entry table for new code.
+Component styles sit beside their components. Portfolio layout, presets, and the semantic bridge live in `packages/ui/src/layout/portfolio/`. Chat, editors, and section sheets live beside those components in `packages/assistant`. Public names such as `@shared/ui/components.css`, `@shared/ui/sections.css`, and `@shared/ui/surfaces.css` still resolve to those files.
 
 ### Where to edit
 
-| Change                  | File                                                |
-| ----------------------- | --------------------------------------------------- |
-| New brand or mode token | `tokens/`                                           |
-| Shadcn semantic token   | `tokens/palettes.css` or `tokens/accent-brands.css` |
-| Studio control skin     | `portfolio/portfolio.css`                           |
-| Section layout          | `components/sections/sections.css`                  |
-| Portfolio theme preset  | `portfolio/presets.css`                             |
-| Site header or nav      | `portfolio/chrome.css`                              |
+| Change                  | File                             |
+| ----------------------- | -------------------------------- |
+| New brand or mode token | `styles/tokens/`                 |
+| Shadcn semantic token   | `styles/tokens/palettes.css`     |
+| Studio control skin     | `layout/portfolio/portfolio.css` |
+| Section layout          | `layout/section/sections.css`    |
+| Portfolio theme preset  | `layout/portfolio/presets.css`   |
+| Site header or nav      | `navigation/chrome.css`          |
 
 Implementation detail for contributors: [packages/ui/src/styles/STYLES.md](packages/ui/src/styles/STYLES.md) mirrors this section and links back here.
 
@@ -352,7 +359,7 @@ Motion is short. Buttons move 1px down on press. Studio buttons move 1px up on h
 
 ## Components
 
-The recipes below are the pieces that define the look, in the same sense as Airbnb's search bar, listing card, and primary button. Controls, sections, editors, and chat surfaces from `packages/ui` are listed in [the UI catalog](packages/ui/CATALOG.md). Visual rules stay here. The catalog is the inventory.
+The recipes below are the pieces that define the look, in the same sense as Airbnb's search bar, listing card, and primary button. Controls, sections, editors, and chat surfaces from `packages/ui` are listed in [the UI catalog](packages/ui/CATALOG.md). Visual rules stay here. The catalog is the inventory. Package catalogs are generated with `pnpm generate:catalogs`; edit `catalog.template.md` for written guidance and run `pnpm check:catalogs` to verify the outputs.
 
 ### Button
 
@@ -430,7 +437,7 @@ The published page is not a second component library. It is the same type and ac
 
 ## Section library
 
-Portfolio sections in `packages/ui` share one frame, `.library-section`, styled in `packages/ui/src/styles/components/sections/sections.css`. A section does not invent its own palette. It uses the studio canvas, hairline, and accent.
+Portfolio sections share one frame, `.library-section`, styled in `packages/ui/src/layout/section/sections.css`. A section does not invent its own palette. It uses the studio canvas, hairline, and accent.
 
 **`library-section`** — Top hairline in `{colors.hairline-studio}`, 56px vertical padding. The heading is `clamp(28px, 3vw, 44px)` with line height 1.15. Body copy is muted with line height 1.8. Links are `{colors.accent}`. Alignment is left unless `data-alignment` is `center` or `right`. The content grid defaults to 3 columns and can be set to 1, 2, or 4 with `data-columns`. Below 700px the grid and masonry collapse to one column.
 
@@ -481,7 +488,7 @@ Example gallery previews are rendered portfolio content, not lazy iframes.
 
 Use `@shared/ui/card`, `@shared/ui/button`, `@shared/ui/input` and
 `@shared/ui/textarea` in product compositions. Elevation and focus styling live in
-`packages/ui/src/styles/components/cards/surfaces.css`, imported by cards, buttons, inputs and textareas.
+`packages/ui/src/cards/surfaces.css`, loaded with the foundation bundle.
 Cards use `interaction="lift"` by default for shared depth, an accent edge and
 hover feedback. Use `interaction="static"` for a preview frame or nested surface
 that should stay still. Lift is limited to fine hover pointers, with matching

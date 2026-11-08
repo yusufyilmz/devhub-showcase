@@ -39,7 +39,7 @@ Layout default retains the existing implementation. Explicit selections use the 
 
 ## Compatibility and rendering
 
-getPortfolioSections derives independent section instances from the saved portfolio type and sectionOrder. Legacy profiles without a type use Engineer defaults. Designer keeps work first; the other layouts keep About first. Explicit saved order takes precedence. The adapter never changes the saved profile or persists normalized instances.
+getPortfolioSections derives independent section instances from the saved portfolio type and sectionOrder. Earlier profiles without a type use Engineer defaults. Designer keeps work first; the other layouts keep About first. Explicit saved order takes precedence. The adapter never changes the saved profile or persists normalized instances.
 
 RegisteredSections selects the explicit server-rendered implementation by renderer identifier and retains stable Fragment keys. It adds no DOM wrappers, so existing styling, anchors and layout selectors stay intact. Missing implementations fail visibly during development/testing instead of silently dropping content. The original section components retain their empty-state rules and About summary fallback.
 
@@ -87,17 +87,17 @@ Limits are 60 custom sections, 30 items per section, 160 characters per section 
 
 ## Compositions, hero and social work
 
-See [the feature overview](../features.md) and [repository guidance](../../AGENTS.md). sectionCompositions defines authorable starters for services, testimonials, FAQs, statistics, calls to action and curated social work. A starter chooses a title and default view without inventing content. All use the same custom section IDs, collections, visibility, previews, mixed order and profile save boundaries. Legacy sections without composition remain generic custom sections.
+See [the feature overview](../features.md) and [repository guidance](../../AGENTS.md). sectionCompositions defines authorable starters for services, testimonials, FAQs, statistics, calls to action and curated social work. A starter chooses a title and default view without inventing content. All use the same custom section IDs, collections, visibility, previews, mixed order and profile save boundaries. Earlier sections without composition remain generic custom sections.
 
 YouTube, Instagram and Pinterest sections require public work URLs matching the selected provider. getSocialWork checks exact HTTPS hosts and supported video/post/pin paths. Optional image URLs and captions provide visual work cards. YouTube player URLs are constructed from validated video IDs and use youtube-nocookie.com. WorkMedia mounts the iframe only on a visitor's load action and supports unloading; there are no automatic thumbnails, third-party scripts or server-side social fetches. Instagram and Pinterest cards link to their originals. Automatic feeds and native Instagram/Pinterest embeds are separate future integrations.
 
-The optional profile.hero stores image/video URL, poster, position and overlay. HeroSurface wraps existing introductory content only when configured, preserving legacy markup otherwise. Video is muted and looping, offers play/pause, pauses under reduced motion and falls back to the optional poster when not playing. Public controls use the portfolio language. Appearance contains the editor and preview. Uploaded media storage and automatic transcoding are not part of this step; authors provide direct media URLs.
+The optional profile.hero stores image/video URL, poster, position and overlay. HeroSurface wraps existing introductory content only when configured, preserving existing markup otherwise. Video is muted and looping, offers play/pause, pauses under reduced motion and falls back to the optional poster when not playing. Public controls use the portfolio language. Appearance contains the editor and preview. Uploaded media storage and automatic transcoding are not part of this step; authors provide direct media URLs.
 
 References for YouTube behavior: [official embed guidance](https://support.google.com/youtube/answer/171780), [player parameters](https://developers.google.com/youtube/player_parameters). No PageForge or original portfolio implementation code/assets are copied by this feature.
 
 ## Complete library and templates
 
-All 42 PageForge section families now have explicit renderer/editor folders in @shared/ui/sections, alongside native custom/services/social sections. New sectionType and compatible options/source fields extend custom sections without changing legacy instances. The source mapping and integration boundaries are listed in [the PageForge migration map](../reference/pageforge-section-migration.md).
+All 42 PageForge section families now have explicit renderer/editor folders in @shared/ui/sections, alongside native custom/services/social sections. New sectionType and compatible options/source fields extend custom sections without changing earlier instances. The source mapping and integration boundaries are listed in [the PageForge migration map](../reference/pageforge-section-migration.md).
 
 Templates are versioned JSON and are saved separately to an account-private library with owner RLS and optimistic revisions. Export defaults to configuration only. Native and compatible PageForge imports are reviewed before applying fresh section/item IDs to a draft; identity, sharing and CV content remain independent. Profile-source bindings are resolved from the current canonical document and public project filtering applies independently of the built-in project section selection.
 
@@ -107,4 +107,4 @@ Homepage sections live in `packages/ui/src/sections/home-section`. App features 
 
 The homepage catalog derives its 47 names from `authorableSectionTypes`, with a labelled search field, category filters, result count and empty state. Each card includes a short search-indexed description and a CSS-only illustrative miniature for its section view; previews are noninteractive, contain no personal data or remote media, and the first three rows remain visible until expanded. It uses the shared Input, Label, Badge, Button and Card controls. Shared section grids, native accordions, carousels and masonry views use Card surfaces; tab and carousel actions use Button. Native details behavior and existing tab keyboard behavior are preserved.
 
-Each registered authorable section has colocated Default, Compact and Empty stories. Shared UI stories cover the controls and compositions independently. Use the Storybook brand and mode toolbar to review semantic controls. Homepage and section stories use a scoped portfolio palette; they do not load legacy global CSS into primitive stories.
+Each registered authorable section has colocated Default, Compact and Empty stories. Shared UI stories cover the controls and compositions independently. Use the Storybook brand and mode toolbar to review semantic controls. Homepage and section stories use a scoped portfolio palette; they do not load portfolio global CSS into primitive stories.

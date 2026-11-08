@@ -42,6 +42,6 @@ Use existing Pino entry points for server logging and the field conventions in [
 
 ## Tests, commits and documentation
 
-Test behavior, especially denied access and legacy defaults. Keep test accounts and fixtures synthetic. Run the checks appropriate to the change and disclose anything blocked.
+Test behavior, especially denied access and earlier defaults. Keep test accounts and fixtures synthetic. Run the checks appropriate to the change and disclose anything blocked.
 
 Prefer small commits with descriptive titles such as `docs: explain profile publication boundaries`. PRs explain the problem, resulting behavior, compatibility, verification and remaining setup. Update documentation with the behavior it describes and link to authoritative configuration rather than duplicating version lists that drift.

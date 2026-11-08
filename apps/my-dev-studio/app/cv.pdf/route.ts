@@ -1,9 +1,9 @@
 import { unstable_rethrow } from "next/navigation";
 
-import { renderCv } from "@shared/templates";
-import template from "@shared/templates/cv.hbs";
+import { renderCv } from "@shared/assistant/cv";
+import template from "@shared/assistant/cv.hbs";
 
-import { getPublishedProfile } from "@/features/portfolio/profiles/published-profile";
+import { getPublishedProfile } from "./_profile";
 
 export const runtime = "nodejs";
 

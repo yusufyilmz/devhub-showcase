@@ -1,6 +1,6 @@
 "use client";
 
-import "../../styles/components/overlays/gallery-lightbox.css";
+import "./gallery-lightbox.css";
 
 import { Button } from "../../buttons/button";
 import {

@@ -3,8 +3,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { test } from "vitest";
 
-import { seedWorkspace } from "@shared/services/fitness";
-import { ScheduleService } from "@shared/services/schedule";
+import { seedWorkspace } from "@shared/lib/db/seed";
+import { ScheduleService } from "@shared/lib/schedule";
 
 import Preview from "../app/preview/page";
 import { TaskTree } from "../features/task-tree/task-tree";

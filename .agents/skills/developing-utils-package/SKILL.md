@@ -31,7 +31,7 @@ Use the logger the caller already uses. Do not add a second logging library.
 
 The package root exports URL, date, id, flatten, and debug helpers from `src/helpers`. Notable symbols include `createUUID`, `joinUrl`, `toAbsoluteUrl`, `formatDateRange`, `capitalizeFirstLetter`, `fetchTimeout`, `sleepMs`, `flatten`, and `unflattenObject`.
 
-Before adding a helper, search `@shared/lib/utils` and this package. Date formatting for a portfolio period belongs in `@shared/config` `formatPortfolioPeriod`. Username checks belong in `@shared/lib/profiles`. A new helper here must be generic enough for more than one feature.
+Before adding a helper, search `@shared/utils` and this package. Date formatting for a portfolio period belongs in `@shared/config` `formatPortfolioPeriod`. Username checks belong in `@shared/lib/profiles`. A new helper here must be generic enough for more than one feature.
 
 `src/helpers/url.test.ts` is the colocated test pattern. Cover joining, trailing slashes, and absolute URLs when you change `src/helpers/url.ts`.
 
@@ -58,6 +58,6 @@ Run the broader unit file when you change a helper that other packages call. Do 
 
 ## Related skills
 
-- [Developing the lib package](../developing-lib-package/SKILL.md)
+- [Shared backend development](../mydevstudio-development/SKILL.md)
 - [Developing the runtime package](../developing-runtime-package/SKILL.md)
 - [Developing the config package](../developing-config-package/SKILL.md)

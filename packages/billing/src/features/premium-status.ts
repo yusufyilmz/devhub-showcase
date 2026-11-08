@@ -26,7 +26,7 @@ export function premiumFeatureStatus(
   feature: PremiumFeature,
   configured: boolean,
 ) {
-  if (feature === "portfolio_chat" && profile.id === "main") return "legacy";
+  if (feature === "portfolio_chat" && profile.id === "main") return "main_portfolio";
   if (billing.plan !== "pro") return "requires_pro";
   if (billing.assignedProfileId !== profile.id) return "unassigned";
   if (!configured) return "setup_required";

@@ -80,48 +80,73 @@
       "entries": [
         {
           "component": "`StudioChatScreen`",
-          "folder": "`display/studio-chat-screen`",
+          "folder": "`chat/studio-chat-screen`",
           "use": "Centered chat screen for Studio and portfolio visitors"
         },
         {
           "component": "`ChatComposer`",
-          "folder": "`display/chat-composer`",
+          "folder": "`chat/chat-composer`",
           "use": "Prompt entry with send, stop and optional controls"
         },
         {
           "component": "`Chat`",
-          "folder": "`display/chat`",
+          "folder": "`chat`",
           "use": "Composable chat panel"
         },
         {
           "component": "`ChatHeader`",
-          "folder": "`display/chat`",
+          "folder": "`chat`",
           "use": "Conversation title and actions"
         },
         {
           "component": "`ChatInput`",
-          "folder": "`display/chat`",
+          "folder": "`chat`",
           "use": "Input for the composable chat panel"
         },
         {
           "component": "`ChatSidebar`",
-          "folder": "`display/chat`",
+          "folder": "`chat`",
           "use": "Grouped conversation navigation"
         },
         {
           "component": "`ChatMessageBubble`",
-          "folder": "`display/chat`",
+          "folder": "`chat`",
           "use": "Individual conversation message"
         },
         {
           "component": "`ChatTypingIndicator`",
-          "folder": "`display/chat`",
+          "folder": "`chat`",
           "use": "Typing indicator"
         },
         {
           "component": "`ChatBubble`",
-          "folder": "`display/chat-bubble`",
+          "folder": "`chat/chat-bubble`",
           "use": "Shared message bubble"
+        },
+        {
+          "component": "`ChatPanel`",
+          "folder": "`chat/assistant-chat`",
+          "use": "Assistant conversation with messages, typing and input"
+        },
+        {
+          "component": "`ChatSection`",
+          "folder": "`chat/chat-section`",
+          "use": "Portfolio and referral chat launchers"
+        },
+        {
+          "component": "`PortfolioChat`",
+          "folder": "`chat/portfolio-chat`",
+          "use": "Published portfolio conversation dialog"
+        },
+        {
+          "component": "`PremiumWidget`",
+          "folder": "`chat/premium-chat`",
+          "use": "Premium portfolio chat presentation"
+        },
+        {
+          "component": "`AgentCompanion`",
+          "folder": "`chat/agent-companion`",
+          "use": "Assistant launcher, activity and feature guide"
         }
       ]
     },
@@ -234,12 +259,12 @@
           "use": "Component, section, and theme metadata"
         },
         {
-          "export": "`@shared/ui/sections`",
+          "export": "`@shared/assistant/sections`",
           "path": "`src/sections/index.ts`",
           "use": "Section renderers and editors"
         },
         {
-          "export": "`@shared/ui/sections/studio`",
+          "export": "`@shared/assistant/sections/studio`",
           "path": "`src/sections/studio/index.ts`",
           "use": "Section settings, ordering, templates, and custom sections"
         },
@@ -256,12 +281,7 @@
         {
           "export": "`@shared/ui/display`",
           "path": "`src/display/index.ts`",
-          "use": "Media and shared chat presentations"
-        },
-        {
-          "export": "`@shared/ui/chat`",
-          "path": "`src/display/chat/index.ts`",
-          "use": "Chat screen, composer, messages, and supporting controls"
+          "use": "Media, data and content presentations"
         },
         {
           "export": "`@shared/ui/site-login`",
@@ -279,13 +299,13 @@
           "use": "Missing page presentation"
         },
         {
-          "export": "`@shared/ui/portfolio`",
+          "export": "`@shared/assistant/portfolio`",
           "path": "`src/portfolio/index.ts`",
           "use": "Published portfolio layouts and studio tools"
         },
         {
-          "export": "`@shared/ui/portfolio-chat.css`",
-          "path": "`src/styles/portfolio-chat.css`",
+          "export": "`@shared/assistant/portfolio-chat.css`",
+          "path": "`packages/assistant/src/components/chat/portfolio-chat/portfolio-chat.css`",
           "use": "Styles for the embedded portfolio chat"
         },
         {
@@ -650,7 +670,7 @@
         },
         {
           "component": "`PortfolioChat`",
-          "folder": "`portfolio/chat`",
+          "folder": "`chat/portfolio-chat`",
           "use": "Published portfolio chat"
         }
       ]
@@ -752,12 +772,12 @@
     },
     {
       "component": "EducationsSection",
-      "description": "Display the profile’s education history.",
+      "description": "Display the profile\u2019s education history.",
       "related": ["EducationItem"]
     },
     {
       "component": "ExperienceSection",
-      "description": "Show the profile’s work experience.",
+      "description": "Show the profile\u2019s work experience.",
       "related": ["ExperienceItem", "ExperienceList"]
     },
     {
@@ -773,7 +793,7 @@
     },
     {
       "component": "SkillSection",
-      "description": "Group the profile’s skills by category.",
+      "description": "Group the profile\u2019s skills by category.",
       "related": ["SkillItem", "SkillCategoryItem"]
     },
     {
@@ -1152,6 +1172,25 @@
         "magenta",
         "pink"
       ],
+      "companion": [
+        "white",
+        "sand",
+        "gray",
+        "slate",
+        "red",
+        "orange",
+        "yellow",
+        "moss",
+        "green",
+        "emerald",
+        "aqua",
+        "cyan",
+        "blue",
+        "indigo",
+        "violet",
+        "magenta",
+        "pink"
+      ],
       "container": ["small", "medium", "large"],
       "font": ["sans", "serif", "mono"],
       "font-size": ["xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl"],
@@ -1159,6 +1198,7 @@
       "line-height": ["none", "tight", "snug", "normal", "relaxed", "loose"],
       "opacity": ["none", "soft", "medium", "strong"],
       "perspective": ["flat", "normal", "dramatic"],
+      "portfolio-theme": ["studio", "paper", "graphite", "bloom", "gloom", "ink", "dune", "harbor"],
       "radius": ["none", "square", "small", "base", "moderate", "rounded", "pill", "circle"],
       "scale": ["small", "base", "large", "90", "95", "100", "105", "110", "120"],
       "shadow": ["none", "soft", "subtle", "medium", "strong", "deep"],
@@ -1206,6 +1246,26 @@
         "description": "Soft lavender surfaces, rounded cards and a relaxed feel.",
         "id": "bloom",
         "name": "Bloom"
+      },
+      {
+        "description": "Dim plum surfaces, tight corners and a quiet mood.",
+        "id": "gloom",
+        "name": "Gloom"
+      },
+      {
+        "description": "Black and ivory, square edges and a heavy serif.",
+        "id": "ink",
+        "name": "Ink"
+      },
+      {
+        "description": "Sun-warm sand, soft corners and a printed warmth.",
+        "id": "dune",
+        "name": "Dune"
+      },
+      {
+        "description": "Deep sea navy, compact cards and a steady sans.",
+        "id": "harbor",
+        "name": "Harbor"
       }
     ]
   }

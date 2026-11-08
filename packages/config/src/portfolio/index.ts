@@ -18,6 +18,7 @@ export type { ContactField, OutputFields } from "./public-projection";
 export { contactFields, projectPublicProfile } from "./public-projection";
 export type { ColorMode, PortfolioAccentId, PortfolioTheme } from "./themes";
 export {
+  getPortfolioThemeAppearance,
   getPortfolioThemeVariables,
   getPreviewAccent,
   getThemePalette,

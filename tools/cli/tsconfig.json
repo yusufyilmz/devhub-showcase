@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "rootDir": "./",
+    "types": ["node"],
+    "verbatimModuleSyntax": true
+  },
+  "exclude": ["node_modules", "dist"],
+  "extends": "@shared/typescript-config/base.json",
+  "include": ["./lookup/**/*.ts", "./generators/**/*.ts", "./tsdown/**/*.ts", "./catalog/**/*.ts"]
+}

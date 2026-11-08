@@ -1,5 +1,5 @@
 "use client";
-import "../../styles/components/display/work-media.css";
+import "./work-media.css";
 
 import { useState } from "react";
 

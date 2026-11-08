@@ -51,6 +51,7 @@
       "**",
       "!!**/node_modules",
       "!!**/.next",
+      "!CLAUDE.md",
       "!!**/.turbo",
       "!!**/.vercel",
       "!!**/dist",

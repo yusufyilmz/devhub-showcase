@@ -1,4 +1,4 @@
-import "@shared/ui/storybook-demo.css";
+import "./demo.css";
 
 function App() {
   return (

@@ -1,72 +1,16 @@
-import { z } from "zod";
-
 import { requireConfirmedUser } from "@shared/auth";
-import type { PortfolioProfile } from "@shared/config";
-import { saveProfileSchema } from "@shared/lib/profiles";
+import { createManagedPortfolioService, isPortfolioAdmin } from "@shared/lib/managed-portfolios";
+import { ProfileAccessError } from "@shared/lib/profile";
 import { createServerClient } from "@shared/lib/supabase";
-import type { Json, SupabaseDbClient } from "@shared/lib/types";
-import {
-  ProfileAccessError,
-  ProfileConflictError,
-  ProfileSetupError,
-  ProfileUsernameError,
-  SupabaseProfileRepository,
-} from "@shared/services/profile";
 
-export const managedId = z.uuid();
-export async function isPortfolioAdmin(client: SupabaseDbClient) {
-  const { data, error } = await client.rpc("is_portfolio_admin", {});
-  return !error && data === true;
-}
+export { isPortfolioAdmin, managedId } from "@shared/lib/managed-portfolios";
+
 export async function requirePortfolioAdmin() {
   const client = await createServerClient();
   const user = await requireConfirmedUser(client, () => new ProfileAccessError());
   if (!(await isPortfolioAdmin(client))) throw new ProfileAccessError();
   return { client, user };
 }
-export async function managedRepository(
-  id: string,
-  provided?: Awaited<ReturnType<typeof requirePortfolioAdmin>>,
-) {
-  managedId.parse(id);
-  const admin = provided ?? (await requirePortfolioAdmin());
-  const { data, error } = await admin.client
-    .from("portfolio_profiles")
-    .select("id")
-    .eq("id", id)
-    .eq("managed_by", admin.user.id)
-    .is("owner_id", null)
-    .maybeSingle();
-  if (error) throw new ProfileSetupError();
-  if (!data) throw new ProfileAccessError();
-  return {
-    ...admin,
-    repository: new SupabaseProfileRepository(admin.client, id),
-  };
-}
-export async function saveManaged(id: string, input: unknown) {
-  const { repository } = await managedRepository(id);
-  const data = saveProfileSchema.parse(input);
-  const saved = await repository.save(data.profile, data.revision, data.isPublic, data.username);
-  if (!saved) throw new ProfileConflictError();
-  return saved;
-}
-export async function createManaged(
-  admin: Awaited<ReturnType<typeof requirePortfolioAdmin>>,
-  username: string,
-  profile: PortfolioProfile,
-) {
-  const { data, error } = await admin.client
-    .from("portfolio_profiles")
-    .insert({
-      document: profile as unknown as Json,
-      managed_by: admin.user.id,
-      owner_id: null,
-      username,
-    })
-    .select("id")
-    .single();
-  if (error?.code === "23505") throw new ProfileUsernameError();
-  if (error || !data) throw new ProfileSetupError();
-  return data;
-}
+
+export const { managedRepository, saveManaged, createManaged } =
+  createManagedPortfolioService(requirePortfolioAdmin);

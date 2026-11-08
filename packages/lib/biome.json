@@ -9,7 +9,7 @@
           "options": {
             "patterns": [
               {
-                "group": ["@shared/lib/**"],
+                "group": ["@shared/lib", "@shared/lib/**"],
                 "message": "Use relative imports within @shared/lib instead of the package alias."
               }
             ]

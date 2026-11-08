@@ -6,7 +6,7 @@ The task is the common domain entity. A parent-child relationship expresses cate
 
 `TaskService` handles tree operations, completion, logging and archive rules. `ScheduleService` creates daily snapshots from rotation, weekdays and overrides. `MealPlanningService` resolves seven days of meals and ingredient choices. `ShoppingListService` aggregates compatible ingredient quantities. `WeeklyPlanningService` composes those outputs into deterministic task trees. `WorkspaceService` validates the persistence boundary. `AgendaService` projects scheduled and generated tasks into chronological events and reschedules individual occurrences while preserving their subtree and meal choices. `features/agenda` shares event rows between daily views and `features/calendar`; URL navigation is isolated in its own hook.
 
-React components render models and call services. The workspace hook handles loading, saving, undo and visible errors. The HTTP gateway unlocks editing after the API loads the signed-in account's snapshot. The API initializes each verified account independently and imports legacy records only under that account's user ID. The demo gateway uses fictional data in memory.
+React components render models and call services. The workspace hook handles loading, saving, undo and visible errors. The HTTP gateway unlocks editing after the API loads the signed-in account's snapshot. The API initializes each verified account independently and imports v1 records only under that account's user ID. The demo gateway uses fictional data in memory.
 
 Repository contracts separate storage from application behavior. `WorkspaceRepository` coordinates a transaction; task and planning repositories map their own records. Dependencies are passed through constructors rather than looked up inside domain rules. New persistence adapters can implement the same contracts without changing scheduling or shopping logic.
 
@@ -39,3 +39,5 @@ The dashboard reloads on session identity changes. The demo is read-only and use
 ## Development tooling
 
 Biome formats and lints source files using its recommended preset. Non-null assertions remain allowed for validated task graphs and test fixture lookups; CSS specificity suppressions document the existing responsive/theme cascade. Vitest runs the domain, persistence, rendering, API-access and session tests with the same `@/` alias as the application.
+
+Shared workspace defaults, reminder calculations and notification persistence/delivery workflows live in `@shared/lib`. Assistant context and reviewed workout draft builders live in `@shared/assistant`. Fitness feature modules retain session/origin checks, environment wiring, browser API transport and UI state.

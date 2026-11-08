@@ -1,8 +1,8 @@
+import { renderCv } from "@shared/assistant/cv";
+import template from "@shared/assistant/cv.hbs";
 import { AuthAccessError, requireConfirmedUser } from "@shared/auth";
 import { cvLibrarySchema } from "@shared/lib/profiles";
 import { createServerClient } from "@shared/lib/supabase";
-import { renderCv } from "@shared/templates";
-import template from "@shared/templates/cv.hbs";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

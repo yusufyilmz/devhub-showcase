@@ -41,7 +41,7 @@ export type CustomSection = {
 export type PortfolioEntryId =
   | ReturnType<typeof getPortfolioSections>[number]["id"]
   | CustomSectionId;
-/** Shared ordering adapter; legacy sectionOrder keeps its original six-section contract. */
+/** Shared ordering adapter; existing sectionOrder keeps its original six-section contract. */
 export function getPortfolioEntries(profile: PortfolioProfile) {
   const entries = [
     ...getPortfolioSections(profile).map((section) => ({

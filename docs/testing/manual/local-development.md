@@ -4,7 +4,7 @@ Scope: development environment setup for PR #93. Local automation is separate fr
 
 ## Prerequisites
 
-Use Node and pnpm versions from root package.json and install dependencies. Start Docker and run `supabase start` from the repository root for authentication. Use a confirmed disposable local Studio user and fictional content. Run `pnpm dev:setup --supabase` before the app environment file exists, add its credentials to the ignored app file, enable `LOCAL_TEST_LOGIN`, and start `pnpm --filter my-dev-studio dev`. Never copy hosted credentials. Existing environment files require manual edits; the setup command preserves them.
+Use Node and pnpm versions from root package.json and install dependencies. Start Docker and run `pnpm supabase:start` from the repository root for authentication. `pnpm supabase:stop` and `pnpm supabase:restart` control the same stack. `pnpm supabase:status` prints the local URL and keys. `pnpm supabase:studio` opens Studio at http://127.0.0.1:54323. Use a confirmed disposable local Studio user and fictional content. Run `pnpm dev:setup --supabase` before the app environment file exists, add its credentials to the ignored app file, enable `LOCAL_TEST_LOGIN`, and start `pnpm --filter my-dev-studio dev`. Never copy hosted credentials. Existing environment files require manual edits; the setup command preserves them.
 
 ## Steps
 

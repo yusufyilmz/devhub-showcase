@@ -1,6 +1,6 @@
 "use client";
 
-import "../../styles/components/navigation/section-navigator.css";
+import "./section-navigator.css";
 
 import { useEffect, useState } from "react";
 

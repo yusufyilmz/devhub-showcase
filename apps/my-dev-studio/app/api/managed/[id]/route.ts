@@ -1,4 +1,4 @@
-import { readPublicProfile } from "@shared/services/published-profile";
+import { readPublicProfile } from "@shared/lib/published-profile";
 
 import { sameOrigin } from "@/features/admin/admin-auth";
 import { managedFailure, privateHeaders, readManagedBody } from "@/features/management/managed-api";

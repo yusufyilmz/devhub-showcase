@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 
-import { StudioShell } from "@shared/ui/portfolio";
+import { StudioShell } from "@shared/assistant/portfolio";
+import { StudioCompanion } from "@shared/assistant/studio-companion";
 import { ThemeToggle } from "@shared/ui/theme";
 
-import { StudioCompanion } from "@/features/companion/studio-companion";
-import { getHomeAction } from "@/features/home/home-links";
 import { ManagementLink } from "@/features/management/management-link";
+
+import { getHomeAction } from "../_home-links";
 
 export const metadata: Metadata = {
   robots: { follow: false, index: false },

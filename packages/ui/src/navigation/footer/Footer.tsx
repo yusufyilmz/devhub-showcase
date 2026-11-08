@@ -1,5 +1,5 @@
-import "../../styles/components/navigation/chrome.css";
-import "../../styles/components/sections/footer.css";
+import "../chrome.css";
+import "./footer.css";
 
 import { Slot } from "@radix-ui/react-slot";
 

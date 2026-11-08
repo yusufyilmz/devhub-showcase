@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { InvalidWorkspaceError, RevisionConflictError } from "@shared/services/workspace";
+import { InvalidWorkspaceError, RevisionConflictError } from "@shared/lib/workspace";
 
 import { SetupRequired, SignInRequired, workspaceContext } from "@/features/task-workspace/server";
 import { sameOrigin } from "@/lib/auth";

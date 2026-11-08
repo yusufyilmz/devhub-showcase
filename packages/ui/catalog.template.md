@@ -1,6 +1,8 @@
 # UI catalog
 
-`EditorWorkspace` and `DraftPreviewPane` (`@shared/ui/portfolio`) provide grouped
+> **AI lookup guide:** From the repository root, run `pnpm --silent lookup catalog "button" --package @shared/ui --limit 2` to read relevant excerpts. Verify an exact export with `pnpm --silent lookup symbol '<ExportName>' --package @shared/ui`. Follow `hasMore` with `--cursor`; use `--max-tokens` to control output size. Excerpts support discovery; read required instructions and source contracts. See the [AI quick start](../../.ai/README.md) and [full CLI usage](../../tools/cli/README.md#token-bounded-repository-lookup).
+
+`EditorWorkspace` and `DraftPreviewPane` (`@shared/assistant/portfolio`) provide grouped
 editor navigation, a preview-first workspace, and an accessible edit lightbox.
 The dialog stays inside the caller's save form and preserves draft state on close.
 The preview offers separate website and CV content views. `ResponsivePortfolioPreview`
@@ -12,17 +14,17 @@ enable/test/disable callbacks. It owns presentation only; applications supply
 authorization, configuration and persistence. Stories cover default, iOS, subscribed
 and missing-setup states.
 
-PasswordGate (`@shared/ui/portfolio`) is the generic protected-portfolio password form. It accepts an unlock callback; authorization, cookies and navigation stay in the app. Types and token styles live beside it.
+PasswordGate (`@shared/assistant/portfolio`) is the generic protected-portfolio password form. It accepts an unlock callback; authorization, cookies and navigation stay in the app. Types and token styles live beside it.
 
 RevisionHistory provides explicit inspect/review/restore callbacks with stale-draft protection. FieldVisibilityEditor edits independent website/CV contact choices; types/tests/stories are colocated.
 
 CvVersionsEditor accepts load/save/download callbacks and edits independent private CV snapshots. Version fields and job evidence review live in portfolio/cv-versions; save failures retain local edits while the screen remains open.
 
-TemplatePicker provides nine presentation-only profession presets under @shared/ui/portfolio. WorkMedia supplies consent-based YouTube loading, persistent original links and image-failure context. Styles and types are colocated.
+TemplatePicker provides nine presentation-only profession presets under @shared/assistant/portfolio. WorkMedia supplies consent-based YouTube loading, persistent original links and image-failure context. Styles and types are colocated.
 
-AssistantTools, AssistantFeedback and PublishedSources are exported from @shared/ui/portfolio. They provide task, tone and length selection, section feedback navigation and validated internal public source links. Types live in portfolio/types.ts and token styles in workflow.css.
+AssistantTools, AssistantFeedback and PublishedSources are exported from @shared/assistant/portfolio. They provide task, tone and length selection, section feedback navigation and validated internal public source links. Types live in portfolio/types.ts and token styles in workflow.css.
 
-`@shared/ui/portfolio` includes EditorGuidance and usePortfolioHistory for owner
+`@shared/assistant/portfolio` includes EditorGuidance and usePortfolioHistory for owner
 editors. The advisory checklist derives essential/recommended items from the
 draft and routes through a caller-supplied navigation callback. Session history
 covers the portfolio document, groups typing within 700 ms in the same field,
@@ -76,10 +78,10 @@ with reduced-motion-aware effects. Reveal requires title and heading; content
 requires title. Hover accepts a trigger element or explicit HoverCardTrigger /
 HoverCardContent children. CardProps is exported from @shared/ui/cards. Use `backdrop="accent"` for the shared gradient and leading accent border, as on the Fitness plans card.
 
-Author CSS in `src/styles`. Domain-specific sheets live under
-`src/styles/components/` and load with their owning components. Public CSS
-exports continue to work. Use shared Tailwind utilities for layouts and controls.
-Card and control surfaces load from `src/styles/components/cards/surfaces.css`.
+Tokens and the foundation layer live in `src/styles`. Component sheets live
+next to the components that load them. Public CSS exports continue to work.
+Use shared Tailwind utilities for layouts and controls. Card and control
+surfaces load from `src/cards/surfaces.css`.
 
 HomeChatLauncher in src/sections/home-section/chat-launcher.tsx composes the shared
 ChatComposer and opens the authenticated Studio assistant below the capabilities strip.
@@ -136,7 +138,7 @@ options that no longer match the supported configuration.
 
 <!-- registry:content -->
 
-`@shared/ui/portfolio` also exports `GuidedOnboarding`, `SetupNavigation`, `DraftRecovery`, `useDraftRecovery` and `ProposalComparison`. These reuse editor controls and the token-based `portfolio-workflow.css` stylesheet; recovery is scoped to the current browser tab.
+`@shared/assistant/portfolio` also exports `GuidedOnboarding`, `SetupNavigation`, `DraftRecovery`, `useDraftRecovery` and `ProposalComparison`. These reuse editor controls and the token-based `portfolio-workflow.css` stylesheet; recovery is scoped to the current browser tab.
 
 ## Studio tools
 
@@ -171,7 +173,7 @@ or composed `TooltipTrigger` and `TooltipContent` parts. Both use the same
 portal, collision handling, keyboard focus, Escape dismissal and appearance
 tokens. `AnimatedTooltip` adds optional pointer tracking.
 
-`SectionsSettings` groups section content, ordering, display, and template controls for the owner editor. Import it from `@shared/ui/sections/studio`.
+`SectionsSettings` groups section content, ordering, display, and template controls for the owner editor. Import it from `@shared/assistant/sections/studio`.
 
 ## Browser preferences
 
@@ -189,7 +191,7 @@ Icons inherit `currentColor`; use a 24px icon inside the 44px large control.
 
 `Section`, `Header` and `Footer` accept `asChild` to compose an existing semantic element without adding a second wrapper. Use this variant for page compositions while keeping their content and navigation in the section package. Shared section grids, accordions and carousels default to semantic Card surfaces; existing portfolio consumers pass `surface="portfolio"` explicitly.
 
-Import portfolio sections from `@shared/ui/sections` and chat from `@shared/ui/chat`. Visual rules for the shared section frame live in the root [DESIGN.md](../../DESIGN.md).
+Import portfolio sections from `@shared/assistant/sections`. Visual rules for the shared section frame live in the root [DESIGN.md](../../DESIGN.md).
 
 ## Entry points
 
@@ -215,9 +217,9 @@ Content sections live in `src/sections/{name}-section`. Most export the section 
 
 ## Full-page compositions
 
-`HomePage` in `@shared/ui/sections` renders the homepage sections. The
+`HomePage` in `@shared/assistant/sections` renders the homepage sections. The
 app supplies the examples and pricing content. `EngineerPage` and
-`PortfolioLayout` in `@shared/ui/portfolio` render published profile
+`PortfolioLayout` in `@shared/assistant/portfolio` render published profile
 layouts and use the same registered section dispatcher. `StudioShell`
 and `StudioHeading` provide the studio navigation, page title and grouped
 footer for editor, billing, management and review screens.
@@ -228,11 +230,19 @@ the fixtures.
 
 ## Homepage sections
 
-Import homepage compositions from `@shared/ui/sections`. They live in `src/sections/home-section` and replace the removed `containers` entry point. `HomeHeroSection`, `HomeFeaturesSection`, `HomeOptionsSection`, `HomePricingSection`, `HomeLibrarySection`, `HomeProcessSection`, `HomeFAQSection`, `HomeCTASection` and `HomeCapabilitiesSection` compose shared controls and surfaces. `HomeHeader`, `HomeFooter`, `PortfolioPreview` and `LibraryPicker` support that composition. Home Hero, FAQ and CTA supply landing-page copy to the same blocks used by authored sections. Header and Footer accept brand, links and actions from the page.
+Import homepage compositions from `@shared/assistant/sections`. They live in `packages/assistant/src/components/sections/home-section` and replace the removed `containers` entry point. `HomeHeroSection`, `HomeFeaturesSection`, `HomeOptionsSection`, `HomePricingSection`, `HomeLibrarySection`, `HomeProcessSection`, `HomeFAQSection`, `HomeCTASection` and `HomeCapabilitiesSection` compose shared controls and surfaces. `HomeHeader`, `HomeFooter`, `PortfolioPreview` and `LibraryPicker` support that composition. Home Hero, FAQ and CTA supply landing-page copy to the same blocks used by authored sections. Header and Footer accept brand, links and actions from the page.
 
 All <!-- registry:section-count --> registered authorable sections have colocated Default, Compact and Empty stories using fictional fixtures from `tools/test/fixtures/section-story.ts`. `SectionCatalog` provides a searchable name/category browser for the same registry, using the names, descriptions and categories in the component registry.
 
-`PublicationControls` (`@shared/ui/portfolio`) reviews a saved revision and confirms publication or withdrawal through app-provided callbacks; it never saves the draft. Optional scheduling callbacks enable reviewed snapshot scheduling, visible timezone/UTC time, status refresh and cancellation. The app owns authorization, persistence and worker setup.
+`PublicationControls` (`@shared/assistant/portfolio`) reviews a saved revision and confirms publication or withdrawal through app-provided callbacks; it never saves the draft. Optional scheduling callbacks enable reviewed snapshot scheduling, visible timezone/UTC time, status refresh and cancellation. The app owns authorization, persistence and worker setup.
 
 AgentCompanion supports idle, listening, thinking, writing, happy and error reactions.
 Its composer placement is a noninteractive character beside ChatComposer; Studio and visitor chats select reactions from request and streaming state.
+
+## Generated package reference
+
+<!-- catalog:exports -->
+
+<!-- catalog:scripts -->
+
+<!-- catalog:dependencies -->

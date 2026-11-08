@@ -8,7 +8,7 @@ vi.mock("@/features/admin/admin-auth", () => ({
   requireWorkspace: mocks.workspace,
 }));
 
-vi.mock("@/features/portfolio/portfolio-reviews", () => ({
+vi.mock("../review/_service", () => ({
   loadPendingPortfolioReviews: mocks.loadPending,
 }));
 

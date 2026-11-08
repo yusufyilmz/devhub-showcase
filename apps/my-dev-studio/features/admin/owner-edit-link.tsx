@@ -2,6 +2,8 @@ import { editCvPath } from "@shared/lib/profiles";
 import { createServerClient } from "@shared/lib/supabase";
 import { EditIcon, GripVerticalIcon } from "@shared/ui/icons";
 
+import { readProfileOwnership } from "../../../../packages/lib/src/repositories/profile";
+
 const editLinkClass =
   "icon-button inline-flex h-10 w-10 items-center justify-center rounded-md bg-[var(--primary)] text-sm font-medium text-[var(--primary-foreground)] ring-offset-[var(--background)] transition-colors hover:bg-[var(--primary)]/90 focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 focus-visible:outline-none";
 
@@ -19,12 +21,7 @@ export async function OwnerEditLink({
     data: { user },
   } = await client.auth.getUser();
   if (!user?.email_confirmed_at) return null;
-  const { data, error } = await client
-    .from("portfolio_profiles")
-    .select("id")
-    .eq("owner_id", user.id)
-    .eq("username", username)
-    .maybeSingle();
+  const { data, error } = await readProfileOwnership(client, user.id, username);
   if (error || !data) return null;
   const href = editCvPath(username);
   const links = (

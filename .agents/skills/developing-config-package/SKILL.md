@@ -12,16 +12,16 @@ description: Change profile types, themes, languages, CV layout choices, and
 
 Read [the file map](references/map.md) and [packages/config/CATALOG.md](../../../packages/config/CATALOG.md). A section change also needs [mydevstudio-sections](../mydevstudio-sections/SKILL.md). Publication, usernames, and privacy need [mydevstudio-business](../mydevstudio-business/SKILL.md).
 
-Homepage FAQ copy lives in `@shared/config`, not here. Zod validation of a save lives in `@shared/lib`. Rendering lives in `@shared/ui` and `@shared/templates`.
+Homepage FAQ copy lives in `@shared/config`, not here. Zod validation of a save lives in `@shared/lib`. Rendering lives in `@shared/ui` and `@shared/assistant/cv`.
 
 ## Change a persisted profile field
 
 Update these together. A document that omits the field must keep loading.
 
 1. The type and default on `PortfolioProfile` in `src/profile/profile.ts`. The exported `profile` value is the default document.
-2. The save and import schemas in `packages/lib/src/domain/profile.ts`, plus any import path that copies the field (`cv-import`, `pageforge-import`, `google-profile`, `section-templates`).
+2. The save and import schemas in `packages/lib/src/schemas/profile/profile.ts`, plus any import path that copies the field (`cv-import`, `pageforge-import`, `google-profile`, `section-templates`).
 3. The renderer and editor in `@shared/ui`.
-4. PDF output in `@shared/templates` when the field can appear on a CV.
+4. PDF output in `@shared/assistant/cv` when the field can appear on a CV.
 5. Tests for the valid value, the rejected value, and a fixture that omits the field.
 
 Do not give the field a second name in copy, config, and the validator. Pick the name already used on `PortfolioProfile`.
@@ -86,7 +86,7 @@ When the field is rendered, also run the component test and the CV test that cov
 
 ## Related skills
 
-- [Developing the lib package](../developing-lib-package/SKILL.md)
+- [Shared backend development](../mydevstudio-development/SKILL.md)
 - [Developing the UI package](../developing-ui-package/SKILL.md)
 - [Developing the CV package](../developing-cv-package/SKILL.md)
 - [Developing the content package](../developing-content-package/SKILL.md)

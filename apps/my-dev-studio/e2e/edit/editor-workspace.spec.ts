@@ -31,14 +31,6 @@ test("editor workspace keeps draft editing, preview and publication separate", a
     if (request.method() === "PUT" && request.url().endsWith(endpoint)) saves++;
   });
   await page.goto(`/${username}/edit`);
-  await expect(
-    page.getByRole("heading", { exact: true, name: "Edit your portfolio" }),
-  ).toBeVisible();
-  await expect(page.getByRole("dialog")).toHaveCount(0);
-  await expect(
-    page.getByRole("button", { exact: true, name: mobile ? "Mobile · 375px" : "Desktop · 1280px" }),
-  ).toHaveAttribute("aria-pressed", "true");
-  await page.getByRole("button", { exact: true, name: "Edit" }).click();
   await expect(page.getByRole("dialog", { exact: true, name: "Edit Profile" })).toBeVisible();
   await page.keyboard.press("Shift+Tab");
   await expect

@@ -1,7 +1,4 @@
-import {
-  changePublication,
-  publicationStatus,
-} from "@/features/portfolio/publication/publication-api";
+import { changePublication, publicationStatus } from "../../../publication/_handlers";
 
 type Context = { params: Promise<{ id: string }> };
 export async function GET(_request: Request, context: Context) {

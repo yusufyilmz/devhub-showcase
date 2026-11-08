@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { starterWorkspace } from "@/features/task-workspace/starter";
+import { starterWorkspace } from "@shared/lib/workspace-defaults";
 
 const mocks = vi.hoisted(() => ({
   identity: vi.fn(),
@@ -18,8 +18,8 @@ vi.mock("@shared/auth/server", () => ({
   createClient: async () => ({ auth: { getUser: mocks.identity } }),
   createRequestClient: () => ({ auth: { getUser: mocks.identity } }),
 }));
-vi.mock("@shared/services/fitness", () => ({ database: () => ({}) }));
-vi.mock("@shared/services/workspace", async (importOriginal) => ({
+vi.mock("@shared/lib/db/client", () => ({ database: () => ({}) }));
+vi.mock("@shared/lib/workspace", async (importOriginal) => ({
   ...(await importOriginal()),
   WorkspaceRepository: class {
     load = mocks.load;

@@ -8,33 +8,25 @@ import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 import { playwright } from "@vitest/browser-playwright";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
-function exportAliases(folder: string, options: { cssOnly?: boolean; packageName?: string } = {}) {
-  const { cssOnly = false, packageName = `@shared/${folder}` } = options;
-  const exports = JSON.parse(
+function exportAliases(folder: string) {
+  const metadata = JSON.parse(
     readFileSync(new URL(`./packages/${folder}/package.json`, import.meta.url), "utf8"),
-  ).exports as Record<string, string>;
-  return Object.entries(exports)
-    .filter(([key]) => !key.includes("*"))
-    .filter(([key]) => (cssOnly ? key.endsWith(".css") : !key.endsWith(".css")))
-    .flatMap(([key, target]) => {
-      const resolved =
-        typeof target === "string"
-          ? target
-          : typeof (target as { default?: string })?.default === "string"
-            ? (target as { default?: string }).default
-            : null;
-
-      if (!resolved) return [];
-      return [
-        {
-          find: key === "." ? packageName : `${packageName}/${key.slice(2)}`,
-          replacement: fileURLToPath(new URL(`./packages/${folder}/${resolved}`, import.meta.url)),
-        },
-      ];
-    });
+  ) as { name: string; exports: Record<string, string | { default?: string; import?: string }> };
+  return Object.entries(metadata.exports).flatMap(([key, target]) => {
+    const resolved = typeof target === "string" ? target : (target.import ?? target.default);
+    if (!resolved) return [];
+    const publicPath = key === "." ? metadata.name : `${metadata.name}/${key.slice(2)}`;
+    const escaped = publicPath.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace("\\*", "(.+)");
+    return [
+      {
+        find: new RegExp(`^${escaped}$`),
+        replacement: fileURLToPath(
+          new URL(`./packages/${folder}/${resolved}`, import.meta.url),
+        ).replace("*", "$1"),
+      },
+    ];
+  });
 }
-
-const servicesRoot = fileURLToPath(new URL("./packages/services/src/", import.meta.url));
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
@@ -75,75 +67,28 @@ export default defineConfig({
         find: "@/app",
         replacement: fileURLToPath(new URL("./apps/my-dev-studio/app", import.meta.url)),
       },
-      ...exportAliases("config").sort((a, b) => b.find.length - a.find.length),
-      {
-        find: "@shared/cache",
-        replacement: fileURLToPath(new URL("./packages/cache/src/index.ts", import.meta.url)),
-      },
-      ...["assistant", "auth", "billing", "notifications", "runtime", "templates", "ui"]
-        .flatMap((pkg) => exportAliases(pkg))
-        .sort((a, b) => b.find.length - a.find.length),
-      ...["ui"]
-        .flatMap((pkg) => exportAliases(pkg, { cssOnly: true }))
-        .sort((a, b) => b.find.length - a.find.length),
-      {
-        find: /^@shared\/assistant\/models\/([^/]+)$/,
-        replacement: `${fileURLToPath(new URL("./packages/assistant/src/models/", import.meta.url))}$1.ts`,
-      },
-      {
-        find: /^@shared\/assistant\/services\/([^/]+)$/,
-        replacement: `${fileURLToPath(new URL("./packages/assistant/src/services/", import.meta.url))}$1/index.ts`,
-      },
-      {
-        find: "@shared/billing-repository",
-        replacement: fileURLToPath(
-          new URL("./packages/billing/src/server/repository.ts", import.meta.url),
-        ),
-      },
-      {
-        find: /^@shared\/services\/db\/(.+)$/,
-        replacement: `${servicesRoot}fitness/db/$1.ts`,
-      },
-      {
-        find: "@shared/services/fitness/task",
-        replacement: `${servicesRoot}fitness/task/index.ts`,
-      },
-      ...exportAliases("services").sort((a, b) => b.find.length - a.find.length),
-      ...Object.entries(
-        JSON.parse(readFileSync(new URL("./packages/lib/package.json", import.meta.url), "utf8"))
-          .exports as Record<string, string>,
-      ).map(([key, path]) => ({
-        find: `@shared/lib/${key.slice(2)}`,
-        replacement: fileURLToPath(new URL(`./packages/lib/${path}`, import.meta.url)),
-      })),
-      {
-        find: "@shared/utils/logger",
-        replacement: fileURLToPath(
-          new URL("./packages/utils/src/logger/index.ts", import.meta.url),
-        ),
-      },
-      {
-        find: "@shared/services/portfolio",
-        replacement: fileURLToPath(
-          new URL("./packages/services/src/portfolio/index.ts", import.meta.url),
-        ),
-      },
-      {
-        find: /^@shared\/lib\/(.*)$/,
-        replacement: `${fileURLToPath(new URL("./packages/lib/src/", import.meta.url))}$1`,
-      },
-      {
-        find: /^@shared\/ui\/([^/]+)$/,
-        replacement: `${fileURLToPath(new URL("./packages/ui/src/components/", import.meta.url))}$1/index.ts`,
-      },
+      ...[
+        "assistant",
+        "auth",
+        "billing",
+        "config",
+        "lib",
+        "notifications",
+        "runtime",
+        "ui",
+        "utils",
+      ].flatMap(exportAliases),
     ],
     tsconfigPaths: true,
   },
   test: {
     coverage: {
       include: [
-        "packages/services/src/portfolio/**",
-        "packages/lib/src/utils/date/**",
+        "packages/lib/src/services/portfolio/index.ts",
+        "packages/lib/src/services/portfolio/formatter.ts",
+        "packages/lib/src/services/portfolio/resource-manager.ts",
+        "packages/lib/src/repositories/portfolio/**",
+        "packages/utils/src/date/**",
         "packages/assistant/src/services/formatter/**",
       ],
       provider: "v8",

@@ -26,4 +26,4 @@ Inspect the target environment's migration history before applying missing commi
 
 Tests exercise RLS as anonymous, normal and administrator roles, protect private user records and the main profile, and check transfer conflicts and preservation of an untouched starter. Browser tests use isolated fixture accounts to verify creation/import, editing, publication, unpublishing, private PDFs and transfer of access on desktop and mobile. They do not exercise live Google OAuth.
 
-Run Supabase security advisors after applying migrations. This feature does not alter unrelated legacy table permissions or platform settings. See the [database advisor documentation](https://supabase.com/docs/guides/database/database-advisors) for interpreting findings.
+Run Supabase security advisors after applying migrations. This feature does not alter unrelated original portfolio table permissions or platform settings. See the [database advisor documentation](https://supabase.com/docs/guides/database/database-advisors) for interpreting findings.

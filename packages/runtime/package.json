@@ -28,6 +28,7 @@
     "types:check": "pnpm typecheck"
   },
   "dependencies": {
+    "@shared/config": "workspace:*",
     "@shared/lib": "workspace:*",
     "@shared/utils": "workspace:*",
     "react": "catalog:",

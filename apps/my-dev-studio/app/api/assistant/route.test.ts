@@ -16,7 +16,7 @@ vi.mock("@/features/admin/admin-auth", () => ({
   requireWorkspace: mocks.workspace,
   sameOrigin: (request: Request) => request.headers.get("origin") === "https://example.test",
 }));
-vi.mock("@shared/cache", () => ({ allowStudioAssistant: mocks.rate }));
+vi.mock("@shared/lib/cache", () => ({ allowStudioAssistant: mocks.rate }));
 vi.mock("@shared/assistant", () => ({
   PortfolioEditModel: class {
     propose = mocks.propose;
@@ -40,7 +40,7 @@ vi.mock("@shared/billing/server", () => ({
     ),
 }));
 
-import { ProfileAccessError } from "@shared/services/profile";
+import { ProfileAccessError } from "@shared/lib/profile";
 
 import { GET, POST } from "./route";
 

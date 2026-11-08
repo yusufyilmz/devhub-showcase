@@ -2,15 +2,15 @@ import { readFileSync } from "node:fs";
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
+import { createCvDefinition, renderCv } from "@shared/assistant/cv";
 import { profile } from "@shared/config";
-import { createCvDefinition, renderCv } from "@shared/templates";
 
 const template = readFileSync(
-  new URL("../../../../packages/templates/templates/cv.json.hbs", import.meta.url),
+  new URL("../../../../packages/assistant/templates/cv.json.hbs", import.meta.url),
   "utf8",
 );
 const published = vi.hoisted(() => vi.fn());
-vi.mock("@/features/portfolio/profiles/published-profile", () => ({
+vi.mock("./_profile", () => ({
   getPublishedProfile: published,
 }));
 

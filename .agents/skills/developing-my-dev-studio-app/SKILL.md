@@ -8,7 +8,7 @@ description: Develop the Next.js app in apps/my-dev-studio. Use when adding a
 
 # Developing the MyDevStudio app
 
-`apps/my-dev-studio` is the Next.js app, package name `my-dev-studio`. Routes and metadata live in `app/`. Data access lives in `features/`. There is no `lib` folder in this app, and there is no `apps/web` package. Shared UI comes from `@shared/ui` and `@shared/ui`.
+`apps/my-dev-studio` is the Next.js app, package name `my-dev-studio`. Routes and metadata live in `app/`. App-specific data access and transport bindings are colocated with their owning pages/routes under `app/`. Portable persistence and domain workflows live in `@shared/lib`; chat/assistant workflows live in `@shared/assistant`. There is no `lib` folder in this app, and there is no `apps/web` package. Primitive controls come from `@shared/ui`; portfolio, studio, chat and companion compositions come from `@shared/assistant`.
 
 Read [the file map](references/map.md). Read [mydevstudio-development](../mydevstudio-development/SKILL.md) for commands and [mydevstudio-business](../mydevstudio-business/SKILL.md) before changing ownership, publication, usernames, transfers, or CV privacy. `docs/architecture.md` still says `apps/web`. Follow this skill and `AGENTS.md`.
 
@@ -16,21 +16,17 @@ Read [the file map](references/map.md). Read [mydevstudio-development](../mydevs
 
 Stop at the first yes.
 
-1. A URL, metadata file, or HTTP handler must exist. Add it under `app/`. Keep the route file thin. Parse and status codes can live there. Call a feature function for the decision.
-2. The code authorizes a user, reads a database, calls Stripe, or knows an API URL. Put it in `features/<feature>`.
+1. A URL, metadata file, or HTTP handler must exist. Add it under `app/`. Keep the route file thin. Parse and status codes can live there. Use the shared domain workflow and colocate its app-specific binding.
+2. The code binds app sessions, cookies, environment, navigation or API transport. Colocate that adapter with its page or route; a private sibling module may serve a route family. Put shared database/service logic in `@shared/lib` and chat/assistant workflows in `@shared/assistant`, with injected app dependencies.
 3. Otherwise it belongs in a shared package. Use that package's skill. Do not add a feature file that only re-exports a shared component.
 
 Feature folders:
 
-| Feature      | Owns                                                                            |
-| ------------ | ------------------------------------------------------------------------------- |
-| `admin`      | Workspace auth, session handlers, Google profile import, owner edit link        |
-| `billing`    | Stripe gateway, billing client, pricing, premium configuration, account status  |
-| `chat`       | Visitor chat access and premium chat access                                     |
-| `home`       | Home page and session links                                                     |
-| `management` | Managed portfolios, transfer helpers, management UI wiring                      |
-| `platform`   | Site URL, platform metadata, page presentation, document shell data             |
-| `portfolio`  | Published and public profiles, metadata, branding, CV responses, page resources |
+| Feature      | Owns                                                                           |
+| ------------ | ------------------------------------------------------------------------------ |
+| `admin`      | Workspace auth, session handlers, Google profile import, owner edit link       |
+| `billing`    | Stripe gateway, billing client, pricing, premium configuration, account status |
+| `management` | Managed portfolios, transfer helpers, management UI wiring                     |
 
 `features/admin/auth-handlers.ts` builds `@shared/auth` handlers with `/login`, `/admin`, and `/auth/callback`. `/admin/login` redirects to `/login`. `requireWorkspace` is the portfolio guard. It is not a generic login helper. Do not copy it into `@shared/auth`.
 
@@ -43,7 +39,7 @@ Feature folders:
 | Personal API    | `app/api/admin/profile/route.ts`, `app/api/admin/cv/route.ts`                  | Origin check on mutations, then `requireWorkspace`                                |
 | Managed         | `app/admin/portfolios`, `app/api/admin/managed`                                | Separate administrator flow. Transfer is explicit                                 |
 | Billing         | `app/api/billing/checkout`, `portal`, `webhook`, `pricing`                     | Gateway in `features/billing`                                                     |
-| Chat and import | `app/api/portfolio-chat`, `app/api/admin/assistant`, `app/api/admin/cv-import` | Access, then `@shared/cache`, then the assistant model                            |
+| Chat and import | `app/api/portfolio-chat`, `app/api/admin/assistant`, `app/api/admin/cv-import` | Access, then `@shared/lib/cache`, then the assistant model                        |
 | Compatibility   | `app/p/[id]`, `app/p/examples/[slug]`, `app/cv.pdf`                            | Keep the documented fallback. Do not use it for arbitrary usernames               |
 | Platform        | `app/page.tsx`, `app/sitemap.ts`, `app/robots.ts`                              | Home and metadata. Personal metadata belongs on the username route                |
 
@@ -57,11 +53,11 @@ Do not publish a profile, transfer ownership, assign a role, or run a production
 
 ## Presentation
 
-Import studio and portfolio surfaces from `@shared/ui` (`studio`, `layout`, `portfolio`, `sections`). Import controls from `@shared/ui/<folder>`. The root layout loads `@shared/ui/globals.css` and wraps children in `PageShell` using `features/platform/page-presentation.ts`.
+Import studio and portfolio surfaces from `@shared/assistant` (`studio`, `portfolio`, `sections`). Import controls from `@shared/ui/<folder>`. The root layout loads `@shared/ui/globals.css` and wraps children in `PageShell` using `app/_presentation.ts`.
 
-Pass fetched data and links into the shared screen. `features/platform/studio-client.tsx` is the client boundary pattern. Add `"use client"` only for hooks and interaction.
+Pass fetched data and links into the shared screen. `app/[username]/_engineer-portfolio.tsx` is a route-family client boundary pattern. Add `"use client"` only for hooks and interaction.
 
-`features/portfolio/cv-response.ts` builds the PDF response. Visibility and authorization stay in the route that calls it. `@shared/templates` does not know which route is public.
+`app/api/cv/_response.ts` binds the CV template to `@shared/assistant/cv-response`. Visibility and authorization stay in the route that calls it. `@shared/assistant/cv` does not know which route is public.
 
 ## Tests
 
@@ -87,8 +83,14 @@ Run `pnpm check` and `pnpm test`. For a route or UI change that can affect the p
 ## Related skills
 
 - [Developing the UI package](../developing-ui-package/SKILL.md)
-- [Developing the lib package](../developing-lib-package/SKILL.md)
+- [Shared backend development](../mydevstudio-development/SKILL.md)
 - [Developing the auth package](../developing-auth-package/SKILL.md)
-- [Developing the cache package](../developing-cache-package/SKILL.md)
+- [Developing the lib package](../developing-lib-package/SKILL.md)
 - [Developing the assistant package](../developing-assistant-package/SKILL.md)
 - [Business rules](../mydevstudio-business/SKILL.md)
+
+## Colocated routes and generated catalogs
+
+Do not recreate `features/home`, `features/reviews`, `features/portfolio`, `features/platform` or `features/chat`. Their single-use bindings live in page/route entry points; shared route-family bindings and tests are private siblings under `app`. Existing admin, billing and management integrations remain separate.
+
+Workspace catalogs are generated with `pnpm generate:catalogs` and checked with `pnpm check:catalogs`. Edit `catalog.template.md` for authored guidance and package metadata/source for the generated reference. UI registry markers still work; the UI-specific commands are compatibility aliases. Never hand-edit a generated `CATALOG.md`.

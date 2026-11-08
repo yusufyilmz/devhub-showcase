@@ -26,21 +26,21 @@ Confirmed users enter through `/admin` and reach their own `/{username}/edit` wo
 
 The studio edits profile/contact details, About, experience and achievements, projects, education, skills and spoken languages. Collections support editing and reordering. Changes remain a draft until **Save changes** succeeds. Discard restores the saved state; stale revisions produce a conflict instead of overwriting newer work.
 
-Publishing exposes `/{username}` and `/{username}/cv.pdf`. Unpublishing hides public reads, but cannot recall downloaded files or search-engine copies. Username changes change public links; legacy `/p/{id}` links resolve to the current username. Private downloads use authenticated endpoints. PDF hide-email/hide-phone preferences do not hide those details on the public website.
+Publishing exposes `/{username}` and `/{username}/cv.pdf`. Unpublishing hides public reads, but cannot recall downloaded files or search-engine copies. Username changes change public links; earlier `/p/{id}` links resolve to the current username. Private downloads use authenticated endpoints. PDF hide-email/hide-phone preferences do not hide those details on the public website.
 
 See [personal workspace setup](features/multiuser-cvs.md) and [Google login](features/google-login.md) for activation and access rules.
 
 ## Layout, appearance and language
 
-| Setting            | Choices                                 | Behavior                                                                                                                                                                              |
-| ------------------ | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Portfolio layout   | Engineer, Designer, Consultant, Minimal | Engineer keeps the original career layout; Designer emphasizes a project gallery; Consultant places introduction beside career content on wide screens; Minimal uses a quieter column |
-| Theme              | Studio, Paper, Graphite, Bloom          | Original palette, warm serif, neutral monospace, or soft lavender treatments                                                                                                          |
-| Accent             | Cyan, violet, emerald                   | Shared accent choice; independent of layout                                                                                                                                           |
-| Default color mode | Dark, Light, Match device               | Visitors can override color mode locally                                                                                                                                              |
-| Portfolio language | English, Spanish, Turkish               | Website labels, actions, dates and HTML language                                                                                                                                      |
-| CV language        | English, Spanish, Turkish               | Independent PDF labels, dates, title and Content-Language header                                                                                                                      |
-| CV format          | Classic, Editorial, Compact             | Independent document layout; all use the same canonical profile                                                                                                                       |
+| Setting            | Choices                                                  | Behavior                                                                                                                                                                              |
+| ------------------ | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Portfolio layout   | Engineer, Designer, Consultant, Minimal                  | Engineer keeps the original career layout; Designer emphasizes a project gallery; Consultant places introduction beside career content on wide screens; Minimal uses a quieter column |
+| Theme              | Studio, Paper, Graphite, Bloom, Gloom, Ink, Dune, Harbor | Ready palettes: cool studio, warm serif, neutral mono, lavender, dim plum, square serif, sun-warm sand, or sea navy                                                                   |
+| Accent             | Cyan, violet, emerald                                    | Shared accent choice; independent of layout                                                                                                                                           |
+| Default color mode | Dark, Light, Match device                                | Visitors can override color mode locally                                                                                                                                              |
+| Portfolio language | English, Spanish, Turkish                                | Website labels, actions, dates and HTML language                                                                                                                                      |
+| CV language        | English, Spanish, Turkish                                | Independent PDF labels, dates, title and Content-Language header                                                                                                                      |
+| CV format          | Classic, Editorial, Compact                              | Independent document layout; all use the same canonical profile                                                                                                                       |
 
 Themes work with all four layouts in light/dark mode. Appearance thumbnails and preview mode are local previews; changing preview mode does not silently change the saved default. The homepage and editor use platform styling rather than inheriting the portfolio theme. Visitor overrides remain scoped to profiles/examples.
 
@@ -108,7 +108,7 @@ Published pages derive titles, descriptions, canonical links, sharing cards, loc
 
 `/sitemap.xml` includes the homepage and published valid usernames, using anonymous reads of username/update columns and deterministic pagination. Without database configuration it lists only the homepage. Database errors fail the request instead of returning a silently incomplete list. Partition the sitemap before reaching 50,000 published portfolios.
 
-`/robots.txt` advertises the sitemap and discourages crawling private/editor/API/auth/legacy/example/PDF routes. Crawler guidance is not authorization and does not guarantee indexing or rankings.
+`/robots.txt` advertises the sitemap and discourages crawling private/editor/API/auth/redirect/example/PDF routes. Crawler guidance is not authorization and does not guarantee indexing or rankings.
 
 ## Known boundaries and verification
 
@@ -118,7 +118,7 @@ Premium entitlements, bounded usage, sandbox billing, visitor chat and private e
 
 Stripe sandbox billing is available at `/admin/billing` once its server configuration and migrations are installed. Checkout, customer portal and signed subscription webhooks are implemented; live keys remain disabled and actual sandbox checkout verification is required. See [setup and limitations](features/stripe-billing.md).
 
-Pro owners can opt into a public portfolio assistant at `/admin/billing`. The reusable chat widget supports all portfolio layouts, with public-only context, isolated session history and reserved usage accounting. Existing main portfolio chat keeps its legacy behavior. See [premium portfolio chat](features/premium-portfolio-chat.md) for migration and verification requirements.
+Pro owners can opt into a public portfolio assistant at `/admin/billing`. The reusable chat widget supports all portfolio layouts, with public-only context, isolated session history and reserved usage accounting. Existing main portfolio chat keeps its original behavior. See [premium portfolio chat](features/premium-portfolio-chat.md) for migration and verification requirements.
 
 ## Private AI editing assistant
 

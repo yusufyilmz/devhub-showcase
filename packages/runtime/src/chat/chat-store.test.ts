@@ -3,8 +3,7 @@
 import { cleanup } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { ChatRole } from "@shared/lib/types";
-
+import { ChatRole } from "../../../lib/src/types";
 import { chatStorage } from "../storage/chatStorage";
 import { createChatStore } from "./chat-store";
 
@@ -16,7 +15,7 @@ describe("ChatState", () => {
     sessionStorage.clear();
   });
   describe("chat-scoped conversation state", () => {
-    it("isolates both portfolio and revision without importing the legacy global history", async () => {
+    it("isolates both portfolio and revision without importing the existing global history", async () => {
       const first = createChatStore(alex);
       first.getState().addMessage({
         category: "unknown",

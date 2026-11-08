@@ -64,6 +64,6 @@ pnpm exec vitest run --project unit apps/my-dev-studio/app/auth/callback/route.t
 
 ## Related skills
 
-- [Developing the lib package](../developing-lib-package/SKILL.md)
+- [Shared backend development](../mydevstudio-development/SKILL.md)
 - [Developing the MyDevStudio app](../developing-my-dev-studio-app/SKILL.md)
 - [Business rules](../mydevstudio-business/SKILL.md)

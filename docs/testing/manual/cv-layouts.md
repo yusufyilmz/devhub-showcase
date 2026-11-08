@@ -21,3 +21,9 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 - [e2e/edit/portfolio-types.spec.ts](../../../apps/my-dev-studio/e2e/edit/portfolio-types.spec.ts)
 
 Return to the [manual testing index](index.md).
+
+## Source reorganization checks
+
+PDF preparation and rendering now live in `packages/templates/src/cv/`, with separate data, definition and render modules. ATS content and section-order tests are colocated. Studio CV import/review and settings controls live under `src/studio/import/` and `src/studio/settings/`. Template types live in `src/types/cv-template.d.ts`. The existing public package entry points are retained.
+
+Run `pnpm --filter @shared/templates typecheck`, `pnpm check:exports` and `pnpm exec vitest run --project unit packages/templates apps/my-dev-studio/app/cv.pdf/route.test.ts tools/cli/generators/config.test.ts`. These local checks cover language/layout PDF output, ATS exclusions, section ordering, public consumers and generator behavior. Re-run the manual steps above against the matching preview when verifying rendered PDF appearance and editor interactions; automated success does not establish a manual or deployed pass.

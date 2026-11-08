@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { createServer } from "node:http";
 
 import { projectPublicProfile } from "../../../packages/config/src/portfolio/public-projection.ts";
+import { portfolioThemes } from "../../../packages/config/src/portfolio/themes.ts";
 import { profile } from "../../../packages/config/src/profile/profile.ts";
 import {
   authorableSectionTypes,
@@ -356,12 +357,12 @@ const libraryExamples = ["engineer", "designer"].map((type, index) => ({
   id: `30303030-3030-4030-8030-30303030303${index}`,
   username: `library-${type}`,
 }));
-const themed = ["studio", "paper", "graphite", "bloom"].flatMap((theme, themeIndex) =>
+const themed = portfolioThemes.flatMap((theme, themeIndex) =>
   ["engineer", "designer", "consultant", "minimal"].map((type, typeIndex) => ({
     ...row,
     document: {
       ...profile,
-      appearance: { accent: "violet", defaultTheme: "dark", theme },
+      appearance: { accent: "violet", defaultTheme: "dark", theme: theme.id },
       portfolioType: type,
     },
     id: `55555555-5555-4555-8555-${String(themeIndex * 4 + typeIndex).padStart(12, "0")}`,

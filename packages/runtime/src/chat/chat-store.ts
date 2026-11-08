@@ -5,8 +5,7 @@ import { createContext, useContext } from "react";
 import { createStore, useStore } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { type ChatMessage, ChatRole, type ChatType } from "@shared/lib/types";
-
+import { type ChatMessage, ChatRole, type ChatType } from "../../../lib/src/types";
 import { chatStorage } from "../storage/chatStorage";
 
 export type ChatIdentity = { id: string; revision: number; name: string };

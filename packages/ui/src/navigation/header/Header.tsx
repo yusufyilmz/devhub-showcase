@@ -1,4 +1,4 @@
-import "../../styles/components/navigation/chrome.css";
+import "../chrome.css";
 
 import { Slot } from "@radix-ui/react-slot";
 import { Menu } from "lucide-react";

@@ -93,7 +93,7 @@ gh workflow disable ci-cd.yml --repo yusufyilmz/yusuf-fitness-os
 ```
 
 Rollback requires pausing the monorepo Fitness deploy path before enabling the
-legacy workflow. Restore the Fitness project's original root (repository root),
+standalone Fitness workflow. Restore the Fitness project's original root (repository root),
 `pnpm build` and `pnpm install --frozen-lockfile` before invoking the old standalone
 pipeline. Do not enable both production writers together. Existing production
 releases can be rolled back separately without changing the database.

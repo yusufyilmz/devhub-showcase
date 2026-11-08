@@ -1,8 +1,14 @@
 {
   "compilerOptions": {
-    "types": ["node"]
+    "jsx": "react-jsx",
+    "lib": ["ES2025", "DOM", "DOM.Iterable"],
+    "paths": {
+      "@fixtures/*": ["../../tools/test/fixtures/*"]
+    },
+    "types": ["node"],
+    "verbatimModuleSyntax": true
   },
   "exclude": ["node_modules", "dist"],
-  "extends": "@shared/typescript-config/base.json",
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "extends": "@shared/typescript-config/library.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.stories.tsx"]
 }

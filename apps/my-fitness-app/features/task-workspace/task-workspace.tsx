@@ -1,23 +1,23 @@
 "use client";
 import { useMemo, useState } from "react";
 
+import { FitnessCompanion, PlanAssistant } from "@shared/assistant/fitness-ui";
 import {
   type AgendaEvent,
   AgendaService,
   ScheduleService,
   TaskService,
-} from "@shared/services/schedule";
-import type { Task, Workspace } from "@shared/services/types";
-import { dateKey } from "@shared/services/types";
-import { AgentCompanion } from "@shared/ui/agent-companion";
+} from "@shared/lib/schedule";
+import type { Task, Workspace } from "@shared/lib/types";
+import { dateKey } from "@shared/lib/types";
 import { Alert, AlertDescription } from "@shared/ui/alert";
 import { Button as LibraryButton } from "@shared/ui/button";
 
 import { useAgendaNavigation } from "@/features/agenda/use-agenda-navigation";
-import { PlanAssistant } from "@/features/assistant/plan-assistant";
 import { TaskEditor, type TaskEditorTarget } from "@/features/task-editor/task-editor";
 
-import { fitnessGuide } from "./companion-guide";
+import { fitnessNotifications } from "../notifications/browser";
+import { assistantRequest } from "./gateway";
 import { useTaskReminders } from "./use-reminders";
 import type { WorkspaceController } from "./use-task-workspace";
 import { WorkspaceFrame, WorkspacePanels } from "./workspace-views";
@@ -110,27 +110,15 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
       onDismissError={() => setError("")}
       overlay={
         <>
-          {!readOnly && (
-            <div hidden={tab === "Assistant" || Boolean(target)}>
-              <AgentCompanion
-                agent="fitness"
-                className="fitness-agent-companion"
-                guide={fitnessGuide(state, tab, tab === "Assistant" || Boolean(target))}
-                label="Fitness assistant"
-                notice={
-                  reminder
-                    ? {
-                        action: { href: reminder.url, label: "View activity" },
-                        id: reminder.key,
-                        message: reminder.taskTitle,
-                        title: "Activity reminder",
-                      }
-                    : undefined
-                }
-                onOpen={() => setTab("Assistant")}
-              />
-            </div>
-          )}
+          <FitnessCompanion
+            editing={Boolean(target)}
+            onOpen={() => setTab("Assistant")}
+            readOnly={readOnly}
+            reminder={reminder}
+            request={assistantRequest}
+            tab={tab}
+            workspace={state}
+          />
           {target && !readOnly ? (
             <TaskEditor
               busy={busy}
@@ -175,9 +163,11 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
           busy={busy}
           date={date}
           initialPlanId={templateRoot}
+          notify={(message) => fitnessNotifications.show(message)}
           onReview={setTarget}
           onSave={save}
           onWeek={() => setTab("Week")}
+          request={assistantRequest}
           revision={controller.revision}
           workspace={state}
         />

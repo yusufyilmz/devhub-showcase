@@ -1,67 +1,41 @@
-# Lib package map
+# Lib file map
 
-Package `@shared/lib` in `packages/lib`. Import a catalogued subpath.
+Workspace package: `@shared/lib` in `packages/lib`. Read [the catalog](../../../../packages/lib/CATALOG.md) and `packages/lib/package.json` for the full export map. All paths below are relative to `packages/lib`.
 
-## Domain
+| Area                     | Source                               | Public imports                                                                        |
+| ------------------------ | ------------------------------------ | ------------------------------------------------------------------------------------- |
+| Aggregate                | `src/index.ts`                       | `@shared/lib` (Fitness and Studio aggregates; not every subpath)                      |
+| Database                 | `src/db/`                            | `@shared/lib/db/*`, `@shared/lib/migrations/*`                                        |
+| Typed auth clients       | `src/db/clients/`                    | `@shared/lib/supabase`, `@shared/lib/supabase/browser`, `@shared/lib/supabase/server` |
+| Generated database types | `src/db/generated/database.types.ts` | `@shared/lib/types`                                                                   |
+| Repositories             | `src/repositories/`                  | Exported `@shared/lib/repositories/*` entries                                         |
+| Domain services          | `src/services/`                      | Exported domain and `@shared/lib/services/*` entries                                  |
+| Validation               | `src/schemas/`                       | `@shared/lib/schemas`, `@shared/lib/profiles`, `@shared/lib/section`                  |
+| Models                   | `src/types/`                         | `@shared/lib/types`                                                                   |
+| Redis                    | `src/cache/`                         | `@shared/lib/cache`                                                                   |
+| General rate limiter     | `src/services/rate-limiter/index.ts` | `@shared/lib/rate-limiter`                                                            |
 
-| Export                          | File                                |
-| ------------------------------- | ----------------------------------- |
-| `@shared/lib/profile`           | `src/domain/profile.ts`             |
-| `@shared/lib/profiles`          | `src/domain/username.ts`            |
-| `@shared/lib/section`           | `src/domain/section.ts`             |
-| `@shared/lib/section-templates` | `src/domain/section-templates.ts`   |
-| `@shared/lib/pageforge-import`  | `src/domain/pageforge-import.ts`    |
-| `@shared/lib/cv-import`         | `src/domain/cv-import.ts`           |
-| `@shared/lib/cv-file`           | `src/domain/cv-file.ts`             |
-| `@shared/lib/profiles`          | `src/domain/ai-edit.ts`             |
-| `@shared/lib/profiles`          | `src/domain/google-profile.ts`      |
-| `@shared/lib/profiles`          | `src/domain/portfolio-knowledge.ts` |
+Services are grouped by profile, portfolio, management, workspace, task, schedule, meal, notifications, companion, rate-limiter, Fitness and Studio. Repositories are grouped by profile, portfolio, management, workspace and notifications. RLS fixtures live in `src/db/rls/`.
 
-## Services and persistence
+## Redis limits
 
-| Export                                | File                                              | Use                                                                              |
-| ------------------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `@shared/services/profile-service`    | `src/services/profile-service.ts`                 | Owner check, parse, revision save                                                |
-| `@shared/services/published-profile`  | `src/services/published-profile.ts`               | Public read                                                                      |
-| `@shared/services/user-profile`       | `src/services/user-profile.ts`                    | Owner provisioning                                                               |
-| `@shared/services/profile-repository` | `src/repositories/supabase-profile-repository.ts` | Supabase repository                                                              |
-| `@shared/services/profile`            | `src/repositories/profile-repository.ts`          | Access, conflict, setup, not-found, username errors and the repository interface |
-| `@shared/services/portfolio`          | `src/services/portfolio`                          | Portfolio resources                                                              |
-| `@shared/services/studio`             | `src/services/index.ts`                           | Service barrel                                                                   |
-| `@shared/lib/supabase`                | `src/supabase`                                    | Clients                                                                          |
-| `@shared/lib/types`                   | `src/types`                                       | Database and chat types                                                          |
-| `@shared/lib/errors`                  | `src/errors`                                      | Generic request errors                                                           |
-| `@shared/lib/utils`                   | `src/utils`                                       | Date and domain helpers                                                          |
-| `@shared/lib/cache`                   | `src/cache`                                       | Service-worker cache manager, not Redis                                          |
+| Helper                                     | Source                                | Limits and key prefixes                                                                                                                                      |
+| ------------------------------------------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `allowCvImport(userId)`                    | `src/cache/cv-import-limit.ts`        | 3/user/hour, configurable global/day (default 100); `cv-import:user:<userId>`, `cv-import:global`                                                            |
+| `allowPortfolioChat(profileId, sessionId)` | `src/cache/portfolio-chat-limit.ts`   | 10/visitor/minute, 100/portfolio/hour, 500/global/day; `mydevstudio:chat:<profileId>:<sessionId>`, `mydevstudio:chat:<profileId>`, `mydevstudio:chat:global` |
+| `allowStudioAssistant(account)`            | `src/cache/studio-assistant-limit.ts` | 10/account/hour, 100/global/day; `studio-assistant:user:<account>`, `studio-assistant:global`                                                                |
+| `allowFitnessAssistant(account)`           | `src/cache/studio-assistant-limit.ts` | Independent 10/account/hour, 100/global/day; `fitness-assistant:user:<account>`, `fitness-assistant:global`                                                  |
+| `RedisCacheClient`                         | `src/cache/redis-cache.ts`            | Default key prefix `devhub-showcase`; `get`, `set`, `expire`, `incr`                                                                                         |
 
-Redis rate limits are `@shared/cache`. This package's `src/cache` is a different helper. Do not store rate-limit counters here.
+Lua results become booleans (`1` allowed, `0` refused). The Lua constants in the helper files and the cache types/store are internal, not package exports. The general `RateLimiter.isAllowed` throws on refusal; do not substitute it for the boolean helpers without adapting the caller.
 
-## Billing
+## Call sites
 
-Billing lives in `@shared/billing`. See [packages/billing/CATALOG.md](../../../../packages/billing/CATALOG.md). App checkout and webhooks stay in `apps/my-dev-studio/features/billing`.
+- Visitor limits: `packages/assistant/src/services/main-portfolio-chat.ts` and `packages/assistant/src/services/premium-portfolio-chat.ts`.
+- CV imports: `apps/my-dev-studio/app/api/cv-import/route.ts`.
+- Studio/job assistant: `apps/my-dev-studio/app/api/assistant/route.ts` and `apps/my-dev-studio/app/api/assistant/job/route.ts`.
+- Fitness assistant: `apps/my-fitness-app/app/api/assistant/route.ts`.
 
-## Errors from profile access
+## Other owners
 
-| Error                  | Meaning                                 |
-| ---------------------- | --------------------------------------- |
-| `ProfileAccessError`   | Caller is not the owner                 |
-| `ProfileConflictError` | Revision is stale                       |
-| `ProfileSetupError`    | Storage is not configured               |
-| `ProfileNotFoundError` | Private or missing. No fallback profile |
-| `ProfileUsernameError` | Username is taken                       |
-
-## RLS tests
-
-`src/supabase/rls/` contains `section-template-rls.test.ts`, `managed-rls.test.ts`, `premium-chat-migration.test.ts`, `multiuser-rls.test.ts`, and `admin-rls.test.ts`. Read the migration they cite before editing the assertion. Do not point them at a live project.
-
-## Other source
-
-`src/services/resources` has resource helpers for projects, experience, skills, and related records. `src/validation` has older project schema helpers. Prefer `src/domain/profile.ts` for the portfolio document. `src/axios` is a legacy client. New portfolio persistence goes through the Supabase repository.
-
-## Checks
-
-```sh
-pnpm --filter @shared/lib typecheck
-pnpm exec vitest run --project unit packages/lib
-pnpm check:exports
-```
+`@shared/utils/cache` owns the service-worker cache manager. Routes own HTTP cache headers, authorization and failure responses. `@shared/runtime` owns browser fetch/debounce helpers. Neither app's env module may be imported by lib.

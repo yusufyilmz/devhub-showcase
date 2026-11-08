@@ -3,8 +3,8 @@
 @import "./foundation/theme-aliases.css";
 @import "./foundation/platform-rgb.css";
 @import "./foundation/product-tokens.css";
-@import "./components/cards/surfaces.css";
-@import "./components/sections/sections.css";
+@import "../cards/surfaces.css";
+@import "../layout/section/sections.css";
 
 @source "../../../../apps/my-dev-studio/app";
 @source "../../../../apps/my-dev-studio/features";
@@ -14,5 +14,4 @@
 @source "..";
 @source "../../../assistant/src";
 @source "../../../billing/src";
-@source "../../../templates/src";
 @source "../../../trello/src";

@@ -25,8 +25,8 @@ Server grants use a key derived with a distinct signing domain from the server-o
 
 ## Local evidence
 
-- [Database boundary tests](../../../packages/lib/src/supabase/rls/password-publication.test.ts)
-- [Salted hashing and grant tampering/expiry tests](../../../apps/my-dev-studio/features/portfolio/access/password.test.ts)
+- [Database boundary tests](../../../packages/lib/src/db/rls/password-publication.test.ts)
+- [Salted hashing and grant tampering/expiry tests](../../../packages/lib/src/services/portfolio/password.test.ts)
 
 Return to the [manual testing index](index.md).
 

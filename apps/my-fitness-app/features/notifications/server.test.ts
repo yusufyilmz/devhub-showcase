@@ -20,13 +20,13 @@ vi.mock("@/lib/auth", async (original) => ({
   requestIdentity: mocks.identity,
   sameOrigin: mocks.origin,
 }));
-vi.mock("@shared/services/fitness", () => ({ database: () => ({ execute: mocks.execute }) }));
-vi.mock("@shared/services/workspace", () => ({
+vi.mock("@shared/lib/db/client", () => ({ database: () => ({ execute: mocks.execute }) }));
+vi.mock("@shared/lib/workspace", () => ({
   WorkspaceRepository: class {
     find = mocks.find;
   },
 }));
-vi.mock("./store", () => ({
+vi.mock("@shared/lib/fitness-notifications", () => ({
   cleanNotifications: mocks.cleanNotifications,
   disableDevice: mocks.disableDevice,
   enqueueReminder: mocks.enqueueReminder,
@@ -34,7 +34,7 @@ vi.mock("./store", () => ({
   notificationAccountIds: mocks.accounts,
   saveDevice: mocks.saveDevice,
 }));
-vi.mock("./reminders", () => ({ dueFitnessReminders: mocks.due }));
+vi.mock("@shared/lib/fitness-reminders", () => ({ dueFitnessReminders: mocks.due }));
 vi.mock("web-push", () => ({ default: { sendNotification: mocks.send } }));
 
 import { dispatchReminders, notificationRequest, testNotification } from "./server";

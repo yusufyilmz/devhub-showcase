@@ -3,9 +3,9 @@ import { type DragEvent, useMemo, useState } from "react";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { type AgendaEvent, AgendaService } from "@shared/services/schedule";
-import type { Workspace } from "@shared/services/types";
-import { dateKey, dateLabel, monday, shiftDate } from "@shared/services/types";
+import { type AgendaEvent, AgendaService } from "@shared/lib/schedule";
+import type { Workspace } from "@shared/lib/types";
+import { dateKey, dateLabel, monday, shiftDate } from "@shared/lib/types";
 import { Button as LibraryButton } from "@shared/ui/button";
 
 import { EventRow, eventDragType } from "@/features/agenda/event-row";

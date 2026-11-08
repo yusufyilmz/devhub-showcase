@@ -1,7 +1,7 @@
 "use client";
 import { Plus, X } from "lucide-react";
 
-import type { MealIngredient } from "@shared/services/types";
+import type { MealIngredient } from "@shared/lib/types";
 import { Button as LibraryButton } from "@shared/ui/button";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";

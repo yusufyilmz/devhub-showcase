@@ -23,11 +23,10 @@
   "dependencies": {
     "@shared/assistant": "workspace:*",
     "@shared/auth": "workspace:*",
-    "@shared/cache": "workspace:*",
     "@shared/config": "workspace:*",
+    "@shared/lib": "workspace:*",
     "@shared/notifications": "workspace:*",
     "@shared/runtime": "workspace:*",
-    "@shared/services": "workspace:*",
     "@shared/ui": "workspace:*",
     "@t3-oss/env-nextjs": "catalog:",
     "drizzle-orm": "catalog:",

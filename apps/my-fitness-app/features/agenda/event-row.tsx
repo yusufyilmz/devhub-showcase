@@ -1,7 +1,7 @@
 "use client";
 import { ChevronRight } from "lucide-react";
 
-import type { AgendaEvent } from "@shared/services/schedule";
+import type { AgendaEvent } from "@shared/lib/schedule";
 import { Input as LibraryInput } from "@shared/ui/input";
 
 import { dayHref } from "./use-agenda-navigation";

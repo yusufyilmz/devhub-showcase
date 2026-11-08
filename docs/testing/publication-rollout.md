@@ -49,4 +49,4 @@ Read-only Vercel metadata now confirms `SUPABASE_SERVICE_ROLE_KEY` exists for Pr
 
 ## Existing advisor findings
 
-Security advisors report legacy tables without RLS, legacy `_heroku` functions with mutable search paths, disabled leaked-password checking and available Postgres security patches. These are separate pre-existing platform findings; this rollout does not silently change their access or upgrade the database. No finding identified the newly created private CV/history tables as publicly readable. See [Supabase database advisors](https://supabase.com/docs/guides/database/database-advisors) for interpretation.
+Security advisors report original portfolio tables without RLS, earlier `_heroku` functions with mutable search paths, disabled leaked-password checking and available Postgres security patches. These are separate pre-existing platform findings; this rollout does not silently change their access or upgrade the database. No finding identified the newly created private CV/history tables as publicly readable. See [Supabase database advisors](https://supabase.com/docs/guides/database/database-advisors) for interpretation.

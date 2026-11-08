@@ -27,7 +27,7 @@ Checked against vendor information on 30 October 2026. Recheck the linked plan a
 | Grafana Cloud Free | Advertises a free tier including 50 GB monthly log ingestion         | Alternative for broader logs/metrics work; check retention and ingestion-path costs |
 | Coralogix          | Pricing advertises a 14-day trial and paid ingestion                 | Do not treat the trial as permanent free monitoring                                 |
 
-Sources: [Sentry Developer plan update](https://www.sentry.help/en/articles/16738709-changes-to-legacy-developer-plans-september-2026), [Sentry quota handling](https://www.sentry.help/en/articles/13964891-i-ve-exhausted-my-quota-what-now), [Sentry pricing](https://sentry.io/pricing/), [Grafana pricing](https://grafana.com/pricing/), [Coralogix pricing](https://www.coralogix.com/pricing/).
+Sources: [Sentry Developer plan update](https://www.sentry.help/en/articles/16738709-changes-to-earlier-developer-plans-september-2026), [Sentry quota handling](https://www.sentry.help/en/articles/13964891-i-ve-exhausted-my-quota-what-now), [Sentry pricing](https://sentry.io/pricing/), [Grafana pricing](https://grafana.com/pricing/), [Coralogix pricing](https://www.coralogix.com/pricing/).
 
 Choose the free plan explicitly after any trial. Do not enable paid overages or upgrade automatically. Review usage regularly; when limits are reached, accept reduced monitoring coverage rather than unexpected spend. Free monitoring does not make the app's hosting, AI or database usage free.
 

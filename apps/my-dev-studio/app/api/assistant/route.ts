@@ -9,13 +9,13 @@ import {
   PremiumUsageRepository,
   premiumAiConfigured,
 } from "@shared/billing/server";
-import { allowStudioAssistant } from "@shared/cache";
+import { allowStudioAssistant } from "@shared/lib/cache";
+import { ProfileAccessError, ProfileConflictError } from "@shared/lib/profile";
 import {
   aiEditRequestSchema,
   buildOwnerPortfolioKnowledge,
   serializeAiEditContext,
 } from "@shared/lib/profiles";
-import { ProfileAccessError, ProfileConflictError } from "@shared/services/profile";
 
 import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
 

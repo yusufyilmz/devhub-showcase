@@ -12,10 +12,10 @@ export default async function ManagedEditor({ params }: { params: Promise<{ id: 
   return (
     <>
       <div className="studio [--studio-bottom:0px]">
-        <a className="text-[rgb(var(--accent-rgb))]" href="/admin/portfolios">
+        <a className="text-[var(--primary)]" href="/admin/portfolios">
           ← Managed portfolios
         </a>
-        <p className="leading-[1.7] wrap-anywhere text-[rgb(var(--muted-rgb))]">
+        <p className="leading-[1.7] wrap-anywhere text-[var(--muted-foreground)]">
           Temporary managed portfolio. You control publishing. Review placeholder contact details
           before sharing it.
         </p>

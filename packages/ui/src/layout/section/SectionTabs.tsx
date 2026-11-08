@@ -1,6 +1,6 @@
 "use client";
 
-import "../../styles/components/layout/section-views.css";
+import "./section-views.css";
 
 import { useId, useRef, useState } from "react";
 

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
+import { StudioHeading } from "@shared/assistant/portfolio";
 import { Button } from "@shared/ui/button";
-import { StudioHeading } from "@shared/ui/portfolio";
 
 import { CreatePortfolio } from "@/features/management/create-portfolio";
 import { requirePortfolioAdmin } from "@/features/management/managed-portfolios";
@@ -55,17 +55,17 @@ export default async function PortfolioManager({
                 };
                 return (
                   <li
-                    className="flex flex-wrap items-center justify-between gap-4 border-b border-[rgb(var(--border-rgb))] py-6"
+                    className="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--border)] py-6"
                     key={row.id}
                   >
                     <div>
                       <h3 className="mb-2">{profile.name ?? row.username}</h3>
-                      <p className="leading-[1.7] wrap-anywhere text-[rgb(var(--muted-rgb))]">
+                      <p className="leading-[1.7] wrap-anywhere text-[var(--muted-foreground)]">
                         /{row.username} · {profile.portfolioType ?? "engineer"} ·{" "}
                         {row.is_public ? "Published" : "Private draft"}
                       </p>
                     </div>
-                    <div className="flex flex-wrap gap-4 [&_a]:text-[rgb(var(--accent-rgb))]">
+                    <div className="flex flex-wrap gap-4 [&_a]:text-[var(--primary)]">
                       <a href={`/admin/portfolios/${row.id}`}>Edit portfolio ↗</a>
                       {row.is_public && <a href={`/${row.username}`}>Public page ↗</a>}
                     </div>

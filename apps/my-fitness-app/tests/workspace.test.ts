@@ -2,16 +2,16 @@ import assert from "node:assert/strict";
 
 import { afterEach, test, vi } from "vitest";
 
-import { convertV1Workspace } from "@shared/services/db/migrations/convert-v1-workspace.js";
-import { makeDay } from "@shared/services/db/migrations/v1-model.js";
-import { seed } from "@shared/services/db/migrations/v1-seed.js";
-import { seedWorkspace } from "@shared/services/fitness";
+import { makeDay } from "@shared/lib/db/migrations/v1-model";
+import { seedWorkspace } from "@shared/lib/db/seed";
+import { convertV1Workspace } from "@shared/lib/migrations/convert-v1-workspace";
+import { seed } from "@shared/lib/migrations/v1-seed";
 import {
   type BaseWorkspaceRepository,
   InvalidWorkspaceError,
   RevisionConflictError,
   WorkspaceService,
-} from "@shared/services/workspace";
+} from "@shared/lib/workspace";
 
 import { DemoWorkspaceGateway, HttpWorkspaceGateway } from "../features/task-workspace/gateway";
 
@@ -83,7 +83,7 @@ test("service propagates revision conflicts without retrying stale writes", asyn
     RevisionConflictError,
   );
 });
-test("legacy JSON migration preserves meal status, actual set logs, water and weights", () => {
+test("existing JSON migration preserves meal status, actual set logs, water and weights", () => {
   const v1 = seed();
   const d = "2026-10-19";
   v1.days[d] = makeDay(v1, d);

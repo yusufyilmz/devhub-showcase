@@ -1,93 +1,64 @@
 ---
 name: developing-lib-package
-description: Change validation, repositories, Supabase access, billing records,
-  and domain services in @shared/lib. Use when editing a Zod schema, profile
-  save, published read, username rule, section template import, CV import
-  review, Google profile review, portfolio knowledge, Stripe sandbox client, or
-  RLS policy test in packages/lib.
+description: Develops shared services, repositories, database clients, schemas,
+  models and Redis caching in packages/lib (@shared/lib). Use when editing
+  profile or portfolio backends, Fitness persistence, validation, Supabase types,
+  RedisCacheClient, or CV, chat, Studio and Fitness attempt limits.
 ---
 
 # Developing the lib package
 
-`packages/lib` is `@shared/lib`. It owns Zod validation, domain services, repositories, and Supabase persistence. Callers import a specific entry point. The app feature that calls these modules still authorizes the request. A client-supplied id, username, or profile field is not authority.
+`packages/lib` is the workspace package `@shared/lib`. It owns shared backend implementations, validation, database/chat models, typed clients and Redis caching. Cache helpers are the `@shared/lib/cache` subpath, not a separate package.
 
-Read [the file map](references/map.md) and [packages/lib/CATALOG.md](../../../packages/lib/CATALOG.md). Read [mydevstudio-business](../mydevstudio-business/SKILL.md) before changing ownership, publication, usernames, or transfers. Read [SECURITY.md](../../../SECURITY.md) before changing access checks.
+Read [the file map](references/map.md), [the lib catalog](../../../packages/lib/CATALOG.md), and the current `packages/lib/package.json` exports before adding or moving a public entry point.
 
-Do not apply production migrations, publish a profile, or transfer ownership as a side effect of a code change.
+## Choose the owning layer
 
-## Where a data change goes
+- Put database connections, Drizzle tables, client adapters and generated schema types in `src/db/`.
+- Put persistence implementations in `src/repositories/<domain>/`; keep owner filters and transaction boundaries there.
+- Put domain workflows in `src/services/<domain>/`. Pass repositories and configuration where the current API supports them.
+- Put Zod validation in `src/schemas/<domain>/` and shared models in `src/types/`.
+- Put Redis clients and atomic attempt helpers in `src/cache/`; export public helpers from its `index.ts` and `./cache` in the package manifest.
 
-| Need                                             | Put it here                           | Leave it in the app                                    |
-| ------------------------------------------------ | ------------------------------------- | ------------------------------------------------------ |
-| Shape of a valid profile, username, or section   | `src/domain`                          | Route status codes and HTTP bodies                     |
-| Save, public read, owner provisioning            | `src/services` and `src/repositories` | `requireWorkspace`, origin check, response mapping     |
-| Supabase browser, server, and middleware clients | `src/supabase`                        | The route file that calls them                         |
-| Entitlement math and billing storage             | `@shared/billing`                     | Stripe Checkout session creation in `features/billing` |
-| RLS behavior of a checked-in migration           | `src/supabase/rls/*.test.ts`          | `supabase/migrations` for the SQL itself               |
+App routes own HTTP transport, verified identity, origin checks, cookies and app env wiring. Shared code must not import either app. Generic browser/cache/logging utilities remain in `@shared/utils`; portable UI remains in `@shared/ui`; AI provider workflows remain in `@shared/assistant`.
 
-`ProfileService.save` checks `repository.isOwner`, parses `saveProfileSchema`, and writes with the revision. A null write throws `ProfileConflictError`. Do not skip the revision or overwrite a newer document. `ProfileAccessError`, `ProfileSetupError`, `ProfileNotFoundError`, and `ProfileUsernameError` are different failures. Map them at the route. Do not collapse them into one message.
+## Package boundaries
 
-A missing or private public read returns unavailable. It must not fall back to another person's profile.
+Use relative imports inside lib and declared public exports across packages. `@shared/lib/cache` is an import path; the pnpm filter is `@shared/lib`. Do not recreate forwarding `services` or `cache` workspace packages. Read `package.json` rather than inventing deep imports. Public paths have at most two segments after the package name.
 
-## Change a persisted field
+Import generated `Database` and `Json` through `@shared/lib/types`, and typed auth clients through `@shared/lib/supabase` or its exported browser/server entry points. Do not hand-edit generated Supabase schema files. Update schemas, persisted types, save/import boundaries and renderers together when stored data changes; preserve documents that omit newer fields.
 
-1. Update `PortfolioProfile` and defaults in `@shared/config`.
-2. Update the schema in `src/domain/profile.ts` so a document that omits the field still parses.
-3. Update import boundaries that can set the field: `cv-import.ts`, `pageforge-import.ts`, `google-profile.ts`, `section-templates.ts`, and `ai-edit.ts` when an assistant may propose it.
-4. Reject invalid URLs and unexpected types in the schema. Accept external input as `unknown` and parse it.
-5. Update the renderer and, if the PDF shows the field, `@shared/templates`.
-6. Extend `src/domain/profile.test.ts` or the matching domain test. Include the absent-field case.
+## Authorization and persistence
 
-Username rules live in `src/domain/username.ts`: lowercase letters, numbers, single hyphens, length 3 to 50, and `reservedUsernames`. Reserved names include route segments such as `admin`, `api`, `auth`, and `p`. Add a reservation when a new top-level route would collide. `cvPath` and `editCvPath` build public paths. Do not trust a username from the body when the session already identifies the owner.
+Preserve caller-scoped authenticated clients, owner isolation, revision conflicts and transaction atomicity. Public profile reads use explicit published website/CV snapshots; missing or private profiles never fall back to another owner. Private saves do not implicitly publish. Do not apply production migrations, change roles, transfer ownership or publish content as a side effect of development.
 
-## Repositories and Supabase
+## Redis and rate limits
 
-`ProfileRepository` in `src/repositories/profile-repository.ts` is the contract. `src/repositories/supabase-profile-repository.ts` is the Supabase implementation and the `@shared/services/profile-repository` export. Keep owner isolation in the query and in RLS. Tests under `src/supabase/rls` describe policy behavior. They do not connect to production and they do not run migrations.
+The boolean helpers in `@shared/lib/cache` limit attempts; they do not authenticate or authorize. Derive account/profile keys on the server, and preserve separate visitor, Studio, Fitness and global buckets. Read [the limit map](references/map.md#redis-limits) before changing thresholds or key prefixes.
 
-There is no Prisma client. Do not add one.
+Keep increment/expiry operations atomic with Redis Lua. Missing or failed Redis calls must not become permission to continue. The CV daily cap defaults to 100 when its configured value is missing, non-positive or non-integer. `RedisCacheClient` defaults to the `devhub-showcase` prefix; preserve caller overrides and TTL behavior. Never store raw profile documents, prompts, CV text or credentials in rate-limit counters.
 
-`src/supabase/client.ts`, `server.ts`, and `middleware.ts` build clients. Do not put a service-role key in a browser path. Public configuration names belong in `.env.example`. Values stay out of source and logs.
+`REDIS_URL` and `REDIS_TOKEN` are server settings; `CV_IMPORT_DAILY_LIMIT` is optional. Keep examples and relevant app schemas aligned when configuration changes. Never import app env modules into lib or require live Redis for tests. The service-worker cache in `@shared/utils/cache` is a separate concern.
 
-## Billing
+## Verification
 
-Entitlements, summaries, Stripe sandbox client, and repository code live in `@shared/billing`. Checkout, portal, webhook signature checks, and the public price response are the app's `features/billing` gateway. Change both sides when the entitlement a customer receives changes. Do not log Stripe payloads or raw request bodies.
-
-## Knowledge, import, and edits
-
-| Module                          | Rule                                                                                  |
-| ------------------------------- | ------------------------------------------------------------------------------------- |
-| `portfolio-knowledge.ts`        | Public and owner projections differ. Owner-only knowledge is not visitor chat context |
-| `cv-import.ts` and `cv-file.ts` | Review and file checks. The model extracts; this module validates. No CV text in logs |
-| `ai-edit.ts`                    | Proposals are validated before any save. The model does not write the profile         |
-| `google-profile.ts`             | Reviewed Google fields. Consent and scopes live in `@shared/auth`                     |
-| `section-templates.ts`          | Import and export of templates. Templates are not stored inside the published profile |
-
-## Add a public entry point
-
-`package.json` `exports` lists exact files. There is a root `main` of `src/index.ts`, but callers should use the subpath that matches the catalog, such as `@shared/lib/profile` or `@shared/lib/profiles`. When you add a module:
-
-1. Export from a stable file under `src/domain`, `src/services`, `src/repositories`, or `src/supabase`.
-2. Add the subpath to `exports`.
-3. Add a catalog row.
-4. Run `pnpm check:exports`.
-
-Do not add a deep import from `apps/my-dev-studio` into a file that is not exported.
-
-## Tests
-
-Colocate `module.test.ts` next to `module.ts`. Start with `describe`. Domain tests should cover a valid document, a rejected document, a legacy document, and the access or conflict error when the service owns that behavior.
+Run from the repository root, using the installed Node/pnpm versions:
 
 ```sh
 pnpm --filter @shared/lib typecheck
-pnpm exec vitest run --project unit packages/lib/src/domain/profile.test.ts
-pnpm exec vitest run --project unit packages/lib/src/supabase/rls/managed-rls.test.ts
+pnpm check:exports
+pnpm exec vitest run --project unit packages/lib
+pnpm exec vitest run --project unit apps/my-dev-studio/app/api/cv-import/route.test.ts
+pnpm exec vitest run --project unit apps/my-dev-studio/app/api/assistant/route.test.ts
+pnpm exec vitest run --project unit apps/my-fitness-app/app/api/assistant/route.test.ts
 ```
 
-RLS tests are not a substitute for an app route test. If the route's status code changes, test `apps/my-dev-studio/app/**/route.test.ts` as well.
+Choose affected API and domain tests; use stubbed providers and fictional accounts. Add colocated tests for changed thresholds, isolation, revision handling and failure behavior. Run both app builds when package boundaries can affect bundling. Report actual local checks separately from manual, provider and deployed verification. Update the catalog and applicable manual testing guide when behavior changes.
 
 ## Related skills
 
-- [Developing the config package](../developing-config-package/SKILL.md)
-- [Developing the auth package](../developing-auth-package/SKILL.md)
-- [Developing the MyDevStudio app](../developing-my-dev-studio-app/SKILL.md)
+- [Shared development](../mydevstudio-development/SKILL.md)
 - [Business rules](../mydevstudio-business/SKILL.md)
+- [Assistant package](../developing-assistant-package/SKILL.md)
+- [Auth package](../developing-auth-package/SKILL.md)
+- [MyDevStudio app](../developing-my-dev-studio-app/SKILL.md)

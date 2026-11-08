@@ -1,12 +1,11 @@
 import { urls } from "@shared/config/urls";
+import type { Workspace } from "@shared/lib/types";
+import type { WorkspaceSnapshot } from "@shared/lib/workspace";
+import { demoWorkspace } from "@shared/lib/workspace-defaults";
 import type { NotificationMessage } from "@shared/notifications";
-import type { Workspace } from "@shared/services/types";
-import type { WorkspaceSnapshot } from "@shared/services/workspace";
 
 import { subscribeFitnessNotifications } from "@/features/notifications/browser";
 import { authorizationHeaders } from "@/lib/browser-session";
-
-import { demoWorkspace } from "./starter";
 export interface WorkspaceGateway {
   load(signal?: AbortSignal): Promise<WorkspaceSnapshot>;
   readonly readOnly: boolean;
@@ -86,4 +85,11 @@ export class DemoWorkspaceGateway implements WorkspaceGateway {
   async save(): Promise<number> {
     throw new Error("The demo is read-only.");
   }
+}
+
+export async function assistantRequest(input: RequestInfo | URL, options?: RequestInit) {
+  const headers = new Headers(options?.headers);
+  for (const [name, value] of Object.entries(await authorizationHeaders()))
+    headers.set(name, value);
+  return fetch(input, { ...options, headers });
 }

@@ -1,8 +1,7 @@
 "use server";
 
-import type { ReviewState } from "@shared/lib/types";
-
-import { decidePortfolioReview } from "@/features/portfolio/portfolio-reviews";
+import type { ReviewState } from "../../../../../packages/lib/src/types";
+import { decidePortfolioReview } from "../review/_service";
 
 export async function submitPortfolioReviewAction(
   id: string,

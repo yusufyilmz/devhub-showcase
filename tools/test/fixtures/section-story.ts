@@ -1,10 +1,10 @@
+import type { SectionProps } from "../../../packages/assistant/src/components/sections/types";
 import {
   type AuthorableSectionType,
   authorableSections,
   getSectionRenderers,
 } from "../../../packages/config/src/sections/authorable-sections";
 import type { CustomSection } from "../../../packages/config/src/sections/custom-sections";
-import type { SectionProps } from "../../../packages/ui/src/sections/types";
 
 type StoryItem = CustomSection["items"][number];
 type StoryContent = {

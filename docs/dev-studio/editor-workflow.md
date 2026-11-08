@@ -1,6 +1,6 @@
 # Guided editing, recovery and AI review
 
-New owners choose a profession and layout, then import or enter details, and review their portfolio before saving or publishing. Back and manual-entry controls keep the current draft. The full editor remains available at every stage. Existing portfolios open directly in the editor.
+New owners move through work, layout, and how to start, then add details and review. Every step stays in a dialog. A later step stays closed until the current one is finished, and Back returns only to a step already reached. Details and review stay in the editor dialog until setup is finished. Existing portfolios open directly in the editor dialog.
 
 ## Draft recovery
 

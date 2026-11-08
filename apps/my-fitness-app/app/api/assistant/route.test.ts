@@ -1,8 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { createTask } from "@shared/services/types";
-
-import { starterWorkspace } from "@/features/task-workspace/starter";
+import { createTask } from "@shared/lib/types";
+import { starterWorkspace } from "@shared/lib/workspace-defaults";
 
 const mocks = vi.hoisted(() => ({
   context: vi.fn(),
@@ -20,7 +19,7 @@ vi.mock("@/lib/auth", () => ({
   sameOrigin: (req: Request) => req.headers.get("origin") === origin,
 }));
 vi.mock("@shared/assistant/fitness", () => ({ proposeFitnessChange: mocks.generate }));
-vi.mock("@shared/cache", () => ({ allowFitnessAssistant: mocks.limit }));
+vi.mock("@shared/lib/cache", () => ({ allowFitnessAssistant: mocks.limit }));
 
 import { SignInRequired } from "@/features/task-workspace/server";
 

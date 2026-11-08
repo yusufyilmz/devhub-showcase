@@ -36,14 +36,41 @@ describe("Shared document theme", () => {
     expect(document.documentElement.dataset.spacing).toBe("compact");
     expect(document.documentElement.style.getPropertyValue("--text-scale")).toBe("1.1");
     render(<Page />);
-    expect(document.documentElement.dataset.accent).toBe("violet");
+    expect(document.documentElement.dataset.accent).toBe("aqua");
+    expect(document.documentElement.dataset.brand).toBeUndefined();
     fireEvent.click(screen.getByRole("button", { name: "Switch to light theme" }));
     expect(document.documentElement.dataset.spacing).toBe("compact");
-    expect(document.documentElement.dataset.brand).toBe("aqua");
+    expect(document.documentElement.dataset.accent).toBe("aqua");
     act(() => useThemeStore.setState({ themePreferences: { spacing: "spacious" } }));
     expect(document.documentElement.dataset.spacing).toBe("spacious");
+    act(() => useThemeStore.setState({ themePreferences: { brand: "pink" } }));
+    expect(document.documentElement.dataset.accent).toBe("pink");
+    expect(document.documentElement.dataset.brand).toBeUndefined();
     act(() => useThemeStore.setState({ themePreferences: {} }));
     expect(document.documentElement.dataset.accent).toBe("cyan");
+  });
+  it("applies a saved portfolio theme and restores the page theme when it is cleared", () => {
+    render(<Page />);
+    act(() => useThemeStore.setState({ themePreferences: { "portfolio-theme": "gloom" } }));
+    expect(document.documentElement.dataset.portfolioTheme).toBe("gloom");
+    expect(document.documentElement.style.getPropertyValue("--portfolio-bg-dark")).toBe("14 12 18");
+    act(() => useThemeStore.setState({ themePreferences: {} }));
+    expect(document.documentElement.dataset.portfolioTheme).toBeUndefined();
+    expect(document.documentElement.style.getPropertyValue("--portfolio-bg-dark")).toBe("");
+  });
+  it("keeps the companion on the palette until a companion color is chosen", () => {
+    render(<Page />);
+    expect(document.documentElement.style.getPropertyValue("--companion-accent")).toBe("");
+    act(() => useThemeStore.setState({ themePreferences: { brand: "cyan", companion: "red" } }));
+    expect(document.documentElement.dataset.accent).toBe("cyan");
+    expect(document.documentElement.dataset.companion).toBe("red");
+    expect(document.documentElement.style.getPropertyValue("--companion-accent")).toBe(
+      "var(--clr-red-600)",
+    );
+    act(() => useThemeStore.setState({ themePreferences: { brand: "cyan" } }));
+    expect(document.documentElement.dataset.accent).toBe("cyan");
+    expect(document.documentElement.dataset.companion).toBeUndefined();
+    expect(document.documentElement.style.getPropertyValue("--companion-accent")).toBe("");
   });
   let dark: boolean;
   let change: (() => void) | undefined;

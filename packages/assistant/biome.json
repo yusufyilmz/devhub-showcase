@@ -9,12 +9,7 @@
           "options": {
             "patterns": [
               {
-                "group": [
-                  "@shared/assistant",
-                  "@shared/assistant/**",
-                  "@shared/ui/chat",
-                  "@shared/ui/chat/**"
-                ],
+                "group": ["@shared/assistant", "@shared/assistant/**"],
                 "message": "Use relative imports within @shared/assistant instead of the package alias."
               }
             ]

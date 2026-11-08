@@ -11,9 +11,9 @@ import {
   SkipForward,
 } from "lucide-react";
 
-import { TaskService } from "@shared/services/fitness";
-import { quantityLabel } from "@shared/services/meal";
-import type { Task, Workspace } from "@shared/services/types";
+import { TaskService } from "@shared/lib/fitness";
+import { quantityLabel } from "@shared/lib/meal";
+import type { Task, Workspace } from "@shared/lib/types";
 import { Button as LibraryButton } from "@shared/ui/button";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";

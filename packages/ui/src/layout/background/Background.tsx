@@ -1,4 +1,4 @@
-import "../../styles/components/layout/background.css";
+import "./background.css";
 
 import { cn } from "cn";
 

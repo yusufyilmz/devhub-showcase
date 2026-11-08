@@ -39,10 +39,11 @@ export async function POST(request: Request) {
       );
     }
     return Response.json({ ok: true }, { headers });
-  } catch {
-    return Response.json(
-      { error: "Local Supabase Auth is unavailable." },
-      { headers, status: 503 },
-    );
+  } catch (reason) {
+    const message =
+      reason instanceof Error && reason.message === "Supabase is not configured."
+        ? "Set the local Supabase URL and publishable key before using the test user."
+        : "Local Supabase Auth is unavailable.";
+    return Response.json({ error: message }, { headers, status: 503 });
   }
 }

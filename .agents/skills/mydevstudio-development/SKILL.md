@@ -15,19 +15,26 @@ Inspect current package.json files, pnpm-workspace.yaml, and .github/workflows/c
 
 Shared libraries live in `packages/` and use `@shared/*`. Depend on them with `workspace:*`. There is no `packages/sections` package. Section renderers and editors are inside `@shared/ui`. Page copy lives in `@shared/config`.
 
-| Folder               | Package             | Use it for                                                                      |
-| -------------------- | ------------------- | ------------------------------------------------------------------------------- |
-| `packages/ui`        | `@shared/ui`        | Controls, sections, studio and portfolio surfaces, theme, and global CSS        |
-| `packages/config`    | `@shared/config`    | Profile types, themes, and section metadata , Page copy, including the home FAQ |
-| `packages/lib`       | `@shared/lib`       | Validation, repositories, and Supabase access                                   |
-| `packages/auth`      | `@shared/auth`      | Sessions and Google sign-in                                                     |
-| `packages/cv`        | `@shared/templates` | CV PDFs                                                                         |
-| `packages/assistant` | `@shared/assistant` | Portfolio and editing assistants                                                |
-| `packages/cache`     | `@shared/cache`     | Cache integrations                                                              |
-| `packages/runtime`   | `@shared/runtime`   | Shared runtime helpers                                                          |
-| `packages/utils`     | `@shared/utils`     | Logging and other utilities                                                     |
-| `packages/trello`    | `@shared/trello`    | Trello board UI                                                                 |
+| Folder               | Package                | Use it for                                                                      |
+| -------------------- | ---------------------- | ------------------------------------------------------------------------------- |
+| `packages/ui`        | `@shared/ui`           | Controls, sections, studio and portfolio surfaces, theme, and global CSS        |
+| `packages/config`    | `@shared/config`       | Profile types, themes, and section metadata , Page copy, including the home FAQ |
+| `packages/auth`      | `@shared/auth`         | Sessions and Google sign-in                                                     |
+| `packages/assistant` | `@shared/assistant/cv` | CV PDFs                                                                         |
+| `packages/assistant` | `@shared/assistant`    | Portfolio and editing assistants                                                |
+| `packages/lib`       | `@shared/lib`          | Shared services, repositories, validation, database clients and Redis cache     |
+| `packages/runtime`   | `@shared/runtime`      | Shared runtime helpers                                                          |
+| `packages/utils`     | `@shared/utils`        | Logging and other utilities                                                     |
+| `packages/trello`    | `@shared/trello`       | Trello board UI                                                                 |
 
 Do not move auth, database access, or route handlers into `@shared/ui`. Do not add an app feature file that only re-exports one of these packages. Pass fetching and navigation in from `apps/my-dev-studio/features`.
 
-When the change is inside one package or app, read that skill too. Each one is a `developing-*-package` or `developing-*-app` directory next to this skill: `developing-ui-package`, `developing-config-package`, `developing-content-package`, `developing-lib-package`, `developing-auth-package`, `developing-cv-package`, `developing-assistant-package`, `developing-cache-package`, `developing-runtime-package`, `developing-utils-package`, `developing-trello-package`, `developing-my-dev-studio-app`, and `developing-storybook-app`.
+When the change is inside one package or app, read that skill too. Each one is a `developing-*-package` or `developing-*-app` directory next to this skill: `developing-ui-package`, `developing-config-package`, `developing-content-package`, `mydevstudio-development`, `developing-auth-package`, `developing-cv-package`, `developing-assistant-package`, `developing-lib-package`, `developing-runtime-package`, `developing-utils-package`, `developing-trello-package`, `developing-my-dev-studio-app`, and `developing-storybook-app`.
+
+Read [shared services and validation](references/services.md) when changing shared backends, schemas or typed database access.
+
+## Colocated routes and generated catalogs
+
+Do not recreate `features/home`, `features/reviews`, `features/portfolio`, `features/platform` or `features/chat`. Their single-use bindings live in page/route entry points; shared route-family bindings and tests are private siblings under `app`. Existing admin, billing and management integrations remain separate.
+
+Workspace catalogs are generated with `pnpm generate:catalogs` and checked with `pnpm check:catalogs`. Edit `catalog.template.md` for authored guidance and package metadata/source for the generated reference. UI registry markers still work; the UI-specific commands are compatibility aliases. Never hand-edit a generated `CATALOG.md`.

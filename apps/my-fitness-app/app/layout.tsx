@@ -1,4 +1,4 @@
-import "@shared/ui/fitness.css";
+import "./fitness.css";
 
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";

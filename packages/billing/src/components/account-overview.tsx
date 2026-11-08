@@ -14,7 +14,7 @@ const planLabels: Record<BillingSummary["access"], string> = {
 const featureLabels = {
   disabled: "Visitor chat is switched off. Enable it below when you are ready.",
   exhausted: "No attempts remain for this period. Check your plan after the period ends.",
-  legacy: "Your existing portfolio assistant keeps its legacy configuration.",
+  main_portfolio: "The original portfolio assistant uses its own configuration and limits.",
   ready: "Ready to use. Availability is checked again for each request.",
   requires_pro: "An active Pro plan is required. Your free portfolio and CV remain available.",
   setup_required:
@@ -62,7 +62,7 @@ export function AccountOverview({ billing, aiConfigured, profile }: AccountStatu
             <section className="my-4 p-5 shadow-none!">
               <h4 className="mb-2 text-base leading-[1.65] font-semibold">{label}</h4>
               <p>{featureLabels[status]}</p>
-              {status !== "legacy" && (
+              {status !== "main_portfolio" && (
                 <>
                   <p>
                     {billing.usage[feature]} / {billing.limits[feature]} attempts used.{" "}
@@ -70,7 +70,7 @@ export function AccountOverview({ billing, aiConfigured, profile }: AccountStatu
                   </p>
                   <progress
                     aria-label={`${label} usage`}
-                    className="h-2 w-full max-w-80 accent-[rgb(var(--accent-rgb))]"
+                    className="h-2 w-full max-w-80 accent-[var(--primary)]"
                     max={Math.max(1, billing.limits[feature])}
                     value={Math.min(billing.usage[feature], Math.max(1, billing.limits[feature]))}
                   />

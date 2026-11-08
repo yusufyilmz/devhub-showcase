@@ -1,4 +1,4 @@
-import { StudioShell } from "@shared/ui/portfolio";
+import { StudioShell } from "@shared/assistant/portfolio";
 import { ThemeToggle } from "@shared/ui/theme";
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {

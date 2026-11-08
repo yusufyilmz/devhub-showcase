@@ -66,6 +66,18 @@
   --spacing: 0.75rem; /* 12px */
 }
 
+[data-spacing="wide"] {
+  --spacing-xs: 0.75rem;
+  --spacing-s: 1.25rem;
+  --spacing-sm: 1.75rem;
+  --spacing-md: 2.5rem;
+  --spacing-lg: 3rem;
+  --spacing-xl: 3.5rem;
+  --spacing-2xl: 4.5rem;
+  --spacing-3xl: 6rem;
+  --spacing: 1rem;
+}
+
 /* === Radius (scales border-radius) === */
 [data-radius="square"] {
   --radius-scale: 0;
@@ -447,6 +459,11 @@
 [data-scale="110"] {
   --scale-factor: 1.1;
   --text-scale: 1.1;
+}
+
+[data-scale="120"] {
+  --scale-factor: 1.2;
+  --text-scale: 1.2;
 }
 
 [data-surface="filled"] {

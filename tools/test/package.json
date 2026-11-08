@@ -9,6 +9,10 @@
     "./setup": "./support/vitest-setup.ts",
     "./mocks/*": "./mocks/*.ts"
   },
+  "dependencies": {
+    "@shared/config": "workspace:*",
+    "@shared/ui": "workspace:*"
+  },
   "devDependencies": {
     "@playwright/test": "catalog:",
     "@shared/typescript-config": "workspace:*",

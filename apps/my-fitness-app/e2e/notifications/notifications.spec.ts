@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { seedWorkspace } from "@shared/services/fitness";
+import { seedWorkspace } from "@shared/lib/db/seed";
 
 test.describe("Fitness OS notifications", () => {
   test.beforeEach(async ({ page }) => {

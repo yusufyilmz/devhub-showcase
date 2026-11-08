@@ -1,5 +1,5 @@
 "use client";
-import "../../styles/components/forms/notification-preferences/notifications.css";
+import "./notifications.css";
 
 import { useState } from "react";
 

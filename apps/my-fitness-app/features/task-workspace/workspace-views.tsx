@@ -13,11 +13,11 @@ import {
   ShoppingBasket,
 } from "lucide-react";
 
-import { TaskService } from "@shared/services/fitness";
-import type { AgendaEvent } from "@shared/services/schedule";
-import { ScheduleService } from "@shared/services/schedule";
-import type { Workspace } from "@shared/services/types";
-import { createTask, dateLabel, shiftDate, type Task } from "@shared/services/types";
+import { TaskService } from "@shared/lib/fitness";
+import type { AgendaEvent } from "@shared/lib/schedule";
+import { ScheduleService } from "@shared/lib/schedule";
+import type { Workspace } from "@shared/lib/types";
+import { createTask, dateLabel, shiftDate, type Task } from "@shared/lib/types";
 import { Alert, AlertDescription, AlertTitle } from "@shared/ui/alert";
 import { Badge } from "@shared/ui/badge";
 import { Button as LibraryButton } from "@shared/ui/button";

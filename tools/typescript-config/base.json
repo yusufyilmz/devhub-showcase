@@ -17,8 +17,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES2025",
-    "verbatimModuleSyntax": true
+    "target": "ES2025"
   },
   "files": ["./css.d.ts"]
 }

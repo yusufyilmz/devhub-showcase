@@ -4,8 +4,8 @@ import { useLayoutEffect, useMemo, useState } from "react";
 
 import { Layers, ListPlus, Pencil, Plus } from "lucide-react";
 
-import { TaskService } from "@shared/services/fitness";
-import type { Task, Workspace } from "@shared/services/types";
+import { TaskService } from "@shared/lib/fitness";
+import type { Task, Workspace } from "@shared/lib/types";
 import { Badge } from "@shared/ui/badge";
 import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";

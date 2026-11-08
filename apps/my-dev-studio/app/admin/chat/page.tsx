@@ -1,7 +1,8 @@
 import { redirect } from "next/navigation";
 
+import { StudioChat } from "@shared/assistant/studio-chat";
+
 import { requireWorkspace } from "@/features/admin/admin-auth";
-import { StudioChat } from "@/features/chat/studio-chat";
 
 export const metadata = {
   robots: { follow: false, index: false },

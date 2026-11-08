@@ -1,0 +1,63 @@
+.template-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+.template-choice {
+  padding: 18px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.template-choice h3 {
+  margin: 18px 0 8px;
+  font-size: 17px;
+  font-weight: 650;
+}
+.template-choice p {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted-foreground);
+}
+.template-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.template-schematic {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  height: 100px;
+  padding: 12px;
+  background: var(--secondary);
+  border-radius: 8px;
+}
+.template-schematic i {
+  grid-column: 1 / -1;
+  background: color-mix(in srgb, var(--primary) 30%, transparent);
+  border-radius: 3px;
+}
+.template-schematic span {
+  background: var(--border);
+  border-radius: 3px;
+}
+.template-schematic[data-template="consultant"],
+.template-schematic[data-template="freelancer"] {
+  grid-template-columns: 1fr 2fr;
+}
+.template-schematic[data-template="consultant"] i,
+.template-schematic[data-template="freelancer"] i {
+  grid-row: 1 / 4;
+  grid-column: 1;
+}
+.template-schematic[data-template="photographer"],
+.template-schematic[data-template="retail"] {
+  grid-template-columns: repeat(3, 1fr);
+}
+.template-schematic[data-template="student"],
+.template-schematic[data-template="blogger"] {
+  grid-template-columns: 1fr;
+}
