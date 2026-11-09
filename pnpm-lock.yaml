@@ -151,8 +151,8 @@ catalogs:
       specifier: 8.5.32
       version: 8.5.32
     postgres:
-      specifier: 3.4.9
-      version: 3.4.9
+      specifier: 4.1.0
+      version: 4.1.0
     prettier:
       specifier: 3.9.10
       version: 3.9.10
@@ -443,7 +443,7 @@ importers:
         version: 0.13.11(typescript@7.0.2)(zod@4.6.7)
       drizzle-orm:
         specifier: 'catalog:'
-        version: 0.45.4(@electric-sql/pglite@0.5.12)(@upstash/redis@1.40.0)(postgres@3.4.9)
+        version: 0.45.4(@electric-sql/pglite@0.5.12)(@upstash/redis@1.40.0)(postgres@4.1.0)
       lucide-react:
         specifier: 'catalog:'
         version: 1.69.0(@types/react@19.3.0)(react@19.3.1)
@@ -452,7 +452,7 @@ importers:
         version: 16.4.3(@babel/core@7.29.13(supports-color@7.2.0))(@playwright/test@1.64.1)(@types/node@26.6.5)(babel-plugin-macros@3.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.107.0)
       postgres:
         specifier: 'catalog:'
-        version: 3.4.9
+        version: 4.1.0
       react:
         specifier: 'catalog:'
         version: 19.3.1
@@ -775,10 +775,10 @@ importers:
         version: 1.40.0
       drizzle-orm:
         specifier: 'catalog:'
-        version: 0.45.4(@electric-sql/pglite@0.5.12)(@upstash/redis@1.40.0)(postgres@3.4.9)
+        version: 0.45.4(@electric-sql/pglite@0.5.12)(@upstash/redis@1.40.0)(postgres@4.1.0)
       postgres:
         specifier: 'catalog:'
-        version: 3.4.9
+        version: 4.1.0
       zod:
         specifier: 'catalog:'
         version: 4.6.7
@@ -6464,9 +6464,9 @@ packages:
     resolution: {integrity: sha512-LJlKCCAUFKOuZxipUdYw1NzIITEsPcgyOG9LkvRJvuKj/bRzbuRY0ARXvL0pWGpsZvn8jku+LMep2eU0seHp8g==}
     engines: {node: ^10 || ^12 || >=14}
 
-  postgres@3.4.9:
-    resolution: {integrity: sha512-GD3qdB0x1z9xgFI6cdRD6xu2Sp2WCOEoe3mtnyB5Ee0XrrL5Pe+e4CCnJrRMnL1zYtRDZmQQVbvOttLnKDLnaw==}
-    engines: {node: '>=12'}
+  postgres@4.1.0:
+    resolution: {integrity: sha512-s+0WH67YAyLdBQUb6XczbziBhY+C9uiQsg9S8R5RHdZhk6sdyK6202E+T2tXpiInSEEjDLRSJ3OpYBe3PN6MsQ==}
+    engines: {node: '>=18'}
 
   powershell-utils@0.2.1:
     resolution: {integrity: sha512-C+y9x90UElAddDZmV4qOx9W53B61PO7cIqWz2dQsWlwswuq4mr8NEwytdGKboYbQlGZ3awrkTeNvcZiZNHnQ8A==}
@@ -10714,11 +10714,11 @@ snapshots:
 
   dotenv@17.4.2: {}
 
-  drizzle-orm@0.45.4(@electric-sql/pglite@0.5.12)(@upstash/redis@1.40.0)(postgres@3.4.9):
+  drizzle-orm@0.45.4(@electric-sql/pglite@0.5.12)(@upstash/redis@1.40.0)(postgres@4.1.0):
     optionalDependencies:
       '@electric-sql/pglite': 0.5.12
       '@upstash/redis': 1.40.0
-      postgres: 3.4.9
+      postgres: 4.1.0
 
   dts-resolver@3.0.0(oxc-resolver@11.24.2):
     optionalDependencies:
@@ -12399,7 +12399,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.2
 
-  postgres@3.4.9: {}
+  postgres@4.1.0: {}
 
   powershell-utils@0.2.1: {}
 
