@@ -51,7 +51,6 @@
       "**",
       "!!**/node_modules",
       "!!**/.next",
-      "!CLAUDE.md",
       "!!**/.turbo",
       "!!**/.vercel",
       "!!**/dist",
@@ -65,7 +64,8 @@
       "!**/CATALOG.md",
       "!**/next-env.d.ts",
       "!**/*.generated.*",
-      "!**/*.gen.*"
+      "!**/*.gen.*",
+      "!CLAUDE.md"
     ],
     "maxSize": 1048576
   },
