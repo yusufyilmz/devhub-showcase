@@ -42,6 +42,7 @@ export function EditorWorkspace({
     onNavigate(next);
     changeView("edit");
   }
+  const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(null);
   const options = groups.map((entry) => (
     <optgroup key={entry.label} label={entry.label}>
       {entry.items.map((item) => (
@@ -57,7 +58,7 @@ export function EditorWorkspace({
       }}
       open={view === "edit"}
     >
-      <div className="editor-workspace" data-view={view}>
+      <div className="editor-workspace" data-view={view} ref={setPortalContainer}>
         <nav aria-label="Editor sections" className="editor-sidebar">
           <div className="editor-sidebar-identity">
             <p className="eyebrow">Your portfolio</p>
@@ -114,6 +115,7 @@ export function EditorWorkspace({
           onPointerDownOutside={(event) => {
             if (locked) event.preventDefault();
           }}
+          portalContainer={portalContainer}
           showCloseButton={false}
         >
           <header className="editor-lightbox-header">

@@ -27,16 +27,25 @@ describe("guided onboarding", () => {
   });
   it("keeps skip, back and review actions separate from saving or publishing", () => {
     const onStep = vi.fn();
+    const onOpen = vi.fn();
     const onManual = vi.fn();
     const onImport = vi.fn();
     render(
-      <SetupNavigation onImport={onImport} onManual={onManual} onStep={onStep} step="details" />,
+      <SetupNavigation
+        canReview
+        onImport={onImport}
+        onManual={onManual}
+        onOpen={onOpen}
+        onStep={onStep}
+        step="details"
+      />,
     );
     fireEvent.click(screen.getByRole("button", { name: "Skip import · enter manually" }));
     fireEvent.click(screen.getByRole("button", { name: "Back to layout" }));
     fireEvent.click(screen.getByRole("button", { name: "Review draft" }));
     expect(onManual).toHaveBeenCalledOnce();
     expect(onImport).not.toHaveBeenCalled();
-    expect(onStep.mock.calls).toEqual([["template"], ["review"]]);
+    expect(onOpen).toHaveBeenCalledWith("layout");
+    expect(onStep).toHaveBeenCalledWith("review");
   });
 });

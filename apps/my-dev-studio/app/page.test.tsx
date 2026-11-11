@@ -46,7 +46,7 @@ describe("HomePage", () => {
     expect(
       screen.getByRole("link", { name: "Sign in to use Studio assistant" }).getAttribute("href"),
     ).toBe("/login");
-    const palettes = screen.getByRole("list", { name: "Available color palettes" });
+    const palettes = screen.getByRole("list", { name: "Palette colors" });
     expect(
       within(palettes)
         .getAllByRole("listitem")

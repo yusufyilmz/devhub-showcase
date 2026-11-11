@@ -867,7 +867,7 @@ function needsRecoveryAttention(recovery: ReturnType<typeof useDraftRecovery>) {
 }
 
 function initialEditorView(_tab: string): "edit" | "preview" {
-  return "edit";
+  return "preview";
 }
 
 async function savePortfolioEditor(input: {
