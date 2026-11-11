@@ -75,6 +75,18 @@ describe("native repository lookup and CLI", () => {
     expect(searchCatalog("submit form", { root }).response.total).toBe(1);
   });
 
+  it("reads generic arrows in TypeScript sources", () => {
+    write(
+      "packages/ui/src/storage.ts",
+      "export const chatStorage = {\n  persistence: <T>(scope: { id: string }) => scope as T,\n};\n",
+    );
+    const manifest = JSON.parse(
+      fs.readFileSync(path.join(root, "packages/ui/package.json"), "utf8"),
+    ) as { exports: Record<string, string> };
+    manifest.exports["./storage"] = "./src/storage.ts";
+    write("packages/ui/package.json", JSON.stringify(manifest));
+    expect(findSymbol("chatStorage", { root }).response.total).toBe(1);
+  });
   it("reads native exports and relative barrels without executing modules", () => {
     const output = findSymbol("Button", { root });
     expect(output.response.total).toBe(2);

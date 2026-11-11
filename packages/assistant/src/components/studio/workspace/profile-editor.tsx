@@ -16,7 +16,7 @@ import { urls } from "@shared/config/urls";
 import type { ProfileSnapshot } from "@shared/lib/profile";
 import { editCvPath } from "@shared/lib/profiles";
 import { draftStorage } from "@shared/runtime/storage";
-import { useStudioRequest } from "@shared/runtime/studio";
+import { type StudioRequest, useStudioRequest } from "@shared/runtime/studio";
 import { useUserConfigStore } from "@shared/runtime/user";
 import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
@@ -263,8 +263,7 @@ export function ProfileEditor({
   const request = useStudioRequest();
   const [message, setMessage] = useState("");
   const [error, showError] = useState("");
-  const dirty =
-    JSON.stringify(draft) !== JSON.stringify(saved.profile) || username !== (saved.username ?? "");
+  const dirty = portfolioDirty(draft, saved, username);
   const recovery = useDraftRecovery({
     dirty,
     onRestore: (value) => {
@@ -293,40 +292,27 @@ export function ProfileEditor({
     return () => window.removeEventListener("beforeunload", warn);
   }, [dirty]);
   async function publish() {
-    if (recovery.stale) return;
-    setBusy(true);
-    showError("");
-    setMessage("");
-    try {
-      const response = await request(saveUrl, {
-        body: JSON.stringify({
-          profile: clean(draft),
-          revision: saved.revision,
-          ...(username ? { username } : {}),
-        }),
-        headers: { "Content-Type": "application/json" },
-        method: "PUT",
-      });
-      const result = await readSaveResponse(response, recovery.conflict);
-      if (!managed && result.username && result.username !== saved.username)
-        window.history.replaceState(null, "", editCvPath(result.username));
-      setUsername(result.username ?? username);
-      recovery.saved(result.revision);
-      setSaved(result);
-      resetDraft(result.profile);
-      setIsPublic(result.isPublic ?? isPublic);
-      setMessage("Saved privately. Review publication to update your public website and CV.");
-      onSaved?.(result);
-    } catch (reason) {
-      setWorkspaceView("edit");
-      showError(
-        reason instanceof Error
-          ? reason.message
-          : "Could not publish. Your changes are still here.",
-      );
-    } finally {
-      setBusy(false);
-    }
+    const revision = await savePortfolioEditor({
+      conflict: recovery.conflict,
+      draft,
+      isPublic,
+      managed,
+      onSaved,
+      request,
+      resetDraft,
+      saved,
+      saveUrl,
+      setBusy,
+      setIsPublic,
+      setMessage,
+      setSaved,
+      setUsername,
+      setWorkspaceView,
+      showError,
+      stale: recovery.stale,
+      username,
+    });
+    if (revision !== undefined) recovery.saved(revision);
   }
   function arrangeLayout() {
     setWorkspaceView("preview");
@@ -426,23 +412,7 @@ export function ProfileEditor({
             <span>Revision {saved.revision}</span>
             <Button
               disabled={busy}
-              onClick={async () => {
-                if (dirty && !window.confirm("Leave without publishing your changes?")) return;
-                setBusy(true);
-                try {
-                  const response = await request(urls.auth.session(), {
-                    method: "DELETE",
-                  });
-                  if (!response.ok) throw new Error("Could not sign out.");
-                  recovery.stop();
-                  draftStorage.clear();
-                  useUserConfigStore.getState().clearUser();
-                  window.location.assign("/login");
-                } catch (reason) {
-                  showError(reason instanceof Error ? reason.message : "Could not sign out.");
-                  setBusy(false);
-                }
-              }}
+              onClick={() => signOutOfStudio(dirty, request, recovery.stop, showError, setBusy)}
               type="button"
             >
               Sign out
@@ -457,7 +427,7 @@ export function ProfileEditor({
             ...group,
             items: group.items.filter((item) => availableTabs.includes(item)),
           }))}
-          locked={step === "details" || step === "review"}
+          locked={setupStepLocksEditor(step)}
           notice={workspaceNotice(recovery, busy, message)}
           onNavigate={(next) => {
             setAssistantPrompt("");
@@ -483,7 +453,7 @@ export function ProfileEditor({
             </DraftPreviewPane>
           }
           username={username}
-          view={step === "details" || step === "review" ? "edit" : workspaceView}
+          view={editorWorkspaceView(step, workspaceView)}
         >
           <SetupNavigation
             canReview={draft.name.trim().length > 0 && draft.title.trim().length > 0}
@@ -850,6 +820,20 @@ function DraftPreview({
   );
 }
 
+function portfolioDirty(draft: PortfolioProfile, saved: ProfileSnapshot, username: string) {
+  return (
+    JSON.stringify(draft) !== JSON.stringify(saved.profile) || username !== (saved.username ?? "")
+  );
+}
+
+function setupStepLocksEditor(step: SetupStep) {
+  return step === "details" || step === "review";
+}
+
+function editorWorkspaceView(step: SetupStep, view: "edit" | "preview") {
+  return setupStepLocksEditor(step) ? "edit" : view;
+}
+
 function initialSetup(profile: PortfolioProfile): SetupStep {
   return profile.templateChosen === false ? "template" : "done";
 }
@@ -884,6 +868,82 @@ function needsRecoveryAttention(recovery: ReturnType<typeof useDraftRecovery>) {
 
 function initialEditorView(_tab: string): "edit" | "preview" {
   return "edit";
+}
+
+async function savePortfolioEditor(input: {
+  conflict: () => void;
+  draft: PortfolioProfile;
+  isPublic: boolean;
+  managed: boolean;
+  onSaved?: (snapshot: ProfileSnapshot) => void;
+  request: StudioRequest;
+  resetDraft: (profile: PortfolioProfile) => void;
+  saveUrl: string;
+  saved: ProfileSnapshot;
+  setBusy: (busy: boolean) => void;
+  setIsPublic: (value: boolean) => void;
+  setMessage: (message: string) => void;
+  setSaved: (snapshot: ProfileSnapshot) => void;
+  setUsername: (username: string) => void;
+  setWorkspaceView: (view: "edit" | "preview") => void;
+  showError: (message: string) => void;
+  stale: boolean;
+  username: string;
+}) {
+  if (input.stale) return;
+  input.setBusy(true);
+  input.showError("");
+  input.setMessage("");
+  try {
+    const response = await input.request(input.saveUrl, {
+      body: JSON.stringify({
+        profile: clean(input.draft),
+        revision: input.saved.revision,
+        ...(input.username ? { username: input.username } : {}),
+      }),
+      headers: { "Content-Type": "application/json" },
+      method: "PUT",
+    });
+    const result = await readSaveResponse(response, input.conflict);
+    if (!input.managed && result.username && result.username !== input.saved.username)
+      window.history.replaceState(null, "", editCvPath(result.username));
+    input.setUsername(result.username ?? input.username);
+    input.setSaved(result);
+    input.resetDraft(result.profile);
+    input.setIsPublic(result.isPublic ?? input.isPublic);
+    input.setMessage("Saved privately. Review publication to update your public website and CV.");
+    input.onSaved?.(result);
+    return result.revision;
+  } catch (reason) {
+    input.setWorkspaceView("edit");
+    input.showError(
+      reason instanceof Error ? reason.message : "Could not publish. Your changes are still here.",
+    );
+  } finally {
+    input.setBusy(false);
+  }
+}
+
+async function signOutOfStudio(
+  dirty: boolean,
+  request: StudioRequest,
+  stopRecovery: () => void,
+  showError: (message: string) => void,
+  setBusy: (busy: boolean) => void,
+) {
+  if (dirty && !window.confirm("Leave without publishing your changes?")) return;
+  setBusy(true);
+  try {
+    const response = await request(urls.auth.session(), { method: "DELETE" });
+    if (!response.ok) throw new Error("Could not sign out.");
+    stopRecovery();
+    draftStorage.clear();
+    useUserConfigStore.getState().clearUser();
+    window.location.assign("/login");
+  } catch (reason) {
+    showError(reason instanceof Error ? reason.message : "Could not sign out.");
+    setBusy(false);
+  }
 }
 
 function editorSaveState(busy: boolean, stale: boolean, dirty: boolean) {

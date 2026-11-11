@@ -97,7 +97,10 @@ function sourceExports(
     return [];
   }
   const next = new Set(visiting).add(file);
-  const nodes = parse(content, { plugins: ["typescript", "jsx"], sourceType: "module" }).program
+  const plugins = /\.(?:[cm]jsx|jsx|[cm]tsx|tsx)$/.test(file)
+    ? (["typescript", "jsx"] as const)
+    : (["typescript"] as const);
+  const nodes = parse(content, { plugins: [...plugins], sourceType: "module" }).program
     .body as unknown as SyntaxNode[];
   const result: string[] = [];
   const types = new Set(

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny:tools */
 declare module "beautify-console-log/lib/beautify-console" {
   export class BeautifyConsole {
     static getInstance(): BeautifyConsole;

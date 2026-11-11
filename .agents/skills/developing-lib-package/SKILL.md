@@ -2,8 +2,8 @@
 name: developing-lib-package
 description: Develops shared services, repositories, database clients, schemas,
   models and Redis caching in packages/lib (@shared/lib). Use when editing
-  profile or portfolio backends, Fitness persistence, validation, Supabase types,
-  RedisCacheClient, or CV, chat, Studio and Fitness attempt limits.
+  profile or portfolio backends, Fitness persistence, validation, Supabase
+  types, RedisCacheClient, or CV, chat, Studio and Fitness attempt limits.
 ---
 
 # Developing the lib package

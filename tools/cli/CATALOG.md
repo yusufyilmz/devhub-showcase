@@ -25,6 +25,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | Dependency                  | Declared version | Kind            |
 | --------------------------- | ---------------- | --------------- |
 | `@babel/parser`             | `catalog:`       | devDependencies |
+| `@biomejs/biome`            | `catalog:`       | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
 | `@turbo/gen`                | `catalog:`       | devDependencies |
 | `commander`                 | `catalog:`       | devDependencies |
