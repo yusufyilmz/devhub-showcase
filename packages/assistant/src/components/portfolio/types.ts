@@ -54,6 +54,7 @@ export type GuidedOnboardingProps = {
   onContinue: () => void;
   onImport: () => void;
   onGoogleImport: () => void;
+  onAskAssistant?: () => void;
   managed: boolean;
   children?: import("react").ReactNode;
   startStep?: "work" | "layout" | "start";
@@ -67,6 +68,8 @@ export type SetupNavigationProps = {
   onStep: (step: import("./recovery/types").SetupStep) => void;
   onImport: () => void;
   onManual: () => void;
+  onAskAssistant?: () => void;
+  onPreview?: () => void;
   onOpen?: (step: "work" | "layout" | "start") => void;
   canReview?: boolean;
   reached?: number;

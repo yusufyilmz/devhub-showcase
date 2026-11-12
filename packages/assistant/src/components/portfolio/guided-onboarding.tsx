@@ -1,6 +1,8 @@
 "use client";
 import "./workflow.css";
 
+import { Bot, FileUp, PenLine, UserRound } from "lucide-react";
+
 import { portfolioTypes } from "@shared/config";
 import { Button } from "@shared/ui/button";
 import { Flex } from "@shared/ui/flex";
@@ -16,6 +18,49 @@ export const setupStages = [
   { id: "details", label: "Details" },
   { id: "review", label: "Review" },
 ] as const;
+
+const startStageCopy = {
+  layout: {
+    description: "Start with the suggested layout or choose another.",
+    tip: "You can change the design later. Your content stays with you.",
+    title: "Pick a layout for your work",
+  },
+  start: {
+    description: "Add details yourself or bring in information you already have.",
+    tip: "Start with a CV if it’s up to date. If you’re starting from notes, I can help shape an introduction.",
+    title: "Choose how to start",
+  },
+  work: {
+    description: "Choose the closest match and we’ll suggest a layout.",
+    tip: "Pick the work you want to showcase. You can use any layout on the next step.",
+    title: "Choose your work type",
+  },
+} as const;
+
+function SetupCompanion({
+  children,
+  disabled,
+  onAsk,
+}: {
+  children: string;
+  disabled?: boolean;
+  onAsk?: () => void;
+}) {
+  return (
+    <aside aria-label="Studio companion" className="setup-companion">
+      <Bot aria-hidden="true" size={22} />
+      <div>
+        <strong>Studio companion</strong>
+        <p>{children}</p>
+      </div>
+      {onAsk && (
+        <Button disabled={disabled} onClick={onAsk} type="button" variant="outline">
+          Ask Studio AI
+        </Button>
+      )}
+    </aside>
+  );
+}
 
 export type SetupStage = (typeof setupStages)[number]["id"];
 
@@ -59,6 +104,7 @@ export function GuidedOnboarding({
   onContinue,
   onImport,
   onGoogleImport,
+  onAskAssistant,
   managed,
   children,
   startStep = "work",
@@ -66,6 +112,7 @@ export function GuidedOnboarding({
   onOpen,
   reached = 0,
 }: GuidedOnboardingProps) {
+  const stageCopy = startStageCopy[startStep];
   function open(stage: SetupStage) {
     if (setupStages.findIndex((item) => item.id === stage) > reached) return;
     if (stage === "work" || stage === "layout" || stage === "start") onStartStep?.(stage);
@@ -78,15 +125,15 @@ export function GuidedOnboarding({
     <div className="studio type-onboarding" id="admin-content">
       <p className="eyebrow">YOUR FIRST PORTFOLIO</p>
       <SetupSteps current={startStep} onSelect={open} reached={reached} />
-      <h1>
-        A home for <span>your work.</span>
-      </h1>
-      <p>
-        Finish this step before the next one opens. You can go back to anything you already
-        completed.
-      </p>
+      <h1>{stageCopy.title}</h1>
+      <p>{stageCopy.description}</p>
+      <SetupCompanion onAsk={startStep === "start" ? onAskAssistant : undefined}>
+        {startStep === "start" && !onAskAssistant
+          ? "Choose a CV if it’s up to date, or enter just the basics to get started."
+          : stageCopy.tip}
+      </SetupCompanion>
       {children}
-      {(startStep === "work" || startStep === "layout") && (
+      {startStep === "work" && (
         <SelectField
           label="What kind of work do you do?"
           onChange={(value) => {
@@ -114,23 +161,41 @@ export function GuidedOnboarding({
         />
       )}
       {startStep === "start" && (
-        <section aria-label="How to start" className="editor-card editor-fields">
-          <h2>How do you want to begin?</h2>
-          <p>Start empty, or bring in a CV or Google profile. You can switch methods later.</p>
-          <Flex direction="row" gap="md">
-            <Button onClick={onContinue} type="button">
-              Use this layout
+        <fieldset aria-label="Starting options" className="setup-start-options">
+          <Button
+            className="setup-start-option"
+            onClick={onContinue}
+            type="button"
+            variant="outline"
+          >
+            <PenLine aria-hidden="true" />
+            <span>
+              <strong>Enter details manually</strong>
+              <small>Start with your name, title and an introduction.</small>
+            </span>
+          </Button>
+          <Button className="setup-start-option" onClick={onImport} type="button" variant="outline">
+            <FileUp aria-hidden="true" />
+            <span>
+              <strong>Start from a CV</strong>
+              <small>Upload a CV and review the suggested details.</small>
+            </span>
+          </Button>
+          {!managed && (
+            <Button
+              className="setup-start-option"
+              onClick={onGoogleImport}
+              type="button"
+              variant="outline"
+            >
+              <UserRound aria-hidden="true" />
+              <span>
+                <strong>Start from Google profile</strong>
+                <small>Bring in the basic details you choose to share.</small>
+              </span>
             </Button>
-            <Button onClick={onImport} type="button" variant="outline">
-              Start from a CV
-            </Button>
-            {!managed && (
-              <Button onClick={onGoogleImport} type="button" variant="outline">
-                Start from Google profile
-              </Button>
-            )}
-          </Flex>
-        </section>
+          )}
+        </fieldset>
       )}
       <Flex direction="row" gap="md" justify="space-between" paddingX="sm">
         <Button
@@ -143,7 +208,7 @@ export function GuidedOnboarding({
         </Button>
         {startStep !== "start" && (
           <Button onClick={advance} type="button">
-            Next
+            {startStep === "work" ? "Choose a layout" : "Choose how to start"}
           </Button>
         )}
       </Flex>
@@ -156,6 +221,8 @@ export function SetupNavigation({
   onStep,
   onImport,
   onManual,
+  onAskAssistant,
+  onPreview,
   onOpen,
   canReview = false,
   reached = 0,
@@ -170,29 +237,32 @@ export function SetupNavigation({
         onSelect={(stage) => {
           if (setupStages.findIndex((item) => item.id === stage) > reached) return;
           if (stage === "details") onStep("details");
-          else if (stage === "review") onStep("review");
-          else onOpen?.(stage);
+          else if (stage === "review" && canReview) onStep("review");
+          else if (stage === "work" || stage === "layout" || stage === "start") onOpen?.(stage);
         }}
         reached={reached}
       />
-      <h2>
-        {step === "details"
-          ? "Step 4 of 5 · Add your details"
-          : "Step 5 of 5 · Review your portfolio"}
-      </h2>
+      <h2>{step === "details" ? "Add your details" : "Review your portfolio"}</h2>
       <p>
         {step === "details"
-          ? "Import a CV or type your details below. Failed imports leave your draft unchanged. You can skip import and continue manually."
-          : "Check your content, preview and visibility. Save changes is explicit; publishing shares your portfolio and CV."}
+          ? "Start with your name and professional title. You can add the rest now or return to it later."
+          : "Preview your portfolio and CV, then finish setup. Save changes keeps your draft private until you choose to publish."}
       </p>
+      {step === "details" && (
+        <SetupCompanion disabled={disabled} onAsk={onAskAssistant}>
+          {onAskAssistant
+            ? "I can help you draft an introduction using facts you share. You choose what to keep."
+            : "Add a short introduction about the work you want to show."}
+        </SetupCompanion>
+      )}
       <div className="studio-header-actions">
         <Button
           disabled={disabled}
-          onClick={() => (step === "review" ? onStep("details") : onOpen?.("layout"))}
+          onClick={() => (step === "review" ? onStep("details") : onOpen?.("start"))}
           type="button"
           variant="outline"
         >
-          Back to {step === "review" ? "details" : "layout"}
+          Back to {step === "review" ? "details" : "starting options"}
         </Button>
         {step === "details" && (
           <>
@@ -212,9 +282,16 @@ export function SetupNavigation({
           </>
         )}
         {step === "review" && (
-          <Button disabled={disabled} onClick={() => onStep("done")} type="button">
-            Finish setup
-          </Button>
+          <>
+            {onPreview && (
+              <Button disabled={disabled} onClick={onPreview} type="button" variant="outline">
+                Preview draft
+              </Button>
+            )}
+            <Button disabled={disabled} onClick={() => onStep("done")} type="button">
+              Finish setup
+            </Button>
+          </>
         )}
         <Button disabled={disabled} onClick={() => onStep("done")} type="button" variant="outline">
           Continue in full editor

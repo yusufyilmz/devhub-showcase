@@ -53,13 +53,15 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
       ),
     )
     .toBe(userId);
+  await page.getByRole("button", { name: "Choose a layout" }).click();
   await expect(page.getByRole("group", { name: "Choose your portfolio layout" })).toBeVisible();
   await page.getByRole("radio", { name: /Designer/ }).check();
   await page.screenshot({
     fullPage: true,
     path: testInfo.outputPath("type-picker.png"),
   });
-  await page.getByRole("button", { name: "Use this layout" }).click();
+  await page.getByRole("button", { name: "Choose how to start" }).click();
+  await page.getByRole("button", { name: /Enter details manually/ }).click();
   await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
     "New Portfolio Owner",
   );

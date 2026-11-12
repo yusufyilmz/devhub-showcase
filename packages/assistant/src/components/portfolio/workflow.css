@@ -85,18 +85,77 @@
   max-height: calc(100dvh - 32px);
   overflow: auto;
 }
-.type-onboarding .setup-steps .ui-button {
-  width: auto;
+.setup-dialog .type-onboarding {
+  width: 100%;
+  padding: clamp(0.5rem, 2vw, 1.5rem);
 }
-.type-onboarding [aria-label="How to start"] {
+.setup-dialog .type-onboarding > :where(h1) {
+  margin-block: 0.75rem;
+  font-size: clamp(1.75rem, 4vw, 2.875rem);
+}
+.type-onboarding .setup-steps {
   display: grid;
-  gap: 12px;
-  margin-block: 8px 20px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
-.type-onboarding [aria-label="How to start"] > div {
+.type-onboarding .setup-steps .ui-button {
+  width: 100%;
+  min-height: 2.5rem;
+}
+.type-onboarding .setup-steps [aria-current="step"] {
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+.type-onboarding .setup-steps-count {
+  grid-column: 1 / -1;
+}
+.setup-start-options {
+  display: grid;
+  gap: 0.75rem;
+  margin-block: 1rem;
+}
+.type-onboarding .setup-start-option {
+  gap: 0.75rem;
+  justify-content: flex-start;
+  height: auto;
+  min-height: 4rem;
+  padding: 0.75rem 1rem;
+  text-align: start;
+  white-space: normal;
+}
+.setup-start-option > span {
+  display: grid;
+  gap: 0.25rem;
+}
+.setup-start-option small {
+  color: var(--muted-foreground);
+}
+.setup-companion {
+  display: flex;
   flex-wrap: wrap;
+  gap: 0.625rem 0.875rem;
+  align-items: start;
+  padding: 0.875rem 1rem;
+  margin-block: 1rem;
+  background: color-mix(in srgb, var(--primary) 7%, var(--card));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.setup-companion > svg {
+  flex-shrink: 0;
+  color: var(--primary);
+}
+.setup-companion > div {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+.setup-companion p {
+  margin-block: 0.25rem 0;
+  color: var(--muted-foreground);
 }
 @media (max-width: 760px) {
+  .type-onboarding .setup-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
   .type-picker-grid {
     grid-template-columns: 1fr;
   }
