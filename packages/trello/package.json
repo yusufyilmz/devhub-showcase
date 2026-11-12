@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@shared/config": "workspace:*",
+    "@shared/env": "workspace:*",
     "@shared/runtime": "workspace:*",
     "@shared/ui": "workspace:*",
     "@shared/utils": "workspace:*",

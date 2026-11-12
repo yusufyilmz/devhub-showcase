@@ -32,11 +32,11 @@ No public package export map or main entry is declared.
 | `@shared/assistant`         | `workspace:*`    | dependencies    |
 | `@shared/auth`              | `workspace:*`    | dependencies    |
 | `@shared/config`            | `workspace:*`    | dependencies    |
+| `@shared/env`               | `workspace:*`    | dependencies    |
 | `@shared/lib`               | `workspace:*`    | dependencies    |
 | `@shared/notifications`     | `workspace:*`    | dependencies    |
 | `@shared/runtime`           | `workspace:*`    | dependencies    |
 | `@shared/ui`                | `workspace:*`    | dependencies    |
-| `@t3-oss/env-nextjs`        | `catalog:`       | dependencies    |
 | `drizzle-orm`               | `catalog:`       | dependencies    |
 | `lucide-react`              | `catalog:`       | dependencies    |
 | `next`                      | `catalog:`       | dependencies    |

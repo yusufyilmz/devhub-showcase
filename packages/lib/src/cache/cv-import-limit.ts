@@ -1,5 +1,7 @@
 import { Redis } from "@upstash/redis";
 
+import { env } from "@shared/env";
+
 // Atomic counters with expiry; no CV content is stored in Redis.
 export const cvImportLimitScript = `
 local personal = redis.call('INCR', KEYS[1])
@@ -10,8 +12,8 @@ if total == 1 then redis.call('EXPIRE', KEYS[2], 86400) end
 if total > tonumber(ARGV[1]) then return 0 end
 return 1`;
 export async function allowCvImport(userId: string) {
-  const redis = new Redis({ token: process.env.REDIS_TOKEN, url: process.env.REDIS_URL });
-  const configured = Number(process.env.CV_IMPORT_DAILY_LIMIT || 100);
+  const redis = new Redis({ token: env.REDIS_TOKEN, url: env.REDIS_URL });
+  const configured = Number(env.CV_IMPORT_DAILY_LIMIT || 100);
   const dailyLimit = Number.isInteger(configured) && configured > 0 ? configured : 100;
   const result = await redis.eval(
     cvImportLimitScript,

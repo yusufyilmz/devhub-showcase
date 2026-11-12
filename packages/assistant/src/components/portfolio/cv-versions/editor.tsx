@@ -64,7 +64,7 @@ export function CvVersionsEditor({
   return (
     <section
       aria-label="Private CV versions"
-      className="grid w-full max-w-3xl justify-items-start gap-md rounded-xl border bg-card p-md text-card-foreground"
+      className="editor-card grid w-full justify-items-start gap-4 text-card-foreground"
     >
       <h2>Private CV versions</h2>
       <p>

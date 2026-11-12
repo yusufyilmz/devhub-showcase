@@ -452,9 +452,6 @@ export function ProfileEditor({
                     showStart={step === "done"}
                     startingOver={Boolean(scratchBackup)}
                   />
-                  <Button className="studio-secondary" href="/admin/jobs" variant="outline">
-                    Job Hunter
-                  </Button>
                   <Button className="studio-secondary" href="/admin/billing" variant="outline">
                     Plan and usage
                   </Button>

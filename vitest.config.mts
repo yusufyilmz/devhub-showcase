@@ -72,6 +72,7 @@ export default defineConfig({
         "auth",
         "billing",
         "config",
+        "env",
         "lib",
         "notifications",
         "runtime",

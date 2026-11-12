@@ -32,13 +32,13 @@ No public package export map or main entry is declared.
 | `@shared/auth`              | `workspace:*`    | dependencies    |
 | `@shared/billing`           | `workspace:*`    | dependencies    |
 | `@shared/config`            | `workspace:*`    | dependencies    |
+| `@shared/env`               | `workspace:*`    | dependencies    |
 | `@shared/lib`               | `workspace:*`    | dependencies    |
 | `@shared/notifications`     | `workspace:*`    | dependencies    |
 | `@shared/runtime`           | `workspace:*`    | dependencies    |
 | `@shared/ui`                | `workspace:*`    | dependencies    |
 | `@shared/utils`             | `workspace:*`    | dependencies    |
 | `@supabase/supabase-js`     | `catalog:`       | dependencies    |
-| `@t3-oss/env-nextjs`        | `catalog:`       | dependencies    |
 | `next`                      | `catalog:`       | dependencies    |
 | `react`                     | `catalog:`       | dependencies    |
 | `react-dom`                 | `catalog:`       | dependencies    |

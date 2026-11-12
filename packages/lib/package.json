@@ -125,6 +125,7 @@
   "dependencies": {
     "@shared/auth": "workspace:*",
     "@shared/config": "workspace:*",
+    "@shared/env": "workspace:*",
     "@shared/notifications": "workspace:*",
     "@shared/utils": "workspace:*",
     "@supabase/supabase-js": "catalog:",

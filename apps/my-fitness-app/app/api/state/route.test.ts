@@ -45,7 +45,7 @@ describe("private Fitness workspace API", () => {
   beforeEach(() => {
     vi.stubEnv("APP_URL", origin);
     vi.stubEnv("FITNESS_ADDITIONAL_ORIGIN", "");
-    vi.stubEnv("SUPABASE_DB_URL", "test");
+    vi.stubEnv("SUPABASE_DB_URL", "postgres://example.test/fitness");
     vi.clearAllMocks();
     mocks.load.mockImplementation(async (id: string) => {
       const state = starterWorkspace();

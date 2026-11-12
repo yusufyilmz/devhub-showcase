@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 
+import { env } from "@shared/env";
 import { type PublicPortfolioKnowledge, serializePublicKnowledge } from "@shared/lib/profiles";
 
 import { AssistantService, type ResponseDelta } from "../services/provider";
@@ -8,7 +9,7 @@ const instructions = `You are an AI portfolio assistant. Answer questions about 
 export class PortfolioChatModel {
   constructor(
     private readonly client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: env.OPENAI_API_KEY,
       maxRetries: 0,
       timeout: 45000,
     }),
@@ -37,7 +38,7 @@ export class PortfolioChatModel {
         ],
         instructions,
         max_output_tokens: 800,
-        model: process.env.OPENAI_CHAT_MODEL || "gpt-6-luna",
+        model: env.OPENAI_CHAT_MODEL || "gpt-6-luna",
         reasoning: { effort: "none" },
         store: false,
       },

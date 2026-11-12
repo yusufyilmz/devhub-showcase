@@ -1,6 +1,7 @@
+import { env } from "@shared/env";
 // Trello Module Constants
 
-export const isDev = () => process.env.NODE_ENV === "development";
+export const isDev = () => env.NODE_ENV === "development";
 
 import type { TrelloServiceConfig } from "./types";
 
@@ -13,13 +14,17 @@ export const TRELLO_CONFIG = {
 } as const;
 
 export const DEFAULT_TRELLO_CONFIG: TrelloServiceConfig = {
-  apiKey: process.env.TRELLO_API_KEY || "",
-  token: process.env.TRELLO_API_TOKEN || "",
+  get apiKey() {
+    return typeof window === "undefined" ? (env.TRELLO_API_KEY ?? "") : "";
+  },
+  get token() {
+    return typeof window === "undefined" ? (env.TRELLO_API_TOKEN ?? "") : "";
+  },
 };
 
 export const CLIENT_TRELLO_CONFIG: TrelloServiceConfig = {
-  apiKey: process.env.NEXT_PUBLIC_TRELLO_API_KEY || "",
-  token: process.env.NEXT_PUBLIC_TRELLO_API_TOKEN || "",
+  apiKey: env.NEXT_PUBLIC_TRELLO_API_KEY || "",
+  token: env.NEXT_PUBLIC_TRELLO_API_TOKEN || "",
 };
 
 export const TRELLO_COLORS = {

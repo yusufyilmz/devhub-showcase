@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@shared/cli": "workspace:*",
+    "@shared/env": "workspace:*",
     "@shared/typescript-config": "workspace:*",
     "@shared/utils": "workspace:*",
     "next": "catalog:",

@@ -5,6 +5,7 @@ const nextConfig = {
   reactStrictMode: true,
   serverExternalPackages: ["openai", "pino", "pdfmake"],
   transpilePackages: [
+    "@shared/env",
     "@shared/ui",
     "@shared/auth",
     "@shared/config",

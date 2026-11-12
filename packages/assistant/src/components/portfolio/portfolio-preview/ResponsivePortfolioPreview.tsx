@@ -24,6 +24,21 @@ export function ResponsivePortfolioPreview({
   const size = selectedSize ?? (isMobile ? "Mobile" : "Desktop");
   const [doc, setDocument] = useState<Document | null>(null);
   const frame = useRef<HTMLIFrameElement>(null);
+  const viewport = useRef<HTMLDivElement>(null);
+  const [availableWidth, setAvailableWidth] = useState(0);
+  const width = previewSizes[size];
+  const scale = availableWidth ? Math.min(1, availableWidth / width) : 1;
+
+  useEffect(() => {
+    const container = viewport.current;
+    if (!open || !container) return;
+    const measure = () => setAvailableWidth(container.clientWidth);
+    measure();
+    if (typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver(measure);
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [open]);
   useEffect(() => {
     if (openRequest) setOpen(true);
   }, [openRequest]);
@@ -90,13 +105,13 @@ export function ResponsivePortfolioPreview({
               {arrange.active && arrange.saveAction}
             </div>
           )}
-          <div className="draft-preview-scroll">
+          <div className="draft-preview-scroll" ref={viewport}>
             <iframe
               onLoad={() => setDocument(frame.current?.contentDocument ?? null)}
               ref={frame}
               sandbox="allow-same-origin"
               srcDoc={previewDocument}
-              style={previewWidthStyle(previewSizes[size])}
+              style={{ ...previewWidthStyle(width), zoom: scale }}
               title="Private draft preview"
             />
           </div>

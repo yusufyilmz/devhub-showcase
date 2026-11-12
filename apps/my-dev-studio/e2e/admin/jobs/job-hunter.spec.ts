@@ -87,3 +87,36 @@ test("matches can be saved and an external application tracked", async ({
   await page.getByRole("tab", { name: "Applications" }).click();
   await expect(page.getByLabel("Application status")).toHaveValue("applied");
 });
+
+test("the profile menu opens job settings and other account pages", async ({
+  page,
+  context,
+}, info) => {
+  await page.goto("/");
+  await expect(page.getByRole("button", { name: "Profile menu" })).toHaveCount(0);
+  await signIn(context, info);
+  await page.goto("/");
+  const menu = page.getByRole("button", { name: "Profile menu" });
+  await expect(menu).toBeVisible();
+  await menu.press("Enter");
+  await expect(page.getByRole("menuitem", { name: "Edit profile" })).toHaveAttribute(
+    "href",
+    /\/edit$/,
+  );
+  await expect(page.getByRole("menuitem", { name: "Plan and billing" })).toHaveAttribute(
+    "href",
+    "/admin/billing",
+  );
+  await expect(page.getByRole("menuitem", { name: "Manage portfolios" })).toHaveCount(0);
+  await page.getByRole("menuitem", { name: "Job settings" }).click();
+  await expect(page.getByRole("tab", { name: "Settings" })).toHaveAttribute(
+    "aria-selected",
+    "true",
+  );
+  await menu.click();
+  await page.getByRole("menuitem", { name: "Applications" }).click();
+  await expect(page.getByRole("tab", { name: "Applications" })).toHaveAttribute(
+    "aria-selected",
+    "true",
+  );
+});

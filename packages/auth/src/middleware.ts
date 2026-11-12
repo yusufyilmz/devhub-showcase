@@ -2,13 +2,15 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import { createServerClient } from "@supabase/ssr";
 
+import { env } from "@shared/env";
+
 import { supabaseConfig } from "./config";
 
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
   if (
-    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
-    !(process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
+    !env.NEXT_PUBLIC_SUPABASE_URL ||
+    !(env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
   )
     return response;
   const { url, key } = supabaseConfig();

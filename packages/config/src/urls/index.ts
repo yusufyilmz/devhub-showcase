@@ -1,15 +1,17 @@
+import { env } from "@shared/env";
 import { stripTrailingSlash } from "@shared/utils";
 
 function studioSiteUrl(): URL {
   return new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ||
-      process.env.NEXT_PUBLIC_PROJECT_URL ||
-      "https://mydevstudio.vercel.app",
+    env.NEXT_PUBLIC_SITE_URL || env.NEXT_PUBLIC_PROJECT_URL || "https://mydevstudio.vercel.app",
   );
 }
 
 function fitnessSiteUrl(): URL {
-  return new URL(process.env.APP_URL || "https://myfitnessstudio.vercel.app");
+  return new URL(
+    (typeof window === "undefined" ? env.APP_URL : undefined) ||
+      "https://myfitnessstudio.vercel.app",
+  );
 }
 
 // Base URLs (normalized, no trailing slash)

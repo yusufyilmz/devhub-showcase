@@ -68,6 +68,7 @@
   "dependencies": {
     "@shared/billing": "workspace:*",
     "@shared/config": "workspace:*",
+    "@shared/env": "workspace:*",
     "@shared/lib": "workspace:*",
     "@shared/notifications": "workspace:*",
     "@shared/runtime": "workspace:*",

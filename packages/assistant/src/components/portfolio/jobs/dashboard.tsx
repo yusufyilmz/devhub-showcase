@@ -17,6 +17,7 @@ import { SearchForm } from "./search-form";
 import type { Draft, JobsData, Match, RunJobAction } from "./types";
 
 type Props = {
+  initialTab?: "discover" | "saved" | "applications" | "settings" | "linkedin";
   data: JobsData;
   busy: boolean;
   feedback: string;
@@ -251,6 +252,7 @@ export function JobsDashboard({
   statuses,
   baseCvUrl,
   cvUrl,
+  initialTab = "discover",
 }: Props) {
   const [query, setQuery] = useState("");
   const [view, setView] = useState("active");
@@ -287,7 +289,7 @@ export function JobsDashboard({
       <p aria-live="polite" role="status">
         {feedback}
       </p>
-      <Tabs defaultValue="discover">
+      <Tabs defaultValue={initialTab}>
         <TabsList aria-label="Job Hunter">
           <TabsTrigger value="discover">Discover</TabsTrigger>
           <TabsTrigger value="saved">Saved</TabsTrigger>

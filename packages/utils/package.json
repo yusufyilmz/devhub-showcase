@@ -45,6 +45,7 @@
     "types:check": "pnpm typecheck"
   },
   "dependencies": {
+    "@shared/env": "workspace:*",
     "axios": "catalog:",
     "flat": "catalog:",
     "pino": "catalog:",
