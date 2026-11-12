@@ -2,6 +2,23 @@ import { expect, test } from "@playwright/test";
 
 import { getThemePalette, portfolioAccentIds, portfolioAccents } from "@shared/config";
 
+test("the homepage groups the getting-started cards with its portfolio features", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const features = page.locator("#features");
+  const steps = features.locator("#how-it-works");
+  await expect(page.locator("#how-it-works")).toHaveCount(1);
+  await expect(steps.getByRole("listitem")).toHaveCount(3);
+  await expect(steps.getByRole("heading", { name: "Open your studio" })).toBeVisible();
+  await expect(steps.getByRole("heading", { name: "Put your story together" })).toBeVisible();
+  await expect(steps.getByRole("heading", { name: "Share it when you’re ready" })).toBeVisible();
+
+  await page.getByRole("contentinfo").getByRole("link", { name: "How it works" }).click();
+  await expect(page).toHaveURL(/#how-it-works$/);
+  await expect(steps.getByRole("heading", { name: /From a blank page/ })).toBeInViewport();
+});
+
 test("homepage opens the real portfolio instead of an anchor", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveTitle("MyDevStudio | A home for your work");

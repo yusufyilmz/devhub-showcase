@@ -135,7 +135,7 @@ export const pricingStyles = {
 } as const;
 
 export const processStyles = {
-  element1: "home-container home-process",
+  element1: "home-process",
   element2: "home-section-intro",
   element3: "home-eyebrow",
 } as const;

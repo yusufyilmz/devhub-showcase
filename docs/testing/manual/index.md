@@ -33,7 +33,7 @@ Deployment tooling: [App routing, Fitness cutover and free Actions](deployments.
 
 | Feature                                                            | Scope/status                                                                                                  | Manual steps                            |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
-| Homepage registry, composer and section browser                    | Implemented                                                                                                   | [Open guide](home.md)                   |
+| Homepage registry, composer, feature cards and section browser     | Implemented                                                                                                   | [Open guide](home.md)                   |
 | Server-rendered fictional portfolios and images                    | Implemented; includes carousel autoplay                                                                       | [Open guide](examples.md)               |
 | Curated profession presets — task 12                               | Implemented                                                                                                   | [Open guide](curated-templates.md)      |
 | Appearance picker, fonts, tokens and stored preferences            | Implemented                                                                                                   | [Open guide](appearance.md)             |

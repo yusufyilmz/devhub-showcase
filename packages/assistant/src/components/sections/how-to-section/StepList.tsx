@@ -8,6 +8,7 @@ export function StepList({ items, landing = false }: { items: SectionItem[]; lan
       {items.map((item, index) => (
         <Card
           asChild
+          backdrop={landing ? "accent" : undefined}
           interaction={landing ? "lift" : "static"}
           key={item.id}
           layout="plain"
@@ -26,12 +27,12 @@ export function StepList({ items, landing = false }: { items: SectionItem[]; lan
             </span>
             {landing ? (
               <>
-                <h3>{item.title}</h3>
+                <h4>{item.title}</h4>
                 {item.content}
               </>
             ) : (
               <div className="min-w-0">
-                <h3>{item.title}</h3>
+                <h4>{item.title}</h4>
                 {item.content}
               </div>
             )}

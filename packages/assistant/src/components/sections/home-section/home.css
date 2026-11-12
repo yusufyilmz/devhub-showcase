@@ -519,9 +519,22 @@
   font-style: normal;
   color: color-mix(in srgb, var(--primary) 55%, transparent);
 }
-.home-features,
-.home-process {
+.home-features {
   padding-block: 105px 0;
+}
+.home-process {
+  margin-top: clamp(36px, 5vw, 64px);
+  scroll-margin-top: 7rem;
+}
+.home-process :where(h3) {
+  margin-top: 12px;
+  font-size: clamp(26px, 3.5vw, 38px);
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+}
+.home-process :where(h3) > :where(span) {
+  color: var(--muted-foreground);
 }
 .home-section-intro :where(h2) {
   margin-block: 17px 20px;
@@ -692,15 +705,11 @@
 }
 .home-steps {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 38px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
   padding: 0;
-  margin-top: 44px;
+  margin-top: 24px;
   list-style: none;
-}
-.home-steps :where(li) {
-  padding-top: 22px;
-  border-top: 1px solid var(--border);
 }
 .home-steps :where(li) > :where(span) {
   font:
@@ -708,7 +717,7 @@
     monospace;
   color: var(--primary);
 }
-.home-steps :where(h3) {
+.home-steps :where(h4) {
   margin-block: 24px 12px;
   font-size: 18px;
   font-weight: 500;
@@ -929,8 +938,7 @@
   .home-capabilities :where(i) {
     font-size: 11px;
   }
-  .home-features,
-  .home-process {
+  .home-features {
     padding-top: 65px;
   }
   .home-section-intro :where(h2) {
@@ -967,20 +975,18 @@
   }
   .home-steps {
     grid-template-columns: 1fr;
-    gap: 27px;
-    margin-top: 30px;
+    gap: 15px;
   }
   .home-steps :where(li) {
     display: grid;
     grid-template-columns: 34px 1fr;
     column-gap: 14px;
-    padding-top: 22px;
   }
   .home-steps :where(li) > :where(span) {
     grid-row: span 2;
     padding-top: 4px;
   }
-  .home-steps :where(h3) {
+  .home-steps :where(h4) {
     margin: 0 0 8px;
   }
   .home-steps :where(p) {

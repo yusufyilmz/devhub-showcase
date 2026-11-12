@@ -1,6 +1,7 @@
 import { Card, RevealCardBase } from "@shared/ui/cards";
 import { Section } from "@shared/ui/section";
 
+import { HomeProcessSection } from "./process";
 import { featuresStyles } from "./styles";
 
 export function HomeFeaturesSection() {
@@ -105,6 +106,7 @@ export function HomeFeaturesSection() {
             <span className={featuresStyles.element16}>Portfolio + PDF</span>
           </Card>
         </div>
+        <HomeProcessSection />
       </section>
     </Section>
   );
