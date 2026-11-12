@@ -56,7 +56,6 @@ import { AppearanceEditor } from "@shared/ui/theme/studio";
 
 import { AgentCompanion } from "../../chat/agent-companion/index";
 import { studioEditorGuide } from "../../companion/guides";
-import { StudioCompanion } from "../../companion/studio-companion";
 import {
   DraftPreviewPane,
   DraftRecovery,
@@ -217,6 +216,7 @@ function FirstPortfolioDialog({
   draft,
   managed,
   onBegin,
+  onAskAssistant,
   onProfessionChange,
   onReview,
   onStartStep,
@@ -229,6 +229,7 @@ function FirstPortfolioDialog({
   busy: boolean;
   draft: PortfolioProfile;
   managed: boolean;
+  onAskAssistant?: () => void;
   onBegin: (tab?: "Profile" | "Import CV" | "Import Google") => void;
   onProfessionChange: (value: PortfolioType) => void;
   onReview: () => void;
@@ -240,38 +241,36 @@ function FirstPortfolioDialog({
   startStep: "work" | "layout" | "start";
 }) {
   return (
-    <>
-      <Dialog open>
-        <DialogContent
-          className="setup-dialog"
-          onEscapeKeyDown={(event) => event.preventDefault()}
-          onPointerDownOutside={(event) => event.preventDefault()}
-          showCloseButton={false}
+    <Dialog open>
+      <DialogContent
+        className="setup-dialog"
+        onEscapeKeyDown={(event) => event.preventDefault()}
+        onPointerDownOutside={(event) => event.preventDefault()}
+        showCloseButton={false}
+      >
+        <DialogTitle className="sr-only">Create your portfolio</DialogTitle>
+        <GuidedOnboarding
+          managed={managed}
+          onAskAssistant={onAskAssistant}
+          onChange={resetDraft}
+          onContinue={() => onBegin()}
+          onGoogleImport={() => onBegin("Import Google")}
+          onImport={() => onBegin("Import CV")}
+          onOpen={(next) => {
+            onBegin();
+            if (next === "review" && draft.name.trim() && draft.title.trim()) onReview();
+          }}
+          onProfessionChange={onProfessionChange}
+          onStartStep={onStartStep}
+          profession={profession}
+          profile={draft}
+          reached={reached}
+          startStep={startStep}
         >
-          <DialogTitle className="sr-only">Create your portfolio</DialogTitle>
-          <GuidedOnboarding
-            managed={managed}
-            onChange={resetDraft}
-            onContinue={() => onBegin()}
-            onGoogleImport={() => onBegin("Import Google")}
-            onImport={() => onBegin("Import CV")}
-            onOpen={(next) => {
-              onBegin();
-              if (next === "review") onReview();
-            }}
-            onProfessionChange={onProfessionChange}
-            onStartStep={onStartStep}
-            profession={profession}
-            profile={draft}
-            reached={reached}
-            startStep={startStep}
-          >
-            <DraftRecovery disabled={busy} recovery={recovery} />
-          </GuidedOnboarding>
-        </DialogContent>
-      </Dialog>
-      <StudioCompanion signedIn />
-    </>
+          <DraftRecovery disabled={busy} recovery={recovery} />
+        </GuidedOnboarding>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -385,6 +384,13 @@ export function ProfileEditor({
     setWorkspaceView("edit");
     setStep("details");
   }
+  function askForSetupHelp() {
+    setAssistantPrompt(
+      "Help me write a short portfolio introduction. Ask what I do and what I’ve worked on before drafting. Use only details I provide.",
+    );
+    if (step === "template") beginDetails("AI assistant");
+    else setTab("AI assistant");
+  }
   function openStart(next: "work" | "layout" | "start") {
     openStartStep(next, setReached, setStartStep, setStep);
   }
@@ -413,6 +419,7 @@ export function ProfileEditor({
         busy={busy}
         draft={draft}
         managed={managed}
+        onAskAssistant={managed ? undefined : askForSetupHelp}
         onBegin={beginDetails}
         onProfessionChange={(value) => {
           setProfession(value);
@@ -519,6 +526,7 @@ export function ProfileEditor({
           <SetupNavigation
             canReview={draft.name.trim().length > 0 && draft.title.trim().length > 0}
             disabled={busy}
+            onAskAssistant={managed ? undefined : askForSetupHelp}
             onImport={() => {
               setTab("Import CV");
             }}
@@ -526,6 +534,7 @@ export function ProfileEditor({
               setTab("Profile");
             }}
             onOpen={openStart}
+            onPreview={() => setWorkspaceView("preview")}
             onStep={(next) => {
               if (next === "review") setReached((current) => Math.max(current, 4));
               if (next === "template") openStart("layout");
@@ -888,7 +897,7 @@ function portfolioDirty(draft: PortfolioProfile, saved: ProfileSnapshot, usernam
 }
 
 function setupStepLocksEditor(step: SetupStep) {
-  return step === "details" || step === "review";
+  return step === "details";
 }
 
 function editorWorkspaceView(step: SetupStep, view: "edit" | "preview") {

@@ -41,11 +41,11 @@ describe("guided onboarding", () => {
       />,
     );
     fireEvent.click(screen.getByRole("button", { name: "Skip import · enter manually" }));
-    fireEvent.click(screen.getByRole("button", { name: "Back to layout" }));
+    fireEvent.click(screen.getByRole("button", { name: "Back to starting options" }));
     fireEvent.click(screen.getByRole("button", { name: "Review draft" }));
     expect(onManual).toHaveBeenCalledOnce();
     expect(onImport).not.toHaveBeenCalled();
-    expect(onOpen).toHaveBeenCalledWith("layout");
+    expect(onOpen).toHaveBeenCalledWith("start");
     expect(onStep).toHaveBeenCalledWith("review");
   });
 });
