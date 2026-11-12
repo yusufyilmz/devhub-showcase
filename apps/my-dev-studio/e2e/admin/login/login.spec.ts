@@ -15,27 +15,40 @@ test("visitors reach login and cannot open an editor", async ({ page }) => {
   await expect(page.getByLabel("Password", { exact: true })).toBeVisible();
 });
 
-test("the login panel animates on desktop and respects reduced motion", async ({ page }) => {
+test("the desktop login illustration can be replayed and respects reduced motion", async ({
+  page,
+}, info) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/login");
   const visual = page.locator(".login-visual");
-  const icon = visual.locator(".login-visual-icon");
+  const portfolio = visual.locator(".login-preview-portfolio");
+  const cv = visual.locator(".login-preview-cv");
+  const replay = visual.getByRole("button", { name: "Replay animation" });
 
   if ((page.viewportSize()?.width ?? 0) <= 760) {
     await expect(visual).toBeHidden();
-    await expect(icon).toHaveCSS("animation-name", "none");
   } else {
-    await expect(visual).toBeVisible();
-    await expect(icon).toHaveCSS("animation-name", "login-visual-icon");
+    await expect(portfolio).toBeVisible();
+    await expect(cv).toBeVisible();
+    await expect(portfolio).toHaveCSS("animation-name", "login-preview-portfolio");
+    await expect(cv).toHaveCSS("animation-name", "login-preview-cv");
+    await portfolio.evaluate((card) => Promise.all(card.getAnimations().map((a) => a.finished)));
+    await visual.screenshot({
+      animations: "disabled",
+      path: info.outputPath("login-illustration.png"),
+    });
+
+    await replay.click();
     await expect
-      .poll(() => visual.evaluate((panel) => getComputedStyle(panel, "::before").animationName))
-      .toBe("login-visual-glow");
+      .poll(() => portfolio.evaluate((card) => card.getAnimations()[0]?.playState))
+      .toBe("running");
+    await expect(replay).toBeFocused();
 
     await page.emulateMedia({ reducedMotion: "reduce" });
-    await expect(icon).toHaveCSS("animation-name", "none");
-    await expect
-      .poll(() => visual.evaluate((panel) => getComputedStyle(panel, "::before").animationName))
-      .toBe("none");
+    await expect(portfolio).toHaveCSS("animation-name", "none");
+    await expect(cv).toHaveCSS("animation-name", "none");
+    await expect(cv).toBeVisible();
+    await expect(replay).toBeHidden();
   }
 
   await expect(page.getByLabel("Email", { exact: true })).toBeVisible();
