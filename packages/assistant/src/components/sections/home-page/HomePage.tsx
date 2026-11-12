@@ -14,7 +14,6 @@ import {
   HomeLibrarySection,
   HomeOptionsSection,
   HomePricingSection,
-  HomeProcessSection,
   type PageAction,
 } from "../home-section";
 
@@ -44,7 +43,6 @@ export function HomePage({
         <HomeOptionsSection />
         <HomePricingSection action={action}>{planDetails}</HomePricingSection>
         <HomeLibrarySection href={action.href} />
-        <HomeProcessSection />
         <HomeFAQSection />
         <HomeCTASection action={action} />
       </main>

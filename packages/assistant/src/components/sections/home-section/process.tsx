@@ -1,48 +1,52 @@
-import { Section } from "@shared/ui/section";
+import { RevealCardBase } from "@shared/ui/cards";
 
-import { StepList } from "../how-to-section/StepList";
-import { processStyles } from "./styles";
+import { featuresStyles } from "./styles";
+
+const steps = [
+  {
+    brief: "Sign in with Google to open your private workspace.",
+    details:
+      "Start with the work you already have. You can edit and preview your draft before publishing it.",
+    id: "how-it-works",
+    number: "04",
+    title: "Open your studio",
+  },
+  {
+    brief: "Import your CV or add your details by hand.",
+    details:
+      "Review what you import, choose the sections you want to show, and pick a layout, theme and languages that suit your work.",
+    id: "build-portfolio",
+    number: "05",
+    title: "Put your story together",
+  },
+  {
+    brief: "Choose a username and publish your portfolio when it’s ready.",
+    details: "Share your portfolio link and download a PDF of your saved CV when you need a copy.",
+    id: "share-portfolio",
+    number: "06",
+    title: "Share it when you’re ready",
+  },
+] as const;
 
 export function HomeProcessSection() {
-  return (
-    <Section asChild>
-      <section aria-labelledby="process-title" className={processStyles.element1} id="how-it-works">
-        <div className={processStyles.element2}>
-          <p className={processStyles.element3}>START WITH WHAT YOU HAVE</p>
-          <h2 id="process-title">
-            From a blank page
-            <br />
-            to <span>your own place.</span>
-          </h2>
-        </div>
-        <StepList
-          items={[
-            {
-              content: <p>Sign in with Google and start with your own private space.</p>,
-              id: "open-studio",
-              title: "Open your studio",
-            },
-            {
-              content: (
-                <p>
-                  Import and review your CV or add details yourself. Choose sections, a layout,
-                  theme and languages for a look that feels right.
-                </p>
-              ),
-              id: "build-portfolio",
-              title: "Put your story together",
-            },
-            {
-              content: (
-                <p>Choose your username, publish your portfolio and take your CV with you.</p>
-              ),
-              id: "share-portfolio",
-              title: "Share it when you’re ready",
-            },
-          ]}
-          landing
-        />
-      </section>
-    </Section>
-  );
+  return steps.map(({ brief, details, id, number, title }) => (
+    <RevealCardBase
+      backdrop="accent"
+      brief={brief}
+      className={featuresStyles.element9}
+      heading={
+        <>
+          <span aria-hidden="true" className={featuresStyles.element6}>
+            {number}
+          </span>
+          <h3>{title}</h3>
+        </>
+      }
+      id={id}
+      key={id}
+      title={title}
+    >
+      <p>{details}</p>
+    </RevealCardBase>
+  ));
 }

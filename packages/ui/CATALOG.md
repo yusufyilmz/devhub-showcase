@@ -5,8 +5,9 @@
 > **AI lookup guide:** From the repository root, run `pnpm --silent lookup catalog "button" --package @shared/ui --limit 2` to read relevant excerpts. Verify an exact export with `pnpm --silent lookup symbol '<ExportName>' --package @shared/ui`. Follow `hasMore` with `--cursor`; use `--max-tokens` to control output size. Excerpts support discovery; read required instructions and source contracts. See the [AI quick start](../../.ai/README.md) and [full CLI usage](../../tools/cli/README.md#token-bounded-repository-lookup).
 
 `EditorWorkspace` and `DraftPreviewPane` (`@shared/assistant/portfolio`) provide grouped
-editor navigation, a preview-first workspace, and an accessible edit lightbox.
-The dialog stays inside the caller's save form and preserves draft state on close.
+editor navigation and inline editing inside the caller's save form. The desktop sidebar
+can switch to a compact rail, and the mobile picker provides the same sections.
+Returning to preview preserves the draft.
 The preview offers separate website and CV content views. `ResponsivePortfolioPreview`
 defaults to the user's device size and retains explicit size selections.
 

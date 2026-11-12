@@ -1,6 +1,7 @@
-import { Card, RevealCardBase } from "@shared/ui/cards";
+import { RevealCardBase } from "@shared/ui/cards";
 import { Section } from "@shared/ui/section";
 
+import { HomeProcessSection } from "./process";
 import { featuresStyles } from "./styles";
 
 export function HomeFeaturesSection() {
@@ -85,25 +86,29 @@ export function HomeFeaturesSection() {
               <li>Separate portfolio and CV language settings</li>
             </ul>
           </RevealCardBase>
-          <Card
+          <RevealCardBase
             backdrop="accent"
-            className={featuresStyles.element13}
-            layout="plain"
-            surface="portfolio"
+            brief="Keep your portfolio and CV connected through the same saved details."
+            className={featuresStyles.element9}
+            heading={
+              <div className={featuresStyles.element13}>
+                <div aria-hidden="true" className={featuresStyles.element14}>
+                  <span>CV</span>↗
+                </div>
+                <div>
+                  <span className={featuresStyles.element15}>03 / ALWAYS CONNECTED</span>
+                  <h3>One update. Both ready.</h3>
+                </div>
+              </div>
+            }
+            title="your portfolio and CV"
           >
-            <div aria-hidden="true" className={featuresStyles.element14}>
-              <span>CV</span>↗
-            </div>
-            <div>
-              <span className={featuresStyles.element15}>03 / ALWAYS CONNECTED</span>
-              <h3>One update. Both ready.</h3>
-              <p>
-                Your CV comes from your saved portfolio details. Choose its Classic, Editorial or
-                Compact format and sections, then download a PDF when the opportunity comes.
-              </p>
-            </div>
-            <span className={featuresStyles.element16}>Portfolio + PDF</span>
-          </Card>
+            <p>
+              Choose a Classic, Editorial or Compact layout and decide which sections to include.
+              Download the saved CV as a PDF when you need it.
+            </p>
+          </RevealCardBase>
+          <HomeProcessSection />
         </div>
       </section>
     </Section>

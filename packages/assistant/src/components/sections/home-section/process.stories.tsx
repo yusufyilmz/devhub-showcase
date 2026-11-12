@@ -2,10 +2,11 @@ import { PortfolioStoryFrame } from "@fixtures/portfolio-story-frame";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { HomeProcessSection } from "./process";
+import { featuresStyles } from "./styles";
 
 function Example({ width = 1120 }: { width?: number }) {
   return (
-    <div style={{ maxWidth: width, width: "100%" }}>
+    <div className={featuresStyles.element4} style={{ maxWidth: width, width: "100%" }}>
       <HomeProcessSection />
     </div>
   );

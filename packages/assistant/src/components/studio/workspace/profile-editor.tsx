@@ -333,6 +333,7 @@ export function ProfileEditor({
   function openStart(next: "work" | "layout" | "start") {
     openStartStep(next, setReached, setStartStep, setStep);
   }
+  const view = editorWorkspaceView(step, workspaceView);
   const editorActions = (
     <>
       <Button className="studio-primary" disabled={!canSave} type="submit">
@@ -399,7 +400,9 @@ export function ProfileEditor({
                 Plan and usage
               </Button>
 
-              <div className="studio-editor-actions">{editorActions}</div>
+              <div className="studio-editor-actions" hidden={view === "edit"}>
+                {editorActions}
+              </div>
             </>
           }
           description="Update your story, tailor your CV, and preview what you want to share."
@@ -453,7 +456,7 @@ export function ProfileEditor({
             </DraftPreviewPane>
           }
           username={username}
-          view={editorWorkspaceView(step, workspaceView)}
+          view={view}
         >
           <SetupNavigation
             canReview={draft.name.trim().length > 0 && draft.title.trim().length > 0}

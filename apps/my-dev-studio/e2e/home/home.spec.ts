@@ -2,6 +2,32 @@ import { expect, test } from "@playwright/test";
 
 import { getThemePalette, portfolioAccentIds, portfolioAccents } from "@shared/config";
 
+test("the homepage shows all six portfolio cards in one reveal-card grid", async ({ page }) => {
+  await page.goto("/");
+  const features = page.locator("#features");
+  const cards = features.locator(".home-feature-grid > .home-feature-card");
+  await expect(cards).toHaveCount(6);
+  await expect(cards.nth(3).getByRole("heading")).toHaveText("Open your studio");
+  await expect(cards.nth(4).getByRole("heading")).toHaveText("Put your story together");
+  await expect(cards.nth(5).getByRole("heading")).toHaveText("Share it when you’re ready");
+  await expect(features.getByRole("heading", { name: /From a blank page/ })).toHaveCount(0);
+
+  await page.getByRole("contentinfo").getByRole("link", { name: "How it works" }).click();
+  await expect(page).toHaveURL(/#how-it-works$/);
+  await expect(cards.nth(3).getByRole("heading")).toBeInViewport();
+
+  for (const card of await cards.all()) {
+    const toggle = card.getByRole("button", { name: /details for/ });
+    await toggle.click();
+    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    const details = card.locator(".reveal-details");
+    await expect(details).toHaveAttribute("aria-hidden", "false");
+    await expect(details.locator("p")).toHaveCSS("font-size", "14px");
+    await toggle.press("Escape");
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  }
+});
+
 test("homepage opens the real portfolio instead of an anchor", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveTitle("MyDevStudio | A home for your work");

@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
-import { openEditor, showEditorPreview } from "../support/editor";
+import { openEditor, selectEditorSection, showEditorPreview } from "../support/editor";
 
 test("editor workspace keeps draft editing, preview and publication separate", async ({
   page,
@@ -31,28 +31,44 @@ test("editor workspace keeps draft editing, preview and publication separate", a
     if (request.method() === "PUT" && request.url().endsWith(endpoint)) saves++;
   });
   await page.goto(`/${username}/edit`);
-  await expect(page.getByRole("dialog", { exact: true, name: "Edit Profile" })).toBeVisible();
-  await page.keyboard.press("Shift+Tab");
-  await expect
-    .poll(() => page.evaluate(() => Boolean(document.activeElement?.closest('[role="dialog"]'))))
-    .toBe(true);
+  await expect(
+    page.getByRole("heading", { exact: true, name: "Edit your portfolio" }),
+  ).toBeVisible();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { exact: true, name: mobile ? "Mobile · 375px" : "Desktop · 1280px" }),
+  ).toHaveAttribute("aria-pressed", "true");
+  const assistant = page.getByLabel("Open Studio assistant", { exact: true });
+  await expect(assistant).toBeVisible();
+  const workspace = page.locator(".editor-workspace-main");
+  const sidebar = page.getByRole("navigation", { name: "Editor sections" });
+  if (!mobile) {
+    await sidebar.getByRole("button", { name: "Collapse sidebar" }).click();
+    await expect(sidebar).toHaveCSS("width", "64px");
+    await sidebar.getByRole("button", { exact: true, name: "Publishing" }).click();
+    await expect(workspace.getByRole("region", { name: "Edit Publishing" })).toBeInViewport();
+    await sidebar.getByRole("button", { name: "Expand sidebar" }).click();
+    await expect(sidebar).toHaveCSS("width", "232px");
+    await selectEditorSection(page, "Profile");
+  } else {
+    await openEditor(page);
+  }
+  await expect(workspace.getByRole("region", { name: "Edit Profile" })).toBeVisible();
+  await expect(assistant).toBeHidden();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
   await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toBeVisible();
   await expect(page.getByLabel("Username", { exact: true })).toHaveCount(0);
   const title = page.getByRole("textbox", { exact: true, name: "Professional title" });
   await title.fill("Unsaved editor workspace title");
-  async function navigate(section: string) {
-    await page.getByRole("combobox", { name: "Editor section" }).selectOption(section);
-  }
-  await navigate("Experience");
+  await selectEditorSection(page, "Experience");
   const entry = page.locator(".editor-collection-toggle").first();
   await entry.click();
   await expect(entry).toHaveAttribute("aria-expanded", "true");
-  await navigate("Profile");
+  await selectEditorSection(page, "Profile");
   await expect(title).toHaveValue("Unsaved editor workspace title");
-  await page.getByRole("dialog").screenshot({ path: info.outputPath("editor-lightbox.png") });
-  await page.screenshot({ path: info.outputPath("editor-lightbox-page.png") });
-  await page.keyboard.press("Escape");
-  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await page.screenshot({ path: info.outputPath("editor-section.png") });
+  await page.getByRole("button", { name: "Done editing" }).click();
+  await expect(workspace.getByRole("region", { name: "Edit Profile" })).toHaveCount(0);
   await expect(page.getByRole("button", { exact: true, name: "Edit" })).toBeFocused();
   const frame = page.frameLocator('iframe[title="Private draft preview"]');
   await expect(frame.getByText("Unsaved editor workspace title", { exact: true })).toBeVisible();
@@ -66,7 +82,7 @@ test("editor workspace keeps draft editing, preview and publication separate", a
   await expect(page.getByRole("link", { name: "Download saved PDF" })).toBeVisible();
   expect(saves).toBe(0);
   await page.getByRole("button", { exact: true, name: "Review & publish" }).click();
-  await expect(page.getByRole("dialog", { exact: true, name: "Edit Publishing" })).toBeVisible();
+  await expect(workspace.getByRole("region", { name: "Edit Publishing" })).toBeVisible();
   await expect(page.getByLabel("Username", { exact: true })).toBeVisible();
   await expect(
     page.getByRole("button", { exact: true, name: "Review publication" }),
@@ -86,7 +102,7 @@ test("editor workspace keeps draft editing, preview and publication separate", a
   await expect(page.getByRole("main").getByRole("alert")).toContainText(
     "Temporary workspace save failure",
   );
-  await navigate("Profile");
+  await selectEditorSection(page, "Profile");
   await expect(title).toHaveValue("Unsaved editor workspace title");
   await page.getByRole("button", { exact: true, name: "Save changes" }).click();
   await expect(page.locator(".studio-status")).toContainText("All changes saved");

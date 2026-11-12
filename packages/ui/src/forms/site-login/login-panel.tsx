@@ -4,11 +4,52 @@ import "../login-form/auth-login.css";
 
 import { type ReactNode, useState } from "react";
 
-import { ArrowUpRight, Eye, EyeOff, LockKeyhole } from "lucide-react";
+import { ArrowUpRight, Eye, EyeOff, FileText, LockKeyhole, RotateCcw } from "lucide-react";
 
 import { Button as LibraryButton } from "../../buttons/button/Button";
 import { Input as LibraryInput } from "../input/Input";
 import { Label as LibraryLabel } from "../label/Label";
+
+function LoginVisualPreview() {
+  const [run, setRun] = useState(0);
+
+  return (
+    <div className="login-preview">
+      <LibraryButton
+        className="login-preview-replay"
+        onClick={() => setRun((previous) => previous + 1)}
+        size="sm"
+        type="button"
+        variant="outline"
+      >
+        <RotateCcw aria-hidden="true" />
+        Replay animation
+      </LibraryButton>
+      <div aria-hidden="true" className="login-preview-stage" key={run}>
+        <div className="login-preview-portfolio">
+          <div className="login-preview-browser">
+            <span />
+            <span />
+            <span />
+          </div>
+          <div className="login-preview-profile">
+            <span className="login-preview-avatar" />
+            <span className="login-preview-lines" />
+          </div>
+          <div className="login-preview-projects">
+            <span />
+            <span />
+          </div>
+        </div>
+        <div className="login-preview-cv">
+          <FileText size={22} />
+          <span>CV</span>
+          <span className="login-preview-lines" />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function LoginPanel({
   initialError = "",
@@ -25,6 +66,7 @@ export function LoginPanel({
   brand,
   brandActions,
   localTestLogin = false,
+  animateVisual = false,
 }: {
   initialError?: string;
   googleAction: string;
@@ -40,6 +82,7 @@ export function LoginPanel({
   brand?: string;
   brandActions?: ReactNode;
   localTestLogin?: boolean;
+  animateVisual?: boolean;
 }) {
   const [error, showError] = useState(initialError);
   const [busy, setBusy] = useState(false);
@@ -188,7 +231,11 @@ export function LoginPanel({
       </div>
       <div className="login-layout">
         {panel}
-        <aside aria-label="Workspace access" className="login-visual">
+        <aside
+          aria-label="Workspace access"
+          className={animateVisual ? "login-visual login-visual-motion" : "login-visual"}
+        >
+          {animateVisual && <LoginVisualPreview />}
           <div className="relative grid gap-md">
             <LockKeyhole aria-hidden="true" className="size-8 text-primary" />
             <p className="text-sm font-semibold tracking-wide text-primary">{brand}</p>
