@@ -69,7 +69,8 @@ describe("EditorWorkspace", () => {
     const expand = screen.getByRole("button", { name: "Expand sidebar" });
     expect(expand.getAttribute("aria-expanded")).toBe("false");
     const experience = screen.getByRole("button", { name: "Experience" });
-    expect(experience.textContent).toBe("E");
+    expect(experience.textContent).toBe("");
+    expect(experience.querySelector("svg")?.getAttribute("aria-hidden")).toBe("true");
     fireEvent.click(experience);
     expect(experience.getAttribute("aria-current")).toBe("page");
     expect(screen.getByRole("region", { name: "Edit Experience" })).toBeTruthy();

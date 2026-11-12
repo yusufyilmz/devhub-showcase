@@ -63,15 +63,6 @@
   grid-template-rows: minmax(10rem, 1fr) auto;
   gap: clamp(1rem, 4vw, 2.5rem);
 }
-.login-preview {
-  display: grid;
-  gap: 0.75rem;
-  align-self: stretch;
-  justify-items: end;
-}
-.login-preview-replay {
-  align-self: start;
-}
 .login-preview-stage {
   position: relative;
   align-self: center;
@@ -153,11 +144,6 @@
   }
   .login-preview-cv {
     animation: login-preview-cv 2.2s 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .login-preview-replay {
-    display: none;
   }
 }
 @keyframes login-preview-portfolio {

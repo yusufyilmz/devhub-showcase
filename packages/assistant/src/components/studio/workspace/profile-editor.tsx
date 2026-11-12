@@ -6,6 +6,34 @@ import dynamic from "next/dynamic";
 import { type ReactNode, useDeferredValue, useEffect, useState } from "react";
 
 import {
+  BookOpen,
+  Bot,
+  BriefcaseBusiness,
+  Columns2,
+  Eye,
+  FileClock,
+  FileDown,
+  FileText,
+  FileUp,
+  FolderKanban,
+  GraduationCap,
+  History,
+  Languages,
+  LayoutGrid,
+  ListOrdered,
+  type LucideIcon,
+  MessageSquareText,
+  Palette,
+  PanelsTopLeft,
+  PlusSquare,
+  Send,
+  Settings2,
+  Sparkles,
+  UserRound,
+  Wrench,
+} from "lucide-react";
+
+import {
   getPortfolioEntries,
   type PortfolioEntryId,
   type PortfolioProfile,
@@ -97,6 +125,33 @@ const tabs = [
   "Field visibility",
   "Publishing",
 ] as const;
+const sectionIcons = {
+  "AI assistant": Bot,
+  "AI profile": Sparkles,
+  Appearance: Palette,
+  "Custom sections": PlusSquare,
+  "CV versions": FileClock,
+  Education: GraduationCap,
+  Experience: BriefcaseBusiness,
+  "Field visibility": Eye,
+  "Import CV": FileUp,
+  "Import Google": FileDown,
+  "Language settings": Settings2,
+  Languages,
+  Layout: Columns2,
+  PDF: FileText,
+  Profile: UserRound,
+  Projects: FolderKanban,
+  Publishing: Send,
+  Reviews: MessageSquareText,
+  "Revision history": History,
+  "Section display": PanelsTopLeft,
+  "Section order": ListOrdered,
+  Sections: LayoutGrid,
+  Skills: Wrench,
+  Templates: BookOpen,
+} satisfies Record<(typeof tabs)[number], LucideIcon>;
+
 const navigationGroups = [
   {
     items: [
@@ -384,44 +439,6 @@ export function ProfileEditor({
           await publish();
         }}
       >
-        <StudioHeading
-          actions={
-            <>
-              <Button
-                className="studio-secondary"
-                disabled={editorDisabled}
-                onClick={arrangeLayout}
-                type="button"
-                variant="outline"
-              >
-                Arrange layout
-              </Button>
-              <Button className="studio-secondary" href="/admin/billing" variant="outline">
-                Plan and usage
-              </Button>
-
-              <div className="studio-editor-actions" hidden={view === "edit"}>
-                {editorActions}
-              </div>
-            </>
-          }
-          description="Update your story, tailor your CV, and preview what you want to share."
-          eyebrow="Portfolio editor"
-          title="Edit your portfolio"
-        >
-          <div className="studio-status">
-            <span className={dirty ? "status-dot unsaved" : "status-dot"} />
-            <span>{dirty ? "You have unsaved changes" : "All changes saved"}</span>
-            <span>Revision {saved.revision}</span>
-            <Button
-              disabled={busy}
-              onClick={() => signOutOfStudio(dirty, request, recovery.stop, showError, setBusy)}
-              type="button"
-            >
-              Sign out
-            </Button>
-          </div>
-        </StudioHeading>
         <EditorWorkspace
           actions={editorActions}
           active={tab}
@@ -430,6 +447,46 @@ export function ProfileEditor({
             ...group,
             items: group.items.filter((item) => availableTabs.includes(item)),
           }))}
+          heading={
+            <StudioHeading
+              actions={
+                <>
+                  <Button
+                    className="studio-secondary"
+                    disabled={editorDisabled}
+                    onClick={arrangeLayout}
+                    type="button"
+                    variant="outline"
+                  >
+                    Arrange layout
+                  </Button>
+                  <Button className="studio-secondary" href="/admin/billing" variant="outline">
+                    Plan and usage
+                  </Button>
+
+                  <div className="studio-editor-actions" hidden={view === "edit"}>
+                    {editorActions}
+                  </div>
+                </>
+              }
+              description="Update your story, tailor your CV, and preview what you want to share."
+              eyebrow="Portfolio editor"
+              title="Edit your portfolio"
+            >
+              <div className="studio-status">
+                <span className={dirty ? "status-dot unsaved" : "status-dot"} />
+                <span>{dirty ? "You have unsaved changes" : "All changes saved"}</span>
+                <span>Revision {saved.revision}</span>
+                <Button
+                  disabled={busy}
+                  onClick={() => signOutOfStudio(dirty, request, recovery.stop, showError, setBusy)}
+                  type="button"
+                >
+                  Sign out
+                </Button>
+              </div>
+            </StudioHeading>
+          }
           locked={setupStepLocksEditor(step)}
           notice={workspaceNotice(recovery, busy, message)}
           onNavigate={(next) => {
@@ -455,6 +512,7 @@ export function ProfileEditor({
               />
             </DraftPreviewPane>
           }
+          sectionIcons={sectionIcons}
           username={username}
           view={view}
         >

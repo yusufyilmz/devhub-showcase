@@ -4,7 +4,7 @@ import "./editor-workspace.css";
 
 import { useEffect, useId, useRef, useState } from "react";
 
-import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { FileText, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 
 import { Button } from "@shared/ui/button";
 import { NativeSelect } from "@shared/ui/native-select";
@@ -18,6 +18,8 @@ export function EditorWorkspace({
   view: controlledView,
   onViewChange,
   groups,
+  heading,
+  sectionIcons,
   username,
   disabled,
   locked = false,
@@ -85,89 +87,90 @@ export function EditorWorkspace({
           {groups.map((entry) => (
             <div className="editor-navigation-group" key={entry.label}>
               {!compact && <p>{entry.label}</p>}
-              {entry.items.map((item) => (
-                <Button
-                  aria-current={active === item ? "page" : undefined}
-                  aria-label={compact ? item : undefined}
-                  disabled={disabled}
-                  key={item}
-                  onClick={() => navigate(item)}
-                  title={compact ? item : undefined}
-                  type="button"
-                  variant="ghost"
-                >
-                  {compact
-                    ? item
-                        .split(" ")
-                        .map((word) => word.charAt(0).toUpperCase())
-                        .join("")
-                    : item}
-                </Button>
-              ))}
+              {entry.items.map((item) => {
+                const Icon = sectionIcons?.[item] ?? FileText;
+                return (
+                  <Button
+                    aria-current={active === item ? "page" : undefined}
+                    aria-label={compact ? item : undefined}
+                    disabled={disabled}
+                    key={item}
+                    onClick={() => navigate(item)}
+                    title={compact ? item : undefined}
+                    type="button"
+                    variant="ghost"
+                  >
+                    {compact ? <Icon aria-hidden="true" /> : item}
+                  </Button>
+                );
+              })}
             </div>
           ))}
         </div>
       </nav>
-      <div className="editor-workspace-main">
-        <div className="editor-workspace-toolbar" ref={toolbar}>
-          <p className="editor-breadcrumb">
-            {group?.label} / {active}
-          </p>
-          <NativeSelect
-            aria-label="Editor section"
-            className="editor-section-picker"
-            disabled={disabled}
-            onChange={(event) => navigate(event.target.value)}
-            value={active}
-          >
-            {groups.map((entry) => (
-              <optgroup key={entry.label} label={entry.label}>
-                {entry.items.map((item) => (
-                  <option key={item}>{item}</option>
-                ))}
-              </optgroup>
-            ))}
-          </NativeSelect>
-          {!locked && (
-            <Button
+      <div className="editor-workspace-body">
+        {heading}
+        <div className="editor-workspace-main">
+          <div className="editor-workspace-toolbar" ref={toolbar}>
+            <p className="editor-breadcrumb">
+              {group?.label} / {active}
+            </p>
+            <NativeSelect
+              aria-label="Editor section"
+              className="editor-section-picker"
               disabled={disabled}
-              onClick={() => changeView(editing ? "preview" : "edit")}
-              ref={viewButton}
-              type="button"
-              variant="outline"
+              onChange={(event) => navigate(event.target.value)}
+              value={active}
             >
-              {editing ? "Back to preview" : "Edit"}
-            </Button>
+              {groups.map((entry) => (
+                <optgroup key={entry.label} label={entry.label}>
+                  {entry.items.map((item) => (
+                    <option key={item}>{item}</option>
+                  ))}
+                </optgroup>
+              ))}
+            </NativeSelect>
+            {!locked && (
+              <Button
+                disabled={disabled}
+                onClick={() => changeView(editing ? "preview" : "edit")}
+                ref={viewButton}
+                type="button"
+                variant="outline"
+              >
+                {editing ? "Back to preview" : "Edit"}
+              </Button>
+            )}
+          </div>
+          {notice}
+          <aside aria-label="Draft preview" className="editor-preview-pane" hidden={editing}>
+            {preview}
+          </aside>
+          {editing && (
+            <section aria-labelledby={headingId}>
+              <header className="editor-section-header">
+                <h2 id={headingId}>Edit {active}</h2>
+              </header>
+              <div className="editor-content-pane">{children}</div>
+              <footer className="editor-section-actions">
+                {!locked && (
+                  <Button
+                    disabled={disabled}
+                    onClick={() => {
+                      changeView("preview");
+                      viewButton.current?.focus({ preventScroll: true });
+                    }}
+                    type="button"
+                    variant="outline"
+                  >
+                    Done editing
+                  </Button>
+                )}
+                {actions}
+              </footer>
+            </section>
           )}
         </div>
-        {notice}
-        <aside aria-label="Draft preview" className="editor-preview-pane" hidden={editing}>
-          {preview}
-        </aside>
-        {editing && (
-          <section aria-labelledby={headingId}>
-            <header className="editor-section-header">
-              <h2 id={headingId}>Edit {active}</h2>
-            </header>
-            <div className="editor-content-pane">{children}</div>
-            <footer className="editor-section-actions">
-              {!locked && (
-                <Button
-                  disabled={disabled}
-                  onClick={() => {
-                    changeView("preview");
-                    viewButton.current?.focus({ preventScroll: true });
-                  }}
-                  type="button"
-                  variant="outline"
-                >
-                  Done editing
-                </Button>
-              )}
-              {actions}
-            </footer>
-          </section>
-        )}
       </div>
     </div>
   );

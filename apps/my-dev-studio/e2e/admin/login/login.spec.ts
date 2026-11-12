@@ -15,7 +15,7 @@ test("visitors reach login and cannot open an editor", async ({ page }) => {
   await expect(page.getByLabel("Password", { exact: true })).toBeVisible();
 });
 
-test("the desktop login illustration can be replayed and respects reduced motion", async ({
+test("the desktop login illustration animates on load and respects reduced motion", async ({
   page,
 }, info) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
@@ -23,7 +23,7 @@ test("the desktop login illustration can be replayed and respects reduced motion
   const visual = page.locator(".login-visual");
   const portfolio = visual.locator(".login-preview-portfolio");
   const cv = visual.locator(".login-preview-cv");
-  const replay = visual.getByRole("button", { name: "Replay animation" });
+  await expect(visual.getByRole("button", { name: "Replay animation" })).toHaveCount(0);
 
   if ((page.viewportSize()?.width ?? 0) <= 760) {
     await expect(visual).toBeHidden();
@@ -38,17 +38,10 @@ test("the desktop login illustration can be replayed and respects reduced motion
       path: info.outputPath("login-illustration.png"),
     });
 
-    await replay.click();
-    await expect
-      .poll(() => portfolio.evaluate((card) => card.getAnimations()[0]?.playState))
-      .toBe("running");
-    await expect(replay).toBeFocused();
-
     await page.emulateMedia({ reducedMotion: "reduce" });
     await expect(portfolio).toHaveCSS("animation-name", "none");
     await expect(cv).toHaveCSS("animation-name", "none");
     await expect(cv).toBeVisible();
-    await expect(replay).toBeHidden();
   }
 
   await expect(page.getByLabel("Email", { exact: true })).toBeVisible();
