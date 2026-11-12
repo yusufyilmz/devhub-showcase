@@ -9,7 +9,15 @@ const positiveInteger = z
   .regex(/^[1-9]\d*$/)
   .optional();
 
-// Missing integrations remain optional; feature code checks availability.
+const deployment = process.env.VERCEL_ENV;
+const redisRequired = deployment === "preview" || deployment === "production";
+const redisToken = z.string().trim().min(1, "Set REDIS_TOKEN to the Redis REST token.");
+const redisUrl = z.url({
+  error: "Set REDIS_URL to the HTTPS Redis REST URL.",
+  protocol: /^https$/,
+});
+
+// Redis is required on hosted deployments. Local development can run without integrations.
 export const env = createEnv({
   client: {
     NEXT_PUBLIC_API_URL: url,
@@ -41,12 +49,15 @@ export const env = createEnv({
   server: {
     ADZUNA_APP_ID: text,
     ADZUNA_APP_KEY: text,
+    ADZUNA_CACHE_TTL_SECONDS: z.string().regex(/^\d+$/).optional(),
     ADZUNA_DAILY_LIMIT: positiveInteger,
     APPLICATION_NAME: text,
     CHAT_V2_DEBUG: text,
     CRON_SECRET: text,
     CV_IMPORT_DAILY_LIMIT: positiveInteger,
     GOOGLE_PROFILE_CLIENT_ID: text,
+    JOB_ALERT_DOMAIN: text,
+    JOB_ALERT_RELAY_SECRET: text,
     JOB_PUSH_PRIVATE_KEY: text,
     JOB_PUSH_PUBLIC_KEY: text,
     JOB_PUSH_SUBJECT: text,
@@ -71,8 +82,8 @@ export const env = createEnv({
     OPENAI_JOB_INSTRUCTIONS: text,
     OPENAI_JOB_MODEL: text,
     OPENAI_MODEL: text,
-    REDIS_TOKEN: text,
-    REDIS_URL: url,
+    REDIS_TOKEN: redisRequired ? redisToken : redisToken.optional(),
+    REDIS_URL: redisRequired ? redisUrl : redisUrl.optional(),
     STRIPE_PRO_CHAT_LIMIT: positiveInteger,
     STRIPE_PRO_EDITOR_LIMIT: positiveInteger,
     STRIPE_PRO_PRICE_ID: text,

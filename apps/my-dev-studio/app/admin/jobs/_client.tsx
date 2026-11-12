@@ -83,6 +83,7 @@ export function JobsClient({ initial, statuses }: { initial: Data; statuses: rea
       }
       run={(command) =>
         action(async () => {
+          if ("action" in command && command.action === "refresh") return "Checked for new alerts.";
           const result = await change(command);
           if (typeof result.url === "string") window.location.assign(result.url);
           return "action" in command && command.action === "draft"

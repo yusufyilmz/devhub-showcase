@@ -220,6 +220,18 @@ export interface Database {
         Relationships: [];
       };
 
+      job_alert_addresses: {
+        Row: { user_id: string; token: string };
+        Insert: { user_id: string; token?: string };
+        Update: { token?: string };
+        Relationships: [];
+      };
+      job_alert_imports: {
+        Row: { user_id: string; id: string; listing: Json; received_at: string };
+        Insert: { user_id: string; id: string; listing: Json; received_at?: string };
+        Update: Record<PropertyKey, never>;
+        Relationships: [];
+      };
       job_searches: {
         Row: {
           id: string;
@@ -264,7 +276,7 @@ export interface Database {
         Row: {
           user_id: string;
           listing_id: string;
-          score: number;
+          score: number | null;
           cv_revision: number;
           explanation: Json;
           state: string;
@@ -274,7 +286,7 @@ export interface Database {
         Insert: {
           user_id: string;
           listing_id: string;
-          score: number;
+          score: number | null;
           cv_revision: number;
           explanation: Json;
           state?: string;
@@ -781,6 +793,14 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
+      enqueue_linkedin_alert: {
+        Args: { address_token: string; verified_sender: string; candidates: Json };
+        Returns: number;
+      };
+      accept_linkedin_alert: {
+        Args: { account_id: string; import_id: string; reviewed_listing: Json; match_score: number | null; cv_version: number; match_explanation: Json };
+        Returns: boolean;
+      };
       reserve_job_provider_request: {
         Args: { source: string; country: string; daily_limit: number };
         Returns: boolean;

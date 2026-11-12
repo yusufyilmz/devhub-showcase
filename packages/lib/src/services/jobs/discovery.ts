@@ -65,7 +65,11 @@ function joobleSalary(value: unknown) {
   };
 }
 
-function normalize(source: JobListing["source"], row: Record<string, unknown>, country: string) {
+function normalize(
+  source: Exclude<JobListing["source"], "linkedin">,
+  row: Record<string, unknown>,
+  country: string,
+) {
   const adzuna = source === "adzuna";
   const salary = adzuna
     ? {
@@ -99,7 +103,7 @@ export type JobProviders = {
 };
 
 export function isProviderConfigured(
-  source: JobListing["source"],
+  source: Exclude<JobListing["source"], "linkedin">,
   country: string,
   providers: JobProviders,
 ) {
@@ -108,15 +112,33 @@ export function isProviderConfigured(
     : Boolean(joobleDomains[country] && providers.joobleKeys[country]);
 }
 
+function providerSearch(filters: JobFilters) {
+  return [filters.title, filters.keywords, filters.workplace].filter(Boolean).join(" ");
+}
+
+function adzunaQuery(filters: JobFilters) {
+  return {
+    "content-type": "application/json",
+    results_per_page: "20",
+    what: providerSearch(filters),
+    where: filters.location,
+  };
+}
+
+export function adzunaSearchKey(filters: JobFilters, appId: string) {
+  return createHash("sha256")
+    .update(JSON.stringify([appId, filters.country, 1, adzunaQuery(filters)]))
+    .digest("hex");
+}
+
 export async function discoverJobs(
-  source: JobListing["source"],
+  source: Exclude<JobListing["source"], "linkedin">,
   filters: JobFilters,
   providers: JobProviders,
   signal: AbortSignal,
   request = fetch,
 ) {
-  const { country, location, title, keywords } = filters;
-  const search = [title, keywords, filters.workplace].filter(Boolean).join(" ");
+  const { country, location } = filters;
   let response: Response;
   if (source === "adzuna") {
     if (!providers.adzuna || !Object.hasOwn(adzunaCurrencies, country))
@@ -125,10 +147,7 @@ export async function discoverJobs(
     url.search = new URLSearchParams({
       app_id: providers.adzuna.appId,
       app_key: providers.adzuna.key,
-      "content-type": "application/json",
-      results_per_page: "20",
-      what: search,
-      where: location,
+      ...adzunaQuery(filters),
     }).toString();
     response = await request(url, { cache: "no-store", redirect: "error", signal });
   } else {
@@ -136,7 +155,7 @@ export async function discoverJobs(
     const key = providers.joobleKeys[country];
     if (!domain || !key) throw new Error("unconfigured");
     response = await request(`https://${domain}/api/${encodeURIComponent(key)}`, {
-      body: JSON.stringify({ keywords: search, location, ResultOnPage: 20 }),
+      body: JSON.stringify({ keywords: providerSearch(filters), location, ResultOnPage: 20 }),
       cache: "no-store",
       headers: { "Content-Type": "application/json" },
       method: "POST",
