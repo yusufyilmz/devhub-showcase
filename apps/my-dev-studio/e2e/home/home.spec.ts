@@ -2,21 +2,30 @@ import { expect, test } from "@playwright/test";
 
 import { getThemePalette, portfolioAccentIds, portfolioAccents } from "@shared/config";
 
-test("the homepage groups the getting-started cards with its portfolio features", async ({
-  page,
-}) => {
+test("the homepage shows all six portfolio cards in one reveal-card grid", async ({ page }) => {
   await page.goto("/");
   const features = page.locator("#features");
-  const steps = features.locator("#how-it-works");
-  await expect(page.locator("#how-it-works")).toHaveCount(1);
-  await expect(steps.getByRole("listitem")).toHaveCount(3);
-  await expect(steps.getByRole("heading", { name: "Open your studio" })).toBeVisible();
-  await expect(steps.getByRole("heading", { name: "Put your story together" })).toBeVisible();
-  await expect(steps.getByRole("heading", { name: "Share it when you’re ready" })).toBeVisible();
+  const cards = features.locator(".home-feature-grid > .home-feature-card");
+  await expect(cards).toHaveCount(6);
+  await expect(cards.nth(3).getByRole("heading")).toHaveText("Open your studio");
+  await expect(cards.nth(4).getByRole("heading")).toHaveText("Put your story together");
+  await expect(cards.nth(5).getByRole("heading")).toHaveText("Share it when you’re ready");
+  await expect(features.getByRole("heading", { name: /From a blank page/ })).toHaveCount(0);
 
   await page.getByRole("contentinfo").getByRole("link", { name: "How it works" }).click();
   await expect(page).toHaveURL(/#how-it-works$/);
-  await expect(steps.getByRole("heading", { name: /From a blank page/ })).toBeInViewport();
+  await expect(cards.nth(3).getByRole("heading")).toBeInViewport();
+
+  for (const card of await cards.all()) {
+    const toggle = card.getByRole("button", { name: /details for/ });
+    await toggle.click();
+    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    const details = card.locator(".reveal-details");
+    await expect(details).toHaveAttribute("aria-hidden", "false");
+    await expect(details.locator("p")).toHaveCSS("font-size", "14px");
+    await toggle.press("Escape");
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  }
 });
 
 test("homepage opens the real portfolio instead of an anchor", async ({ page }) => {

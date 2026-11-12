@@ -24,10 +24,9 @@ export const featuresStyles = {
   element10: "home-feature-index",
   element11: "home-style-demo",
   element12: "home-feature-details",
-  element13: "home-feature-card home-feature-wide",
+  element13: "home-feature-cv",
   element14: "home-file-icon",
   element15: "home-feature-index",
-  element16: "home-file-tag",
 } as const;
 
 export const portfolioPreviewStyles = {
@@ -132,12 +131,6 @@ export const pricingStyles = {
   element9: "home-eyebrow",
   element10: "home-button home-button-primary",
   element11: "home-plan-note",
-} as const;
-
-export const processStyles = {
-  element1: "home-process",
-  element2: "home-section-intro",
-  element3: "home-eyebrow",
 } as const;
 
 export function homeOptionsSectionClassName(...values: unknown[]): string {
