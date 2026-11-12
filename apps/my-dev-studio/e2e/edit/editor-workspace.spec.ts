@@ -119,6 +119,19 @@ test("editor workspace keeps draft editing, preview and publication separate", a
   await expect
     .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
     .toBe(true);
+  await title.fill("Existing unsaved edit");
+  const savesBeforeStartingOver = saves;
+  page.once("dialog", (dialog) => dialog.accept());
+  await page.getByRole("button", { name: "Start from scratch" }).click();
+  await expect(page.getByRole("dialog", { name: "Create your portfolio" })).toBeVisible();
+  await page.getByRole("button", { name: "Choose a layout" }).click();
+  await page.getByRole("button", { name: "Choose how to start" }).click();
+  await page.getByRole("button", { name: /Enter details manually/ }).click();
+  await expect(title).toHaveValue("Add your professional title");
+  await page.getByRole("button", { name: "Cancel starting over" }).click();
+  await expect(title).toHaveValue("Existing unsaved edit");
+  expect(saves).toBe(savesBeforeStartingOver);
+  await title.fill("Unsaved editor workspace title");
   await showEditorPreview(page);
   await page.screenshot({ path: info.outputPath("editor-workspace-viewport.png") });
   await page.screenshot({ fullPage: true, path: info.outputPath("editor-workspace.png") });
