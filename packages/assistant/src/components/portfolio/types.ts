@@ -55,6 +55,7 @@ export type GuidedOnboardingProps = {
   onImport: () => void;
   onGoogleImport: () => void;
   onAskAssistant?: () => void;
+  onCancel?: () => void;
   managed: boolean;
   children?: import("react").ReactNode;
   startStep?: "work" | "layout" | "start";

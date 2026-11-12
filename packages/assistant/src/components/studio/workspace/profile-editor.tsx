@@ -42,7 +42,7 @@ import {
 } from "@shared/config";
 import { urls } from "@shared/config/urls";
 import type { ProfileSnapshot } from "@shared/lib/profile";
-import { editCvPath } from "@shared/lib/profiles";
+import { createEmptyProfile, editCvPath } from "@shared/lib/profiles";
 import { draftStorage } from "@shared/runtime/storage";
 import { type StudioRequest, useStudioRequest } from "@shared/runtime/studio";
 import { useUserConfigStore } from "@shared/runtime/user";
@@ -211,12 +211,49 @@ function setupReached(step: SetupStep) {
   return 0;
 }
 
+type ScratchBackup = {
+  profile: PortfolioProfile;
+  profession: PortfolioType;
+  tab: (typeof tabs)[number];
+  username: string;
+  view: "edit" | "preview";
+};
+
+function StartFromScratchAction({
+  disabled,
+  startingOver,
+  showStart,
+  onCancel,
+  onStart,
+}: {
+  disabled: boolean;
+  startingOver: boolean;
+  showStart: boolean;
+  onCancel: () => void;
+  onStart: () => void;
+}) {
+  if (!startingOver && !showStart) return null;
+  return (
+    <Button
+      className="studio-secondary"
+      disabled={disabled}
+      onClick={startingOver ? onCancel : onStart}
+      type="button"
+      variant="outline"
+    >
+      {startingOver ? "Cancel starting over" : "Start from scratch"}
+    </Button>
+  );
+}
+
 function FirstPortfolioDialog({
   busy,
   draft,
   managed,
   onBegin,
   onAskAssistant,
+  onCancel,
+  startingOver,
   onProfessionChange,
   onReview,
   onStartStep,
@@ -230,6 +267,8 @@ function FirstPortfolioDialog({
   draft: PortfolioProfile;
   managed: boolean;
   onAskAssistant?: () => void;
+  onCancel: () => void;
+  startingOver: boolean;
   onBegin: (tab?: "Profile" | "Import CV" | "Import Google") => void;
   onProfessionChange: (value: PortfolioType) => void;
   onReview: () => void;
@@ -252,6 +291,7 @@ function FirstPortfolioDialog({
         <GuidedOnboarding
           managed={managed}
           onAskAssistant={onAskAssistant}
+          onCancel={startingOver ? onCancel : undefined}
           onChange={resetDraft}
           onContinue={() => onBegin()}
           onGoogleImport={() => onBegin("Import Google")}
@@ -295,6 +335,7 @@ export function ProfileEditor({
 }) {
   const userId = useUserConfigStore((state) => state.user?.id);
   const [profession, setProfession] = useState<PortfolioType>(defaultProfession(initial.profile));
+  const [scratchBackup, setScratchBackup] = useState<ScratchBackup | null>(null);
   const [step, setStep] = useState<SetupStep>(initialSetup(initial.profile));
   const [startStep, setStartStep] = useState<"work" | "layout" | "start">("work");
   const [reached, setReached] = useState(() => setupReached(initialSetup(initial.profile)));
@@ -366,7 +407,40 @@ export function ProfileEditor({
       stale: recovery.stale,
       username,
     });
-    if (revision !== undefined) recovery.saved(revision);
+    if (revision !== undefined) {
+      recovery.saved(revision);
+      setScratchBackup(null);
+    }
+  }
+  function startFromScratch() {
+    if (
+      !window.confirm(
+        "Start with a blank draft? Your saved portfolio stays as it is until you save changes.",
+      )
+    )
+      return;
+    setScratchBackup({ profession, profile: draft, tab, username, view: workspaceView });
+    const blank = createEmptyProfile({ email: saved.profile.email });
+    resetDraft({ ...blank, publicationVisibility: saved.profile.publicationVisibility });
+    setProfession(defaultProfession(blank));
+    setAssistantPrompt("");
+    setStartStep("work");
+    setReached(0);
+    setStep("template");
+    setTab("Profile");
+    setWorkspaceView("edit");
+  }
+  function cancelStartingOver() {
+    if (!scratchBackup) return;
+    recovery.discard();
+    resetDraft(scratchBackup.profile);
+    setProfession(scratchBackup.profession);
+    setTab(scratchBackup.tab);
+    setUsername(scratchBackup.username);
+    setWorkspaceView(scratchBackup.view);
+    setStep("done");
+    setReached(setupReached("done"));
+    setScratchBackup(null);
   }
   function arrangeLayout() {
     setWorkspaceView("preview");
@@ -394,6 +468,7 @@ export function ProfileEditor({
   function openStart(next: "work" | "layout" | "start") {
     openStartStep(next, setReached, setStartStep, setStep);
   }
+  const onAskAssistant = managed ? undefined : askForSetupHelp;
   const view = editorWorkspaceView(step, workspaceView);
   const editorActions = (
     <>
@@ -419,8 +494,9 @@ export function ProfileEditor({
         busy={busy}
         draft={draft}
         managed={managed}
-        onAskAssistant={managed ? undefined : askForSetupHelp}
+        onAskAssistant={onAskAssistant}
         onBegin={beginDetails}
+        onCancel={cancelStartingOver}
         onProfessionChange={(value) => {
           setProfession(value);
           resetDraft({ ...draft, portfolioType: value });
@@ -434,6 +510,7 @@ export function ProfileEditor({
         reached={reached}
         recovery={recovery}
         resetDraft={resetDraft}
+        startingOver={Boolean(scratchBackup)}
         startStep={startStep}
       />
     );
@@ -467,6 +544,13 @@ export function ProfileEditor({
                   >
                     Arrange layout
                   </Button>
+                  <StartFromScratchAction
+                    disabled={editorDisabled}
+                    onCancel={cancelStartingOver}
+                    onStart={startFromScratch}
+                    showStart={step === "done"}
+                    startingOver={Boolean(scratchBackup)}
+                  />
                   <Button className="studio-secondary" href="/admin/billing" variant="outline">
                     Plan and usage
                   </Button>
@@ -526,7 +610,7 @@ export function ProfileEditor({
           <SetupNavigation
             canReview={draft.name.trim().length > 0 && draft.title.trim().length > 0}
             disabled={busy}
-            onAskAssistant={managed ? undefined : askForSetupHelp}
+            onAskAssistant={onAskAssistant}
             onImport={() => {
               setTab("Import CV");
             }}
@@ -611,6 +695,8 @@ export function ProfileEditor({
               onClick={() => {
                 if (window.confirm("Discard unpublished changes?")) {
                   recovery.discard();
+                  setScratchBackup(null);
+                  setStep(initialSetup(saved.profile));
                   resetDraft(saved.profile);
                   setUsername(saved.username ?? "");
                   setIsPublic(saved.isPublic ?? false);
