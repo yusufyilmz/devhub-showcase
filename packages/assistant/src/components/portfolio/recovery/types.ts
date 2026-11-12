@@ -8,6 +8,7 @@ export type RecoveryValue = {
   isPublic: boolean;
   tab: string;
   step: SetupStep;
+  setupPosition?: { stage: number; section: number };
 };
 export type RecoveryRecord = { version: 1; revision: number; at: number; value: RecoveryValue };
 export type RecoveryOptions = {

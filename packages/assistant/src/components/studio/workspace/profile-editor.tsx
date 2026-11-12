@@ -48,7 +48,6 @@ import { type StudioRequest, useStudioRequest } from "@shared/runtime/studio";
 import { useUserConfigStore } from "@shared/runtime/user";
 import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
-import { Dialog, DialogContent, DialogTitle } from "@shared/ui/dialog";
 import { GoogleImportEditor } from "@shared/ui/google-import";
 import { Input } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
@@ -62,11 +61,9 @@ import {
   EditorGuidance,
   EditorWorkspace,
   FieldVisibilityEditor,
-  GuidedOnboarding,
   LanguageSettingsEditor,
   PortfolioTypePicker,
   ProfileFields,
-  SetupNavigation,
   type SetupStep,
   StudioHeading,
   TemplatePicker,
@@ -95,6 +92,7 @@ const PreviewContent = dynamic(() =>
 );
 
 import { PrivateCvVersions } from "./cv-versions";
+import { PortfolioSetup, type SetupPosition } from "./portfolio-setup";
 import { ProfilePublication } from "./publication";
 import { OwnerRevisionHistory } from "./revision-history";
 
@@ -195,22 +193,6 @@ function clean(profile: PortfolioProfile): PortfolioProfile {
     ),
   };
 }
-function openStartStep(
-  next: "work" | "layout" | "start",
-  setReached: (update: (current: number) => number) => void,
-  setStartStep: (next: "work" | "layout" | "start") => void,
-  setStep: (next: SetupStep) => void,
-) {
-  setReached((current) => Math.max(current, ["work", "layout", "start"].indexOf(next)));
-  setStartStep(next);
-  setStep("template");
-}
-function setupReached(step: SetupStep) {
-  if (step === "review" || step === "done") return 4;
-  if (step === "details") return 3;
-  return 0;
-}
-
 type ScratchBackup = {
   profile: PortfolioProfile;
   profession: PortfolioType;
@@ -246,74 +228,6 @@ function StartFromScratchAction({
   );
 }
 
-function FirstPortfolioDialog({
-  busy,
-  draft,
-  managed,
-  onBegin,
-  onAskAssistant,
-  onCancel,
-  startingOver,
-  onProfessionChange,
-  onReview,
-  onStartStep,
-  profession,
-  reached,
-  recovery,
-  resetDraft,
-  startStep,
-}: {
-  busy: boolean;
-  draft: PortfolioProfile;
-  managed: boolean;
-  onAskAssistant?: () => void;
-  onCancel: () => void;
-  startingOver: boolean;
-  onBegin: (tab?: "Profile" | "Import CV" | "Import Google") => void;
-  onProfessionChange: (value: PortfolioType) => void;
-  onReview: () => void;
-  onStartStep: (next: "work" | "layout" | "start") => void;
-  profession: PortfolioType;
-  reached: number;
-  recovery: ReturnType<typeof useDraftRecovery>;
-  resetDraft: (profile: PortfolioProfile) => void;
-  startStep: "work" | "layout" | "start";
-}) {
-  return (
-    <Dialog open>
-      <DialogContent
-        className="setup-dialog"
-        onEscapeKeyDown={(event) => event.preventDefault()}
-        onPointerDownOutside={(event) => event.preventDefault()}
-        showCloseButton={false}
-      >
-        <DialogTitle className="sr-only">Create your portfolio</DialogTitle>
-        <GuidedOnboarding
-          managed={managed}
-          onAskAssistant={onAskAssistant}
-          onCancel={startingOver ? onCancel : undefined}
-          onChange={resetDraft}
-          onContinue={() => onBegin()}
-          onGoogleImport={() => onBegin("Import Google")}
-          onImport={() => onBegin("Import CV")}
-          onOpen={(next) => {
-            onBegin();
-            if (next === "review" && draft.name.trim() && draft.title.trim()) onReview();
-          }}
-          onProfessionChange={onProfessionChange}
-          onStartStep={onStartStep}
-          profession={profession}
-          profile={draft}
-          reached={reached}
-          startStep={startStep}
-        >
-          <DraftRecovery disabled={busy} recovery={recovery} />
-        </GuidedOnboarding>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
 export function ProfileEditor({
   initial,
   saveUrl = urls.studio.profile(),
@@ -337,8 +251,7 @@ export function ProfileEditor({
   const [profession, setProfession] = useState<PortfolioType>(defaultProfession(initial.profile));
   const [scratchBackup, setScratchBackup] = useState<ScratchBackup | null>(null);
   const [step, setStep] = useState<SetupStep>(initialSetup(initial.profile));
-  const [startStep, setStartStep] = useState<"work" | "layout" | "start">("work");
-  const [reached, setReached] = useState(() => setupReached(initialSetup(initial.profile)));
+  const [setupPosition, setSetupPosition] = useState<SetupPosition>({ section: 0, stage: 0 });
   const [saved, setSaved] = useState(initial);
   const [username, setUsername] = useState(initial.username ?? "");
   const [busy, setBusy] = useState(false);
@@ -367,12 +280,12 @@ export function ProfileEditor({
       setUsername(value.username);
       if (availableTabs.includes(value.tab as typeof tab)) setTab(value.tab as typeof tab);
       setStep(value.step);
-      setReached((current) => Math.max(current, setupReached(value.step)));
+      setSetupPosition(restoreSetupPosition(value.step, value.setupPosition));
       setProfession(defaultProfession(value.profile, value.profession));
     },
     revision: saved.revision,
     storageKey: recoveryKey(userId, initial.id, saveUrl),
-    value: { isPublic, profession, profile: draft, step, tab, username },
+    value: { isPublic, profession, profile: draft, setupPosition, step, tab, username },
   });
   const recoveryNeedsAttention = needsRecoveryAttention(recovery);
   const { editorDisabled, canSave } = editorSaveState(busy, recovery.stale, dirty);
@@ -386,10 +299,10 @@ export function ProfileEditor({
     window.addEventListener("beforeunload", warn);
     return () => window.removeEventListener("beforeunload", warn);
   }, [dirty]);
-  async function publish() {
+  async function saveDraft(profile = draft) {
     const revision = await savePortfolioEditor({
       conflict: recovery.conflict,
-      draft,
+      draft: profile,
       isPublic,
       managed,
       onSaved,
@@ -410,6 +323,7 @@ export function ProfileEditor({
     if (revision !== undefined) {
       recovery.saved(revision);
       setScratchBackup(null);
+      setStep("done");
     }
   }
   function startFromScratch() {
@@ -424,8 +338,9 @@ export function ProfileEditor({
     resetDraft({ ...blank, publicationVisibility: saved.profile.publicationVisibility });
     setProfession(defaultProfession(blank));
     setAssistantPrompt("");
-    setStartStep("work");
-    setReached(0);
+    setSetupPosition({ section: 0, stage: 0 });
+    showError("");
+    setMessage("");
     setStep("template");
     setTab("Profile");
     setWorkspaceView("edit");
@@ -439,7 +354,7 @@ export function ProfileEditor({
     setUsername(scratchBackup.username);
     setWorkspaceView(scratchBackup.view);
     setStep("done");
-    setReached(setupReached("done"));
+    showError("");
     setScratchBackup(null);
   }
   function arrangeLayout() {
@@ -447,29 +362,7 @@ export function ProfileEditor({
     setArrangeRequest((count) => count + 1);
     document.getElementById("portfolio-draft-preview")?.scrollIntoView({ block: "start" });
   }
-  function beginDetails(nextTab: typeof tab = "Profile") {
-    resetDraft({
-      ...draft,
-      cvLayout: onboardingCvLayout(draft),
-      templateChosen: true,
-    });
-    setTab(nextTab);
-    setReached((current) => Math.max(current, 3));
-    setWorkspaceView("edit");
-    setStep("details");
-  }
-  function askForSetupHelp() {
-    setAssistantPrompt(
-      "Help me write a short portfolio introduction. Ask what I do and what I’ve worked on before drafting. Use only details I provide.",
-    );
-    if (step === "template") beginDetails("AI assistant");
-    else setTab("AI assistant");
-  }
-  function openStart(next: "work" | "layout" | "start") {
-    openStartStep(next, setReached, setStartStep, setStep);
-  }
-  const onAskAssistant = managed ? undefined : askForSetupHelp;
-  const view = editorWorkspaceView(step, workspaceView);
+  const view = workspaceView;
   const editorActions = (
     <>
       <Button className="studio-primary" disabled={!canSave} type="submit">
@@ -488,39 +381,47 @@ export function ProfileEditor({
       </Button>
     </>
   );
-  if (step === "template")
+  if (step !== "done") {
+    const setupDraft = prepareSetupDraft(draft);
     return (
-      <FirstPortfolioDialog
+      <PortfolioSetup
+        assistant={setupAssistant(managed, draft, setDraft, saved)}
         busy={busy}
-        draft={draft}
-        managed={managed}
-        onAskAssistant={onAskAssistant}
-        onBegin={beginDetails}
-        onCancel={cancelStartingOver}
-        onProfessionChange={(value) => {
+        error={error}
+        onCancel={scratchBackup ? cancelStartingOver : undefined}
+        onChange={setDraft}
+        onPosition={setSetupPosition}
+        onProfession={(value) => {
           setProfession(value);
-          resetDraft({ ...draft, portfolioType: value });
+          setDraft({ ...draft, portfolioType: value });
         }}
-        onReview={() => {
-          setReached((current) => Math.max(current, 4));
-          setStep("review");
-        }}
-        onStartStep={openStart}
+        onSave={() => saveDraft(setupDraft)}
+        position={setupPosition}
+        preview={
+          <DraftPreviewPane
+            downloadHref={downloadHref}
+            profile={setupDraft}
+            showSavedDownload={false}
+          >
+            <ResponsivePortfolioPreview appearance={setupDraft.appearance} initiallyOpen>
+              <PreviewContent profile={setupDraft} username={username} />
+            </ResponsivePortfolioPreview>
+          </DraftPreviewPane>
+        }
         profession={profession}
-        reached={reached}
-        recovery={recovery}
-        resetDraft={resetDraft}
-        startingOver={Boolean(scratchBackup)}
-        startStep={startStep}
+        profile={draft}
+        recovery={<DraftRecovery disabled={busy} recovery={recovery} />}
+        stale={recovery.stale}
       />
     );
+  }
   return (
     <main className="studio studio-editor" id="admin-content">
       <form
         id="portfolio-editor-form"
         onSubmit={async (event) => {
           event.preventDefault();
-          await publish();
+          await saveDraft();
         }}
       >
         <EditorWorkspace
@@ -578,7 +479,6 @@ export function ProfileEditor({
               </div>
             </StudioHeading>
           }
-          locked={setupStepLocksEditor(step)}
           notice={workspaceNotice(recovery, busy, message)}
           onNavigate={(next) => {
             setAssistantPrompt("");
@@ -607,30 +507,6 @@ export function ProfileEditor({
           username={username}
           view={view}
         >
-          <SetupNavigation
-            canReview={draft.name.trim().length > 0 && draft.title.trim().length > 0}
-            disabled={busy}
-            onAskAssistant={onAskAssistant}
-            onImport={() => {
-              setTab("Import CV");
-            }}
-            onManual={() => {
-              setTab("Profile");
-            }}
-            onOpen={openStart}
-            onPreview={() => setWorkspaceView("preview")}
-            onStep={(next) => {
-              if (next === "review") setReached((current) => Math.max(current, 4));
-              if (next === "template") openStart("layout");
-              else {
-                setWorkspaceView("edit");
-                setStep(next);
-              }
-              if (next === "review") setTab("Profile");
-            }}
-            reached={reached}
-            step={step}
-          />
           {error && (
             <div className="editor-alert" role="alert">
               <p>{error}</p>
@@ -982,12 +858,57 @@ function portfolioDirty(draft: PortfolioProfile, saved: ProfileSnapshot, usernam
   );
 }
 
-function setupStepLocksEditor(step: SetupStep) {
-  return step === "details";
+function restoreSetupPosition(step: SetupStep, position?: SetupPosition): SetupPosition {
+  if (
+    position &&
+    Number.isInteger(position.stage) &&
+    position.stage >= 0 &&
+    position.stage <= 4 &&
+    Number.isInteger(position.section) &&
+    position.section >= 0 &&
+    position.section <= 5
+  )
+    return position;
+  if (step === "review") return { section: 0, stage: 4 };
+  return { section: 0, stage: step === "details" ? 3 : 0 };
 }
 
-function editorWorkspaceView(step: SetupStep, view: "edit" | "preview") {
-  return setupStepLocksEditor(step) ? "edit" : view;
+function prepareSetupDraft(profile: PortfolioProfile): PortfolioProfile {
+  const locationMissing = !profile.location.trim() || profile.location === "Add your location";
+  const summary =
+    profile.summary.trim() === "Add a short professional summary." ? "" : profile.summary.trim();
+  return {
+    ...profile,
+    cvFields: { email: false, ...profile.cvFields, ...(locationMissing && { location: false }) },
+    cvLayout: onboardingCvLayout(profile),
+    location: locationMissing ? "Not specified" : profile.location,
+    summary: summary || profile.title.trim(),
+    templateChosen: true,
+    websiteFields: {
+      email: false,
+      ...profile.websiteFields,
+      ...(locationMissing && { location: false }),
+    },
+  };
+}
+
+function setupAssistant(
+  managed: boolean,
+  profile: PortfolioProfile,
+  onChange: (profile: PortfolioProfile) => void,
+  saved: ProfileSnapshot,
+) {
+  if (managed) return undefined;
+  return (
+    <AiAssistantEditor
+      initialMessage="Help me write a short portfolio introduction. Ask what I do and what I’ve worked on before drafting. Use only details I provide."
+      managed={false}
+      onChange={(next) => onChange({ ...profile, summary: next.summary })}
+      profile={profile}
+      profileId={saved.id}
+      revision={saved.revision}
+    />
+  );
 }
 
 function initialSetup(profile: PortfolioProfile): SetupStep {

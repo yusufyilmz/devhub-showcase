@@ -7,6 +7,7 @@ import type { PortfolioProfile } from "@shared/config";
 export type DraftPreviewPaneProps = {
   profile: PortfolioProfile;
   downloadHref: string;
+  showSavedDownload?: boolean;
   children: ReactNode;
 };
 
