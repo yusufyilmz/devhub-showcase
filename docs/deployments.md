@@ -65,6 +65,11 @@ domains and database are retained; their values are not copied into GitHub or
 committed. Readiness inspection found the existing auth/owner/database variables.
 Optional notification credentials/worker setup remain a separate feature.
 
+After GitHub Verify succeeds, the Fitness OS job uploads the verified source to
+Vercel for the production build. Vercel provides the production database URI to
+that build. External builds receive a placeholder when pulling this Secret.
+Studio continues to build in GitHub Actions and deploy its prebuilt output.
+
 Configuration preparation on 2026-11-05 set and read back the monorepo Fitness
 project variable and Vercel monorepo settings, and disabled the old workflow
 (`disabled_manually`). No production deployment was triggered. Merge the workflow

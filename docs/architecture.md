@@ -135,8 +135,10 @@ flowchart TD
   Gate -->|No| Stop["Block release and inspect reports"]
   Gate -->|Yes| Main{"Non-PR run on main?"}
   Main -->|No| Review["PR ready for review and merge"]
-  Main -->|Yes| Config["Pull production Vercel configuration"]
+  Main -->|Yes| Target{"Which app was selected?"}
+  Target -->|Studio| Config["Pull production Vercel configuration"]
   Config --> Prod["Build and deploy prebuilt production output"]
+  Target -->|Fitness OS| Hosted["Build and deploy on Vercel"]
 ```
 
 Browser reports are uploaded for diagnosis. Database migrations and provider setup are separate operational changes; this workflow does not apply them.
