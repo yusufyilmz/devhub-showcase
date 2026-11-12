@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
-import { openDraftTools, openEditor, selectEditorSection } from "../support/editor";
+import { openDraftTools, openEditor } from "../support/editor";
 
 test("guided setup recovers unsaved work and reconciles a newer save from another tab", async ({
   page,
@@ -41,59 +41,46 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
     .getByRole("combobox", { name: "What kind of work do you do?" })
     .selectOption("designer");
   await page.getByRole("button", { exact: true, name: "Choose a layout" }).click();
-  await page.getByRole("button", { exact: true, name: "Choose how to start" }).click();
-  await expect(page.getByRole("complementary", { name: "Studio companion" })).toBeVisible();
-  await page.getByRole("button", { name: "Ask Studio AI" }).click();
-  await expect(page.locator("#ai-studio-message")).toHaveValue(
-    /Help me write a short portfolio introduction/,
-  );
-  await expect(page.getByRole("heading", { name: "Add your details" })).toBeVisible();
-  await page.getByRole("button", { exact: true, name: "Skip import · enter manually" }).click();
-  await expect(page.getByRole("button", { name: "Back to preview" })).toHaveCount(0);
-  await page
-    .getByRole("textbox", { exact: true, name: "Professional title" })
-    .fill("Recovered designer draft");
-  await page
-    .getByRole("textbox", { exact: true, name: "Short introduction" })
-    .fill("A thoughtful introduction.");
-  await page.getByRole("button", { exact: true, name: "Import a CV" }).click();
+  await page.getByRole("button", { name: "Continue to CV import" }).click();
+  await expect(page.getByRole("dialog", { name: "Import a CV" })).toBeVisible();
+  await expect(page.getByText("Start from Google profile")).toHaveCount(0);
   await page.getByLabel("Your CV file").setInputFiles({
     buffer: Buffer.from("%PDF-1.7\nFictional CV"),
     mimeType: "application/pdf",
     name: "sample.pdf",
   });
   await page.getByLabel("Send this CV to OpenAI").check();
-  await page.getByRole("button", { exact: true, name: "Process CV" }).click();
+  await page.getByRole("button", { name: "Process CV" }).click();
   await expect(page.getByText("Import temporarily unavailable", { exact: true })).toBeVisible();
-  await page.getByRole("button", { exact: true, name: "Skip import · enter manually" }).click();
-  await openDraftTools(page);
+  await page.getByRole("button", { name: "Skip for now" }).click();
+  await expect(page.getByRole("dialog", { name: "Add your details" })).toBeVisible();
+  await page.getByRole("button", { name: "Help me write an introduction" }).click();
+  await expect(page.locator("#ai-studio-message")).toHaveValue(
+    /Help me write a short portfolio introduction/,
+  );
+  await page.getByRole("button", { name: "Hide AI help" }).click();
+  await page.getByRole("textbox", { exact: true, name: "Full name" }).fill("Alex Designer");
+  await page
+    .getByRole("textbox", { exact: true, name: "Professional title" })
+    .fill("Recovered designer draft");
+  await page
+    .getByRole("textbox", { name: "Short introduction (optional)" })
+    .fill("A thoughtful introduction.");
+  await page.getByRole("button", { exact: true, name: "Continue" }).click();
+  await expect(page.getByText("2 of 6 · Optional")).toBeVisible();
+  await page.getByRole("button", { name: "Skip for now" }).click();
+  await expect(page.getByRole("heading", { exact: true, name: "Projects" }).first()).toBeVisible();
   await expect(page.getByText("Recovery saved in this tab", { exact: true })).toBeVisible();
   await page.reload();
-  await openEditor(page);
   await page.getByRole("button", { exact: true, name: "Restore recovered draft" }).click();
-  await expect(page.getByRole("textbox", { exact: true, name: "Professional title" })).toHaveValue(
+  await expect(page.getByText("3 of 6 · Optional")).toBeVisible();
+  await page.getByRole("button", { name: "Review draft" }).click();
+  await expect(page.getByRole("dialog", { name: "Review your draft" })).toBeVisible();
+  await page.getByRole("button", { exact: true, name: "CV" }).click();
+  await expect(page.getByRole("article", { name: "CV content preview" })).toContainText(
     "Recovered designer draft",
   );
-  await selectEditorSection(page, "PDF");
-  await page.getByLabel("CV layout").selectOption("compact");
-  await page.getByRole("button", { exact: true, name: "2. Layout" }).click();
-  await expect(page.getByRole("radio", { name: /Designer/ })).toBeChecked();
-  await page.getByRole("radio", { name: /Consultant/ }).check();
-  await expect(page.getByRole("combobox", { name: "What kind of work do you do?" })).toHaveCount(0);
-
-  await page.getByRole("button", { exact: true, name: "4. Details" }).click();
-  await expect(page.getByRole("textbox", { exact: true, name: "Professional title" })).toHaveValue(
-    "Recovered designer draft",
-  );
-  await selectEditorSection(page, "PDF");
-  await expect(page.getByLabel("CV layout")).toHaveValue("compact");
-  await page.getByRole("button", { exact: true, name: "Review draft" }).click();
-  await expect(page.getByRole("heading", { name: "Review your portfolio" })).toBeVisible();
-  await page.getByRole("button", { exact: true, name: "Preview draft" }).click();
-  await expect(page.getByRole("complementary", { name: "Draft preview" })).toBeVisible();
-  await openEditor(page);
   expect(saves).toBe(0);
-  await page.getByRole("button", { exact: true, name: "Finish setup" }).click();
   let failSave = true;
   await page.route(`**${urls.studio.profile()}`, (route) => {
     if (route.request().method() === "PUT" && failSave) {
@@ -102,13 +89,12 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
     }
     return route.continue();
   });
-  await page.getByRole("button", { exact: true, name: "Save changes" }).click();
+  await page.getByRole("button", { name: "Save private draft" }).click();
   await expect(page.getByText("Temporary save failure", { exact: true })).toBeVisible();
-  await expect(page.getByRole("textbox", { exact: true, name: "Professional title" })).toHaveValue(
-    "Recovered designer draft",
-  );
-  await page.getByRole("button", { exact: true, name: "Save changes" }).click();
+  await expect(page.getByRole("dialog", { name: "Review your draft" })).toBeVisible();
+  await page.getByRole("button", { name: "Save private draft" }).click();
   await expect(page.locator(".studio-status")).toContainText("All changes saved");
+  await openEditor(page);
   await page
     .getByRole("textbox", { exact: true, name: "Professional title" })
     .fill("Unsaved first tab text");

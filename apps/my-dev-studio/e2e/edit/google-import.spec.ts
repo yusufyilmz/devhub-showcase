@@ -55,7 +55,7 @@ test("new owner chooses Google details, reviews fields and applies without savin
   });
   await page.goto(`/${device}-google-owner/edit`);
   await openEditor(page);
-  await page.getByRole("button", { name: "Start from Google profile" }).click();
+  await selectEditorSection(page, "Import Google");
   const read = page.getByRole("button", { name: "Read selected Google details" });
   await expect(read).toBeDisabled();
   await expect(page.getByLabel("Birthdate (optional)", { exact: true })).not.toBeChecked();

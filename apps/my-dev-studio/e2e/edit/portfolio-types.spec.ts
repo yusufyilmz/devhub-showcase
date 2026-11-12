@@ -60,14 +60,16 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
     fullPage: true,
     path: testInfo.outputPath("type-picker.png"),
   });
-  await page.getByRole("button", { name: "Choose how to start" }).click();
-  await page.getByRole("button", { name: /Enter details manually/ }).click();
+  await page.getByRole("button", { name: "Continue to CV import" }).click();
+  await page.getByRole("button", { name: "Skip for now" }).click();
   await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
     "New Portfolio Owner",
   );
-  await selectEditorSection(page, "Publishing");
-  await expect(page.getByText("Your saved draft is private until you publish it.")).toBeVisible();
-  await page.getByRole("button", { name: "Save changes" }).click();
+  await page
+    .getByRole("textbox", { exact: true, name: "Professional title" })
+    .fill("Portfolio designer");
+  await page.getByRole("button", { name: "Review draft" }).click();
+  await page.getByRole("button", { name: "Save private draft" }).click();
   await expect(page.getByRole("status")).toContainText("Saved");
   await page.reload();
   await openEditor(page);

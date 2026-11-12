@@ -24,7 +24,9 @@ import { CvImportReview } from "./cv-import-review";
 export function CvImportEditor({
   profile,
   onChange,
+  embedded = false,
 }: {
+  embedded?: boolean;
   profile: PortfolioProfile;
   onChange: (profile: PortfolioProfile) => void;
 }) {
@@ -80,17 +82,25 @@ export function CvImportEditor({
   }
   return (
     <Card asChild layout="plain" surface="portfolio">
-      <section aria-labelledby="cv-import-title" className="editor-card cv-import-panel">
-        <p className="eyebrow">START WITH YOUR EXPERIENCE</p>
-        <h2 id="cv-import-title">Turn your CV into a portfolio</h2>
-        <p>
-          Upload your CV, review the extracted details and choose what to use. Your portfolio and
-          downloadable CV will use the details you save.
-        </p>
+      <section
+        aria-label={embedded ? "CV upload" : undefined}
+        aria-labelledby={embedded ? undefined : "cv-import-title"}
+        className="editor-card cv-import-panel"
+      >
+        {!embedded && (
+          <>
+            <p className="eyebrow">START WITH YOUR EXPERIENCE</p>
+            <h2 id="cv-import-title">Turn your CV into a portfolio</h2>
+            <p>
+              Upload your CV, review the extracted details and choose what to use. Your portfolio
+              and downloadable CV will use the details you save.
+            </p>
+          </>
+        )}
         {enabled === null && <p role="status">Checking CV import availability…</p>}
         {enabled === false && (
           <p role="status">
-            CV import is not available right now. You can still add your details in the editor.
+            CV import is unavailable right now. You can still enter your details manually.
           </p>
         )}
         <LibraryLabel className="cv-upload-label" htmlFor="cv-upload" unstyled>
@@ -176,7 +186,9 @@ export function CvImportEditor({
               onChange(applyCvDraft(profile, candidate, selected));
               setCandidate(null);
               setMessage(
-                "Applied to your draft. Review required fields, then Save changes when ready.",
+                embedded
+                  ? "Applied to your draft. Continue to review the imported details."
+                  : "Applied to your draft. Review required fields, then Save changes when ready.",
               );
             }}
             onChange={setCandidate}

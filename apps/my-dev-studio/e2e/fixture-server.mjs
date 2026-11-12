@@ -179,7 +179,7 @@ const chatOwners = aiOwners.map((owner, index) => ({
 }));
 const googleOwners = ["desktop", "mobile"].map((device, index) => ({
   ...row,
-  document: { ...starters[index].document, name: "Google Import Owner" },
+  document: { ...starters[index].document, name: "Google Import Owner", templateChosen: true },
   id: `72727272-7272-4272-8272-72727272727${index}`,
   is_public: false,
   owner_id: `71717171-7171-4171-8171-71717171717${index}`,

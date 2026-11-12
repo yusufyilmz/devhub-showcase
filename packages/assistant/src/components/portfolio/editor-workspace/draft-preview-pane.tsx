@@ -12,7 +12,12 @@ import { Button } from "@shared/ui/button";
 
 import type { DraftPreviewPaneProps } from "./types";
 
-export function DraftPreviewPane({ profile, downloadHref, children }: DraftPreviewPaneProps) {
+export function DraftPreviewPane({
+  profile,
+  downloadHref,
+  children,
+  showSavedDownload = true,
+}: DraftPreviewPaneProps) {
   const [output, setOutput] = useState<"website" | "cv">("website");
   return (
     <>
@@ -42,13 +47,16 @@ export function DraftPreviewPane({ profile, downloadHref, children }: DraftPrevi
       {output === "cv" && (
         <>
           <p className="editor-preview-note">
-            CV content preview, including unsaved edits. Download the saved PDF to check pagination
-            and your selected PDF layout.
+            CV content preview, including unsaved edits.
+            {showSavedDownload &&
+              " Download the saved PDF to check pagination and your selected PDF layout."}
           </p>
           <CvContentPreview profile={profile} />
-          <Button href={downloadHref} variant="outline">
-            Download saved PDF
-          </Button>
+          {showSavedDownload && (
+            <Button href={downloadHref} variant="outline">
+              Download saved PDF
+            </Button>
+          )}
         </>
       )}
     </>

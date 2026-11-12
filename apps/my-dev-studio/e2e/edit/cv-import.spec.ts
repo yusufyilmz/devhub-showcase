@@ -42,7 +42,8 @@ test("owner reviews a CV, cancels safely, applies edits and explicitly saves bef
   });
   await page.goto(`/${device}-cv-importer/edit`);
   await openEditor(page);
-  await page.getByRole("button", { name: "Start from a CV" }).click();
+  await page.getByRole("button", { name: "Choose a layout" }).click();
+  await page.getByRole("button", { name: "Continue to CV import" }).click();
   await page.getByLabel("Your CV file").setInputFiles({
     buffer: Buffer.from("%PDF-1.7\nFictional CV"),
     mimeType: "application/pdf",
@@ -59,11 +60,11 @@ test("owner reviews a CV, cancels safely, applies edits and explicitly saves bef
     "Alex Rivera",
   );
   await page.getByRole("button", { name: "Cancel import" }).click();
-  await selectEditorSection(page, "Profile");
+  await page.getByRole("button", { name: "Skip for now" }).click();
   await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
     "CV Import Owner",
   );
-  await selectEditorSection(page, "Import CV");
+  await page.getByRole("button", { exact: true, name: "Back" }).click();
   await page.getByLabel("Your CV file").setInputFiles({
     buffer: Buffer.from("%PDF-1.7\nFictional CV"),
     mimeType: "application/pdf",
@@ -80,7 +81,12 @@ test("owner reviews a CV, cancels safely, applies edits and explicitly saves bef
   await page.getByRole("button", { name: "Apply reviewed details to draft" }).click();
   await expect(page.getByText("Applied to your draft.", { exact: false })).toBeVisible();
   expect((await page.request.get(`/${device}-cv-importer`)).status()).toBe(404);
-  await page.getByRole("button", { exact: true, name: "Save changes" }).click();
+  await page.getByRole("button", { name: "Continue to details" }).click();
+  await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
+    "Alex Reviewed",
+  );
+  await page.getByRole("button", { name: "Review draft" }).click();
+  await page.getByRole("button", { name: "Save private draft" }).click();
   await expect(page.getByRole("status").filter({ hasText: "Saved privately." })).toContainText(
     "Saved privately.",
   );
