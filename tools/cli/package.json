@@ -18,7 +18,6 @@
   "devDependencies": {
     "@babel/parser": "catalog:",
     "@biomejs/biome": "catalog:",
-    "@shared/env": "workspace:*",
     "@shared/typescript-config": "workspace:*",
     "@turbo/gen": "catalog:",
     "commander": "catalog:",

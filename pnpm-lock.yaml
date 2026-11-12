@@ -1249,9 +1249,6 @@ importers:
       '@biomejs/biome':
         specifier: 'catalog:'
         version: 2.6.5
-      '@shared/env':
-        specifier: workspace:*
-        version: link:../../packages/env
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config

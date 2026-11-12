@@ -3,8 +3,6 @@ import { appendFileSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { env } from "@shared/env";
-
 export type Application = "studio" | "fitness";
 const sharedFiles = new Set([
   "package.json",
@@ -92,9 +90,9 @@ export function currentDeployment(cwd: string, application: string, head: string
   return !classifyChanges(changedPaths(cwd, head, main))[application];
 }
 function output(values: Record<string, boolean | string>) {
-  if (env.GITHUB_OUTPUT)
+  if (process.env.GITHUB_OUTPUT)
     appendFileSync(
-      env.GITHUB_OUTPUT,
+      process.env.GITHUB_OUTPUT,
       Object.entries(values)
         .map(([key, value]) => `${key}=${value}\n`)
         .join(""),
@@ -105,19 +103,25 @@ function main() {
   if (process.argv[2] === "--paths") return output(classifyChanges(process.argv.slice(3)));
   if (process.argv[2] === "--current")
     return output({
-      current: currentDeployment(process.cwd(), process.argv[3] ?? "", env.GITHUB_SHA ?? ""),
+      current: currentDeployment(
+        process.cwd(),
+        process.argv[3] ?? "",
+        process.env.GITHUB_SHA ?? "",
+      ),
     });
-  const event = JSON.parse(readFileSync(env.GITHUB_EVENT_PATH ?? "", "utf8")) as WorkflowEvent;
+  const event = JSON.parse(
+    readFileSync(process.env.GITHUB_EVENT_PATH ?? "", "utf8"),
+  ) as WorkflowEvent;
   const selection = deploymentSelection(
-    env.GITHUB_EVENT_NAME ?? "",
+    process.env.GITHUB_EVENT_NAME ?? "",
     event,
-    env.GITHUB_SHA ?? "",
+    process.env.GITHUB_SHA ?? "",
     process.cwd(),
   );
   output(selection);
-  if (env.GITHUB_STEP_SUMMARY)
+  if (process.env.GITHUB_STEP_SUMMARY)
     appendFileSync(
-      env.GITHUB_STEP_SUMMARY,
+      process.env.GITHUB_STEP_SUMMARY,
       `### Deployment selection\n\nStudio: **${selection.studio}** · Fitness: **${selection.fitness}**\n\n${selection.reason}.\n`,
     );
 }
