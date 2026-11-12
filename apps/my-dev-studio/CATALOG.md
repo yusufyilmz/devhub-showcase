@@ -33,6 +33,7 @@ No public package export map or main entry is declared.
 | `@shared/billing`           | `workspace:*`    | dependencies    |
 | `@shared/config`            | `workspace:*`    | dependencies    |
 | `@shared/lib`               | `workspace:*`    | dependencies    |
+| `@shared/notifications`     | `workspace:*`    | dependencies    |
 | `@shared/runtime`           | `workspace:*`    | dependencies    |
 | `@shared/ui`                | `workspace:*`    | dependencies    |
 | `@shared/utils`             | `workspace:*`    | dependencies    |

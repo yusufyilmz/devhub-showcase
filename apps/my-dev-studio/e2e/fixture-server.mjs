@@ -8,6 +8,7 @@ import {
   authorableSectionTypes,
   getSectionRenderers,
 } from "../../../packages/config/src/sections/authorable-sections.ts";
+import { jobsFixture } from "./support/jobs-fixture.mjs";
 
 // Test-only transport fixture, never imported by application code. Public
 // records are read only. Two isolated fake accounts can save their own starter.
@@ -484,6 +485,7 @@ createServer(async (request, response) => {
   response.setHeader("Content-Type", "application/json");
   if (fixtureMaintenance(request, response, url)) return;
   const owner = fixtureOwner(request);
+  if (await jobsFixture(request, response, url, owner)) return;
   if (request.method === "GET" && url.pathname === "/health") {
     response.end("{}");
     return;
@@ -531,7 +533,7 @@ createServer(async (request, response) => {
   if (["/rest/v1/reviews", "/rest/v1/referrals"].includes(url.pathname))
     return testimonialRequest(request, response, url, owner);
   response.writeHead(405).end(JSON.stringify({ message: "Unsupported fixture request" }));
-}).listen(3101, "127.0.0.1");
+}).listen(Number(process.argv[2] ?? 3101), "127.0.0.1");
 
 function fixtureOwner(request) {
   let owner;

@@ -13,7 +13,12 @@ export {
 } from "./messages";
 export { CvImportModel } from "./models/cv-import-model";
 export { createCVModel } from "./models/cv-model";
-export { proposeInterviewPrep } from "./models/job-assistant";
+export {
+  applicationDraft,
+  assessJobMatches,
+  prepareJobApplication,
+  proposeInterviewPrep,
+} from "./models/job-assistant";
 export { PortfolioChatModel } from "./models/portfolio-chat-model";
 export { PortfolioEditModel } from "./models/portfolio-edit-model";
 export { formatAllCV, formatters } from "./services/formatter";

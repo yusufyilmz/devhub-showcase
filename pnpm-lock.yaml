@@ -363,6 +363,9 @@ importers:
       '@shared/lib':
         specifier: workspace:*
         version: link:../../packages/lib
+      '@shared/notifications':
+        specifier: workspace:*
+        version: link:../../packages/notifications
       '@shared/runtime':
         specifier: workspace:*
         version: link:../../packages/runtime

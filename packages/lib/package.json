@@ -34,6 +34,7 @@
     "./portfolio-resources": "./src/services/portfolio/resources.ts",
     "./portfolio-reviews": "./src/services/portfolio/reviews.ts",
     "./portfolio-unlock": "./src/services/portfolio/unlock.ts",
+    "./services/jobs": "./src/services/jobs/index.ts",
     "./services/profile": "./src/services/profile/index.ts",
     "./services/published-profile": "./src/services/profile/published-profile.ts",
     "./services/user-profile": "./src/services/profile/user-profile.ts",

@@ -7,6 +7,7 @@ export { EditorWorkspace } from "./editor-workspace/editor-workspace";
 export { EngineerPage } from "./engineer-page/EngineerPage";
 export { FieldVisibilityEditor } from "./field-visibility";
 export { GuidedOnboarding, SetupNavigation } from "./guided-onboarding";
+export { JobsDashboard } from "./jobs/dashboard";
 export { LanguageSettingsEditor } from "./language-settings-editor";
 export { PortfolioTypePicker } from "./portfolio-type-picker";
 export { ProfileFields } from "./profile-fields";

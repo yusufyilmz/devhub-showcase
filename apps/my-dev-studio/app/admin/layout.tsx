@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 
 import { StudioShell } from "@shared/assistant/portfolio";
 import { StudioCompanion } from "@shared/assistant/studio-companion";
+import { Button } from "@shared/ui/button";
 import { ThemeToggle } from "@shared/ui/theme";
 
 import { ManagementLink } from "@/features/management/management-link";
@@ -24,6 +25,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       contentId="admin-content"
       tools={
         <div className="admin-tools">
+          <Button href="/admin/jobs" variant="outline">
+            Job Hunter
+          </Button>
           <ManagementLink />
           <ThemeToggle />
         </div>
