@@ -24,7 +24,15 @@ async function change(command: object) {
   );
 }
 
-export function JobsClient({ initial, statuses }: { initial: Data; statuses: readonly string[] }) {
+export function JobsClient({
+  initial,
+  initialTab,
+  statuses,
+}: {
+  initial: Data;
+  initialTab: React.ComponentProps<typeof JobsDashboard>["initialTab"];
+  statuses: readonly string[];
+}) {
   const [data, setData] = useState(initial);
   const [busy, setBusy] = useState(false);
   const [feedback, setFeedback] = useState("");
@@ -63,6 +71,7 @@ export function JobsClient({ initial, statuses }: { initial: Data; statuses: rea
       cvUrl={(id) => `${endpoint}/cv?job=${encodeURIComponent(id)}`}
       data={data}
       feedback={feedback}
+      initialTab={initialTab}
       push={
         data.pushPublicKey
           ? (enabled) => {

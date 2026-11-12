@@ -57,6 +57,7 @@ function chatActivity({
 }
 
 export function StudioChatScreen({
+  accountMenu,
   message,
   onMessageChange,
   onSubmit,
@@ -119,6 +120,7 @@ export function StudioChatScreen({
             </details>
             {actions}
             <ThemeToggle />
+            {accountMenu}
           </div>
         </header>
         <div className={studioChatScreenStyles.element11} data-started={started}>

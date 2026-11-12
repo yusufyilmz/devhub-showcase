@@ -1,3 +1,5 @@
+import { env } from "@shared/env";
+
 /**
  * Structured Logging System
  * Only logs in development environment or when explicitly enabled via environment variables
@@ -76,7 +78,7 @@ try {
   LogType = {};
 }
 
-const isDev = () => process.env.NODE_ENV === "development";
+const isDev = () => env.NODE_ENV === "development";
 
 const logLevelValues = {
   DEBUG: 3,
@@ -131,11 +133,11 @@ class Logger {
     // Only enable logging in development or when explicitly enabled
     this.isEnabled =
       isDev() ||
-      process.env.NEXT_PUBLIC_ENABLE_LOGGING === "true" ||
-      process.env.NEXT_PUBLIC_LOG_LEVEL !== undefined;
+      env.NEXT_PUBLIC_ENABLE_LOGGING === "true" ||
+      env.NEXT_PUBLIC_LOG_LEVEL !== undefined;
 
     // Set log level from environment or default to INFO in dev, ERROR in prod
-    const envLogLevel = process.env.NEXT_PUBLIC_LOG_LEVEL;
+    const envLogLevel = env.NEXT_PUBLIC_LOG_LEVEL;
     if (envLogLevel) {
       this.logLevel =
         logLevelValues[envLogLevel.toUpperCase() as keyof typeof logLevelValues] || LogLevel.INFO;
@@ -145,7 +147,7 @@ class Logger {
 
     // Enable string output for copying logs (default: enabled in development)
     // Respect explicit 'true'/'false' values; treat any other/undefined as fallback to dev default
-    const envStringOutput = process.env.NEXT_PUBLIC_LOG_STRING_OUTPUT;
+    const envStringOutput = env.NEXT_PUBLIC_LOG_STRING_OUTPUT;
     if (envStringOutput === "true") {
       this.stringOutputEnabled = true;
     } else if (envStringOutput === "false") {
@@ -154,7 +156,7 @@ class Logger {
       this.stringOutputEnabled = isDev();
     }
 
-    this.prefix = process.env.NEXT_PUBLIC_LOG_PREFIX ? process.env.NEXT_PUBLIC_LOG_PREFIX : "🔍";
+    this.prefix = env.NEXT_PUBLIC_LOG_PREFIX ? env.NEXT_PUBLIC_LOG_PREFIX : "🔍";
 
     // Initialize Pino on server to emit structured logs
     // Disabled to avoid thread-stream compatibility issues with Next.js/Turbopack
@@ -215,9 +217,9 @@ class Logger {
   //     this.pino = pino({
   //       base: {
   //         env: isDev() ? 'development' : 'production',
-  //         service: process.env.NEXT_PUBLIC_APP_NAME || 'mono-krypton',
+  //         service: env.NEXT_PUBLIC_APP_NAME || 'mono-krypton',
   //       },
-  //       level: process.env.NEXT_PUBLIC_LOG_LEVEL?.toLowerCase?.() || (isDev() ? 'info' : 'error'),
+  //       level: env.NEXT_PUBLIC_LOG_LEVEL?.toLowerCase?.() || (isDev() ? 'info' : 'error'),
   //       redact: {
   //         paths: [
   //           'context.authorization',

@@ -1,13 +1,15 @@
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 
+import { env } from "@shared/env";
+
 import * as schema from "./schema";
 
 let connection: ReturnType<typeof postgres> | undefined;
 export function database() {
-  if (!process.env.SUPABASE_DB_URL)
+  if (!env.SUPABASE_DB_URL)
     throw new Error("Set SUPABASE_DB_URL to the Supabase pooler connection URI.");
-  connection ??= postgres(process.env.SUPABASE_DB_URL, {
+  connection ??= postgres(env.SUPABASE_DB_URL, {
     connect_timeout: 10,
     idle_timeout: 20,
     max: 3,

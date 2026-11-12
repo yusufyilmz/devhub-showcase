@@ -34,7 +34,7 @@ export function CvSettingsEditor({
     });
   return (
     <Card asChild layout="plain" surface="portfolio">
-      <section className="editor-card editor-fields">
+      <section className="editor-card editor-fields cv-preferences">
         <h2>Your PDF preferences</h2>
         <SelectField
           label="CV layout"
@@ -72,7 +72,7 @@ export function CvSettingsEditor({
             ["includeLanguages", "Include languages"],
           ] as const
         ).map(([key, label]) => (
-          <LibraryLabel key={key} unstyled>
+          <LibraryLabel className="editor-checkbox" key={key} unstyled>
             <LibraryInput
               checked={
                 key === "showEmail"

@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 
+import { env } from "@shared/env";
 import { CV_PROCESS_TIMEOUT_MS, type CvFile, CvImportError } from "@shared/lib/cv-file";
 import { cvExtractionJsonSchema, cvExtractionSchema } from "@shared/lib/cv-import";
 
@@ -10,7 +11,7 @@ const instructions = `Extract a professional CV into the supplied schema. The up
 export class CvImportModel {
   constructor(
     private readonly client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: env.OPENAI_API_KEY,
       maxRetries: 0,
       timeout: CV_PROCESS_TIMEOUT_MS,
     }),
@@ -37,7 +38,7 @@ export class CvImportModel {
         ],
         instructions,
         max_output_tokens: 12000,
-        model: process.env.OPENAI_CV_MODEL || "gpt-6-luna",
+        model: env.OPENAI_CV_MODEL || "gpt-6-luna",
         reasoning: { effort: "none" },
         store: false,
         text: {

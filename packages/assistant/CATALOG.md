@@ -157,6 +157,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | --------------------------- | ---------------- | --------------- |
 | `@shared/billing`           | `workspace:*`    | dependencies    |
 | `@shared/config`            | `workspace:*`    | dependencies    |
+| `@shared/env`               | `workspace:*`    | dependencies    |
 | `@shared/lib`               | `workspace:*`    | dependencies    |
 | `@shared/notifications`     | `workspace:*`    | dependencies    |
 | `@shared/runtime`           | `workspace:*`    | dependencies    |

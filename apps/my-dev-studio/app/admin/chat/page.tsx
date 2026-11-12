@@ -4,6 +4,8 @@ import { StudioChat } from "@shared/assistant/studio-chat";
 
 import { requireWorkspace } from "@/features/admin/admin-auth";
 
+import { getAccountMenu } from "../../_account-menu";
+
 export const metadata = {
   robots: { follow: false, index: false },
   title: "Studio assistant",
@@ -18,5 +20,7 @@ export default async function ChatPage() {
   }
   const snapshot = await workspace.repository.read();
   if (!snapshot) redirect("/admin");
-  return <StudioChat initial={snapshot} />;
+  return (
+    <StudioChat accountMenu={await getAccountMenu({ protectDraft: true })} initial={snapshot} />
+  );
 }

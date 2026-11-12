@@ -456,6 +456,16 @@ button:disabled {
   border: 1px solid var(--border);
   border-radius: 8px;
 }
+.admin-shell select {
+  height: auto;
+  min-height: 40px;
+  padding-block: 8px;
+}
+
+.admin-shell select:has(+ svg) {
+  padding-inline-end: 32px;
+}
+
 .admin-shell input:focus,
 .admin-shell textarea:focus,
 .admin-shell select:focus {

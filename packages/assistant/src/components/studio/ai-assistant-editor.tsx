@@ -32,7 +32,13 @@ type Props = {
   revision: number;
   managed: boolean;
   onChange: (profile: PortfolioProfile) => void;
-  chat?: { editorHref: string; actions?: ReactNode; status?: string; error?: string };
+  chat?: {
+    accountMenu?: ReactNode;
+    editorHref: string;
+    actions?: ReactNode;
+    status?: string;
+    error?: string;
+  };
 };
 type Review = { proposal: AiEditProposal; baseline: string; revision: number };
 type Availability = { enabled: boolean; usage: number; limit: number };
@@ -203,6 +209,7 @@ function AssistantWorkspace({
   if (chat)
     return (
       <ChatPresentation
+        accountMenu={chat.accountMenu}
         actions={chat.actions}
         availability={availability}
         busy={busy}

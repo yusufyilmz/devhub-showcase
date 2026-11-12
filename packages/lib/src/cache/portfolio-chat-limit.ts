@@ -1,5 +1,7 @@
 import { Redis } from "@upstash/redis";
 
+import { env } from "@shared/env";
+
 const script = `
 local visitor = redis.call('INCR', KEYS[1])
 if visitor == 1 then redis.call('EXPIRE', KEYS[1], 60) end
@@ -12,7 +14,7 @@ if global == 1 then redis.call('EXPIRE', KEYS[3], 86400) end
 if global > 500 then return 0 end
 return 1`;
 export async function allowPortfolioChat(profileId: string, sessionId: string) {
-  const redis = new Redis({ token: process.env.REDIS_TOKEN, url: process.env.REDIS_URL });
+  const redis = new Redis({ token: env.REDIS_TOKEN, url: env.REDIS_URL });
   return (
     (await redis.eval(
       script,

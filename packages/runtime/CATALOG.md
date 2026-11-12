@@ -64,6 +64,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | Dependency                  | Declared version | Kind            |
 | --------------------------- | ---------------- | --------------- |
 | `@shared/config`            | `workspace:*`    | dependencies    |
+| `@shared/env`               | `workspace:*`    | dependencies    |
 | `@shared/lib`               | `workspace:*`    | dependencies    |
 | `@shared/utils`             | `workspace:*`    | dependencies    |
 | `react`                     | `catalog:`       | dependencies    |

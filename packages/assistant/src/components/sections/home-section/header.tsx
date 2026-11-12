@@ -13,15 +13,16 @@ const links = [
   { href: "#questions", label: "Questions" },
 ] as const;
 
-export function HomeHeader({ action }: HomeHeaderOptions) {
+export function HomeHeader({ action, accountMenu }: HomeHeaderOptions) {
   return (
     <Header
       actions={
         <>
-          <ThemeToggle />
           <Button className="site-navigation-cta" href={action.href} variant="outline">
             {action.signedIn ? "My studio" : "Sign in"} <span aria-hidden="true">↗</span>
           </Button>
+          <ThemeToggle />
+          {accountMenu}
         </>
       }
       brand={<Brand />}

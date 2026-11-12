@@ -67,8 +67,9 @@ function post(body: unknown = input, origin = "https://example.test") {
 describe("Assistant", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    for (const key of ["OPENAI_API_KEY", "REDIS_URL", "REDIS_TOKEN", "SUPABASE_SERVICE_ROLE_KEY"])
+    for (const key of ["OPENAI_API_KEY", "REDIS_TOKEN", "SUPABASE_SERVICE_ROLE_KEY"])
       vi.stubEnv(key, "test");
+    vi.stubEnv("REDIS_URL", "https://redis.example.test");
     mocks.read.mockResolvedValue(snapshot);
     mocks.workspace.mockResolvedValue({
       client: {},

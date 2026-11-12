@@ -43,7 +43,7 @@ function request(input: object = {}, requestOrigin = origin) {
 describe("Fitness assistant route", () => {
   beforeEach(() => {
     vi.stubEnv("OPENAI_API_KEY", "fixture");
-    vi.stubEnv("REDIS_URL", "fixture");
+    vi.stubEnv("REDIS_URL", "https://redis.example.test");
     vi.stubEnv("REDIS_TOKEN", "fixture");
     const state = starterWorkspace();
     state.tasks.push(

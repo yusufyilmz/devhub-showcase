@@ -45,8 +45,8 @@ export function SectionsSettings({
   const customSections = profile.customSections?.length ?? 0;
   return (
     <Card asChild interaction="static" layout="plain">
-      <section aria-labelledby="portfolio-sections-title" className="grid gap-md p-md">
-        <div className="grid gap-xs">
+      <section aria-labelledby="portfolio-sections-title" className="editor-card grid gap-4">
+        <div className="grid gap-1">
           <h2 id="portfolio-sections-title">Portfolio sections</h2>
           <p className="text-muted-foreground">
             Manage the content and layout of your portfolio. Changes are saved with your draft.
@@ -54,10 +54,10 @@ export function SectionsSettings({
         </div>
         <ul className="m-0 grid list-none divide-y divide-border p-0">
           {destinations.map(({ action, description, icon: Icon, label, tab }) => (
-            <li className="flex flex-wrap items-center justify-between gap-s py-s" key={tab}>
-              <div className="flex min-w-0 flex-1 items-start gap-s">
+            <li className="flex flex-wrap items-center justify-between gap-3 py-3" key={tab}>
+              <div className="flex min-w-0 flex-1 items-start gap-3">
                 <Icon aria-hidden="true" className="mt-1 size-4 shrink-0 text-primary" />
-                <div className="grid gap-xs">
+                <div className="grid gap-1">
                   <h3 className="text-base">{label}</h3>
                   <p className="text-sm text-muted-foreground">{description}</p>
                   {tab === "Custom sections" && (

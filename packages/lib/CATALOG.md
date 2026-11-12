@@ -256,6 +256,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | --------------------------- | ---------------- | --------------- |
 | `@shared/auth`              | `workspace:*`    | dependencies    |
 | `@shared/config`            | `workspace:*`    | dependencies    |
+| `@shared/env`               | `workspace:*`    | dependencies    |
 | `@shared/notifications`     | `workspace:*`    | dependencies    |
 | `@shared/utils`             | `workspace:*`    | dependencies    |
 | `@supabase/supabase-js`     | `catalog:`       | dependencies    |

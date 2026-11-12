@@ -8,6 +8,8 @@ import { themeOptions } from "@shared/config/theme";
 const mocks = vi.hoisted(() => ({ action: vi.fn(), example: vi.fn() }));
 vi.mock("./_home-links", () => ({ getHomeAction: mocks.action, getHomeExample: mocks.example }));
 
+vi.mock("./api/jobs/_config", () => ({ jobAlertConfig: () => null }));
+
 import Page from "./page";
 
 describe("HomePage", () => {

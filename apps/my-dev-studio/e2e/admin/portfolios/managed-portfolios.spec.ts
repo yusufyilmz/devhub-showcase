@@ -159,11 +159,11 @@ test("admin appearance controls stay separate and compact", async ({ page, conte
   await signIn(context, `99999999-9999-4999-8999-99999999999${n}`, `manager${n}@example.test`);
   await page.goto("/admin/portfolios");
   const launcher = page.getByRole("button", { name: "Appearance controls" });
-  const management = page.getByRole("link", { exact: true, name: "Manage portfolios" });
+  const profileMenu = page.getByRole("button", { exact: true, name: "Profile menu" });
   const settings = page.getByRole("button", { exact: true, name: "Theme settings" });
   await launcher.click();
   await expect(settings).toBeVisible();
-  const a = await management.boundingBox();
+  const a = await profileMenu.boundingBox();
   const b = await settings.boundingBox();
   expect(a).not.toBeNull();
   expect(b).not.toBeNull();
@@ -175,14 +175,19 @@ test("admin appearance controls stay separate and compact", async ({ page, conte
   await settings.click();
   await page.getByRole("button", { exact: true, name: "Font size: 6xl" }).click();
   await page.getByRole("button", { exact: true, name: "Spacing: spacious" }).click();
-  await page.getByRole("button", { exact: true, name: "Theme: violet" }).click();
+  await page.getByRole("button", { exact: true, name: "Palette: violet" }).click();
   await expect(page.getByRole("dialog")).toBeInViewport();
   await page.keyboard.press("Escape");
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-font-size", "6xl");
   await expect(launcher).toHaveCSS("width", "40px");
-  await expect(management).toHaveCSS("width", "40px");
-  await expect(management.locator("svg")).toHaveCSS("width", "16px");
+  await expect(profileMenu).toHaveCSS("width", "40px");
+  await profileMenu.click();
+  await expect(page.getByRole("menuitem", { name: "Manage portfolios" })).toHaveAttribute(
+    "href",
+    "/admin/portfolios",
+  );
+  await page.keyboard.press("Escape");
   await launcher.click();
   await expect(settings).toHaveCSS("width", "32px");
   const header = await page.locator(".admin-brand").boundingBox();

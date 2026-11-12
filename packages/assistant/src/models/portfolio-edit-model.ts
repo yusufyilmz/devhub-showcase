@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 
+import { env } from "@shared/env";
 import type { AssistantTaskOptions, OwnerPortfolioKnowledge } from "@shared/lib/profiles";
 import { aiEditJsonSchema, serializeAiEditContext, validateAiEdit } from "@shared/lib/profiles";
 
@@ -10,7 +11,7 @@ import { studioAgentInstructions } from "./studio-agent-prompt";
 export class PortfolioEditModel {
   constructor(
     private readonly client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: env.OPENAI_API_KEY,
       maxRetries: 0,
       timeout: 45000,
     }),
@@ -46,7 +47,7 @@ export class PortfolioEditModel {
             ? `${studioAgentInstructions}\nAssess clarity, completeness and presentation section by section. Return feedback entries identifying an actual field, concrete issue, benefit and recommendation. Set needsInput=true when missing facts require the owner. Never invent missing history. Only propose direct edits supported by supplied facts; recommendations alone use an empty changes array. Do not change anything during analysis.`
             : studioAgentInstructions,
         max_output_tokens: 12000,
-        model: process.env.OPENAI_EDITOR_MODEL || "gpt-6-luna",
+        model: env.OPENAI_EDITOR_MODEL || "gpt-6-luna",
         reasoning: { effort: "none" },
         store: false,
         text: {

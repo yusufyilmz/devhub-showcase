@@ -139,3 +139,80 @@ test("editor workspace keeps draft editing, preview and publication separate", a
   await context.clearCookies();
   expect((await page.request.get(endpoint)).status()).toBe(403);
 });
+
+test("editor panels fit the viewport and keep the profile menu available", async ({
+  page,
+  context,
+}, info) => {
+  const mobile = info.project.name.startsWith("mobile");
+  const id = `e2e2e2e2-e2e2-42e2-82e2-e2e2e2e2e2e${mobile ? 1 : 0}`;
+  const exp = Math.floor(Date.now() / 1000) + 3600;
+  const token = [
+    "fixture",
+    Buffer.from(JSON.stringify({ exp, sub: id })).toString("base64url"),
+    "signature",
+  ].join(".");
+  await context.addCookies([
+    {
+      name: "sb-127-auth-token",
+      sameSite: "Lax",
+      url: info.project.use.baseURL ?? "http://localhost:3100",
+      value: `base64-${Buffer.from(
+        JSON.stringify({
+          access_token: token,
+          expires_at: exp,
+          expires_in: 3600,
+          refresh_token: "fixture-refresh",
+          token_type: "bearer",
+          user: { email: "owner@example.test", id },
+        }),
+      ).toString("base64url")}`,
+    },
+  ]);
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.goto(`/${mobile ? "mobile" : "desktop"}-workspace-owner/edit`);
+  await expect(page.getByRole("button", { name: "Profile menu" })).toBeVisible();
+  const preview = page.locator(".draft-preview-scroll");
+  await expect(preview).toBeVisible();
+  await page.getByRole("button", { name: "Desktop · 1280px" }).click();
+  await expect
+    .poll(() => preview.evaluate((node) => node.scrollWidth - node.clientWidth))
+    .toBeLessThanOrEqual(1);
+  await openEditor(page);
+
+  for (const tab of [
+    "Experience",
+    "Projects",
+    "Education",
+    "Skills",
+    "Languages",
+    "Sections",
+    "Section display",
+    "Templates",
+    "PDF",
+    "CV versions",
+  ]) {
+    await selectEditorSection(page, tab);
+    const pane = page.getByRole("region", { exact: true, name: `Edit ${tab}` });
+    await expect(pane).toBeVisible();
+    await expect
+      .poll(() => pane.evaluate((node) => node.scrollWidth - node.clientWidth))
+      .toBeLessThanOrEqual(1);
+    if (tab === "PDF") {
+      const layout = pane.getByLabel("CV layout");
+      await expect(layout).toBeVisible();
+      await expect
+        .poll(() =>
+          layout.evaluate((node) => {
+            const style = getComputedStyle(node);
+            return (
+              node.clientHeight -
+              Number.parseFloat(style.paddingTop) -
+              Number.parseFloat(style.paddingBottom)
+            );
+          }),
+        )
+        .toBeGreaterThanOrEqual(20);
+    }
+  }
+});

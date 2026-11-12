@@ -4,7 +4,13 @@ const nextConfig = {
   experimental: { useTypeScriptCli: true },
   reactStrictMode: true,
   serverExternalPackages: ["postgres"],
-  transpilePackages: ["@shared/auth", "@shared/ui", "@shared/runtime", "@shared/utils"],
+  transpilePackages: [
+    "@shared/env",
+    "@shared/auth",
+    "@shared/ui",
+    "@shared/runtime",
+    "@shared/utils",
+  ],
 };
 
 export default nextConfig;

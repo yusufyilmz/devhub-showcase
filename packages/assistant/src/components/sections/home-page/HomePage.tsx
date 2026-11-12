@@ -18,11 +18,13 @@ import {
 } from "../home-section";
 
 export function HomePage({
+  accountMenu,
   action,
   exampleHref,
   examples,
   planDetails,
 }: {
+  accountMenu?: ReactNode;
   action: PageAction;
   exampleHref: string | null;
   examples: ReactNode;
@@ -33,7 +35,7 @@ export function HomePage({
       <a className="skip-link" href="#home-content">
         Skip to content
       </a>
-      <HomeHeader action={action} />
+      <HomeHeader accountMenu={accountMenu} action={action} />
       <main id="home-content">
         <HomeHeroSection action={action} exampleHref={exampleHref} />
         <HomeCapabilitiesSection />

@@ -3,6 +3,7 @@ import { HomePage } from "@shared/assistant/sections";
 import { StudioCompanion } from "@shared/assistant/studio-companion";
 import { StudioPlanDetails } from "@shared/billing/components";
 
+import { getAccountMenu } from "./_account-menu";
 import { getHomeAction, getHomeExample } from "./_home-links";
 
 export default async function Page() {
@@ -10,6 +11,7 @@ export default async function Page() {
   return (
     <>
       <HomePage
+        accountMenu={await getAccountMenu({ action })}
         action={action}
         exampleHref={exampleHref}
         examples={<ExampleCarousel />}

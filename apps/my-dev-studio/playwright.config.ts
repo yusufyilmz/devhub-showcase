@@ -1,10 +1,11 @@
+import { env } from "@shared/env";
 import { generatePlaywrightConfig } from "@shared/test/playwright";
 
 export default generatePlaywrightConfig("http://localhost:3100", {
-  forbidOnly: Boolean(process.env.CI),
+  forbidOnly: Boolean(env.CI),
   fullyParallel: true,
   reporter: [["list"], ["html", { open: "never" }]],
-  retries: process.env.CI ? 1 : 0,
+  retries: env.CI ? 1 : 0,
   testDir: "e2e",
   testMatch: "**/*.spec.{ts,tsx}",
   webServer: [
@@ -46,5 +47,5 @@ export default generatePlaywrightConfig("http://localhost:3100", {
       url: "http://localhost:3102",
     },
   ],
-  workers: process.env.CI ? 1 : 2,
+  workers: env.CI ? 1 : 2,
 });

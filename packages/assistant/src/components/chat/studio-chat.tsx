@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
 import { urls } from "@shared/config/urls";
 import type { ProfileSnapshot } from "@shared/lib/profile";
@@ -10,7 +10,13 @@ import { Button } from "@shared/ui/button";
 
 import { AiAssistantEditor } from "../studio/index";
 
-export function StudioChat({ initial }: { initial: ProfileSnapshot }) {
+export function StudioChat({
+  initial,
+  accountMenu,
+}: {
+  initial: ProfileSnapshot;
+  accountMenu?: ReactNode;
+}) {
   const [saved, setSaved] = useState(initial);
   const [draft, setDraft] = useState(initial.profile);
   const [saving, setSaving] = useState(false);
@@ -57,6 +63,7 @@ export function StudioChat({ initial }: { initial: ProfileSnapshot }) {
   return (
     <AiAssistantEditor
       chat={{
+        accountMenu,
         actions: (
           <Button disabled={!dirty || saving} onClick={save} variant="outline">
             {saving ? "Saving…" : "Save draft"}

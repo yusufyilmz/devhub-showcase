@@ -1,5 +1,7 @@
 import { Redis } from "@upstash/redis";
 
+import { env } from "@shared/env";
+
 import type { CacheClient, CacheValue } from "./types";
 
 export class RedisCacheClient implements CacheClient {
@@ -8,8 +10,8 @@ export class RedisCacheClient implements CacheClient {
 
   constructor(keyPrefix = "devhub-showcase") {
     this.client = new Redis({
-      token: process.env.REDIS_TOKEN,
-      url: process.env.REDIS_URL,
+      token: env.REDIS_TOKEN,
+      url: env.REDIS_URL,
     });
     this.keyPrefix = keyPrefix;
   }

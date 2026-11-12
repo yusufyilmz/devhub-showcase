@@ -62,6 +62,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | Dependency                  | Declared version | Kind            |
 | --------------------------- | ---------------- | --------------- |
 | `@shared/cli`               | `workspace:*`    | devDependencies |
+| `@shared/env`               | `workspace:*`    | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
 | `@shared/utils`             | `workspace:*`    | devDependencies |
 | `next`                      | `catalog:`       | devDependencies |

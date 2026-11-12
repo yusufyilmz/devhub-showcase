@@ -1,13 +1,15 @@
 import OpenAI from "openai";
 import type { ResponseCreateParamsNonStreaming } from "openai/resources/responses/responses";
 
+import { env } from "@shared/env";
+
 import { assertTextInputBudget } from "./token-budget";
 
 export type AssistantTask = "CHAT" | "EDITOR" | "CV" | "FITNESS" | "NOTIFICATIONS" | "JOB";
 export type ResponseDelta = (text: string) => void;
 
 export function createAssistantClient() {
-  return new OpenAI({ apiKey: process.env.OPENAI_API_KEY, maxRetries: 0, timeout: 45000 });
+  return new OpenAI({ apiKey: env.OPENAI_API_KEY, maxRetries: 0, timeout: 45000 });
 }
 
 export class AssistantService {
@@ -19,8 +21,8 @@ export class AssistantService {
     signal?: AbortSignal,
     onDelta?: ResponseDelta,
   ) {
-    const agentId = process.env[`OPENAI_${task}_AGENT_ID`];
-    let instructions = process.env[`OPENAI_${task}_INSTRUCTIONS`];
+    const agentId = env[`OPENAI_${task}_AGENT_ID`];
+    let instructions = env[`OPENAI_${task}_INSTRUCTIONS`];
     let configuration = parameters;
     if (agentId) {
       if (!/^agent_[a-zA-Z0-9]+$/.test(agentId)) throw new Error("Invalid agent configuration.");
@@ -29,7 +31,7 @@ export class AssistantService {
       instructions = agent.instructions;
       configuration = {
         ...parameters,
-        model: process.env[`OPENAI_${task}_MODEL`] || agent.model,
+        model: env[`OPENAI_${task}_MODEL`] || agent.model,
       };
     }
     if (instructions?.trim()) {

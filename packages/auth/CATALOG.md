@@ -46,6 +46,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | Dependency                  | Declared version | Kind            |
 | --------------------------- | ---------------- | --------------- |
 | `@shared/config`            | `workspace:*`    | dependencies    |
+| `@shared/env`               | `workspace:*`    | dependencies    |
 | `@supabase/ssr`             | `catalog:`       | dependencies    |
 | `@supabase/supabase-js`     | `catalog:`       | dependencies    |
 | `next`                      | `catalog:`       | dependencies    |

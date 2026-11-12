@@ -14,7 +14,7 @@ const guest: PageAction = {
   signedIn: false,
 };
 /** Read session identity without provisioning a workspace on a public page visit. */
-export const getHomeAction = cache(async (): Promise<PageAction> => {
+export const getHomeAction = cache(async (): Promise<PageAction & { username?: string }> => {
   try {
     const client = await createServerClient();
     const {
@@ -28,6 +28,7 @@ export const getHomeAction = cache(async (): Promise<PageAction> => {
       href: data?.username ? editCvPath(data.username) : "/admin",
       label: "Open your studio",
       signedIn: true,
+      username: data?.username ?? undefined,
     };
   } catch {
     return guest;

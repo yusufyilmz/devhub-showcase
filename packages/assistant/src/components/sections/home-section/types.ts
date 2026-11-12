@@ -6,7 +6,7 @@ export type HomeCTASectionOptions = { action: PageAction };
 
 export type HomeFooterOptions = { action: PageAction };
 
-export type HomeHeaderOptions = { action: PageAction };
+export type HomeHeaderOptions = { action: PageAction; accountMenu?: ReactNode };
 
 export type HomeHeroSectionOptions = {
   action: PageAction;

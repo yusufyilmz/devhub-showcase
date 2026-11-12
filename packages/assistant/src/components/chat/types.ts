@@ -140,6 +140,7 @@ export type ChatComposerOptions = {
 };
 
 export type StudioChatScreenOptions = {
+  accountMenu?: ReactNode;
   message: string;
   onMessageChange: (message: string) => void;
   onSubmit: () => void;

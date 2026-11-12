@@ -72,6 +72,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 
 | Dependency                  | Declared version | Kind            |
 | --------------------------- | ---------------- | --------------- |
+| `@shared/env`               | `workspace:*`    | dependencies    |
 | `axios`                     | `catalog:`       | dependencies    |
 | `flat`                      | `catalog:`       | dependencies    |
 | `pino`                      | `catalog:`       | dependencies    |
