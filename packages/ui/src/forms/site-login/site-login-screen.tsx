@@ -32,6 +32,7 @@ export function SiteLoginScreen({
 
   return (
     <LoginPanel
+      animateVisual={site === "my-dev-studio"}
       backHref={siteCopy.backHref}
       backLabel={siteCopy.backLabel}
       brand={siteCopy.brand}

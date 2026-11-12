@@ -25,6 +25,7 @@ export function LoginPanel({
   brand,
   brandActions,
   localTestLogin = false,
+  animateVisual = false,
 }: {
   initialError?: string;
   googleAction: string;
@@ -40,6 +41,7 @@ export function LoginPanel({
   brand?: string;
   brandActions?: ReactNode;
   localTestLogin?: boolean;
+  animateVisual?: boolean;
 }) {
   const [error, showError] = useState(initialError);
   const [busy, setBusy] = useState(false);
@@ -188,9 +190,12 @@ export function LoginPanel({
       </div>
       <div className="login-layout">
         {panel}
-        <aside aria-label="Workspace access" className="login-visual">
+        <aside
+          aria-label="Workspace access"
+          className={animateVisual ? "login-visual login-visual-motion" : "login-visual"}
+        >
           <div className="relative grid gap-md">
-            <LockKeyhole aria-hidden="true" className="size-8 text-primary" />
+            <LockKeyhole aria-hidden="true" className="login-visual-icon size-8 text-primary" />
             <p className="text-sm font-semibold tracking-wide text-primary">{brand}</p>
             <p className="max-w-xs text-3xl leading-tight font-semibold tracking-tight">
               Pick up where you left off.
