@@ -1,9 +1,12 @@
 .studio.studio-editor {
   max-width: none;
-  padding: 32px 32px 96px 0;
+  padding: 0 32px 96px 0;
 }
-.studio.studio-editor .studio-editor-header {
-  margin-left: calc(var(--editor-sidebar-width, 232px) + 16px);
+.editor-workspace-body {
+  min-width: 0;
+}
+.studio-editor .editor-workspace-body {
+  padding-top: 32px;
 }
 .editor-workspace {
   display: grid;
@@ -20,7 +23,6 @@
   --editor-sidebar-width: 64px;
   --editor-sidebar-item-alignment: center;
   --editor-sidebar-item-padding: 4px;
-  --editor-sidebar-item-font-size: 11px;
 }
 .editor-sidebar {
   position: sticky;
@@ -28,7 +30,7 @@
   z-index: 25;
   display: flex;
   flex-direction: column;
-  max-height: calc(100dvh - 4.25rem);
+  height: calc(100dvh - 4.25rem);
   padding-block: 12px;
   background: var(--card);
   border-right: 1px solid var(--border);
@@ -79,7 +81,7 @@
   height: auto;
   min-height: 38px;
   padding: 8px var(--editor-sidebar-item-padding, 12px);
-  font-size: var(--editor-sidebar-item-font-size, 13px);
+  font-size: 13px;
   color: var(--muted-foreground);
   text-align: left;
   white-space: normal;
@@ -291,8 +293,8 @@
   .studio.studio-editor {
     padding: 20px 16px 104px;
   }
-  .studio.studio-editor .studio-editor-header {
-    margin-left: 0;
+  .studio-editor .editor-workspace-body {
+    padding-top: 0;
   }
   .editor-workspace {
     grid-template-columns: minmax(0, 1fr);

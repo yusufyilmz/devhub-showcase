@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import type { LucideIcon } from "lucide-react";
+
 import type { PortfolioProfile } from "@shared/config";
 
 export type DraftPreviewPaneProps = {
@@ -20,6 +22,8 @@ export type EditorWorkspaceProps = {
   view?: "edit" | "preview";
   onViewChange?: (view: "edit" | "preview") => void;
   groups: readonly EditorNavigationGroup[];
+  heading?: ReactNode;
+  sectionIcons?: Readonly<Record<string, LucideIcon>>;
   username: string;
   disabled?: boolean;
   locked?: boolean;

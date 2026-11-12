@@ -43,9 +43,16 @@ test("editor workspace keeps draft editing, preview and publication separate", a
   const workspace = page.locator(".editor-workspace-main");
   const sidebar = page.getByRole("navigation", { name: "Editor sections" });
   if (!mobile) {
+    const sidebarBounds = await sidebar.boundingBox();
+    const headingBounds = await page.locator(".studio-editor-header").boundingBox();
+    expect(sidebarBounds?.x).toBe(0);
+    expect(sidebarBounds?.y ?? Number.POSITIVE_INFINITY).toBeLessThan(headingBounds?.y ?? 0);
     await sidebar.getByRole("button", { name: "Collapse sidebar" }).click();
     await expect(sidebar).toHaveCSS("width", "64px");
-    await sidebar.getByRole("button", { exact: true, name: "Publishing" }).click();
+    const publishing = sidebar.getByRole("button", { exact: true, name: "Publishing" });
+    await expect(publishing.locator("svg.lucide-send")).toHaveCount(1);
+    await expect(publishing).toHaveText("");
+    await publishing.click();
     await expect(workspace.getByRole("region", { name: "Edit Publishing" })).toBeInViewport();
     await sidebar.getByRole("button", { name: "Expand sidebar" }).click();
     await expect(sidebar).toHaveCSS("width", "232px");
