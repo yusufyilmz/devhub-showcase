@@ -59,7 +59,7 @@ export const listingSchema = z.object({
   location: z.string(),
   maximum: z.number().nullable(),
   minimum: z.number().nullable(),
-  source: z.enum(["adzuna", "jooble"]),
+  source: z.enum(["adzuna", "jooble", "linkedin"]),
   sourceId: z.string(),
   title: z.string().min(1),
   url: z.url({ protocol: /^https?$/ }).refine((value) => {

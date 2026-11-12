@@ -12,6 +12,7 @@ import { NativeSelect } from "@shared/ui/native-select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@shared/ui/tabs";
 import { Textarea } from "@shared/ui/textarea";
 
+import { LinkedInInbox } from "./linkedin-inbox";
 import { SearchForm } from "./search-form";
 import type { Draft, JobsData, Match, RunJobAction } from "./types";
 
@@ -27,6 +28,7 @@ type Props = {
 };
 const date = (value: string) => new Date(value).toLocaleString();
 function ListingSource({ source }: { source: string }) {
+  if (source === "linkedin") return <span>LinkedIn email alert</span>;
   if (source === "adzuna") {
     return (
       <Button
@@ -54,7 +56,9 @@ function MatchCard({ job, busy, run }: { job: Match; busy: boolean; run: RunJobA
       <CardHeader>
         <CardTitle>{listing.title}</CardTitle>
         <CardDescription>
-          {[listing.company, listing.location, `${score}% match`].filter(Boolean).join(" · ")}
+          {[listing.company, listing.location, score === null ? "Unscored" : `${score}% match`]
+            .filter(Boolean)
+            .join(" · ")}
         </CardDescription>
       </CardHeader>
       <CardContent className="job-hunter-stack">
@@ -265,7 +269,7 @@ export function JobsDashboard({
         .toLowerCase()
         .includes(query.trim().toLowerCase()),
     )
-    .sort((a, b) => b.score - a.score);
+    .sort((a, b) => (b.score ?? -1) - (a.score ?? -1));
 
   return (
     <section
@@ -288,6 +292,7 @@ export function JobsDashboard({
           <TabsTrigger value="discover">Discover</TabsTrigger>
           <TabsTrigger value="saved">Saved</TabsTrigger>
           <TabsTrigger value="applications">Applications</TabsTrigger>
+          {data.linkedInAlerts && <TabsTrigger value="linkedin">LinkedIn alerts</TabsTrigger>}
           <TabsTrigger value="settings">Settings</TabsTrigger>
         </TabsList>
         <TabsContent className="job-hunter-stack" value="discover">
@@ -327,6 +332,11 @@ export function JobsDashboard({
           </Button>
           <ApplicationList busy={busy} cvUrl={cvUrl} data={data} run={run} statuses={statuses} />
         </TabsContent>
+        {data.linkedInAlerts && (
+          <TabsContent className="job-hunter-stack" value="linkedin">
+            <LinkedInInbox busy={busy} inbox={data.linkedInAlerts} run={run} />
+          </TabsContent>
+        )}
         <TabsContent className="job-hunter-stack" value="settings">
           <Card>
             <CardHeader>

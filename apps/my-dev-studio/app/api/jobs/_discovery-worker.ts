@@ -1,6 +1,7 @@
 import { assessJobMatches } from "@shared/assistant";
 import { validateProfile } from "@shared/lib/profiles";
 import {
+  adzunaSearchKey,
   discoverJobs,
   discoveryCandidates,
   isProviderConfigured,
@@ -15,27 +16,55 @@ import {
   pushSubscriptionSchema,
 } from "@shared/notifications/server";
 
-import { jobProviders, jobsPushConfig, providerDailyLimit } from "./_config";
+import { withAdzunaCache } from "./_adzuna-cache";
+import {
+  adzunaCache,
+  adzunaCacheTtl,
+  jobProviders,
+  jobsPushConfig,
+  providerDailyLimit,
+} from "./_config";
 import { cvEvidence } from "./_cv-evidence";
 
 type Search = Database["public"]["Tables"]["job_searches"]["Row"];
 const sources = ["adzuna", "jooble"] as const;
 
+const providerIssues = new Map([
+  ["unconfigured", "not configured for this market"],
+  ["daily limit reached", "daily request budget reached"],
+  ["rate-limited", "provider rate limit reached"],
+]);
+
+async function readProvider(
+  client: SupabaseDbClient,
+  filters: JobFilters,
+  providers: ReturnType<typeof jobProviders>,
+  source: (typeof sources)[number],
+) {
+  if (!isProviderConfigured(source, filters.country, providers)) throw new Error("unconfigured");
+  const fetchJobs = async () => {
+    const budget = await client.rpc("reserve_job_provider_request", {
+      country: source === "adzuna" ? "all" : filters.country,
+      daily_limit: providerDailyLimit(source),
+      source,
+    });
+    if (budget.error) throw new Error("unavailable");
+    if (!budget.data) throw new Error("daily limit reached");
+    return discoverJobs(source, filters, providers, AbortSignal.timeout(8000));
+  };
+  if (source !== "adzuna" || !providers.adzuna) return fetchJobs();
+  return withAdzunaCache(
+    adzunaCache(),
+    adzunaSearchKey(filters, providers.adzuna.appId),
+    adzunaCacheTtl(),
+    fetchJobs,
+  );
+}
+
 async function readProviders(client: SupabaseDbClient, filters: JobFilters) {
   const providers = jobProviders();
   const outcomes = await Promise.allSettled(
-    sources.map(async (source) => {
-      if (!isProviderConfigured(source, filters.country, providers))
-        throw new Error("unconfigured");
-      const budget = await client.rpc("reserve_job_provider_request", {
-        country: source === "adzuna" ? "all" : filters.country,
-        daily_limit: providerDailyLimit(source),
-        source,
-      });
-      if (budget.error) throw new Error("unavailable");
-      if (!budget.data) throw new Error("daily limit reached");
-      return discoverJobs(source, filters, providers, AbortSignal.timeout(8000));
-    }),
+    sources.map((source) => readProvider(client, filters, providers, source)),
   );
   const issues: string[] = [];
   const jobs: JobListing[] = [];
@@ -47,12 +76,7 @@ async function readProviders(client: SupabaseDbClient, filters: JobFilters) {
       examined += outcome.value.examined;
     } else {
       const reason = outcome.reason instanceof Error ? outcome.reason.message : "";
-      const issue =
-        reason === "unconfigured"
-          ? "not configured for this market"
-          : reason === "daily limit reached"
-            ? "daily request budget reached"
-            : "temporarily unavailable";
+      const issue = providerIssues.get(reason) ?? "temporarily unavailable";
       issues.push(`${sources[index]}: ${issue}.`);
       retry ||= issue === "temporarily unavailable";
     }
@@ -100,7 +124,7 @@ async function scan(client: SupabaseDbClient, search: Search) {
   if (existing.error) throw new Error("Match storage unavailable");
   const previous = new Map(
     existing.data
-      .filter((match) => match.cv_revision === cvRevision)
+      .filter((match) => match.cv_revision === cvRevision && match.score !== null)
       .map((match) => [match.listing_id, match]),
   );
   const results = candidates.flatMap(([id, listing]) => {

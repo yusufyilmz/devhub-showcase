@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { applicationDraft, prepareJobApplication } from "@shared/assistant";
+import { applicationDraft, assessJobMatches, prepareJobApplication } from "@shared/assistant";
 import { allowStudioAssistant } from "@shared/lib/cache";
 import {
   applicationStatuses,
@@ -14,7 +14,7 @@ import { subscriptionFingerprint, validatePushSubscription } from "@shared/notif
 import type { requireWorkspace } from "@/features/admin/admin-auth";
 
 import { cvResponse } from "../cv/_response";
-import { jobsPushConfig, jobsServiceClient } from "./_config";
+import { jobAlertConfig, jobsPushConfig, jobsServiceClient } from "./_config";
 import { cvEvidence } from "./_cv-evidence";
 
 type Workspace = Awaited<ReturnType<typeof requireWorkspace>>;
@@ -26,7 +26,18 @@ const matchExplanation = z.object({
   reason: z.string(),
 });
 
+const pendingAlert = z.object({ sourceId: z.string(), title: z.string(), url: z.url() });
+const reviewAlert = z.object({
+  company: z.string().trim().max(180),
+  description: z.string().trim().max(2000),
+  location: z.string().trim().max(180),
+  title: z.string().trim().min(1).max(180),
+});
 const commandSchema = z.discriminatedUnion("action", [
+  z.object({ action: z.literal("enableLinkedInAlerts") }),
+  z.object({ action: z.literal("disableLinkedInAlerts") }),
+  z.object({ action: z.literal("discardLinkedInJob"), id: jobId }),
+  z.object({ action: z.literal("reviewLinkedInJob"), id: jobId, job: reviewAlert }),
   z.object({ action: z.literal("search"), id: z.uuid().optional(), search: savedJobSearch }),
   z.object({ action: z.literal("delete"), id: z.uuid() }),
   z.object({ action: z.literal("state"), id: jobId, state: z.enum(["new", "saved", "dismissed"]) }),
@@ -56,9 +67,88 @@ function requireRecord<T>(value: T | null) {
   return value;
 }
 
-export async function loadJobs({ client, user }: Workspace) {
+async function loadLinkedInAlerts({ client, user }: Workspace) {
+  const config = jobAlertConfig();
+  if (!config) return null;
+  const [address, pending] = await Promise.all([
+    client.from("job_alert_addresses").select("token").eq("user_id", user.id).maybeSingle(),
+    client
+      .from("job_alert_imports")
+      .select("id,listing")
+      .eq("user_id", user.id)
+      .gte("received_at", new Date(Date.now() - 30 * 86_400_000).toISOString())
+      .order("received_at", { ascending: false })
+      .limit(100),
+  ]);
+  const token = dataOrThrow<{ token: string } | null>(address)?.token;
+  return {
+    address: token ? `alerts+${token}@${config.domain}` : null,
+    jobs: dataOrThrow(pending).map(({ id, listing }) => ({ id, ...pendingAlert.parse(listing) })),
+  };
+}
+
+async function approveLinkedInAlert(
+  { client, user, repository }: Workspace,
+  id: string,
+  job: z.infer<typeof reviewAlert>,
+  signal: AbortSignal,
+) {
+  const row = requireRecord(
+    dataOrThrow<{ listing: Json } | null>(
+      await client
+        .from("job_alert_imports")
+        .select("listing")
+        .eq("user_id", user.id)
+        .eq("id", id)
+        .maybeSingle(),
+    ),
+  );
+  const pending = pendingAlert.parse(row.listing);
+  const listing = listingSchema.parse({
+    ...pending,
+    ...job,
+    currency: "",
+    date: null,
+    dateKind: "posted",
+    employment: "",
+    maximum: null,
+    minimum: null,
+    source: "linkedin",
+  });
+  const snapshot = job.description ? await repository.read() : null;
+  const cv = snapshot && cvEvidence(snapshot.profile);
+  let score: number | null = null;
+  let explanation: z.infer<typeof matchExplanation> = {
+    matchedSkills: [],
+    missingRequirements: [],
+    reason: "Saved from a forwarded LinkedIn alert.",
+  };
+  if (cv && (await allowStudioAssistant(user.id).catch(() => false))) {
+    const response = await assessJobMatches({ cv, jobs: [{ id, listing: job }] }, signal).catch(
+      () => null,
+    );
+    const match = response?.matches.find((candidate) => candidate.id === id);
+    if (match) {
+      score = match.score;
+      explanation = matchExplanation.parse(match);
+    }
+  }
+  const result = await jobsServiceClient().rpc("accept_linkedin_alert", {
+    account_id: user.id,
+    cv_version: snapshot?.revision ?? 0,
+    import_id: id,
+    match_explanation: explanation,
+    match_score: score,
+    reviewed_listing: listing,
+  });
+  if (result.error) throw new JobsError("The imported job could not be saved.", 503);
+  if (!result.data) throw new JobsError("This import is no longer pending.", 409);
+}
+
+export async function loadJobs(workspace: Workspace) {
+  const { client, user } = workspace;
   const owner = user.id;
-  const [searches, matches, saved, runs, applications] = await Promise.all([
+  const [searches, matches, saved, runs, applications, linkedInAlerts] = await Promise.all([
     client
       .from("job_searches")
       .select("id,name,filters,hours,threshold,enabled,due_at")
@@ -87,6 +177,7 @@ export async function loadJobs({ client, user }: Workspace) {
       .select("listing_id,status,draft,updated_at")
       .eq("user_id", owner)
       .order("updated_at", { ascending: false }),
+    loadLinkedInAlerts(workspace),
   ]);
   const matchesData = [
     ...new Map(
@@ -125,6 +216,7 @@ export async function loadJobs({ client, user }: Workspace) {
         ? [{ explanation: matchExplanation.parse(explanation), id, listing, ...match }]
         : [];
     }),
+    linkedInAlerts,
     pushPublicKey: jobsPushConfig()?.publicKey ?? null,
     runs: dataOrThrow(runs),
     searches: dataOrThrow(searches).map((search) => ({
@@ -249,6 +341,25 @@ export async function changeJobs(workspace: Workspace, input: unknown, signal: A
   const command = commandSchema.parse(input);
   const { client, user } = workspace;
   switch (command.action) {
+    case "enableLinkedInAlerts":
+      if (!jobAlertConfig()) throw new JobsError("Email forwarding is unavailable.", 503);
+      dataOrThrow(
+        await client
+          .from("job_alert_addresses")
+          .upsert({ user_id: user.id }, { ignoreDuplicates: true, onConflict: "user_id" }),
+      );
+      break;
+    case "disableLinkedInAlerts":
+      dataOrThrow(await client.from("job_alert_addresses").delete().eq("user_id", user.id));
+      break;
+    case "discardLinkedInJob":
+      dataOrThrow(
+        await client.from("job_alert_imports").delete().eq("user_id", user.id).eq("id", command.id),
+      );
+      break;
+    case "reviewLinkedInJob":
+      await approveLinkedInAlert(workspace, command.id, command.job, signal);
+      break;
     case "search":
       if (command.id) {
         requireRecord(

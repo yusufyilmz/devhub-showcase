@@ -42,7 +42,7 @@ export type Listing = {
 export type Match = {
   id: string;
   listing: Listing;
-  score: number;
+  score: number | null;
   state: string;
   notified_at: string | null;
   explanation: { reason: string; matchedSkills: string[]; missingRequirements: string[] };
@@ -52,7 +52,12 @@ export type Draft = {
   coverLetter: string;
   answers: { question: string; answer: string }[];
 };
+export type LinkedInAlerts = {
+  address: string | null;
+  jobs: { id: string; sourceId: string; title: string; url: string }[];
+};
 export type JobsData = {
+  linkedInAlerts: LinkedInAlerts | null;
   searches: Search[];
   jobs: Match[];
   runs: {

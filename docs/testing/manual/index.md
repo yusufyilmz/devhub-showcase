@@ -33,6 +33,7 @@ Deployment tooling: [App routing, Fitness cutover and free Actions](deployments.
 
 | Feature                                                            | Scope/status                                                                                                  | Manual steps                            |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| LinkedIn job-alert imports                                         | Local follow-up; live email relay verification pending                                                        | [Open guide](linkedin-job-alerts.md)    |
 | Job Hunter                                                         | Local MVP; provider and deployed verification pending                                                         | [Open guide](job-hunter.md)             |
 | Homepage registry, composer, feature cards and section browser     | Implemented                                                                                                   | [Open guide](home.md)                   |
 | Server-rendered fictional portfolios and images                    | Implemented; includes carousel autoplay                                                                       | [Open guide](examples.md)               |

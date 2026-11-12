@@ -52,14 +52,15 @@
         "NEXT_PUBLIC_SUPABASE_ANON_KEY",
         "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
         "NEXT_PUBLIC_SITE_URL",
-        "GOOGLE_PROFILE_CLIENT_ID"
+        "GOOGLE_PROFILE_CLIENT_ID",
+        "REDIS_URL",
+        "REDIS_TOKEN",
+        "VERCEL_ENV"
       ],
       "outputs": [".next/**", "!.next/cache/**"],
       "passThroughEnv": [
         "OPENAI_API_KEY",
         "OPENAI_MODEL",
-        "REDIS_URL",
-        "REDIS_TOKEN",
         "APPLICATION_NAME",
         "LOG_LEVEL",
         "OPENAI_CV_MODEL",
