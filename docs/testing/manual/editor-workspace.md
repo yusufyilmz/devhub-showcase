@@ -1,7 +1,7 @@
 # Portfolio editor workspace — manual testing
 
 **Scope/status:** Local implementation keeps the “Edit your portfolio” studio heading.
-The default view is now the private preview; Edit and section navigation open a lightbox.
+The default view is the private preview. Edit and section navigation open the selected form inline.
 Phone screens default to the Mobile preview and other screens to Desktop. Production
 deployment is not verified.
 
@@ -10,10 +10,12 @@ configuration. Use the disposable desktop/mobile preview-owner and workspace-own
 production account for failure or conflict checks. Desktop width: 1440px; mobile: 390px;
 tablet: 1024px. See [shared setup and result rules](index.md#before-you-start).
 
-**Manual result:** Interactive manual walkthrough not run. Desktop and mobile browser
-screenshots were visually reviewed on 7 November 2026.
+**Inline editor verification:** `pnpm check`, 695 unit tests, the MyDevStudio
+production build, and six desktop and mobile Chromium tests passed. Browser checks
+used local fixtures and covered compact sidebar navigation, mobile section selection,
+draft retention, save retry, and guided setup recovery. The manual walkthrough is pending.
 
-**PR integration verification — 7 November 2026:** Production build, `pnpm check`
+**Previous lightbox integration verification — 7 November 2026:** Production build, `pnpm check`
 and all 632 unit tests passed, plus 28 focused component tests. The broad editor and
 managed-portfolio browser run passed 36 cases and skipped the existing duplicate mobile
 review test. Six stale-selector/storage-key failures passed after test updates; the mobile
@@ -23,16 +25,16 @@ No deployment or live provider verification is claimed.
 
 | Step | Clickable URL                                                      | Route path                    | Action                                                                                 | Expected result                                                                                                                                        | Actual result / evidence |
 | ---- | ------------------------------------------------------------------ | ----------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ |
-| 1    | [Desktop editor](http://localhost:3100/desktop-preview-owner/edit) | `/desktop-preview-owner/edit` | Open at 1440px.                                                                        | Original studio heading remains; grouped sidebar and device-sized private preview appear. Edit opens the form in a lightbox.                           | Not run                  |
+| 1    | [Desktop editor](http://localhost:3100/desktop-preview-owner/edit) | `/desktop-preview-owner/edit` | At 1440px, click Collapse sidebar, select Publishing, and click Expand sidebar.        | Publishing opens inside the main workspace. Grouped sections remain reachable in both widths.                                                          | Not run                  |
 | 2    | [Desktop editor](http://localhost:3100/desktop-preview-owner/edit) | `/desktop-preview-owner/edit` | Change Professional title; select Experience, expand an entry, then return to Profile. | Draft values remain; only the selected collection entry is expanded. No save or publish occurs from navigation.                                        | Not run                  |
-| 3    | [Mobile editor](http://localhost:3100/mobile-preview-owner/edit)   | `/mobile-preview-owner/edit`  | At 390px select an Editor section; use Preview, then Edit.                             | Picker includes grouped sections; no page overflow. Lightbox save/publish actions remain available. Closing returns to the unsaved preview.            | Not run                  |
+| 3    | [Mobile editor](http://localhost:3100/mobile-preview-owner/edit)   | `/mobile-preview-owner/edit`  | At 390px select an Editor section; use Back to preview, then Edit.                     | The picker includes grouped sections. The form and save actions fit the page. Back to preview displays the unsaved draft.                              | Not run                  |
 | 4    | [Desktop editor](http://localhost:3100/desktop-preview-owner/edit) | `/desktop-preview-owner/edit` | Select CV in the preview; change website/CV field visibility independently.            | CV content uses CV-specific visibility; private projects and birthdate are excluded. Saved PDF download is clearly distinguished from unsaved content. | Not run                  |
 | 5    | [Desktop editor](http://localhost:3100/desktop-preview-owner/edit) | `/desktop-preview-owner/edit` | Choose Review & publish with an unsaved draft.                                         | Publishing opens; Review publication stays disabled until Save changes succeeds. Saving alone does not publish.                                        | Not run                  |
 | 6    | [Desktop editor](http://localhost:3100/desktop-preview-owner/edit) | `/desktop-preview-owner/edit` | Simulate one failed PUT; Save changes, retry, then reload.                             | Failure retains edited fields. Retry persists the draft; reload shows the saved value.                                                                 | Not run                  |
 | 7    | [Desktop editor](http://localhost:3100/desktop-preview-owner/edit) | `/desktop-preview-owner/edit` | Open Draft tools; test checklist, undo/redo; reload unsaved work.                      | Controls remain available; actionable recovery notice appears above the workspace; stale revisions still block saving.                                 | Not run                  |
 | 8    | [Public portfolio](http://localhost:3100/desktop-preview-owner)    | `/desktop-preview-owner`      | Visit while signed out, then open the owner editor using another disposable account.   | Private public page stays unavailable; unauthorized owner edits stay blocked.                                                                          | Not run                  |
 
-## Device preview and lightbox checks
+## Previous device preview and lightbox checks
 
 | Step | Clickable URL                                                      | Route path                    | Action                                                                                     | Expected result                                                                                                                                       | Actual result / evidence                               |
 | ---- | ------------------------------------------------------------------ | ----------------------------- | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |

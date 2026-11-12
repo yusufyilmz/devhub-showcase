@@ -11,7 +11,7 @@ export async function selectEditorSection(page: Page, section: string) {
 }
 
 export async function showEditorPreview(page: Page) {
-  const close = page.getByRole("button", { exact: true, name: "Close editor" });
+  const close = page.getByRole("button", { exact: true, name: "Back to preview" });
   if (await close.isVisible()) await close.click();
 }
 

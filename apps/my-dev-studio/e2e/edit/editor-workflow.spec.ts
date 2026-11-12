@@ -44,6 +44,7 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
   await page.getByRole("button", { exact: true, name: "Next" }).click();
   await page.getByRole("button", { exact: true, name: "Use this layout" }).click();
   await page.getByRole("button", { exact: true, name: "Skip import · enter manually" }).click();
+  await expect(page.getByRole("button", { name: "Back to preview" })).toHaveCount(0);
   await page
     .getByRole("textbox", { exact: true, name: "Professional title" })
     .fill("Recovered designer draft");
@@ -77,7 +78,7 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
     "designer",
   );
 
-  await page.getByRole("button", { exact: true, name: "Use this layout" }).click();
+  await page.getByRole("button", { exact: true, name: "4. Details" }).click();
   await expect(page.getByRole("textbox", { exact: true, name: "Professional title" })).toHaveValue(
     "Recovered designer draft",
   );
