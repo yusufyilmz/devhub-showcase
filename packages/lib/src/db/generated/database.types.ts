@@ -220,6 +220,116 @@ export interface Database {
         Relationships: [];
       };
 
+      job_searches: {
+        Row: {
+          id: string;
+          user_id: string;
+          name: string;
+          filters: Json;
+          hours: number;
+          threshold: number;
+          enabled: boolean;
+          due_at: string;
+          lease: string | null;
+          failures: number;
+        };
+        Insert: {
+          id?: string;
+          user_id?: string;
+          name: string;
+          filters: Json;
+          hours: number;
+          threshold: number;
+          enabled?: boolean;
+          due_at?: string;
+          lease?: string | null;
+          failures?: number;
+        };
+        Update: {
+          name?: string;
+          filters?: Json;
+          hours?: number;
+          threshold?: number;
+          enabled?: boolean;
+        };
+        Relationships: [];
+      };
+      job_listings: {
+        Row: { user_id: string; id: string; listing: Json };
+        Insert: { user_id: string; id: string; listing: Json };
+        Update: { listing?: Json };
+        Relationships: [];
+      };
+      job_matches: {
+        Row: {
+          user_id: string;
+          listing_id: string;
+          score: number;
+          cv_revision: number;
+          explanation: Json;
+          state: string;
+          notified_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          user_id: string;
+          listing_id: string;
+          score: number;
+          cv_revision: number;
+          explanation: Json;
+          state?: string;
+          notified_at?: string | null;
+          created_at?: string;
+        };
+        Update: { state?: string };
+        Relationships: [];
+      };
+      job_scan_runs: {
+        Row: {
+          id: string;
+          user_id: string;
+          search_id: string;
+          created_at: string;
+          examined: number;
+          matched: number;
+          issues: string[];
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          search_id: string;
+          created_at?: string;
+          examined: number;
+          matched: number;
+          issues: string[];
+        };
+        Update: Record<PropertyKey, never>;
+        Relationships: [];
+      };
+      job_applications: {
+        Row: {
+          user_id: string;
+          listing_id: string;
+          status: string;
+          draft: Json | null;
+          updated_at: string;
+        };
+        Insert: {
+          user_id?: string;
+          listing_id: string;
+          status?: string;
+          draft?: Json | null;
+          updated_at?: string;
+        };
+        Update: { status?: string; draft?: Json | null };
+        Relationships: [];
+      };
+      job_push_devices: {
+        Row: { id: string; user_id: string; subscription: Json };
+        Insert: { id: string; user_id: string; subscription: Json };
+        Update: { subscription?: Json };
+        Relationships: [];
+      };
       portfolio_profiles: {
         Row: {
           managed_by: string | null;
@@ -671,6 +781,33 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
+      reserve_job_provider_request: {
+        Args: { source: string; country: string; daily_limit: number };
+        Returns: boolean;
+      };
+      claim_job_search: {
+        Args: Record<PropertyKey, never>;
+        Returns: Database["public"]["Tables"]["job_searches"]["Row"][];
+      };
+      finish_job_search: {
+        Args: {
+          search: string;
+          claim: string;
+          results: Json;
+          examined_count: number;
+          issues_found: string[];
+          should_retry: boolean;
+        };
+        Returns: boolean;
+      };
+      claim_job_push: {
+        Args: { batch_size: number };
+        Returns: { id: string; lease: string; attempt: number; subscription: Json }[];
+      };
+      finish_job_push: {
+        Args: { delivery_id: string; claim: string; outcome: string };
+        Returns: undefined;
+      };
       claim_billing: {
         Args: { p_account: string; p_lease: string };
         Returns: boolean;
