@@ -8,6 +8,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "../../overlays/dropdown-menu";
 import { Navbar } from "../navbar/Navbar";
@@ -49,7 +50,15 @@ export function Header({
                       <Menu aria-hidden="true" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
+                  <DropdownMenuContent
+                    align="end"
+                    className="site-navigation-dropdown"
+                    collisionPadding={12}
+                    sideOffset={10}
+                  >
+                    <DropdownMenuLabel className="site-navigation-dropdown-heading">
+                      {navigationLabel}
+                    </DropdownMenuLabel>
                     {links.map(({ href, label }) => (
                       <DropdownMenuItem asChild key={href}>
                         <a href={href}>{label}</a>
