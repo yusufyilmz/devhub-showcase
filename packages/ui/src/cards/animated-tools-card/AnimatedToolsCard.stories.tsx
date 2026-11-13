@@ -3,9 +3,12 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { AnimatedToolsCard } from "./AnimatedToolsCard";
 
 const meta = {
-  args: { description: "Compose and automate portfolio tasks.", title: "Developer toolkit" },
+  args: {
+    className: "mx-auto",
+    description: "Compose and automate portfolio tasks.",
+    title: "Developer toolkit",
+  },
   component: AnimatedToolsCard,
-  parameters: { layout: "centered" },
   tags: ["autodocs"],
   title: "UI/Cards/Animated Tools Card",
 } satisfies Meta<typeof AnimatedToolsCard>;

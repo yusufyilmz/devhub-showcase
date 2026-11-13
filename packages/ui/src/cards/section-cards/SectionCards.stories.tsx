@@ -6,10 +6,8 @@ const meta = {
   component: SectionCards,
   decorators: [
     (Story) => (
-      <div className="min-h-screen bg-background p-6">
-        <div className="mx-auto max-w-6xl">
-          <Story />
-        </div>
+      <div className="mx-auto max-w-6xl">
+        <Story />
       </div>
     ),
   ],
@@ -30,7 +28,7 @@ export const NarrowCanvas: StoryObj<typeof meta> = {
   ...Default,
   decorators: [
     (Story) => (
-      <div style={{ maxWidth: 320, width: "100%" }}>
+      <div className="w-full max-w-80">
         <Story />
       </div>
     ),
@@ -41,7 +39,7 @@ export const WideCanvas: StoryObj<typeof meta> = {
   ...Default,
   decorators: [
     (Story) => (
-      <div style={{ maxWidth: 960, width: "100%" }}>
+      <div className="w-full max-w-[60rem]">
         <Story />
       </div>
     ),

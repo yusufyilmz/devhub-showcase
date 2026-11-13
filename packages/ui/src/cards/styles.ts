@@ -301,35 +301,6 @@ export const cardBodyStyles = {
   element1: "text-xl font-semibold mb-2",
 } as const;
 
-export const sectionCardsStyles = {
-  element1:
-    "*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4",
-  element2: "@container/card",
-  element3: "text-2xl font-semibold tabular-nums @[250px]/card:text-3xl",
-  element4: "flex-col items-start gap-1.5 text-sm",
-  element5: "line-clamp-1 flex gap-2 font-medium",
-  element6: "size-4",
-  element7: "text-muted-foreground",
-  element8: "@container/card",
-  element9: "text-2xl font-semibold tabular-nums @[250px]/card:text-3xl",
-  element10: "flex-col items-start gap-1.5 text-sm",
-  element11: "line-clamp-1 flex gap-2 font-medium",
-  element12: "size-4",
-  element13: "text-muted-foreground",
-  element14: "@container/card",
-  element15: "text-2xl font-semibold tabular-nums @[250px]/card:text-3xl",
-  element16: "flex-col items-start gap-1.5 text-sm",
-  element17: "line-clamp-1 flex gap-2 font-medium",
-  element18: "size-4",
-  element19: "text-muted-foreground",
-  element20: "@container/card",
-  element21: "text-2xl font-semibold tabular-nums @[250px]/card:text-3xl",
-  element22: "flex-col items-start gap-1.5 text-sm",
-  element23: "line-clamp-1 flex gap-2 font-medium",
-  element24: "size-4",
-  element25: "text-muted-foreground",
-} as const;
-
 export const revealCardCopyStyles = {
   element1: "reveal-heading [&>div]:p-0 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:tracking-tight",
   element2: "reveal-preview",
