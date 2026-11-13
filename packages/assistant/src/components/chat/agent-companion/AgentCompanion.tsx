@@ -5,7 +5,7 @@ import "./agent-companion.css";
 import { type CSSProperties, type RefObject, useMemo, useRef, useState } from "react";
 
 import { cn } from "cn";
-import { ArrowLeftRight, X } from "lucide-react";
+import { ArrowLeftRight, MoveDiagonal, X } from "lucide-react";
 
 import { Button } from "@shared/ui/button";
 
@@ -100,8 +100,45 @@ function useAgentGuide(guide: AgentGuide | undefined, blocked: boolean) {
   return { bubble, features, guideOpen, progress, setGuideOpen, tips };
 }
 
-function dragStyle(offset: number | undefined): CSSProperties | undefined {
-  return offset === undefined ? undefined : ({ "--agent-drag-x": `${offset}px` } as CSSProperties);
+function CompanionResize({ dock }: { dock: ReturnType<typeof useCompanionDock> }) {
+  return (
+    <Button
+      aria-label="Resize companion"
+      className="agent-resize-toggle"
+      onClick={(event) => {
+        if (!dock.suppressDragClick(event)) dock.resizeBy(16);
+      }}
+      onKeyDown={(event) => {
+        if (event.key !== "ArrowUp" && event.key !== "ArrowDown") return;
+        event.preventDefault();
+        dock.resizeBy(event.key === "ArrowUp" ? 16 : -16);
+      }}
+      onLostPointerCapture={dock.cancel}
+      onPointerCancel={dock.cancel}
+      onPointerDown={(event) => dock.start(event, true)}
+      onPointerMove={dock.move}
+      onPointerUp={dock.finish}
+      title="Drag up to enlarge or down to shrink. Use Up and Down arrow keys to resize."
+      type="button"
+      variant="unstyled"
+    >
+      <MoveDiagonal aria-hidden="true" size={15} />
+    </Button>
+  );
+}
+
+function floatingPosition(floating: boolean, dock: ReturnType<typeof useCompanionDock>) {
+  if (!floating) return {};
+  const { size, x, y } = dock.current;
+  return {
+    "data-side": dock.side,
+    "data-upper": y < 0.45 ? "" : undefined,
+    style: {
+      "--agent-custom-size": size && `${size}px`,
+      "--agent-x": x,
+      "--agent-y": y,
+    } as CSSProperties,
+  };
 }
 
 export function AgentCompanion({
@@ -131,10 +168,10 @@ export function AgentCompanion({
       className={cn("agent-companion", className)}
       data-activity={activity}
       data-agent={agent}
-      data-dragging={dock.offset !== undefined || undefined}
+      data-dragging={dock.moving || undefined}
       data-placement={placement}
-      data-side={floating ? dock.side : undefined}
-      style={dragStyle(dock.offset)}
+      {...floatingPosition(floating, dock)}
+      ref={dock.container}
     >
       {currentBubble && (
         <NoticeBubble
@@ -160,7 +197,7 @@ export function AgentCompanion({
           }}
           onLostPointerCapture={dock.cancel}
           onPointerCancel={dock.cancel}
-          onPointerDown={dock.start}
+          onPointerDown={(event) => dock.start(event)}
           onPointerMove={dock.move}
           onPointerUp={dock.finish}
           type={href ? undefined : "button"}
@@ -188,6 +225,7 @@ export function AgentCompanion({
             <ArrowLeftRight aria-hidden="true" size={15} />
           </Button>
         )}
+        {floating && <CompanionResize dock={dock} />}
         {guide && (
           <FeatureGuide
             completed={progress.completed}

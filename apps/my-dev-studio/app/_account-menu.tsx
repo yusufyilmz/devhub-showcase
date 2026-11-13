@@ -23,6 +23,7 @@ export async function getAccountMenu({
       initials={session.username?.slice(0, 2).toUpperCase() ?? "U"}
       protectDraft={protectDraft}
       studioHref={session.href}
+      username={session.username}
     />
   );
 }

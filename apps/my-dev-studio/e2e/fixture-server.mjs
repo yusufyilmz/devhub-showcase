@@ -149,6 +149,10 @@ const previewOwners = aiOwners.map((owner, index) => ({
 }));
 const workspaceOwners = previewOwners.map((owner, index) => ({
   ...structuredClone(owner),
+  document: {
+    ...structuredClone(owner.document),
+    appearance: { accent: "violet", defaultTheme: "dark", theme: "studio" },
+  },
   id: `e1e1e1e1-e1e1-41e1-81e1-e1e1e1e1e1e${index}`,
   owner_id: `e2e2e2e2-e2e2-42e2-82e2-e2e2e2e2e2e${index}`,
   username: `${index ? "mobile" : "desktop"}-workspace-owner`,

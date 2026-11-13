@@ -3,46 +3,46 @@
   display: flex;
   align-items: center;
 }
+/* Keep chrome controls compact even when preference-driven rem spacing grows. */
+.appearance-launcher .theme-toggle {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  min-height: 40px;
+  padding: 0;
+}
+.appearance-launcher .theme-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
 .appearance-quick-actions {
   position: absolute;
-  top: 50%;
-  right: 100%;
+  inset-block-start: 100%;
+  inset-inline-end: 0;
   z-index: 110;
   display: flex;
   visibility: hidden;
-  gap: 0.25rem;
+  gap: 4px;
   align-items: center;
+  padding: 4px;
   pointer-events: none;
+  background: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 14%, transparent);
   opacity: 0;
-  transform: translate(0.25rem, -50%);
-  transition:
-    opacity 160ms ease,
-    transform 160ms ease;
-}
-.appearance-launcher[data-side="right"] .appearance-quick-actions {
-  right: auto;
-  left: 100%;
-}
-.appearance-launcher[data-side^="inline"] .appearance-quick-actions {
-  position: static;
-  width: 0;
-  overflow: hidden;
-  transform: none;
-}
-.appearance-launcher[data-side="inline-left"] .appearance-quick-actions {
-  order: -1;
-}
-.appearance-launcher[data-side^="inline"]:is(:hover, :focus-within, [data-expanded])
-  .appearance-quick-actions {
-  width: 64px;
+  transition: opacity 160ms ease;
 }
 .appearance-launcher .appearance-quick-actions .theme-toggle {
+  margin: 0;
   color: var(--foreground);
-  background: var(--background);
+  background: transparent;
   border: 0;
+  border-radius: 8px;
 }
 .appearance-launcher .appearance-quick-actions .theme-toggle:hover {
-  background: color-mix(in srgb, var(--primary) 12%, var(--background));
+  background: color-mix(in srgb, var(--primary) 12%, var(--popover));
 }
 .appearance-launcher .theme-toggle:focus-visible {
   outline: 2px solid var(--ring);
@@ -54,7 +54,6 @@
   visibility: visible;
   pointer-events: auto;
   opacity: 1;
-  transform: translate(0, -50%);
 }
 .appearance-dialog {
   width: min(600px, calc(100vw - 32px));
@@ -351,19 +350,6 @@
   padding: 8px 12px;
   font-size: 12px;
   border-radius: 8px;
-}
-
-/* Keep chrome controls compact even when preference-driven rem spacing grows. */
-.appearance-launcher .theme-toggle {
-  width: 40px;
-  min-width: 40px;
-  height: 40px;
-  min-height: 40px;
-  padding: 0;
-}
-.appearance-launcher .theme-toggle svg {
-  width: 18px;
-  height: 18px;
 }
 
 .appearance-launcher .appearance-quick-actions .theme-toggle {

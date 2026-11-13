@@ -213,7 +213,7 @@
   grid-column: 1 / -1;
 }
 
-.editor-content-pane .cv-preferences > p {
+:where(.editor-content-pane) .cv-preferences > p {
   max-width: 72ch;
   font-size: 13px;
   line-height: 1.6;
@@ -402,12 +402,8 @@
   border: 0;
 }
 
-.studio-editor:has(.editor-workspace[data-view="edit"]) > .agent-companion {
-  visibility: hidden;
-}
+.studio-editor > .editor-companion[data-placement="floating"] {
+  --agent-launcher-size: clamp(3.75rem, 8vw, 5.25rem);
 
-@media (min-width: 768px) {
-  .studio-editor > .agent-companion[data-side="left"] {
-    left: calc(var(--editor-sidebar-width, 232px) + 1rem);
-  }
+  z-index: 45;
 }

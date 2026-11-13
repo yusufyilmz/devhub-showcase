@@ -61,7 +61,8 @@ test("editor workspace keeps draft editing, preview and publication separate", a
     await openEditor(page);
   }
   await expect(workspace.getByRole("region", { name: "Edit Profile" })).toBeVisible();
-  await expect(assistant).toBeHidden();
+  await expect(assistant).toBeInViewport();
+  await assistant.click({ trial: true });
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toBeVisible();
   await expect(page.getByLabel("Username", { exact: true })).toHaveCount(0);
@@ -170,8 +171,36 @@ test("editor panels fit the viewport and keep the profile menu available", async
     },
   ]);
   await page.emulateMedia({ colorScheme: "dark" });
-  await page.goto(`/${mobile ? "mobile" : "desktop"}-workspace-owner/edit`);
-  await expect(page.getByRole("button", { name: "Profile menu" })).toBeVisible();
+  await page.goto("/");
+  const root = page.locator("html");
+  await expect(root).toHaveAttribute("data-accent", "cyan");
+  const initialMode = await root.getAttribute("data-theme");
+  const mode = initialMode === "dark" ? "light" : "dark";
+  const appearance = page.getByRole("button", { name: "Appearance controls" });
+  await appearance.hover();
+  const switchTheme = page.getByRole("button", { name: `Switch to ${mode} theme` });
+  await expect(switchTheme).toBeInViewport();
+  await switchTheme.click();
+  await expect(root).toHaveAttribute("data-theme", mode);
+  await page.getByRole("link", { name: "My studio" }).click();
+  await expect(page).toHaveURL(`/${mobile ? "mobile" : "desktop"}-workspace-owner/edit`);
+  await expect(root).toHaveAttribute("data-theme", mode);
+  await expect(root).toHaveAttribute("data-accent", "cyan");
+  const profile = page.getByRole("button", { name: "Profile menu" });
+  const avatar = profile.locator(".profile-menu-avatar");
+  await expect
+    .poll(() =>
+      avatar.evaluate((element) => {
+        const style = getComputedStyle(element);
+        const parent = element.closest("button");
+        return parent && style.color !== getComputedStyle(parent).backgroundColor;
+      }),
+    )
+    .toBe(true);
+  await profile.click();
+  await expect(page.getByRole("menu").getByText("My profile")).toBeVisible();
+  await expect(page.getByRole("menuitem", { name: "Job Hunter" })).toBeVisible();
+  await page.keyboard.press("Escape");
   const preview = page.locator(".draft-preview-scroll");
   await expect(preview).toBeVisible();
   await page.getByRole("button", { name: "Desktop · 1280px" }).click();

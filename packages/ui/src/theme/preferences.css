@@ -57,8 +57,10 @@
 :root[data-platform="mydevstudio"][data-font="mono"] body {
   --studio-font: var(--font-geist-mono, ui-monospace), monospace;
 }
-:root[data-platform="mydevstudio"][data-portfolio-theme]:not(:has(.admin-shell)) body {
+:root[data-platform="mydevstudio"][data-portfolio-theme]:not([data-font]) body {
   --studio-font: var(--portfolio-display);
+}
+:root[data-platform="mydevstudio"][data-portfolio-theme]:not(:has(.admin-shell)) body {
   font-weight: var(--portfolio-heading-weight);
   letter-spacing: var(--tracking, normal);
 }
