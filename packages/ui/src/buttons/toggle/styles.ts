@@ -1,7 +1,13 @@
 import { cva } from "class-variance-authority";
 
+export const pressedToggleStyles =
+  "[&:is([aria-pressed=true],[data-state=on])]:border-border [&:is([aria-pressed=true],[data-state=on])]:bg-accent [&:is([aria-pressed=true],[data-state=on])]:text-accent-foreground";
+
 export const toggleVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-lg border border-transparent text-sm font-medium whitespace-nowrap text-muted-foreground outline-none transition-[background-color,border-color,color] hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/40 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:border-primary data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:shadow-[inset_0_1px_0_0_color-mix(in_oklch,white_24%,transparent)] [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  [
+    "inline-flex items-center justify-center gap-2 rounded-lg border border-transparent text-sm font-medium whitespace-nowrap text-muted-foreground outline-none motion-safe:transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+    pressedToggleStyles,
+  ],
   {
     defaultVariants: {
       size: "default",
@@ -15,7 +21,7 @@ export const toggleVariants = cva(
       },
       variant: {
         default: "bg-transparent",
-        outline: "border-border bg-transparent hover:bg-foreground/5",
+        outline: "border-border bg-transparent",
       },
     },
   },

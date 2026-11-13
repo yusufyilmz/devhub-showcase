@@ -9,7 +9,6 @@ import { Toggle } from "./Toggle";
 const meta: Meta<typeof Toggle> = {
   args: {
     disabled: false,
-    pressed: false,
     size: "default",
     variant: "default",
   },
