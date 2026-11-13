@@ -1,5 +1,6 @@
 export const segmentedControlStyles = {
-  element1: "inline-flex flex-wrap gap-1 rounded-lg border border-border bg-foreground/5 p-1",
+  element1:
+    "inline-flex max-w-full flex-wrap gap-0.5 rounded-lg border border-border bg-muted/60 p-1",
   option:
-    "rounded-md text-muted-foreground hover:text-foreground aria-pressed:bg-primary aria-pressed:text-primary-foreground aria-pressed:shadow-[inset_0_1px_0_0_color-mix(in_oklch,white_24%,transparent)]",
+    "h-7 max-w-full rounded-md border-transparent px-2.5 text-sm text-muted-foreground hover:bg-muted hover:text-foreground aria-pressed:border-border aria-pressed:bg-background aria-pressed:text-foreground aria-pressed:hover:bg-background",
 } as const;

@@ -23,3 +23,9 @@
 | Story                                                                                                          | Route path                                      | Action           | Expected result                                                           | Actual result         |
 | -------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | ---------------- | ------------------------------------------------------------------------- | --------------------- |
 | [Icon Button](http://127.0.0.1:6006/?path=/story/ui-buttons-icon-button--default&globals=brand:sand;mode:dark) | `/?path=/story/ui-buttons-icon-button--default` | Press Tab twice. | Focus skips the disabled middle icon button and outlines the last button. | Verified in Chromium. |
+
+## Segmented Control
+
+| Story                                                                                                            | Route path                                            | Action                         | Expected result                                                   | Actual result                                                                             |
+| ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- | ------------------------------ | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| [Segmented Control](http://127.0.0.1:6006/?path=/story/ui-buttons-segmented-control--default&globals=brand:sand) | `/?path=/story/ui-buttons-segmented-control--default` | Tab to **CV** and press Space. | **CV** is pressed and has a distinct fill. Focus stays on **CV**. | Keyboard selection and focus verified in Sand light and dark, including the Narrow story. |
