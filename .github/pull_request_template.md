@@ -56,7 +56,7 @@
 | ------------------------------------------------------------------------ | ------- | -------------------------- |
 | `pnpm check`                                                             | Not run |                            |
 | `pnpm test` or relevant focused unit tests                               | Not run |                            |
-| `pnpm --filter my-dev-studio build` when dev studio app behavior changes | Not run |
+| `pnpm --filter my-dev-studio build` when dev studio app behavior changes | Not run |                            |
 | `pnpm --filter my-dev-studio build` when app behavior changes            | Not run |                            |
 
                        |

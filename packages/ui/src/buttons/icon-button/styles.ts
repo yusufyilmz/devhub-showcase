@@ -18,11 +18,10 @@ export const iconButtonVariants = cva(
         default:
           "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[inset_0_1px_0_0_color-mix(in_oklch,white_28%,transparent)] hover:bg-[var(--primary)]/90",
         destructive:
-          "bg-[var(--destructive)] text-[var(--destructive-foreground)] hover:bg-[var(--destructive)]/90",
-        ghost: "hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]",
-        link: "text-[var(--primary)] underline-offset-4 hover:underline",
-        outline:
-          "border border-[var(--border)] bg-[var(--background)] hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]",
+          "border-[var(--destructive)] bg-[var(--destructive)] text-white shadow-[inset_0_1px_0_0_color-mix(in_oklch,white_28%,transparent)] hover:bg-[var(--destructive)]/90",
+        ghost: "text-muted-foreground hover:text-foreground",
+        link: "text-foreground underline-offset-4 hover:underline",
+        outline: "bg-transparent text-foreground hover:border-[var(--border)]",
         secondary:
           "border-[var(--border)] bg-transparent text-foreground shadow-[inset_0_1px_0_0_color-mix(in_oklch,var(--foreground)_10%,transparent)] hover:bg-foreground/5",
       },

@@ -33,7 +33,14 @@ function Button({
   children,
   ...props
 }: ButtonOptions) {
-  const classes = buttonClasses({ className, size, variant });
+  const classes = buttonClasses({
+    "aria-busy": props["aria-busy"],
+    "aria-disabled": props["aria-disabled"],
+    className,
+    disabled: props.disabled,
+    size,
+    variant,
+  });
   const content = (
     <>
       {startIcon && !asChild ? <ButtonIcon icon={startIcon} position="inline-start" /> : null}

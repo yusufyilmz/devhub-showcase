@@ -50,6 +50,22 @@ describe("Shared button composition", () => {
     fireEvent.click(link);
     expect(click).not.toHaveBeenCalled();
   });
+  it("sets the cursor from the button state", () => {
+    render(
+      <>
+        <Button>Submit</Button>
+        <Button aria-busy>Saving...</Button>
+        <Button disabled>Confirm</Button>
+      </>,
+    );
+    expect(screen.getByRole("button", { name: "Submit" }).className).toContain("cursor-pointer");
+    expect(screen.getByRole("button", { name: "Saving..." }).className).toContain(
+      "cursor-progress",
+    );
+    expect(screen.getByRole("button", { name: "Confirm" }).className).toContain(
+      "cursor-not-allowed",
+    );
+  });
   it("styles the slotted link itself without nesting interactive controls", () => {
     render(
       <Button asChild variant="outline">

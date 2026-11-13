@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-lg px-3 py-1.5 text-left text-sm outline-hidden ring-sidebar-ring motion-safe:transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-data-[sidebar=menu-action]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground data-open:hover:bg-sidebar-accent data-open:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! [&>span:last-child]:truncate [&_svg]:size-4 [&_svg]:shrink-0",
+  "peer/menu-button group-has-data-[sidebar=menu-action]/menu-item:pr-8 flex w-full items-center gap-2 overflow-hidden rounded-xl border border-transparent pl-2 pr-4 text-left text-sm text-sidebar-foreground outline-hidden ring-sidebar-ring transition-[background-color,border-color,color] duration-200 hover:border-foreground/5 hover:bg-foreground/5 focus-visible:border-foreground/5 focus-visible:bg-foreground/5 focus-visible:ring-2 active:border-foreground/5 active:bg-foreground/5 disabled:pointer-events-none disabled:border-transparent disabled:bg-muted disabled:text-muted-foreground aria-disabled:pointer-events-none aria-disabled:border-transparent aria-disabled:bg-muted aria-disabled:text-muted-foreground data-[active=true]:border-foreground/10 data-[active=true]:bg-foreground/10 data-[active=true]:font-medium data-[state=open]:border-foreground/5 data-[state=open]:bg-foreground/5 data-open:border-foreground/5 data-open:bg-foreground/5 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! [&>span:last-child]:truncate [&_svg]:size-4 [&_svg]:shrink-0",
   {
     defaultVariants: {
       size: "default",
@@ -9,14 +9,13 @@ export const sidebarMenuButtonVariants = cva(
     },
     variants: {
       size: {
-        default: "h-8 text-sm",
-        lg: "h-12 text-sm group-data-[collapsible=icon]:p-0!",
-        sm: "h-7 text-xs",
+        default: "h-10 text-sm",
+        lg: "h-12 px-5 text-sm group-data-[collapsible=icon]:p-0!",
+        sm: "h-8 px-2 text-xs",
       },
       variant: {
-        default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-        outline:
-          "bg-background shadow-[0_0_0_1px_var(--sidebar-border)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_var(--sidebar-accent)]",
+        default: "",
+        outline: "border-foreground/10",
       },
     },
   },
@@ -53,47 +52,47 @@ export const sidebarStyles = {
   sidebarFooter: "flex flex-col gap-2 p-2",
   sidebarGroup: "relative flex w-full min-w-0 flex-col p-2",
   sidebarGroupAction:
-    "text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground absolute top-3.5 right-3 flex aspect-square w-5 items-center justify-center rounded-md p-0 outline-hidden transition-transform focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+    "text-sidebar-foreground ring-sidebar-ring absolute top-2.5 right-3 flex aspect-square w-5 items-center justify-center rounded-md p-0 outline-hidden transition-[background-color,color] hover:bg-foreground/5 focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
   sidebarGroupAction2: "after:absolute after:-inset-2 md:after:hidden",
   sidebarGroupAction3: "group-data-[collapsible=icon]:hidden",
   sidebarGroupContent: "w-full text-sm",
   sidebarGroupLabel:
-    "text-sidebar-foreground/70 ring-sidebar-ring flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium outline-hidden transition-[margin,opacity] duration-200 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
-  sidebarGroupLabel2: "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0",
+    "text-sidebar-foreground/70 ring-sidebar-ring flex h-10 shrink-0 items-center rounded-md pr-4 pl-2 text-xs font-medium outline-hidden transition-[margin,opacity] duration-200 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+  sidebarGroupLabel2:
+    "group-data-[collapsible=icon]:-mt-10 group-data-[collapsible=icon]:opacity-0",
   sidebarHeader: "flex flex-col gap-2 p-2",
   sidebarInput: "bg-background h-8 w-full shadow-none",
   sidebarInset: "bg-background relative flex w-full min-w-0 flex-1 flex-col",
   sidebarInset2:
     "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
-  sidebarMenu: "flex w-full min-w-0 flex-col gap-0.5",
+  sidebarMenu: "flex w-full min-w-0 flex-col gap-1",
   sidebarMenuAction:
-    "text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground peer-hover/menu-button:text-sidebar-accent-foreground absolute top-1.5 right-1 flex aspect-square w-5 items-center justify-center rounded-md p-0 outline-hidden transition-transform focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+    "text-sidebar-foreground ring-sidebar-ring peer-hover/menu-button:text-sidebar-foreground absolute top-1.5 right-1 flex aspect-square w-5 items-center justify-center rounded-md p-0 outline-hidden transition-[background-color,color] hover:bg-foreground/5 focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
   sidebarMenuAction2: "after:absolute after:-inset-2 md:after:hidden",
-  sidebarMenuAction3: "peer-data-[size=sm]/menu-button:top-1",
-  sidebarMenuAction4: "peer-data-[size=default]/menu-button:top-1.5",
-  sidebarMenuAction5: "peer-data-[size=lg]/menu-button:top-2.5",
+  sidebarMenuAction3: "peer-data-[size=sm]/menu-button:top-1.5",
+  sidebarMenuAction4: "peer-data-[size=default]/menu-button:top-2.5",
+  sidebarMenuAction5: "peer-data-[size=lg]/menu-button:top-3.5",
   sidebarMenuAction6: "group-data-[collapsible=icon]:hidden",
   sidebarMenuAction7:
-    "peer-data-[active=true]/menu-button:text-sidebar-accent-foreground group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 md:opacity-0",
+    "peer-data-[active=true]/menu-button:text-sidebar-foreground group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 md:opacity-0",
   sidebarMenuBadge:
     "text-sidebar-foreground pointer-events-none absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium tabular-nums select-none",
   sidebarMenuBadge2:
-    "peer-hover/menu-button:text-sidebar-accent-foreground peer-data-[active=true]/menu-button:text-sidebar-accent-foreground",
-  sidebarMenuBadge3: "peer-data-[size=sm]/menu-button:top-1",
-  sidebarMenuBadge4: "peer-data-[size=default]/menu-button:top-1.5",
-  sidebarMenuBadge5: "peer-data-[size=lg]/menu-button:top-2.5",
+    "peer-hover/menu-button:text-sidebar-foreground peer-data-[active=true]/menu-button:text-sidebar-foreground",
+  sidebarMenuBadge3: "peer-data-[size=sm]/menu-button:top-1.5",
+  sidebarMenuBadge4: "peer-data-[size=default]/menu-button:top-2.5",
+  sidebarMenuBadge5: "peer-data-[size=lg]/menu-button:top-3.5",
   sidebarMenuBadge6: "group-data-[collapsible=icon]:hidden",
   sidebarMenuItem: "group/menu-item relative",
-  sidebarMenuSkeleton: "flex h-8 items-center gap-2 rounded-md px-2",
-  sidebarMenuSub:
-    "border-sidebar-border mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l px-2.5 py-0.5",
+  sidebarMenuSkeleton: "flex h-10 items-center gap-2 rounded-xl px-2",
+  sidebarMenuSub: "ml-3 flex min-w-0 flex-col gap-1 border-l border-foreground/20 pl-2",
   sidebarMenuSub2: "group-data-[collapsible=icon]:hidden",
   sidebarMenuSubButton:
-    "text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground active:bg-sidebar-accent active:text-sidebar-accent-foreground [&>svg]:text-sidebar-accent-foreground flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 outline-hidden focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+    "text-sidebar-foreground ring-sidebar-ring flex h-8 min-w-0 items-center gap-2 overflow-hidden rounded-lg border border-transparent px-2 text-xs outline-hidden transition-[background-color,border-color,color] duration-200 hover:border-foreground/5 hover:bg-foreground/5 focus-visible:border-foreground/5 focus-visible:bg-foreground/5 focus-visible:ring-2 active:border-foreground/5 active:bg-foreground/5 disabled:pointer-events-none disabled:border-transparent disabled:bg-muted disabled:text-muted-foreground aria-disabled:pointer-events-none aria-disabled:border-transparent aria-disabled:bg-muted aria-disabled:text-muted-foreground [&>span:last-child]:truncate [&_svg]:size-4 [&_svg]:shrink-0",
   sidebarMenuSubButton2:
-    "data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground",
+    "data-[active=true]:border-foreground/10 data-[active=true]:bg-foreground/10 data-[active=true]:font-medium",
   sidebarMenuSubButton3: "text-xs",
-  sidebarMenuSubButton4: "text-sm",
+  sidebarMenuSubButton4: "text-xs",
   sidebarMenuSubButton5: "group-data-[collapsible=icon]:hidden",
   sidebarMenuSubItem: "group/menu-sub-item relative",
   sidebarProvider:

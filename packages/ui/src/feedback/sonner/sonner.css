@@ -6,7 +6,8 @@
 .ui-toaster [data-sonner-toast][data-styled="true"] {
   gap: 0.625rem;
   padding: 0.75rem;
-  box-shadow: var(--elevation-hover);
+  border: 1px solid var(--border);
+  box-shadow: none;
 }
 
 .ui-toaster [data-sonner-toast][data-styled="true"] [data-description] {
