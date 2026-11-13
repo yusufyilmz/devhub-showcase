@@ -19,6 +19,14 @@ const textFields = {
   title: "Job title",
 } as const;
 
+const basicFields = ["title", "country", "location", "keywords"] as const;
+const advancedFields = [
+  "preferredCompanies",
+  "excludedCompanies",
+  "excludedKeywords",
+  "currency",
+] as const;
+
 const options = {
   employment: ["full-time", "contract", "freelance"],
   experience: ["mid", "senior", "staff", "lead", "principal"],
@@ -54,18 +62,37 @@ export function SearchForm({ search, run, busy }: SearchFormProps) {
   const [open, setOpen] = useState(false);
   const id = useId();
   const filters = search?.filters;
+  function textField(name: keyof typeof textFields) {
+    return (
+      <Label key={name}>
+        {textFields[name]}
+        <Input
+          defaultValue={filters?.[name] ?? (name === "country" ? "gb" : "")}
+          maxLength={name === "country" ? 2 : name === "currency" ? 3 : 120}
+          name={name}
+          required={name === "title" || name === "country"}
+        />
+      </Label>
+    );
+  }
+
   return (
-    <details onToggle={(event) => setOpen(event.currentTarget.open)} open={open}>
+    <details
+      className="job-hunter-details"
+      onToggle={(event) => setOpen(event.currentTarget.open)}
+      open={open}
+    >
       <summary>
         {search
           ? `${search.name} · ${search.enabled ? "Enabled" : "Paused"}`
           : "Create a saved search"}
       </summary>
       <form
-        className="job-hunter-grid"
+        className="job-hunter-stack job-hunter-details-body"
         onSubmit={async (event) => {
           event.preventDefault();
-          const form = new FormData(event.currentTarget);
+          const formElement = event.currentTarget;
+          const form = new FormData(formElement);
           const saved = await run({
             action: "search",
             id: search?.id,
@@ -77,97 +104,105 @@ export function SearchForm({ search, run, busy }: SearchFormProps) {
               threshold: Number(form.get("threshold")),
             },
           });
-          if (saved) setOpen(false);
+          if (saved) {
+            if (!search) formElement.reset();
+            setOpen(false);
+          }
         }}
       >
-        <Label>
-          Search name
-          <Input defaultValue={search?.name} maxLength={100} name="name" required />
-        </Label>
-        {Object.entries(textFields).map(([name, label]) => {
-          const key = name as keyof typeof textFields;
-          return (
-            <Label key={name}>
-              {label}
+        <div className="job-hunter-grid">
+          <Label>
+            Search name
+            <Input defaultValue={search?.name} maxLength={100} name="name" required />
+          </Label>
+          {basicFields.map(textField)}
+        </div>
+        <details
+          className="job-hunter-details"
+          onInvalidCapture={(event) => {
+            event.currentTarget.open = true;
+          }}
+        >
+          <summary>Advanced filters</summary>
+          <div className="job-hunter-grid job-hunter-details-body">
+            {advancedFields.map(textField)}
+            {Object.entries(options).map(([name, values]) => (
+              <Label className="job-hunter-capitalize" key={name}>
+                {name}
+                <NativeSelect defaultValue={filters?.[name as keyof typeof options]} name={name}>
+                  <option value="">Any</option>
+                  {values.map((value) => (
+                    <option key={value} value={value}>
+                      {value}
+                    </option>
+                  ))}
+                </NativeSelect>
+              </Label>
+            ))}
+            {Object.entries(salaryFields).map(([name, label]) => (
+              <Label key={name}>
+                {label}
+                <Input
+                  defaultValue={filters?.[name as keyof typeof salaryFields] ?? ""}
+                  max={100_000_000}
+                  min={0}
+                  name={name}
+                  type="number"
+                />
+              </Label>
+            ))}
+            <Label>
+              Posted within (days, 0 for any date)
               <Input
-                defaultValue={filters?.[key] ?? (name === "country" ? "gb" : "")}
-                maxLength={name === "country" ? 2 : name === "currency" ? 3 : 120}
-                name={name}
-                required={name === "title" || name === "country"}
+                defaultValue={filters?.postedDays ?? 0}
+                max={30}
+                min={0}
+                name="postedDays"
+                type="number"
               />
             </Label>
-          );
-        })}
-        {Object.entries(options).map(([name, values]) => (
-          <Label className="job-hunter-capitalize" key={name}>
-            {name}
-            <NativeSelect defaultValue={filters?.[name as keyof typeof options]} name={name}>
-              <option value="">Any</option>
-              {values.map((value) => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              ))}
-            </NativeSelect>
-          </Label>
-        ))}
-        {Object.entries(salaryFields).map(([name, label]) => (
-          <Label key={name}>
-            {label}
-            <Input
-              defaultValue={filters?.[name as keyof typeof salaryFields] ?? ""}
-              max={100_000_000}
-              min={0}
-              name={name}
-              type="number"
-            />
-          </Label>
-        ))}
-        <Label>
-          Posted within (days, 0 for any date)
-          <Input
-            defaultValue={filters?.postedDays ?? 0}
-            max={30}
-            min={0}
-            name="postedDays"
-            type="number"
-          />
-        </Label>
-        <Label>
-          Scan schedule
-          <NativeSelect defaultValue={search?.hours ?? 12} name="hours">
-            {[3, 6, 12, 24].map((hours) => (
-              <option key={hours} value={hours}>
-                Every {hours} hours
-              </option>
-            ))}
-          </NativeSelect>
-        </Label>
-        <Label>
-          Alert threshold (%)
-          <Input
-            defaultValue={search?.threshold ?? 85}
-            max={100}
-            min={0}
-            name="threshold"
-            required
-            type="number"
-          />
-        </Label>
-        <div className="job-hunter-actions">
-          <Checkbox
-            defaultChecked={filters?.sponsorship}
-            id={`${id}-sponsorship`}
-            name="sponsorship"
-          />
-          <Label htmlFor={`${id}-sponsorship`}>Require visa sponsorship</Label>
-        </div>
-        <div className="job-hunter-actions">
-          <Checkbox defaultChecked={search?.enabled} id={`${id}-enabled`} name="enabled" />
-          <Label htmlFor={`${id}-enabled`}>
-            Enable scheduled discovery and AI matching against my CV
-          </Label>
-        </div>
+            <div className="job-hunter-actions">
+              <Checkbox
+                defaultChecked={filters?.sponsorship}
+                id={`${id}-sponsorship`}
+                name="sponsorship"
+              />
+              <Label htmlFor={`${id}-sponsorship`}>Require visa sponsorship</Label>
+            </div>
+          </div>
+        </details>
+        <fieldset className="job-hunter-schedule job-hunter-stack">
+          <legend>Schedule and alerts</legend>
+          <div className="job-hunter-grid">
+            <Label>
+              Scan schedule
+              <NativeSelect defaultValue={search?.hours ?? 12} name="hours">
+                {[3, 6, 12, 24].map((hours) => (
+                  <option key={hours} value={hours}>
+                    Every {hours} hours
+                  </option>
+                ))}
+              </NativeSelect>
+            </Label>
+            <Label>
+              Alert threshold (%)
+              <Input
+                defaultValue={search?.threshold ?? 85}
+                max={100}
+                min={0}
+                name="threshold"
+                required
+                type="number"
+              />
+            </Label>
+          </div>
+          <div className="job-hunter-actions">
+            <Checkbox defaultChecked={search?.enabled} id={`${id}-enabled`} name="enabled" />
+            <Label htmlFor={`${id}-enabled`}>
+              Enable scheduled discovery and AI matching against my CV
+            </Label>
+          </div>
+        </fieldset>
         <div className="job-hunter-actions">
           <Button disabled={busy} type="submit">
             Save search

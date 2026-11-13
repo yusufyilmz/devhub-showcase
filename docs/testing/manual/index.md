@@ -33,7 +33,7 @@ Deployment tooling: [App routing, Fitness cutover and free Actions](deployments.
 
 | Feature                                                            | Scope/status                                                                                                  | Manual steps                            |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
-| Job Hunter                                                         | Local MVP; provider and deployed verification pending                                                         | [Open guide](job-hunter.md)             |
+| Job Hunter                                                         | Refreshed dashboard; provider and deployed verification pending                                                         | [Open guide](job-hunter.md)             |
 | Homepage registry, composer, feature cards and section browser     | Implemented                                                                                                   | [Open guide](home.md)                   |
 | Server-rendered fictional portfolios and images                    | Implemented; includes carousel autoplay                                                                       | [Open guide](examples.md)               |
 | Curated profession presets — task 12                               | Implemented                                                                                                   | [Open guide](curated-templates.md)      |

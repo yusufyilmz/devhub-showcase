@@ -36,10 +36,15 @@ test("a confirmed owner can create, pause and delete a private saved search", as
 
   await page.goto("/admin/jobs");
   await expect(page.getByRole("heading", { exact: true, name: "Job Hunter" })).toBeVisible();
-  await page.getByRole("tab", { name: "Settings" }).click();
+  await page.getByRole("button", { name: "Manage saved searches" }).click();
   await page.getByText("Create a saved search", { exact: true }).click();
   await page.getByLabel("Search name").fill("Fixture engineering search");
   await page.getByLabel("Job title").fill("Software Engineer");
+  await expect(page.getByLabel("Minimum salary")).toBeHidden();
+  await page.getByText("Advanced filters", { exact: true }).click();
+  await page.getByLabel("Minimum salary").fill("65000");
+  await page.getByLabel("Salary currency").fill("GBP");
+  await page.getByText("Advanced filters", { exact: true }).click();
   await page.getByLabel("Enable scheduled discovery and AI matching against my CV").check();
   await page.getByRole("button", { name: "Save search" }).click();
   await expect(page.getByText("Fixture engineering search · Enabled")).toBeVisible();
@@ -47,6 +52,8 @@ test("a confirmed owner can create, pause and delete a private saved search", as
   await page.getByRole("tab", { name: "Settings" }).click();
   await page.getByText("Fixture engineering search · Enabled").click();
   const edit = page.locator("details").filter({ hasText: "Fixture engineering search · Enabled" });
+  await edit.getByText("Advanced filters", { exact: true }).click();
+  await expect(edit.getByLabel("Minimum salary")).toHaveValue("65000");
   await edit.getByLabel("Enable scheduled discovery and AI matching against my CV").uncheck();
   await edit.getByRole("button", { name: "Save search" }).click();
   await page.getByText("Fixture engineering search · Paused").click();
@@ -71,8 +78,26 @@ test("matches can be saved and an external application tracked", async ({
     }),
   );
   await page.goto("/admin/jobs");
+  const search = page.getByRole("searchbox", { name: "Filter by title, company or location" });
+  await search.fill("london software");
+  await expect(page.getByText("Fixture Software Engineer")).toBeVisible();
+  await search.fill("no matching title");
+  await expect(page.getByRole("heading", { name: "No jobs match your search" })).toBeVisible();
+  await page.getByRole("button", { name: "Clear search" }).click();
+  await expect(search).toHaveValue("");
+  await page.getByLabel("Sort by").selectOption("recent");
+  await page.getByLabel("Listing view").selectOption("dismissed");
+  await page.getByRole("button", { name: "View active matches" }).click();
+  await expect(page.getByLabel("Listing view")).toHaveValue("active");
   await page.getByLabel("Listing view").selectOption("alerts");
   await expect(page.getByText("Relevant TypeScript experience.")).toBeVisible();
+  const fitsViewport = await page.locator(".job-hunter").evaluate((dashboard) => {
+    const { left, right } = dashboard.getBoundingClientRect();
+    return (
+      left >= 0 && right <= window.innerWidth && dashboard.scrollWidth <= dashboard.clientWidth
+    );
+  });
+  expect(fitsViewport).toBe(true);
   await page.getByRole("button", { name: "Save job" }).click();
   await page.getByRole("tab", { name: "Saved" }).click();
   await expect(page.getByText("Fixture Software Engineer")).toBeVisible();
