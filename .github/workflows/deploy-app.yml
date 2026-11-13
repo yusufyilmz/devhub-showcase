@@ -48,17 +48,17 @@ jobs:
           git fetch --no-tags origin main
           node tools/cli/ci/changes.ts --current "$APPLICATION"
       - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
-        if: steps.release.outputs.current == 'true'
+        if: steps.release.outputs.current == 'true' && inputs.application == 'studio'
         with:
           cache: false
       - name: Install dependencies
-        if: steps.release.outputs.current == 'true'
+        if: steps.release.outputs.current == 'true' && inputs.application == 'studio'
         run: pnpm install --frozen-lockfile
       - name: Install deployment CLI
         if: steps.release.outputs.current == 'true'
         run: npm install --global vercel@65.4.0
       - name: Pull production configuration
-        if: steps.release.outputs.current == 'true'
+        if: steps.release.outputs.current == 'true' && inputs.application == 'studio'
         run: |
           : "${VERCEL_TOKEN:?Set the VERCEL_TOKEN secret}"
           : "${VERCEL_ORG_ID:?Set the VERCEL_ORG_ID secret}"
@@ -67,12 +67,21 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       - name: Build production output
-        if: steps.release.outputs.current == 'true'
+        if: steps.release.outputs.current == 'true' && inputs.application == 'studio'
         run: vercel build --prod
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       - name: Deploy verified production output
-        if: steps.release.outputs.current == 'true'
+        if: steps.release.outputs.current == 'true' && inputs.application == 'studio'
         run: vercel deploy --prebuilt --prod
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      - name: Build and deploy Fitness OS on Vercel
+        if: steps.release.outputs.current == 'true' && inputs.application == 'fitness'
+        run: |
+          : "${VERCEL_TOKEN:?Set the VERCEL_TOKEN secret}"
+          : "${VERCEL_ORG_ID:?Set the VERCEL_ORG_ID secret}"
+          : "${VERCEL_PROJECT_ID:?Set the application project ID}"
+          vercel deploy --prod --yes
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
