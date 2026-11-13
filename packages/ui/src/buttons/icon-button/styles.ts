@@ -21,8 +21,7 @@ export const iconButtonVariants = cva(
           "bg-[var(--destructive)] text-[var(--destructive-foreground)] hover:bg-[var(--destructive)]/90",
         ghost: "hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]",
         link: "text-[var(--primary)] underline-offset-4 hover:underline",
-        outline:
-          "border border-[var(--border)] bg-[var(--background)] hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]",
+        outline: "border border-border bg-background hover:bg-muted hover:text-foreground",
         secondary:
           "bg-[var(--secondary)] text-[var(--secondary-foreground)] hover:bg-[var(--secondary)]/80",
       },
@@ -36,7 +35,7 @@ export const iconButtonStyles = {
 
 export const styledIconButtonStyles = {
   classes: "relative transition-all duration-300",
-  classes2: "border-2",
+  classes2: "border",
   classes3: "fixed bottom-8 right-8 z-50 size-14 shadow-2xl",
   classes4: "hover:-translate-y-0.5",
   classes5: "hover:scale-110",

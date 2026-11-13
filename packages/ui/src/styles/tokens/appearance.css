@@ -39,7 +39,7 @@
   --spacing-xl: 2rem; /* 32px */
   --spacing-2xl: 3rem; /* 48px */
   --spacing-3xl: 4rem; /* 64px */
-  --spacing: 0.375rem; /* 6px */
+  --spacing: 0.25rem; /* 4px */
 }
 
 [data-spacing="relaxed"] {

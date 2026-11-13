@@ -10,6 +10,7 @@ export function CardSpotlight({
   children,
   radius = 220,
   color = "var(--primary)",
+  interaction = "static",
   className,
   onPointerMove,
   ...props
@@ -22,6 +23,7 @@ export function CardSpotlight({
     <CardBase
       {...props}
       className={cn("group/spotlight relative isolate overflow-hidden p-5", className)}
+      interaction={interaction}
       onPointerMove={(event) => {
         onPointerMove?.(event);
         if (event.defaultPrevented || event.pointerType === "touch") return;

@@ -133,7 +133,7 @@ export function ComponentCustomizer({
     <FlexCol className={cn(customizerVariants({ className, size, theme }))} gap="lg" {...props}>
       {/* Header */}
       <FlexCol gap="md">
-        <FlexBetween>
+        <FlexBetween wrap>
           <FlexCol gap="sm">
             <Typography className={componentCustomizerStyles.element10} variant="h3">
               {componentName} Customizer
@@ -144,7 +144,7 @@ export function ComponentCustomizer({
               </Typography>
             )}
           </FlexCol>
-          <FlexRow gap="sm">
+          <FlexRow gap="sm" wrap>
             {showTheme && (
               <Select
                 onValueChange={(next) => setSelectedTheme(next as "light" | "dark" | "auto")}
@@ -180,7 +180,7 @@ export function ComponentCustomizer({
         </FlexBetween>
       </FlexCol>
 
-      <FlexRow align="start" gap="lg">
+      <FlexRow align="start" gap="lg" wrap>
         {/* Main Content */}
         <FlexCol className={componentCustomizerStyles.element12} gap="lg">
           {/* Live Preview */}

@@ -333,7 +333,7 @@
   padding: 0 16px 16px;
 }
 
-.editor-collection-item .editor-actions {
+.editor-collection-item .editor-collection-actions {
   justify-content: flex-end;
   margin-block: 16px;
 }

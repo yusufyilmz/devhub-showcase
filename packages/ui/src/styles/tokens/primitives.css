@@ -294,8 +294,7 @@
   --accent-foreground: var(--clr-gray-200);
   --destructive: var(--clr-red-600);
   --destructive-foreground: var(--clr-white);
-  --border: var(--clr-gray-300);
-  --input: var(--clr-gray-200);
+  --border: var(--clr-gray-900);
   --ring: var(--clr-gray-600);
   --sidebar: var(--clr-white);
   --sidebar-foreground: var(--clr-gray-200);
@@ -303,7 +302,7 @@
   --sidebar-primary-foreground: var(--clr-white);
   --sidebar-accent: var(--clr-gray-1000);
   --sidebar-accent-foreground: var(--clr-gray-100);
-  --sidebar-border: var(--clr-gray-300);
+  --sidebar-border: var(--border);
   --sidebar-ring: var(--clr-gray-600);
 
   --success: var(--clr-green-600);

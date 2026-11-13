@@ -370,7 +370,7 @@ Object.entries(themeConfig).forEach(([key, value]) => {
   return (
     <div className={cn(themeCustomizerStyles.themeCustomizer, className)} {...props} ref={rootRef}>
       {/* Header */}
-      <FlexBetween>
+      <FlexBetween wrap>
         <div>
           <Typography className={themeCustomizerStyles.element4} variant="h2">
             Theme Customizer
@@ -379,7 +379,7 @@ Object.entries(themeConfig).forEach(([key, value]) => {
             Customize your design system's appearance and behavior
           </Typography>
         </div>
-        <FlexRow gap="sm">
+        <FlexRow gap="sm" wrap>
           {showCode && (
             <Button onClick={() => setShowCodePanel(!showCodePanel)} variant="outline">
               {showCodePanel ? "👁️ Hide Code" : "👁️‍🗨️ Show Code"}
@@ -393,11 +393,11 @@ Object.entries(themeConfig).forEach(([key, value]) => {
         </FlexRow>
       </FlexBetween>
 
-      <FlexRow align="start" gap="lg">
+      <FlexRow align="start" gap="lg" wrap>
         {/* Controls */}
         <FlexCol className={themeCustomizerStyles.element6} gap="lg">
           <CustomizerGroup description="Color mode, palette, theme, and companion" title="Color">
-            <FlexRow gap="md">
+            <FlexRow gap="md" wrap>
               <div className={themeCustomizerStyles.element7}>
                 <SelectField
                   label="Color mode"
@@ -435,7 +435,7 @@ Object.entries(themeConfig).forEach(([key, value]) => {
             <PreferenceSelect label="Font size" preference="font-size" />
             <PreferenceSelect label="Line height" preference="line-height" />
             <PreferenceSelect label="Scale" preference="scale" />
-            <FlexRow gap="md">
+            <FlexRow gap="md" wrap>
               <div className={themeCustomizerStyles.element12}>
                 <SelectField
                   label="Spacing"
@@ -455,7 +455,7 @@ Object.entries(themeConfig).forEach(([key, value]) => {
             </FlexRow>
           </CustomizerGroup>
           <CustomizerGroup description="Borders, shadows, and clarity" title="Surface">
-            <FlexRow gap="md">
+            <FlexRow gap="md" wrap>
               <div className={themeCustomizerStyles.element9}>
                 <SelectField
                   label="Border"
@@ -501,7 +501,7 @@ Object.entries(themeConfig).forEach(([key, value]) => {
                     <Typography className={themeCustomizerStyles.element14} variant="h6">
                       Buttons
                     </Typography>
-                    <FlexRow gap="sm">
+                    <FlexRow gap="sm" wrap>
                       <Button variant="default">Default</Button>
                       <Button variant="secondary">Secondary</Button>
                       <Button variant="outline">Outline</Button>
@@ -515,7 +515,7 @@ Object.entries(themeConfig).forEach(([key, value]) => {
                     <Typography className={themeCustomizerStyles.element15} variant="h6">
                       Cards
                     </Typography>
-                    <FlexRow gap="md">
+                    <FlexRow gap="md" wrap>
                       <Card className={themeCustomizerStyles.element16}>
                         <Typography variant="h6">Card Title</Typography>
                         <Typography className={themeCustomizerStyles.element17} variant="body2">
