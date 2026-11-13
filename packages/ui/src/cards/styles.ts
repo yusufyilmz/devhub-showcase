@@ -202,8 +202,10 @@ export function variantCardStyle(options: VariantCardStyleOptions): React.CSSPro
 }
 
 export const cardBaseStyles = {
-  cardBase: "ui-card rounded-xl border bg-card text-card-foreground",
+  cardBase:
+    "ui-card relative min-w-0 rounded-xl border border-border bg-card text-card-foreground inset-shadow-[0_1px_0_color-mix(in_srgb,var(--card-foreground)_5%,transparent)] [--card-accent:var(--primary)]",
   cardBase2: "flex flex-col gap-md py-md",
+  lift: "motion-safe:transition-colors motion-safe:duration-150 focus-within:border-[color-mix(in_srgb,var(--card-accent)_22%,var(--border))] [@media(pointer:fine)]:hover:border-[color-mix(in_srgb,var(--card-accent)_22%,var(--border))] motion-safe:[@media(pointer:fine)]:hover:bg-[color-mix(in_srgb,var(--card-accent)_8%,var(--card))]",
 } as const;
 
 export const appearanceCardStyles = {

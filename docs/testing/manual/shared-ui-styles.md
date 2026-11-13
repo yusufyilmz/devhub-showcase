@@ -54,3 +54,12 @@ Visual references are the [Once UI Toggle Button](https://docs.once-ui.com/once-
 | [Download CV](http://127.0.0.1:6006/?path=/story/ui-buttons-download-cv-button--default)                                    | `/?path=/story/ui-buttons-download-cv-button--default` | Press Tab to focus **Download CV**.    | The focus outline appears and the link points to `/cv.pdf`.    | Verified at 480px in Sand dark.                                                                                                       |
 
 The navigation buttons already use the shared Button. The visual reference for the Action Button variants is the [Once UI Button](https://docs.once-ui.com/components/button).
+
+## Card surfaces
+
+| Story                                                                                                          | Route path                                       | Action                          | Expected result                                                             | Actual result                                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ | ------------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| [Card Product Surfaces](http://127.0.0.1:6006/?path=/story/ui-cards-card--product-surfaces&globals=brand:sand) | `/?path=/story/ui-cards-card--product-surfaces`  | Tab to **View project**.        | The card border responds to focus and the link remains keyboard-accessible. | Verified at 480px in Sand light, Sand dark, and White light.                                                                     |
+| [Card Spotlight](http://127.0.0.1:6006/?path=/story/ui-cards-card-spotlight--default&globals=brand:sand)       | `/?path=/story/ui-cards-card-spotlight--default` | Move the pointer over the card. | The glow follows the pointer and the card keeps its one-pixel border.       | Glow and pointer position verified in Sand light. Border and layout verified at 480px in Sand light, Sand dark, and White light. |
+
+The shared surface uses a thin neutral border and reserves the tinted surface for interactive cards. [Once UI Card](https://docs.once-ui.com/components/card)

@@ -18,6 +18,7 @@ export function CardBase({
     <Comp
       className={cn(
         cardBaseStyles.cardBase,
+        interaction === "lift" && cardBaseStyles.lift,
         layout === "stack" && cardBaseStyles.cardBase2,
         className,
       )}

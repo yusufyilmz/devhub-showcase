@@ -3,34 +3,11 @@
   --elevation-rest: none;
   --elevation-hover: none;
   --control-shadow: inset 0 1px 0 color-mix(in srgb, white 28%, transparent);
-  --surface-duration: 160ms;
 }
 [data-theme="dark"] {
   --elevation-rest: none;
   --elevation-hover: none;
   --control-shadow: inset 0 1px 0 color-mix(in srgb, white 16%, transparent);
-}
-.ui-card[data-slot="card"] {
-  --card-accent: var(--primary);
-  position: relative;
-  min-width: 0;
-  border-color: var(--border);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--card-foreground) 5%, transparent);
-  transition:
-    background-color var(--surface-duration) ease,
-    border-color var(--surface-duration) ease;
-}
-.ui-card[data-interaction="lift"]:focus-within {
-  border-color: color-mix(in srgb, var(--card-accent) 22%, var(--border));
-}
-@media (hover: hover) and (pointer: fine) {
-  .ui-card[data-slot="card"]:hover {
-    background-color: color-mix(in srgb, var(--foreground) 4%, var(--card));
-  }
-  .ui-card[data-interaction="lift"]:hover {
-    background-color: color-mix(in srgb, var(--card-accent) 8%, var(--card));
-    border-color: color-mix(in srgb, var(--card-accent) 22%, var(--border));
-  }
 }
 .ui-input {
   background-color: var(--background);
@@ -50,13 +27,8 @@
   margin-block: 16px;
 }
 @media (prefers-reduced-motion: reduce) {
-  .ui-card[data-slot="card"],
   .ui-input {
     transition: none;
-  }
-  .ui-card[data-slot="card"]:hover,
-  .ui-card[data-interaction="lift"]:hover {
-    background-color: var(--card);
   }
 }
 
