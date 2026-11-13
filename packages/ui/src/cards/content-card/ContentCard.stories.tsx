@@ -7,7 +7,7 @@ const meta = {
   args: {
     className: "w-[min(85vw,26rem)]",
     description: "Findings from a week of research.",
-    title: "Field notes",
+    title: "Storybook App UI/Cards/Content Card/Contentcard",
     variant: "solid",
   },
   component: ContentCard,

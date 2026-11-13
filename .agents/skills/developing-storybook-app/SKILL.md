@@ -16,7 +16,7 @@ Read [the file map](references/map.md). Read [developing-ui-package](../developi
 - `/.storybook/main.ts` story globs, addons, and Vite aliases.
 - `/.storybook/preview.tsx` global decorator and parameters.
 - The Next.js stand-ins: `next-link.tsx`, `next-image.tsx`, `next-font-google.ts`, and `next-navigation.ts`.
-- Vite config used by the app's own `dev` and `build` scripts.
+- Vite config used by the app's own `dev` and `build` scripts. Tailwind runs through `@tailwindcss/vite` in that config. Storybook loads the same file. Do not add a PostCSS config here; the Next.js apps are the ones that use `@tailwindcss/postcss`.
 
 Leave these out:
 

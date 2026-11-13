@@ -29,7 +29,7 @@ const meta = {
     layout: "fullscreen",
   },
   tags: ["autodocs"],
-  title: "Layout/AppSidebar",
+  title: "UI/Navigation/App Sidebar",
 } satisfies Meta<typeof AppSidebar>;
 
 export default meta;

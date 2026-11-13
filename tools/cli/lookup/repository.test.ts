@@ -67,7 +67,7 @@ describe("native repository lookup and CLI", () => {
   afterEach(() => fs.rmSync(root, { force: true, recursive: true }));
 
   it("keeps native lookups available when .ai contains only a usage README", () => {
-    write(".ai/README.md", "# AI lookup guide\nUse native repository artifacts.\n");
+    write(".agents/README.md", "# AI lookup guide\nUse native repository artifacts.\n");
     expect(findSymbol("Button", { root }).response.total).toBe(2);
     expect(searchDesign("compact controls", { root }).response.results[0]?.artifact).toBe(
       "DESIGN.md",

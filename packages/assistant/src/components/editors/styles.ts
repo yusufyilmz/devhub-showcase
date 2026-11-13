@@ -1,12 +1,9 @@
 export const collectionEditorStyles = {
   element1: "editor-collection",
   element2: "editor-section-heading",
-  element3: "eyebrow",
-  element4: "studio-secondary",
   element5: "editor-card",
   element6: "editor-card-heading",
-  element7: "editor-actions",
-  element8: "danger-button",
+  element7: "editor-collection-actions",
   element9: "editor-fields",
 } as const;
 

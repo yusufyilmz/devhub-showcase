@@ -17,7 +17,7 @@ const meta = {
     layout: "fullscreen",
   },
   tags: ["autodocs"],
-  title: "Dashboard/ChartAreaInteractive",
+  title: "UI/Display/Chart/Chart Area Interactive",
 } satisfies Meta<typeof ChartAreaInteractive>;
 
 export default meta;

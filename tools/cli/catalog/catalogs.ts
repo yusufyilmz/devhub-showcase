@@ -41,6 +41,13 @@ const header =
   "<!-- Generated from catalog.template.md, package.json and declared public exports. Run pnpm generate:catalogs. -->\n\n";
 const reference =
   "\n\n## Generated package reference\n\n<!-- catalog:exports -->\n\n<!-- catalog:scripts -->\n\n<!-- catalog:dependencies -->\n";
+const defaultTemplatePath = fileURLToPath(new URL("./default-template.md", import.meta.url));
+function defaultCatalogSource(name: string): string {
+  return fs
+    .readFileSync(defaultTemplatePath, "utf8")
+    .replaceAll("{{name}}", name)
+    .replace(/\r\n/g, "\n");
+}
 function object(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value);
 }
@@ -166,25 +173,41 @@ function renderDependencies(manifest: Manifest): string {
     ? table(["Dependency", "Declared version", "Kind"], rows)
     : "No package dependencies are declared.";
 }
+function withReference(source: string): string {
+  const normalized = source.replace(/\r\n/g, "\n");
+  if (normalized.includes("<!-- catalog:")) return normalized;
+  return normalized.trimEnd() + reference;
+}
 function sourceTemplate(root: string, pkg: WorkspacePackage) {
   const templatePath = path.join(pkg.directory, "catalog.template.md");
   const catalogPath = path.join(pkg.directory, "CATALOG.md");
   safePath(root, templatePath);
   safePath(root, catalogPath);
-  let source: string;
-  if (fs.existsSync(templatePath)) source = fs.readFileSync(templatePath, "utf8");
-  else if (fs.existsSync(catalogPath)) {
+  if (fs.existsSync(templatePath)) {
+    return {
+      catalogPath,
+      shared: false,
+      source: withReference(fs.readFileSync(templatePath, "utf8")),
+      templatePath,
+    };
+  }
+  if (fs.existsSync(catalogPath)) {
     const existing = fs.readFileSync(catalogPath, "utf8");
-    if (existing.startsWith(header))
-      throw new Error(
-        `Missing source template: ${templatePath}; restore it instead of copying generated output`,
-      );
-    source = existing.replace(/^<!-- Generated[^\n]*-->\r?\n\r?\n/, "");
-  } else
-    source = `# ${pkg.manifest.name} catalog\n\n${pkg.manifest.description ?? `Workspace package ${code(pkg.manifest.name)}.`}\n`;
-  source = source.replace(/\r\n/g, "\n");
-  if (!source.includes("<!-- catalog:")) source = source.trimEnd() + reference;
-  return { catalogPath, source, templatePath };
+    if (!existing.startsWith(header)) {
+      return {
+        catalogPath,
+        shared: false,
+        source: withReference(existing.replace(/^<!-- Generated[^\n]*-->\r?\n\r?\n/, "")),
+        templatePath,
+      };
+    }
+  }
+  return {
+    catalogPath,
+    shared: true,
+    source: defaultCatalogSource(pkg.manifest.name),
+    templatePath,
+  };
 }
 function renderTemplate(source: string, pkg: WorkspacePackage, symbols: LookupRecord[]): string {
   const replacements: Record<string, () => string> = {
@@ -209,6 +232,17 @@ function renderTemplate(source: string, pkg: WorkspacePackage, symbols: LookupRe
 }
 function same(file: string, content: string) {
   return fs.existsSync(file) && fs.readFileSync(file, "utf8") === content;
+}
+function catalogIsCurrent(plan: {
+  catalogPath: string;
+  rendered: string;
+  shared: boolean;
+  source: string;
+  templatePath: string;
+}): boolean {
+  return (
+    same(plan.catalogPath, plan.rendered) && (plan.shared || same(plan.templatePath, plan.source))
+  );
 }
 /** All plans are validated before writing. Check mode never creates or changes files. */
 export function generateCatalogs(options: CatalogOptions = {}): CatalogResult {
@@ -242,10 +276,12 @@ export function generateCatalogs(options: CatalogOptions = {}): CatalogResult {
     stale: [],
   };
   for (const plan of plans) {
-    if (same(plan.catalogPath, plan.rendered) && same(plan.templatePath, plan.source)) continue;
+    if (catalogIsCurrent(plan)) continue;
     result.stale.push(plan.pkg.relative);
     if (options.check) continue;
-    if (!same(plan.templatePath, plan.source)) fs.writeFileSync(plan.templatePath, plan.source);
+    if (!plan.shared && !same(plan.templatePath, plan.source)) {
+      fs.writeFileSync(plan.templatePath, plan.source);
+    }
     if (!same(plan.catalogPath, plan.rendered)) fs.writeFileSync(plan.catalogPath, plan.rendered);
     result.changed.push(plan.pkg.relative);
   }

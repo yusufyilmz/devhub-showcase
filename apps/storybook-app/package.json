@@ -13,6 +13,7 @@
     "lint:check": "biome lint .",
     "lint:fix": "biome lint --write .",
     "preview": "vite preview",
+    "start": "storybook dev -p 6006",
     "storybook": "storybook dev -p 6006",
     "storybook:clean": "node -e \"const fs=require('node:fs'); for (const path of ['node_modules/.cache','node_modules/.vite']) fs.rmSync(path,{recursive:true,force:true})\"",
     "storybook:kill": "node -e \"const {execSync}=require('node:child_process'); let ids=''; try { ids=execSync('lsof -nP -tiTCP:6006 -sTCP:LISTEN',{encoding:'utf8'}).trim(); } catch {} for (const id of ids.split(/\\s+/).filter(Boolean)) { try { process.kill(Number(id)); } catch {} }\"",
@@ -21,8 +22,6 @@
   "dependencies": {
     "@shared/billing": "workspace:*",
     "@shared/ui": "workspace:*",
-    "@tailwindcss/postcss": "catalog:",
-    "postcss": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "tailwindcss": "catalog:"
@@ -33,6 +32,7 @@
     "@storybook/addon-a11y": "catalog:",
     "@storybook/addon-vitest": "catalog:",
     "@storybook/react-vite": "catalog:",
+    "@tailwindcss/vite": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",

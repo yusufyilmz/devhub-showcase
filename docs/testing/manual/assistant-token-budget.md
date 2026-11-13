@@ -1,6 +1,6 @@
 # Assistant token budgeting
 
-**Scope/status:** Implemented for the existing Studio Editor, Portfolio Chat, and CV Import provider requests. The additional assistant prompts are ready to copy from the [rollout](../../features/assistant-rollout.md).
+**Scope/status:** Implemented for the existing Studio Editor, Portfolio Chat, and CV Import provider requests. The additional assistant prompts are ready to copy from the [rollout](/docs/dev-studio/assistant-rollout.md).
 
 **Prerequisites:** Use a matching preview with a fictional published portfolio, a disposable owner account, and either a stub provider or explicitly configured preview credentials. Use a fictional CV. A live test can consume the configured provider and app allowance. Substitute the preview hostname and disposable username in the links.
 

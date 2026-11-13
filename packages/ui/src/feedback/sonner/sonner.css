@@ -1,11 +1,13 @@
 .ui-toaster[data-sonner-toaster] {
-  --border-radius: var(--radius-lg);
+  --border-radius: var(--radius-xl);
   font-family: inherit;
 }
 
 .ui-toaster [data-sonner-toast][data-styled="true"] {
   gap: 0.625rem;
-  padding: 0.625rem 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  box-shadow: none;
 }
 
 .ui-toaster [data-sonner-toast][data-styled="true"] [data-description] {
@@ -22,6 +24,11 @@
   border: 0;
   border-radius: var(--radius-sm);
   transform: none;
+}
+
+.ui-toaster [data-sonner-toast][data-styled="true"] [data-close-button]:hover {
+  color: var(--foreground);
+  background: var(--muted);
 }
 
 .ui-toaster [data-sonner-toast][data-styled="true"]:has([data-close-button]) {

@@ -6,7 +6,7 @@ const meta = {
   component: ErrorPage,
   parameters: { layout: "fullscreen" },
   tags: ["autodocs"],
-  title: "UI/Layout/ErrorPage",
+  title: "UI/Layout/Error Page",
 } satisfies Meta<typeof ErrorPage>;
 
 export default meta;

@@ -4,9 +4,10 @@ import { profile } from "@shared/config";
 
 import { RevisionHistory } from "./editor";
 
-const meta = { component: RevisionHistory, title: "Studio/Revision history" } satisfies Meta<
-  typeof RevisionHistory
->;
+const meta = {
+  component: RevisionHistory,
+  title: "Assistant/Portfolio/Revision History/Editor",
+} satisfies Meta<typeof RevisionHistory>;
 export default meta;
 export const Default: StoryObj<typeof meta> = {
   args: {

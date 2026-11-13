@@ -9,7 +9,7 @@ const meta = {
     layout: "fullscreen",
   },
   tags: ["autodocs"],
-  title: "UI/Layout/PageShell",
+  title: "UI/Layout/Page Shell",
 } satisfies Meta<typeof PageShell>;
 
 export default meta;

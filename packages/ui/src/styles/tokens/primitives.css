@@ -294,7 +294,7 @@
   --accent-foreground: var(--clr-gray-200);
   --destructive: var(--clr-red-600);
   --destructive-foreground: var(--clr-white);
-  --border: var(--clr-gray-300);
+  --border: color-mix(in srgb, var(--foreground) 14%, transparent);
   --input: var(--clr-gray-200);
   --ring: var(--clr-gray-600);
   --sidebar: var(--clr-white);

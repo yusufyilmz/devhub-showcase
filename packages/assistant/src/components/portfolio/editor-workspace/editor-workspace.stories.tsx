@@ -11,7 +11,7 @@ import { EditorWorkspace } from "./editor-workspace";
 const meta = {
   component: EditorWorkspace,
   parameters: { layout: "fullscreen" },
-  title: "Studio/Editor workspace",
+  title: "Assistant/Portfolio/Editor Workspace",
 } satisfies Meta<typeof EditorWorkspace>;
 export default meta;
 type Story = StoryObj<typeof meta>;

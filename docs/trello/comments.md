@@ -224,7 +224,7 @@ describe("TrelloArticleComments", () => {
 
 ## 📚 **Related Documentation**
 
-- [Article Comment System](@/article/README.md)
+- [Article comment component](../../packages/trello/src/components/integration/TrelloArticleComments.tsx)
 - [Trello Integration Guide](./README.md)
 
 ---

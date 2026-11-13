@@ -1,6 +1,6 @@
 # Lib catalog
 
-> **AI lookup guide:** From the repository root, run `pnpm --silent lookup catalog "profile" --package @shared/lib --limit 2` to read relevant excerpts. Verify an exact export with `pnpm --silent lookup symbol '<ExportName>' --package @shared/lib`. Follow `hasMore` with `--cursor`; use `--max-tokens` to control output size. Excerpts support discovery; read required instructions and source contracts. See the [AI quick start](../../.ai/README.md) and [full CLI usage](../../tools/cli/README.md#token-bounded-repository-lookup).
+> **AI lookup guide:** From the repository root, run `pnpm --silent lookup catalog "profile" --package @shared/lib --limit 2` to read relevant excerpts. Verify an exact export with `pnpm --silent lookup symbol '<ExportName>' --package @shared/lib`. Follow `hasMore` with `--cursor`; use `--max-tokens` to control output size. Excerpts support discovery; read required instructions and source contracts. See the [AI quick start](../../.agents/README.md) and [full CLI usage](../../tools/cli/README.md#token-bounded-repository-lookup).
 
 `@shared/lib` owns shared backend services, repositories, validation, domain models, database clients, and Redis caching. It uses one shared database layer. Source files are grouped by layer; services and repositories are organized into domain folders within each layer.
 

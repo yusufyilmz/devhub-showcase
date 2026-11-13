@@ -20,26 +20,32 @@ function Example({
 }) {
   const [items, setItems] = useState(initialItems);
   return (
-    <CollectionEditor
-      create={() => ({ id: crypto.randomUUID(), title: "Untitled" })}
-      getTitle={(item) => item.title}
-      items={items}
-      maxItems={maxItems}
-      onChange={setItems}
-      render={(item, change) => (
-        <Field label="Title" onChange={(title) => change({ ...item, title })} value={item.title} />
-      )}
-      title="Projects"
-    />
+    <div className="mx-auto w-full max-w-xl">
+      <CollectionEditor
+        create={() => ({ id: crypto.randomUUID(), title: "Untitled" })}
+        getTitle={(item) => item.title}
+        items={items}
+        maxItems={maxItems}
+        onChange={setItems}
+        render={(item, change) => (
+          <Field
+            label="Title"
+            onChange={(title) => change({ ...item, title })}
+            value={item.title}
+          />
+        )}
+        title="Projects"
+      />
+    </div>
   );
 }
 
 const meta = {
   args: { items: sampleItems },
   component: Example,
-  parameters: { layout: "centered" },
+  parameters: { layout: "fullscreen" },
   tags: ["autodocs"],
-  title: "UI/Editors/Collection Editor",
+  title: "Assistant/Editors/Collection Editor",
 } satisfies Meta<typeof Example>;
 
 export default meta;

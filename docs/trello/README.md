@@ -1,5 +1,9 @@
 # Trello V2 Components - Complete Documentation
 
+## When to read
+
+Read this before changing the Trello board UI in `packages/trello`: boards, cards, lists, comments, or the board store. The package owns that surface. App routes and live API tokens stay outside it.
+
 ## 🎯 Overview
 
 This module provides a complete Trello-like interface built with **Pure UI Components** and a powerful **Zustand store**. The architecture follows a **framework-agnostic** pattern, making it easy to migrate to any UI library (MUI, Ant Design, Chakra UI, etc.).

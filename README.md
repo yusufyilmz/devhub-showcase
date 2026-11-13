@@ -1,8 +1,11 @@
-# MyDevStudio
+# devhub-showcase
 
-MyDevStudio is a multiuser portfolio and CV platform, developed in the `devhub-showcase` repository. It combines public portfolio pages, a private editing studio, reusable sections, PDF generation and optional AI features.
+This repository hosts two Next.js apps that share one Supabase project and the same signed-in users.
 
-[Live site](https://mydevstudio.vercel.app) · [Yusuf's portfolio](https://yusufdevhub.vercel.app) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md)
+- **MyDevStudio** (`apps/my-dev-studio`) is a multiuser portfolio and CV platform: public pages, a private editing studio, reusable sections, PDF generation, and optional AI features.
+- **My Fitness Studio** (`apps/my-fitness-app`) is a fitness workspace: plans and tasks, Today and Week views, a public demo, optional workout and shopping drafts, and browser reminders.
+
+[MyDevStudio](https://mydevstudio.vercel.app) · [My Fitness Studio](https://myfitnessstudio.vercel.app) · [Yusuf's portfolio](https://yusufdevhub.vercel.app) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md)
 
 ## What it does
 
@@ -16,7 +19,14 @@ MyDevStudio is a multiuser portfolio and CV platform, developed in the `devhub-s
 - Administrator-managed portfolios with controlled ownership transfer.
 - Saved public and owner AI knowledge inspection, optional CV extraction, and Pro visitor chat and private editing proposals. Pro checkout uses Stripe test mode.
 
-The bundled public content works without service credentials. Authentication, persistence, managed portfolios and AI integrations require their respective setup. See the feature guides below; historical deployment notes are not proof of current production configuration.
+My Fitness Studio, for a confirmed account:
+
+- Plans, workouts, and task drill-down on Today, Week, and Tasks.
+- A signed-out demo at `/preview`.
+- Optional Fitness assistant drafts for plans, sets, task edits, and the weekly shopping list. Generating a draft does not change saved tasks until the owner reviews and saves it.
+- Optional browser reminders. Delivery needs the documented web-push keys.
+
+The bundled public content works without service credentials. Authentication, persistence, managed portfolios, fitness data, and AI integrations require their respective setup. See the feature guides below; historical deployment notes are not proof of current production configuration.
 
 ## Start locally
 
@@ -28,11 +38,14 @@ cd devhub-showcase
 pnpm install --frozen-lockfile
 pnpm dev:setup
 pnpm --filter my-dev-studio dev
+pnpm --filter my-fitness-app dev
 ```
 
-Open <http://localhost:3001>. `pnpm dev:setup` copies the safe root [.env.development](.env.development) defaults to `apps/my-dev-studio/.env.development.local` only when that file does not exist. Repeating the command preserves it byte-for-byte. Next.js loads environment files from the app directory; it does not load root environment files. Exported shell variables, `.env.development.local`, `.env.local`, `.env.development`, then `.env` take precedence in that order during development. Restart the server after edits.
+MyDevStudio serves <http://localhost:3001>. My Fitness Studio serves <http://localhost:3002>. `pnpm dev:setup` copies the safe root [.env.development](.env.development) defaults to `apps/my-dev-studio/.env.development.local` only when that file does not exist. Repeating the command preserves it byte-for-byte. Next.js loads environment files from the app directory; it does not load root environment files. Exported shell variables, `.env.development.local`, `.env.local`, `.env.development`, then `.env` take precedence in that order during development. Restart the server after edits.
 
-For optional integrations, consult [.env.example](.env.example) and add only the settings you need to the ignored app file. Never commit it. For local authentication, install Docker and the Supabase CLI, run `supabase start` from the repository root, then run `pnpm dev:setup --supabase` before creating the app environment file. This reads only the running local stack's URL and public key; it does not start containers, reset data, link a hosted project or create users. If the file already exists, edit its local Supabase settings manually. See [local login setup](docs/features/google-login.md#local-testing-without-google-oauth) and the [manual setup checks](docs/testing/manual/local-development.md).
+Fitness uses its own ignored env file. Copy [apps/my-fitness-app/.env.example](apps/my-fitness-app/.env.example) to `apps/my-fitness-app/.env.local` and point it at the same Supabase project, including `http://localhost:3002/auth/callback` in that project's redirect URLs.
+
+For optional integrations, consult [.env.example](.env.example) and add only the settings you need to the ignored app file. Never commit it. For local authentication, install Docker and the Supabase CLI, run `supabase start` from the repository root, then run `pnpm dev:setup --supabase` before creating the app environment file. This reads only the running local stack's URL and public key; it does not start containers, reset data, link a hosted project or create users. If the file already exists, edit its local Supabase settings manually. See [local login setup](/docs/dev-studio/google-login.md#local-testing-without-google-oauth) and the [manual setup checks](docs/testing/manual/local-development.md).
 
 | Configuration                                                      | Purpose                                                        |
 | ------------------------------------------------------------------ | -------------------------------------------------------------- |
@@ -51,44 +64,48 @@ Shared workspace tooling lives in [`tools/cli`](tools/cli/README.md) (`@shared/c
 
 Run these from the repository root.
 
-| Command                             | Purpose                                                 |
-| ----------------------------------- | ------------------------------------------------------- |
-| `pnpm dev`                          | Start development through Turborepo                     |
-| `pnpm check`                        | Biome checks, complexity checks and TypeScript          |
-| `pnpm check:format` / `pnpm format` | Check / write formatting                                |
-| `pnpm lint` / `pnpm lint:fix`       | Check / fix lint issues                                 |
-| `pnpm check:assist` / `pnpm assist` | Check / apply configured import assistance              |
-| `pnpm test` / `pnpm test:watch`     | Vitest run / watch mode                                 |
-| `pnpm test:coverage`                | V8 coverage for the configured source subset            |
-| `pnpm build`                        | Full workspace production build                         |
-| `pnpm start`                        | Serve the built web app                                 |
-| `pnpm test:e2e`                     | Playwright against production output and local fixtures |
-| `pnpm test:e2e:report`              | Open the browser test report                            |
-| `pnpm cv:generate`                  | Generate a local PDF from a public profile              |
+| Command                                    | Purpose                                                   |
+| ------------------------------------------ | --------------------------------------------------------- |
+| `pnpm dev`                                 | Start workspace development through Turborepo             |
+| `pnpm --filter my-dev-studio dev`          | MyDevStudio on port 3001                                  |
+| `pnpm --filter my-fitness-app dev`         | My Fitness Studio on port 3002                            |
+| `pnpm check`                               | Link, catalog, export, lint, docs, skill, and type checks |
+| `pnpm check:format` / `pnpm format`        | Check / write formatting                                  |
+| `pnpm lint` / `pnpm lint:fix`              | Check / fix lint issues                                   |
+| `pnpm test` / `pnpm test:watch`            | Unit tests / watch mode                                   |
+| `pnpm test:fitness`                        | Fitness app unit tests                                    |
+| `pnpm test:coverage`                       | V8 coverage for the configured source subset              |
+| `pnpm build`                               | Full workspace production build                           |
+| `pnpm build:studio` / `pnpm build:fitness` | Production build for one app                              |
+| `pnpm test:e2e` / `pnpm test:e2e:fitness`  | Studio / Fitness Playwright suites                        |
+| `pnpm test:e2e:report`                     | Open the Studio browser test report                       |
+| `pnpm storybook`                           | Storybook for shared UI on port 6006                      |
+| `pnpm cv:generate`                         | Generate a local PDF from a public profile                |
 
 See [testing](docs/testing.md) for browser prerequisites and coverage limitations. Package-specific aliases may differ from root commands; root `format:check`, `lint:check` and `assist:check` are not the documented entry points.
 
 ## Architecture
 
-Next.js App Router and React run in a pnpm/Turborepo workspace. TypeScript, Biome and Tailwind CSS support the application. External dependency versions live in [pnpm-workspace.yaml](pnpm-workspace.yaml); internal dependencies use `workspace:*`.
+Next.js App Router and React run in a pnpm/Turborepo workspace. TypeScript, Biome and Tailwind CSS support both apps. External dependency versions live in [pnpm-workspace.yaml](pnpm-workspace.yaml); internal dependencies use `workspace:*`.
 
-| Location              | Responsibility                                                |
-| --------------------- | ------------------------------------------------------------- |
-| `apps/my-dev-studio`  | Routes, server adapters, metadata and application composition |
-| `packages/config`     | Domain content, profile types, themes and section metadata    |
-| `packages/auth`       | Shared authentication integration                             |
-| `packages/ui`         | Controls, sections, studio and portfolio surfaces, global CSS |
-| `packages/assistant`  | Studio and portfolio compositions, PDF generation and AI chat |
-| `packages/utils`      | Logging and generic utilities                                 |
-| `apps/my-fitness-app` | Fitness OS, a separate app in this workspace                  |
-| `supabase/migrations` | Reviewed schema and access-policy history                     |
-| `tests`, `e2e`        | Vitest and Playwright suites                                  |
+| Location              | Responsibility                                                            |
+| --------------------- | ------------------------------------------------------------------------- |
+| `apps/my-dev-studio`  | Portfolio routes, server adapters, metadata, and composition              |
+| `apps/my-fitness-app` | Fitness routes, task workspace, demo, and notification delivery           |
+| `apps/storybook-app`  | Storybook for shared UI                                                   |
+| `packages/config`     | Profile types, themes, section metadata, and page copy                    |
+| `packages/lib`        | Shared database access, repositories, validation, and Fitness persistence |
+| `packages/auth`       | Shared sign-in used by both apps                                          |
+| `packages/ui`         | Controls, layout, theme tokens, and global CSS                            |
+| `packages/assistant`  | Studio, portfolio, and fitness assistant compositions, plus CV PDFs       |
+| `packages/utils`      | Logging and generic utilities                                             |
+| `supabase/migrations` | Reviewed schema and access-policy history                                 |
 
-Supabase is the persistence integration. Prisma is not used. Install, check and build commands do not apply migrations. The published main profile, when configured, supplies the original portfolio content and chat context; bundled content supplies the supported fallback. Named private or missing profiles must never fall back to another person's data.
+Supabase is the persistence integration for both apps. Prisma is not used. Install, check and build commands do not apply migrations. The published main profile, when configured, supplies the original portfolio content and chat context; bundled content supplies the supported fallback. Named private or missing profiles must never fall back to another person's data. A Fitness account is the same signed-in user, with its own plans and tasks.
 
 ## Documentation
 
-See [docs/README.md](docs/README.md) for the full index, including [guided setup](docs/testing/manual/onboarding.md), [Job Hunter](docs/testing/manual/job-hunter.md) and [LinkedIn alert forwarding](docs/testing/manual/linkedin-job-alerts.md).
+See [docs/README.md](docs/README.md) for the full index, including [guided setup](docs/testing/manual/onboarding.md), [Job Hunter](docs/testing/manual/job-hunter.md), and [LinkedIn alert forwarding](docs/testing/manual/linkedin-job-alerts.md). Fitness guides start at [login compatibility](docs/testing/manual/fitness-login.md), [workspaces](docs/testing/manual/fitness-workspaces.md), [task plans](docs/testing/manual/fitness-task-plans.md), and the [assistant](docs/testing/manual/fitness-assistants.md).
 
 ### Hubs
 
@@ -104,13 +121,14 @@ See [docs/README.md](docs/README.md) for the full index, including [guided setup
 
 ### Features
 
-| Guide                                                                                                                                                         | Read it for                                                            |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| [Personal workspaces](docs/features/multiuser-cvs.md), [Google login](docs/features/google-login.md)                                                          | Authentication and profile setup                                       |
-| [AI foundation](docs/features/portfolio-ai-foundation.md)                                                                                                     | Public/owner knowledge, saved AI profile inspector and chat boundaries |
-| [Managed portfolios](docs/features/managed-portfolios.md), [CV import](docs/features/cv-import.md)                                                            | Administration, transfer and extraction                                |
-| [Section system](docs/features/section-system.md), [section templates](docs/features/section-templates.md)                                                    | Section editing and composition                                        |
-| [Premium access](docs/features/premium-access.md), [premium chat](docs/features/premium-portfolio-chat.md), [Stripe billing](docs/features/stripe-billing.md) | Entitlements, chat and test billing                                    |
+| Guide                                                                                                                                                                                                                           | Read it for                                                            |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| [Personal workspaces](docs/dev-studio/multiuser-cvs.md), [Google login](docs/dev-studio/google-login.md)                                                                                                                        | Authentication and profile setup                                       |
+| [AI foundation](docs/dev-studio/portfolio-ai-foundation.md)                                                                                                                                                                     | Public/owner knowledge, saved AI profile inspector and chat boundaries |
+| [Managed portfolios](docs/dev-studio/managed-portfolios.md), [CV import](docs/dev-studio/cv-import.md)                                                                                                                          | Administration, transfer and extraction                                |
+| [Section system](docs/dev-studio/section-system.md), [section templates](docs/dev-studio/section-templates.md)                                                                                                                  | Section editing and composition                                        |
+| [Premium access](docs/dev-studio/premium-access.md), [premium chat](docs/dev-studio/premium-portfolio-chat.md), [Stripe billing](docs/dev-studio/stripe-billing.md)                                                             | Entitlements, chat and test billing                                    |
+| [Fitness login](docs/testing/manual/fitness-login.md), [workspaces](docs/testing/manual/fitness-workspaces.md), [task plans](docs/testing/manual/fitness-task-plans.md), [assistant](docs/testing/manual/fitness-assistants.md) | Plans, demo, reminders, and reviewed drafts                            |
 
 ### Reference
 
@@ -130,13 +148,13 @@ pnpm cv:generate
 pnpm cv:generate --args output/my-cv.pdf main
 ```
 
-The generator does not overwrite existing output. See [personal workspaces](docs/features/multiuser-cvs.md) for public/private behavior and deployment prerequisites.
+The generator does not overwrite existing output. See [personal workspaces](/docs/dev-studio/multiuser-cvs.md) for public/private behavior and deployment prerequisites.
 
 ## CI and deployment
 
 [CI / CD](.github/workflows/ci.yml) runs frozen installation, `pnpm check`, `pnpm test`, the Storybook build and `pnpm build` in the `Verify` job. [Browser tests](.github/workflows/e2e.yml) run separately only on pushes to the production branch, `main`. Their job is non-blocking and deployment does not depend on it. Browser reports are retained for seven days.
 
-Production deployment runs after verification on non-PR pushes to `main`. Two jobs deploy in parallel: MyDevStudio (`VERCEL_PROJECT_ID`) and Fitness OS (`VERCEL_FITNESS_PROJECT_ID`), both using `VERCEL_TOKEN` and `VERCEL_ORG_ID`. Each job pulls production configuration, builds, and deploys prebuilt output. Application variables belong in deployment configuration. See `apps/my-dev-studio/vercel.json` and `apps/my-fitness-app/vercel.json`.
+Production deployment runs after verification on non-PR pushes to `main`. Two jobs deploy in parallel: MyDevStudio (`VERCEL_PROJECT_ID`) and My Fitness Studio (`VERCEL_FITNESS_PROJECT_ID`), both using `VERCEL_TOKEN` and `VERCEL_ORG_ID`. Each job pulls production configuration, builds, and deploys prebuilt output. Application variables belong in deployment configuration. See `apps/my-dev-studio/vercel.json` and `apps/my-fitness-app/vercel.json`.
 
 Require `Verify` before merging. If GitHub Actions is the intended sole release path, check the project's automatic Git deployment settings separately. A successful build does not confirm a deployment, migration or external provider setup.
 

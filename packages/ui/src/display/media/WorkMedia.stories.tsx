@@ -7,7 +7,7 @@ const meta = {
   component: WorkMedia,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
-  title: "UI/Display/Work Media",
+  title: "UI/Display/Media/Work Media",
 } satisfies Meta<typeof WorkMedia>;
 
 export default meta;

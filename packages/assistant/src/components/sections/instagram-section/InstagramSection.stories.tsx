@@ -15,7 +15,7 @@ const meta = {
     ),
   ],
   tags: ["autodocs"],
-  title: "Sections/Instagram",
+  title: "Assistant/Sections/Instagram Section",
 } satisfies Meta<typeof InstagramSection>;
 export default meta;
 type Story = StoryObj<typeof meta>;

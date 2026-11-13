@@ -1,3 +1,3 @@
 export const skeletonStyles = {
-  skeleton: "bg-accent animate-pulse rounded-md",
+  skeleton: "animate-pulse rounded-lg bg-foreground/10",
 } as const;

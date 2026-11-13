@@ -24,7 +24,7 @@ const meta = {
     ),
   ],
   parameters: { layout: "fullscreen", pageCanvas: true },
-  title: "Pages/Studio",
+  title: "Assistant/Portfolio/Studio Shell",
 } satisfies Meta<typeof StudioShell>;
 
 export default meta;

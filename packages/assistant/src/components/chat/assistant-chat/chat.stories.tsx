@@ -191,7 +191,7 @@ const meta = {
     layout: "padded",
   },
   tags: ["autodocs"],
-  title: "Components/Chat",
+  title: "Assistant/Chat/Assistant Chat/Chat",
 } satisfies Meta;
 
 export default meta;

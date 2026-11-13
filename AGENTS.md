@@ -111,7 +111,7 @@ pnpm --silent lookup docs "revision conflicts" --limit 2
 pnpm --silent lookup design "spacing" --limit 1
 ```
 
-Queries use lexical AND matching: use a few specific keywords. Follow `hasMore` with `--cursor`, or retrieve a result/locator with `lookup section '<id>' --max-tokens 4000`. A budget failure is not evidence that a reference is absent. Always read mandatory instructions and the relevant source contracts; catalog excerpts are discovery context. Use `--max-tokens` to bound the final output and `--package` to narrow catalog ownership. Catalog rows do not prove that an import works; verify declared symbols and source contracts. See the [AI quick start](.ai/README.md) and [full CLI usage](tools/cli/README.md#token-bounded-repository-lookup).
+Queries use lexical AND matching: use a few specific keywords. Follow `hasMore` with `--cursor`, or retrieve a result/locator with `lookup section '<id>' --max-tokens 4000`. A budget failure is not evidence that a reference is absent. Always read mandatory instructions and the relevant source contracts; catalog excerpts are discovery context. Use `--max-tokens` to bound the final output and `--package` to narrow catalog ownership. Catalog rows do not prove that an import works; verify declared symbols and source contracts. See the [AI quick start](.agents/README.md) and [full CLI usage](tools/cli/README.md#token-bounded-repository-lookup).
 
 ## Dev environment
 

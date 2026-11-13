@@ -17,10 +17,10 @@
   display: flex;
   gap: var(--spacing-xs);
   align-items: center;
-  padding: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-s);
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
 }
 .sortable-list > li[data-draggable] {
   touch-action: none;
@@ -39,10 +39,15 @@
   min-height: 44px;
   font: inherit;
   color: var(--foreground);
-  background: var(--muted);
-  border: 1px solid var(--border);
+  background: transparent;
+  border: 1px solid transparent;
   border-radius: var(--radius-md);
 }
+.sortable-handle:hover,
+.sortable-move:enabled:hover {
+  background: var(--muted);
+}
+
 .sortable-handle {
   font-size: 1.4rem;
 }

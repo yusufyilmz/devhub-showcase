@@ -4,9 +4,10 @@ import { profile } from "@shared/config";
 
 import { PublicationControls } from "./editor";
 
-const meta = { component: PublicationControls, title: "Studio/Publication" } satisfies Meta<
-  typeof PublicationControls
->;
+const meta = {
+  component: PublicationControls,
+  title: "Assistant/Portfolio/Publication/Editor",
+} satisfies Meta<typeof PublicationControls>;
 export default meta;
 export const SavedDraft: StoryObj<typeof meta> = {
   args: {

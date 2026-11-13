@@ -19,7 +19,7 @@ const recovery = {
 const meta = {
   args: { recovery },
   component: DraftRecovery,
-  title: "Studio/Draft recovery",
+  title: "Assistant/Portfolio/Recovery/Draft Recovery",
 } satisfies Meta<typeof DraftRecovery>;
 export default meta;
 export const Saved: StoryObj<typeof meta> = {};

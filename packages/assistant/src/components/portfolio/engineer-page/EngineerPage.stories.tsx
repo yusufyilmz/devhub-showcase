@@ -13,7 +13,7 @@ const meta = {
         projects: { renderer: "project-cards" },
         skills: { renderer: "skill-list" },
       },
-      title: "Software engineer",
+      title: "Storybook App Assistant/Portfolio/Engineer Page/Engineerpage",
     },
     resources: { educations: [], experiences: [], projects: [], referrals: [], skills: {} },
   },
@@ -26,7 +26,7 @@ const meta = {
     ),
   ],
   parameters: { layout: "fullscreen", pageCanvas: true },
-  title: "Pages/Engineer Portfolio",
+  title: "Assistant/Portfolio/Engineer Page",
 } satisfies Meta<typeof EngineerPage>;
 
 export default meta;

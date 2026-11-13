@@ -38,4 +38,20 @@ describe("ThemeCustomizer", () => {
     expect(shell.dataset.theme).toBe("light");
     expect(shell.classList.contains("dark")).toBe(false);
   });
+
+  it("keeps the preview mode and palette when no mode is selected", () => {
+    vi.stubGlobal("matchMedia", () => ({
+      addEventListener: vi.fn(),
+      matches: false,
+      removeEventListener: vi.fn(),
+    }));
+    const view = render(
+      <div data-brand="sand" data-theme="dark">
+        <ThemeCustomizer showCode={false} showPreview={false} showReset={false} />
+      </div>,
+    );
+    expect(view.container.firstElementChild?.getAttribute("data-theme")).toBe("dark");
+    expect(document.documentElement.dataset.theme).toBe("dark");
+    expect(document.documentElement.dataset.brand).toBe("sand");
+  });
 });

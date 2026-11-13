@@ -6,7 +6,7 @@ import { NotFoundPage } from "../not-found-page/NotFoundPage";
 const meta = {
   component: NotFoundPage,
   parameters: { layout: "fullscreen", pageCanvas: true },
-  title: "Pages/Recovery",
+  title: "UI/Layout/Page Variants/Recovery Pages",
 } satisfies Meta<typeof NotFoundPage>;
 
 export default meta;

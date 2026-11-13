@@ -8,7 +8,7 @@ const meta = {
     caseStudyHref: "#case-study",
     description: "A portfolio for a landscape photography practice.",
     projectHref: "#project",
-    title: "Ridgeline",
+    title: "Storybook App UI/Cards/Project Card/Projectcard",
   },
   component: ProjectCard,
   decorators: [

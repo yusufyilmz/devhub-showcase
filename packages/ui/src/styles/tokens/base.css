@@ -12,6 +12,11 @@
   }
 }
 
+/* Field boundaries need more contrast than decorative dividers. */
+:where(:root, [data-brand], [data-theme]) {
+  --input: color-mix(in srgb, var(--foreground) 48%, var(--background));
+}
+
 :root {
   color-scheme: light;
 }

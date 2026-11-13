@@ -34,7 +34,7 @@ function Example() {
     </>
   );
 }
-const meta = { component: Example, title: "Studio/Guided onboarding" } satisfies Meta<
+const meta = { component: Example, title: "Assistant/Portfolio/Guided Onboarding" } satisfies Meta<
   typeof Example
 >;
 export default meta;

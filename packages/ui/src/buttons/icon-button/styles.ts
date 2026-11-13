@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const iconButtonVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-[var(--background)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "ui-icon-button inline-flex items-center justify-center rounded-lg border border-transparent text-sm font-medium transition-[background-color,border-color,color] outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]/40 disabled:pointer-events-none disabled:border-transparent disabled:bg-muted disabled:text-muted-foreground disabled:shadow-none",
   {
     defaultVariants: {
       size: "default",
@@ -16,15 +16,14 @@ export const iconButtonVariants = cva(
       },
       variant: {
         default:
-          "bg-[var(--primary)] text-[var(--primary-foreground)] hover:bg-[var(--primary)]/90",
+          "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[inset_0_1px_0_0_color-mix(in_oklch,white_28%,transparent)] hover:bg-[var(--primary)]/90",
         destructive:
-          "bg-[var(--destructive)] text-[var(--destructive-foreground)] hover:bg-[var(--destructive)]/90",
-        ghost: "hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]",
-        link: "text-[var(--primary)] underline-offset-4 hover:underline",
-        outline:
-          "border border-[var(--border)] bg-[var(--background)] hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]",
+          "border-[var(--destructive)] bg-[var(--destructive)] text-white shadow-[inset_0_1px_0_0_color-mix(in_oklch,white_28%,transparent)] hover:bg-[var(--destructive)]/90",
+        ghost: "text-muted-foreground hover:text-foreground",
+        link: "text-foreground underline-offset-4 hover:underline",
+        outline: "bg-transparent text-foreground hover:border-[var(--border)]",
         secondary:
-          "bg-[var(--secondary)] text-[var(--secondary-foreground)] hover:bg-[var(--secondary)]/80",
+          "border-[var(--border)] bg-transparent text-foreground shadow-[inset_0_1px_0_0_color-mix(in_oklch,var(--foreground)_10%,transparent)] hover:bg-foreground/5",
       },
     },
   },
@@ -36,7 +35,7 @@ export const iconButtonStyles = {
 
 export const styledIconButtonStyles = {
   classes: "relative transition-all duration-300",
-  classes2: "border-2",
+  classes2: "border",
   classes3: "fixed bottom-8 right-8 z-50 size-14 shadow-2xl",
   classes4: "hover:-translate-y-0.5",
   classes5: "hover:scale-110",

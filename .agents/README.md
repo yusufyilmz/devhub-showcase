@@ -37,7 +37,7 @@ Exit codes: 0 match (including multiple symbol owners), 1 command syntax error, 
 
 ## Repository sources and optional bundles
 
-This repository uses `packages/*/CATALOG.md`, `.agents/skills`, `docs/`, root `DESIGN.md`, and package export maps. This README does not install or require a generated `.ai` bundle. When provided, `.ai/manifest.json` supplies bundled symbols and `.ai/DESIGN.md` supplies bundled design sections. Native workspace files remain available when those bundle artifacts are absent. Use `--root /absolute/project/root` to select another project explicitly.
+This repository uses `packages/*/CATALOG.md`, `.agents/skills`, `docs/`, root `DESIGN.md`, and package export maps. A generated `.ai` folder is not a catalog or skill source. `.ai/manifest.json`, when a project actually ships one, supplies bundled symbols only.
 
 Read [AGENTS.md](../AGENTS.md) for repository instructions, [full CLI usage](../tools/cli/README.md#token-bounded-repository-lookup) for all options, and [lookup verification](../docs/testing/manual/repository-lookup.md) for checks.
 

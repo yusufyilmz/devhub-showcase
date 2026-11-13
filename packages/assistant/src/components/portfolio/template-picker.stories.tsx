@@ -10,7 +10,7 @@ function Example() {
   const [draft, setDraft] = useState(profile);
   return <TemplatePicker onChange={setDraft} profile={draft} />;
 }
-const meta = { component: Example, title: "Studio/Profession templates" } satisfies Meta<
+const meta = { component: Example, title: "Assistant/Portfolio/Template Picker" } satisfies Meta<
   typeof Example
 >;
 export default meta;

@@ -1,6 +1,10 @@
 # Features
 
-This is the current product overview. It describes repository behavior, not a guarantee that every external service is configured in a deployed environment. Start with [the README](../README.md) for setup and [architecture](architecture.md) for implementation boundaries.
+## When to read
+
+Read this to see what MyDevStudio currently does, which capabilities need OpenAI, Redis, or Stripe, and which flows are still local or sandbox-only. Use the linked manual guides when you need click-by-click checks. Start with [the README](../README.md) for setup and [architecture](architecture.md) for implementation boundaries.
+
+This is the current product overview. It describes repository behavior, not a guarantee that every external service is configured in a deployed environment.
 
 ## Availability
 
@@ -40,7 +44,7 @@ The studio edits profile/contact details, About, experience and achievements, pr
 
 Publishing makes `/{username}` and `/{username}/cv.pdf` available under the chosen access rules. Owners can use public, unlisted or password-protected sharing and schedule publication. Saved revision history is available in the studio. Unpublishing hides public reads, while previously downloaded files or search-engine copies may remain. Username changes change public links; earlier `/p/{id}` links resolve to the current username. Private downloads use authenticated endpoints. PDF hide-email/hide-phone preferences do not hide those details on the public website.
 
-See [personal workspace setup](features/multiuser-cvs.md) and [Google login](features/google-login.md) for activation and access rules.
+See [personal workspace setup](/docs/dev-studio/multiuser-cvs.md) and [Google login](/docs/dev-studio/google-login.md) for activation and access rules.
 
 ## Layout, appearance and language
 
@@ -72,13 +76,13 @@ Section order supports pointer/touch dragging, move buttons and keyboard control
 
 Optional image/video hero backgrounds support poster, position, overlay and playback controls. Reduced motion pauses automatic playback. Social work is curated from public links: YouTube loads a privacy-enhanced player after a visitor action; Instagram and Pinterest cards link to original posts. Automatic feeds, scraping, media uploads and transcoding are not provided.
 
-See [section contracts](features/section-system.md), [templates](features/section-templates.md) and [the source mapping](reference/pageforge-section-migration.md). Contact/newsletter/shop/pricing sections do not provision mail, subscriptions, checkout or booking services.
+See [section contracts](/docs/dev-studio/section-system.md), [templates](dev-studio/section-templates.md) and [the source mapping](reference/pageforge-section-migration.md). Contact/newsletter/shop/pricing sections do not provision mail, subscriptions, checkout or booking services.
 
 ## Templates and import/export
 
 Each account can save up to five templates in its private library. The library has its own immediate save; applying a template changes only the portfolio draft and still requires **Save changes**.
 
-Configuration-only export omits personal authored content by default. Including authored content, media and bindings is explicit. Imports are validated and reviewed before applying; append or confirmed replacement creates fresh section/item IDs. Imports cannot change identity, ownership, username, publication or CV settings. See [template limits and formats](features/section-templates.md).
+Configuration-only export omits personal authored content by default. Including authored content, media and bindings is explicit. Imports are validated and reviewed before applying; append or confirmed replacement creates fresh section/item IDs. Imports cannot change identity, ownership, username, publication or CV settings. See [template limits and formats](dev-studio/section-templates.md).
 
 ## CV generation and extraction
 
@@ -86,13 +90,13 @@ Public and private PDF downloads share `packages/assistant` and its Handlebars/J
 
 Optional **Import CV** accepts PDF, DOCX or UTF-8 text up to 3 MB. After consent, the server validates the file, authorizes the user, applies Redis limits and sends it to OpenAI. The original file is not stored in Supabase. Provider data policies still apply.
 
-Users review and correct extracted fields, select groups to replace and apply them to the draft. Missing facts are not invented; new projects start hidden. Apply does not save or publish. Cancel/failure leaves the existing draft intact. See [CV import](features/cv-import.md) for exact limits, models, retention caveats and tests.
+Users review and correct extracted fields, select groups to replace and apply them to the draft. Missing facts are not invented; new projects start hidden. Apply does not save or publish. Cancel/failure leaves the existing draft intact. See [CV import](dev-studio/cv-import.md) for exact limits, models, retention caveats and tests.
 
 ## Managed portfolios
 
 Authorized administrators can create private temporary portfolios, import validated JSON, edit them, download private PDFs and explicitly publish. These records use administrator authorization, not a shared login or password.
 
-Transfer requires a verified recipient and revision checks. An untouched private starter can be preserved before assignment; an edited/published recipient portfolio blocks transfer. Main cannot become managed, and the manager loses access after transfer. No invitation email is sent. See [managed portfolios](features/managed-portfolios.md).
+Transfer requires a verified recipient and revision checks. An untouched private starter can be preserved before assignment; an edited/published recipient portfolio blocks transfer. Main cannot become managed, and the manager loses access after transfer. No invitation email is sent. See [managed portfolios](dev-studio/managed-portfolios.md).
 
 ## AI knowledge and chat
 
@@ -100,7 +104,7 @@ The AI profile tab inspects knowledge derived from the saved revision, not unsav
 
 Public visitor chat is available on the main portfolio and on eligible published Pro portfolios whose owners enable it. Each request re-reads the published snapshot, validates input and enforces Redis limits; missing/private profiles do not fall back to someone else's data. Conversation state is scoped by portfolio and revision.
 
-See [AI foundation](features/portfolio-ai-foundation.md) for projections, limits, provider behavior and the remaining rollout.
+See [AI foundation](/docs/dev-studio/portfolio-ai-foundation.md) for projections, limits, provider behavior and the remaining rollout.
 
 ## Homepage and fictional examples
 
@@ -128,22 +132,22 @@ Automated coverage includes layout/theme/language combinations, profile saves an
 
 Premium entitlements, bounded usage, sandbox billing, visitor chat and private editing proposals are implemented. Real checkout/webhook and paid model verification remain independent operational checks before launch. External commerce, automatic social feeds and media upload/transcoding need separate integrations. Hosted monitoring remains a setup plan in [observability](observability.md), not an active service.
 
-Stripe sandbox billing is available at `/admin/billing` once its server configuration and migrations are installed. Checkout, customer portal and signed subscription webhooks are implemented; live keys remain disabled and actual sandbox checkout verification is required. See [setup and limitations](features/stripe-billing.md).
+Stripe sandbox billing is available at `/admin/billing` once its server configuration and migrations are installed. Checkout, customer portal and signed subscription webhooks are implemented; live keys remain disabled and actual sandbox checkout verification is required. See [setup and limitations](/docs/dev-studio/stripe-billing.md).
 
-Pro owners can opt into a public portfolio assistant at `/admin/billing`. The reusable chat widget supports all portfolio layouts, with public-only context, isolated session history and reserved usage accounting. Existing main portfolio chat keeps its original behavior. See [premium portfolio chat](features/premium-portfolio-chat.md) for migration and verification requirements.
+Pro owners can opt into a public portfolio assistant at `/admin/billing`. The reusable chat widget supports all portfolio layouts, with public-only context, isolated session history and reserved usage accounting. Existing main portfolio chat keeps its original behavior. See [premium portfolio chat](/docs/dev-studio/premium-portfolio-chat.md) for migration and verification requirements.
 
 ## Private AI editing assistant
 
-Pro owners can generate validated changes from the AI assistant editor tab, review before/after values and apply selected fields to their draft. Saving remains explicit. Public visitor chat is independent of private assistant access. See [private AI editor](features/private-ai-editor.md) for supported fields, privacy, accounting and setup.
+Pro owners can generate validated changes from the AI assistant editor tab, review before/after values and apply selected fields to their draft. Saving remains explicit. Public visitor chat is independent of private assistant access. See [private AI editor](/docs/dev-studio/private-ai-editor.md) for supported fields, privacy, accounting and setup.
 
 ## Plans and demo testing
 
-The homepage compares Free and Pro with dynamic sandbox pricing and bounded AI allowances. The subscription page exposes the same test price, and the editor links to plan/usage settings. A guarded server-only helper can seed fictional content into a separate verified empty account for private feature testing. See [plans and demo checklist](features/pricing-and-demo.md).
+The homepage compares Free and Pro with dynamic sandbox pricing and bounded AI allowances. The subscription page exposes the same test price, and the editor links to plan/usage settings. A guarded server-only helper can seed fictional content into a separate verified empty account for private feature testing. See [plans and demo checklist](/docs/dev-studio/pricing-and-demo.md).
 
 ## Premium account status
 
-Subscription settings show plan access, its end date, assignment/publication, separate AI usage and remaining attempts. Readiness explains missing Pro, assignment, service configuration, allowance, publication and visitor opt-in. Refresh status reloads account data without creating Stripe sessions or model requests. Checkout return never grants access. Billing errors use safe codes and next actions instead of raw provider payloads. See [premium status](features/premium-status.md).
+Subscription settings show plan access, its end date, assignment/publication, separate AI usage and remaining attempts. Readiness explains missing Pro, assignment, service configuration, allowance, publication and visitor opt-in. Refresh status reloads account data without creating Stripe sessions or model requests. Checkout return never grants access. Billing errors use safe codes and next actions instead of raw provider payloads. See [premium status](/docs/dev-studio/premium-status.md).
 
 ## Optional Google profile import
 
-Owners can request selected Google profile categories after normal login, review available name/email, city, phone, birthdate and current job details, then apply chosen fields to their draft. Google consent is separate from basic login and does not read mail or contacts. Birthdate is off by default and can become public profile data if explicitly saved; existing page/PDF layouts do not display it. People API/OAuth setup and verification are required. See [Google profile import](features/google-profile-import.md).
+Owners can request selected Google profile categories after normal login, review available name/email, city, phone, birthdate and current job details, then apply chosen fields to their draft. Google consent is separate from basic login and does not read mail or contacts. Birthdate is off by default and can become public profile data if explicitly saved; existing page/PDF layouts do not display it. People API/OAuth setup and verification are required. See [Google profile import](/docs/dev-studio/google-profile-import.md).

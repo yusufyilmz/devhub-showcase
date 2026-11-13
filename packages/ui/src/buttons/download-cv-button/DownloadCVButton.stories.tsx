@@ -6,7 +6,7 @@ const meta = {
   component: DownloadCVButton,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
-  title: "UI/Actions/Download CV Button",
+  title: "UI/Buttons/Download CV Button",
 } satisfies Meta<typeof DownloadCVButton>;
 
 export default meta;

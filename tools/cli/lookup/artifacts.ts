@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
+import { SKILL_DISCOVERY_TARGETS } from "./artifact-paths.ts";
 import { importPath, parseCatalog } from "./catalog.ts";
 import { catalogAudience } from "./catalog-sections.ts";
 import { digest, type MarkdownNode, markdown, object, slug, text, versions } from "./markdown.ts";
@@ -20,7 +21,7 @@ export class ArtifactReader {
       while (true) {
         if (
           fs.existsSync(path.join(candidate, "pnpm-workspace.yaml")) ||
-          fs.existsSync(path.join(candidate, ".ai"))
+          fs.existsSync(path.join(candidate, ".ai/manifest.json"))
         ) {
           selected = candidate;
           break;
@@ -116,8 +117,8 @@ export class ArtifactReader {
     return this.symbolRecords;
   }
   capabilities(): LookupRecord[] {
-    const directory = path.join(this.root, ".ai/catalogs");
-    if (!fs.existsSync(directory)) return this.documents("catalog");
+    const bundled = path.join(this.root, ".ai/manifest.json");
+    if (!fs.existsSync(bundled)) return this.documents("catalog");
     const inventory = this.symbols();
     return discoverMarkdown(this.root, ".ai/catalogs").flatMap((file) =>
       this.capabilityFile(file, inventory),
@@ -158,25 +159,22 @@ export class ArtifactReader {
     });
   }
   design(): LookupRecord[] {
-    const file = fs.existsSync(path.join(this.root, ".ai/DESIGN.md"))
-      ? ".ai/DESIGN.md"
-      : "DESIGN.md";
+    const bundled = fs.existsSync(path.join(this.root, ".ai/manifest.json"));
+    const file =
+      bundled && fs.existsSync(path.join(this.root, ".ai/DESIGN.md"))
+        ? ".ai/DESIGN.md"
+        : "DESIGN.md";
     return this.sections(file, "design");
   }
   documents(kind: "docs" | "skills" | "catalog"): LookupRecord[] {
     const files =
       kind === "catalog"
-        ? [
-            ...["apps", "packages", "tools"]
-              .flatMap((directory) => discoverMarkdown(this.root, directory))
-              .filter((file) => file.endsWith("/CATALOG.md")),
-            ...discoverMarkdown(this.root, ".ai/catalogs"),
-          ]
+        ? ["apps", "packages", "tools"]
+            .flatMap((directory) => discoverMarkdown(this.root, directory))
+            .filter((file) => file.endsWith("/CATALOG.md"))
         : kind === "docs"
           ? discoverMarkdown(this.root, "docs")
-          : [".agents/skills", ".ai/skills", ".claude/skills", ".cursor/skills"].flatMap((dir) =>
-              discoverMarkdown(this.root, dir),
-            );
+          : SKILL_DISCOVERY_TARGETS.flatMap((dir) => discoverMarkdown(this.root, dir));
     return [...new Set(files)]
       .sort()
       .flatMap((file) =>

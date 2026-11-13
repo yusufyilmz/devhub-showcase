@@ -1,6 +1,8 @@
 # Engineering conventions
 
-Use [AGENTS.md](../AGENTS.md) for agent workflow, [architecture](architecture.md) for package boundaries and [testing](testing.md) for verification.
+## When to read
+
+Read this before adding a dependency, a TypeScript module, a React component, or a validation boundary. It covers Node and pnpm versions, Biome, package exports, and how untrusted input is checked. Use [AGENTS.md](../AGENTS.md) for agent workflow, [architecture](architecture.md) for package boundaries, and [testing](testing.md) for verification.
 
 ## Tooling and dependencies
 

@@ -17,6 +17,6 @@ export const sheetStyles = {
   sheetFooter: "mt-auto flex flex-col gap-2 p-4",
   sheetHeader: "flex flex-col gap-1.5 p-4",
   sheetOverlay:
-    "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
+    "fixed inset-0 z-50 bg-black/40 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
   sheetTitle: "text-foreground font-semibold",
 } as const;

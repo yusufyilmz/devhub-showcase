@@ -4,50 +4,50 @@ Source: yusufyilmz/pageforge-ai at 82ee192f7b9125bf42b899fb3e356c2be4983eb2, src
 
 Each folder has a renderer, a matching editor and index.tsx. Shared presenters implement the data-driven views; folders remain independently importable and discoverable. The registry is explicit and checked against the schema.
 
-| PageForge source           | Package folder                                                                      | Presentation |
-| -------------------------- | ----------------------------------------------------------------------------------- | ------------ |
-| AboutHeroSection.tsx       | [src/about-hero-section](../packages/sections/src/about-hero-section)               | hero         |
-| AboutSection.tsx           | [src/about-section](../packages/sections/src/about-section)                         | about        |
-| AccordionSection.tsx       | [src/accordion-section](../packages/sections/src/accordion-section)                 | accordion    |
-| AwardsSection.tsx          | [src/awards-section](../packages/sections/src/awards-section)                       | awards       |
-| BlogPageSection.tsx        | [src/blog-page-section](../packages/sections/src/blog-page-section)                 | posts        |
-| CTASection.tsx             | [src/cta-section](../packages/sections/src/cta-section)                             | cards        |
-| CalendarLinkSection.tsx    | [src/calendar-link-section](../packages/sections/src/calendar-link-section)         | links        |
-| CareersSection.tsx         | [src/careers-section](../packages/sections/src/careers-section)                     | careers      |
-| ClientsSection.tsx         | [src/clients-section](../packages/sections/src/clients-section)                     | clients      |
-| ContactFormSection.tsx     | [src/contact-form-section](../packages/sections/src/contact-form-section)           | contact      |
-| ContactInfoSection.tsx     | [src/contact-info-section](../packages/sections/src/contact-info-section)           | links        |
-| FAQSection.tsx             | [src/faq-section](../packages/sections/src/faq-section)                             | accordion    |
-| FeaturesSection.tsx        | [src/features-section](../packages/sections/src/features-section)                   | cards        |
-| GalleryGridSection.tsx     | [src/gallery-grid-section](../packages/sections/src/gallery-grid-section)           | gallery      |
-| HeadingSection.tsx         | [src/heading-section](../packages/sections/src/heading-section)                     | heading      |
-| HeroSection.tsx            | [src/hero-section](../packages/sections/src/hero-section)                           | hero         |
-| HowToSection.tsx           | [src/how-to-section](../packages/sections/src/how-to-section)                       | steps        |
-| LegalTextSection.tsx       | [src/legal-text-section](../packages/sections/src/legal-text-section)               | text         |
-| MapSection.tsx             | [src/map-section](../packages/sections/src/map-section)                             | map          |
-| MenuSection.tsx            | [src/menu-section](../packages/sections/src/menu-section)                           | menu         |
-| NewsletterSection.tsx      | [src/newsletter-section](../packages/sections/src/newsletter-section)               | newsletter   |
-| PlansSection.tsx           | [src/plans-section](../packages/sections/src/plans-section)                         | pricing      |
-| PostsGridSection.tsx       | [src/posts-grid-section](../packages/sections/src/posts-grid-section)               | posts        |
-| PricingSection.tsx         | [src/pricing-section](../packages/sections/src/pricing-section)                     | pricing      |
-| ProfileSection.tsx         | [src/profile-section](../packages/sections/src/profile-section)                     | profile      |
-| ProjectsSection.tsx        | [src/projects-section](../packages/sections/src/projects-section)                   | projects     |
-| PropertySection.tsx        | [src/property-section](../packages/sections/src/property-section)                   | property     |
-| QuickstartSection.tsx      | [src/quickstart-section](../packages/sections/src/quickstart-section)               | steps        |
-| ShopItemsSection.tsx       | [src/shop-items-section](../packages/sections/src/shop-items-section)               | shop         |
-| ShowcaseSection.tsx        | [src/showcase-section](../packages/sections/src/showcase-section)                   | gallery      |
-| SocialLinksSection.tsx     | [src/social-links-section](../packages/sections/src/social-links-section)           | links        |
-| StatsSection.tsx           | [src/stats-section](../packages/sections/src/stats-section)                         | statistics   |
-| StudiesSection.tsx         | [src/studies-section](../packages/sections/src/studies-section)                     | timeline     |
-| TableOfContentsSection.tsx | [src/table-of-contents-section](../packages/sections/src/table-of-contents-section) | toc          |
-| TabsSection.tsx            | [src/tabs-section](../packages/sections/src/tabs-section)                           | tabs         |
-| TeamSection.tsx            | [src/team-section](../packages/sections/src/team-section)                           | team         |
-| TechnicalSkillsSection.tsx | [src/technical-skills-section](../packages/sections/src/technical-skills-section)   | skills       |
-| TestimonialsSection.tsx    | [src/testimonials-section](../packages/sections/src/testimonials-section)           | quotes       |
-| TextSection.tsx            | [src/text-section](../packages/sections/src/text-section)                           | text         |
-| TimelineSection.tsx        | [src/timeline-section](../packages/sections/src/timeline-section)                   | timeline     |
-| VideoSection.tsx           | [src/video-section](../packages/sections/src/video-section)                         | video        |
-| WorkExperienceSection.tsx  | [src/work-experience-section](../packages/sections/src/work-experience-section)     | timeline     |
+| PageForge source           | Package folder                                                                                              | Presentation |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------ |
+| AboutHeroSection.tsx       | [src/about-hero-section](../../packages/assistant/src/components/sections/about-hero-section)               | hero         |
+| AboutSection.tsx           | [src/about-section](../../packages/assistant/src/components/sections/about-section)                         | about        |
+| AccordionSection.tsx       | [src/accordion-section](../../packages/assistant/src/components/sections/accordion-section)                 | accordion    |
+| AwardsSection.tsx          | [src/awards-section](../../packages/assistant/src/components/sections/awards-section)                       | awards       |
+| BlogPageSection.tsx        | [src/blog-page-section](../../packages/assistant/src/components/sections/blog-page-section)                 | posts        |
+| CTASection.tsx             | [src/cta-section](../../packages/assistant/src/components/sections/cta-section)                             | cards        |
+| CalendarLinkSection.tsx    | [src/calendar-link-section](../../packages/assistant/src/components/sections/calendar-link-section)         | links        |
+| CareersSection.tsx         | [src/careers-section](../../packages/assistant/src/components/sections/careers-section)                     | careers      |
+| ClientsSection.tsx         | [src/clients-section](../../packages/assistant/src/components/sections/clients-section)                     | clients      |
+| ContactFormSection.tsx     | [src/contact-form-section](../../packages/assistant/src/components/sections/contact-form-section)           | contact      |
+| ContactInfoSection.tsx     | [src/contact-info-section](../../packages/assistant/src/components/sections/contact-info-section)           | links        |
+| FAQSection.tsx             | [src/faq-section](../../packages/assistant/src/components/sections/faq-section)                             | accordion    |
+| FeaturesSection.tsx        | [src/features-section](../../packages/assistant/src/components/sections/features-section)                   | cards        |
+| GalleryGridSection.tsx     | [src/gallery-grid-section](../../packages/assistant/src/components/sections/gallery-grid-section)           | gallery      |
+| HeadingSection.tsx         | [src/heading-section](../../packages/assistant/src/components/sections/heading-section)                     | heading      |
+| HeroSection.tsx            | [src/hero-section](../../packages/assistant/src/components/sections/hero-section)                           | hero         |
+| HowToSection.tsx           | [src/how-to-section](../../packages/assistant/src/components/sections/how-to-section)                       | steps        |
+| LegalTextSection.tsx       | [src/legal-text-section](../../packages/assistant/src/components/sections/legal-text-section)               | text         |
+| MapSection.tsx             | [src/map-section](../../packages/assistant/src/components/sections/map-section)                             | map          |
+| MenuSection.tsx            | [src/menu-section](../../packages/assistant/src/components/sections/menu-section)                           | menu         |
+| NewsletterSection.tsx      | [src/newsletter-section](../../packages/assistant/src/components/sections/newsletter-section)               | newsletter   |
+| PlansSection.tsx           | [src/plans-section](../../packages/assistant/src/components/sections/plans-section)                         | pricing      |
+| PostsGridSection.tsx       | [src/posts-grid-section](../../packages/assistant/src/components/sections/posts-grid-section)               | posts        |
+| PricingSection.tsx         | [src/pricing-section](../../packages/assistant/src/components/sections/pricing-section)                     | pricing      |
+| ProfileSection.tsx         | [src/profile-section](../../packages/assistant/src/components/sections/profile-section)                     | profile      |
+| ProjectsSection.tsx        | [src/projects-section](../../packages/assistant/src/components/sections/projects-section)                   | projects     |
+| PropertySection.tsx        | [src/property-section](../../packages/assistant/src/components/sections/property-section)                   | property     |
+| QuickstartSection.tsx      | [src/quickstart-section](../../packages/assistant/src/components/sections/quickstart-section)               | steps        |
+| ShopItemsSection.tsx       | [src/shop-items-section](../../packages/assistant/src/components/sections/shop-items-section)               | shop         |
+| ShowcaseSection.tsx        | [src/showcase-section](../../packages/assistant/src/components/sections/showcase-section)                   | gallery      |
+| SocialLinksSection.tsx     | [src/social-links-section](../../packages/assistant/src/components/sections/social-links-section)           | links        |
+| StatsSection.tsx           | [src/stats-section](../../packages/assistant/src/components/sections/stats-section)                         | statistics   |
+| StudiesSection.tsx         | [src/studies-section](../../packages/assistant/src/components/sections/studies-section)                     | timeline     |
+| TableOfContentsSection.tsx | [src/table-of-contents-section](../../packages/assistant/src/components/sections/table-of-contents-section) | toc          |
+| TabsSection.tsx            | [src/tabs-section](../../packages/assistant/src/components/sections/tabs-section)                           | tabs         |
+| TeamSection.tsx            | [src/team-section](../../packages/assistant/src/components/sections/team-section)                           | team         |
+| TechnicalSkillsSection.tsx | [src/technical-skills-section](../../packages/assistant/src/components/sections/technical-skills-section)   | skills       |
+| TestimonialsSection.tsx    | [src/testimonials-section](../../packages/assistant/src/components/sections/testimonials-section)           | quotes       |
+| TextSection.tsx            | [src/text-section](../../packages/assistant/src/components/sections/text-section)                           | text         |
+| TimelineSection.tsx        | [src/timeline-section](../../packages/assistant/src/components/sections/timeline-section)                   | timeline     |
+| VideoSection.tsx           | [src/video-section](../../packages/assistant/src/components/sections/video-section)                         | video        |
+| WorkExperienceSection.tsx  | [src/work-experience-section](../../packages/assistant/src/components/sections/work-experience-section)     | timeline     |
 
 ## Supporting files
 

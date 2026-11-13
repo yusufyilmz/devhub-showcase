@@ -19,6 +19,7 @@ No public package export map or main entry is declared.
 | `lint:check`      | `biome lint .`                                                                                                                                                                                                                                                         |
 | `lint:fix`        | `biome lint --write .`                                                                                                                                                                                                                                                 |
 | `preview`         | `vite preview`                                                                                                                                                                                                                                                         |
+| `start`           | `storybook dev -p 6006`                                                                                                                                                                                                                                                |
 | `storybook`       | `storybook dev -p 6006`                                                                                                                                                                                                                                                |
 | `storybook:clean` | `node -e "const fs=require('node:fs'); for (const path of ['node_modules/.cache','node_modules/.vite']) fs.rmSync(path,{recursive:true,force:true})"`                                                                                                                  |
 | `storybook:kill`  | `node -e "const {execSync}=require('node:child_process'); let ids=''; try { ids=execSync('lsof -nP -tiTCP:6006 -sTCP:LISTEN',{encoding:'utf8'}).trim(); } catch {} for (const id of ids.split(/\s+/).filter(Boolean)) { try { process.kill(Number(id)); } catch {} }"` |
@@ -28,8 +29,6 @@ No public package export map or main entry is declared.
 | ---------------------------- | ---------------- | --------------- |
 | `@shared/billing`            | `workspace:*`    | dependencies    |
 | `@shared/ui`                 | `workspace:*`    | dependencies    |
-| `@tailwindcss/postcss`       | `catalog:`       | dependencies    |
-| `postcss`                    | `catalog:`       | dependencies    |
 | `react`                      | `catalog:`       | dependencies    |
 | `react-dom`                  | `catalog:`       | dependencies    |
 | `tailwindcss`                | `catalog:`       | dependencies    |
@@ -38,6 +37,7 @@ No public package export map or main entry is declared.
 | `@storybook/addon-a11y`      | `catalog:`       | devDependencies |
 | `@storybook/addon-vitest`    | `catalog:`       | devDependencies |
 | `@storybook/react-vite`      | `catalog:`       | devDependencies |
+| `@tailwindcss/vite`          | `catalog:`       | devDependencies |
 | `@types/node`                | `catalog:`       | devDependencies |
 | `@types/react`               | `catalog:`       | devDependencies |
 | `@types/react-dom`           | `catalog:`       | devDependencies |

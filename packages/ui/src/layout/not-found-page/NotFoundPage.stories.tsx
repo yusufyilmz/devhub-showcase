@@ -6,7 +6,7 @@ const meta = {
   component: NotFoundPage,
   parameters: { layout: "fullscreen" },
   tags: ["autodocs"],
-  title: "UI/Layout/NotFoundPage",
+  title: "UI/Layout/Not Found Page",
 } satisfies Meta<typeof NotFoundPage>;
 
 export default meta;

@@ -8,11 +8,11 @@ const meta = {
   args: {
     icon: <span aria-hidden="true">✳</span>,
     subtitle: "A fictional collection",
-    title: "Selected work",
+    title: "Storybook App UI/Layout/Section/Sectionheader",
   },
   component: SectionHeader,
   tags: ["autodocs"],
-  title: "UI/Layout/Section/Header",
+  title: "UI/Layout/Section/Section Header",
 } satisfies Meta<typeof SectionHeader>;
 export default meta;
 type Story = StoryObj<typeof meta>;

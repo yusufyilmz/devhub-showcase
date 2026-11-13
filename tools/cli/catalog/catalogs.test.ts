@@ -173,8 +173,8 @@ describe("workspace catalog generation", () => {
     fs.unlinkSync(catalog);
     generateCatalogs({ root });
     const before = read("packages/example/CATALOG.md");
-    fs.unlinkSync(path.join(root, "packages/example/catalog.template.md"));
-    expect(() => generateCatalogs({ root })).toThrow("Missing source template");
+    expect(fs.existsSync(path.join(root, "packages/example/catalog.template.md"))).toBe(false);
+    generateCatalogs({ root });
     expect(read("packages/example/CATALOG.md")).toBe(before);
   });
   it("generates declared symbols for packages outside the shared scope", () => {

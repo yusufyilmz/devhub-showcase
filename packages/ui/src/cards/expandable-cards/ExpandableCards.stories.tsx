@@ -9,7 +9,7 @@ const meta = {
       {
         content: <p>Read the research notes from the first round of interviews.</p>,
         id: "field-notes",
-        title: "Field Notes",
+        title: "Storybook App UI/Cards/Expandable Cards/Expandablecards",
       },
       {
         content: <p>Explore the signage study and its first prototype.</p>,

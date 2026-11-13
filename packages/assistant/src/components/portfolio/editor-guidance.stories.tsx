@@ -5,9 +5,10 @@ import { profile } from "@shared/config";
 import { EditorGuidance } from "./editor-guidance";
 import { usePortfolioHistory } from "./use-portfolio-history";
 
-const meta = { component: EditorGuidance, title: "Studio/EditorGuidance" } satisfies Meta<
-  typeof EditorGuidance
->;
+const meta = {
+  component: EditorGuidance,
+  title: "Assistant/Portfolio/Editor Guidance",
+} satisfies Meta<typeof EditorGuidance>;
 export default meta;
 function Example() {
   const { draft, undo, redo, canUndo, canRedo } = usePortfolioHistory(profile);

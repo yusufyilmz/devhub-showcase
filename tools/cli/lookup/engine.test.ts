@@ -9,7 +9,7 @@ import { getEncoding } from "js-tiktoken";
 import { findSymbol, getArtifactSection, searchCapabilities, searchDesign } from "./engine.ts";
 
 let root: string;
-const pkg = "@shared/fcf-components";
+const pkg = "@shared/storybook-app";
 const manifest = {
   [pkg]: {
     "./amount-field": {
@@ -22,7 +22,7 @@ const manifest = {
       exports: ["AmountField", "*", "* as Widgets"],
     },
   },
-  "@shared/fcf-server": {
+  "@shared/storybook-server": {
     ".": { audience: "SERVER", exports: ["AmountField"] },
   },
 };
@@ -31,17 +31,17 @@ function write(file: string, content: string) {
   fs.writeFileSync(path.join(root, ".ai", file), content);
 }
 function hashes() {
-  return ["manifest.json", "catalogs/fcf-components-catalog.md", "DESIGN.md"].map((file) =>
+  return ["manifest.json", "catalogs/storybook-app-catalog.md", "DESIGN.md"].map((file) =>
     fs.readFileSync(path.join(root, ".ai", file), "utf8"),
   );
 }
 describe("read-only artifact lookup", () => {
   beforeEach(() => {
-    root = fs.mkdtempSync(path.join(os.tmpdir(), "fcf-lookup-"));
+    root = fs.mkdtempSync(path.join(os.tmpdir(), "storybook-lookup-"));
     fs.writeFileSync(path.join(root, "package.json"), '{"name":"synthetic-app"}');
     write("manifest.json", JSON.stringify(manifest));
     write(
-      "catalogs/fcf-components-catalog.md",
+      "catalogs/storybook-app-catalog.md",
       `---\nname: "${pkg}"\nversion: 6.2.0\n---\n# ${pkg}\n\n| Capability | Use for | Preferred import |\n| --- | --- | --- |\n| \`AmountField\` | Currency-aware numeric input. | \`${pkg}/amount-field\` |\n| \`NotExported\` | Currency input fake row. | \`${pkg}/absent\` |\n`,
     );
     write(
@@ -119,7 +119,7 @@ describe("read-only artifact lookup", () => {
   it("ranks complete capability rows, verifies imports and retains purpose and provenance", () => {
     const result = searchCapabilities("currency input", { root });
     expect(result.response.results[0]).toMatchObject({
-      artifact: ".ai/catalogs/fcf-components-catalog.md",
+      artifact: ".ai/catalogs/storybook-app-catalog.md",
       audience: "UI",
       import: `${pkg}/amount-field`,
       name: "AmountField",
@@ -174,7 +174,7 @@ describe("read-only artifact lookup", () => {
     expect(tiny.stdout).toBe("");
   });
   it("rejects out-of-root symlinked artifacts and invalid audience schemas", () => {
-    const outside = fs.mkdtempSync(path.join(os.tmpdir(), "fcf-outside-"));
+    const outside = fs.mkdtempSync(path.join(os.tmpdir(), "storybook-outside-"));
     try {
       fs.writeFileSync(path.join(outside, "manifest.json"), JSON.stringify(manifest));
       fs.unlinkSync(path.join(root, ".ai/manifest.json"));

@@ -1,36 +1,35 @@
 /* One elevation and interaction system shared by product pages and Storybook. */
 :root {
-  --elevation-rest: 0 1px 2px rgb(0 0 0 / 0.04), 0 6px 20px rgb(0 0 0 / 0.06);
-  --elevation-hover: 0 3px 6px rgb(0 0 0 / 0.05), 0 16px 36px rgb(0 0 0 / 0.12);
-  --control-shadow: 0 1px 2px rgb(0 0 0 / 0.1), inset 0 1px 0 rgb(255 255 255 / 0.12);
-  --surface-duration: 220ms;
+  --elevation-rest: none;
+  --elevation-hover: none;
+  --control-shadow: inset 0 1px 0 color-mix(in srgb, white 28%, transparent);
+  --surface-duration: 160ms;
 }
 [data-theme="dark"] {
-  --elevation-rest: 0 2px 4px rgb(0 0 0 / 0.18), 0 8px 24px rgb(0 0 0 / 0.22);
-  --elevation-hover: 0 4px 8px rgb(0 0 0 / 0.2), 0 18px 40px rgb(0 0 0 / 0.35);
+  --elevation-rest: none;
+  --elevation-hover: none;
+  --control-shadow: inset 0 1px 0 color-mix(in srgb, white 16%, transparent);
 }
 .ui-card[data-slot="card"] {
   --card-accent: var(--primary);
   position: relative;
   min-width: 0;
-  border-color: color-mix(in srgb, var(--border) 65%, transparent);
-  box-shadow:
-    var(--elevation-rest),
-    inset 0 1px 0 color-mix(in srgb, var(--card-foreground) 4%, transparent);
+  border-color: var(--border);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--card-foreground) 5%, transparent);
   transition:
-    box-shadow var(--surface-duration) ease,
-    border-color var(--surface-duration) ease,
-    transform var(--surface-duration) ease;
+    background-color var(--surface-duration) ease,
+    border-color var(--surface-duration) ease;
 }
 .ui-card[data-interaction="lift"]:focus-within {
-  border-color: color-mix(in srgb, var(--card-accent) 55%, var(--border));
-  box-shadow: var(--elevation-hover);
+  border-color: color-mix(in srgb, var(--card-accent) 22%, var(--border));
 }
 @media (hover: hover) and (pointer: fine) {
+  .ui-card[data-slot="card"]:hover {
+    background-color: color-mix(in srgb, var(--foreground) 4%, var(--card));
+  }
   .ui-card[data-interaction="lift"]:hover {
-    border-color: color-mix(in srgb, var(--card-accent) 55%, var(--border));
-    box-shadow: var(--elevation-hover);
-    transform: translateY(-3px);
+    background-color: color-mix(in srgb, var(--card-accent) 8%, var(--card));
+    border-color: color-mix(in srgb, var(--card-accent) 22%, var(--border));
   }
 }
 .ui-button[data-slot="button"] {
@@ -43,23 +42,35 @@
 }
 .ui-button[data-variant="link"],
 .ui-button[data-variant="ghost"],
-.ui-button[data-variant="text"] {
+.ui-button[data-variant="text"],
+.ui-button[data-variant="outline"] {
   box-shadow: none;
 }
-.ui-button[data-slot="button"]:focus-visible,
-.ui-input:focus-visible {
+.ui-button[data-slot="button"]:focus-visible {
   outline: 2px solid var(--ring);
-  outline-offset: 3px;
+  outline-offset: 2px;
 }
-.ui-button[data-slot="button"]:active:not(:disabled):not([aria-disabled="true"]) {
-  transform: translateY(1px);
-}
+.ui-button:disabled,
 .ui-button[aria-disabled="true"] {
+  color: var(--muted-foreground);
   pointer-events: none;
-  opacity: 0.5;
+  background: var(--muted);
+  border-color: transparent;
+  box-shadow: none;
+  opacity: 1;
 }
 .ui-input {
-  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.04);
+  background-color: var(--background);
+  border-color: var(--border);
+  box-shadow: none;
+}
+[data-theme="dark"] .ui-input {
+  background-color: color-mix(in srgb, var(--foreground) 6%, transparent);
+}
+.ui-input:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--ring) 45%, transparent);
+  outline-offset: 2px;
+  border-color: color-mix(in srgb, var(--foreground) 32%, transparent);
 }
 .account-feature-card {
   padding: 24px;
@@ -71,14 +82,14 @@
   .ui-input {
     transition: none;
   }
-  .ui-card[data-interaction="lift"]:hover,
-  .ui-button[data-slot="button"]:active {
-    transform: none;
+  .ui-card[data-slot="card"]:hover,
+  .ui-card[data-interaction="lift"]:hover {
+    background-color: var(--card);
   }
 }
 
 /* The portfolio edge treatment is shared by static-content and reveal cards. */
-.ui-card[data-interaction="lift"]:not(.reveal-card)::before {
+.ui-card[data-surface="portfolio"][data-interaction="lift"]:not(.reveal-card)::before {
   position: absolute;
   inset: 0;
   padding: 1px;
@@ -105,7 +116,6 @@
   --background: var(--card);
   --accent: var(--secondary);
   --accent-foreground: var(--foreground);
-  --ring: var(--primary);
   color: var(--foreground);
   border: 1px solid var(--border);
   box-shadow: var(--control-shadow);
@@ -143,7 +153,6 @@
       var(--card) 25%,
       color-mix(in srgb, var(--card) 92%, var(--card-accent))
     );
-  border-inline-start: 3px solid color-mix(in srgb, var(--card-accent) 72%, var(--border));
 }
 
 @property --reveal-angle {
@@ -321,8 +330,7 @@
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .ui-card[data-slot="card"][data-card-type="tilt"]:hover,
   .ui-card[data-slot="card"][data-card-type="tilt"]:focus-within {
-    box-shadow: var(--elevation-hover);
-    transform: perspective(900px) rotateX(3deg) rotateY(-3deg) translateY(-3px);
+    transform: perspective(900px) rotateX(3deg) rotateY(-3deg);
   }
 }
 @media (prefers-reduced-motion: no-preference) {

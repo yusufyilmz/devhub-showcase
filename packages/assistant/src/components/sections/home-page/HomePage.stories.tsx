@@ -32,7 +32,7 @@ const meta = {
     ),
   ],
   parameters: { layout: "fullscreen", pageCanvas: true },
-  title: "Pages/Home",
+  title: "Assistant/Sections/Home Page",
 } satisfies Meta<typeof HomePage>;
 
 export default meta;

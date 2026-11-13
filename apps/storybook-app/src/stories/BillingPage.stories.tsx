@@ -63,7 +63,7 @@ const meta = {
     ),
   ],
   parameters: { layout: "fullscreen", pageCanvas: true },
-  title: "Pages/Billing",
+  title: "Storybook/Billing Page",
 } satisfies Meta<typeof BillingSettings>;
 
 export default meta;

@@ -15,7 +15,7 @@ const meta = {
     ),
   ],
   tags: ["autodocs"],
-  title: "Sections/PostsGrid",
+  title: "Assistant/Sections/Posts Grid Section",
 } satisfies Meta<typeof PostsGridSection>;
 export default meta;
 type Story = StoryObj<typeof meta>;

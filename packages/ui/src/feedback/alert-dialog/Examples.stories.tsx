@@ -38,7 +38,7 @@ function Example({ size }: { size?: "default" | "narrow" | "wide" }) {
 const meta = {
   component: Example,
   tags: ["autodocs"],
-  title: "UI/Feedback/alert-dialog",
+  title: "UI/Feedback/Alert Dialog",
 } satisfies Meta<typeof Example>;
 export default meta;
 type Story = StoryObj<typeof meta>;

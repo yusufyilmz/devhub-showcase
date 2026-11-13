@@ -10,8 +10,7 @@ Package `storybook-app` in `apps/storybook-app`. Dev server port 6006.
 | `.storybook/next-image.tsx`      | Stand-in for `next/image`                                      |
 | `.storybook/next-font-google.ts` | Stand-in for `next/font/google`                                |
 | `.storybook/next-navigation.ts`  | Stand-in for `next/navigation`                                 |
-| `vite.config.ts`                 | Vite app config                                                |
-| `postcss.config.cjs`             | PostCSS for this app                                           |
+| `vite.config.ts`                 | Vite app config, including `@tailwindcss/vite`                 |
 | `src/App.tsx`, `src/main.tsx`    | Vite shell. Not the component catalog                          |
 | `package.json`                   | `storybook`, `storybook:clean`, `build-storybook`              |
 

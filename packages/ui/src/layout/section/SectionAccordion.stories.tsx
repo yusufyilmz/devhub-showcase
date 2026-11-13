@@ -15,7 +15,7 @@ const meta = {
   args: { items, label: "Selected work" },
   component: SectionAccordion,
   tags: ["autodocs"],
-  title: "UI/Layout/Section/SectionAccordion",
+  title: "UI/Layout/Section/Section Accordion",
 } satisfies Meta<typeof SectionAccordion>;
 export default meta;
 type Story = StoryObj<typeof meta>;

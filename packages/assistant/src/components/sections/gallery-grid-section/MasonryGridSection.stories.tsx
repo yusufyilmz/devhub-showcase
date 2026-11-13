@@ -46,7 +46,7 @@ const meta = {
     ),
   ],
   tags: ["autodocs"],
-  title: "Sections/MasonryGrid",
+  title: "Assistant/Sections/Gallery Grid Section/Masonry Grid Section",
 } satisfies Meta<typeof MasonryGridSection>;
 export default meta;
 type Story = StoryObj<typeof meta>;

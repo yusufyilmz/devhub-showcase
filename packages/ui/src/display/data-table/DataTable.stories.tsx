@@ -95,7 +95,7 @@ const meta = {
     layout: "fullscreen",
   },
   tags: ["autodocs"],
-  title: "Dashboard/DataTable",
+  title: "UI/Display/Data Table",
 } satisfies Meta<typeof DataTable>;
 
 export default meta;

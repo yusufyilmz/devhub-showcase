@@ -1,5 +1,7 @@
 "use client";
 
+import "../editor-controls.css";
+
 import { useState } from "react";
 
 import { Button } from "@shared/ui/button";
@@ -33,12 +35,8 @@ export function CollectionEditor<T extends CollectionEditorItem>({
   return (
     <section className={collectionEditorStyles.element1}>
       <div className={collectionEditorStyles.element2}>
-        <div>
-          <p className={collectionEditorStyles.element3}>MAKE IT YOURS</p>
-          <h2>{title}</h2>
-        </div>
+        <h2>{title}</h2>
         <Button
-          className={collectionEditorStyles.element4}
           disabled={maxItems !== undefined && items.length >= maxItems}
           onClick={() => {
             const item = create();
@@ -53,7 +51,7 @@ export function CollectionEditor<T extends CollectionEditorItem>({
       </div>
       {items.length === 0 && <EmptyState>Nothing here yet. Add your first item above.</EmptyState>}
       {items.map((item, index) => (
-        <Card asChild key={item.id} layout="plain" surface="portfolio">
+        <Card asChild interaction="static" key={item.id} layout="plain">
           <article
             className={collapsible ? "editor-collection-item" : collectionEditorStyles.element5}
           >
@@ -82,7 +80,9 @@ export function CollectionEditor<T extends CollectionEditorItem>({
                     aria-label={`Move ${getTitle(item)} up`}
                     disabled={index === 0}
                     onClick={() => onChange(moveItem(items, index, index - 1))}
+                    size="icon"
                     type="button"
+                    variant="ghost"
                   >
                     ↑
                   </Button>
@@ -90,12 +90,13 @@ export function CollectionEditor<T extends CollectionEditorItem>({
                     aria-label={`Move ${getTitle(item)} down`}
                     disabled={index === items.length - 1}
                     onClick={() => onChange(moveItem(items, index, index + 1))}
+                    size="icon"
                     type="button"
+                    variant="ghost"
                   >
                     ↓
                   </Button>
                   <Button
-                    className={collectionEditorStyles.element8}
                     onClick={() => {
                       if (
                         window.confirm(
@@ -106,7 +107,9 @@ export function CollectionEditor<T extends CollectionEditorItem>({
                         else onChange(items.filter((row) => row.id !== item.id));
                       }
                     }}
+                    size="sm"
                     type="button"
+                    variant="destructive"
                   >
                     Remove
                   </Button>

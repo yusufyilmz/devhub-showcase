@@ -18,7 +18,7 @@ const meta = {
     layout: "fullscreen",
   },
   tags: ["autodocs"],
-  title: "Layout/SiteHeader",
+  title: "UI/Navigation/Site Header",
 } satisfies Meta<typeof SiteHeader>;
 
 export default meta;

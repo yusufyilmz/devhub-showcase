@@ -15,7 +15,7 @@ const meta = {
   args: { items, label: "Selected work" },
   component: SectionCarousel,
   tags: ["autodocs"],
-  title: "UI/Layout/Section/SectionCarousel",
+  title: "UI/Layout/Section/Section Carousel",
 } satisfies Meta<typeof SectionCarousel>;
 export default meta;
 type Story = StoryObj<typeof meta>;
