@@ -53,7 +53,7 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
   await page.getByRole("button", { name: "Process CV" }).click();
   await expect(page.getByText("Import temporarily unavailable", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Skip for now" }).click();
-  await expect(page.getByRole("dialog", { name: "Add your details" })).toBeVisible();
+  await expect(page.getByRole("dialog", { name: "Profile" })).toBeVisible();
   await page.getByRole("button", { name: "Help me write an introduction" }).click();
   await expect(page.locator("#ai-studio-message")).toHaveValue(
     /Help me write a short portfolio introduction/,
@@ -67,13 +67,31 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
     .getByRole("textbox", { name: "Short introduction (optional)" })
     .fill("A thoughtful introduction.");
   await page.getByRole("button", { exact: true, name: "Continue" }).click();
-  await expect(page.getByText("2 of 6 · Optional")).toBeVisible();
+  await expect(page.getByText("Step 5 of 11")).toBeVisible();
   await page.getByRole("button", { name: "Skip for now" }).click();
   await expect(page.getByRole("heading", { exact: true, name: "Projects" }).first()).toBeVisible();
   await expect(page.getByText("Recovery saved in this tab", { exact: true })).toBeVisible();
   await page.reload();
   await page.getByRole("button", { exact: true, name: "Restore recovered draft" }).click();
-  await expect(page.getByText("3 of 6 · Optional")).toBeVisible();
+  await expect(page.getByText("Step 6 of 11")).toBeVisible();
+  for (const title of ["Skills", "Education", "Languages", "Custom sections"]) {
+    await page.getByRole("button", { exact: true, name: "Skip for now" }).click();
+    await expect(page.getByRole("dialog", { exact: true, name: title })).toBeVisible();
+  }
+  const library = page.getByLabel("Section starter");
+  await library.selectOption("heading");
+  await page.getByRole("button", { exact: true, name: "Add custom section" }).click();
+  await page.getByRole("textbox", { name: "Section name" }).fill("Featured work");
+  await expect(page.getByLabel("Section display")).toBeVisible();
+  await library.selectOption("faq");
+  await page.getByRole("button", { exact: true, name: "Add custom section" }).click();
+  await expect(page.getByLabel("Section type")).toHaveValue("faq");
+  await page
+    .getByRole("navigation", { name: "Custom sections in your draft" })
+    .getByRole("button", { name: "Featured work" })
+    .click();
+  await expect(page.getByLabel("Section type")).toHaveValue("heading");
+
   await page.getByRole("button", { name: "Review draft" }).click();
   await expect(page.getByRole("dialog", { name: "Review your draft" })).toBeVisible();
   await page.getByRole("button", { exact: true, name: "CV" }).click();

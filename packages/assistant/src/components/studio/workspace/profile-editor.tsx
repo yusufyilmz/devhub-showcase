@@ -201,33 +201,6 @@ type ScratchBackup = {
   view: "edit" | "preview";
 };
 
-function StartFromScratchAction({
-  disabled,
-  startingOver,
-  showStart,
-  onCancel,
-  onStart,
-}: {
-  disabled: boolean;
-  startingOver: boolean;
-  showStart: boolean;
-  onCancel: () => void;
-  onStart: () => void;
-}) {
-  if (!startingOver && !showStart) return null;
-  return (
-    <Button
-      className="studio-secondary"
-      disabled={disabled}
-      onClick={startingOver ? onCancel : onStart}
-      type="button"
-      variant="outline"
-    >
-      {startingOver ? "Cancel starting over" : "Start from scratch"}
-    </Button>
-  );
-}
-
 export function ProfileEditor({
   initial,
   saveUrl = urls.studio.profile(),
@@ -388,8 +361,8 @@ export function ProfileEditor({
         assistant={setupAssistant(managed, draft, setDraft, saved)}
         busy={busy}
         error={error}
-        onCancel={scratchBackup ? cancelStartingOver : undefined}
         onChange={setDraft}
+        onClose={scratchBackup ? cancelStartingOver : () => setStep("done")}
         onPosition={setSetupPosition}
         onProfession={(value) => {
           setProfession(value);
@@ -445,13 +418,19 @@ export function ProfileEditor({
                   >
                     Arrange layout
                   </Button>
-                  <StartFromScratchAction
+                  <Button
+                    className="studio-secondary"
                     disabled={editorDisabled}
-                    onCancel={cancelStartingOver}
-                    onStart={startFromScratch}
-                    showStart={step === "done"}
-                    startingOver={Boolean(scratchBackup)}
-                  />
+                    onClick={
+                      saved.profile.templateChosen === false
+                        ? () => setStep("template")
+                        : startFromScratch
+                    }
+                    type="button"
+                    variant="outline"
+                  >
+                    {saved.profile.templateChosen === false ? "Resume setup" : "Start from scratch"}
+                  </Button>
                   <Button className="studio-secondary" href="/admin/billing" variant="outline">
                     Plan and usage
                   </Button>
@@ -867,7 +846,7 @@ function restoreSetupPosition(step: SetupStep, position?: SetupPosition): SetupP
     position.stage <= 4 &&
     Number.isInteger(position.section) &&
     position.section >= 0 &&
-    position.section <= 5
+    position.section <= 6
   )
     return position;
   if (step === "review") return { section: 0, stage: 4 };

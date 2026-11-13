@@ -33,6 +33,7 @@ export type CustomViewOptions = {
 };
 
 export type CustomSectionsEditorOptions = {
+  focused?: boolean;
   profile: PortfolioProfile;
   onChange: (profile: PortfolioProfile) => void;
 };

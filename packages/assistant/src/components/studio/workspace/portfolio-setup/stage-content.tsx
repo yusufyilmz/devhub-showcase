@@ -1,10 +1,11 @@
-import type { ReactNode, Ref } from "react";
+import type { ReactNode } from "react";
 
 import { type PortfolioProfile, type PortfolioType, portfolioTypes } from "@shared/config";
 import { Button } from "@shared/ui/button";
 import { SelectField } from "@shared/ui/forms";
 
 import { PortfolioTypePicker } from "../../../portfolio/portfolio-type-picker";
+import { CustomSectionsEditor } from "../../../sections/studio/custom-sections-editor";
 import { CvImportEditor } from "../../import/cv-import-editor";
 import { SetupProfile } from "./profile";
 import { type SetupPosition, sections } from "./steps";
@@ -20,7 +21,6 @@ export function SetupStageContent({
   preview,
   profession,
   profile,
-  sectionHeading,
 }: {
   assistant?: ReactNode;
   busy: boolean;
@@ -32,7 +32,6 @@ export function SetupStageContent({
   preview: ReactNode;
   profession: PortfolioType;
   profile: PortfolioProfile;
-  sectionHeading: Ref<HTMLHeadingElement>;
 }) {
   const { stage, section } = position;
   const activeSection = sections[section] ?? sections[0];
@@ -60,24 +59,14 @@ export function SetupStageContent({
         />
       )}
       {stage === 2 && <CvImportEditor embedded onChange={onApplyCv} profile={profile} />}
-      {stage === 3 && (
-        <>
-          <div className="portfolio-setup-section-heading">
-            <h3 ref={sectionHeading} tabIndex={-1}>
-              {activeSection.title}
-            </h3>
-            <span>
-              {section + 1} of {sections.length}
-              {section > 0 ? " · Optional" : ""}
-            </span>
-          </div>
-          {Editor ? (
-            <Editor key={activeSection.title} onChange={onChange} profile={profile} />
-          ) : (
-            <SetupProfile assistant={assistant} onChange={onChange} profile={profile} />
-          )}
-        </>
-      )}
+      {stage === 3 &&
+        (section === sections.length - 1 ? (
+          <CustomSectionsEditor focused onChange={onChange} profile={profile} />
+        ) : Editor ? (
+          <Editor key={activeSection.title} onChange={onChange} profile={profile} />
+        ) : (
+          <SetupProfile assistant={assistant} onChange={onChange} profile={profile} />
+        ))}
       {stage === 4 && (
         <>
           <nav aria-label="Edit draft sections" className="portfolio-setup-review-links">

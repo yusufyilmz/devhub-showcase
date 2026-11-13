@@ -7,7 +7,6 @@ export function SetupActions({
   cvApplied,
   error,
   go,
-  onCancel,
   onSave,
   position,
   ready,
@@ -17,7 +16,6 @@ export function SetupActions({
   cvApplied: boolean;
   error: string;
   go: (stage: number, section?: number) => void;
-  onCancel?: () => void;
   onSave: () => void;
   position: SetupPosition;
   ready: boolean;
@@ -45,11 +43,6 @@ export function SetupActions({
       <Button disabled={busy || stage === 0} onClick={back} type="button" variant="outline">
         Back
       </Button>
-      {onCancel && (
-        <Button disabled={busy} onClick={onCancel} type="button" variant="ghost">
-          Cancel starting over
-        </Button>
-      )}
       <div>
         {stage === 2 && !cvApplied && (
           <Button disabled={busy} onClick={() => go(3)} type="button" variant="ghost">

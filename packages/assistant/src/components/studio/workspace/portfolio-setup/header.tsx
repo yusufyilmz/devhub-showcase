@@ -2,30 +2,36 @@ import type { Ref } from "react";
 
 import { DialogDescription, DialogTitle } from "@shared/ui/dialog";
 
-import { stages } from "./steps";
+import { progressSteps, type SetupPosition, sections, stages } from "./steps";
 
 export function SetupHeader({
   heading,
-  stage,
+  position,
 }: {
   heading: Ref<HTMLHeadingElement>;
-  stage: number;
+  position: SetupPosition;
 }) {
+  const { stage, section } = position;
+  const index = stage === 3 ? 3 + section : stage === 4 ? progressSteps.length - 1 : stage;
   const copy = stages[stage] ?? stages[0];
   return (
     <header className="portfolio-setup-header">
       <p className="eyebrow">
-        Step {stage + 1} of {stages.length}
+        Step {index + 1} of {progressSteps.length}
       </p>
       <DialogTitle ref={heading} tabIndex={-1}>
-        {copy.title}
+        {stage === 3 ? sections[section]?.title : copy.title}
       </DialogTitle>
-      <DialogDescription>{copy.description}</DialogDescription>
+      <DialogDescription>
+        {stage === 3 && section > 0
+          ? "Optional. You can return to this section later."
+          : copy.description}
+      </DialogDescription>
       <ol aria-label="Setup progress" className="portfolio-setup-progress">
-        {stages.map(({ label }, index) => (
+        {progressSteps.map((label, step) => (
           <li
-            aria-current={index === stage ? "step" : undefined}
-            data-reached={index <= stage}
+            aria-current={step === index ? "step" : undefined}
+            data-reached={step <= index}
             key={label}
           >
             {label}

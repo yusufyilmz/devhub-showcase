@@ -105,7 +105,6 @@ export function GuidedOnboarding({
   onImport,
   onGoogleImport,
   onAskAssistant,
-  onCancel,
   managed,
   children,
   startStep = "work",
@@ -207,11 +206,6 @@ export function GuidedOnboarding({
         >
           Back
         </Button>
-        {onCancel && (
-          <Button onClick={onCancel} type="button" variant="ghost">
-            Cancel starting over
-          </Button>
-        )}
         {startStep !== "start" && (
           <Button onClick={advance} type="button">
             {startStep === "work" ? "Choose a layout" : "Choose how to start"}
