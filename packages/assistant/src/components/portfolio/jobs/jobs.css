@@ -1,12 +1,78 @@
 .job-hunter {
-  width: min(100%, 64rem);
-  padding: clamp(1rem, 3vw, 2rem);
+  display: grid;
+  gap: 1.25rem;
+  width: min(100%, 70rem);
+  min-width: 0;
+  padding: clamp(1rem, 3vw, 2.5rem);
   margin-inline: auto;
 }
 
+.job-hunter-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 0.5rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
 .job-hunter h1 {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-size: clamp(2rem, 4vw, 2.75rem);
   font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+
+.job-hunter-header p {
+  margin-block-start: 0.5rem;
+  color: var(--muted-foreground);
+}
+
+.job-hunter-feedback {
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.job-hunter-feedback:empty {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip-path: inset(50%);
+}
+
+.job-hunter .job-hunter-tabs {
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+.job-hunter [data-slot="tabs-list"] {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.25rem;
+  width: 100%;
+  height: auto;
+  padding: 0.25rem;
+}
+
+.job-hunter [data-slot="tabs-trigger"] {
+  height: auto;
+  min-height: 2.75rem;
+}
+
+.job-hunter [data-slot="tabs-trigger"] span {
+  padding-inline: 0.45rem;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  border-radius: 999px;
 }
 
 .job-hunter-stack,
@@ -17,43 +83,232 @@
 }
 
 .job-hunter-grid {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
 }
 
-.job-hunter-actions {
+.job-hunter-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr));
+  gap: 0.875rem;
+  padding: 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.job-hunter-results,
+.job-hunter-actions,
+.job-hunter-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.625rem;
   align-items: center;
+}
+
+.job-hunter-results h2 {
+  margin-inline-end: auto;
+  font-size: 1.125rem;
+  font-weight: 650;
+}
+
+.job-hunter-result-count,
+.job-hunter-meta {
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+}
+
+.job-hunter .job-hunter-card {
+  gap: 1rem;
+  overflow-wrap: anywhere;
+}
+
+.job-hunter .job-hunter-card-heading {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.job-hunter-role {
+  display: grid;
+  gap: 0.375rem;
+  min-width: 0;
+}
+
+.job-hunter-card [data-slot="card-title"] {
+  font-size: 1.125rem;
+  font-weight: 650;
+}
+
+.job-hunter-meta > *,
+.job-hunter-match {
+  display: inline-flex;
+  gap: 0.375rem;
+  align-items: center;
+  min-height: 1.75rem;
+  padding: 0.2rem 0.625rem;
+  background: var(--muted);
+  border-radius: 999px;
+}
+
+.job-hunter-match {
+  font-size: 0.8125rem;
+  font-weight: 650;
+  color: var(--card-foreground);
+  background: color-mix(in oklab, var(--primary) 12%, var(--card));
+}
+
+.job-hunter-meta svg,
+.job-hunter-match svg,
+.job-hunter-icon-title svg {
+  flex: none;
+  width: 1em;
+  height: 1em;
+}
+
+.job-hunter .job-hunter-source {
+  height: auto;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.job-hunter-reason,
+.job-hunter-description {
+  line-height: 1.6;
+}
+
+.job-hunter-description {
+  white-space: pre-line;
+}
+
+.job-hunter-card-actions {
+  padding-block-start: 0.875rem;
+  border-top: 1px solid var(--border);
 }
 
 .job-hunter label {
   display: block;
+  line-height: 1.4;
 }
 
 .job-hunter label > :is(input:not([type="checkbox"]), textarea, select) {
   display: block;
   width: 100%;
-  margin-block-start: 0.25rem;
+  margin-block-start: 0.375rem;
 }
 
-.job-hunter summary {
-  margin-block-end: 0.5rem;
+.job-hunter-toolbar :is(input, select) {
+  min-height: 2.625rem;
+}
+
+.job-hunter-status-field {
+  max-width: 16rem;
+}
+
+.job-hunter-details {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.job-hunter-details > summary {
+  padding: 0.75rem 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 600;
   cursor: pointer;
+  border-radius: inherit;
+}
+
+.job-hunter-details > summary:hover {
+  background: var(--muted);
+}
+
+.job-hunter-details > summary:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.job-hunter-details[open] > summary {
+  border-bottom: 1px solid var(--border);
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.job-hunter-details-body {
+  padding: 0.875rem;
+}
+
+.job-hunter-schedule {
+  padding: 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.job-hunter-schedule legend {
+  padding-inline: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 600;
 }
 
 .job-hunter-capitalize {
   text-transform: capitalize;
 }
 
-.job-hunter [data-slot="tabs-list"] {
-  flex-wrap: wrap;
-  max-width: 100%;
-  height: auto;
+.job-hunter-icon-title {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
-.job-hunter-source {
-  justify-self: start;
-  min-width: 116px;
-  min-height: 23px;
+.job-hunter-empty {
+  display: grid;
+  gap: 0.625rem;
+  justify-items: center;
+  padding: clamp(1.5rem, 5vw, 3rem) 1rem;
+  text-align: center;
+  background: var(--card);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.job-hunter-empty h3 {
+  font-weight: 650;
+}
+
+.job-hunter-empty p,
+.job-hunter-scan p {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.job-hunter-scan + .job-hunter-scan {
+  padding-block-start: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 767px) {
+  .job-hunter [data-slot="tabs-list"],
+  .job-hunter-toolbar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .job-hunter [data-slot="tabs-trigger"] {
+    flex-wrap: wrap;
+    white-space: normal;
+  }
+
+  .job-hunter-toolbar > :first-child {
+    grid-column: 1 / -1;
+  }
+
+  .job-hunter-actions .ui-button,
+  .job-hunter-header .ui-button,
+  .job-hunter-results .ui-button {
+    max-width: 100%;
+    height: auto;
+    min-height: 2.75rem;
+    white-space: normal;
+  }
 }
