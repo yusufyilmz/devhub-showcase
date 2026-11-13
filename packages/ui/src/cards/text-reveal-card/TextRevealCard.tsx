@@ -19,7 +19,7 @@ export function TextRevealCard({ text, revealText, className, children }: TextRe
       <Collapsible>
         <CollapsibleTrigger asChild>
           <Button
-            className="group h-auto w-full justify-between gap-3 whitespace-normal px-5 py-4 text-left"
+            className="group h-auto min-h-11 w-full justify-between gap-3 whitespace-normal px-md py-3 text-left text-foreground aria-expanded:bg-muted/60"
             variant="ghost"
           >
             {text}
@@ -30,7 +30,7 @@ export function TextRevealCard({ text, revealText, className, children }: TextRe
           </Button>
         </CollapsibleTrigger>
         <CollapsibleContent className="ui-disclosure-motion">
-          <div className="mx-5 space-y-2 border-border border-t py-4 text-muted-foreground text-sm">
+          <div className="mx-md space-y-2 border-t border-border py-4 text-sm leading-relaxed text-muted-foreground">
             <p>{revealText}</p>
             {children}
           </div>

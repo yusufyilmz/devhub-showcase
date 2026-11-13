@@ -90,9 +90,6 @@
   initial-value: 0deg;
   inherits: false;
 }
-.reveal-card {
-  padding: var(--spacing-md);
-}
 .reveal-card::before {
   position: absolute;
   inset: 0;
@@ -119,26 +116,9 @@
 .reveal-card[data-expanded="true"] {
   border-color: color-mix(in srgb, var(--primary) 60%, transparent);
 }
-.reveal-heading h3 {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.025em;
-}
-.reveal-heading > div {
-  padding: 0;
-}
 .reveal-subtitle {
   margin-top: 6px;
   font-size: 14px;
-  color: var(--muted-foreground);
-}
-.reveal-brief {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  -webkit-line-clamp: 2;
-  font-size: 13px;
-  line-height: 1.8;
   color: var(--muted-foreground);
 }
 .reveal-preview {
@@ -158,29 +138,6 @@
   grid-template-rows: 0fr;
   margin-top: 0;
   opacity: 0;
-}
-.reveal-toggle {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  padding: 6px var(--spacing-s);
-  margin-top: 18px;
-  font-size: 11px;
-  color: var(--primary);
-  letter-spacing: 0.04em;
-  cursor: pointer;
-}
-.reveal-toggle.ui-button[data-slot="button"]:hover,
-.reveal-toggle.ui-button[data-slot="button"]:focus-visible {
-  color: var(--foreground);
-  background-color: color-mix(in srgb, var(--primary) 10%, var(--card));
-}
-.reveal-chevron {
-  font-size: 18px;
-  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.reveal-card[data-expanded="true"] .reveal-chevron {
-  transform: rotate(90deg);
 }
 .reveal-hint-touch,
 .reveal-hint-keyboard {
@@ -250,7 +207,6 @@
   .reveal-details {
     animation: none;
   }
-  .reveal-chevron,
   .reveal-preview,
   .reveal-details {
     transition: none;

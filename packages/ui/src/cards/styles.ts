@@ -255,14 +255,15 @@ export const hoverCardStyles = {
 } as const;
 
 export const revealCardStyles = {
-  element1: "reveal-heading",
+  element1: "reveal-heading [&>div]:p-0 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:tracking-tight",
   element2: "reveal-preview",
-  element3: "reveal-brief",
-  element4: "reveal-toggle",
+  element3: "reveal-brief line-clamp-2 text-sm leading-relaxed text-muted-foreground",
+  element4: "reveal-toggle mt-4 min-h-9 gap-2 px-3 text-xs text-foreground",
   element5: "reveal-hint-desktop",
   element6: "reveal-hint-touch",
   element7: "reveal-hint-keyboard",
-  element8: "reveal-chevron",
+  element8:
+    "reveal-chevron text-base leading-none motion-safe:transition-transform group-aria-expanded/button:rotate-90",
   element9: "reveal-details",
   element10: "reveal-details-inner",
 } as const;
@@ -330,14 +331,15 @@ export const sectionCardsStyles = {
 } as const;
 
 export const revealCardCopyStyles = {
-  element1: "reveal-heading",
+  element1: "reveal-heading [&>div]:p-0 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:tracking-tight",
   element2: "reveal-preview",
-  element3: "reveal-brief",
-  element4: "reveal-toggle",
+  element3: "reveal-brief line-clamp-2 text-sm leading-relaxed text-muted-foreground",
+  element4: "reveal-toggle mt-4 min-h-9 gap-2 px-3 text-xs text-foreground",
   element5: "reveal-hint-desktop",
   element6: "reveal-hint-touch",
   element7: "reveal-hint-keyboard",
-  element8: "reveal-chevron",
+  element8:
+    "reveal-chevron text-base leading-none motion-safe:transition-transform group-aria-expanded/button:rotate-90",
   element9: "reveal-details",
   element10: "reveal-details-inner",
 } as const;
@@ -346,8 +348,8 @@ export function cardBodyClassName(...values: unknown[]): string {
   return `p-0 md:p-4 ${values[0]}`;
 }
 
-export function revealCardBaseClassName(...values: unknown[]): string {
-  return `section-card reveal-card ${values[0]}`;
+export function revealCardBaseClassName(className?: string): string {
+  return cn("section-card reveal-card p-md", className);
 }
 
 export function appearanceCardInlineStyle1(
