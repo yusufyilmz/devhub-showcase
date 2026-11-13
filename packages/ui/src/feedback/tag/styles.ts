@@ -13,5 +13,5 @@ export const sizes = {
 };
 
 export function tagClassName(...values: unknown[]): string {
-  return `inline-flex items-center rounded-full border font-medium ${values[0]} ${values[1]}`;
+  return `inline-flex items-center rounded-lg border ${values[0]} ${values[1]}`;
 }

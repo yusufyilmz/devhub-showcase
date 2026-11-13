@@ -988,3 +988,15 @@
   --sidebar-border: var(--border);
   --sidebar-ring: var(--clr-emerald-700);
 }
+
+/* Soft hairlines for every brand. The solid 300–600 steps are near-black and
+   read as a heavy stroke on cards, fields, and menus. */
+[data-theme="light"][data-brand] {
+  --border: color-mix(in srgb, var(--foreground) 14%, transparent);
+  --sidebar-border: color-mix(in srgb, var(--foreground) 14%, transparent);
+}
+[data-theme="dark"][data-brand],
+[data-theme="dark"]:not([data-brand]) {
+  --border: color-mix(in srgb, var(--foreground) 18%, transparent);
+  --sidebar-border: color-mix(in srgb, var(--foreground) 18%, transparent);
+}

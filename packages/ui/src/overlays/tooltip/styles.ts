@@ -7,8 +7,7 @@ export const tooltipContentClass = cva(
     variants: {
       variant: {
         dark: "[--tooltip-bg:var(--clr-gray-100)] [--tooltip-fg:var(--clr-white)]",
-        default:
-          "[--tooltip-bg:var(--popover)] [--tooltip-fg:var(--popover-foreground)] ring-1 ring-inset ring-border",
+        default: "[--tooltip-bg:var(--foreground)] [--tooltip-fg:var(--background)] shadow-none",
         gradient:
           "[--tooltip-bg:var(--primary)] [--tooltip-fg:var(--primary-foreground)] bg-linear-to-br from-primary to-accent",
         light:

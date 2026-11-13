@@ -265,6 +265,7 @@ export function ThemeCustomizer({
         root.style.getPropertyValue(name),
       ]),
     );
+    // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: TODO
     const applyMode = () => {
       const systemMode = media.matches ? "dark" : "light";
       const resolved = activeMode === null && shell ? previousTheme : null;
