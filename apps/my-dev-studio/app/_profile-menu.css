@@ -29,21 +29,8 @@
 }
 
 .profile-menu-panel[data-slot="dropdown-menu-content"] {
-  z-index: 120;
   width: min(18rem, calc(100vw - 24px));
   min-width: 0;
-  padding: 6px;
-  color: var(--foreground);
-  background:
-    radial-gradient(
-      ellipse 125% 225px at top,
-      color-mix(in srgb, var(--primary) 28%, transparent),
-      transparent
-    ),
-    var(--popover);
-  border: 1px solid var(--border);
-  border-radius: 26px;
-  box-shadow: 0 16px 44px color-mix(in srgb, var(--foreground) 18%, transparent);
 }
 
 .profile-menu-panel .profile-menu-identity {
@@ -87,29 +74,3 @@
   letter-spacing: 0.06em;
 }
 
-.profile-menu-panel [data-slot="dropdown-menu-item"] {
-  gap: 12px;
-  min-height: 40px;
-  padding: 7px 12px;
-  font-size: 14px;
-  border-radius: 12px;
-}
-
-.profile-menu-panel [data-slot="dropdown-menu-item"] svg {
-  width: 17px;
-  height: 17px;
-  color: var(--muted-foreground);
-}
-
-.profile-menu-panel [data-slot="dropdown-menu-item"][data-highlighted] {
-  color: var(--primary);
-  background: color-mix(in srgb, var(--primary) 12%, var(--popover));
-}
-
-.profile-menu-panel [data-slot="dropdown-menu-item"][data-variant="destructive"][data-highlighted] {
-  color: var(--destructive);
-}
-
-.profile-menu-panel [data-slot="dropdown-menu-separator"] {
-  margin: 4px;
-}
