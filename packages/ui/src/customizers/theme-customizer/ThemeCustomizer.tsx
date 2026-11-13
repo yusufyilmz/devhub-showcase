@@ -207,7 +207,8 @@ export function ThemeCustomizer({
   ...props
 }: ThemeCustomizerProps) {
   const preferences = useThemeStore((state) => state.themePreferences);
-  const theme = useThemeStore((state) => state.activeMode) ?? "system";
+  const activeMode = useThemeStore((state) => state.activeMode);
+  const theme = activeMode ?? "system";
   const setTheme = (value: ThemeOption) => useThemeStore.getState().setActiveMode(value);
   const brand = (preferences.brand ?? defaultAttribute("brand", "white")) as BrandOption;
   const border = preferences.border ?? defaultAttribute("border", "base");
@@ -265,15 +266,18 @@ export function ThemeCustomizer({
       ]),
     );
     const applyMode = () => {
-      const resolved = theme === "system" ? (media.matches ? "dark" : "light") : theme;
+      const systemMode = media.matches ? "dark" : "light";
+      const resolved = activeMode === null && shell ? previousTheme : null;
+      const mode = resolved ?? (theme === "system" ? systemMode : theme);
       for (const element of shell ? [root, shell] : [root]) {
-        element.setAttribute("data-theme", resolved);
-        element.classList.toggle("dark", resolved === "dark");
+        element.setAttribute("data-theme", mode);
+        element.classList.toggle("dark", mode === "dark");
       }
     };
     applyMode();
     media.addEventListener("change", applyMode);
-    root.setAttribute("data-brand", brand);
+    const previewBrand = shell?.getAttribute("data-brand");
+    root.setAttribute("data-brand", preferences.brand ?? previewBrand ?? brand);
     root.setAttribute("data-border", border);
     root.setAttribute("data-shadow", shadow);
     root.setAttribute("data-spacing", spacing);
@@ -300,7 +304,18 @@ export function ThemeCustomizer({
         else root.style.removeProperty(name);
       }
     };
-  }, [theme, brand, border, shadow, spacing, radius, transition, portfolioTheme, preferences]);
+  }, [
+    activeMode,
+    theme,
+    brand,
+    border,
+    shadow,
+    spacing,
+    radius,
+    transition,
+    portfolioTheme,
+    preferences,
+  ]);
 
   const handleThemeChange = (newTheme: ThemeOption) => {
     setTheme(newTheme);
