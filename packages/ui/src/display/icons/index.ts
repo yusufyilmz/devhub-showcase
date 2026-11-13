@@ -1,11 +1,17 @@
 export {
+  Bookmark as BookmarkIcon,
+  BriefcaseBusiness as BriefcaseIcon,
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronUpIcon,
+  ClipboardList as ClipboardListIcon,
+  CreditCard as CreditCardIcon,
   Folders as FoldersIcon,
   GripVertical as GripVerticalIcon,
   Loader2Icon,
+  LogOut as LogOutIcon,
+  Settings as SettingsIcon,
 } from "lucide-react";
 
 export {

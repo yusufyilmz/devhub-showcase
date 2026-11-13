@@ -18,12 +18,24 @@ import {
   DropdownMenuTrigger,
 } from "@shared/ui/dropdown-menu";
 import { IconButton } from "@shared/ui/icon-button";
+import {
+  BookmarkIcon,
+  BriefcaseIcon,
+  ChatIcon,
+  ClipboardListIcon,
+  CreditCardIcon,
+  EditIcon,
+  FoldersIcon,
+  LinkedInIcon,
+  LogOutIcon,
+  SettingsIcon,
+} from "@shared/ui/icons";
 
 const jobLinks = [
-  { href: "/admin/jobs", label: "Job Hunter" },
-  { href: "/admin/jobs?tab=saved", label: "Saved jobs" },
-  { href: "/admin/jobs?tab=applications", label: "Applications" },
-  { href: "/admin/jobs?tab=settings", label: "Job settings" },
+  { href: "/admin/jobs", icon: BriefcaseIcon, label: "Job Hunter" },
+  { href: "/admin/jobs?tab=saved", icon: BookmarkIcon, label: "Saved jobs" },
+  { href: "/admin/jobs?tab=applications", icon: ClipboardListIcon, label: "Applications" },
+  { href: "/admin/jobs?tab=settings", icon: SettingsIcon, label: "Job settings" },
 ];
 
 export function ProfileMenu({
@@ -86,40 +98,59 @@ export function ProfileMenu({
               {username && <span>@{username}</span>}
             </span>
           </DropdownMenuLabel>
-          <DropdownMenuSeparator />
           <DropdownMenuLabel className="profile-menu-heading">Portfolio</DropdownMenuLabel>
           <DropdownMenuGroup>
             <DropdownMenuItem asChild>
-              <a href={studioHref}>Edit profile</a>
+              <a href={studioHref}>
+                <EditIcon aria-hidden="true" />
+                Edit profile
+              </a>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <a href="/admin/chat">Studio assistant</a>
+              <a href="/admin/chat">
+                <ChatIcon aria-hidden="true" />
+                Studio assistant
+              </a>
             </DropdownMenuItem>
             {canManagePortfolios && (
               <DropdownMenuItem asChild>
-                <a href="/admin/portfolios">Manage portfolios</a>
+                <a href="/admin/portfolios">
+                  <FoldersIcon aria-hidden="true" />
+                  Manage portfolios
+                </a>
               </DropdownMenuItem>
             )}
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuLabel className="profile-menu-heading">Jobs</DropdownMenuLabel>
           <DropdownMenuGroup>
-            {jobLinks.map(({ href, label }) => (
+            {jobLinks.map(({ href, icon: Icon, label }) => (
               <DropdownMenuItem asChild key={href}>
-                <a href={href}>{label}</a>
+                <a href={href}>
+                  <Icon aria-hidden="true" />
+                  {label}
+                </a>
               </DropdownMenuItem>
             ))}
             {canImportLinkedInAlerts && (
               <DropdownMenuItem asChild>
-                <a href="/admin/jobs?tab=linkedin">LinkedIn alerts</a>
+                <a href="/admin/jobs?tab=linkedin">
+                  <LinkedInIcon aria-hidden="true" />
+                  LinkedIn alerts
+                </a>
               </DropdownMenuItem>
             )}
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <a href="/admin/billing">Plan and billing</a>
+            <a href="/admin/billing">
+              <CreditCardIcon aria-hidden="true" />
+              Plan and billing
+            </a>
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem disabled={busy} onSelect={() => signOut()} variant="destructive">
+            <LogOutIcon aria-hidden="true" />
             {busy ? "Signing out…" : "Sign out"}
           </DropdownMenuItem>
         </DropdownMenuContent>
