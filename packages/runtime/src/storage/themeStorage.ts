@@ -2,13 +2,23 @@ import { getPortfolioThemeVariables, portfolioThemes } from "@shared/config";
 import { storage } from "@shared/config/storage";
 import { themeOptions } from "@shared/config/theme";
 
+import { accountPreferenceSession } from "./accountPreferenceSession";
 import { localStorageBase, versionedStorage } from "./browserStorage";
 import { type ThemePreferences, themePreferenceAliases } from "./themePreferences";
 
 export type ThemeMode = "light" | "dark" | "system";
 export type ThemeSettings = { activeMode: ThemeMode | null; themePreferences: ThemePreferences };
 
-export const themeStorage = versionedStorage<ThemeSettings>(localStorageBase, storage.theme);
+const browserTheme = versionedStorage<ThemeSettings>(localStorageBase, storage.theme);
+export const themeStorage = {
+  ...browserTheme,
+  storage: {
+    ...browserTheme.storage,
+    setItem: (...args: Parameters<typeof browserTheme.storage.setItem>) => {
+      if (!accountPreferenceSession.active()) browserTheme.storage.setItem(...args);
+    },
+  },
+};
 
 export function isThemeMode(value: unknown): value is ThemeMode {
   return value === "light" || value === "dark" || value === "system";

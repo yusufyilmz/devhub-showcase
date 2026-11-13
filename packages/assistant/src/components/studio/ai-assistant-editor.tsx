@@ -23,6 +23,7 @@ import { Textarea as LibraryTextarea } from "@shared/ui/textarea";
 
 import { StudioChatScreen } from "../chat/index";
 import { AssistantFeedback, AssistantTools, ProposalComparison } from "../portfolio/index";
+import { applyAccountPreferenceCommand } from "./account-preference-command";
 
 type Props = {
   initialMessage?: string;
@@ -60,7 +61,7 @@ function ChatPresentation({
   return (
     <StudioChatScreen
       {...screen}
-      disabled={!availability?.enabled || !profileId}
+      disabled={!profileId}
       error={error || saveError}
       notice={<AssistantNotice availability={availability} />}
       status={saveStatus || status}
@@ -71,7 +72,10 @@ function ChatPresentation({
 function AssistantNotice({ availability }: { availability: Availability | null }) {
   return (
     <>
-      <p>Your draft is sent to OpenAI. Review proposals before applying or saving.</p>
+      <p>
+        Portfolio requests send your draft to OpenAI. Review proposals before applying or saving.
+      </p>
+      <p>Try “Switch to dark theme”, “Move companion right”, or “Resize companion 100”.</p>
       {availability ? (
         <p>
           {availability.usage} / {availability.limit} attempts used.
@@ -206,6 +210,21 @@ function AssistantWorkspace({
       );
     }
   }
+  function submitChat() {
+    if (busy) return;
+    const preferenceUpdate = chat && !task ? applyAccountPreferenceCommand(message) : undefined;
+    if (preferenceUpdate) {
+      showError("");
+      recordTurn("user", message);
+      recordTurn("assistant", preferenceUpdate);
+      return;
+    }
+    if (!availability?.enabled) {
+      showError("Portfolio assistance requires Studio Pro.");
+      return;
+    }
+    generate();
+  }
   if (chat)
     return (
       <ChatPresentation
@@ -226,7 +245,7 @@ function AssistantWorkspace({
           setStatus("");
         }}
         onStop={() => controller.current?.abort()}
-        onSubmit={generate}
+        onSubmit={submitChat}
         profileId={profileId}
         review={
           review ? (

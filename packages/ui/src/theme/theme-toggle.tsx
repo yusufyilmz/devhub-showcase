@@ -61,7 +61,8 @@ export function ThemeToggle({
         <header>
           <DialogTitle>Make yourself at home</DialogTitle>
           <DialogDescription>
-            Choose your colors, typography and space. Saved on this device.
+            Choose your colors, typography and space. Sign in to sync your preferences across
+            devices.
           </DialogDescription>
         </header>
         <AppearanceOptions />

@@ -183,6 +183,12 @@ export interface Database {
         Update: Partial<CompanionFeatureRow>;
         Relationships: [];
       };
+      studio_account_preferences: {
+        Row: { user_id: string; key: string; value: Json };
+        Insert: { user_id: string; key: string; value: Json };
+        Update: { user_id?: string; key?: string; value?: Json };
+        Relationships: [];
+      };
       companion_feature_progress: {
         Row: CompanionProgressRow;
         Insert: Omit<CompanionProgressRow, "completed_at">;

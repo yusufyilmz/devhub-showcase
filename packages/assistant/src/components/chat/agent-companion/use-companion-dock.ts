@@ -2,7 +2,7 @@
 
 import { type MouseEvent, type PointerEvent, useEffect, useRef, useState } from "react";
 
-import { companionStorage } from "@shared/runtime/storage";
+import { accountPreferenceSession, companionStorage } from "@shared/runtime/storage";
 
 type Layout = NonNullable<ReturnType<typeof companionStorage.readLayout>>;
 type Gesture = {
@@ -27,12 +27,15 @@ export function useCompanionDock(agent: string, floating: boolean) {
 
   useEffect(() => {
     if (!floating) return;
-    setLayout(
-      companionStorage.readLayout(agent) ?? {
-        x: companionStorage.readSide(agent) === "right" ? 1 : 0,
-        y: 1,
-      },
-    );
+    const refresh = () =>
+      setLayout(
+        companionStorage.readLayout(agent) ?? {
+          x: companionStorage.readSide(agent) === "right" ? 1 : 0,
+          y: 1,
+        },
+      );
+    refresh();
+    return accountPreferenceSession.subscribe(refresh);
   }, [agent, floating]);
 
   function save(next: Layout) {
