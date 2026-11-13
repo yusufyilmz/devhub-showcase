@@ -7,7 +7,7 @@ const meta = {
     brief: "An introduction to the project.",
     children: <p>The project involved three teams over six weeks.</p>,
     heading: <h3>Project overview</h3>,
-    title: "Storybook App UI/Cards/Reveal Card/Revealcard",
+    title: "Project overview",
   },
   component: RevealCard,
   parameters: { layout: "centered" },

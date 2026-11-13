@@ -49,6 +49,27 @@ describe("Shared document theme", () => {
     act(() => useThemeStore.setState({ themePreferences: {} }));
     expect(document.documentElement.dataset.accent).toBe("cyan");
   });
+  it.each(["relaxed", "cozy", "wide", "extra"])(
+    "restores legacy %s spacing as spacious before and after hydration",
+    async (spacing) => {
+      localStorage.setItem(
+        themeStorage.name,
+        JSON.stringify({ state: { themePreferences: { spacing } }, version: storage.version }),
+      );
+      runInNewContext(themeBootstrapScript("dark"), {
+        document,
+        localStorage,
+        matchMedia: window.matchMedia,
+      });
+      expect(document.documentElement.dataset.spacing).toBe("spacious");
+
+      await useThemeStore.persist.rehydrate();
+      expect(useThemeStore.getState().themePreferences.spacing).toBe("spacious");
+      render(<Page />);
+      expect(document.documentElement.dataset.spacing).toBe("spacious");
+    },
+  );
+
   it("applies a saved portfolio theme and restores the page theme when it is cleared", () => {
     render(<Page />);
     act(() => useThemeStore.setState({ themePreferences: { "portfolio-theme": "gloom" } }));

@@ -1,8 +1,8 @@
 export const switchStyles = {
   switch:
-    "peer inline-flex h-5 w-9 shrink-0 items-center rounded-full border border-transparent bg-foreground/15 shadow-none outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring/40 data-[state=checked]:bg-primary disabled:cursor-not-allowed disabled:opacity-50",
+    "peer inline-flex h-5 w-9 shrink-0 items-center rounded-full border border-border bg-foreground/15 outline-none motion-safe:transition-colors focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring data-[state=checked]:border-transparent data-[state=checked]:bg-primary disabled:cursor-not-allowed disabled:opacity-50",
   switch2:
-    "pointer-events-none block size-4 rounded-full border border-transparent bg-background shadow-none motion-safe:transition-transform data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0",
+    "pointer-events-none mx-px block size-4 rounded-full border border-border bg-background motion-safe:transition-transform data-[state=checked]:translate-x-4 rtl:data-[state=checked]:-translate-x-4",
 } as const;
 
 export const styledSwitchStyles = {

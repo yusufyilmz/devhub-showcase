@@ -22,7 +22,7 @@ export function CardSpotlight({
   return (
     <CardBase
       {...props}
-      className={cn("group/spotlight relative isolate overflow-hidden p-5", className)}
+      className={cn("group/spotlight isolate overflow-hidden p-5", className)}
       interaction={interaction}
       onPointerMove={(event) => {
         onPointerMove?.(event);
@@ -34,7 +34,7 @@ export function CardSpotlight({
     >
       <motion.div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 opacity-0 motion-safe:transition-opacity motion-safe:group-hover/spotlight:opacity-15"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-0 motion-safe:transition-opacity motion-safe:[@media(pointer:fine)]:group-hover/spotlight:opacity-15"
         style={{ background }}
       />
       {children}

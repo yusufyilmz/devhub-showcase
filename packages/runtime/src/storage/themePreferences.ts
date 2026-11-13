@@ -7,18 +7,30 @@ export const themePreferenceAliases: Record<string, Record<string, string>> = {
   border: { moderate: "base" },
   radius: { circle: "pill", moderate: "base", none: "square" },
   shadow: { deep: "strong" },
-  spacing: { cozy: "relaxed", extra: "spacious" },
+  spacing: { cozy: "spacious", extra: "spacious", relaxed: "spacious", wide: "spacious" },
   transition: { elastic: "bouncy" },
 };
 
 export function cleanThemePreferences(value: unknown): ThemePreferences {
   if (!value || typeof value !== "object") return {};
   return Object.fromEntries(
-    Object.entries(value).filter(
-      ([key, entry]) =>
-        Object.hasOwn(themeOptions, key) &&
-        typeof entry === "string" &&
-        (themeOptions[key as keyof typeof themeOptions] as readonly string[]).includes(entry),
-    ),
+    Object.entries(value)
+      .map(
+        ([key, entry]) =>
+          [
+            key,
+            key === "spacing" &&
+            typeof entry === "string" &&
+            Object.hasOwn(themePreferenceAliases.spacing ?? {}, entry)
+              ? themePreferenceAliases.spacing?.[entry]
+              : entry,
+          ] as const,
+      )
+      .filter(
+        ([key, entry]) =>
+          Object.hasOwn(themeOptions, key) &&
+          typeof entry === "string" &&
+          (themeOptions[key as keyof typeof themeOptions] as readonly string[]).includes(entry),
+      ),
   );
 }

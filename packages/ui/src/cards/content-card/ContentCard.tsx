@@ -143,6 +143,16 @@ function ContentCardCopy({
   );
 }
 
+function hasMediaBackground({
+  backgroundColor,
+  backgroundImage,
+  style,
+  variant,
+}: Pick<ContentCardProps, "backgroundColor" | "backgroundImage" | "style" | "variant">) {
+  if (variant === "gradient") return Boolean(backgroundColor);
+  return variant === "default" && Boolean(backgroundImage || style?.backgroundImage);
+}
+
 export const ContentCard = forwardRef<HTMLDivElement, ContentCardProps>(
   (
     {
@@ -153,7 +163,7 @@ export const ContentCard = forwardRef<HTMLDivElement, ContentCardProps>(
       author,
       metadata,
       children,
-      variant,
+      variant = "default",
       size = "md",
       layout = "overlay",
       overlay = "medium",
@@ -165,8 +175,9 @@ export const ContentCard = forwardRef<HTMLDivElement, ContentCardProps>(
     ref,
   ) => {
     const cardStyle = contentCardStyle(style, backgroundImage, backgroundColor, variant);
-    const textColor = variant === "solid" ? "text-foreground" : "text-white";
-    const subtitleColor = variant === "solid" ? "text-muted-foreground" : "text-white/80";
+    const hasMedia = hasMediaBackground({ backgroundColor, backgroundImage, style, variant });
+    const textColor = hasMedia ? "text-white" : "text-foreground";
+    const subtitleColor = hasMedia ? "text-white/80" : "text-muted-foreground";
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (onCardClick && (event.key === "Enter" || event.key === " ")) {
@@ -178,7 +189,13 @@ export const ContentCard = forwardRef<HTMLDivElement, ContentCardProps>(
     return (
       <div className={contentCardStyles.element11} ref={ref}>
         <Card
-          className={cn(contentCardVariants({ layout, size, variant }), className)}
+          className={cn(
+            contentCardVariants({ layout, size, variant }),
+            onCardClick &&
+              "cursor-pointer focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring",
+            className,
+          )}
+          interaction={onCardClick ? "lift" : "static"}
           onClick={onCardClick}
           onKeyDown={handleKeyDown}
           role={onCardClick ? "button" : undefined}
@@ -186,7 +203,7 @@ export const ContentCard = forwardRef<HTMLDivElement, ContentCardProps>(
           tabIndex={onCardClick ? 0 : undefined}
           {...props}
         >
-          {variant !== "solid" && <div className={overlayVariants({ overlay })} />}
+          {hasMedia && <div aria-hidden="true" className={overlayVariants({ overlay })} />}
           {author && layout === "overlay" && (
             <OverlayAuthor
               author={author}

@@ -21,17 +21,22 @@ export function ProjectCard({
   projectHref,
 }: ProjectCardProps) {
   return (
-    <CardBase asChild className="gap-4 overflow-hidden p-5" interaction="static">
+    <CardBase
+      asChild
+      className="flex flex-col gap-4 p-4 sm:p-5"
+      interaction="static"
+      layout="plain"
+    >
       <article>
         {images.length > 0 && (
-          <Carousel aria-label={`${title} screenshots`} className="relative">
+          <Carousel aria-label={`${title} screenshots`}>
             <CarouselContent>
               {images.map(({ src, alt }) => (
                 <CarouselItem key={src}>
                   {/* biome-ignore lint/performance/noImgElement: The component accepts caller-supplied screenshots. */}
                   <img
                     alt={alt}
-                    className="aspect-video w-full rounded-md object-cover"
+                    className="aspect-video w-full rounded-lg border border-border object-cover"
                     loading="lazy"
                     src={src}
                   />
@@ -40,15 +45,17 @@ export function ProjectCard({
             </CarouselContent>
             {images.length > 1 && (
               <>
-                <CarouselPrevious className="left-2" />
-                <CarouselNext className="right-2" />
+                <CarouselPrevious className="left-2 size-9" />
+                <CarouselNext className="right-2 size-9" />
               </>
             )}
           </Carousel>
         )}
-        <div className="space-y-2">
-          <h3 className="font-semibold text-lg">{title}</h3>
-          {description && <p className="text-muted-foreground text-sm">{description}</p>}
+        <div className="flex flex-col items-start gap-2 wrap-anywhere">
+          <h3 className="text-lg leading-tight font-semibold tracking-tight">{title}</h3>
+          {description && (
+            <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
+          )}
           {avatars.length > 0 && <AvatarGroup avatars={avatars} />}
         </div>
         {(caseStudyHref || projectHref) && (

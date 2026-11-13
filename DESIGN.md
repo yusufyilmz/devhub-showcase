@@ -308,19 +308,20 @@ The type scale is multiplied by `--text-scale` (default 1): 12, 14, 16, 18, 20, 
 
 ## Spacing
 
-The comfortable scale is the default. Compact, cozy, wide, and extra scales exist as theme options and only change these steps.
+Comfortable is the default. The appearance controls offer Compact, Comfortable, and Spacious. These presets adjust semantic padding and gaps. The 4px Tailwind unit stays fixed so controls and icons keep their intended dimensions.
 
-| Token            | Value |
-| ---------------- | ----- |
-| `{spacing.unit}` | 4px   |
-| `{spacing.xs}`   | 6px   |
-| `{spacing.s}`    | 12px  |
-| `{spacing.sm}`   | 16px  |
-| `{spacing.md}`   | 24px  |
-| `{spacing.lg}`   | 32px  |
-| `{spacing.xl}`   | 40px  |
-| `{spacing.2xl}`  | 56px  |
-| `{spacing.3xl}`  | 72px  |
+| Token           | Compact | Comfortable | Spacious |
+| --------------- | ------- | ----------- | -------- |
+| `{spacing.xs}`  | 2px     | 4px         | 6px      |
+| `{spacing.s}`   | 4px     | 8px         | 10px     |
+| `{spacing.sm}`  | 8px     | 12px        | 16px     |
+| `{spacing.md}`  | 12px    | 16px        | 20px     |
+| `{spacing.lg}`  | 16px    | 24px        | 28px     |
+| `{spacing.xl}`  | 24px    | 32px        | 40px     |
+| `{spacing.2xl}` | 32px    | 48px        | 56px     |
+| `{spacing.3xl}` | 48px    | 64px        | 72px     |
+
+Saved Relaxed, Cozy, Wide, and Extra preferences resolve to Spacious.
 
 Published sections use a wider rhythm: 40px page padding, 82px section padding, and a 64px gap between the sticky heading column and the content. The content column starts at 1200px max width. The nav is 78px tall inside a 1280px bar.
 

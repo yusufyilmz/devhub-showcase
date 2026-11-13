@@ -7,7 +7,7 @@ const meta = {
   args: {
     className: "w-[min(85vw,26rem)]",
     description: "Findings from a week of research.",
-    title: "Storybook App UI/Cards/Content Card/Contentcard",
+    title: "Research notes",
     variant: "solid",
   },
   component: ContentCard,
@@ -23,4 +23,9 @@ export const Default: Story = {};
 export const WithAuthor: Story = {
   args: { author: { name: "Mina Chen", subtitle: "Designer" }, metadata: "5 min read" },
 };
-export const Split: Story = { args: { backgroundImage: cardStoryImages.morning, layout: "split" } };
+export const Split: Story = {
+  args: { backgroundImage: cardStoryImages.morning, layout: "split", variant: "default" },
+};
+export const Gradient: Story = { args: { variant: "gradient" } };
+export const Minimal: Story = { args: { variant: "minimal" } };
+export const Interactive: Story = { args: { onCardClick: () => undefined } };

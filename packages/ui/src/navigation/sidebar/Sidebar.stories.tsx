@@ -18,7 +18,7 @@ import {
 
 function Example({ width = 560 }: { width?: number }) {
   return (
-    <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
+    <div className="mx-auto w-full" style={{ maxWidth: width }}>
       <SidebarProvider>
         <Sidebar collapsible="icon" variant="inset">
           <SidebarHeader>
@@ -55,11 +55,11 @@ function Example({ width = 560 }: { width?: number }) {
           <SidebarRail />
         </Sidebar>
         <SidebarInset>
-          <header className="flex items-center gap-2 border-b p-3">
+          <header className="flex items-center gap-xs border-sidebar-border border-b px-md py-s">
             <SidebarTrigger />
             <span className="text-sm font-medium">Workspace</span>
           </header>
-          <p className="p-4 text-sm text-muted-foreground">Studio content</p>
+          <p className="p-md text-sm text-muted-foreground">Studio content</p>
         </SidebarInset>
       </SidebarProvider>
     </div>

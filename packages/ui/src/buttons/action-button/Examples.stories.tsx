@@ -1,11 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { ActionButton } from "./ActionButton";
+import type { ActionButtonProps } from "./types";
 
-function Example({ width = 560 }: { width?: number }) {
+function Example({
+  width = 560,
+  ...props
+}: Pick<ActionButtonProps, "colorScheme" | "loading" | "variant"> & { width?: number }) {
   return (
-    <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
-      <ActionButton>Save changes</ActionButton>
+    <div className="w-full p-md" style={{ maxWidth: width }}>
+      <ActionButton {...props}>Save changes</ActionButton>
     </div>
   );
 }
@@ -19,3 +23,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const Narrow: Story = { args: { width: 320 } };
 export const Wide: Story = { args: { width: 960 } };
+export const Outlined: Story = { args: { variant: "outlined" } };
+export const Ghost: Story = { args: { variant: "ghost" } };
+export const Loading: Story = { args: { loading: true } };

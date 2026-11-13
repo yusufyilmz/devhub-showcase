@@ -3,7 +3,10 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { CardSpotlight } from "./CardSpotlight";
 
 const meta = {
-  args: { children: <p>Move the pointer to preview the spotlight.</p>, className: "w-72" },
+  args: {
+    children: <p>Move the pointer to preview the spotlight.</p>,
+    className: "w-72 max-w-full",
+  },
   component: CardSpotlight,
   parameters: { layout: "centered" },
   tags: ["autodocs"],

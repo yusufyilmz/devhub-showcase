@@ -19,63 +19,40 @@
 }
 
 [data-spacing="compact"] {
-  --spacing-xs: 0.125rem; /* 2px */
-  --spacing-s: 0.25rem; /* 4px */
-  --spacing-sm: 0.5rem; /* 8px */
-  --spacing-md: 0.75rem; /* 12px */
-  --spacing-lg: 1rem; /* 16px */
-  --spacing-xl: 1.5rem; /* 24px */
-  --spacing-2xl: 2rem; /* 32px */
-  --spacing-3xl: 3rem; /* 48px */
-  --spacing: 0.25rem; /* 4px */
+  --spacing-xs: 0.125rem;
+  --spacing-s: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-lg: 1rem;
+  --spacing-xl: 1.5rem;
+  --spacing-2xl: 2rem;
+  --spacing-3xl: 3rem;
 }
 
 [data-spacing="comfortable"] {
-  --spacing-xs: 0.25rem; /* 4px */
-  --spacing-s: 0.5rem; /* 8px */
-  --spacing-sm: 0.75rem; /* 12px */
-  --spacing-md: 1rem; /* 16px */
-  --spacing-lg: 1.5rem; /* 24px */
-  --spacing-xl: 2rem; /* 32px */
-  --spacing-2xl: 3rem; /* 48px */
-  --spacing-3xl: 4rem; /* 64px */
-  --spacing: 0.25rem; /* 4px */
+  --spacing-xs: 0.25rem;
+  --spacing-s: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
 }
 
-[data-spacing="relaxed"] {
-  --spacing-xs: 0.375rem; /* 6px */
-  --spacing-s: 0.75rem; /* 12px */
-  --spacing-sm: 1rem; /* 16px */
-  --spacing-md: 1.5rem; /* 24px */
-  --spacing-lg: 2rem; /* 32px */
-  --spacing-xl: 2.5rem; /* 40px */
-  --spacing-2xl: 3.5rem; /* 56px */
-  --spacing-3xl: 4.5rem; /* 72px */
-  --spacing: 0.5rem; /* 8px */
-}
-
-[data-spacing="spacious"] {
-  --spacing-xs: 0.5rem; /* 8px */
-  --spacing-s: 1rem; /* 16px */
-  --spacing-sm: 1.5rem; /* 24px */
-  --spacing-md: 2rem; /* 32px */
-  --spacing-lg: 2.5rem; /* 40px */
-  --spacing-xl: 3rem; /* 48px */
-  --spacing-2xl: 4rem; /* 64px */
-  --spacing-3xl: 5rem; /* 80px */
-  --spacing: 0.75rem; /* 12px */
-}
-
-[data-spacing="wide"] {
-  --spacing-xs: 0.75rem;
-  --spacing-s: 1.25rem;
-  --spacing-sm: 1.75rem;
-  --spacing-md: 2.5rem;
-  --spacing-lg: 3rem;
-  --spacing-xl: 3.5rem;
-  --spacing-2xl: 4.5rem;
-  --spacing-3xl: 6rem;
-  --spacing: 1rem;
+[data-spacing="spacious"],
+[data-spacing="relaxed"],
+[data-spacing="cozy"],
+[data-spacing="wide"],
+[data-spacing="extra"] {
+  --spacing-xs: 0.375rem;
+  --spacing-s: 0.625rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.25rem;
+  --spacing-lg: 1.75rem;
+  --spacing-xl: 2.5rem;
+  --spacing-2xl: 3.5rem;
+  --spacing-3xl: 4.5rem;
 }
 
 /* === Radius (scales border-radius) === */
@@ -303,15 +280,6 @@
   --container-6xl: 80rem;
   --container-7xl: 90rem;
   --container-width: 80rem;
-}
-
-/* === Spacing System === */
-[data-spacing="tight"] {
-  --space-multiplier: 0.75;
-}
-
-[data-spacing="wide"] {
-  --space-multiplier: 1.25;
 }
 
 /* === Radius === */

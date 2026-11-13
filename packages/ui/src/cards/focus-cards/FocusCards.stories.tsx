@@ -10,10 +10,9 @@ const meta = {
       { src: cardStoryImages.noon, title: "Midday" },
       { src: cardStoryImages.evening, title: "Last light" },
     ],
-    className: "w-[min(88vw,48rem)]",
+    className: "mx-auto w-full max-w-3xl",
   },
   component: FocusCards,
-  parameters: { layout: "centered" },
   tags: ["autodocs"],
   title: "UI/Cards/Focus Cards",
 } satisfies Meta<typeof FocusCards>;

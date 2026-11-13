@@ -4,7 +4,7 @@ import type { Preview } from "@storybook/react-vite";
 import { useGlobals } from "storybook/preview-api";
 
 import { ThemeContext } from "../../../packages/ui/src/theme/theme-toggle";
-import { BRANDS } from "../../../packages/ui/src/theme/types";
+import { BRANDS, SPACING_STYLES } from "../../../packages/ui/src/theme/types";
 import { ThemePreview } from "./theme-preview";
 
 const preview: Preview = {
@@ -46,7 +46,7 @@ const preview: Preview = {
       toolbar: {
         dynamicTitle: true,
         icon: "grow",
-        items: ["compact", "comfortable", "relaxed", "spacious"],
+        items: [...SPACING_STYLES],
       },
     },
   },

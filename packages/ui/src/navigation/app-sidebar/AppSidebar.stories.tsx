@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { SidebarInset, SidebarProvider } from "../sidebar/Sidebar";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "../sidebar/Sidebar";
 import { AppSidebar } from "./AppSidebar";
 
 const providerStyles = {
@@ -14,19 +14,20 @@ const meta = {
   decorators: [
     (Story) => (
       <SidebarProvider style={providerStyles}>
-        <div className="flex min-h-screen bg-background text-foreground">
-          <Story />
-          <SidebarInset>
-            <div className="flex flex-1 items-center justify-center bg-muted/20 p-6">
-              <p className="text-muted-foreground text-sm">Sidebar content preview area</p>
-            </div>
-          </SidebarInset>
-        </div>
+        <Story />
+        <SidebarInset>
+          <header className="flex items-center gap-xs border-sidebar-border border-b px-md py-s">
+            <SidebarTrigger />
+            <span className="text-sm font-medium">Workspace</span>
+          </header>
+          <p className="p-md text-sm text-muted-foreground">Sidebar content preview area</p>
+        </SidebarInset>
       </SidebarProvider>
     ),
   ],
   parameters: {
     layout: "fullscreen",
+    pageCanvas: true,
   },
   tags: ["autodocs"],
   title: "UI/Navigation/App Sidebar",

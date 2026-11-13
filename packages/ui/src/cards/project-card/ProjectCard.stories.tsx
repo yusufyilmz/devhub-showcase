@@ -8,17 +8,16 @@ const meta = {
     caseStudyHref: "#case-study",
     description: "A portfolio for a landscape photography practice.",
     projectHref: "#project",
-    title: "Storybook App UI/Cards/Project Card/Projectcard",
+    title: "A landscape photography portfolio",
   },
   component: ProjectCard,
   decorators: [
     (Story) => (
-      <div className="w-[min(88vw,30rem)]">
+      <div className="mx-auto w-full max-w-lg">
         <Story />
       </div>
     ),
   ],
-  parameters: { layout: "centered" },
   tags: ["autodocs"],
   title: "UI/Cards/Project Card",
 } satisfies Meta<typeof ProjectCard>;
