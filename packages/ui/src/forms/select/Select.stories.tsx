@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: () => (
     <Select>
-      <SelectTrigger style={{ width: 180 }}>
+      <SelectTrigger aria-label="Select a fruit" className="w-45">
         <SelectValue placeholder="Select a fruit" />
       </SelectTrigger>
       <SelectContent>
@@ -36,7 +36,7 @@ export const NarrowCanvas: StoryObj<typeof meta> = {
   ...Default,
   decorators: [
     (Story) => (
-      <div style={{ maxWidth: 320, width: "100%" }}>
+      <div className="w-full max-w-80">
         <Story />
       </div>
     ),
@@ -47,9 +47,51 @@ export const WideCanvas: StoryObj<typeof meta> = {
   ...Default,
   decorators: [
     (Story) => (
-      <div style={{ maxWidth: 960, width: "100%" }}>
+      <div className="w-full max-w-[60rem]">
         <Story />
       </div>
     ),
   ],
+};
+
+export const LongOption: Story = {
+  render: () => (
+    <Select defaultValue="long">
+      <SelectTrigger aria-label="Delivery option" className="w-56">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="long">
+          Standard delivery to the address listed in your portfolio settings
+        </SelectItem>
+        <SelectItem disabled value="unavailable">
+          Unavailable
+        </SelectItem>
+        <SelectItem value="pickup">Pickup</SelectItem>
+      </SelectContent>
+    </Select>
+  ),
+};
+
+export const Disabled: Story = {
+  render: () => (
+    <Select disabled>
+      <SelectTrigger aria-label="Select a fruit" className="w-45">
+        <SelectValue placeholder="Select a fruit" />
+      </SelectTrigger>
+    </Select>
+  ),
+};
+
+export const Invalid: Story = {
+  render: () => (
+    <Select>
+      <SelectTrigger aria-invalid aria-label="Select a fruit" className="w-45">
+        <SelectValue placeholder="Select a fruit" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="apple">Apple</SelectItem>
+      </SelectContent>
+    </Select>
+  ),
 };
