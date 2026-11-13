@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const iconButtonVariants = cva(
-  "ui-icon-button inline-flex items-center justify-center rounded-lg border border-transparent text-sm font-medium transition-[background-color,border-color,color] outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]/40 disabled:pointer-events-none disabled:border-transparent disabled:bg-muted disabled:text-muted-foreground disabled:shadow-none",
+  "ui-icon-button inline-flex items-center justify-center rounded-lg border border-transparent text-sm font-medium motion-safe:transition-colors motion-safe:duration-150 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:border-transparent disabled:bg-muted disabled:text-muted-foreground disabled:opacity-55 disabled:shadow-none",
   {
     defaultVariants: {
       size: "default",
@@ -9,21 +9,19 @@ export const iconButtonVariants = cva(
     },
     variants: {
       size: {
-        default: "h-10 w-10",
-        icon: "h-10 w-10",
-        lg: "h-11 w-11",
-        sm: "h-9 w-9",
+        default: "size-10",
+        icon: "size-10",
+        lg: "size-11",
+        sm: "size-9",
       },
       variant: {
-        default:
-          "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[inset_0_1px_0_0_color-mix(in_oklch,white_28%,transparent)] hover:bg-[var(--primary)]/90",
+        default: "border-primary bg-primary text-primary-foreground hover:bg-primary/90",
         destructive:
-          "border-[var(--destructive)] bg-[var(--destructive)] text-white shadow-[inset_0_1px_0_0_color-mix(in_oklch,white_28%,transparent)] hover:bg-[var(--destructive)]/90",
-        ghost: "text-muted-foreground hover:text-foreground",
+          "border-destructive bg-destructive text-destructive-foreground hover:bg-destructive/90 focus-visible:outline-destructive",
+        ghost: "text-muted-foreground hover:bg-muted hover:text-foreground",
         link: "text-foreground underline-offset-4 hover:underline",
-        outline: "bg-transparent text-foreground hover:border-[var(--border)]",
-        secondary:
-          "border-[var(--border)] bg-transparent text-foreground shadow-[inset_0_1px_0_0_color-mix(in_oklch,var(--foreground)_10%,transparent)] hover:bg-foreground/5",
+        outline: "border-border bg-background text-foreground hover:bg-muted",
+        secondary: "border-border bg-transparent text-foreground hover:bg-foreground/5",
       },
     },
   },
