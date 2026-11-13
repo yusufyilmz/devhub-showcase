@@ -1,5 +1,13 @@
 export const homeFaq = [
   [
+    "How do I set up my first portfolio?",
+    "Choose a layout, then import your CV or enter your details section by section. Preview your website and CV in the setup flow and save a private draft when you are ready.",
+  ],
+  [
+    "Can I track job applications in MyDevStudio?",
+    "Yes. Job Hunter keeps saved roles, CV matches and application status in your private workspace. When the matching service is available, you can prepare drafts for review before applying on the original job site. LinkedIn alerts can be forwarded when email forwarding is configured.",
+  ],
+  [
     "What do the AI assistants do?",
     "Pro can add visitor chat using published portfolio information and a private editing assistant for your current draft. You choose whether to enable visitor chat. Review proposed edits before applying and saving. Private drafts may be sent to OpenAI for owner-requested proposals. Allowances count attempts, including failed or uncertain requests.",
   ],

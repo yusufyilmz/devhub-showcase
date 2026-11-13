@@ -6,13 +6,15 @@ MyDevStudio is a multiuser portfolio and CV platform, developed in the `devhub-s
 
 ## What it does
 
-- Personal workspaces with private saves and explicit public sharing.
+- Guided portfolio setup with optional CV import, one screen per section, and separate website and CV previews before saving a private draft.
+- Publication controls for public, unlisted, password-protected and scheduled sharing, plus saved revision history.
+- A signed-in profile menu, synced Studio appearance and companion preferences, and a companion feature guide.
+- A private Job Hunter workspace for saved searches, CV matches, tailored application drafts and status tracking. Forwarded LinkedIn job alerts require an inbound email relay.
 - Public username pages, themes, layouts and independent portfolio/PDF language settings.
 - Reusable section renderers and editors, media sections and saved section templates.
-- PDF CVs generated from profile content rather than a separately maintained document.
+- PDF CVs generated from saved profile content, with Classic, Editorial, Compact and two ATS-friendly formats.
 - Administrator-managed portfolios with controlled ownership transfer.
-- Saved public/owner AI knowledge inspection, main-portfolio AI chat and optional CV extraction.
-- Server-side AI credentials and Redis limits; premium multiuser chat and billing remain separate rollout steps.
+- Saved public and owner AI knowledge inspection, optional CV extraction, and Pro visitor chat and private editing proposals. Pro checkout uses Stripe test mode.
 
 The bundled public content works without service credentials. Authentication, persistence, managed portfolios and AI integrations require their respective setup. See the feature guides below; historical deployment notes are not proof of current production configuration.
 
@@ -68,24 +70,25 @@ See [testing](docs/testing.md) for browser prerequisites and coverage limitation
 
 ## Architecture
 
-Next.js App Router and React run in a pnpm/Turborepo workspace. TypeScript, Biome, Tailwind CSS and MUI support the application. External dependency versions live in [pnpm-workspace.yaml](pnpm-workspace.yaml); internal dependencies use `workspace:*`.
+Next.js App Router and React run in a pnpm/Turborepo workspace. TypeScript, Biome and Tailwind CSS support the application. External dependency versions live in [pnpm-workspace.yaml](pnpm-workspace.yaml); internal dependencies use `workspace:*`.
 
-| Location                         | Responsibility                                                |
-| -------------------------------- | ------------------------------------------------------------- |
-| `apps/web`                       | Routes, server adapters, metadata and application composition |
-| `packages/content`               | Domain content, profile types, themes and section metadata    |
-| `packages/auth`                  | Shared authentication integration                             |
-| `packages/ui`                    | Controls, sections, studio and portfolio surfaces, global CSS |
-| `packages/cv`, `packages/chat`   | PDF generation and AI chat                                    |
-| `packages/cache`, `packages/log` | Redis adapter and logging                                     |
-| `supabase/migrations`            | Reviewed schema and access-policy history                     |
-| `tests`, `e2e`                   | Vitest and Playwright suites                                  |
+| Location              | Responsibility                                                |
+| --------------------- | ------------------------------------------------------------- |
+| `apps/my-dev-studio`  | Routes, server adapters, metadata and application composition |
+| `packages/config`     | Domain content, profile types, themes and section metadata    |
+| `packages/auth`       | Shared authentication integration                             |
+| `packages/ui`         | Controls, sections, studio and portfolio surfaces, global CSS |
+| `packages/assistant`  | Studio and portfolio compositions, PDF generation and AI chat |
+| `packages/utils`      | Logging and generic utilities                                 |
+| `apps/my-fitness-app` | Fitness OS, a separate app in this workspace                  |
+| `supabase/migrations` | Reviewed schema and access-policy history                     |
+| `tests`, `e2e`        | Vitest and Playwright suites                                  |
 
 Supabase is the persistence integration. Prisma is not used. Install, check and build commands do not apply migrations. The published main profile, when configured, supplies the original portfolio content and chat context; bundled content supplies the supported fallback. Named private or missing profiles must never fall back to another person's data.
 
 ## Documentation
 
-See [docs/README.md](docs/README.md) for the full index.
+See [docs/README.md](docs/README.md) for the full index, including [guided setup](docs/testing/manual/onboarding.md), [Job Hunter](docs/testing/manual/job-hunter.md) and [LinkedIn alert forwarding](docs/testing/manual/linkedin-job-alerts.md).
 
 ### Hubs
 
@@ -119,7 +122,7 @@ See [docs/README.md](docs/README.md) for the full index.
 
 ## CV generation
 
-Public CV endpoints generate PDFs from published data. Private downloads require the authenticated studio. Edit `packages/cv/templates/cv.json.hbs` for template changes; profile values are data, never executable template code.
+Public CV endpoints generate PDFs from published data. Private downloads require the authenticated studio. Edit `packages/assistant/templates/cv.json.hbs` for template changes; profile values are data, never executable template code.
 
 ```sh
 pnpm cv:generate

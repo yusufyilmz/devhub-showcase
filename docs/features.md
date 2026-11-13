@@ -20,29 +20,41 @@ This is the current product overview. It describes repository behavior, not a gu
 | Private AI editing assistant             | Optional integration | Assigned Pro, bounded usage and explicit review/apply/save       |
 | Hosted error monitoring                  | Planned              | Existing Pino logs; Sentry setup is documented but not installed |
 
+## Guided setup and Studio preferences
+
+New owners and existing owners using **Start from scratch** enter the same setup modal. Choose a layout and optionally import a CV. Add or revise details on separate section screens, review the Website and CV previews, and save a private draft. See [guided setup](testing/manual/onboarding.md).
+
+The signed-in [profile menu](testing/manual/profile-menu.md) provides account navigation. Studio appearance and companion preferences sync with the signed-in account once the preferences migration is applied. Saved portfolio appearance is controlled in the portfolio editor. The companion feature guide tracks progress for signed-in users. See [appearance](testing/manual/appearance.md) and the [companion guide](testing/manual/companion-feature-guide.md).
+
+## Job Hunter and LinkedIn alerts
+
+Confirmed owners can use `/admin/jobs` to keep private saved searches, matches, alerts and application status. Configured provider discovery and CV matching can suggest jobs. Owners can prepare and edit a tailored CV summary and cover letter before applying on the original job site. Scheduled scans, AI matching and browser alerts require their documented configuration. See [Job Hunter](testing/manual/job-hunter.md).
+
+LinkedIn email alerts can be forwarded to a private inbox when the inbound relay is configured. Owners review imported links and choose what to keep. A reviewed job can be saved without a score. See [LinkedIn alert setup and verification](testing/manual/linkedin-job-alerts.md).
+
 ## Personal workspaces and sharing
 
-Confirmed users enter through `/admin` and reach their own `/{username}/edit` workspace. A new account starts with a private profile and a layout picker. Signing in never grants access to another person's editor or site moderation.
+Confirmed users enter through `/admin` and reach their own `/{username}/edit` workspace. A new account starts with a private profile and guided setup. Signing in never grants access to another person's editor or site moderation.
 
 The studio edits profile/contact details, About, experience and achievements, projects, education, skills and spoken languages. Collections support editing and reordering. Changes remain a draft until **Save changes** succeeds. Discard restores the saved state; stale revisions produce a conflict instead of overwriting newer work.
 
-Publishing exposes `/{username}` and `/{username}/cv.pdf`. Unpublishing hides public reads, but cannot recall downloaded files or search-engine copies. Username changes change public links; earlier `/p/{id}` links resolve to the current username. Private downloads use authenticated endpoints. PDF hide-email/hide-phone preferences do not hide those details on the public website.
+Publishing makes `/{username}` and `/{username}/cv.pdf` available under the chosen access rules. Owners can use public, unlisted or password-protected sharing and schedule publication. Saved revision history is available in the studio. Unpublishing hides public reads, while previously downloaded files or search-engine copies may remain. Username changes change public links; earlier `/p/{id}` links resolve to the current username. Private downloads use authenticated endpoints. PDF hide-email/hide-phone preferences do not hide those details on the public website.
 
 See [personal workspace setup](features/multiuser-cvs.md) and [Google login](features/google-login.md) for activation and access rules.
 
 ## Layout, appearance and language
 
-| Setting            | Choices                                                  | Behavior                                                                                                                                                                              |
-| ------------------ | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Portfolio layout   | Engineer, Designer, Consultant, Minimal                  | Engineer keeps the original career layout; Designer emphasizes a project gallery; Consultant places introduction beside career content on wide screens; Minimal uses a quieter column |
-| Theme              | Studio, Paper, Graphite, Bloom, Gloom, Ink, Dune, Harbor | Ready palettes: cool studio, warm serif, neutral mono, lavender, dim plum, square serif, sun-warm sand, or sea navy                                                                   |
-| Accent             | Cyan, violet, emerald                                    | Shared accent choice; independent of layout                                                                                                                                           |
-| Default color mode | Dark, Light, Match device                                | Visitors can override color mode locally                                                                                                                                              |
-| Portfolio language | English, Spanish, Turkish                                | Website labels, actions, dates and HTML language                                                                                                                                      |
-| CV language        | English, Spanish, Turkish                                | Independent PDF labels, dates, title and Content-Language header                                                                                                                      |
-| CV format          | Classic, Editorial, Compact                              | Independent document layout; all use the same canonical profile                                                                                                                       |
+| Setting            | Choices                                                           | Behavior                                                                                                                                                                                                                                                                                     |
+| ------------------ | ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Portfolio layout   | Engineer, Designer, Consultant, Minimal, Trainer, Content creator | Engineer keeps the original career layout; Designer emphasizes a project gallery; Consultant places introduction beside career content on wide screens; Minimal uses a quieter column. Trainer highlights coaching and credentials, and Content creator highlights featured posts and series |
+| Theme              | Studio, Paper, Graphite, Bloom, Gloom, Ink, Dune, Harbor          | Ready palettes: cool studio, warm serif, neutral mono, lavender, dim plum, square serif, sun-warm sand, or sea navy                                                                                                                                                                          |
+| Accent             | Registered palette colors                                         | Shared accent choice; independent of layout                                                                                                                                                                                                                                                  |
+| Default color mode | Dark, Light, Match device                                         | Visitors can override color mode locally                                                                                                                                                                                                                                                     |
+| Portfolio language | English, Spanish, Turkish                                         | Website labels, actions, dates and HTML language                                                                                                                                                                                                                                             |
+| CV language        | English, Spanish, Turkish                                         | Independent PDF labels, dates, title and Content-Language header                                                                                                                                                                                                                             |
+| CV format          | Classic, Editorial, Compact, ATS-friendly, ATS-friendly compact   | Independent document layout; all use the same canonical profile                                                                                                                                                                                                                              |
 
-Themes work with all four layouts in light/dark mode. Appearance thumbnails and preview mode are local previews; changing preview mode does not silently change the saved default. The homepage and editor use platform styling rather than inheriting the portfolio theme. Visitor overrides remain scoped to profiles/examples.
+Themes work with all six layouts in light/dark mode. Appearance thumbnails and preview mode are local previews; changing preview mode does not silently change the saved default. The homepage and editor use platform styling rather than inheriting the portfolio theme. Visitor overrides remain scoped to profiles/examples.
 
 Existing documents default to Engineer, Studio, English and Classic where settings are absent. A new user's first layout selection suggests a CV format; later layout changes preserve their chosen CV format. Layout and theme changes do not publish, change usernames or replace profile content.
 
@@ -70,7 +82,7 @@ Configuration-only export omits personal authored content by default. Including 
 
 ## CV generation and extraction
 
-Public and private PDF downloads share `packages/cv` and its Handlebars/JSON template. The canonical saved profile supplies content; there is no committed CV PDF to keep in sync. Page size, text size, inclusion and contact preferences remain independent where exposed in the editor. Local public generation uses `pnpm cv:generate`.
+Public and private PDF downloads share `packages/assistant` and its Handlebars/JSON template. The canonical saved profile supplies content; there is no committed CV PDF to keep in sync. Page size, text size, inclusion and contact preferences remain independent where exposed in the editor. Local public generation uses `pnpm cv:generate`.
 
 Optional **Import CV** accepts PDF, DOCX or UTF-8 text up to 3 MB. After consent, the server validates the file, authorizes the user, applies Redis limits and sends it to OpenAI. The original file is not stored in Supabase. Provider data policies still apply.
 
@@ -86,7 +98,7 @@ Transfer requires a verified recipient and revision checks. An untouched private
 
 The AI profile tab inspects knowledge derived from the saved revision, not unsaved drafts. Public knowledge contains published, visible content; owner knowledge contains the full saved document and stays behind authorized reads. Inspecting it makes no provider request.
 
-The existing public chat is restricted to the main portfolio. Each request re-reads the published snapshot, validates input and enforces Redis limits; missing/private profiles do not fall back to someone else's data. Conversation state is scoped by portfolio and revision. Premium chat for other accounts, subscriptions and an editing agent are not enabled.
+Public visitor chat is available on the main portfolio and on eligible published Pro portfolios whose owners enable it. Each request re-reads the published snapshot, validates input and enforces Redis limits; missing/private profiles do not fall back to someone else's data. Conversation state is scoped by portfolio and revision.
 
 See [AI foundation](features/portfolio-ai-foundation.md) for projections, limits, provider behavior and the remaining rollout.
 
@@ -94,9 +106,9 @@ See [AI foundation](features/portfolio-ai-foundation.md) for projections, limits
 
 The platform homepage has separate branding, metadata and theme storage. Its signed-in action resolves the user's editor without creating a workspace during the homepage read. The main example link follows the main profile's readable username; the external published-example fallback does not expose private records.
 
-The layout gallery offers two fictional profiles per layout. Filters, previous/next controls and swipe have no autoplay and respect reduced motion. Illustrative portfolio/CV tabs are keyboard accessible and never save changes.
+The layout gallery offers fictional examples for each supported layout. Filters, previous/next controls and swipe have no autoplay and respect reduced motion. Illustrative portfolio/CV tabs are keyboard accessible and never save changes.
 
-Examples live at `/p/examples/{slug}`, with matching `/cv.pdf` downloads. They work without database records, identify themselves as fictional and use noindex/nofollow. Keep their identities fictional and contact addresses under example.com. Edit gallery data in `apps/web/features/examples/data.ts` and assets in `apps/web/public/examples`.
+Examples live at `/p/examples/{slug}`, with matching `/cv.pdf` downloads. They work without database records, identify themselves as fictional and use noindex/nofollow. Keep their identities fictional and contact addresses under example.com. Edit gallery data in `packages/assistant/src/components/studio/examples/data.ts` and assets in `apps/my-dev-studio/public/examples`.
 
 ## Search and public branding
 

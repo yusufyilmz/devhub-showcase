@@ -28,6 +28,13 @@ Start with the hub guides, then dig into feature or reference pages as needed. P
 | [Premium portfolio chat](features/premium-portfolio-chat.md) | Owner-enabled public chat widget                     |
 | [Stripe billing](features/stripe-billing.md)                 | Test-only checkout, portal and webhooks              |
 
+## Current Studio workflows
+
+- [Guided portfolio setup](testing/manual/onboarding.md) and [profile menu](testing/manual/profile-menu.md)
+- [Studio appearance](testing/manual/appearance.md) and [companion guide](testing/manual/companion-feature-guide.md)
+- [Job Hunter](testing/manual/job-hunter.md) and [LinkedIn job-alert forwarding](testing/manual/linkedin-job-alerts.md)
+- [Publication controls](testing/manual/publication.md), [scheduled publication](testing/manual/scheduled-publication.md) and [revision history](testing/manual/revision-history.md)
+
 ## Reference
 
 | Guide                                                                 | Read it for                                |

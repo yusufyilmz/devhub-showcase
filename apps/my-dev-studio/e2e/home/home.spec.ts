@@ -2,15 +2,20 @@ import { expect, test } from "@playwright/test";
 
 import { getThemePalette, portfolioAccentIds, portfolioAccents } from "@shared/config";
 
-test("the homepage shows all six portfolio cards in one reveal-card grid", async ({ page }) => {
+test("the homepage shows portfolio setup and private tools in one reveal-card grid", async ({
+  page,
+}) => {
   await page.goto("/");
   const features = page.locator("#features");
   const cards = features.locator(".home-feature-grid > .home-feature-card");
-  await expect(cards).toHaveCount(6);
+  await expect(cards).toHaveCount(8);
   await expect(cards.nth(3).getByRole("heading")).toHaveText("Open your studio");
   await expect(cards.nth(4).getByRole("heading")).toHaveText("Put your story together");
   await expect(cards.nth(5).getByRole("heading")).toHaveText("Share it when you’re ready");
-  await expect(features.getByRole("heading", { name: /From a blank page/ })).toHaveCount(0);
+  await expect(features.getByRole("heading", { name: "Find and track jobs" })).toBeVisible();
+  await expect(
+    features.getByRole("heading", { name: "Make the studio work for you" }),
+  ).toBeVisible();
 
   await page.getByRole("contentinfo").getByRole("link", { name: "How it works" }).click();
   await expect(page).toHaveURL(/#how-it-works$/);

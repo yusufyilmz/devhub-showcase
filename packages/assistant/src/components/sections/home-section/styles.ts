@@ -17,16 +17,13 @@ export const featuresStyles = {
   element3: "home-eyebrow",
   element4: "home-feature-grid",
   element5: "home-feature-card home-feature-main",
-  element6: "home-feature-index",
   element7: "home-url-demo",
   element8: "home-feature-details",
   element9: "home-feature-card",
-  element10: "home-feature-index",
   element11: "home-style-demo",
   element12: "home-feature-details",
   element13: "home-feature-cv",
   element14: "home-file-icon",
-  element15: "home-feature-index",
 } as const;
 
 export const portfolioPreviewStyles = {

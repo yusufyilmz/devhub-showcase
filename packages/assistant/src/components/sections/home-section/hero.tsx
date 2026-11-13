@@ -24,7 +24,7 @@ export function HomeHeroSection({ action, exampleHref }: HomeHeroSectionOptions)
             </Button>
           </>
         }
-        description="A portfolio that feels like you, with a CV to match. Bring your projects, experience and ideas together in a place you can call your own."
+        description="Build a portfolio and a downloadable CV from the same saved details. Start with your existing CV or build your draft one section at a time."
         eyebrow={
           <>
             <span /> A LITTLE SPACE. A LOT OF YOU.

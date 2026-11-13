@@ -62,6 +62,13 @@ Do not create one-off components from plain HTML elements in app routes, feature
 
 If the catalog has no component that fits, add it in `packages/ui`. All workspace `CATALOG.md` files are generated. Edit the package's `catalog.template.md` for authored guidance, or `package.json`/source exports for the generated reference, then run `pnpm generate:catalogs`. UI registry sections still use `packages/ui/src/registry/components.json`. Do not hand-edit generated catalogs; verify with `pnpm check:catalogs`. Use `--package @shared/ui` to select one package.
 
+## Keep feature descriptions current
+
+- Use [the feature inventory](docs/features.md) to verify what the homepage and README advertise. Describe configuration requirements for AI, scheduled discovery, browser push, LinkedIn email forwarding and Stripe test checkout.
+- Homepage routing and metadata live under `apps/my-dev-studio/app`. The homepage FAQ uses `packages/config/src/copy/site-copy/faq.ts`. Keep it aligned with the visible feature cards and product documentation.
+- Portfolio setup and the companion are shared Studio compositions. Studio account preferences use `/api/account-preferences` and are separate from saved portfolio appearance.
+- Job Hunter UI lives in `packages/assistant/src/components/portfolio/jobs`. The app owns `/admin/jobs`, `/api/jobs` and the inbound email and scheduled worker routes. Shared listing and email parsing code lives in `packages/lib/src/services/jobs`. See the [Job Hunter guide](docs/testing/manual/job-hunter.md) and [LinkedIn alert guide](docs/testing/manual/linkedin-job-alerts.md).
+
 ## Where code goes
 
 Follow the first matching question. Stop at the first yes.

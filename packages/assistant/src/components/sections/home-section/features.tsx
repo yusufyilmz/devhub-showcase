@@ -9,15 +9,14 @@ export function HomeFeaturesSection() {
     <Section asChild>
       <section aria-labelledby="features-title" className={featuresStyles.element1} id="features">
         <div className={featuresStyles.element2}>
-          <p className={featuresStyles.element3}>MORE THAN A DOCUMENT</p>
           <h2 id="features-title">
-            A portfolio first.
+            Build your portfolio and CV.
             <br />
-            <span>A CV when you need it.</span>
+            <span>Keep your job search organized.</span>
           </h2>
           <p>
-            Your work deserves more than a list of bullet points. Give it context, make it personal,
-            and keep everything connected.
+            Set up your portfolio, choose how to share it, and keep job matches and application
+            drafts in your private studio.
           </p>
         </div>
         <div className={featuresStyles.element4}>
@@ -27,7 +26,6 @@ export function HomeFeaturesSection() {
             className={featuresStyles.element5}
             heading={
               <>
-                <span className={featuresStyles.element6}>01 / YOUR OWN CORNER</span>
                 <h3>
                   A link that’s
                   <br />
@@ -58,11 +56,10 @@ export function HomeFeaturesSection() {
           </RevealCardBase>
           <RevealCardBase
             backdrop="accent"
-            brief="Choose Studio, Paper, Graphite or Bloom. Pair any layout with your favorite theme, accent and light or dark mode."
+            brief="Pair any layout with a theme, color palette and light or dark mode."
             className={featuresStyles.element9}
             heading={
               <>
-                <span className={featuresStyles.element10}>02 / MAKE IT YOURS</span>
                 <div aria-hidden="true" className={featuresStyles.element11}>
                   <span />
                   <span />
@@ -96,7 +93,6 @@ export function HomeFeaturesSection() {
                   <span>CV</span>↗
                 </div>
                 <div>
-                  <span className={featuresStyles.element15}>03 / ALWAYS CONNECTED</span>
                   <h3>One update. Both ready.</h3>
                 </div>
               </div>
@@ -104,11 +100,36 @@ export function HomeFeaturesSection() {
             title="your portfolio and CV"
           >
             <p>
-              Choose a Classic, Editorial or Compact layout and decide which sections to include.
-              Download the saved CV as a PDF when you need it.
+              Choose what goes on your site and what goes into your PDF. CV formats include Classic,
+              Editorial, Compact and two ATS-friendly layouts.
             </p>
           </RevealCardBase>
           <HomeProcessSection />
+          <RevealCardBase
+            backdrop="accent"
+            brief="Save roles and track applications in your private Job Hunter workspace."
+            className={featuresStyles.element9}
+            heading={<h3>Find and track jobs</h3>}
+            title="Job Hunter"
+          >
+            <p>
+              Save searches and review matches against your CV when discovery is configured. Prepare
+              a tailored CV and cover letter for review, then apply on the employer’s site. With
+              email forwarding configured, you can also review LinkedIn job alerts here.
+            </p>
+          </RevealCardBase>
+          <RevealCardBase
+            backdrop="accent"
+            brief="Set your Studio appearance and choose how the companion helps."
+            className={featuresStyles.element9}
+            heading={<h3>Make the studio work for you</h3>}
+            title="Studio preferences"
+          >
+            <p>
+              Sign in to sync appearance and companion preferences across devices. Use the
+              companion’s feature guide to explore the studio and keep track of what you’ve tried.
+            </p>
+          </RevealCardBase>
         </div>
       </section>
     </Section>
