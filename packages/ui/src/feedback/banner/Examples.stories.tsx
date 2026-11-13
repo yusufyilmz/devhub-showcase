@@ -4,7 +4,7 @@ import { Banner } from "./Banner";
 
 function Example({ width = 560 }: { width?: number }) {
   return (
-    <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
+    <div className="mx-auto w-full" style={{ maxWidth: width }}>
       <Banner>Your draft is private until you publish.</Banner>
     </div>
   );
