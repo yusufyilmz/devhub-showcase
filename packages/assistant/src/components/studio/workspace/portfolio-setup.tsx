@@ -33,7 +33,7 @@ export function PortfolioSetup({
   preview,
   assistant,
   recovery,
-  onCancel,
+  onClose,
   onSave,
   busy,
   stale,
@@ -48,7 +48,7 @@ export function PortfolioSetup({
   preview: ReactNode;
   assistant?: ReactNode;
   recovery: ReactNode;
-  onCancel?: () => void;
+  onClose: () => void;
   onSave: () => void;
   busy: boolean;
   stale: boolean;
@@ -57,14 +57,13 @@ export function PortfolioSetup({
   const { stage, section } = position;
   const body = useRef<HTMLDivElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
-  const sectionHeading = useRef<HTMLHeadingElement>(null);
   const [cvApplied, setCvApplied] = useState(false);
   const ready = basicsComplete(profile);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Reset focus and scrolling on each stage or section change.
   useEffect(() => {
     body.current?.scrollTo?.({ top: 0 });
-    (sectionHeading.current ?? heading.current)?.focus({ preventScroll: true });
+    heading.current?.focus({ preventScroll: true });
   }, [stage, section]);
 
   function go(next: number, detail = 0) {
@@ -72,14 +71,20 @@ export function PortfolioSetup({
   }
 
   return (
-    <Dialog open>
+    <Dialog
+      onOpenChange={(open) => {
+        if (!open && !busy) onClose();
+      }}
+      open
+    >
       <DialogContent
         className="setup-dialog portfolio-setup"
-        onEscapeKeyDown={(event) => event.preventDefault()}
+        onEscapeKeyDown={(event) => {
+          if (busy) event.preventDefault();
+        }}
         onPointerDownOutside={(event) => event.preventDefault()}
-        showCloseButton={false}
       >
-        <SetupHeader heading={heading} stage={stage} />
+        <SetupHeader heading={heading} position={position} />
         <div className="portfolio-setup-body" ref={body}>
           {recovery}
           <SetupStageContent
@@ -96,7 +101,6 @@ export function PortfolioSetup({
             preview={preview}
             profession={profession}
             profile={profile}
-            sectionHeading={sectionHeading}
           />
         </div>
         <SetupActions
@@ -104,7 +108,6 @@ export function PortfolioSetup({
           cvApplied={cvApplied}
           error={error}
           go={go}
-          onCancel={onCancel}
           onSave={onSave}
           position={position}
           ready={ready}

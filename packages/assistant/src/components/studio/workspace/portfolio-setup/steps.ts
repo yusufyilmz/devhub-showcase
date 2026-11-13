@@ -1,4 +1,5 @@
 import {
+  CustomSectionsEditor,
   EducationEditor,
   ExperienceEditor,
   LanguagesEditor,
@@ -41,6 +42,13 @@ export const sections = [
   { Editor: SkillsEditor, title: "Skills" },
   { Editor: EducationEditor, title: "Education" },
   { Editor: LanguagesEditor, title: "Languages" },
+  { Editor: CustomSectionsEditor, title: "Custom sections" },
 ] as const;
+
+export const progressSteps = [
+  ...stages.slice(0, 3).map(({ label }) => label),
+  ...sections.map(({ title }) => title),
+  stages[4].label,
+];
 
 export type SetupPosition = { stage: number; section: number };

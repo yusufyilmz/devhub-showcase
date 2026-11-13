@@ -129,7 +129,7 @@ test("editor workspace keeps draft editing, preview and publication separate", a
   await page.getByRole("button", { name: "Continue to CV import" }).click();
   await page.getByRole("button", { name: "Skip for now" }).click();
   await expect(title).toHaveValue("");
-  await page.getByRole("button", { name: "Cancel starting over" }).click();
+  await page.getByRole("button", { name: "Close" }).click();
   await expect(title).toHaveValue("Existing unsaved edit");
   expect(saves).toBe(savesBeforeStartingOver);
   await title.fill("Unsaved editor workspace title");

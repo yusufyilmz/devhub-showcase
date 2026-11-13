@@ -54,9 +54,21 @@ function createSection(type: AuthorableSectionType): CustomSection {
     visible: true,
   };
 }
-export function CustomSectionsEditor({ profile, onChange }: CustomSectionsEditorOptions) {
+export function CustomSectionsEditor({
+  profile,
+  onChange,
+  focused = false,
+}: CustomSectionsEditorOptions) {
   const [starter, setStarter] = useState<AuthorableSectionType>("custom");
   const sections = profile.customSections ?? [];
+  const [selection, setSelection] = useState<string>();
+  const selected = sections.find(({ id }) => id === selection) ?? sections[0];
+  const displayed = focused ? sections.filter(({ id }) => id === selected?.id) : sections;
+  function add() {
+    const section = createSection(starter);
+    change([...sections, section]);
+    setSelection(section.id);
+  }
   function change(customSections: CustomSection[]) {
     const ids = new Set(customSections.map(({ id }) => id));
     const sequence = profile.sectionSequence?.filter(
@@ -75,13 +87,9 @@ export function CustomSectionsEditor({ profile, onChange }: CustomSectionsEditor
         : {}),
     });
   }
-  return (
-    <section>
+  const library = (
+    <div className={focused ? "setup-section-library" : undefined}>
       <h2>Section library</h2>
-      <p>
-        Choose any section type, add your content or use compatible profile elements, then arrange
-        it in Section order. Changes stay in your draft until saved.
-      </p>
       <SelectField
         label="Section starter"
         onChange={(value) => setStarter(value as AuthorableSectionType)}
@@ -96,52 +104,75 @@ export function CustomSectionsEditor({ profile, onChange }: CustomSectionsEditor
       <Button
         className={customSectionsEditorStyles.element1}
         disabled={sections.length >= MAX_CUSTOM_SECTIONS}
-        onClick={() => change([...sections, createSection(starter)])}
+        onClick={add}
         type="button"
       >
         Add custom section
       </Button>
-      {sections.map((section) => (
-        <SectionEditor
-          key={section.id}
-          onChange={(updated) =>
-            change(sections.map((item) => (item.id === updated.id ? updated : item)))
-          }
-          onDuplicate={
-            sections.length >= MAX_CUSTOM_SECTIONS
-              ? undefined
-              : () =>
-                  change([
-                    ...sections,
-                    {
-                      ...section,
-                      id: `custom-${crypto.randomUUID()}`,
-                      items: section.items.map((item) => ({
-                        ...item,
-                        details: item.details ? [...item.details] : undefined,
-                        id: crypto.randomUUID(),
-                      })),
-                      options: section.options ? { ...section.options } : undefined,
-                      source: section.source
-                        ? {
-                            ...section.source,
-                            itemIds: section.source.itemIds
-                              ? [...section.source.itemIds]
-                              : undefined,
-                          }
-                        : undefined,
-                      title: `${section.title.slice(0, 155)} copy`,
-                    },
-                  ])
-          }
-          onRemove={() => {
-            if (window.confirm(`Remove ${section.title}? Changes take effect when you save.`))
-              change(sections.filter(({ id }) => id !== section.id));
-          }}
-          profile={profile}
-          section={section}
-        />
-      ))}
+      {focused && sections.length > 0 && (
+        <nav aria-label="Custom sections in your draft">
+          {sections.map(({ id, title }) => (
+            <Button
+              aria-current={selected?.id === id ? "true" : undefined}
+              key={id}
+              onClick={() => setSelection(id)}
+              type="button"
+              variant={selected?.id === id ? "secondary" : "outline"}
+            >
+              {title || "New section"}
+            </Button>
+          ))}
+        </nav>
+      )}
+    </div>
+  );
+  return (
+    <section className={focused ? "setup-section-builder" : undefined}>
+      {library}
+      <div className={focused ? "setup-section-editable" : undefined}>
+        {focused && !selected && <p>Choose a section starter to add and configure it here.</p>}
+        {displayed.map((section) => (
+          <SectionEditor
+            key={section.id}
+            onChange={(updated) =>
+              change(sections.map((item) => (item.id === updated.id ? updated : item)))
+            }
+            onDuplicate={
+              sections.length >= MAX_CUSTOM_SECTIONS
+                ? undefined
+                : () =>
+                    change([
+                      ...sections,
+                      {
+                        ...section,
+                        id: `custom-${crypto.randomUUID()}`,
+                        items: section.items.map((item) => ({
+                          ...item,
+                          details: item.details ? [...item.details] : undefined,
+                          id: crypto.randomUUID(),
+                        })),
+                        options: section.options ? { ...section.options } : undefined,
+                        source: section.source
+                          ? {
+                              ...section.source,
+                              itemIds: section.source.itemIds
+                                ? [...section.source.itemIds]
+                                : undefined,
+                            }
+                          : undefined,
+                        title: `${section.title.slice(0, 155)} copy`,
+                      },
+                    ])
+            }
+            onRemove={() => {
+              if (window.confirm(`Remove ${section.title}? Changes take effect when you save.`))
+                change(sections.filter(({ id }) => id !== section.id));
+            }}
+            profile={profile}
+            section={section}
+          />
+        ))}
+      </div>
     </section>
   );
 }
