@@ -33,8 +33,8 @@ export function makeRewriteTitlesCommand(): Command {
     });
 }
 
-const program = new Command("fcf-storybook")
-  .description("FCF Storybook scaffolding, story variant generation, and asset tooling.")
+const program = new Command("storybook")
+  .description("Storybook scaffolding, story variant generation, and asset tooling.")
   .addCommand(makeRewriteTitlesCommand())
   .configureHelp({
     sortSubcommands: true, // Groups: create:*, fix:*, generate:*, rewrite:*

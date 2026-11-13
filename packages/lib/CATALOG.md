@@ -1,4 +1,4 @@
-<!-- Generated from catalog.template.md, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
 
 # Lib catalog
 

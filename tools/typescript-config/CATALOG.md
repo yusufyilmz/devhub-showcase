@@ -1,8 +1,8 @@
-<!-- Generated from catalog.template.md, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
 
 # @shared/typescript-config catalog
 
-Workspace package `@shared/typescript-config`.
+> **AI lookup guide:** From the repository root, run `pnpm --silent lookup catalog "typescript-config" --package @shared/typescript-config --limit 2` to read relevant excerpts. Verify an exact export with `pnpm --silent lookup symbol '<ExportName>' --package @shared/typescript-config`. Follow `hasMore` with `--cursor`; use `--max-tokens` to control output size. Excerpts support discovery; read required instructions and source contracts. See the [AI quick start](../../.agents/README.md) and [full CLI usage](../../tools/cli/README.md#token-bounded-repository-lookup).
 
 ## Generated package reference
 

@@ -111,7 +111,28 @@ pnpm --silent lookup docs "revision conflicts" --limit 2
 pnpm --silent lookup design "spacing" --limit 1
 ```
 
-Queries use lexical AND matching: use a few specific keywords. Follow `hasMore` with `--cursor`, or retrieve a result/locator with `lookup section '<id>' --max-tokens 4000`. A budget failure is not evidence that a reference is absent. Always read mandatory instructions and the relevant source contracts; catalog excerpts are discovery context. Use `--max-tokens` to bound the final output and `--package` to narrow catalog ownership. Catalog rows do not prove that an import works; verify declared symbols and source contracts. See the [AI quick start](.agents/README.md) and [full CLI usage](tools/cli/README.md#token-bounded-repository-lookup).
+Queries use lexical AND matching: use a few specific keywords. Follow `hasMore` with `--cursor`, or retrieve a result/locator with `lookup section '<id>' --max-tokens 4000`. A budget failure is not evidence that a reference is absent. Always read mandatory instructions and the relevant source contracts; catalog excerpts are discovery context. Use `--max-tokens` to bound the final output and `--package` to narrow catalog ownership. Catalog rows do not prove that an import works; verify declared symbols and source contracts. Catalogs are generated from [tools/cli/catalog/templates/package.md.hbs](tools/cli/catalog/templates/package.md.hbs). See the [AI quick start](.agents/README.md) and [full CLI usage](tools/cli/README.md#token-bounded-repository-lookup).
+
+## Skills and repository checks
+
+Canonical skills live in `.agents/skills`. `.cursor/skills` and `.claude/skills` are links to that directory, not a second copy.
+
+```sh
+pnpm cli:skills symlink --dry-run
+pnpm cli:skills validate
+pnpm cli:skills scaffold my-skill --description "When to use this skill"
+pnpm cli:check links
+pnpm cli:check catalogs
+pnpm cli:check exports
+pnpm cli:check lint
+pnpm cli:check docs
+pnpm cli:check skills
+pnpm cli:check types
+pnpm cli:check unused
+pnpm cli:check secrets
+```
+
+`validate` checks skill frontmatter, duplicate names, local links, and advisory file size. A skill file over 800 lines or 65536 bytes is reported and does not fail the check. Placeholders such as TODO, FIXME, and TBD are reported the same way. `scaffold` writes `SKILL.md`, `workflows/overview.md`, and `references/overview.md` and does not replace an existing skill. `cli:check` runs the checks this repository already owns. `secrets` looks for private keys and live tokens in the tree. It does not install Gitleaks or a duplicate-code scanner. `pnpm check:skills` uses the same validator.
 
 ## Dev environment
 

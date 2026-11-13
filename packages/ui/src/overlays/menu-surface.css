@@ -90,7 +90,7 @@
   :root [data-slot="dropdown-menu-content"],
   :root [data-slot="dropdown-menu-sub-content"],
   :root [data-slot="navigation-menu-viewport"] {
-    animation-duration: 0.01ms;
     transition-duration: 0.01ms;
+    animation-duration: 0.01ms;
   }
 }

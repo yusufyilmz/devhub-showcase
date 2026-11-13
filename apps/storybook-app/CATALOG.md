@@ -1,8 +1,8 @@
-<!-- Generated from catalog.template.md, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
 
 # storybook-app catalog
 
-Workspace package `storybook-app`.
+> **AI lookup guide:** From the repository root, run `pnpm --silent lookup catalog "storybook-app" --package storybook-app --limit 2` to read relevant excerpts. Verify an exact export with `pnpm --silent lookup symbol '<ExportName>' --package storybook-app`. Follow `hasMore` with `--cursor`; use `--max-tokens` to control output size. Excerpts support discovery; read required instructions and source contracts. See the [AI quick start](../../.agents/README.md) and [full CLI usage](../../tools/cli/README.md#token-bounded-repository-lookup).
 
 ## Generated package reference
 

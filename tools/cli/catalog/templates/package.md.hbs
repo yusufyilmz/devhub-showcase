@@ -1,0 +1,15 @@
+# {{title}}
+
+> **AI lookup guide:** From the repository root, run `pnpm --silent lookup catalog "{{query}}" --package {{name}} --limit 2` to read relevant excerpts. Verify an exact export with `pnpm --silent lookup symbol '<ExportName>' --package {{name}}`. Follow `hasMore` with `--cursor`; use `--max-tokens` to control output size. Excerpts support discovery; read required instructions and source contracts. See the [AI quick start]({{agentsReadme}}) and [full CLI usage]({{cliReadme}}).
+{{#if guidance}}
+
+{{{guidance}}}
+{{/if}}
+
+## Generated package reference
+
+<!-- catalog:exports -->
+
+<!-- catalog:scripts -->
+
+<!-- catalog:dependencies -->

@@ -89,4 +89,3 @@ When the field is rendered, also run the component test and the CV test that cov
 - [Shared backend development](../mydevstudio-development/SKILL.md)
 - [Developing the UI package](../developing-ui-package/SKILL.md)
 - [Developing the CV package](../developing-cv-package/SKILL.md)
-- [Developing the content package](../developing-content-package/SKILL.md)

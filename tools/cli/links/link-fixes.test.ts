@@ -15,7 +15,7 @@ function write(name: string, text: string): string {
   return file;
 }
 beforeEach(() => {
-  root = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), "fcf-link-fix-")));
+  root = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), "link-fix-")));
 });
 afterEach(() => {
   vi.restoreAllMocks();

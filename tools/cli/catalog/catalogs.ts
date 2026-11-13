@@ -7,6 +7,7 @@ import { parse } from "yaml";
 import { ArtifactReader } from "../lookup/artifacts.ts";
 import { repositorySymbols } from "../lookup/repository.ts";
 import type { LookupRecord } from "../lookup/types.ts";
+import { catalogQuery, catalogTitle, packageGuidance, renderHbs } from "./render-hbs.ts";
 import { code, table } from "./table.ts";
 import { renderUiCatalogMarkers } from "./ui-registry.mjs";
 
@@ -38,15 +39,21 @@ interface WorkspacePackage {
 }
 const repositoryRoot = fileURLToPath(new URL("../../../", import.meta.url));
 const header =
-  "<!-- Generated from catalog.template.md, package.json and declared public exports. Run pnpm generate:catalogs. -->\n\n";
+  "<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->\n\n";
 const reference =
   "\n\n## Generated package reference\n\n<!-- catalog:exports -->\n\n<!-- catalog:scripts -->\n\n<!-- catalog:dependencies -->\n";
-const defaultTemplatePath = fileURLToPath(new URL("./default-template.md", import.meta.url));
-function defaultCatalogSource(name: string): string {
-  return fs
-    .readFileSync(defaultTemplatePath, "utf8")
-    .replaceAll("{{name}}", name)
-    .replace(/\r\n/g, "\n");
+const packageTemplatePath = fileURLToPath(new URL("./templates/package.md.hbs", import.meta.url));
+function sharedCatalogSource(pkg: WorkspacePackage, existing: string | undefined): string {
+  const depth = pkg.relative.split(/[\\/]/).filter(Boolean).length;
+  const rootPrefix = "../".repeat(depth);
+  return renderHbs(fs.readFileSync(packageTemplatePath, "utf8"), {
+    agentsReadme: `${rootPrefix}.agents/README.md`,
+    cliReadme: `${rootPrefix}tools/cli/README.md#token-bounded-repository-lookup`,
+    guidance: packageGuidance(existing),
+    name: pkg.manifest.name,
+    query: catalogQuery(pkg.manifest.name, existing),
+    title: catalogTitle(pkg.manifest.name, existing),
+  }).replace(/\r\n/g, "\n");
 }
 function object(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -193,21 +200,22 @@ function sourceTemplate(root: string, pkg: WorkspacePackage) {
   }
   if (fs.existsSync(catalogPath)) {
     const existing = fs.readFileSync(catalogPath, "utf8");
-    if (!existing.startsWith(header)) {
+    if (!existing.startsWith(header) && !existing.startsWith("<!-- Generated from ")) {
       return {
         catalogPath,
         shared: false,
-        source: withReference(existing.replace(/^<!-- Generated[^\n]*-->\r?\n\r?\n/, "")),
+        source: withReference(existing.replace(/^<!-- Generated[\s\S]*?-->\n+/, "")),
         templatePath,
       };
     }
+    return {
+      catalogPath,
+      shared: true,
+      source: sharedCatalogSource(pkg, existing),
+      templatePath,
+    };
   }
-  return {
-    catalogPath,
-    shared: true,
-    source: defaultCatalogSource(pkg.manifest.name),
-    templatePath,
-  };
+  return { catalogPath, shared: true, source: sharedCatalogSource(pkg, undefined), templatePath };
 }
 function renderTemplate(source: string, pkg: WorkspacePackage, symbols: LookupRecord[]): string {
   const replacements: Record<string, () => string> = {

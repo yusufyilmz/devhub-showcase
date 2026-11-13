@@ -8,7 +8,7 @@ import { headingAnchors, validateLocalLinks } from "./markdown-links.ts";
 
 let root: string;
 beforeEach(() => {
-  root = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), "fcf-links-")));
+  root = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), "links-")));
 });
 afterEach(() => fs.rmSync(root, { force: true, recursive: true }));
 const write = (name: string, content: string) => {
@@ -48,7 +48,7 @@ describe("offline local links", () => {
     expect(validateLocalLinks([file], root)).toEqual([]);
   });
   it("rejects local symlinks pointing outside the selected root", () => {
-    const outside = fs.mkdtempSync(path.join(os.tmpdir(), "fcf-outside-"));
+    const outside = fs.mkdtempSync(path.join(os.tmpdir(), "outside-"));
     try {
       fs.writeFileSync(path.join(outside, "x.md"), "# x");
       fs.symlinkSync(path.join(outside, "x.md"), path.join(root, "x.md"));

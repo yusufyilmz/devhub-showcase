@@ -90,6 +90,21 @@ pnpm check:links --fix --no-external
 
 With no `--paths`, it checks `docs` directories plus `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `AGENTS.md`, and `CLAUDE.md`, skipping dependency and build directories. Exit code 1 means a broken link was found.
 
+## Skills and checks
+
+Canonical skills live in `.agents/skills`. Editor folders link to that directory and are not a second copy.
+
+```sh
+pnpm cli:skills symlink --dry-run
+pnpm cli:skills validate
+pnpm cli:skills scaffold my-skill --description "When to use this skill"
+pnpm cli:check links
+pnpm cli:check catalogs
+pnpm cli:check skills
+```
+
+`cli:check` runs the repository checks: links, catalogs, exports, lint, complexity, docs, skills, types, unused files, and a local secret-pattern scan. It does not install Gitleaks, Knip replacements, or duplicate-code tools from the older quality CLI.
+
 ## Generate catalogs for every workspace package
 
 ```sh
@@ -99,7 +114,7 @@ pnpm generate:catalogs --package @shared/assistant
 pnpm check:catalogs --package @shared/assistant
 ```
 
-The generator discovers packages from `pnpm-workspace.yaml`, including apps and tools. Each package gets a generated `CATALOG.md`. Packages without their own `catalog.template.md` use [tools/cli/catalog/default-template.md](catalog/default-template.md), which fills the package name and the exports, scripts, and dependencies tables. On the first run, an existing authored catalog is preserved as that package's template. Later runs keep guidance in a local template and generate the reference from current package exports, declared TypeScript symbols, scripts and dependencies. Reading symbols never executes package code.
+The generator discovers packages from `pnpm-workspace.yaml`, including apps and tools. Each package gets a generated `CATALOG.md`. The shared lookup guide and generated exports, scripts, and dependencies come from [tools/cli/catalog/templates/package.md.hbs](catalog/templates/package.md.hbs). Package-specific notes already in a catalog are kept. A local `catalog.template.md` is only needed for guidance the shared template cannot express. On the first run, an existing authored catalog is preserved as that package's template. Reading symbols never executes package code.
 
 Add `catalog.template.md` only when a package needs hand-written explanations. Supported placeholders are `<!-- catalog:package -->`, `<!-- catalog:exports -->`, `<!-- catalog:scripts -->` and `<!-- catalog:dependencies -->`. If a template has no catalog placeholders, the default generated reference is appended. UI templates also support their existing `<!-- registry:... -->` markers with the same registry/config consistency checks. Never edit generated `CATALOG.md` directly.
 
