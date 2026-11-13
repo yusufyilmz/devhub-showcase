@@ -4,63 +4,128 @@ import { type MouseEvent, type PointerEvent, useEffect, useRef, useState } from 
 
 import { companionStorage } from "@shared/runtime/storage";
 
-type Side = "left" | "right";
-type Drag = { pointerId: number; startX: number; left: number; width: number };
+type Layout = NonNullable<ReturnType<typeof companionStorage.readLayout>>;
+type Gesture = {
+  pointer: number;
+  x: number;
+  y: number;
+  bounds: DOMRect;
+  size: number;
+  resize: boolean;
+};
+
+const margin = 16;
+const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+const clampSize = (size: number) => clamp(Math.round(size), 48, 208);
 
 export function useCompanionDock(agent: string, floating: boolean) {
-  const [side, setSide] = useState<Side>("left");
-  const [offset, setOffset] = useState<number>();
-  const drag = useRef<Drag>(null);
+  const [layout, setLayout] = useState<Layout>();
+  const [pending, setPending] = useState<Layout>();
+  const container = useRef<HTMLDivElement>(null);
+  const gesture = useRef<Gesture>(null);
   const didDrag = useRef(false);
 
   useEffect(() => {
-    if (floating) setSide(companionStorage.readSide(agent));
+    if (!floating) return;
+    setLayout(
+      companionStorage.readLayout(agent) ?? {
+        x: companionStorage.readSide(agent) === "right" ? 1 : 0,
+        y: 1,
+      },
+    );
   }, [agent, floating]);
 
-  function dock(next: Side) {
-    setSide(next);
-    companionStorage.writeSide(agent, next);
+  function save(next: Layout) {
+    setLayout(next);
+    companionStorage.writeLayout(agent, next);
   }
 
-  function start(event: PointerEvent<HTMLButtonElement>) {
-    if (!floating || !event.isPrimary || event.button !== 0) return;
-    const { left, width } = event.currentTarget.getBoundingClientRect();
+  const current = pending ?? layout ?? { x: 0, y: 1 };
+  const side = current.x < 0.5 ? "left" : "right";
+
+  function start(event: PointerEvent<HTMLElement>, resize = false) {
+    if (!floating || !event.isPrimary || event.button !== 0 || gesture.current) return;
+    const bounds = container.current?.getBoundingClientRect();
+    const size = container.current?.querySelector(".agent-launcher")?.getBoundingClientRect().width;
+    if (!bounds || !size) return;
     didDrag.current = false;
-    drag.current = { left, pointerId: event.pointerId, startX: event.clientX, width };
+    gesture.current = {
+      bounds,
+      pointer: event.pointerId,
+      resize,
+      size,
+      x: event.clientX,
+      y: event.clientY,
+    };
     event.currentTarget.setPointerCapture(event.pointerId);
   }
 
-  function move(event: PointerEvent<HTMLButtonElement>) {
-    const current = drag.current;
-    if (!current || current.pointerId !== event.pointerId) return;
-    const distance = event.clientX - current.startX;
-    if (!didDrag.current && Math.abs(distance) < 6) return;
+  function nextLayout(event: PointerEvent<HTMLElement>, active: Gesture): Layout {
+    const dx = event.clientX - active.x;
+    const dy = event.clientY - active.y;
+    if (active.resize) return { ...(layout ?? current), size: clampSize(active.size - dy) };
+    const viewport = document.documentElement;
+    return {
+      ...layout,
+      x: clamp(
+        (active.bounds.left + dx - margin) /
+          Math.max(1, viewport.clientWidth - active.bounds.width - 2 * margin),
+        0,
+        1,
+      ),
+      y: clamp(
+        (active.bounds.top + dy - margin) /
+          Math.max(1, viewport.clientHeight - active.bounds.height - 2 * margin),
+        0,
+        1,
+      ),
+    };
+  }
+
+  function move(event: PointerEvent<HTMLElement>) {
+    const active = gesture.current;
+    if (!active || active.pointer !== event.pointerId) return;
+    if (!didDrag.current && Math.hypot(event.clientX - active.x, event.clientY - active.y) < 6)
+      return;
     didDrag.current = true;
-    const right = document.documentElement.clientWidth - current.width;
-    setOffset(Math.min(right - current.left, Math.max(-current.left, distance)));
+    setPending(nextLayout(event, active));
   }
 
   function cancel() {
-    drag.current = null;
-    setOffset(undefined);
+    gesture.current = null;
+    setPending(undefined);
   }
 
-  function finish(event: PointerEvent<HTMLButtonElement>) {
-    const current = drag.current;
-    if (!current || current.pointerId !== event.pointerId) return;
-    if (didDrag.current) {
-      const center = current.left + current.width / 2 + event.clientX - current.startX;
-      dock(center < document.documentElement.clientWidth / 2 ? "left" : "right");
-    }
+  function finish(event: PointerEvent<HTMLElement>) {
+    const active = gesture.current;
+    if (!active || active.pointer !== event.pointerId) return;
+    if (didDrag.current) save(nextLayout(event, active));
     cancel();
   }
 
-  function suppressDragClick(event: MouseEvent<HTMLButtonElement>) {
+  function suppressDragClick(event: MouseEvent<HTMLElement>) {
     if (!didDrag.current || event.detail === 0) return false;
     event.preventDefault();
     didDrag.current = false;
     return true;
   }
 
-  return { cancel, dock, finish, move, offset, side, start, suppressDragClick };
+  function resizeBy(delta: number) {
+    const size = container.current?.querySelector(".agent-launcher")?.getBoundingClientRect().width;
+    if (size) save({ ...current, size: clampSize(size + delta) });
+  }
+
+  return {
+    cancel,
+    container,
+    current,
+    dock: (next: "left" | "right") => save({ ...current, x: next === "left" ? 0 : 1 }),
+    finish,
+    move,
+    moving: Boolean(pending),
+    resizeBy,
+    side,
+    start,
+    suppressDragClick,
+  };
 }

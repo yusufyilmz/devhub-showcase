@@ -1,5 +1,7 @@
 "use client";
 
+import "./_profile-menu.css";
+
 import { useState } from "react";
 
 import { urls } from "@shared/config/urls";
@@ -30,12 +32,14 @@ export function ProfileMenu({
   initials,
   protectDraft,
   studioHref,
+  username,
 }: {
   canImportLinkedInAlerts: boolean;
   canManagePortfolios: boolean;
   initials: string;
   protectDraft: boolean;
   studioHref: string;
+  username?: string;
 }) {
   const request = useStudioRequest();
   const [busy, setBusy] = useState(false);
@@ -61,23 +65,29 @@ export function ProfileMenu({
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <IconButton
-            aria-label="Profile menu"
-            className="size-[40px] shrink-0 rounded-full"
-            surface="portfolio"
-            variant="outline"
-          >
-            <span aria-hidden="true" className="text-[12px] font-semibold">
+          <IconButton aria-label="Profile menu" className="profile-menu-trigger" variant="outline">
+            <span aria-hidden="true" className="profile-menu-avatar">
               {initials}
             </span>
           </IconButton>
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="end"
-          className="w-[240px] min-w-0 max-w-[calc(100vw-16px)]"
-          sideOffset={8}
+          className="profile-menu-panel"
+          collisionPadding={12}
+          sideOffset={10}
         >
-          <DropdownMenuLabel>Portfolio</DropdownMenuLabel>
+          <DropdownMenuLabel className="profile-menu-identity">
+            <span aria-hidden="true" className="profile-menu-avatar">
+              {initials}
+            </span>
+            <span className="profile-menu-name">
+              <strong>My profile</strong>
+              {username && <span>@{username}</span>}
+            </span>
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuLabel className="profile-menu-heading">Portfolio</DropdownMenuLabel>
           <DropdownMenuGroup>
             <DropdownMenuItem asChild>
               <a href={studioHref}>Edit profile</a>
@@ -92,7 +102,7 @@ export function ProfileMenu({
             )}
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuLabel>Jobs</DropdownMenuLabel>
+          <DropdownMenuLabel className="profile-menu-heading">Jobs</DropdownMenuLabel>
           <DropdownMenuGroup>
             {jobLinks.map(({ href, label }) => (
               <DropdownMenuItem asChild key={href}>
@@ -109,7 +119,7 @@ export function ProfileMenu({
           <DropdownMenuItem asChild>
             <a href="/admin/billing">Plan and billing</a>
           </DropdownMenuItem>
-          <DropdownMenuItem disabled={busy} onSelect={() => signOut()}>
+          <DropdownMenuItem disabled={busy} onSelect={() => signOut()} variant="destructive">
             {busy ? "Signing out…" : "Sign out"}
           </DropdownMenuItem>
         </DropdownMenuContent>

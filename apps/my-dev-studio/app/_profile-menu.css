@@ -1,0 +1,91 @@
+.ui-icon-button.profile-menu-trigger {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  padding: 3px;
+  color: var(--primary);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  box-shadow: none;
+}
+
+.ui-icon-button.profile-menu-trigger:is(:hover, [data-state="open"]) {
+  border-color: var(--primary);
+}
+
+.profile-menu-avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 10%, var(--card));
+  border-radius: 50%;
+}
+
+.profile-menu-panel[data-slot="dropdown-menu-content"] {
+  z-index: 120;
+  width: min(17rem, calc(100vw - 24px));
+  min-width: 0;
+  padding: 6px;
+  color: var(--foreground);
+  background: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 16px 44px color-mix(in srgb, var(--foreground) 18%, transparent);
+}
+
+.profile-menu-panel .profile-menu-identity {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+}
+
+.profile-menu-name {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.profile-menu-name > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+.profile-menu-panel .profile-menu-heading {
+  padding: 6px 10px 2px;
+  font-size: 11px;
+  font-weight: 650;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.profile-menu-panel [data-slot="dropdown-menu-item"] {
+  min-height: 36px;
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 8px;
+}
+
+.profile-menu-panel [data-slot="dropdown-menu-item"][data-highlighted] {
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, var(--popover));
+}
+
+.profile-menu-panel [data-slot="dropdown-menu-item"][data-variant="destructive"][data-highlighted] {
+  color: var(--destructive);
+}
+
+.profile-menu-panel [data-slot="dropdown-menu-separator"] {
+  margin: 4px;
+}

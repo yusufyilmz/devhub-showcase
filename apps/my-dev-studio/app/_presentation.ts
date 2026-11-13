@@ -13,7 +13,7 @@ export function getPagePresentation(
   const example = getExampleForPath(path);
   const profile = example?.profile ?? snapshot?.profile;
   const editing = path.startsWith("/admin") || path.endsWith("/edit");
-  const appearance = profile?.appearance ?? {
+  const appearance = (editing ? undefined : profile?.appearance) ?? {
     accent: "cyan" as const,
     defaultTheme: "light" as const,
   };

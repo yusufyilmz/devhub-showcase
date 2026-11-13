@@ -615,6 +615,7 @@ export function ProfileEditor({
       {tab !== "AI assistant" && (
         <AgentCompanion
           agent="studio"
+          className="editor-companion"
           guide={studioEditorGuide({
             ask: (prompt) => {
               setWorkspaceView("edit");
