@@ -11,6 +11,7 @@ import { PageShell } from "@shared/ui/page-shell";
 
 import { requireWorkspace } from "@/features/admin/admin-auth";
 
+import { AccountPreferences } from "./_account-preferences";
 import { getPagePresentation } from "./_presentation";
 import { getProfileStructuredData, isPlatformPage, platformMetadata } from "./_site";
 import { getPublicProfile, getUsernameProfile } from "./[username]/_profile";
@@ -80,6 +81,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       portfolioTheme={portfolioTheme}
       structuredData={structuredData}
     >
+      <AccountPreferences />
       {children}
       {showPublicCompanion && <StudioCompanion onLoginPage={path === "/login"} />}
     </PageShell>

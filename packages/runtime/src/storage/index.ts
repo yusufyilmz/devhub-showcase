@@ -1,6 +1,7 @@
 export { storage } from "@shared/config/storage";
 export { themeOptions } from "@shared/config/theme";
 
+export { accountPreferenceSession } from "./accountPreferenceSession";
 export { chatStorage, type VisitorMessage } from "./chatStorage";
 export { companionStorage, type TipSettings } from "./companionStorage";
 export { draftStorage } from "./draftStorage";

@@ -2,7 +2,11 @@
 
 import { type RefObject, useEffect, useState } from "react";
 
-import { companionStorage, type TipSettings } from "@shared/runtime/storage";
+import {
+  accountPreferenceSession,
+  companionStorage,
+  type TipSettings,
+} from "@shared/runtime/storage";
 
 import type { AgentFeature, AgentGuide } from "./types";
 
@@ -59,11 +63,13 @@ export function useFeatureTips({
     const storage = (event: StorageEvent) => {
       if (event.key === key) refresh();
     };
+    const unsubscribe = accountPreferenceSession.subscribe(refresh);
     visibility();
     setReadyKey(key);
     window.addEventListener("storage", storage);
     document.addEventListener("visibilitychange", visibility);
     return () => {
+      unsubscribe();
       window.removeEventListener("storage", storage);
       document.removeEventListener("visibilitychange", visibility);
     };
@@ -126,6 +132,7 @@ export function useFeatureTips({
       if (!key) return;
       const updated = { ...(companionStorage.readTips(key) ?? settings), enabled };
       companionStorage.writeTips(key, updated);
+      companionStorage.setTipsEnabled(key, enabled);
       setSettings(updated);
       if (!enabled) setActive(undefined);
     },

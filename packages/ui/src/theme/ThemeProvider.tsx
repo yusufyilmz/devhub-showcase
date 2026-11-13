@@ -5,7 +5,12 @@ import { useEffect, useRef, useState } from "react";
 
 import { getPortfolioThemeVariables, type PortfolioTheme, portfolioThemes } from "@shared/config";
 import { themeOptions } from "@shared/config/theme";
-import { type ThemeMode, themePreferenceAliases, themeStorage } from "@shared/runtime/storage";
+import {
+  accountPreferenceSession,
+  type ThemeMode,
+  themePreferenceAliases,
+  themeStorage,
+} from "@shared/runtime/storage";
 import { useThemeStore } from "@shared/runtime/user";
 
 import "./store";
@@ -177,7 +182,11 @@ export function ThemeProvider({
     const unsubscribe = useThemeStore.subscribe(apply);
     const media = window.matchMedia("(prefers-color-scheme: dark)");
     const syncStorage = (event: StorageEvent) => {
-      if (event.key === themeStorage.name || event.key === null) useThemeStore.persist.rehydrate();
+      if (
+        !accountPreferenceSession.active() &&
+        (event.key === themeStorage.name || event.key === null)
+      )
+        useThemeStore.persist.rehydrate();
     };
     media.addEventListener("change", apply);
     window.addEventListener("storage", syncStorage);
