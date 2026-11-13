@@ -58,6 +58,7 @@ export const AppearanceCard = forwardRef<HTMLDivElement, AppearanceCardProps>(
       transitionDuration = 300,
       className,
       children,
+      style: customStyle,
       ...props
     },
     ref,
@@ -79,23 +80,7 @@ export const AppearanceCard = forwardRef<HTMLDivElement, AppearanceCardProps>(
     });
 
     return (
-      <Card
-        className={classes}
-        ref={ref}
-        style={style}
-        {...props}
-        onMouseEnter={(event: React.MouseEvent<HTMLDivElement>) => {
-          if (enableHover) {
-            event.currentTarget.style.transform =
-              "scale(var(--hover-scale)) translateY(var(--hover-translate-y))";
-          }
-        }}
-        onMouseLeave={(event: React.MouseEvent<HTMLDivElement>) => {
-          if (enableHover) {
-            event.currentTarget.style.transform = "";
-          }
-        }}
-      >
+      <Card className={classes} ref={ref} style={{ ...style, ...customStyle }} {...props}>
         <AppearanceAccent accentConfig={accentConfig} transitionDuration={transitionDuration} />
         {children}
       </Card>

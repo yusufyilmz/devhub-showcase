@@ -37,11 +37,12 @@ export function appearanceCardClasses({
     GRADIENT_MAP[appearance as AppearanceCardAppearance] ?? GRADIENT_MAP.default;
   return cn(
     appearanceClass,
-    "relative border px-[var(--spacing-md)] shadow-sm backdrop-blur-sm",
+    "px-md",
     allowOverflow ? "overflow-visible" : "overflow-hidden",
-    enableHover && "cursor-pointer transition-all hover:border-primary/30 hover:shadow-md",
-    enableHover && interactiveElevation && "hover:shadow-xl",
-    enableHover && enableGlow && "hover:shadow-primary/20 hover:brightness-105",
+    enableHover &&
+      "cursor-pointer motion-safe:transition-[background-color,border-color,box-shadow,transform] motion-safe:hover:[transform:scale(var(--hover-scale))_translateY(var(--hover-translate-y))]",
+    enableHover && interactiveElevation && "hover:shadow-md",
+    enableHover && enableGlow && "hover:shadow-sm hover:shadow-primary/20 hover:brightness-105",
     className,
   );
 }
@@ -63,7 +64,7 @@ export function appearanceCardStyle({
 }
 
 export const contentCardVariants = cva(
-  "cursor-pointer overflow-hidden relative flex flex-col justify-between transition-all duration-300 ease-in-out group/card",
+  "group/card relative flex min-w-0 max-w-full flex-col justify-between overflow-hidden",
   {
     defaultVariants: {
       layout: "overlay",
@@ -83,29 +84,32 @@ export const contentCardVariants = cva(
         xl: "h-[28rem] p-8 rounded-3xl max-w-lg",
       },
       variant: {
-        default: "bg-cover bg-center shadow-xl",
-        gradient: "bg-gradient-to-br shadow-xl",
-        minimal: "bg-transparent border border-border/50 shadow-sm",
-        solid: "bg-background border border-border shadow-lg",
+        default: "bg-cover bg-center",
+        gradient: "bg-gradient-to-br",
+        minimal: "bg-transparent border-border/60",
+        solid: "bg-card border-border",
       },
     },
   },
 );
 
-export const overlayVariants = cva("absolute inset-0 transition-all duration-300", {
-  defaultVariants: {
-    overlay: "medium",
-  },
-  variants: {
-    overlay: {
-      gradient: "bg-gradient-to-t from-black/80 via-black/20 to-transparent",
-      heavy: "bg-black/60 group-hover/card:bg-black/80",
-      light: "bg-black/20 group-hover/card:bg-black/40",
-      medium: "bg-black/40 group-hover/card:bg-black/60",
-      none: "opacity-0",
+export const overlayVariants = cva(
+  "pointer-events-none absolute inset-0 motion-safe:transition-colors",
+  {
+    defaultVariants: {
+      overlay: "medium",
+    },
+    variants: {
+      overlay: {
+        gradient: "bg-gradient-to-t from-black/80 via-black/20 to-transparent",
+        heavy: "bg-black/60 group-hover/card:bg-black/80",
+        light: "bg-black/20 group-hover/card:bg-black/40",
+        medium: "bg-black/40 group-hover/card:bg-black/60",
+        none: "opacity-0",
+      },
     },
   },
-});
+);
 
 export function contentCardStyle(
   style: ContentCardStyleOptions,
@@ -122,7 +126,7 @@ export function contentCardStyle(
   }
   if (variant === "gradient") {
     cardStyle.backgroundImage =
-      backgroundColor || "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+      backgroundColor || "linear-gradient(135deg, var(--card), var(--muted))";
   }
   return cardStyle;
 }
@@ -151,7 +155,7 @@ export const variantCardVariants = cva(
         sm: "rounded-sm",
       },
       shadow: {
-        default: "shadow-md",
+        default: "",
         lg: "shadow-lg",
         none: "",
         sm: "shadow-sm",
@@ -166,7 +170,7 @@ export const variantCardVariants = cva(
       },
       variant: {
         default: "bg-card text-card-foreground border-border",
-        elevated: "bg-card text-card-foreground border-border shadow-lg",
+        elevated: "bg-card text-card-foreground border-border shadow-sm",
         glass:
           "bg-card/60 text-card-foreground border-border/50 backdrop-blur-xl backdrop-saturate-120",
         gradient: "bg-gradient-to-br from-card to-muted text-card-foreground border-border",
@@ -222,8 +226,8 @@ export const contentCardStyles = {
   contentCardCopy2: "relative z-10 font-normal leading-relaxed",
   contentCardCopy3: "text-xs",
   contentCardCopy4: "text-sm",
-  element1: "h-8 w-8 rounded-full border border-white/20 object-cover",
-  element2: "h-10 w-10 rounded-full border-2 border-white/20 object-cover",
+  element1: "h-8 w-8 rounded-full border border-current/20 object-cover",
+  element2: "h-10 w-10 rounded-full border border-current/20 object-cover",
   element3: "relative z-10 flex items-center space-x-3",
   element4: "flex flex-col",
   element5: "ml-auto",
