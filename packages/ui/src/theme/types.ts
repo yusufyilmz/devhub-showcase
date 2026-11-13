@@ -1,3 +1,5 @@
+import type { themeOptions } from "@shared/config/theme";
+
 export const THEME_MODES = ["light", "dark", "system"] as const;
 export type ThemeMode = (typeof THEME_MODES)[number];
 
@@ -28,8 +30,12 @@ export type BorderStyle = (typeof BORDER_STYLES)[number];
 export const SHADOW_STYLES = ["none", "soft", "subtle", "medium", "strong", "deep"] as const;
 export type ShadowStyle = (typeof SHADOW_STYLES)[number];
 
-export const SPACING_STYLES = ["compact", "comfortable", "cozy", "wide", "extra"] as const;
-export type SpacingStyle = (typeof SPACING_STYLES)[number];
+export const SPACING_STYLES = [
+  "compact",
+  "comfortable",
+  "spacious",
+] as const satisfies typeof themeOptions.spacing;
+export type SpacingStyle = (typeof SPACING_STYLES)[number] | "cozy" | "wide" | "extra";
 
 export const RADIUS_STYLES = ["none", "small", "moderate", "rounded", "pill", "circle"] as const;
 export type RadiusStyle = (typeof RADIUS_STYLES)[number];

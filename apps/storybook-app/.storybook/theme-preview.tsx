@@ -2,6 +2,8 @@ import { type ReactNode, useLayoutEffect } from "react";
 
 import { NotificationProvider, StudioRequestProvider } from "@shared/ui/providers";
 
+import { SPACING_STYLES } from "../../../packages/ui/src/theme/types";
+
 type ThemeGlobals = Record<string, unknown>;
 
 /** Root attributes also theme Radix portals mounted outside the story canvas. */
@@ -17,7 +19,12 @@ export function ThemePreview({
   const brand = String(globals.brand ?? "white");
   const mode = globals.mode === "dark" ? "dark" : "light";
   const radius = String(globals.radius ?? "base");
-  const spacing = String(globals.spacing ?? "comfortable");
+  const requestedSpacing = globals.spacing;
+  const spacing =
+    SPACING_STYLES.find((preset) => preset === requestedSpacing) ??
+    (["cozy", "extra", "relaxed", "wide"].includes(String(requestedSpacing))
+      ? "spacious"
+      : "comfortable");
   useLayoutEffect(() => {
     const root = document.documentElement;
     const attributes = {

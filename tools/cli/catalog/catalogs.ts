@@ -46,10 +46,18 @@ const packageTemplatePath = fileURLToPath(new URL("./templates/package.md.hbs", 
 function sharedCatalogSource(pkg: WorkspacePackage, existing: string | undefined): string {
   const depth = pkg.relative.split(/[\\/]/).filter(Boolean).length;
   const rootPrefix = "../".repeat(depth);
+  const guidance = packageGuidance(existing);
+  const renderedGuidance =
+    pkg.manifest.name === "@shared/ui"
+      ? guidance.replace(
+          /^\| Attribute +\| Values +\|\n(?:\|[^\n]*\n)*?\| Portfolio accents [^\n]*\n/m,
+          "<!-- registry:theme-options -->\n",
+        )
+      : guidance;
   return renderHbs(fs.readFileSync(packageTemplatePath, "utf8"), {
     agentsReadme: `${rootPrefix}.agents/README.md`,
     cliReadme: `${rootPrefix}tools/cli/README.md#token-bounded-repository-lookup`,
-    guidance: packageGuidance(existing),
+    guidance: renderedGuidance,
     name: pkg.manifest.name,
     query: catalogQuery(pkg.manifest.name, existing),
     title: catalogTitle(pkg.manifest.name, existing),

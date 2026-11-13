@@ -8,7 +8,7 @@ function Example({
   ...props
 }: Pick<ActionButtonProps, "colorScheme" | "loading" | "variant"> & { width?: number }) {
   return (
-    <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
+    <div className="w-full p-md" style={{ maxWidth: width }}>
       <ActionButton {...props}>Save changes</ActionButton>
     </div>
   );

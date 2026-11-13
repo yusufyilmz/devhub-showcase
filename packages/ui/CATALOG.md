@@ -139,7 +139,7 @@ options that no longer match the supported configuration.
 | `data-radius`          | `none`, `square`, `small`, `base`, `moderate`, `rounded`, `pill`, `circle`                                                                             |
 | `data-scale`           | `small`, `base`, `large`, `90`, `95`, `100`, `105`, `110`, `120`                                                                                       |
 | `data-shadow`          | `none`, `soft`, `subtle`, `medium`, `strong`, `deep`                                                                                                   |
-| `data-spacing`         | `compact`, `comfortable`, `relaxed`, `spacious`, `cozy`, `wide`, `extra`                                                                               |
+| `data-spacing`         | `compact`, `comfortable`, `spacious`                                                                                                                   |
 | `data-theme`           | `light`, `dark`, `system`                                                                                                                              |
 | `data-tracking`        | `tight`, `wide`                                                                                                                                        |
 | `data-transition`      | `none`, `base`, `smooth`, `bouncy`, `elastic`                                                                                                          |

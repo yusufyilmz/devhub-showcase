@@ -52,7 +52,8 @@ export function themeBootstrapScript(fallback: ThemeMode) {
     for (const key of Object.keys(options)) {
       if (key === "theme") continue;
       const value = preferences[key];
-      if (!options[key].includes(value)) continue;
+      const alias = Object.hasOwn(aliases[key] ?? {}, value) ? aliases[key][value] : undefined;
+      if (!options[key].includes(value) && !(key === "spacing" && options[key].includes(alias))) continue;
       if (key === "brand") {
         root.dataset.accent = value;
         continue;
@@ -76,7 +77,7 @@ export function themeBootstrapScript(fallback: ThemeMode) {
       }
       const attribute = "data-" + (key === "container" ? "container-size" : key);
       defaults[key] = root.getAttribute(attribute);
-      root.setAttribute(attribute, aliases[key]?.[value] ?? value);
+      root.setAttribute(attribute, alias ?? value);
       if (key === "scale" && Number.isFinite(Number(value))) {
         root.style.setProperty("--text-scale", String(Number(value) / 100));
       }
