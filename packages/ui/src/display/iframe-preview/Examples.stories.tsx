@@ -12,7 +12,7 @@ function Example({ scale = 1, width = 560 }: { scale?: number; width?: number })
 const meta = {
   component: Example,
   tags: ["autodocs"],
-  title: "UI/Display/iframe-preview",
+  title: "UI/Display/Iframe Preview",
 } satisfies Meta<typeof Example>;
 export default meta;
 type Story = StoryObj<typeof meta>;

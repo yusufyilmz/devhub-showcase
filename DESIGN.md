@@ -213,7 +213,7 @@ pnpm --silent lookup catalog "button" --package @shared/ui --limit 2
 
 Use a few specific keywords: text searches require every query word to match. Results retain source references, parent prerequisites and named global constraints. Follow `hasMore` with `--cursor '<cursor>'` using the same query and filters. Retrieve a result or oversized-record locator with `pnpm --silent lookup section '<id>' --max-tokens 4000`. Increase the budget when a complete section does not fit; a budget failure does not mean the design rule is absent. Read the relevant design rules and mandatory instructions before implementation.
 
-See the [AI quick start](.ai/README.md) and [full CLI usage](tools/cli/README.md#token-bounded-repository-lookup).
+See the [AI quick start](.agents/README.md) and [full CLI usage](tools/cli/README.md#token-bounded-repository-lookup).
 
 ## Stylesheet architecture
 

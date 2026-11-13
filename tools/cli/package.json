@@ -6,7 +6,8 @@
   "exports": {
     "./tsdown": "./tsdown/library.ts",
     "./generators": "./generators/config.ts",
-    "./lookup": "./lookup/index.ts"
+    "./lookup": "./lookup/index.ts",
+    "./storybook": "./storybook/index.ts"
   },
   "scripts": {
     "test": "vitest",

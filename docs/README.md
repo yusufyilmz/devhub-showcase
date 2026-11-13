@@ -1,6 +1,10 @@
 # Documentation
 
-Start with the hub guides, then dig into feature or reference pages as needed. Product inventory lives in [features](features.md); package boundaries live in [architecture](architecture.md).
+## When to read
+
+Read this first when you do not yet know which guide matches the task. It points at the hub pages, feature guides, current Studio workflows, and reference notes.
+
+Start with the hub guides, then dig into feature or reference pages as needed. Product inventory lives in [features](features.md); package boundaries live in [architecture](architecture.md). Studio notes are indexed in [dev-studio](dev-studio/README.md). Fitness notes are indexed in [fitness-app](fitness-app/README.md).
 
 ## Hubs
 
@@ -14,19 +18,19 @@ Start with the hub guides, then dig into feature or reference pages as needed. P
 
 ## Features
 
-| Guide                                                        | Read it for                                          |
-| ------------------------------------------------------------ | ---------------------------------------------------- |
-| [Personal workspaces](features/multiuser-cvs.md)             | Profile setup, publication and private downloads     |
-| [Google login](features/google-login.md)                     | Supabase Google OAuth and workspace access           |
-| [Managed portfolios](features/managed-portfolios.md)         | Administrator portfolios and ownership transfer      |
-| [CV import](features/cv-import.md)                           | Optional CV extraction into portfolio drafts         |
-| [Editor workflow](features/editor-workflow.md)               | Guided setup, tab-local recovery and AI field review |
-| [Section system](features/section-system.md)                 | Section registry, ordering and compositions          |
-| [Section templates](features/section-templates.md)           | Private template library and import/export           |
-| [AI foundation](features/portfolio-ai-foundation.md)         | Public/owner knowledge and chat boundaries           |
-| [Premium access](features/premium-access.md)                 | Entitlements and usage reservations                  |
-| [Premium portfolio chat](features/premium-portfolio-chat.md) | Owner-enabled public chat widget                     |
-| [Stripe billing](features/stripe-billing.md)                 | Test-only checkout, portal and webhooks              |
+| Guide                                                          | Read it for                                          |
+| -------------------------------------------------------------- | ---------------------------------------------------- |
+| [Personal workspaces](dev-studio/multiuser-cvs.md)             | Profile setup, publication and private downloads     |
+| [Google login](dev-studio/google-login.md)                     | Supabase Google OAuth and workspace access           |
+| [Managed portfolios](dev-studio/managed-portfolios.md)         | Administrator portfolios and ownership transfer      |
+| [CV import](dev-studio/cv-import.md)                           | Optional CV extraction into portfolio drafts         |
+| [Editor workflow](dev-studio/editor-workflow.md)               | Guided setup, tab-local recovery and AI field review |
+| [Section system](dev-studio/section-system.md)                 | Section registry, ordering and compositions          |
+| [Section templates](dev-studio/section-templates.md)           | Private template library and import/export           |
+| [AI foundation](dev-studio/portfolio-ai-foundation.md)         | Public/owner knowledge and chat boundaries           |
+| [Premium access](dev-studio/premium-access.md)                 | Entitlements and usage reservations                  |
+| [Premium portfolio chat](dev-studio/premium-portfolio-chat.md) | Owner-enabled public chat widget                     |
+| [Stripe billing](dev-studio/stripe-billing.md)                 | Test-only checkout, portal and webhooks              |
 
 ## Current Studio workflows
 

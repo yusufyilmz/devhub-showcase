@@ -1,5 +1,9 @@
 # Vitest support
 
+## When to read
+
+Read this when you need to know where unit tests live or how to run one file. Command details, browser suites, and CI limits are in [testing and verification](../testing.md).
+
 Colocated tests live next to the code they cover:
 
 - `packages/**/**/*.test.{ts,tsx}` — shared packages (ui, lib, config, auth, and others)

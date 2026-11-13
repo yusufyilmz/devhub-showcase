@@ -15,7 +15,7 @@ function Example({ width = 560 }: { width?: number }) {
 const meta = {
   component: Example,
   tags: ["autodocs"],
-  title: "UI/Layout/scroll-to-top",
+  title: "UI/Layout/Scroll To Top",
 } satisfies Meta<typeof Example>;
 export default meta;
 type Story = StoryObj<typeof meta>;

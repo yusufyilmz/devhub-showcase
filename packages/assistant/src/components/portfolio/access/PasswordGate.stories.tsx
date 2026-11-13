@@ -5,7 +5,7 @@ import { PasswordGate } from "./PasswordGate";
 const meta = {
   component: PasswordGate,
   parameters: { layout: "fullscreen", pageCanvas: true },
-  title: "Pages/Protected Portfolio",
+  title: "Assistant/Portfolio/Access/Password Gate",
 } satisfies Meta<typeof PasswordGate>;
 export default meta;
 export const Locked: StoryObj<typeof meta> = {

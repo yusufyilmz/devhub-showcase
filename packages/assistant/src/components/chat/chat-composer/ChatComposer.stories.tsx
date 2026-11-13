@@ -24,7 +24,7 @@ const meta = {
     );
   },
   tags: ["autodocs"],
-  title: "UI/Display/Chat Composer",
+  title: "Assistant/Chat/Chat Composer",
 } satisfies Meta<typeof ChatComposer>;
 
 export default meta;

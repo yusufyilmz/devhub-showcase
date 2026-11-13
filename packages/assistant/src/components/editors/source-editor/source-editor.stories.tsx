@@ -21,7 +21,7 @@ const meta = {
     return <SourceEditor {...args} onChange={setSection} section={section} />;
   },
   tags: ["autodocs"],
-  title: "UI/Editors/Source Editor",
+  title: "Assistant/Editors/Source Editor",
 } satisfies Meta<typeof SourceEditor>;
 
 export default meta;

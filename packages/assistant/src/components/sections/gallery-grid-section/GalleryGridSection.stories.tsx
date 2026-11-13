@@ -15,7 +15,7 @@ const meta = {
     ),
   ],
   tags: ["autodocs"],
-  title: "Sections/GalleryGrid",
+  title: "Assistant/Sections/Gallery Grid Section",
 } satisfies Meta<typeof GalleryGridSection>;
 export default meta;
 type Story = StoryObj<typeof meta>;

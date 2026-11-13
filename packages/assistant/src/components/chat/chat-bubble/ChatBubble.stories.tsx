@@ -5,7 +5,7 @@ import { ChatBubble } from "./ChatBubble";
 const meta = {
   args: { children: "Your draft is ready to review.", maxWidth: "18rem" },
   component: ChatBubble,
-  title: "UI/Display/Chat Bubble",
+  title: "Assistant/Chat/Chat Bubble",
 } satisfies Meta<typeof ChatBubble>;
 
 export default meta;

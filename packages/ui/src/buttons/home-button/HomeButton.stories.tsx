@@ -6,7 +6,7 @@ const meta = {
   component: HomeButton,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
-  title: "UI/Actions/Home Button",
+  title: "UI/Buttons/Home Button",
 } satisfies Meta<typeof HomeButton>;
 
 export default meta;

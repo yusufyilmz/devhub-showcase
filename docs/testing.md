@@ -1,5 +1,9 @@
 # Testing and verification
 
+## When to read
+
+Read this before running the local gate, adding a unit or browser test, or deciding what a green CI run does and does not prove. Manual feature steps live in the [manual testing index](testing/manual/index.md).
+
 Run commands from the repository root using the Node/pnpm versions in [package.json](../package.json). The source of truth is the scripts, [Vitest configuration](../vitest.config.mts), [Fitness app Playwright configuration](/apps/my-fitness-app/playwright.config.ts) and [Dev studio Playwright configuration](/apps/my-dev-studio/playwright.config.ts) [CI workflow](../.github/workflows/ci.yml).
 
 ## Manual feature catalog

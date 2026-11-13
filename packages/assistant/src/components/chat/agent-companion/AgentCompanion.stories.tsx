@@ -13,7 +13,7 @@ const meta = {
   args: { agent: "studio", label: "Open Studio assistant" },
   component: Preview,
   parameters: { layout: "fullscreen" },
-  title: "UI/Display/Agent Companion",
+  title: "Assistant/Chat/Agent Companion",
 } satisfies Meta<typeof Preview>;
 
 export default meta;

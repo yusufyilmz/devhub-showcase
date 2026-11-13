@@ -15,7 +15,7 @@ const meta = {
     ),
   ],
   tags: ["autodocs"],
-  title: "Sections/HowTo",
+  title: "Assistant/Sections/How To Section",
 } satisfies Meta<typeof HowToSection>;
 export default meta;
 type Story = StoryObj<typeof meta>;

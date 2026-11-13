@@ -7,7 +7,7 @@ const meta = {
   component: GoBackButton,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
-  title: "UI/Actions/Go Back Button",
+  title: "UI/Buttons/Go Back Button",
 } satisfies Meta<typeof GoBackButton>;
 
 export default meta;

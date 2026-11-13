@@ -13,7 +13,7 @@ function Example(props: TooltipProps) {
 const meta = {
   args: {
     children: <Button variant="outline">Keyboard shortcuts</Button>,
-    title: "Press ? to open keyboard shortcuts.",
+    title: "Storybook App UI/Overlays/Tooltip",
   },
   component: Example,
   parameters: { layout: "centered" },

@@ -15,7 +15,7 @@ const meta = {
     ),
   ],
   tags: ["autodocs"],
-  title: "Sections/YouTube",
+  title: "Assistant/Sections/YouTube Section",
 } satisfies Meta<typeof YouTubeSection>;
 export default meta;
 type Story = StoryObj<typeof meta>;

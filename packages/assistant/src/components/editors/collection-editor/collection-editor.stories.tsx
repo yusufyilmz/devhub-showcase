@@ -45,7 +45,7 @@ const meta = {
   component: Example,
   parameters: { layout: "fullscreen" },
   tags: ["autodocs"],
-  title: "UI/Editors/Collection Editor",
+  title: "Assistant/Editors/Collection Editor",
 } satisfies Meta<typeof Example>;
 
 export default meta;

@@ -1,5 +1,9 @@
 # Observability
 
+## When to read
+
+Read this before adding logs, changing log levels, or planning hosted error monitoring. It describes the current Pino baseline and the Sentry rollout that is documented but not installed.
+
 ## Decision and implementation status
 
 Use the existing **Pino** logging as the free baseline. Adopt **Sentry Developer** as the recommended hosted error-monitoring option when configuring monitoring for this project. This guide defines the framework and rollout; it does not install a Sentry SDK or provision an account.

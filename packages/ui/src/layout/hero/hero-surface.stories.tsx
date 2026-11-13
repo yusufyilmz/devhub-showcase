@@ -28,7 +28,7 @@ const meta = {
     />
   ),
   tags: ["autodocs"],
-  title: "UI/Layout/Hero Surface",
+  title: "UI/Layout/Hero/Hero Surface",
 } satisfies Meta<typeof HeroSurface>;
 
 export default meta;

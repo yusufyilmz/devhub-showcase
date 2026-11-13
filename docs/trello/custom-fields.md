@@ -323,8 +323,8 @@ await migrationService.migrateDescriptionToCustomFields(boardId);
 
 - [Trello Cards API - Custom Fields](https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-idcard-customfield-idcustomfield-item-put)
 - [Article-Trello Linking Guide](./linking.md)
-- [TrelloCustomFieldsService Source](../services/TrelloCustomFields.ts)
-- [Article Metadata Utilities](../utils/articleMetadata.ts)
+- [Trello service source](../../packages/trello/src/services/TrelloService.ts)
+- [Article metadata utilities](../../packages/trello/src/utils/articleMetadata.ts)
 
 ---
 

@@ -1,6 +1,10 @@
 # Architecture
 
-MyDevStudio is a Next.js App Router application in a pnpm/Turborepo monorepo. The repository retains the name `devhub-showcase`. This guide describes current source boundaries; it does not certify production provider or database configuration.
+## When to read
+
+Read this before placing new code, moving a feature between packages, or tracing how MyDevStudio and My Fitness Studio share auth, data, and assistants. Use it for package boundaries, trust boundaries, and which app owns a route. It does not certify production provider or database configuration.
+
+MyDevStudio is a Next.js App Router application in a pnpm/Turborepo monorepo. The repository retains the name `devhub-showcase`. This guide describes current source boundaries.
 
 ## Workspace ownership
 
@@ -164,7 +168,7 @@ Browser reports are uploaded for diagnosis. Database migrations and provider set
 
 Consult the actual route files for individual methods and response contracts. Database ownership and publication checks remain necessary even if the UI hides an action.
 
-Managed portfolios are a separate administrator flow. Transfer requires explicit action, validated access and revision checks; it must not replace an edited or published recipient profile. See [managed portfolios](features/managed-portfolios.md).
+Managed portfolios are a separate administrator flow. Transfer requires explicit action, validated access and revision checks; it must not replace an edited or published recipient profile. See [managed portfolios](dev-studio/managed-portfolios.md).
 
 ## Rendering and runtime
 
@@ -172,7 +176,7 @@ Server components and handlers load permitted data. Client components own intera
 
 PDFs are generated from normalized profile data using the shared CV package and its Handlebars/JSON template. Treat profile strings as data. Preserve the independent portfolio/PDF settings and visibility rules.
 
-Saved AI knowledge has separate public and owner projections. The authorized editor can inspect saved knowledge without an LLM request; private owner knowledge is not public chat context. Public chat currently remains restricted to the main portfolio, reads its published snapshot on every request and does not enable premium chat for other accounts. See [AI foundation](features/portfolio-ai-foundation.md).
+Saved AI knowledge has separate public and owner projections. The authorized editor can inspect saved knowledge without an LLM request; private owner knowledge is not public chat context. Public chat currently remains restricted to the main portfolio, reads its published snapshot on every request and does not enable premium chat for other accounts. See [AI foundation](/docs/dev-studio/portfolio-ai-foundation.md).
 
 AI chat uses OpenAI with Redis rate limiting. CV extraction additionally has per-user and global limits. Missing optional services should produce the supported unavailable/fallback behavior without preventing a credential-free build.
 
@@ -182,7 +186,7 @@ Supabase is the database/auth integration; Prisma is not used. RLS complements s
 
 See [features](features.md) for user-visible behavior and [shared packages](reference/shared-packages.md) for reuse in another app.
 
-See [security policy](../SECURITY.md), [personal workspaces](features/multiuser-cvs.md) and the [portfolio table RLS review](reference/portfolio-table-rls-review.md). Browser fixtures do not prove real OAuth or production RLS behavior.
+See [security policy](../SECURITY.md), [personal workspaces](/docs/dev-studio/multiuser-cvs.md) and the [portfolio table RLS review](reference/portfolio-table-rls-review.md). Browser fixtures do not prove real OAuth or production RLS behavior.
 
 ## Change strategy
 

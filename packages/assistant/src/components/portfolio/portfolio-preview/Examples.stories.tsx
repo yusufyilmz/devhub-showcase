@@ -13,7 +13,7 @@ const meta = {
   },
   component: ResponsivePortfolioPreview,
   tags: ["autodocs"],
-  title: "UI/Display/Responsive portfolio preview",
+  title: "Assistant/Portfolio/Portfolio Preview",
 } satisfies Meta<typeof ResponsivePortfolioPreview>;
 export default meta;
 type Story = StoryObj<typeof meta>;

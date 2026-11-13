@@ -25,7 +25,7 @@ See [notification setup](../../notifications.md) for scheduler and device prereq
 
 ## Branded address rollout
 
-Use the [branded address setup](../../../apps/my-fitness-app/README.md#add-the-branded-address) before hosted checks. The new hostname is pending. Keep the existing public address for bookmarks.
+Use the [extra hostname steps](../../fitness-app/workspace.md#extra-hostname) before hosted checks. The new hostname is pending. Keep the existing public address for bookmarks.
 
 | Step | Clickable URL                                                         | Route path       | Action                                                                                | Expected result                                                             | Actual result / evidence                                                           |
 | ---- | --------------------------------------------------------------------- | ---------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |

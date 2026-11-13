@@ -36,7 +36,7 @@ const meta = {
     );
   },
   tags: ["autodocs"],
-  title: "UI/Editors/Sortable List",
+  title: "Assistant/Editors/Sortable List",
 } satisfies Meta<typeof SortableList>;
 
 export default meta;

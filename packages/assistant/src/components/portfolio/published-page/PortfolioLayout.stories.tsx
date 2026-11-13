@@ -15,7 +15,7 @@ const meta = {
     ),
   ],
   parameters: { layout: "fullscreen", pageCanvas: true },
-  title: "Pages/Portfolio",
+  title: "Assistant/Portfolio/Published Page/Portfolio Layout",
 } satisfies Meta<typeof PortfolioLayout>;
 
 export default meta;

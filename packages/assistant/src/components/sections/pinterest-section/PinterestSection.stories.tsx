@@ -15,7 +15,7 @@ const meta = {
     ),
   ],
   tags: ["autodocs"],
-  title: "Sections/Pinterest",
+  title: "Assistant/Sections/Pinterest Section",
 } satisfies Meta<typeof PinterestSection>;
 export default meta;
 type Story = StoryObj<typeof meta>;

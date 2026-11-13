@@ -1,6 +1,6 @@
 # UI catalog
 
-> **AI lookup guide:** From the repository root, run `pnpm --silent lookup catalog "button" --package @shared/ui --limit 2` to read relevant excerpts. Verify an exact export with `pnpm --silent lookup symbol '<ExportName>' --package @shared/ui`. Follow `hasMore` with `--cursor`; use `--max-tokens` to control output size. Excerpts support discovery; read required instructions and source contracts. See the [AI quick start](../../.ai/README.md) and [full CLI usage](../../tools/cli/README.md#token-bounded-repository-lookup).
+> **AI lookup guide:** From the repository root, run `pnpm --silent lookup catalog "button" --package @shared/ui --limit 2` to read relevant excerpts. Verify an exact export with `pnpm --silent lookup symbol '<ExportName>' --package @shared/ui`. Follow `hasMore` with `--cursor`; use `--max-tokens` to control output size. Excerpts support discovery; read required instructions and source contracts. See the [AI quick start](../../.agents/README.md) and [full CLI usage](../../tools/cli/README.md#token-bounded-repository-lookup).
 
 `EditorWorkspace` and `DraftPreviewPane` (`@shared/assistant/portfolio`) provide grouped
 editor navigation and inline editing inside the caller's save form. The desktop sidebar

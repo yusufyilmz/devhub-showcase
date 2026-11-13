@@ -20,7 +20,7 @@ function Example({ width = 560 }: { width?: number }) {
 const meta = {
   component: Example,
   tags: ["autodocs"],
-  title: "UI/Overlays/popover",
+  title: "UI/Overlays/Popover",
 } satisfies Meta<typeof Example>;
 export default meta;
 type Story = StoryObj<typeof meta>;

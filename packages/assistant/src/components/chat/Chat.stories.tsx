@@ -467,7 +467,7 @@ const ChatDemo: React.FC = () => {
 const meta = {
   component: ChatDemo,
   parameters: { layout: "fullscreen" },
-  title: "UI/Display/Chat",
+  title: "Assistant/Chat",
 } satisfies Meta<typeof ChatDemo>;
 
 export default meta;

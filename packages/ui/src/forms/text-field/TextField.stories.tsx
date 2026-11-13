@@ -371,7 +371,7 @@ const TextFieldDemo: React.FC = () => {
 const meta = {
   component: TextFieldDemo,
   parameters: { layout: "fullscreen" },
-  title: "UI/Forms/TextField",
+  title: "UI/Forms/Text Field",
 } satisfies Meta<typeof TextFieldDemo>;
 
 export default meta;

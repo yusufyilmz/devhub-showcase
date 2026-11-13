@@ -5,7 +5,7 @@ import { ProposalComparison } from "./proposal-comparison";
 const meta = {
   args: { after: "Frontend engineer", before: "Software developer" },
   component: ProposalComparison,
-  title: "Studio/Proposal comparison",
+  title: "Assistant/Portfolio/Proposal Comparison",
 } satisfies Meta<typeof ProposalComparison>;
 export default meta;
 export const Default: StoryObj<typeof meta> = {};

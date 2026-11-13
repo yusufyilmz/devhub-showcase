@@ -1,0 +1,485 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.6.5/schema.json",
+  "assist": {
+    "actions": {
+      "preset": "all",
+      "source": {
+        "noDuplicateClasses": "on",
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              [":STYLE:"],
+              ["use client;"],
+              ":BLANK_LINE:",
+              ["react", "react/**", "react-*", "react-*/**", "next", "next/**", ":NODE:"],
+              ":BLANK_LINE:",
+              ["vitest", "vitest/**", "@testing-library", "@testing-library/**"],
+              ":BLANK_LINE:",
+              [":PACKAGE:", ":PACKAGE_WITH_PROTOCOL:", "!@shared/**"],
+              ":BLANK_LINE:",
+              "@shared/**",
+              ":BLANK_LINE:",
+              ":ALIAS:",
+              ":BLANK_LINE:",
+              ":PATH:",
+              ["./**"],
+              {
+                "type": true
+              }
+            ],
+            "sortBareImports": true
+          }
+        },
+        "useSortedInterfaceMembers": "on"
+      }
+    },
+    "enabled": true
+  },
+  "css": {
+    "formatter": {
+      "enabled": true
+    },
+    "parser": {
+      "cssModules": true,
+      "tailwindDirectives": true
+    }
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "includes": [
+      "**",
+      "!!**/node_modules",
+      "!!**/.next",
+      "!!**/dist",
+      "!!**/build",
+      "!!**/coverage",
+      "!.turbo",
+      "!.pnpm-store",
+      "!.pnpm",
+      "!!**/html",
+      "!!**/storybook-static",
+      "!!**/test-results",
+      "!!**/vitest-attachments",
+      "!!**/vitest",
+      "!!**/playwright-report"
+    ]
+  },
+  "formatter": {
+    "attributePosition": "auto",
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80
+  },
+  "javascript": {
+    "formatter": {
+      "arrowParentheses": "always",
+      "attributePosition": "auto",
+      "bracketSameLine": false,
+      "bracketSpacing": true,
+      "indentStyle": "space",
+      "indentWidth": 2,
+      "jsxQuoteStyle": "double",
+      "lineEnding": "lf",
+      "lineWidth": 80,
+      "quoteProperties": "asNeeded",
+      "quoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "es5"
+    },
+    "globals": [
+      "React",
+      "JSX",
+      "NodeJS",
+      "vi",
+      "describe",
+      "it",
+      "test",
+      "expect",
+      "beforeEach",
+      "afterEach",
+      "beforeAll",
+      "afterAll"
+    ],
+    "jsxRuntime": "reactClassic"
+  },
+  "json": {
+    "formatter": {
+      "enabled": true,
+      "trailingCommas": "none"
+    }
+  },
+  "linter": {
+    "domains": {
+      "next": "all",
+      "project": "recommended",
+      "test": "recommended",
+      "types": "recommended"
+    },
+    "enabled": true,
+    "rules": {
+      "a11y": {
+        "noAccessKey": "error",
+        "noAriaUnsupportedElements": "error",
+        "noAutofocus": "warn",
+        "noDistractingElements": "error",
+        "noHeaderScope": "error",
+        "noInteractiveElementToNoninteractiveRole": "error",
+        "noNoninteractiveElementToInteractiveRole": "error",
+        "noNoninteractiveTabindex": "error",
+        "noPositiveTabindex": "error",
+        "noRedundantAlt": "error",
+        "noRedundantRoles": "error",
+        "useAltText": "error",
+        "useAnchorContent": "error",
+        "useAriaActivedescendantWithTabindex": "error",
+        "useAriaPropsForRole": "error",
+        "useButtonType": "error",
+        "useHeadingContent": "error",
+        "useHtmlLang": "error",
+        "useIframeTitle": "error",
+        "useKeyWithClickEvents": "error",
+        "useKeyWithMouseEvents": "error",
+        "useMediaCaption": "error",
+        "useSemanticElements": "warn",
+        "useValidAnchor": "error",
+        "useValidAriaProps": "error",
+        "useValidAriaRole": "error",
+        "useValidAriaValues": "error",
+        "useValidAutocomplete": "warn",
+        "useValidLang": "error"
+      },
+      "complexity": {
+        "noAdjacentSpacesInRegex": "error",
+        "noBannedTypes": "error",
+        "noExcessiveCognitiveComplexity": "warn",
+        "noExtraBooleanCast": "error",
+        "noForEach": "off",
+        "noStaticOnlyClass": "error",
+        "noUselessCatch": "error",
+        "noUselessConstructor": "error",
+        "noUselessEmptyExport": "error",
+        "noUselessFragments": "error",
+        "noUselessLabel": "error",
+        "noUselessLoneBlockStatements": "error",
+        "noUselessRename": "error",
+        "noUselessStringConcat": "warn",
+        "noUselessSwitchCase": "error",
+        "noUselessTernary": "error",
+        "noUselessThisAlias": "error",
+        "noUselessTypeConstraint": "error",
+        "noUselessUndefinedInitialization": "warn",
+        "noVoid": "warn",
+        "useDateNow": "warn",
+        "useFlatMap": "warn",
+        "useLiteralKeys": "warn",
+        "useOptionalChain": "warn",
+        "useRegexLiterals": "error",
+        "useSimpleNumberKeys": "error"
+      },
+      "correctness": {
+        "noChildrenProp": "error",
+        "noConstAssign": "error",
+        "noConstantCondition": "error",
+        "noConstructorReturn": "error",
+        "noEmptyCharacterClassInRegex": "error",
+        "noEmptyPattern": "error",
+        "noGlobalObjectCalls": "error",
+        "noInnerDeclarations": "error",
+        "noInvalidBuiltinInstantiation": "error",
+        "noInvalidConstructorSuper": "error",
+        "noInvalidUseBeforeDeclaration": "error",
+        "noNonoctalDecimalEscape": "error",
+        "noPrecisionLoss": "error",
+        "noRenderReturnValue": "error",
+        "noSelfAssign": "error",
+        "noSetterReturn": "error",
+        "noSwitchDeclarations": "error",
+        "noUndeclaredVariables": "error",
+        "noUnreachable": "error",
+        "noUnreachableSuper": "error",
+        "noUnsafeFinally": "error",
+        "noUnsafeOptionalChaining": "error",
+        "noUnusedFunctionParameters": "warn",
+        "noUnusedImports": "error",
+        "noUnusedLabels": "error",
+        "noUnusedPrivateClassMembers": "warn",
+        "noUnusedVariables": {
+          "fix": "unsafe",
+          "level": "error"
+        },
+        "noVoidElementsWithChildren": "error",
+        "noVoidTypeReturn": "warn",
+        "useExhaustiveDependencies": "warn",
+        "useHookAtTopLevel": "error",
+        "useIsNan": "error",
+        "useJsxKeyInIterable": "error",
+        "useValidForDirection": "error",
+        "useValidTypeof": "error",
+        "useYield": "error"
+      },
+      "nursery": {
+        "useExplicitType": "off"
+      },
+      "performance": {
+        "noAccumulatingSpread": "warn",
+        "noBarrelFile": "off",
+        "noDelete": "warn",
+        "noReExportAll": "off"
+      },
+      "preset": "recommended",
+      "security": {
+        "noDangerouslySetInnerHtml": "warn",
+        "noDangerouslySetInnerHtmlWithChildren": "error",
+        "noGlobalEval": "error"
+      },
+      "style": {
+        "noDefaultExport": "warn",
+        "noInferrableTypes": "warn",
+        "noNamespace": "off",
+        "noNegationElse": "off",
+        "noNonNullAssertion": "warn",
+        "noParameterAssign": "warn",
+        "noParameterProperties": "off",
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "patterns": [
+              {
+                "group": ["@shared/*/dist", "@shared/*/dist/**"],
+                "message": "Import only paths listed in package.json \"exports\" for that package — not …/dist/…."
+              },
+              {
+                "group": ["@shared/*/src", "@shared/*/src/**"],
+                "message": "Do not import package internals (…/src/…). Use the @shared/<pkg> export subpaths."
+              },
+              {
+                "group": ["@mui/**"],
+                "message": "Import controls from @shared/ui subpaths (for example @shared/ui/button) instead of @mui/*."
+              },
+              {
+                "group": ["@material-ui/**"],
+                "message": "Legacy @material-ui/* is not allowed. Use @shared/ui subpaths instead."
+              }
+            ]
+          }
+        },
+        "noUnusedTemplateLiteral": "warn",
+        "noUselessElse": "warn",
+        "useArrayLiterals": "warn",
+        "useAsConstAssertion": "error",
+        "useBlockStatements": "off",
+        "useCollapsedElseIf": "warn",
+        "useConsistentArrayType": "warn",
+        "useConsistentBuiltinInstantiation": "error",
+        "useConst": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "warn",
+        "useExponentiationOperator": "error",
+        "useExportType": "error",
+        "useForOf": "off",
+        "useFragmentSyntax": "warn",
+        "useImportType": "warn",
+        "useLiteralEnumMembers": "error",
+        "useNumberNamespace": "error",
+        "useSelfClosingElements": "warn",
+        "useShorthandAssign": "warn",
+        "useShorthandFunctionType": "warn",
+        "useSingleVarDeclarator": "warn",
+        "useTemplate": "warn",
+        "useThrowNewError": "error",
+        "useThrowOnlyError": "error"
+      },
+      "suspicious": {
+        "noApproximativeNumericConstant": "warn",
+        "noArrayIndexKey": "warn",
+        "noAssignInExpressions": "error",
+        "noAsyncPromiseExecutor": "error",
+        "noCatchAssign": "error",
+        "noClassAssign": "error",
+        "noCommentText": "error",
+        "noCompareNegZero": "error",
+        "noConfusingLabels": "error",
+        "noConfusingVoidType": "error",
+        "noConsole": {
+          "level": "warn",
+          "options": {
+            "allow": ["error", "warn"]
+          }
+        },
+        "noConstEnum": "warn",
+        "noControlCharactersInRegex": "error",
+        "noDebugger": "error",
+        "noDoubleEquals": "error",
+        "noDuplicateCase": "error",
+        "noDuplicateClassMembers": "error",
+        "noDuplicateJsxProps": "error",
+        "noDuplicateObjectKeys": "error",
+        "noDuplicateParameters": "error",
+        "noEmptyBlockStatements": "warn",
+        "noEmptyInterface": "error",
+        "noEvolvingTypes": "warn",
+        "noExplicitAny": "warn",
+        "noExportsInTest": "error",
+        "noExtraNonNullAssertion": "error",
+        "noFallthroughSwitchClause": "error",
+        "noFocusedTests": "error",
+        "noFunctionAssign": "error",
+        "noGlobalAssign": "error",
+        "noImportAssign": "error",
+        "noImportCycles": "error",
+        "noLabelVar": "error",
+        "noMisleadingCharacterClass": "error",
+        "noMisleadingInstantiator": "error",
+        "noMisplacedAssertion": "error",
+        "noMisrefactoredShorthandAssign": "error",
+        "noPrototypeBuiltins": "error",
+        "noRedeclare": "error",
+        "noRedundantUseStrict": "error",
+        "noSelfCompare": "error",
+        "noShadowRestrictedNames": "error",
+        "noSkippedTests": "warn",
+        "noSparseArray": "error",
+        "noThenProperty": "error",
+        "noUnsafeDeclarationMerging": "error",
+        "noUnsafeNegation": "error",
+        "useAdjacentOverloadSignatures": "error",
+        "useArraySortCompare": "off",
+        "useAwait": "off",
+        "useDefaultSwitchClauseLast": "error",
+        "useErrorMessage": "warn",
+        "useGetterReturn": "error",
+        "useNamespaceKeyword": "error"
+      }
+    }
+  },
+  "markdown": {
+    "analyzeEmbeds": false,
+    "formatter": {
+      "enabled": true,
+      "formatEmbeds": true,
+      "lineWidth": 100
+    },
+    "linter": {
+      "enabled": true
+    },
+    "parser": {
+      "frontmatter": true
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["**/index.ts"],
+      "linter": {
+        "rules": {
+          "performance": {
+            "noReExportAll": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/*.stories.tsx",
+        "**/*.stories.ts",
+        "**/*.config.js",
+        "**/*.config.ts",
+        "**/*.config.mjs",
+        "**/*.config.cjs",
+        "**/vitest.config.ts",
+        "**/vitest.config.mts",
+        "**/*.vitest.config.ts",
+        "**/tsconfig.json",
+        "**/tsconfig.*.json",
+        ".storybook/**",
+        "**/*.json",
+        "**/scripts/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off",
+            "noRestrictedImports": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/src/pages/**",
+        "**/src/pages/*",
+        "**/pages/**",
+        "**/pages/*",
+        "**/middleware.ts",
+        "**/middleware.js",
+        "**/instrumentation.ts",
+        "**/instrumentation.js",
+        "**/api-client/index.ts"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/tests/**",
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.spec.ts",
+        "**/*.spec.tsx",
+        "**/*.test.tsx",
+        "**/*.test.ts",
+        "**/*.spec.tsx",
+        "**/*.spec.ts",
+        "**/*.config.mjs",
+        "**/*.mjs",
+        "**/*.js",
+        "**/*.fixtures.tsx",
+        "**/*.fixtures.ts",
+        "**/*.stories.tsx",
+        "**/*.stories.ts",
+        "**/__tests__/**"
+      ],
+      "linter": {
+        "rules": {
+          "a11y": "off",
+          "correctness": {
+            "noUnusedVariables": "info"
+          },
+          "nursery": {
+            "useExplicitType": "off"
+          },
+          "style": {
+            "noNonNullAssertion": "off"
+          },
+          "suspicious": {
+            "noEmptyBlockStatements": "off",
+            "noExplicitAny": "off"
+          }
+        }
+      }
+    },
+    {
+      "formatter": {
+        "enabled": false
+      },
+      "includes": ["**/*.md"],
+      "linter": {
+        "enabled": false
+      }
+    }
+  ],
+  "vcs": {
+    "clientKind": "git",
+    "defaultBranch": "main",
+    "enabled": true,
+    "useIgnoreFile": true
+  }
+}

@@ -1,7 +1,6 @@
-/** Canonical repository lookup roots; generated directories are never traversed. */
+/** Canonical repository lookup roots. Package catalogs and skill files are not read from `.ai`. */
 export const SKILL_DISCOVERY_TARGETS = [
   ".agents/skills",
-  ".ai/skills",
   ".claude/skills",
   ".cursor/skills",
 ] as const;

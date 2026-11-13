@@ -23,7 +23,7 @@ const meta = {
   },
   component: LoginPanel,
   parameters: { layout: "fullscreen", pageCanvas: true },
-  title: "Pages/Sign In",
+  title: "UI/Forms/Site Login/Sign In Page",
 } satisfies Meta<typeof LoginPanel>;
 
 export default meta;

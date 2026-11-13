@@ -17,7 +17,7 @@ const meta = {
     layout: "fullscreen",
   },
   tags: ["autodocs"],
-  title: "Dashboard/SectionCards",
+  title: "UI/Cards/Section Cards",
 } satisfies Meta<typeof SectionCards>;
 
 export default meta;

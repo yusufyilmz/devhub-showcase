@@ -4,7 +4,7 @@ import { SectionNavigator } from "./SectionNavigator";
 
 const meta = {
   component: SectionNavigator,
-  title: "UI/Navigation/SectionNavigator",
+  title: "UI/Navigation/Section Navigator",
 } satisfies Meta<typeof SectionNavigator>;
 export default meta;
 export const Automatic: StoryObj<typeof meta> = {

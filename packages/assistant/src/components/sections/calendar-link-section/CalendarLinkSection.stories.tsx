@@ -15,7 +15,7 @@ const meta = {
     ),
   ],
   tags: ["autodocs"],
-  title: "Sections/CalendarLink",
+  title: "Assistant/Sections/Calendar Link Section",
 } satisfies Meta<typeof CalendarLinkSection>;
 export default meta;
 type Story = StoryObj<typeof meta>;

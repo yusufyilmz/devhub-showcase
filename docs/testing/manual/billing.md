@@ -19,6 +19,6 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 ## Related evidence and detail
 
 - [e2e/admin/billing/billing.spec.ts](../../../apps/my-dev-studio/e2e/admin/billing/billing.spec.ts)
-- [docs/features/stripe-billing.md](../../../docs/features/stripe-billing.md)
+- [docs/features/stripe-billing.md](/docs/dev-studio/stripe-billing.md)
 
 Return to the [manual testing index](index.md).

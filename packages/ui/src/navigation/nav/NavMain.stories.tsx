@@ -23,7 +23,7 @@ const meta = {
     layout: "padded",
   },
   tags: ["autodocs"],
-  title: "UI/Navigation/NavMain",
+  title: "UI/Navigation/Nav/Nav Main",
 } satisfies Meta<typeof NavMain>;
 
 export default meta;

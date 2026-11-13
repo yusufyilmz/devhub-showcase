@@ -17,7 +17,7 @@ const meta = {
     layout: "fullscreen",
   },
   tags: ["autodocs"],
-  title: "Auth/LoginForm",
+  title: "UI/Forms/Login Form",
 } satisfies Meta<typeof LoginForm>;
 
 export default meta;

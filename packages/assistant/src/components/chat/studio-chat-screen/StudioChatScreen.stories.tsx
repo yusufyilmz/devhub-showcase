@@ -50,7 +50,7 @@ function Preview({ visitor }: Pick<StudioChatScreenOptions, "visitor">) {
 const meta = {
   component: Preview,
   parameters: { layout: "fullscreen", pageCanvas: true },
-  title: "Pages/Studio Assistant",
+  title: "Assistant/Chat/Studio Chat Screen",
 } satisfies Meta<typeof Preview>;
 export default meta;
 type Story = StoryObj<typeof meta>;

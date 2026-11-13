@@ -107,7 +107,7 @@ const ThemeCustomizerDemo: React.FC = () => {
 const meta = {
   component: ThemeCustomizerDemo,
   parameters: { layout: "fullscreen" },
-  title: "UI/Customizers/ThemeCustomizer",
+  title: "UI/Customizers/Theme Customizer",
 } satisfies Meta<typeof ThemeCustomizerDemo>;
 
 export default meta;

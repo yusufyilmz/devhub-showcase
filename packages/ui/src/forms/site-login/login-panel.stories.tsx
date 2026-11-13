@@ -8,12 +8,12 @@ const meta = {
     googleAction: "#storybook-google",
     sessionEndpoint: "#storybook-session",
     successPath: "#storybook-success",
-    title: "Sign in to your studio",
+    title: "Storybook App UI/Forms/Site Login/Login Panel",
   },
   component: LoginPanel,
   parameters: { layout: "fullscreen" },
   tags: ["autodocs"],
-  title: "UI/Forms/Site Login",
+  title: "UI/Forms/Site Login/Login Panel",
 } satisfies Meta<typeof LoginPanel>;
 
 export default meta;

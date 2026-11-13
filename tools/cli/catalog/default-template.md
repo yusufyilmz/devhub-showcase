@@ -1,6 +1,6 @@
-# my-dev-studio catalog
+# {{name}} catalog
 
-Workspace package `my-dev-studio`.
+Workspace package `{{name}}`.
 
 ## Generated package reference
 

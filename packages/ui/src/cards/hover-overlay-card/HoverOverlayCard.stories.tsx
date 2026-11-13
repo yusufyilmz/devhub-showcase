@@ -9,7 +9,7 @@ const meta = {
     description: "Hover to preview the landscape after sunset.",
     hoverImage: cardStoryImages.evening,
     image: cardStoryImages.morning,
-    title: "A day in the valley",
+    title: "Storybook App UI/Cards/Hover Overlay Card/Hoveroverlaycard",
   },
   component: HoverOverlayCard,
   parameters: { layout: "centered" },

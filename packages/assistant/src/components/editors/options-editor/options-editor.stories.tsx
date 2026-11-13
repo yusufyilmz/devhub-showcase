@@ -21,7 +21,7 @@ const meta = {
     return <OptionsEditor {...args} onChange={setSection} section={section} />;
   },
   tags: ["autodocs"],
-  title: "UI/Editors/Options Editor",
+  title: "Assistant/Editors/Options Editor",
 } satisfies Meta<typeof OptionsEditor>;
 
 export default meta;

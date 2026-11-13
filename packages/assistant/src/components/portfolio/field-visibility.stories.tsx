@@ -10,7 +10,7 @@ function Example() {
   const [draft, setDraft] = useState(profile);
   return <FieldVisibilityEditor onChange={setDraft} profile={draft} />;
 }
-const meta = { component: Example, title: "Studio/Output field visibility" } satisfies Meta<
+const meta = { component: Example, title: "Assistant/Portfolio/Field Visibility" } satisfies Meta<
   typeof Example
 >;
 export default meta;

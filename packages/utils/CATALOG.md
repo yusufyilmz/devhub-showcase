@@ -2,7 +2,7 @@
 
 # Utils catalog
 
-> **AI lookup guide:** From the repository root, run `pnpm --silent lookup catalog "logger" --package @shared/utils --limit 2` to read relevant excerpts. Verify an exact export with `pnpm --silent lookup symbol '<ExportName>' --package @shared/utils`. Follow `hasMore` with `--cursor`; use `--max-tokens` to control output size. Excerpts support discovery; read required instructions and source contracts. See the [AI quick start](../../.ai/README.md) and [full CLI usage](../../tools/cli/README.md#token-bounded-repository-lookup).
+> **AI lookup guide:** From the repository root, run `pnpm --silent lookup catalog "logger" --package @shared/utils --limit 2` to read relevant excerpts. Verify an exact export with `pnpm --silent lookup symbol '<ExportName>' --package @shared/utils`. Follow `hasMore` with `--cursor`; use `--max-tokens` to control output size. Excerpts support discovery; read required instructions and source contracts. See the [AI quick start](../../.agents/README.md) and [full CLI usage](../../tools/cli/README.md#token-bounded-repository-lookup).
 
 Logging and generic helpers for `@shared/utils`. Domain validation stays in `@shared/lib`.
 

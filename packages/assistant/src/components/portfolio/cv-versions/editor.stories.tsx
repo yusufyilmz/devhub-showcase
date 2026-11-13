@@ -4,9 +4,10 @@ import { profile } from "@shared/config";
 
 import { CvVersionsEditor } from "./editor";
 
-const meta = { component: CvVersionsEditor, title: "Studio/Private CV versions" } satisfies Meta<
-  typeof CvVersionsEditor
->;
+const meta = {
+  component: CvVersionsEditor,
+  title: "Assistant/Portfolio/CV Versions/Editor",
+} satisfies Meta<typeof CvVersionsEditor>;
 export default meta;
 export const Default: StoryObj<typeof meta> = {
   args: {

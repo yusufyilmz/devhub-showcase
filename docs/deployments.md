@@ -1,5 +1,9 @@
 # App deployments and free GitHub Actions
 
+## When to read
+
+Read this before changing what ships to production, editing the deploy workflow, or checking why a push built one app and skipped the other. It covers the Verify gate, Studio and Fitness selection, Vercel projects, and the free GitHub Actions limits.
+
 The public `yusufyilmz/devhub-showcase` repository owns production deployment for
 both apps. Main pushes must pass **Verify** before a selected app deploys. Pull
 requests verify code without receiving production deployment credentials.

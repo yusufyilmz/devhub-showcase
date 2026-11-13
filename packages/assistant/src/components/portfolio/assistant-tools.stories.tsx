@@ -32,6 +32,8 @@ function Example() {
     </div>
   );
 }
-const meta = { component: Example, title: "Studio/Assistant tools" } satisfies Meta<typeof Example>;
+const meta = { component: Example, title: "Assistant/Portfolio/Assistant Tools" } satisfies Meta<
+  typeof Example
+>;
 export default meta;
 export const Default: StoryObj<typeof meta> = {};

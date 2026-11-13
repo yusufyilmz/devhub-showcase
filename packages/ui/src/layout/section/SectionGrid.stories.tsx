@@ -15,7 +15,7 @@ const meta = {
   args: { items, label: "Selected work" },
   component: SectionGrid,
   tags: ["autodocs"],
-  title: "UI/Layout/Section/SectionGrid",
+  title: "UI/Layout/Section/Section Grid",
 } satisfies Meta<typeof SectionGrid>;
 
 export default meta;

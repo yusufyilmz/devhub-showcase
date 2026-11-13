@@ -6,7 +6,7 @@ const meta = {
   component: AddProjectButton,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
-  title: "UI/Actions/Add Project Button",
+  title: "UI/Buttons/Add Project Button",
 } satisfies Meta<typeof AddProjectButton>;
 
 export default meta;
