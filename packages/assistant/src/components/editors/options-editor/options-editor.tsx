@@ -3,7 +3,7 @@ import "../editor-controls.css";
 import { authorableSections, type SectionOptions } from "@shared/config";
 import { Field, SelectField } from "@shared/ui/forms";
 
-import { optionsEditorStyles } from "../styles";
+import { editorPanelStyles, optionsEditorStyles } from "../styles";
 import type { OptionsEditorOptions } from "../types";
 
 export function OptionsEditor({ section, type, onChange }: OptionsEditorOptions) {
@@ -12,9 +12,11 @@ export function OptionsEditor({ section, type, onChange }: OptionsEditorOptions)
   const change = (patch: Partial<SectionOptions>) =>
     onChange({ ...section, options: { ...options, ...patch } });
   return (
-    <fieldset className="ui-editor-panel">
-      <legend>{name} settings</legend>
-      <p>Set the description and presentation for this section.</p>
+    <fieldset className={editorPanelStyles.panel}>
+      <legend className={editorPanelStyles.legend}>{name} settings</legend>
+      <p className={editorPanelStyles.description}>
+        Set the description and presentation for this section.
+      </p>
       <div className={optionsEditorStyles.element1}>
         <Field
           label="Section description"
