@@ -208,10 +208,21 @@ export function variantCardStyle(options: VariantCardStyleOptions): React.CSSPro
 }
 
 export const cardBaseStyles = {
-  cardBase:
-    "ui-card [&[data-surface='portfolio'][data-interaction='lift']:not(.reveal-card)::before]:[position:absolute] [&[data-slot='card [padding:24px] [margin-bottom:20px] [background:var(--surface)] [border:1px_solid_var(--line)] [border-radius:12px] max-[700px]:[padding:18px] [box-shadow:0_2px_10px_var(--shadow-color)]'][data-backdrop='accent']]:[background-image:radial-gradient(_ellipse_at_100%_0%,_color-mix(in_srgb,_var(--card-accent)_16%,_transparent),_transparent_72%_),_linear-gradient(_125deg,_var(--card)_25%,_color-mix(in_srgb,_var(--card)_92%,_var(--card-accent))_)] [@media(hover:_hover)_and_(pointer:_fine)_and_(prefers-reduced-motion:_no-preference)]:[&[data-slot='card [padding:24px] [margin-bottom:20px] [background:var(--surface)] [border:1px_solid_var(--line)] [border-radius:12px] max-[700px]:[padding:18px] [box-shadow:0_2px_10px_var(--shadow-color)]'][data-card-type='tilt']:hover]:[transform:perspective(900px)_rotateX(3deg)_rotateY(-3deg)] [@media(hover:_hover)_and_(pointer:_fine)_and_(prefers-reduced-motion:_no-preference)]:[&[data-slot='card [padding:24px] [margin-bottom:20px] [background:var(--surface)] [border:1px_solid_var(--line)] [border-radius:12px] max-[700px]:[padding:18px] [box-shadow:0_2px_10px_var(--shadow-color)]'][data-card-type='tilt']:focus-within]:[transform:perspective(900px)_rotateX(3deg)_rotateY(-3deg)] motion-safe:[&[data-card-type='animated']]:[animation:card-entrance_var(--transition-medium)_var(--easing-standard)_both] relative min-w-0 rounded-xl border border-border bg-card text-card-foreground inset-shadow-[0_1px_0_color-mix(in_srgb,var(--card-foreground)_5%,transparent)]",
+  cardBase: cn(
+    "ui-card relative min-w-0 rounded-xl border border-border/75 bg-card text-card-foreground",
+    "inset-shadow-[0_1px_0_color-mix(in_srgb,var(--card-foreground)_5%,transparent)]",
+    "data-[backdrop=accent]:bg-[radial-gradient(ellipse_at_top_right,color-mix(in_srgb,var(--card-accent,var(--primary))_16%,transparent),transparent_72%),linear-gradient(125deg,var(--card)_25%,color-mix(in_srgb,var(--card)_92%,var(--card-accent,var(--primary))))]",
+    "motion-safe:data-[card-type=animated]:animate-[card-entrance_var(--transition-medium)_var(--easing-standard)_both]",
+    "motion-safe:[@media(hover:hover)_and_(pointer:fine)]:data-[card-type=tilt]:hover:[transform:perspective(900px)_rotateX(3deg)_rotateY(-3deg)]",
+    "motion-safe:[@media(hover:hover)_and_(pointer:fine)]:data-[card-type=tilt]:focus-within:[transform:perspective(900px)_rotateX(3deg)_rotateY(-3deg)]",
+  ),
   cardBase2: "flex flex-col gap-md py-md",
-  lift: "motion-safe:transition-colors motion-safe:duration-150 focus-within:border-[color-mix(in_srgb,var(--card-accent)_22%,var(--border))] [@media(pointer:fine)]:hover:border-[color-mix(in_srgb,var(--card-accent)_22%,var(--border))] motion-safe:[@media(pointer:fine)]:hover:bg-[color-mix(in_srgb,var(--card-accent)_8%,var(--card))]",
+  lift: cn(
+    "motion-safe:transition-colors motion-safe:duration-150",
+    "focus-within:border-[color-mix(in_srgb,var(--card-accent,var(--primary))_22%,var(--border))]",
+    "[@media(hover:hover)_and_(pointer:fine)]:hover:border-[color-mix(in_srgb,var(--card-accent,var(--primary))_22%,var(--border))]",
+    "[@media(hover:hover)_and_(pointer:fine)]:hover:bg-[color-mix(in_srgb,var(--card-accent,var(--primary))_8%,var(--card))]",
+  ),
 } as const;
 
 export const appearanceCardStyles = {
