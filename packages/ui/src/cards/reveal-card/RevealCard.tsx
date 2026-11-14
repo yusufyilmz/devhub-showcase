@@ -46,7 +46,7 @@ export function RevealCardBase({
             setExpanded(false);
         }}
         onFocusCapture={(event) => {
-          if (pointerIntent.current === null && event.target.matches(":focus-visible")) {
+          if (pointerIntent.current === null) {
             setExpanded(true);
           }
         }}
@@ -58,7 +58,10 @@ export function RevealCardBase({
           }
         }}
         onPointerEnter={(event) => {
-          if (event.pointerType === "mouse" && window.matchMedia("(hover: hover)").matches) {
+          if (
+            event.pointerType === "mouse" &&
+            (typeof window.matchMedia !== "function" || window.matchMedia("(hover: hover)").matches)
+          ) {
             setExpanded(true);
           }
         }}
