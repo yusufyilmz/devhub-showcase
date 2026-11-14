@@ -1,18 +1,27 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "../../buttons/button";
-import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "./Sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./Sheet";
 
-function Example({ width = 560 }: { width?: number }) {
+function Example({ width = 560, side }: { width?: number; side?: "right" | "bottom" }) {
   return (
     <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline">Open sheet</Button>
         </SheetTrigger>
-        <SheetContent>
-          <SheetTitle>Review your changes</SheetTitle>
-          <SheetDescription>Your draft stays private until you publish.</SheetDescription>
+        <SheetContent side={side}>
+          <SheetHeader>
+            <SheetTitle>Review your changes</SheetTitle>
+            <SheetDescription>Your draft stays private until you publish.</SheetDescription>
+          </SheetHeader>
         </SheetContent>
       </Sheet>
     </div>
@@ -28,3 +37,5 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const Narrow: Story = { args: { width: 320 } };
 export const Wide: Story = { args: { width: 960 } };
+
+export const Bottom: Story = { args: { side: "bottom" } };

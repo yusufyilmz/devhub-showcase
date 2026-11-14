@@ -328,3 +328,7 @@ Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-overlays-command--
 ## Hover Card preview
 
 Chrome checked [Wide Preview](http://127.0.0.1:6006/?path=/story/ui-cards-hover-card--wide-preview) at 320px in Sand light and dark and at 1280px in Cyan light. The card fit the viewport with one-pixel borders and 16px padding. The long label did not overflow. Tab focus and pointer hover opened the preview, and moving focus or the pointer away closed it. Reduced motion disabled animation. [Once UI HoverCard](https://docs.once-ui.com/components/hoverCard)
+
+## Sheet
+
+Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-overlays-sheet--narrow) and **Bottom** at 320px in Sand light and dark and 1280px in Cyan light. Both fit the viewport, kept a one-pixel edge border, and skipped animation under reduced motion. Opening focused Close with a two-pixel outline. Escape and activating Close returned focus to the trigger. [Once UI Dialog](https://docs.once-ui.com/components/dialog)

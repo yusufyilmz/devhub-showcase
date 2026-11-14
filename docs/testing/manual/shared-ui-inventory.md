@@ -99,7 +99,7 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 | [overlays/navigation-menu](../../../packages/ui/src/overlays/navigation-menu)   | `@shared/ui/navigation-menu` | UI/Overlays/Navigation Menu  | Pending                                                                                                         |
 | [overlays/popover](../../../packages/ui/src/overlays/popover)                   | `@shared/ui/popover`         | UI/Overlays/Popover          | Viewport-aware width and shared panel spacing. [Chrome checks](shared-ui-styles.md#popover).                    |
 | [overlays/radix-dialog](../../../packages/ui/src/overlays/radix-dialog)         | `@shared/ui/radix-dialog`    | UI/Overlays/Radix Dialog     | Pending                                                                                                         |
-| [overlays/sheet](../../../packages/ui/src/overlays/sheet)                       | `@shared/ui/sheet`           | UI/Overlays/Sheet            | Pending                                                                                                         |
+| [overlays/sheet](../../../packages/ui/src/overlays/sheet)                       | `@shared/ui/sheet`           | UI/Overlays/Sheet            | Shared spacing, visible close focus, and reduced motion. [Chrome checks](shared-ui-styles.md#sheet).            |
 | [overlays/tooltip](../../../packages/ui/src/overlays/tooltip)                   | `@shared/ui/tooltip`         | UI/Overlays/Tooltip          | Explicit variant text colors, shared spacing, and reduced motion. [Chrome checks](shared-ui-styles.md#tooltip). |
 
 ## Layout
