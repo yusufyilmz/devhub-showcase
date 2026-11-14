@@ -9,17 +9,17 @@ const tools = [Terminal, Braces, Layers, Workflow, Database];
 export function AnimatedToolsCard({ title, description, className }: AnimatedToolsCardProps) {
   return (
     <CardBase
-      className={cn("group/tools flex w-full max-w-sm flex-col gap-4 p-4", className)}
+      className={cn("group/tools flex w-full max-w-sm flex-col gap-md p-md", className)}
       interaction="static"
       layout="plain"
     >
       <div
         aria-hidden="true"
-        className="flex flex-wrap justify-center gap-2 rounded-lg border border-border bg-muted px-3 py-4"
+        className="flex flex-wrap justify-center gap-xs rounded-lg border border-border/60 bg-muted/60 px-sm py-md"
       >
         {tools.map((Icon, index) => (
           <span
-            className="grid size-9 place-items-center rounded-lg border border-border bg-card text-primary motion-safe:transition-transform motion-safe:group-hover/tools:-translate-y-1"
+            className="grid size-9 place-items-center rounded-md border border-border/60 bg-card text-primary motion-safe:transition-transform motion-safe:[@media(hover:hover)_and_(pointer:fine)]:group-hover/tools:-translate-y-1"
             key={Icon.displayName}
             style={{ transitionDelay: `${index * 40}ms` }}
           >

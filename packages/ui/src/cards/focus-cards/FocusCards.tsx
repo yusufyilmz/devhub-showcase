@@ -7,13 +7,13 @@ export function FocusCards({ cards, className }: FocusCardsProps) {
   return (
     <ul
       className={cn(
-        "group/focus-cards grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3",
+        "group/focus-cards grid min-w-0 grid-cols-1 gap-sm sm:grid-cols-2 lg:grid-cols-3",
         className,
       )}
     >
       {cards.map((card) => (
         <li
-          className="min-w-0 motion-safe:transition-opacity motion-safe:[@media(hover:hover)]:group-has-[li:hover]/focus-cards:not-hover:opacity-75"
+          className="min-w-0 motion-safe:transition-opacity motion-safe:[@media(hover:hover)_and_(pointer:fine)]:group-has-[li:hover]/focus-cards:not-hover:opacity-75"
           key={card.src}
         >
           <CardBase
@@ -29,7 +29,7 @@ export function FocusCards({ cards, className }: FocusCardsProps) {
                 loading="lazy"
                 src={card.src}
               />
-              <figcaption className="border-border border-t px-4 py-3 text-sm font-medium wrap-anywhere">
+              <figcaption className="border-t border-border/60 px-md py-sm text-sm font-medium wrap-anywhere">
                 {card.title}
               </figcaption>
             </figure>

@@ -25,15 +25,15 @@ export function HoverOverlayCard({
         {/* biome-ignore lint/performance/noImgElement: The alternate background is decorative. */}
         <img
           alt=""
-          className="absolute inset-0 -z-20 size-full object-cover opacity-0 motion-safe:transition-opacity [@media(pointer:fine)]:group-hover/image:opacity-100"
+          className="absolute inset-0 -z-20 size-full object-cover opacity-0 motion-safe:transition-opacity [@media(hover:hover)_and_(pointer:fine)]:group-hover/image:opacity-100"
           src={hoverImage}
         />
         <div
           aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-linear-to-t from-black/90 via-black/50 to-transparent"
+          className="absolute inset-0 -z-10 bg-linear-to-t from-black/95 via-black/65 to-transparent"
         />
-        <div className="text-white">
-          <h3 className="font-semibold text-lg">{title}</h3>
+        <div className="text-white wrap-anywhere">
+          <h3 className="font-semibold text-lg tracking-tight">{title}</h3>
           {description && (
             <p className="mt-1 text-sm leading-relaxed text-white/90">{description}</p>
           )}
