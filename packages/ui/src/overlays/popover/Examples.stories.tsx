@@ -27,3 +27,19 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const Narrow: Story = { args: { width: 320 } };
 export const Wide: Story = { args: { width: 960 } };
+
+export const WithAction: Story = {
+  render: () => (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="outline">Portfolio settings</Button>
+      </PopoverTrigger>
+      <PopoverContent aria-label="Publishing settings" className="grid w-96 gap-s">
+        <p>PortfolioDocumentationForContributors</p>
+        <Button asChild size="sm" variant="secondary">
+          <a href="#publishing">Publishing guide</a>
+        </Button>
+      </PopoverContent>
+    </Popover>
+  ),
+};

@@ -300,3 +300,7 @@ Chrome opened [Toast](http://127.0.0.1:6006/?path=/story/ui-feedback-toast--narr
 ## Alert Dialog
 
 Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-feedback-alert-dialog--narrow) in Sand light Compact and Sand dark Spacious at 320px and Cyan light Comfortable at 1280px. The dialog fit the viewport with a one-pixel border and token-based padding. Opening focused Cancel, Shift+Tab wrapped to Continue, and Escape and Continue both closed the dialog and returned focus to Review changes. The checks used reduced motion. [Once UI Dialog](https://docs.once-ui.com/components/dialog)
+
+## Popover
+
+In [With Action](http://127.0.0.1:6006/?path=/story/ui-overlays-popover--with-action), Chrome verified that a wide panel fit at 320px in Sand light and dark and at 1280px in Cyan light. Long text wrapped, the panel retained a one-pixel border, and reduced motion disabled animation. Enter moved focus into the popover, Tab reached its link, and Escape returned focus to the trigger. [Once UI DropdownWrapper](https://docs.once-ui.com/components/dropdownWrapper)

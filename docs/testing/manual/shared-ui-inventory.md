@@ -85,22 +85,22 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 
 [Once UI reference](https://docs.once-ui.com/components/overview#overlays)
 
-| Component family                                                                | Public import                | Storybook title              | Review evidence |
-| ------------------------------------------------------------------------------- | ---------------------------- | ---------------------------- | --------------- |
-| [overlays](../../../packages/ui/src/overlays)                                   | `@shared/ui/overlays`        | Find consuming story         | Pending         |
-| [overlays/animated-tooltip](../../../packages/ui/src/overlays/animated-tooltip) | See group exports            | UI/Overlays/Animated Tooltip | Pending         |
-| [overlays/command](../../../packages/ui/src/overlays/command)                   | `@shared/ui/command`         | UI/Overlays/Command          | Pending         |
-| [overlays/context-menu](../../../packages/ui/src/overlays/context-menu)         | `@shared/ui/context-menu`    | UI/Overlays/Context Menu     | Pending         |
-| [overlays/dialog](../../../packages/ui/src/overlays/dialog)                     | `@shared/ui/dialog`          | UI/Overlays/Dialog           | Pending         |
-| [overlays/drawer](../../../packages/ui/src/overlays/drawer)                     | `@shared/ui/drawer`          | UI/Overlays/Drawer           | Pending         |
-| [overlays/dropdown-menu](../../../packages/ui/src/overlays/dropdown-menu)       | `@shared/ui/dropdown-menu`   | UI/Overlays/Dropdown Menu    | Pending         |
-| [overlays/gallery-lightbox](../../../packages/ui/src/overlays/gallery-lightbox) | See group exports            | UI/Overlays/Gallery Lightbox | Pending         |
-| [overlays/menubar](../../../packages/ui/src/overlays/menubar)                   | `@shared/ui/menubar`         | UI/Overlays/Menubar          | Pending         |
-| [overlays/navigation-menu](../../../packages/ui/src/overlays/navigation-menu)   | `@shared/ui/navigation-menu` | UI/Overlays/Navigation Menu  | Pending         |
-| [overlays/popover](../../../packages/ui/src/overlays/popover)                   | `@shared/ui/popover`         | UI/Overlays/Popover          | Pending         |
-| [overlays/radix-dialog](../../../packages/ui/src/overlays/radix-dialog)         | `@shared/ui/radix-dialog`    | UI/Overlays/Radix Dialog     | Pending         |
-| [overlays/sheet](../../../packages/ui/src/overlays/sheet)                       | `@shared/ui/sheet`           | UI/Overlays/Sheet            | Pending         |
-| [overlays/tooltip](../../../packages/ui/src/overlays/tooltip)                   | `@shared/ui/tooltip`         | UI/Overlays/Tooltip          | Pending         |
+| Component family                                                                | Public import                | Storybook title              | Review evidence                                                                              |
+| ------------------------------------------------------------------------------- | ---------------------------- | ---------------------------- | -------------------------------------------------------------------------------------------- |
+| [overlays](../../../packages/ui/src/overlays)                                   | `@shared/ui/overlays`        | Find consuming story         | Pending                                                                                      |
+| [overlays/animated-tooltip](../../../packages/ui/src/overlays/animated-tooltip) | See group exports            | UI/Overlays/Animated Tooltip | Pending                                                                                      |
+| [overlays/command](../../../packages/ui/src/overlays/command)                   | `@shared/ui/command`         | UI/Overlays/Command          | Pending                                                                                      |
+| [overlays/context-menu](../../../packages/ui/src/overlays/context-menu)         | `@shared/ui/context-menu`    | UI/Overlays/Context Menu     | Pending                                                                                      |
+| [overlays/dialog](../../../packages/ui/src/overlays/dialog)                     | `@shared/ui/dialog`          | UI/Overlays/Dialog           | Pending                                                                                      |
+| [overlays/drawer](../../../packages/ui/src/overlays/drawer)                     | `@shared/ui/drawer`          | UI/Overlays/Drawer           | Pending                                                                                      |
+| [overlays/dropdown-menu](../../../packages/ui/src/overlays/dropdown-menu)       | `@shared/ui/dropdown-menu`   | UI/Overlays/Dropdown Menu    | Pending                                                                                      |
+| [overlays/gallery-lightbox](../../../packages/ui/src/overlays/gallery-lightbox) | See group exports            | UI/Overlays/Gallery Lightbox | Pending                                                                                      |
+| [overlays/menubar](../../../packages/ui/src/overlays/menubar)                   | `@shared/ui/menubar`         | UI/Overlays/Menubar          | Pending                                                                                      |
+| [overlays/navigation-menu](../../../packages/ui/src/overlays/navigation-menu)   | `@shared/ui/navigation-menu` | UI/Overlays/Navigation Menu  | Pending                                                                                      |
+| [overlays/popover](../../../packages/ui/src/overlays/popover)                   | `@shared/ui/popover`         | UI/Overlays/Popover          | Viewport-aware width and shared panel spacing. [Chrome checks](shared-ui-styles.md#popover). |
+| [overlays/radix-dialog](../../../packages/ui/src/overlays/radix-dialog)         | `@shared/ui/radix-dialog`    | UI/Overlays/Radix Dialog     | Pending                                                                                      |
+| [overlays/sheet](../../../packages/ui/src/overlays/sheet)                       | `@shared/ui/sheet`           | UI/Overlays/Sheet            | Pending                                                                                      |
+| [overlays/tooltip](../../../packages/ui/src/overlays/tooltip)                   | `@shared/ui/tooltip`         | UI/Overlays/Tooltip          | Pending                                                                                      |
 
 ## Layout
 
