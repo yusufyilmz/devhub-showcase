@@ -246,7 +246,7 @@ packages/ui/src/styles/
   foundation/             Theme aliases and shared design tokens
 ```
 
-Component styles sit beside their components. Portfolio layout, presets, and the semantic bridge live in `packages/ui/src/layout/portfolio/`. Chat, editors, and section sheets live beside those components in `packages/assistant`. Public names such as `@shared/ui/components.css`, `@shared/ui/sections.css`, and `@shared/ui/surfaces.css` still resolve to those files.
+Component styles sit beside their components. Portfolio layout, presets, and the semantic bridge live in `packages/ui/src/styles/portfolio/`. Chat, editors, and section sheets live beside those components in `packages/assistant`. Public names such as `@shared/ui/components.css`, `@shared/ui/sections.css`, and `@shared/ui/surfaces.css` still resolve to those files.
 
 ### Where to edit
 
@@ -254,9 +254,9 @@ Component styles sit beside their components. Portfolio layout, presets, and the
 | ----------------------- | -------------------------------- |
 | New brand or mode token | `styles/tokens/`                 |
 | Shadcn semantic token   | `styles/tokens/palettes.css`     |
-| Studio control skin     | `layout/portfolio/portfolio.css` |
+| Studio control skin     | `styles/portfolio/portfolio.css` |
 | Section layout          | `layout/section/sections.css`    |
-| Portfolio theme preset  | `layout/portfolio/presets.css`   |
+| Portfolio theme preset  | `styles/portfolio/presets.css`   |
 | Site header or nav      | `navigation/chrome.css`          |
 
 Implementation detail for contributors: [packages/ui/src/styles/STYLES.md](packages/ui/src/styles/STYLES.md) mirrors this section and links back here.
