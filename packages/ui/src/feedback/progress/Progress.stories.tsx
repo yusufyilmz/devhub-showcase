@@ -57,3 +57,5 @@ export const NearlyComplete: Story = {
 export const CustomMaximum: Story = { args: { max: 200, value: 50 } };
 
 export const Complete: Story = { args: { value: 100 } };
+
+export const Indeterminate: Story = { args: { value: null } };

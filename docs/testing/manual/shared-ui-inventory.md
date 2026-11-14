@@ -60,26 +60,26 @@ See the [manual review notes](shared-ui-styles.md) for interaction steps and res
 
 [Once UI reference](https://docs.once-ui.com/components/overview#status-and-feedback)
 
-| Component family                                                                | Public import                 | Storybook title              | Review evidence |
-| ------------------------------------------------------------------------------- | ----------------------------- | ---------------------------- | --------------- |
-| [feedback/alert](../../../packages/ui/src/feedback/alert)                       | `@shared/ui/alert`            | UI/Feedback/Alert            | Pending         |
-| [feedback/alert-dialog](../../../packages/ui/src/feedback/alert-dialog)         | `@shared/ui/alert-dialog`     | UI/Feedback/Alert Dialog     | Pending         |
-| [feedback/badge](../../../packages/ui/src/feedback/badge)                       | `@shared/ui/badge`            | UI/Feedback/Badge            | Pending         |
-| [feedback/banner](../../../packages/ui/src/feedback/banner)                     | `@shared/ui/banner`           | UI/Feedback/Banner           | Pending         |
-| [feedback/chip](../../../packages/ui/src/feedback/chip)                         | `@shared/ui/chip`             | UI/Feedback/Chip             | Pending         |
-| [feedback/empty-state](../../../packages/ui/src/feedback/empty-state)           | `@shared/ui/empty-state`      | UI/Feedback/Empty State      | Pending         |
-| [feedback/error-boundary](../../../packages/ui/src/feedback/error-boundary)     | `@shared/ui/error-boundary`   | Find consuming story         | Pending         |
-| [feedback/error-page](../../../packages/ui/src/feedback/error-page)             | `@shared/ui/error-page`       | UI/Feedback/Error Page       | Pending         |
-| [feedback/feedback](../../../packages/ui/src/feedback/feedback)                 | `@shared/ui/feedback`         | UI/Feedback/Feedback         | Pending         |
-| [feedback/not-found](../../../packages/ui/src/feedback/not-found)               | `@shared/ui/not-found`        | UI/Feedback/Not Found        | Pending         |
-| [feedback/notification](../../../packages/ui/src/feedback/notification)         | `@shared/ui/notification`     | UI/Feedback/Notification     | Pending         |
-| [feedback/progress](../../../packages/ui/src/feedback/progress)                 | `@shared/ui/progress`         | UI/Feedback/Progress         | Pending         |
-| [feedback/skeleton](../../../packages/ui/src/feedback/skeleton)                 | `@shared/ui/skeleton`         | UI/Feedback/Skeleton         | Pending         |
-| [feedback/sonner](../../../packages/ui/src/feedback/sonner)                     | `@shared/ui/sonner`           | UI/Feedback/Sonner           | Pending         |
-| [feedback/spinner](../../../packages/ui/src/feedback/spinner)                   | `@shared/ui/spinner`          | UI/Feedback/Spinner          | Pending         |
-| [feedback/status-indicator](../../../packages/ui/src/feedback/status-indicator) | `@shared/ui/status-indicator` | UI/Feedback/Status Indicator | Pending         |
-| [feedback/tag](../../../packages/ui/src/feedback/tag)                           | `@shared/ui/tag`              | UI/Feedback/Tag              | Pending         |
-| [feedback/toast](../../../packages/ui/src/feedback/toast)                       | `@shared/ui/toast`            | UI/Feedback/Toast            | Pending         |
+| Component family                                                                | Public import                 | Storybook title              | Review evidence                                                                            |
+| ------------------------------------------------------------------------------- | ----------------------------- | ---------------------------- | ------------------------------------------------------------------------------------------ |
+| [feedback/alert](../../../packages/ui/src/feedback/alert)                       | `@shared/ui/alert`            | UI/Feedback/Alert            | Pending                                                                                    |
+| [feedback/alert-dialog](../../../packages/ui/src/feedback/alert-dialog)         | `@shared/ui/alert-dialog`     | UI/Feedback/Alert Dialog     | Pending                                                                                    |
+| [feedback/badge](../../../packages/ui/src/feedback/badge)                       | `@shared/ui/badge`            | UI/Feedback/Badge            | Pending                                                                                    |
+| [feedback/banner](../../../packages/ui/src/feedback/banner)                     | `@shared/ui/banner`           | UI/Feedback/Banner           | Pending                                                                                    |
+| [feedback/chip](../../../packages/ui/src/feedback/chip)                         | `@shared/ui/chip`             | UI/Feedback/Chip             | Pending                                                                                    |
+| [feedback/empty-state](../../../packages/ui/src/feedback/empty-state)           | `@shared/ui/empty-state`      | UI/Feedback/Empty State      | Pending                                                                                    |
+| [feedback/error-boundary](../../../packages/ui/src/feedback/error-boundary)     | `@shared/ui/error-boundary`   | Find consuming story         | Pending                                                                                    |
+| [feedback/error-page](../../../packages/ui/src/feedback/error-page)             | `@shared/ui/error-page`       | UI/Feedback/Error Page       | Pending                                                                                    |
+| [feedback/feedback](../../../packages/ui/src/feedback/feedback)                 | `@shared/ui/feedback`         | UI/Feedback/Feedback         | Pending                                                                                    |
+| [feedback/not-found](../../../packages/ui/src/feedback/not-found)               | `@shared/ui/not-found`        | UI/Feedback/Not Found        | Pending                                                                                    |
+| [feedback/notification](../../../packages/ui/src/feedback/notification)         | `@shared/ui/notification`     | UI/Feedback/Notification     | Pending                                                                                    |
+| [feedback/progress](../../../packages/ui/src/feedback/progress)                 | `@shared/ui/progress`         | UI/Feedback/Progress         | Static pattern for unknown progress. [Chrome checks](shared-ui-styles.md#progress-states). |
+| [feedback/skeleton](../../../packages/ui/src/feedback/skeleton)                 | `@shared/ui/skeleton`         | UI/Feedback/Skeleton         | Pending                                                                                    |
+| [feedback/sonner](../../../packages/ui/src/feedback/sonner)                     | `@shared/ui/sonner`           | UI/Feedback/Sonner           | Pending                                                                                    |
+| [feedback/spinner](../../../packages/ui/src/feedback/spinner)                   | `@shared/ui/spinner`          | UI/Feedback/Spinner          | Pending                                                                                    |
+| [feedback/status-indicator](../../../packages/ui/src/feedback/status-indicator) | `@shared/ui/status-indicator` | UI/Feedback/Status Indicator | Pending                                                                                    |
+| [feedback/tag](../../../packages/ui/src/feedback/tag)                           | `@shared/ui/tag`              | UI/Feedback/Tag              | Pending                                                                                    |
+| [feedback/toast](../../../packages/ui/src/feedback/toast)                       | `@shared/ui/toast`            | UI/Feedback/Toast            | Pending                                                                                    |
 
 ## Overlays
 

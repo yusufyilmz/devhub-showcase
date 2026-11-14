@@ -256,3 +256,7 @@ These stories fit at 320px in Sand light and dark and at 1280px in Sand light. [
 | [Radio Group](http://127.0.0.1:6006/?path=/story/ui-forms-radio-group--narrow&globals=brand:sand)   | Tab focused Classic, the arrow keys selected Editorial and Classic, and Archived was disabled.                                 |
 
 All tested stories fit at 320px in Sand light and dark and at 1280px in Cyan light. [Once UI RadioButton](https://docs.once-ui.com/form-controls/radioButton) and [InteractiveDetails](https://docs.once-ui.com/form-controls/interactiveDetails)
+
+## Progress states
+
+Chrome checked [Custom Maximum](http://127.0.0.1:6006/?path=/story/ui-feedback-progress--custom-maximum), **Complete**, and **Indeterminate**. A value of 50 out of 200 filled a quarter of the track, complete filled the entire track, and indeterminate showed a static pattern without exposing a numeric value. All three fit at 320px in Sand light and dark and at 1280px in Cyan light. Reduced motion disabled the fill transition. [Once UI ProgressBar](https://docs.once-ui.com/components/progressBar)
