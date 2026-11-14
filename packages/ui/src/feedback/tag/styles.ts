@@ -9,14 +9,14 @@ export const variants: Record<string, string> = {
   warning: "border-amber-500/20 bg-amber-500/8 text-amber-900 dark:text-amber-200",
 };
 export const sizes = {
-  l: "px-3 py-1.5 text-sm",
-  m: "px-2 py-1 text-xs",
+  l: "px-sm py-1.5 text-sm",
+  m: "px-s py-1 text-xs",
   s: "px-1.5 py-0.5 text-xs",
 };
 
 export function tagClassName(variant: string | undefined, size: string): string {
   return cn(
-    "inline-flex max-w-full items-center gap-1 rounded-full border leading-snug font-medium wrap-anywhere",
+    "inline-flex max-w-full items-center gap-xs rounded-full border leading-snug font-medium wrap-anywhere",
     variant,
     size,
   );

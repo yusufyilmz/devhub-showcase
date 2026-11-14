@@ -272,3 +272,7 @@ Chrome checked the four [Badge variants](http://127.0.0.1:6006/?path=/story/ui-f
 ## Chip
 
 In [Interactive Chip](http://127.0.0.1:6006/?path=/story/ui-feedback-chip--interactive), Chrome confirmed that Space toggled Design and changed the surface, while Enter removed Development. Each action showed a two-pixel focus outline. The story fit in Sand light and dark at 320px and Cyan light at 1280px. [Once UI Chip](https://docs.once-ui.com/form-controls/chip)
+
+## Tag spacing and tones
+
+In [Tag Variants](http://127.0.0.1:6006/?path=/story/ui-feedback-tag--variants), Chrome confirmed six distinct fills, one-pixel borders, and distinct side padding for all three sizes. **Long Label** wrapped without overflow. Both stories fit at 320px in Sand light and dark and at 1280px in Cyan light. The separate status colors keep success and warning distinct where the theme aliases both to the brand color. [Once UI Tag](https://docs.once-ui.com/components/tag)
