@@ -51,11 +51,11 @@ export function CountBadge({
 
 export function DotBadge({ color = "default", className, ...props }: DotBadgeOptions) {
   const colorClasses = {
-    default: "bg-[var(--primary)]",
-    destructive: "bg-[var(--destructive)]",
-    info: "bg-[var(--info)]",
-    success: "bg-[var(--success)]",
-    warning: "bg-[var(--warning)]",
+    default: "bg-primary",
+    destructive: "bg-destructive",
+    info: "bg-info",
+    success: "bg-success",
+    warning: "bg-warning",
   };
 
   return <span className={cn(badgeStyles.dotBadge, colorClasses[color], className)} {...props} />;

@@ -264,3 +264,7 @@ Chrome checked [Custom Maximum](http://127.0.0.1:6006/?path=/story/ui-feedback-p
 ## Loading feedback
 
 Chrome checked [Spinner](http://127.0.0.1:6006/?path=/story/ui-feedback-spinner--narrow) and [Skeleton Card](http://127.0.0.1:6006/?path=/story/ui-feedback-skeleton--card) at 320px in Sand light and dark and at 1280px in Sand light. Both fit the viewport, and the skeleton lines retained their width. The spinner rotated and the skeleton pulsed with motion enabled. Both were static with reduced motion. [Once UI Spinner](https://docs.once-ui.com/components/spinner)
+
+## Badge
+
+Chrome checked the four [Badge variants](http://127.0.0.1:6006/?path=/story/ui-feedback-badge--default), verified hover and a two-pixel keyboard outline in **Linked**, and confirmed activation with Enter. **Status and Counts** displayed the status pill, capped count, and eight-pixel dot. The stories fit in Sand light and dark at 320px and Cyan light at 1280px. [Once UI Badge](https://docs.once-ui.com/components/badge)

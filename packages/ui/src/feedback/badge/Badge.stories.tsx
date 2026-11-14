@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Badge } from "./Badge";
+import { Badge, CountBadge, DotBadge, StatusBadge } from "./Badge";
 
 /**
  * Displays a badge or a component that looks like a badge.
@@ -65,4 +65,29 @@ export const Outline: Story = {
   args: {
     variant: "outline",
   },
+};
+
+export const Linked: Story = {
+  render: () => (
+    <Badge asChild variant="outline">
+      <a href="#release-notes">Release notes</a>
+    </Badge>
+  ),
+};
+
+export const StatusAndCounts: Story = {
+  render: () => (
+    <div className="flex w-56 max-w-[70vw] flex-wrap items-center gap-s">
+      <StatusBadge status="online" />
+      <StatusBadge status="away" />
+      <StatusBadge status="busy" />
+      <StatusBadge status="offline" />
+      <CountBadge count={7} />
+      <CountBadge count={120} />
+      <span className="inline-flex items-center gap-xs text-sm">
+        <DotBadge aria-hidden="true" color="success" />
+        Available
+      </span>
+    </div>
+  ),
 };
