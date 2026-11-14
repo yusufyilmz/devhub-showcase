@@ -34,7 +34,7 @@ export function CTABlock({
         }
       >
         {eyebrow && (
-          <p className={landing ? "home-eyebrow" : "text-sm font-semibold text-primary"}>
+          <p className={landing ? "home-eyebrow flex items-center gap-[9px] [font:500_10px/1.6_var(--font-geist-mono),monospace] tracking-[0.13em] text-primary [&>span]:size-[5px] [&>span]:rounded-full [&>span]:bg-current [&>span]:shadow-[0_0_12px_color-mix(in_srgb,var(--primary)_50%,transparent)]" : "text-sm font-semibold text-primary"}>
             {eyebrow}
           </p>
         )}
