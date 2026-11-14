@@ -5,7 +5,7 @@ Group imports and stylesheet exports are covered through the components that con
 A row covers the public component family and its parts. Expand the evidence for each part as it is reviewed.
 A folder without a colocated story needs a consuming composition or a dedicated story before its review is complete.
 
-See the [manual review notes](shared-ui-styles.md) for interaction steps and results.
+Follow the [review plan](shared-ui-review-plan.md) and see the [manual review notes](shared-ui-styles.md) for interaction steps and results.
 
 ## Actions
 
