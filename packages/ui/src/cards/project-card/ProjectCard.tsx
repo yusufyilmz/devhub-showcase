@@ -21,12 +21,7 @@ export function ProjectCard({
   projectHref,
 }: ProjectCardProps) {
   return (
-    <CardBase
-      asChild
-      className="flex flex-col gap-4 p-4 sm:p-5"
-      interaction="static"
-      layout="plain"
-    >
+    <CardBase asChild className="flex flex-col gap-md p-md" interaction="static" layout="plain">
       <article>
         {images.length > 0 && (
           <Carousel aria-label={`${title} screenshots`}>
@@ -36,7 +31,7 @@ export function ProjectCard({
                   {/* biome-ignore lint/performance/noImgElement: The component accepts caller-supplied screenshots. */}
                   <img
                     alt={alt}
-                    className="aspect-video w-full rounded-lg border border-border object-cover"
+                    className="aspect-video w-full rounded-lg border border-border/60 bg-muted object-cover"
                     loading="lazy"
                     src={src}
                   />
@@ -51,7 +46,7 @@ export function ProjectCard({
             )}
           </Carousel>
         )}
-        <div className="flex flex-col items-start gap-2 wrap-anywhere">
+        <div className="flex flex-col items-start gap-xs wrap-anywhere">
           <h3 className="text-lg leading-tight font-semibold tracking-tight">{title}</h3>
           {description && (
             <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
@@ -59,7 +54,7 @@ export function ProjectCard({
           {avatars.length > 0 && <AvatarGroup avatars={avatars} />}
         </div>
         {(caseStudyHref || projectHref) && (
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-xs">
             {caseStudyHref && (
               <Button href={caseStudyHref} variant="outline">
                 Read case study

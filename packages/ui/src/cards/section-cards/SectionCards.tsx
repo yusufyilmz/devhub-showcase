@@ -41,9 +41,9 @@ const metrics = [
 export function SectionCards() {
   return (
     <div className="@container">
-      <div className="grid grid-cols-1 gap-3 @lg:grid-cols-2 @4xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-sm @lg:grid-cols-2 @4xl:grid-cols-4">
         {metrics.map(({ change, detail, icon: Icon, label, trend, value }) => (
-          <Card className="gap-3" interaction="static" key={label}>
+          <Card className="gap-sm" interaction="static" key={label}>
             <CardHeader>
               <CardDescription className="min-w-0 wrap-anywhere">{label}</CardDescription>
               <CardTitle className="text-2xl font-semibold tracking-tight tabular-nums">
@@ -56,7 +56,7 @@ export function SectionCards() {
                 </Badge>
               </CardAction>
             </CardHeader>
-            <CardFooter className="flex-col items-start gap-1 text-sm">
+            <CardFooter className="flex-col items-start gap-1 text-sm leading-relaxed wrap-anywhere">
               <div className="font-medium">{trend}</div>
               <div className="text-muted-foreground">{detail}</div>
             </CardFooter>
