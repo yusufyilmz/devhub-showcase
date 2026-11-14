@@ -16,23 +16,27 @@ export function AnimatedTooltip({
   arrow = true,
   ...props
 }: AnimatedTooltipProps) {
-  const [alignOffset, setAlignOffset] = useState(0);
+  const [alignOffset, setAlignOffset] = useState<number | null>(null);
   const reducedMotion = useReducedMotion();
   const trackPointer = followCursor && !reducedMotion;
 
   function handlePointerMove(event: PointerEvent<HTMLButtonElement>) {
     if (event.pointerType === "touch") return;
     const bounds = event.currentTarget.getBoundingClientRect();
-    const delta =
-      placement === "top" || placement === "bottom"
-        ? event.clientX - bounds.left - bounds.width / 2
-        : event.clientY - bounds.top - bounds.height / 2;
+    const horizontal = placement === "top" || placement === "bottom";
+    const rtl = horizontal && getComputedStyle(event.currentTarget).direction === "rtl";
+    const delta = horizontal
+      ? rtl
+        ? bounds.right - event.clientX
+        : event.clientX - bounds.left
+      : event.clientY - bounds.top;
     setAlignOffset(Math.round(delta));
   }
 
   return (
     <TooltipHint
-      alignOffset={trackPointer ? alignOffset : 0}
+      align={trackPointer && alignOffset !== null ? "start" : "center"}
+      alignOffset={trackPointer ? (alignOffset ?? 0) : 0}
       arrow={arrow && !trackPointer}
       placement={placement}
       sideOffset={offset}
@@ -40,7 +44,7 @@ export function AnimatedTooltip({
       triggerProps={
         trackPointer
           ? {
-              onPointerLeave: () => setAlignOffset(0),
+              onPointerLeave: () => setAlignOffset(null),
               onPointerMove: handlePointerMove,
             }
           : undefined

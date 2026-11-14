@@ -75,7 +75,7 @@ function TooltipHint({
   variant,
   ...contentProps
 }: TooltipProps &
-  Pick<TooltipContentProps, "sideOffset" | "alignOffset"> & {
+  Pick<TooltipContentProps, "sideOffset" | "align" | "alignOffset"> & {
     triggerProps?: Pick<ComponentProps<typeof TooltipTrigger>, "onPointerLeave" | "onPointerMove">;
   }) {
   if (disabled || title === null || title === undefined || title === false || title === "") {
