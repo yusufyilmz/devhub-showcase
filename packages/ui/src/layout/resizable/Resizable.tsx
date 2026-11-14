@@ -35,7 +35,7 @@ function ResizableHandle({ withHandle, className, ...props }: ResizableHandleOpt
     >
       {withHandle && (
         <div className={resizableStyles.element1}>
-          <GripVerticalIcon className={resizableStyles.element2} />
+          <GripVerticalIcon aria-hidden="true" className={resizableStyles.element2} />
         </div>
       )}
     </ResizablePrimitive.PanelResizeHandle>
