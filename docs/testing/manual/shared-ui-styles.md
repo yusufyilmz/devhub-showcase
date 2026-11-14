@@ -186,3 +186,11 @@ All six stories were checked in Sand dark at 320px, Sand light at 1280px, and Wh
 | ---- | ----------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ------------- |
 | 1    | [Content Editor](http://127.0.0.1:6006/?path=/story/assistant-editors-content-editor--default&globals=brand:sand) | `/?path=/story/assistant-editors-content-editor--default` | Change **Section display** in the **Layout** panel and compare **Compact** and **Empty**. | The panel uses the same border and spacing as the other settings panels.       | Not run.      |
 | 2    | [Sortable List](http://127.0.0.1:6006/?path=/story/assistant-editors-sortable-list--default&globals=brand:sand)   | `/?path=/story/assistant-editors-sortable-list--default`  | Focus a reorder handle and press Arrow Down. Compare **Section Preview**.                 | Rows use a soft surface, and the handle and reorder controls remain available. | Not run.      |
+
+## Slider
+
+| Step | Story                                                                                        | Route path                             | Action                                                                                            | Expected result                                                                    | Actual result |
+| ---- | -------------------------------------------------------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------------- |
+| 1    | [Slider range](http://127.0.0.1:6006/?path=/story/ui-forms-slider--range&globals=brand:sand) | `/?path=/story/ui-forms-slider--range` | At 320px, tab to each thumb and adjust it with arrow keys. Compare **Disabled** and **Vertical**. | Each enabled thumb shows an outline on focus and the track fits both orientations. | Not run.      |
+
+[Once UI Slider](https://docs.once-ui.com/components/slider)
