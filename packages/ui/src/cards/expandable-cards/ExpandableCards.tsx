@@ -6,6 +6,7 @@ import { ChevronDown } from "lucide-react";
 import { Button } from "../../buttons/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../layout/collapsible";
 import { CardBase } from "../card/CardBase";
+import { disclosureCardStyles } from "../styles";
 import type { ExpandableCardsProps } from "./types";
 
 export function ExpandableCards({ cards, className }: ExpandableCardsProps) {
@@ -19,7 +20,7 @@ export function ExpandableCards({ cards, className }: ExpandableCardsProps) {
                 <CollapsibleTrigger asChild>
                   <Button
                     aria-label={`View ${card.title}`}
-                    className="group h-auto min-h-11 w-full justify-start gap-3 rounded-[inherit] px-4 py-3 text-left whitespace-normal text-card-foreground focus-visible:-outline-offset-2 aria-expanded:bg-foreground/5"
+                    className={disclosureCardStyles.trigger}
                     variant="ghost"
                   >
                     {card.thumbnail && (
@@ -31,15 +32,12 @@ export function ExpandableCards({ cards, className }: ExpandableCardsProps) {
                       />
                     )}
                     <span className="min-w-0 flex-1 font-medium wrap-anywhere">{card.title}</span>
-                    <ChevronDown
-                      aria-hidden="true"
-                      className="text-muted-foreground motion-safe:transition-transform group-data-[state=open]:rotate-180"
-                    />
+                    <ChevronDown aria-hidden="true" className={disclosureCardStyles.chevron} />
                   </Button>
                 </CollapsibleTrigger>
               </h3>
-              <CollapsibleContent className="ui-disclosure-motion [overflow:clip] motion-safe:[&[data-state='open']]:[animation:ui-disclosure-open_340ms_cubic-bezier(0.22,_1,_0.36,_1)] motion-safe:[&[data-state='closed']]:[animation:ui-disclosure-close_240ms_ease-in]">
-                <div className="mx-4 space-y-1.5 border-border border-t pt-3 pb-4 text-sm wrap-anywhere">
+              <CollapsibleContent className={disclosureCardStyles.content}>
+                <div className={disclosureCardStyles.body}>
                   {card.description && <p className="font-medium">{card.description}</p>}
                   <div className="text-muted-foreground">{card.content}</div>
                 </div>
