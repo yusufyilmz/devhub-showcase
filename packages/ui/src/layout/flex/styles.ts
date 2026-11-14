@@ -59,8 +59,8 @@ export const surfaceVariants = cva("", {
   },
 });
 
-export function wrapClasses(wrap: FlexProps["wrap [flex-wrap:wrap] [margin-bottom:20px]"]): string {
-  if (wrap === true || wrap === "wrap [flex-wrap:wrap] [margin-bottom:20px]") {
+export function wrapClasses(wrap: FlexProps["wrap"]): string {
+  if (wrap === true || wrap === "wrap") {
     return "flex-wrap";
   }
   if (wrap === "wrap-reverse") {
@@ -137,10 +137,7 @@ function flexSizingClasses(input: FlexClassNameInput): string {
 
 export function buildFlexClassNames(input: FlexClassNameInput): string {
   const axisDirection: FlexDirection =
-    input.direction ??
-    input.tabletDirection ??
-    input.mobileDirection ??
-    "row [display:flex] [gap:10px] [align-items:center]";
+    input.direction ?? input.tabletDirection ?? input.mobileDirection ?? "row";
 
   const { justifyClassName, itemsClassName } = resolveAxisAlignment({
     center: input.center,

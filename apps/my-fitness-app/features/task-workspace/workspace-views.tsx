@@ -252,10 +252,7 @@ function WorkspaceSidebar({
 }) {
   return (
     <aside className="sidebar [position:fixed] [inset:0_auto_0_0] [z-index:20] [display:flex] [flex-direction:column] [width:244px] [padding:38px_25px] [background:var(--surface)] [border-right:1px_solid_var(--line)] [&_nav]:[display:grid] [gap:7px] [&_nav_button]:[display:flex] [gap:13px] [align-items:center] [justify-content:flex-start] [min-height:44px] [padding:10px_14px] [font-weight:550] [color:var(--muted)] [text-align:left] [background:transparent] [border:0] [border-radius:9px] [&_nav_button.active]:[color:var(--ink)] [background:var(--surface-soft)] max-[1200px]:[width:205px] [padding:32px_18px] max-[950px]:[width:170px] max-[700px]:[inset:auto_0_0] [width:100%] [height:calc(68px_+_env(safe-area-inset-bottom))] [padding:0_5px_env(safe-area-inset-bottom)] [border-top:1px_solid_var(--line)] [border-right:0] [backdrop-filter:blur(20px)] max-[700px]:[&_>_.brand]:[display:none] max-[700px]:[&_nav]:[display:grid] [grid-template-columns:repeat(5,_1fr)] [gap:0] max-[700px]:[&_nav_button]:[display:flex] [gap:5px] [padding:12px_3px_8px] [font-size:9px] [border-radius:0] max-[700px]:[&_nav_button.active]:[color:var(--ink)] max-[700px]:[&_nav_svg]:[width:20px] [height:20px] [&_nav_button.active]:[color:var(--accent)] [background:var(--accent-soft)] [&_nav_button:hover]:[color:var(--accent)] max-[700px]:[background:color-mix(in_srgb,_var(--surface)_94%,_transparent)] max-[700px]:[&_nav_button.active]:[color:var(--accent)] max-[700px]:[&_nav_button]:[justify-content:center] [height:100%] [min-height:56px] [border-radius:10px]">
-      <a
-        className="brand [font-family:var(--font-geist-sans),_sans-serif] [display:flex] [gap:8px] [align-items:center] [font-size:20px] [font-weight:800] [line-height:1.15] [letter-spacing:-0.6px] [&_>_span:first-child]:[display:grid] [flex:0_0_33px] [place-items:center] [width:33px] [height:33px] [font-size:28px] [color:var(--muted)] [background:var(--green)] [border-radius:9px] max-[950px]:[font-size:19px] [&_>_span:first-child]:[color:var(--accent)] [background:var(--accent-soft)] [border:1px_solid_var(--line)]"
-        href={readOnly ? "/preview" : "/"}
-      >
+      <a className="brand" href={readOnly ? "/preview" : "/"}>
         <span aria-hidden="true">↗</span>
         <span>My Fitness Studio</span>
       </a>

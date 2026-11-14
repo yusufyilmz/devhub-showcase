@@ -37,7 +37,7 @@ export function SetupHeader({
 }
 
 function SetupProgress({ active }: { active: number }) {
-  const list = useRef<HTMLUListElement>(null);
+  const list = useRef<HTMLOListElement>(null);
   const [edges, setEdges] = useState({ end: false, start: false });
 
   const readEdges = useCallback(() => {
