@@ -348,3 +348,7 @@ Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-overlays-radix-dia
 ## Animated Tooltip
 
 Chrome checked [Tracks Pointer](http://127.0.0.1:6006/?path=/story/ui-overlays-animated-tooltip--tracks-pointer) in Sand light and dark at 320px and Sand light at 1280px. The tooltip moved with the pointer and stayed within the viewport. With reduced motion, it stayed centered, showed its arrow, and skipped animation. Tab opened the tooltip, and Escape dismissed it with focus still on Preview. [Once UI Tooltip](https://docs.once-ui.com/components/tooltip)
+
+## Navigation Menu
+
+Chrome checked [With Panel](http://127.0.0.1:6006/?path=/story/ui-overlays-navigation-menu--with-panel) and **Inline Panel** at 320px in Sand light and dark and at 1280px in Cyan light. Both panels fit with a one-pixel border and a solid background. Enter opened Resources, Tab reached the destination, and Escape closed the panel and returned focus. The trigger and link showed two-pixel focus outlines. [Once UI Dropdown](https://docs.once-ui.com/components/dropdown)

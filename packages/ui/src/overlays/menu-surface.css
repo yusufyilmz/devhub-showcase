@@ -1,7 +1,5 @@
 :root [data-slot="dropdown-menu-content"],
-:root [data-slot="dropdown-menu-sub-content"],
-:root [data-slot="navigation-menu-viewport"],
-:root [data-slot="navigation-menu"][data-viewport="false"] [data-slot="navigation-menu-content"] {
+:root [data-slot="dropdown-menu-sub-content"] {
   z-index: 120;
   color: var(--foreground);
   background:
@@ -18,7 +16,9 @@
 
 :root [data-slot="navigation-menu-viewport"],
 :root [data-slot="navigation-menu"][data-viewport="false"] [data-slot="navigation-menu-content"] {
+  z-index: 120;
   max-width: calc(100vw - 24px);
+  border-color: var(--border);
 }
 
 :root [data-slot="dropdown-menu-content"],
@@ -64,10 +64,6 @@
 
 :root [data-slot="dropdown-menu-separator"] {
   margin: 4px;
-}
-
-:root [data-slot="navigation-menu-link"] {
-  border-radius: 12px;
 }
 
 :root [data-slot="navigation-menu-link"]:is(:hover, :focus-visible) {
