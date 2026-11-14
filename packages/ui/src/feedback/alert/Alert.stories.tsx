@@ -59,3 +59,12 @@ export const WideCanvas: StoryObj<typeof meta> = {
     ),
   ],
 };
+
+export const WithoutIcon: Story = {
+  render: () => (
+    <Alert role="status">
+      <AlertTitle>Draft saved</AlertTitle>
+      <AlertDescription>Your changes are ready to review.</AlertDescription>
+    </Alert>
+  ),
+};

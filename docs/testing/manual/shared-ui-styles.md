@@ -280,3 +280,7 @@ In [Tag Variants](http://127.0.0.1:6006/?path=/story/ui-feedback-tag--variants),
 ## Status Indicator
 
 In [Colors and Sizes](http://127.0.0.1:6006/?path=/story/ui-feedback-status-indicator--colors-and-sizes), Chrome confirmed six distinct colors in each mode and measured the dots at 8px, 10px, and 12px. The large dot stayed round beside wrapped text, and its accessible name identified the status. The story fit in Sand light and dark at 320px and Cyan light at 1280px. [Once UI StatusIndicator](https://docs.once-ui.com/components/statusIndicator)
+
+## Alert severity and layout
+
+Chrome checked [Narrow Canvas](http://127.0.0.1:6006/?path=/story/ui-feedback-alert--narrow-canvas), **Destructive**, and **Without Icon** at 320px in Sand light and dark and at 1280px in Cyan light. All fit the viewport with one-pixel borders. Both icons had tinted surfaces and distinct severity colors. The no-icon story used one column, and announcements kept their status or alert roles. [Once UI Feedback](https://docs.once-ui.com/components/feedback)
