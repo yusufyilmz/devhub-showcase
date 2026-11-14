@@ -28,7 +28,7 @@ export function FAQBlock({
     >
       <div className={landing ? "home-section-intro [&_h2]:my-[17px] [&_h2]:mb-[20px] [&_h2]:text-[clamp(34px,4vw,51px)] [&_h2]:font-medium [&_h2]:leading-[1.16] [&_h2]:tracking-[-0.045em] [&_p:not(.home-eyebrow)]:max-w-[510px] [&_p:not(.home-eyebrow)]:text-[14px] [&_p:not(.home-eyebrow)]:leading-[1.9] [&_p:not(.home-eyebrow)]:text-muted-foreground max-[760px]:[&_h2]:text-[36px] max-[760px]:[&_p:not(.home-eyebrow)]:text-[13px]" : "min-w-0"}>
         {eyebrow && (
-          <p className={landing ? "home-eyebrow" : "text-sm font-semibold text-primary"}>
+          <p className={landing ? "home-eyebrow flex items-center gap-[9px] [font:500_10px/1.6_var(--font-geist-mono),monospace] tracking-[0.13em] text-primary [&>span]:size-[5px] [&>span]:rounded-full [&>span]:bg-current [&>span]:shadow-[0_0_12px_color-mix(in_srgb,var(--primary)_50%,transparent)]" : "text-sm font-semibold text-primary"}>
             {eyebrow}
           </p>
         )}
