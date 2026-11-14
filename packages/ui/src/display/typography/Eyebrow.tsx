@@ -2,9 +2,9 @@ import type { ReactNode } from "react";
 
 import { cn } from "cn";
 
-import { eyebrowClass } from "./eyebrow";
+import { eyebrowClass } from "./eyebrow-class";
 
-export { eyebrowClass } from "./eyebrow";
+export { eyebrowClass } from "./eyebrow-class";
 
 export function Eyebrow({
   as: Tag = "p",
