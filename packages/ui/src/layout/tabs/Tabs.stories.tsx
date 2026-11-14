@@ -35,8 +35,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: (args) => (
-    <Tabs {...args} className="w-[400px]">
-      <TabsList className="grid w-full grid-cols-2">
+    <Tabs {...args} className="w-[min(85vw,25rem)]">
+      <TabsList className="w-full">
         <TabsTrigger value="account">Account</TabsTrigger>
         <TabsTrigger value="password">Password</TabsTrigger>
       </TabsList>
@@ -80,4 +80,20 @@ export const WideCanvas: StoryObj<typeof meta> = {
       </div>
     ),
   ],
+};
+
+export const LongLabels: Story = {
+  render: (args) => (
+    <Tabs {...args} className="w-[min(85vw,25rem)]">
+      <TabsList className="w-full">
+        <TabsTrigger value="account">Workspace preferences</TabsTrigger>
+        <TabsTrigger disabled value="billing">
+          Billing history
+        </TabsTrigger>
+        <TabsTrigger value="security">Sign-in and security</TabsTrigger>
+      </TabsList>
+      <TabsContent value="account">Manage your workspace preferences.</TabsContent>
+      <TabsContent value="security">Manage your sign-in settings.</TabsContent>
+    </Tabs>
+  ),
 };
