@@ -194,3 +194,11 @@ All six stories were checked in Sand dark at 320px, Sand light at 1280px, and Wh
 | 1    | [Slider range](http://127.0.0.1:6006/?path=/story/ui-forms-slider--range&globals=brand:sand) | `/?path=/story/ui-forms-slider--range` | At 320px, tab to each thumb and adjust it with arrow keys. Compare **Disabled** and **Vertical**. | Each enabled thumb shows an outline on focus and the track fits both orientations. | Not run.      |
 
 [Once UI Slider](https://docs.once-ui.com/components/slider)
+
+## Input OTP
+
+| Story                                                                                         | Route path                                 | Action                                                                      | Expected result                                                                           | Actual result |
+| --------------------------------------------------------------------------------------------- | ------------------------------------------ | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------- |
+| [Input OTP](http://127.0.0.1:6006/?path=/story/ui-forms-input-otp--narrow&globals=brand:sand) | `/?path=/story/ui-forms-input-otp--narrow` | Tab into the field at 320px and enter six digits. Then compare **Invalid**. | The active cell shows a focus ring, and an invalid input gives all cells an error border. | Not run.      |
+
+[Once UI OTPInput](https://docs.once-ui.com/form-controls/otpInput)
