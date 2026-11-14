@@ -284,3 +284,7 @@ In [Colors and Sizes](http://127.0.0.1:6006/?path=/story/ui-feedback-status-indi
 ## Alert severity and layout
 
 Chrome checked [Narrow Canvas](http://127.0.0.1:6006/?path=/story/ui-feedback-alert--narrow-canvas), **Destructive**, and **Without Icon** at 320px in Sand light and dark and at 1280px in Cyan light. All fit the viewport with one-pixel borders. Both icons had tinted surfaces and distinct severity colors. The no-icon story used one column, and announcements kept their status or alert roles. [Once UI Feedback](https://docs.once-ui.com/components/feedback)
+
+## Banner spacing and action
+
+Chrome checked [With Action](http://127.0.0.1:6006/?path=/story/ui-feedback-banner--with-action) at 320px in Sand light and dark and at 1280px in Cyan light. The banner and action fit all three spacing presets, with side padding of 12px, 16px, and 20px and a one-pixel border. Tab showed the action's two-pixel focus outline and Enter dismissed the announcement. [Once UI Banner](https://docs.once-ui.com/components/banner)
