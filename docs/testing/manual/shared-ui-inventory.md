@@ -75,11 +75,11 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 | [feedback/notification](../../../packages/ui/src/feedback/notification)         | `@shared/ui/notification`     | UI/Feedback/Notification     | Pending                                                                                                             |
 | [feedback/progress](../../../packages/ui/src/feedback/progress)                 | `@shared/ui/progress`         | UI/Feedback/Progress         | Static pattern for unknown progress. [Chrome checks](shared-ui-styles.md#progress-states).                          |
 | [feedback/skeleton](../../../packages/ui/src/feedback/skeleton)                 | `@shared/ui/skeleton`         | UI/Feedback/Skeleton         | Responsive loading styles and reduced-motion support. [Chrome checks](shared-ui-styles.md#loading-feedback).        |
-| [feedback/sonner](../../../packages/ui/src/feedback/sonner)                     | `@shared/ui/sonner`           | UI/Feedback/Sonner           | Pending                                                                                                             |
+| [feedback/sonner](../../../packages/ui/src/feedback/sonner)                     | `@shared/ui/sonner`           | UI/Feedback/Sonner           | Shared toast spacing and close focus. [Chrome checks](shared-ui-styles.md#toast-and-sonner).                        |
 | [feedback/spinner](../../../packages/ui/src/feedback/spinner)                   | `@shared/ui/spinner`          | UI/Feedback/Spinner          | Responsive loading styles and reduced-motion support. [Chrome checks](shared-ui-styles.md#loading-feedback).        |
 | [feedback/status-indicator](../../../packages/ui/src/feedback/status-indicator) | `@shared/ui/status-indicator` | UI/Feedback/Status Indicator | Mode-aware colors and fixed dot sizes. [Chrome checks](shared-ui-styles.md#status-indicator).                       |
 | [feedback/tag](../../../packages/ui/src/feedback/tag)                           | `@shared/ui/tag`              | UI/Feedback/Tag              | Shared spacing and narrow label wrapping. [Chrome checks](shared-ui-styles.md#tag-spacing-and-tones).               |
-| [feedback/toast](../../../packages/ui/src/feedback/toast)                       | `@shared/ui/toast`            | UI/Feedback/Toast            | Pending                                                                                                             |
+| [feedback/toast](../../../packages/ui/src/feedback/toast)                       | `@shared/ui/toast`            | UI/Feedback/Toast            | Shared toast spacing and close focus. [Chrome checks](shared-ui-styles.md#toast-and-sonner).                        |
 
 ## Overlays
 

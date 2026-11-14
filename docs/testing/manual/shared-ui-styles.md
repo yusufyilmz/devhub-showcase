@@ -292,3 +292,7 @@ Chrome checked [With Action](http://127.0.0.1:6006/?path=/story/ui-feedback-bann
 ## Empty State
 
 Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-feedback-empty-state--narrow) and **With Actions** at 320px in Sand light and dark and at 1280px in Cyan light. Both fit the viewport and retained the configured 280px height. The default icon was decorative. Tab focused both actions in order and Enter activated Create project. [Once UI empty data example](https://docs.once-ui.com/data/setup)
+
+## Toast and Sonner
+
+Chrome opened [Toast](http://127.0.0.1:6006/?path=/story/ui-feedback-toast--narrow) and [Sonner](http://127.0.0.1:6006/?path=/story/ui-feedback-sonner--narrow) in Sand light and dark at 320px and Cyan light at 1280px. Both notifications fit the viewport and used a one-pixel border. Alt+T and Tab reached the Toast close button, which showed a two-pixel outline. Enter dismissed it. [Once UI Toast](https://docs.once-ui.com/components/toast)
