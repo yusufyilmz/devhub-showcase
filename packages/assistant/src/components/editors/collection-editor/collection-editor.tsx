@@ -53,26 +53,38 @@ export function CollectionEditor<T extends CollectionEditorItem>({
       {items.map((item, index) => (
         <Card asChild interaction="static" key={item.id} layout="plain">
           <article
-            className={collapsible ? "editor-collection-item" : collectionEditorStyles.element5}
+            className={
+              collapsible ? "editor-collection-item min-w-0" : collectionEditorStyles.element5
+            }
           >
             {collapsible && (
               <Button
                 aria-controls={`collection-${item.id}`}
                 aria-expanded={expanded === item.id}
                 aria-label={`${expanded === item.id ? "Close" : "Edit"} ${getTitle(item) || "new item"}`}
-                className="editor-collection-toggle"
+                className="editor-collection-toggle h-auto min-h-12 w-full justify-between gap-sm rounded-[inherit] px-md py-s text-left whitespace-normal wrap-anywhere text-card-foreground focus-visible:-outline-offset-2 aria-expanded:bg-foreground/5"
                 onClick={() => setExpanded(expanded === item.id ? null : item.id)}
                 type="button"
                 variant="ghost"
               >
-                <span>
-                  <strong>{getTitle(item) || "New item"}</strong>
-                  {getSummary && <small>{getSummary(item)}</small>}
+                <span className="min-w-0 flex-1">
+                  <strong className="font-medium">{getTitle(item) || "New item"}</strong>
+                  {getSummary && (
+                    <small className="block text-xs font-normal text-muted-foreground">
+                      {getSummary(item)}
+                    </small>
+                  )}
                 </span>
-                <span>{expanded === item.id ? "Close" : "Edit"}</span>
+                <span className="shrink-0 text-xs text-muted-foreground">
+                  {expanded === item.id ? "Close" : "Edit"}
+                </span>
               </Button>
             )}
-            <div hidden={collapsible && expanded !== item.id} id={`collection-${item.id}`}>
+            <div
+              className={collapsible ? "px-md pt-s pb-md" : undefined}
+              hidden={collapsible && expanded !== item.id}
+              id={`collection-${item.id}`}
+            >
               <div className={collectionEditorStyles.element6}>
                 <h3>{getTitle(item) || "New item"}</h3>
                 <div className={collectionEditorStyles.element7}>

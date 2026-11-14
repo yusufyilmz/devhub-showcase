@@ -12,9 +12,11 @@ const sampleItems = [
 import { CollectionEditor } from "./collection-editor";
 
 function Example({
+  collapsible,
   items: initialItems,
   maxItems,
 }: {
+  collapsible?: boolean;
   items: typeof sampleItems;
   maxItems?: number;
 }) {
@@ -22,7 +24,9 @@ function Example({
   return (
     <div className="mx-auto w-full max-w-xl">
       <CollectionEditor
+        collapsible={collapsible}
         create={() => ({ id: crypto.randomUUID(), title: "Untitled" })}
+        getSummary={() => "Portfolio project"}
         getTitle={(item) => item.title}
         items={items}
         maxItems={maxItems}
@@ -54,3 +58,5 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const Empty: Story = { args: { items: [] } };
 export const AtCapacity: Story = { args: { maxItems: 2 } };
+
+export const Collapsible: Story = { args: { collapsible: true } };

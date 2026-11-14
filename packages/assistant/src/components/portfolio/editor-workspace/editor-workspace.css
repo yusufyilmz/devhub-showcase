@@ -295,48 +295,6 @@
   line-height: 1.6;
   color: var(--muted-foreground);
 }
-.editor-collection-toggle {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: auto;
-  min-height: 48px;
-  text-align: left;
-  overflow-wrap: anywhere;
-  white-space: normal;
-}
-.editor-collection-toggle > span:first-child {
-  flex: 1;
-  min-width: 0;
-}
-.editor-collection-toggle small {
-  display: block;
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--muted-foreground);
-}
-.editor-collection-item {
-  margin-bottom: 10px;
-  overflow: clip;
-  background: var(--card);
-  border: 1px solid var(--border);
-}
-
-.editor-collection-item > .editor-collection-toggle {
-  min-height: 60px;
-  padding: 12px 16px;
-}
-
-.editor-collection-item > div:not([hidden]) {
-  padding: 0 16px 16px;
-}
-
-.editor-collection-item .editor-collection-actions {
-  justify-content: flex-end;
-  margin-block: 16px;
-}
 @media (max-width: 767px) {
   .studio.studio-editor {
     padding: 20px 16px 104px;

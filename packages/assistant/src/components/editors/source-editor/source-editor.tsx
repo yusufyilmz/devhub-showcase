@@ -7,7 +7,7 @@ import { SelectField } from "@shared/ui/forms";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
 
-import { sourceEditorStyles } from "../styles";
+import { editorPanelStyles } from "../styles";
 import type { SourceEditorOptions } from "../types";
 
 export function SourceEditor({ section, type, onChange, sourceItems }: SourceEditorOptions) {
@@ -16,9 +16,11 @@ export function SourceEditor({ section, type, onChange, sourceItems }: SourceEdi
   const source = section.source;
   const choices = source ? (sourceItems?.[source.field] ?? []) : [];
   return (
-    <fieldset className="ui-editor-panel">
-      <legend>Content source</legend>
-      <p>Write content for this section or reuse a saved profile field.</p>
+    <fieldset className={editorPanelStyles.panel}>
+      <legend className={editorPanelStyles.legend}>Content source</legend>
+      <p className={editorPanelStyles.description}>
+        Write content for this section or reuse a saved profile field.
+      </p>
       <SelectField
         label="Use content from"
         onChange={(field) =>
@@ -38,9 +40,10 @@ export function SourceEditor({ section, type, onChange, sourceItems }: SourceEdi
       </SelectField>
       {source && (
         <>
-          <LibraryLabel className={sourceEditorStyles.element1} unstyled>
+          <LibraryLabel className={editorPanelStyles.choice} unstyled>
             <LibraryInput
               checked={!source.itemIds}
+              className={editorPanelStyles.checkbox}
               onChange={(event) =>
                 onChange({
                   ...section,
@@ -52,13 +55,14 @@ export function SourceEditor({ section, type, onChange, sourceItems }: SourceEdi
               }
               type="checkbox"
               unstyled
-            />{" "}
-            All current and future items
+            />
+            <span className="min-w-0">All current and future items</span>
           </LibraryLabel>
           {choices.map((item) => (
-            <LibraryLabel className={sourceEditorStyles.element1} key={item.id} unstyled>
+            <LibraryLabel className={editorPanelStyles.choice} key={item.id} unstyled>
               <LibraryInput
                 checked={source.itemIds?.includes(item.id) ?? true}
+                className={editorPanelStyles.checkbox}
                 onChange={(event) => {
                   const selected = source.itemIds ?? choices.map(({ id }) => id);
                   onChange({
@@ -73,11 +77,13 @@ export function SourceEditor({ section, type, onChange, sourceItems }: SourceEdi
                 }}
                 type="checkbox"
                 unstyled
-              />{" "}
-              {item.title}
+              />
+              <span className="min-w-0">{item.title}</span>
             </LibraryLabel>
           ))}
-          <p>Sources use this profile’s saved fields. Private projects stay excluded publicly.</p>
+          <p className={editorPanelStyles.description}>
+            Sources use this profile’s saved fields. Private projects stay excluded publicly.
+          </p>
         </>
       )}
     </fieldset>

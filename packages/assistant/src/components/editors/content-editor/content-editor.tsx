@@ -8,7 +8,7 @@ import { Field, LinesField, SelectField } from "@shared/ui/forms";
 import { CollectionEditor } from "../collection-editor";
 import { OptionsEditor } from "../options-editor";
 import { SourceEditor } from "../source-editor";
-import { contentEditorStyles } from "../styles";
+import { contentEditorStyles, editorPanelStyles } from "../styles";
 import type { ItemFieldsOptions, SectionContentEditorOptions } from "../types";
 
 function ItemFields({ item, onChange, view }: ItemFieldsOptions) {
@@ -98,22 +98,25 @@ export function SectionContentEditor({
   return (
     <div className={contentEditorStyles.element1}>
       <OptionsEditor onChange={onChange} section={section} type={type} />
-      <SelectField
-        label="Section display"
-        onChange={(renderer) =>
-          onChange({
-            ...section,
-            renderer: renderer as CustomSection["renderer"],
-          })
-        }
-        value={section.renderer}
-      >
-        {getSectionRenderers(type).map((view) => (
-          <option key={view} value={view}>
-            {view}
-          </option>
-        ))}
-      </SelectField>
+      <fieldset className={editorPanelStyles.panel}>
+        <legend className={editorPanelStyles.legend}>Layout</legend>
+        <SelectField
+          label="Section display"
+          onChange={(renderer) =>
+            onChange({
+              ...section,
+              renderer: renderer as CustomSection["renderer"],
+            })
+          }
+          value={section.renderer}
+        >
+          {getSectionRenderers(type).map((view) => (
+            <option key={view} value={view}>
+              {view}
+            </option>
+          ))}
+        </SelectField>
+      </fieldset>
       <SourceEditor onChange={onChange} section={section} sourceItems={sourceItems} type={type} />
       {!section.source &&
         !["heading", "contact", "map", "toc", "newsletter"].includes(definition.view) && (
