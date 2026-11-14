@@ -77,7 +77,7 @@ export function ProfileMenu({
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <IconButton aria-label="Profile menu" className="profile-menu-trigger" variant="outline">
+          <IconButton aria-label="Profile menu" className="profile-menu-trigger size-10 shrink-0 rounded-full border border-border bg-card p-[3px] text-primary shadow-none hover:border-primary data-[state=open]:border-primary" variant="outline">
             <span
               aria-hidden="true"
               className="profile-menu-avatar [display:grid] [flex:none] [place-items:center] [width:32px] [height:32px] [font-size:12px] [font-weight:700] [line-height:1] [color:var(--foreground)] [background:color-mix(in_srgb,_var(--foreground)_10%,_var(--card))] [border-radius:50%]"
@@ -88,23 +88,23 @@ export function ProfileMenu({
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="end"
-          className="profile-menu-panel [&[data-slot='dropdown-menu-content']]:[width:min(18rem,_calc(100vw_-_24px))]"
+          className="profile-menu-panel min-w-0 [&[data-slot='dropdown-menu-content']]:[width:min(18rem,_calc(100vw_-_24px))]"
           collisionPadding={12}
           sideOffset={10}
         >
-          <DropdownMenuLabel className="profile-menu-identity [&_.profile-menu-avatar]:[width:72px] [height:72px] [font-size:26px] [color:var(--primary-foreground)] [background:var(--primary)] [border:1px_solid_color-mix(in_srgb,_var(--primary-foreground)_30%,_transparent)] [box-shadow:0_6px_24px_color-mix(in_srgb,_var(--primary)_22%,_transparent)]">
+          <DropdownMenuLabel className="profile-menu-identity grid justify-items-center gap-[10px] px-[12px] pt-[20px] pb-[16px] text-center [&_.profile-menu-avatar]:[width:72px] [&_.profile-menu-avatar]:[height:72px] [&_.profile-menu-avatar]:[font-size:26px] [&_.profile-menu-avatar]:[color:var(--primary-foreground)] [&_.profile-menu-avatar]:[background:var(--primary)] [&_.profile-menu-avatar]:[border:1px_solid_color-mix(in_srgb,_var(--primary-foreground)_30%,_transparent)] [&_.profile-menu-avatar]:[box-shadow:0_6px_24px_color-mix(in_srgb,_var(--primary)_22%,_transparent)]">
             <span
               aria-hidden="true"
               className="profile-menu-avatar [display:grid] [flex:none] [place-items:center] [width:32px] [height:32px] [font-size:12px] [font-weight:700] [line-height:1] [color:var(--foreground)] [background:color-mix(in_srgb,_var(--foreground)_10%,_var(--card))] [border-radius:50%]"
             >
               {initials}
             </span>
-            <span className="profile-menu-name [display:grid] [gap:2px] [min-width:0] [&_>_span]:[overflow:hidden] [text-overflow:ellipsis] [font-size:12px] [color:var(--muted-foreground)] [white-space:nowrap]">
+            <span className="profile-menu-name [display:grid] [gap:2px] [min-width:0] [&_>_span]:[overflow:hidden] [&_>_span]:[text-overflow:ellipsis] [&_>_span]:[font-size:12px] [&_>_span]:[color:var(--muted-foreground)] [&_>_span]:[white-space:nowrap]">
               <strong>My profile</strong>
               {username && <span>@{username}</span>}
             </span>
           </DropdownMenuLabel>
-          <DropdownMenuLabel className="profile-menu-heading">Portfolio</DropdownMenuLabel>
+          <DropdownMenuLabel className="profile-menu-heading px-[10px] pt-[6px] pb-[2px] text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">Portfolio</DropdownMenuLabel>
           <DropdownMenuGroup>
             <DropdownMenuItem asChild>
               <a href={studioHref}>
@@ -128,7 +128,7 @@ export function ProfileMenu({
             )}
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuLabel className="profile-menu-heading">Jobs</DropdownMenuLabel>
+          <DropdownMenuLabel className="profile-menu-heading px-[10px] pt-[6px] pb-[2px] text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">Jobs</DropdownMenuLabel>
           <DropdownMenuGroup>
             {jobLinks.map(({ href, icon: Icon, label }) => (
               <DropdownMenuItem asChild key={href}>
