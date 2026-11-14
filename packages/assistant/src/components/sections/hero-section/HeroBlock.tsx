@@ -31,7 +31,7 @@ export function HeroBlock({
     >
       <div className={landing ? "home-hero-copy" : "grid min-w-0 gap-sm"}>
         {eyebrow && (
-          <p className={landing ? "home-eyebrow" : "text-sm font-semibold text-primary"}>
+          <p className={landing ? "home-eyebrow flex items-center gap-[9px] font-[500_10px/1.6_var(--font-geist-mono),monospace] tracking-[0.13em] text-primary [&>span]:size-[5px] [&>span]:rounded-full [&>span]:bg-current [&>span]:shadow-[0_0_12px_color-mix(in_srgb,var(--primary)_50%,transparent)]" : "text-sm font-semibold text-primary"}>
             {eyebrow}
           </p>
         )}
@@ -43,18 +43,18 @@ export function HeroBlock({
         </Heading>
         {description && (
           <p
-            className={landing ? "home-hero-description" : "m-0 max-w-prose text-muted-foreground"}
+            className={landing ? "home-hero-description max-w-[420px] text-[15px] leading-[1.9] text-muted-foreground max-[760px]:max-w-[500px] max-[760px]:text-[14px]" : "m-0 max-w-prose text-muted-foreground"}
           >
             {description}
           </p>
         )}
         {actions && (
-          <div className={landing ? "home-hero-actions" : "flex flex-wrap items-center gap-s"}>
+          <div className={landing ? "home-hero-actions my-[32px] mb-[25px] flex flex-wrap items-center gap-[26px] max-[760px]:mt-[27px] max-[760px]:gap-[23px]" : "flex flex-wrap items-center gap-s"}>
             {actions}
           </div>
         )}
         {notes && (
-          <div className={landing ? "home-hero-notes" : "text-sm text-muted-foreground"}>
+          <div className={landing ? "home-hero-notes flex gap-[23px] text-[10px] text-muted-foreground [&_i]:mr-[5px] [&_i]:not-italic [&_i]:text-primary max-[1000px]:gap-[13px] max-[1000px]:text-[9px] max-[760px]:gap-[20px] max-[760px]:text-[10px] max-[380px]:gap-[12px] max-[380px]:text-[9px]" : "text-sm text-muted-foreground"}>
             {notes}
           </div>
         )}
