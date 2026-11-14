@@ -1,8 +1,6 @@
 /** Adapted from Once UI (MIT). Copyright (c) 2024-2025 Once UI. */
 "use client";
 
-import "./chip.css";
-
 import { cn } from "cn";
 import { X } from "lucide-react";
 
@@ -11,7 +9,13 @@ import { chipStyles } from "./styles";
 import type { ChipOptions } from "./types";
 export function Chip({ label, selected = true, onRemove, onClick }: ChipOptions) {
   return (
-    <span className={cn(chipStyles.chip, selected ? chipStyles.selected : chipStyles.unselected)}>
+    <span
+      className={cn(
+        chipStyles.chip,
+        selected ? chipStyles.selected : chipStyles.unselected,
+        onClick && "hover:bg-foreground/10",
+      )}
+    >
       {onClick ? (
         <LibraryButton
           aria-pressed={selected}
@@ -23,7 +27,7 @@ export function Chip({ label, selected = true, onRemove, onClick }: ChipOptions)
           {label}
         </LibraryButton>
       ) : (
-        label
+        <span className="min-w-0 wrap-anywhere">{label}</span>
       )}
       {onRemove ? (
         <LibraryButton

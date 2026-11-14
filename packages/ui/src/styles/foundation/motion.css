@@ -32,12 +32,6 @@
   }
 }
 
-@keyframes ui-chip-shine {
-  to {
-    transform: translateX(105%);
-  }
-}
-
 @keyframes background-wash-in {
   from {
     opacity: 0.3;

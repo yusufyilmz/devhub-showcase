@@ -268,3 +268,7 @@ Chrome checked [Spinner](http://127.0.0.1:6006/?path=/story/ui-feedback-spinner-
 ## Badge
 
 Chrome checked the four [Badge variants](http://127.0.0.1:6006/?path=/story/ui-feedback-badge--default), verified hover and a two-pixel keyboard outline in **Linked**, and confirmed activation with Enter. **Status and Counts** displayed the status pill, capped count, and eight-pixel dot. The stories fit in Sand light and dark at 320px and Cyan light at 1280px. [Once UI Badge](https://docs.once-ui.com/components/badge)
+
+## Chip
+
+In [Interactive Chip](http://127.0.0.1:6006/?path=/story/ui-feedback-chip--interactive), Chrome confirmed that Space toggled Design and changed the surface, while Enter removed Development. Each action showed a two-pixel focus outline. The story fit in Sand light and dark at 320px and Cyan light at 1280px. [Once UI Chip](https://docs.once-ui.com/form-controls/chip)
