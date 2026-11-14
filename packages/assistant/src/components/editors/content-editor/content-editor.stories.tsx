@@ -10,12 +10,11 @@ const meta = {
   component: SectionContentEditor,
   decorators: [
     (Story) => (
-      <div className="w-[min(82vw,44rem)]">
+      <div className="mx-auto w-full max-w-2xl">
         <Story />
       </div>
     ),
   ],
-  parameters: { layout: "centered" },
   render: function Editable(args) {
     const [section, setSection] = useState(args.section);
     return <SectionContentEditor {...args} onChange={setSection} section={section} />;

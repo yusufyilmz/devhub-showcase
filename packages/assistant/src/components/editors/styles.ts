@@ -30,9 +30,9 @@ export const sortableListStyles = {
   element1: "sortable-panel",
   element2: "sortable-list",
   element3: "sortable-handle",
-  element4: "sortable-number",
-  element5: "sortable-label",
+  element4: "sortable-number text-xs text-muted-foreground tabular-nums",
+  element5: "sortable-label min-w-0 flex-1 text-sm wrap-anywhere",
   element6: "sortable-move",
   element7: "sortable-move",
-  element8: "sortable-announcement",
+  element8: "sortable-announcement sr-only",
 } as const;
