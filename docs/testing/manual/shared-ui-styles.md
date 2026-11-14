@@ -304,3 +304,7 @@ Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-feedback-alert-dia
 ## Popover
 
 In [With Action](http://127.0.0.1:6006/?path=/story/ui-overlays-popover--with-action), Chrome verified that a wide panel fit at 320px in Sand light and dark and at 1280px in Cyan light. Long text wrapped, the panel retained a one-pixel border, and reduced motion disabled animation. Enter moved focus into the popover, Tab reached its link, and Escape returned focus to the trigger. [Once UI DropdownWrapper](https://docs.once-ui.com/components/dropdownWrapper)
+
+## Tooltip
+
+Chrome checked all five [variants](http://127.0.0.1:6006/?path=/story/ui-overlays-tooltip--variants) on hover in Sand light and dark at 320px and Cyan light at 1280px. The text and solid background colors differed in every variant, the gradient rendered, and animation was off with reduced motion. In **Icon With Long Hint**, Tab showed the tooltip, the text fit the panel, and Escape dismissed it without moving focus. [Once UI Tooltip](https://docs.once-ui.com/components/tooltip)

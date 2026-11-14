@@ -1,8 +1,0 @@
-[data-slot="tooltip-content"] {
-  transform-origin: var(--radix-tooltip-content-transform-origin);
-}
-
-[data-slot="tooltip-content"][data-state="instant-open"],
-[data-slot="tooltip-content"][data-state="delayed-open"] {
-  animation: shared-tooltip-enter 140ms ease-out;
-}

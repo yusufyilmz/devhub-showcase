@@ -27,6 +27,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const KeyboardAndEscape: Story = {
+  args: { title: "Press ? to open keyboard shortcuts." },
   play: async ({ canvasElement }) => {
     const button = within(canvasElement).getByRole("button", { name: "Keyboard shortcuts" });
     const page = within(canvasElement.ownerDocument.body);
