@@ -5,6 +5,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./DropdownMenu";
 
@@ -34,3 +38,24 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const Narrow: Story = { args: { width: 320 } };
 export const Wide: Story = { args: { width: 960 } };
+
+export const WithSubmenu: Story = {
+  render: () => (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">Section actions</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem disabled>Unavailable</DropdownMenuItem>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>Export</DropdownMenuSubTrigger>
+          <DropdownMenuPortal>
+            <DropdownMenuSubContent className="w-60">
+              <DropdownMenuItem>PortfolioDocumentationForContributors.json</DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuPortal>
+        </DropdownMenuSub>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  ),
+};

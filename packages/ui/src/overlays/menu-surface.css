@@ -3,7 +3,6 @@
 :root [data-slot="navigation-menu-viewport"],
 :root [data-slot="navigation-menu"][data-viewport="false"] [data-slot="navigation-menu-content"] {
   z-index: 120;
-  max-width: calc(100vw - 24px);
   color: var(--foreground);
   background:
     radial-gradient(
@@ -15,6 +14,11 @@
   border: 1px solid var(--border);
   border-radius: 26px;
   box-shadow: 0 16px 44px color-mix(in srgb, var(--foreground) 18%, transparent);
+}
+
+:root [data-slot="navigation-menu-viewport"],
+:root [data-slot="navigation-menu"][data-viewport="false"] [data-slot="navigation-menu-content"] {
+  max-width: calc(100vw - 24px);
 }
 
 :root [data-slot="dropdown-menu-content"],

@@ -308,3 +308,7 @@ In [With Action](http://127.0.0.1:6006/?path=/story/ui-overlays-popover--with-ac
 ## Tooltip
 
 Chrome checked all five [variants](http://127.0.0.1:6006/?path=/story/ui-overlays-tooltip--variants) on hover in Sand light and dark at 320px and Cyan light at 1280px. The text and solid background colors differed in every variant, the gradient rendered, and animation was off with reduced motion. In **Icon With Long Hint**, Tab showed the tooltip, the text fit the panel, and Escape dismissed it without moving focus. [Once UI Tooltip](https://docs.once-ui.com/components/tooltip)
+
+## Dropdown Menu
+
+Chrome checked [With Submenu](http://127.0.0.1:6006/?path=/story/ui-overlays-dropdown-menu--with-submenu) at 320px in Sand light and dark and at 1280px in Cyan light. Arrow Down skipped the disabled item, Arrow Right opened Export, and the filename wrapped within the viewport. The submenu retained a one-pixel border and skipped animation with reduced motion. Enter closed the menu and returned focus to the trigger. [Once UI Dropdown](https://docs.once-ui.com/components/dropdown)
