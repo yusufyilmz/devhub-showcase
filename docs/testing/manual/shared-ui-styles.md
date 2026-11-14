@@ -332,3 +332,7 @@ Chrome checked [Wide Preview](http://127.0.0.1:6006/?path=/story/ui-cards-hover-
 ## Sheet
 
 Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-overlays-sheet--narrow) and **Bottom** at 320px in Sand light and dark and 1280px in Cyan light. Both fit the viewport, kept a one-pixel edge border, and skipped animation under reduced motion. Opening focused Close with a two-pixel outline. Escape and activating Close returned focus to the trigger. [Once UI Dialog](https://docs.once-ui.com/components/dialog)
+
+## Drawer
+
+Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-overlays-drawer--narrow) and **Right** at 320px in Sand light and dark and at 1280px in Cyan light. Both panels fit the viewport with a one-pixel edge border and shared header padding. Tab reached Done. Escape and Enter on Done closed the respective panels and returned focus to the trigger. [Once UI Dialog](https://docs.once-ui.com/components/dialog)
