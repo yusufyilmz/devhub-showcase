@@ -9,15 +9,21 @@ import { Input } from "./Input";
  */
 const meta: Meta<typeof Input> = {
   args: {
-    className: "w-96",
+    "aria-label": "Email",
     disabled: false,
     placeholder: "Email",
     type: "email",
   },
-  argTypes: {},
   component: Input,
+  decorators: [
+    (Story) => (
+      <div className="mx-auto w-full max-w-96">
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
-    layout: "centered",
+    layout: "fullscreen",
   },
   tags: ["autodocs"],
   title: "UI/Forms/Input",
@@ -73,9 +79,13 @@ export const WithHelperText: Story = {
  */
 export const WithButton: Story = {
   render: (args) => (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center gap-s">
       <Input {...args} />
       <Button type="submit">Subscribe</Button>
     </div>
   ),
+};
+
+export const Invalid: Story = {
+  args: { "aria-invalid": true, defaultValue: "invalid-email" },
 };

@@ -228,3 +228,11 @@ Chrome exercised these four controls in Sand light at 320px and 1280px and Sand 
 | [Textarea](http://127.0.0.1:6006/?path=/story/ui-forms-textarea--default&globals=brand:sand) | Tab into **Default**, enter six lines, then compare **Invalid** and **Disabled**. | Chrome measured a one-pixel border and a two-pixel focus ring. The field grew with the text, the invalid border changed color, and the disabled field was disabled. All stories fit Sand light and dark at 320px and Cyan light at 1280px. |
 
 [Once UI Textarea](https://docs.once-ui.com/form-controls/textarea)
+
+## Input
+
+| Story                                                                                  | Action                                                                                                                                                        | Result                                                                                                                                                                                                                                                                           |
+| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Input](http://127.0.0.1:6006/?path=/story/ui-forms-input--default&globals=brand:sand) | Switch between the three spacing presets. In **With Button**, tab into the field, enter an email, and tab to Subscribe. Compare **Invalid** and **Disabled**. | Chrome measured 8px, 12px, and 16px side padding, a one-pixel border, and a two-pixel focus ring. The input accepted typing, Tab moved to Subscribe, and the invalid and disabled states rendered. The tested stories fit Sand light and dark at 320px and Cyan light at 1280px. |
+
+[Once UI Input](https://docs.once-ui.com/form-controls/input)
