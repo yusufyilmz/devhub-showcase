@@ -202,3 +202,11 @@ All six stories were checked in Sand dark at 320px, Sand light at 1280px, and Wh
 | [Input OTP](http://127.0.0.1:6006/?path=/story/ui-forms-input-otp--narrow&globals=brand:sand) | `/?path=/story/ui-forms-input-otp--narrow` | Tab into the field at 320px and enter six digits. Then compare **Invalid**. | The active cell shows a focus ring, and an invalid input gives all cells an error border. | Not run.      |
 
 [Once UI OTPInput](https://docs.once-ui.com/form-controls/otpInput)
+
+## Calendar
+
+| Story                                                                                       | Action                                                                                                                  | Expected result                                                                                                                            | Actual result |
+| ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------- |
+| [Calendar](http://127.0.0.1:6006/?path=/story/ui-forms-calendar--narrow&globals=brand:sand) | At 320px in light and dark modes, navigate to the current month. Use arrow keys to focus a date and Space to select it. | Today uses a subtle border. The selection uses the primary fill, and keyboard focus remains visible on both selected and unselected dates. | Not run.      |
+
+[Once UI DatePicker](https://docs.once-ui.com/form-controls/datePicker)
