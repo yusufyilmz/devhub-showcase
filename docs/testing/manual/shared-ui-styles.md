@@ -276,3 +276,7 @@ In [Interactive Chip](http://127.0.0.1:6006/?path=/story/ui-feedback-chip--inter
 ## Tag spacing and tones
 
 In [Tag Variants](http://127.0.0.1:6006/?path=/story/ui-feedback-tag--variants), Chrome confirmed six distinct fills, one-pixel borders, and distinct side padding for all three sizes. **Long Label** wrapped without overflow. Both stories fit at 320px in Sand light and dark and at 1280px in Cyan light. The separate status colors keep success and warning distinct where the theme aliases both to the brand color. [Once UI Tag](https://docs.once-ui.com/components/tag)
+
+## Status Indicator
+
+In [Colors and Sizes](http://127.0.0.1:6006/?path=/story/ui-feedback-status-indicator--colors-and-sizes), Chrome confirmed six distinct colors in each mode and measured the dots at 8px, 10px, and 12px. The large dot stayed round beside wrapped text, and its accessible name identified the status. The story fit in Sand light and dark at 320px and Cyan light at 1280px. [Once UI StatusIndicator](https://docs.once-ui.com/components/statusIndicator)
