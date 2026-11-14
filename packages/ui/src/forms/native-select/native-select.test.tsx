@@ -13,7 +13,7 @@ describe("Shared native form semantics", () => {
       <form aria-label="Settings">
         <label>
           Choice
-          <NativeSelect defaultValue="a" name="choice" onChange={change} unstyled>
+          <NativeSelect defaultValue="a" name="choice" onChange={change}>
             <optgroup label="Group">
               <option value="a">Alpha</option>
               <option value="b">Beta</option>

@@ -210,3 +210,11 @@ All six stories were checked in Sand dark at 320px, Sand light at 1280px, and Wh
 | [Calendar](http://127.0.0.1:6006/?path=/story/ui-forms-calendar--narrow&globals=brand:sand) | At 320px in light and dark modes, navigate to the current month. Use arrow keys to focus a date and Space to select it. | Today uses a subtle border. The selection uses the primary fill, and keyboard focus remains visible on both selected and unselected dates. | Not run.      |
 
 [Once UI DatePicker](https://docs.once-ui.com/form-controls/datePicker)
+
+## Native Select
+
+| Story                                                                                                  | Action                                                                                                                             | Expected result                                                                                                   | Actual result |
+| ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------- |
+| [Native Select](http://127.0.0.1:6006/?path=/story/ui-forms-native-select--default&globals=brand:sand) | At 320px in light and dark modes, tab to the field and change its value. Compare **Disabled**, **Invalid**, and **Option Groups**. | Keyboard focus is visible, an invalid field has an error border, and the grouped list has room for multiple rows. | Not run.      |
+
+[Once UI Select](https://docs.once-ui.com/form-controls/select)

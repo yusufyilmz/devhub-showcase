@@ -24,6 +24,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+export const Invalid: Story = { args: { "aria-invalid": true } };
 export const Disabled: Story = { args: { disabled: true } };
 export const OptionGroups: Story = {
   args: {
