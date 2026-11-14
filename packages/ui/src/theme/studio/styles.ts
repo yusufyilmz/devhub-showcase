@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 
 import { getPortfolioThemeVariables, getPreviewAccent, type PortfolioTheme } from "@shared/config";
 
-import { eyebrowClass } from "../../display/typography/Eyebrow";
+import { eyebrowClass } from "../../display/typography/eyebrow";
 import type { Accent } from "./types";
 
 export function themePreviewStyle(theme: PortfolioTheme, accent: Accent): CSSProperties {

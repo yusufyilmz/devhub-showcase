@@ -1,4 +1,4 @@
-import { eyebrowClass } from "../../display/typography/Eyebrow";
+import { eyebrowClass } from "../../display/typography/eyebrow";
 
 export const sectionStyles = {
   element1:

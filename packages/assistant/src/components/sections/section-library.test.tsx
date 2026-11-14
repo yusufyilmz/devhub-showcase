@@ -289,7 +289,7 @@ describe("SectionLibrary", () => {
     expect(cards).toContain("Send your brief and dates");
     const list = renderToStaticMarkup(<CTA section={{ ...section, renderer: "list" }} />);
     expect(list).toContain(
-      "section-prose [&_article[data-slot='card']]:[padding:var(--spacing-sm)]",
+      "section-prose [display:grid] [gap:var(--spacing-s)] [&amp;_article[data-slot=card]]:[padding:var(--spacing-sm)]",
     );
   });
 

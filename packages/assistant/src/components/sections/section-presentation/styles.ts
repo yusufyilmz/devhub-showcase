@@ -5,7 +5,7 @@ export const presenterStyles = {
   element2: "section-item-value [font-size:2rem] [font-weight:650]",
   element3: "section-item-period [font-size:0.85rem]",
   element5:
-    "section-prose [display:grid] [gap:var(--spacing-s)] [&_article[data-slot='card [padding:24px] [margin-bottom:20px] [background:var(--surface)] [border:1px_solid_var(--line)] [border-radius:12px] max-[700px]:[padding:18px] [box-shadow:0_2px_10px_var(--shadow-color)]']]:[padding:var(--spacing-sm)]",
+    "section-prose [display:grid] [gap:var(--spacing-s)] [&_article[data-slot=card]]:[padding:var(--spacing-sm)]",
   element8: "section-description",
 } as const;
 

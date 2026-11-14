@@ -1,4 +1,4 @@
-import { studioButtonClass } from "../../buttons/button/StudioButton";
+import { studioButtonClass } from "../../buttons/button/studio-button";
 
 export const menuItemsStyles = {
   element1: "text-main-white border-none whitespace-pre",
