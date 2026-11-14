@@ -296,3 +296,7 @@ Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-feedback-empty-sta
 ## Toast and Sonner
 
 Chrome opened [Toast](http://127.0.0.1:6006/?path=/story/ui-feedback-toast--narrow) and [Sonner](http://127.0.0.1:6006/?path=/story/ui-feedback-sonner--narrow) in Sand light and dark at 320px and Cyan light at 1280px. Both notifications fit the viewport and used a one-pixel border. Alt+T and Tab reached the Toast close button, which showed a two-pixel outline. Enter dismissed it. [Once UI Toast](https://docs.once-ui.com/components/toast)
+
+## Alert Dialog
+
+Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-feedback-alert-dialog--narrow) in Sand light Compact and Sand dark Spacious at 320px and Cyan light Comfortable at 1280px. The dialog fit the viewport with a one-pixel border and token-based padding. Opening focused Cancel, Shift+Tab wrapped to Continue, and Escape and Continue both closed the dialog and returned focus to Review changes. The checks used reduced motion. [Once UI Dialog](https://docs.once-ui.com/components/dialog)
