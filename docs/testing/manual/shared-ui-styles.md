@@ -324,3 +324,7 @@ Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-overlays-menubar--
 ## Command
 
 Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-overlays-command--narrow) at 320px in Sand light and dark and at 1280px in Cyan light. The palette fit the viewport. Tab focused the search field and changed its surface, Arrow Down skipped Archive and highlighted Projects, typing Contact narrowed the list to one result, and an unmatched query displayed the empty message. [Once UI Kbar](https://docs.once-ui.com/modules/kbar)
+
+## Hover Card preview
+
+Chrome checked [Wide Preview](http://127.0.0.1:6006/?path=/story/ui-cards-hover-card--wide-preview) at 320px in Sand light and dark and at 1280px in Cyan light. The card fit the viewport with one-pixel borders and 16px padding. The long label did not overflow. Tab focus and pointer hover opened the preview, and moving focus or the pointer away closed it. Reduced motion disabled animation. [Once UI HoverCard](https://docs.once-ui.com/components/hoverCard)

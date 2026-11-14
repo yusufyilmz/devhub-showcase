@@ -30,3 +30,21 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const BelowTrigger: Story = { args: { children: <Preview side="bottom" /> } };
 export const QuickPreview: Story = { args: { closeDelay: 0, openDelay: 0 } };
+
+export const WidePreview: Story = {
+  args: {
+    children: (
+      <>
+        <HoverCardTrigger asChild>
+          <Button variant="outline">Mina Chen</Button>
+        </HoverCardTrigger>
+        <HoverCardContent className="w-96">
+          <p className="font-semibold">Mina Chen</p>
+          <p className="mt-xs text-muted-foreground">PortfolioDocumentationForContributors</p>
+        </HoverCardContent>
+      </>
+    ),
+    closeDelay: 0,
+    openDelay: 0,
+  },
+};

@@ -181,23 +181,23 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 
 [Once UI reference](https://docs.once-ui.com/components/card)
 
-| Component family                                                                | Public import           | Storybook title              | Review evidence |
-| ------------------------------------------------------------------------------- | ----------------------- | ---------------------------- | --------------- |
-| [cards](../../../packages/ui/src/cards)                                         | `@shared/ui/cards`      | Find consuming story         | Pending         |
-| [cards/animated-tools-card](../../../packages/ui/src/cards/animated-tools-card) | See group exports       | UI/Cards/Animated Tools Card | Pending         |
-| [cards/appearance-card](../../../packages/ui/src/cards/appearance-card)         | See group exports       | UI/Cards/Appearance Card     | Pending         |
-| [cards/card](../../../packages/ui/src/cards/card)                               | See group exports       | UI/Cards/Card                | Pending         |
-| [cards/card-spotlight](../../../packages/ui/src/cards/card-spotlight)           | See group exports       | UI/Cards/Card Spotlight      | Pending         |
-| [cards/content-card](../../../packages/ui/src/cards/content-card)               | See group exports       | UI/Cards/Content Card        | Pending         |
-| [cards/expandable-cards](../../../packages/ui/src/cards/expandable-cards)       | See group exports       | UI/Cards/Expandable Cards    | Pending         |
-| [cards/focus-cards](../../../packages/ui/src/cards/focus-cards)                 | See group exports       | UI/Cards/Focus Cards         | Pending         |
-| [cards/hover-card](../../../packages/ui/src/cards/hover-card)                   | `@shared/ui/hover-card` | UI/Cards/Hover Card          | Pending         |
-| [cards/hover-overlay-card](../../../packages/ui/src/cards/hover-overlay-card)   | See group exports       | UI/Cards/Hover Overlay Card  | Pending         |
-| [cards/project-card](../../../packages/ui/src/cards/project-card)               | See group exports       | UI/Cards/Project Card        | Pending         |
-| [cards/reveal-card](../../../packages/ui/src/cards/reveal-card)                 | See group exports       | UI/Cards/Reveal Card         | Pending         |
-| [cards/section-cards](../../../packages/ui/src/cards/section-cards)             | See group exports       | UI/Cards/Section Cards       | Pending         |
-| [cards/text-reveal-card](../../../packages/ui/src/cards/text-reveal-card)       | See group exports       | UI/Cards/Text Reveal Card    | Pending         |
-| [cards/variant-card](../../../packages/ui/src/cards/variant-card)               | See group exports       | UI/Cards/Variant Card        | Pending         |
+| Component family                                                                | Public import           | Storybook title              | Review evidence                                                                                         |
+| ------------------------------------------------------------------------------- | ----------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------- |
+| [cards](../../../packages/ui/src/cards)                                         | `@shared/ui/cards`      | Find consuming story         | Pending                                                                                                 |
+| [cards/animated-tools-card](../../../packages/ui/src/cards/animated-tools-card) | See group exports       | UI/Cards/Animated Tools Card | Pending                                                                                                 |
+| [cards/appearance-card](../../../packages/ui/src/cards/appearance-card)         | See group exports       | UI/Cards/Appearance Card     | Pending                                                                                                 |
+| [cards/card](../../../packages/ui/src/cards/card)                               | See group exports       | UI/Cards/Card                | Pending                                                                                                 |
+| [cards/card-spotlight](../../../packages/ui/src/cards/card-spotlight)           | See group exports       | UI/Cards/Card Spotlight      | Pending                                                                                                 |
+| [cards/content-card](../../../packages/ui/src/cards/content-card)               | See group exports       | UI/Cards/Content Card        | Pending                                                                                                 |
+| [cards/expandable-cards](../../../packages/ui/src/cards/expandable-cards)       | See group exports       | UI/Cards/Expandable Cards    | Pending                                                                                                 |
+| [cards/focus-cards](../../../packages/ui/src/cards/focus-cards)                 | See group exports       | UI/Cards/Focus Cards         | Pending                                                                                                 |
+| [cards/hover-card](../../../packages/ui/src/cards/hover-card)                   | `@shared/ui/hover-card` | UI/Cards/Hover Card          | Shared inset and viewport-aware preview width. [Chrome checks](shared-ui-styles.md#hover-card-preview). |
+| [cards/hover-overlay-card](../../../packages/ui/src/cards/hover-overlay-card)   | See group exports       | UI/Cards/Hover Overlay Card  | Pending                                                                                                 |
+| [cards/project-card](../../../packages/ui/src/cards/project-card)               | See group exports       | UI/Cards/Project Card        | Pending                                                                                                 |
+| [cards/reveal-card](../../../packages/ui/src/cards/reveal-card)                 | See group exports       | UI/Cards/Reveal Card         | Pending                                                                                                 |
+| [cards/section-cards](../../../packages/ui/src/cards/section-cards)             | See group exports       | UI/Cards/Section Cards       | Pending                                                                                                 |
+| [cards/text-reveal-card](../../../packages/ui/src/cards/text-reveal-card)       | See group exports       | UI/Cards/Text Reveal Card    | Pending                                                                                                 |
+| [cards/variant-card](../../../packages/ui/src/cards/variant-card)               | See group exports       | UI/Cards/Variant Card        | Pending                                                                                                 |
 
 ## Customization
 
