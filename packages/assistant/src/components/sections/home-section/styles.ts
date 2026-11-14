@@ -4,7 +4,7 @@ import type { PortfolioPreviewInlineStyle1Values } from "./types";
 
 export const capabilitiesStyles = {
   element1:
-    "home-container [width:min(var(--home-width,_1200px),_calc(100%_-_80px))] [margin-inline:auto] max-[1000px]:[width:calc(100%_-_52px)] max-[760px]:[width:calc(100%_-_40px)] max-[380px]:[width:calc(100%_-_32px)] home-capabilities [display:flex] [gap:16px] [align-items:center] [justify-content:space-between] [padding-block:26px] [font-size:12px] [color:var(--muted-foreground)] [border-block:1px_solid_color-mix(in_srgb,_var(--border)_70%,_transparent)] [&_>_:where(span):first-child]:[font:9px_var(--font-geist-mono),_monospace] [color:var(--muted-foreground)] [letter-spacing:0.1em] [&_:where(i)]:[font-size:15px] [font-style:normal] [color:color-mix(in_srgb,_var(--primary)_55%,_transparent)] max-[760px]:[flex-wrap:wrap] [gap:15px] [justify-content:flex-start] [padding-block:23px] [font-size:10px] max-[760px]:[&_>_:where(span):first-child]:[width:100%] [font-size:8px] max-[760px]:[&_:where(i)]:[font-size:11px]",
+    "home-container [width:min(var(--home-width,_1200px),_calc(100%_-_80px))] [margin-inline:auto] max-[1000px]:[width:calc(100%_-_52px)] max-[760px]:[width:calc(100%_-_40px)] max-[380px]:[width:calc(100%_-_32px)] home-capabilities [display:flex] [gap:16px] [align-items:center] [justify-content:space-between] [padding-block:26px] [font-size:12px] [color:var(--muted-foreground)] [border-block:1px_solid_color-mix(in_srgb,_var(--border)_70%,_transparent)] [&_>_:where(span):first-child]:[font:9px_var(--font-geist-mono),_monospace] [color:var(--muted-foreground)] [letter-spacing:0.1em] [&_:where(i)]:[font-size:15px] [font-style:normal] [color:color-mix(in_srgb,_var(--primary)_55%,_transparent)] max-[760px]:[flex-wrap:wrap] max-[760px]:[gap:15px] max-[760px]:[justify-content:flex-start] max-[760px]:[padding-block:23px] max-[760px]:[font-size:10px] max-[760px]:[&_>_:where(span):first-child]:[width:100%] max-[760px]:[&_>_:where(span):first-child]:[font-size:8px] max-[760px]:[&_:where(i)]:[font-size:11px]",
 } as const;
 
 export const chatLauncherStyles = {
@@ -22,7 +22,7 @@ export const featuresStyles = {
   element3:
     "home-eyebrow [display:flex] [gap:9px] [align-items:center] [font:500_10px_/_1.6_var(--font-geist-mono),_monospace] [color:var(--primary)] [letter-spacing:0.13em] [&_>_:where(span)]:[width:5px] [height:5px] [background:currentColor] [border-radius:50%] [box-shadow:0_0_12px_color-mix(in_srgb,_var(--primary)_50%,_transparent)]",
   element4:
-    "home-feature-grid [display:grid] [grid-template-columns:repeat(2,_minmax(0,_1fr))] [gap:20px] [margin-top:40px] max-[760px]:[grid-template-columns:1fr] [gap:15px] [margin-top:29px]",
+    "home-feature-grid [display:grid] [grid-template-columns:repeat(2,_minmax(0,_1fr))] [gap:20px] [margin-top:40px] max-[760px]:[grid-template-columns:1fr] max-[760px]:[gap:15px] max-[760px]:[margin-top:29px]",
   element5:
     "home-feature-card [padding:35px] [border-radius:12px] [&_:where(h3)]:[margin-block:21px_15px] [font-size:26px] [font-weight:500] [line-height:1.25] [letter-spacing:-0.04em] [&_:where(p)]:[max-width:390px] [font-size:12px] [line-height:1.85] [color:var(--muted-foreground)] max-[1000px]:[padding:26px] max-[760px]:[padding:25px] max-[760px]:[&_:where(h3)]:[font-size:25px] [&.ui-card]:[border-radius:14px] [&.reveal-card]:[align-self:start] [padding:32px] [&_.reveal-heading_h3]:[font-size:clamp(26px,_3vw,_36px)] [&_.home-url-demo]:[padding:20px] [margin-block:24px] [&_.home-style-demo]:[padding:15px_5px] [&_.reveal-brief]:[display:block] [max-height:none] [&_.reveal-toggle]:[margin-top:20px] [&_.reveal-details-inner_p]:[max-width:56ch] [font-size:14px] [line-height:1.65] [color:var(--foreground)] [&_.reveal-details-inner_ul]:[max-width:56ch] [font-size:14px] [line-height:1.65] [color:var(--foreground)] max-[700px]:[&.reveal-card]:[padding:24px] home-feature-main [display:flex] [flex-direction:column] [justify-content:space-between]",
   element7:
@@ -38,7 +38,7 @@ export const featuresStyles = {
   element13:
     "home-feature-cv [display:flex] [gap:22px] [align-items:center] [&_:where(h3)]:[margin-top:12px] max-[760px]:[&_:where(h3)]:[font-size:22px]",
   element14:
-    "home-file-icon [display:flex] [flex-shrink:0] [align-items:flex-end] [justify-content:space-between] [width:70px] [height:90px] [padding:12px] [font-size:20px] [color:var(--primary)] [background:color-mix(in_srgb,_var(--primary)_6%,_transparent)] [border:1px_solid_color-mix(in_srgb,_var(--primary)_45%,_transparent)] [border-radius:5px_15px_5px_5px] [&_>_:where(span)]:[font:12px_var(--font-geist-mono),_monospace] max-[760px]:[width:48px] [height:65px] [padding:8px] [font-size:14px] max-[760px]:[&_>_:where(span)]:[font-size:9px]",
+    "home-file-icon [display:flex] [flex-shrink:0] [align-items:flex-end] [justify-content:space-between] [width:70px] [height:90px] [padding:12px] [font-size:20px] [color:var(--primary)] [background:color-mix(in_srgb,_var(--primary)_6%,_transparent)] [border:1px_solid_color-mix(in_srgb,_var(--primary)_45%,_transparent)] [border-radius:5px_15px_5px_5px] [&_>_:where(span)]:[font:12px_var(--font-geist-mono),_monospace] max-[760px]:[width:48px] max-[760px]:[height:65px] max-[760px]:[padding:8px] max-[760px]:[font-size:14px] max-[760px]:[&_>_:where(span)]:[font-size:9px]",
 } as const;
 
 export const portfolioPreviewStyles = {
@@ -64,7 +64,7 @@ export const portfolioPreviewStyles = {
   element11:
     "home-sample-intro [&_:where(h2)_:where(span)]:[color:var(--primary)] [position:relative] [padding-block:36px_24px] [&_>_:where(p):first-of-type]:[margin-bottom:8px] [font:8px_var(--font-geist-mono),_monospace] [color:var(--primary)] [letter-spacing:0.13em] [&_:where(h2)]:[margin:0_0_10px] [font-size:39px] [font-weight:500] [line-height:1.2] [letter-spacing:-2px] [&_:where(button)]:[display:flex] [gap:25px] [align-items:center] [padding:8px_12px] [font-size:9px] [font-weight:600] [color:var(--card)] [background:var(--primary)] [border:0] [border-radius:6px] max-[1000px]:[&_:where(h2)]:[font-size:34px] max-[760px]:[&_:where(h2)]:[font-size:39px]",
   element12:
-    "home-sample-avatar [position:absolute] [top:55px] [right:6px] [display:grid] [place-items:center] [width:68px] [height:68px] [font-size:23px] [font-weight:300] [color:var(--primary)] [background:radial-gradient(_circle_at_70%_20%,_color-mix(in_srgb,_var(--primary)_17%,_transparent),_transparent_)] [border:1px_solid_color-mix(in_srgb,_var(--primary)_40%,_transparent)] [border-radius:50%] max-[1000px]:[right:0] [width:48px] [height:48px] max-[760px]:[width:64px] [height:64px] max-[380px]:[width:45px] [height:45px]",
+    "home-sample-avatar [position:absolute] [top:55px] [right:6px] [display:grid] [place-items:center] [width:68px] [height:68px] [font-size:23px] [font-weight:300] [color:var(--primary)] [background:radial-gradient(_circle_at_70%_20%,_color-mix(in_srgb,_var(--primary)_17%,_transparent),_transparent_)] [border:1px_solid_color-mix(in_srgb,_var(--primary)_40%,_transparent)] [border-radius:50%] max-[1000px]:[right:0] max-[1000px]:[width:48px] max-[1000px]:[height:48px] max-[760px]:[width:64px] max-[760px]:[height:64px] max-[380px]:[width:45px] max-[380px]:[height:45px]",
   element13:
     "home-sample-role [margin-block:7px] [font-size:10px] max-[1000px]:[max-width:185px] max-[380px]:[font-size:9px]",
   element14: "home-sample-bio [font-size:9px] [line-height:1.8] [color:var(--muted-foreground)]",
@@ -104,7 +104,7 @@ export const portfolioPreviewStyles = {
 
 export const heroStyles = {
   element6:
-    "home-button [display:inline-flex] [gap:30px] [align-items:center] [justify-content:center] [min-height:48px] [padding:14px_20px] [font-size:12px] [font-weight:650] [text-decoration:none] [border-radius:6px] [transition:transform_0.2s,_box-shadow_0.2s] hover:[box-shadow:0_7px_24px_color-mix(in_srgb,_var(--primary)_15%,_transparent)] [transform:translateY(-2px)] motion-reduce:[transition:none] motion-reduce:hover:[transform:none] home-button-primary [color:var(--background)] [background:var(--primary)]",
+    "home-button [display:inline-flex] [gap:30px] [align-items:center] [justify-content:center] [min-height:48px] [padding:14px_20px] [font-size:12px] [font-weight:650] [text-decoration:none] [border-radius:6px] [transition:transform_0.2s,_box-shadow_0.2s] hover:[box-shadow:0_7px_24px_color-mix(in_srgb,_var(--primary)_15%,_transparent)] hover:[transform:translateY(-2px)] motion-reduce:[transition:none] motion-reduce:hover:[transform:none] home-button-primary [color:var(--background)] [background:var(--primary)]",
   element7:
     "home-example-link [display:inline-flex] [gap:12px] [align-items:center] [padding-block:9px] [font-size:12px] [text-decoration:none] [border-bottom:1px_solid_var(--border)] hover:[color:var(--primary)]",
 } as const;
