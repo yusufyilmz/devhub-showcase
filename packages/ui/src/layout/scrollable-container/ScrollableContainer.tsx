@@ -3,31 +3,32 @@
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
+import { cn } from "cn";
+
 import { IconButton } from "../../buttons/icon-button/IconButton";
 import { CARD_IDS } from "../../constants/cards";
 import { ArrowBackIcon, ArrowForwardIcon } from "../../display/icons/Icons";
-import {
-  scrollableContainerInlineStyle1,
-  scrollableContainerInlineStyle2,
-  scrollableContainerStyles,
-} from "./styles";
+import { scrollableContainerStyles } from "./styles";
 import type { ScrollableContainerProps } from "./types";
 
 export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
   children,
   category = "contact",
+  className,
+  onScroll,
   ...props
 }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
-  const [containerHeight, setContainerHeight] = useState(0);
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
       const offset = (document.getElementById(CARD_IDS[category])?.offsetWidth ?? 300) + 32;
       scrollContainerRef.current.scrollBy({
-        behavior: "smooth",
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
         left: -offset,
       });
       handleScroll();
@@ -38,7 +39,12 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
     if (scrollContainerRef.current) {
       const offset = (document.getElementById(CARD_IDS[category])?.offsetWidth ?? 300) + 32;
 
-      scrollContainerRef.current.scrollBy({ behavior: "smooth", left: offset });
+      scrollContainerRef.current.scrollBy({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+        left: offset,
+      });
       handleScroll();
     }
   };
@@ -55,7 +61,6 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
     const element = scrollContainerRef.current;
     if (!element) return;
     const update = () => {
-      setContainerHeight(element.clientHeight);
       setShowLeftArrow(element.scrollLeft > 0);
       setShowRightArrow(element.scrollLeft + element.clientWidth < element.scrollWidth);
     };
@@ -69,29 +74,34 @@ export const ScrollableContainer: React.FC<ScrollableContainerProps> = ({
   return (
     <div className={scrollableContainerStyles.element1}>
       {showLeftArrow && (
-        <div
-          className={scrollableContainerStyles.element2}
-          style={scrollableContainerInlineStyle1(`${containerHeight / 2}px`)}
-        >
-          <IconButton aria-label="Scroll left" onClick={scrollLeft}>
+        <div className={scrollableContainerStyles.element2}>
+          <IconButton
+            aria-label="Scroll left"
+            className={scrollableContainerStyles.button}
+            onClick={scrollLeft}
+          >
             <ArrowBackIcon />
           </IconButton>
         </div>
       )}
       <div
-        className={scrollableContainerStyles.element3}
-        onScroll={handleScroll}
+        className={cn(scrollableContainerStyles.element3, className)}
+        onScroll={(event) => {
+          handleScroll();
+          onScroll?.(event);
+        }}
         ref={scrollContainerRef}
         {...props}
       >
         {children}
       </div>
       {showRightArrow && (
-        <div
-          className={scrollableContainerStyles.element4}
-          style={scrollableContainerInlineStyle2(`${containerHeight / 2}px`)}
-        >
-          <IconButton aria-label="Scroll right" onClick={scrollRight}>
+        <div className={scrollableContainerStyles.element4}>
+          <IconButton
+            aria-label="Scroll right"
+            className={scrollableContainerStyles.button}
+            onClick={scrollRight}
+          >
             <ArrowForwardIcon />
           </IconButton>
         </div>

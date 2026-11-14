@@ -5,10 +5,13 @@ import { ScrollableContainer } from "./ScrollableContainer";
 function Example({ width = 560 }: { width?: number }) {
   return (
     <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
-      <ScrollableContainer>
+      <ScrollableContainer aria-label="Projects" role="region" tabIndex={0}>
         <div className="flex gap-4">
           {[1, 2, 3, 4].map((item) => (
-            <article className="min-w-64 rounded-lg border p-6" key={item}>
+            <article
+              className="min-w-64 rounded-lg border border-border/75 bg-card p-lg"
+              key={item}
+            >
               Project {item}
             </article>
           ))}
