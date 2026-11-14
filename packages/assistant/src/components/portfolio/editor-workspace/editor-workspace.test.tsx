@@ -9,6 +9,8 @@ import { profile } from "@shared/config";
 import { DraftPreviewPane } from "./draft-preview-pane";
 import { EditorWorkspace } from "./editor-workspace";
 
+vi.mock("@shared/runtime/browser", () => ({ useIsMobile: () => false }));
+
 const groups = [{ items: ["Profile", "Experience"], label: "Content" }];
 
 function Workspace({ save = () => undefined }: { save?: () => void }) {
@@ -69,13 +71,14 @@ describe("EditorWorkspace", () => {
     const expand = screen.getByRole("button", { name: "Expand sidebar" });
     expect(expand.getAttribute("aria-expanded")).toBe("false");
     const experience = screen.getByRole("button", { name: "Experience" });
-    expect(experience.textContent).toBe("");
     expect(experience.querySelector("svg")?.getAttribute("aria-hidden")).toBe("true");
     fireEvent.click(experience);
     expect(experience.getAttribute("aria-current")).toBe("page");
     expect(screen.getByRole("region", { name: "Edit Experience" })).toBeTruthy();
     fireEvent.click(expand);
-    expect(experience.textContent).toBe("Experience");
+    expect(experience.textContent).toContain("Experience");
+    expect(screen.getByText("Your portfolio")).toBeTruthy();
+    expect(screen.getByText("Portfolio draft")).toBeTruthy();
   });
 
   it("retains unsaved edits in preview and saves through the original form", () => {

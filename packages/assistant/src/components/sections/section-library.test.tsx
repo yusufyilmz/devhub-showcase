@@ -288,7 +288,9 @@ describe("SectionLibrary", () => {
     expect(cards.match(/href="https:\/\/example.test\/contact"/g)).toHaveLength(1);
     expect(cards).toContain("Send your brief and dates");
     const list = renderToStaticMarkup(<CTA section={{ ...section, renderer: "list" }} />);
-    expect(list).toContain("section-prose");
+    expect(list).toContain(
+      "section-prose [&_article[data-slot='card']]:[padding:var(--spacing-sm)]",
+    );
   });
 
   it("renders authored dashboard values and hides an empty dashboard", () => {

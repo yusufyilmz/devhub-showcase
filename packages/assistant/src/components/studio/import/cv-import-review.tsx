@@ -3,7 +3,7 @@
 import type { PortfolioProfile } from "@shared/config";
 import { applyCvDraft, type CvImportGroup, cvImportGroups } from "@shared/lib/cv-import";
 import { profileSchema } from "@shared/lib/profiles";
-import { Button } from "@shared/ui/button";
+import { StudioButton } from "@shared/ui/button";
 import { Field, LinesField } from "@shared/ui/forms";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
@@ -45,7 +45,7 @@ function PersonalReview({
   onChange: (profile: PortfolioProfile) => void;
 }) {
   return (
-    <div className="editor-fields">
+    <div className="editor-fields grid grid-cols-2 gap-6 max-[767px]:grid-cols-1 max-[767px]:gap-[18px]">
       {personalFields.map(([key, label]) => (
         <Field
           key={key}
@@ -77,7 +77,10 @@ export function CvImportReview({
 }) {
   const validation = profileSchema.safeParse(applyCvDraft(base, candidate, selected));
   return (
-    <section aria-labelledby="cv-review-title" className="cv-import-review">
+    <section
+      aria-labelledby="cv-review-title"
+      className="cv-import-review [display:grid] [gap:1.25rem] [min-width:0] [&_details]:[padding-block:1rem] [border-top:1px_solid_var(--border)] [&_summary]:[padding-block:0.5rem] [cursor:pointer] [&_.editor-fields]:[margin-block:1rem]"
+    >
       <h3 id="cv-review-title">Review your CV details</h3>
       <p>
         Select the groups to replace in your draft. Unselected groups, your layout, sections,
@@ -88,7 +91,7 @@ export function CvImportReview({
           <li key={note}>{note}</li>
         ))}
       </ul>
-      <div className="cv-import-groups">
+      <div className="cv-import-groups [display:flex] [flex-wrap:wrap] [gap:1rem] [&_label]:[display:flex] [gap:0.5rem] [align-items:center] [min-height:44px]">
         {cvImportGroups.map((group) => (
           <LibraryLabel key={group} unstyled>
             <LibraryInput
@@ -119,7 +122,7 @@ export function CvImportReview({
           );
         })}
       {!validation.success && (
-        <div className="editor-alert">
+        <div className="editor-alert mb-6 rounded-[10px] border border-border px-5 py-4 text-xs leading-[1.8] whitespace-pre-line text-destructive [&_button]:mt-2.5 [&_button]:underline">
           <p>
             These fields need attention before you can save. You can correct them here or after
             applying to the draft.
@@ -133,14 +136,9 @@ export function CvImportReview({
           </ul>
         </div>
       )}
-      <Button
-        className="studio-primary"
-        disabled={!selected.length}
-        onClick={onApply}
-        type="button"
-      >
+      <StudioButton disabled={!selected.length} onClick={onApply} type="button">
         Apply reviewed details to draft
-      </Button>
+      </StudioButton>
       <p>Applying does not save or publish. Use Save changes when your draft is ready.</p>
     </section>
   );

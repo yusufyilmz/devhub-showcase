@@ -1,5 +1,3 @@
-import "@shared/assistant/portfolio-chat.css";
-
 import type { Metadata } from "next";
 
 import { AgentCompanion } from "@shared/assistant/agent-companion";

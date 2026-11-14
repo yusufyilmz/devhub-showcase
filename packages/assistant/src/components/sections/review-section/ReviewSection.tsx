@@ -20,7 +20,7 @@ export function ReviewSection({ reviews, handleReview }: ReviewSectionProps) {
 
   return (
     <section aria-labelledby="review-queue-heading">
-      <header className="editor-section-heading flex-wrap">
+      <header className="editor-section-heading mb-5 flex flex-wrap items-center justify-between gap-4 max-[767px]:items-start [&_h2]:my-1 [&_h2]:mb-2 [&_h2]:text-[clamp(1.375rem,2.6vw,1.875rem)] [&_h2]:leading-[1.17] [&_h2]:font-[670] [&_h2]:tracking-[-0.035em] [&_p:not(.eyebrow)]:max-w-[62ch] [&_p:not(.eyebrow)]:text-[0.9375rem] [&_p:not(.eyebrow)]:leading-normal [&_p:not(.eyebrow)]:text-muted-foreground">
         <div>
           <h2 id="review-queue-heading">Testimonial reviews</h2>
           <p>

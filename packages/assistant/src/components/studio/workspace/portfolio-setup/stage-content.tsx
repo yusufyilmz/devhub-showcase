@@ -1,8 +1,7 @@
 import type { ReactNode } from "react";
 
-import { type PortfolioProfile, type PortfolioType, portfolioTypes } from "@shared/config";
+import type { PortfolioProfile, PortfolioType } from "@shared/config";
 import { Button } from "@shared/ui/button";
-import { SelectField } from "@shared/ui/forms";
 
 import { PortfolioTypePicker } from "../../../portfolio/portfolio-type-picker";
 import { CustomSectionsEditor } from "../../../sections/studio/custom-sections-editor";
@@ -38,28 +37,18 @@ export function SetupStageContent({
   const Editor = activeSection.Editor;
 
   return (
-    <fieldset className="portfolio-setup-content" disabled={busy}>
+    <fieldset className="m-0 grid min-w-0 gap-4 border-0 p-0" disabled={busy}>
       {stage === 0 && (
-        <SelectField
-          label="What kind of work do you do?"
-          onChange={(value) => onProfession(value as PortfolioType)}
-          value={profession}
-        >
-          {portfolioTypes.map((type) => (
-            <option key={type.id} value={type.id}>
-              {type.id === "minimal" ? "General portfolio" : type.audience}
-            </option>
-          ))}
-        </SelectField>
-      )}
-      {stage === 1 && (
         <PortfolioTypePicker
-          onChange={(portfolioType) => onChange({ ...profile, portfolioType })}
+          className="my-0"
+          description="This sets your starting layout. You can change it later in the editor."
+          legend="What kind of work do you do?"
+          onChange={onProfession}
           value={profile.portfolioType ?? profession}
         />
       )}
-      {stage === 2 && <CvImportEditor embedded onChange={onApplyCv} profile={profile} />}
-      {stage === 3 &&
+      {stage === 1 && <CvImportEditor embedded onChange={onApplyCv} profile={profile} />}
+      {stage === 2 &&
         (section === sections.length - 1 ? (
           <CustomSectionsEditor focused onChange={onChange} profile={profile} />
         ) : Editor ? (
@@ -67,16 +56,18 @@ export function SetupStageContent({
         ) : (
           <SetupProfile assistant={assistant} onChange={onChange} profile={profile} />
         ))}
-      {stage === 4 && (
+      {stage === 3 && (
         <>
-          <nav aria-label="Edit draft sections" className="portfolio-setup-review-links">
+          <nav aria-label="Edit draft sections" className="flex flex-wrap items-center gap-2">
             {sections.map(({ title }, index) => (
-              <Button key={title} onClick={() => go(3, index)} type="button" variant="outline">
+              <Button key={title} onClick={() => go(2, index)} type="button" variant="outline">
                 {title}
               </Button>
             ))}
           </nav>
-          <div className="editor-preview-pane">{preview}</div>
+          <div className="editor-preview-pane [min-width:0] [padding:24px] [background:var(--secondary)] [&_.draft-preview]:[padding:0] [margin:0] [background:transparent] [border:0] [&_.draft-preview_iframe]:[height:65dvh] max-[767px]:[padding:20px_16px]">
+            {preview}
+          </div>
         </>
       )}
     </fieldset>

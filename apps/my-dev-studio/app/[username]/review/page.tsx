@@ -38,7 +38,10 @@ export default async function PortfolioReviewPage({
     });
 
   return (
-    <main className="studio" id="admin-content">
+    <main
+      className="studio [max-width:1160px] [padding:var(--studio-top,_36px)_40px_var(--studio-bottom,_80px)] [margin:auto] max-[767px]:[padding:var(--studio-top,_20px)_18px_var(--studio-bottom,_50px)] [&.studio-editor]:[max-width:none] [padding:0_32px_96px_0] max-[767px]:[&.studio-editor]:[padding:20px_16px_104px] [--studio-bottom:0px]"
+      id="admin-content"
+    >
       <StudioHeading
         description="Review referrals submitted for your portfolio."
         eyebrow="Portfolio moderation"
@@ -54,7 +57,10 @@ export default async function PortfolioReviewPage({
           reviews={reviews}
         />
       ) : (
-        <p className="editor-card" role="alert">
+        <p
+          className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px]"
+          role="alert"
+        >
           Couldn’t load your reviews. Refresh to try again.
         </p>
       )}

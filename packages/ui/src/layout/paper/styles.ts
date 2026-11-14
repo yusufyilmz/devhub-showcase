@@ -25,7 +25,9 @@ export function paperMotionClass({
 }: PaperMotionClassOptions) {
   return cn(
     enableHover && "cursor-pointer hover:border-primary/30",
-    enableHover && forceCardShadow !== false && "hover:shadow-lg",
+    enableHover &&
+      forceCardShadow !== false &&
+      "hover:shadow-lg [--notification-tone:var(--primary)]",
     enablePulse && "animate-pulse",
     enableFloat && "animate-float",
     enableGlow && glowColor && `hover:shadow-[0_0_20px_${glowColor}]`,
@@ -56,7 +58,8 @@ export const paperStyles = {
   paperClassName: "relative border border-border shadow-sm transition-all duration-300",
   paperClassName2: "w-full",
   paperClassName3: "overflow-visible",
-  paperClassName4: "overflow-hidden",
+  paperClassName4:
+    "overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)]",
 } as const;
 
 export function paperInlineStyle1(...values: PaperInlineStyle1Values): CSSProperties {

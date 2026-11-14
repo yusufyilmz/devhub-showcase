@@ -21,7 +21,7 @@ export function LinkedInInbox({
         <CardHeader>
           <CardTitle>Forward LinkedIn job alerts</CardTitle>
         </CardHeader>
-        <CardContent className="job-hunter-stack">
+        <CardContent className="grid min-w-0 gap-4">
           {inbox.address ? (
             <>
               <Label>
@@ -33,7 +33,7 @@ export function LinkedInInbox({
                 LinkedIn, then forward an alert. A forwarding rule can be used if your relay
                 verifies the forwarding account.
               </p>
-              <div className="job-hunter-actions">
+              <div className="flex flex-wrap items-center gap-2">
                 <Button
                   disabled={busy}
                   onClick={() => run({ action: "refresh" })}
@@ -63,12 +63,12 @@ export function LinkedInInbox({
           <CardHeader>
             <CardTitle>{job.title || "LinkedIn job"}</CardTitle>
           </CardHeader>
-          <CardContent className="job-hunter-stack">
+          <CardContent className="grid min-w-0 gap-4">
             <Button href={job.url} rel="noopener noreferrer" target="_blank" variant="outline">
               View original listing
             </Button>
             <form
-              className="job-hunter-stack"
+              className="grid min-w-0 gap-4"
               onSubmit={(event) => {
                 event.preventDefault();
                 const fields = new FormData(event.currentTarget);
@@ -95,7 +95,7 @@ export function LinkedInInbox({
                 Requirements for CV matching (optional)
                 <Textarea maxLength={2000} name="description" rows={3} />
               </Label>
-              <div className="job-hunter-actions">
+              <div className="flex flex-wrap items-center gap-2">
                 <Button disabled={busy} type="submit">
                   Save and match
                 </Button>

@@ -8,7 +8,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     <StudioShell
       contentId="main-content"
       tools={
-        <div className="admin-tools">
+        <div className="admin-tools flex items-center gap-3">
           <ThemeToggle />
           {await getAccountMenu({})}
         </div>

@@ -118,7 +118,7 @@ export function ChatExample() {
   };
 
   return (
-    <div className="flex h-[600px] flex-col border rounded-xl overflow-hidden bg-background">
+    <div className="flex h-[600px] flex-col border rounded-xl overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)] bg-background">
       {/* Chat List */}
       <ChatList className="flex-1" glassEffect={false} showBottomFade showTopFade>
         {messages.length === 0 ? (
@@ -206,7 +206,7 @@ export const Simple: Story = {
     const [message, setMessage] = useState("");
 
     return (
-      <div className="flex h-[600px] flex-col overflow-hidden rounded-lg border">
+      <div className="flex h-[600px] flex-col overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)] rounded-lg border">
         <ChatList className="flex-1">
           <ChatListSeparator label="Today" />
           <ChatListItem isOwn={false}>
@@ -451,7 +451,7 @@ export const Group: Story = {
  */
 export const Empty: Story = {
   render: () => (
-    <div className="h-[600px] overflow-hidden rounded-lg border">
+    <div className="h-[600px] overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)] rounded-lg border">
       <ChatList className="h-full">
         <ChatListEmpty
           description="Start a conversation by sending a message below"

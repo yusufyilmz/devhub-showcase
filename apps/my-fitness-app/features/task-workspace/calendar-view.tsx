@@ -61,12 +61,12 @@ export function CalendarView({
       />
       <Card
         asChild
-        className="fitness-shared-panel fitness-calendar-day"
+        className="fitness-shared-panel [padding:clamp(16px,_3vw,_24px)] fitness-calendar-day [margin-top:16px]"
         interaction="static"
         layout="plain"
       >
         <section>
-          <div className="section-heading">
+          <div className="section-heading [position:sticky] [top:118px] [align-self:start] [&_.eyebrow]:[margin-bottom:12px] [&_h2]:[margin-bottom:16px] [font-size:30px] [font-weight:600] [line-height:1.25] [letter-spacing:-0.04em] [&_>_p:last-child]:[font-size:13px] [line-height:1.7] [color:var(--muted-foreground)] max-[767px]:[position:static] max-[767px]:[&_h2]:[margin-bottom:8px] [font-size:26px] [display:flex] [gap:14px] [align-items:center] [justify-content:space-between] [margin-bottom:20px] [&_h2]:[display:flex] [gap:8px] max-[700px]:[margin-bottom:16px] max-[700px]:[&_h2]:[font-size:17px]">
             <h2>{dateLabel(date)}</h2>
             <LibraryButton onClick={() => openDay(date)} type="button" variant="outline">
               Open day
@@ -89,7 +89,7 @@ export function CalendarView({
               );
             }}
           >
-            <div className="form-grid">
+            <div className="form-grid [display:grid] [grid-template-columns:1fr_1fr] [gap:15px]">
               <LibraryLabel unstyled>
                 Diet task
                 <LibraryNativeSelect
@@ -127,14 +127,14 @@ export function CalendarView({
               </LibraryLabel>
             </div>
             <LibraryButton
-              className="fitness-primary"
+              className="fitness-primary [color:var(--on-primary)]"
               disabled={readOnly || busy}
               size="lg"
               type="submit"
             >
               Save this day
             </LibraryButton>
-            <p className="hint">
+            <p className="hint [font-size:11px] [line-height:1.7] [color:var(--muted)]">
               This override does not restart the rotation. Days with existing logs cannot be
               replaced.
             </p>

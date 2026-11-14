@@ -2,6 +2,8 @@ import "../home-section/home.css";
 
 import type { ReactNode } from "react";
 
+import { SkipLink } from "@shared/ui/header";
+
 import {
   HomeCapabilitiesSection,
   HomeChatLauncher,
@@ -31,10 +33,8 @@ export function HomePage({
   planDetails: ReactNode;
 }) {
   return (
-    <div className="home-page">
-      <a className="skip-link" href="#home-content">
-        Skip to content
-      </a>
+    <div className="home-page [--home-width:1200px] [&_>_main]:[overflow:clip]">
+      <SkipLink href="#home-content">Skip to content</SkipLink>
       <HomeHeader accountMenu={accountMenu} action={action} />
       <main id="home-content">
         <HomeHeroSection action={action} exampleHref={exampleHref} />

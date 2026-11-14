@@ -19,7 +19,7 @@ export function HeroSection({ section, language }: SectionProps) {
           <Button href={actionUrl}>{getPortfolioCopy(language).exploreWork} ↗</Button>
         ) : undefined
       }
-      className="section-hero-block py-xl"
+      className="section-hero-block [&[data-alignment='center']_>_div:first-child]:[justify-items:center] [&[data-alignment='right']_>_div:first-child]:[justify-items:end] py-xl"
       data-alignment={alignment}
       data-section-type="hero"
       description={description}

@@ -18,7 +18,11 @@ export function HomeHeader({ action, accountMenu }: HomeHeaderOptions) {
     <Header
       actions={
         <>
-          <Button className="site-navigation-cta" href={action.href} variant="outline">
+          <Button
+            className="site-navigation-cta [font-size:12px] [text-decoration:none] [display:inline-flex] [gap:24px] [align-items:center] [padding:11px_17px] [white-space:nowrap] [border:1px_solid_var(--border)] [border-radius:6px] @max-[760px]:[gap:6px] @max-[760px]:[padding:8px_10px] @max-[760px]:[font-size:11px]"
+            href={action.href}
+            variant="outline"
+          >
             {action.signedIn ? "My studio" : "Sign in"} <span aria-hidden="true">↗</span>
           </Button>
           <ThemeToggle />

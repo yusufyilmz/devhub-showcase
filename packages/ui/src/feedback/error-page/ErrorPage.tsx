@@ -11,7 +11,7 @@ import { recoveryPageStyles } from "../../layout/page-variants/styles";
 export function ErrorPage() {
   return (
     <div className={recoveryPageStyles.shell}>
-      <section className={`${recoveryPageStyles.card} [--recovery-tone:var(--destructive)]`}>
+      <section className={`${recoveryPageStyles.card}`}>
         <span className={recoveryPageStyles.icon}>
           <CircleAlert aria-hidden="true" className="size-[1.375rem]" />
         </span>

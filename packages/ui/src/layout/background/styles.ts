@@ -15,7 +15,7 @@ export const backgroundVariants = cva(
     },
     variants: {
       animation: {
-        bounce: "motion-safe:animate-bounce",
+        bounce: "motion-safe:animate-bounce [animation-delay:150ms]",
         float: "motion-safe:animate-[background-float_3s_ease-in-out_1]",
         glow: "motion-safe:animate-[background-glow_2.4s_ease-in-out_1]",
         none: "",

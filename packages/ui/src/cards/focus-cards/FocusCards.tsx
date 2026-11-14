@@ -16,7 +16,11 @@ export function FocusCards({ cards, className }: FocusCardsProps) {
           className="min-w-0 motion-safe:transition-opacity motion-safe:[@media(hover:hover)]:group-has-[li:hover]/focus-cards:not-hover:opacity-75"
           key={card.src}
         >
-          <CardBase className="overflow-hidden" interaction="static" layout="plain">
+          <CardBase
+            className="overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)]"
+            interaction="static"
+            layout="plain"
+          >
             <figure>
               {/* biome-ignore lint/performance/noImgElement: This component supports arbitrary caller-supplied images. */}
               <img

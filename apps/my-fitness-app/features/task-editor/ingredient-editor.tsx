@@ -15,15 +15,18 @@ export function IngredientEditor({ mealTaskId, items, onChange }: Props) {
   const patch = (id: string, changes: Partial<MealIngredient>) =>
     onChange(items.map((i) => (i.id === id ? { ...i, ...changes } : i)));
   return (
-    <section className="ingredient-editor">
+    <section className="ingredient-editor [padding-top:20px] [margin:20px_0] [border-top:1px_solid_var(--line)] [&_h3]:[margin-bottom:12px]">
       <h3>Shopping ingredients</h3>
-      <p className="hint">
+      <p className="hint [font-size:11px] [line-height:1.7] [color:var(--muted)]">
         Use the same group for alternatives and tick “Choice.” Unknown quantities stay blank.
         Optional items are excluded from shopping.
       </p>
       {items.map((item) => (
-        <div className="ingredient-input" key={item.id}>
-          <div className="row">
+        <div
+          className="ingredient-input [padding:16px] [margin:14px_0] [background:var(--surface-soft)] [border:1px_solid_var(--line)] [border-radius:8px] [&_.row_>_label]:[flex:1] max-[700px]:[padding:12px]"
+          key={item.id}
+        >
+          <div className="row [display:flex] [gap:10px] [align-items:center]">
             <LibraryLabel unstyled>
               Name
               <LibraryInput
@@ -40,7 +43,7 @@ export function IngredientEditor({ mealTaskId, items, onChange }: Props) {
             </LibraryLabel>
             <LibraryButton
               aria-label={`Remove ${item.name}`}
-              className="icon-btn danger"
+              className="icon-btn [display:inline-flex] [align-items:center] [justify-content:center] [min-width:34px] [min-height:34px] [padding:8px] [color:var(--muted)] [background:transparent] [border:0] [border-radius:6px] hover:[background:var(--surface-soft)] hover:[color:var(--accent)] [background:var(--surface-soft)] danger [color:var(--danger)]"
               onClick={() => onChange(items.filter((i) => i.id !== item.id))}
               type="button"
               variant="unstyled"
@@ -48,7 +51,7 @@ export function IngredientEditor({ mealTaskId, items, onChange }: Props) {
               <X size={16} />
             </LibraryButton>
           </div>
-          <div className="form-grid three">
+          <div className="form-grid [display:grid] [grid-template-columns:1fr_1fr] [gap:15px] three [grid-template-columns:repeat(3,_1fr)] max-[700px]:[gap:8px]">
             <LibraryLabel unstyled>
               Minimum
               <LibraryInput
@@ -102,7 +105,7 @@ export function IngredientEditor({ mealTaskId, items, onChange }: Props) {
               value={item.groupId}
             />
           </LibraryLabel>
-          <div className="row checkbox-row">
+          <div className="row [display:flex] [gap:10px] [align-items:center] checkbox-row [&_label]:[display:flex] [gap:8px] [&_input]:[width:auto] [margin:0]">
             <LibraryLabel unstyled>
               <LibraryInput
                 checked={item.isChoice}
@@ -133,7 +136,7 @@ export function IngredientEditor({ mealTaskId, items, onChange }: Props) {
         </div>
       ))}
       <LibraryButton
-        className="outline"
+        className="outline [display:inline-flex] [gap:9px] [align-items:center] [justify-content:center] [min-height:42px] [padding:12px_17px] [font-size:12px] [font-weight:600] [border-radius:8px] [background:var(--surface)] [border:1px_solid_var(--line)] max-[700px]:[min-height:38px] [padding:9px_12px] [font-size:10px] hover:[color:var(--accent)] [border-color:var(--accent)]"
         onClick={() =>
           onChange([
             ...items,

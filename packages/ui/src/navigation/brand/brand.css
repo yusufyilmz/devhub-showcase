@@ -1,20 +1,3 @@
-.home-brand {
-  display: inline-flex;
-  flex-shrink: 0;
-  gap: 10px;
-  align-items: center;
-  color: var(--primary);
-  text-decoration: none;
-}
-.home-brand > :where(span) {
-  font-size: 19px;
-  font-weight: 650;
-  color: var(--foreground);
-  letter-spacing: -0.8px;
-}
-.home-brand-light {
-  font-weight: 400;
-}
-.home-brand :where(b) {
-  color: var(--primary);
+:root {
+  --component-css-migrated: 1;
 }

@@ -83,7 +83,7 @@ export const ChatPopupContainer = ({
     <div className="fixed bottom-0 right-0 z-[250] md:right-4">
       <div
         aria-labelledby={titleId}
-        className="chat-panel relative flex flex-col h-[100dvh] w-[100vw] bg-background p-6 shadow-2xl md:h-[32rem] md:w-96 md:rounded-lg"
+        className="chat-panel [color:var(--foreground)] [background:var(--card)] [border:1px_solid_var(--border)] [&_input]:[color:var(--foreground)] [background:var(--secondary)] [border-color:var(--border)] min-[768px]:[width:390px] [max-height:min(650px,_calc(100svh_-_100px))] [border-radius:16px] relative flex flex-col h-[100dvh] w-[100vw] bg-background p-6 shadow-2xl md:h-[32rem] md:w-96 md:rounded-lg"
         role="dialog"
       >
         {type === "cv" && <PublishedSources sources={sources} />}

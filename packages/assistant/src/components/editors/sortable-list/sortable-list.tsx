@@ -261,7 +261,9 @@ export function SortableList({
             >
               {renderContent ? (
                 <>
-                  <div className="sortable-item-tools">{controls}</div>
+                  <div className="sortable-item-tools [display:flex] [gap:0.375rem] [align-items:center] [padding:0.375rem] [background:color-mix(in_srgb,_var(--foreground)_6%,_transparent)] [border-radius:var(--radius-lg)_var(--radius-lg)_0_0]">
+                    {controls}
+                  </div>
                   {renderContent(item.id)}
                 </>
               ) : (

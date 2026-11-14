@@ -42,7 +42,10 @@ export default async function ExamplePage({ params }: Props) {
   const profile = exampleViewProfile(item);
   return (
     <>
-      <aside aria-label="Example portfolio" className="example-banner">
+      <aside
+        aria-label="Example portfolio"
+        className="example-banner [display:flex] [flex-wrap:wrap] [gap:0.75rem] [justify-content:space-between] [padding:1rem_5%] [font-size:0.8rem] [color:var(--foreground)] [background:var(--card)] [border-bottom:1px_solid_var(--border)] [&_a]:[color:inherit] [text-decoration:underline] [text-underline-offset:4px]"
+      >
         <a href="/#examples">← All examples</a>
         <span>Fictional portfolio · Sample work and CV</span>
         <a href="/admin">Create your portfolio ↗</a>

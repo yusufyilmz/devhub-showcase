@@ -78,7 +78,11 @@ export function ChatComposer({
           rows={1}
           value={value}
         />
-        {controls && <div className="studio-chat-composer-controls">{controls}</div>}
+        {controls && (
+          <div className="studio-chat-composer-controls [display:flex] [flex-wrap:wrap] [gap:var(--spacing-xs)] [align-items:center] [min-width:0]">
+            {controls}
+          </div>
+        )}
         <Button
           aria-label={busy ? "Stop generating" : "Send message"}
           className={chatComposerStyles.element3}

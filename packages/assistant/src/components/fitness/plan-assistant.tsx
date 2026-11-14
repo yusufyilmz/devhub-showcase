@@ -201,15 +201,21 @@ function AssistantForm({
   const started = turns.length > 0 || pending || Boolean(error);
 
   return (
-    <section aria-label="Fitness assistant" className="fitness-assistant-page">
-      <div className="fitness-assistant-page-actions">
+    <section
+      aria-label="Fitness assistant"
+      className="fitness-assistant-page [display:flex] [flex-direction:column] [min-width:0] [min-height:calc(100dvh_-_86px)] max-[700px]:[min-height:calc(100dvh_-_128px_-_env(safe-area-inset-bottom))]"
+    >
+      <div className="fitness-assistant-page-actions [display:flex] [justify-content:flex-end] [padding-block:12px]">
         <Button disabled={busy} onClick={onReset} type="button" variant="ghost">
           <Plus aria-hidden="true" />
           New chat
         </Button>
       </div>
-      <div className="fitness-assistant-thread" data-started={started || undefined}>
-        <header className="fitness-assistant-welcome">
+      <div
+        className="fitness-assistant-thread [&[data-started='true']]:[justify-content:flex-start] [&[data-started='true']_.fitness-assistant-welcome]:[justify-items:start] [&[data-started='true']_.fitness-assistant-welcome_h1]:[font-size:19px] [&[data-started='true']_.fitness-assistant-compose]:[position:sticky] max-[700px]:[&[data-started='true']_.fitness-assistant-compose]:[bottom:calc(68px_+_env(safe-area-inset-bottom))]"
+        data-started={started || undefined}
+      >
+        <header className="fitness-assistant-welcome [display:grid] [gap:8px] [justify-items:center] [text-align:center] [&_svg]:[width:28px] [height:28px] [margin-bottom:6px] [color:var(--accent)] [&_h1]:[font-size:clamp(25px,_4.5vw,_40px)] [font-weight:620] [line-height:1.15] [letter-spacing:-0.045em] [&_p]:[color:var(--muted)]">
           {!started && <Sparkles aria-hidden="true" />}
           <h1 ref={heading} tabIndex={-1}>
             {started ? "Fitness assistant" : "What are we working on today?"}
@@ -226,7 +232,7 @@ function AssistantForm({
           timezone={workspace.settings.timezone}
           turns={turns}
         />
-        <div className="fitness-assistant-compose">
+        <div className="fitness-assistant-compose [display:grid] [gap:12px] [&_.studio-chat-composer]:[padding:12px] [color:var(--ink)] [background:var(--surface)] [border:1px_solid_var(--line)] [border-radius:22px] [box-shadow:0_8px_24px_rgb(0_0_0\_/\_6%)] [&_.studio-chat-composer:focus-within]:[border-color:var(--accent)] [&_.studio-chat-composer_textarea.ui-input]:[min-height:62px] [max-height:180px] [padding:8px_10px] [margin:0] [font:inherit] [font-size:16px] [line-height:1.5] [resize:none] [outline [display:inline-flex] [gap:9px] [align-items:center] [justify-content:center] [min-height:42px] [padding:12px_17px] [font-size:12px] [font-weight:600] [border-radius:8px] max-[700px]:[min-height:38px] [padding:9px_12px] [font-size:10px] hover:[color:var(--accent)] [border-color:var(--accent)]:0] [background:transparent] [border:0] [&_>_.fitness-assistant-proposal]:[padding:16px] [border-radius:16px]">
           <FitnessComposer
             busy={busy}
             error={error}
@@ -261,7 +267,7 @@ function AssistantForm({
             workspace={workspace}
           />
           {!started && <StarterActions modes={availableModes(plans)} onChoose={chooseMode} />}
-          <p className="fitness-assistant-caption">
+          <p className="fitness-assistant-caption [color:var(--muted)] [font-size:12px] [text-align:center]">
             AI requests use the selected plan. Review proposals before saving.
           </p>
         </div>
@@ -323,7 +329,12 @@ function FitnessComposer({
       </NativeSelect>
     </Label>
   );
-  if (utility) return <div className="fitness-assistant-toolbar">{picker}</div>;
+  if (utility)
+    return (
+      <div className="fitness-assistant-toolbar [display:flex] [flex-wrap:wrap] [gap:6px] [align-items:center] [&_label]:[flex:0_1_auto] [min-width:0] [margin:0] [&_select]:[width:auto] [max-width:min(100%,_13rem)] [padding:6px_9px] [font-size:13px] [color:var(--ink)] [background:var(--surface-soft)] [border-radius:10px]">
+        {picker}
+      </div>
+    );
 
   return (
     <>
@@ -331,7 +342,7 @@ function FitnessComposer({
         busy={pending}
         companion={{ activity: error ? "error" : hasReply ? "happy" : "idle", agent: "fitness" }}
         controls={
-          <div className="fitness-assistant-toolbar">
+          <div className="fitness-assistant-toolbar [display:flex] [flex-wrap:wrap] [gap:6px] [align-items:center] [&_label]:[flex:0_1_auto] [min-width:0] [margin:0] [&_select]:[width:auto] [max-width:min(100%,_13rem)] [padding:6px_9px] [font-size:13px] [color:var(--ink)] [background:var(--surface-soft)] [border-radius:10px]">
             {picker}
             <PromptContext
               disabled={disabled}
@@ -355,7 +366,7 @@ function FitnessComposer({
         value={goal}
       />
       {needsTarget && !targets.length && (
-        <p className="fitness-assistant-caption">
+        <p className="fitness-assistant-caption [color:var(--muted)] [font-size:12px] [text-align:center]">
           Choose a plan with a task that supports this action.
         </p>
       )}
@@ -371,7 +382,10 @@ function StarterActions({
   onChoose: (mode: Mode, prompt?: string) => void;
 }) {
   return (
-    <fieldset aria-label="Starter actions" className="fitness-assistant-starters">
+    <fieldset
+      aria-label="Starter actions"
+      className="fitness-assistant-starters [display:flex] [flex-wrap:wrap] [gap:8px] [justify-content:center] [padding:0] [border:0] [&_button]:[min-height:36px] [border-radius:999px]"
+    >
       {starters
         .filter((starter) => modes.some(({ id }) => id === starter.mode))
         .map(({ icon: Icon, label, mode, prompt }) => (
@@ -424,11 +438,17 @@ function Conversation({
   }, [latest, pending, error]);
 
   return (
-    <div aria-label="Conversation" className="fitness-assistant-messages" role="log">
+    <div
+      aria-label="Conversation"
+      className="fitness-assistant-messages [&:has(.fitness-assistant-user)]:[display:grid] [gap:22px] [&:not(:has(.fitness-assistant-user))]:[display:none]"
+      role="log"
+    >
       {turns.map((turn) => (
-        <article className="fitness-assistant-turn" key={turn.id}>
-          <p className="fitness-assistant-user">{turn.prompt}</p>
-          <div className="fitness-assistant-reply">
+        <article className="fitness-assistant-turn [display:grid] [gap:14px]" key={turn.id}>
+          <p className="fitness-assistant-user [justify-self:end] [max-width:min(84%,_38rem)] [padding:10px_15px] [color:var(--ink)] [overflow-wrap:anywhere] [white-space:pre-wrap] [background:var(--accent-soft)] [border-radius:18px_18px_4px_18px]">
+            {turn.prompt}
+          </p>
+          <div className="fitness-assistant-reply [min-width:0] [overflow-wrap:anywhere]">
             {turn === latest && turn.revision === revision && !pending ? (
               <AssistantProposal
                 onReview={onReview}
@@ -442,7 +462,11 @@ function Conversation({
           </div>
         </article>
       ))}
-      {(pending || error) && <p className="fitness-assistant-user">{submitted}</p>}
+      {(pending || error) && (
+        <p className="fitness-assistant-user [justify-self:end] [max-width:min(84%,_38rem)] [padding:10px_15px] [color:var(--ink)] [overflow-wrap:anywhere] [white-space:pre-wrap] [background:var(--accent-soft)] [border-radius:18px_18px_4px_18px]">
+          {submitted}
+        </p>
+      )}
       {pending && <p role="status">Preparing your proposal…</p>}
       {error && (
         <Alert role="alert" variant="destructive">
@@ -565,7 +589,10 @@ function AssistantProposal({
     const { summary, title, notes, targetReps } = result.proposal;
     const reps = result.task.details.type === "set" ? targetReps : null;
     return (
-      <section aria-label="Task edit proposal" className="fitness-assistant-proposal">
+      <section
+        aria-label="Task edit proposal"
+        className="fitness-assistant-proposal [display:grid] [gap:12px] [&_li]:[display:grid] [&_li]:[padding-block:12px] [border-block-start:1px_solid_var(--line)]"
+      >
         <p>{summary}</p>
         {title !== null && <p>New title: {title}</p>}
         {notes !== null && <p>New notes: {notes || "Clear notes"}</p>}
@@ -586,7 +613,10 @@ function AssistantProposal({
     const { preview, time, weekdays } = result.proposal;
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     return (
-      <section aria-label="Reminder proposal" className="fitness-assistant-proposal">
+      <section
+        aria-label="Reminder proposal"
+        className="fitness-assistant-proposal [display:grid] [gap:12px] [&_li]:[display:grid] [&_li]:[padding-block:12px] [border-block-start:1px_solid_var(--line)]"
+      >
         <p>{result.proposal.summary}</p>
         <p>
           <strong>
@@ -616,7 +646,10 @@ function AssistantProposal({
     );
   }
   return (
-    <section aria-label="Plan proposal" className="fitness-assistant-proposal">
+    <section
+      aria-label="Plan proposal"
+      className="fitness-assistant-proposal [display:grid] [gap:12px] [&_li]:[display:grid] [&_li]:[padding-block:12px] [border-block-start:1px_solid_var(--line)]"
+    >
       <p>{result.proposal.summary}</p>
       <ul>
         {result.proposal.suggestions.map((suggestion, index) => (

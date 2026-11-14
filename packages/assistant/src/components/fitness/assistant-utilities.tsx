@@ -41,7 +41,10 @@ export function ShoppingDraft({
   }
 
   return (
-    <section aria-label="Shopping list preview" className="fitness-assistant-proposal">
+    <section
+      aria-label="Shopping list preview"
+      className="fitness-assistant-proposal [display:grid] [gap:12px] [&_li]:[display:grid] [&_li]:[padding-block:12px] [border-block-start:1px_solid_var(--line)]"
+    >
       <h3>Shopping for the week of {dateLabel(start)}</h3>
       <p>
         Calculated from your saved meals and ingredients. Review quantities and ingredient choices
@@ -112,7 +115,10 @@ export function NotificationNow({
   }
 
   return (
-    <section aria-label="Send a notification" className="fitness-assistant-proposal">
+    <section
+      aria-label="Send a notification"
+      className="fitness-assistant-proposal [display:grid] [gap:12px] [&_li]:[display:grid] [&_li]:[padding-block:12px] [border-block-start:1px_solid_var(--line)]"
+    >
       <p>
         This notification appears on this device now. Keep the message suitable for your lock
         screen.

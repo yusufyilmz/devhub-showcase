@@ -78,22 +78,28 @@ export function ProfileMenu({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <IconButton aria-label="Profile menu" className="profile-menu-trigger" variant="outline">
-            <span aria-hidden="true" className="profile-menu-avatar">
+            <span
+              aria-hidden="true"
+              className="profile-menu-avatar [display:grid] [flex:none] [place-items:center] [width:32px] [height:32px] [font-size:12px] [font-weight:700] [line-height:1] [color:var(--foreground)] [background:color-mix(in_srgb,_var(--foreground)_10%,_var(--card))] [border-radius:50%]"
+            >
               {initials}
             </span>
           </IconButton>
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="end"
-          className="profile-menu-panel"
+          className="profile-menu-panel [&[data-slot='dropdown-menu-content']]:[width:min(18rem,_calc(100vw_-_24px))]"
           collisionPadding={12}
           sideOffset={10}
         >
-          <DropdownMenuLabel className="profile-menu-identity">
-            <span aria-hidden="true" className="profile-menu-avatar">
+          <DropdownMenuLabel className="profile-menu-identity [&_.profile-menu-avatar]:[width:72px] [height:72px] [font-size:26px] [color:var(--primary-foreground)] [background:var(--primary)] [border:1px_solid_color-mix(in_srgb,_var(--primary-foreground)_30%,_transparent)] [box-shadow:0_6px_24px_color-mix(in_srgb,_var(--primary)_22%,_transparent)]">
+            <span
+              aria-hidden="true"
+              className="profile-menu-avatar [display:grid] [flex:none] [place-items:center] [width:32px] [height:32px] [font-size:12px] [font-weight:700] [line-height:1] [color:var(--foreground)] [background:color-mix(in_srgb,_var(--foreground)_10%,_var(--card))] [border-radius:50%]"
+            >
               {initials}
             </span>
-            <span className="profile-menu-name">
+            <span className="profile-menu-name [display:grid] [gap:2px] [min-width:0] [&_>_span]:[overflow:hidden] [text-overflow:ellipsis] [font-size:12px] [color:var(--muted-foreground)] [white-space:nowrap]">
               <strong>My profile</strong>
               {username && <span>@{username}</span>}
             </span>

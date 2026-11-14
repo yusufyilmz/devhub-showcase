@@ -7,6 +7,7 @@ import { portfolioTypes } from "@shared/config";
 import { Button } from "@shared/ui/button";
 import { Flex } from "@shared/ui/flex";
 import { SelectField } from "@shared/ui/forms";
+import { Eyebrow } from "@shared/ui/typography";
 
 import { PortfolioTypePicker } from "./portfolio-type-picker";
 import type { GuidedOnboardingProps, SetupNavigationProps } from "./types";
@@ -47,7 +48,10 @@ function SetupCompanion({
   onAsk?: () => void;
 }) {
   return (
-    <aside aria-label="Studio companion" className="setup-companion">
+    <aside
+      aria-label="Studio companion"
+      className="setup-companion [display:flex] [flex-wrap:wrap] [gap:0.625rem_0.875rem] [align-items:start] [padding:0.875rem_1rem] [margin-block:1rem] [background:color-mix(in_srgb,_var(--primary)_7%,_var(--card))] [border:1px_solid_var(--border)] [border-radius:var(--radius-md)] [&_>_svg]:[flex-shrink:0] [color:var(--primary)] [&_>_div]:[flex:1_1_12rem] [min-width:0] [&_p]:[margin-block:0.25rem_0] [color:var(--muted-foreground)]"
+    >
       <Bot aria-hidden="true" size={22} />
       <div>
         <strong>Studio companion</strong>
@@ -75,7 +79,10 @@ function SetupSteps({
 }) {
   const index = setupStages.findIndex((stage) => stage.id === current);
   return (
-    <ol aria-label="Setup steps" className="setup-steps">
+    <ol
+      aria-label="Setup steps"
+      className="setup-steps [display:flex] [flex-wrap:wrap] [gap:8px] [align-items:center] [padding:0] [margin:0_0_24px] [list-style:none]"
+    >
       {setupStages.map((stage, stageIndex) => (
         <li key={stage.id}>
           <Button
@@ -89,7 +96,7 @@ function SetupSteps({
           </Button>
         </li>
       ))}
-      <li className="setup-steps-count">
+      <li className="setup-steps-count [margin-left:auto] [font-size:12px] [color:var(--muted-foreground)]">
         Step {index + 1} of {setupStages.length}
       </li>
     </ol>
@@ -122,8 +129,11 @@ export function GuidedOnboarding({
     onStartStep?.(startStep === "work" ? "layout" : "start");
   }
   return (
-    <div className="studio type-onboarding" id="admin-content">
-      <p className="eyebrow">YOUR FIRST PORTFOLIO</p>
+    <div
+      className="studio [max-width:1160px] [padding:var(--studio-top,_36px)_40px_var(--studio-bottom,_80px)] [margin:auto] max-[767px]:[padding:var(--studio-top,_20px)_18px_var(--studio-bottom,_50px)] [&.studio-editor]:[max-width:none] [padding:0_32px_96px_0] max-[767px]:[&.studio-editor]:[padding:20px_16px_104px] [--studio-bottom:0px] type-onboarding [&_.setup-steps]:[display:grid] [grid-template-columns:repeat(5,_minmax(0,_1fr))] [&_.setup-steps_.ui-button]:[width:100%] [min-height:2.5rem] [&_.setup-steps_[aria-current='step']]:[color:var(--primary-foreground)] max-w-[1180px] [&>h1]:my-4 [&>h1]:mb-6 [&>h1]:text-[clamp(36px,5vw,60px)] [&>h1]:leading-[1.1] [&>h1]:font-[550] [&>h1]:tracking-[-0.05em] [&>h1_span]:text-primary [&>p:not(.eyebrow)]:my-4 [&>p:not(.eyebrow)]:mb-6 [&>p:not(.eyebrow)]:max-w-[720px] [&>p:not(.eyebrow)]:text-sm [&>p:not(.eyebrow)]:leading-[1.7] [&>p:not(.eyebrow)]:text-muted-foreground"
+      id="admin-content"
+    >
+      <Eyebrow>YOUR FIRST PORTFOLIO</Eyebrow>
       <SetupSteps current={startStep} onSelect={open} reached={reached} />
       <h1>{stageCopy.title}</h1>
       <p>{stageCopy.description}</p>
@@ -161,9 +171,12 @@ export function GuidedOnboarding({
         />
       )}
       {startStep === "start" && (
-        <fieldset aria-label="Starting options" className="setup-start-options">
+        <fieldset
+          aria-label="Starting options"
+          className="setup-start-options [display:grid] [gap:0.75rem] [margin-block:1rem]"
+        >
           <Button
-            className="setup-start-option"
+            className="setup-start-option [&_>_span]:[display:grid] [gap:0.25rem] [&_small]:[color:var(--muted-foreground)]"
             onClick={onContinue}
             type="button"
             variant="outline"
@@ -174,7 +187,12 @@ export function GuidedOnboarding({
               <small>Start with your name, title and an introduction.</small>
             </span>
           </Button>
-          <Button className="setup-start-option" onClick={onImport} type="button" variant="outline">
+          <Button
+            className="setup-start-option [&_>_span]:[display:grid] [gap:0.25rem] [&_small]:[color:var(--muted-foreground)]"
+            onClick={onImport}
+            type="button"
+            variant="outline"
+          >
             <FileUp aria-hidden="true" />
             <span>
               <strong>Start from a CV</strong>
@@ -183,7 +201,7 @@ export function GuidedOnboarding({
           </Button>
           {!managed && (
             <Button
-              className="setup-start-option"
+              className="setup-start-option [&_>_span]:[display:grid] [gap:0.25rem] [&_small]:[color:var(--muted-foreground)]"
               onClick={onGoogleImport}
               type="button"
               variant="outline"
@@ -231,7 +249,10 @@ export function SetupNavigation({
   if (step === "done" || step === "template") return null;
   const current: SetupStage = step === "review" ? "review" : "details";
   return (
-    <section aria-label="Guided setup" className="editor-card editor-fields">
+    <section
+      aria-label="Guided setup"
+      className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px] editor-fields grid grid-cols-2 gap-6 max-[767px]:grid-cols-1 max-[767px]:gap-[18px]"
+    >
       <SetupSteps
         current={current}
         onSelect={(stage) => {
@@ -255,7 +276,7 @@ export function SetupNavigation({
             : "Add a short introduction about the work you want to show."}
         </SetupCompanion>
       )}
-      <div className="studio-header-actions">
+      <div className="flex flex-wrap items-center justify-between gap-2.5">
         <Button
           disabled={disabled}
           onClick={() => (step === "review" ? onStep("details") : onOpen?.("start"))}

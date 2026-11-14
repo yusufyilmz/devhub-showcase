@@ -42,7 +42,11 @@ export function CustomPortfolioSection({
           .filter(Boolean)
           .map((paragraph, index) => (
             <p
-              className={section.composition === "testimonials" ? "testimonial-quote" : undefined}
+              className={
+                section.composition === "testimonials"
+                  ? "testimonial-quote border-l-2 border-primary pl-4 italic"
+                  : undefined
+              }
               key={`${item.id}-${index}`}
               style={customPortfolioSectionInlineStyle1}
             >

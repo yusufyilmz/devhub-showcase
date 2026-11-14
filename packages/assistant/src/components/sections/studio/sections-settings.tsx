@@ -45,7 +45,10 @@ export function SectionsSettings({
   const customSections = profile.customSections?.length ?? 0;
   return (
     <Card asChild interaction="static" layout="plain">
-      <section aria-labelledby="portfolio-sections-title" className="editor-card grid gap-4">
+      <section
+        aria-labelledby="portfolio-sections-title"
+        className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px] grid gap-4"
+      >
         <div className="grid gap-1">
           <h2 id="portfolio-sections-title">Portfolio sections</h2>
           <p className="text-muted-foreground">

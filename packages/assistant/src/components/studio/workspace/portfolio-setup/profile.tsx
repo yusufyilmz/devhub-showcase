@@ -17,7 +17,7 @@ export function SetupProfile({
 }) {
   const [showAssistant, setShowAssistant] = useState(false);
   return (
-    <div className="portfolio-setup-fields">
+    <div className="grid gap-4">
       <Field
         label="Full name"
         onChange={(name) => onChange({ ...profile, name })}
@@ -36,7 +36,10 @@ export function SetupProfile({
         onChange={(summary) => onChange({ ...profile, summary })}
         value={profile.summary === "Add a short professional summary." ? "" : profile.summary}
       />
-      <aside aria-label="Studio companion" className="portfolio-setup-companion">
+      <aside
+        aria-label="Studio companion"
+        className="flex flex-wrap items-center gap-2 rounded-md border border-border bg-secondary p-4 [&_p]:text-muted-foreground [&_svg]:text-primary [&>div]:flex-[1_1_12rem]"
+      >
         <Bot aria-hidden="true" size={22} />
         <div>
           <strong>Studio companion</strong>

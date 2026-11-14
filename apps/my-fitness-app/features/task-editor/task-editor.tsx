@@ -138,7 +138,7 @@ export function TaskEditor({ workspace, target, busy, error, onClose, onSave, on
       open
     >
       <DialogContent
-        className="fitness-dialog fitness-task-editor"
+        className="fitness-dialog [padding:clamp(16px,_3vw,_24px)] [&[data-slot]]:[max-height:90dvh] fitness-task-editor [&[data-slot]]:[width:min(calc(100%_-_24px),_40rem)] [&_[data-slot='dialog-header']]:[padding-inline-end:24px]"
         onCloseAutoFocus={(event) => {
           event.preventDefault();
           previousFocus.current?.focus();
@@ -170,7 +170,7 @@ export function TaskEditor({ workspace, target, busy, error, onClose, onSave, on
               value={draft.title}
             />
           </LibraryLabel>
-          <div className="form-grid">
+          <div className="form-grid [display:grid] [grid-template-columns:1fr_1fr] [gap:15px]">
             <LibraryLabel unstyled>
               Type
               <LibraryNativeSelect
@@ -270,7 +270,7 @@ export function TaskEditor({ workspace, target, busy, error, onClose, onSave, on
             </LibraryLabel>
           )}
           {draft.details.type === "dose" && (
-            <div className="form-grid">
+            <div className="form-grid [display:grid] [grid-template-columns:1fr_1fr] [gap:15px]">
               <LibraryLabel unstyled>
                 Amount
                 <LibraryInput
@@ -310,8 +310,10 @@ export function TaskEditor({ workspace, target, busy, error, onClose, onSave, on
           {draft.scope === "template" &&
             ["workout", "supplement", "water"].includes(draft.kind) && (
               <>
-                <p className="hint">Repeat on weekdays</p>
-                <div className="days-picker">
+                <p className="hint [font-size:11px] [line-height:1.7] [color:var(--muted)]">
+                  Repeat on weekdays
+                </p>
+                <div className="days-picker [display:flex] [flex-wrap:wrap] [gap:12px] [&_label]:[display:flex] [flex-direction:column] [gap:8px] [align-items:center] [&_input]:[width:18px] [height:18px] [accent-color:var(--green)]">
                   {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((label, i) => (
                     <LibraryLabel key={label} unstyled>
                       <LibraryInput
@@ -331,18 +333,23 @@ export function TaskEditor({ workspace, target, busy, error, onClose, onSave, on
           {draft.kind === "meal" && (
             <IngredientEditor items={ingredients} mealTaskId={draft.id} onChange={setIngredients} />
           )}
-          <p className="hint">
+          <p className="hint [font-size:11px] [line-height:1.7] [color:var(--muted)]">
             {draft.scope === "template"
               ? "Template changes affect future days that have not been saved. Weekly lists will be marked for refresh."
               : "This edits only this scheduled task. Its template stays unchanged."}
           </p>
-          <LibraryButton className="fitness-primary" disabled={busy} size="lg" type="submit">
+          <LibraryButton
+            className="fitness-primary [color:var(--on-primary)]"
+            disabled={busy}
+            size="lg"
+            type="submit"
+          >
             Save task
           </LibraryButton>
         </form>
         {target.task && (
           <div className="sheet-actions">
-            <div className="row">
+            <div className="row [display:flex] [gap:10px] [align-items:center]">
               <LibraryButton
                 disabled={busy}
                 onClick={async () => {
@@ -373,7 +380,7 @@ export function TaskEditor({ workspace, target, busy, error, onClose, onSave, on
                   Archive
                 </LibraryButton>
               </AlertDialogTrigger>
-              <AlertDialogContent className="fitness-dialog fitness-confirmation">
+              <AlertDialogContent className="fitness-dialog [padding:clamp(16px,_3vw,_24px)] [&[data-slot]]:[max-height:90dvh] fitness-confirmation">
                 <AlertDialogHeader>
                   <AlertDialogTitle>Archive this task?</AlertDialogTitle>
                   <AlertDialogDescription>
@@ -383,7 +390,7 @@ export function TaskEditor({ workspace, target, busy, error, onClose, onSave, on
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <AlertDialogAction
-                    className="fitness-primary"
+                    className="fitness-primary [color:var(--on-primary)]"
                     onClick={async () => {
                       try {
                         if (await onSave(tasks.archive(workspace, draft.id), "Task archived"))

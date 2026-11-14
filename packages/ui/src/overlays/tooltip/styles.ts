@@ -6,13 +6,11 @@ export const tooltipContentClass = cva(
     defaultVariants: { variant: "default" },
     variants: {
       variant: {
-        dark: "[--tooltip-bg:var(--clr-gray-100)] [--tooltip-fg:var(--clr-white)]",
-        default: "[--tooltip-bg:var(--foreground)] [--tooltip-fg:var(--background)] shadow-none",
-        gradient:
-          "[--tooltip-bg:var(--primary)] [--tooltip-fg:var(--primary-foreground)] bg-linear-to-br from-primary to-accent",
-        light:
-          "[--tooltip-bg:var(--clr-white)] [--tooltip-fg:var(--clr-gray-100)] ring-1 ring-inset ring-border",
-        minimal: "[--tooltip-bg:var(--muted)] [--tooltip-fg:var(--foreground)] shadow-none",
+        dark: "[--tooltip-bg:var(--clr-gray-100)]",
+        default: "[--tooltip-bg:var(--foreground)] shadow-none",
+        gradient: "[--tooltip-bg:var(--primary)] bg-linear-to-br from-primary to-accent",
+        light: "[--tooltip-bg:var(--clr-white)] ring-1 ring-inset ring-border",
+        minimal: "[--tooltip-bg:var(--muted)] shadow-none",
       },
     },
   },

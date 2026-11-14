@@ -4,7 +4,7 @@ export const sheetStyles = {
   element2: "size-4",
   element3: "sr-only",
   sheetContent:
-    "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 flex flex-col gap-4 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+    "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 flex flex-col gap-4 shadow-lg [--notification-tone:var(--primary)] transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
   sheetContent2:
     "data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right inset-y-0 right-0 h-full w-3/4 border-l sm:max-w-sm",
   sheetContent3:

@@ -1,5 +1,6 @@
 /* Tailwind + token themes. Use alone in Storybook; app loads via app.css. */
 @import "./tokens/index.css";
+@import "./foundation/motion.css";
 @import "./foundation/theme-aliases.css";
 @import "./foundation/platform-rgb.css";
 @import "./foundation/product-tokens.css";

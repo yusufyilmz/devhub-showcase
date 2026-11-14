@@ -5,6 +5,7 @@ import { Button } from "@shared/ui/button";
 import { TextField } from "@shared/ui/text-field";
 
 import { scheduledInstant } from "./schedule-time";
+import { publicationStyles } from "./styles";
 import type { PublicationScheduleProps, PublicationScheduleRecord } from "./types";
 
 export function PublicationSchedule({
@@ -68,7 +69,7 @@ export function PublicationSchedule({
   }
   const instant = scheduledInstant(local);
   return (
-    <div className="publication-schedule">
+    <div className={publicationStyles.schedule}>
       <h3>Scheduled publication</h3>
       <p>
         Only the saved revision you review is scheduled. Later draft edits stay private. Immediate

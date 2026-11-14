@@ -1,6 +1,6 @@
 export const calendarStyles = {
   calendar:
-    "bg-background group/calendar p-3 [--cell-size:--spacing(8)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent",
+    "bg-background group/calendar p-3 [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent",
   calendar2: "size-(--cell-size) aria-disabled:opacity-50 p-0 select-none",
   calendar3: "size-(--cell-size) aria-disabled:opacity-50 p-0 select-none",
   calendar4: "select-none font-medium",

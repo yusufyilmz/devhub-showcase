@@ -132,7 +132,10 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
             />
           ) : null}
           {controller.message ? (
-            <Alert className="fitness-save-status" role="status">
+            <Alert
+              className="fitness-save-status [&[data-slot='alert']]:[position:fixed] [&_[data-slot='alert-description']]:[display:flex] max-[700px]:[&[data-slot='alert']]:[bottom:calc(78px_+_env(safe-area-inset-bottom))]"
+              role="status"
+            >
               <AlertDescription>
                 {controller.message}
                 {controller.undo ? (

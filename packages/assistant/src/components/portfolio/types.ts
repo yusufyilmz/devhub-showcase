@@ -9,6 +9,9 @@ export type LanguageSettingsEditorOptions = {
 export type PortfolioTypePickerOptions = {
   value: PortfolioType;
   onChange: (type: PortfolioType) => void;
+  legend?: string;
+  description?: string;
+  className?: string;
 };
 
 export type ProfileFieldsOptions = {

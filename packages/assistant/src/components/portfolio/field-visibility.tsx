@@ -36,7 +36,10 @@ export function FieldVisibilityEditor({
     onChange(next);
   }
   return (
-    <section aria-label="Output field visibility" className="editor-card editor-fields">
+    <section
+      aria-label="Output field visibility"
+      className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px] editor-fields grid grid-cols-2 gap-6 max-[767px]:grid-cols-1 max-[767px]:gap-[18px]"
+    >
       <h2>Choose what each output includes</h2>
       <p>
         Website and CV choices are independent. These controls hide structured contact fields;

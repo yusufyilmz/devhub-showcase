@@ -9,14 +9,9 @@ import {
 
 export const stages = [
   {
-    description: "Choose the closest match to get a suggested layout.",
+    description: "Choose the closest match. You can change the layout later in the editor.",
     label: "Work",
     title: "Choose your work type",
-  },
-  {
-    description: "Choose a design for your work. You can change it later.",
-    label: "Layout",
-    title: "Pick a portfolio layout",
   },
   {
     description: "Upload an existing CV or skip to enter your details yourself.",
@@ -46,9 +41,10 @@ export const sections = [
 ] as const;
 
 export const progressSteps = [
-  ...stages.slice(0, 3).map(({ label }) => label),
+  stages[0].label,
+  stages[1].label,
   ...sections.map(({ title }) => title),
-  stages[4].label,
+  stages[3].label,
 ];
 
 export type SetupPosition = { stage: number; section: number };

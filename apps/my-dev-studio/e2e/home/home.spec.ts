@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 import { getThemePalette, portfolioAccentIds, portfolioAccents } from "@shared/config";
 
-test("the homepage shows portfolio setup and private tools in one reveal-card grid", async ({
+test("the homepage shows portfolio setup and private tools in one reveal-card [&[data-expanded='true']::before]:[animation-play-state:paused] [&[data-expanded='true']]:[border-color:color-mix(in_srgb,_var(--primary)_60%,_transparent)] [&[data-expanded='true']_.reveal-preview]:[grid-template-rows:0fr] [&[data-expanded='true']_.reveal-details]:[visibility:visible] grid", async ({
   page,
 }) => {
   await page.goto("/");
@@ -80,7 +80,7 @@ test("theme choice persists across homepage, studio navigation and reload", asyn
   await expect(page).toHaveURL("/login");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(9, 15, 26)");
-  await expect(page.getByRole("main")).toHaveClass("auth-login");
+  await expect(page.getByRole("main")).toHaveClass(/auth-login/);
   await expect(page.getByRole("button", { name: "Open studio →" })).toHaveCSS(
     "background-color",
     "rgb(103, 216, 231)",

@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const iconButtonVariants = cva(
-  "ui-icon-button inline-flex items-center justify-center rounded-lg border border-transparent text-sm font-medium motion-safe:transition-colors motion-safe:duration-150 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:border-transparent disabled:bg-muted disabled:text-muted-foreground disabled:opacity-55 disabled:shadow-none",
+  "ui-icon-button [&[data-surface='portfolio']]:[--primary:var(--card)] [&[data-surface='portfolio']:hover]:[border-color:var(--primary)] [&.profile-menu-trigger[data-state='open']]:[border-color:var(--primary)] inline-flex items-center justify-center rounded-lg border border-transparent text-sm font-medium motion-safe:transition-colors motion-safe:duration-150 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:border-transparent disabled:bg-muted disabled:text-muted-foreground disabled:opacity-55 disabled:shadow-none",
   {
     defaultVariants: {
       size: "default",
@@ -28,7 +28,8 @@ export const iconButtonVariants = cva(
 );
 
 export const iconButtonStyles = {
-  iconButton: "ui-icon-button",
+  iconButton:
+    "ui-icon-button [&[data-surface='portfolio']]:[--primary:var(--card)] [&[data-surface='portfolio']:hover]:[border-color:var(--primary)] [&.profile-menu-trigger[data-state='open']]:[border-color:var(--primary)]",
 } as const;
 
 export const styledIconButtonStyles = {
@@ -37,8 +38,8 @@ export const styledIconButtonStyles = {
   classes3: "fixed bottom-8 right-8 z-50 size-14 shadow-2xl",
   classes4: "hover:-translate-y-0.5",
   classes5: "hover:scale-110",
-  classes6: "hover:shadow-lg",
-  classes7: "animate-pulse shadow-lg",
+  classes6: "hover:shadow-lg [--notification-tone:var(--primary)]",
+  classes7: "animate-pulse shadow-lg [--notification-tone:var(--primary)]",
   element1:
     "absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs font-medium text-destructive-foreground",
 } as const;

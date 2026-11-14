@@ -6,7 +6,7 @@ import { type PortfolioProfile, type PortfolioType, portfolioTypes } from "@shar
 import { urls } from "@shared/config/urls";
 import { createEmptyProfile } from "@shared/lib/profiles";
 import { useStudioRequest } from "@shared/runtime/studio";
-import { Button } from "@shared/ui/button";
+import { StudioButton } from "@shared/ui/button";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
 import { NativeSelect as LibraryNativeSelect } from "@shared/ui/native-select";
@@ -69,7 +69,7 @@ export function CreatePortfolio({ onCreated }: { onCreated: (id: string) => void
     }
   }
   return (
-    <section className="editor-card">
+    <section className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px]">
       <h2>Create a temporary portfolio</h2>
       <p>
         Create a private portfolio without a separate login. You manage it until it is transferred
@@ -81,7 +81,10 @@ export function CreatePortfolio({ onCreated }: { onCreated: (id: string) => void
           disabled={busy}
         >
           <legend className="sr-only">New managed portfolio</legend>
-          <LibraryLabel className="editor-field" unstyled>
+          <LibraryLabel
+            className="editor-field flex min-w-0 flex-col gap-[9px] text-xs text-muted-foreground [&_small]:text-[10px] [&_small]:leading-normal [&_small]:opacity-80"
+            unstyled
+          >
             Import portfolio JSON
             <LibraryInput
               accept=".json,application/json"
@@ -95,7 +98,10 @@ export function CreatePortfolio({ onCreated }: { onCreated: (id: string) => void
               Imported {imported.name}. Existing project images and links will be preserved.
             </p>
           )}
-          <LibraryLabel className="editor-field" unstyled>
+          <LibraryLabel
+            className="editor-field flex min-w-0 flex-col gap-[9px] text-xs text-muted-foreground [&_small]:text-[10px] [&_small]:leading-normal [&_small]:opacity-80"
+            unstyled
+          >
             Name
             <LibraryInput
               maxLength={200}
@@ -105,7 +111,10 @@ export function CreatePortfolio({ onCreated }: { onCreated: (id: string) => void
               value={name}
             />
           </LibraryLabel>
-          <LibraryLabel className="editor-field" unstyled>
+          <LibraryLabel
+            className="editor-field flex min-w-0 flex-col gap-[9px] text-xs text-muted-foreground [&_small]:text-[10px] [&_small]:leading-normal [&_small]:opacity-80"
+            unstyled
+          >
             Username
             <LibraryInput
               maxLength={50}
@@ -117,7 +126,10 @@ export function CreatePortfolio({ onCreated }: { onCreated: (id: string) => void
               value={username}
             />
           </LibraryLabel>
-          <LibraryLabel className="editor-field" unstyled>
+          <LibraryLabel
+            className="editor-field flex min-w-0 flex-col gap-[9px] text-xs text-muted-foreground [&_small]:text-[10px] [&_small]:leading-normal [&_small]:opacity-80"
+            unstyled
+          >
             Contact email
             <LibraryInput
               onChange={(event) => setEmail(event.target.value)}
@@ -126,7 +138,10 @@ export function CreatePortfolio({ onCreated }: { onCreated: (id: string) => void
               value={email}
             />
           </LibraryLabel>
-          <LibraryLabel className="editor-field" unstyled>
+          <LibraryLabel
+            className="editor-field flex min-w-0 flex-col gap-[9px] text-xs text-muted-foreground [&_small]:text-[10px] [&_small]:leading-normal [&_small]:opacity-80"
+            unstyled
+          >
             Portfolio layout
             <LibraryNativeSelect
               onChange={(event) => setType(event.target.value as PortfolioType)}
@@ -144,22 +159,25 @@ export function CreatePortfolio({ onCreated }: { onCreated: (id: string) => void
             New portfolios are private. A missing email uses pending@example.com until you replace
             it. Review imported contact details before publishing.
           </p>
-          <Button className="studio-primary" type="submit">
+          <StudioButton type="submit">
             {busy ? "Creating…" : "Create private portfolio"}
-          </Button>
+          </StudioButton>
           {imported && (
-            <Button
-              className="studio-secondary"
+            <StudioButton
               onClick={() => setImported(null)}
+              tone="secondary"
               type="button"
               variant="outline"
             >
               Clear imported content
-            </Button>
+            </StudioButton>
           )}
         </fieldset>
         {error && (
-          <p className="editor-alert" role="alert">
+          <p
+            className="editor-alert mb-6 rounded-[10px] border border-border px-5 py-4 text-xs leading-[1.8] whitespace-pre-line text-destructive [&_button]:mt-2.5 [&_button]:underline"
+            role="alert"
+          >
             {error}
           </p>
         )}

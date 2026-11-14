@@ -16,7 +16,8 @@ export const experienceItemStyles = {
   element14: "pt-0",
   element15: "flex justify-start flex-wrap gap-2",
   element16: "pt-0 pl-0",
-  element17: "reveal-projects",
+  element17:
+    "reveal-projects [&_p]:[font-size:13px] [line-height:1.8] [color:var(--muted-foreground)] [white-space:pre-line] [&_h4]:[margin:16px_0_6px] [font-weight:600] [&_h5]:[margin:16px_0_6px] [font-weight:600]",
 } as const;
 
 export const experienceListStyles = {

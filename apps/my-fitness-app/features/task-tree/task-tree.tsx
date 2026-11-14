@@ -17,6 +17,7 @@ import type { Task, Workspace } from "@shared/lib/types";
 import { Button as LibraryButton } from "@shared/ui/button";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
+import { Eyebrow } from "@shared/ui/typography";
 
 const service = new TaskService();
 export interface TaskTreeProps {
@@ -32,7 +33,7 @@ export interface TaskTreeProps {
 }
 export function TaskTree(props: TaskTreeProps) {
   return (
-    <div className="task-tree">
+    <div className="task-tree [display:grid] [gap:12px] [&_+_.hint]:[margin-bottom:20px]">
       {service
         .children(props.workspace.tasks, props.parentId)
         .sort((a, b) =>
@@ -53,7 +54,7 @@ export function TaskBranch(props: TaskTreeProps & { task: Task }) {
   const status = service.status(workspace.tasks, task.id);
   return (
     <article className={`tree-node kind-${task.kind} status-${status}`}>
-      <div className="tree-row">
+      <div className="tree-row [display:flex] [gap:10px] [align-items:flex-start] [padding:18px] max-[700px]:[gap:5px] [padding:13px_10px]">
         <ExpandControl
           expanded={expanded}
           hasChildren={children.length > 0}
@@ -87,7 +88,7 @@ export function TaskBranch(props: TaskTreeProps & { task: Task }) {
         <LeafActions busy={busy} onStatus={onStatus} readOnly={readOnly} task={task} />
       ) : null}
       {expanded && children.length > 0 ? (
-        <div className="tree-children">
+        <div className="tree-children [padding:0_15px_15px_28px] [&_.tree-node]:[background:var(--surface-soft)] [border-radius:8px] max-[700px]:[padding:0_7px_10px_11px] [box-shadow:none]">
           <TaskTree {...props} depth={depth + 1} parentId={task.id} />
         </div>
       ) : null}
@@ -106,12 +107,15 @@ function ExpandControl({
   onToggle: () => void;
   title: string;
 }) {
-  if (!hasChildren) return <span className="leaf-dot" />;
+  if (!hasChildren)
+    return (
+      <span className="leaf-dot [flex-shrink:0] [width:7px] [height:7px] [margin:7px_8px] [background:var(--accent)] [border-radius:100%]" />
+    );
   return (
     <LibraryButton
       aria-expanded={expanded}
       aria-label={`${expanded ? "Collapse" : "Expand"} ${title}`}
-      className="icon-btn"
+      className="icon-btn [display:inline-flex] [align-items:center] [justify-content:center] [min-width:34px] [min-height:34px] [padding:8px] [color:var(--muted)] [background:transparent] [border:0] [border-radius:6px] hover:[background:var(--surface-soft)] hover:[color:var(--accent)] [background:var(--surface-soft)]"
       onClick={onToggle}
       type="button"
       variant="unstyled"
@@ -123,11 +127,11 @@ function ExpandControl({
 
 function TaskSummary({ task }: { task: Task }) {
   return (
-    <div className="tree-title">
-      <span className="eyebrow">
+    <div className="tree-title [display:flex] [flex:1] [flex-direction:column] [gap:7px] [min-width:0] [&_strong]:[font-family:var(--font-geist-sans),_sans-serif] [font-size:15px] [&_p]:[font-size:11px] [line-height:1.7] [white-space:pre-line] [&_>_span:not(.eyebrow)]:[font-size:11px] [color:var(--muted)] [&_.eyebrow]:[font-size:8px] [letter-spacing:1.3px] max-[700px]:[&_strong]:[font-size:12px] max-[700px]:[&_p]:[font-size:10px]">
+      <Eyebrow as="span">
         {task.kind.replace("_", " ")}
         {task.time ? ` · ${task.time}` : ""}
-      </span>
+      </Eyebrow>
       <strong>{task.title}</strong>
       {task.notes ? <p>{task.notes}</p> : null}
       <TaskFacts task={task} />
@@ -145,7 +149,11 @@ export function TaskFacts({ task }: { task: Task }) {
   }
   if (task.details.type === "water") return <span>{task.details.ml} ml</span>;
   if (task.details.type === "meal" && task.details.waterMl > 0) {
-    return <span className="water-label">Includes {task.details.waterMl} ml water</span>;
+    return (
+      <span className="water-label [display:flex] [gap:7px] [align-items:center] [margin:5px_0_15px] [font-size:11px] [color:var(--muted)] [color:var(--accent)]">
+        Includes {task.details.waterMl} ml water
+      </span>
+    );
   }
   if (task.details.type === "shopping") return <ShoppingFacts task={task} />;
   if (task.details.type === "cook") return <CookFacts task={task} />;
@@ -162,7 +170,10 @@ function ShoppingFacts({ task }: { task: Task }) {
         {task.details.occurrences === 1 ? "" : "s"}
       </span>
       {task.details.warnings.map((warning) => (
-        <p className="ingredient-warning" key={warning}>
+        <p
+          className="ingredient-warning [font-size:10px] [color:var(--muted)] [color:var(--warning)]"
+          key={warning}
+        >
           {warning}
         </p>
       ))}
@@ -174,14 +185,16 @@ function CookFacts({ task }: { task: Task }) {
   if (task.details.type !== "cook") return null;
   return (
     <>
-      <ul className="ingredient-lines">
+      <ul className="ingredient-lines [padding-left:17px] [margin:0] [font-size:11px] [line-height:1.9] [color:var(--muted)]">
         {task.details.lines.map((line, index) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: Generated instruction lines form an immutable snapshot with no row state.
           <li key={index}>{line}</li>
         ))}
       </ul>
       {task.details.warnings.length > 0 ? (
-        <p className="ingredient-warning">Some choices or quantities need review.</p>
+        <p className="ingredient-warning [font-size:10px] [color:var(--muted)] [color:var(--warning)]">
+          Some choices or quantities need review.
+        </p>
       ) : null}
     </>
   );
@@ -211,16 +224,16 @@ function TaskActions({
   task: Task;
 }) {
   return (
-    <div className="tree-actions">
+    <div className="tree-actions [display:flex] [flex-wrap:wrap] [gap:5px] [align-items:center] [justify-content:flex-end] max-[700px]:[gap:0] [max-width:85px] max-[700px]:[&_.icon-btn]:[min-width:29px] [min-height:34px] [padding:5px]">
       {childCount > 0 && task.scope !== "template" ? (
-        <span className="count">
+        <span className="count [padding:4px_7px] [font-family:var(--font-geist-sans),_sans-serif] [font-size:10px] [color:var(--muted)] [letter-spacing:0] [background:var(--surface-soft)] [border-radius:5px] [color:var(--accent)] [background:var(--accent-soft)]">
           {progress.done}/{progress.total}
         </span>
       ) : null}
       {canAdd ? (
         <LibraryButton
           aria-label={`Add subtask to ${task.title}`}
-          className="icon-btn"
+          className="icon-btn [display:inline-flex] [align-items:center] [justify-content:center] [min-width:34px] [min-height:34px] [padding:8px] [color:var(--muted)] [background:transparent] [border:0] [border-radius:6px] hover:[background:var(--surface-soft)] hover:[color:var(--accent)] [background:var(--surface-soft)]"
           disabled={readOnly || busy}
           onClick={onAdd}
           type="button"
@@ -232,7 +245,7 @@ function TaskActions({
       {task.scope !== "generated" && task.kind !== "day" ? (
         <LibraryButton
           aria-label={`Edit ${task.title}`}
-          className="icon-btn"
+          className="icon-btn [display:inline-flex] [align-items:center] [justify-content:center] [min-width:34px] [min-height:34px] [padding:8px] [color:var(--muted)] [background:transparent] [border:0] [border-radius:6px] hover:[background:var(--surface-soft)] hover:[color:var(--accent)] [background:var(--surface-soft)]"
           disabled={readOnly || busy}
           onClick={onEdit}
           type="button"
@@ -274,7 +287,7 @@ function SetLog({
   const lastWeight = previous?.details.type === "set" ? previous.details.weightKg : undefined;
   return (
     <form
-      className="set-log"
+      className="set-log [display:flex] [gap:12px] [align-items:center] [padding:0_20px_14px_43px] [&_>_span]:[flex:1] [font-size:12px] [&_small]:[display:block] [margin-top:5px] [font-size:10px] [color:var(--muted)] [&_label]:[width:70px] [margin:0] [&_input]:[padding:8px] [margin-top:4px] max-[700px]:[flex-wrap:wrap] [gap:8px] [padding:0_12px_12px_19px] max-[700px]:[&_label]:[width:58px] max-[700px]:[&_>_span]:[font-size:10px]"
       onSubmit={(event) => {
         event.preventDefault();
         const form = new FormData(event.currentTarget);
@@ -347,9 +360,9 @@ function LeafActions({
   task: Task;
 }) {
   return (
-    <div className="leaf-actions">
+    <div className="leaf-actions [display:flex] [gap:14px] [padding:0_20px_12px_43px] [&_.text-btn]:[min-height:24px] [font-size:10px] max-[700px]:[padding-left:23px]">
       <LibraryButton
-        className="text-btn"
+        className="text-btn [display:inline-flex] [gap:7px] [align-items:center] [justify-content:center] [min-height:32px] [padding:4px_0] [font-size:12px] [font-weight:550] [color:var(--ink)] [background:transparent] [border:0] max-[700px]:[font-size:11px] [color:var(--accent)]"
         disabled={readOnly || busy}
         onClick={() => onStatus(task, task.status === "skipped" ? "pending" : "skipped")}
         type="button"
@@ -360,7 +373,7 @@ function LeafActions({
       </LibraryButton>
       {task.status === "done" ? (
         <LibraryButton
-          className="text-btn"
+          className="text-btn [display:inline-flex] [gap:7px] [align-items:center] [justify-content:center] [min-height:32px] [padding:4px_0] [font-size:12px] [font-weight:550] [color:var(--ink)] [background:transparent] [border:0] max-[700px]:[font-size:11px] [color:var(--accent)]"
           disabled={readOnly || busy}
           onClick={() => onStatus(task, "pending")}
           type="button"

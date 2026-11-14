@@ -53,8 +53,7 @@ test("a new owner chooses a layout, saves it and returns to the editor without l
       ),
     )
     .toBe(userId);
-  await page.getByRole("button", { name: "Choose a layout" }).click();
-  await expect(page.getByRole("group", { name: "Choose your portfolio layout" })).toBeVisible();
+  await expect(page.getByRole("group", { name: "What kind of work do you do?" })).toBeVisible();
   await page.getByRole("radio", { name: /Designer/ }).check();
   await page.screenshot({
     fullPage: true,

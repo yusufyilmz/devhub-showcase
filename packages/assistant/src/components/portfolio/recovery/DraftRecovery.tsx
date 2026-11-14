@@ -15,8 +15,11 @@ const labels = {
 };
 export function DraftRecovery({ recovery, disabled = false }: DraftRecoveryProps) {
   return (
-    <section aria-label="Draft recovery" className="draft-recovery">
-      <div className="draft-recovery-summary">
+    <section
+      aria-label="Draft recovery"
+      className="draft-recovery [min-width:0] [padding:12px_16px] [margin-block:16px] [background:var(--card)] [border:1px_solid_var(--border)] [border-radius:12px]"
+    >
+      <div className="draft-recovery-summary [display:flex] [flex-wrap:wrap] [gap:8px_16px] [align-items:baseline] [&_strong]:[font-size:14px] [&_p]:[margin:0] [font-size:12px] [line-height:1.6] [color:var(--muted-foreground)] [&_details]:[margin:0] [&_details]:[margin-left:auto] [&_details[open]]:[flex-basis:100%]">
         <strong>Draft recovery</strong>
         <p aria-live="polite">{labels[recovery.status]}</p>
         <details>
@@ -47,7 +50,7 @@ export function DraftRecovery({ recovery, disabled = false }: DraftRecoveryProps
           </p>
           <details>
             <summary>Review recovered work</summary>
-            <pre className="ai-profile-json">
+            <pre className="ai-profile-json [max-height:34rem] [padding:1rem] [overflow:auto] [font-size:0.8rem] [overflow-wrap:anywhere] [white-space:pre-wrap]">
               {JSON.stringify(recovery.candidate.value, null, 2)}
             </pre>
           </details>

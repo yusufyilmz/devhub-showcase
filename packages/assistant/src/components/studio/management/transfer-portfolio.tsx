@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { urls } from "@shared/config/urls";
 import { useStudioRequest } from "@shared/runtime/studio";
-import { Button } from "@shared/ui/button";
+import { StudioButton } from "@shared/ui/button";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
 
@@ -46,7 +46,7 @@ export function TransferPortfolio({
     }
   }
   return (
-    <section className="editor-card">
+    <section className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px]">
       <h2>Transfer to the owner</h2>
       <p>
         Ask the owner to sign in with Google first. Their account must have no portfolio or only an
@@ -57,7 +57,10 @@ export function TransferPortfolio({
         className="mt-6 grid min-w-0 gap-4 border-0 p-0 [&_input]:max-w-full [&_select]:max-w-full"
         onSubmit={transfer}
       >
-        <LibraryLabel className="editor-field" unstyled>
+        <LibraryLabel
+          className="editor-field flex min-w-0 flex-col gap-[9px] text-xs text-muted-foreground [&_small]:text-[10px] [&_small]:leading-normal [&_small]:opacity-80"
+          unstyled
+        >
           Owner account email
           <LibraryInput
             disabled={busy}
@@ -68,12 +71,15 @@ export function TransferPortfolio({
             value={email}
           />
         </LibraryLabel>
-        <Button className="studio-secondary" disabled={busy} type="submit" variant="outline">
+        <StudioButton disabled={busy} tone="secondary" type="submit" variant="outline">
           {busy ? "Transferring…" : "Transfer portfolio"}
-        </Button>
+        </StudioButton>
       </form>
       {error && (
-        <p className="editor-alert" role="alert">
+        <p
+          className="editor-alert mb-6 rounded-[10px] border border-border px-5 py-4 text-xs leading-[1.8] whitespace-pre-line text-destructive [&_button]:mt-2.5 [&_button]:underline"
+          role="alert"
+        >
           {error}
         </p>
       )}

@@ -11,7 +11,10 @@ const meta = {
     action: { href: "/login", label: "Create your portfolio", signedIn: false },
     exampleHref: "/?path=/story/pages-portfolio--designer",
     examples: (
-      <section className="home-container py-lg" id="examples">
+      <section
+        className="home-container [width:min(var(--home-width,_1200px),_calc(100%_-_80px))] [margin-inline:auto] max-[1000px]:[width:calc(100%_-_52px)] max-[760px]:[width:calc(100%_-_40px)] max-[380px]:[width:calc(100%_-_32px)] py-lg"
+        id="examples"
+      >
         <Card className="px-lg" layout="plain" surface="portfolio">
           <h2>Explore a sample portfolio</h2>
           <p>See the work and experience sections in a fictional portfolio.</p>

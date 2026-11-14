@@ -232,7 +232,7 @@ export function PortfolioPreview() {
             <Button
               aria-label={`Preview the ${item.name} theme`}
               aria-pressed={theme === item.id}
-              className="home-accent"
+              className="home-accent [display:grid] [place-items:center] [width:19px] [height:19px] [font-size:10px] [color:#101929] [border-radius:50%] [&[aria-pressed='true']]:[outline [display:inline-flex] [gap:9px] [align-items:center] [justify-content:center] [min-height:42px] [padding:12px_17px] [font-size:12px] [font-weight:600] [border-radius:8px] [background:var(--surface)] [border:1px_solid_var(--line)] max-[700px]:[min-height:38px] [padding:9px_12px] hover:[color:var(--accent)] [border-color:var(--accent)]:1px_solid_var(--muted-foreground)]"
               key={item.id}
               onClick={() => setTheme(item.id)}
               style={themeSwatchColor(item.id)}

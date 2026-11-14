@@ -26,7 +26,7 @@ This is the current product overview. It describes repository behavior, not a gu
 
 ## Guided setup and Studio preferences
 
-New owners and existing owners using **Start from scratch** enter the same setup modal. Choose a layout and optionally import a CV. Add or revise details on separate section screens, review the Website and CV previews, and save a private draft. See [guided setup](testing/manual/onboarding.md).
+New owners and existing owners using **Start from scratch** enter the same setup modal. Choose a work type, which sets the starting layout, and optionally import a CV. Add or revise details on separate section screens, review the Website and CV previews, and save a private draft. See [guided setup](testing/manual/onboarding.md).
 
 The signed-in [profile menu](testing/manual/profile-menu.md) provides account navigation. Studio appearance and companion preferences sync with the signed-in account once the preferences migration is applied. Saved portfolio appearance is controlled in the portfolio editor. The companion feature guide tracks progress for signed-in users. See [appearance](testing/manual/appearance.md) and the [companion guide](testing/manual/companion-feature-guide.md).
 

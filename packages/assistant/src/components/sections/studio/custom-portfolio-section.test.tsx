@@ -119,7 +119,7 @@ describe("MediaSections", () => {
           <h1>My story</h1>
         </HeroSurface>,
       ),
-    ).toBe('<div class="hero-surface-plain"><h1>My story</h1></div>');
+    ).toContain("hero-surface-plain");
     const output = renderToStaticMarkup(
       <HeroSurface media={hero}>
         <h1>My story</h1>

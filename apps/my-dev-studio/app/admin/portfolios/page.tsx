@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { StudioHeading } from "@shared/assistant/portfolio";
-import { Button } from "@shared/ui/button";
+import { StudioButton } from "@shared/ui/button";
 
 import { CreatePortfolio } from "@/features/management/create-portfolio";
 import { requirePortfolioAdmin } from "@/features/management/managed-portfolios";
@@ -27,19 +27,22 @@ export default async function PortfolioManager({
     .order("updated_at", { ascending: false })
     .range(page * 50, page * 50 + 50);
   return (
-    <main className="studio grid gap-8 [--studio-heading-gap:0px]" id="admin-content">
+    <main
+      className="studio [max-width:1160px] [padding:var(--studio-top,_36px)_40px_var(--studio-bottom,_80px)] [margin:auto] max-[767px]:[padding:var(--studio-top,_20px)_18px_var(--studio-bottom,_50px)] [&.studio-editor]:[max-width:none] [padding:0_32px_96px_0] max-[767px]:[&.studio-editor]:[padding:20px_16px_104px] [--studio-bottom:0px] grid gap-8 [--studio-heading-gap:0px]"
+      id="admin-content"
+    >
       <StudioHeading
         actions={
-          <Button className="studio-secondary" href="/admin" variant="outline">
+          <StudioButton href="/admin" tone="secondary" variant="outline">
             My portfolio
-          </Button>
+          </StudioButton>
         }
         description="Create temporary portfolios, import content and manage publishing."
         eyebrow="Platform administration"
         title="Manage portfolios"
       />
       <CreatePortfolio />
-      <section className="editor-card">
+      <section className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px]">
         <h2>Managed portfolios</h2>
         {error ? (
           <p role="alert">

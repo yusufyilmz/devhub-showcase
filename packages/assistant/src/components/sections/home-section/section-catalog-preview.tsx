@@ -38,7 +38,7 @@ const previewKindByView = {
 
 const previews = {
   accordion: (
-    <div className="section-mini-list">
+    <div className="section-mini-list [display:grid] [gap:4px] [&_>_span]:[display:flex] [align-items:center] [justify-content:space-between] [padding:5px_8px] [border:1px_solid_color-mix(in_srgb,_var(--primary)_16%,_transparent)] [border-radius:4px] [&_b]:[color:var(--primary)]">
       <span>
         What I do <b>+</b>
       </span>

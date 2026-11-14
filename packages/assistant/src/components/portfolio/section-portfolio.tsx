@@ -85,8 +85,11 @@ export function EngineerPortfolio({
     <>
       <Header profile={profile} />
       {!showChat && ownerLink}
-      <main className="portfolio-main" id="main-content">
-        <div className="portfolio-inner">
+      <main
+        className="portfolio-main [width:100%] [overflow:clip] [&[data-featured]_.section-heading_h2]:[font-weight:650]"
+        id="main-content"
+      >
+        <div className="portfolio-inner [width:100%] [max-width:1200px] [padding:0_40px] [margin:auto] max-[767px]:[padding:0_22px]">
           <HeroSurface
             labels={{ pause: text.pauseBackground, play: text.playBackground }}
             media={profile.hero}

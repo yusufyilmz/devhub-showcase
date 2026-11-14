@@ -46,7 +46,7 @@ import { createEmptyProfile, editCvPath } from "@shared/lib/profiles";
 import { draftStorage } from "@shared/runtime/storage";
 import { type StudioRequest, useStudioRequest } from "@shared/runtime/studio";
 import { useUserConfigStore } from "@shared/runtime/user";
-import { Button } from "@shared/ui/button";
+import { Button, StudioButton } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 import { GoogleImportEditor } from "@shared/ui/google-import";
 import { Input } from "@shared/ui/input";
@@ -338,9 +338,9 @@ export function ProfileEditor({
   const view = workspaceView;
   const editorActions = (
     <>
-      <Button className="studio-primary" disabled={!canSave} type="submit">
+      <StudioButton disabled={!canSave} type="submit">
         {busy ? "Saving…" : "Save changes"}
-      </Button>
+      </StudioButton>
       <Button
         disabled={busy}
         onClick={() => {
@@ -389,7 +389,10 @@ export function ProfileEditor({
     );
   }
   return (
-    <main className="studio studio-editor" id="admin-content">
+    <div
+      className="studio [max-width:1160px] [padding:var(--studio-top,_36px)_40px_var(--studio-bottom,_80px)] [margin:auto] max-[767px]:[padding:var(--studio-top,_20px)_18px_var(--studio-bottom,_50px)] [&.studio-editor]:[max-width:none] [padding:0_32px_96px_0] max-[767px]:[&.studio-editor]:[padding:20px_16px_104px] [--studio-bottom:0px] studio-editor [&_.editor-workspace-body]:[padding-top:32px] min-[768px]:[&_.editor-workspace-body]:[padding-left:var(--editor-sidebar-gap,_16px)] max-[767px]:[&_.editor-workspace-body]:[padding-top:0] [&_>_.editor-companion[data-placement='floating']]:[--agent-launcher-size:clamp(3.75rem,_8vw,_5.25rem)]"
+      id="admin-content"
+    >
       <form
         id="portfolio-editor-form"
         onSubmit={async (event) => {
@@ -409,33 +412,39 @@ export function ProfileEditor({
             <StudioHeading
               actions={
                 <>
-                  <Button
-                    className="studio-secondary"
-                    disabled={editorDisabled}
-                    onClick={arrangeLayout}
-                    type="button"
-                    variant="outline"
+                  <div className="flex flex-wrap items-center gap-2.5">
+                    <StudioButton
+                      disabled={editorDisabled}
+                      onClick={arrangeLayout}
+                      tone="secondary"
+                      type="button"
+                      variant="outline"
+                    >
+                      Arrange layout
+                    </StudioButton>
+                    <StudioButton
+                      disabled={editorDisabled}
+                      onClick={
+                        saved.profile.templateChosen === false
+                          ? () => setStep("template")
+                          : startFromScratch
+                      }
+                      tone="secondary"
+                      type="button"
+                      variant="outline"
+                    >
+                      {saved.profile.templateChosen === false
+                        ? "Resume setup"
+                        : "Start from scratch"}
+                    </StudioButton>
+                    <StudioButton href="/admin/billing" tone="secondary" variant="outline">
+                      Plan and usage
+                    </StudioButton>
+                  </div>
+                  <div
+                    className="studio-editor-actions [display:flex] [flex-wrap:wrap] [gap:10px] [align-items:center] [&[hidden]]:[display:none]"
+                    hidden={view === "edit"}
                   >
-                    Arrange layout
-                  </Button>
-                  <Button
-                    className="studio-secondary"
-                    disabled={editorDisabled}
-                    onClick={
-                      saved.profile.templateChosen === false
-                        ? () => setStep("template")
-                        : startFromScratch
-                    }
-                    type="button"
-                    variant="outline"
-                  >
-                    {saved.profile.templateChosen === false ? "Resume setup" : "Start from scratch"}
-                  </Button>
-                  <Button className="studio-secondary" href="/admin/billing" variant="outline">
-                    Plan and usage
-                  </Button>
-
-                  <div className="studio-editor-actions" hidden={view === "edit"}>
                     {editorActions}
                   </div>
                 </>
@@ -444,17 +453,18 @@ export function ProfileEditor({
               eyebrow="Portfolio editor"
               title="Edit your portfolio"
             >
-              <div className="studio-status">
-                <span className={dirty ? "status-dot unsaved" : "status-dot"} />
+              <div className="flex items-center gap-3 border-t border-border bg-card/55 px-[clamp(1.125rem,4vw,2.25rem)] py-2 text-[0.8125rem] text-muted-foreground max-[767px]:gap-2 max-[767px]:text-[10px]">
+                <span
+                  className={
+                    dirty
+                      ? "inline-block size-1.5 shrink-0 rounded-full bg-[#dca94b] shadow-[0_0_0_4px_color-mix(in_srgb,var(--primary)_9%,transparent)]"
+                      : "inline-block size-1.5 shrink-0 rounded-full bg-primary shadow-[0_0_0_4px_color-mix(in_srgb,var(--primary)_9%,transparent)]"
+                  }
+                />
                 <span>{dirty ? "You have unsaved changes" : "All changes saved"}</span>
-                <span>Revision {saved.revision}</span>
-                <Button
-                  disabled={busy}
-                  onClick={() => signOutOfStudio(dirty, request, recovery.stop, showError, setBusy)}
-                  type="button"
-                >
-                  Sign out
-                </Button>
+                <span className="ml-2 border-l border-border pl-3.5 max-[767px]:hidden">
+                  Revision {saved.revision}
+                </span>
               </div>
             </StudioHeading>
           }
@@ -487,7 +497,10 @@ export function ProfileEditor({
           view={view}
         >
           {error && (
-            <div className="editor-alert" role="alert">
+            <div
+              className="editor-alert mb-6 rounded-[10px] border border-border px-5 py-4 text-xs leading-[1.8] whitespace-pre-line text-destructive [&_button]:mt-2.5 [&_button]:underline"
+              role="alert"
+            >
               <p>{error}</p>
               <Button
                 disabled={busy}
@@ -501,7 +514,10 @@ export function ProfileEditor({
               </Button>
             </div>
           )}
-          <fieldset className="editor-body" disabled={busy}>
+          <fieldset
+            className="editor-body m-0 min-w-0 border-0 p-0 [&_.editor-card>h2]:my-1 [&_.editor-card>h2]:mb-2 [&_.editor-card>h2]:text-[clamp(1.375rem,2.6vw,1.875rem)] [&_.editor-card>h2]:leading-[1.17] [&_.editor-card>h2]:font-[670] [&_.editor-card>h2]:tracking-[-0.035em] [&_.editor-card>h2+p]:mb-4 [&_.editor-card>h2+p]:max-w-[62ch] [&_.editor-card>h2+p]:text-[0.9375rem] [&_.editor-card>h2+p]:leading-normal [&_.editor-card>h2+p]:text-muted-foreground"
+            disabled={busy}
+          >
             <legend className="sr-only">{tab} editor</legend>
             <EditorBody
               assistantPrompt={assistantPrompt}
@@ -540,12 +556,11 @@ export function ProfileEditor({
               tab={tab}
             />
           </fieldset>
-          <footer className="editor-footer">
+          <footer className="editor-footer [display:flex] [flex-wrap:wrap] [gap:12px_20px] [align-items:center] [justify-content:space-between] [padding-top:20px] [margin-top:24px] [border-top:1px_solid_var(--border)] [&_p]:[flex:1_1_16rem] [font-size:13px] [line-height:1.6] [color:var(--muted-foreground)]">
             <p>
               Save your draft to update your CV. Publish separately to update the public version.
             </p>
-            <Button
-              className="studio-secondary"
+            <StudioButton
               disabled={!canSave}
               onClick={() => {
                 if (window.confirm("Discard unpublished changes?")) {
@@ -559,13 +574,14 @@ export function ProfileEditor({
                   setMessage("");
                 }
               }}
+              tone="secondary"
               type="button"
               variant="outline"
             >
               Discard changes
-            </Button>
+            </StudioButton>
           </footer>
-          <details className="editor-draft-tools">
+          <details className="editor-draft-tools [padding-top:20px] [margin-top:28px] [border-top:1px_solid_var(--border)] [&_>_summary]:[font-size:13px] [color:var(--muted-foreground)] [cursor:pointer] [&[open]_>_summary]:[margin-bottom:16px]">
             <summary>Draft tools · checklist, undo & recovery</summary>
             <EditorGuidance
               canRedo={canRedo}
@@ -618,7 +634,7 @@ export function ProfileEditor({
           }
         />
       )}
-    </main>
+    </div>
   );
 }
 
@@ -709,7 +725,7 @@ function SharingSettings({
 }) {
   return (
     <Card asChild layout="plain" surface="portfolio">
-      <div className="editor-card studio-sharing">
+      <div className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px] studio-sharing my-6 flex flex-wrap items-center gap-4 [&_label]:flex [&_label]:items-center [&_label]:gap-2.5 [&_input]:w-auto [&_p]:w-full [&_p]:text-[13px] [&_p]:text-muted-foreground">
         <LibraryLabel htmlFor="cv-username" unstyled>
           Username
         </LibraryLabel>
@@ -731,9 +747,9 @@ function SharingSettings({
           The public link changes only when you publish the saved username.
         </p>
         {publication}
-        <Button className="studio-secondary" href={downloadHref} variant="outline">
+        <StudioButton href={downloadHref} tone="secondary" variant="outline">
           Download my saved CV
-        </Button>
+        </StudioButton>
       </div>
     </Card>
   );
@@ -747,7 +763,7 @@ function LayoutEditor({
 }) {
   return (
     <Card asChild layout="plain" surface="portfolio">
-      <section className="editor-card">
+      <section className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px]">
         <PortfolioTypePicker
           onChange={(portfolioType) => onChange({ ...profile, portfolioType })}
           value={profile.portfolioType ?? "engineer"}
@@ -843,14 +859,14 @@ function restoreSetupPosition(step: SetupStep, position?: SetupPosition): SetupP
     position &&
     Number.isInteger(position.stage) &&
     position.stage >= 0 &&
-    position.stage <= 4 &&
+    position.stage <= 3 &&
     Number.isInteger(position.section) &&
     position.section >= 0 &&
     position.section <= 6
   )
     return position;
-  if (step === "review") return { section: 0, stage: 4 };
-  return { section: 0, stage: step === "details" ? 3 : 0 };
+  if (step === "review") return { section: 0, stage: 3 };
+  return { section: 0, stage: step === "details" ? 2 : 0 };
 }
 
 function prepareSetupDraft(profile: PortfolioProfile): PortfolioProfile {
@@ -981,28 +997,6 @@ async function savePortfolioEditor(input: {
   }
 }
 
-async function signOutOfStudio(
-  dirty: boolean,
-  request: StudioRequest,
-  stopRecovery: () => void,
-  showError: (message: string) => void,
-  setBusy: (busy: boolean) => void,
-) {
-  if (dirty && !window.confirm("Leave without publishing your changes?")) return;
-  setBusy(true);
-  try {
-    const response = await request(urls.auth.session(), { method: "DELETE" });
-    if (!response.ok) throw new Error("Could not sign out.");
-    stopRecovery();
-    draftStorage.clear();
-    useUserConfigStore.getState().clearUser();
-    window.location.assign("/login");
-  } catch (reason) {
-    showError(reason instanceof Error ? reason.message : "Could not sign out.");
-    setBusy(false);
-  }
-}
-
 function editorSaveState(busy: boolean, stale: boolean, dirty: boolean) {
   const editorDisabled = busy || stale;
   return { canSave: dirty && !editorDisabled, editorDisabled };
@@ -1019,7 +1013,10 @@ function workspaceNotice(
         <DraftRecovery disabled={disabled} recovery={recovery} />
       )}
       {message && (
-        <p className="editor-success" role="status">
+        <p
+          className="editor-success mb-6 rounded-[10px] border border-border px-5 py-4 text-xs leading-[1.8] text-primary"
+          role="status"
+        >
           {message}
         </p>
       )}

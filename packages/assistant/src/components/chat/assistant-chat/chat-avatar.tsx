@@ -63,9 +63,9 @@ export const ChatAvatar = React.forwardRef<HTMLDivElement, ChatAvatarProps>(
             className="absolute -bottom-1 -right-1 flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-primary text-primary-foreground text-[10px]"
             role="img"
           >
-            <span className="size-1 rounded-full bg-current animate-bounce [animation-delay:0ms]" />
             <span className="size-1 rounded-full bg-current animate-bounce [animation-delay:150ms]" />
-            <span className="size-1 rounded-full bg-current animate-bounce [animation-delay:300ms]" />
+            <span className="size-1 rounded-full bg-current animate-bounce [animation-delay:150ms]" />
+            <span className="size-1 rounded-full bg-current animate-bounce [animation-delay:150ms]" />
           </span>
         )}
       </div>

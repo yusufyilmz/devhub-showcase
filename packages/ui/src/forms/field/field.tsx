@@ -19,7 +19,11 @@ export function Field({
   const fieldId = useId();
   return (
     <LibraryLabel
-      className={multiline ? "editor-field full-width" : "editor-field"}
+      className={
+        multiline
+          ? "editor-field flex min-w-0 flex-col gap-[9px] text-xs text-muted-foreground [&_small]:text-[10px] [&_small]:leading-normal [&_small]:opacity-80 full-width col-span-full"
+          : "editor-field flex min-w-0 flex-col gap-[9px] text-xs text-muted-foreground [&_small]:text-[10px] [&_small]:leading-normal [&_small]:opacity-80"
+      }
       htmlFor={fieldId}
       unstyled
     >

@@ -38,7 +38,7 @@ export function ExpandableCards({ cards, className }: ExpandableCardsProps) {
                   </Button>
                 </CollapsibleTrigger>
               </h3>
-              <CollapsibleContent className="ui-disclosure-motion">
+              <CollapsibleContent className="ui-disclosure-motion [overflow:clip] motion-safe:[&[data-state='open']]:[animation:ui-disclosure-open_340ms_cubic-bezier(0.22,_1,_0.36,_1)] motion-safe:[&[data-state='closed']]:[animation:ui-disclosure-close_240ms_ease-in]">
                 <div className="mx-4 space-y-1.5 border-border border-t pt-3 pb-4 text-sm wrap-anywhere">
                   {card.description && <p className="font-medium">{card.description}</p>}
                   <div className="text-muted-foreground">{card.content}</div>

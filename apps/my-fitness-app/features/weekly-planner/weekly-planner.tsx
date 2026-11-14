@@ -14,6 +14,7 @@ import { EmptyState } from "@shared/ui/empty-state";
 import { Label as LibraryLabel } from "@shared/ui/label";
 import { NativeSelect as LibraryNativeSelect } from "@shared/ui/native-select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@shared/ui/tabs";
+import { Eyebrow } from "@shared/ui/typography";
 
 import { TaskTree } from "@/features/task-tree/task-tree";
 
@@ -39,7 +40,12 @@ export function WeeklyPlanner({ workspace, date, readOnly, busy, update }: Props
   const unresolved = plan.reduce((sum, m) => sum + m.choices.filter((c) => !c.selected).length, 0);
   return (
     <>
-      <Card asChild className="fitness-week-summary" interaction="static" layout="plain">
+      <Card
+        asChild
+        className="fitness-week-summary [&_+_[data-slot='alert']]:[margin-top:12px]"
+        interaction="static"
+        layout="plain"
+      >
         <section>
           <ShoppingBasket aria-hidden="true" />
           <div>
@@ -49,7 +55,7 @@ export function WeeklyPlanner({ workspace, date, readOnly, busy, update }: Props
             </p>
           </div>
           <LibraryButton
-            className="fitness-primary"
+            className="fitness-primary [color:var(--on-primary)]"
             disabled={readOnly || busy}
             onClick={() =>
               update(
@@ -84,7 +90,10 @@ export function WeeklyPlanner({ workspace, date, readOnly, busy, update }: Props
           </AlertDescription>
         </Alert>
       )}
-      <Tabs className="fitness-week-tabs" defaultValue="shopping">
+      <Tabs
+        className="fitness-week-tabs [margin-top:16px] [&_[data-slot='tabs-list']]:[justify-content:flex-start] [&_[data-slot='tabs-trigger']]:[min-height:36px] [&_[data-slot='tabs-trigger'][data-state='active']]:[color:var(--ink)] max-[700px]:[&_[data-slot='tabs-list']]:[display:grid] max-[700px]:[&_[data-slot='tabs-trigger']]:[height:100%]"
+        defaultValue="shopping"
+      >
         <TabsList aria-label="Weekly plan">
           <TabsTrigger value="shopping">Shopping checklist</TabsTrigger>
           <TabsTrigger value="cooking">Meals to prepare</TabsTrigger>
@@ -123,21 +132,23 @@ export function WeeklyPlanner({ workspace, date, readOnly, busy, update }: Props
               title="No meals this week"
             />
           ) : (
-            <div className="meal-grid">
+            <div className="meal-grid [display:grid] [grid-template-columns:repeat(2,_minmax(0,_1fr))] [gap:20px] max-[950px]:[gap:15px] max-[700px]:[grid-template-columns:1fr]">
               {plan.map((meal) => (
                 <Card
                   asChild
-                  className="fitness-shared-panel"
+                  className="fitness-shared-panel [padding:clamp(16px,_3vw,_24px)]"
                   interaction="static"
                   key={meal.taskId}
                   layout="plain"
                 >
                   <section>
-                    <span className="eyebrow">
+                    <Eyebrow as="span">
                       {dateLabel(meal.date)} · {meal.time}
-                    </span>
+                    </Eyebrow>
                     <h2>{meal.title}</h2>
-                    <p className="hint">{meal.diet}</p>
+                    <p className="hint [font-size:11px] [line-height:1.7] [color:var(--muted)]">
+                      {meal.diet}
+                    </p>
                     {meal.choices.length ? (
                       meal.choices.map((choice) => (
                         <LibraryLabel key={choice.groupId} unstyled>
@@ -182,7 +193,7 @@ export function WeeklyPlanner({ workspace, date, readOnly, busy, update }: Props
           )}
         </TabsContent>
       </Tabs>
-      <p className="hint space-top">
+      <p className="hint [font-size:11px] [line-height:1.7] [color:var(--muted)] space-top [margin-top:30px]">
         Shopping includes only meal ingredients. Supplements and drinking water are not groceries
         here. Optional items are excluded. Salad composition, fruit type, drink amounts, and
         raw/cooked weight basis need your review where the trainer did not specify them.

@@ -18,7 +18,7 @@ export function EventRow({ event, readOnly, busy, compact, onOpen, onStatus }: E
   const { task, date, time, status } = event;
   return (
     <article
-      className={`agenda-event event-${task.kind} ${compact ? "compact-event" : ""} event-status-${status}`}
+      className={`agenda-event [&[draggable='true']]:[cursor:grab] [&[draggable='true']:active]:[cursor:grabbing] event-${task.kind} ${compact ? "compact-event" : ""} event-status-${status}`}
       draggable={!readOnly && !busy && task.scope === "scheduled" && status === "pending"}
       onDragStart={(e) => {
         e.dataTransfer.setData(eventDragType, JSON.stringify({ date, id: task.id, time }));
@@ -28,14 +28,14 @@ export function EventRow({ event, readOnly, busy, compact, onOpen, onStatus }: E
       <LibraryInput
         aria-label={`Complete ${task.title}`}
         checked={status === "done"}
-        className="event-checkbox"
+        className="event-checkbox [display:block] [flex-shrink:0] [width:26px] [height:26px] [padding:0] [margin:0] [accent-color:var(--accent)] [cursor:pointer] disabled:[cursor:not-allowed]"
         disabled={readOnly || busy}
         onChange={() => onStatus(event)}
         type="checkbox"
         unstyled
       />
       <a
-        className="event-link"
+        className="event-link [display:flex] [flex:1] [gap:12px] [align-items:center] [justify-content:space-between] [min-width:0] [&_>_svg]:[flex-shrink:0] [color:var(--accent)]"
         href={dayHref(date, task.id)}
         onClick={(e) => {
           if (!e.metaKey && !e.ctrlKey && !e.shiftKey) {
@@ -44,13 +44,17 @@ export function EventRow({ event, readOnly, busy, compact, onOpen, onStatus }: E
           }
         }}
       >
-        <span className="event-copy">
-          <span className="event-time">
+        <span className="event-copy [display:flex] [flex-direction:column] [gap:5px] [min-width:0] [&_strong]:[font-size:13px] [overflow-wrap:anywhere] max-[700px]:[&_strong]:[font-size:12px]">
+          <span className="event-time [font-size:10px] [font-variant-numeric:tabular-nums] [color:var(--accent)]">
             {time ?? "No time"}
             {status === "skipped" ? " · Skipped" : ""}
           </span>
           <strong>{task.title}</strong>
-          {!compact && <span className="event-kind">{task.kind.replaceAll("_", " ")}</span>}
+          {!compact && (
+            <span className="event-kind [font-size:10px] [color:var(--muted)] [text-transform:capitalize]">
+              {task.kind.replaceAll("_", " ")}
+            </span>
+          )}
         </span>
         <ChevronRight aria-hidden="true" size={17} />
       </a>

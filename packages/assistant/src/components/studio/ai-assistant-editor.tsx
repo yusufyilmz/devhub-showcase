@@ -15,7 +15,7 @@ import {
 } from "@shared/lib/profiles";
 import { chatStorage } from "@shared/runtime/storage";
 import { useStudioRequest } from "@shared/runtime/studio";
-import { Button } from "@shared/ui/button";
+import { Button, StudioButton } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
@@ -96,7 +96,7 @@ export function AiAssistantEditor(props: Props) {
   if (props.managed)
     return (
       <Card asChild layout="plain" surface="portfolio">
-        <section className="editor-card">
+        <section className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px]">
           <h2>Private AI assistant</h2>
           <p>This assistant is available only in your own portfolio workspace.</p>
         </section>
@@ -249,7 +249,7 @@ function AssistantWorkspace({
         profileId={profileId}
         review={
           review ? (
-            <div className="studio-chat-review">
+            <div className="studio-chat-review [padding:var(--spacing-md)] [background:var(--card)] [border:1px_solid_var(--border)] [border-radius:var(--radius-xl)] [&_>_section]:[display:grid] [gap:var(--spacing-sm)] [&_h3]:[font-size:var(--text-base)] [font-weight:600] [&_label]:[display:flex] [gap:var(--spacing-s)] [align-items:center] [&_details]:[padding-block:var(--spacing-s)] [&_pre]:[max-height:240px] [padding:var(--spacing-sm)] [overflow:auto] [font-size:var(--text-xs)] [white-space:pre-wrap] [background:var(--muted)] [border-radius:var(--radius-md)]">
               <ProposalReview
                 apply={apply}
                 discard={() => setReview(null)}
@@ -271,7 +271,7 @@ function AssistantWorkspace({
     );
   return (
     <Card asChild layout="plain" surface="portfolio">
-      <section className="editor-card">
+      <section className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px]">
         <h2>Private AI assistant</h2>
         <p>
           Describe how to create or improve your portfolio. Your current draft, including private
@@ -317,14 +317,13 @@ function AssistantWorkspace({
           unstyled
           value={message}
         />
-        <Button
-          className="studio-primary"
+        <StudioButton
           disabled={!availability?.enabled || !canGenerate(profileId, message, task, busy)}
           onClick={generate}
           type="button"
         >
           {busy ? "Preparing proposal…" : "Generate proposal"}
-        </Button>
+        </StudioButton>
         {busy && <p role="status">Reviewing your draft…</p>}
         {error && <p role="alert">{error}</p>}
         {status && <p role="status">{status}</p>}
@@ -341,19 +340,19 @@ function AssistantWorkspace({
           />
         )}
         {undo && (
-          <Button
-            className="studio-secondary"
+          <StudioButton
             disabled={busy || undo.after !== current}
             onClick={() => {
               onChange(undo.before);
               setUndo(null);
               setStatus("AI changes undone in your draft.");
             }}
+            tone="secondary"
             type="button"
             variant="outline"
           >
             Undo AI changes
-          </Button>
+          </StudioButton>
         )}
       </section>
     </Card>
@@ -413,7 +412,10 @@ function ProposalReview({
         Reject all proposed changes
       </Button>
       {review.proposal.changes.map((change) => (
-        <div className="proposal-change" key={change.field}>
+        <div
+          className="proposal-change [padding-block:20px] [border-bottom:1px_solid_var(--border)]"
+          key={change.field}
+        >
           <LibraryLabel unstyled>
             <LibraryInput
               checked={selected.includes(change.field)}
@@ -434,17 +436,12 @@ function ProposalReview({
           <ProposalComparison after={JSON.parse(change.value)} before={profile[change.field]} />
         </div>
       ))}
-      <Button
-        className="studio-primary"
-        disabled={stale || selected.length === 0}
-        onClick={apply}
-        type="button"
-      >
+      <StudioButton disabled={stale || selected.length === 0} onClick={apply} type="button">
         Apply selected changes to draft
-      </Button>{" "}
-      <Button className="studio-secondary" onClick={discard} type="button" variant="outline">
+      </StudioButton>{" "}
+      <StudioButton onClick={discard} tone="secondary" type="button" variant="outline">
         Discard proposal
-      </Button>
+      </StudioButton>
     </section>
   );
 }

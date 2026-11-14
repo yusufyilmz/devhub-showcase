@@ -1,5 +1,7 @@
 "use client";
 
+import { cn } from "cn";
+
 import { portfolioTypes } from "@shared/config";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
@@ -7,14 +9,17 @@ import { Label as LibraryLabel } from "@shared/ui/label";
 import { portfolioTypePickerStyles } from "./styles";
 import type { PortfolioTypePickerOptions } from "./types";
 
-export function PortfolioTypePicker({ value, onChange }: PortfolioTypePickerOptions) {
+export function PortfolioTypePicker({
+  value,
+  onChange,
+  legend = "Choose your portfolio layout",
+  description = "The same information, presented your way. You can change this later without losing your content.",
+  className,
+}: PortfolioTypePickerOptions) {
   return (
-    <fieldset className={portfolioTypePickerStyles.element1}>
-      <legend>Choose your portfolio layout</legend>
-      <p>
-        The same information, presented your way. You can change this later without losing your
-        content.
-      </p>
+    <fieldset className={cn(portfolioTypePickerStyles.element1, className)}>
+      <legend>{legend}</legend>
+      <p>{description}</p>
       <div className={portfolioTypePickerStyles.element2}>
         {portfolioTypes.map((type) => (
           <LibraryLabel

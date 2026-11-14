@@ -80,8 +80,10 @@ export function SectionCatalog() {
             <Card asChild interaction="static" key={id} layout="plain" surface="portfolio">
               <li>
                 <SectionCatalogPreview type={id} />
-                <div className="section-catalog-card-copy">
-                  <span className="section-catalog-card-category">{category}</span>
+                <div className="section-catalog-card-copy [width:100%] [padding:12px_14px_16px] [&_h4]:[margin-top:4px] [font-size:15px] [font-weight:650] [overflow-wrap:anywhere] [&_p]:[margin-top:5px] [font-size:12px] [line-height:1.45] [color:var(--muted-foreground)]">
+                  <span className="section-catalog-card-category [font-size:10px] [font-weight:700] [color:var(--primary)] [text-transform:uppercase] [letter-spacing:0.09em]">
+                    {category}
+                  </span>
                   <h4>{name}</h4>
                   <p>{description}</p>
                 </div>

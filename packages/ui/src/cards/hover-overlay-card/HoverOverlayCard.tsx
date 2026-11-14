@@ -14,7 +14,7 @@ export function HoverOverlayCard({
     <CardBase
       asChild
       className={cn(
-        "group/image isolate min-h-64 max-w-sm justify-end overflow-hidden p-md",
+        "group/image isolate min-h-64 max-w-sm justify-end overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)] p-md",
         className,
       )}
       interaction="static"

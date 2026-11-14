@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import { ReviewState } from "@shared/lib/types";
 import { useNotification } from "@shared/runtime/notifications";
-import { Button } from "@shared/ui/button";
+import { StudioButton } from "@shared/ui/button";
 
 import type { ReviewButtonOptions } from "./types";
 
@@ -43,25 +43,24 @@ export function ReviewButton({ handleReview, id, name, updatedAt }: ReviewButton
         </p>
       )}
       <div className="flex flex-wrap justify-end gap-2">
-        <Button
+        <StudioButton
           aria-label={`Reject testimonial from ${name}`}
-          className="studio-secondary"
           disabled={Boolean(saving)}
           onClick={() => decide(ReviewState.REJECTED)}
+          tone="secondary"
           type="button"
           variant="outline"
         >
           {saving === ReviewState.REJECTED ? "Rejecting…" : "Reject"}
-        </Button>
-        <Button
+        </StudioButton>
+        <StudioButton
           aria-label={`Approve testimonial from ${name}`}
-          className="studio-primary"
           disabled={Boolean(saving)}
           onClick={() => decide(ReviewState.APPROVED)}
           type="button"
         >
           {saving === ReviewState.APPROVED ? "Approving…" : "Approve"}
-        </Button>
+        </StudioButton>
       </div>
     </div>
   );

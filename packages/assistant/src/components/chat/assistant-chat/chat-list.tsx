@@ -251,7 +251,7 @@ export const ChatListEmpty = React.forwardRef<HTMLDivElement, ChatListEmptyProps
         ref={ref}
         {...props}
       >
-        <div className="text-7xl mb-6 animate-bounce">{icon}</div>
+        <div className="text-7xl mb-6 animate-bounce [animation-delay:150ms]">{icon}</div>
         <h3 className="text-xl font-bold mb-2 text-foreground">{title}</h3>
         <p className="text-sm text-muted-foreground max-w-xs mb-6">{description}</p>
         {action && <div className="mt-4">{action}</div>}

@@ -1,6 +1,5 @@
 "use client";
 import "@shared/ui/components.css";
-import "./settings.css";
 
 import {
   getPortfolioSections,

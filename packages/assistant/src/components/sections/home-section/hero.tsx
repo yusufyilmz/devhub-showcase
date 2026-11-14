@@ -8,7 +8,11 @@ import type { HomeHeroSectionOptions } from "./types";
 
 export function HomeHeroSection({ action, exampleHref }: HomeHeroSectionOptions) {
   return (
-    <Background className="home-hero-background rounded-none" effect="aurora" variant="transparent">
+    <Background
+      className="home-hero-background [--aurora-accent:var(--primary)] rounded-none"
+      effect="aurora"
+      variant="transparent"
+    >
       <HeroBlock
         actions={
           <>

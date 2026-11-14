@@ -90,22 +90,21 @@ Hero text must stay readable over image and video. Video needs a pause control a
 
 `src/styles` keeps tokens and the foundation layer. See [DESIGN.md — Stylesheet architecture](../../../DESIGN.md#stylesheet-architecture) and `src/styles/STYLES.md` (pointer only). The app root layout imports `@shared/ui/globals.css` (the same file as `app.css`). Storybook preview imports `@shared/ui/foundation.css`. Do not add a second global entry in `apps/my-dev-studio` or `apps/storybook-app`.
 
-| Export                                 | File                                     | Use                                                         |
-| -------------------------------------- | ---------------------------------------- | ----------------------------------------------------------- |
-| `@shared/ui/foundation.css`            | `styles/foundation.css`                  | Tailwind, tokens, surfaces — Storybook and token-only hosts |
-| `@shared/ui/app.css`                   | `styles/app.css`                         | Foundation + portfolio bundle — same as full app CSS        |
-| `@shared/ui/globals.css`               | `styles/app.css`                         | Same file as `app.css` (MyDevStudio layout)                 |
-| `@shared/ui/styles.css`                | `styles/foundation.css`                  | Same file as `foundation.css`                               |
-| `@shared/ui/shadcn.css`                | `styles/tokens/index.css`                | Token aggregator                                            |
-| `@shared/ui/theme.css`                 | `styles/foundation/theme-aliases.css`    | Theme aliases                                               |
-| `@shared/ui/themes.css`                | `layout/portfolio/presets.css`           | Portfolio theme presets                                     |
-| `@shared/ui/components.css`            | `layout/portfolio/portfolio.css`         | Studio and portfolio control skin                           |
-| `@shared/ui/sections.css`              | `layout/section/sections.css`            | Section frame                                               |
-| `@shared/ui/portfolios.css`            | `layout/portfolio/layouts.css`           | Published portfolio layouts                                 |
-| `@shared/ui/layout.css`                | `navigation/chrome.css`                  | Site header, nav, and footer chrome                         |
-| `@shared/assistant/portfolio-chat.css` | `chat/portfolio-chat/portfolio-chat.css` | Portfolio chat styles                                       |
-| `@shared/ui/surfaces.css`              | `cards/surfaces.css`                     | Shared control surfaces                                     |
-| `@shared/ui/postcss.config`            | `postcss.config.js`                      | Shared PostCSS config                                       |
+| Export                      | File                                  | Use                                                         |
+| --------------------------- | ------------------------------------- | ----------------------------------------------------------- |
+| `@shared/ui/foundation.css` | `styles/foundation.css`               | Tailwind, tokens, surfaces — Storybook and token-only hosts |
+| `@shared/ui/app.css`        | `styles/app.css`                      | Foundation + portfolio bundle — same as full app CSS        |
+| `@shared/ui/globals.css`    | `styles/app.css`                      | Same file as `app.css` (MyDevStudio layout)                 |
+| `@shared/ui/styles.css`     | `styles/foundation.css`               | Same file as `foundation.css`                               |
+| `@shared/ui/shadcn.css`     | `styles/tokens/index.css`             | Token aggregator                                            |
+| `@shared/ui/theme.css`      | `styles/foundation/theme-aliases.css` | Theme aliases                                               |
+| `@shared/ui/themes.css`     | `layout/portfolio/presets.css`        | Portfolio theme presets                                     |
+| `@shared/ui/components.css` | `layout/portfolio/portfolio.css`      | Studio and portfolio control skin                           |
+| `@shared/ui/sections.css`   | `layout/section/sections.css`         | Section frame                                               |
+| `@shared/ui/portfolios.css` | `layout/portfolio/layouts.css`        | Published portfolio layouts                                 |
+| `@shared/ui/layout.css`     | `navigation/chrome.css`               | Site header, nav, and footer chrome                         |
+| `@shared/ui/surfaces.css`   | `cards/surfaces.css`                  | Shared control surfaces                                     |
+| `@shared/ui/postcss.config` | `postcss.config.js`                   | Shared PostCSS config                                       |
 
 Put a new brand token in `src/styles/tokens`. Put other CSS next to the component that imports it. Shared portfolio skins live in `src/layout/portfolio`. Section frame rules live in `src/layout/section/sections.css`. Chat rules live beside the chat component in `packages/assistant`.
 

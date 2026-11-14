@@ -9,7 +9,7 @@ export function DashboardContent({ section }: Pick<SectionProps, "section">) {
   return (
     <div className="grid gap-md">
       {metrics.length > 0 && (
-        <dl className="section-view-grid grid gap-s">
+        <dl className="section-view-grid [ul&]:[display:grid] grid gap-s">
           {metrics.map((item) => (
             <Card asChild interaction="static" key={item.id} layout="plain">
               <div className="min-w-0 p-md">

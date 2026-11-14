@@ -16,10 +16,11 @@ export const scrollAreaStyles = {
 } as const;
 
 export const scrollableContainerStyles = {
-  element1: "relative flex align-top scrollbar-hide overflow-hidden",
+  element1:
+    "relative flex align-top scrollbar-hide overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)]",
   element2: "absolute z-10 left-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2",
   element3:
-    "w-full gap-8 no-scrollbar flex flex-row justify-start overflow-x-auto scrollbar-hide whitespace-nowrap p-4 max-w-full",
+    "w-full gap-8 [--studio-heading-gap:0px] no-scrollbar [scrollbar-width:thin] flex flex-row justify-start overflow-x-auto scrollbar-hide whitespace-nowrap p-4 max-w-full",
   element4: "absolute z-10 right-0 transform -translate-y-1/2 bg-gray-200 rounded-full p-2",
 } as const;
 

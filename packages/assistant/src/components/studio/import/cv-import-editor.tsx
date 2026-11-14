@@ -14,10 +14,11 @@ import {
   cvReviewNotes,
 } from "@shared/lib/cv-import";
 import { type StudioRequest, useStudioRequest } from "@shared/runtime/studio";
-import { Button } from "@shared/ui/button";
+import { StudioButton } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
+import { Eyebrow } from "@shared/ui/typography";
 
 import { CvImportReview } from "./cv-import-review";
 
@@ -85,11 +86,11 @@ export function CvImportEditor({
       <section
         aria-label={embedded ? "CV upload" : undefined}
         aria-labelledby={embedded ? undefined : "cv-import-title"}
-        className="editor-card cv-import-panel"
+        className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px] cv-import-panel [display:grid] [gap:1rem] [&_input[type='file']]:[max-width:100%]"
       >
         {!embedded && (
           <>
-            <p className="eyebrow">START WITH YOUR EXPERIENCE</p>
+            <Eyebrow>START WITH YOUR EXPERIENCE</Eyebrow>
             <h2 id="cv-import-title">Turn your CV into a portfolio</h2>
             <p>
               Upload your CV, review the extracted details and choose what to use. Your portfolio
@@ -123,7 +124,10 @@ export function CvImportEditor({
           PDF, DOCX or UTF-8 text, up to 3 MB. Scanned PDFs may need a clearer copy. Original files
           are not saved to your account.
         </p>
-        <LibraryLabel className="editor-checkbox" unstyled>
+        <LibraryLabel
+          className="editor-checkbox flex items-center gap-2.5 text-xs text-muted-foreground [&_input]:size-4 [&_input]:accent-primary"
+          unstyled
+        >
           <LibraryInput
             checked={consent}
             disabled={busy}
@@ -137,29 +141,28 @@ export function CvImportEditor({
           The file is sent for this request. OpenAI’s API data retention policies apply. Review the
           result for mistakes before saving.
         </p>
-        <div className="cv-import-actions">
-          <Button
-            className="studio-primary"
+        <div className="cv-import-actions [display:flex] [flex-wrap:wrap] [gap:1rem] [&_button]:[min-height:44px]">
+          <StudioButton
             disabled={!enabled || !file || !consent || busy}
             onClick={extract}
             type="button"
           >
             {busy ? "Reading your CV…" : "Process CV"}
-          </Button>
+          </StudioButton>
           {(busy || candidate) && (
-            <Button
-              className="studio-secondary"
+            <StudioButton
               onClick={() => {
                 pending.current?.abort();
                 setBusy(false);
                 setCandidate(null);
                 setMessage("Import cancelled. Your draft is unchanged.");
               }}
+              tone="secondary"
               type="button"
               variant="outline"
             >
               Cancel import
-            </Button>
+            </StudioButton>
           )}
         </div>
         {busy && (
@@ -168,12 +171,18 @@ export function CvImportEditor({
           </p>
         )}
         {error && (
-          <p className="editor-alert" role="alert">
+          <p
+            className="editor-alert mb-6 rounded-[10px] border border-border px-5 py-4 text-xs leading-[1.8] whitespace-pre-line text-destructive [&_button]:mt-2.5 [&_button]:underline"
+            role="alert"
+          >
             {error}
           </p>
         )}
         {message && (
-          <p className="editor-success" role="status">
+          <p
+            className="editor-success mb-6 rounded-[10px] border border-border px-5 py-4 text-xs leading-[1.8] text-primary"
+            role="status"
+          >
             {message}
           </p>
         )}

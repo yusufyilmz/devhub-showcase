@@ -351,7 +351,6 @@ Import portfolio sections from `@shared/assistant/sections`. Visual rules for th
 | `@shared/ui/error-page`                | `src/feedback/error-page/index.ts`                                         | Error page presentation                                    |
 | `@shared/ui/not-found`                 | `src/feedback/not-found/index.ts`                                          | Missing page presentation                                  |
 | `@shared/assistant/portfolio`          | `src/portfolio/index.ts`                                                   | Published portfolio layouts and studio tools               |
-| `@shared/assistant/portfolio-chat.css` | `packages/assistant/src/components/chat/portfolio-chat/portfolio-chat.css` | Styles for the embedded portfolio chat                     |
 | `@shared/ui/seo`                       | `src/seo/index.ts`                                                         | Canonical, Open Graph, Twitter, and Schema.org metadata    |
 | `@shared/ui/seo/image`                 | `src/seo/share-image.tsx`                                                  | Server-side social share image renderer                    |
 

@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const badgeVariants = cva(
-  "inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-[background-color,border-color,color] focus-visible:ring-2 focus-visible:ring-ring/40 [&>svg]:pointer-events-none [&>svg]:size-3",
+  "inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)] rounded-full border px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-[background-color,border-color,color] focus-visible:ring-2 focus-visible:ring-ring/40 [&>svg]:pointer-events-none [&>svg]:size-3",
   {
     defaultVariants: {
       variant: "default",

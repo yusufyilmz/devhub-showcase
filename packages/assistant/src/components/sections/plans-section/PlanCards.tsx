@@ -10,7 +10,7 @@ import type { SectionProps } from "../types";
 export function PlanCards({ language, section }: Pick<SectionProps, "language" | "section">) {
   if (!section.items.length) return null;
   return (
-    <div className="section-view-grid grid gap-s">
+    <div className="section-view-grid [ul&]:[display:grid] grid gap-s">
       {section.items.map((item) => (
         <Card asChild interaction="static" key={item.id} layout="plain">
           <article className="flex min-w-0 flex-col gap-s bg-linear-to-b from-primary/5 to-card p-md">

@@ -53,7 +53,7 @@ const meta = {
       <StudioShell
         contentId="admin-content"
         tools={
-          <div className="admin-tools">
+          <div className="admin-tools flex items-center gap-3">
             <ThemeToggle />
           </div>
         }

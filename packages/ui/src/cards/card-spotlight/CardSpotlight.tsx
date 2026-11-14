@@ -22,7 +22,10 @@ export function CardSpotlight({
   return (
     <CardBase
       {...props}
-      className={cn("group/spotlight isolate overflow-hidden p-5", className)}
+      className={cn(
+        "group/spotlight isolate overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)] p-5",
+        className,
+      )}
       interaction={interaction}
       onPointerMove={(event) => {
         onPointerMove?.(event);

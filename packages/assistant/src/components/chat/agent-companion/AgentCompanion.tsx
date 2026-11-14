@@ -30,7 +30,7 @@ function NoticeBubble({
 }) {
   return (
     <ChatBubble
-      className="agent-notice"
+      className="agent-notice [&_a:focus-visible]:[outline [display:inline-flex] [gap:9px] [align-items:center] [justify-content:center] [min-height:42px] [padding:12px_17px] [font-size:12px] [font-weight:600] [border-radius:8px] [background:var(--surface)] [border:1px_solid_var(--line)] max-[700px]:[min-height:38px] [padding:9px_12px] [font-size:10px] hover:[color:var(--accent)] [border-color:var(--accent)]:2px_solid_var(--agent-accent)] [outline-offset:3px] [&_button:focus-visible]:[outline after:[position:absolute] [inset-block-end:-0.32rem] [inset-inline-end:1.75rem] [width:0.6rem] [height:0.6rem] [pointer-events:none] [content:''] [background:inherit] [border:solid_var(--border)] [border-width:0_1px_1px_0] [rotate:45deg] [&_strong]:[font-size:0.8125rem] [font-weight:650] [&_a]:[font-size:0.8125rem] [&_p]:[margin:0.25rem_0_0] [font-size:0.75rem] [line-height:1.45] [color:var(--muted-foreground)] [&_a]:[width:fit-content] [color:inherit] [text-decoration:underline] [text-underline-offset:0.15rem] [&_.agent-notice-dismiss]:[position:absolute] [inset-block-start:0.25rem] [inset-inline-end:0.25rem] [display:grid] [place-items:center] [width:1.75rem] [height:1.75rem] [min-height:0] [padding:0] [cursor:pointer] [background:transparent] [border:0] [border-radius:0.375rem] [&_.agent-notice-dismiss:hover]:[background:var(--secondary)]"
       enableHover={false}
       maxWidth="none"
       ref={bubble}
@@ -43,7 +43,11 @@ function NoticeBubble({
           !tip && ("announce" in notice ? notice.announce !== false : true) ? "status" : undefined
         }
       >
-        {tip && <span className="agent-tip-kicker">Feature tip</span>}
+        {tip && (
+          <span className="agent-tip-kicker [display:block] [font-size:0.7rem] [font-weight:600] [color:var(--muted-foreground)]">
+            Feature tip
+          </span>
+        )}
         <strong>{notice.title}</strong>
         <p>{notice.message}</p>
       </div>
@@ -165,7 +169,10 @@ export function AgentCompanion({
 
   return (
     <div
-      className={cn("agent-companion", className)}
+      className={cn(
+        "agent-companion [&[data-placement='floating']]:[--agent-size:min(_var(--agent-custom-size,_var(--agent-launcher-size,_8.375rem)),_max(48px,_calc(100dvh_-_100px))_)] [&[data-placement='floating']_.agent-launcher]:[width:var(--agent-size)] [&[data-dragging]_.agent-launcher]:[cursor:grabbing] [&[data-dragging]_.agent-launcher-label]:[visibility:hidden] [&[data-dragging]_.agent-notice]:[visibility:hidden] [&[data-placement='floating']_.agent-notice]:[--agent-notice-width:min(17.5rem,_calc(100vw_-_32px))] [&[data-upper]_.agent-notice]:[inset-block-start:calc(100%_+_0.5rem)] [&[data-upper]_.agent-launcher-label]:[inset-block-start:calc(100%_+_0.5rem)] [&[data-placement='floating']_.agent-notice::after]:[display:none] [&[data-side='left']_.agent-launcher-label]:[inset-inline:0_auto] motion-safe:[&[data-side='left']_.agent-notice]:[transform-origin:bottom_left] [&[data-placement='composer']]:[--agent-launcher-size:3.75rem] [&[data-placement='composer']_.agent-launcher]:[cursor:default] [&[data-activity='listening']_.agent-avatar]:[rotate:-8deg] [&[data-activity='thinking']_.agent-arm]:[transform:translate(-10px,_-13px)_rotate(-20deg)] [&[data-activity='error']_.agent-avatar]:[rotate:6deg] motion-safe:[&:not([data-activity='idle'])_.agent-avatar]:[animation:none] motion-safe:[&:not([data-activity='idle'])_.agent-arm]:[animation:none] motion-safe:[&[data-activity='listening']_.agent-avatar]:[animation:agent-attentive_2.4s_ease-in-out_infinite] motion-safe:[&[data-activity='thinking']_.agent-avatar]:[animation:agent-ponder_2.8s_ease-in-out_infinite] motion-safe:[&[data-activity='thinking']_.agent-thoughts]:[animation:agent-thought_1.5s_ease-in-out_infinite] motion-safe:[&[data-activity='writing']_.agent-avatar]:[animation:agent-attentive_1s_ease-in-out_infinite] motion-safe:[&[data-activity='writing']_.agent-pencil]:[transform-origin:59px_60px] motion-safe:[&[data-activity='writing']_.agent-arm]:[transform-origin:59px_60px] motion-safe:[&[data-activity='happy']_.agent-avatar]:[animation:agent-cheer_650ms_ease-out_2] motion-safe:[&[data-activity='happy']_.agent-arm]:[animation:agent-wave_1.8s_ease-in-out_2] motion-safe:[&[data-activity='error']_.agent-avatar]:[animation:agent-concern_450ms_ease-in-out]",
+        className,
+      )}
       data-activity={activity}
       data-agent={agent}
       data-dragging={dock.moving || undefined}
@@ -183,13 +190,17 @@ export function AgentCompanion({
         />
       )}
       {placement === "composer" ? (
-        <span aria-label={`${label}: ${activity}`} className="agent-launcher" role="img">
+        <span
+          aria-label={`${label}: ${activity}`}
+          className="agent-launcher hover:[&_.agent-launcher-label]:[visibility:visible] focus-visible:[&_.agent-launcher-label]:[visibility:visible]"
+          role="img"
+        >
           <AgentAvatar activity={activity} agent={agent} />
         </span>
       ) : (
         <Button
           aria-label={label}
-          className="agent-launcher"
+          className="agent-launcher hover:[&_.agent-launcher-label]:[visibility:visible] focus-visible:[&_.agent-launcher-label]:[visibility:visible]"
           draggable={false}
           href={href}
           onClick={(event) => {
@@ -204,15 +215,23 @@ export function AgentCompanion({
           variant="unstyled"
         >
           <AgentAvatar activity={activity} agent={agent} />
-          {currentBubble && <span aria-hidden="true" className="agent-notice-dot" />}
+          {currentBubble && (
+            <span
+              aria-hidden="true"
+              className="agent-notice-dot [position:absolute] [inset-block-start:0.4rem] [inset-inline-end:0.4rem] [width:0.625rem] [height:0.625rem] [background:var(--agent-accent)] [border:2px_solid_var(--card)] [border-radius:50%]"
+            />
+          )}
           {!currentBubble && (
-            <span aria-hidden="true" className="agent-launcher-label">
+            <span
+              aria-hidden="true"
+              className="agent-launcher-label [position:absolute] [inset-block-end:calc(100%_+_0.35rem)] [inset-inline-end:0] [visibility:hidden] [padding:0.25rem_0.5rem] [font-size:0.6875rem] [white-space:nowrap] [pointer-events:none] [background:var(--card)] [border:1px_solid_var(--border)] [border-radius:0.375rem]"
+            >
               {label}
             </span>
           )}
         </Button>
       )}
-      <div className="agent-companion-controls">
+      <div className="agent-companion-controls [&:empty [padding:40px] [font-size:12px] [color:var(--muted)] [text-align:center]]:[display:none] [display:flex] [gap:2px] [justify-self:center]">
         {floating && (
           <Button
             aria-label={`Move companion to the ${opposite}`}

@@ -37,10 +37,7 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
   });
   await page.goto(ownerUrl);
   await openEditor(page);
-  await page
-    .getByRole("combobox", { name: "What kind of work do you do?" })
-    .selectOption("designer");
-  await page.getByRole("button", { exact: true, name: "Choose a layout" }).click();
+  await page.getByRole("radio", { name: /Designer/ }).check();
   await page.getByRole("button", { name: "Continue to CV import" }).click();
   await expect(page.getByRole("dialog", { name: "Import a CV" })).toBeVisible();
   await expect(page.getByText("Start from Google profile")).toHaveCount(0);

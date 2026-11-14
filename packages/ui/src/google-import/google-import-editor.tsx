@@ -13,6 +13,7 @@ import { applyGoogleProfile, type GoogleImportField } from "@shared/lib/profiles
 
 import { Button } from "../buttons";
 import { Card } from "../cards";
+import { Eyebrow } from "../display/typography/Eyebrow";
 import { Input as LibraryInput } from "../forms/input/Input";
 import { Label as LibraryLabel } from "../forms/label/Label";
 import { GoogleImportReview } from "./google-import-review";
@@ -29,9 +30,9 @@ export function GoogleImportEditor({
     return (
       <Card asChild layout="plain" surface="portfolio">
         <section className={googleImportEditorStyles.panel}>
-          <div className="editor-section-heading">
+          <div className="editor-section-heading mb-5 flex flex-wrap items-center justify-between gap-4 max-[767px]:items-start [&_h2]:my-1 [&_h2]:mb-2 [&_h2]:text-[clamp(1.375rem,2.6vw,1.875rem)] [&_h2]:leading-[1.17] [&_h2]:font-[670] [&_h2]:tracking-[-0.035em] [&_p:not(.eyebrow)]:max-w-[62ch] [&_p:not(.eyebrow)]:text-[0.9375rem] [&_p:not(.eyebrow)]:leading-normal [&_p:not(.eyebrow)]:text-muted-foreground">
             <div>
-              <p className="eyebrow">Profile import</p>
+              <Eyebrow>Profile import</Eyebrow>
               <h2>Import from Google</h2>
               <p>Google import is available in your own portfolio workspace.</p>
             </div>
@@ -50,9 +51,9 @@ function GoogleImportWorkspace({ profile, onChange }: GoogleImportWorkspaceOptio
   return (
     <Card asChild layout="plain" surface="portfolio">
       <section aria-labelledby="google-import-title" className={googleImportEditorStyles.panel}>
-        <header className="editor-section-heading">
+        <header className="editor-section-heading mb-5 flex flex-wrap items-center justify-between gap-4 max-[767px]:items-start [&_h2]:my-1 [&_h2]:mb-2 [&_h2]:text-[clamp(1.375rem,2.6vw,1.875rem)] [&_h2]:leading-[1.17] [&_h2]:font-[670] [&_h2]:tracking-[-0.035em] [&_p:not(.eyebrow)]:max-w-[62ch] [&_p:not(.eyebrow)]:text-[0.9375rem] [&_p:not(.eyebrow)]:leading-normal [&_p:not(.eyebrow)]:text-muted-foreground">
           <div>
-            <p className="eyebrow">Profile import</p>
+            <Eyebrow>Profile import</Eyebrow>
             <h2 id="google-import-title">Import from Google</h2>
             <p>
               Choose the profile details you want to bring into your draft. You’ll review each
@@ -60,7 +61,7 @@ function GoogleImportWorkspace({ profile, onChange }: GoogleImportWorkspaceOptio
             </p>
           </div>
         </header>
-        <div className="google-import-privacy">
+        <div className="google-import-privacy [display:grid] [gap:0.375rem] [padding:0.875rem_1rem] [margin-block:0_1.25rem] [background:var(--secondary)] [border:1px_solid_var(--border)] [border-radius:0.75rem] [&_h3]:[font-size:0.875rem] [font-weight:650] [&_p]:[max-width:75ch] [font-size:0.8125rem] [color:var(--muted-foreground)]">
           <h3>What MyDevStudio can read</h3>
           <p>
             We read only the Google profile categories you choose. Your MyDevStudio sign-in stays
@@ -75,9 +76,12 @@ function GoogleImportWorkspace({ profile, onChange }: GoogleImportWorkspaceOptio
         {!state.checking && !state.clientId && (
           <p>Google import needs site configuration. You can still enter your details manually.</p>
         )}
-        <fieldset className="google-import-fields" disabled={state.busy || !state.clientId}>
+        <fieldset
+          className="google-import-fields [&_legend]:[font-size:0.875rem] [font-weight:650] [min-inline-size:0] [&_legend]:[margin-block-end:0.625rem]"
+          disabled={state.busy || !state.clientId}
+        >
           <legend>Details to request from Google</legend>
-          <div className="google-import-categories">
+          <div className="google-import-categories [display:grid] [grid-template-columns:repeat(auto-fit,_minmax(min(100%,_15rem),_1fr))] [gap:0.5rem]">
             {googleProfileCategories.map((category) => (
               <LibraryLabel className={googleImportEditorStyles.option} key={category} unstyled>
                 <LibraryInput
@@ -112,7 +116,7 @@ function GoogleImportWorkspace({ profile, onChange }: GoogleImportWorkspaceOptio
           </LibraryLabel>
         </fieldset>
         {state.preparing && <p role="status">Preparing Google permission screen…</p>}
-        <div className="google-import-actions">
+        <div className="google-import-actions [display:flex] [flex-wrap:wrap] [gap:0.625rem] [&_button]:[height:auto] [min-height:2.625rem] [white-space:normal]">
           {consent && !state.oauth && !state.preparing && state.clientId && (
             <Button
               className={googleImportEditorStyles.secondary}

@@ -62,7 +62,7 @@ export function SearchForm({ search, run, busy }: SearchFormProps) {
           : "Create a saved search"}
       </summary>
       <form
-        className="job-hunter-grid"
+        className="grid min-w-0 grid-cols-[repeat(auto-fit,minmax(min(100%,15rem),1fr))] gap-4"
         onSubmit={async (event) => {
           event.preventDefault();
           const form = new FormData(event.currentTarget);
@@ -99,7 +99,7 @@ export function SearchForm({ search, run, busy }: SearchFormProps) {
           );
         })}
         {Object.entries(options).map(([name, values]) => (
-          <Label className="job-hunter-capitalize" key={name}>
+          <Label className="capitalize" key={name}>
             {name}
             <NativeSelect defaultValue={filters?.[name as keyof typeof options]} name={name}>
               <option value="">Any</option>
@@ -154,7 +154,7 @@ export function SearchForm({ search, run, busy }: SearchFormProps) {
             type="number"
           />
         </Label>
-        <div className="job-hunter-actions">
+        <div className="flex flex-wrap items-center gap-2">
           <Checkbox
             defaultChecked={filters?.sponsorship}
             id={`${id}-sponsorship`}
@@ -162,13 +162,13 @@ export function SearchForm({ search, run, busy }: SearchFormProps) {
           />
           <Label htmlFor={`${id}-sponsorship`}>Require visa sponsorship</Label>
         </div>
-        <div className="job-hunter-actions">
+        <div className="flex flex-wrap items-center gap-2">
           <Checkbox defaultChecked={search?.enabled} id={`${id}-enabled`} name="enabled" />
           <Label htmlFor={`${id}-enabled`}>
             Enable scheduled discovery and AI matching against my CV
           </Label>
         </div>
-        <div className="job-hunter-actions">
+        <div className="flex flex-wrap items-center gap-2">
           <Button disabled={busy} type="submit">
             Save search
           </Button>

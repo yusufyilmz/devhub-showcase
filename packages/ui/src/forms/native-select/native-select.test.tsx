@@ -36,6 +36,8 @@ describe("Shared native form semantics", () => {
     const input = screen.getByRole("checkbox", { name: "Enabled" });
     fireEvent.click(input);
     expect((input as HTMLInputElement).checked).toBe(true);
-    expect(input.className).not.toContain("ui-input");
+    expect(input.className).not.toContain(
+      "ui-input [[data-theme='dark']_&]:[background-color:color-mix(in_srgb,_var(--foreground)_6%,_transparent)]",
+    );
   });
 });

@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const textFieldVariants = cva(
-  "ui-input flex w-full rounded-lg border border-border bg-background px-[var(--spacing-md)] py-[var(--spacing-sm)] text-foreground shadow-none placeholder:text-muted-foreground transition-[border-color,background-color] focus:border-foreground focus:outline-none focus:ring-2 focus:ring-ring/40 disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground dark:bg-foreground/5",
+  "ui-input [background-color:var(--background)] [border-color:var(--border)] [box-shadow:none] flex w-full rounded-lg border border-border bg-background px-[var(--spacing-md)] py-[var(--spacing-sm)] text-foreground shadow-none placeholder:text-muted-foreground transition-[border-color,background-color] focus:border-foreground focus:outline-none focus:ring-2 focus:ring-ring/40 disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground dark:bg-foreground/5",
   {
     defaultVariants: {
       size: "default",

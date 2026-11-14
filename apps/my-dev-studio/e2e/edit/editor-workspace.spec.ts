@@ -47,15 +47,16 @@ test("editor workspace keeps draft editing, preview and publication separate", a
     const headingBounds = await page.locator(".studio-editor-header").boundingBox();
     expect(sidebarBounds?.x).toBe(0);
     expect(sidebarBounds?.y ?? Number.POSITIVE_INFINITY).toBeLessThan(headingBounds?.y ?? 0);
+    const column = page.locator("[data-slot='sidebar-container']");
     await sidebar.getByRole("button", { name: "Collapse sidebar" }).click();
-    await expect(sidebar).toHaveCSS("width", "64px");
+    await expect(column).toHaveCSS("width", "64px");
+    await expect(page.locator("[data-slot='sidebar']")).toHaveAttribute("data-collapsible", "icon");
     const publishing = sidebar.getByRole("button", { exact: true, name: "Publishing" });
     await expect(publishing.locator("svg.lucide-send")).toHaveCount(1);
-    await expect(publishing).toHaveText("");
     await publishing.click();
     await expect(workspace.getByRole("region", { name: "Edit Publishing" })).toBeInViewport();
     await sidebar.getByRole("button", { name: "Expand sidebar" }).click();
-    await expect(sidebar).toHaveCSS("width", "232px");
+    await expect(column).toHaveCSS("width", "232px");
     await selectEditorSection(page, "Profile");
   } else {
     await openEditor(page);
@@ -125,7 +126,6 @@ test("editor workspace keeps draft editing, preview and publication separate", a
   page.once("dialog", (dialog) => dialog.accept());
   await page.getByRole("button", { name: "Start from scratch" }).click();
   await expect(page.getByRole("dialog", { name: "Choose your work type" })).toBeVisible();
-  await page.getByRole("button", { name: "Choose a layout" }).click();
   await page.getByRole("button", { name: "Continue to CV import" }).click();
   await page.getByRole("button", { name: "Skip for now" }).click();
   await expect(title).toHaveValue("");

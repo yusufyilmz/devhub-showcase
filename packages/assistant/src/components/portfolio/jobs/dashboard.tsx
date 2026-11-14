@@ -1,7 +1,5 @@
 "use client";
 
-import "./jobs.css";
-
 import { useState } from "react";
 
 import { Button } from "@shared/ui/button";
@@ -33,7 +31,7 @@ function ListingSource({ source }: { source: string }) {
   if (source === "adzuna") {
     return (
       <Button
-        className="job-hunter-source"
+        className="min-h-[23px] min-w-[116px] justify-self-start"
         href="https://www.adzuna.co.uk/"
         rel="noopener noreferrer"
         target="_blank"
@@ -62,7 +60,7 @@ function MatchCard({ job, busy, run }: { job: Match; busy: boolean; run: RunJobA
             .join(" · ")}
         </CardDescription>
       </CardHeader>
-      <CardContent className="job-hunter-stack">
+      <CardContent className="grid min-w-0 gap-4">
         <ListingSource source={listing.source} />
         {listing.minimum !== null || listing.maximum !== null ? (
           <p>
@@ -86,7 +84,7 @@ function MatchCard({ job, busy, run }: { job: Match; busy: boolean; run: RunJobA
             <p>Missing evidence · {explanation.missingRequirements.join(", ")}</p>
           )}
         </details>
-        <div className="job-hunter-actions">
+        <div className="flex flex-wrap items-center gap-2">
           <Button disabled={busy} onClick={() => run({ action: "open", id })}>
             Open application site
           </Button>
@@ -130,7 +128,7 @@ function DraftEditor({
 }) {
   return (
     <form
-      className="job-hunter-stack"
+      className="grid min-w-0 gap-4"
       onSubmit={async (event) => {
         event.preventDefault();
         const fields = new FormData(event.currentTarget);
@@ -169,7 +167,7 @@ function DraftEditor({
           <Textarea defaultValue={answer} maxLength={500} name={`answer-${index}`} rows={3} />
         </Label>
       ))}
-      <div className="job-hunter-actions">
+      <div className="flex flex-wrap items-center gap-2">
         <Button disabled={busy} type="submit">
           Save draft edits
         </Button>
@@ -196,7 +194,7 @@ function ApplicationList({
         <CardTitle>{listing.title}</CardTitle>
         <CardDescription>{listing.company}</CardDescription>
       </CardHeader>
-      <CardContent className="job-hunter-stack">
+      <CardContent className="grid min-w-0 gap-4">
         <ListingSource source={listing.source} />
         <Label>
           Application status
@@ -212,7 +210,7 @@ function ApplicationList({
             ))}
           </NativeSelect>
         </Label>
-        <div className="job-hunter-actions">
+        <div className="flex flex-wrap items-center gap-2">
           <Button disabled={busy} onClick={() => run({ action: "open", id })}>
             Open application site
           </Button>
@@ -276,7 +274,7 @@ export function JobsDashboard({
   return (
     <section
       aria-labelledby="job-hunter-title"
-      className="job-hunter job-hunter-stack"
+      className="mx-auto grid w-[min(100%,64rem)] min-w-0 gap-4 p-[clamp(1rem,3vw,2rem)] [&_h1]:text-[clamp(1.75rem,4vw,2.5rem)] [&_h1]:font-bold [&_label]:block [&_summary]:mb-2 [&_summary]:cursor-pointer [&_[data-slot=tabs-list]]:h-auto [&_[data-slot=tabs-list]]:max-w-full [&_[data-slot=tabs-list]]:flex-wrap [&_label>:is(input:not([type=checkbox]),textarea,select)]:mt-1 [&_label>:is(input:not([type=checkbox]),textarea,select)]:block [&_label>:is(input:not([type=checkbox]),textarea,select)]:w-full"
       id="admin-content"
     >
       <header>
@@ -297,8 +295,8 @@ export function JobsDashboard({
           {data.linkedInAlerts && <TabsTrigger value="linkedin">LinkedIn alerts</TabsTrigger>}
           <TabsTrigger value="settings">Settings</TabsTrigger>
         </TabsList>
-        <TabsContent className="job-hunter-stack" value="discover">
-          <div className="job-hunter-actions">
+        <TabsContent className="grid min-w-0 gap-4" value="discover">
+          <div className="flex flex-wrap items-center gap-2">
             <Input
               aria-label="Filter by title, company or location"
               onChange={(event) => setQuery(event.target.value)}
@@ -322,29 +320,29 @@ export function JobsDashboard({
             <MatchCard busy={busy} job={job} key={job.id} run={run} />
           ))}
         </TabsContent>
-        <TabsContent className="job-hunter-stack" value="saved">
+        <TabsContent className="grid min-w-0 gap-4" value="saved">
           {!saved.length && <p>No saved jobs yet.</p>}
           {saved.map((job) => (
             <MatchCard busy={busy} job={job} key={job.id} run={run} />
           ))}
         </TabsContent>
-        <TabsContent className="job-hunter-stack" value="applications">
+        <TabsContent className="grid min-w-0 gap-4" value="applications">
           <Button href={baseCvUrl} variant="outline">
             Download my private CV PDF
           </Button>
           <ApplicationList busy={busy} cvUrl={cvUrl} data={data} run={run} statuses={statuses} />
         </TabsContent>
         {data.linkedInAlerts && (
-          <TabsContent className="job-hunter-stack" value="linkedin">
+          <TabsContent className="grid min-w-0 gap-4" value="linkedin">
             <LinkedInInbox busy={busy} inbox={data.linkedInAlerts} run={run} />
           </TabsContent>
         )}
-        <TabsContent className="job-hunter-stack" value="settings">
+        <TabsContent className="grid min-w-0 gap-4" value="settings">
           <Card>
             <CardHeader>
               <CardTitle>Saved searches</CardTitle>
             </CardHeader>
-            <CardContent className="job-hunter-stack">
+            <CardContent className="grid min-w-0 gap-4">
               <SearchForm busy={busy} run={run} />
               {data.searches.map((search) => (
                 <SearchForm
@@ -360,7 +358,7 @@ export function JobsDashboard({
             <CardHeader>
               <CardTitle>Browser alerts</CardTitle>
             </CardHeader>
-            <CardContent className="job-hunter-actions">
+            <CardContent className="flex flex-wrap items-center gap-2">
               {push ? (
                 <>
                   <Button disabled={busy} onClick={() => push(true)}>
@@ -379,7 +377,7 @@ export function JobsDashboard({
             <CardHeader>
               <CardTitle>Scan history</CardTitle>
             </CardHeader>
-            <CardContent className="job-hunter-stack">
+            <CardContent className="grid min-w-0 gap-4">
               {!data.runs.length && <p>No scans have run yet.</p>}
               {data.runs.map((scan) => (
                 <div key={scan.id}>

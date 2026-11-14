@@ -60,7 +60,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
       />
       <IconButton
         aria-label="Send message"
-        className="icon-button px-4 py-2 bg-main-primary text-main-white rounded-lg hover:bg-gray-600 disabled:bg-gray-700 disabled:text-main-white"
+        className="icon-button [color:var(--foreground)] px-4 py-2 bg-main-primary text-main-white rounded-lg hover:bg-gray-600 disabled:bg-gray-700 disabled:text-main-white"
         disabled={botIsTyping || chatFinished}
         onClick={handleSendButtonClick}
         type="submit"

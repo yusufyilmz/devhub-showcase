@@ -88,7 +88,13 @@ export function CustomSectionsEditor({
     });
   }
   const library = (
-    <div className={focused ? "setup-section-library" : undefined}>
+    <div
+      className={
+        focused
+          ? "col-start-2 row-start-1 min-w-0 rounded-md border border-border bg-background p-4 max-[767px]:col-auto max-[767px]:row-auto [&_nav]:mt-4 [&_nav]:grid [&_nav]:gap-2"
+          : undefined
+      }
+    >
       <h2>Section library</h2>
       <SelectField
         label="Section starter"
@@ -127,9 +133,21 @@ export function CustomSectionsEditor({
     </div>
   );
   return (
-    <section className={focused ? "setup-section-builder" : undefined}>
+    <section
+      className={
+        focused
+          ? "grid grid-cols-[minmax(0,1fr)_minmax(13rem,0.5fr)] items-start gap-4 max-[767px]:grid-cols-1"
+          : undefined
+      }
+    >
       {library}
-      <div className={focused ? "setup-section-editable" : undefined}>
+      <div
+        className={
+          focused
+            ? "col-start-1 row-start-1 min-w-0 rounded-md border border-border bg-background p-4 max-[767px]:col-auto max-[767px]:row-auto"
+            : undefined
+        }
+      >
         {focused && !selected && <p>Choose a section starter to add and configure it here.</p>}
         {displayed.map((section) => (
           <SectionEditor

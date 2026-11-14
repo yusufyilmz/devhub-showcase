@@ -1,7 +1,5 @@
 "use client";
 
-import "../portfolio-chat/portfolio-chat.css";
-
 import type { ComponentProps } from "react";
 
 import { PortfolioChat } from "../portfolio-chat/portfolio-chat-dialog";

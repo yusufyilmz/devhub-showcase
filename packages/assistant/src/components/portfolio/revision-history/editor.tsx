@@ -49,7 +49,10 @@ export function RevisionHistory({ profile, revision, load, read, onChange }: Rev
     }
   }
   return (
-    <section aria-label="Saved revision history" className="editor-card editor-fields">
+    <section
+      aria-label="Saved revision history"
+      className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px] editor-fields grid grid-cols-2 gap-6 max-[767px]:grid-cols-1 max-[767px]:gap-[18px]"
+    >
       <h2>Saved revision history</h2>
       <p>
         Inspect earlier saved work, then restore it into your draft for review. Restoring does not

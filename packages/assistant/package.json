@@ -42,7 +42,6 @@
     "./examples": "./src/components/studio/examples/index.ts",
     "./examples.css": "./src/components/sections/home-section/examples.css",
     "./home.css": "./src/components/sections/home-section/home.css",
-    "./portfolio-chat.css": "./src/components/chat/portfolio-chat/portfolio-chat.css",
     "./examples-data": "./src/components/studio/examples/data.ts",
     "./management-ui": "./src/components/studio/management/index.ts",
     "./portfolio-branding": "./src/server/portfolio-branding.ts",

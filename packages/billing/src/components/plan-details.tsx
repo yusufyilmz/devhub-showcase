@@ -49,7 +49,7 @@ export function StudioPlanDetails() {
   );
   return (
     <div>
-      <p className="home-plan-price">
+      <p className="home-plan-price [font-size:2rem] [font-weight:700] [&_span]:[font-size:1rem] [font-weight:400]">
         {price}
         <span> / month · test price</span>
       </p>

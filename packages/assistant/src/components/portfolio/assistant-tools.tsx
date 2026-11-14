@@ -156,7 +156,10 @@ export function PublishedSources({ sources }: PublishedSourcesProps) {
   );
   if (!allowed.length) return null;
   return (
-    <nav aria-label="Published portfolio sources" className="published-sources">
+    <nav
+      aria-label="Published portfolio sources"
+      className="published-sources [display:flex] [flex-shrink:0] [gap:6px] [margin-bottom:12px] [overflow-x:auto] [&_.ui-button]:[flex-shrink:0] [font-size:12px]"
+    >
       {allowed.map((source) => (
         <Button href={source.href} key={source.href} variant="outline">
           {source.label}

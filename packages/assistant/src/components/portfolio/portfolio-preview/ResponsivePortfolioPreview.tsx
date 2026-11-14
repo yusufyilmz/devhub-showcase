@@ -1,5 +1,4 @@
 "use client";
-import "./preview.css";
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -61,7 +60,7 @@ export function ResponsivePortfolioPreview({
   const target = doc?.getElementById("portfolio-preview-root");
   return (
     <details
-      className="draft-preview"
+      className="my-5 min-w-0 rounded-xl border border-border bg-card p-4 [&_summary]:cursor-pointer [&_summary]:text-sm [&_summary]:font-semibold [&>p]:my-3 [&>p]:text-xs [&>p]:leading-relaxed [&>p]:text-muted-foreground"
       id="portfolio-draft-preview"
       onToggle={(event) => {
         setOpen(event.currentTarget.open);
@@ -77,7 +76,7 @@ export function ResponsivePortfolioPreview({
       </p>
       {open && (
         <>
-          <fieldset className="draft-preview-sizes">
+          <fieldset className="my-3 flex min-w-0 flex-wrap gap-2 border-0 p-0 [&_button]:min-h-10 [&_[aria-pressed=true]]:border-primary [&_[aria-pressed=true]]:text-primary">
             <legend className="sr-only">Preview sizes</legend>
             {previewSizeLabels.map((value) => (
               <Button
@@ -92,7 +91,7 @@ export function ResponsivePortfolioPreview({
             ))}
           </fieldset>
           {arrange && (
-            <div className="draft-preview-sizes">
+            <div className="my-3 flex min-w-0 flex-wrap gap-2 [&_button]:min-h-10 [&_[aria-pressed=true]]:border-primary [&_[aria-pressed=true]]:text-primary">
               <Button
                 aria-pressed={arrange.active}
                 disabled={arrange.disabled}
@@ -105,7 +104,10 @@ export function ResponsivePortfolioPreview({
               {arrange.active && arrange.saveAction}
             </div>
           )}
-          <div className="draft-preview-scroll" ref={viewport}>
+          <div
+            className="grid max-w-full grid-cols-1 justify-items-center overflow-auto rounded-lg border border-border [&_iframe]:block [&_iframe]:h-[65dvh] [&_iframe]:min-h-[360px] [&_iframe]:border-0 [&_iframe]:bg-background"
+            ref={viewport}
+          >
             <iframe
               onLoad={() => setDocument(frame.current?.contentDocument ?? null)}
               ref={frame}

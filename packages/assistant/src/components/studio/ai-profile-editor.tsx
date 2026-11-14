@@ -10,7 +10,7 @@ import {
   type PublicPortfolioKnowledge,
 } from "@shared/lib/profiles";
 import { useStudioRequest } from "@shared/runtime/studio";
-import { Button } from "@shared/ui/button";
+import { StudioButton } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
@@ -47,7 +47,7 @@ export function AiProfileEditor({ readUrl = urls.studio.profile() }: { readUrl?:
   }, [refresh, readUrl, request]);
   return (
     <Card asChild layout="plain" surface="portfolio">
-      <section className="editor-card">
+      <section className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px]">
         <h2>Your AI profile</h2>
         <p>
           Private knowledge uses your saved draft. Public knowledge uses the last explicitly
@@ -59,15 +59,18 @@ export function AiProfileEditor({ readUrl = urls.studio.profile() }: { readUrl?:
           includes your full saved document for the future studio assistant. This screen does not
           enable public chat.
         </p>
-        <Button
-          className="studio-secondary"
+        <StudioButton
           onClick={() => setRefresh((value) => value + 1)}
+          tone="secondary"
           type="button"
           variant="outline"
         >
           Reload saved AI profile
-        </Button>
-        <LibraryLabel className="editor-checkbox" unstyled>
+        </StudioButton>
+        <LibraryLabel
+          className="editor-checkbox flex items-center gap-2.5 text-xs text-muted-foreground [&_input]:size-4 [&_input]:accent-primary"
+          unstyled
+        >
           <LibraryInput
             checked={privateView}
             onChange={(event) => setPrivateView(event.target.checked)}
@@ -86,7 +89,7 @@ export function AiProfileEditor({ readUrl = urls.studio.profile() }: { readUrl?:
             {!privateView && !data.public ? (
               <p>Your portfolio is private. No public AI knowledge is available.</p>
             ) : (
-              <pre className="ai-profile-json">
+              <pre className="ai-profile-json [max-height:34rem] [padding:1rem] [overflow:auto] [font-size:0.8rem] [overflow-wrap:anywhere] [white-space:pre-wrap]">
                 {JSON.stringify(privateView ? data.owner : data.public, null, 2)}
               </pre>
             )}

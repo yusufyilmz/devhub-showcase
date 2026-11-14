@@ -24,7 +24,7 @@ function DeviceAction({
 }) {
   return (
     <Tooltip title={label}>
-      <span className="notification-preferences-action">
+      <span className="notification-preferences-action [display:inline-flex] [&_[data-slot='button']]:[width:2.5rem]">
         <Button
           aria-label={label}
           disabled={disabled}
@@ -63,7 +63,10 @@ export function NotificationPreferences(props: NotificationPreferencesProps) {
     }
   }
   return (
-    <section aria-label="Device notifications" className="notification-preferences">
+    <section
+      aria-label="Device notifications"
+      className="notification-preferences [display:grid] [gap:0.85rem] [padding-block:1.25rem] [margin-block:1rem] [border-block-start:1px_solid_var(--border)] [&_h3]:[margin:0] [font-size:1.1rem] [font-weight:650] [line-height:1.4] [&_p]:[margin:0] [font-size:0.9rem] [line-height:1.6] [&_[role='alert']]:[color:var(--destructive,_#b42318)]"
+    >
       <h3>Notifications on this device</h3>
       <p>
         Live updates: {props.liveStatus}. Background reminders can reach this device when the app is
@@ -86,7 +89,7 @@ export function NotificationPreferences(props: NotificationPreferencesProps) {
       </p>
       {error && <p role="alert">{error}</p>}
       {message && <p role="status">{message}</p>}
-      <div className="notification-preferences-actions">
+      <div className="notification-preferences-actions [display:flex] [flex-wrap:wrap] [gap:0.65rem]">
         {props.canInstall && (
           <DeviceAction
             disabled={busy || props.disabled}

@@ -29,7 +29,7 @@ export function TextRevealCard({ text, revealText, className, children }: TextRe
             />
           </Button>
         </CollapsibleTrigger>
-        <CollapsibleContent className="ui-disclosure-motion">
+        <CollapsibleContent className="ui-disclosure-motion [overflow:clip] motion-safe:[&[data-state='open']]:[animation:ui-disclosure-open_340ms_cubic-bezier(0.22,_1,_0.36,_1)] motion-safe:[&[data-state='closed']]:[animation:ui-disclosure-close_240ms_ease-in]">
           <div className="mx-md space-y-2 border-t border-border py-4 text-sm leading-relaxed text-muted-foreground">
             <p>{revealText}</p>
             {children}

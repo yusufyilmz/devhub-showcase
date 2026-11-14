@@ -1,3 +1,4 @@
+export { Eyebrow, eyebrowClass } from "./Eyebrow";
 export {
   Body1,
   Body2,

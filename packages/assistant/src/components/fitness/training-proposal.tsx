@@ -33,7 +33,10 @@ export function TrainingProposal({
   }
 
   return (
-    <section aria-label="Workout proposal" className="fitness-assistant-proposal">
+    <section
+      aria-label="Workout proposal"
+      className="fitness-assistant-proposal [display:grid] [gap:12px] [&_li]:[display:grid] [&_li]:[padding-block:12px] [border-block-start:1px_solid_var(--line)]"
+    >
       <p>{proposal.summary}</p>
       {task.kind === "gym" && proposal.workoutTitle && <h3>{proposal.workoutTitle}</h3>}
       <ul>

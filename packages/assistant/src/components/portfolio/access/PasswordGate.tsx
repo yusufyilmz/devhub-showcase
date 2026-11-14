@@ -1,7 +1,5 @@
 "use client";
 
-import "./password-gate.css";
-
 import { useState } from "react";
 
 import { Button } from "@shared/ui/button";
@@ -18,12 +16,13 @@ export function PasswordGate({ unlock }: PasswordGateProps) {
   return (
     <Card asChild className={passwordGateStyles.root} interaction="static">
       <main id="admin-content">
-        <h1>This portfolio is protected</h1>
-        <p>
+        <h1 className={passwordGateStyles.title}>This portfolio is protected</h1>
+        <p className={passwordGateStyles.text}>
           Enter the password shared by its owner to view the portfolio and CV. Access lasts one
           hour.
         </p>
         <form
+          className={passwordGateStyles.form}
           onSubmit={async (event) => {
             event.preventDefault();
             if (busy) return;

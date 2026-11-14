@@ -1,9 +1,10 @@
 export const commandStyles = {
   command:
-    "bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md",
-  commandDialog: "overflow-hidden p-0",
+    "bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)] rounded-md",
+  commandDialog:
+    "overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)] p-0",
   commandGroup:
-    "text-foreground [&_[cmdk-group-heading]]:text-muted-foreground overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium",
+    "text-foreground [&_[cmdk-group-heading]]:text-muted-foreground overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)] p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium",
   commandInput:
     "placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50",
   commandItem:

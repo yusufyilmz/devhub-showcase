@@ -304,11 +304,6 @@
           "use": "Published portfolio layouts and studio tools"
         },
         {
-          "export": "`@shared/assistant/portfolio-chat.css`",
-          "path": "`packages/assistant/src/components/chat/portfolio-chat/portfolio-chat.css`",
-          "use": "Styles for the embedded portfolio chat"
-        },
-        {
           "export": "`@shared/ui/seo`",
           "path": "`src/seo/index.ts`",
           "use": "Canonical, Open Graph, Twitter, and Schema.org metadata"

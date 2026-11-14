@@ -27,7 +27,7 @@ export function FitnessCompanion({
     <div hidden={paused}>
       <AgentCompanion
         agent="fitness"
-        className="fitness-agent-companion"
+        className="fitness-agent-companion max-[700px]:[--agent-companion-bottom:calc(76px_+_env(safe-area-inset-bottom))]"
         guide={fitnessGuide(workspace, tab, paused, request)}
         label="Fitness assistant"
         notice={

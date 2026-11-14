@@ -42,7 +42,6 @@ test("owner reviews a CV, cancels safely, applies edits and explicitly saves bef
   });
   await page.goto(`/${device}-cv-importer/edit`);
   await openEditor(page);
-  await page.getByRole("button", { name: "Choose a layout" }).click();
   await page.getByRole("button", { name: "Continue to CV import" }).click();
   await page.getByLabel("Your CV file").setInputFiles({
     buffer: Buffer.from("%PDF-1.7\nFictional CV"),

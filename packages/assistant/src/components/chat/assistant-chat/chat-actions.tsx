@@ -33,7 +33,7 @@ export const ChatMessageActions = React.forwardRef<HTMLDivElement, ChatMessageAc
     return (
       <div
         className={cn(
-          "absolute flex items-center gap-1 p-1 bg-background/95 backdrop-blur-sm border border-border rounded-md shadow-lg transition-opacity",
+          "absolute flex items-center gap-1 p-1 bg-background/95 backdrop-blur-sm border border-border rounded-md shadow-lg [--notification-tone:var(--primary)] transition-opacity",
           !visible && "opacity-0 pointer-events-none",
           position === "top" && "-top-3",
           position === "bottom" && "-bottom-3",
@@ -84,7 +84,7 @@ export const ChatMessageActionGroup = React.forwardRef<HTMLDivElement, ChatMessa
     return (
       <div
         className={cn(
-          "flex items-center gap-1 p-1 bg-background/95 backdrop-blur-sm border border-border rounded-md shadow-lg",
+          "flex items-center gap-1 p-1 bg-background/95 backdrop-blur-sm border border-border rounded-md shadow-lg [--notification-tone:var(--primary)]",
           className,
         )}
         data-slot="chat-message-action-group"
@@ -139,7 +139,7 @@ export const ChatQuickReactions = React.forwardRef<HTMLDivElement, ChatQuickReac
     return (
       <div
         className={cn(
-          "flex items-center gap-1 p-1 bg-background/95 backdrop-blur-sm border border-border rounded-md shadow-lg",
+          "flex items-center gap-1 p-1 bg-background/95 backdrop-blur-sm border border-border rounded-md shadow-lg [--notification-tone:var(--primary)]",
           className,
         )}
         data-slot="chat-quick-reactions"

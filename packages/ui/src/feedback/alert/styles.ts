@@ -7,7 +7,7 @@ export const alertVariants = cva(
     variants: {
       variant: {
         default: "[--alert-tone:var(--primary)]",
-        destructive: "border-destructive/25 bg-destructive/5 [--alert-tone:var(--destructive)]",
+        destructive: "border-destructive/25 bg-destructive/5",
       },
     },
   },

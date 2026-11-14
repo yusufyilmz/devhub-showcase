@@ -1,6 +1,4 @@
 "use client";
-import "./publication.css";
-
 import { useEffect, useState } from "react";
 
 import { projectPublicProfile } from "@shared/config";

@@ -34,7 +34,10 @@ function EditorPreview() {
   const [profile, setProfile] = useState(pageProfile);
   const [saved, setSaved] = useState(pageProfile);
   return (
-    <main className="studio" id="admin-content">
+    <main
+      className="studio [max-width:1160px] [padding:var(--studio-top,_36px)_40px_var(--studio-bottom,_80px)] [margin:auto] max-[767px]:[padding:var(--studio-top,_20px)_18px_var(--studio-bottom,_50px)] [&.studio-editor]:[max-width:none] [padding:0_32px_96px_0] max-[767px]:[&.studio-editor]:[padding:20px_16px_104px] [--studio-bottom:0px]"
+      id="admin-content"
+    >
       <StudioHeading
         actions={
           <Button disabled={profile === saved} onClick={() => setSaved(profile)}>
@@ -63,7 +66,10 @@ export const Editor: Story = {
 export const ManagedPortfolios: Story = {
   args: {
     children: (
-      <main className="studio" id="admin-content">
+      <main
+        className="studio [max-width:1160px] [padding:var(--studio-top,_36px)_40px_var(--studio-bottom,_80px)] [margin:auto] max-[767px]:[padding:var(--studio-top,_20px)_18px_var(--studio-bottom,_50px)] [&.studio-editor]:[max-width:none] [padding:0_32px_96px_0] max-[767px]:[&.studio-editor]:[padding:20px_16px_104px] [--studio-bottom:0px]"
+        id="admin-content"
+      >
         <StudioHeading
           actions={
             <Button href="/admin" variant="outline">
@@ -74,7 +80,7 @@ export const ManagedPortfolios: Story = {
           eyebrow="Platform administration"
           title="Manage portfolios"
         />
-        <section className="editor-card">
+        <section className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px]">
           <h2>Managed portfolios</h2>
           <p>No temporary portfolios yet.</p>
         </section>
@@ -86,7 +92,10 @@ export const ManagedPortfolios: Story = {
 export const Reviews: Story = {
   args: {
     children: (
-      <main className="studio" id="admin-content">
+      <main
+        className="studio [max-width:1160px] [padding:var(--studio-top,_36px)_40px_var(--studio-bottom,_80px)] [margin:auto] max-[767px]:[padding:var(--studio-top,_20px)_18px_var(--studio-bottom,_50px)] [&.studio-editor]:[max-width:none] [padding:0_32px_96px_0] max-[767px]:[&.studio-editor]:[padding:20px_16px_104px] [--studio-bottom:0px]"
+        id="admin-content"
+      >
         <StudioHeading
           description="Review referrals submitted for the portfolio."
           eyebrow="Portfolio moderation"

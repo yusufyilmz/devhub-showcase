@@ -1,7 +1,5 @@
 "use client";
 
-import "./portfolio-chat.css";
-
 import { useEffect, useId, useRef, useState } from "react";
 
 import { chatStorage, type VisitorMessage } from "@shared/runtime/storage";
@@ -20,9 +18,9 @@ export type PortfolioChatProps = {
 export function PortfolioChat(props: PortfolioChatProps) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="portfolio-chat">
+    <div className="fixed right-4 bottom-4 z-[100]">
       <LibraryButton
-        className="portfolio-chat-launch"
+        className="max-w-[calc(100vw-2rem)] rounded-full border border-slate-500 bg-slate-900 px-4 py-3 text-slate-50 focus-visible:outline-3 focus-visible:outline-offset-[3px] focus-visible:outline-sky-400"
         onClick={() => setOpen(true)}
         type="button"
         variant="unstyled"
@@ -92,7 +90,12 @@ function ChatDialog({
     }
   }
   return (
-    <dialog aria-labelledby={label} className="portfolio-chat-panel" onCancel={close} ref={dialog}>
+    <dialog
+      aria-labelledby={label}
+      className="fixed inset-auto right-4 bottom-4 m-0 max-h-[calc(100dvh-2rem)] w-[min(28rem,calc(100vw-2rem))] overflow-auto rounded-2xl border border-slate-500 bg-slate-900 p-5 text-slate-50 shadow-[0_1rem_3rem_#0006] backdrop:bg-black/50 focus-visible:outline-3 focus-visible:outline-offset-[3px] focus-visible:outline-sky-400 [&_button]:cursor-pointer [&_button]:rounded-lg [&_button]:border [&_button]:border-slate-400 [&_button]:bg-slate-800 [&_button]:px-3 [&_button]:py-2 [&_button]:text-slate-50 [&_button:disabled]:cursor-wait [&_button:disabled]:opacity-50 [&_form]:grid [&_form]:gap-2 [&_h2]:text-[1.15rem] [&_header]:flex [&_header]:items-start [&_header]:justify-between [&_header]:gap-4 [&_p]:my-3 [&_p]:wrap-anywhere [&_p]:whitespace-pre-wrap [&_textarea]:min-h-20 [&_textarea]:w-full [&_textarea]:rounded-lg [&_textarea]:border [&_textarea]:border-slate-400 [&_textarea]:bg-slate-800 [&_textarea]:p-2 [&_textarea]:text-slate-50"
+      onCancel={close}
+      ref={dialog}
+    >
       <PublishedSources sources={sources} />
       <ChatPanel
         busy={busy}

@@ -1,7 +1,5 @@
 "use client";
 
-import "./chat-bubble.css";
-
 import React from "react";
 
 import { cva, type VariantProps } from "class-variance-authority";
@@ -10,24 +8,27 @@ import { cn } from "cn";
 import { AppearanceCard } from "@shared/ui/cards";
 import { convertSystemProps, extractSystemProps, type SystemProps } from "@shared/ui/utils";
 
-const chatBubbleVariants = cva("chat-bubble-surface break-words transition-all", {
-  defaultVariants: {
-    size: "md",
-    variant: "received",
-  },
-  variants: {
-    size: {
-      lg: "text-lg",
-      md: "text-base",
-      sm: "text-sm",
+const chatBubbleVariants = cva(
+  "break-words shadow-[0_0.25rem_0.75rem_rgb(0_0_0/0.12)] transition-all",
+  {
+    defaultVariants: {
+      size: "md",
+      variant: "received",
     },
-    variant: {
-      received: "bg-card border-border",
-      sent: "ml-auto bg-gradient-to-br from-primary to-primary/90 text-primary-foreground shadow-md",
-      system: "bg-accent/30 text-accent-foreground text-center italic backdrop-blur-sm",
+    variants: {
+      size: {
+        lg: "text-lg",
+        md: "text-base",
+        sm: "text-sm",
+      },
+      variant: {
+        received: "bg-card border-border",
+        sent: "ml-auto bg-gradient-to-br from-primary to-primary/90 text-primary-foreground shadow-md",
+        system: "bg-accent/30 text-accent-foreground text-center italic backdrop-blur-sm",
+      },
     },
   },
-});
+);
 
 export interface ChatBubbleProps
   extends React.HTMLAttributes<HTMLDivElement>,

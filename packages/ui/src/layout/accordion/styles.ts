@@ -7,7 +7,7 @@ export const accordionStyles = {
   element2:
     "text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200",
   element3:
-    "data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm",
+    "data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)] text-sm",
 } as const;
 
 export function accordionBodyClassName(...values: unknown[]): string {

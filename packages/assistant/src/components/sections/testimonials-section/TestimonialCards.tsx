@@ -12,7 +12,7 @@ export function TestimonialCards({ section }: Pick<SectionProps, "section">) {
   const columns = Math.min(section.options?.columns ?? 3, section.items.length);
   return (
     <div
-      className="section-view-grid grid gap-md"
+      className="section-view-grid [ul&]:[display:grid] grid gap-md"
       style={{ "--section-columns": columns } as CSSProperties}
     >
       {section.items.map((item) => (

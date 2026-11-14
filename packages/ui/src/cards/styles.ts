@@ -38,9 +38,11 @@ export function appearanceCardClasses({
   return cn(
     appearanceClass,
     "px-md",
-    allowOverflow ? "overflow-visible" : "overflow-hidden",
+    allowOverflow
+      ? "overflow-visible"
+      : "overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)]",
     enableHover &&
-      "cursor-pointer motion-safe:transition-[background-color,border-color,box-shadow,transform] motion-safe:hover:[transform:scale(var(--hover-scale))_translateY(var(--hover-translate-y))]",
+      "cursor-pointer motion-safe:transition-[background-color,border-color,box-shadow,transform]",
     enableHover && interactiveElevation && "hover:shadow-md",
     enableHover && enableGlow && "hover:shadow-sm hover:shadow-primary/20 hover:brightness-105",
     className,
@@ -64,7 +66,7 @@ export function appearanceCardStyle({
 }
 
 export const contentCardVariants = cva(
-  "group/card relative flex min-w-0 max-w-full flex-col justify-between overflow-hidden",
+  "group/card relative flex min-w-0 max-w-full flex-col justify-between overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)]",
   {
     defaultVariants: {
       layout: "overlay",
@@ -156,7 +158,7 @@ export const variantCardVariants = cva(
       },
       shadow: {
         default: "",
-        lg: "shadow-lg",
+        lg: "shadow-lg [--notification-tone:var(--primary)]",
         none: "",
         sm: "shadow-sm",
         xl: "shadow-xl",
@@ -207,7 +209,7 @@ export function variantCardStyle(options: VariantCardStyleOptions): React.CSSPro
 
 export const cardBaseStyles = {
   cardBase:
-    "ui-card relative min-w-0 rounded-xl border border-border bg-card text-card-foreground inset-shadow-[0_1px_0_color-mix(in_srgb,var(--card-foreground)_5%,transparent)] [--card-accent:var(--primary)]",
+    "ui-card [&[data-surface='portfolio'][data-interaction='lift']:not(.reveal-card)::before]:[position:absolute] [&[data-slot='card [padding:24px] [margin-bottom:20px] [background:var(--surface)] [border:1px_solid_var(--line)] [border-radius:12px] max-[700px]:[padding:18px] [box-shadow:0_2px_10px_var(--shadow-color)]'][data-backdrop='accent']]:[background-image:radial-gradient(_ellipse_at_100%_0%,_color-mix(in_srgb,_var(--card-accent)_16%,_transparent),_transparent_72%_),_linear-gradient(_125deg,_var(--card)_25%,_color-mix(in_srgb,_var(--card)_92%,_var(--card-accent))_)] [@media(hover:_hover)_and_(pointer:_fine)_and_(prefers-reduced-motion:_no-preference)]:[&[data-slot='card [padding:24px] [margin-bottom:20px] [background:var(--surface)] [border:1px_solid_var(--line)] [border-radius:12px] max-[700px]:[padding:18px] [box-shadow:0_2px_10px_var(--shadow-color)]'][data-card-type='tilt']:hover]:[transform:perspective(900px)_rotateX(3deg)_rotateY(-3deg)] [@media(hover:_hover)_and_(pointer:_fine)_and_(prefers-reduced-motion:_no-preference)]:[&[data-slot='card [padding:24px] [margin-bottom:20px] [background:var(--surface)] [border:1px_solid_var(--line)] [border-radius:12px] max-[700px]:[padding:18px] [box-shadow:0_2px_10px_var(--shadow-color)]'][data-card-type='tilt']:focus-within]:[transform:perspective(900px)_rotateX(3deg)_rotateY(-3deg)] motion-safe:[&[data-card-type='animated']]:[animation:card-entrance_var(--transition-medium)_var(--easing-standard)_both] relative min-w-0 rounded-xl border border-border bg-card text-card-foreground inset-shadow-[0_1px_0_color-mix(in_srgb,var(--card-foreground)_5%,transparent)]",
   cardBase2: "flex flex-col gap-md py-md",
   lift: "motion-safe:transition-colors motion-safe:duration-150 focus-within:border-[color-mix(in_srgb,var(--card-accent)_22%,var(--border))] [@media(pointer:fine)]:hover:border-[color-mix(in_srgb,var(--card-accent)_22%,var(--border))] motion-safe:[@media(pointer:fine)]:hover:bg-[color-mix(in_srgb,var(--card-accent)_8%,var(--card))]",
 } as const;
@@ -251,21 +253,25 @@ export const contentCardStyles = {
 
 export const hoverCardStyles = {
   hoverCardContent:
-    "z-50 w-64 max-w-(--radix-hover-card-content-available-width) origin-(--radix-hover-card-content-transform-origin) rounded-xl border border-border bg-popover p-4 text-sm leading-relaxed wrap-anywhere text-popover-foreground shadow-lg outline-hidden motion-safe:data-[state=open]:animate-in motion-safe:data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+    "z-50 w-64 max-w-(--radix-hover-card-content-available-width) origin-(--radix-hover-card-content-transform-origin) rounded-xl border border-border bg-popover p-4 text-sm leading-relaxed wrap-anywhere text-popover-foreground shadow-lg [--notification-tone:var(--primary)] outline-hidden motion-safe:data-[state=open]:animate-in motion-safe:data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
 } as const;
 
 export const revealCardStyles = {
   element1: "reveal-heading [&>div]:p-0 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:tracking-tight",
-  element2: "reveal-preview",
+  element2:
+    "reveal-preview [display:grid] [grid-template-rows:1fr] [margin-top:14px] [opacity:1] [transition:grid-template-rows_var(--reveal-duration,_580ms)_cubic-bezier(0.22,_1,_0.36,_1),_margin-top_var(--reveal-duration,_580ms)_ease,_opacity_var(--reveal-fade-duration,_380ms)_ease] [&_>_p]:[min-height:0] motion-reduce:[transition:none]",
   element3: "reveal-brief line-clamp-2 text-sm leading-relaxed text-muted-foreground",
-  element4: "reveal-toggle mt-4 min-h-9 gap-2 px-3 text-xs text-foreground",
-  element5: "reveal-hint-desktop",
-  element6: "reveal-hint-touch",
-  element7: "reveal-hint-keyboard",
+  element4:
+    "reveal-toggle focus-visible:[&_.reveal-hint-desktop]:[display:none] focus-visible:[&_.reveal-hint-touch]:[display:none] focus-visible:[&_.reveal-hint-keyboard]:[display:inline] mt-4 min-h-9 gap-2 px-3 text-xs text-foreground",
+  element5: "reveal-hint-desktop [@media(hover:_none),_(pointer:_coarse)]:[display:none]",
+  element6:
+    "reveal-hint-touch [display:none] [@media(hover:_none),_(pointer:_coarse)]:[display:inline]",
+  element7: "reveal-hint-keyboard [display:none]",
   element8:
     "reveal-chevron text-base leading-none motion-safe:transition-transform group-aria-expanded/button:rotate-90",
-  element9: "reveal-details",
-  element10: "reveal-details-inner",
+  element9:
+    "reveal-details [display:grid] [visibility:hidden] [grid-template-rows:0fr] [margin-top:0] [opacity:0] [transition:grid-template-rows_var(--reveal-duration,_580ms)_cubic-bezier(0.22,_1,_0.36,_1),_margin-top_var(--reveal-duration,_580ms)_ease,_opacity_var(--reveal-fade-duration,_380ms)_ease,_visibility_var(--reveal-duration,_580ms)] motion-reduce:[animation:none] motion-reduce:[transition:none]",
+  element10: "reveal-details-inner [min-height:0] [overflow:hidden]",
 } as const;
 
 export const variantCardStyles = {
@@ -303,16 +309,20 @@ export const cardBodyStyles = {
 
 export const revealCardCopyStyles = {
   element1: "reveal-heading [&>div]:p-0 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:tracking-tight",
-  element2: "reveal-preview",
+  element2:
+    "reveal-preview [display:grid] [grid-template-rows:1fr] [margin-top:14px] [opacity:1] [transition:grid-template-rows_var(--reveal-duration,_580ms)_cubic-bezier(0.22,_1,_0.36,_1),_margin-top_var(--reveal-duration,_580ms)_ease,_opacity_var(--reveal-fade-duration,_380ms)_ease] [&_>_p]:[min-height:0] motion-reduce:[transition:none]",
   element3: "reveal-brief line-clamp-2 text-sm leading-relaxed text-muted-foreground",
-  element4: "reveal-toggle mt-4 min-h-9 gap-2 px-3 text-xs text-foreground",
-  element5: "reveal-hint-desktop",
-  element6: "reveal-hint-touch",
-  element7: "reveal-hint-keyboard",
+  element4:
+    "reveal-toggle focus-visible:[&_.reveal-hint-desktop]:[display:none] focus-visible:[&_.reveal-hint-touch]:[display:none] focus-visible:[&_.reveal-hint-keyboard]:[display:inline] mt-4 min-h-9 gap-2 px-3 text-xs text-foreground",
+  element5: "reveal-hint-desktop [@media(hover:_none),_(pointer:_coarse)]:[display:none]",
+  element6:
+    "reveal-hint-touch [display:none] [@media(hover:_none),_(pointer:_coarse)]:[display:inline]",
+  element7: "reveal-hint-keyboard [display:none]",
   element8:
     "reveal-chevron text-base leading-none motion-safe:transition-transform group-aria-expanded/button:rotate-90",
-  element9: "reveal-details",
-  element10: "reveal-details-inner",
+  element9:
+    "reveal-details [display:grid] [visibility:hidden] [grid-template-rows:0fr] [margin-top:0] [opacity:0] [transition:grid-template-rows_var(--reveal-duration,_580ms)_cubic-bezier(0.22,_1,_0.36,_1),_margin-top_var(--reveal-duration,_580ms)_ease,_opacity_var(--reveal-fade-duration,_380ms)_ease,_visibility_var(--reveal-duration,_580ms)] motion-reduce:[animation:none] motion-reduce:[transition:none]",
+  element10: "reveal-details-inner [min-height:0] [overflow:hidden]",
 } as const;
 
 export function cardBodyClassName(...values: unknown[]): string {
@@ -320,7 +330,10 @@ export function cardBodyClassName(...values: unknown[]): string {
 }
 
 export function revealCardBaseClassName(className?: string): string {
-  return cn("section-card reveal-card p-md", className);
+  return cn(
+    "section-card relative m-0 w-full rounded-[14px] border border-[color-mix(in_srgb,var(--border)_70%,transparent)] bg-card p-6 shadow-[0_6px_26px_color-mix(in_srgb,var(--foreground)_5%,transparent)] transition-[border-color,box-shadow] duration-150 hover:border-[color-mix(in_srgb,var(--primary)_55%,transparent)] hover:shadow-[0_12px_32px_color-mix(in_srgb,var(--foreground)_8%,transparent)] max-[767px]:p-[18px] [&_li]:cursor-default [&_li]:py-1.5 [&_li]:leading-[1.75] [&_.text-xs]:text-xs [&_.text-textColor-lightSlate]:text-[13px] [&_.text-textColor-lightSlate]:leading-[1.8] reveal-card before:[position:absolute] [inset:0] [padding:1px] [pointer-events:none] [content:''] [background:conic-gradient(_from_var(--reveal-angle),_transparent_65%,_color-mix(in_srgb,_var(--primary)_15%,_transparent)_78%,_color-mix(in_srgb,_var(--primary)_45%,_transparent)_90%,_transparent_100%_)] [border-radius:inherit] [mask:linear-gradient(#fff_0_0)_content-box,_linear-gradient(#fff_0_0)] [mask-composite:exclude] [animation:reveal-shimmer_12s_linear_infinite] [&[data-expanded='true']::before]:[animation-play-state:paused] [&[data-expanded='true']]:[border-color:color-mix(in_srgb,_var(--primary)_60%,_transparent)] [&[data-expanded='true']_.reveal-preview]:[grid-template-rows:0fr] [&[data-expanded='true']_.reveal-details]:[visibility:visible] p-md",
+    className,
+  );
 }
 
 export function appearanceCardInlineStyle1(

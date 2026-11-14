@@ -19,7 +19,10 @@ export function ProfileFields({ profile, onChange, onImprove }: ProfileFieldsOpt
           <p>Add your professional details and write the introduction readers will see first.</p>
         </div>
       </div>
-      <nav aria-label="Profile details" className="editor-profile-navigation">
+      <nav
+        aria-label="Profile details"
+        className="editor-profile-navigation [display:flex] [flex-wrap:wrap] [gap:6px] [margin-bottom:24px] max-[767px]:[&_button]:[padding-inline:8px] [font-size:12px]"
+      >
         {[
           ["profile-basics", "Basic details"],
           ["profile-introduction", "Introduction"],
@@ -39,9 +42,12 @@ export function ProfileFields({ profile, onChange, onImprove }: ProfileFieldsOpt
           </Button>
         ))}
       </nav>
-      <section className="editor-profile-section" id="profile-basics">
+      <section
+        className="editor-profile-section [padding-block:20px] [scroll-margin-top:100px] [border-top:1px_solid_var(--border)] [&_h3]:[margin-bottom:20px] [font-size:16px] [font-weight:550]"
+        id="profile-basics"
+      >
         <h3>Basic details</h3>
-        <div className="editor-fields">
+        <div className="editor-fields grid grid-cols-2 gap-6 max-[767px]:grid-cols-1 max-[767px]:gap-[18px]">
           <Field
             label="Full name"
             onChange={(v) => update("name", v)}
@@ -54,7 +60,7 @@ export function ProfileFields({ profile, onChange, onImprove }: ProfileFieldsOpt
             required
             value={profile.location}
           />
-          <div className="full-width">
+          <div className="full-width col-span-full">
             <Field
               label="Professional title"
               onChange={(v) => update("title", v)}
@@ -64,9 +70,12 @@ export function ProfileFields({ profile, onChange, onImprove }: ProfileFieldsOpt
           </div>
         </div>
       </section>
-      <section className="editor-profile-section" id="profile-introduction">
+      <section
+        className="editor-profile-section [padding-block:20px] [scroll-margin-top:100px] [border-top:1px_solid_var(--border)] [&_h3]:[margin-bottom:20px] [font-size:16px] [font-weight:550]"
+        id="profile-introduction"
+      >
         <h3>Introduction</h3>
-        <div className="editor-fields">
+        <div className="editor-fields grid grid-cols-2 gap-6 max-[767px]:grid-cols-1 max-[767px]:gap-[18px]">
           <Field
             label="Short introduction"
             multiline
@@ -87,9 +96,12 @@ export function ProfileFields({ profile, onChange, onImprove }: ProfileFieldsOpt
           </Button>
         )}
       </section>
-      <section className="editor-profile-section" id="profile-contact">
+      <section
+        className="editor-profile-section [padding-block:20px] [scroll-margin-top:100px] [border-top:1px_solid_var(--border)] [&_h3]:[margin-bottom:20px] [font-size:16px] [font-weight:550]"
+        id="profile-contact"
+      >
         <h3>Contact & links</h3>
-        <div className="editor-fields">
+        <div className="editor-fields grid grid-cols-2 gap-6 max-[767px]:grid-cols-1 max-[767px]:gap-[18px]">
           <Field
             label="Public email"
             onChange={(v) => update("email", v)}
