@@ -29,7 +29,7 @@ export function HeroBlock({
       )}
       {...props}
     >
-      <div className={landing ? "home-hero-copy" : "grid min-w-0 gap-sm"}>
+      <div className={landing ? "home-hero-copy motion-safe:[&>*]:[animation:home-enter_var(--transition-slow,_550ms)_cubic-bezier(0.22,_1,_0.36,_1)_both] motion-safe:[&>:nth-child(2)]:[animation-delay:55ms] motion-safe:[&>:nth-child(3)]:[animation-delay:110ms] motion-safe:[&>:nth-child(4)]:[animation-delay:165ms] motion-safe:[&>:nth-child(5)]:[animation-delay:220ms] motion-safe:[&>:focus-within]:[animation:none]" : "grid min-w-0 gap-sm"}>
         {eyebrow && (
           <p className={landing ? "home-eyebrow flex items-center gap-[9px] [font:500_10px/1.6_var(--font-geist-mono),monospace] tracking-[0.13em] text-primary [&>span]:size-[5px] [&>span]:rounded-full [&>span]:bg-current [&>span]:shadow-[0_0_12px_color-mix(in_srgb,var(--primary)_50%,transparent)]" : "text-sm font-semibold text-primary"}>
             {eyebrow}
