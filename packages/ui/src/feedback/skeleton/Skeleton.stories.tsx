@@ -31,12 +31,13 @@ export const Default: Story = {
 };
 
 export const Card: Story = {
+  parameters: { layout: "fullscreen" },
   render: () => (
-    <div className="flex items-center space-x-4">
-      <Skeleton className="h-12 w-12 rounded-full" />
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-[250px]" />
-        <Skeleton className="h-4 w-[200px]" />
+    <div className="mx-auto flex w-full max-w-80 items-center gap-md">
+      <Skeleton className="size-12 shrink-0 rounded-full" />
+      <div className="min-w-0 flex-1 space-y-s">
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-4/5" />
       </div>
     </div>
   ),

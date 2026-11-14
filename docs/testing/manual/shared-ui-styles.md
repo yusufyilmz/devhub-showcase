@@ -260,3 +260,7 @@ All tested stories fit at 320px in Sand light and dark and at 1280px in Cyan lig
 ## Progress states
 
 Chrome checked [Custom Maximum](http://127.0.0.1:6006/?path=/story/ui-feedback-progress--custom-maximum), **Complete**, and **Indeterminate**. A value of 50 out of 200 filled a quarter of the track, complete filled the entire track, and indeterminate showed a static pattern without exposing a numeric value. All three fit at 320px in Sand light and dark and at 1280px in Cyan light. Reduced motion disabled the fill transition. [Once UI ProgressBar](https://docs.once-ui.com/components/progressBar)
+
+## Loading feedback
+
+Chrome checked [Spinner](http://127.0.0.1:6006/?path=/story/ui-feedback-spinner--narrow) and [Skeleton Card](http://127.0.0.1:6006/?path=/story/ui-feedback-skeleton--card) at 320px in Sand light and dark and at 1280px in Sand light. Both fit the viewport, and the skeleton lines retained their width. The spinner rotated and the skeleton pulsed with motion enabled. Both were static with reduced motion. [Once UI Spinner](https://docs.once-ui.com/components/spinner)
