@@ -220,3 +220,11 @@ All six stories were checked in Sand dark at 320px, Sand light at 1280px, and Wh
 [Once UI Select](https://docs.once-ui.com/form-controls/select)
 
 Chrome exercised these four controls in Sand light at 320px and 1280px and Sand dark at 320px. The tested stories fit each viewport.
+
+## Textarea
+
+| Story                                                                                        | Action                                                                            | Result                                                                                                                                                                                                                                     |
+| -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Textarea](http://127.0.0.1:6006/?path=/story/ui-forms-textarea--default&globals=brand:sand) | Tab into **Default**, enter six lines, then compare **Invalid** and **Disabled**. | Chrome measured a one-pixel border and a two-pixel focus ring. The field grew with the text, the invalid border changed color, and the disabled field was disabled. All stories fit Sand light and dark at 320px and Cyan light at 1280px. |
+
+[Once UI Textarea](https://docs.once-ui.com/form-controls/textarea)

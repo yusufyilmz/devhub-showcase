@@ -1,4 +1,4 @@
 export const textareaStyles = {
   textarea:
-    "ui-input [background-color:var(--background)] [border-color:var(--border)] [box-shadow:none] border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive flex field-sizing-content min-h-16 w-full rounded-md border bg-background px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+    "ui-input flex field-sizing-content min-h-16 w-full min-w-0 rounded-lg border border-border bg-background px-sm py-s text-base leading-relaxed shadow-none outline-none motion-safe:transition-colors placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground md:text-sm dark:bg-foreground/5 dark:disabled:bg-muted",
 } as const;

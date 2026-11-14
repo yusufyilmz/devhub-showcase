@@ -33,3 +33,11 @@ export const WithValue: Story = {
     value: "This is a sample text in the textarea component.",
   },
 };
+
+export const Invalid: Story = {
+  args: {
+    "aria-invalid": true,
+    "aria-label": "Message",
+    placeholder: "Enter a message",
+  },
+};
