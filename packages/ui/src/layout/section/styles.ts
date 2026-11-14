@@ -10,7 +10,7 @@ export const sectionStyles = {
 
 export const sectionElementsStyles = {
   element1:
-    "section-view-accordion [&_details_>_div]:[font-size:0.875rem] [line-height:1.6] [color:var(--muted-foreground)] [display:grid] [gap:var(--spacing-s)] [min-width:0] [&_.section-disclosure-card[data-slot='card [padding:24px] [margin-bottom:20px] [background:var(--surface)] [border:1px_solid_var(--line)] [border-radius:12px] max-[700px]:[padding:18px] [box-shadow:0_2px_10px_var(--shadow-color)]']]:[padding:0] [&_details[open]_summary_svg]:[transform:rotate(180deg)]",
+    "section-view-accordion [&_details_>_div]:[font-size:0.875rem] [line-height:1.6] [color:var(--muted-foreground)] [display:grid] [gap:var(--spacing-s)] [min-width:0] [&_.section-disclosure-card[data-slot='card']]:[padding:0] [&_details[open]_summary_svg]:[transform:rotate(180deg)]",
   element2:
     "section-view-tabs [display:grid] [gap:var(--spacing-s)] [min-width:0] [&_[role='tablist']]:[display:flex] [&_[role='tablist']]:[flex-wrap:wrap] [&_[role='tab']]:[max-width:100%] [&_[aria-selected='true']]:[color:var(--foreground)]",
   element3:
