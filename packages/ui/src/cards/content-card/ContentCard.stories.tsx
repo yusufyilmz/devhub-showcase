@@ -1,5 +1,6 @@
 import { cardStoryImages } from "@fixtures/card-story-images";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, fn } from "storybook/test";
 
 import { ContentCard } from "./ContentCard";
 
@@ -28,4 +29,25 @@ export const Split: Story = {
 };
 export const Gradient: Story = { args: { variant: "gradient" } };
 export const Minimal: Story = { args: { variant: "minimal" } };
-export const Interactive: Story = { args: { onCardClick: () => undefined } };
+export const Interactive: Story = {
+  args: { onCardClick: fn() },
+  play: async ({ args, canvas, userEvent }) => {
+    const card = canvas.getByRole("button", { name: /research notes/i });
+    await userEvent.tab();
+    await expect(card).toHaveFocus();
+    await userEvent.keyboard("{Enter} ");
+    await expect(args.onCardClick).toHaveBeenCalledTimes(2);
+  },
+};
+
+export const LongContent: Story = {
+  args: {
+    author: { name: "Mina Chen", subtitle: "Research and design" },
+    description:
+      "The team reorganized the workspace after testing how people found recent projects, switched between accounts, and returned to unfinished tasks. The revised navigation keeps these actions visible as the available space changes.",
+    layout: "stacked",
+    metadata: "12 min read",
+    size: "sm",
+    title: "What we learned from redesigning the workspace navigation for small screens",
+  },
+};

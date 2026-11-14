@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { VariantCard } from "./VariantCard";
 
 const meta = {
-  args: { children: <p>Preview the new workspace layout.</p>, className: "w-72" },
+  args: { children: <p>Preview the new workspace layout.</p>, className: "w-[min(85vw,18rem)]" },
   component: VariantCard,
   parameters: { layout: "centered" },
   tags: ["autodocs"],

@@ -66,7 +66,7 @@ export function appearanceCardStyle({
 }
 
 export const contentCardVariants = cva(
-  "group/card relative flex min-w-0 max-w-full flex-col justify-between overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)]",
+  "group/card relative flex min-w-0 max-w-full flex-col justify-between overflow-hidden wrap-anywhere [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)]",
   {
     defaultVariants: {
       layout: "overlay",
@@ -80,16 +80,16 @@ export const contentCardVariants = cva(
         stacked: "justify-start gap-4",
       },
       size: {
-        lg: "h-96 p-6 rounded-2xl max-w-md",
-        md: "h-80 p-4 rounded-xl max-w-sm",
-        sm: "h-64 p-3 rounded-lg max-w-xs",
-        xl: "h-[28rem] p-8 rounded-3xl max-w-lg",
+        lg: "min-h-96 p-lg rounded-2xl max-w-md",
+        md: "min-h-80 p-md rounded-xl max-w-sm",
+        sm: "min-h-64 p-sm rounded-lg max-w-xs",
+        xl: "min-h-[28rem] p-xl rounded-3xl max-w-lg",
       },
       variant: {
         default: "bg-cover bg-center",
         gradient: "bg-gradient-to-br",
         minimal: "bg-transparent border-border/60",
-        solid: "bg-card border-border",
+        solid: "bg-card border-border/75",
       },
     },
   },
@@ -140,7 +140,7 @@ export function titleSizeClass(size: ContentCardProps["size"]) {
 }
 
 export const variantCardVariants = cva(
-  "relative transition-all duration-300 ease-out border border-solid",
+  "relative min-w-0 max-w-full wrap-anywhere border border-solid",
   {
     defaultVariants: {
       rounded: "default",
@@ -171,11 +171,11 @@ export const variantCardVariants = cva(
         spacious: "p-6 sm:p-8 md:p-10",
       },
       variant: {
-        default: "bg-card text-card-foreground border-border",
-        elevated: "bg-card text-card-foreground border-border shadow-sm",
+        default: "bg-card text-card-foreground border-border/75",
+        elevated: "bg-card text-card-foreground border-border/75 shadow-sm",
         glass:
           "bg-card/60 text-card-foreground border-border/50 backdrop-blur-xl backdrop-saturate-120",
-        gradient: "bg-gradient-to-br from-card to-muted text-card-foreground border-border",
+        gradient: "bg-gradient-to-br from-card to-muted text-card-foreground border-border/75",
         subtle: "bg-card/90 text-card-foreground border-border/70",
       },
     },
@@ -251,12 +251,12 @@ export const contentCardStyles = {
   contentCardCopy4: "text-sm",
   element1: "h-8 w-8 rounded-full border border-current/20 object-cover",
   element2: "h-10 w-10 rounded-full border border-current/20 object-cover",
-  element3: "relative z-10 flex items-center space-x-3",
+  element3: "relative z-10 flex flex-wrap items-center gap-sm",
   element4: "flex flex-col",
   element5: "ml-auto",
-  element6: "flex items-center space-x-3",
+  element6: "flex flex-wrap items-center gap-sm",
   element7: "flex flex-1 flex-col",
-  element8: "flex items-center justify-between pt-2",
+  element8: "flex flex-wrap items-center justify-between gap-xs pt-2",
   element9: "flex items-center space-x-2",
   element10: "space-y-2",
   element11: "group/card w-full",
