@@ -2,6 +2,8 @@
 
 import { useId } from "react";
 
+import { cn } from "cn";
+
 import { Input } from "../input";
 import { Label as LibraryLabel } from "../label/Label";
 import { Textarea } from "../textarea";
@@ -17,19 +19,22 @@ export function Field({
   required = false,
 }: FieldOptions) {
   const fieldId = useId();
+  const labelId = `${fieldId}-label`;
+  const hintId = hint ? `${fieldId}-hint` : undefined;
   return (
     <LibraryLabel
-      className={
-        multiline
-          ? "editor-field flex min-w-0 flex-col gap-[9px] text-xs text-muted-foreground [&_small]:text-[10px] [&_small]:leading-normal [&_small]:opacity-80 full-width col-span-full"
-          : "editor-field flex min-w-0 flex-col gap-[9px] text-xs text-muted-foreground [&_small]:text-[10px] [&_small]:leading-normal [&_small]:opacity-80"
-      }
+      className={cn(
+        "editor-field flex min-w-0 flex-col gap-xs text-sm font-medium text-foreground",
+        multiline && "full-width col-span-full",
+      )}
       htmlFor={fieldId}
       unstyled
     >
-      <span>{label}</span>
+      <span id={labelId}>{label}</span>
       {multiline ? (
         <Textarea
+          aria-describedby={hintId}
+          aria-labelledby={labelId}
           id={fieldId}
           onChange={(event) => onChange(event.target.value)}
           required={required}
@@ -38,14 +43,20 @@ export function Field({
         />
       ) : (
         <Input
+          aria-describedby={hintId}
+          aria-labelledby={labelId}
           id={fieldId}
           onChange={(event) => onChange(event.target.value)}
           required={required}
           type={type}
           value={value}
         />
-      )}{" "}
-      {hint && <small>{hint}</small>}
+      )}
+      {hint && (
+        <small className="text-xs font-normal leading-normal text-muted-foreground" id={hintId}>
+          {hint}
+        </small>
+      )}
     </LibraryLabel>
   );
 }

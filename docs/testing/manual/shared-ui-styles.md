@@ -236,3 +236,13 @@ Chrome exercised these four controls in Sand light at 320px and 1280px and Sand 
 | [Input](http://127.0.0.1:6006/?path=/story/ui-forms-input--default&globals=brand:sand) | Switch between the three spacing presets. In **With Button**, tab into the field, enter an email, and tab to Subscribe. Compare **Invalid** and **Disabled**. | Chrome measured 8px, 12px, and 16px side padding, a one-pixel border, and a two-pixel focus ring. The input accepted typing, Tab moved to Subscribe, and the invalid and disabled states rendered. The tested stories fit Sand light and dark at 320px and Cyan light at 1280px. |
 
 [Once UI Input](https://docs.once-ui.com/form-controls/input)
+
+## Labeled fields
+
+| Story                                                                                                | Action                                                                     | Result                                                                                                                           |
+| ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| [Field with Hint](http://127.0.0.1:6006/?path=/story/ui-forms-field--with-hint&globals=brand:sand)   | Edit the name and inspect its description. Open **Multiline**.             | Chrome verified editing and the hint association. The multiline field rendered.                                                  |
+| [Select Field](http://127.0.0.1:6006/?path=/story/ui-forms-select-field--default&globals=brand:sand) | Tab to the field and select Paper. Open **With Unavailable Option**.       | Chrome measured a two-pixel focus ring, verified the changed value and confirmed that Paper was disabled in the alternate story. |
+| [Text Field](http://127.0.0.1:6006/?path=/story/ui-forms-text-field--demo&globals=brand:sand)        | Compare **Valid Email** and **Invalid Email** and focus the invalid field. | Chrome verified distinct border colors, the error association, and the one-pixel focused border.                                 |
+
+These stories fit at 320px in Sand light and dark and at 1280px in Sand light. [Once UI Input](https://docs.once-ui.com/form-controls/input) and [Once UI Select](https://docs.once-ui.com/form-controls/select)

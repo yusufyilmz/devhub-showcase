@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const textFieldVariants = cva(
-  "ui-input [background-color:var(--background)] [border-color:var(--border)] [box-shadow:none] flex w-full rounded-lg border border-border bg-background px-[var(--spacing-md)] py-[var(--spacing-sm)] text-foreground shadow-none placeholder:text-muted-foreground transition-[border-color,background-color] focus:border-foreground focus:outline-none focus:ring-2 focus:ring-ring/40 disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground dark:bg-foreground/5",
+  "ui-input flex w-full min-w-0 rounded-lg border border-border bg-background px-md py-sm text-foreground shadow-none placeholder:text-muted-foreground motion-safe:transition-colors focus:border-foreground focus:outline-none focus:ring-2 focus:ring-ring/40 disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground dark:bg-foreground/5 dark:disabled:bg-muted",
   {
     defaultVariants: {
       size: "default",
@@ -10,29 +10,23 @@ export const textFieldVariants = cva(
     },
     variants: {
       size: {
-        default: "h-[calc(var(--spacing-xl))] px-[var(--spacing-md)] text-sm",
-        lg: "h-[calc(var(--spacing-2xl))] px-[var(--spacing-lg)] text-base",
-        sm: "h-[calc(var(--spacing-lg))] px-[var(--spacing-sm)] text-xs",
+        default: "h-(--spacing-xl) px-md text-sm",
+        lg: "h-(--spacing-2xl) px-lg text-base",
+        sm: "h-(--spacing-lg) px-sm text-xs",
       },
       state: {
         default: "",
-        error:
-          "border-[var(--destructive)] focus:border-[var(--destructive)] focus:ring-[var(--destructive)]/20",
-        success:
-          "border-[var(--success)] focus:border-[var(--success)] focus:ring-[var(--success)]/20",
-        warning:
-          "border-[var(--warning)] focus:border-[var(--warning)] focus:ring-[var(--warning)]/20",
+        error: "border-destructive focus:border-destructive focus:ring-destructive/20",
+        success: "border-success focus:border-success focus:ring-success/20",
+        warning: "border-warning focus:border-warning focus:ring-warning/20",
       },
       variant: {
-        default: "border-[var(--border)]",
-        destructive:
-          "border-[var(--destructive)] focus:border-[var(--destructive)] focus:ring-[var(--destructive)]/20",
-        info: "border-[var(--info)] focus:border-[var(--info)] focus:ring-[var(--info)]/20",
-        primary: "border-[var(--primary)] focus:border-[var(--primary)]",
-        success:
-          "border-[var(--success)] focus:border-[var(--success)] focus:ring-[var(--success)]/20",
-        warning:
-          "border-[var(--warning)] focus:border-[var(--warning)] focus:ring-[var(--warning)]/20",
+        default: "",
+        destructive: "border-destructive focus:border-destructive focus:ring-destructive/20",
+        info: "border-info focus:border-info focus:ring-info/20",
+        primary: "border-primary focus:border-primary",
+        success: "border-success focus:border-success focus:ring-success/20",
+        warning: "border-warning focus:border-warning focus:ring-warning/20",
       },
     },
   },
@@ -47,22 +41,22 @@ export const labelVariants = cva(
     variants: {
       required: {
         false: "",
-        true: "after:content-['*'] after:ml-0.5 after:text-[var(--destructive)]",
+        true: "after:content-['*'] after:ml-0.5 after:text-destructive",
       },
     },
   },
 );
 
-export const helperTextVariants = cva("text-xs leading-none", {
+export const helperTextVariants = cva("text-xs leading-normal", {
   defaultVariants: {
     state: "default",
   },
   variants: {
     state: {
       default: "text-[var(--muted-foreground)]",
-      error: "text-[var(--destructive)]",
-      success: "text-[var(--success)]",
-      warning: "text-[var(--warning)]",
+      error: "text-destructive",
+      success: "text-success",
+      warning: "text-warning",
     },
   },
 });
@@ -74,7 +68,7 @@ export const styledTextFieldStyles = {
     "pointer-events-none absolute left-3 top-1/2 flex -translate-y-1/2 items-center text-primary",
   getVariantClasses: "bg-card/60 backdrop-blur-md border-border/50",
   getVariantClasses2: "hover:bg-card/80 hover:backdrop-blur-lg hover:border-primary/40",
-  getVariantClasses3: "focus:bg-card focus:backdrop-blur-xl focus:border-primary focus:border-2",
+  getVariantClasses3: "focus:bg-card focus:backdrop-blur-xl focus:border-primary",
   getVariantClasses4: "transition-all duration-300",
   getVariantClasses5: "bg-transparent border-border/30",
   getVariantClasses6: "hover:border-primary/50",
@@ -82,7 +76,7 @@ export const styledTextFieldStyles = {
   getVariantClasses8: "transition-colors",
   getVariantClasses9: "bg-card border-border",
   getVariantClasses10: "hover:bg-card/90 hover:border-primary/30",
-  getVariantClasses11: "focus:bg-card focus:border-primary focus:border-2",
+  getVariantClasses11: "focus:bg-card focus:border-primary",
   getVariantClasses12: "transition-all",
   styledTextField: "font-medium",
   styledTextField2: "text-destructive",
