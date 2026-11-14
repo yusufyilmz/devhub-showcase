@@ -320,3 +320,7 @@ Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-overlays-context-m
 ## Menubar
 
 Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-overlays-menubar--narrow) at 320px in Sand light and dark and at 1280px in Cyan light. Tab showed a two-pixel trigger outline. Arrow Down opened Portfolio and skipped the disabled item, Arrow Right moved to View, and Escape returned focus to the View trigger. The long filename wrapped, the menu fit the viewport, and reduced motion disabled animation. [Once UI Dropdown](https://docs.once-ui.com/components/dropdown)
+
+## Command
+
+Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-overlays-command--narrow) at 320px in Sand light and dark and at 1280px in Cyan light. The palette fit the viewport. Tab focused the search field and changed its surface, Arrow Down skipped Archive and highlighted Projects, typing Contact narrowed the list to one result, and an unmatched query displayed the empty message. [Once UI Kbar](https://docs.once-ui.com/modules/kbar)

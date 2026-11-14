@@ -12,12 +12,13 @@ import {
 function Example({ width = 560 }: { width?: number }) {
   return (
     <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
-      <Command>
-        <CommandInput placeholder="Find a section" />
+      <Command className="border border-border">
+        <CommandInput aria-label="Find a section" placeholder="Find a section" />
         <CommandList>
           <CommandEmpty>No results.</CommandEmpty>
           <CommandGroup heading="Sections">
             <CommandItem>About</CommandItem>
+            <CommandItem disabled>Archive</CommandItem>
             <CommandItem>Projects</CommandItem>
             <CommandItem>Contact</CommandItem>
           </CommandGroup>
