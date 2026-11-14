@@ -229,8 +229,6 @@ export const disclosureCardStyles = {
   body: "mx-md space-y-xs border-t border-border/60 pt-3 pb-md text-sm leading-relaxed wrap-anywhere",
   chevron:
     "text-muted-foreground motion-safe:transition-transform group-data-[state=open]:rotate-180",
-  content:
-    "overflow-clip motion-safe:data-[state=open]:animate-[ui-disclosure-open_340ms_cubic-bezier(0.22,1,0.36,1)] motion-safe:data-[state=closed]:animate-[ui-disclosure-close_240ms_ease-in]",
   trigger:
     "group h-auto min-h-11 w-full justify-between gap-sm rounded-[inherit] px-md py-3 text-left whitespace-normal text-card-foreground focus-visible:-outline-offset-2 aria-expanded:rounded-b-none",
 } as const;
