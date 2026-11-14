@@ -312,3 +312,7 @@ Chrome checked all five [variants](http://127.0.0.1:6006/?path=/story/ui-overlay
 ## Dropdown Menu
 
 Chrome checked [With Submenu](http://127.0.0.1:6006/?path=/story/ui-overlays-dropdown-menu--with-submenu) at 320px in Sand light and dark and at 1280px in Cyan light. Arrow Down skipped the disabled item, Arrow Right opened Export, and the filename wrapped within the viewport. The submenu retained a one-pixel border and skipped animation with reduced motion. Enter closed the menu and returned focus to the trigger. [Once UI Dropdown](https://docs.once-ui.com/components/dropdown)
+
+## Context Menu
+
+Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-overlays-context-menu--narrow) at 320px in Sand light and dark and at 1280px in Cyan light. Shift+F10 opened the menu, Arrow Down skipped the disabled item, and Escape closed it. Right-click also opened the menu within the viewport. The long filename wrapped, the border measured one pixel, and reduced motion disabled animation. [Once UI Dropdown](https://docs.once-ui.com/components/dropdown)

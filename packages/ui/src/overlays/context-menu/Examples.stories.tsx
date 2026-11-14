@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { Button } from "../../buttons/button";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -11,12 +12,15 @@ function Example({ width = 560 }: { width?: number }) {
   return (
     <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
       <ContextMenu>
-        <ContextMenuTrigger>
-          <div className="rounded-lg border border-dashed p-12">Right click to view actions</div>
+        <ContextMenuTrigger asChild>
+          <Button className="h-auto w-full whitespace-normal p-md" variant="outline">
+            Right click to view actions
+          </Button>
         </ContextMenuTrigger>
         <ContextMenuContent>
           <ContextMenuItem>Edit section</ContextMenuItem>
-          <ContextMenuItem>Duplicate section</ContextMenuItem>
+          <ContextMenuItem disabled>Delete section</ContextMenuItem>
+          <ContextMenuItem>PortfolioDocumentationForContributors.json</ContextMenuItem>
         </ContextMenuContent>
       </ContextMenu>
     </div>
