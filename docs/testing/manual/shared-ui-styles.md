@@ -340,3 +340,7 @@ Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-overlays-drawer--n
 ## Dialog
 
 Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-overlays-dialog--narrow) at 320px in Sand light and dark and at 1280px in Cyan light. The panel fit horizontally and used a one-pixel border. Enter opened it and focused Close with a two-pixel outline. Escape closed the dialog and returned focus to the trigger. Reduced motion disabled animation. [Once UI Dialog](https://docs.once-ui.com/components/dialog)
+
+## Radix Dialog
+
+Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-overlays-radix-dialog--narrow) in Sand light and dark at 320px and Cyan light at 1280px. The panel fit the viewport with a one-pixel border and a two-pixel Close outline. Escape returned focus to the trigger. Reduced motion disabled the entrance animation. [Once UI Dialog](https://docs.once-ui.com/components/dialog)
