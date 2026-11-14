@@ -288,3 +288,7 @@ Chrome checked [Narrow Canvas](http://127.0.0.1:6006/?path=/story/ui-feedback-al
 ## Banner spacing and action
 
 Chrome checked [With Action](http://127.0.0.1:6006/?path=/story/ui-feedback-banner--with-action) at 320px in Sand light and dark and at 1280px in Cyan light. The banner and action fit all three spacing presets, with side padding of 12px, 16px, and 20px and a one-pixel border. Tab showed the action's two-pixel focus outline and Enter dismissed the announcement. [Once UI Banner](https://docs.once-ui.com/components/banner)
+
+## Empty State
+
+Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-feedback-empty-state--narrow) and **With Actions** at 320px in Sand light and dark and at 1280px in Cyan light. Both fit the viewport and retained the configured 280px height. The default icon was decorative. Tab focused both actions in order and Enter activated Create project. [Once UI empty data example](https://docs.once-ui.com/data/setup)
