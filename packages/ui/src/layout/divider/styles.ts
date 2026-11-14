@@ -1,3 +1,3 @@
 export const dividerStyles = {
-  divider: "my-[var(--spacing-lg)] border-t border-[var(--border)]",
+  divider: "my-lg border-t border-border/70",
 } as const;

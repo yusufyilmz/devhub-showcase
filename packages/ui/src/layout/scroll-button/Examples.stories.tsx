@@ -6,9 +6,11 @@ function Example({ width = 560 }: { width?: number }) {
   return (
     <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
       <div>
-        <p id="first">First section</p>
+        <p className="min-h-screen" id="first">
+          First section
+        </p>
         <ScrollButton sectionIds={["first", "second"]} />
-        <p className="mt-32" id="second">
+        <p className="min-h-screen" id="second">
           Second section
         </p>
       </div>

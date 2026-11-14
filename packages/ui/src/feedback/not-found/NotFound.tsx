@@ -20,8 +20,8 @@ export function NotFound({
 
   return (
     <div className={cn(recoveryPageStyles.shell, className)} {...props}>
-      <section className={cn(recoveryPageStyles.card, "group/recovery")}>
-        <span className={cn(recoveryPageStyles.icon, "motion-safe:group-hover/recovery:rotate-12")}>
+      <section className={cn(recoveryPageStyles.card, "[--recovery-tone:var(--primary)]")}>
+        <span className={recoveryPageStyles.icon}>
           <Compass aria-hidden="true" className="size-[1.375rem]" />
         </span>
         <p className={recoveryPageStyles.label}>Error 404</p>

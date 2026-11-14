@@ -37,7 +37,7 @@ export function appearanceCardClasses({
     GRADIENT_MAP[appearance as AppearanceCardAppearance] ?? GRADIENT_MAP.default;
   return cn(
     appearanceClass,
-    "px-md",
+    "max-w-full px-md wrap-anywhere",
     allowOverflow
       ? "overflow-visible"
       : "overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)]",
@@ -229,8 +229,6 @@ export const disclosureCardStyles = {
   body: "mx-md space-y-xs border-t border-border/60 pt-3 pb-md text-sm leading-relaxed wrap-anywhere",
   chevron:
     "text-muted-foreground motion-safe:transition-transform group-data-[state=open]:rotate-180",
-  content:
-    "overflow-clip motion-safe:data-[state=open]:animate-[ui-disclosure-open_340ms_cubic-bezier(0.22,1,0.36,1)] motion-safe:data-[state=closed]:animate-[ui-disclosure-close_240ms_ease-in]",
   trigger:
     "group h-auto min-h-11 w-full justify-between gap-sm rounded-[inherit] px-md py-3 text-left whitespace-normal text-card-foreground focus-visible:-outline-offset-2 aria-expanded:rounded-b-none",
 } as const;
@@ -352,7 +350,10 @@ export function cardBodyClassName(...values: unknown[]): string {
 
 export function revealCardBaseClassName(className?: string): string {
   return cn(
-    "section-card relative m-0 w-full rounded-[14px] border border-[color-mix(in_srgb,var(--border)_70%,transparent)] bg-card p-6 shadow-[0_6px_26px_color-mix(in_srgb,var(--foreground)_5%,transparent)] transition-[border-color,box-shadow] duration-150 hover:border-[color-mix(in_srgb,var(--primary)_55%,transparent)] hover:shadow-[0_12px_32px_color-mix(in_srgb,var(--foreground)_8%,transparent)] max-[767px]:p-[18px] [&_li]:cursor-default [&_li]:py-1.5 [&_li]:leading-[1.75] [&_.text-xs]:text-xs [&_.text-textColor-lightSlate]:text-[13px] [&_.text-textColor-lightSlate]:leading-[1.8] reveal-card before:[position:absolute] [inset:0] [padding:1px] [pointer-events:none] [content:''] [background:conic-gradient(_from_var(--reveal-angle),_transparent_65%,_color-mix(in_srgb,_var(--primary)_15%,_transparent)_78%,_color-mix(in_srgb,_var(--primary)_45%,_transparent)_90%,_transparent_100%_)] [border-radius:inherit] [mask:linear-gradient(#fff_0_0)_content-box,_linear-gradient(#fff_0_0)] [mask-composite:exclude] [animation:reveal-shimmer_12s_linear_infinite] [&[data-expanded='true']::before]:[animation-play-state:paused] [&[data-expanded='true']]:[border-color:color-mix(in_srgb,_var(--primary)_60%,_transparent)] [&[data-expanded='true']_.reveal-preview]:[grid-template-rows:0fr] [&[data-expanded='true']_.reveal-details]:[visibility:visible] p-md",
+    "section-card reveal-card relative m-0 w-full min-w-0 border-border/75 bg-card p-md wrap-anywhere",
+    "data-[expanded=true]:border-primary/35",
+    "data-[expanded=true]:[&_.reveal-preview]:mt-0 data-[expanded=true]:[&_.reveal-preview]:grid-rows-[0fr] data-[expanded=true]:[&_.reveal-preview]:opacity-0",
+    "data-[expanded=true]:[&_.reveal-details]:visible data-[expanded=true]:[&_.reveal-details]:mt-sm data-[expanded=true]:[&_.reveal-details]:grid-rows-[1fr] data-[expanded=true]:[&_.reveal-details]:opacity-100",
     className,
   );
 }

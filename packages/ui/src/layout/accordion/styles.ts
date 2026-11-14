@@ -1,13 +1,13 @@
 export const accordionStyles = {
-  accordionContent: "pt-0 pb-4",
-  accordionItem: "border-b last:border-b-0",
+  accordionContent: "px-sm pb-sm leading-relaxed text-muted-foreground wrap-anywhere",
+  accordionItem: "border-b border-border/60 last:border-b-0",
   accordionTrigger:
-    "focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180",
+    "flex min-h-11 flex-1 items-start justify-between gap-sm rounded-md px-sm py-3 text-left text-sm font-medium leading-snug wrap-anywhere outline-none hover:bg-muted/60 focus-visible:outline-2 focus-visible:outline-ring focus-visible:-outline-offset-2 disabled:pointer-events-none disabled:text-muted-foreground data-[state=open]:bg-muted/40 [&[data-state=open]>svg]:rotate-180 motion-safe:transition-colors",
   element1: "flex",
   element2:
-    "text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200",
+    "pointer-events-none size-4 shrink-0 translate-y-0.5 text-muted-foreground motion-safe:transition-transform",
   element3:
-    "data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)] text-sm",
+    "overflow-hidden pt-2 text-sm data-[state=closed]:pt-0 motion-safe:data-[state=closed]:animate-accordion-up motion-safe:data-[state=open]:animate-accordion-down",
 } as const;
 
 export function accordionBodyClassName(...values: unknown[]): string {

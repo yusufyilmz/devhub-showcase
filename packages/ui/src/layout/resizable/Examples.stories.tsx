@@ -2,16 +2,25 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "./Resizable";
 
-function Example({ width = 560 }: { width?: number }) {
+function Example({
+  width = 560,
+  direction = "horizontal",
+}: {
+  width?: number;
+  direction?: "horizontal" | "vertical";
+}) {
   return (
-    <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
-      <ResizablePanelGroup className="min-h-48 rounded-lg border" direction="horizontal">
+    <div style={{ height: 272, maxWidth: width, padding: 24, width: "100%" }}>
+      <ResizablePanelGroup
+        className="rounded-lg border border-border/75 bg-card"
+        direction={direction}
+      >
         <ResizablePanel>
-          <div className="p-6">Preview</div>
+          <div className="p-md">Preview</div>
         </ResizablePanel>
-        <ResizableHandle withHandle />
+        <ResizableHandle aria-label="Resize preview and editor" withHandle />
         <ResizablePanel>
-          <div className="p-6">Editor</div>
+          <div className="p-md">Editor</div>
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
@@ -27,3 +36,5 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const Narrow: Story = { args: { width: 320 } };
 export const Wide: Story = { args: { width: 960 } };
+
+export const Vertical: Story = { args: { direction: "vertical" } };
