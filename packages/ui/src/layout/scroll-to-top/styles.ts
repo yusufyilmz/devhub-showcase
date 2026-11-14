@@ -1,3 +1,8 @@
-export function scrollToTopClassName(...values: unknown[]): string {
-  return `fixed right-4 bottom-4 z-40 rounded-full bg-button-primary px-4 py-3 text-sm text-button-light shadow-lg transition ${values[0]}`;
+import { cn } from "cn";
+
+export function scrollToTopClassName(visibility: string): string {
+  return cn(
+    "fixed end-md bottom-[max(var(--spacing-md),env(safe-area-inset-bottom))] z-40 h-10 rounded-full border-border/75 bg-background/95 px-sm shadow-sm motion-safe:transition-opacity",
+    visibility,
+  );
 }

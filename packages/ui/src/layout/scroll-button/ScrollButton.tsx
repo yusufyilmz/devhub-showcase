@@ -17,7 +17,11 @@ export const ScrollButton: React.FC<ScrollButtonProps> = ({ sectionIds }) => {
     if (nextIndex < sectionIds.length && sectionIds[nextIndex]) {
       const nextSection = document.getElementById(sectionIds[nextIndex]);
       if (nextSection) {
-        nextSection.scrollIntoView({ behavior: "smooth" });
+        nextSection.scrollIntoView({
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "instant"
+            : "smooth",
+        });
         setCurrentIndex(nextIndex);
       }
     }
@@ -48,7 +52,7 @@ export const ScrollButton: React.FC<ScrollButtonProps> = ({ sectionIds }) => {
     };
   }, [sectionIds]);
 
-  if (currentIndex === sectionIds.length - 1) return null;
+  if (currentIndex >= sectionIds.length - 1) return null;
 
   return (
     <div className={scrollButtonStyles.element1}>
@@ -57,7 +61,6 @@ export const ScrollButton: React.FC<ScrollButtonProps> = ({ sectionIds }) => {
         className={scrollButtonStyles.element2}
         onClick={scrollToNextSection}
         size="lg"
-        surface="portfolio"
         variant="outline"
       >
         <ArrowDownwardIcon />
