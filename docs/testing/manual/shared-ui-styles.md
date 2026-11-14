@@ -316,3 +316,7 @@ Chrome checked [With Submenu](http://127.0.0.1:6006/?path=/story/ui-overlays-dro
 ## Context Menu
 
 Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-overlays-context-menu--narrow) at 320px in Sand light and dark and at 1280px in Cyan light. Shift+F10 opened the menu, Arrow Down skipped the disabled item, and Escape closed it. Right-click also opened the menu within the viewport. The long filename wrapped, the border measured one pixel, and reduced motion disabled animation. [Once UI Dropdown](https://docs.once-ui.com/components/dropdown)
+
+## Menubar
+
+Chrome checked [Narrow](http://127.0.0.1:6006/?path=/story/ui-overlays-menubar--narrow) at 320px in Sand light and dark and at 1280px in Cyan light. Tab showed a two-pixel trigger outline. Arrow Down opened Portfolio and skipped the disabled item, Arrow Right moved to View, and Escape returned focus to the View trigger. The long filename wrapped, the menu fit the viewport, and reduced motion disabled animation. [Once UI Dropdown](https://docs.once-ui.com/components/dropdown)

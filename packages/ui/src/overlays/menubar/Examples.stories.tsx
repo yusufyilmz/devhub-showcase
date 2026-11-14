@@ -10,7 +10,14 @@ function Example({ width = 560 }: { width?: number }) {
           <MenubarTrigger>Portfolio</MenubarTrigger>
           <MenubarContent>
             <MenubarItem>Preview</MenubarItem>
-            <MenubarItem>Download CV</MenubarItem>
+            <MenubarItem disabled>Download CV</MenubarItem>
+            <MenubarItem>PortfolioDocumentationForContributors.json</MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
+        <MenubarMenu>
+          <MenubarTrigger>View</MenubarTrigger>
+          <MenubarContent>
+            <MenubarItem>Show drafts</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
