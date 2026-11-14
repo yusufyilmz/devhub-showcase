@@ -246,3 +246,13 @@ Chrome exercised these four controls in Sand light at 320px and 1280px and Sand 
 | [Text Field](http://127.0.0.1:6006/?path=/story/ui-forms-text-field--demo&globals=brand:sand)        | Compare **Valid Email** and **Invalid Email** and focus the invalid field. | Chrome verified distinct border colors, the error association, and the one-pixel focused border.                                 |
 
 These stories fit at 320px in Sand light and dark and at 1280px in Sand light. [Once UI Input](https://docs.once-ui.com/form-controls/input) and [Once UI Select](https://docs.once-ui.com/form-controls/select)
+
+## Checkbox and radio controls
+
+| Story                                                                                               | Chrome result                                                                                                                  |
+| --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| [Checkbox](http://127.0.0.1:6006/?path=/story/ui-forms-checkbox--with-label&globals=brand:sand)     | Tab showed a two-pixel focus ring, Space checked the control, and **Indeterminate** showed a minus. **Disabled** was disabled. |
+| [Radio Button](http://127.0.0.1:6006/?path=/story/ui-forms-radio-button--narrow&globals=brand:sand) | Tab showed a two-pixel outline, Arrow Down selected Public, and Unlisted was disabled.                                         |
+| [Radio Group](http://127.0.0.1:6006/?path=/story/ui-forms-radio-group--narrow&globals=brand:sand)   | Tab focused Classic, the arrow keys selected Editorial and Classic, and Archived was disabled.                                 |
+
+All tested stories fit at 320px in Sand light and dark and at 1280px in Cyan light. [Once UI RadioButton](https://docs.once-ui.com/form-controls/radioButton) and [InteractiveDetails](https://docs.once-ui.com/form-controls/interactiveDetails)
