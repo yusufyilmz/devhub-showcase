@@ -29,7 +29,7 @@ export function CTABlock({
       <div
         className={
           landing
-            ? "home-final-inner"
+            ? "home-final-inner relative z-[1] [&>p:not(.home-eyebrow)]:mb-[28px] [&>p:not(.home-eyebrow)]:text-[13px] [&>p:not(.home-eyebrow)]:text-muted-foreground"
             : "grid justify-items-center gap-sm rounded-xl border bg-linear-to-br from-primary/10 via-card to-card p-lg text-center sm:p-xl"
         }
       >
@@ -57,7 +57,7 @@ export function CTABlock({
             <div className="flex flex-wrap justify-center gap-s">{actions}</div>
           ))}
         {note && (
-          <span className={landing ? "home-final-note" : "text-sm text-muted-foreground"}>
+          <span className={landing ? "home-final-note ml-[20px] inline-block [font:9px_var(--font-geist-mono),monospace] text-muted-foreground max-[760px]:mt-[18px] max-[760px]:ml-0 max-[760px]:block" : "text-sm text-muted-foreground"}>
             {note}
           </span>
         )}
