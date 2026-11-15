@@ -9,6 +9,7 @@ import { LoginTitle } from "./login-title";
 const content = copy.loginSites["my-dev-studio"];
 const meta = {
   args: {
+    animateVisual: true,
     backHref: content.backHref,
     backLabel: content.backLabel,
     brand: content.brand,
