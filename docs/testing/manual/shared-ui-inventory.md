@@ -16,12 +16,12 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 | [buttons/action-button](../../../packages/ui/src/buttons/action-button)           | `@shared/ui/action-button`     | UI/Buttons/Action Button      | Checked         |
 | [buttons/add-project-button](../../../packages/ui/src/buttons/add-project-button) | See group exports              | UI/Buttons/Add Project Button | Checked         |
 | [buttons/button](../../../packages/ui/src/buttons/button)                         | `@shared/ui/button`            | UI/Buttons/Button             | Checked         |
-| [buttons/buttons](../../../packages/ui/src/buttons/buttons)                       | `@shared/ui/buttons`           | Find consuming story          | Pending         |
+| [buttons/buttons](../../../packages/ui/src/buttons/buttons)                       | `@shared/ui/buttons`           | Find consuming story          | Checked         |
 | [buttons/download-cv-button](../../../packages/ui/src/buttons/download-cv-button) | See group exports              | UI/Buttons/Download CV Button | Checked         |
 | [buttons/go-back-button](../../../packages/ui/src/buttons/go-back-button)         | See group exports              | UI/Buttons/Go Back Button     | Checked         |
 | [buttons/home-button](../../../packages/ui/src/buttons/home-button)               | See group exports              | UI/Buttons/Home Button        | Checked         |
-| [buttons/icon-button](../../../packages/ui/src/buttons/icon-button)               | `@shared/ui/icon-button`       | UI/Buttons/Icon Button        | Pending         |
-| [buttons/project-button](../../../packages/ui/src/buttons/project-button)         | See group exports              | UI/Buttons/Project Button     | Pending         |
+| [buttons/icon-button](../../../packages/ui/src/buttons/icon-button)               | `@shared/ui/icon-button`       | UI/Buttons/Icon Button        | Checked         |
+| [buttons/project-button](../../../packages/ui/src/buttons/project-button)         | See group exports              | UI/Buttons/Project Button     | Checked         |
 | [buttons/segmented-control](../../../packages/ui/src/buttons/segmented-control)   | `@shared/ui/segmented-control` | UI/Buttons/Segmented Control  | Pending         |
 | [buttons/switch](../../../packages/ui/src/buttons/switch)                         | `@shared/ui/switch`            | UI/Buttons/Switch             | Pending         |
 | [buttons/toggle](../../../packages/ui/src/buttons/toggle)                         | `@shared/ui/toggle`            | UI/Buttons/Toggle             | Pending         |
