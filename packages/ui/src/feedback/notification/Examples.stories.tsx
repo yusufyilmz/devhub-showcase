@@ -4,8 +4,13 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "../../buttons/button";
 import { SnackbarNotification } from "./Notification";
+import type { SnackbarNotificationProps } from "./types";
 
-function Example({ width = 560 }: { width?: number }) {
+function Example({
+  width = 560,
+  severity = "success",
+  message = "Saved to your draft",
+}: Partial<Pick<SnackbarNotificationProps, "severity" | "message">> & { width?: number }) {
   const [open, setOpen] = useState(true);
 
   return (
@@ -14,10 +19,10 @@ function Example({ width = 560 }: { width?: number }) {
         Show notification
       </Button>
       <SnackbarNotification
-        message="Saved to your draft"
+        message={message}
         onClose={() => setOpen(false)}
         open={open}
-        severity="success"
+        severity={severity}
       />
     </div>
   );
@@ -32,3 +37,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const Narrow: Story = { args: { width: 320 } };
 export const Wide: Story = { args: { width: 960 } };
+export const SaveFailure: Story = {
+  args: {
+    message: "Your draft could not be saved. Check your connection and try again.",
+    severity: "error",
+  },
+};

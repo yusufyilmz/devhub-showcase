@@ -25,8 +25,10 @@ export function SnackbarNotification({
 
   return (
     <div className={notificationStyles.root} data-severity={severity}>
-      <StatusIcon aria-hidden="true" className={notificationStyles.icon} />
-      <p className="min-w-0 break-words" role={severity === "error" ? "alert" : "status"}>
+      <span className={notificationStyles.icon}>
+        <StatusIcon aria-hidden="true" />
+      </span>
+      <p className="min-w-0 wrap-anywhere" role={severity === "error" ? "alert" : "status"}>
         {message}
       </p>
       <Button
