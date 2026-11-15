@@ -201,7 +201,19 @@ test("editor panels fit the viewport and keep the profile menu available", async
   await expect(page.getByRole("menu").getByText("My profile")).toBeVisible();
   await expect(page.getByRole("menuitem", { name: "Job Hunter" })).toBeVisible();
   await page.keyboard.press("Escape");
-  const preview = page.locator(".draft-preview-scroll");
+  await appearance.click();
+  await expect(appearance).toHaveAttribute("aria-expanded", "true");
+  const settings = page.getByRole("button", { exact: true, name: "Theme settings" });
+  await settings.click();
+  const settingsDialog = page.getByRole("dialog", { name: "Make yourself at home" });
+  await expect(settingsDialog).toBeInViewport({ ratio: 1 });
+  await expect(settingsDialog.getByRole("button", { name: "Reset appearance" })).toBeVisible();
+  const reset = settingsDialog.getByRole("button", { name: "Reset appearance" });
+  await reset.click({ trial: true });
+  await page.keyboard.press("Escape");
+  await expect(settingsDialog).toBeHidden();
+  await expect(settings).toBeFocused();
+  const preview = page.getByTitle("Private draft preview").locator("..");
   await expect(preview).toBeVisible();
   await page.getByRole("button", { name: "Desktop · 1280px" }).click();
   await expect
