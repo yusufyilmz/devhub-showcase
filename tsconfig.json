@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "paths": {
       "@/app/*": ["./apps/my-dev-studio/app/*"],
       "@/features/*": ["./apps/my-dev-studio/features/*"],
