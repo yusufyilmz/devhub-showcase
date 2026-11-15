@@ -4,6 +4,8 @@ import "./preview.css";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
+import { useIsMobile } from "@shared/runtime/browser";
+
 import { Button } from "../../buttons/button/Button";
 import { preparePreviewFrame } from "./frame";
 import { previewDocument, previewSizeLabels, previewSizes, previewWidthStyle } from "./styles";
@@ -12,11 +14,20 @@ import type { ResponsivePortfolioPreviewProps } from "./types";
 export function ResponsivePortfolioPreview({
   children,
   appearance,
+  defaultOpen = false,
 }: ResponsivePortfolioPreviewProps) {
-  const [open, setOpen] = useState(false);
-  const [size, setSize] = useState<keyof typeof previewSizes>("Mobile");
+  const [open, setOpen] = useState(defaultOpen);
+  const isMobile = useIsMobile();
+  const [selectedSize, setSize] = useState<keyof typeof previewSizes | null>(null);
+  const size = selectedSize ?? (isMobile ? "Mobile" : "Desktop");
   const [doc, setDocument] = useState<Document | null>(null);
   const frame = useRef<HTMLIFrameElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const content = frame.current?.contentDocument;
+    // A server-rendered open frame can finish loading before hydration attaches onLoad.
+    if (content?.readyState === "complete") setDocument(content);
+  }, [open]);
   useEffect(() => {
     if (!doc) return;
     const sync = () => preparePreviewFrame(doc, appearance);
@@ -37,6 +48,7 @@ export function ResponsivePortfolioPreview({
         setOpen(event.currentTarget.open);
         if (!event.currentTarget.open) setDocument(null);
       }}
+      open={open}
     >
       <summary>Preview your draft</summary>
       <p>

@@ -2,6 +2,8 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
+import { openEditor, selectEditorSection } from "../support/editor";
+
 test("owner reviews saved history and independent field choices without autosave", async ({
   page,
   context,
@@ -46,15 +48,16 @@ test("owner reviews saved history and independent field choices without autosave
     });
   });
   await page.goto(`/${mobile ? "mobile" : "desktop"}-assistant-tools/edit`);
-  await page.getByRole("button", { exact: true, name: "Field visibility" }).click();
+  await openEditor(page);
+  await selectEditorSection(page, "Field visibility");
   await page.getByRole("checkbox", { name: "Include email on website" }).uncheck();
   await expect(page.getByRole("checkbox", { name: "Include email on cv" })).toBeChecked();
   await page.getByRole("checkbox", { name: "Include phone on cv" }).uncheck();
-  await page.getByRole("button", { exact: true, name: "PDF" }).click();
+  await selectEditorSection(page, "PDF");
   await expect(
     page.getByRole("checkbox", { exact: true, name: "Include phone" }),
   ).not.toBeChecked();
-  await page.getByRole("button", { exact: true, name: "Revision history" }).click();
+  await selectEditorSection(page, "Revision history");
   await page.getByRole("combobox", { name: /Saved revision/ }).selectOption("1");
   await page.getByRole("button", { exact: true, name: "Inspect revision" }).click();
   await expect(
@@ -63,7 +66,7 @@ test("owner reviews saved history and independent field choices without autosave
   expect(writes).toBe(0);
   await page.getByRole("button", { name: "Restore reviewed revision to draft" }).click();
   await expect(page.getByRole("status").filter({ hasText: "Earlier work restored" })).toBeVisible();
-  await page.getByRole("button", { exact: true, name: "Profile" }).click();
+  await selectEditorSection(page, "Profile");
   await expect(page.getByRole("textbox", { exact: true, name: "Professional title" })).toHaveValue(
     "Earlier saved title",
   );

@@ -1,5 +1,16 @@
 # UI catalog
 
+`@shared/ui/portfolio` exports `EditorWorkspace` and `DraftPreviewPane`. The workspace
+starts with the draft preview. Edit and section navigation render the selected form
+inline in the main workspace. The desktop sidebar scrolls and can switch to a compact
+rail. The mobile section picker keeps the same navigation available on narrow screens.
+Back to preview and Done editing preserve the draft. Save and publication actions use
+the original form, and recovery notices remain accessible in either view. The website preview defaults to Mobile below 768px and Desktop otherwise;
+a manually chosen size is retained. CV preview uses independent CV visibility choices;
+PDF pagination is checked through the saved download. Profile fields are grouped into
+basic details, introduction and contact links. `CollectionEditor` accepts optional
+`collapsible` and `getSummary` to keep inactive career entries compact.
+
 `@shared/ui/notification-preferences` provides a reusable per-device notification
 settings panel with install guidance, permission/connection status and explicit
 enable/test/disable callbacks. It owns presentation only; applications supply
@@ -355,7 +366,7 @@ Each content section lives in `src/sections/variants/{name}`. Most export the se
 | `PropertySection`                                       | editor                                                                                                          |
 | `QuickstartSection`                                     | editor                                                                                                          |
 | `ReferralSection`, `ReferralItem`                       |                                                                                                                 |
-| `ReviewSection`, `ReviewButton`                         |                                                                                                                 |
+| `ReviewSection`, `ReviewButton`                         | Studio testimonial queue with pending, empty, load error and per-review decision states                         |
 | `ServicesSection`                                       | editor                                                                                                          |
 | `ShopItemsSection`                                      | editor                                                                                                          |
 | `ShowcaseSection`                                       | editor                                                                                                          |
@@ -382,3 +393,5 @@ Import homepage compositions from `@shared/ui/sections`. They live in `src/secti
 All 47 registered authorable sections have colocated Default, Compact and Empty stories using fictional fixtures from `src/sections/__fixtures__/section-story.ts`. `SectionCatalog` provides a searchable name/category browser for the same registry, without copying its list into another data source.
 
 `PublicationControls` (`@shared/ui/portfolio`) reviews a saved revision and confirms publication or withdrawal through app-provided callbacks; it never saves the draft. Optional scheduling callbacks enable reviewed snapshot scheduling, visible timezone/UTC time, status refresh and cancellation. The app owns authorization, persistence and worker setup.
+
+`JobsDashboard` (`@shared/ui/portfolio`) presents private job matches, saved searches, alerts, and application drafts.

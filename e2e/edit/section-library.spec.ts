@@ -4,6 +4,7 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
+import { openEditor, selectEditorSection } from "../support/editor";
 import { confirmPublication } from "../support/publication";
 
 test("owner creates a library section, saves a template, exports content, reviews PageForge import and publishes only after save", async ({
@@ -35,14 +36,15 @@ test("owner creates a library section, saves a template, exports content, review
     },
   ]);
   await page.goto(`/${device}-library-owner/edit`);
-  await page.getByRole("button", { exact: true, name: "Custom sections" }).click();
+  await openEditor(page);
+  await selectEditorSection(page, "Custom sections");
   await page.getByLabel("Section starter").selectOption("pricing");
   await page.getByRole("button", { name: "Add custom section" }).click();
   await page.getByRole("button", { name: "+ Add section items" }).click();
   await page.getByLabel("Item title", { exact: true }).fill("Independent plan");
   await page.getByLabel("Item details").fill("A focused engagement.");
   await page.getByLabel("Price or value").fill("€250");
-  await page.getByRole("button", { exact: true, name: "Templates" }).click();
+  await selectEditorSection(page, "Templates");
   await page.getByLabel("Template name").fill("Pricing preset");
   await page.getByRole("button", { exact: true, name: "Save section template" }).click();
   const downloadEvent = page.waitForEvent("download");
@@ -107,7 +109,8 @@ test("owner creates a library section, saves a template, exports content, review
   await confirmPublication(page);
   await expect(page.getByRole("status")).toContainText("Saved privately.");
   await page.reload();
-  await page.getByRole("button", { exact: true, name: "Templates" }).click();
+  await openEditor(page);
+  await selectEditorSection(page, "Templates");
   await expect(
     page.getByRole("button", { exact: true, name: "Review Pricing preset" }),
   ).toBeVisible();

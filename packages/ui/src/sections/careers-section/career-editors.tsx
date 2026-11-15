@@ -14,6 +14,7 @@ const today = () => new Date().toISOString().slice(0, 10);
 export function ExperienceEditor({ profile, onChange }: Props) {
   return (
     <CollectionEditor
+      collapsible
       create={() => ({
         achievements: [],
         company: "",
@@ -23,6 +24,9 @@ export function ExperienceEditor({ profile, onChange }: Props) {
         position: "",
         start: today(),
       })}
+      getSummary={(item) =>
+        `${item.position} · ${item.start.slice(0, 7)} — ${item.end?.slice(0, 7) || "Present"}`
+      }
       getTitle={(item) => item.company}
       items={profile.experiences}
       onChange={(experiences) => onChange({ ...profile, experiences })}
@@ -80,6 +84,7 @@ export function ExperienceEditor({ profile, onChange }: Props) {
 export function ProjectsEditor({ profile, onChange }: Props) {
   return (
     <CollectionEditor
+      collapsible
       create={() => ({
         company: "Personal",
         description: "",
@@ -91,6 +96,7 @@ export function ProjectsEditor({ profile, onChange }: Props) {
         sourceUrl: null,
         url: null,
       })}
+      getSummary={(item) => item.company}
       getTitle={(item) => item.name}
       items={profile.projects}
       onChange={(projects) => onChange({ ...profile, projects })}
@@ -166,6 +172,7 @@ export function ProjectsEditor({ profile, onChange }: Props) {
 export function EducationEditor({ profile, onChange }: Props) {
   return (
     <CollectionEditor
+      collapsible
       create={() => ({
         degree: "",
         end: today(),
@@ -175,6 +182,7 @@ export function EducationEditor({ profile, onChange }: Props) {
         start: today(),
         url: "https://",
       })}
+      getSummary={(item) => `${item.degree} · ${item.field}`}
       getTitle={(item) => item.institution}
       items={profile.education}
       onChange={(education) => onChange({ ...profile, education })}

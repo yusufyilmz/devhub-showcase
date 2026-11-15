@@ -164,6 +164,13 @@ Use [features](docs/features.md), [architecture](docs/architecture.md), [convent
 | `utils`     | [packages/utils/CATALOG.md](packages/utils/CATALOG.md)         | A logger or generic helper                  |
 | `trello`    | [packages/trello/CATALOG.md](packages/trello/CATALOG.md)       | Trello board UI or a Trello client          |
 
+## Repository lookup
+
+From the repository root, run `pnpm lookup capability <terms>` for package capabilities or
+`pnpm lookup design <terms>` for design guidance. Open the returned artifact before acting on it.
+Use `pnpm lookup symbol <name>` for exports listed in `.ai/catalogs/symbols-catalog.md`. For exact
+imports, verify the package's `exports` and its public entry point.
+
 ## Data and security
 
 Keep authorization on the server. A client-supplied id, username, or profile field is not authority. Keep each owner's records isolated. A missing or private profile must not fall back to someone else's content. Respect revision conflicts.

@@ -126,3 +126,6 @@ describe("Fitness auth", () => {
     expect(response.headers.get("cache-control")).toBe("no-store");
   });
 });
+
+// Keep per-test configuration mutable; production schemas are validated separately.
+vi.mock("../../../env", () => ({ env: process.env }));

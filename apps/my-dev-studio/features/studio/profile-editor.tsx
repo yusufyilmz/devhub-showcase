@@ -3,7 +3,7 @@
 import "@shared/ui/components.css";
 
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { type ReactNode, useDeferredValue, useEffect, useState } from "react";
 
 import { AiAssistantEditor, AiProfileEditor } from "@shared/assistant/studio";
 import { type PortfolioProfile, type PortfolioType, portfolioTypes } from "@shared/config";
@@ -20,8 +20,10 @@ import { Input } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
 import {
   clearDraftRecovery,
+  DraftPreviewPane,
   DraftRecovery,
   EditorGuidance,
+  EditorWorkspace,
   FieldVisibilityEditor,
   GuidedOnboarding,
   LanguageSettingsEditor,
@@ -60,6 +62,7 @@ import { OwnerRevisionHistory } from "./revision-history";
 
 const tabs = [
   "Profile",
+  "Reviews",
   "Import CV",
   "Import Google",
   "AI profile",
@@ -80,7 +83,34 @@ const tabs = [
   "CV versions",
   "Revision history",
   "Field visibility",
+  "Publishing",
 ] as const;
+const navigationGroups = [
+  {
+    items: [
+      "Profile",
+      "Experience",
+      "Projects",
+      "Education",
+      "Skills",
+      "Languages",
+      "Reviews",
+      "Custom sections",
+    ],
+    label: "Content",
+  },
+  {
+    items: ["Layout", "Appearance", "Section order", "Section display", "Templates"],
+    label: "Design",
+  },
+  { items: ["PDF", "CV versions"], label: "CV" },
+  {
+    items: ["Import CV", "Import Google", "AI profile", "AI assistant", "Revision history"],
+    label: "Tools & AI",
+  },
+  { items: ["Language settings", "Field visibility", "Publishing"], label: "Settings" },
+] satisfies { label: string; items: (typeof tabs)[number][] }[];
+
 function clean(profile: PortfolioProfile): PortfolioProfile {
   const lines = (values: string[]) => values.filter((value) => value.trim());
   return {
@@ -106,6 +136,7 @@ export function ProfileEditor({
   managed = false,
   onSaved,
   initialTab = "Profile",
+  reviews,
 }: {
   initial: ProfileSnapshot;
   saveUrl?: string;
@@ -113,6 +144,7 @@ export function ProfileEditor({
   managed?: boolean;
   onSaved?: (snapshot: ProfileSnapshot) => void;
   initialTab?: (typeof tabs)[number];
+  reviews?: ReactNode;
 }) {
   const userId = useUserConfigStore((state) => state.user?.id);
   const [profession, setProfession] = useState<PortfolioType>(defaultProfession(initial.profile));
@@ -124,7 +156,12 @@ export function ProfileEditor({
     initial.profile,
     busy,
   );
+  const previewDraft = useDeferredValue(draft);
   const [isPublic, setIsPublic] = useState(initial.isPublic ?? false);
+  const availableTabs = tabs.filter((item) => item !== "Reviews" || reviews);
+  const [workspaceView, setWorkspaceView] = useState<"edit" | "preview">(() =>
+    initialEditorView(initialTab),
+  );
   const [tab, setTab] = useState<(typeof tabs)[number]>(initialTab);
   const request = useStudioRequest();
   const [message, setMessage] = useState("");
@@ -134,9 +171,10 @@ export function ProfileEditor({
   const recovery = useDraftRecovery({
     dirty,
     onRestore: (value) => {
+      setWorkspaceView("edit");
       resetDraft(value.profile);
       setUsername(value.username);
-      if (tabs.includes(value.tab as typeof tab)) setTab(value.tab as typeof tab);
+      if (availableTabs.includes(value.tab as typeof tab)) setTab(value.tab as typeof tab);
       setStep(value.step);
       setProfession(defaultProfession(value.profile, value.profession));
     },
@@ -144,6 +182,7 @@ export function ProfileEditor({
     storageKey: recoveryKey(userId, initial.id, saveUrl),
     value: { isPublic, profession, profile: draft, step, tab, username },
   });
+  const recoveryNeedsAttention = needsRecoveryAttention(recovery);
   useEffect(() => {
     const warn = (event: BeforeUnloadEvent) => {
       if (dirty) {
@@ -180,6 +219,7 @@ export function ProfileEditor({
       setMessage("Saved privately. Review publication to update your public website and CV.");
       onSaved?.(result);
     } catch (reason) {
+      setWorkspaceView("edit");
       showError(
         reason instanceof Error
           ? reason.message
@@ -196,8 +236,27 @@ export function ProfileEditor({
       templateChosen: true,
     });
     setTab(nextTab);
+    setWorkspaceView("edit");
     setStep("details");
   }
+  const editorActions = (
+    <>
+      <Button className="studio-primary" disabled={busy || !dirty || recovery.stale} type="submit">
+        {busy ? "Saving…" : "Save changes"}
+      </Button>
+      <Button
+        disabled={busy}
+        onClick={() => {
+          setTab("Publishing");
+          setWorkspaceView("edit");
+        }}
+        type="button"
+        variant="outline"
+      >
+        Review & publish
+      </Button>
+    </>
+  );
   if (step === "template")
     return (
       <GuidedOnboarding
@@ -217,8 +276,9 @@ export function ProfileEditor({
       </GuidedOnboarding>
     );
   return (
-    <main className="studio" id="admin-content">
+    <main className="studio studio-editor" id="admin-content">
       <form
+        id="portfolio-editor-form"
         onSubmit={async (event) => {
           event.preventDefault();
           await publish();
@@ -226,30 +286,38 @@ export function ProfileEditor({
       >
         <div className="studio-heading">
           <div>
-            <p className="eyebrow">A SPACE FOR YOUR STORY</p>
-            <h1>
-              Make it <span>yours.</span>
-            </h1>
-            <p>Keep your portfolio as current as your work.</p>
+            <p className="eyebrow">PORTFOLIO EDITOR</p>
+            <h1>Edit your portfolio</h1>
+            <p>Update your story, tailor your CV, and preview what you want to share.</p>
           </div>
           <div className="studio-header-actions">
+            <Button
+              className="studio-secondary"
+              onClick={() => {
+                setTab("Section order");
+                setWorkspaceView("edit");
+              }}
+              type="button"
+              variant="outline"
+            >
+              Arrange layout
+            </Button>
+            <Button className="studio-secondary" href="/admin/jobs" variant="outline">
+              Job Hunter
+            </Button>
             <Button className="studio-secondary" href="/admin/billing" variant="outline">
               Plan and usage
             </Button>
 
-            <Button
-              className="studio-primary"
-              disabled={busy || !dirty || recovery.stale}
-              type="submit"
-            >
-              {busy ? "Saving…" : "Save changes"}
-            </Button>
+            <div className="studio-editor-actions" hidden={workspaceView === "edit"}>
+              {editorActions}
+            </div>
           </div>
         </div>
         <div className="studio-status">
           <span className={dirty ? "status-dot unsaved" : "status-dot"} />
           {dirty ? "You have unsaved changes" : "All changes saved"}
-          <span>Revision {saved.revision}</span>
+          <span>Revision {saved.revision} · Public version unchanged by saving</span>
           <Button
             disabled={busy}
             onClick={async () => {
@@ -278,132 +346,160 @@ export function ProfileEditor({
             Sign out
           </Button>
         </div>
-        <DraftRecovery disabled={busy} recovery={recovery} />
-        <SetupNavigation
+        <EditorWorkspace
+          actions={editorActions}
+          active={tab}
           disabled={busy}
-          onImport={() => setTab("Import CV")}
-          onManual={() => setTab("Profile")}
-          onStep={(next) => {
-            setStep(next);
-            if (next === "review") setTab("Profile");
-          }}
-          step={step}
-        />
-        <EditorGuidance
-          canRedo={canRedo}
-          canUndo={canUndo}
-          disabled={busy}
-          onNavigate={(next, label) => {
-            setTab(next);
-            requestAnimationFrame(() => {
-              const target = Array.from(
-                document.querySelectorAll<HTMLLabelElement>("#admin-content label"),
-              ).find((node) => node.querySelector("span")?.textContent === label);
-              const input = target?.querySelector<HTMLElement>("input, textarea");
-              const heading = document.querySelector<HTMLElement>(".editor-section-heading h2");
-              (input ?? heading)?.scrollIntoView({ behavior: "auto", block: "center" });
-              input?.focus({ preventScroll: true });
-            });
-          }}
-          profile={draft}
-          redo={redo}
-          undo={undo}
-        />
-        <SharingSettings
-          busy={busy}
-          downloadHref={downloadHref}
-          managed={managed}
-          publication={
-            <ProfilePublication
-              dirty={dirty}
-              disabled={busy || recovery.stale}
-              id={saved.id}
-              managed={managed}
-              onChanged={(value) => {
-                setIsPublic(value);
-                setSaved((previous) => ({ ...previous, isPublic: value }));
-              }}
-              profile={saved.profile}
-              revision={saved.revision}
-            />
+          groups={navigationGroups.map((group) => ({
+            ...group,
+            items: group.items.filter((item) => availableTabs.includes(item)),
+          }))}
+          notice={
+            recoveryNeedsAttention ? <DraftRecovery disabled={busy} recovery={recovery} /> : null
           }
-          setUsername={setUsername}
+          onNavigate={(next) => {
+            if (availableTabs.includes(next as typeof tab)) setTab(next as typeof tab);
+          }}
+          onViewChange={setWorkspaceView}
+          preview={
+            <DraftPreviewPane downloadHref={downloadHref} profile={previewDraft}>
+              <DraftPreview profile={previewDraft} username={username} />
+            </DraftPreviewPane>
+          }
           username={username}
-        />
-        <nav aria-label="Editor sections" className="editor-tabs">
-          {tabs.map((item) => (
+          view={workspaceView}
+        >
+          <SetupNavigation
+            disabled={busy}
+            onImport={() => {
+              setTab("Import CV");
+              setWorkspaceView("edit");
+            }}
+            onManual={() => {
+              setTab("Profile");
+              setWorkspaceView("edit");
+            }}
+            onStep={(next) => {
+              setWorkspaceView("edit");
+              setStep(next);
+              if (next === "review") setTab("Profile");
+            }}
+            step={step}
+          />
+          {error && (
+            <div className="editor-alert" role="alert">
+              <p>{error}</p>
+              <Button
+                disabled={busy}
+                onClick={() => {
+                  if (window.confirm("Reload and discard unpublished changes?"))
+                    window.location.reload();
+                }}
+                type="button"
+              >
+                Reload latest version
+              </Button>
+            </div>
+          )}
+          {message && (
+            <p className="editor-success" role="status">
+              {message}
+            </p>
+          )}
+          <fieldset className="editor-body" disabled={busy}>
+            <legend className="sr-only">{tab} editor</legend>
+            <EditorBody
+              managed={managed}
+              onChange={setDraft}
+              onNavigate={(next) => {
+                if (availableTabs.includes(next as typeof tab)) setTab(next as typeof tab);
+              }}
+              profile={draft}
+              publication={
+                <SharingSettings
+                  busy={busy}
+                  downloadHref={downloadHref}
+                  managed={managed}
+                  publication={
+                    <ProfilePublication
+                      dirty={dirty}
+                      disabled={busy || recovery.stale}
+                      id={saved.id}
+                      managed={managed}
+                      onChanged={(value) => {
+                        setIsPublic(value);
+                        setSaved((previous) => ({ ...previous, isPublic: value }));
+                      }}
+                      profile={saved.profile}
+                      revision={saved.revision}
+                    />
+                  }
+                  setUsername={setUsername}
+                  username={username}
+                />
+              }
+              readUrl={saveUrl}
+              reviews={reviews}
+              snapshot={saved}
+              tab={tab}
+            />
+          </fieldset>
+          <footer className="editor-footer">
+            <p>
+              Save your draft to update your CV. Publish separately to update the public version.
+            </p>
             <Button
-              aria-current={tab === item ? "page" : undefined}
-              key={item}
-              onClick={() => setTab(item)}
-              type="button"
-            >
-              {item}
-            </Button>
-          ))}
-        </nav>
-        {error && (
-          <div className="editor-alert" role="alert">
-            <p>{error}</p>
-            <Button
-              disabled={busy}
+              className="studio-secondary"
+              disabled={!dirty || busy}
               onClick={() => {
-                if (window.confirm("Reload and discard unpublished changes?"))
-                  window.location.reload();
+                if (window.confirm("Discard unpublished changes?")) {
+                  recovery.discard();
+                  resetDraft(saved.profile);
+                  setUsername(saved.username ?? "");
+                  setIsPublic(saved.isPublic ?? false);
+                  showError("");
+                  setMessage("");
+                }
               }}
               type="button"
+              variant="outline"
             >
-              Reload latest version
+              Discard changes
             </Button>
-          </div>
-        )}
-        {message && (
-          <p className="editor-success" role="status">
-            {message}
-          </p>
-        )}
-        <fieldset className="editor-body" disabled={busy}>
-          <legend className="sr-only">{tab} editor</legend>
-          <EditorBody
-            managed={managed}
-            onChange={setDraft}
-            onNavigate={(next) => {
-              if (tabs.includes(next as typeof tab)) setTab(next as typeof tab);
-            }}
-            profile={draft}
-            readUrl={saveUrl}
-            snapshot={saved}
-            tab={tab}
-          />
-        </fieldset>
-        <DraftPreview profile={draft} username={username} />
-        <footer className="editor-footer">
-          <p>Save your edits to update your CV. Public sharing is optional.</p>
-          <Button
-            className="studio-secondary"
-            disabled={!dirty || busy}
-            onClick={() => {
-              if (window.confirm("Discard unpublished changes?")) {
-                recovery.discard();
-                resetDraft(saved.profile);
-                setUsername(saved.username ?? "");
-                setIsPublic(saved.isPublic ?? false);
-                showError("");
-                setMessage("");
-              }
-            }}
-            type="button"
-            variant="outline"
-          >
-            Discard changes
-          </Button>
-        </footer>
+          </footer>
+          <details className="editor-draft-tools">
+            <summary>Draft tools · checklist, undo & recovery</summary>
+            <EditorGuidance
+              canRedo={canRedo}
+              canUndo={canUndo}
+              disabled={busy}
+              onNavigate={(next, label) => {
+                setTab(next);
+                requestAnimationFrame(() => {
+                  const target = Array.from(
+                    document.querySelectorAll<HTMLLabelElement>("#admin-content label"),
+                  ).find((node) => node.querySelector("span")?.textContent === label);
+                  const input = target?.querySelector<HTMLElement>("input, textarea");
+                  const heading = document.querySelector<HTMLElement>(".editor-section-heading h2");
+                  (input ?? heading)?.scrollIntoView({ behavior: "auto", block: "center" });
+                  input?.focus({ preventScroll: true });
+                });
+              }}
+              profile={draft}
+              redo={redo}
+              undo={undo}
+            />
+            {!recoveryNeedsAttention && <DraftRecovery disabled={busy} recovery={recovery} />}
+          </details>
+        </EditorWorkspace>
       </form>
     </main>
   );
 }
 
 function EditorBody({
+  publication,
+  reviews,
   onNavigate,
   tab,
   snapshot,
@@ -414,12 +510,24 @@ function EditorBody({
 }: {
   onNavigate: (tab: string) => void;
   tab: (typeof tabs)[number];
+  publication: ReactNode;
+  reviews?: ReactNode;
   snapshot: ProfileSnapshot;
   managed: boolean;
   readUrl: string;
   profile: PortfolioProfile;
   onChange: (profile: PortfolioProfile) => void;
 }) {
+  if (tab === "Profile")
+    return (
+      <ProfileFields
+        onChange={onChange}
+        onImprove={() => onNavigate("AI assistant")}
+        profile={profile}
+      />
+    );
+  if (tab === "Publishing") return publication;
+  if (tab === "Reviews") return reviews;
   if (tab === "Revision history")
     return (
       <OwnerRevisionHistory
@@ -543,7 +651,7 @@ const editors = {
 
 function DraftPreview({ profile, username }: { profile: PortfolioProfile; username: string }) {
   return (
-    <ResponsivePortfolioPreview appearance={profile.appearance}>
+    <ResponsivePortfolioPreview appearance={profile.appearance} defaultOpen>
       <PreviewContent profile={profile} username={username} />
     </ResponsivePortfolioPreview>
   );
@@ -575,4 +683,12 @@ function onboardingCvLayout(profile: PortfolioProfile) {
     portfolioTypes.find((type) => type.id === (profile.portfolioType ?? "engineer"))?.cvLayout ??
     "classic"
   );
+}
+
+function needsRecoveryAttention(recovery: ReturnType<typeof useDraftRecovery>) {
+  return Boolean(recovery.candidate) || recovery.stale || recovery.status === "failed";
+}
+
+function initialEditorView(tab: string): "edit" | "preview" {
+  return tab === "Profile" ? "preview" : "edit";
 }

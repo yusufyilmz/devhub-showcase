@@ -1,9 +1,8 @@
-import type { ResourceService } from "@shared/lib/types";
 import { ReviewState, type ReviewWithReferrals, type SupabaseDbClient } from "@shared/lib/types";
 import { keysToCamelCase } from "@shared/lib/utils";
 import type { Logger } from "@shared/utils/logger";
 
-export class ReviewService implements ResourceService<ReviewWithReferrals> {
+export class ReviewService {
   private logger: Logger;
   private readonly dbClient: SupabaseDbClient;
 
@@ -24,12 +23,8 @@ export class ReviewService implements ResourceService<ReviewWithReferrals> {
 
   async update(
     id: string,
-    {
-      state,
-    }: {
-      state: ReviewState;
-    },
-  ): Promise<ReviewWithReferrals> {
+    { state, updatedAt }: { state: ReviewState; updatedAt: string },
+  ): Promise<boolean> {
     const { data, error } = await this.dbClient
       .from("reviews")
       .update({
@@ -37,14 +32,17 @@ export class ReviewService implements ResourceService<ReviewWithReferrals> {
         updated_at: new Date().toISOString(),
       })
       .eq("id", id)
-      .single();
+      .eq("state", ReviewState.PENDING)
+      .eq("updated_at", updatedAt)
+      .select("id")
+      .maybeSingle();
 
     if (error) {
       this.logger.error({ error }, "Error updating review");
       throw new Error(error.message);
     }
 
-    return keysToCamelCase<ReviewWithReferrals>(data);
+    return Boolean(data);
   }
 
   async getPendingReviews(): Promise<ReviewWithReferrals[]> {
@@ -54,7 +52,9 @@ export class ReviewService implements ResourceService<ReviewWithReferrals> {
       *,
       referral:referrals(*)
     `)
-      .eq("state", ReviewState.PENDING);
+      .eq("state", ReviewState.PENDING)
+      .order("created_at")
+      .order("id");
 
     if (error) {
       throw new Error(error.message);

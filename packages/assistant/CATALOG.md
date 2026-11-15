@@ -28,3 +28,5 @@ Portfolio and editing assistants for `@shared/assistant`. Models call a provider
 | `createCVModel`, `formatAllCV`, `formatters`                       | CV text prepared for a model                       |
 | `MessageProcessor`                                                 | Chat reply classification                          |
 | `greetingMessage`, `failureMessage`, and the other message helpers | Fixed assistant copy                               |
+
+`assessJobMatches` scores vacancies from private CV evidence. `prepareJobApplication` proposes a CV summary, cover letter and answers for owner review.

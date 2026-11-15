@@ -5,11 +5,13 @@ import { WorkspaceRepository, WorkspaceService } from "@shared/services/workspac
 import { starterWorkspace } from "@/features/task-workspace/starter";
 import { configured, fitnessUser, requestIdentity } from "@/lib/auth";
 
+import { env } from "../../env";
+
 export class SignInRequired extends Error {}
 export class SetupRequired extends Error {}
 
 export async function workspaceContext(request: Request) {
-  if (!configured() || !process.env.SUPABASE_DB_URL)
+  if (!configured() || !env.SUPABASE_DB_URL)
     throw new SetupRequired("Fitness workspace setup is incomplete.");
   const { user, client } = await requestIdentity(request);
   const account = fitnessUser(user);

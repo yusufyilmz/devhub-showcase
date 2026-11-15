@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 
+import { Button } from "@shared/ui/button";
 import { ThemeToggle } from "@shared/ui/theme";
 
 import { ManagementLink } from "@/features/management/management-link";
@@ -23,6 +24,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       title="PORTFOLIO STUDIO"
       tools={
         <div className="admin-tools">
+          <Button href="/admin/jobs" variant="outline">
+            Job Hunter
+          </Button>
           <ManagementLink />
           <ThemeToggle />
         </div>

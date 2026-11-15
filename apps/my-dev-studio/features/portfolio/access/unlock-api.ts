@@ -6,6 +6,7 @@ import { readPortfolioAccessStatus } from "@shared/services/published-profile";
 
 import { sameOrigin } from "@/features/admin/admin-auth";
 
+import { env } from "../../../env";
 import {
   accessAttemptBucket,
   issuePortfolioGrant,
@@ -60,7 +61,7 @@ export async function unlockPortfolio(request: Request, username: string) {
         maxAge: 3600,
         path: "/",
         sameSite: "lax",
-        secure: process.env.NODE_ENV === "production",
+        secure: env.NODE_ENV === "production",
       },
     );
     return response;

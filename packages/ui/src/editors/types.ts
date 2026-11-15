@@ -29,7 +29,9 @@ export type SectionContentEditorOptions = SectionEditorProps & {
 };
 
 export interface CollectionEditorProps<T extends { id: string }> {
+  collapsible?: boolean;
   create: () => T;
+  getSummary?: (item: T) => string;
   getTitle: (item: T) => string;
   items: T[];
   maxItems?: number;

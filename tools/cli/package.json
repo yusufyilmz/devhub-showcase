@@ -10,8 +10,11 @@
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",
     "@turbo/gen": "catalog:",
+    "remark-gfm": "catalog:",
+    "remark-parse": "catalog:",
     "tsdown": "catalog:",
     "typescript": "catalog:",
+    "unified": "catalog:",
     "yaml": "catalog:"
   },
   "engines": {

@@ -10,6 +10,7 @@
     "./published-profile": "./src/profile/service/published-profile.ts",
     "./user-profile": "./src/profile/service/user-profile.ts",
     "./db/*": "./src/fitness/db/*",
+    "./jobs": "./src/jobs/index.ts",
     "./fitness": "./src/fitness/index.ts",
     "./workspace": "./src/workspace/index.ts",
     "./schedule": "./src/schedule/index.ts",

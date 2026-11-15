@@ -73,6 +73,7 @@
     "apps/**/*.test.tsx",
     "tools/test/support/**/*.ts",
     "tools/cli/ci/**/*.ts",
+    "tools/cli/lookup/**/*.ts",
     "vitest.config.mts",
     "turbo/**/*.ts",
     "generators/**/*.ts",

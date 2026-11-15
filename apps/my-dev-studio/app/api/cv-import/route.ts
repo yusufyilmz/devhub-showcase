@@ -12,12 +12,14 @@ import { ProfileAccessError } from "@shared/services/profile";
 
 import { sameOrigin } from "@/features/admin/admin-auth";
 
+import { env } from "../../../env";
+
 export const runtime = "nodejs";
 
 export const maxDuration = 60;
 const headers = { "Cache-Control": "private, no-store" };
 function configured() {
-  return Boolean(process.env.OPENAI_API_KEY && process.env.REDIS_URL && process.env.REDIS_TOKEN);
+  return Boolean(env.OPENAI_API_KEY && env.REDIS_URL && env.REDIS_TOKEN);
 }
 async function identity() {
   return requireConfirmedUser(await createServerClient(), () => new ProfileAccessError());

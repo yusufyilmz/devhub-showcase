@@ -7,6 +7,7 @@ import {
   authorableSectionTypes,
   getSectionRenderers,
 } from "../packages/config/src/sections/authorable-sections.ts";
+import { jobsFixture } from "./support/jobs-fixture.mjs";
 
 // Test-only transport fixture, never imported by application code. Public
 // records are read only. Two isolated fake accounts can save their own starter.
@@ -14,11 +15,22 @@ const row = {
   document: profile,
   id: "main",
   is_public: true,
-  owner_id: null,
+  owner_id: "11111111-1111-4111-8111-111111111119",
   revision: 1,
   updated_at: "2026-01-01T00:00:00Z",
   username: "yusufyilmz",
 };
+
+const testimonialReviews = [
+  { feedback: "Alex supplied a fictional testimonial.", name: "Alex Example" },
+  { feedback: "Sam supplied a fictional testimonial.", name: "Sam Example" },
+].map((referral, index) => ({
+  created_at: row.updated_at,
+  id: `testimonial-${index}`,
+  referral: { ...referral, id: `referral-${index}`, relationship: "Former teammate" },
+  state: "PENDING",
+  updated_at: row.updated_at,
+}));
 const examples = ["designer", "consultant", "minimal"].map((type, index) => ({
   ...row,
   document: {
@@ -133,6 +145,12 @@ const previewOwners = aiOwners.map((owner, index) => ({
   id: `63636363-6363-4363-8363-63636363636${index}`,
   owner_id: `62626262-6262-4262-8262-62626262626${index}`,
   username: `${index ? "mobile" : "desktop"}-preview-owner`,
+}));
+const workspaceOwners = previewOwners.map((owner, index) => ({
+  ...structuredClone(owner),
+  id: `e1e1e1e1-e1e1-41e1-81e1-e1e1e1e1e1e${index}`,
+  owner_id: `e2e2e2e2-e2e2-42e2-82e2-e2e2e2e2e2e${index}`,
+  username: `${index ? "mobile" : "desktop"}-workspace-owner`,
 }));
 const guidanceOwners = aiOwners.map((owner, index) => ({
   ...owner,
@@ -421,6 +439,7 @@ const rows = [
   ...aiOwners,
   ...guidanceOwners,
   ...previewOwners,
+  ...workspaceOwners,
   ...workflowOwners,
   ...publicationOwners,
   ...scheduleOwners,
@@ -465,6 +484,7 @@ createServer(async (request, response) => {
   response.setHeader("Content-Type", "application/json");
   if (fixtureMaintenance(request, response, url)) return;
   const owner = fixtureOwner(request);
+  if (await jobsFixture(request, response, url, owner)) return;
   if (request.method === "GET" && url.pathname === "/health") {
     response.end("{}");
     return;
@@ -509,12 +529,10 @@ createServer(async (request, response) => {
     return templateLibraryRequest(request, response, url, owner);
   if (url.pathname === "/rest/v1/portfolio_profiles")
     return profileRequest(request, response, url, owner);
-  if (request.method === "GET" && url.pathname === "/rest/v1/referrals") {
-    response.end("[]");
-    return;
-  }
+  if (["/rest/v1/reviews", "/rest/v1/referrals"].includes(url.pathname))
+    return testimonialRequest(request, response, url, owner);
   response.writeHead(405).end(JSON.stringify({ message: "Unsupported fixture request" }));
-}).listen(3101, "127.0.0.1");
+}).listen(Number(process.argv[2] ?? 3101), "127.0.0.1");
 
 function fixtureOwner(request) {
   let owner;
@@ -522,12 +540,14 @@ function fixtureOwner(request) {
     const token = request.headers.authorization?.split(" ")[1];
     const userId = JSON.parse(Buffer.from(token.split(".")[1], "base64url")).sub;
     owner = [
+      row,
       ...starters,
       ...customOwners,
       ...cvImportOwners,
       ...aiOwners,
       ...guidanceOwners,
       ...previewOwners,
+      ...workspaceOwners,
       ...workflowOwners,
       ...publicationOwners,
       ...scheduleOwners,
@@ -573,6 +593,35 @@ function discoveryRows(url, owner) {
     .sort((a, b) => a.username.localeCompare(b.username))
     .slice(offset, offset + limit)
     .map(({ username, updated_at }) => ({ updated_at, username }));
+}
+
+async function testimonialRequest(request, response, url, owner) {
+  if (url.pathname === "/rest/v1/referrals" && request.method === "GET") {
+    const referrals = testimonialReviews.map(({ referral, state }) => ({
+      ...referral,
+      review: { state },
+    }));
+    return response.end(JSON.stringify(referrals));
+  }
+  if (owner?.id !== "main") return response.writeHead(403).end("{}");
+  if (request.method === "GET") {
+    return response.end(
+      JSON.stringify(testimonialReviews.filter(({ state }) => state === "PENDING")),
+    );
+  }
+  const chunks = [];
+  for await (const chunk of request) chunks.push(chunk);
+  const update = JSON.parse(Buffer.concat(chunks).toString());
+  const review = testimonialReviews.find(
+    ({ id, state, updated_at }) =>
+      url.searchParams.get("id") === `eq.${id}` &&
+      url.searchParams.get("state") === `eq.${state}` &&
+      url.searchParams.get("updated_at") === `eq.${updated_at}`,
+  );
+  if (!review) return response.end("[]");
+  review.state = update.state;
+  review.updated_at = update.updated_at;
+  return response.end(JSON.stringify([{ id: review.id }]));
 }
 
 async function profileRequest(request, response, url, owner) {

@@ -54,3 +54,6 @@ describe("protected snapshot reads", () => {
     await expect(readProtectedProfile(id)).rejects.toThrow();
   });
 });
+
+// Keep per-test configuration mutable; production schemas are validated separately.
+vi.mock("../../../env", () => ({ env: process.env }));

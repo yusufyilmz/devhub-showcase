@@ -10,7 +10,7 @@ vi.mock("@shared/services/studio", () => ({
     getAll = mocks.referrals;
   },
 }));
-vi.mock("@shared/lib/supabase", () => ({ createServerClient: mocks.client }));
+vi.mock("./access/server-access", () => ({ portfolioAccessServer: mocks.client }));
 vi.mock("@shared/utils/logger", () => ({ logger: { warn: mocks.warn } }));
 
 vi.mock("@/features/portfolio/profiles/published-profile", async () => {
@@ -34,8 +34,8 @@ describe("PortfolioLoader", () => {
   });
   it("does not resurrect deleted projects from the older database tables", async () => {
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://test.supabase.co");
-    vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "publishable");
-    mocks.client.mockResolvedValue({});
+    vi.stubEnv("SUPABASE_SERVICE_ROLE_KEY", "test-secret");
+    mocks.client.mockReturnValue({ client: {} });
     mocks.referrals.mockResolvedValue([]);
     const result = await loadPageResources();
     expect(result.projects.map((item) => item.id)).toEqual(["fitness-os", "devhub"]);
@@ -43,8 +43,8 @@ describe("PortfolioLoader", () => {
   });
   it("keeps the portfolio usable when a configured backend fails", async () => {
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://test.supabase.co");
-    vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "publishable");
-    mocks.client.mockResolvedValue({});
+    vi.stubEnv("SUPABASE_SERVICE_ROLE_KEY", "test-secret");
+    mocks.client.mockReturnValue({ client: {} });
     mocks.referrals.mockRejectedValue(new Error("unavailable"));
 
     const result = await loadPageResources();
@@ -53,3 +53,6 @@ describe("PortfolioLoader", () => {
     expect(result.projects).toHaveLength(2);
   });
 });
+
+// Keep per-test configuration mutable; production schemas are validated separately.
+vi.mock("../../env", () => ({ env: process.env }));

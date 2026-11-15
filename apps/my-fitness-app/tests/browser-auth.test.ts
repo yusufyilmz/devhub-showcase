@@ -48,3 +48,6 @@ describe("Fitness browser session", () => {
     expect(mocks.signOut).toHaveBeenCalledExactlyOnceWith({ scope: "local" });
   });
 });
+
+// Keep per-test configuration mutable; production schemas are validated separately.
+vi.mock("../env", () => ({ env: process.env }));

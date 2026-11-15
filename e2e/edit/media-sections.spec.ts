@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 
+import { openEditor, selectEditorSection } from "../support/editor";
 import { confirmPublication } from "../support/publication";
 
 test("owner saves a video hero and YouTube section and visitors with reduced motion see a paused background", async ({
@@ -33,12 +34,13 @@ test("owner saves a video hero and YouTube section and visitors with reduced mot
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.route("**/test-background.mp4", (route) => route.abort());
   await page.goto(`/${device}-media-owner/edit`);
-  await page.getByRole("button", { exact: true, name: "Appearance" }).click();
+  await openEditor(page);
+  await selectEditorSection(page, "Appearance");
   await page.getByLabel("Use hero background").check();
   await page.getByLabel("Background type").selectOption("video");
   await page.getByLabel("Background media URL").fill("http://localhost:3100/test-background.mp4");
   await page.getByLabel("Video poster URL").fill("http://localhost:3100/examples/orbit-brand.svg");
-  await page.getByRole("button", { exact: true, name: "Custom sections" }).click();
+  await selectEditorSection(page, "Custom sections");
   await page.getByLabel("Section starter").selectOption("youtube");
   await page.getByRole("button", { exact: true, name: "Add custom section" }).click();
   await page.getByRole("button", { exact: true, name: "+ Add section items" }).click();
@@ -48,7 +50,8 @@ test("owner saves a video hero and YouTube section and visitors with reduced mot
   await confirmPublication(page);
   await expect(page.getByRole("status")).toContainText("Saved privately.");
   await page.reload();
-  await page.getByRole("button", { exact: true, name: "Appearance" }).click();
+  await openEditor(page);
+  await selectEditorSection(page, "Appearance");
   await expect(page.getByLabel("Background media URL")).toHaveValue(
     "http://localhost:3100/test-background.mp4",
   );

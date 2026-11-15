@@ -109,3 +109,6 @@ describe("private Fitness workspace API", () => {
     expect((await PUT(saveRequest(second))).status).toBe(200);
   });
 });
+
+// Keep per-test configuration mutable; production schemas are validated separately.
+vi.mock("../../../env", () => ({ env: process.env }));

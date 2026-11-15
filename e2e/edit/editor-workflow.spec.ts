@@ -2,6 +2,8 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
+import { openDraftTools, openEditor, selectEditorSection } from "../support/editor";
+
 test("guided setup recovers unsaved work and reconciles a newer save from another tab", async ({
   page,
   context,
@@ -34,6 +36,7 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
     return route.fulfill({ json: { error: "Import temporarily unavailable" }, status: 503 });
   });
   await page.goto(ownerUrl);
+  await openEditor(page);
   await page
     .getByRole("combobox", { name: "What kind of work do you do?" })
     .selectOption("designer");
@@ -55,13 +58,15 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
   await page.getByRole("button", { exact: true, name: "Process CV" }).click();
   await expect(page.getByText("Import temporarily unavailable", { exact: true })).toBeVisible();
   await page.getByRole("button", { exact: true, name: "Skip import · enter manually" }).click();
+  await openDraftTools(page);
   await expect(page.getByText("Recovery saved in this tab", { exact: true })).toBeVisible();
   await page.reload();
+  await openEditor(page);
   await page.getByRole("button", { exact: true, name: "Restore recovered draft" }).click();
   await expect(page.getByRole("textbox", { exact: true, name: "Professional title" })).toHaveValue(
     "Recovered designer draft",
   );
-  await page.getByRole("button", { exact: true, name: "PDF" }).click();
+  await selectEditorSection(page, "PDF");
   await page.getByLabel("CV layout").selectOption("compact");
   await page.getByRole("button", { exact: true, name: "Back to layout" }).click();
   await expect(page.getByRole("radio", { name: /Designer/ })).toBeChecked();
@@ -74,7 +79,7 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
   await expect(page.getByRole("textbox", { exact: true, name: "Professional title" })).toHaveValue(
     "Recovered designer draft",
   );
-  await page.getByRole("button", { exact: true, name: "PDF" }).click();
+  await selectEditorSection(page, "PDF");
   await expect(page.getByLabel("CV layout")).toHaveValue("compact");
   await page.getByRole("button", { exact: true, name: "Review draft" }).click();
   await expect(
@@ -100,9 +105,11 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
   await page
     .getByRole("textbox", { exact: true, name: "Professional title" })
     .fill("Unsaved first tab text");
+  await openDraftTools(page);
   await expect(page.getByText("Recovery saved in this tab", { exact: true })).toBeVisible();
   const other = await context.newPage();
   await other.goto(ownerUrl);
+  await openEditor(other);
   await other
     .getByRole("textbox", { exact: true, name: "Professional title" })
     .fill("Newer saved revision");
@@ -111,6 +118,7 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
   await expect(page.getByText(/A newer saved revision exists/)).toBeVisible();
   await expect(page.getByRole("button", { exact: true, name: "Save changes" })).toBeDisabled();
   await page.reload();
+  await openEditor(page);
   await expect(
     page.getByRole("button", { exact: true, name: "Restore recovered draft" }),
   ).toBeDisabled();

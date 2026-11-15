@@ -20,4 +20,5 @@ export type GalleryLightboxOptions = {
 
 export type DialogContentOptions = React.ComponentProps<typeof DialogPrimitive.Content> & {
   showCloseButton?: boolean;
+  portalContainer?: HTMLElement | null;
 };

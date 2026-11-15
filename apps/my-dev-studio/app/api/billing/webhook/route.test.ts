@@ -59,3 +59,6 @@ describe("Webhook", () => {
     expect((await request(body, signature)).status).toBe(503);
   });
 });
+
+// Keep per-test configuration mutable; production schemas are validated separately.
+vi.mock("../../../../env", () => ({ env: process.env }));

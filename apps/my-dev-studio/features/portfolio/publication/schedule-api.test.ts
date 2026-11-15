@@ -76,3 +76,6 @@ describe("private publication schedule API", () => {
     expect((await publicationSchedule(request(input))).status).toBe(503);
   });
 });
+
+// Keep per-test configuration mutable; production schemas are validated separately.
+vi.mock("../../../env", () => ({ env: process.env }));

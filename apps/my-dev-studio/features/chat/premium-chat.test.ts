@@ -156,3 +156,6 @@ describe("PremiumChat", () => {
     expect(mocks.finish).toHaveBeenCalledWith(input.requestId, "failed");
   });
 });
+
+// Keep per-test configuration mutable; production schemas are validated separately.
+vi.mock("../../env", () => ({ env: process.env }));

@@ -38,6 +38,8 @@ Deployment tooling: [App routing, Fitness cutover and free Actions](deployments.
 | Completion checklist — task 06                                 | Implemented                                                                                                   | [Open guide](completion.md)             |
 | Draft undo/redo and reorder focus — task 09                    | Implemented                                                                                                   | [Open guide](undo-redo.md)              |
 | Browser recovery, failed save and conflicts — task 08          | Implemented for the main editor                                                                               | [Open guide](draft-recovery.md)         |
+| Job Hunter                                                     | Refreshed dashboard; provider and deployed verification pending                                               | [Open guide](job-hunter.md)             |
+| Portfolio editor workspace and responsive navigation           | Implemented locally; deployed verification pending                                                            | [Open guide](editor-workspace.md)       |
 | Private responsive preview — task 11                           | Implemented                                                                                                   | [Open guide](responsive-preview.md)     |
 | Built-in sections, item selection and order                    | Implemented                                                                                                   | [Open guide](built-in-sections.md)      |
 | Custom section catalog and rich compositions                   | Implemented                                                                                                   | [Open guide](custom-sections.md)        |
@@ -61,6 +63,7 @@ Deployment tooling: [App routing, Fitness cutover and free Actions](deployments.
 | Reviewed job-specific CV drafts — task 26                      | Implemented; local keyword matching, no provider call                                                         | [Open guide](job-cv.md)                 |
 | Private saved revision history — task 10                       | Implemented; history migration required                                                                       | [Open guide](revision-history.md)       |
 | Independent website/CV fields — task 28                        | Implemented; publication migration required for public payload checks                                         | [Open guide](output-fields.md)          |
+| Testimonial moderation in the profile editor                   | Original portfolio owner only; testimonial migration required                                                 | [Open guide](testimonial-reviews.md)    |
 | Separate draft save, review, publish and withdraw — task 07    | Implemented; publication snapshot migration required                                                          | [Open guide](publication.md)            |
 | Retained username redirects — task 14                          | Implemented in PR #87                                                                                         | [Open guide](username-redirects.md)     |
 | Public/unlisted discovery — partial task 15                    | Public/unlisted implemented in PR #87; protected flow locally verified, separate migration pending            | [Open guide](unlisted.md)               |
@@ -91,3 +94,5 @@ Create/update its guide in this directory and add/update the index row in the sa
 [Fitness task plans](fitness-task-plans.md) covers the full-width plan carousel, task drill-down, editing, and desktop and mobile checks for Tasks.
 
 [Fitness shared controls and notifications](fitness-shared-ui.md) covers the task editor, weekly tabs, calendar, agenda, and reminder permission checks.
+
+Environment configuration: [Application environment modules](environment-modules.md).

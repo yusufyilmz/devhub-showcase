@@ -3,6 +3,8 @@ import { createServerClient } from "@shared/lib/supabase";
 import { requireWorkspace } from "@/features/admin/admin-auth";
 import { localTestLoginRequestAllowed } from "@/features/admin/local-test-login";
 
+import { env } from "../../../../env";
+
 /** This shortcut uses a real Supabase Auth session, never forged cookies. */
 export async function POST(request: Request) {
   const headers = { "Cache-Control": "no-store" };
@@ -10,8 +12,8 @@ export async function POST(request: Request) {
     return Response.json({ error: "Local test login is unavailable." }, { headers, status: 404 });
   }
 
-  const email = process.env.LOCAL_TEST_EMAIL;
-  const password = process.env.LOCAL_TEST_PASSWORD;
+  const email = env.LOCAL_TEST_EMAIL;
+  const password = env.LOCAL_TEST_PASSWORD;
   if (!email || !password) {
     return Response.json(
       { error: "Set LOCAL_TEST_EMAIL and LOCAL_TEST_PASSWORD for the local test user." },

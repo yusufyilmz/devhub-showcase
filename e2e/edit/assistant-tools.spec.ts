@@ -2,6 +2,8 @@ import { expect, test } from "@playwright/test";
 
 import { urls } from "@shared/config/urls";
 
+import { openEditor, selectEditorSection } from "../support/editor";
+
 test("writing alternatives and section feedback require review and never autosave", async ({
   page,
   context,
@@ -69,7 +71,8 @@ test("writing alternatives and section feedback require review and never autosav
     });
   });
   await page.goto(`/${mobile ? "mobile" : "desktop"}-assistant-tools/edit`);
-  await page.getByRole("button", { exact: true, name: "AI assistant" }).click();
+  await openEditor(page);
+  await selectEditorSection(page, "AI assistant");
   await page.getByRole("combobox", { name: /^What do you want help with/ }).selectOption("writing");
   await page.getByRole("combobox", { name: /^Writing tone/ }).selectOption("friendly");
   await page.getByRole("combobox", { name: /^Writing length/ }).selectOption("concise");

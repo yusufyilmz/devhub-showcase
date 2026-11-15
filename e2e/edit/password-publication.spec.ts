@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+import { openEditor } from "../support/editor";
+
 test("protected publication gates pages, CV and generated assets and revokes old grants", async ({
   page,
   context,
@@ -26,6 +28,8 @@ test("protected publication gates pages, CV and generated assets and revokes old
   const visitor = await browser.newContext();
   try {
     await page.goto(`/${username}/edit`);
+    await openEditor(page);
+    await page.getByRole("button", { exact: true, name: "Review & publish" }).click();
     await page.getByRole("button", { exact: true, name: "Review publication" }).click();
     await page.getByLabel("Publication password").fill("fictional-portfolio-password");
     await page.getByRole("button", { exact: true, name: "Confirm publication" }).click();
@@ -67,6 +71,7 @@ test("protected publication gates pages, CV and generated assets and revokes old
       expect(response.status()).toBe(200);
       expect(response.headers()["cache-control"]).toContain("no-store");
     }
+    await page.getByRole("button", { exact: true, name: "Review & publish" }).click();
     await page.getByRole("button", { exact: true, name: "Review publication" }).click();
     await page.getByRole("button", { exact: true, name: "Confirm publication" }).click();
     await expect(
