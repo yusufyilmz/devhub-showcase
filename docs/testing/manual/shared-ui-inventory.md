@@ -144,7 +144,7 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 | [navigation/footer](../../../packages/ui/src/navigation/footer)                       | `@shared/ui/footer`            | UI/Navigation/Footer            | Checked         |
 | [navigation/header](../../../packages/ui/src/navigation/header)                       | `@shared/ui/header`            | UI/Navigation/Header            | Pending         |
 | [navigation/nav](../../../packages/ui/src/navigation/nav)                             | `@shared/ui/nav`               | UI/Navigation/Nav/Nav Main      | Checked         |
-| [navigation/navbar](../../../packages/ui/src/navigation/navbar)                       | `@shared/ui/navbar`            | UI/Navigation/Navbar            | Pending         |
+| [navigation/navbar](../../../packages/ui/src/navigation/navbar)                       | `@shared/ui/navbar`            | UI/Navigation/Navbar            | Checked         |
 | [navigation/page-header](../../../packages/ui/src/navigation/page-header)             | `@shared/ui/page-header`       | UI/Navigation/Page Header       | Checked         |
 | [navigation/pagination](../../../packages/ui/src/navigation/pagination)               | `@shared/ui/pagination`        | UI/Navigation/Pagination        | Checked         |
 | [navigation/section-navigator](../../../packages/ui/src/navigation/section-navigator) | `@shared/ui/section-navigator` | UI/Navigation/Section Navigator | Checked         |

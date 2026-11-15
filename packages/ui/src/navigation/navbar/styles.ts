@@ -1,23 +1,11 @@
-import { studioButtonClass } from "../../buttons/button/studio-button";
-
-export const menuItemsStyles = {
-  element1: "text-main-white border-none whitespace-pre",
-} as const;
-
-export const mobileMenuStyles = {
-  element1: "md:hidden",
-  element2: "bg-main-dark h-full flex flex-col justify-start p-4 align-middle",
-  element3: studioButtonClass.primary,
-} as const;
-
 export const navbarStyles = {
   element1:
-    "portfolio-nav [display:flex] [gap:24px] [align-items:center] [justify-content:space-between] [max-width:1280px] [min-height:78px] [padding:14px_40px] [margin:auto] max-[767px]:[min-height:68px] max-[767px]:[padding:12px_22px]",
+    "portfolio-nav mx-auto flex min-h-17 w-full max-w-7xl items-center justify-between gap-sm px-md py-sm md:min-h-[78px] md:px-lg xl:px-xl",
   element2:
-    "brand-mark text-[32px] leading-none font-[750] tracking-[-0.12em] text-foreground no-underline [&_span]:text-primary",
+    "brand-mark rounded-sm text-[32px] leading-none font-[750] tracking-[-0.12em] text-foreground no-underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring [&_span]:text-primary",
   element3:
-    "nav-links [display:flex] [gap:4px] [&_a]:[padding:9px] [&_a]:[font-size:10px] [&_a]:[font-weight:500] [&_a]:[letter-spacing:0.06em] [&_a]:[box-shadow:none] max-[1050px]:[&_a]:[padding:6px] max-[1050px]:[&_a]:[font-size:9px] max-[767px]:[display:none]",
-  element4: "nav-tools [display:flex] [gap:18px] [align-items:center]",
+    "nav-links hidden min-w-0 flex-wrap items-center justify-center gap-0.5 md:flex [&_a]:px-xs [&_a]:text-xs",
+  element4: "nav-tools flex shrink-0 items-center gap-xs sm:gap-sm",
   element5:
-    "nav-contact [font-size:12px] [color:var(--primary)] [white-space:nowrap] max-[1050px]:[display:none]",
+    "nav-contact hidden rounded-sm text-xs whitespace-nowrap text-primary hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring min-[1051px]:inline",
 } as const;
