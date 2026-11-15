@@ -96,7 +96,7 @@ export function AiAssistantEditor(props: Props) {
   if (props.managed)
     return (
       <Card asChild layout="plain" surface="portfolio">
-        <section className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px]">
+        <section className="editor-card min-w-0 rounded-xl border border-border/75 bg-card p-md">
           <h2>Private AI assistant</h2>
           <p>This assistant is available only in your own portfolio workspace.</p>
         </section>
@@ -271,7 +271,7 @@ function AssistantWorkspace({
     );
   return (
     <Card asChild layout="plain" surface="portfolio">
-      <section className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px]">
+      <section className="editor-card min-w-0 rounded-xl border border-border/75 bg-card p-md">
         <h2>Private AI assistant</h2>
         <p>
           Describe how to create or improve your portfolio. Your current draft, including private
@@ -412,10 +412,7 @@ function ProposalReview({
         Reject all proposed changes
       </Button>
       {review.proposal.changes.map((change) => (
-        <div
-          className="proposal-change [padding-block:20px] [border-bottom:1px_solid_var(--border)]"
-          key={change.field}
-        >
+        <div className="proposal-change border-b border-border/60 py-md" key={change.field}>
           <LibraryLabel unstyled>
             <LibraryInput
               checked={selected.includes(change.field)}

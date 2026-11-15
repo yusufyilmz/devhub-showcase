@@ -227,11 +227,18 @@ test("editor panels fit the viewport and keep the profile menu available", async
     "Education",
     "Skills",
     "Languages",
+    "Custom sections",
+    "Section order",
     "Sections",
     "Section display",
     "Templates",
     "PDF",
     "CV versions",
+    "AI profile",
+    "AI assistant",
+    "Language settings",
+    "Field visibility",
+    "Publishing",
   ]) {
     await selectEditorSection(page, tab);
     const pane = page.getByRole("region", { exact: true, name: `Edit ${tab}` });
@@ -239,9 +246,27 @@ test("editor panels fit the viewport and keep the profile menu available", async
     await expect
       .poll(() => pane.evaluate((node) => node.scrollWidth - node.clientWidth))
       .toBeLessThanOrEqual(1);
+    if (tab === "Language settings") {
+      await expect(pane.getByLabel("Portfolio language")).toBeVisible();
+      await expect(pane.getByLabel("CV language")).toBeVisible();
+    }
+    if (tab === "Field visibility") {
+      await expect(pane.getByRole("group", { name: "Website contact details" })).toBeVisible();
+    }
     if (tab === "PDF") {
       const layout = pane.getByLabel("CV layout");
       await expect(layout).toBeVisible();
+      await expect
+        .poll(() =>
+          layout.evaluate((node) => {
+            const select = node.getBoundingClientRect();
+            const icon = node.nextElementSibling?.getBoundingClientRect();
+            return Boolean(
+              icon && icon.left > select.left + select.width / 2 && icon.right < select.right,
+            );
+          }),
+        )
+        .toBe(true);
       await expect
         .poll(() =>
           layout.evaluate((node) => {

@@ -2,9 +2,9 @@ import { eyebrowClass } from "@shared/ui/typography";
 
 export const languageSettingsEditorStyles = {
   element1:
-    "editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px] editor-fields grid grid-cols-2 gap-6 max-[767px]:grid-cols-1 max-[767px]:gap-[18px]",
-  element2: "full-width col-span-full",
-  element3: "full-width col-span-full",
+    "editor-card editor-fields grid min-w-0 gap-md rounded-xl border border-border/75 bg-card p-md sm:grid-cols-2 [&>h2]:col-span-full [&>h2]:text-lg [&>h2]:font-semibold",
+  element2: "full-width col-span-full max-w-prose text-sm leading-relaxed text-muted-foreground",
+  element3: "full-width col-span-full max-w-prose text-sm leading-relaxed text-muted-foreground",
 } as const;
 
 export const portfolioTypePickerStyles = {
