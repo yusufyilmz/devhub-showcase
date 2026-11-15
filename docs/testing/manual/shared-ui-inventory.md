@@ -140,7 +140,7 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 | [navigation](../../../packages/ui/src/navigation)                                     | `@shared/ui/navigation`        | Find consuming story            | Pending         |
 | [navigation/app-sidebar](../../../packages/ui/src/navigation/app-sidebar)             | `@shared/ui/app-sidebar`       | UI/Navigation/App Sidebar       | Pending         |
 | [navigation/brand](../../../packages/ui/src/navigation/brand)                         | `@shared/ui/brand`             | UI/Navigation/Brand             | Pending         |
-| [navigation/breadcrumb](../../../packages/ui/src/navigation/breadcrumb)               | `@shared/ui/breadcrumb`        | UI/Navigation/Breadcrumb        | Pending         |
+| [navigation/breadcrumb](../../../packages/ui/src/navigation/breadcrumb)               | `@shared/ui/breadcrumb`        | UI/Navigation/Breadcrumb        | Checked         |
 | [navigation/footer](../../../packages/ui/src/navigation/footer)                       | `@shared/ui/footer`            | UI/Navigation/Footer            | Pending         |
 | [navigation/header](../../../packages/ui/src/navigation/header)                       | `@shared/ui/header`            | UI/Navigation/Header            | Pending         |
 | [navigation/nav](../../../packages/ui/src/navigation/nav)                             | `@shared/ui/nav`               | UI/Navigation/Nav/Nav Main      | Pending         |

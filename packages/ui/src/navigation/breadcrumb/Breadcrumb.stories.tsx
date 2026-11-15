@@ -63,3 +63,20 @@ export const WideCanvas: StoryObj<typeof meta> = {
     ),
   ],
 };
+
+export const LongPageName: Story = {
+  ...NarrowCanvas,
+  render: () => (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Workspace settings and publication preferences</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  ),
+};
