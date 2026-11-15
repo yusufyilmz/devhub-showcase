@@ -87,7 +87,7 @@ export function FeatureGuide({
           <BookOpen aria-hidden="true" size={17} />
         </Button>
       </DialogTrigger>
-      <DialogContent className="agent-guide-dialog [z-index:260] [display:flex] [flex-direction:column] [width:min(34rem,_calc(100vw_-_2rem))] [max-height:86dvh]">
+      <DialogContent className="agent-guide-dialog">
         <DialogHeader>
           <DialogTitle>{guide.title}</DialogTitle>
           <DialogDescription>
@@ -100,17 +100,14 @@ export function FeatureGuide({
           {enabled ? "Turn off automatic tips" : "Turn on automatic tips"}
         </Button>
         {error && (
-          <div
-            className="agent-guide-error [display:flex] [flex-wrap:wrap] [gap:0.625rem] [align-items:center]"
-            role="status"
-          >
+          <div className="agent-guide-error" role="status">
             <p>Couldn’t sync your progress.</p>
             <Button onClick={retry} type="button" variant="outline">
               Try again
             </Button>
           </div>
         )}
-        <div className="agent-guide-list [min-height:0] [padding-inline-end:0.35rem] [overflow:auto] [overscroll-behavior:contain] [&_section_+_section]:[margin-block-start:1.25rem] [&_h3]:[margin-block-end:0.5rem] [font-size:1rem] [font-weight:650] [&_li]:[padding-block:0.75rem] [border-top:1px_solid_var(--border)] [&_li_p]:[margin-block:0.25rem_0.5rem] [font-size:0.875rem] [line-height:1.5] [color:var(--muted-foreground)]">
+        <div className="agent-guide-list">
           {[...groups].map(([group, items]) => (
             <section key={group}>
               <h3>{group}</h3>
@@ -121,7 +118,7 @@ export function FeatureGuide({
                     <li key={id}>
                       <strong>{title}</strong>
                       <p>{message}</p>
-                      <div className="agent-guide-actions [display:flex] [flex-wrap:wrap] [gap:0.625rem] [align-items:center] [&_a]:[text-decoration:underline] [text-underline-offset:0.15rem]">
+                      <div className="agent-guide-actions">
                         {action && (
                           <FeatureAction action={action} onSelect={() => setOpen(false)} />
                         )}

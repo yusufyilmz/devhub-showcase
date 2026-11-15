@@ -69,11 +69,7 @@ export function SectionItemCard({
     default:
       return (
         <Card
-          className={
-            accordion
-              ? "section-disclosure-card"
-              : "section-item-card [&[data-slot='card']]:[gap:0.5rem]"
-          }
+          className={accordion ? "section-disclosure-card" : "section-item-card"}
           interaction={accordion ? "static" : "lift"}
           layout="plain"
           surface={surface}

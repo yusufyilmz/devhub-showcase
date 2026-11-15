@@ -33,7 +33,7 @@ export function HomePage({
   planDetails: ReactNode;
 }) {
   return (
-    <div className="home-page [--home-width:1200px] [&_>_main]:[overflow:clip]">
+    <div className="home-page">
       <SkipLink href="#home-content">Skip to content</SkipLink>
       <HomeHeader accountMenu={accountMenu} action={action} />
       <main id="home-content">
