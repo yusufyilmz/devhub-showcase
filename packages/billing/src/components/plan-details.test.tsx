@@ -33,7 +33,7 @@ describe("PricingUi", () => {
     expect(
       await screen.findByText(new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))),
     ).toBeTruthy();
-    expect(fetchMock.mock.calls[0]?.[0]).toBe(urls.next.billing.pricing());
+    expect(fetchMock.mock.calls[0]?.[0]).toBe(urls.billing.pricing());
     expect(await screen.findByText(/100 visitor chat attempts/)).toBeTruthy();
   });
   it("keeps a useful free-plan message when pricing is unavailable", async () => {

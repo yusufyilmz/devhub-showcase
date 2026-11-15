@@ -76,8 +76,8 @@ secrets
 /output/
 
 # Playwright
-/playwright-report/
-/test-results/
+playwright-report/
+test-results/
 
 
 .pnpm-store/

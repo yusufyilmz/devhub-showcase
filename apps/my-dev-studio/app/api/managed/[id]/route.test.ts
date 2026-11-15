@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { profile } from "@shared/config";
-import { ProfileAccessError, ProfileConflictError } from "@shared/services/profile";
+import { ProfileAccessError, ProfileConflictError } from "@shared/lib/profile";
 
 const mocks = vi.hoisted(() => ({
   guard: vi.fn(),

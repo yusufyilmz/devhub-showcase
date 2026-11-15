@@ -1,0 +1,11 @@
+[aria-label="Draft recovery"] h2,
+[aria-label="Guided setup"] h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+[aria-label="Draft recovery"] p,
+[aria-label="Guided setup"] p {
+  font-size: 14px;
+  line-height: 1.6;
+}

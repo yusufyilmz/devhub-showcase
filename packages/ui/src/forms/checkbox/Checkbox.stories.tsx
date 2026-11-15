@@ -3,12 +3,13 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Checkbox } from "./Checkbox";
 
 const meta: Meta<typeof Checkbox> = {
+  args: { "aria-label": "Accept terms and conditions" },
   component: Checkbox,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
-  title: "UI/Checkbox",
+  title: "UI/Forms/Checkbox",
 };
 
 export default meta;
@@ -25,6 +26,8 @@ export const Checked: Story = {
   },
 };
 
+export const Indeterminate: Story = { args: { checked: "indeterminate" } };
+
 export const Disabled: Story = {
   args: {
     disabled: true,
@@ -33,7 +36,7 @@ export const Disabled: Story = {
 
 export const WithLabel: Story = {
   render: () => (
-    <div style={{ alignItems: "center", display: "flex", gap: 8 }}>
+    <div className="flex items-center gap-s">
       <Checkbox id="terms" />
       <label htmlFor="terms">Accept terms and conditions</label>
     </div>

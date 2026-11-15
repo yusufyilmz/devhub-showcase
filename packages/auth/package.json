@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@shared/config": "workspace:*",
+    "@shared/env": "workspace:*",
     "@supabase/ssr": "catalog:",
     "@supabase/supabase-js": "catalog:",
     "next": "catalog:",

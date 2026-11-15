@@ -1,6 +1,8 @@
 # Engineering conventions
 
-Use [AGENTS.md](../AGENTS.md) for agent workflow, [architecture](architecture.md) for package boundaries and [testing](testing.md) for verification.
+## When to read
+
+Read this before adding a dependency, a TypeScript module, a React component, or a validation boundary. It covers Node and pnpm versions, Biome, package exports, and how untrusted input is checked. Use [AGENTS.md](../AGENTS.md) for agent workflow, [architecture](architecture.md) for package boundaries, and [testing](testing.md) for verification.
 
 ## Tooling and dependencies
 
@@ -42,6 +44,6 @@ Use existing Pino entry points for server logging and the field conventions in [
 
 ## Tests, commits and documentation
 
-Test behavior, especially denied access and legacy defaults. Keep test accounts and fixtures synthetic. Run the checks appropriate to the change and disclose anything blocked.
+Test behavior, especially denied access and earlier defaults. Keep test accounts and fixtures synthetic. Run the checks appropriate to the change and disclose anything blocked.
 
 Prefer small commits with descriptive titles such as `docs: explain profile publication boundaries`. PRs explain the problem, resulting behavior, compatibility, verification and remaining setup. Update documentation with the behavior it describes and link to authoritative configuration rather than duplicating version lists that drift.

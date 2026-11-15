@@ -1,7 +1,5 @@
 "use client";
 
-import "../login-form/auth-login.css";
-
 import type { ReactNode } from "react";
 
 import { copy, type LoginSiteId } from "@shared/config";
@@ -32,6 +30,7 @@ export function SiteLoginScreen({
 
   return (
     <LoginPanel
+      animateVisual={site === "my-dev-studio"}
       backHref={siteCopy.backHref}
       backLabel={siteCopy.backLabel}
       brand={siteCopy.brand}
@@ -39,10 +38,10 @@ export function SiteLoginScreen({
       contentId={"contentId" in siteCopy ? siteCopy.contentId : undefined}
       description={siteCopy.description}
       eyebrow={siteCopy.eyebrow}
-      googleAction={urls.next.auth.google()}
+      googleAction={urls.auth.google()}
       initialError={resolvedError}
       localTestLogin={localTestLogin}
-      sessionEndpoint={urls.next.auth.session()}
+      sessionEndpoint={urls.auth.session()}
       submitLabel={siteCopy.submitLabel}
       successPath={siteCopy.successPath}
       title={<LoginTitle emphasis={siteCopy.titleEmphasis} lines={[...siteCopy.titleLines]} />}

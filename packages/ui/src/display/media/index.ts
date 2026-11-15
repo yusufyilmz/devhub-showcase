@@ -1,1 +1,1 @@
-export { WorkMedia } from "./work-media";
+export { WorkMedia } from "./WorkMedia";

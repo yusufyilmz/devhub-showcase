@@ -19,7 +19,7 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 
 The homepage catalog preview uses a lookup for its illustrations. Its unit coverage verifies that every registered section has a nonempty preview, in addition to reveal, category and search behavior. This refactor preserves the rendered controls and layout; browser verification remains Not run.
 
-- [e2e/edit/custom-sections.spec.ts](../../../e2e/edit/custom-sections.spec.ts)
-- [e2e/portfolio/section-library.spec.ts](../../../e2e/portfolio/section-library.spec.ts)
+- [e2e/edit/custom-sections.spec.ts](../../../apps/my-dev-studio/e2e/edit/custom-sections.spec.ts)
+- [e2e/portfolio/section-library.spec.ts](../../../apps/my-dev-studio/e2e/portfolio/section-library.spec.ts)
 
 Return to the [manual testing index](index.md).

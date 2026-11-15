@@ -1,3 +1,8 @@
-export function bannerClassName(...values: unknown[]): string {
-  return `flex w-full items-center justify-center gap-3 bg-button-primary px-4 py-2 text-center text-sm font-medium text-button-light ${values[0]}`;
+import { cn } from "cn";
+
+export function bannerClassName(className?: string) {
+  return cn(
+    "flex w-full min-w-0 flex-wrap items-center justify-center gap-x-sm gap-y-s rounded-xl border border-border bg-card px-md py-s text-center text-sm leading-relaxed font-medium wrap-anywhere text-card-foreground",
+    className,
+  );
 }

@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-import type { Database } from "./database.types";
+import type { Database } from "../../db/generated/database.types";
 
 export type ExperienceRow = Database["public"]["Tables"]["experiences"]["Row"];
 export type ProjectRow = Database["public"]["Tables"]["projects"]["Row"];
@@ -195,11 +195,13 @@ export interface Review {
   updatedAt: string;
 }
 
-export enum ReviewState {
-  APPROVED = "APPROVED",
-  PENDING = "PENDING",
-  REJECTED = "REJECTED",
-}
+export const ReviewState = {
+  APPROVED: "APPROVED",
+  PENDING: "PENDING",
+  REJECTED: "REJECTED",
+} as const;
+
+export type ReviewState = (typeof ReviewState)[keyof typeof ReviewState];
 
 export type SupabaseDbClient = SupabaseClient<Database>;
 

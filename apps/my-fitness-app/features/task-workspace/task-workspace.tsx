@@ -1,23 +1,23 @@
 "use client";
 import { useMemo, useState } from "react";
 
-import { Sparkles } from "lucide-react";
-
+import { FitnessCompanion, PlanAssistant } from "@shared/assistant/fitness-ui";
 import {
   type AgendaEvent,
   AgendaService,
   ScheduleService,
   TaskService,
-} from "@shared/services/schedule";
-import type { Task, Workspace } from "@shared/services/types";
-import { dateKey } from "@shared/services/types";
+} from "@shared/lib/schedule";
+import type { Task, Workspace } from "@shared/lib/types";
+import { dateKey } from "@shared/lib/types";
 import { Alert, AlertDescription } from "@shared/ui/alert";
 import { Button as LibraryButton } from "@shared/ui/button";
 
 import { useAgendaNavigation } from "@/features/agenda/use-agenda-navigation";
-import { PlanAssistant } from "@/features/assistant/plan-assistant";
 import { TaskEditor, type TaskEditorTarget } from "@/features/task-editor/task-editor";
 
+import { fitnessNotifications } from "../notifications/browser";
+import { assistantRequest } from "./gateway";
 import { useTaskReminders } from "./use-reminders";
 import type { WorkspaceController } from "./use-task-workspace";
 import { WorkspaceFrame, WorkspacePanels } from "./workspace-views";
@@ -34,7 +34,7 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
   );
   const [target, setTarget] = useState<TaskEditorTarget | null>(null);
   const [templateRoot, setTemplateRoot] = useState<string | null>(null);
-  useTaskReminders(state, readOnly);
+  const reminder = useTaskReminders(state, readOnly);
   const day = useMemo(() => scheduleService.ensureDay(state, date), [state, date]);
   const onEdit = (task: Task) => {
     if (!readOnly) setTarget({ task });
@@ -103,20 +103,6 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
     target?.task?.scope === "scheduled" || target?.parent?.scope === "scheduled" ? day : state;
   return (
     <WorkspaceFrame
-      assistant={
-        !readOnly &&
-        tab !== "Assistant" && (
-          <LibraryButton
-            className="fitness-assistant-trigger"
-            onClick={() => setTab("Assistant")}
-            type="button"
-            variant="outline"
-          >
-            <Sparkles aria-hidden="true" />
-            Fitness assistant
-          </LibraryButton>
-        )
-      }
       busy={busy}
       date={date}
       error={error}
@@ -124,6 +110,15 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
       onDismissError={() => setError("")}
       overlay={
         <>
+          <FitnessCompanion
+            editing={Boolean(target)}
+            onOpen={() => setTab("Assistant")}
+            readOnly={readOnly}
+            reminder={reminder}
+            request={assistantRequest}
+            tab={tab}
+            workspace={state}
+          />
           {target && !readOnly ? (
             <TaskEditor
               busy={busy}
@@ -137,7 +132,10 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
             />
           ) : null}
           {controller.message ? (
-            <Alert className="fitness-save-status" role="status">
+            <Alert
+              className="fitness-save-status [&[data-slot='alert']]:[position:fixed] [&_[data-slot='alert-description']]:[display:flex] max-[700px]:[&[data-slot='alert']]:[bottom:calc(78px_+_env(safe-area-inset-bottom))]"
+              role="status"
+            >
               <AlertDescription>
                 {controller.message}
                 {controller.undo ? (
@@ -168,9 +166,11 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
           busy={busy}
           date={date}
           initialPlanId={templateRoot}
+          notify={(message) => fitnessNotifications.show(message)}
           onReview={setTarget}
           onSave={save}
           onWeek={() => setTab("Week")}
+          request={assistantRequest}
           revision={controller.revision}
           workspace={state}
         />

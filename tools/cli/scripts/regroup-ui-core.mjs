@@ -181,7 +181,7 @@ async function updatePackageExports() {
   exportsField["./hover-card"] = "./src/cards/HoverCard.tsx";
   exportsField["./reveal-card"] = "./src/layout/reveal-card/index.ts";
 
-  delete exportsField["./*"];
+  exportsField["./*"] = undefined;
 
   pkg.exports = exportsField;
   pkg.scripts["folders:kebab"] =

@@ -105,7 +105,7 @@ export async function extractArticleMetadataHybrid(
   cardDescription?: string,
 ): Promise<ArticleMetadata | null>;
 
-// ✅ LEGACY: Description parsing (backwards compatibility)
+// ✅ DESCRIPTION-BASED: Description parsing (backwards compatibility)
 // @deprecated Use extractArticleMetadataFromCustomFields instead
 export function extractArticleMetadata(cardDescription: string): ArticleMetadata | null;
 ```
@@ -245,7 +245,7 @@ try {
 2. **Open card modal** → Metadata extracted from custom fields
 3. **Comments work** with original article ID
 
-### **Legacy Cards (Description-based)**
+### **Description-based Cards**
 
 1. **Open existing card** with description metadata → Fallback parsing works
 2. **Comments work** with extracted article ID
@@ -323,8 +323,8 @@ await migrationService.migrateDescriptionToCustomFields(boardId);
 
 - [Trello Cards API - Custom Fields](https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-idcard-customfield-idcustomfield-item-put)
 - [Article-Trello Linking Guide](./linking.md)
-- [TrelloCustomFieldsService Source](../services/TrelloCustomFields.ts)
-- [Article Metadata Utilities](../utils/articleMetadata.ts)
+- [Trello service source](../../packages/trello/src/services/TrelloService.ts)
+- [Article metadata utilities](../../packages/trello/src/utils/articleMetadata.ts)
 
 ---
 

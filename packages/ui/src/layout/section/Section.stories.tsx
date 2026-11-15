@@ -1,4 +1,4 @@
-import "../../sections/sections.css";
+import "./sections.css";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
@@ -9,11 +9,11 @@ const meta = {
     children: <p>Your content belongs here.</p>,
     sectionId: "example",
     subtitle: "A quiet space for your work.",
-    title: "Your story",
+    title: "Storybook App UI/Layout/Section",
   },
   component: Section,
   tags: ["autodocs"],
-  title: "UI/Section/Frame",
+  title: "UI/Layout/Section",
 } satisfies Meta<typeof Section>;
 export default meta;
 type Story = StoryObj<typeof meta>;

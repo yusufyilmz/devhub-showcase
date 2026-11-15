@@ -75,6 +75,6 @@ describe("PremiumStatus", () => {
     ).toBe("requires_pro");
     expect(
       premiumFeatureStatus(billing, { id: "main", isPublic: true }, "portfolio_chat", true),
-    ).toBe("legacy");
+    ).toBe("main_portfolio");
   });
 });

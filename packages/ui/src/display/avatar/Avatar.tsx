@@ -5,12 +5,13 @@ import type * as React from "react";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import { cn } from "cn";
 
-import { avatarStyles } from "./styles";
+import { avatarStyles, avatarVariants } from "./styles";
+import type { AvatarProps } from "./types";
 
-function Avatar({ className, ...props }: React.ComponentProps<typeof AvatarPrimitive.Root>) {
+function Avatar({ className, size, variant, ...props }: AvatarProps) {
   return (
     <AvatarPrimitive.Root
-      className={cn(avatarStyles.avatar, className)}
+      className={cn(avatarVariants({ size, variant }), className)}
       data-slot="avatar"
       {...props}
     />

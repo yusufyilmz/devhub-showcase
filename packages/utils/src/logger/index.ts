@@ -2,13 +2,15 @@ import os from "node:os";
 
 import pino, { type Logger, type LoggerOptions } from "pino";
 
+import { env } from "@shared/env";
+
 export type { Logger, LoggerOptions };
 
 const createLogger = (hostname: string): Logger => {
   const options: LoggerOptions = {
     base: {
-      application: process.env.APPLICATION_NAME,
-      env: process.env.NODE_ENV,
+      application: env.APPLICATION_NAME,
+      env: env.NODE_ENV,
       host: hostname,
       pid: process.pid,
     },
@@ -20,15 +22,15 @@ const createLogger = (hostname: string): Logger => {
     timestamp: () => `,"time":"${new Date(Date.now()).toISOString()}"`,
   };
 
-  if (process.env.NODE_ENV !== "production") {
+  if (env.NODE_ENV !== "production") {
     options.level = "debug";
     options.transport = {
       target: "pino-pretty",
     };
   }
 
-  if (process.env.LOG_LEVEL) {
-    options.level = process.env.LOG_LEVEL;
+  if (env.LOG_LEVEL) {
+    options.level = env.LOG_LEVEL;
   }
 
   return pino(options);

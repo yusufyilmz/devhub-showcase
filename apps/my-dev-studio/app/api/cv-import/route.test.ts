@@ -14,7 +14,7 @@ const mocks = vi.hoisted(() => ({
 vi.mock("@shared/lib/supabase", () => ({
   createServerClient: async () => ({ auth: { getUser: mocks.getUser } }),
 }));
-vi.mock("@shared/cache", () => ({ allowCvImport: mocks.limit }));
+vi.mock("@shared/lib/cache", () => ({ allowCvImport: mocks.limit }));
 vi.mock("@shared/assistant", () => ({
   CvImportModel: class {
     extract = mocks.extract;

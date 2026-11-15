@@ -3,6 +3,8 @@ import { parseArgs } from "node:util";
 
 import { createClient } from "@supabase/supabase-js";
 
+import { env } from "@shared/env";
+
 import demoProfile from "../../../packages/config/src/profile/demo-profile.json" with {
   type: "json",
 };
@@ -95,15 +97,13 @@ async function main() {
   });
   if (!/^[0-9a-f-]{36}$/i.test(values["owner-id"] || ""))
     throw new Error("Provide --owner-id UUID.");
-  if (!process.env.STRIPE_SECRET_KEY?.startsWith("sk_test_"))
+  if (!env.STRIPE_SECRET_KEY?.startsWith("sk_test_"))
     throw new Error("Demo provisioning requires Stripe test configuration.");
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY)
+  if (!env.NEXT_PUBLIC_SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY)
     throw new Error("Missing server Supabase configuration.");
-  const client = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY,
-    { auth: { autoRefreshToken: false, persistSession: false } },
-  );
+  const client = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
   const result = await seedDemo(client, values["owner-id"], {
     apply: values.apply,
     grantPro: values["grant-pro"],

@@ -1,68 +1,71 @@
 "use client";
 
-import Link from "next/link";
-import type React from "react";
 import { useState } from "react";
 
+import { Button } from "../../buttons/button";
 import { Spinner } from "../../feedback/spinner";
+import { NativeSelect } from "../../forms/native-select";
 import { iFramePreviewStyles } from "./styles";
 import type { IFramePreviewProps } from "./types";
 
-export const IFramePreview: React.FC<IFramePreviewProps> = ({ url }) => {
-  const [loading, setLoading] = useState(true);
-  const [error, showError] = useState(false);
+export function IFramePreview({ url, scale = 1 }: IFramePreviewProps) {
+  if (!/^(https?:\/\/|\/(?![/\\])|about:blank$)/i.test(url)) {
+    return <p className="text-muted-foreground text-sm">Enter a website URL to preview it.</p>;
+  }
+  const initialScale = Number.isFinite(scale) ? Math.min(1, Math.max(0.25, scale)) : 1;
+  return <PreviewFrame key={`${url}:${initialScale}`} scale={initialScale} url={url} />;
+}
 
-  const handleLoad = () => {
-    setLoading(false);
-  };
-
-  const handleError = () => {
-    showError(true);
-    setLoading(false);
-  };
-
-  const IFrame = url ? (
-    <a
-      aria-label="Open website preview"
-      className={iFramePreviewStyles.element1}
-      href={url}
-      rel="noopener noreferrer"
-      target="_blank"
-    >
-      <iframe
-        className={iFramePreviewStyles.element2}
-        id="iframe"
-        onError={handleError}
-        onLoad={handleLoad}
-        sandbox="allow-scripts"
-        src={url ?? null}
-        title="Website Preview"
-      />
-    </a>
-  ) : null;
+function PreviewFrame({ url, scale }: Required<IFramePreviewProps>) {
+  const [zoom, setZoom] = useState(scale);
+  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+  const zoomLevels = [...new Set([0.5, 0.75, 1, scale])].sort((a, b) => a - b);
 
   return (
-    <div className={iFramePreviewStyles.element3}>
-      {loading && !error && (
-        <div className={iFramePreviewStyles.element4}>
-          <Spinner />
-        </div>
-      )}
-      {!error ? (
-        IFrame
-      ) : (
-        <div className={iFramePreviewStyles.element5}>
-          <p className={iFramePreviewStyles.element6}>Unable to load the website preview.</p>
-          <Link
-            className={iFramePreviewStyles.element7}
-            href={url}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Click here to visit the website
-          </Link>
-        </div>
-      )}
+    <div className={iFramePreviewStyles.container}>
+      <div className={iFramePreviewStyles.toolbar}>
+        <NativeSelect
+          aria-label="Preview scale"
+          onChange={(event) => setZoom(Number(event.target.value))}
+          value={zoom}
+        >
+          {zoomLevels.map((level) => (
+            <option key={level} value={level}>
+              {Math.round(level * 100)}%
+            </option>
+          ))}
+        </NativeSelect>
+        <Button href={url} rel="noopener noreferrer" size="sm" target="_blank" variant="outline">
+          Open website preview
+        </Button>
+      </div>
+      <div aria-busy={status === "loading"} className={iFramePreviewStyles.viewport}>
+        {status === "error" ? (
+          <p className={iFramePreviewStyles.status}>
+            Unable to load this preview. Open the website to view it.
+          </p>
+        ) : (
+          <iframe
+            className={iFramePreviewStyles.frame}
+            onError={() => setStatus("error")}
+            onLoad={() => setStatus("ready")}
+            sandbox="allow-scripts"
+            src={url}
+            style={{
+              height: `${100 / zoom}%`,
+              transform: `scale(${zoom})`,
+              width: `${100 / zoom}%`,
+            }}
+            tabIndex={-1}
+            title="Website preview"
+          />
+        )}
+        {status === "loading" && (
+          <div className={iFramePreviewStyles.status}>
+            <Spinner />
+          </div>
+        )}
+      </div>
     </div>
   );
-};
+}

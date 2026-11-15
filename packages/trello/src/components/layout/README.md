@@ -286,7 +286,7 @@ Each component exposes multiple customization hooks:
 1. **Import the page component:**
 
    ```typescript
-   import { TrelloBoardPage } from "@/modules/trello/v2/pages/TrelloBoardPage";
+   import { TrelloBoardPage } from "@/shared/trello/v2/pages/TrelloBoardPage";
    ```
 
 2. **Use with your Trello credentials:**

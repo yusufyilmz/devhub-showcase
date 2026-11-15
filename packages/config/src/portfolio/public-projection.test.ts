@@ -25,7 +25,7 @@ describe("publishable output projections", () => {
     expect(source.email).toBe(profile.email);
     expect(source.projects[0]!.public).toBe(false);
   });
-  it("honors CV exclusions independently of website visibility and legacy settings", () => {
+  it("honors CV exclusions independently of website visibility and existing settings", () => {
     const source = {
       ...profile,
       cvFields: { email: false, website: false },

@@ -8,13 +8,13 @@ vi.mock("@/features/admin/admin-auth", () => ({
   requireWorkspace: mocks.workspace,
   sameOrigin: (request: Request) => request.headers.get("origin") === "https://studio.test",
 }));
-vi.mock("@/features/jobs/workspace", () => ({
+vi.mock("./_workspace", () => ({
   changeJobs: mocks.change,
   JobsError: class extends Error {},
   loadJobs: vi.fn(),
 }));
 
-import { ProfileAccessError } from "@shared/services/profile";
+import { ProfileAccessError } from "@shared/lib/profile";
 
 import { POST } from "./route";
 

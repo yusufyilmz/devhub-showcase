@@ -3,11 +3,10 @@
 import { createContext, useContext } from "react";
 
 import { createStore, useStore } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 
-import { type ChatMessage, ChatRole, type ChatType } from "@shared/lib/types";
-
-export const CHAT_STORAGE_NAME = "my-dev-studio-chat-store";
+import { type ChatMessage, ChatRole, type ChatType } from "../../../lib/src/types";
+import { chatStorage } from "../storage/chatStorage";
 
 export type ChatIdentity = { id: string; revision: number; name: string };
 export type ChatState = {
@@ -19,8 +18,6 @@ export type ChatStoreState = ChatState & {
   addMessage: (message: ChatMessage) => void;
   resetChat: (type: ChatType) => void;
 };
-export const chatStorageKey = (identity: ChatIdentity) =>
-  `${CHAT_STORAGE_NAME}:${encodeURIComponent(identity.id)}:${identity.revision}`;
 export function createChatStore(identity: ChatIdentity) {
   const welcome = (type: ChatType): ChatMessage => ({
     category: "greeting",
@@ -53,12 +50,7 @@ export function createChatStore(identity: ChatIdentity) {
           ),
         sessionId: crypto.randomUUID(),
       }),
-      {
-        name: chatStorageKey(identity),
-        skipHydration: true,
-        storage: createJSONStorage(() => window.sessionStorage),
-        version: 1,
-      },
+      chatStorage.persistence<ChatStoreState>(identity),
     ),
   );
 }

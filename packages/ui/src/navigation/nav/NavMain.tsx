@@ -25,37 +25,52 @@ export function NavMain({ items }: NavMainOptions) {
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
-          <Collapsible
-            asChild
-            className={navMainStyles.element1}
-            defaultOpen={item.isActive}
-            key={item.title}
-          >
-            <SidebarMenuItem>
-              <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title}>
-                  {item.icon && <item.icon />}
+        {items.map((item) =>
+          item.items?.length ? (
+            <Collapsible
+              asChild
+              className={navMainStyles.element1}
+              defaultOpen={item.isActive}
+              key={item.title}
+            >
+              <SidebarMenuItem>
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton
+                    className={navMainStyles.trigger}
+                    isActive={item.isActive}
+                    tooltip={item.title}
+                  >
+                    {item.icon && <item.icon />}
+                    <span>{item.title}</span>
+                    <ChevronRight aria-hidden="true" className={navMainStyles.element2} />
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <SidebarMenuSub>
+                    {item.items.map((subItem) => (
+                      <SidebarMenuSubItem key={subItem.title}>
+                        <SidebarMenuSubButton asChild>
+                          <a href={subItem.url}>
+                            <span>{subItem.title}</span>
+                          </a>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    ))}
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+              </SidebarMenuItem>
+            </Collapsible>
+          ) : (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton asChild isActive={item.isActive} tooltip={item.title}>
+                <a aria-current={item.isActive ? "page" : undefined} href={item.url}>
+                  {item.icon && <item.icon aria-hidden="true" />}
                   <span>{item.title}</span>
-                  <ChevronRight className={navMainStyles.element2} />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarMenuSub>
-                  {item.items?.map((subItem) => (
-                    <SidebarMenuSubItem key={subItem.title}>
-                      <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
-                          <span>{subItem.title}</span>
-                        </a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  ))}
-                </SidebarMenuSub>
-              </CollapsibleContent>
+                </a>
+              </SidebarMenuButton>
             </SidebarMenuItem>
-          </Collapsible>
-        ))}
+          ),
+        )}
       </SidebarMenu>
     </SidebarGroup>
   );

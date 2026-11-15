@@ -3,21 +3,22 @@ import "./preferences.css";
 
 import { useEffect, useRef, useState } from "react";
 
+import { getPortfolioThemeVariables, type PortfolioTheme, portfolioThemes } from "@shared/config";
+import { themeOptions } from "@shared/config/theme";
 import {
-  completeUserConfigMigration,
-  readLegacyThemePreferences,
-  readLegacyUserConfig,
+  accountPreferenceSession,
+  type ThemeMode,
   themePreferenceAliases,
-  USER_CONFIG_STORAGE_KEY,
-  type UserConfigMode,
-  useUserConfigStore,
-} from "@shared/runtime/user";
+  themeStorage,
+} from "@shared/runtime/storage";
+import { useThemeStore } from "@shared/runtime/user";
 
 import "./store";
+import { companionAccentValue } from "./styles";
 import { ThemeContext } from "./theme-toggle";
 import type { ResolvedTheme, ThemeProviderOptions } from "./types";
 
-function resolveTheme(theme: UserConfigMode): ResolvedTheme {
+function resolveTheme(theme: ThemeMode): ResolvedTheme {
   return theme === "system"
     ? window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
@@ -30,7 +31,7 @@ function attributeName(key: string) {
 }
 
 function applyAliases(root: HTMLElement) {
-  const preferences = useUserConfigStore.getState().themePreferences;
+  const preferences = useThemeStore.getState().themePreferences;
   for (const [key, values] of Object.entries(themePreferenceAliases)) {
     const value = preferences[key as keyof typeof preferences];
     if (value && Object.hasOwn(values, value))
@@ -49,17 +50,103 @@ function readAppearanceDefaults(root: HTMLElement): Record<string, string | null
   }
 }
 
-function applyAppearance(root: HTMLElement, defaults: Record<string, string | null>) {
-  const preferences = useUserConfigStore.getState().themePreferences;
-  for (const [key, value] of Object.entries(preferences)) {
-    if (!(key in defaults)) defaults[key] = root.getAttribute(attributeName(key));
-    if (value) root.setAttribute(attributeName(key), value);
+const accentThemes = new Set<string>(themeOptions.brand);
+const portfolioThemeIds = new Set<string>(portfolioThemes.map((theme) => theme.id));
+const portfolioVariableNames = Object.keys(getPortfolioThemeVariables());
+
+function rememberPortfolioTheme(root: HTMLElement, defaults: Record<string, string | null>) {
+  if ("portfolio-theme" in defaults) return;
+  defaults["portfolio-theme"] = root.getAttribute("data-portfolio-theme");
+  defaults["portfolio-theme-style"] = JSON.stringify(
+    Object.fromEntries(
+      portfolioVariableNames.map((name) => [name, root.style.getPropertyValue(name)]),
+    ),
+  );
+}
+
+function writePortfolioTheme(root: HTMLElement, value: string) {
+  root.dataset.portfolioTheme = value;
+  for (const [name, variable] of Object.entries(
+    getPortfolioThemeVariables(value as PortfolioTheme),
+  ))
+    root.style.setProperty(name, variable);
+}
+
+function restorePortfolioTheme(root: HTMLElement, defaults: Record<string, string | null>) {
+  const attribute = defaults["portfolio-theme"];
+  if (attribute) root.dataset.portfolioTheme = attribute;
+  else root.removeAttribute("data-portfolio-theme");
+  let saved: Record<string, string> = {};
+  try {
+    saved = JSON.parse(defaults["portfolio-theme-style"] ?? "{}") as Record<string, string>;
+  } catch {
+    saved = {};
   }
+  for (const name of portfolioVariableNames) {
+    const previous = saved[name];
+    if (previous) root.style.setProperty(name, previous);
+    else root.style.removeProperty(name);
+  }
+}
+
+function applyPreference(
+  root: HTMLElement,
+  key: string,
+  value: string,
+  defaults: Record<string, string | null>,
+) {
+  if (key === "theme") return;
+  if (key === "portfolio-theme" && portfolioThemeIds.has(value)) {
+    rememberPortfolioTheme(root, defaults);
+    writePortfolioTheme(root, value);
+    return;
+  }
+  if (key === "brand" && accentThemes.has(value)) {
+    if (!("brand" in defaults)) defaults.brand = root.getAttribute("data-brand");
+    root.dataset.accent = value;
+    root.removeAttribute("data-brand");
+    return;
+  }
+  if (key === "companion") {
+    if (!("companion" in defaults)) defaults.companion = root.getAttribute("data-companion");
+    root.dataset.companion = value;
+    root.style.setProperty("--companion-accent", companionAccentValue(value));
+    return;
+  }
+  if (!(key in defaults)) defaults[key] = root.getAttribute(attributeName(key));
+  if (value) root.setAttribute(attributeName(key), value);
+}
+
+function restoreDefault(
+  root: HTMLElement,
+  key: string,
+  value: string | null,
+  defaults: Record<string, string | null>,
+  preferences: ReturnType<typeof useThemeStore.getState>["themePreferences"],
+) {
+  if (key === "portfolio-theme-style") return;
+  if (key === "portfolio-theme") {
+    restorePortfolioTheme(root, defaults);
+    return;
+  }
+  if (key === "companion") {
+    if (value) root.dataset.companion = value;
+    else root.removeAttribute("data-companion");
+    root.style.removeProperty("--companion-accent");
+    return;
+  }
+  if (key === "accent" && preferences.brand && accentThemes.has(preferences.brand)) return;
+  if (value === null) root.removeAttribute(attributeName(key));
+  else root.setAttribute(attributeName(key), value);
+}
+
+function applyAppearance(root: HTMLElement, defaults: Record<string, string | null>) {
+  const preferences = useThemeStore.getState().themePreferences;
+  for (const [key, value] of Object.entries(preferences))
+    applyPreference(root, key, value, defaults);
   for (const [key, value] of Object.entries(defaults)) {
-    if (!(key in preferences)) {
-      if (value === null) root.removeAttribute(attributeName(key));
-      else root.setAttribute(attributeName(key), value);
-    }
+    if (key in preferences) continue;
+    restoreDefault(root, key, value, defaults, preferences);
   }
   applyAliases(root);
 }
@@ -69,28 +156,17 @@ export function ThemeProvider({
   children,
   defaultTheme,
   portfolioTheme,
-  storageKey,
 }: ThemeProviderOptions) {
   const [mode, setMode] = useState<ResolvedTheme>(defaultTheme === "light" ? "light" : "dark");
   const defaultsRef = useRef<Record<string, string | null> | null>(null);
   useEffect(() => {
-    void useUserConfigStore.persist.rehydrate();
-    const legacy = readLegacyUserConfig(storageKey);
-    if (!Object.keys(useUserConfigStore.getState().themePreferences).length) {
-      useUserConfigStore.getState().setThemePreferences(readLegacyThemePreferences());
-    }
-    if (!useUserConfigStore.getState().activeMode) {
-      useUserConfigStore.getState().setActiveMode(legacy.mode ?? defaultTheme);
-      if (!useUserConfigStore.getState().user && legacy.user)
-        useUserConfigStore.getState().setUser(legacy.user);
-    }
-    completeUserConfigMigration();
+    if (!useThemeStore.persist.hasHydrated()) useThemeStore.persist.rehydrate();
     const root = document.documentElement;
     const defaults = defaultsRef.current ?? readAppearanceDefaults(root);
     defaultsRef.current = defaults;
     defaults.accent = accent;
     const apply = () => {
-      const resolved = resolveTheme(useUserConfigStore.getState().activeMode ?? defaultTheme);
+      const resolved = resolveTheme(useThemeStore.getState().activeMode ?? defaultTheme);
       setMode(resolved);
       root.dataset.theme = resolved;
       root.classList.toggle("dark", resolved === "dark");
@@ -98,21 +174,19 @@ export function ThemeProvider({
     };
     root.dataset.accent = accent;
     apply();
-    if (portfolioTheme) root.dataset.portfolioTheme = portfolioTheme;
-    else delete root.dataset.portfolioTheme;
-    const unsubscribe = useUserConfigStore.subscribe((state, previous) => {
-      if (
-        state.activeMode !== previous.activeMode ||
-        state.themePreferences !== previous.themePreferences
-      )
-        apply();
-    });
+    const chosenPortfolioTheme = useThemeStore.getState().themePreferences["portfolio-theme"];
+    if (!chosenPortfolioTheme) {
+      if (portfolioTheme) root.dataset.portfolioTheme = portfolioTheme;
+      else delete root.dataset.portfolioTheme;
+    }
+    const unsubscribe = useThemeStore.subscribe(apply);
     const media = window.matchMedia("(prefers-color-scheme: dark)");
     const syncStorage = (event: StorageEvent) => {
-      if (event.key !== USER_CONFIG_STORAGE_KEY && event.key !== null) return;
-      if (!event.newValue)
-        useUserConfigStore.setState({ activeMode: null, themePreferences: {}, user: null });
-      else void useUserConfigStore.persist.rehydrate();
+      if (
+        !accountPreferenceSession.active() &&
+        (event.key === themeStorage.name || event.key === null)
+      )
+        useThemeStore.persist.rehydrate();
     };
     media.addEventListener("change", apply);
     window.addEventListener("storage", syncStorage);
@@ -121,8 +195,7 @@ export function ThemeProvider({
       media.removeEventListener("change", apply);
       window.removeEventListener("storage", syncStorage);
     };
-  }, [accent, defaultTheme, portfolioTheme, storageKey]);
-  const toggle = () =>
-    useUserConfigStore.getState().setActiveMode(mode === "dark" ? "light" : "dark");
+  }, [accent, defaultTheme, portfolioTheme]);
+  const toggle = () => useThemeStore.getState().setActiveMode(mode === "dark" ? "light" : "dark");
   return <ThemeContext.Provider value={{ mode, toggle }}>{children}</ThemeContext.Provider>;
 }

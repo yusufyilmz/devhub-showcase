@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { urls } from "@shared/config/urls";
-import { Button } from "@shared/ui/button";
+import { StudioButton } from "@shared/ui/button";
 
 import { useAccountStatus, useBillingRequest } from "../provider/billing-context";
 import { AccountOverview, type AccountStatus } from "./account-overview";
@@ -11,21 +11,26 @@ import { AccountOverview, type AccountStatus } from "./account-overview";
 export function ChatSettings() {
   const { data, error, loading, refresh } = useAccountStatus();
   return (
-    <section aria-labelledby="portfolio-ai-settings-title">
-      <h2 id="portfolio-ai-settings-title">Portfolio AI features</h2>
+    <section
+      aria-labelledby="portfolio-ai-settings-title"
+      className="mt-7 border-t border-[var(--border)] pt-7"
+    >
+      <h2 className="mb-3 text-[22px] leading-[1.3] font-semibold" id="portfolio-ai-settings-title">
+        Portfolio AI features
+      </h2>
       <p>
         Assign Pro to your portfolio to use the private editing assistant. Visitor chat is a
         separate opt-in and uses only published portfolio information.
       </p>
-      <Button
-        className="studio-secondary"
+      <StudioButton
         disabled={loading}
         onClick={refresh}
+        tone="secondary"
         type="button"
         variant="outline"
       >
         Refresh status
-      </Button>
+      </StudioButton>
       {loading && <p role="status">Loading plan and usage…</p>}
       {!loading && data && (
         <>
@@ -49,7 +54,7 @@ function AssignmentControls({ data, refresh }: { data: AccountStatus; refresh: (
     setBusy(true);
     showError("");
     try {
-      const result = await request(urls.next.billing.root(), {
+      const result = await request(urls.billing.root(), {
         body: JSON.stringify({ chatEnabled, profileId }),
         headers: { "Content-Type": "application/json" },
         method: "PUT",
@@ -64,26 +69,26 @@ function AssignmentControls({ data, refresh }: { data: AccountStatus; refresh: (
   }
   return (
     <>
-      <Button
-        className="studio-secondary"
+      <StudioButton
         disabled={busy || (!assigned && billing.plan !== "pro")}
         onClick={() => configure(assigned ? null : profile.id, false)}
+        tone="secondary"
         type="button"
         variant="outline"
       >
         {assigned ? "Remove Pro assignment" : "Use Pro for my portfolio"}
-      </Button>
+      </StudioButton>
       <p>Removing the assignment disables both premium assistants. It does not reset usage.</p>
       {profile.id !== "main" && (
-        <Button
-          className="studio-secondary"
+        <StudioButton
           disabled={busy || (!enabled && billing.plan !== "pro")}
           onClick={() => configure(billing.plan === "pro" ? profile.id : null, !enabled)}
+          tone="secondary"
           type="button"
           variant="outline"
         >
           {enabled ? "Disable portfolio AI chat" : "Enable portfolio AI chat"}
-        </Button>
+        </StudioButton>
       )}
       {error && <p role="alert">{error}</p>}
     </>

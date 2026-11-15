@@ -9,7 +9,7 @@ const meta = {
     layout: "fullscreen",
   },
   tags: ["autodocs"],
-  title: "Components/Layout/PageShell",
+  title: "UI/Layout/Page Shell",
 } satisfies Meta<typeof PageShell>;
 
 export default meta;
@@ -23,7 +23,6 @@ export const Studio: Story = {
     documentLanguage: "en",
     embed: true,
     portfolioTheme: "studio",
-    storageKey: "storybook-document-shell",
   },
   render: (args) => (
     <PageShell {...args}>
@@ -42,7 +41,14 @@ export const PaperDark: Story = {
     ...Studio.args,
     appearance: { accent: "violet", defaultTheme: "dark" },
     portfolioTheme: "paper",
-    storageKey: "storybook-document-shell-paper",
+  },
+  render: Studio.render,
+};
+
+export const LightPaper: Story = {
+  args: {
+    ...PaperDark.args,
+    appearance: { accent: "emerald", defaultTheme: "light" },
   },
   render: Studio.render,
 };

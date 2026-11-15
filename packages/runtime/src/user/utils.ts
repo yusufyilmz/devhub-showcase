@@ -1,10 +1,10 @@
+import { env } from "@shared/env";
 import type { ComponentLogger } from "@shared/utils/client-logger";
 
 const readInitialFlag = () => {
-  let envValue: string | undefined;
-  if (typeof process !== "undefined") {
-    envValue = process.env.NEXT_PUBLIC_CHAT_V2_DEBUG ?? process.env.CHAT_V2_DEBUG;
-  }
+  const envValue =
+    env.NEXT_PUBLIC_CHAT_V2_DEBUG ??
+    (typeof window === "undefined" ? env.CHAT_V2_DEBUG : undefined);
 
   if (typeof envValue === "string") {
     return envValue.toLowerCase() === "true";

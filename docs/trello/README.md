@@ -1,5 +1,9 @@
 # Trello V2 Components - Complete Documentation
 
+## When to read
+
+Read this before changing the Trello board UI in `packages/trello`: boards, cards, lists, comments, or the board store. The package owns that surface. App routes and live API tokens stay outside it.
+
 ## 🎯 Overview
 
 This module provides a complete Trello-like interface built with **Pure UI Components** and a powerful **Zustand store**. The architecture follows a **framework-agnostic** pattern, making it easy to migrate to any UI library (MUI, Ant Design, Chakra UI, etc.).
@@ -35,7 +39,7 @@ import { Card, CardBody, CardFooter, CardHeader } from './components/ui/Card'
     <Heading level={3}>Card Title</Heading>
   </CardHeader>
   <CardBody>
-    <Typography>Card content goes here</Typography>
+    <Typography >Card content goes here</Typography>
   </CardBody>
   <CardFooter>
     <Button variant="default">Action</Button>
@@ -113,14 +117,14 @@ import { Column, Flex, Grid, Row, Sidebar, Stack } from './components/ui/Layout'
 
 // Flexible Layouts
 <Flex align="center" gap="md" justify="between" >
-  <Typography>Left content</Typography>
+  <Typography >Left content</Typography>
   <Button>Right action</Button>
 </Flex>
 
 // Stack (Vertical/Horizontal)
 <Stack gap="lg" padding="md">
-  <Typography>Item 1</Typography>
-  <Typography>Item 2</Typography>
+  <Typography >Item 1</Typography>
+  <Typography >Item 2</Typography>
 </Stack>
 
 <Stack horizontal gap="sm">
@@ -132,7 +136,7 @@ import { Column, Flex, Grid, Row, Sidebar, Stack } from './components/ui/Layout'
 <Row justify="between" align="center" gap="md">
   <Column gap="sm" flex="1">
     <Heading level={2}>Title</Heading>
-    <Typography>Description</Typography>
+    <Typography >Description</Typography>
   </Column>
   <Button>Action</Button>
 </Row>
@@ -146,7 +150,7 @@ import { Column, Flex, Grid, Row, Sidebar, Stack } from './components/ui/Layout'
 
 // Sidebar
 <Sidebar collapsed={false} width="280px">
-  <Typography>Sidebar content</Typography>
+  <Typography >Sidebar content</Typography>
 </Sidebar>
 ```
 
@@ -186,9 +190,9 @@ import { Heading, Label, Text } from './components/ui/Typography'
 </Heading>
 
 // Text Variants
-<Typography size="l" weight="bold">Large Bold Text</Typography>
-<Typography color="#666" size="s" >Small Gray Text</Typography>
-<Typography italic underline>Styled Text</Typography>
+<Typography  size="l" weight="bold">Large Bold Text</Typography>
+<Typography  color="#666" size="s" >Small Gray Text</Typography>
+<Typography  italic underline>Styled Text</Typography>
 
 // Labels/Badges
 <Label color="#0079bf" small>
@@ -209,14 +213,14 @@ import { BoardContainer, Container, Header, ListContainer, Panel } from './compo
     <Heading level={1}>Page Title</Heading>
   </Header>
   <Panel>
-    <Typography>Panel content with background</Typography>
+    <Typography >Panel content with background</Typography>
   </Panel>
 </Container>
 
 // Specialized Containers
 <BoardContainer>
   <ListContainer>
-    <Typography>List content</Typography>
+    <Typography >List content</Typography>
   </ListContainer>
 </BoardContainer>
 ```
@@ -283,7 +287,7 @@ import { Modal, ModalFooter } from './components/ui/Modal'
   size="m"
   title="Modal Title"
 >
-  <Typography>Modal content goes here</Typography>
+  <Typography >Modal content goes here</Typography>
 </Modal>
 
 // Large Modal with Footer
@@ -344,7 +348,7 @@ function App() {
 // ✅ Next.js App Router page with SSR
 // src/app/(utils)/trello/board/[boardId]/page.tsx
 
-import { TrelloBoardPageSSR } from "@/modules/trello/v2/pages/TrelloBoardPageSSR";
+import { TrelloBoardPageSSR } from "@/shared/trello/v2/pages/TrelloBoardPageSSR";
 
 export default async function TrelloBoardPage({ params }: { params: { boardId: string } }) {
   // Fetch board data server-side
@@ -822,8 +826,8 @@ All components accept these base props:
 **Convert any article to a Trello task** with full metadata mapping and intelligent content transformation.
 
 ```tsx
-import { articleSelectors, useArticleStore } from "@/modules/article/store/articleStore";
-import { ArticleToTrelloButton } from "@/modules/trello/v2/components/integration";
+import { articleSelectors, useArticleStore } from "@/shared/article/store/articleStore";
+import { ArticleToTrelloButton } from "@/shared/trello/v2/components/integration";
 
 function ArticleContent() {
   const currentArticle = useArticleStore(articleSelectors.currentArticle);

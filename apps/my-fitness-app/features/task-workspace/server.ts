@@ -1,11 +1,10 @@
-import { database } from "@shared/services/db/client";
-import { loadLegacyWorkspace } from "@shared/services/fitness";
-import { WorkspaceRepository, WorkspaceService } from "@shared/services/workspace";
+import { database } from "@shared/lib/db/client";
+import { loadV1Workspace } from "@shared/lib/db/migrations/load-v1-workspace";
+import { WorkspaceRepository, WorkspaceService } from "@shared/lib/workspace";
+import { starterWorkspace } from "@shared/lib/workspace-defaults";
 
-import { starterWorkspace } from "@/features/task-workspace/starter";
+import { env } from "@/env";
 import { configured, fitnessUser, requestIdentity } from "@/lib/auth";
-
-import { env } from "../../env";
 
 export class SignInRequired extends Error {}
 export class SetupRequired extends Error {}
@@ -19,7 +18,7 @@ export async function workspaceContext(request: Request) {
     throw new SignInRequired("Sign in with a confirmed account to open your workspace.");
   const repository = new WorkspaceRepository(
     database(),
-    async (id) => (await loadLegacyWorkspace(client, id)) ?? starterWorkspace(),
+    async (id) => (await loadV1Workspace(client, id)) ?? starterWorkspace(),
   );
   return { service: new WorkspaceService(repository), userId: account.id };
 }

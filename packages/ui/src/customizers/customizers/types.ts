@@ -2,6 +2,8 @@ import type * as React from "react";
 
 import type { VariantProps } from "class-variance-authority";
 
+import type { themeOptions } from "@shared/config/theme";
+
 import type { customizerVariants } from "./styles";
 
 export interface ComponentCustomizerProps
@@ -19,11 +21,11 @@ export interface ComponentCustomizerProps
 
 export type ThemeOption = "light" | "dark" | "system";
 
-export type BrandOption = (typeof themePreferenceOptions.brand)[number];
+export type BrandOption = (typeof themeOptions.brand)[number];
 
-export type ShadowOption = (typeof themePreferenceOptions.shadow)[number];
+export type ShadowOption = (typeof themeOptions.shadow)[number];
 
-export type SpacingOption = (typeof themePreferenceOptions.spacing)[number];
+export type SpacingOption = (typeof themeOptions.spacing)[number];
 
 export type ScaleOption = "90" | "95" | "100" | "105" | "110";
 
@@ -52,5 +54,3 @@ export type ThemeCustomizerOptions = {
   options: SelectOption[];
   onChange: (value: string) => void;
 };
-
-import type { themePreferenceOptions } from "@shared/runtime/user";

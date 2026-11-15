@@ -12,7 +12,7 @@ import type {
   UpdateCardOptions,
 } from "../types";
 
-const boardUrls = urls.next.boards;
+const boardUrls = urls.boards;
 
 export class BoardService {
   private baseUrl: string;

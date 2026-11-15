@@ -1,4 +1,7 @@
+import type { CSSProperties } from "react";
 import { forwardRef } from "react";
+
+import { cn } from "cn";
 
 import {
   accentGradientFor,
@@ -68,26 +71,26 @@ export const Paper = forwardRef<HTMLDivElement, PaperProps>(
 
     return (
       <div
-        className={classes}
-        onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => {
-          if (enableHover) {
-            e.currentTarget.style.transform =
-              "scale(var(--hover-scale)) translateY(var(--hover-translate-y)) rotate(var(--hover-rotation))";
-          }
-          props.onMouseEnter?.(e);
-        }}
-        onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
-          if (enableHover) {
-            e.currentTarget.style.transform = "";
-          }
-          props.onMouseLeave?.(e);
-        }}
-        ref={ref}
-        style={style}
         {...props}
+        className={cn(
+          enableFade &&
+            "motion-safe:animate-[card-entrance_600ms_ease-out_var(--paper-fade-delay)_backwards]",
+          classes,
+        )}
+        ref={ref}
+        style={
+          {
+            "--paper-glow": glowColor ?? "color-mix(in srgb, var(--primary) 20%, transparent)",
+            ...style,
+          } as CSSProperties
+        }
       >
         {showAccent && (
-          <div className={paperStyles.element1} style={paperInlineStyle1(accentGradient)} />
+          <div
+            aria-hidden="true"
+            className={paperStyles.element1}
+            style={paperInlineStyle1(accentGradient)}
+          />
         )}
         {children}
       </div>

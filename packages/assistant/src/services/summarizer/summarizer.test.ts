@@ -8,7 +8,7 @@ describe("summarizeQuestions", () => {
   it("keeps recent visitor questions in order within the history budget", () => {
     const history = summarizeQuestions(
       [
-        { content: "old".repeat(2500), role: ChatRole.User },
+        { content: "old ".repeat(1300).trimEnd(), role: ChatRole.User },
         { content: "What did you build?", role: ChatRole.User },
         { content: "A portfolio.", role: ChatRole.Assistant },
         { content: "How did you test it?", role: ChatRole.User },

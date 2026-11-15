@@ -1,12 +1,5 @@
-import type { CSSProperties } from "react";
-
-import type { ProgressInlineStyle1Values } from "./types";
-
 export const progressStyles = {
-  element1: "bg-primary h-full w-full flex-1 transition-all",
-  progress: "bg-primary/20 relative h-2 w-full overflow-hidden rounded-full",
+  indicator: "h-full rounded-full bg-primary motion-safe:transition-[width]",
+  progress:
+    "relative h-1.5 w-full overflow-hidden rounded-full bg-foreground/10 data-[state=indeterminate]:bg-[repeating-linear-gradient(135deg,var(--primary)_0_2px,transparent_2px_6px)]",
 } as const;
-
-export function progressInlineStyle1(...values: ProgressInlineStyle1Values): CSSProperties {
-  return { transform: values[0] };
-}

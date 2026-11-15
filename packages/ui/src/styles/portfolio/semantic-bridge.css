@@ -1,7 +1,6 @@
-/* Product and published pages share the same paired RGB surfaces and ink. */
-:root[data-platform="mydevstudio"][data-theme],
-:root[data-portfolio-theme][data-theme],
-:root[data-portfolio-theme][data-theme][data-brand] {
+/* Studio surfaces stay in place until a brand palette is chosen. */
+:root[data-platform="mydevstudio"][data-theme]:not([data-brand]),
+:root[data-portfolio-theme][data-theme]:not([data-brand]) {
   --background: rgb(var(--bg-rgb));
   --foreground: rgb(var(--text-rgb));
   --card: rgb(var(--surface-rgb));

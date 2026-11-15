@@ -1,6 +1,8 @@
 import Stripe from "stripe";
 import { z } from "zod";
 
+import { env } from "@shared/env";
+
 export function stripeConfiguration() {
   const input = z
     .object({
@@ -12,12 +14,12 @@ export function stripeConfiguration() {
       webhook: z.string().startsWith("whsec_"),
     })
     .parse({
-      chat: process.env.STRIPE_PRO_CHAT_LIMIT,
-      editor: process.env.STRIPE_PRO_EDITOR_LIMIT,
-      key: process.env.STRIPE_SECRET_KEY,
-      origin: process.env.NEXT_PUBLIC_SITE_URL,
-      price: process.env.STRIPE_PRO_PRICE_ID,
-      webhook: process.env.STRIPE_WEBHOOK_SECRET,
+      chat: env.STRIPE_PRO_CHAT_LIMIT,
+      editor: env.STRIPE_PRO_EDITOR_LIMIT,
+      key: env.STRIPE_SECRET_KEY,
+      origin: env.NEXT_PUBLIC_SITE_URL,
+      price: env.STRIPE_PRO_PRICE_ID,
+      webhook: env.STRIPE_WEBHOOK_SECRET,
     });
   const url = new URL(input.origin);
   if (url.protocol !== "https:" && url.hostname !== "localhost")

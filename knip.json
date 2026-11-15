@@ -1,7 +1,32 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
+  "rules": {
+    "binaries": "warn",
+    "cycles": "error",
+    "dependencies": "error",
+    "devDependencies": "error",
+    "duplicates": "error",
+    "exports": "error",
+    "files": "error",
+    "nsExports": "warn",
+    "nsTypes": "warn",
+    "types": "error",
+    "unlisted": "error",
+    "unresolved": "error"
+  },
   "tags": ["-lintignore"],
   "workspaces": {
-    ".": {}
+    ".": {},
+    "apps/*": {
+      "includeEntryExports": true
+    },
+    "packages/*": {
+      "includeEntryExports": true,
+      "includeSubpathExports": true
+    },
+    "tools/*": {
+      "includeEntryExports": true,
+      "includeSubpathExports": true
+    }
   }
 }

@@ -7,14 +7,16 @@ const paths = [
   "apps/storybook-app/package.json",
   "packages/config/package.json",
   "packages/lib/package.json",
+  "packages/utils/package.json",
   "packages/billing/package.json",
   "packages/assistant/package.json",
   "packages/cache/package.json",
   "packages/ui/package.json",
   "packages/auth/package.json",
-  "packages/cv/package.json",
+  "packages/templates/package.json",
   "pnpm-workspace.yaml",
-  "playwright.config.ts",
+  "apps/my-dev-studio/playwright.config.ts",
+  "apps/my-fitness-app/playwright.config.ts",
   ".github/workflows/ci.yml",
 ];
 const missing = [

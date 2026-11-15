@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { SidebarInset, SidebarProvider } from "../sidebar/Sidebar";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "../sidebar/Sidebar";
 import { AppSidebar } from "./AppSidebar";
 
 const providerStyles = {
@@ -14,22 +14,28 @@ const meta = {
   decorators: [
     (Story) => (
       <SidebarProvider style={providerStyles}>
-        <div className="flex min-h-screen bg-background text-foreground">
-          <Story />
-          <SidebarInset>
-            <div className="flex flex-1 items-center justify-center bg-muted/20 p-6">
-              <p className="text-muted-foreground text-sm">Sidebar content preview area</p>
-            </div>
-          </SidebarInset>
-        </div>
+        <Story />
+        <SidebarInset>
+          <header className="flex items-center gap-xs border-b border-sidebar-border/60 px-md py-s">
+            <SidebarTrigger className="rounded-md focus-visible:outline-2 focus-visible:outline-ring" />
+            <span className="text-sm font-medium">Workspace</span>
+          </header>
+          <section className="p-md sm:p-lg">
+            <h1 className="text-xl font-semibold tracking-tight">Projects</h1>
+            <p className="mt-xs max-w-prose text-sm text-muted-foreground">
+              Review your recent work and manage the projects in this workspace.
+            </p>
+          </section>
+        </SidebarInset>
       </SidebarProvider>
     ),
   ],
   parameters: {
     layout: "fullscreen",
+    pageCanvas: true,
   },
   tags: ["autodocs"],
-  title: "Layout/AppSidebar",
+  title: "UI/Navigation/App Sidebar",
 } satisfies Meta<typeof AppSidebar>;
 
 export default meta;

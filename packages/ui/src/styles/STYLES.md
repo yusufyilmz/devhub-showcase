@@ -1,22 +1,12 @@
 # `@shared/ui` styles
 
-**Canonical overview:** [DESIGN.md — Stylesheet architecture](../../../DESIGN.md#stylesheet-architecture) at the repo root.
+**Canonical overview:** [DESIGN.md — Stylesheet architecture](../../DESIGN.md#stylesheet-architecture) at the repo root.
 
-Use this file when you are already in `packages/ui/src/styles` and need a quick pointer:
+This folder keeps the shared token and foundation layers:
 
 - **Storybook / tokens only:** `@shared/ui/foundation.css`
-- **Full app:** `@shared/ui/app.css` or `@shared/ui/globals.css`
+- **Full app:** `@shared/ui/app.css` (`@shared/ui/globals.css` is the same file)
 - **Tokens:** `tokens/` (aggregator: `tokens/index.css`, export `@shared/ui/shadcn.css`)
-- **Component styles:** colocated with their owning UI domain: `../portfolio/portfolio.css`,
-  `../sections/sections.css`, `../navigation/chrome.css`, `../display/chat/*.css`,
-  `../sections/home-section/examples.css`, and `../forms/login-form/auth-login.css`.
-- **Global bundle:** `portfolio/bundle.css` loads layout, presets and the semantic bridge only.
-- **Loading:** components import their own styles. Global entry points do not load
-  portfolio skins, section skins, navigation, chat or login CSS.
-- **Scope:** these remain ordinary CSS files with globally scoped selectors.
-  Component-owned imports control ownership/loading; use CSS Modules if selector
-  isolation is needed.
-- **Shared control styles:** `../cards/surfaces.css`, imported by cards and controls.
-- **Centralized styles:** tokens, themes, layout CSS and global resets.
+- **Foundation:** `foundation/` (theme aliases, platform RGB, product tokens)
 
-Root-level `*.css` files beside this document are compatibility shims; see DESIGN.md for the mapping.
+Component, portfolio, chat, fitness, and Storybook demo styles live next to the components that load them. The app entry still pulls in `src/styles/portfolio/bundle.css`. Shared control surfaces live in `src/cards/surfaces.css`. Fitness styles live in `apps/my-fitness-app/app/fitness.css`. The Storybook demo shell lives in `apps/storybook-app/src/demo.css` and `demo-globals.css`.

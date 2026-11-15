@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
-import { dateSchema } from "@shared/services/types";
+import { dateSchema } from "@shared/lib/types";
 export function dayHref(date: string, taskId?: string) {
   const query = new URLSearchParams({ date, view: "day" });
   if (taskId) query.set("task", taskId);

@@ -30,7 +30,7 @@ export function useGoogleImport() {
   useEffect(() => {
     mounted.current = true;
     const controller = new AbortController();
-    request(urls.next.studio.googleProfile(), { cache: "no-store", signal: controller.signal })
+    request(urls.studio.googleProfile(), { cache: "no-store", signal: controller.signal })
       .then(async (response) => {
         if (!response.ok) throw new Error("Unavailable");
         return setupSchema.parse(await response.json());
@@ -136,7 +136,7 @@ async function readSelectedDetails(
   categories: GoogleProfileCategory[],
   signal: AbortSignal,
 ) {
-  const response = await request(urls.next.studio.googleProfile(), {
+  const response = await request(urls.studio.googleProfile(), {
     body: JSON.stringify({ categories, token }),
     headers: { "Content-Type": "application/json" },
     method: "POST",

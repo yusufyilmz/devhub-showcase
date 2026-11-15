@@ -3,7 +3,8 @@ import { z } from "zod";
 import { PortfolioChatModel } from "@shared/assistant";
 
 import { sameOrigin } from "@/features/admin/admin-auth";
-import { requireLegacyChat } from "@/features/chat/portfolio-chat";
+
+import { requireMainPortfolioChat } from "./_access";
 
 export const maxDuration = 60;
 const inputSchema = z.object({
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
       chunks.push(part.value);
     }
     const input = inputSchema.parse(JSON.parse(Buffer.concat(chunks).toString("utf8")));
-    const { knowledge } = await requireLegacyChat(input.username, input.sessionId);
+    const { knowledge } = await requireMainPortfolioChat(input.username, input.sessionId);
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
       cancel() {

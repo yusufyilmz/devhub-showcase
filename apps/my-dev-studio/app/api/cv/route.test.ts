@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { ProfileAccessError } from "@shared/services/profile";
+import { ProfileAccessError } from "@shared/lib/profile";
 
 const mocks = vi.hoisted(() => ({
   render: vi.fn(),
@@ -9,7 +9,7 @@ const mocks = vi.hoisted(() => ({
 vi.mock("@/features/admin/admin-auth", () => ({
   requireWorkspace: mocks.workspace,
 }));
-vi.mock("@/features/portfolio/cv/cv-response", () => ({ cvResponse: mocks.render }));
+vi.mock("./_response", () => ({ cvResponse: mocks.render }));
 
 import { GET } from "./route";
 

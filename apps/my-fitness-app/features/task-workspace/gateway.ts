@@ -1,12 +1,11 @@
 import { urls } from "@shared/config/urls";
+import type { Workspace } from "@shared/lib/types";
+import type { WorkspaceSnapshot } from "@shared/lib/workspace";
+import { demoWorkspace } from "@shared/lib/workspace-defaults";
 import type { NotificationMessage } from "@shared/notifications";
-import type { Workspace } from "@shared/services/types";
-import type { WorkspaceSnapshot } from "@shared/services/workspace";
 
 import { subscribeFitnessNotifications } from "@/features/notifications/browser";
 import { authorizationHeaders } from "@/lib/browser-session";
-
-import { demoWorkspace } from "./starter";
 export interface WorkspaceGateway {
   load(signal?: AbortSignal): Promise<WorkspaceSnapshot>;
   readonly readOnly: boolean;
@@ -31,7 +30,7 @@ export class HttpWorkspaceGateway implements WorkspaceGateway {
     return subscribeFitnessNotifications(handlers);
   }
   async load(signal?: AbortSignal) {
-    const response = await fetch(urls.next.fitness.state(), {
+    const response = await fetch(urls.fitness.state(), {
       cache: "no-store",
       credentials: "same-origin",
       headers: await this.auth(),
@@ -58,7 +57,7 @@ export class HttpWorkspaceGateway implements WorkspaceGateway {
   async save(state: Workspace, revision: number) {
     const workspaceId = this.workspaceId;
     if (!workspaceId) throw new Error("Sign in to make changes to your workspace.");
-    const response = await fetch(urls.next.fitness.state(), {
+    const response = await fetch(urls.fitness.state(), {
       body: JSON.stringify({ revision, state, workspaceId }),
       credentials: "same-origin",
       headers: { "Content-Type": "application/json", ...(await this.auth()) },
@@ -86,4 +85,11 @@ export class DemoWorkspaceGateway implements WorkspaceGateway {
   async save(): Promise<number> {
     throw new Error("The demo is read-only.");
   }
+}
+
+export async function assistantRequest(input: RequestInfo | URL, options?: RequestInit) {
+  const headers = new Headers(options?.headers);
+  for (const [name, value] of Object.entries(await authorizationHeaders()))
+    headers.set(name, value);
+  return fetch(input, { ...options, headers });
 }

@@ -5,12 +5,12 @@ const mocks = vi.hoisted(() => ({
   render: vi.fn(),
   resolve: vi.fn(),
 }));
-vi.mock("@shared/services/published-profile", () => ({
+vi.mock("@shared/lib/published-profile", () => ({
   readPortfolioAccessStatus: vi.fn().mockResolvedValue(null),
   readPublicProfileByUsername: mocks.publicRead,
   resolvePublishedUsername: mocks.resolve,
 }));
-vi.mock("@/features/portfolio/cv-response", () => ({ cvResponse: mocks.render }));
+vi.mock("../../api/cv/_response", () => ({ cvResponse: mocks.render }));
 
 import { GET } from "./route";
 

@@ -1,5 +1,6 @@
-import { cvResponse } from "@/features/portfolio/cv/cv-response";
-import { getPortfolioExample } from "@/features/studio";
+import { getPortfolioExample } from "@shared/assistant/examples-data";
+
+import { cvResponse } from "../../../../api/cv/_response";
 
 export const runtime = "nodejs";
 

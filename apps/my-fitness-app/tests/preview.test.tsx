@@ -3,9 +3,9 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { test } from "vitest";
 
-import { seedWorkspace } from "@shared/services/db/seed";
+import { seedWorkspace } from "@shared/lib/db/seed";
+import { ScheduleService } from "@shared/lib/schedule";
 
-import { ScheduleService } from "../../../packages/services/src/schedule";
 import Preview from "../app/preview/page";
 import { TaskTree } from "../features/task-tree/task-tree";
 import { WeeklyPlanner } from "../features/weekly-planner/weekly-planner";

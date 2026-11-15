@@ -54,8 +54,8 @@ export function useAccountStatus() {
     setLoading(true);
     showError("");
     Promise.all([
-      request(urls.next.studio.profile(), { cache: "no-store", signal: controller.signal }),
-      request(urls.next.billing.root(), { cache: "no-store", signal: controller.signal }),
+      request(urls.studio.profile(), { cache: "no-store", signal: controller.signal }),
+      request(urls.billing.root(), { cache: "no-store", signal: controller.signal }),
     ])
       .then(async ([profile, billing]) => {
         if (!profile.ok || !billing.ok) throw new Error("Unavailable");

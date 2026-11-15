@@ -10,11 +10,10 @@ The Next.js app is `apps/my-dev-studio` (`my-dev-studio`). Shared libraries use 
 | `packages/ui`             | Controls, sections, studio and portfolio surfaces, theme, notifications, and global CSS |
 | `packages/config`         | Profile types, themes, section registry, and custom-section metadata                    |
 | `packages/content`        | Page copy, including the home FAQ                                                       |
-| `packages/lib`            | Zod validation, domain services, repositories, and Supabase persistence                 |
 | `packages/auth`           | Supabase session helpers and Google sign-in                                             |
-| `packages/cv`             | CV PDF rendering                                                                        |
+| `packages/assistant`      | CV PDF rendering                                                                        |
 | `packages/assistant`      | Portfolio and editing assistants                                                        |
-| `packages/cache`          | Cache integrations                                                                      |
+| `packages/lib`            | Shared services, repositories, validation, database clients and Redis cache             |
 | `packages/runtime`        | Shared runtime helpers, including notifications                                         |
 | `packages/utils`          | Logging and other shared utilities                                                      |
 | `packages/trello`         | Trello board UI                                                                         |
@@ -30,7 +29,7 @@ App features, and what stays out of shared packages:
 | ------------ | ------------------------------------------------------------------------------- |
 | `admin`      | Workspace auth, session handlers, Google profile import, owner edit link        |
 | `billing`    | Stripe gateway, billing client, pricing, premium configuration, account status  |
-| `chat`       | Visitor chat and legacy portfolio chat access                                   |
+| `chat`       | Visitor chat and main portfolio chat access                                     |
 | `home`       | Home session links                                                              |
 | `management` | Managed portfolios and their API helpers                                        |
 | `platform`   | Site URL, platform metadata, page presentation, document request client         |

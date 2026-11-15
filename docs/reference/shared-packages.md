@@ -71,7 +71,7 @@ Cards, buttons and timeline remain available through the older `@shared/ui/compo
 
 `pnpm check`, `pnpm test`, `pnpm typecheck` and `pnpm build` include the new packages through the workspace/Turbo configuration. Tests cover the auth handlers with a second app's routes, invalid origins, unconfirmed identity, failed provisioning, password errors and session cleanup. Components tests use independent login routes and workout models, alongside the existing portfolio/card and RLS tests.
 
-`apps/my-fitness-app` is a separate Next.js app with its own routes and Vercel project. Its tables live in `supabase/migrations` and reference the same `auth.users` rows as portfolio profiles. Light and dark mode uses the shared `buzzy-userconfig-store` record. Google and email sign-in use `createAuthHandlers` and the shared Supabase cookie session. Fitness does not run portfolio provisioning after sign-in. A later app that reuses `@shared/auth` still needs its own Next.js configuration, scripts, deployment scope, and data policies, then a verified sign-in and private-data flow.
+`apps/my-fitness-app` is a separate Next.js app with its own routes and Vercel project. Its tables live in `supabase/migrations` and reference the same `auth.users` rows as portfolio profiles. Light and dark mode uses the shared `userconfig-store` record. Google and email sign-in use `createAuthHandlers` and the shared Supabase cookie session. Fitness does not run portfolio provisioning after sign-in. A later app that reuses `@shared/auth` still needs its own Next.js configuration, scripts, deployment scope, and data policies, then a verified sign-in and private-data flow.
 
 ## Sortable lists
 

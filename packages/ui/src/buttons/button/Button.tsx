@@ -1,5 +1,3 @@
-import "../../cards/surfaces.css";
-
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { Slot } from "@radix-ui/react-slot";
 
@@ -35,7 +33,14 @@ function Button({
   children,
   ...props
 }: ButtonOptions) {
-  const classes = buttonClasses({ className, size, variant });
+  const classes = buttonClasses({
+    "aria-busy": props["aria-busy"],
+    "aria-disabled": props["aria-disabled"],
+    className,
+    disabled: props.disabled,
+    size,
+    variant,
+  });
   const content = (
     <>
       {startIcon && !asChild ? <ButtonIcon icon={startIcon} position="inline-start" /> : null}

@@ -1,6 +1,8 @@
 import { type ReactNode, useLayoutEffect } from "react";
 
-import { NotificationProvider, StudioRequestProvider } from "../../../packages/ui/src/providers";
+import { NotificationProvider, StudioRequestProvider } from "@shared/ui/providers";
+
+import { SPACING_STYLES } from "../../../packages/ui/src/theme/types";
 
 type ThemeGlobals = Record<string, unknown>;
 
@@ -8,14 +10,21 @@ type ThemeGlobals = Record<string, unknown>;
 export function ThemePreview({
   globals,
   children,
+  fullBleed = false,
 }: {
   globals: ThemeGlobals;
   children: ReactNode;
+  fullBleed?: boolean;
 }) {
   const brand = String(globals.brand ?? "white");
   const mode = globals.mode === "dark" ? "dark" : "light";
   const radius = String(globals.radius ?? "base");
-  const spacing = String(globals.spacing ?? "comfortable");
+  const requestedSpacing = globals.spacing;
+  const spacing =
+    SPACING_STYLES.find((preset) => preset === requestedSpacing) ??
+    (["cozy", "extra", "relaxed", "wide"].includes(String(requestedSpacing))
+      ? "spacious"
+      : "comfortable");
   useLayoutEffect(() => {
     const root = document.documentElement;
     const attributes = {
@@ -40,7 +49,11 @@ export function ThemePreview({
   }, [brand, mode, radius, spacing]);
   return (
     <div
-      className="min-h-screen bg-background p-lg text-foreground"
+      className={
+        fullBleed
+          ? "min-h-screen bg-background text-foreground"
+          : "min-h-screen bg-background p-lg text-foreground"
+      }
       data-brand={brand}
       data-radius={radius}
       data-spacing={spacing}

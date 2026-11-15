@@ -9,7 +9,6 @@ import { Toggle } from "./Toggle";
 const meta: Meta<typeof Toggle> = {
   args: {
     disabled: false,
-    pressed: false,
     size: "default",
     variant: "default",
   },
@@ -38,7 +37,7 @@ const meta: Meta<typeof Toggle> = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  title: "UI/Toggle",
+  title: "UI/Buttons/Toggle",
 };
 
 export default meta;

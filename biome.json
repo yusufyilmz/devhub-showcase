@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.6.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.6.5/schema.json",
   "assist": {
     "actions": {
       "preset": "all",
@@ -61,9 +61,11 @@
       "!!**/playwright-report",
       "!!**/test-results",
       "!!**/generated",
+      "!**/CATALOG.md",
       "!**/next-env.d.ts",
       "!**/*.generated.*",
-      "!**/*.gen.*"
+      "!**/*.gen.*",
+      "!CLAUDE.md"
     ],
     "maxSize": 1048576
   },
@@ -201,7 +203,7 @@
         "noGlobalEval": "error"
       },
       "style": {
-        "noDefaultExport": "warn",
+        "noDefaultExport": "off",
         "noInferrableTypes": "warn",
         "noNamespace": "off",
         "noNegationElse": "off",
@@ -258,7 +260,7 @@
         "noDuplicateClassMembers": "error",
         "noDuplicateObjectKeys": "error",
         "noDuplicateParameters": "error",
-        "noEmptyBlockStatements": "warn",
+        "noEmptyBlockStatements": "off",
         "noEmptyInterface": "error",
         "noEmptySource": "error",
         "noEvolvingTypes": "warn",
@@ -340,6 +342,16 @@
       }
     },
     {
+      "includes": ["**/index.ts"],
+      "linter": {
+        "rules": {
+          "performance": {
+            "noReExportAll": "off"
+          }
+        }
+      }
+    },
+    {
       "includes": ["**/*.stories.*"],
       "linter": {
         "rules": {
@@ -364,6 +376,25 @@
           },
           "suspicious": {
             "noConsole": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["tools/**"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noExcessiveCognitiveComplexity": "off",
+            "noVoid": "off"
+          },
+          "style": {
+            "noNonNullAssertion": "off"
+          },
+          "suspicious": {
+            "noConsole": "off",
+            "noExplicitAny": "off",
+            "noUndeclaredEnvVars": "off"
           }
         }
       }

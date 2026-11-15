@@ -1,4 +1,8 @@
-export type { ServerResponse } from "./api";
+export { dateKey, dateLabel, monday, shiftDate } from "@shared/utils/date";
+export type { ServerResponse } from "@shared/utils/types";
+
+export type { Database, Json } from "../db/generated/database.types";
+export * from "../schemas";
 export type {
   ChatCategoryType,
   ChatMessage,
@@ -8,11 +12,12 @@ export type {
   CVChatMessage,
   ReferralMessage,
   ReferralQuestionCategory,
-} from "./chat";
-export { validReferralCategories } from "./chat";
+} from "./chat/index";
+export { validReferralCategories } from "./chat/index";
 export { ChatRole } from "./chat/roles";
-export type { PageResources } from "./resources";
-export { ResourceService } from "./resources";
+export * from "./nutrition";
+export type { PageResources } from "./portfolio/resources";
+export { ResourceService } from "./portfolio/resources";
 export type {
   Achievement,
   Achievements,
@@ -40,6 +45,7 @@ export type {
   Skill,
   SkillRow,
   SupabaseDbClient,
-} from "./supabase";
-export { ReviewState } from "./supabase";
-export type { Database, Json } from "./supabase/database.types";
+} from "./supabase/index";
+export { ReviewState } from "./supabase/index";
+export * from "./task";
+export * from "./workspace";

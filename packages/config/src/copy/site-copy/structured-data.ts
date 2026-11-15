@@ -13,5 +13,8 @@ export const structuredData = {
   name: profile.name,
   sameAs: [profile.linkedin, profile.github],
   url: profile.website,
-  worksFor: { "@type": "Organization", name: "dLocal" },
+  worksFor: {
+    "@type": "Organization",
+    name: profile.experiences[0]?.company ?? "",
+  },
 };

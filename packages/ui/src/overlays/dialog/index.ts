@@ -1,3 +1,4 @@
+export { GalleryLightbox, type GalleryLightboxItem } from "../gallery-lightbox/GalleryLightbox";
 export {
   Dialog,
   DialogClose,
@@ -10,4 +11,3 @@ export {
   DialogTitle,
   DialogTrigger,
 } from "./Dialog";
-export { GalleryLightbox, type GalleryLightboxItem } from "./GalleryLightbox";

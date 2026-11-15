@@ -5,9 +5,7 @@ import { useCallback, useState } from "react";
 
 import { NotificationContext, type NotificationType } from "@shared/runtime/notifications";
 
-import { Button as LibraryButton } from "../buttons/button/Button";
-import { Alert, AlertDescription } from "../feedback/alert";
-import { notificationProviderStyles } from "./styles";
+import { SnackbarNotification } from "../feedback/notification";
 import type { NotificationProviderProps } from "./types";
 
 export const NotificationProvider: React.FC<NotificationProviderProps> = ({ children }) => {
@@ -49,22 +47,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
       }}
     >
       {children}
-      {notification.open && (
-        <Alert
-          className={notificationProviderStyles.element1}
-          variant={notification.severity === "error" ? "destructive" : "default"}
-        >
-          <AlertDescription>{notification.message}</AlertDescription>
-          <LibraryButton
-            className={notificationProviderStyles.element2}
-            onClick={handleClose}
-            type="button"
-            variant="unstyled"
-          >
-            Close
-          </LibraryButton>
-        </Alert>
-      )}
+      <SnackbarNotification {...notification} onClose={handleClose} />
     </NotificationContext.Provider>
   );
 };

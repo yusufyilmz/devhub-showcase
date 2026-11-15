@@ -1,4 +1,4 @@
-import { publicationSchedule } from "@/features/portfolio/publication/schedule-api";
+import { publicationSchedule } from "./_handlers";
 
 async function schedule(request: Request) {
   return publicationSchedule(request);

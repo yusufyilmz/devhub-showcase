@@ -1,5 +1,7 @@
 "use client";
 
+import { ChevronDown } from "lucide-react";
+
 import { Button } from "../../buttons/button";
 import { Card } from "../../cards";
 import type { SectionItemCardOptions } from "./types";
@@ -12,7 +14,10 @@ export function SectionItemCard({
 }: SectionItemCardOptions) {
   const content = accordion ? (
     <details>
-      <summary>{item.title}</summary>
+      <summary>
+        {item.title}
+        <ChevronDown aria-hidden="true" size={16} />
+      </summary>
       <div>{item.content}</div>
     </details>
   ) : (
@@ -64,6 +69,7 @@ export function SectionItemCard({
     default:
       return (
         <Card
+          className={accordion ? "section-disclosure-card" : "section-item-card"}
           interaction={accordion ? "static" : "lift"}
           layout="plain"
           surface={surface}

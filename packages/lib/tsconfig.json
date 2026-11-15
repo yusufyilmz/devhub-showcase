@@ -1,11 +1,8 @@
 {
   "compilerOptions": {
-    "paths": {
-      "@shared/lib/*": ["./src/*"]
-    },
     "types": ["node"]
   },
   "exclude": ["node_modules", "dist"],
-  "extends": "@shared/typescript-config/base.json",
+  "extends": "@shared/typescript-config/library.json",
   "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

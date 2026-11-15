@@ -4,8 +4,8 @@ import { Tag } from "./Tag";
 
 function Example({ width = 560 }: { width?: number }) {
   return (
-    <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
-      <div className="flex gap-2">
+    <div className="mx-auto w-full" style={{ maxWidth: width }}>
+      <div className="flex flex-wrap items-center gap-s">
         <Tag label="Design" />
         <Tag label="Published" variant="success" />
         <Tag label="Draft" variant="warning" />
@@ -13,11 +13,34 @@ function Example({ width = 560 }: { width?: number }) {
     </div>
   );
 }
-const meta = { component: Example, tags: ["autodocs"], title: "UI/tag" } satisfies Meta<
-  typeof Example
->;
+const meta = {
+  component: Example,
+  tags: ["autodocs"],
+  title: "UI/Feedback/Tag",
+} satisfies Meta<typeof Example>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const Narrow: Story = { args: { width: 320 } };
 export const Wide: Story = { args: { width: 960 } };
+
+export const Variants: Story = {
+  render: () => (
+    <div className="mx-auto flex max-w-sm flex-wrap items-center gap-s">
+      <Tag label="Portfolio" size="l" variant="brand" />
+      <Tag label="Needs review" size="s" variant="info" />
+      <Tag label="Unavailable" variant="danger" />
+      <Tag label="Published" variant="success" />
+      <Tag label="Draft" variant="warning" />
+      <Tag>Storybook</Tag>
+    </div>
+  ),
+};
+
+export const LongLabel: Story = {
+  render: () => (
+    <div className="mx-auto w-full max-w-48">
+      <Tag label="PortfolioDocumentationForContributors" variant="info" />
+    </div>
+  ),
+};

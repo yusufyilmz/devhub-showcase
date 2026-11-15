@@ -46,7 +46,7 @@ Package `@shared/config` in `packages/config`. No database client and no authori
 | `portfolioThemes` and accent                                             | `cvLayout`, `cvSettings`, CV accent derived at render time |
 | Section visibility on the page                                           | Whether that block is included in the PDF                  |
 
-Read `packages/cv/src/index.ts` `createCvData` before assuming a profile flag hides a PDF block. Flags such as `showEmail` and `includeLanguages` are applied there.
+Read `packages/assistant/src/components/cv/data.ts` `createCvData` before assuming a profile flag hides a PDF block. Flags such as `showEmail` and `includeLanguages` are applied there.
 
 ## Checks
 

@@ -5,7 +5,7 @@ import { Spinner } from "./Spinner";
 function Example({ width = 560 }: { width?: number }) {
   return (
     <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
-      <div className="flex gap-4">
+      <div className="flex flex-wrap items-center gap-md">
         <Spinner size={16} />
         <Spinner />
         <Spinner size={36} />
@@ -13,9 +13,11 @@ function Example({ width = 560 }: { width?: number }) {
     </div>
   );
 }
-const meta = { component: Example, tags: ["autodocs"], title: "UI/spinner" } satisfies Meta<
-  typeof Example
->;
+const meta = {
+  component: Example,
+  tags: ["autodocs"],
+  title: "UI/Feedback/Spinner",
+} satisfies Meta<typeof Example>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {};

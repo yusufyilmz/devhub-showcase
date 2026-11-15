@@ -12,7 +12,7 @@ export const carouselStyles = {
   carouselPrevious: "absolute size-8 rounded-full",
   carouselPrevious2: "top-1/2 -left-12 -translate-y-1/2",
   carouselPrevious3: "-top-12 left-1/2 -translate-x-1/2 rotate-90",
-  element1: "overflow-hidden",
+  element1: "overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)]",
   element2: "sr-only",
   element3: "sr-only",
 } as const;

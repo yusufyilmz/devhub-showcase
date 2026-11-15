@@ -1,38 +1,35 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 
-import { Button } from "@shared/ui/button";
+import { StudioShell } from "@shared/assistant/portfolio";
+import { StudioCompanion } from "@shared/assistant/studio-companion";
 import { ThemeToggle } from "@shared/ui/theme";
 
-import { ManagementLink } from "@/features/management/management-link";
-import { StudioShell } from "@/features/studio";
+import { getAccountMenu } from "../_account-menu";
+import { getHomeAction } from "../_home-links";
 
 export const metadata: Metadata = {
   robots: { follow: false, index: false },
   title: "Portfolio studio",
 };
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  if ((await headers()).get("x-profile-path") === "/admin/chat") return children;
+  const path = (await headers()).get("x-profile-path") ?? "";
+  if (path === "/admin/chat") return children;
+  const showCompanion =
+    path === "/admin/billing" || path === "/admin/portfolios" || path.endsWith("/review");
+  const action = await getHomeAction();
   return (
     <StudioShell
-      brand={
-        <>
-          CV<span>.</span>
-        </>
-      }
       contentId="admin-content"
-      title="PORTFOLIO STUDIO"
       tools={
-        <div className="admin-tools">
-          <Button href="/admin/jobs" variant="outline">
-            Job Hunter
-          </Button>
-          <ManagementLink />
+        <div className="admin-tools flex items-center gap-3">
           <ThemeToggle />
+          {await getAccountMenu({ action, protectDraft: path.endsWith("/edit") })}
         </div>
       }
     >
       {children}
+      {showCompanion && <StudioCompanion signedIn={action.signedIn} />}
     </StudioShell>
   );
 }

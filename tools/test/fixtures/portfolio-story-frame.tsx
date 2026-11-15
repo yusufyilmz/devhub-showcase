@@ -3,30 +3,27 @@ import "@shared/ui/sections.css";
 
 import type { CSSProperties, ReactNode } from "react";
 
-import { type ColorMode, getThemePalette, portfolioAccents } from "@shared/config";
+import type { ColorMode } from "@shared/config";
 
-/** A scoped portfolio palette; never load legacy global resets into primitive stories. */
+/** Story canvas uses the same data-theme and data-brand palette as the product. */
 export function PortfolioStoryFrame({
   children,
   mode = "light",
+  fullBleed = false,
 }: {
   children: ReactNode;
   mode?: ColorMode;
+  fullBleed?: boolean;
 }) {
-  const palette = getThemePalette("studio", mode);
-  const variables = Object.fromEntries(
-    Object.entries(palette).map(([key, value]) => [
-      `--${key === "soft" ? "surface-soft" : key}-rgb`,
-      value,
-    ]),
-  );
   const style = {
-    ...variables,
-    "--accent-rgb": portfolioAccents.cyan[mode],
-    background: "rgb(var(--bg-rgb))",
-    color: "rgb(var(--text-rgb))",
+    background: "var(--background)",
+    color: "var(--foreground)",
     minWidth: 0,
-    padding: "24px",
+    padding: fullBleed ? 0 : "24px",
   } as CSSProperties;
-  return <div style={style}>{children}</div>;
+  return (
+    <div data-brand="cyan" data-theme={mode} style={style}>
+      {children}
+    </div>
+  );
 }

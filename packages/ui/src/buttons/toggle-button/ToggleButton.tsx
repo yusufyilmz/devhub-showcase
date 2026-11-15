@@ -2,21 +2,17 @@
 "use client";
 
 import { Button as LibraryButton } from "../button/Button";
-import { toggleButtonClassName } from "./styles";
+import { toggleButtonStyles } from "./styles";
 import type { ToggleButtonOptions } from "./types";
 
 export function ToggleButton({ label, selected = false, onClick, children }: ToggleButtonOptions) {
   return (
     <LibraryButton
       aria-pressed={selected}
-      className={toggleButtonClassName(
-        selected
-          ? "bg-button-primary text-button-light"
-          : "text-textColor-secondary hover:bg-backgroundColor-lightestNavy",
-      )}
+      className={toggleButtonStyles.button}
       onClick={onClick}
       type="button"
-      variant="unstyled"
+      variant="ghost"
     >
       {label || children}
     </LibraryButton>

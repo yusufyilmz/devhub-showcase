@@ -2,17 +2,17 @@ import assert from "node:assert/strict";
 
 import { afterEach, test, vi } from "vitest";
 
-import { convertV1Workspace } from "@shared/services/db/migrations/convert-v1-workspace";
-import { makeDay as v1Day } from "@shared/services/db/migrations/v1-model";
-import { seed as seedV1 } from "@shared/services/db/migrations/v1-seed";
-import { seedWorkspace } from "@shared/services/db/seed";
-
+import { makeDay } from "@shared/lib/db/migrations/v1-model";
+import { seedWorkspace } from "@shared/lib/db/seed";
+import { convertV1Workspace } from "@shared/lib/migrations/convert-v1-workspace";
+import { seed } from "@shared/lib/migrations/v1-seed";
 import {
   type BaseWorkspaceRepository,
   InvalidWorkspaceError,
   RevisionConflictError,
   WorkspaceService,
-} from "../../../packages/services/src/workspace";
+} from "@shared/lib/workspace";
+
 import { DemoWorkspaceGateway, HttpWorkspaceGateway } from "../features/task-workspace/gateway";
 
 afterEach(() => vi.unstubAllGlobals());
@@ -83,10 +83,10 @@ test("service propagates revision conflicts without retrying stale writes", asyn
     RevisionConflictError,
   );
 });
-test("legacy JSON migration preserves meal status, actual set logs, water and weights", () => {
-  const v1 = seedV1();
+test("existing JSON migration preserves meal status, actual set logs, water and weights", () => {
+  const v1 = seed();
   const d = "2026-10-19";
-  v1.days[d] = v1Day(v1, d);
+  v1.days[d] = makeDay(v1, d);
   v1.days[d].status["y1-breakfast"] = "done";
   v1.days[d].sets["hip-abduction-machine:0"] = {
     done: true,

@@ -1,21 +1,26 @@
 # Architecture
 
-MyDevStudio is a Next.js App Router application in a pnpm/Turborepo monorepo. The repository retains the name `devhub-showcase`. This guide describes current source boundaries; it does not certify production provider or database configuration.
+## When to read
+
+Read this before placing new code, moving a feature between packages, or tracing how MyDevStudio and My Fitness Studio share auth, data, and assistants. Use it for package boundaries, trust boundaries, and which app owns a route. It does not certify production provider or database configuration.
+
+MyDevStudio is a Next.js App Router application in a pnpm/Turborepo monorepo. The repository retains the name `devhub-showcase`. This guide describes current source boundaries.
 
 ## Workspace ownership
 
-| Package or directory                                   | Owns                                                                       | Keep out                                    |
-| ------------------------------------------------------ | -------------------------------------------------------------------------- | ------------------------------------------- |
-| `apps/my-dev-studio`                                   | Routes, API handlers, feature data access, metadata                        | Duplicated portable UI                      |
-| `apps/storybook-app`                                   | Storybook for `@shared/ui`                                                 | Production routes                           |
-| `packages/config`                                      | Profile types, themes, section metadata, page copy                         | Credentials and private database access     |
-| `packages/lib`                                         | Validators, domain services, repository contracts and Supabase persistence | Route-specific presentation                 |
-| `packages/auth`                                        | Shared browser/server authentication integration                           | Portfolio content ownership decisions in UI |
-| `packages/ui`                                          | Controls, sections, studio and portfolio surfaces, theme, global CSS       | Auth, routes and private repositories       |
-| `packages/templates` (`packages/cv`)                   | PDF normalization, layouts and templates                                   | Public bypasses for private downloads       |
-| `packages/assistant`                                   | Portfolio and editing assistants, chat models                              | Ownership or publication authority          |
-| `packages/cache`, `packages/utils`, `packages/runtime` | Redis, logging, shared browser stores                                      | Secrets or private payloads in telemetry    |
-| `supabase/migrations`                                  | Schema and RLS change history                                              | Implicit execution during app builds        |
+| Package or directory                 | Owns                                                                                 | Keep out                                    |
+| ------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------- |
+| `apps/my-dev-studio`                 | Routes, API handlers, feature data access, metadata                                  | Duplicated portable UI                      |
+| `apps/storybook-app`                 | Storybook for `@shared/ui`                                                           | Production routes                           |
+| `packages/config`                    | Profile types, themes, section metadata, page copy                                   | Credentials and private database access     |
+| `packages/lib`                       | Shared database access, repositories, services, domain models and validation schemas | Route-specific presentation                 |
+| `packages/auth`                      | Shared browser/server authentication integration                                     | Portfolio content ownership decisions in UI |
+| `packages/ui`                        | Shared controls, layouts, theme tokens and global CSS                                | Auth, routes and private repositories       |
+| `packages/assistant`                 | Studio, portfolio and homepage compositions, PDF rendering, assistants and chat      | Ownership or publication authority          |
+| `packages/utils`, `packages/runtime` | Logging and shared browser stores                                                    | Secrets or private payloads in telemetry    |
+| `supabase/migrations`                | Schema and RLS change history                                                        | Implicit execution during app builds        |
+
+`packages/lib/src` is organized into `db/`, `repositories/`, `services/`, `types/`, and `schemas/`. Within `services/` and `repositories/`, implementations and colocated tests are grouped into domain folders. Database connections and table definitions are shared across domains. App feature adapters bind verified identities, cookies and configuration. Publication/history/access, managed portfolios, resource/review access, Google IO and Fitness notification workflows/persistence live in this package. Chat entitlement/usage orchestration and Fitness assistant context/drafts live in `packages/assistant/src/services`. Existing domain exports remain available, while new direct imports can use `@shared/lib/repositories/profile` or `@shared/lib/services/task`. See the [services catalog](../packages/lib/CATALOG.md).
 
 Shared compiler and Tailwind configuration live in their own packages. Packages expose explicit entry points; external versions are centralized in the workspace catalog.
 
@@ -46,30 +51,36 @@ Arrows mean **imports/declares a dependency on**. These views show selected inte
 ```mermaid
 flowchart TD
   App["apps/my-dev-studio"] --> UI["packages/ui"]
-  App --> Templates["packages/templates"]
+  App --> Assistant["packages/assistant"]
+  Assistant --> UI
   UI --> Config["packages/config"]
   UI --> Lib["packages/lib"]
-  Templates --> Config
+  Assistant --> Config
 ```
 
-Section renderers, editors, and controls live in `packages/ui`. Config defines shared profile and section metadata; UI consumes config and lib adapters. Templates consume config without depending on app routes.
+Section renderers, editors and PDF generation live in `packages/assistant` and use profile and section metadata from `packages/config`. Shared controls live in `packages/ui`.
 
 ### Services and authorization packages
 
 ```mermaid
 flowchart TD
   App["apps/my-dev-studio"] --> Assistant["packages/assistant"]
-  App --> Lib["packages/lib"]
+  App --> Services["packages/lib"]
+  Assistant --> Services
+  Services --> Notifications["packages/notifications"]
+  Services --> Auth
   App --> Auth["packages/auth"]
-  App --> Cache["packages/cache"]
-  Assistant --> Lib
   Assistant --> Config["packages/config"]
-  Lib --> Auth
-  Lib --> Cache
-  Lib --> Config
+  Services --> Config
 ```
 
 No shared package imports `apps/my-dev-studio`. Authentication establishes identity; app guards, repositories and RLS decide resource access. See [observability](observability.md) for logging boundaries.
+
+## Studio preferences and Job Hunter
+
+The Studio account preferences route binds a verified account to appearance and companion settings. Published portfolio appearance stays in the saved profile and follows the publication flow.
+
+The private Job Hunter page and API bind the signed-in workspace to job searches, matches and application records. Listing normalization and LinkedIn email parsing live in `packages/lib/src/services/jobs`. The scheduled worker and inbound email relay use dedicated routes and server configuration. Follow the [Job Hunter](testing/manual/job-hunter.md) and [LinkedIn alerts](testing/manual/linkedin-job-alerts.md) guides for prerequisites and verification.
 
 ## Profile save flow
 
@@ -133,8 +144,10 @@ flowchart TD
   Gate -->|No| Stop["Block release and inspect reports"]
   Gate -->|Yes| Main{"Non-PR run on main?"}
   Main -->|No| Review["PR ready for review and merge"]
-  Main -->|Yes| Config["Pull production Vercel configuration"]
+  Main -->|Yes| Target{"Which app was selected?"}
+  Target -->|Studio| Config["Pull production Vercel configuration"]
   Config --> Prod["Build and deploy prebuilt production output"]
+  Target -->|Fitness OS| Hosted["Build and deploy on Vercel"]
 ```
 
 Browser reports are uploaded for diagnosis. Database migrations and provider setup are separate operational changes; this workflow does not apply them.
@@ -155,7 +168,7 @@ Browser reports are uploaded for diagnosis. Database migrations and provider set
 
 Consult the actual route files for individual methods and response contracts. Database ownership and publication checks remain necessary even if the UI hides an action.
 
-Managed portfolios are a separate administrator flow. Transfer requires explicit action, validated access and revision checks; it must not replace an edited or published recipient profile. See [managed portfolios](features/managed-portfolios.md).
+Managed portfolios are a separate administrator flow. Transfer requires explicit action, validated access and revision checks; it must not replace an edited or published recipient profile. See [managed portfolios](dev-studio/managed-portfolios.md).
 
 ## Rendering and runtime
 
@@ -163,7 +176,7 @@ Server components and handlers load permitted data. Client components own intera
 
 PDFs are generated from normalized profile data using the shared CV package and its Handlebars/JSON template. Treat profile strings as data. Preserve the independent portfolio/PDF settings and visibility rules.
 
-Saved AI knowledge has separate public and owner projections. The authorized editor can inspect saved knowledge without an LLM request; private owner knowledge is not public chat context. Public chat currently remains restricted to the main portfolio, reads its published snapshot on every request and does not enable premium chat for other accounts. See [AI foundation](features/portfolio-ai-foundation.md).
+Saved AI knowledge has separate public and owner projections. The authorized editor can inspect saved knowledge without an LLM request; private owner knowledge is not public chat context. Public chat currently remains restricted to the main portfolio, reads its published snapshot on every request and does not enable premium chat for other accounts. See [AI foundation](/docs/dev-studio/portfolio-ai-foundation.md).
 
 AI chat uses OpenAI with Redis rate limiting. CV extraction additionally has per-user and global limits. Missing optional services should produce the supported unavailable/fallback behavior without preventing a credential-free build.
 
@@ -173,8 +186,8 @@ Supabase is the database/auth integration; Prisma is not used. RLS complements s
 
 See [features](features.md) for user-visible behavior and [shared packages](reference/shared-packages.md) for reuse in another app.
 
-See [security policy](../SECURITY.md), [personal workspaces](features/multiuser-cvs.md) and the [legacy RLS review](reference/legacy-rls-review.md). Browser fixtures do not prove real OAuth or production RLS behavior.
+See [security policy](../SECURITY.md), [personal workspaces](/docs/dev-studio/multiuser-cvs.md) and the [portfolio table RLS review](reference/portfolio-table-rls-review.md). Browser fixtures do not prove real OAuth or production RLS behavior.
 
 ## Change strategy
 
-Prefer a vertical change across the existing type, validator, repository, adapter and renderer instead of introducing a parallel data model. Preserve legacy documents, absent-field defaults and established package exports. New dependencies require catalog and lockfile changes together. Use [testing](testing.md) to verify the affected boundary and [observability](observability.md) to define useful, non-sensitive failure signals.
+Prefer a vertical change across the existing type, validator, repository, adapter and renderer instead of introducing a parallel data model. Preserve earlier documents, absent-field defaults and established package exports. New dependencies require catalog and lockfile changes together. Use [testing](testing.md) to verify the affected boundary and [observability](observability.md) to define useful, non-sensitive failure signals.

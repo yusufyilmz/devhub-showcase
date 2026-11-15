@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { env } from "@shared/env";
+
 import { AssistantService, type AssistantTask } from "./provider";
 
 export async function generateStructuredProposal<Schema extends z.ZodType>(
@@ -16,7 +18,7 @@ export async function generateStructuredProposal<Schema extends z.ZodType>(
       input: JSON.stringify(context),
       instructions,
       max_output_tokens: 1200,
-      model: process.env[`OPENAI_${task}_MODEL`] || "gpt-6-luna",
+      model: env[`OPENAI_${task}_MODEL`] || "gpt-6-luna",
       store: false,
       text: {
         format: { name: task.toLowerCase(), schema: format, strict: true, type: "json_schema" },

@@ -1,8 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { profile } from "@shared/config";
-import { formatDateRange } from "@shared/lib/utils";
-import { getPortfolioResources } from "@shared/services/portfolio";
+import { formatPortfolioPeriod as formatDateRange, profile } from "@shared/config";
+import { getPortfolioResources } from "@shared/lib/portfolio";
 
 import { formatAllCV, formatters } from "../services/formatter";
 import { createCVModel } from "./cv-model";

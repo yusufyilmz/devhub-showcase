@@ -85,7 +85,7 @@ describe("GoogleImportUi", () => {
     expect(screen.getByText(/Applied selected details to your draft/)).toBeTruthy();
     const calls = vi.mocked(fetch).mock.calls;
     expect(calls.filter(([, options]) => options?.method === "POST")).toHaveLength(1);
-    expect(calls.every(([url]) => url === urls.next.studio.googleProfile())).toBe(true);
+    expect(calls.every(([url]) => url === urls.studio.googleProfile())).toBe(true);
     expect(localStorage.getItem("ephemeral-token")).toBeNull();
   });
   it("ignores a late Google response after cancellation and never opens consent for managed profiles", async () => {

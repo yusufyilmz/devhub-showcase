@@ -49,7 +49,7 @@ Package `@shared/assistant` in `packages/assistant`.
 | `apps/my-dev-studio/app/api/admin/assistant/route.ts` | Owner editor assistant |
 | `apps/my-dev-studio/app/api/admin/cv-import/route.ts` | CV import              |
 
-Limits for those routes are `allowPortfolioChat`, `allowStudioAssistant`, and `allowCvImport` in `@shared/cache`.
+Limits for those routes are `allowPortfolioChat`, `allowStudioAssistant`, and `allowCvImport` in `@shared/lib/cache`.
 
 ## Checks
 
@@ -57,3 +57,5 @@ Limits for those routes are `allowPortfolioChat`, `allowStudioAssistant`, and `a
 pnpm --filter @shared/assistant typecheck
 pnpm exec vitest run --project unit packages/assistant
 ```
+
+The feature surface map and shallow exports are maintained in [the assistant catalog](../../../../packages/assistant/CATALOG.md). Shared UI lives in `src/components`, streaming in `src/client`, and metadata/download factories in `src/server`. App source imports are prohibited.

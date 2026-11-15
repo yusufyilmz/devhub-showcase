@@ -1,5 +1,9 @@
 # App deployments and free GitHub Actions
 
+## When to read
+
+Read this before changing what ships to production, editing the deploy workflow, or checking why a push built one app and skipped the other. It covers the Verify gate, Studio and Fitness selection, Vercel projects, and the free GitHub Actions limits.
+
 The public `yusufyilmz/devhub-showcase` repository owns production deployment for
 both apps. Main pushes must pass **Verify** before a selected app deploys. Pull
 requests verify code without receiving production deployment credentials.
@@ -65,6 +69,11 @@ domains and database are retained; their values are not copied into GitHub or
 committed. Readiness inspection found the existing auth/owner/database variables.
 Optional notification credentials/worker setup remain a separate feature.
 
+After GitHub Verify succeeds, the Fitness OS job uploads the verified source to
+Vercel for the production build. Vercel provides the production database URI to
+that build. External builds receive a placeholder when pulling this Secret.
+Studio continues to build in GitHub Actions and deploy its prebuilt output.
+
 Configuration preparation on 2026-11-05 set and read back the monorepo Fitness
 project variable and Vercel monorepo settings, and disabled the old workflow
 (`disabled_manually`). No production deployment was triggered. Merge the workflow
@@ -93,7 +102,7 @@ gh workflow disable ci-cd.yml --repo yusufyilmz/yusuf-fitness-os
 ```
 
 Rollback requires pausing the monorepo Fitness deploy path before enabling the
-legacy workflow. Restore the Fitness project's original root (repository root),
+standalone Fitness workflow. Restore the Fitness project's original root (repository root),
 `pnpm build` and `pnpm install --frozen-lockfile` before invoking the old standalone
 pipeline. Do not enable both production writers together. Existing production
 releases can be rolled back separately without changing the database.

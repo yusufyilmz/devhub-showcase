@@ -1,3 +1,43 @@
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-family, inherit);
+    font-size: calc(var(--heading-size) * var(--text-scale, 1));
+    font-weight: max(600, var(--font-weight, 600));
+    line-height: 1.25;
+  }
+
+  h1 {
+    --heading-size: clamp(2rem, 4vw, 3rem);
+
+    line-height: 1.1;
+  }
+
+  h2 {
+    --heading-size: clamp(1.5rem, 2.5vw, 2rem);
+  }
+
+  h3 {
+    --heading-size: 1.25rem;
+  }
+
+  h4 {
+    --heading-size: 1.125rem;
+  }
+
+  h5 {
+    --heading-size: 1rem;
+  }
+
+  h6 {
+    --heading-size: 0.875rem;
+  }
+}
+
 /* Font family configurations */
 .font-noto-sans-thai {
   font-family: var(--font-noto-sans-thai, "Noto Sans Thai", system-ui, sans-serif);

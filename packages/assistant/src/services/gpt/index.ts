@@ -1,18 +1,17 @@
 import OpenAI from "openai";
 import type { Logger } from "pino";
 
+import { env } from "@shared/env";
 import type { ChatMessage } from "@shared/lib/types";
 
 import { AssistantService } from "../provider";
 import { summarizeQuestions } from "../summarizer/index";
 
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY ?? "";
-
 export class ChatGPTService {
   openai: OpenAI;
 
   constructor(private readonly logger: Logger) {
-    this.openai = new OpenAI({ apiKey: OPENAI_API_KEY });
+    this.openai = new OpenAI({ apiKey: env.OPENAI_API_KEY ?? "" });
   }
 
   async generateResponse(
@@ -21,7 +20,7 @@ export class ChatGPTService {
     sessionMessages: ChatMessage[] = [],
   ): Promise<string> {
     try {
-      const model = process.env.OPENAI_MODEL || "gpt-4.1-mini";
+      const model = env.OPENAI_MODEL || "gpt-4.1-mini";
       const history = summarizeQuestions(sessionMessages, model);
       const input = [history, message]
         .filter(Boolean)

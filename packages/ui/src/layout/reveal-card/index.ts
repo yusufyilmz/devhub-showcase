@@ -1,1 +1,1 @@
-export { RevealCard, RevealCardBase } from "../../cards/RevealCard";
+export { RevealCard, RevealCardBase } from "../../cards/reveal-card/RevealCard";

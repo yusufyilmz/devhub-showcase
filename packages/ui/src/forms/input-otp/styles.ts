@@ -1,9 +1,9 @@
 export const inputOTPStyles = {
   element1: "pointer-events-none absolute inset-0 flex items-center justify-center",
-  element2: "animate-caret-blink bg-foreground h-4 w-px duration-1000",
+  element2: "h-4 w-px bg-current motion-safe:animate-caret-blink",
   inputOTP: "disabled:cursor-not-allowed",
-  inputOTP2: "flex items-center gap-2 has-disabled:opacity-50",
-  inputOTPGroup: "flex items-center",
+  inputOTP2: "group/otp flex min-w-0 max-w-full items-center gap-xs has-disabled:opacity-50",
+  inputOTPGroup: "flex min-w-0 items-center gap-1",
   inputOTPSlot:
-    "data-[active=true]:border-ring data-[active=true]:ring-ring/50 data-[active=true]:aria-invalid:ring-destructive/20 dark:data-[active=true]:aria-invalid:ring-destructive/40 aria-invalid:border-destructive data-[active=true]:aria-invalid:border-destructive dark:bg-input/30 border-input relative flex h-9 w-9 items-center justify-center border-y border-r text-sm shadow-xs transition-all outline-none first:rounded-l-md first:border-l last:rounded-r-md data-[active=true]:z-10 data-[active=true]:ring-[3px]",
+    "relative grid h-10 w-9 min-w-0 place-items-center rounded-md border border-border bg-background text-sm font-medium tabular-nums motion-safe:transition-colors dark:bg-foreground/5 data-[active=true]:z-10 data-[active=true]:border-ring data-[active=true]:ring-2 data-[active=true]:ring-ring/50 group-has-[[aria-invalid=true]]/otp:border-destructive group-has-[[aria-invalid=true]]/otp:data-[active=true]:ring-destructive/30",
 } as const;

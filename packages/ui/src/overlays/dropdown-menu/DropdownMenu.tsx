@@ -1,5 +1,7 @@
 "use client";
 
+import "../menu-surface.css";
+
 import type * as React from "react";
 
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
@@ -31,13 +33,15 @@ function DropdownMenuTrigger({
 
 function DropdownMenuContent({
   className,
-  sideOffset = 4,
+  collisionPadding = 12,
+  sideOffset = 8,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Content>) {
   return (
     <DropdownMenuPrimitive.Portal>
       <DropdownMenuPrimitive.Content
         className={cn(dropdownMenuStyles.dropdownMenuContent, className)}
+        collisionPadding={collisionPadding}
         data-slot="dropdown-menu-content"
         sideOffset={sideOffset}
         {...props}

@@ -51,7 +51,7 @@ function ThemeGallery() {
   );
 }
 
-export default { component: ThemeGallery, title: "Design system/Themes" } satisfies Meta<
+export default { component: ThemeGallery, title: "Storybook/Themes" } satisfies Meta<
   typeof ThemeGallery
 >;
 export const Playground: StoryObj<typeof ThemeGallery> = {};

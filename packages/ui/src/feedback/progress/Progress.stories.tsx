@@ -7,6 +7,7 @@ import { Progress } from "./Progress";
  */
 const meta: Meta<typeof Progress> = {
   args: {
+    "aria-label": "Task progress",
     max: 100,
     value: 33,
   },
@@ -21,11 +22,15 @@ const meta: Meta<typeof Progress> = {
     },
   },
   component: Progress,
-  parameters: {
-    layout: "centered",
-  },
+  decorators: [
+    (Story) => (
+      <div className="mx-auto w-full max-w-sm">
+        <Story />
+      </div>
+    ),
+  ],
   tags: ["autodocs"],
-  title: "UI/Progress",
+  title: "UI/Feedback/Progress",
 };
 
 export default meta;
@@ -48,3 +53,9 @@ export const NearlyComplete: Story = {
     value: 90,
   },
 };
+
+export const CustomMaximum: Story = { args: { max: 200, value: 50 } };
+
+export const Complete: Story = { args: { value: 100 } };
+
+export const Indeterminate: Story = { args: { value: null } };

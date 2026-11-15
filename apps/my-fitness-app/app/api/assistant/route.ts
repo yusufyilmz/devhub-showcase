@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
 
 import { proposeFitnessChange } from "@shared/assistant/fitness";
+import { assistantContext } from "@shared/assistant/fitness-context";
 import { fitnessAssistantRequest } from "@shared/assistant/fitness-contract";
-import { allowFitnessAssistant } from "@shared/cache";
+import { allowFitnessAssistant } from "@shared/lib/cache";
 
-import { assistantContext } from "@/features/assistant/plan-context";
+import { env } from "@/env";
 import { SetupRequired, SignInRequired, workspaceContext } from "@/features/task-workspace/server";
 import { sameOrigin } from "@/lib/auth";
-
-import { env } from "../../../env";
 
 export const maxDuration = 60;
 const headers = { "Cache-Control": "private, no-store" };

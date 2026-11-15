@@ -1,25 +1,40 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { ChevronDown } from "lucide-react";
 
 import { Button } from "../../buttons/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./Collapsible";
+import { collapsibleMotionClassName } from "./styles";
 
 function Example({ width = 560 }: { width?: number }) {
   return (
-    <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
-      <Collapsible>
+    <div className="w-full" style={{ maxWidth: width }}>
+      <Collapsible className="rounded-lg border border-border/75 bg-card">
         <CollapsibleTrigger asChild>
-          <Button variant="outline">Show details</Button>
+          <Button
+            className="group h-auto min-h-11 w-full justify-between rounded-[inherit] px-md text-card-foreground focus-visible:-outline-offset-2 aria-expanded:rounded-b-none"
+            variant="ghost"
+          >
+            Project details
+            <ChevronDown
+              aria-hidden="true"
+              className="motion-safe:transition-transform group-data-[state=open]:rotate-180"
+            />
+          </Button>
         </CollapsibleTrigger>
-        <CollapsibleContent>
-          <p className="p-4">Your work, in context.</p>
+        <CollapsibleContent className={collapsibleMotionClassName}>
+          <p className="mx-md border-t border-border/60 py-sm text-sm leading-relaxed text-muted-foreground">
+            See what changed, who worked on it, and when it was last published.
+          </p>
         </CollapsibleContent>
       </Collapsible>
     </div>
   );
 }
-const meta = { component: Example, tags: ["autodocs"], title: "UI/collapsible" } satisfies Meta<
-  typeof Example
->;
+const meta = {
+  component: Example,
+  tags: ["autodocs"],
+  title: "UI/Layout/Collapsible",
+} satisfies Meta<typeof Example>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {};

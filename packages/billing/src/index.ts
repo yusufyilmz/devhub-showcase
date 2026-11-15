@@ -93,7 +93,10 @@ export async function runPremiumOperation<T>(
 }
 
 export class BillingActionError extends Error {
-  constructor(readonly code: BillingErrorCode) {
+  readonly code: BillingErrorCode;
+
+  constructor(code: BillingErrorCode) {
     super(billingMessages[code]);
+    this.code = code;
   }
 }

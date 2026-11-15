@@ -1,5 +1,9 @@
 # Reusable notifications and Fitness OS setup
 
+## When to read
+
+Read this before changing browser push, Fitness reminders, or the shared notifications package. It covers permission, device subscriptions, the scheduled worker, and how `@shared/notifications` stays separate from toast UI.
+
 `@shared/notifications` separates browser capabilities, service worker delivery,
 WebSocket transport and the server push sender from fitness scheduling. Its
 [package guide](../packages/notifications/README.md) and

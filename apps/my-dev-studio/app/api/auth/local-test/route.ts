@@ -1,9 +1,8 @@
 import { createServerClient } from "@shared/lib/supabase";
 
+import { env } from "@/env";
 import { requireWorkspace } from "@/features/admin/admin-auth";
 import { localTestLoginRequestAllowed } from "@/features/admin/local-test-login";
-
-import { env } from "../../../../env";
 
 /** This shortcut uses a real Supabase Auth session, never forged cookies. */
 export async function POST(request: Request) {
@@ -40,10 +39,11 @@ export async function POST(request: Request) {
       );
     }
     return Response.json({ ok: true }, { headers });
-  } catch {
-    return Response.json(
-      { error: "Local Supabase Auth is unavailable." },
-      { headers, status: 503 },
-    );
+  } catch (reason) {
+    const message =
+      reason instanceof Error && reason.message === "Supabase is not configured."
+        ? "Set the local Supabase URL and publishable key before using the test user."
+        : "Local Supabase Auth is unavailable.";
+    return Response.json({ error: message }, { headers, status: 503 });
   }
 }

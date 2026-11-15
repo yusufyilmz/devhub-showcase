@@ -11,16 +11,18 @@ function Example({ width = 560 }: { width?: number }) {
         <TeamSwitcher
           teams={[
             { logo: Square, name: "Studio North", plan: "Free" },
-            { logo: Square, name: "Studio South", plan: "Pro" },
+            { logo: Square, name: "Studio South Research and Design", plan: "Pro" },
           ]}
         />
       </SidebarProvider>
     </div>
   );
 }
-const meta = { component: Example, tags: ["autodocs"], title: "UI/team-switcher" } satisfies Meta<
-  typeof Example
->;
+const meta = {
+  component: Example,
+  tags: ["autodocs"],
+  title: "UI/Navigation/Team Switcher",
+} satisfies Meta<typeof Example>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {};

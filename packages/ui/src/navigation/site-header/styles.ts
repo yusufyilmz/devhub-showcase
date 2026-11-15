@@ -1,11 +1,8 @@
 export const siteHeaderStyles = {
-  element1:
-    "flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)",
-  element2: "flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6",
-  element3: "-ml-1",
-  element4: "mx-2 data-[orientation=vertical]:h-4",
-  element5: "text-base font-medium",
-  element6: "ml-auto flex items-center gap-2",
-  element7: "hidden sm:flex",
-  element8: "dark:text-foreground",
+  actions: "col-span-full flex min-w-0 flex-wrap items-center gap-xs sm:col-span-1 sm:justify-end",
+  content:
+    "grid w-full min-w-0 grid-cols-[auto_auto_minmax(0,1fr)] items-center gap-x-xs gap-y-[var(--spacing-sm)] px-sm sm:grid-cols-[auto_auto_minmax(0,1fr)_auto] lg:px-lg",
+  header:
+    "sticky top-0 z-20 flex min-h-(--header-height) shrink-0 items-center border-b border-border/70 bg-background/95 py-xs backdrop-blur-sm",
+  title: "min-w-0 text-base leading-snug font-semibold tracking-tight text-balance wrap-anywhere",
 } as const;

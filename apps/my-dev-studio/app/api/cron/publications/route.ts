@@ -4,7 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 
 import type { Database } from "@shared/lib/types";
 
-import { env } from "../../../../env";
+import { env } from "@/env";
 
 const headers = { "Cache-Control": "private, no-store" };
 export async function GET(request: Request) {

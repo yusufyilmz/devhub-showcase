@@ -50,7 +50,6 @@ App package `my-dev-studio` in `apps/my-dev-studio`.
 | `app/api/admin/managed/[id]/route.ts`          | One managed portfolio                              |
 | `app/api/admin/managed/[id]/transfer/route.ts` | Explicit transfer                                  |
 | `app/api/admin/section-templates/route.ts`     | Section template library                           |
-| `app/api/portfolio-chat/route.ts`              | `features/chat`                                    |
 | `app/api/billing/checkout/route.ts`            | Stripe checkout                                    |
 | `app/api/billing/portal/route.ts`              | Stripe portal                                      |
 | `app/api/billing/webhook/route.ts`             | Signed webhook                                     |
@@ -58,15 +57,11 @@ App package `my-dev-studio` in `apps/my-dev-studio`.
 
 ## Features
 
-| Folder                | Representative files                                                                                                                  |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `features/admin`      | `admin-auth.ts`, `auth-handlers.ts`, `google-profile-import.ts`, `owner-edit-link.tsx`                                                |
-| `features/billing`    | `gateway.ts`, `handler.ts`, `client.ts`, `public-pricing.ts`, `premium-configuration.ts`, `errors.ts`                                 |
-| `features/chat`       | `portfolio-chat.ts`, `premium-chat.ts`                                                                                                |
-| `features/home`       | `home-page.tsx`, `home-links.ts`                                                                                                      |
-| `features/management` | `managed-portfolios.ts`, `managed-api.ts`, `managed-workspace.tsx`, `create-portfolio.tsx`                                            |
-| `features/platform`   | `platform.ts`, `site-url.ts`, `page-presentation.ts`, `studio-client.tsx`                                                             |
-| `features/portfolio`  | `public-profile.ts`, `published-profile.ts`, `active-profile.ts`, `cv-response.ts`, `portfolio-metadata.ts`, `engineer-portfolio.tsx` |
+| Folder                | Representative files                                                                                  |
+| --------------------- | ----------------------------------------------------------------------------------------------------- |
+| `features/admin`      | `admin-auth.ts`, `auth-handlers.ts`, `google-profile-import.ts`, `owner-edit-link.tsx`                |
+| `features/billing`    | `gateway.ts`, `handler.ts`, `client.ts`, `public-pricing.ts`, `premium-configuration.ts`, `errors.ts` |
+| `features/management` | `managed-portfolios.ts`, `managed-api.ts`, `managed-workspace.tsx`, `create-portfolio.tsx`            |
 
 ## Scripts and support
 
@@ -86,3 +81,7 @@ pnpm --filter my-dev-studio typecheck
 pnpm --filter my-dev-studio build
 pnpm exec vitest run --project unit apps/my-dev-studio
 ```
+
+## Route-family bindings
+
+Homepage composition is `app/page.tsx`, with `_home-links.ts` beside it. Site defaults and presentation are `app/_site.ts` and `_presentation.ts`. Username profile/resources/renderer bindings are private siblings in `app/[username]`; review and chat bindings live in their route folders. API access/publication/history/CV helpers and tests sit beside their handlers.

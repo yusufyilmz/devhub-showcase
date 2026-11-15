@@ -1,9 +1,84 @@
 {
   "config": {
     "default": true,
+
+    // Auto-fixable rules (enabled)
+    "MD004": { "style": "dash" },
+    "MD005": true,
+    "MD007": { "indent": 2 },
+    "MD009": { "br_spaces": 2 },
+    "MD010": true,
+    "MD011": true,
+    "MD012": { "maximum": 1 },
+
+    // Intentionally disabled for AI skills + docs
     "MD013": false,
+
+    // Auto-fixable but disabled (too noisy)
+    "MD014": false,
+    "MD018": true,
+    "MD019": true,
+    "MD020": true,
+    "MD021": true,
+    "MD022": { "lines_above": 1, "lines_below": 1 },
+    "MD023": true,
+    "MD024": false,
+    "MD025": false,
+    "MD026": { "punctuation": ".,;:!" },
+    "MD027": true,
+    "MD030": {
+      "ol_multi": 1,
+      "ol_single": 1,
+      "ul_multi": 1,
+      "ul_single": 1
+    },
+    "MD031": true,
+    "MD032": true,
     "MD033": false,
-    "MD041": false
+    "MD034": false,
+    "MD036": false,
+    "MD037": true,
+    "MD038": true,
+    "MD039": true,
+    "MD041": false,
+    "MD044": false,
+
+    // Additional enabled rules
+    "MD046": { "style": "consistent" },
+    "MD047": true,
+    "MD049": { "style": "underscore" },
+    "MD050": { "style": "asterisk" },
+    "MD051": true,
+    "MD052": true,
+    "MD053": true,
+    "MD054": true,
+    "MD055": { "style": "leading_and_trailing" },
+    "MD056": true,
+    "MD058": true
   },
-  "ignores": ["**/node_modules/**", "**/.next/**", "**/dist/**", "**/coverage/**"]
+
+  "fix": true,
+  "gitignore": true,
+
+  "globs": ["**/*.md"],
+
+  "ignores": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/.next/**",
+    "**/.turbo/**",
+    "**/coverage/**",
+    "**/storybook-static/**",
+    "**/CHANGELOG.md",
+    "**/generated/**",
+    "**/*.generated.md",
+    "**/dcoder-storage/**",
+    "**/pnpm-lock.yaml",
+    "**/playwright-report/**",
+    "test-results/**"
+  ],
+  "noBanner": true,
+
+  "outputFormatters": [["markdownlint-cli2-formatter-pretty", { "appendLink": true }]]
 }

@@ -24,16 +24,4 @@ export { useGet } from "./http/useGet";
 export { usePatch } from "./http/usePatch";
 export { usePost } from "./http/usePost";
 export { usePut } from "./http/usePut";
-export {
-  completeUserConfigMigration,
-  readLegacyUserConfig,
-  USER_CONFIG_STORAGE_KEY,
-  USER_CONFIG_STORAGE_VERSION,
-  userConfigThemeScript,
-} from "./user/userConfigPersistence";
-export type { StoredUser, UserConfigMode } from "./user/userConfigStore";
-export {
-  userConfigActions,
-  userconfigSelectors,
-  useUserConfigStore,
-} from "./user/userConfigStore";
+export { useThemeStore, useUserConfigStore } from "./user";

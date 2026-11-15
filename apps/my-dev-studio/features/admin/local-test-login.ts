@@ -1,4 +1,4 @@
-import { env } from "../../env";
+import { env } from "@/env";
 
 /** Opt-in local test sign-in. All checks must pass on the server. */
 export function localTestLoginEnabled(

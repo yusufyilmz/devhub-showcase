@@ -15,6 +15,7 @@
     "lint:fix": "biome lint --write .",
     "start": "next start --port=3002",
     "test": "vitest run",
+    "test:e2e": "playwright test",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "types:check": "pnpm typecheck"
@@ -22,13 +23,12 @@
   "dependencies": {
     "@shared/assistant": "workspace:*",
     "@shared/auth": "workspace:*",
-    "@shared/cache": "workspace:*",
     "@shared/config": "workspace:*",
+    "@shared/env": "workspace:*",
+    "@shared/lib": "workspace:*",
     "@shared/notifications": "workspace:*",
     "@shared/runtime": "workspace:*",
-    "@shared/services": "workspace:*",
     "@shared/ui": "workspace:*",
-    "@t3-oss/env-nextjs": "catalog:",
     "drizzle-orm": "catalog:",
     "lucide-react": "catalog:",
     "next": "catalog:",
@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@electric-sql/pglite": "catalog:",
+    "@shared/test": "workspace:*",
     "@shared/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",

@@ -23,13 +23,13 @@ Avoid disruptive testing, account enumeration, accessing another person's record
 - Validate saved and imported content, including URLs and upload limits. Treat CV text and AI output as untrusted data.
 - Keep API keys, cookies, bearer tokens, uploaded documents and private profile content out of logs, error trackers and test artifacts.
 
-Only publishable or legacy anon Supabase keys belong in browser configuration. Never put secret/service-role, Redis, OpenAI or deployment tokens in `NEXT_PUBLIC_` variables.
+Only publishable or earlier anon Supabase keys belong in browser configuration. Never put secret/service-role, Redis, OpenAI or deployment tokens in `NEXT_PUBLIC_` variables.
 
 ## Database and dependency changes
 
 Review migrations and policy changes against anonymous, owner, other-user and administrator access. Test both allowed and denied operations, including direct Data API access. Do not apply policy changes to production merely to satisfy a build.
 
-The repository contains a [legacy RLS review](docs/reference/legacy-rls-review.md) documenting earlier findings on legacy tables. Treat these as findings to revalidate, not as proof of current production state or of a completed remediation. New profile isolation does not automatically secure unrelated legacy tables.
+The repository contains a [portfolio table RLS review](docs/reference/portfolio-table-rls-review.md) documenting earlier findings on original portfolio tables. Treat these as findings to revalidate, not as proof of current production state or of a completed remediation. New profile isolation does not automatically secure unrelated original portfolio tables.
 
 Use pinned catalog versions and the committed lockfile. Review dependency updates and license notices, run the required checks, and investigate security advisories rather than silently suppressing them.
 

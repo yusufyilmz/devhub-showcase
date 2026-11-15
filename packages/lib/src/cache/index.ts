@@ -1,10 +1,4 @@
-export {
-  clearAllCaches,
-  clearCache,
-  debugCache,
-  getCacheInfo,
-  getCacheStats,
-  testCacheStrategies,
-  updateServiceWorker,
-  useCacheManager,
-} from "./cache-manager";
+export { allowCvImport } from "./cv-import-limit";
+export { allowPortfolioChat } from "./portfolio-chat-limit";
+export { RedisCacheClient } from "./redis-cache";
+export { allowFitnessAssistant, allowStudioAssistant } from "./studio-assistant-limit";

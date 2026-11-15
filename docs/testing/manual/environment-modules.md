@@ -13,7 +13,3 @@
 | 3    | [Studio](http://localhost:3001/)  | `/`        | In a temporary client consumer, attempt to read a server-only setting. Remove the temporary consumer afterward.                      | Access is rejected; secret value is not returned.                 | Not run                  |
 
 Settings are strings, including flags and numeric limits, to preserve existing comparisons. No defaults replace existing feature-specific fallbacks. The modules do not load `.env.local` themselves; Next.js handles loading for app execution. Standalone scripts must load their environment explicitly.
-
-## Automated verification
-
-Both app typechecks and production builds passed locally. All 68 Fitness tests and 64 focused Studio tests passed, including schema validation and browser secret-access checks. A broader Studio feature run had three UI failures because `window.matchMedia` is missing in its test environment; manual/provider/deployed checks remain not run.

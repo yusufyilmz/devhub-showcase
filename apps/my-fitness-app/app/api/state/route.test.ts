@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { starterWorkspace } from "@/features/task-workspace/starter";
+import { starterWorkspace } from "@shared/lib/workspace-defaults";
 
 const mocks = vi.hoisted(() => ({
   identity: vi.fn(),
@@ -18,8 +18,8 @@ vi.mock("@shared/auth/server", () => ({
   createClient: async () => ({ auth: { getUser: mocks.identity } }),
   createRequestClient: () => ({ auth: { getUser: mocks.identity } }),
 }));
-vi.mock("@shared/services/db/client", () => ({ database: () => ({}) }));
-vi.mock("@shared/services/workspace", async (importOriginal) => ({
+vi.mock("@shared/lib/db/client", () => ({ database: () => ({}) }));
+vi.mock("@shared/lib/workspace", async (importOriginal) => ({
   ...(await importOriginal()),
   WorkspaceRepository: class {
     load = mocks.load;
@@ -45,7 +45,7 @@ describe("private Fitness workspace API", () => {
   beforeEach(() => {
     vi.stubEnv("APP_URL", origin);
     vi.stubEnv("FITNESS_ADDITIONAL_ORIGIN", "");
-    vi.stubEnv("SUPABASE_DB_URL", "test");
+    vi.stubEnv("SUPABASE_DB_URL", "postgres://example.test/fitness");
     vi.clearAllMocks();
     mocks.load.mockImplementation(async (id: string) => {
       const state = starterWorkspace();

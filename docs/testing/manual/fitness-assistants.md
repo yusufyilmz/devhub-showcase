@@ -20,4 +20,4 @@
 | 10   | [Fitness Assistant](https://myfitnessstudio.vercel.app/?view=Assistant) | `/?view=Assistant`    | Open the Assistant directly. Check the centered prompt and starter actions. Send a fictional request with Enter, then choose **New chat**.                               | The reply appears in the page conversation. New chat restores the starter screen without changing saved data.                | Desktop and mobile fixtures.                                                          |
 | 11   | [Fitness Tasks](https://myfitnessstudio.vercel.app/?view=Tasks)         | `/?view=Tasks`        | Click **Fitness assistant** in the header, then use the browser’s Back action.                                                                                           | The assistant opens at its own URL. Back returns to Tasks.                                                                   | Desktop and mobile fixtures.                                                          |
 
-[Rollout and configuration](../../features/assistant-rollout.md)
+[Rollout and configuration](/docs/dev-studio/assistant-rollout.md)

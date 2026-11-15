@@ -1,45 +1,47 @@
 "use client";
 
-import { useState } from "react";
-
 import { getPortfolioCopy } from "@shared/config";
 
+import { Button } from "../../buttons/button";
 import { IconButton } from "../../buttons/icon-button/IconButton";
 import { MenuIcon } from "../../display/icons/Icons";
-import { Drawer } from "../../overlays/drawer";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../../overlays/sheet";
 import { MenuItems } from "./MenuItems";
-import { mobileMenuStyles } from "./styles";
 import type { MobileMenuOptions } from "./types";
 
 export function MobileMenu({ language = "en", hiddenLinks = [] }: MobileMenuOptions) {
   const text = getPortfolioCopy(language);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
 
   return (
-    <>
-      <IconButton
-        aria-expanded={isOpen}
-        aria-label={text.menu}
-        className={mobileMenuStyles.element1}
-        onClick={toggleMenu}
-        size="lg"
-        surface="portfolio"
-        variant="outline"
+    <Sheet>
+      <SheetTrigger asChild>
+        <IconButton aria-label={text.menu} className="md:hidden" size="lg" variant="outline">
+          <MenuIcon fontSize="medium" />
+        </IconButton>
+      </SheetTrigger>
+      <SheetContent
+        aria-describedby={undefined}
+        className="z-[300] w-[min(19rem,calc(100vw-2rem))] border-border/75"
       >
-        <MenuIcon fontSize="medium" />
-      </IconButton>
-      <Drawer anchor="right" onClose={toggleMenu} open={isOpen}>
-        <div className={mobileMenuStyles.element2} role="presentation">
-          <MenuItems hiddenLinks={hiddenLinks} language={language} />
-          <a className={mobileMenuStyles.element3} href="/login">
-            {text.createCv}
-          </a>
+        <SheetHeader className="border-b border-border/60">
+          <SheetTitle>{text.menu}</SheetTitle>
+        </SheetHeader>
+        <div className="grid gap-xs px-md pb-md [&>a]:min-h-10 [&>a]:justify-start">
+          <MenuItems closeOnSelect hiddenLinks={hiddenLinks} language={language} />
+          <SheetClose asChild>
+            <Button className="mt-sm" href="/login" variant="outline">
+              {text.createCv}
+            </Button>
+          </SheetClose>
         </div>
-      </Drawer>
-    </>
+      </SheetContent>
+    </Sheet>
   );
 }

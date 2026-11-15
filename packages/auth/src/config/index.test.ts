@@ -4,10 +4,10 @@ import { supabaseConfig, supabaseConfigured } from ".";
 
 describe("SupabaseConfig", () => {
   afterEach(() => vi.unstubAllEnvs());
-  it("prefers a publishable key over the legacy anon key", () => {
+  it("prefers a publishable key over the anon key", () => {
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://example.supabase.co");
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "publishable");
-    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "legacy");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "anon-key");
     expect(supabaseConfig()).toEqual({
       key: "publishable",
       url: "https://example.supabase.co",
@@ -16,15 +16,15 @@ describe("SupabaseConfig", () => {
   it("retains compatibility with existing anon-key deployments", () => {
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://example.supabase.co");
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "");
-    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "legacy");
-    expect(supabaseConfig().key).toBe("legacy");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "anon-key");
+    expect(supabaseConfig().key).toBe("anon-key");
   });
   it("reports when public Supabase env vars are present", () => {
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://example.supabase.co");
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "publishable");
     expect(supabaseConfigured()).toBe(true);
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "");
-    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "legacy");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "anon-key");
     expect(supabaseConfigured()).toBe(true);
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "");
     expect(supabaseConfigured()).toBe(false);

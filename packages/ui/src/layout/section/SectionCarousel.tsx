@@ -1,6 +1,10 @@
 "use client";
 
+import "./section-views.css";
+
 import { useId, useRef } from "react";
+
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Button } from "../../buttons/button";
 import { Section } from "./Section";
@@ -28,7 +32,10 @@ export function SectionCarousel({
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
         ? "instant"
         : "smooth",
-      left: direction * node.clientWidth * 0.85,
+      left:
+        direction *
+        ((node.children[1]?.getBoundingClientRect().left ?? 0) -
+          (node.children[0]?.getBoundingClientRect().left ?? 0) || node.clientWidth * 0.85),
     });
   }
 
@@ -41,19 +48,25 @@ export function SectionCarousel({
           <Button
             aria-controls={listId}
             aria-label={previousLabel}
+            className="size-[2.25rem]"
             onClick={() => move(-1)}
+            size="icon"
             type="button"
+            variant="outline"
           >
-            ←
+            <ChevronLeft aria-hidden="true" />
           </Button>
 
           <Button
             aria-controls={listId}
             aria-label={nextLabel}
+            className="size-[2.25rem]"
             onClick={() => move(1)}
+            size="icon"
             type="button"
+            variant="outline"
           >
-            →
+            <ChevronRight aria-hidden="true" />
           </Button>
         </div>
 

@@ -1,9 +1,10 @@
 import { ZodError } from "zod";
 
-import { ProfileAccessError } from "@shared/services/profile";
+import { ProfileAccessError } from "@shared/lib/profile";
 
 import { requireWorkspace } from "@/features/admin/admin-auth";
-import { JobsError, jobCv } from "@/features/jobs/workspace";
+
+import { JobsError, jobCv } from "../_workspace";
 
 export async function GET(request: Request) {
   try {

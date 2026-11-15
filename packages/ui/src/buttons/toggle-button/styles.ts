@@ -1,3 +1,5 @@
-export function toggleButtonClassName(...values: unknown[]): string {
-  return `rounded-lg px-3 py-1.5 text-sm ${values[0]}`;
-}
+import { pressedToggleStyles } from "../toggle/styles";
+
+export const toggleButtonStyles = {
+  button: `border-border text-muted-foreground ${pressedToggleStyles}`,
+} as const;

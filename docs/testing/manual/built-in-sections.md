@@ -17,7 +17,7 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 
 ## Related evidence and detail
 
-- [e2e/portfolio/section-settings.spec.ts](../../../e2e/portfolio/section-settings.spec.ts)
-- [e2e/portfolio/section-order.spec.ts](../../../e2e/portfolio/section-order.spec.ts)
+- [e2e/portfolio/section-settings.spec.ts](../../../apps/my-dev-studio/e2e/portfolio/section-settings.spec.ts)
+- [e2e/portfolio/section-order.spec.ts](../../../apps/my-dev-studio/e2e/portfolio/section-order.spec.ts)
 
 Return to the [manual testing index](index.md).

@@ -4,12 +4,12 @@ const mocks = vi.hoisted(() => ({
   published: vi.fn(),
   render: vi.fn(),
 }));
-vi.mock("@shared/services/published-profile", () => ({
+vi.mock("@shared/lib/published-profile", () => ({
   readPublicProfile: mocks.published,
 }));
-vi.mock("@/features/portfolio/cv-response", () => ({ cvResponse: mocks.render }));
+vi.mock("../../../api/cv/_response", () => ({ cvResponse: mocks.render }));
 
-vi.mock("@/features/portfolio/access/server-access", () => ({
+vi.mock("../../../[username]/access/_session", () => ({
   readProtectedProfile: vi.fn().mockResolvedValue(null),
 }));
 

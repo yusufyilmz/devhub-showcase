@@ -10,16 +10,25 @@ function Example({ width = 560 }: { width?: number }) {
           <MenubarTrigger>Portfolio</MenubarTrigger>
           <MenubarContent>
             <MenubarItem>Preview</MenubarItem>
-            <MenubarItem>Download CV</MenubarItem>
+            <MenubarItem disabled>Download CV</MenubarItem>
+            <MenubarItem>PortfolioDocumentationForContributors.json</MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
+        <MenubarMenu>
+          <MenubarTrigger>View</MenubarTrigger>
+          <MenubarContent>
+            <MenubarItem>Show drafts</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
     </div>
   );
 }
-const meta = { component: Example, tags: ["autodocs"], title: "UI/menubar" } satisfies Meta<
-  typeof Example
->;
+const meta = {
+  component: Example,
+  tags: ["autodocs"],
+  title: "UI/Overlays/Menubar",
+} satisfies Meta<typeof Example>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {};

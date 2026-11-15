@@ -1,3 +1,5 @@
+import "./background.css";
+
 import { cn } from "cn";
 
 import { backgroundVariants } from "./styles";
@@ -5,6 +7,7 @@ import type { BackgroundProps } from "./types";
 
 export function Background({
   className,
+  effect,
   variant,
   pattern,
   gradient,
@@ -31,6 +34,7 @@ export function Background({
           variant,
         }),
       )}
+      data-effect={effect}
       data-slot="background"
       {...props}
     >

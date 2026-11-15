@@ -1,4 +1,4 @@
 export {
   ThemeCustomizer,
   type ThemeCustomizerProps,
-} from "../customizers/ThemeCustomizer";
+} from "./ThemeCustomizer";

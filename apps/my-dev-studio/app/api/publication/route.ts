@@ -1,7 +1,4 @@
-import {
-  changePublication,
-  publicationStatus,
-} from "@/features/portfolio/publication/publication-api";
+import { changePublication, publicationStatus } from "./_handlers";
 export async function GET() {
   return publicationStatus();
 }

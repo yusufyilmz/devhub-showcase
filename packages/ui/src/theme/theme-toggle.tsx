@@ -3,16 +3,22 @@
 import "../navigation/chrome.css";
 import "./settings.css";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useId, useState } from "react";
 
 import { Moon, Palette, Sun, SwatchBook } from "lucide-react";
 
-import { useUserConfigStore } from "@shared/runtime/user";
+import { useThemeStore } from "@shared/runtime/user";
 
+import { IconButton } from "../buttons";
 import { Button as LibraryButton } from "../buttons/button/Button";
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../overlays/dialog/Dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "../overlays/dialog/Dialog";
 import { AppearanceOptions } from "./AppearanceOptions";
-import { themeToggleStyles } from "./styles";
 import type { ThemeToggleOptions } from "./types";
 
 export const ThemeContext = createContext({ mode: "dark", toggle: () => {} });
@@ -23,51 +29,48 @@ export function ThemeToggle({
   const { mode, toggle } = useContext(ThemeContext);
   const [expanded, setExpanded] = useState(false);
   const [open, setOpen] = useState(false);
+  const actionsId = useId();
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <div className="appearance-launcher" data-expanded={expanded || undefined}>
-        <LibraryButton
+        <IconButton
+          aria-controls={actionsId}
           aria-expanded={expanded}
           aria-label="Appearance controls"
-          className="theme-toggle"
-          onClick={() => setExpanded(!expanded)}
+          className="theme-toggle pr-0.5"
+          onClick={() => setExpanded((value) => !value)}
           type="button"
-          variant="unstyled"
         >
           <Palette size={18} />
-        </LibraryButton>
-        <div className="appearance-quick-actions">
-          <LibraryButton
+        </IconButton>
+        <div className="appearance-quick-actions" id={actionsId}>
+          <IconButton
             aria-label={mode === "dark" ? labels.light : labels.dark}
-            className={themeToggleStyles.element1}
+            className={"theme-toggle"}
             onClick={toggle}
             title={mode === "dark" ? labels.light : labels.dark}
             type="button"
-            variant="unstyled"
           >
             {mode === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-          </LibraryButton>
-          <LibraryButton
-            aria-label="Theme settings"
-            className="theme-toggle"
-            onClick={() => setOpen(true)}
-            type="button"
-            variant="unstyled"
-          >
-            <SwatchBook size={18} />
-          </LibraryButton>
+          </IconButton>
+          <DialogTrigger asChild>
+            <IconButton aria-label="Theme settings" className="theme-toggle" type="button">
+              <SwatchBook aria-hidden="true" size={18} />
+            </IconButton>
+          </DialogTrigger>
         </div>
       </div>
       <DialogContent className="appearance-dialog">
         <header>
           <DialogTitle>Make yourself at home</DialogTitle>
           <DialogDescription>
-            Choose your colors, typography and space. Saved on this device.
+            Choose your colors, typography and space. Sign in to sync your preferences across
+            devices.
           </DialogDescription>
         </header>
         <AppearanceOptions />
         <LibraryButton
-          onClick={() => useUserConfigStore.setState({ themePreferences: {} })}
+          onClick={() => useThemeStore.setState({ themePreferences: {} })}
           type="button"
           variant="outline"
         >

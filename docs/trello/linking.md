@@ -306,10 +306,9 @@ describe("Article-Trello Linking", () => {
 
 ## 📚 **Related Documentation**
 
-- [Article Comment Integration](./comments.md)
-- [Trello Store Documentation](../stores/trelloStore.ts)
-- [Article Store Documentation](@/article/store/articleStore.ts)
-- [Utility Functions](../utils/articleMetadata.ts)
+- [Article comment integration](./comments.md)
+- [Trello store](../../packages/trello/src/stores/trelloStore.ts)
+- [Article metadata utilities](../../packages/trello/src/utils/articleMetadata.ts)
 
 ---
 

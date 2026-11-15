@@ -1,14 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { profile } from "@shared/config";
-import { ProfileAccessError } from "@shared/services/profile";
+import { ProfileAccessError } from "@shared/lib/profile";
 
 const mocks = vi.hoisted(() => ({ published: vi.fn(), workspace: vi.fn() }));
 vi.mock("@/features/admin/admin-auth", () => ({
   requireWorkspace: mocks.workspace,
   sameOrigin: () => true,
 }));
-vi.mock("@shared/services/published-profile", () => ({ readPublicProfile: mocks.published }));
+vi.mock("@shared/lib/published-profile", () => ({ readPublicProfile: mocks.published }));
 
 import { GET } from "./route";
 

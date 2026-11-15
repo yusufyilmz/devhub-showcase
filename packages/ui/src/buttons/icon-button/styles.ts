@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const iconButtonVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-[var(--background)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "ui-icon-button [&[data-surface='portfolio']]:[--primary:var(--card)] [&[data-surface='portfolio']:hover]:[border-color:var(--primary)] [&.profile-menu-trigger[data-state='open']]:[border-color:var(--primary)] inline-flex items-center justify-center rounded-lg border border-transparent text-sm font-medium motion-safe:transition-colors motion-safe:duration-150 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:border-transparent disabled:bg-muted disabled:text-muted-foreground disabled:opacity-55 disabled:shadow-none",
   {
     defaultVariants: {
       size: "default",
@@ -9,39 +9,37 @@ export const iconButtonVariants = cva(
     },
     variants: {
       size: {
-        default: "h-10 w-10",
-        icon: "h-10 w-10",
-        lg: "h-11 w-11",
-        sm: "h-9 w-9",
+        default: "size-10",
+        icon: "size-10",
+        lg: "size-11",
+        sm: "size-9",
       },
       variant: {
-        default:
-          "bg-[var(--primary)] text-[var(--primary-foreground)] hover:bg-[var(--primary)]/90",
+        default: "border-primary bg-primary text-primary-foreground hover:bg-primary/90",
         destructive:
-          "bg-[var(--destructive)] text-[var(--destructive-foreground)] hover:bg-[var(--destructive)]/90",
-        ghost: "hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]",
-        link: "text-[var(--primary)] underline-offset-4 hover:underline",
-        outline:
-          "border border-[var(--border)] bg-[var(--background)] hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]",
-        secondary:
-          "bg-[var(--secondary)] text-[var(--secondary-foreground)] hover:bg-[var(--secondary)]/80",
+          "border-destructive bg-destructive text-destructive-foreground hover:bg-destructive/90 focus-visible:outline-destructive",
+        ghost: "text-muted-foreground hover:bg-muted hover:text-foreground",
+        link: "text-foreground underline-offset-4 hover:underline",
+        outline: "border-border bg-background text-foreground hover:bg-muted",
+        secondary: "border-border bg-transparent text-foreground hover:bg-foreground/5",
       },
     },
   },
 );
 
 export const iconButtonStyles = {
-  iconButton: "ui-icon-button",
+  iconButton:
+    "ui-icon-button [&[data-surface='portfolio']]:[--primary:var(--card)] [&[data-surface='portfolio']:hover]:[border-color:var(--primary)] [&.profile-menu-trigger[data-state='open']]:[border-color:var(--primary)]",
 } as const;
 
 export const styledIconButtonStyles = {
   classes: "relative transition-all duration-300",
-  classes2: "border-2",
+  classes2: "border",
   classes3: "fixed bottom-8 right-8 z-50 size-14 shadow-2xl",
   classes4: "hover:-translate-y-0.5",
   classes5: "hover:scale-110",
-  classes6: "hover:shadow-lg",
-  classes7: "animate-pulse shadow-lg",
+  classes6: "hover:shadow-lg [--notification-tone:var(--primary)]",
+  classes7: "animate-pulse shadow-lg [--notification-tone:var(--primary)]",
   element1:
     "absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs font-medium text-destructive-foreground",
 } as const;

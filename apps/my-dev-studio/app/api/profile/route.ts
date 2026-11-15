@@ -5,8 +5,8 @@ import {
   ProfileConflictError,
   ProfileSetupError,
   ProfileUsernameError,
-} from "@shared/services/profile";
-import { readPublicProfile } from "@shared/services/published-profile";
+} from "@shared/lib/profile";
+import { readPublicProfile } from "@shared/lib/published-profile";
 
 import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
 

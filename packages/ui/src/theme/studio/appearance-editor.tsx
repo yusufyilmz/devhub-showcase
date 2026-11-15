@@ -4,10 +4,10 @@ import { useState } from "react";
 
 import type { ColorMode, PortfolioProfile } from "@shared/config";
 
+import { HeroSettingsEditor } from "../../../../assistant/src/components/sections/hero-section/HeroSettingsEditor";
 import { Button } from "../../buttons";
 import { Card } from "../../cards";
 import { SelectField } from "../../forms";
-import { HeroSettingsEditor } from "../../sections/hero-section/HeroSettingsEditor";
 import { appearanceEditorStyles } from "./styles";
 import { ThemePicker } from "./theme-picker";
 import { ThemePreview } from "./theme-preview";

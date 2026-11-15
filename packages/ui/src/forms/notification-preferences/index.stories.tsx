@@ -19,7 +19,7 @@ const meta = {
     supported: true,
   },
   component: NotificationPreferences,
-  title: "Forms/Device notifications",
+  title: "UI/Forms/Notification Preferences",
 } satisfies Meta<typeof NotificationPreferences>;
 export default meta;
 export const Default: StoryObj<typeof meta> = {};
@@ -30,3 +30,11 @@ export const Subscribed: StoryObj<typeof meta> = {
   args: { enabled: true, installed: true, permission: "granted" },
 };
 export const SetupRequired: StoryObj<typeof meta> = { args: { configured: false } };
+export const EnableFailure: StoryObj<typeof meta> = {
+  args: {
+    onEnable: async () => {
+      await new Promise((resolve) => setTimeout(resolve, 750));
+      throw new Error("The browser blocked notifications for this device.");
+    },
+  },
+};

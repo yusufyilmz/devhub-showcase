@@ -1,26 +1,25 @@
 import { cva } from "class-variance-authority";
 
 export const badgeVariants = cva(
-  "inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
+  "inline-flex w-fit shrink-0 items-center justify-center gap-xs rounded-full border px-s py-0.5 text-xs font-medium whitespace-nowrap motion-safe:transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [&>svg]:pointer-events-none [&>svg]:size-3",
   {
     defaultVariants: {
       variant: "default",
     },
     variants: {
       variant: {
-        default: "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
+        default: "border-border bg-foreground/5 text-foreground [a&]:hover:bg-foreground/10",
         destructive:
-          "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        outline: "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
-        secondary:
-          "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
+          "border-transparent bg-destructive/12 text-destructive [a&]:hover:bg-destructive/20",
+        outline: "border-border bg-transparent text-foreground [a&]:hover:bg-foreground/5",
+        secondary: "border-transparent bg-primary/12 text-foreground [a&]:hover:bg-primary/20",
       },
     },
   },
 );
 
 export const badgeStyles = {
-  countBadge: "min-w-[1.2rem] h-5",
-  dotBadge: "w-2 h-2 rounded-full",
+  countBadge: "h-5 min-w-5 px-1 tabular-nums",
+  dotBadge: "inline-block size-2 shrink-0 rounded-full",
   element1: "text-xs font-semibold",
 } as const;

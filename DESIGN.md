@@ -16,7 +16,7 @@ colors:
   muted: "#757575"
   muted-studio: "#a0b1c6"
   muted-studio-light: "#536981"
-  hairline: "#3f3f3f"
+  hairline: "color-mix(in srgb, #0a0a0a 14%, transparent)"
   hairline-studio: "#2b3c51"
   hairline-studio-light: "#cfdce7"
   primary: "#0a0a0a"
@@ -130,21 +130,21 @@ components:
     height: 32px
     padding: 0 10px
   button-secondary:
-    backgroundColor: "{colors.secondary}"
-    textColor: "{colors.on-secondary}"
+    backgroundColor: transparent
+    textColor: "{colors.ink}"
     typography: "{typography.button}"
     rounded: "{rounded.lg}"
     height: 32px
     padding: 0 10px
   button-outline:
-    backgroundColor: "{colors.canvas}"
+    backgroundColor: transparent
     textColor: "{colors.ink}"
     rounded: "{rounded.lg}"
     height: 32px
     padding: 0 10px
   button-ghost:
     backgroundColor: transparent
-    textColor: "{colors.ink}"
+    textColor: "{colors.muted}"
     rounded: "{rounded.lg}"
     height: 32px
     padding: 0 10px
@@ -160,10 +160,10 @@ components:
     rounded: "{rounded.md}"
     size: 40px
   badge:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.on-primary}"
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.ink}"
     typography: "{typography.caption}"
-    rounded: "{rounded.md}"
+    rounded: "{rounded.pill}"
     padding: 2px 8px
   card:
     backgroundColor: "{colors.card}"
@@ -171,15 +171,15 @@ components:
     rounded: "{rounded.xl}"
     padding: 24px 0
   input:
-    backgroundColor: transparent
+    backgroundColor: "{colors.canvas}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.md}"
-    height: 36px
+    rounded: "{rounded.lg}"
+    height: 40px
     padding: 4px 12px
   dialog:
     backgroundColor: "{colors.canvas}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.lg}"
+    rounded: "{rounded.xl}"
     padding: 24px
   section-card:
     backgroundColor: "{colors.surface-studio}"
@@ -201,18 +201,27 @@ Published portfolios read as a dark studio: navy canvas, one cyan accent, Inter 
 
 Styles and tokens live in `packages/ui/src/styles`. Components in `packages/ui` consume those tokens. They do not invent a second palette. The folder map and export names are documented below; day-to-day edits follow the “where to edit” table.
 
+## AI lookup guide
+
+Before reading the full design reference, run these commands from the repository root:
+
+```sh
+pnpm --silent lookup design "spacing" --limit 1 --max-tokens 1000
+pnpm --silent lookup design "typography" --limit 1
+pnpm --silent lookup catalog "button" --package @shared/ui --limit 2
+```
+
+Use a few specific keywords: text searches require every query word to match. Results retain source references, parent prerequisites and named global constraints. Follow `hasMore` with `--cursor '<cursor>'` using the same query and filters. Retrieve a result or oversized-record locator with `pnpm --silent lookup section '<id>' --max-tokens 4000`. Increase the budget when a complete section does not fit; a budget failure does not mean the design rule is absent. Read the relevant design rules and mandatory instructions before implementation.
+
+See the [AI quick start](.agents/README.md) and [full CLI usage](tools/cli/README.md#token-bounded-repository-lookup).
+
 ## Stylesheet architecture
 
-Component styles are now colocated: portfolio skins in
-`packages/ui/src/portfolio/portfolio.css`, section skins in
-`packages/ui/src/sections/sections.css`, navigation in
-`packages/ui/src/navigation/chrome.css`, chat in `packages/ui/src/display/chat`,
-examples in `packages/ui/src/sections/home-section`, and login in
-`packages/ui/src/forms/login-form`. The older directory map below describes the
-original organization; these colocated paths take precedence. Components import
-their own styles; global bundles no longer import component skins. Public CSS
-forwarding imports remain available. Themes, tokens, layout CSS,
-and resets remain centralized. Shared surface rules load from cards and controls.
+Keep tokens and the foundation layer in `packages/ui/src/styles`. Use Tailwind
+utilities and shared UI components for layouts and controls. Put component CSS
+next to the component that loads it. The global bundles load tokens, themes,
+layout rules and resets. Fitness styles live with the Fitness app. The
+Storybook demo shell lives with the Storybook app.
 
 Two stacks share one component library. **Foundation** is the token + Tailwind layer (`data-brand`, `data-theme`, appearance). **Portfolio** is the RGB palette model for published pages (`data-portfolio-theme`, section frames, site chrome). Storybook and token-only hosts load foundation only so toolbar brands are not overridden by portfolio remaps.
 
@@ -222,49 +231,33 @@ Two stacks share one component library. **Foundation** is the token + Tailwind l
 | --------------------------- | ----------------------------------------------------------- |
 | `@shared/ui/foundation.css` | Tailwind, design tokens, shared surfaces. **Storybook.**    |
 | `@shared/ui/app.css`        | Foundation + portfolio bundle. **MyDevStudio root layout.** |
-| `@shared/ui/globals.css`    | Same as `app.css` (compatibility shim).                     |
+| `@shared/ui/globals.css`    | Same file as `app.css`.                                     |
 
-Lazy or partial loads: `@shared/ui/portfolio/bundle.css` (portfolio CSS without the foundation `@source` setup), `@shared/ui/examples.css` (example carousel pages).
+Lazy or partial loads: `@shared/ui/portfolio/bundle.css` (portfolio CSS without the foundation `@source` setup), `@shared/assistant/examples.css` (example carousel pages).
 
 ### Repository layout
 
 ```tree
 packages/ui/src/styles/
-  app.css                 Full app (foundation + portfolio)
+  app.css                 Full app (foundation + portfolio bundle)
   foundation.css          Tailwind + tokens + shared surfaces
-
   tokens/                 Brand palettes, modes, appearance, @theme extensions
-    index.css             Token aggregator (shim: @shared/ui/shadcn.css)
-
-  foundation/
-    theme-aliases.css     Legacy Tailwind color names tied to --bg-rgb
-    surfaces.css          Card elevation, focus, reduced motion
-
-  portfolio/              Published portfolio + RGB studio chrome
-    bundle.css            Imports portfolio sheets + semantic-bridge
-    components.css        Control skins, studio defaults, 767px collapse
-    sections.css          Section frames (.library-section, etc.)
-    layouts.css           Portfolio page layout
-    presets.css           Named portfolio themes on [data-portfolio-theme]
-    chrome.css            Sticky header, portfolio nav
-    chat.css              Visitor chat widget
-    semantic-bridge.css   Maps --bg-rgb → shadcn vars on [data-portfolio-theme] only
-
-  examples.css            Example carousel only
+    index.css             Token aggregator (export: @shared/ui/shadcn.css)
+  foundation/             Theme aliases and shared design tokens
 ```
 
-Older root paths (`styles.css`, `legacy.css`, `layout.css`, `components.css`, `sections.css`, `portfolios.css`, `themes.css`, `portfolio-chat.css`, `theme.css`, `surfaces.css`) re-export the files above. Prefer the names in the entry table for new code.
+Component styles sit beside their components. Portfolio layout, presets, and the semantic bridge live in `packages/ui/src/styles/portfolio/`. Chat, editors, and section sheets live beside those components in `packages/assistant`. Public names such as `@shared/ui/components.css`, `@shared/ui/sections.css`, and `@shared/ui/surfaces.css` still resolve to those files.
 
 ### Where to edit
 
-| Change                  | File                                                |
-| ----------------------- | --------------------------------------------------- |
-| New brand or mode token | `tokens/`                                           |
-| Shadcn semantic token   | `tokens/palettes.css` or `tokens/accent-brands.css` |
-| Studio control skin     | `portfolio/components.css`                          |
-| Section layout          | `portfolio/sections.css`                            |
-| Portfolio theme preset  | `portfolio/presets.css`                             |
-| Site header or nav      | `portfolio/chrome.css`                              |
+| Change                  | File                             |
+| ----------------------- | -------------------------------- |
+| New brand or mode token | `styles/tokens/`                 |
+| Shadcn semantic token   | `styles/tokens/palettes.css`     |
+| Studio control skin     | `styles/portfolio/portfolio.css` |
+| Section layout          | `layout/section/sections.css`    |
+| Portfolio theme preset  | `styles/portfolio/presets.css`   |
+| Site header or nav      | `navigation/chrome.css`          |
 
 Implementation detail for contributors: [packages/ui/src/styles/STYLES.md](packages/ui/src/styles/STYLES.md) mirrors this section and links back here.
 
@@ -282,7 +275,7 @@ The component theme defaults to a light gray scale. Brand color is a swap, not a
 | `{colors.on-primary}`     | `#ffffff` | Text on primary                               |
 | `{colors.secondary}`      | `#151515` | Secondary button                              |
 | `{colors.destructive}`    | `#ff5f53` | Destructive text and soft destructive buttons |
-| `{colors.hairline}`       | `#3f3f3f` | Borders                                       |
+| `{colors.hairline}`       | 14% ink   | Soft borders on cards, fields, and menus      |
 | `{colors.ring}`           | `#959595` | Focus ring                                    |
 | `{colors.accent}`         | `#67d8e7` | Published-page accent on the dark canvas      |
 | `{colors.accent-light}`   | `#0d6e84` | Same accent when the published page is light  |
@@ -315,19 +308,20 @@ The type scale is multiplied by `--text-scale` (default 1): 12, 14, 16, 18, 20, 
 
 ## Spacing
 
-The comfortable scale is the default. Compact, cozy, wide, and extra scales exist as theme options and only change these steps.
+Comfortable is the default. The appearance controls offer Compact, Comfortable, and Spacious. These presets adjust semantic padding and gaps. The 4px Tailwind unit stays fixed so controls and icons keep their intended dimensions.
 
-| Token            | Value |
-| ---------------- | ----- |
-| `{spacing.unit}` | 4px   |
-| `{spacing.xs}`   | 6px   |
-| `{spacing.s}`    | 12px  |
-| `{spacing.sm}`   | 16px  |
-| `{spacing.md}`   | 24px  |
-| `{spacing.lg}`   | 32px  |
-| `{spacing.xl}`   | 40px  |
-| `{spacing.2xl}`  | 56px  |
-| `{spacing.3xl}`  | 72px  |
+| Token           | Compact | Comfortable | Spacious |
+| --------------- | ------- | ----------- | -------- |
+| `{spacing.xs}`  | 2px     | 4px         | 6px      |
+| `{spacing.s}`   | 4px     | 8px         | 10px     |
+| `{spacing.sm}`  | 8px     | 12px        | 16px     |
+| `{spacing.md}`  | 12px    | 16px        | 20px     |
+| `{spacing.lg}`  | 16px    | 24px        | 28px     |
+| `{spacing.xl}`  | 24px    | 32px        | 40px     |
+| `{spacing.2xl}` | 32px    | 48px        | 56px     |
+| `{spacing.3xl}` | 48px    | 64px        | 72px     |
+
+Saved Relaxed, Cozy, Wide, and Extra preferences resolve to Spacious.
 
 Published sections use a wider rhythm: 40px page padding, 82px section padding, and a 64px gap between the sticky heading column and the content. The content column starts at 1200px max width. The nav is 78px tall inside a 1280px bar.
 
@@ -349,7 +343,7 @@ Published section cards use 14px. Studio buttons use 9px. Those are fixed radii,
 
 ## Elevation
 
-Component shadows are soft and short. They separate a card or a dialog from the page. Buttons use a smaller control shadow and a quiet inset highlight.
+Controls sit on the page as flat surfaces. A card or dialog is separated by its border, not by a drop shadow. Solid buttons and the selected segmented option use a 1px top inset highlight.
 
 | Token | Value                                                                |
 | ----- | -------------------------------------------------------------------- |
@@ -358,31 +352,33 @@ Component shadows are soft and short. They separate a card or a dialog from the 
 | `md`  | `0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)`   |
 | `lg`  | `0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)` |
 
-Inputs use the `xs` shadow. Dialogs use `lg`. Published cards use `0 6px 26px rgb(0 0 0 / 0.05)` and lift to `0 12px 32px` on hover. The sticky header is not elevated with a shadow. It uses an 88% background and an 18px backdrop blur.
+Fields have no inner shadow. In light mode they are `{colors.canvas}` with a border mixed toward `{colors.ink}`. In dark mode the fill is a 6% foreground wash. Dialogs and menus are flat panels with `{rounded.xl}` and a hairline. Published cards keep `0 6px 26px rgb(0 0 0 / 0.05)`. The sticky header is not elevated with a shadow. It uses an 88% background and an 18px backdrop blur.
 
-Focus is a 3px ring at 50% `{colors.ring}` on components, and a 2px `{colors.accent}` outline with 4px offset on the published page. Disabled controls drop to 50% opacity in the kit and 48% on the published page.
+Focus is a 2px ring at 40% `{colors.ring}` on components. A focused field also darkens its border to `{colors.ink}`. The published page keeps a 2px `{colors.accent}` outline with 4px offset. Disabled solid controls switch to the muted fill and muted text. They do not fade to 50% opacity. Published pages still fade disabled controls to 48%.
 
-Motion is short. Buttons move 1px down on press. Studio buttons move 1px up on hover over 160ms. Dialogs fade and scale from 95% over 200ms. The easing curve is `cubic-bezier(0.4, 0, 0.2, 1)`.
+Motion is short. Cards wash their background on hover over 160ms and stay in place. Dialogs fade and scale from 95% over 200ms. The easing curve is `cubic-bezier(0.4, 0, 0.2, 1)`.
 
 ## Components
 
-The recipes below are the pieces that define the look, in the same sense as Airbnb's search bar, listing card, and primary button. Controls, sections, editors, and chat surfaces from `packages/ui` are listed in [the UI catalog](packages/ui/CATALOG.md). Visual rules stay here. The catalog is the inventory.
+The recipes below are the pieces that define the look, in the same sense as Airbnb's search bar, listing card, and primary button. Controls, sections, editors, and chat surfaces from `packages/ui` are listed in [the UI catalog](packages/ui/CATALOG.md). Visual rules stay here. The catalog is the inventory. Package catalogs are generated with `pnpm generate:catalogs`; edit `catalog.template.md` for written guidance and run `pnpm check:catalogs` to verify the outputs.
 
 ### Button
 
 `packages/ui/src/components/button`
 
-**`button-primary`** — Background `{colors.primary}`, text `{colors.on-primary}`, `{typography.button}`, radius `{rounded.lg}`, height 32px, horizontal padding 10px. Hover mixes the background to 80% opacity. This is the default action.
+**`button-primary`** — Background `{colors.primary}`, text `{colors.on-primary}`, a 1px top inset highlight, `{typography.button}`, radius `{rounded.lg}`, height 32px, horizontal padding 10px. Hover mixes the background to 90% opacity. This is the default action.
 
-**`button-secondary`** — Background `{colors.secondary}`, text `{colors.on-secondary}`. Hover mixes 5% foreground into the fill.
+**`button-secondary`** — Transparent fill, `{colors.ink}` text, and a hairline border. Hover washes 5% foreground over the fill. It keeps the inset highlight.
 
-**`button-outline`** — `{colors.canvas}` fill, `{colors.hairline}` border. Hover fills with the muted surface.
+**`button-outline`** — Transparent fill and a transparent border. Hover draws the hairline. It has no inset.
 
-**`button-ghost`** and **`button-text`** — No fill until hover, then the muted surface.
+**`button-ghost`** — Transparent fill and muted text. Hover strengthens the text to `{colors.ink}`.
 
-**`button-destructive`** — 10% `{colors.destructive}` fill and destructive text. Hover raises the fill to 20%. It is a warning action, not a solid red block.
+**`button-text`** — Same as ghost, with a 5% foreground wash on hover.
 
-**`button-link`** — Primary-colored text with an underline on hover.
+**`button-destructive`** — Solid `{colors.destructive}` fill, white text, and the same inset highlight. Hover mixes the fill to 90%.
+
+**`button-link`** — `{colors.ink}` text with an underline on hover.
 
 Sizes: `xs` 24px, `sm` 28px, default 32px, `lg` 36px. Icon-only sizes match those heights and are square. Icons inside a label are 16px, 14px at `sm`, and 12px at `xs`.
 
@@ -390,33 +386,33 @@ Sizes: `xs` 24px, `sm` 28px, default 32px, `lg` 36px. Icon-only sizes match thos
 
 `packages/ui/src/components/icon-button`
 
-40px square at the default size, 36px small, 44px large. Radius `{rounded.md}`. Variants match the button set: default, secondary, outline, ghost, and a solid destructive fill. The published theme toggle is the circular exception: 40px, full pill, surface fill, hairline border, accent border on hover.
+40px square at the default size, 36px small, 44px large. Radius `{rounded.lg}`. Variants match the button set: solid default, transparent secondary, border-on-hover outline, text-only ghost, and a solid destructive fill. The published theme toggle is the circular exception: 40px, full pill, surface fill, hairline border, accent border on hover.
 
 ### Badge
 
 `packages/ui/src/components/badge`
 
-`{typography.caption}`, medium weight, radius `{rounded.md}`, padding 2px 8px. Default is primary fill. Secondary uses `{colors.secondary}`. Outline keeps the text color and a transparent fill. Destructive is a solid `{colors.destructive}` chip with white text. The published status dot is separate: 6px, accent fill, and a 4px accent ring at 9% opacity.
+`{typography.caption}`, medium weight, full pill, padding 2px 8px. Default is a quiet foreground wash with a hairline. Secondary is a 12% primary wash. Outline is transparent with a hairline. Destructive is a 12% destructive wash with destructive text. The published status dot is separate: 6px, accent fill, and a 4px accent ring at 9% opacity.
 
 ### Card
 
 `packages/ui/src/components/card`
 
-Background `{colors.card}`, text `{colors.ink}`, 1px border, radius `{rounded.xl}`, vertical padding `{spacing.md}`, column layout with a `{spacing.md}` gap. Header and footer pad horizontally by `{spacing.md}`. The title is 16px semibold. Description is 14px muted.
+Background `{colors.card}`, text `{colors.ink}`, 1px border, radius `{rounded.xl}`, vertical padding `{spacing.md}`, column layout with a `{spacing.md}` gap. Header and footer pad horizontally by `{spacing.md}`. The title is 16px semibold. Description is 14px muted. Hover washes 4% foreground over the fill. `interaction="lift"` swaps that wash for an 8% accent tint and a stronger accent border. The card does not move.
 
-**`section-card`** is the published version. Background `{colors.surface-studio}`, 14px radius, 24px padding, and the soft shadow above. Hover shifts the border to 55% accent.
+**`section-card`** is the published version. Background `{colors.surface-studio}`, 14px radius, 24px padding, and the soft shadow above. Hover shifts the border toward the accent.
 
 ### Input and textarea
 
 `packages/ui/src/components/input` and `packages/ui/src/components/textarea`
 
-Height 36px for a single-line field. Full width, radius `{rounded.md}`, 1px input border, transparent fill, 12px horizontal padding. Type is 16px, 14px from the `md` breakpoint. Placeholder is muted. Focus replaces the border with `{colors.ring}` and a 3px ring at 50%. An invalid field uses `{colors.destructive}` for the border and ring. Disabled fields are 50% opacity. The textarea keeps the same chrome with a 64px minimum height.
+Height 40px for a single-line field. Full width, radius `{rounded.lg}`, 1px soft hairline, `{colors.canvas}` fill, 12px horizontal padding. Type is 14px. Placeholder is muted. Focus raises the hairline to 32% ink and draws a 2px ring at 45% `{colors.ring}`. An invalid field uses `{colors.destructive}` for the border and ring. Disabled fields use the muted fill. Dark mode fills the field with 6% foreground. The textarea keeps the same chrome with a 96px minimum height.
 
 ### Dialog
 
 `packages/ui/src/components/dialog`
 
-Centered overlay at 50% black. The panel is `{colors.canvas}`, radius `{rounded.lg}`, padding `{spacing.md}`, shadow `lg`, max width 32rem. It fades and scales in over 200ms. The title is 18px semibold. The close control sits 16px from the top and right. Description text is 14px muted.
+Centered overlay at 40% black. The panel is `{colors.canvas}`, radius `{rounded.xl}`, a hairline, padding `{spacing.md}`, no drop shadow, max width 32rem. It fades and scales in over 200ms. The title is 18px semibold. The close control sits 16px from the top and right. Description text is 14px muted. Menus and popovers use the same flat panel.
 
 ### Typography component
 
@@ -444,7 +440,7 @@ The published page is not a second component library. It is the same type and ac
 
 ## Section library
 
-Portfolio sections in `packages/ui` share one frame, `.library-section`, styled in `packages/ui/src/styles/portfolio/sections.css`. A section does not invent its own palette. It uses the studio canvas, hairline, and accent.
+Portfolio sections share one frame, `.library-section`, styled in `packages/ui/src/layout/section/sections.css`. A section does not invent its own palette. It uses the studio canvas, hairline, and accent.
 
 **`library-section`** — Top hairline in `{colors.hairline-studio}`, 56px vertical padding. The heading is `clamp(28px, 3vw, 44px)` with line height 1.15. Body copy is muted with line height 1.8. Links are `{colors.accent}`. Alignment is left unless `data-alignment` is `center` or `right`. The content grid defaults to 3 columns and can be set to 1, 2, or 4 with `data-columns`. Below 700px the grid and masonry collapse to one column.
 
@@ -473,7 +469,7 @@ Portfolio sections in `packages/ui` share one frame, `.library-section`, styled 
 - Reach for `packages/ui` components before adding a one-off control.
 - Keep one accent on a page. Cyan is the product accent. Red is for contrast marks and destructive actions.
 - Use the spacing and radius tokens. Do not invent a third radius for a button.
-- Use the shared elevation tokens on cards and dialogs. Buttons use the smaller control shadow; text and ghost actions stay flat.
+- Keep cards, dialogs, and menus flat. Solid buttons use the inset highlight; text, ghost, and outline actions stay flat.
 - Swap brand with `data-brand` and theme with `data-theme`. Do not hard-code a new hex for a one-off screen.
 
 ## Shared surface implementation
@@ -486,7 +482,7 @@ its accessible name is Send message. Do not nest the old chat textarea panel in
 the homepage hero. StudioChatScreen provides the full-page conversation layout:
 a quiet workspace sidebar, a centered empty state, and a bottom composer once
 the conversation starts. Use semantic background, card, foreground, border and
-muted tokens, shared spacing and radius tokens, and the small elevation token.
+muted tokens, shared spacing and radius tokens, and a flat hairline surface.
 The mobile layout replaces the sidebar with an explicit workspace disclosure.
 
 HeroSurface supplies the shared low-contrast orbit treatment when no image or
@@ -495,12 +491,12 @@ Example gallery previews are rendered portfolio content, not lazy iframes.
 
 Use `@shared/ui/card`, `@shared/ui/button`, `@shared/ui/input` and
 `@shared/ui/textarea` in product compositions. Elevation and focus styling live in
-`packages/ui/src/cards/surfaces.css`, imported by cards, buttons, inputs and textareas.
-Cards use `interaction="lift"` by default for shared depth, an accent edge and
-hover feedback. Use `interaction="static"` for a preview frame or nested surface
-that should stay still. Lift is limited to fine hover pointers, with matching
-focus-within depth.
-Reduced motion removes transforms and transitions.
+`packages/ui/src/cards/surfaces.css`, loaded with the foundation bundle.
+Cards use `interaction="lift"` by default for an accent-tinted hover wash and
+a stronger border. Use `interaction="static"` for a preview frame or nested surface
+that should stay on the plain card fill. Hover is limited to fine pointers, with matching
+focus-within border color.
+Reduced motion removes the hover wash and transitions.
 
 Use `Card asChild layout="plain"` around an existing section or article to keep
 its semantics and page layout. Existing published palettes use the explicit

@@ -6,7 +6,7 @@ const { sameOrigin, access, answer } = vi.hoisted(() => ({
   sameOrigin: vi.fn(),
 }));
 vi.mock("@/features/admin/admin-auth", () => ({ sameOrigin }));
-vi.mock("@/features/chat/portfolio-chat", () => ({ requireLegacyChat: access }));
+vi.mock("./_access", () => ({ requireMainPortfolioChat: access }));
 vi.mock("@shared/assistant", () => ({
   PortfolioChatModel: class {
     answer = answer;

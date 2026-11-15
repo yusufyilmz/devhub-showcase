@@ -1,16 +1,17 @@
-import "@shared/ui/examples.css";
+import "@shared/assistant/examples.css";
 
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { PortfolioLayout } from "@/features/portfolio/sections";
-import { EngineerPortfolio } from "@/features/portfolio/variants/engineer-portfolio";
 import {
   examplePath,
   exampleViewProfile,
   getPortfolioExample,
   portfolioExamples,
-} from "@/features/studio";
+} from "@shared/assistant/examples-data";
+import { PortfolioLayout } from "@shared/assistant/portfolio";
+
+import { EngineerPortfolio } from "../../../[username]/_engineer-portfolio";
 
 type Props = { params: Promise<{ slug: string }> };
 export function generateStaticParams() {
@@ -41,7 +42,10 @@ export default async function ExamplePage({ params }: Props) {
   const profile = exampleViewProfile(item);
   return (
     <>
-      <aside aria-label="Example portfolio" className="example-banner">
+      <aside
+        aria-label="Example portfolio"
+        className="example-banner [display:flex] [flex-wrap:wrap] [gap:0.75rem] [justify-content:space-between] [padding:1rem_5%] [font-size:0.8rem] [color:var(--foreground)] [background:var(--card)] [border-bottom:1px_solid_var(--border)] [&_a]:[color:inherit] [text-decoration:underline] [text-underline-offset:4px]"
+      >
         <a href="/#examples">← All examples</a>
         <span>Fictional portfolio · Sample work and CV</span>
         <a href="/admin">Create your portfolio ↗</a>

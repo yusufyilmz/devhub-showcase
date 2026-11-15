@@ -2,22 +2,11 @@ import assert from "node:assert/strict";
 
 import { test } from "vitest";
 
-import { seedWorkspace } from "@shared/services/db/seed";
-import { TaskService } from "@shared/services/fitness/task";
-
-import {
-  MealPlanningService,
-  ShoppingListService,
-  WeeklyPlanningService,
-} from "../../../packages/services/src/meal";
-import { ScheduleService } from "../../../packages/services/src/schedule";
-import {
-  createTask,
-  dateKey,
-  monday,
-  validateWorkspace,
-  workspaceSchema,
-} from "../../../packages/services/src/types";
+import { seedWorkspace } from "@shared/lib/db/seed";
+import { MealPlanningService, ShoppingListService, WeeklyPlanningService } from "@shared/lib/meal";
+import { ScheduleService } from "@shared/lib/schedule";
+import { TaskService } from "@shared/lib/services/task";
+import { createTask, dateKey, monday, validateWorkspace, workspaceSchema } from "@shared/lib/types";
 
 const tasks = new TaskService();
 const schedule = new ScheduleService();

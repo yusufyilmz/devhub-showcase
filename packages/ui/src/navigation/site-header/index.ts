@@ -1,1 +1,2 @@
-export * from "./SiteHeader";
+export { SiteHeader } from "./SiteHeader";
+export type { SiteHeaderProps } from "./types";

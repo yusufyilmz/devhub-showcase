@@ -1,14 +1,11 @@
 import { ZodError, z } from "zod";
 
 import { googleProfileCategories } from "@shared/auth/google-provider";
-import { ProfileAccessError } from "@shared/services/profile";
+import { boundedText, readGoogleProfile } from "@shared/lib/google-profile";
+import { ProfileAccessError } from "@shared/lib/profile";
 
 import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
-import {
-  boundedText,
-  googleProfileClientId,
-  readGoogleProfile,
-} from "@/features/admin/google-profile-import";
+import { googleProfileClientId } from "@/features/admin/google-profile-import";
 
 export const maxDuration = 30;
 const headers = { "Cache-Control": "private, no-store" };

@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import { type DayButton, DayPicker, getDefaultClassNames } from "react-day-picker";
 
 import { cn } from "cn";

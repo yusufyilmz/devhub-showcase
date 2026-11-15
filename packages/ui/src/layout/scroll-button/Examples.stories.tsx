@@ -6,18 +6,22 @@ function Example({ width = 560 }: { width?: number }) {
   return (
     <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
       <div>
-        <p id="first">First section</p>
+        <p className="min-h-screen" id="first">
+          First section
+        </p>
         <ScrollButton sectionIds={["first", "second"]} />
-        <p className="mt-32" id="second">
+        <p className="min-h-screen" id="second">
           Second section
         </p>
       </div>
     </div>
   );
 }
-const meta = { component: Example, tags: ["autodocs"], title: "UI/scroll-button" } satisfies Meta<
-  typeof Example
->;
+const meta = {
+  component: Example,
+  tags: ["autodocs"],
+  title: "UI/Layout/Scroll Button",
+} satisfies Meta<typeof Example>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {};

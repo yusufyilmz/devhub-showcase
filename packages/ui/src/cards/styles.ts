@@ -37,11 +37,14 @@ export function appearanceCardClasses({
     GRADIENT_MAP[appearance as AppearanceCardAppearance] ?? GRADIENT_MAP.default;
   return cn(
     appearanceClass,
-    "relative border shadow-sm backdrop-blur-sm",
-    allowOverflow ? "overflow-visible" : "overflow-hidden",
-    enableHover && "cursor-pointer transition-all hover:border-primary/30 hover:shadow-md",
-    enableHover && interactiveElevation && "hover:shadow-xl",
-    enableHover && enableGlow && "hover:shadow-primary/20 hover:brightness-105",
+    "max-w-full px-md wrap-anywhere",
+    allowOverflow
+      ? "overflow-visible"
+      : "overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)]",
+    enableHover &&
+      "cursor-pointer motion-safe:transition-[background-color,border-color,box-shadow,transform]",
+    enableHover && interactiveElevation && "hover:shadow-md",
+    enableHover && enableGlow && "hover:shadow-sm hover:shadow-primary/20 hover:brightness-105",
     className,
   );
 }
@@ -63,7 +66,7 @@ export function appearanceCardStyle({
 }
 
 export const contentCardVariants = cva(
-  "cursor-pointer overflow-hidden relative flex flex-col justify-between transition-all duration-300 ease-in-out group/card",
+  "group/card relative flex min-w-0 max-w-full flex-col justify-between overflow-hidden wrap-anywhere [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)]",
   {
     defaultVariants: {
       layout: "overlay",
@@ -77,35 +80,38 @@ export const contentCardVariants = cva(
         stacked: "justify-start gap-4",
       },
       size: {
-        lg: "h-96 p-6 rounded-2xl max-w-md",
-        md: "h-80 p-4 rounded-xl max-w-sm",
-        sm: "h-64 p-3 rounded-lg max-w-xs",
-        xl: "h-[28rem] p-8 rounded-3xl max-w-lg",
+        lg: "min-h-96 p-lg rounded-2xl max-w-md",
+        md: "min-h-80 p-md rounded-xl max-w-sm",
+        sm: "min-h-64 p-sm rounded-lg max-w-xs",
+        xl: "min-h-[28rem] p-xl rounded-3xl max-w-lg",
       },
       variant: {
-        default: "bg-cover bg-center shadow-xl",
-        gradient: "bg-gradient-to-br shadow-xl",
-        minimal: "bg-transparent border border-border/50 shadow-sm",
-        solid: "bg-background border border-border shadow-lg",
+        default: "bg-cover bg-center",
+        gradient: "bg-gradient-to-br",
+        minimal: "bg-transparent border-border/60",
+        solid: "bg-card border-border/75",
       },
     },
   },
 );
 
-export const overlayVariants = cva("absolute inset-0 transition-all duration-300", {
-  defaultVariants: {
-    overlay: "medium",
-  },
-  variants: {
-    overlay: {
-      gradient: "bg-gradient-to-t from-black/80 via-black/20 to-transparent",
-      heavy: "bg-black/60 group-hover/card:bg-black/80",
-      light: "bg-black/20 group-hover/card:bg-black/40",
-      medium: "bg-black/40 group-hover/card:bg-black/60",
-      none: "opacity-0",
+export const overlayVariants = cva(
+  "pointer-events-none absolute inset-0 motion-safe:transition-colors",
+  {
+    defaultVariants: {
+      overlay: "medium",
+    },
+    variants: {
+      overlay: {
+        gradient: "bg-gradient-to-t from-black/80 via-black/20 to-transparent",
+        heavy: "bg-black/60 group-hover/card:bg-black/80",
+        light: "bg-black/20 group-hover/card:bg-black/40",
+        medium: "bg-black/40 group-hover/card:bg-black/60",
+        none: "opacity-0",
+      },
     },
   },
-});
+);
 
 export function contentCardStyle(
   style: ContentCardStyleOptions,
@@ -122,7 +128,7 @@ export function contentCardStyle(
   }
   if (variant === "gradient") {
     cardStyle.backgroundImage =
-      backgroundColor || "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+      backgroundColor || "linear-gradient(135deg, var(--card), var(--muted))";
   }
   return cardStyle;
 }
@@ -134,7 +140,7 @@ export function titleSizeClass(size: ContentCardProps["size"]) {
 }
 
 export const variantCardVariants = cva(
-  "relative transition-all duration-300 ease-out border border-solid",
+  "relative min-w-0 max-w-full wrap-anywhere border border-solid",
   {
     defaultVariants: {
       rounded: "default",
@@ -151,8 +157,8 @@ export const variantCardVariants = cva(
         sm: "rounded-sm",
       },
       shadow: {
-        default: "shadow-md",
-        lg: "shadow-lg",
+        default: "",
+        lg: "shadow-lg [--notification-tone:var(--primary)]",
         none: "",
         sm: "shadow-sm",
         xl: "shadow-xl",
@@ -165,11 +171,11 @@ export const variantCardVariants = cva(
         spacious: "p-6 sm:p-8 md:p-10",
       },
       variant: {
-        default: "bg-card text-card-foreground border-border",
-        elevated: "bg-card text-card-foreground border-border shadow-lg",
+        default: "bg-card text-card-foreground border-border/75",
+        elevated: "bg-card text-card-foreground border-border/75 shadow-sm",
         glass:
           "bg-card/60 text-card-foreground border-border/50 backdrop-blur-xl backdrop-saturate-120",
-        gradient: "bg-gradient-to-br from-card to-muted text-card-foreground border-border",
+        gradient: "bg-gradient-to-br from-card to-muted text-card-foreground border-border/75",
         subtle: "bg-card/90 text-card-foreground border-border/70",
       },
     },
@@ -202,8 +208,29 @@ export function variantCardStyle(options: VariantCardStyleOptions): React.CSSPro
 }
 
 export const cardBaseStyles = {
-  cardBase: "ui-card rounded-xl border bg-card text-card-foreground",
+  cardBase: cn(
+    "ui-card relative min-w-0 rounded-xl border border-border/75 bg-card text-card-foreground",
+    "inset-shadow-[0_1px_0_color-mix(in_srgb,var(--card-foreground)_5%,transparent)]",
+    "data-[backdrop=accent]:bg-[radial-gradient(ellipse_at_top_right,color-mix(in_srgb,var(--card-accent,var(--primary))_16%,transparent),transparent_72%),linear-gradient(125deg,var(--card)_25%,color-mix(in_srgb,var(--card)_92%,var(--card-accent,var(--primary))))]",
+    "motion-safe:data-[card-type=animated]:animate-[card-entrance_var(--transition-medium)_var(--easing-standard)_both]",
+    "motion-safe:[@media(hover:hover)_and_(pointer:fine)]:data-[card-type=tilt]:hover:[transform:perspective(900px)_rotateX(3deg)_rotateY(-3deg)]",
+    "motion-safe:[@media(hover:hover)_and_(pointer:fine)]:data-[card-type=tilt]:focus-within:[transform:perspective(900px)_rotateX(3deg)_rotateY(-3deg)]",
+  ),
   cardBase2: "flex flex-col gap-md py-md",
+  lift: cn(
+    "motion-safe:transition-colors motion-safe:duration-150",
+    "focus-within:border-[color-mix(in_srgb,var(--card-accent,var(--primary))_22%,var(--border))]",
+    "[@media(hover:hover)_and_(pointer:fine)]:hover:border-[color-mix(in_srgb,var(--card-accent,var(--primary))_22%,var(--border))]",
+    "[@media(hover:hover)_and_(pointer:fine)]:hover:bg-[color-mix(in_srgb,var(--card-accent,var(--primary))_8%,var(--card))]",
+  ),
+} as const;
+
+export const disclosureCardStyles = {
+  body: "mx-md space-y-xs border-t border-border/60 pt-3 pb-md text-sm leading-relaxed wrap-anywhere",
+  chevron:
+    "text-muted-foreground motion-safe:transition-transform group-data-[state=open]:rotate-180",
+  trigger:
+    "group h-auto min-h-11 w-full justify-between gap-sm rounded-[inherit] px-md py-3 text-left whitespace-normal text-card-foreground focus-visible:-outline-offset-2 aria-expanded:rounded-b-none",
 } as const;
 
 export const appearanceCardStyles = {
@@ -220,14 +247,14 @@ export const contentCardStyles = {
   contentCardCopy2: "relative z-10 font-normal leading-relaxed",
   contentCardCopy3: "text-xs",
   contentCardCopy4: "text-sm",
-  element1: "h-8 w-8 rounded-full border border-white/20 object-cover",
-  element2: "h-10 w-10 rounded-full border-2 border-white/20 object-cover",
-  element3: "relative z-10 flex items-center space-x-3",
+  element1: "h-8 w-8 rounded-full border border-current/20 object-cover",
+  element2: "h-10 w-10 rounded-full border border-current/20 object-cover",
+  element3: "relative z-10 flex flex-wrap items-center gap-sm",
   element4: "flex flex-col",
   element5: "ml-auto",
-  element6: "flex items-center space-x-3",
+  element6: "flex flex-wrap items-center gap-sm",
   element7: "flex flex-1 flex-col",
-  element8: "flex items-center justify-between pt-2",
+  element8: "flex flex-wrap items-center justify-between gap-xs pt-2",
   element9: "flex items-center space-x-2",
   element10: "space-y-2",
   element11: "group/card w-full",
@@ -245,20 +272,25 @@ export const contentCardStyles = {
 
 export const hoverCardStyles = {
   hoverCardContent:
-    "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-64 origin-(--radix-hover-card-content-transform-origin) rounded-md border p-4 shadow-md outline-hidden",
+    "z-50 w-64 max-w-[min(calc(100vw-1rem),var(--radix-hover-card-content-available-width))] origin-(--radix-hover-card-content-transform-origin) rounded-xl border border-border bg-popover p-md text-sm leading-relaxed wrap-anywhere text-popover-foreground shadow-md outline-hidden motion-safe:data-[state=open]:animate-in motion-safe:data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
 } as const;
 
 export const revealCardStyles = {
-  element1: "reveal-heading",
-  element2: "reveal-preview",
-  element3: "reveal-brief",
-  element4: "reveal-toggle",
-  element5: "reveal-hint-desktop",
-  element6: "reveal-hint-touch",
-  element7: "reveal-hint-keyboard",
-  element8: "reveal-chevron",
-  element9: "reveal-details",
-  element10: "reveal-details-inner",
+  element1: "reveal-heading [&>div]:p-0 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:tracking-tight",
+  element2:
+    "reveal-preview [display:grid] [grid-template-rows:1fr] [margin-top:14px] [opacity:1] [transition:grid-template-rows_var(--reveal-duration,_580ms)_cubic-bezier(0.22,_1,_0.36,_1),_margin-top_var(--reveal-duration,_580ms)_ease,_opacity_var(--reveal-fade-duration,_380ms)_ease] [&_>_p]:[min-height:0] motion-reduce:[transition:none]",
+  element3: "reveal-brief line-clamp-2 text-sm leading-relaxed text-muted-foreground",
+  element4:
+    "reveal-toggle focus-visible:[&_.reveal-hint-desktop]:[display:none] focus-visible:[&_.reveal-hint-touch]:[display:none] focus-visible:[&_.reveal-hint-keyboard]:[display:inline] mt-4 min-h-9 gap-2 px-3 text-xs text-foreground",
+  element5: "reveal-hint-desktop [@media(hover:_none),_(pointer:_coarse)]:[display:none]",
+  element6:
+    "reveal-hint-touch [display:none] [@media(hover:_none),_(pointer:_coarse)]:[display:inline]",
+  element7: "reveal-hint-keyboard [display:none]",
+  element8:
+    "reveal-chevron text-base leading-none motion-safe:transition-transform group-aria-expanded/button:rotate-90",
+  element9:
+    "reveal-details [display:grid] [visibility:hidden] [grid-template-rows:0fr] [margin-top:0] [opacity:0] [transition:grid-template-rows_var(--reveal-duration,_580ms)_cubic-bezier(0.22,_1,_0.36,_1),_margin-top_var(--reveal-duration,_580ms)_ease,_opacity_var(--reveal-fade-duration,_380ms)_ease,_visibility_var(--reveal-duration,_580ms)] motion-reduce:[animation:none] motion-reduce:[transition:none]",
+  element10: "reveal-details-inner [min-height:0] [overflow:hidden]",
 } as const;
 
 export const variantCardStyles = {
@@ -294,44 +326,16 @@ export const cardBodyStyles = {
   element1: "text-xl font-semibold mb-2",
 } as const;
 
-export const sectionCardsStyles = {
-  element1:
-    "*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4",
-  element2: "@container/card",
-  element3: "text-2xl font-semibold tabular-nums @[250px]/card:text-3xl",
-  element4: "flex-col items-start gap-1.5 text-sm",
-  element5: "line-clamp-1 flex gap-2 font-medium",
-  element6: "size-4",
-  element7: "text-muted-foreground",
-  element8: "@container/card",
-  element9: "text-2xl font-semibold tabular-nums @[250px]/card:text-3xl",
-  element10: "flex-col items-start gap-1.5 text-sm",
-  element11: "line-clamp-1 flex gap-2 font-medium",
-  element12: "size-4",
-  element13: "text-muted-foreground",
-  element14: "@container/card",
-  element15: "text-2xl font-semibold tabular-nums @[250px]/card:text-3xl",
-  element16: "flex-col items-start gap-1.5 text-sm",
-  element17: "line-clamp-1 flex gap-2 font-medium",
-  element18: "size-4",
-  element19: "text-muted-foreground",
-  element20: "@container/card",
-  element21: "text-2xl font-semibold tabular-nums @[250px]/card:text-3xl",
-  element22: "flex-col items-start gap-1.5 text-sm",
-  element23: "line-clamp-1 flex gap-2 font-medium",
-  element24: "size-4",
-  element25: "text-muted-foreground",
-} as const;
-
 export const revealCardCopyStyles = {
-  element1: "reveal-heading",
+  element1: "reveal-heading [&>div]:p-0 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:tracking-tight",
   element2: "reveal-preview",
-  element3: "reveal-brief",
-  element4: "reveal-toggle",
+  element3: "reveal-brief line-clamp-2 text-sm leading-relaxed text-muted-foreground",
+  element4: "reveal-toggle mt-4 min-h-9 gap-2 px-3 text-xs text-foreground",
   element5: "reveal-hint-desktop",
   element6: "reveal-hint-touch",
   element7: "reveal-hint-keyboard",
-  element8: "reveal-chevron",
+  element8:
+    "reveal-chevron text-base leading-none motion-safe:transition-transform group-aria-expanded/button:rotate-90",
   element9: "reveal-details",
   element10: "reveal-details-inner",
 } as const;
@@ -340,8 +344,15 @@ export function cardBodyClassName(...values: unknown[]): string {
   return `p-0 md:p-4 ${values[0]}`;
 }
 
-export function revealCardBaseClassName(...values: unknown[]): string {
-  return `section-card reveal-card ${values[0]}`;
+export function revealCardBaseClassName(className?: string): string {
+  //   return cn("section-card reveal-card p-md", className);
+  return cn(
+    "section-card reveal-card relative m-0 w-full min-w-0 border-border/75 bg-card p-md wrap-anywhere",
+    "data-[expanded=true]:border-primary/35",
+    "data-[expanded=true]:[&_.reveal-preview]:mt-0 data-[expanded=true]:[&_.reveal-preview]:grid-rows-[0fr] data-[expanded=true]:[&_.reveal-preview]:opacity-0",
+    "data-[expanded=true]:[&_.reveal-details]:visible data-[expanded=true]:[&_.reveal-details]:mt-sm data-[expanded=true]:[&_.reveal-details]:grid-rows-[1fr] data-[expanded=true]:[&_.reveal-details]:opacity-100",
+    className,
+  );
 }
 
 export function appearanceCardInlineStyle1(

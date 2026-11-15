@@ -7,15 +7,11 @@ import { describe, test } from "vitest";
 import { PGlite } from "@electric-sql/pglite";
 import { drizzle } from "drizzle-orm/pglite";
 
-import type { Database } from "@shared/services/db/client";
-import * as schema from "@shared/services/db/schema";
-
-import { WeeklyPlanningService } from "../../../packages/services/src/meal";
-import {
-  RevisionConflictError,
-  WorkspaceRepository,
-} from "../../../packages/services/src/workspace";
-import { starterWorkspace } from "../features/task-workspace/starter";
+import type { Database } from "@shared/lib/db/client";
+import * as schema from "@shared/lib/db/schema";
+import { WeeklyPlanningService } from "@shared/lib/meal";
+import { RevisionConflictError, WorkspaceRepository } from "@shared/lib/workspace";
+import { starterWorkspace } from "@shared/lib/workspace-defaults";
 
 const owner = "00000000-0000-4000-8000-000000000001";
 const other = "00000000-0000-4000-8000-000000000002";

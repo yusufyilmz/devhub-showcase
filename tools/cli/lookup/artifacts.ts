@@ -1,394 +1,361 @@
-import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
-import remarkGfm from "remark-gfm";
-import remarkParse from "remark-parse";
-import { unified } from "unified";
-import { parse as yamlLoad } from "yaml";
+import { SKILL_DISCOVERY_TARGETS } from "./artifact-paths.ts";
+import { importPath, parseCatalog } from "./catalog.ts";
+import { catalogAudience } from "./catalog-sections.ts";
+import { digest, type MarkdownNode, markdown, object, slug, text, versions } from "./markdown.ts";
+import { discoverMarkdown, repositorySymbols } from "./repository.ts";
+import { LookupError, type LookupRecord } from "./types.ts";
 
-import type { CatalogAudience, LookupRecord } from "./types.ts";
-import { LookupError } from "./types.ts";
-
-const parser = unified().use(remarkParse).use(remarkGfm);
-
-interface MarkdownNode {
-  children?: MarkdownNode[];
-  depth?: number;
-  position?: {
-    start: { offset?: number };
-    end: { offset?: number };
-  };
-  type: string;
-  value?: string;
-}
-
-interface Section {
-  content: string;
-  depth: number;
-  heading: string;
-  start: number;
-}
-
-type ManifestEntry = {
-  exports: string[];
-  audience?: CatalogAudience;
-};
-type SymbolManifest = Record<string, Record<string, ManifestEntry>>;
-
-function object(value: unknown): value is Record<string, unknown> {
-  return value !== null && typeof value === "object" && !Array.isArray(value);
-}
-
-function isAudience(value: unknown): value is CatalogAudience {
-  return value === "UI" || value === "SERVER" || value === "SHARED";
-}
-
-function digest(value: string): string {
-  return createHash("sha256").update(value).digest("hex");
-}
-
-function text(node: MarkdownNode): string {
-  return node.value ?? (node.children ?? []).map(text).join("");
-}
-
-/** Accepts frontmatter delimited by --- (with normalized LF line endings). */
-export function markdown(content: string): {
-  metadata: Record<string, unknown>;
-  body: string;
-  nodes: MarkdownNode[];
-} {
-  let body = content.replace(/\r\n?/g, "\n");
-  let metadata: Record<string, unknown> = {};
-  if (body.startsWith("---\n")) {
-    const end = body.indexOf("\n---\n", 4);
-    if (end < 0) {
-      throw new LookupError("invalid_schema", "Unclosed artifact frontmatter");
-    }
-    const parsed: unknown = yamlLoad(body.slice(4, end));
-    if (!object(parsed)) {
-      throw new LookupError("invalid_schema", "Artifact frontmatter must be a mapping");
-    }
-    metadata = parsed;
-    body = body.slice(end + 5);
-  }
-  const tree = parser.parse(body) as MarkdownNode;
-  return { body, metadata, nodes: tree.children ?? [] };
-}
-
-function parseSections(body: string, nodes: MarkdownNode[], maxDepth = 6): Section[] {
-  const headings = nodes.flatMap((node) => {
-    const depth = node.depth;
-    const start = node.position?.start.offset;
-    const end = node.position?.end.offset;
-    if (
-      node.type !== "heading" ||
-      depth === undefined ||
-      depth > maxDepth ||
-      start === undefined ||
-      end === undefined
-    ) {
-      return [];
-    }
-    return [{ depth, end, heading: text(node).trim(), start }];
-  });
-  return headings.map((heading, index) => ({
-    content: body.slice(heading.end, headings[index + 1]?.start ?? body.length).trim(),
-    depth: heading.depth,
-    heading: heading.heading,
-    start: heading.start,
-  }));
-}
-
-function slug(value: string): string {
-  return value
-    .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^\p{L}\p{N}\s-]/gu, "")
-    .trim()
-    .replace(/\s+/g, "-");
-}
-
-function versions(metadata: Record<string, unknown>, pkg?: string): Record<string, string> {
-  const result: Record<string, string> = {};
-  if (pkg && typeof metadata.version === "string") result[pkg] = metadata.version;
-  if (object(metadata.packages)) {
-    for (const [name, value] of Object.entries(metadata.packages)) {
-      if (typeof value === "string") result[name] = value;
-    }
-  }
-  return result;
-}
-
-function parseManifestEntry(pkg: string, subpath: string, raw: unknown): ManifestEntry {
-  if (
-    (subpath !== "." && !subpath.startsWith("./")) ||
-    subpath.split("/").includes("..") ||
-    !object(raw) ||
-    !Array.isArray(raw.exports) ||
-    !raw.exports.every((name) => typeof name === "string" && name.trim())
-  ) {
-    throw new LookupError("invalid_schema", `Invalid manifest subpath/exports: ${pkg} ${subpath}`);
-  }
-  const audience = raw.audience;
-  if (audience !== undefined && !isAudience(audience)) {
-    throw new LookupError("invalid_schema", `Invalid manifest audience: ${pkg} ${subpath}`);
-  }
-  return { audience, exports: raw.exports as string[] };
-}
-
-/** Reads a YAML/JSON catalog from Markdown (frontmatter or a fenced data block). */
-function parseSymbolManifest(content: string): SymbolManifest {
-  const { metadata, body } = markdown(content);
-  const block = body.match(/```(?:yaml|yml|json)\s*\n([\s\S]*?)\n```/i)?.[1];
-  const mapping = [metadata.catalog, metadata.manifest, metadata.packages].find(object);
-  const source: unknown = mapping ?? (block === undefined ? metadata : yamlLoad(block));
-  if (!object(source)) throw new LookupError("invalid_schema", "Missing symbol catalog mapping");
-  return Object.fromEntries(
-    Object.entries(source).map(([pkg, subpaths]) => {
-      if (!/^(@[\w.-]+\/)?[\w.-]+$/.test(pkg) || pkg === "." || pkg === ".." || !object(subpaths)) {
-        throw new LookupError("invalid_schema", `Invalid catalog package: ${pkg}`);
-      }
-      const entries = Object.entries(subpaths).map(([subpath, raw]) => [
-        subpath,
-        parseManifestEntry(pkg, subpath, raw),
-      ]);
-      return [pkg, Object.fromEntries(entries)];
-    }),
-  );
-}
-
+/** Reads only the selected project's artifacts, never the tools bundle or module root. */
 export class ArtifactReader {
   readonly root: string;
   readonly inputs = new Map<string, string>();
-  unresolved = 0;
   private symbolRecords?: LookupRecord[];
-
-  constructor(root = process.cwd()) {
-    // A symlinked workspace itself is fine; paths inside it are checked below.
-    this.root = fs.realpathSync(path.resolve(root));
+  unresolved = 0;
+  constructor(root?: string) {
+    let selected = root ? path.resolve(root) : process.cwd();
+    if (!root) {
+      let candidate = selected;
+      while (true) {
+        if (
+          fs.existsSync(path.join(candidate, "pnpm-workspace.yaml")) ||
+          fs.existsSync(path.join(candidate, ".ai/manifest.json"))
+        ) {
+          selected = candidate;
+          break;
+        }
+        const parent = path.dirname(candidate);
+        if (parent === candidate) break;
+        candidate = parent;
+      }
+    }
+    this.root = fs.realpathSync(selected);
   }
-
-  private inside(candidate: string): boolean {
+  private inside(candidate: string) {
     const relative = path.relative(this.root, candidate);
     return relative !== ".." && !relative.startsWith(`..${path.sep}`) && !path.isAbsolute(relative);
   }
-
-  /** Read only an existing regular file inside the selected project, following symlinks safely. */
+  read(file: string): string;
+  read(file: string, optional: boolean): string | undefined;
   read(file: string, optional = false): string | undefined {
     const candidate = path.resolve(this.root, file);
-    if (!this.inside(candidate)) {
-      throw new LookupError("unsafe_path", `Artifact must remain within selected project: ${file}`);
-    }
-    let resolved: string;
+    if (!this.inside(candidate))
+      throw new LookupError("unsafe_path", "Artifact must remain within the selected project");
     try {
-      resolved = fs.realpathSync(candidate);
+      const resolved = fs.realpathSync(candidate);
       if (!this.inside(resolved) || !fs.statSync(resolved).isFile()) {
-        throw new LookupError("unsafe_path", `Unsafe artifact path: ${file}`);
+        throw new LookupError("unsafe_path", `Unsafe artifact: ${file}`);
       }
-      const content = fs.readFileSync(resolved, "utf8").replace(/\r\n?/g, "\n");
-      this.inputs.set(file.replaceAll("\\", "/"), content);
+      const content = fs.readFileSync(resolved, "utf8").replace(/\r\n/g, "\n");
+      this.inputs.set(file, content);
       return content;
     } catch (error) {
-      if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      if (["ENOENT", "ENOTDIR"].includes((error as NodeJS.ErrnoException).code ?? "")) {
         if (optional) return undefined;
-        throw new LookupError("missing_artifact", `Missing ${file} in the selected project`);
+        throw new LookupError(
+          "missing_artifact",
+          `Missing ${file} in the selected project; do not generate/install automatically`,
+        );
       }
       throw error;
     }
   }
-
-  /** Stable over the root path and normalized Markdown used by a lookup. */
   identity(): string {
     return digest(
       JSON.stringify([this.root, [...this.inputs].sort(([a], [b]) => a.localeCompare(b))]),
     );
   }
-
-  private recordId(args: { kind: string; file: string; content: string; key: string }): string {
-    return digest(JSON.stringify([args.kind, args.file, digest(args.content), args.key])).slice(
-      0,
-      24,
-    );
+  private recordId(kind: string, file: string, content: string, key: string) {
+    return `${kind}:${digest(JSON.stringify([file, content, key])).slice(0, 24)}`;
   }
-
-  /** Enumerate .md files recursively while refusing traversal through symlinks. */
-  private markdownFiles(directory: string): string[] {
-    const base = path.resolve(this.root, directory);
-    if (!this.inside(base) || !fs.existsSync(base)) return [];
-    if (!this.inside(fs.realpathSync(base))) {
-      throw new LookupError("unsafe_path", `Unsafe artifact directory: ${directory}`);
-    }
-    const results: string[] = [];
-    const walk = (dir: string): void => {
-      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-        const absolute = path.join(dir, entry.name);
-        // Skip symlink entries entirely; prevents recursive loops and escapes.
-        if (entry.isSymbolicLink()) continue;
-        if (entry.isDirectory()) walk(absolute);
-        else if (entry.isFile() && entry.name.endsWith(".md")) {
-          results.push(path.relative(this.root, absolute).split(path.sep).join("/"));
-        }
-      }
-    };
-    walk(base);
-    return results.sort();
-  }
-
-  /** Exact public imports from .ai/catalogs/symbols-catalog.md. */
   symbols(): LookupRecord[] {
     if (this.symbolRecords) return this.symbolRecords;
-    const file = ".ai/catalogs/symbols-catalog.md";
-    const content = this.read(file);
-    if (content === undefined) return [];
-    const manifest = parseSymbolManifest(content);
-    this.symbolRecords = Object.entries(manifest).flatMap(([pkg, subpaths]) =>
-      Object.entries(subpaths).flatMap(([subpath, entry]) => {
-        const importPath = subpath === "." ? pkg : `${pkg}/${subpath.slice(2)}`;
-        return entry.exports.flatMap((exported): LookupRecord[] => {
-          const name = exported.replace(/^type\s+/, "");
-          if (subpath.includes("*") || !/^[A-Za-z_$][\w$]*$/.test(name)) {
-            this.unresolved++;
-            return [];
-          }
-          return [
-            {
-              artifact: file,
-              audience: entry.audience ?? "SHARED",
-              export: exported,
-              id: this.recordId({
-                content,
-                file,
-                key: `${importPath}:${exported}`,
-                kind: "symbol",
-              }),
-              import: importPath,
-              kind: exported.startsWith("type ") ? "type" : "value",
-              name,
-              package: pkg,
-              subpath,
-            },
-          ];
-        });
-      }),
-    );
+    const file = ".ai/manifest.json";
+    const content = this.read(file, true);
+    if (content === undefined) {
+      if (
+        !["apps", "packages", "tools"].some((directory) =>
+          fs.existsSync(path.join(this.root, directory)),
+        )
+      )
+        this.read(file);
+      this.symbolRecords = repositorySymbols(this);
+      return this.symbolRecords;
+    }
+    const raw: unknown = JSON.parse(content);
+    const { original, unresolved, packages } = manifestInventory(raw);
+    this.unresolved += unresolved;
+    // Reuse the imports reader's compatible normalization and deduplication.
+    const parsed = original.size ? parseCatalog(raw) : [];
+    const packageVersions = new Map<string, Record<string, string>>();
+    for (const pkg of packages) {
+      const catalog = this.read(`.ai/catalogs/${pkg.split("/").at(-1)}-catalog.md`, true);
+      packageVersions.set(pkg, catalog ? versions(markdown(catalog).metadata, pkg) : {});
+    }
+    this.symbolRecords = parsed.flatMap((entry) => {
+      const source = original.get(
+        JSON.stringify([entry.package, entry.subpath, entry.name, entry.kind]),
+      );
+      if (!source) return [];
+      const module = importPath(entry);
+      return [
+        {
+          artifact: file,
+          audience: source.audience,
+          export: source.export,
+          id: this.recordId("symbol", file, content, `${module}:${source.export}`),
+          import: module,
+          kind: entry.kind,
+          package: entry.package,
+          subpath: entry.subpath ? `./${entry.subpath}` : ".",
+          versions: packageVersions.get(entry.package) ?? {},
+        },
+      ];
+    });
     return this.symbolRecords;
   }
-
-  private packageCatalogs(): string[] {
-    const directory = path.join(this.root, "packages");
-    if (!fs.existsSync(directory)) return [];
-    if (!this.inside(fs.realpathSync(directory))) {
-      throw new LookupError("unsafe_path", "Unsafe artifact directory: packages");
-    }
-    return fs
-      .readdirSync(directory, { withFileTypes: true })
-      .filter((entry) => entry.isDirectory())
-      .map((entry) => `packages/${entry.name}/CATALOG.md`)
-      .filter((file) => fs.existsSync(path.join(this.root, file)))
-      .sort();
-  }
-
-  /** Capability documentation, indexed at heading boundaries. */
   capabilities(): LookupRecord[] {
-    const files = this.markdownFiles(".ai/catalogs").filter(
-      (file) => file !== ".ai/catalogs/symbols-catalog.md",
+    const bundled = path.join(this.root, ".ai/manifest.json");
+    if (!fs.existsSync(bundled)) return this.documents("catalog");
+    const inventory = this.symbols();
+    return discoverMarkdown(this.root, ".ai/catalogs").flatMap((file) =>
+      this.capabilityFile(file, inventory),
     );
-    const catalogs = files.length ? files : this.packageCatalogs();
-    if (!catalogs.length) throw new LookupError("missing_artifact", "Missing capability catalogs");
-    const records: LookupRecord[] = [];
-    for (const file of catalogs) {
-      const content = this.read(file);
-      if (content === undefined) continue;
-      const parsed = markdown(content);
-      const sections = parseSections(parsed.body, parsed.nodes, 2);
-      const { audience, package: pkg, purpose } = parsed.metadata;
-      const packageName = typeof pkg === "string" ? pkg : undefined;
-      records.push(
-        ...sections.map((section) => {
-          const heading = section.heading;
-          return {
-            anchor: slug(heading),
-            artifact: file,
-            audience: isAudience(audience) ? audience : undefined,
-            content: section.content,
-            heading,
-            id: this.recordId({
-              content,
-              file,
-              key: `${heading}:${section.start}`,
-              kind: "capability",
-            }),
-            name: heading,
-            package: packageName,
-            purpose: typeof purpose === "string" ? purpose : undefined,
-            versions: versions(parsed.metadata, packageName),
-          };
-        }),
+  }
+  private capabilityFile(file: string, inventory: LookupRecord[]): LookupRecord[] {
+    const content = this.read(file);
+    const { metadata, nodes } = markdown(content);
+    const heading = nodes.find((node) => node.type === "heading" && node.depth === 1);
+    const pkg = typeof metadata.name === "string" ? metadata.name : text(heading);
+    if (!pkg.startsWith("@shared/"))
+      throw new LookupError("invalid_schema", `Catalog package heading missing: ${file}`);
+    const table = nodes.find(
+      (node) => node.type === "table" && text(node.children?.[0]?.children?.[0]) === "Capability",
+    );
+    if (!table)
+      throw new LookupError("invalid_schema", `Compact capability table missing: ${file}`);
+    return (table.children ?? []).slice(1).flatMap((row) => {
+      const cells = (row.children ?? []).map(text);
+      if (cells.length !== 3 || cells.some((cell) => !cell))
+        throw new LookupError("invalid_schema", `Invalid capability row: ${file}`);
+      const [name, purpose, module] = cells as [string, string, string];
+      const owner = inventory.find((record) => record.package === pkg && record.import === module);
+      if (!owner) return [];
+      return [
+        {
+          artifact: file,
+          audience: owner.audience,
+          id: this.recordId("capability", file, content, `${name}:${module}`),
+          import: module,
+          name,
+          package: pkg,
+          purpose,
+          subpath: owner.subpath,
+          versions: versions(metadata, pkg),
+        },
+      ];
+    });
+  }
+  design(): LookupRecord[] {
+    const bundled = fs.existsSync(path.join(this.root, ".ai/manifest.json"));
+    const file =
+      bundled && fs.existsSync(path.join(this.root, ".ai/DESIGN.md"))
+        ? ".ai/DESIGN.md"
+        : "DESIGN.md";
+    return this.sections(file, "design");
+  }
+  documents(kind: "docs" | "skills" | "catalog"): LookupRecord[] {
+    const files =
+      kind === "catalog"
+        ? ["apps", "packages", "tools"]
+            .flatMap((directory) => discoverMarkdown(this.root, directory))
+            .filter((file) => file.endsWith("/CATALOG.md"))
+        : kind === "docs"
+          ? discoverMarkdown(this.root, "docs")
+          : SKILL_DISCOVERY_TARGETS.flatMap((dir) => discoverMarkdown(this.root, dir));
+    return [...new Set(files)]
+      .sort()
+      .flatMap((file) =>
+        kind === "catalog" ? this.catalogRecords(file) : this.sections(file, kind),
       );
+  }
+  private catalogRecords(file: string): LookupRecord[] {
+    const content = this.read(file);
+    const { body, nodes, metadata: frontmatter } = markdown(content);
+    const manifestFile = `${path.posix.dirname(file)}/package.json`;
+    const manifest = this.read(manifestFile, true);
+    const metadata = manifest ? JSON.parse(manifest) : frontmatter;
+    let heading = file;
+    const records: LookupRecord[] = [];
+    const facts = catalogFacts(metadata);
+    for (const node of nodes) {
+      if (node.type === "heading") {
+        heading = text(node);
+        continue;
+      }
+      if (["html", "thematicBreak"].includes(node.type)) continue;
+      const chunks = node.type === "table" ? (node.children ?? []).slice(1) : [node];
+      for (const [index, chunk] of chunks.entries()) {
+        records.push({
+          artifact: file,
+          ...catalogExcerpt(body, node, chunk, heading),
+          id: this.recordId("catalog", file, content, `${node.position.start.offset}:${index}`),
+          ...facts,
+        });
+      }
     }
     return records;
   }
-
-  /** Design documentation with inherited cross-cutting constraints. */
-  designs(): LookupRecord[] {
-    const files = new Set([
-      ...this.markdownFiles(".ai/design"),
-      ...this.markdownFiles(".ai/designs"),
-      ...this.markdownFiles(".ai/catalogs").filter((file) => /design/i.test(file)),
+  private sections(file: string, kind: string): LookupRecord[] {
+    const content = this.read(file);
+    const { metadata, body, nodes } = markdown(content);
+    const headings = nodes.filter((n) => n.type === "heading" && (n.depth ?? 0) >= 2);
+    if (!headings.length) {
+      return [
+        {
+          artifact: file,
+          content: body.trim(),
+          heading: typeof metadata.name === "string" ? metadata.name : file,
+          id: this.recordId(kind, file, content, "whole"),
+          versions: versions(metadata),
+        },
+      ];
+    }
+    const sections = headings.map((node, index) => ({
+      content: body
+        .slice(
+          node.position.start.offset,
+          headings[index + 1]?.position?.start.offset ?? body.length,
+        )
+        .trim(),
+      depth: node.depth ?? 2,
+      heading: text(node),
+    }));
+    const crossCutting = new Set([
+      "Visual direction",
+      "Interaction states",
+      "Do and don't",
+      "Consumer workflow",
+      "Known gaps",
     ]);
-    if (!files.size) files.add("DESIGN.md");
-    const records: LookupRecord[] = [];
-    for (const file of [...files].sort()) {
-      const content = this.read(file);
-      if (content === undefined) continue;
-      const { metadata, body, nodes } = markdown(content);
-      const sections = parseSections(body, nodes);
-      const crosscutting = new Set([
-        "visual direction",
-        "interaction states",
-        "do and don't",
-        "consumer workflow",
-        "known gaps",
-      ]);
-      const constraints = sections
-        .filter((section) => crosscutting.has(section.heading.toLowerCase()))
-        .map((section) => section.content)
-        .filter(Boolean);
-      const headingNodes = nodes.filter((n) => n.type === "heading");
-      const preamble = body.slice(0, headingNodes[0]?.position?.start.offset ?? body.length).trim();
-      const anchors = new Map<string, number>();
-      let parent: Section | undefined;
-      records.push(
-        ...sections.map((section) => {
-          if (section.depth < 3) parent = section.depth === 2 ? section : undefined;
-          const base = slug(section.heading);
-          const duplicate = anchors.get(base) ?? 0;
-          anchors.set(base, duplicate + 1);
-          return {
-            anchor: duplicate ? `${base}-${duplicate}` : base,
-            artifact: file,
-            constraints: [
-              ...new Set([
-                preamble,
-                ...constraints.filter((value) => value !== section.content),
-                ...(section.depth === 3 && parent ? [parent.content] : []),
-              ]),
-            ].filter(Boolean),
-            content: section.content,
-            heading: section.heading,
-            id: this.recordId({
-              content,
-              file,
-              key: `${section.heading}:${duplicate}`,
-              kind: "design",
-            }),
-            versions: versions(metadata),
-          };
-        }),
-      );
-    }
-    return records;
+    const constraints = sections.filter((s) => crossCutting.has(s.heading)).map((s) => s.content);
+    const preamble = body.slice(0, headings[0]?.position.start.offset ?? 0).trim();
+    const packageName = file.match(/^packages\/([^/]+)\//)?.[1];
+    const packageMetadata = packageName
+      ? this.read(`packages/${packageName}/package.json`, true)
+      : undefined;
+    const pkg = packageMetadata ? (JSON.parse(packageMetadata).name as string) : undefined;
+    const anchors = new Map<string, number>();
+    const parents: typeof sections = [];
+    return sections.map((section) => {
+      while (parents.length && (parents.at(-1)?.depth ?? 0) >= section.depth) parents.pop();
+      const prerequisites = parents.map((parent) => parent.content);
+      parents.push(section);
+      const base = slug(section.heading);
+      const duplicate = anchors.get(base) ?? 0;
+      anchors.set(base, duplicate + 1);
+      return {
+        anchor: duplicate ? `${base}-${duplicate}` : base,
+        artifact: file,
+        constraints: [
+          ...new Set([
+            preamble,
+            ...constraints.filter((c) => c !== section.content),
+            ...prerequisites,
+          ]),
+        ].filter(Boolean),
+        ...(typeof metadata.description === "string" ? { purpose: metadata.description } : {}),
+        content: section.content,
+        heading: section.heading,
+        id: this.recordId(kind, file, content, `${section.heading}:${duplicate}`),
+        ...(pkg ? { package: pkg } : {}),
+        versions: versions(metadata, pkg),
+      };
+    });
   }
+}
+
+type ManifestOwner = { export: string; audience: "UI" | "SERVER" | "SHARED" };
+function validateEntry(
+  pkg: string,
+  subpath: string,
+  entry: unknown,
+): { exports: string[]; audience?: string } {
+  if (
+    (subpath !== "." && !subpath.startsWith("./")) ||
+    subpath.split("/").includes("..") ||
+    !object(entry)
+  )
+    throw new LookupError("invalid_schema", `Invalid manifest subpath: ${pkg} ${subpath}`);
+  if (
+    !Array.isArray(entry.exports) ||
+    !entry.exports.every((name) => typeof name === "string" && name.trim())
+  )
+    throw new LookupError("invalid_schema", `Invalid manifest exports: ${pkg} ${subpath}`);
+  if (entry.audience !== undefined && !["UI", "SERVER", "SHARED"].includes(String(entry.audience)))
+    throw new LookupError("invalid_schema", `Invalid manifest audience: ${pkg} ${subpath}`);
+  return entry as { exports: string[]; audience?: string };
+}
+function manifestInventory(raw: unknown) {
+  if (!object(raw))
+    throw new LookupError("invalid_schema", "Manifest must be package → subpath → exports");
+  const original = new Map<string, ManifestOwner>();
+  let unresolved = 0;
+  for (const [pkg, subpaths] of Object.entries(raw)) {
+    if (!pkg.startsWith("@shared/") || pkg.includes("..") || !object(subpaths))
+      throw new LookupError("invalid_schema", `Invalid manifest package: ${pkg}`);
+    for (const [subpath, rawEntry] of Object.entries(subpaths)) {
+      const entry = validateEntry(pkg, subpath, rawEntry);
+      unresolved += registerExports(pkg, subpath, entry, original);
+    }
+  }
+  return { original, packages: Object.keys(raw), unresolved };
+}
+function unresolvedExport(subpath: string, exported: string): boolean {
+  return subpath.includes("*") || exported.includes("*") || /^namespace\s/.test(exported);
+}
+function catalogFacts(
+  metadata: Record<string, unknown>,
+): Pick<LookupRecord, "package" | "audience" | "versions"> {
+  if (typeof metadata.name !== "string") return { versions: {} };
+  return {
+    audience: catalogAudience(metadata.name, ".", {}, metadata),
+    package: metadata.name,
+    versions: versions(metadata, metadata.name),
+  };
+}
+function catalogExcerpt(body: string, node: MarkdownNode, chunk: MarkdownNode, heading: string) {
+  const excerpt = body.slice(chunk.position.start.offset, chunk.position.end.offset);
+  if (node.type !== "table") return { content: excerpt, heading };
+  const header = body.slice(node.position.start.offset, node.children?.[1]?.position.start.offset);
+  return {
+    content: `${header}${excerpt}`.trim(),
+    heading: `${heading}: ${text(chunk.children?.[0] ?? chunk)}`,
+  };
+}
+
+function registerExports(
+  pkg: string,
+  subpath: string,
+  entry: { exports: string[]; audience?: string },
+  original: Map<string, ManifestOwner>,
+): number {
+  const audience = catalogAudience(pkg, subpath, entry);
+  let unresolved = 0;
+  for (const exported of entry.exports) {
+    if (unresolvedExport(subpath, exported)) {
+      unresolved++;
+      continue;
+    }
+    const key = JSON.stringify([
+      pkg,
+      subpath === "." ? "" : subpath.slice(2),
+      exported.replace(/^type\s+/, "").trim(),
+      /^type\s/.test(exported) ? "type" : "value",
+    ]);
+    original.set(key, { audience, export: exported });
+  }
+  return unresolved;
 }

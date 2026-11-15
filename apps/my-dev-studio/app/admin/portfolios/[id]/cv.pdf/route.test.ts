@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { ProfileAccessError } from "@shared/services/profile";
+import { ProfileAccessError } from "@shared/lib/profile";
 
 const mocks = vi.hoisted(() => ({
   cv: vi.fn(),
@@ -9,7 +9,7 @@ const mocks = vi.hoisted(() => ({
 vi.mock("@/features/management/managed-portfolios", () => ({
   managedRepository: mocks.managed,
 }));
-vi.mock("@/features/portfolio/cv-response", () => ({ cvResponse: mocks.cv }));
+vi.mock("../../../../api/cv/_response", () => ({ cvResponse: mocks.cv }));
 
 import { GET } from "./route";
 

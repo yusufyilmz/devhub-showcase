@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 
 import { cn } from "cn";
 
-import { Button } from "../../buttons/button";
+import { Button } from "../button";
 import { colorSchemeClasses, styledIconButtonStyles } from "./styles";
 import type { StyledIconButtonProps } from "./types";
 

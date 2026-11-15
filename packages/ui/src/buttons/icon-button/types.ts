@@ -3,7 +3,7 @@ import type { MouseEvent, ReactNode } from "react";
 
 import type { VariantProps } from "class-variance-authority";
 
-import type { Button } from "../../buttons/button";
+import type { Button } from "../button";
 import type { iconButtonVariants } from "./styles";
 
 export interface IconButtonProps

@@ -17,12 +17,12 @@ Package `@shared/ui` in `packages/ui`. Controls, sections, studio and portfolio 
 | `@shared/ui/utils`                                                                                                               | `src/utils/index.ts`                              |
 | `@shared/ui/sections`                                                                                                            | `src/sections/index.ts`                           |
 | `@shared/ui/sections/studio`                                                                                                     | `src/sections/studio/index.ts`                    |
-| `@shared/ui/portfolio`                                                                                                           | `src/portfolio/index.ts`                          |
+| `@shared/assistant/portfolio`                                                                                                    | `src/portfolio/index.ts`                          |
 | `@shared/ui/google-import`                                                                                                       | `src/google-import/index.ts`                      |
-| `@shared/ui/chat`                                                                                                                | `src/display/chat/index.ts`                       |
+| `@shared/ui/chat`                                                                                                                | `src/chat/index.ts`                               |
 | `@shared/ui/*.css` and `./postcss.config`                                                                                        | `src/styles` and `postcss.config.js`              |
 
-The root `tsconfig.json` also aliases `@shared/ui/editor` to `src/editors/index.ts`, `@shared/ui/section/editors` to `src/sections/editors`, and `@shared/ui/section/renderers` to `src/sections/renderers`. Those aliases are for this workspace. A new public entry still needs a `package.json` export. `@shared/ui/login` and the `@shared/ui/chat` path alias point outside this package. See the skill.
+The root `tsconfig.json` also aliases `@shared/ui/editor` to `src/editors/index.ts`, `@shared/ui/section/editors` to `src/sections/editors`, and `@shared/ui/section/renderers` to `src/sections/renderers`. Those aliases are for this workspace. A new public entry still needs a `package.json` export. The `@shared/ui/chat` alias resolves to this package’s `src/chat/index.ts`.
 
 ## Source tree
 
@@ -44,9 +44,9 @@ The root `tsconfig.json` also aliases `@shared/ui/editor` to `src/editors/index.
 | `src/layout/hero`                                                                                                                         | `HeroSurface`                                                    |
 | `src/layout/page-shell`                                                                                                                   | `PageShell`                                                      |
 | `src/display/media`                                                                                                                       | `WorkMedia`                                                      |
-| `src/display/chat`                                                                                                                        | Chat bubbles, composer, list, typing                             |
+| `src/chat`                                                                                                                                | Chat bubbles, composer, list, typing                             |
 | `src/google-import`                                                                                                                       | Google import review UI                                          |
-| `src/styles`                                                                                                                              | Global CSS, tokens, section and portfolio styles                 |
+| `src/styles`                                                                                                                              | Tokens and foundation CSS                                        |
 | `src/utils`, `src/constants`                                                                                                              | UI helpers, not domain services                                  |
 | `CATALOG.md`                                                                                                                              | Public inventory                                                 |
 
@@ -54,33 +54,30 @@ The root `tsconfig.json` also aliases `@shared/ui/editor` to `src/editors/index.
 
 1. `packages/config/src/sections/section-registry.ts`
 2. `packages/config/src/sections/custom-sections.ts`
-3. `packages/lib/src/domain/section.ts`
+3. `packages/lib/src/schemas/section/index.ts`
 4. `src/sections/<name>`
 5. `src/sections/index.ts`
 6. `src/sections/renderers/renderers.tsx`
 7. `src/sections/editors/editors.tsx`
 8. `CATALOG.md`
 
-A persisted field also updates `packages/config/src/profile/profile.ts` and `packages/lib/src/domain/profile.ts`.
+A persisted field also updates `packages/config/src/profile/profile.ts` and `packages/lib/src/schemas/profile/profile.ts`.
 
 ## Styles
 
-| File                            | Role                                                   |
-| ------------------------------- | ------------------------------------------------------ |
-| `src/styles/globals.css`        | `@import "./styles.css"`                               |
-| `src/styles/styles.css`         | Tailwind import, layer imports, `@source` globs        |
-| `src/styles/theme.css`          | Semantic token aliases                                 |
-| `src/styles/themes.css`         | Named portfolio themes                                 |
-| `src/styles/tokens/`            | Appearance, base, palettes, primitives, typography     |
-| `src/styles/shadcn.css`         | Shadcn token layer                                     |
-| `src/styles/components.css`     | Shared component skins, 767px collapse, reduced motion |
-| `src/styles/sections.css`       | Section styles                                         |
-| `src/styles/portfolios.css`     | Portfolio layout styles                                |
-| `src/styles/portfolio-chat.css` | Chat styles                                            |
-| `src/styles/surfaces.css`       | Surface styles and reduced motion                      |
-| `postcss.config.js`             | Shared PostCSS config                                  |
+| File                              | Role                                               |
+| --------------------------------- | -------------------------------------------------- |
+| `src/styles/tokens/`              | Appearance, base, palettes, primitives, typography |
+| `src/styles/foundation/`          | Theme aliases, platform RGB, product tokens        |
+| `src/styles/foundation.css`       | Tailwind, tokens, surfaces, `@source` globs        |
+| `src/styles/app.css`              | Foundation plus the portfolio bundle               |
+| `src/cards/surfaces.css`          | Surface styles and reduced motion                  |
+| `src/layout/section/sections.css` | Section frame                                      |
+| `src/layout/portfolio/`           | Portfolio skin, layouts, presets, semantic bridge  |
+| `src/navigation/chrome.css`       | Site header, nav, and footer chrome                |
+| `postcss.config.js`               | Shared PostCSS config                              |
 
-`apps/my-dev-studio/app/layout.tsx` and `apps/storybook-app/.storybook/preview.tsx` import `@shared/ui/globals.css`.
+`apps/my-dev-studio/app/layout.tsx` imports `@shared/ui/globals.css`. `apps/storybook-app/.storybook/preview.tsx` imports `@shared/ui/foundation.css`.
 
 ## Props that must stay outside
 
@@ -90,7 +87,7 @@ A persisted field also updates `packages/config/src/profile/profile.ts` and `pac
 | Whether a profile is public             | `@shared/lib` published-profile path and the app route    |
 | Save URL and revision conflict handling | App route calls `@shared/lib` `ProfileService`            |
 | Stripe checkout                         | `features/billing`                                        |
-| Rate limit                              | `@shared/cache`, called from the app route                |
+| Rate limit                              | `@shared/lib/cache`, called from the app route            |
 | Allowed theme ids                       | `@shared/config` `portfolioThemes` and `portfolioAccents` |
 
 ## Checks

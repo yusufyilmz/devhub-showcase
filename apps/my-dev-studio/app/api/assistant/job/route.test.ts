@@ -12,7 +12,7 @@ vi.mock("@/features/admin/admin-auth", () => ({
   sameOrigin: (request: Request) => request.headers.get("origin") === "https://studio.example",
 }));
 vi.mock("@shared/assistant", () => ({ proposeInterviewPrep: mocks.propose }));
-vi.mock("@shared/cache", () => ({ allowStudioAssistant: mocks.limit }));
+vi.mock("@shared/lib/cache", () => ({ allowStudioAssistant: mocks.limit }));
 vi.mock("@shared/billing/server", () => ({
   billingServiceClient: () => ({}),
   PremiumUsageRepository: class {

@@ -7,6 +7,7 @@ const mocks = vi.hoisted(() => ({
   headers: vi.fn(),
   removeChannel: vi.fn(),
 }));
+vi.mock("@shared/auth/config", () => ({ supabaseConfigured: () => true }));
 vi.mock("@/lib/browser-session", () => ({
   authorizationHeaders: mocks.headers,
   browserAuth: () => ({

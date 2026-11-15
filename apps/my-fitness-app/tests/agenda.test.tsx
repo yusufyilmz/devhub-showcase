@@ -3,12 +3,11 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { test } from "vitest";
 
-import { seedWorkspace } from "@shared/services/db/seed";
-import { TaskService } from "@shared/services/fitness/task";
+import { seedWorkspace } from "@shared/lib/db/seed";
+import { MealPlanningService, WeeklyPlanningService } from "@shared/lib/meal";
+import { AgendaService, ScheduleService, TaskService } from "@shared/lib/schedule";
+import { validateWorkspace, workspaceSchema } from "@shared/lib/types";
 
-import { MealPlanningService, WeeklyPlanningService } from "../../../packages/services/src/meal";
-import { AgendaService, ScheduleService } from "../../../packages/services/src/schedule";
-import { validateWorkspace, workspaceSchema } from "../../../packages/services/src/types";
 import { DayAgenda } from "../features/agenda/day-agenda";
 import { CalendarGrid } from "../features/calendar/calendar-grid";
 

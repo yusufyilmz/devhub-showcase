@@ -6,9 +6,10 @@ import {
   cvLibrarySchema as librarySchema,
 } from "@shared/lib/profiles";
 import { createServerClient } from "@shared/lib/supabase";
-import type { Json } from "@shared/lib/types";
 
 import { sameOrigin } from "@/features/admin/admin-auth";
+
+import type { Json } from "../../../../../packages/lib/src/types";
 
 const headers = { "Cache-Control": "private, no-store" };
 async function session() {

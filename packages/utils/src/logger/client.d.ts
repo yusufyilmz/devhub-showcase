@@ -1,10 +1,16 @@
-export declare enum LogLevel {
-  ERROR = 0,
-  WARN = 1,
-  INFO = 2,
-  DEBUG = 3,
-  TRACE = 4,
-}
+export type LogLevel = 0 | 1 | 2 | 3 | 4;
+export declare const LogLevel: {
+  readonly ERROR: 0;
+  readonly WARN: 1;
+  readonly INFO: 2;
+  readonly DEBUG: 3;
+  readonly TRACE: 4;
+  readonly 0: "ERROR";
+  readonly 1: "WARN";
+  readonly 2: "INFO";
+  readonly 3: "DEBUG";
+  readonly 4: "TRACE";
+};
 export interface LogContext {
   action?: string;
   component?: string;

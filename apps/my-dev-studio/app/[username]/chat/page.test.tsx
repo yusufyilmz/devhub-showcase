@@ -3,11 +3,11 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { profile } from "@shared/config";
 
 const mocks = vi.hoisted(() => ({ available: vi.fn(), read: vi.fn() }));
-vi.mock("@shared/services/published-profile", () => ({
+vi.mock("@shared/lib/published-profile", () => ({
   readPublicProfileByUsername: mocks.read,
 }));
-vi.mock("@/features/chat/premium-chat", () => ({ premiumChatAvailable: mocks.available }));
-vi.mock("@/features/chat/portfolio-visitor-chat", () => ({ PortfolioVisitorChat: () => null }));
+vi.mock("./_access", () => ({ premiumChatAvailable: mocks.available }));
+vi.mock("@shared/assistant/visitor-chat", () => ({ PortfolioVisitorChat: () => null }));
 
 import PortfolioChatPage from "./page";
 
@@ -34,12 +34,12 @@ describe("Portfolio chat page", () => {
     expect(mocks.available).not.toHaveBeenCalled();
   });
 
-  it("opens the legacy portfolio assistant", async () => {
+  it("opens the main portfolio assistant", async () => {
     mocks.read.mockResolvedValue({ ...snapshot, id: "main" });
     const page = await openChat();
     expect(page.props).toMatchObject({
       identity: { id: "main", name: "Alice", revision: 3 },
-      legacy: true,
+      isMainPortfolio: true,
       username: "alice",
     });
     expect(mocks.available).not.toHaveBeenCalled();
@@ -53,7 +53,7 @@ describe("Portfolio chat page", () => {
 
     mocks.available.mockResolvedValue(true);
     const page = await openChat();
-    expect(page.props).toMatchObject({ legacy: false, username: "alice" });
+    expect(page.props).toMatchObject({ isMainPortfolio: false, username: "alice" });
     expect(page.props.sources.length).toBeGreaterThan(0);
     for (const source of page.props.sources) expect(source.href).toMatch(/^\/alice#/);
   });

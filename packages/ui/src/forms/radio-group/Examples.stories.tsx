@@ -6,21 +6,27 @@ function Example({ width = 560 }: { width?: number }) {
   return (
     <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
       <RadioGroup aria-label="Layout" defaultValue="classic">
-        <div className="flex gap-2">
+        <div className="flex items-center gap-s">
           <RadioGroupItem id="classic" value="classic" />
           <label htmlFor="classic">Classic</label>
         </div>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-s">
           <RadioGroupItem id="editorial" value="editorial" />
           <label htmlFor="editorial">Editorial</label>
+        </div>
+        <div className="flex items-center gap-s">
+          <RadioGroupItem disabled id="archived" value="archived" />
+          <label htmlFor="archived">Archived</label>
         </div>
       </RadioGroup>
     </div>
   );
 }
-const meta = { component: Example, tags: ["autodocs"], title: "UI/radio-group" } satisfies Meta<
-  typeof Example
->;
+const meta = {
+  component: Example,
+  tags: ["autodocs"],
+  title: "UI/Forms/Radio Group",
+} satisfies Meta<typeof Example>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {};

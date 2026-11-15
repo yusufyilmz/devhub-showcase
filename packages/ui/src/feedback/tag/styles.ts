@@ -1,17 +1,23 @@
+import { cn } from "cn";
+
 export const variants: Record<string, string> = {
-  brand: "border-main-green/40 bg-main-green/15 text-main-green",
-  danger: "border-red-500/40 bg-red-500/15 text-red-300",
-  info: "border-sky-500/40 bg-sky-500/15 text-sky-200",
-  neutral: "border-main-lightest bg-backgroundColor-lightestNavy text-textColor-secondary",
-  success: "border-emerald-500/40 bg-emerald-500/15 text-emerald-300",
-  warning: "border-amber-400/40 bg-amber-400/15 text-amber-200",
+  brand: "border-primary/20 bg-primary/8 text-foreground",
+  danger: "border-destructive/20 bg-destructive/8 text-red-800 dark:text-red-200",
+  info: "border-sky-500/20 bg-sky-500/8 text-sky-800 dark:text-sky-200",
+  neutral: "border-border bg-foreground/5 text-foreground",
+  success: "border-emerald-500/20 bg-emerald-500/8 text-emerald-800 dark:text-emerald-200",
+  warning: "border-amber-500/20 bg-amber-500/8 text-amber-900 dark:text-amber-200",
 };
 export const sizes = {
-  l: "px-3 py-1.5 text-sm",
-  m: "px-2 py-1 text-xs",
+  l: "px-sm py-1.5 text-sm",
+  m: "px-s py-1 text-xs",
   s: "px-1.5 py-0.5 text-xs",
 };
 
-export function tagClassName(...values: unknown[]): string {
-  return `inline-flex items-center rounded-lg border ${values[0]} ${values[1]}`;
+export function tagClassName(variant: string | undefined, size: string): string {
+  return cn(
+    "inline-flex max-w-full items-center gap-xs rounded-full border leading-snug font-medium wrap-anywhere",
+    variant,
+    size,
+  );
 }

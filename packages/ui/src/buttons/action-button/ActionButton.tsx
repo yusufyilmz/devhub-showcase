@@ -3,29 +3,34 @@ import { forwardRef } from "react";
 import { cn } from "cn";
 
 import { Button } from "../button";
-import { actionButtonStyles } from "./styles";
 import type { ActionButtonColor, ActionButtonProps } from "./types";
 
+const buttonVariant = {
+  contained: "default",
+  ghost: "ghost",
+  outlined: "secondary",
+} as const;
+
 const colorSchemeMap: Record<ActionButtonColor, string> = {
-  danger: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-  info: "bg-info text-info-foreground hover:bg-info/90",
+  danger: "border-destructive bg-destructive text-destructive-foreground hover:bg-destructive/90",
+  info: "border-info bg-info text-info-foreground hover:bg-info/90",
   primary: "bg-primary text-primary-foreground hover:bg-primary/90",
-  success: "bg-success text-success-foreground hover:bg-success/90",
-  warning: "bg-warning text-warning-foreground hover:bg-warning/90",
+  success: "border-success bg-success text-success-foreground hover:bg-success/90",
+  warning: "border-warning bg-warning text-warning-foreground hover:bg-warning/90",
 };
 
 const outlinedColorSchemeMap: Record<ActionButtonColor, string> = {
-  danger: "border-destructive text-destructive hover:bg-destructive/10",
-  info: "border-info text-info hover:bg-info/10",
-  primary: "border-primary text-primary hover:bg-primary/10",
-  success: "border-success text-success hover:bg-success/10",
-  warning: "border-warning text-warning hover:bg-warning/10",
+  danger: "border-destructive/40 text-foreground hover:bg-destructive/10",
+  info: "border-info/40 text-foreground hover:bg-info/10",
+  primary: "border-border text-foreground hover:bg-muted",
+  success: "border-success/40 text-foreground hover:bg-success/10",
+  warning: "border-warning/40 text-foreground hover:bg-warning/10",
 };
 
 const ghostColorSchemeMap: Record<ActionButtonColor, string> = {
   danger: "text-destructive hover:bg-destructive/10",
   info: "text-info hover:bg-info/10",
-  primary: "text-primary hover:bg-primary/10",
+  primary: "",
   success: "text-success hover:bg-success/10",
   warning: "text-warning hover:bg-warning/10",
 };
@@ -57,16 +62,7 @@ export const ActionButton = forwardRef<HTMLButtonElement, ActionButtonProps>(
       return colorSchemeMap[colorScheme] ?? colorSchemeMap.primary;
     };
 
-    const baseClasses = cn(
-      actionButtonStyles.baseClasses,
-      actionButtonStyles.baseClasses2,
-      actionButtonStyles.baseClasses3,
-      fullWidth && actionButtonStyles.baseClasses4,
-      variant === "outlined" && actionButtonStyles.baseClasses5,
-      variant === "ghost" && actionButtonStyles.baseClasses6,
-      getColorClasses(),
-      className,
-    );
+    const baseClasses = cn(fullWidth && "w-full", getColorClasses(), className);
 
     const buttonProps = {
       asChild: !!href,
@@ -75,6 +71,7 @@ export const ActionButton = forwardRef<HTMLButtonElement, ActionButtonProps>(
       onClick,
       ref,
       size,
+      variant: buttonVariant[variant],
       ...props,
     };
 

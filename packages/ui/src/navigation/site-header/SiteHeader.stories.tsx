@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { SidebarProvider } from "../sidebar/Sidebar";
+import { Button } from "../../buttons/button";
+import { Sidebar, SidebarContent, SidebarInset, SidebarProvider } from "../sidebar/Sidebar";
 import { SiteHeader } from "./SiteHeader";
 
 const meta = {
@@ -8,9 +9,12 @@ const meta = {
   decorators: [
     (Story) => (
       <SidebarProvider>
-        <div className="min-h-48 bg-background text-foreground">
+        <Sidebar collapsible="offcanvas">
+          <SidebarContent className="p-md">Workspace navigation</SidebarContent>
+        </Sidebar>
+        <SidebarInset className="min-h-48">
           <Story />
-        </div>
+        </SidebarInset>
       </SidebarProvider>
     ),
   ],
@@ -18,7 +22,7 @@ const meta = {
     layout: "fullscreen",
   },
   tags: ["autodocs"],
-  title: "Layout/SiteHeader",
+  title: "UI/Navigation/Site Header",
 } satisfies Meta<typeof SiteHeader>;
 
 export default meta;
@@ -47,4 +51,16 @@ export const WideCanvas: StoryObj<typeof meta> = {
       </div>
     ),
   ],
+};
+
+export const WithActions: Story = {
+  args: {
+    actions: (
+      <>
+        <Button variant="outline">Preview</Button>
+        <Button>Save changes</Button>
+      </>
+    ),
+    title: "Workspace settings and publication preferences",
+  },
 };

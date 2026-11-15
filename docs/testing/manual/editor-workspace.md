@@ -10,28 +10,22 @@ configuration. Use the disposable desktop/mobile preview-owner and workspace-own
 production account for failure or conflict checks. Desktop width: 1440px; mobile: 390px;
 tablet: 1024px. See [shared setup and result rules](index.md#before-you-start).
 
-**Inline editor verification:** The production build, UI type check, five workspace unit
-tests, and six desktop/mobile Chromium tests passed. Browser checks covered compact
-sidebar navigation, the mobile picker, draft retention, failed save and retry, and
-returning to preview. The browser runs used isolated local fixtures on ports 3130–3132.
-Desktop and mobile screenshots of the inline editor were visually reviewed.
-The manual walkthrough below is pending.
+**Inline editor verification:** `pnpm check`, 695 unit tests, the MyDevStudio
+production build, and six desktop and mobile Chromium tests passed. Browser checks
+used local fixtures and covered compact sidebar navigation, mobile section selection,
+draft retention, save retry, and guided setup recovery. The manual walkthrough is pending.
 
-**Previous workspace verification (before the lightbox update):** Production build, app/UI package type checks, changed-file lint and
-10 focused editor unit tests passed. The editor regression run initially passed 34
-scenarios; all five failures caused by old navigation assertions passed after their
-checks were updated and rerun. One pre-existing mobile testimonial scenario is skipped.
-All six managed-portfolio browser checks passed on their final run. Tests used only
-local fixture services.
-
-The full workspace check reaches the existing `.ts` import errors in
-`tools/cli/lookup`. The full unit run also reports the unchanged assistant summarizer
-test exceeding its five-second timeout; it fails when rerun separately. These failures
-are outside this editor change. No deployment or production verification was performed.
+**Previous lightbox integration verification — 7 November 2026:** Production build, `pnpm check`
+and all 632 unit tests passed, plus 28 focused component tests. The broad editor and
+managed-portfolio browser run passed 36 cases and skipped the existing duplicate mobile
+review test. Six stale-selector/storage-key failures passed after test updates; the mobile
+Google onboarding click still times out because layout content intercepts it. Device defaults, focus, draft retention,
+private saves, failure/retry, layouts and managed editing are covered with local fixtures.
+No deployment or live provider verification is claimed.
 
 | Step | Clickable URL                                                      | Route path                    | Action                                                                                 | Expected result                                                                                                                                        | Actual result / evidence |
 | ---- | ------------------------------------------------------------------ | ----------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ |
-| 1    | [Desktop editor](http://localhost:3100/desktop-preview-owner/edit) | `/desktop-preview-owner/edit` | Open at 1440px, collapse the sidebar, select Publishing, then expand the sidebar.      | Grouped sections remain available in both sidebar widths. Publishing opens in the main workspace.                                                      | Not run                  |
+| 1    | [Desktop editor](http://localhost:3100/desktop-preview-owner/edit) | `/desktop-preview-owner/edit` | At 1440px, click Collapse sidebar, select Publishing, and click Expand sidebar.        | The sidebar starts at the top. Header and footer narrow with it. Publishing opens in the workspace.                                                    | Not run                  |
 | 2    | [Desktop editor](http://localhost:3100/desktop-preview-owner/edit) | `/desktop-preview-owner/edit` | Change Professional title; select Experience, expand an entry, then return to Profile. | Draft values remain; only the selected collection entry is expanded. No save or publish occurs from navigation.                                        | Not run                  |
 | 3    | [Mobile editor](http://localhost:3100/mobile-preview-owner/edit)   | `/mobile-preview-owner/edit`  | At 390px select an Editor section; use Back to preview, then Edit.                     | The picker includes grouped sections. The form and save actions fit the page. Back to preview displays the unsaved draft.                              | Not run                  |
 | 4    | [Desktop editor](http://localhost:3100/desktop-preview-owner/edit) | `/desktop-preview-owner/edit` | Select CV in the preview; change website/CV field visibility independently.            | CV content uses CV-specific visibility; private projects and birthdate are excluded. Saved PDF download is clearly distinguished from unsaved content. | Not run                  |
@@ -41,14 +35,6 @@ are outside this editor change. No deployment or production verification was per
 | 8    | [Public portfolio](http://localhost:3100/desktop-preview-owner)    | `/desktop-preview-owner`      | Visit while signed out, then open the owner editor using another disposable account.   | Private public page stays unavailable; unauthorized owner edits stay blocked.                                                                          | Not run                  |
 
 ## Previous device preview and lightbox checks
-
-**Previous verification — 7 November 2026:** Production build, app/UI package type
-checks, 36-file lint check and 12 focused unit tests passed. The broader desktop/mobile
-browser run passed 42 cases and skipped one existing mobile testimonial case. The three
-remaining drag-cancel and modal-navigation cases passed after fixes in a targeted rerun
-of ten scenarios. Device defaults, focus trapping/return, Escape dismissal, draft retention,
-private saves, failure/retry and managed editing are covered. This remains local fixture
-verification; no deployment or live provider verification is claimed.
 
 | Step | Clickable URL                                                      | Route path                    | Action                                                                                     | Expected result                                                                                                                                       | Actual result / evidence                               |
 | ---- | ------------------------------------------------------------------ | ----------------------------- | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
@@ -61,10 +47,10 @@ verification; no deployment or live provider verification is claimed.
 ## Related evidence and detail
 
 - [Figma design](https://www.figma.com/design/kUZPyqUNjpMnUpwFATHp45?node-id=3-223).
-- [Workspace and CV projection tests](../../../packages/ui/src/portfolio/editor-workspace/editor-workspace.test.tsx).
-- [Collection editor tests](../../../packages/ui/src/editors/collection-editor.test.tsx).
-- [Preview isolation tests](../../../packages/ui/src/display/portfolio-preview/ResponsivePortfolioPreview.test.tsx).
-- [Editor browser checks](../../../e2e/edit/editor-workspace.spec.ts).
+- [Workspace and CV projection tests](../../../packages/assistant/src/components/portfolio/editor-workspace/editor-workspace.test.tsx).
+- [Collection editor tests](../../../packages/assistant/src/components/editors/collection-editor/collection-editor.test.tsx).
+- [Preview isolation tests](../../../packages/assistant/src/components/portfolio/portfolio-preview/ResponsivePortfolioPreview.test.tsx).
+- [Editor browser checks](../../../apps/my-dev-studio/e2e/edit/editor-workspace.spec.ts).
 - [Existing recovery guide](draft-recovery.md) and [publication guide](publication.md).
 
 The CV panel previews content and visibility. PDF layout and pagination continue to use the

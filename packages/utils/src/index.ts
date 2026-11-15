@@ -1,3 +1,4 @@
+export { keysToCamelCase, toCamelCase } from "./converters/camel-case";
 export { createUUID } from "./helpers/createUUID";
 export {
   type DataWorkerLog,
@@ -17,7 +18,10 @@ export { formatDateRange } from "./helpers/format-date";
 export { capitalizeFirstLetter } from "./helpers/format-text";
 export { formatTimestamp } from "./helpers/format-timestamp";
 export { isMobile } from "./helpers/isMobile";
+export { noop, noopAsync } from "./helpers/noop";
 export { NullsToUndefined } from "./helpers/nullsToUndefined";
+export { safeJson } from "./helpers/safe-json";
+export { safeLink } from "./helpers/safe-link";
 export { sleepMs } from "./helpers/sleepMs";
 export {
   ensureLeadingSlash,
@@ -46,3 +50,5 @@ export {
   setSharedOpen,
   subscribe,
 } from "./helpers/wsMetrics";
+export { apiClient } from "./http/api-client";
+export { fetcher } from "./http/fetcher";

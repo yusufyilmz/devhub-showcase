@@ -5,6 +5,7 @@ export * from "./collapsible";
 export * from "./divider";
 export * from "./flex";
 export * from "./hero";
+export { MasonryGrid, type MasonryGridProps } from "./masonry-grid";
 export * from "./page-shell";
 export * from "./page-variants";
 export * from "./paper";

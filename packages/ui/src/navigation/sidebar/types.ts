@@ -1,5 +1,6 @@
 import type * as React from "react";
 
+import type { useRender } from "@base-ui/react/use-render";
 import type { VariantProps } from "class-variance-authority";
 
 import type { TooltipContent } from "../../overlays/tooltip";
@@ -12,6 +13,7 @@ export type SidebarContextProps = {
   openMobile: boolean;
   setOpenMobile: (open: boolean) => void;
   isMobile: boolean;
+  mobileWidth: React.CSSProperties["width"];
   toggleSidebar: () => void;
 };
 
@@ -29,17 +31,17 @@ export type SidebarOptions2 = React.ComponentProps<"div"> & {
   collapsible?: "offcanvas" | "icon" | "none";
 };
 
-export type SidebarGroupLabelOptions = React.ComponentProps<"div"> & { asChild?: boolean };
+export type SidebarGroupLabelOptions = useRender.ComponentProps<"div"> & { asChild?: boolean };
 
-export type SidebarGroupActionOptions = React.ComponentProps<"button"> & { asChild?: boolean };
+export type SidebarGroupActionOptions = useRender.ComponentProps<"button"> & { asChild?: boolean };
 
-export type SidebarMenuButtonOptions = React.ComponentProps<"button"> & {
+export type SidebarMenuButtonOptions = useRender.ComponentProps<"button"> & {
   asChild?: boolean;
   isActive?: boolean;
   tooltip?: string | React.ComponentProps<typeof TooltipContent>;
 } & VariantProps<typeof sidebarMenuButtonVariants>;
 
-export type SidebarMenuActionOptions = React.ComponentProps<"button"> & {
+export type SidebarMenuActionOptions = useRender.ComponentProps<"button"> & {
   asChild?: boolean;
   showOnHover?: boolean;
 };
@@ -48,7 +50,7 @@ export type SidebarMenuSkeletonOptions = React.ComponentProps<"div"> & {
   showIcon?: boolean;
 };
 
-export type SidebarMenuSubButtonOptions = React.ComponentProps<"a"> & {
+export type SidebarMenuSubButtonOptions = useRender.ComponentProps<"a"> & {
   asChild?: boolean;
   size?: "sm" | "md";
   isActive?: boolean;

@@ -30,17 +30,20 @@ export function NavDocuments({ items }: NavDocumentsOptions) {
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild tooltip={item.name}>
               <a href={item.url}>
-                <item.icon />
+                <item.icon aria-hidden="true" />
                 <span>{item.name}</span>
               </a>
             </SidebarMenuButton>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuAction className={navDocumentsStyles.element2} showOnHover>
+                <SidebarMenuAction
+                  aria-label={`More options for ${item.name}`}
+                  className={navDocumentsStyles.element2}
+                  showOnHover
+                >
                   <IconDots />
-                  <span className={navDocumentsStyles.element3}>More</span>
                 </SidebarMenuAction>
               </DropdownMenuTrigger>
               <DropdownMenuContent

@@ -474,9 +474,9 @@ export const TrelloCardComments: FC<TrelloCardCommentsProps> = ({ card }) => {
               <div key={commentReply.id} style={{ width: "100%" }}>
                 <TrelloCommentReply
                   commentReply={commentReply}
-                  onDelete={(commentReplyId) => {}}
-                  onEdit={(commentReplyId) => {}}
-                  onReply={(commentReplyId) => {}}
+                  onDelete={(_commentReplyId) => {}}
+                  onEdit={(_commentReplyId) => {}}
+                  onReply={(_commentReplyId) => {}}
                   uuidOrId={effectiveArticleId}
                 />
               </div>

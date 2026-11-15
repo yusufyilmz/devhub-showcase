@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-import { validateWorkspace, type Workspace, workspaceSchema } from "@shared/services/types";
+import { validateWorkspace, type Workspace, workspaceSchema } from "@shared/lib/types";
 
 import { watchSession } from "@/lib/browser-session";
 

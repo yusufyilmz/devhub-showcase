@@ -1,5 +1,7 @@
 "use client";
 
+import "./section-views.css";
+
 import { useId, useRef, useState } from "react";
 
 import { Button } from "../../buttons/button";
@@ -65,6 +67,7 @@ export function SectionTabs({
               role="tab"
               tabIndex={n === index ? 0 : -1}
               type="button"
+              variant="ghost"
             >
               {item.title}
             </Button>

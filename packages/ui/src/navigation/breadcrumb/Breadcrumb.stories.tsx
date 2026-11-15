@@ -15,7 +15,7 @@ const meta = {
     layout: "padded",
   },
   tags: ["autodocs"],
-  title: "Navigation/Breadcrumb",
+  title: "UI/Navigation/Breadcrumb",
 } satisfies Meta<typeof Breadcrumb>;
 
 export default meta;
@@ -62,4 +62,21 @@ export const WideCanvas: StoryObj<typeof meta> = {
       </div>
     ),
   ],
+};
+
+export const LongPageName: Story = {
+  ...NarrowCanvas,
+  render: () => (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Workspace settings and publication preferences</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  ),
 };

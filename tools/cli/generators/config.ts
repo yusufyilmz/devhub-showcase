@@ -4,26 +4,25 @@ import { dirname, resolve } from "node:path";
 
 import type { PlopTypes } from "@turbo/gen";
 
-import { cvHelpers, renderCv } from "@shared/templates";
-
-import {
-  readPublicProfile,
-  readPublishedProfile,
-} from "../../../packages/services/src/profile/service/published-profile";
+import { cvHelpers, renderCv } from "@shared/assistant/cv";
+import { readPublicProfile, readPublishedProfile } from "@shared/lib/published-profile";
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   for (const [name, helper] of Object.entries(cvHelpers)) plop.setHelper(name, helper);
   plop.setGenerator("cv", {
     actions: [
       async (answers) => {
-        for (const file of ["apps/web/.env.local", ".env.local"]) {
+        for (const file of ["apps/my-dev-studio/.env.local", ".env.local"]) {
           if (existsSync(file)) process.loadEnvFile(file);
         }
         const snapshot = await cvSnapshot(answers?.profileId);
         const { profile, revision } = snapshot;
         if (revision === 0)
           console.warn("No database configured; generating from the bundled development profile.");
-        const template = await readFile(resolve("packages/cv/templates/cv.json.hbs"), "utf8");
+        const template = await readFile(
+          resolve("packages/assistant/templates/cv.json.hbs"),
+          "utf8",
+        );
         const pdf = await renderCv(profile, template, (source, data) =>
           plop.renderString(source, data),
         );
@@ -117,8 +116,9 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
 async function cvSnapshot(value: unknown) {
   const profileId = String(value || "main");
   const snapshot =
-    profileId === "main" ? await readPublishedProfile() : await readPublicProfile(profileId);
-  if (!snapshot) throw new Error("The requested public profile does not exist or is private.");
-
+    profileId === "main"
+      ? await readPublishedProfile("cv")
+      : await readPublicProfile(profileId, "cv");
+  if (!snapshot) throw new Error("The requested public CV does not exist or is private.");
   return snapshot;
 }

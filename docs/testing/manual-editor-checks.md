@@ -91,7 +91,7 @@ Start at the [test account editor](https://mydevstudio.vercel.app/test-owner/edi
 | [Open editor](https://mydevstudio.vercel.app/test-owner/edit) | `/test-owner/edit` | 9    | Apply a fresh accepted change, inspect the draft preview, then explicitly save if desired.                                        | Application and preview remain local until Save; a private portfolio remains private until **Review publication** and **Confirm publication** are completed separately. |
 
 ```sh
-pnpm exec vitest run --project unit packages/assistant/src/studio/ai-assistant-editor.test.tsx packages/lib/src/profiles/ai-edit.test.ts
+pnpm exec vitest run --project unit packages/assistant/src/studio/ai-assistant-editor.test.tsx packages/lib/src/schemas/profile/ai-edit.test.ts
 ```
 
 ## Portfolio sections

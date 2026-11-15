@@ -395,7 +395,7 @@ const BackgroundDemo: React.FC = () => {
 const meta = {
   component: BackgroundDemo,
   parameters: { layout: "fullscreen" },
-  title: "Components/Background",
+  title: "UI/Layout/Background",
 } satisfies Meta<typeof BackgroundDemo>;
 
 export default meta;
@@ -424,4 +424,15 @@ export const WideCanvas: StoryObj<typeof meta> = {
       </div>
     ),
   ],
+};
+
+export const Aurora: Story = {
+  render: () => (
+    <Background className="grid min-h-64 place-items-center p-8" effect="aurora">
+      <div className="text-center">
+        <h2 className="font-semibold text-3xl">Your work, in focus</h2>
+        <p className="mt-2 text-muted-foreground">A soft accent wash with a dotted texture.</p>
+      </div>
+    </Background>
+  ),
 };

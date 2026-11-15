@@ -1,4 +1,4 @@
-import type { CVCategoryType } from "@shared/lib/types";
+import type { CVCategoryType } from "../../../lib/src/types";
 
 export const CARD_IDS: Record<CVCategoryType, string> = {
   achievements: "achievement-card",

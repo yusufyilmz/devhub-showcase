@@ -4,7 +4,7 @@
 import { useState } from "react";
 
 import { Button as LibraryButton } from "../button/Button";
-import { segmentedControlClassName, segmentedControlStyles } from "./styles";
+import { segmentedControlStyles } from "./styles";
 import type { SegmentedControlOptions } from "./types";
 
 export function SegmentedControl({
@@ -20,18 +20,14 @@ export function SegmentedControl({
       {buttons.map((button) => (
         <LibraryButton
           aria-pressed={current === button.value}
-          className={segmentedControlClassName(
-            current === button.value
-              ? "bg-button-primary text-button-light"
-              : "text-textColor-secondary",
-          )}
+          className={segmentedControlStyles.option}
           key={button.value}
           onClick={() => {
             setInternal(button.value);
             onToggle(button.value);
           }}
           type="button"
-          variant="unstyled"
+          variant="ghost"
         >
           {button.label}
         </LibraryButton>

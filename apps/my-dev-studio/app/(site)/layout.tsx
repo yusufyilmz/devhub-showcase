@@ -1,17 +1,20 @@
-import { Footer, Header } from "@shared/ui/components";
+import { StudioShell } from "@shared/assistant/portfolio";
+import { ThemeToggle } from "@shared/ui/theme";
 
-import { getPublishedProfile } from "@/features/portfolio/profiles/published-profile";
+import { getAccountMenu } from "../_account-menu";
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  const { profile } = await getPublishedProfile();
   return (
-    <>
-      <a className="skip-link" href="#main-content">
-        Skip to content
-      </a>
-      <Header profile={profile} />
+    <StudioShell
+      contentId="main-content"
+      tools={
+        <div className="admin-tools flex items-center gap-3">
+          <ThemeToggle />
+          {await getAccountMenu({})}
+        </div>
+      }
+    >
       {children}
-      <Footer profile={profile} />
-    </>
+    </StudioShell>
   );
 }
