@@ -75,13 +75,11 @@ export function ExampleCarouselClient({
   return (
     <section
       aria-labelledby="examples-title"
-      className="home-container [width:min(var(--home-width,_1200px),_calc(100%_-_80px))] [margin-inline:auto] max-[1000px]:[width:calc(100%_-_52px)] max-[760px]:[width:calc(100%_-_40px)] max-[380px]:[width:calc(100%_-_32px)] home-examples [padding-block:5rem] max-[700px]:[padding-block:3rem]"
+      className="home-container home-examples"
       id="examples"
     >
-      <div className="home-section-intro [&_:where(h2)]:[margin-block:17px_20px] [font-size:clamp(34px,_4vw,_51px)] [font-weight:500] [line-height:1.16] [letter-spacing:-0.045em] [&_:where(h2)_>_:where(span)]:[color:var(--muted-foreground)] [&_>_:where(p):not(.home-eyebrow)]:[max-width:510px] [font-size:14px] [line-height:1.9] [color:var(--muted-foreground)] max-[760px]:[&_:where(h2)]:[font-size:36px] max-[760px]:[&_>_:where(p):not(.home-eyebrow)]:[font-size:13px]">
-        <p className="home-eyebrow [display:flex] [gap:9px] [align-items:center] [font:500_10px\_/\_1.6_var(--font-geist-mono),_monospace] [color:var(--primary)] [letter-spacing:0.13em] [&_>_:where(span)]:[width:5px] [height:5px] [background:currentColor] [border-radius:50%] [box-shadow:0_0_12px_color-mix(in_srgb,_var(--primary)_50%,_transparent)]">
-          FIND YOUR STARTING POINT
-        </p>
+      <div className="home-section-intro">
+        <p className="home-eyebrow">FIND YOUR STARTING POINT</p>
         <h2 id="examples-title">
           Different work.
           <br />
@@ -92,11 +90,8 @@ export function ExampleCarouselClient({
           and download its sample CV.
         </p>
       </div>
-      <div className="example-toolbar [display:flex] [gap:0.6rem] [align-items:center] [justify-content:space-between] [flex-wrap:wrap] [margin:2rem_0_1.25rem]">
-        <fieldset
-          aria-label="Filter portfolio examples"
-          className="example-filters [display:flex] [gap:0.6rem] [align-items:center] [flex-wrap:wrap] [&_button]:[padding:0.65rem_1rem] [font:inherit] [font-size:0.85rem] [color:var(--foreground)] [cursor:pointer] [background:var(--card)] [border:1px_solid_var(--border)] [border-radius:var(--portfolio-radius,_var(--radius,_0.5rem))] [&_button:hover]:[color:var(--primary)] [border-color:var(--primary)] [&_button[aria-pressed='true']]:[color:var(--primary-foreground)]"
-        >
+      <div className="example-toolbar">
+        <fieldset aria-label="Filter portfolio examples" className="example-filters">
           <LibraryButton
             aria-pressed={filter === "all"}
             onClick={() => choose("all")}
@@ -117,7 +112,7 @@ export function ExampleCarouselClient({
             </LibraryButton>
           ))}
         </fieldset>
-        <div className="example-controls [display:flex] [gap:0.6rem] [align-items:center] [&_button]:[padding:0.65rem_1rem] [font:inherit] [font-size:0.85rem] [color:var(--foreground)] [cursor:pointer] [background:var(--card)] [border:1px_solid_var(--border)] [border-radius:var(--portfolio-radius,_var(--radius,_0.5rem))] [&_button:hover]:[color:var(--primary)] [border-color:var(--primary)] [&_button:disabled]:[cursor:default] [opacity:0.35]">
+        <div className="example-controls">
           {count > 1 && (
             <LibraryButton
               aria-controls={id}
@@ -131,11 +126,11 @@ export function ExampleCarouselClient({
           )}
         </div>
       </div>
-      <div className="example-stage [position:relative] hover:[&_.example-nav]:[pointer-events:auto] [opacity:1] focus-within:[&_.example-nav]:[pointer-events:auto] hover:[&_.example-nav:disabled]:[opacity:0.35] focus-within:[&_.example-nav:disabled]:[opacity:0.35]">
+      <div className="example-stage">
         <LibraryButton
           aria-controls={id}
           aria-label="Previous portfolio examples"
-          className="example-nav [position:absolute] [top:50%] [z-index:2] [display:grid] [place-items:center] [width:40px] [height:40px] [padding:0] [font-size:1.1rem] [color:var(--foreground)] [pointer-events:none] [cursor:pointer] [background:color-mix(in_srgb,_var(--card)_90%,_transparent)] [border:1px_solid_var(--border)] [border-radius:var(--portfolio-radius,_var(--radius,_999px))] [opacity:0] [transform:translateY(-50%)] [transition:opacity_160ms_ease] disabled:[cursor:default] [@media(hover:_none)]:[pointer-events:auto] [opacity:1] example-nav-previous [left:12px]"
+          className="example-nav example-nav-previous"
           disabled={position === 0}
           onClick={() => move(-1)}
           type="button"
@@ -146,7 +141,7 @@ export function ExampleCarouselClient({
         <LibraryButton
           aria-controls={id}
           aria-label="Next portfolio examples"
-          className="example-nav [position:absolute] [top:50%] [z-index:2] [display:grid] [place-items:center] [width:40px] [height:40px] [padding:0] [font-size:1.1rem] [color:var(--foreground)] [pointer-events:none] [cursor:pointer] [background:color-mix(in_srgb,_var(--card)_90%,_transparent)] [border:1px_solid_var(--border)] [border-radius:var(--portfolio-radius,_var(--radius,_999px))] [opacity:0] [transform:translateY(-50%)] [transition:opacity_160ms_ease] disabled:[cursor:default] [@media(hover:_none)]:[pointer-events:auto] [opacity:1] example-nav-next [right:12px]"
+          className="example-nav example-nav-next"
           disabled={atEnd}
           onClick={() => move(1)}
           type="button"
@@ -156,14 +151,14 @@ export function ExampleCarouselClient({
         </LibraryButton>
         <ul
           aria-label="Portfolio examples carousel"
-          className="example-track [position:relative] [display:flex] [gap:1.5rem] [padding:2px_2px_1.25rem] [margin:0] [overflow-x:auto] [overscroll-behavior-x:contain] [list-style:none] [scroll-snap-type:x_mandatory] [scroll-padding-inline:1px] [scrollbar-width:thin]"
+          className="example-track"
           id={id}
           onScroll={updatePosition}
           ref={track}
         >
           {examples.map((item, itemIndex) => (
             <Card asChild key={item.slug} layout="plain" surface="portfolio">
-              <li className="example-card min-w-0 flex-[0_0_calc((100%-1.5rem)/2)] snap-start overflow-hidden rounded-[var(--portfolio-radius,var(--radius,1.2rem))] border border-border/65 bg-card shadow-none focus-within:outline-2 focus-within:outline-offset-4 focus-within:outline-primary [@media(max-width:700px)]:basis-[88%] motion-safe:hover:-translate-y-1 motion-safe:transition-[transform,box-shadow] motion-safe:duration-[250ms] motion-safe:hover:shadow-[0_12px_28px_color-mix(in_srgb,var(--foreground)_10%,transparent)] [&>a]:relative [&>a]:block [&>a]:h-full [&>a]:cursor-pointer [&>a]:text-inherit [&>a]:no-underline [&>a:focus-visible]:-outline-offset-4 [&_h3]:mt-[0.65rem] [&_h3]:mb-[0.3rem] [&_h3]:flex [&_h3]:justify-between [&_h3]:text-[1.35rem] motion-safe:hover:[&_.example-preview-action]:text-foreground">
+              <li className="example-card">
                 <a
                   aria-label={`Explore ${item.profile.name}'s ${item.profile.portfolioType} example`}
                   href={examplePath(item.slug)}
@@ -174,18 +169,18 @@ export function ExampleCarouselClient({
                   }}
                 >
                   <ExampleThumbnail item={item} />
-                  <span className="example-preview-action [position:absolute] [top:12px] [right:18px] [z-index:1] [font-size:12px] [font-weight:600] [color:var(--primary)] [text-decoration:underline] [text-underline-offset:3px]">
+                  <span className="example-preview-action">
                     Preview portfolio <span aria-hidden="true">↗</span>
                   </span>
-                  <div className="example-card-copy p-6 [&_p]:m-0 [&_p]:text-[0.9rem] [&_p]:text-muted-foreground">
-                    <span className="example-label [font-size:0.65rem] [color:var(--muted-foreground)] [text-transform:uppercase] [letter-spacing:0.1em]">
+                  <div className="example-card-copy">
+                    <span className="example-label">
                       {item.profile.portfolioType} / {item.profile.appearance?.theme}
                     </span>
                     <h3>
                       {item.profile.name} <span aria-hidden="true">↗</span>
                     </h3>
                     <p>{item.profile.title}</p>
-                    <div className="example-card-meta [display:flex] [flex-wrap:wrap] [gap:0.5rem] [justify-content:space-between] [margin-top:1.5rem] [font-size:0.7rem] [color:var(--muted-foreground)]">
+                    <div className="example-card-meta">
                       <span>
                         {item.profile.portfolioLanguage?.toUpperCase()} · {item.profile.cvLayout} CV
                       </span>
@@ -210,7 +205,7 @@ export function ExampleCarouselClient({
         }))}
         onIndexChange={setActiveExample}
       />
-      <div className="example-caption mt-3 flex items-center justify-between gap-[0.6rem] text-xs text-muted-foreground [@media(max-width:700px)]:items-start [@media(max-width:700px)]:gap-4 [@media(max-width:700px)]:[&_[role=status]]:whitespace-nowrap">
+      <div className="example-caption">
         <span>Swipe, scroll or use the arrows to explore.</span>
         <span role="status">
           {position + 1} / {examples.length} examples
