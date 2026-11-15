@@ -1,8 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { IconDashboard, IconDatabase, IconFileDescription } from "@tabler/icons-react";
+import {
+  IconDashboard,
+  IconDatabase,
+  IconFileDescription,
+  IconSettings,
+} from "@tabler/icons-react";
+import { Folder } from "lucide-react";
 
 import { SidebarProvider } from "../sidebar/Sidebar";
+import { NavDocuments } from "./NavDocuments";
 import { NavMain } from "./NavMain";
+import { NavProjects } from "./NavProjects";
+import { NavSecondary } from "./NavSecondary";
+import { NavUser } from "./NavUser";
 
 const meta = {
   args: {
@@ -70,4 +80,23 @@ export const WideCanvas: StoryObj<typeof meta> = {
       </div>
     ),
   ],
+};
+
+export const SidebarGroups: Story = {
+  render: () => (
+    <>
+      <NavDocuments
+        items={[{ icon: IconFileDescription, name: "Quarterly design research", url: "#report" }]}
+      />
+      <NavProjects
+        projects={[
+          { icon: Folder, name: "Navigation redesign and accessibility", url: "#project" },
+        ]}
+      />
+      <NavSecondary
+        items={[{ icon: IconSettings, title: "Workspace settings", url: "#settings" }]}
+      />
+      <NavUser user={{ avatar: "", email: "alex.morgan@workspace.example", name: "Alex Morgan" }} />
+    </>
+  ),
 };
