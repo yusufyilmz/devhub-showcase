@@ -16,6 +16,7 @@ export const HomeButton = ({ className }: { className?: string } = {}) => {
       aria-label="Go to home"
       className={className}
       onClick={() => replace("/")}
+      size="lg"
       startIcon={<House />}
       variant="outline"
     >
