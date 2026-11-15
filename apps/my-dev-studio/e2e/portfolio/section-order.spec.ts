@@ -19,6 +19,12 @@ for (const type of ["engineer", "designer", "consultant", "minimal"]) {
           : "Projects & client work",
     );
     expect(headings.slice(4, 6)).toEqual(["Professional Experience", "About me"]);
+    // The portfolio container must not inherit button display styles from the CSS migration.
+    if (type !== "engineer") {
+      await expect(page.locator(".folio").first()).toHaveCSS("display", "block");
+      await expect(page.locator("#folio-experience")).toHaveCount(1);
+      await expect(page.locator('[aria-labelledby="folio-experience"]')).toHaveCount(1);
+    }
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Yusuf");
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
       false,
