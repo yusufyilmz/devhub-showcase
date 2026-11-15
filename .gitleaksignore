@@ -1,0 +1,5 @@
+# Historical findings in an earlier PR commit. Current .env.example entries are empty.
+# These entries suppress ONLY the two specific historical fingerprints, not future leaks.
+# Rotate any real exposed credentials and clean Git history separately.
+f952e1466f65951176f0bcb3cd87d02bc286b0f0:apps/my-dev-studio/.env.example:generic-api-key:50
+f952e1466f65951176f0bcb3cd87d02bc286b0f0:apps/my-dev-studio/.env.example:generic-api-key:52
