@@ -163,7 +163,7 @@ export function ExampleCarouselClient({
         >
           {examples.map((item, itemIndex) => (
             <Card asChild key={item.slug} layout="plain" surface="portfolio">
-              <li className="example-card [flex:0_0_calc((100%_-_1.5rem)\_/\_2)] [min-width:0] [overflow:hidden] [scroll-snap-align:start] [background:var(--card)] [border-radius:var(--portfolio-radius,_var(--radius,_1.2rem))] [&_>_a]:[display:block] [height:100%] [color:inherit] [text-decoration:none] [&_>_a:focus-visible]:[outline-offset:-4px] [&_h3]:[display:flex] [justify-content:space-between] [margin:0.65rem_0_0.3rem] [font-size:1.35rem] max-[700px]:[flex-basis:88%] [&_>_a]:[position:relative] [display:block] [cursor:pointer] focus-within:[outline [display:inline-flex] [gap:9px] [align-items:center] [justify-content:center] [min-height:42px] [padding:12px_17px] [font-size:12px] [font-weight:600] [border-radius:8px] [background:var(--surface)] [border:1px_solid_var(--line)] max-[700px]:[min-height:38px] [padding:9px_12px] [font-size:10px] hover:[color:var(--accent)] [border-color:var(--accent)]:2px_solid_var(--primary)] [outline-offset:4px] [@media(hover:_hover)_and_(prefers-reduced-motion:_no-preference)]:[transition:transform_0.25s,_box-shadow_0.25s] [@media(hover:_hover)_and_(prefers-reduced-motion:_no-preference)]:hover:[box-shadow:0_12px_28px_color-mix(in_srgb,_var(--foreground)_10%,_transparent)] [transform:translateY(-4px)] [@media(hover:_hover)_and_(prefers-reduced-motion:_no-preference)]:hover:[&_.example-preview-action]:[color:var(--foreground)]">
+              <li className="example-card min-w-0 flex-[0_0_calc((100%-1.5rem)/2)] snap-start overflow-hidden rounded-[var(--portfolio-radius,var(--radius,1.2rem))] border border-border/65 bg-card shadow-none focus-within:outline-2 focus-within:outline-offset-4 focus-within:outline-primary [@media(max-width:700px)]:basis-[88%] motion-safe:hover:-translate-y-1 motion-safe:transition-[transform,box-shadow] motion-safe:duration-[250ms] motion-safe:hover:shadow-[0_12px_28px_color-mix(in_srgb,var(--foreground)_10%,transparent)] [&>a]:relative [&>a]:block [&>a]:h-full [&>a]:cursor-pointer [&>a]:text-inherit [&>a]:no-underline [&>a:focus-visible]:-outline-offset-4 [&_h3]:mt-[0.65rem] [&_h3]:mb-[0.3rem] [&_h3]:flex [&_h3]:justify-between [&_h3]:text-[1.35rem] motion-safe:hover:[&_.example-preview-action]:text-foreground">
                 <a
                   aria-label={`Explore ${item.profile.name}'s ${item.profile.portfolioType} example`}
                   href={examplePath(item.slug)}
@@ -177,7 +177,7 @@ export function ExampleCarouselClient({
                   <span className="example-preview-action [position:absolute] [top:12px] [right:18px] [z-index:1] [font-size:12px] [font-weight:600] [color:var(--primary)] [text-decoration:underline] [text-underline-offset:3px]">
                     Preview portfolio <span aria-hidden="true">↗</span>
                   </span>
-                  <div className="example-card-copy [padding:1.5rem] [&_p]:[margin:0] [font-size:0.9rem] [color:var(--muted-foreground)]">
+                  <div className="example-card-copy p-6 [&_p]:m-0 [&_p]:text-[0.9rem] [&_p]:text-muted-foreground">
                     <span className="example-label [font-size:0.65rem] [color:var(--muted-foreground)] [text-transform:uppercase] [letter-spacing:0.1em]">
                       {item.profile.portfolioType} / {item.profile.appearance?.theme}
                     </span>
@@ -210,7 +210,7 @@ export function ExampleCarouselClient({
         }))}
         onIndexChange={setActiveExample}
       />
-      <div className="example-caption [display:flex] [gap:0.6rem] [align-items:center] [justify-content:space-between] [margin-top:0.75rem] [font-size:0.75rem] [color:var(--muted-foreground)] max-[700px]:[gap:1rem] [align-items:start] max-[700px]:[&_[role='status']]:[white-space:nowrap]">
+      <div className="example-caption mt-3 flex items-center justify-between gap-[0.6rem] text-xs text-muted-foreground [@media(max-width:700px)]:items-start [@media(max-width:700px)]:gap-4 [@media(max-width:700px)]:[&_[role=status]]:whitespace-nowrap">
         <span>Swipe, scroll or use the arrows to explore.</span>
         <span role="status">
           {position + 1} / {examples.length} examples
