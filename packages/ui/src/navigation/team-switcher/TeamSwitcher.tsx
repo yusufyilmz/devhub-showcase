@@ -9,6 +9,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
@@ -48,19 +50,27 @@ export function TeamSwitcher({ teams }: TeamSwitcherOptions) {
             sideOffset={4}
           >
             <DropdownMenuLabel className={teamSwitcherStyles.element9}>Teams</DropdownMenuLabel>
-            {teams.map((team, index) => (
-              <DropdownMenuItem
-                className={teamSwitcherStyles.element10}
-                key={team.name}
-                onClick={() => setActiveTeam(team)}
-              >
-                <div className={teamSwitcherStyles.element11}>
-                  <team.logo className={teamSwitcherStyles.element12} />
-                </div>
-                {team.name}
-                <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            ))}
+            <DropdownMenuRadioGroup
+              onValueChange={(name) => {
+                const team = teams.find((option) => option.name === name);
+                if (team) setActiveTeam(team);
+              }}
+              value={activeTeam.name}
+            >
+              {teams.map((team, index) => (
+                <DropdownMenuRadioItem
+                  className={teamSwitcherStyles.element10}
+                  key={team.name}
+                  value={team.name}
+                >
+                  <div className={teamSwitcherStyles.element11}>
+                    <team.logo className={teamSwitcherStyles.element12} />
+                  </div>
+                  <span className="min-w-0 flex-1 wrap-anywhere">{team.name}</span>
+                  <DropdownMenuShortcut className="shrink-0">⌘{index + 1}</DropdownMenuShortcut>
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem className={teamSwitcherStyles.element13}>
               <div className={teamSwitcherStyles.element14}>
