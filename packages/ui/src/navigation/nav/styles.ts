@@ -1,7 +1,8 @@
 export const navMainStyles = {
   element1: "group/collapsible",
   element2:
-    "ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90",
+    "ms-auto size-4 shrink-0 text-muted-foreground motion-safe:transition-transform group-data-[state=open]/collapsible:rotate-90 rtl:rotate-180 rtl:group-data-[state=open]/collapsible:rotate-90",
+  trigger: "data-[state=open]:bg-sidebar-accent/60",
 } as const;
 
 export const navProjectsStyles = {

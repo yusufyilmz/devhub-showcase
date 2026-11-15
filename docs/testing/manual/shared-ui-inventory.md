@@ -135,22 +135,22 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 
 [Once UI reference](https://docs.once-ui.com/components/overview#navigation)
 
-| Component family                                                                      | Public import                  | Storybook title                 | Review evidence |
-| ------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------- | --------------- |
-| [navigation](../../../packages/ui/src/navigation)                                     | `@shared/ui/navigation`        | Find consuming story            | Pending         |
-| [navigation/app-sidebar](../../../packages/ui/src/navigation/app-sidebar)             | `@shared/ui/app-sidebar`       | UI/Navigation/App Sidebar       | Checked         |
-| [navigation/brand](../../../packages/ui/src/navigation/brand)                         | `@shared/ui/brand`             | UI/Navigation/Brand             | Checked         |
-| [navigation/breadcrumb](../../../packages/ui/src/navigation/breadcrumb)               | `@shared/ui/breadcrumb`        | UI/Navigation/Breadcrumb        | Checked         |
-| [navigation/footer](../../../packages/ui/src/navigation/footer)                       | `@shared/ui/footer`            | UI/Navigation/Footer            | Checked         |
-| [navigation/header](../../../packages/ui/src/navigation/header)                       | `@shared/ui/header`            | UI/Navigation/Header            | Pending         |
-| [navigation/nav](../../../packages/ui/src/navigation/nav)                             | `@shared/ui/nav`               | UI/Navigation/Nav/Nav Main      | Pending         |
-| [navigation/navbar](../../../packages/ui/src/navigation/navbar)                       | `@shared/ui/navbar`            | UI/Navigation/Navbar            | Pending         |
-| [navigation/page-header](../../../packages/ui/src/navigation/page-header)             | `@shared/ui/page-header`       | UI/Navigation/Page Header       | Checked         |
-| [navigation/pagination](../../../packages/ui/src/navigation/pagination)               | `@shared/ui/pagination`        | UI/Navigation/Pagination        | Checked         |
-| [navigation/section-navigator](../../../packages/ui/src/navigation/section-navigator) | `@shared/ui/section-navigator` | UI/Navigation/Section Navigator | Checked         |
-| [navigation/sidebar](../../../packages/ui/src/navigation/sidebar)                     | `@shared/ui/sidebar`           | UI/Navigation/Sidebar           | Pending         |
-| [navigation/site-header](../../../packages/ui/src/navigation/site-header)             | `@shared/ui/site-header`       | UI/Navigation/Site Header       | Pending         |
-| [navigation/team-switcher](../../../packages/ui/src/navigation/team-switcher)         | `@shared/ui/team-switcher`     | UI/Navigation/Team Switcher     | Checked         |
+| Component family                                                                      | Public import                  | Storybook title                 | Review evidence                               |
+| ------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------- | --------------------------------------------- |
+| [navigation](../../../packages/ui/src/navigation)                                     | `@shared/ui/navigation`        | Find consuming story            | Pending                                       |
+| [navigation/app-sidebar](../../../packages/ui/src/navigation/app-sidebar)             | `@shared/ui/app-sidebar`       | UI/Navigation/App Sidebar       | Checked                                       |
+| [navigation/brand](../../../packages/ui/src/navigation/brand)                         | `@shared/ui/brand`             | UI/Navigation/Brand             | Checked                                       |
+| [navigation/breadcrumb](../../../packages/ui/src/navigation/breadcrumb)               | `@shared/ui/breadcrumb`        | UI/Navigation/Breadcrumb        | Checked                                       |
+| [navigation/footer](../../../packages/ui/src/navigation/footer)                       | `@shared/ui/footer`            | UI/Navigation/Footer            | Checked                                       |
+| [navigation/header](../../../packages/ui/src/navigation/header)                       | `@shared/ui/header`            | UI/Navigation/Header            | Pending                                       |
+| [navigation/nav](../../../packages/ui/src/navigation/nav)                             | `@shared/ui/nav`               | UI/Navigation/Nav/Nav Main      | Nav Main checked. Other Nav variants pending. |
+| [navigation/navbar](../../../packages/ui/src/navigation/navbar)                       | `@shared/ui/navbar`            | UI/Navigation/Navbar            | Pending                                       |
+| [navigation/page-header](../../../packages/ui/src/navigation/page-header)             | `@shared/ui/page-header`       | UI/Navigation/Page Header       | Checked                                       |
+| [navigation/pagination](../../../packages/ui/src/navigation/pagination)               | `@shared/ui/pagination`        | UI/Navigation/Pagination        | Checked                                       |
+| [navigation/section-navigator](../../../packages/ui/src/navigation/section-navigator) | `@shared/ui/section-navigator` | UI/Navigation/Section Navigator | Checked                                       |
+| [navigation/sidebar](../../../packages/ui/src/navigation/sidebar)                     | `@shared/ui/sidebar`           | UI/Navigation/Sidebar           | Pending                                       |
+| [navigation/site-header](../../../packages/ui/src/navigation/site-header)             | `@shared/ui/site-header`       | UI/Navigation/Site Header       | Pending                                       |
+| [navigation/team-switcher](../../../packages/ui/src/navigation/team-switcher)         | `@shared/ui/team-switcher`     | UI/Navigation/Team Switcher     | Checked                                       |
 
 ## Content
 

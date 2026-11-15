@@ -1,22 +1,30 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { IconDashboard, IconDatabase, IconFileDescription } from "@tabler/icons-react";
 
+import { SidebarProvider } from "../sidebar/Sidebar";
 import { NavMain } from "./NavMain";
 
 const meta = {
   args: {
     items: [
-      { icon: IconDashboard, title: "Dashboard", url: "/dashboard" },
-      { icon: IconDatabase, title: "Data Library", url: "/data-library" },
+      { icon: IconDashboard, title: "Dashboard", url: "#dashboard" },
+      {
+        icon: IconDatabase,
+        items: [{ title: "Saved reports", url: "#saved-reports" }],
+        title: "Data Library",
+        url: "#data-library",
+      },
       { icon: IconFileDescription, title: "Documents", url: "/documents" },
     ],
   },
   component: NavMain,
   decorators: [
     (Story) => (
-      <div className="w-72 rounded-lg border bg-card p-3">
-        <Story />
-      </div>
+      <SidebarProvider className="min-h-0">
+        <section className="w-full max-w-72 rounded-xl border border-sidebar-border/70 bg-sidebar p-xs">
+          <Story />
+        </section>
+      </SidebarProvider>
     ),
   ],
   parameters: {
