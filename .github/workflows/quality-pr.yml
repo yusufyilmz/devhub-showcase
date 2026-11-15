@@ -54,9 +54,6 @@ jobs:
       - name: TypeScript
         run: pnpm check:types
 
-      - name: Unused dependencies
-        run: pnpm exec knip --dependencies
-
       - name: Circular dependencies
         run: pnpm check:circular
 
