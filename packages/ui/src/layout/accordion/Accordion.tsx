@@ -38,7 +38,7 @@ function AccordionTrigger({
         {...props}
       >
         {children}
-        <ChevronDownIcon className={accordionStyles.element2} />
+        <ChevronDownIcon aria-hidden="true" className={accordionStyles.element2} />
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   );

@@ -3,14 +3,15 @@ import { ChevronDown } from "lucide-react";
 
 import { Button } from "../../buttons/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./Collapsible";
+import { collapsibleMotionClassName } from "./styles";
 
 function Example({ width = 560 }: { width?: number }) {
   return (
     <div className="w-full" style={{ maxWidth: width }}>
-      <Collapsible className="overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)] rounded-lg border bg-card">
+      <Collapsible className="rounded-lg border border-border/75 bg-card">
         <CollapsibleTrigger asChild>
           <Button
-            className="group h-auto min-h-[2.75rem] w-full justify-between rounded-none px-[0.875rem]"
+            className="group h-auto min-h-11 w-full justify-between rounded-[inherit] px-md text-card-foreground focus-visible:-outline-offset-2 aria-expanded:rounded-b-none"
             variant="ghost"
           >
             Project details
@@ -20,8 +21,8 @@ function Example({ width = 560 }: { width?: number }) {
             />
           </Button>
         </CollapsibleTrigger>
-        <CollapsibleContent className="ui-disclosure-motion [overflow:clip] motion-safe:[&[data-state='open']]:[animation:ui-disclosure-open_340ms_cubic-bezier(0.22,_1,_0.36,_1)] motion-safe:[&[data-state='closed']]:[animation:ui-disclosure-close_240ms_ease-in]">
-          <p className="border-t px-[0.875rem] py-[0.75rem] text-sm leading-relaxed text-muted-foreground">
+        <CollapsibleContent className={collapsibleMotionClassName}>
+          <p className="mx-md border-t border-border/60 py-sm text-sm leading-relaxed text-muted-foreground">
             See what changed, who worked on it, and when it was last published.
           </p>
         </CollapsibleContent>

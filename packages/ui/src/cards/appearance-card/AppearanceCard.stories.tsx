@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { AppearanceCard } from "./AppearanceCard";
 
 const meta = {
-  args: { children: <p>Portfolio appearance settings</p>, className: "w-72" },
+  args: { children: <p>Portfolio appearance settings</p>, className: "w-[min(85vw,18rem)]" },
   component: AppearanceCard,
   parameters: { layout: "centered" },
   tags: ["autodocs"],

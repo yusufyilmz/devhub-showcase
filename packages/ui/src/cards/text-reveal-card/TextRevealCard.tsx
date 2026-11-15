@@ -5,6 +5,7 @@ import { ChevronDown } from "lucide-react";
 
 import { Button } from "../../buttons/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../layout/collapsible";
+import { collapsibleMotionClassName } from "../../layout/collapsible/styles";
 import { CardBase } from "../card/CardBase";
 import { disclosureCardStyles } from "../styles";
 import type { TextRevealCardProps } from "./types";
@@ -24,7 +25,7 @@ export function TextRevealCard({ text, revealText, className, children }: TextRe
             <ChevronDown aria-hidden="true" className={disclosureCardStyles.chevron} />
           </Button>
         </CollapsibleTrigger>
-        <CollapsibleContent className={disclosureCardStyles.content}>
+        <CollapsibleContent className={collapsibleMotionClassName}>
           <div className={cn(disclosureCardStyles.body, "text-muted-foreground")}>
             <p>{revealText}</p>
             {children}

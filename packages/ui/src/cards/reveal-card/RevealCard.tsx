@@ -45,7 +45,11 @@ export function RevealCardBase({
           if (!pinned.current && !event.currentTarget.contains(event.relatedTarget))
             setExpanded(false);
         }}
-        onFocusCapture={() => setExpanded(true)}
+        onFocusCapture={() => {
+          if (pointerIntent.current === null) {
+            setExpanded(true);
+          }
+        }}
         onKeyDown={(event) => {
           if (event.key === "Escape") {
             pinned.current = false;
@@ -54,7 +58,12 @@ export function RevealCardBase({
           }
         }}
         onPointerEnter={(event) => {
-          if (event.pointerType === "mouse") setExpanded(true);
+          if (
+            event.pointerType === "mouse" &&
+            (typeof window.matchMedia !== "function" || window.matchMedia("(hover: hover)").matches)
+          ) {
+            setExpanded(true);
+          }
         }}
         onPointerLeave={(event) => {
           if (!pinned.current && !event.currentTarget.contains(document.activeElement))

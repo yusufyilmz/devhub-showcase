@@ -5,14 +5,11 @@ import { cn } from "cn";
 import type { PaperInlineStyle1Values, PaperMotionClassOptions, PaperStyleOptions } from "./types";
 
 export function paperSurfaceClass(glassEffect: boolean, enhancedSurface: boolean) {
-  if (glassEffect) return ["bg-background/80 backdrop-blur-md", "dark:bg-background/60"];
+  if (glassEffect) return ["bg-card/80", "dark:bg-card/65"];
   if (enhancedSurface) {
-    return [
-      "bg-gradient-to-br from-background to-background/95",
-      "dark:from-background dark:to-background/90",
-    ];
+    return ["bg-linear-to-br from-card to-muted/70", "dark:from-card dark:to-muted/50"];
   }
-  return "bg-background";
+  return "bg-card";
 }
 
 export function paperMotionClass({
@@ -21,17 +18,14 @@ export function paperMotionClass({
   enableHover,
   enablePulse,
   forceCardShadow,
-  glowColor,
 }: PaperMotionClassOptions) {
   return cn(
-    enableHover && "cursor-pointer hover:border-primary/30",
     enableHover &&
-      forceCardShadow !== false &&
-      "hover:shadow-lg [--notification-tone:var(--primary)]",
-    enablePulse && "animate-pulse",
-    enableFloat && "animate-float",
-    enableGlow && glowColor && `hover:shadow-[0_0_20px_${glowColor}]`,
-    enableGlow && !glowColor && "hover:shadow-primary/20",
+      "hover:border-primary/30 motion-safe:hover:[transform:scale(var(--hover-scale))_translateY(var(--hover-translate-y))_rotate(var(--hover-rotation))]",
+    enableHover && forceCardShadow !== false && "hover:shadow-sm",
+    enablePulse && "motion-safe:animate-pulse",
+    enableFloat && "motion-safe:animate-float",
+    enableGlow && "hover:shadow-[0_0_20px_var(--paper-glow)]",
   );
 }
 
@@ -42,7 +36,7 @@ export function paperStyle(options: PaperStyleOptions) {
       WebkitBackdropFilter: `blur(${options.backdropBlur}px) saturate(120%)`,
     }),
     ...(options.enableFade && {
-      animation: `fadeIn 600ms ease-out ${options.fadeDelay}ms both`,
+      "--paper-fade-delay": `${options.fadeDelay}ms`,
     }),
     ...(options.enableHover && {
       "--hover-rotation": `${options.hoverRotation}deg`,
@@ -54,8 +48,9 @@ export function paperStyle(options: PaperStyleOptions) {
 }
 
 export const paperStyles = {
-  element1: "absolute left-0 right-0 top-0 h-1 transition-all",
-  paperClassName: "relative border border-border shadow-sm transition-all duration-300",
+  element1: "pointer-events-none absolute inset-x-0 top-0 h-0.5 rounded-t-[inherit]",
+  paperClassName:
+    "relative min-w-0 border border-border/75 text-card-foreground wrap-anywhere motion-safe:transition-[border-color,box-shadow,transform]",
   paperClassName2: "w-full",
   paperClassName3: "overflow-visible",
   paperClassName4:
@@ -68,12 +63,12 @@ export function paperInlineStyle1(...values: PaperInlineStyle1Values): CSSProper
 
 import type { PaperClassNameOptions } from "./types";
 export const SPACING_CLASS = {
-  compact: "p-4",
-  content: "p-6 m-3",
-  header: "p-6",
+  compact: "p-sm",
+  content: "m-3 p-md",
+  header: "p-lg",
   none: "p-0 m-0",
-  sidebar: "p-3",
-  spacious: "p-10 m-4",
+  sidebar: "p-sm",
+  spacious: "m-4 p-lg",
 } as const;
 
 export const RADIUS_CLASS = {
@@ -87,7 +82,7 @@ export const RADIUS_CLASS = {
 
 export function accentGradientFor(accentColors?: [string, string, string]) {
   if (!accentColors) {
-    return "linear-gradient(120deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 50%, hsl(var(--info)) 100%)";
+    return "linear-gradient(120deg, var(--primary), color-mix(in srgb, var(--primary) 55%, transparent), transparent)";
   }
   return `linear-gradient(120deg, ${accentColors[0]} 0%, ${accentColors[1]} 50%, ${accentColors[2]} 100%)`;
 }

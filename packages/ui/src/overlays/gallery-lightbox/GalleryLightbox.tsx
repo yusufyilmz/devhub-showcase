@@ -1,6 +1,6 @@
 "use client";
 
-import "./gallery-lightbox.css";
+import { ArrowLeft, ArrowRight, X } from "lucide-react";
 
 import { Button } from "../../buttons/button";
 import {
@@ -27,7 +27,7 @@ export function GalleryLightbox({ items, index, onIndexChange }: GalleryLightbox
     >
       {active && (
         <DialogContent
-          className={galleryLightboxStyles.element1}
+          className={galleryLightboxStyles.dialog}
           onKeyDown={(event) => {
             if (
               event.target instanceof HTMLElement &&
@@ -41,38 +41,44 @@ export function GalleryLightbox({ items, index, onIndexChange }: GalleryLightbox
           }}
           showCloseButton={false}
         >
-          <header className={galleryLightboxStyles.element2}>
-            <span className={galleryLightboxStyles.element3}>THE GALLERY</span>
+          <header className={galleryLightboxStyles.header}>
             <DialogTitle>{active.title}</DialogTitle>
             <DialogDescription>{active.description || "Gallery preview"}</DialogDescription>
             <DialogClose asChild>
-              <Button aria-label="Close" className={galleryLightboxStyles.element4} variant="ghost">
-                ✕
+              <Button
+                aria-label="Close"
+                className={galleryLightboxStyles.close}
+                size="icon"
+                variant="ghost"
+              >
+                <X aria-hidden="true" />
               </Button>
             </DialogClose>
           </header>
-          <div className={galleryLightboxStyles.element5} key={active.id}>
+          <div className={galleryLightboxStyles.stage} key={active.id}>
             {active.content}
           </div>
-          <nav aria-label="Gallery navigation" className={galleryLightboxStyles.element6}>
+          <nav aria-label="Gallery navigation" className={galleryLightboxStyles.controls}>
             <Button
               aria-label="Previous item"
               disabled={index === 0}
               onClick={() => move(-1)}
+              size="icon"
               variant="outline"
             >
-              ←
+              <ArrowLeft aria-hidden="true" />
             </Button>
-            <span aria-live="polite">
+            <span aria-live="polite" className="px-xs text-sm text-muted-foreground tabular-nums">
               {(index ?? 0) + 1} / {items.length}
             </span>
             <Button
               aria-label="Next item"
               disabled={index === items.length - 1}
               onClick={() => move(1)}
+              size="icon"
               variant="outline"
             >
-              →
+              <ArrowRight aria-hidden="true" />
             </Button>
             {active.href && (
               <Button href={active.href} variant="outline">
@@ -80,20 +86,20 @@ export function GalleryLightbox({ items, index, onIndexChange }: GalleryLightbox
               </Button>
             )}
           </nav>
-          <nav aria-label="Gallery thumbnails" className={galleryLightboxStyles.element7}>
+          <nav aria-label="Gallery thumbnails" className={galleryLightboxStyles.thumbnails}>
             {items.map((item, itemIndex) => (
               <Button
                 aria-label={`Show ${item.title}`}
                 aria-pressed={itemIndex === index}
-                className={galleryLightboxStyles.element8}
+                className={galleryLightboxStyles.thumbnail}
                 key={item.id}
                 onClick={() => onIndexChange(itemIndex)}
                 variant="outline"
               >
-                <span aria-hidden="true" className={galleryLightboxStyles.element9}>
+                <span aria-hidden="true" className={galleryLightboxStyles.thumbnailArt}>
                   {item.thumbnail}
                 </span>
-                <span className={galleryLightboxStyles.element10}>{item.title}</span>
+                <span className={galleryLightboxStyles.thumbnailTitle}>{item.title}</span>
               </Button>
             ))}
           </nav>

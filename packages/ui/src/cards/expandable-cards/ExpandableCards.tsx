@@ -5,6 +5,7 @@ import { ChevronDown } from "lucide-react";
 
 import { Button } from "../../buttons/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../layout/collapsible";
+import { collapsibleMotionClassName } from "../../layout/collapsible/styles";
 import { CardBase } from "../card/CardBase";
 import { disclosureCardStyles } from "../styles";
 import type { ExpandableCardsProps } from "./types";
@@ -36,7 +37,7 @@ export function ExpandableCards({ cards, className }: ExpandableCardsProps) {
                   </Button>
                 </CollapsibleTrigger>
               </h3>
-              <CollapsibleContent className={disclosureCardStyles.content}>
+              <CollapsibleContent className={collapsibleMotionClassName}>
                 <div className={disclosureCardStyles.body}>
                   {card.description && <p className="font-medium">{card.description}</p>}
                   <div className="text-muted-foreground">{card.content}</div>
