@@ -1,6 +1,6 @@
 export const formStyles = {
-  formDescription: "text-muted-foreground text-sm",
-  formItem: "grid gap-2",
+  formDescription: "text-sm leading-relaxed text-muted-foreground wrap-anywhere",
+  formItem: "grid min-w-0 gap-xs",
   formLabel: "data-[error=true]:text-destructive",
-  formMessage: "text-destructive text-sm",
+  formMessage: "text-sm leading-relaxed font-medium text-destructive wrap-anywhere",
 } as const;
