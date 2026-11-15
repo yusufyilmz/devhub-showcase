@@ -179,6 +179,7 @@ test("admin appearance controls stay separate and compact", async ({ page, conte
   await expect(page.getByRole("dialog")).toBeInViewport();
   await page.keyboard.press("Escape");
   await page.reload();
+  await openEditor(page);
   await expect(page.locator("html")).toHaveAttribute("data-font-size", "6xl");
   await expect(launcher).toHaveCSS("width", "40px");
   await expect(profileMenu).toHaveCSS("width", "40px");

@@ -1,8 +1,7 @@
 import { type ReactNode, useLayoutEffect } from "react";
 
 import { NotificationProvider, StudioRequestProvider } from "@shared/ui/providers";
-
-import { SPACING_STYLES } from "../../../packages/ui/src/theme/types";
+import { SPACING_STYLES } from "@shared/ui/theme";
 
 type ThemeGlobals = Record<string, unknown>;
 

@@ -210,7 +210,7 @@
   "git.confirmSync": true,
   "git.enableSmartCommit": false,
   "git.fetchOnPull": true,
-  "git.mergeEditor": true,
+  "git.mergeEditor": false,
   "git.openRepositoryInParentFolders": "always",
   "git.pruneOnFetch": true,
   "git.rebaseWhenSync": true,

@@ -1,0 +1,13 @@
+ignores: []
+skip-missing: false
+ignore-patterns:
+  - node_modules
+  - .next
+  - .turbo
+  - dist
+  - build
+  - coverage
+  - reports
+  - storybook-static
+  - playwright-report
+  - test-results

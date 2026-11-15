@@ -31,6 +31,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `@turbo/gen`                | `catalog:`       | devDependencies |
 | `commander`                 | `catalog:`       | devDependencies |
 | `js-tiktoken`               | `catalog:`       | devDependencies |
+| `jscpd`                     | `^5.4.2`         | devDependencies |
 | `remark-gfm`                | `catalog:`       | devDependencies |
 | `remark-parse`              | `catalog:`       | devDependencies |
 | `tsdown`                    | `catalog:`       | devDependencies |

@@ -9,11 +9,11 @@ import {
 import { portfolioChatInput } from "@shared/assistant/chat";
 import { isCategoryReferralCategory } from "@shared/lib/referral-category";
 import { ReviewService } from "@shared/lib/studio";
+import { type ChatMessage, ChatRole, type ReviewState } from "@shared/lib/types";
 import { logger } from "@shared/utils/logger";
 
 import { requireAdmin } from "@/features/admin/admin-auth";
 
-import { type ChatMessage, ChatRole, type ReviewState } from "../../../packages/lib/src/types";
 import { answerPremiumChat } from "./[username]/chat/_access";
 import { savePortfolioReferral } from "./[username]/review/_service";
 import { assertCurrentPublication, requireMainPortfolioChat } from "./api/chat/stream/_access";

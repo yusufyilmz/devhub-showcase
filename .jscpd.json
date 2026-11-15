@@ -1,0 +1,25 @@
+{
+  "format": ["typescript", "javascript"],
+  "ignore": [
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/.turbo/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/coverage/**",
+    "**/storybook-static/**",
+    "**/playwright-report/**",
+    "**/test-results/**",
+    "**/__snapshots__/**",
+    "**/*.generated.*",
+    "**/*.min.js",
+    "**/pnpm-lock.yaml"
+  ],
+  "minLines": 10,
+  "minTokens": 80,
+  "mode": "mild",
+  "output": "reports/jscpd",
+  "path": ["apps", "packages", "tools"],
+  "reporters": ["console", "html"],
+  "threshold": 5
+}

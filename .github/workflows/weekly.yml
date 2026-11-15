@@ -1,0 +1,129 @@
+name: Weekly Code Health
+
+on:
+  schedule:
+    - cron: "17 9 * * 1"
+      timezone: Europe/Madrid
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weekly-code-health
+  cancel-in-progress: false
+
+jobs:
+  analysis:
+    name: Dependency and Code Health
+    if: ${{ github.event.repository.private == false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        with:
+          version: 11.25.0
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24.15.0"
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Knip - full analysis
+        id: knip
+        continue-on-error: true
+        run: pnpm exec knip
+
+      - name: Duplicate code
+        id: duplicates
+        continue-on-error: true
+        run: pnpm exec jscpd
+
+      - name: Depcheck - root and workspaces
+        id: depcheck
+        continue-on-error: true
+        shell: bash
+        run: |
+          status=0
+
+          pnpm exec depcheck . --config .depcheckrc \
+            || status=1
+
+          for manifest in apps/*/package.json packages/*/package.json tools/*/package.json; do
+            [ -f "$manifest" ] || continue
+            pnpm exec depcheck "$(dirname "$manifest")" \
+              --config .depcheckrc || status=1
+          done
+
+          exit "$status"
+
+      - name: Outdated dependencies
+        continue-on-error: true
+        run: pnpm outdated -r
+
+      - name: Unit test coverage
+        id: coverage
+        continue-on-error: true
+        run: pnpm test:coverage
+
+      - name: Fail on actionable findings
+        if: always()
+        env:
+          KNIP: ${{ steps.knip.outcome }}
+          DUPLICATES: ${{ steps.duplicates.outcome }}
+          DEPCHECK: ${{ steps.depcheck.outcome }}
+          COVERAGE: ${{ steps.coverage.outcome }}
+        run: |
+          for result in "$KNIP" "$DUPLICATES" "$DEPCHECK" "$COVERAGE"; do
+            if [ "$result" != "success" ]; then
+              echo "One or more health checks failed"
+              exit 1
+            fi
+          done
+
+  e2e:
+    name: E2E and Accessibility
+    if: ${{ github.event.repository.private == false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        with:
+          version: 11.25.0
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24.15.0"
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run E2E tests
+        run: pnpm test:e2e
+
+  secrets:
+    name: Full Secret Scan
+    if: ${{ github.event.repository.private == false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_COMMENTS: "false"

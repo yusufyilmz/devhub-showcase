@@ -1,0 +1,86 @@
+name: PR Quality
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Code Quality
+    if: ${{ github.event.repository.private == false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        with:
+          version: 11.25.0
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24.15.0"
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Biome (errors)
+        run: pnpm check:lint
+
+      - name: Catalogs
+        run: pnpm check:catalogs
+
+      - name: Package exports
+        run: pnpm check:exports
+
+      - name: Skills
+        run: pnpm check:skills
+
+      - name: Links
+        run: pnpm check:links --no-external
+
+      - name: TypeScript
+        run: pnpm check:types
+
+      - name: Circular dependencies
+        run: pnpm check:circular
+
+      - name: Architecture boundaries
+        run: pnpm check:architecture
+
+      - name: Unit tests
+        run: pnpm test
+
+      - name: Vulnerability audit
+        run: pnpm check:security
+
+  secrets:
+    name: Secret Scan
+    if: ${{ github.event.repository.private == false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout with history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Scan secrets
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_COMMENTS: "false"

@@ -28,6 +28,7 @@ const checks = {
     ],
   ],
   docs: ["pnpm", ["exec", "markdownlint-cli2", "**/*.md"]],
+  duplicates: ["pnpm", ["exec", "jscpd", "."], ["--min-lines", "10", "--max-lines", "100"]],
   exports: ["node", ["tools/cli/scripts/check-exports.mjs"]],
   links: ["node", ["tools/cli/links/cli.ts", "--no-external"]],
   lint: ["pnpm", ["exec", "biome", "check", "."]],
@@ -38,7 +39,10 @@ const checks = {
 } as const;
 
 function runCheck(command: string, args: readonly string[], extra: string[]): number {
-  const result = spawnSync(command, [...args, ...extra], { cwd: repoRoot, stdio: "inherit" });
+  const result = spawnSync(command, [...args, ...extra], {
+    cwd: repoRoot,
+    stdio: "inherit",
+  });
   return result.status ?? 1;
 }
 

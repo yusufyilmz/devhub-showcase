@@ -6,6 +6,7 @@ packages:
 overrides:
   parse5: 8.1.1
   parse5-parser-stream: 8.1.1
+  re2js: 2.8.7
 
 allowBuilds:
   "@parcel/watcher": true
@@ -17,14 +18,12 @@ minimumReleaseAgeExclude:
 
 # External dependency versions are shared by every workspace package.
 catalog:
-  "@babel/parser": "8.1.0"
-  "commander": "15.0.0"
-  "remark-gfm": "4.0.1"
-  "remark-parse": "11.0.0"
-  "unified": "11.0.5"
   "@t3-oss/env-nextjs": "0.13.11"
   "web-push": "3.6.7"
   "@types/web-push": "3.6.4"
+  remark-gfm: "4.0.1"
+  remark-parse: "11.0.0"
+  unified: "11.0.5"
   tsx: "4.23.15"
   stripe: 23.1.0
   "@playwright/test": "1.65.0"
@@ -67,8 +66,11 @@ catalog:
   "@types/pdfmake": "0.3.3"
   "prettier": "3.9.10"
   "markdownlint-cli2": "0.24.0"
+  "js-yaml": "^5.5.0"
   "yaml": "^2.9.1"
   "husky": "^9.1.7"
+  "knip": "^6.44.1"
+  "jscpd": "^5.4.2"
   "lint-staged": "^17.6.0"
   "class-variance-authority": "^0.7.1"
   "framer-motion": "^14.9.1"
@@ -82,6 +84,7 @@ catalog:
   "@chromatic-com/storybook": "latest"
   "@storybook/addon-vitest": "^10.6.6"
   "@storybook/addon-a11y": "^10.6.6"
+  "@storybook/addon-docs": "^10.6.6"
   "cn": "^0.5.2"
   "lucide-react": "^1.70.0"
   "short-uuid": "^6.0.3"
@@ -89,3 +92,5 @@ catalog:
   "beautify-console-log": "^1.3.17"
   "drizzle-orm": "0.45.4"
   "postgres": "3.4.9"
+  "commander": "^15.0.0"
+  "@babel/parser": "^8.1.2"

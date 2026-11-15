@@ -4,7 +4,7 @@ import { z } from "zod";
 import { RedisCacheClient } from "@shared/lib/cache";
 import type { Database } from "@shared/lib/types";
 
-import { env } from "../../../env";
+import { env } from "@/env";
 
 export function jobsServiceClient() {
   if (!env.NEXT_PUBLIC_SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {

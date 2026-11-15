@@ -69,6 +69,7 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
   await expect(page.getByRole("heading", { exact: true, name: "Projects" }).first()).toBeVisible();
   await expect(page.getByText("Recovery saved in this tab", { exact: true })).toBeVisible();
   await page.reload();
+  await openEditor(page);
   await page.getByRole("button", { exact: true, name: "Restore recovered draft" }).click();
   await expect(page.getByText("Step 6 of 11")).toBeVisible();
   for (const title of ["Skills", "Education", "Languages", "Custom sections"]) {

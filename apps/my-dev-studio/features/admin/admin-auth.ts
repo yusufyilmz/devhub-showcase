@@ -1,9 +1,8 @@
 import { requireConfirmedUser } from "@shared/auth";
 import { ProfileAccessError, ProfileService, SupabaseProfileRepository } from "@shared/lib/profile";
 import { createServerClient } from "@shared/lib/supabase";
+import type { SupabaseDbClient } from "@shared/lib/types";
 import { ensureUserProfile } from "@shared/lib/user-profile";
-
-import type { SupabaseDbClient } from "../../../../packages/lib/src/types";
 
 export async function requireAdmin(providedClient?: SupabaseDbClient) {
   const client = providedClient ?? (await createServerClient());
