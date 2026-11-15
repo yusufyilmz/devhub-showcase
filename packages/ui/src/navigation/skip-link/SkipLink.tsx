@@ -14,7 +14,7 @@ export function SkipLink({
   return (
     <a
       className={cn(
-        "fixed top-3 left-3 z-[1000] -translate-y-[160%] rounded-lg border border-primary bg-card px-[18px] py-3 focus:translate-y-0",
+        "fixed top-3 z-[1000] -translate-y-[160%] rounded-lg border border-border bg-popover px-md py-sm text-sm font-medium text-popover-foreground focus:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [inset-inline-start:var(--spacing-sm)]",
         className,
       )}
       href={href}

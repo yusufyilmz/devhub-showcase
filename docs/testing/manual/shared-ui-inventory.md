@@ -142,7 +142,7 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 | [navigation/brand](../../../packages/ui/src/navigation/brand)                         | `@shared/ui/brand`             | UI/Navigation/Brand             | Checked         |
 | [navigation/breadcrumb](../../../packages/ui/src/navigation/breadcrumb)               | `@shared/ui/breadcrumb`        | UI/Navigation/Breadcrumb        | Checked         |
 | [navigation/footer](../../../packages/ui/src/navigation/footer)                       | `@shared/ui/footer`            | UI/Navigation/Footer            | Checked         |
-| [navigation/header](../../../packages/ui/src/navigation/header)                       | `@shared/ui/header`            | UI/Navigation/Header            | Pending         |
+| [navigation/header](../../../packages/ui/src/navigation/header)                       | `@shared/ui/header`            | UI/Navigation/Header            | Checked         |
 | [navigation/nav](../../../packages/ui/src/navigation/nav)                             | `@shared/ui/nav`               | UI/Navigation/Nav/Nav Main      | Checked         |
 | [navigation/navbar](../../../packages/ui/src/navigation/navbar)                       | `@shared/ui/navbar`            | UI/Navigation/Navbar            | Checked         |
 | [navigation/page-header](../../../packages/ui/src/navigation/page-header)             | `@shared/ui/page-header`       | UI/Navigation/Page Header       | Checked         |
