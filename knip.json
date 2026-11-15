@@ -21,12 +21,10 @@
       "includeEntryExports": true
     },
     "packages/*": {
-      "includeEntryExports": true,
-      "includeSubpathExports": true
+      "includeEntryExports": true
     },
     "tools/*": {
-      "includeEntryExports": true,
-      "includeSubpathExports": true
+      "includeEntryExports": true
     }
   }
 }

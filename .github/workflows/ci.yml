@@ -3,8 +3,10 @@ name: CI / CD
 on:
   pull_request:
     branches: [ main ]
+
   push:
     branches: [ main ]
+
   workflow_dispatch:
     inputs:
       application:
@@ -16,81 +18,137 @@ on:
 permissions:
   contents: read
 
-# PR updates replace obsolete verification. Every main push keeps its change
-# selection; cancelling an unrelated push could otherwise miss an app release.
+# PR updates replace obsolete verification.
+# Main pushes are never cancelled to avoid missing deployments.
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  # ----------------------------------------
+  # Detect affected applications
+  # ----------------------------------------
   changes:
     name: Select affected apps
     if: ${{ github.event.repository.private == false }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
+
     outputs:
       studio: ${{ steps.apps.outputs.studio }}
       fitness: ${{ steps.apps.outputs.fitness }}
+
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "24"
           package-manager-cache: false
-      - id: apps
+
+      - name: Detect changed applications
+        id: apps
         run: node tools/cli/ci/changes.ts
 
+  # ----------------------------------------
+  # Code quality, security and build
+  # ----------------------------------------
   verify:
     name: Verify
     if: ${{ github.event.repository.private == false }}
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
+
     env:
       NEXT_TELEMETRY_DISABLED: "1"
       TURBO_TELEMETRY_DISABLED: "1"
+
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
         with:
           cache: false
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "24"
           cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm check
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Static analysis
+      - name: Code quality
+        run: pnpm check
+
       - name: Full lint diagnostics on failure
         if: failure()
         run: pnpm exec biome check . --diagnostic-level=error --max-diagnostics=none
-      - run: pnpm test
+
+      # Dependency and architecture checks
+      - name: Circular dependencies
+        run: pnpm check:circular
+
+      - name: Architecture boundaries
+        run: pnpm check:architecture
+
+      # Security
+      - name: Dependency vulnerability audit
+        run: pnpm check:security
+
+      # Tests
+      - name: Unit tests
+        run: pnpm test
+
+      # Builds
       - name: Build Storybook
         run: pnpm --filter storybook-app build-storybook
-      - run: pnpm build
 
+      - name: Build monorepo
+        run: pnpm build
+
+  # ----------------------------------------
+  # Deploy Studio
+  # ----------------------------------------
   deploy-studio:
     name: Deploy Studio
     needs: [ changes, verify ]
+
     if: ${{ github.event.repository.private == false && github.repository == 'yusufyilmz/devhub-showcase' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && needs.changes.outputs.studio == 'true' }}
     uses: ./.github/workflows/deploy-app.yml
+
     with:
       application: studio
+
     secrets:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       DEPLOY_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
+  # ----------------------------------------
+  # Deploy Fitness OS
+  # ----------------------------------------
   deploy-fitness:
     name: Deploy Fitness OS
     needs: [ changes, verify ]
+
     if: ${{ github.event.repository.private == false && github.repository == 'yusufyilmz/devhub-showcase' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && needs.changes.outputs.fitness == 'true' }}
     uses: ./.github/workflows/deploy-app.yml
+
     with:
       application: fitness
+
     secrets:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}

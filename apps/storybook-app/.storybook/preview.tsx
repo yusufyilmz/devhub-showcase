@@ -3,8 +3,8 @@ import "@shared/ui/foundation.css";
 import type { Preview } from "@storybook/react-vite";
 import { useGlobals } from "storybook/preview-api";
 
-import { ThemeContext } from "../../../packages/ui/src/theme/theme-toggle";
-import { BRANDS, SPACING_STYLES } from "../../../packages/ui/src/theme/types";
+import { BRANDS, SPACING_STYLES, ThemeContext } from "@shared/ui/theme";
+
 import { ThemePreview } from "./theme-preview";
 
 const preview: Preview = {
