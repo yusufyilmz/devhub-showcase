@@ -4,8 +4,10 @@ export const paginationStyles = {
   element3: "size-4",
   element4: "sr-only",
   pagination: "mx-auto flex w-full justify-center",
-  paginationContent: "flex flex-row items-center gap-1",
-  paginationEllipsis: "flex size-9 items-center justify-center",
-  paginationNext: "gap-1 px-2.5 sm:pr-2.5",
-  paginationPrevious: "gap-1 px-2.5 sm:pl-2.5",
+  paginationContent: "flex min-w-0 flex-wrap items-center justify-center gap-1",
+  paginationEllipsis: "grid size-9 place-items-center text-muted-foreground",
+  paginationLink:
+    "min-h-9 tabular-nums data-[active=true]:border-primary/35 data-[active=true]:bg-primary/10 data-[active=true]:font-semibold data-[active=true]:text-foreground",
+  paginationNext: "min-w-9 gap-1 px-xs rtl:[&_svg]:rotate-180",
+  paginationPrevious: "min-w-9 gap-1 px-xs rtl:[&_svg]:rotate-180",
 } as const;
