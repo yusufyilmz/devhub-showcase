@@ -36,8 +36,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Biome
-        run: pnpm check:ci
+      - name: Biome (errors)
+        run: pnpm check:lint
 
       - name: Catalogs
         run: pnpm check:catalogs
