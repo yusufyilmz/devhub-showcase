@@ -34,7 +34,13 @@ export function CTABlock({
         }
       >
         {eyebrow && (
-          <p className={landing ? "home-eyebrow flex items-center gap-[9px] [font:500_10px/1.6_var(--font-geist-mono),monospace] tracking-[0.13em] text-primary [&>span]:size-[5px] [&>span]:rounded-full [&>span]:bg-current [&>span]:shadow-[0_0_12px_color-mix(in_srgb,var(--primary)_50%,transparent)]" : "text-sm font-semibold text-primary"}>
+          <p
+            className={
+              landing
+                ? "home-eyebrow flex items-center gap-[9px] [font:500_10px/1.6_var(--font-geist-mono),monospace] tracking-[0.13em] text-primary [&>span]:size-[5px] [&>span]:rounded-full [&>span]:bg-current [&>span]:shadow-[0_0_12px_color-mix(in_srgb,var(--primary)_50%,transparent)]"
+                : "text-sm font-semibold text-primary"
+            }
+          >
             {eyebrow}
           </p>
         )}
@@ -57,7 +63,13 @@ export function CTABlock({
             <div className="flex flex-wrap justify-center gap-s">{actions}</div>
           ))}
         {note && (
-          <span className={landing ? "home-final-note ml-[20px] inline-block [font:9px_var(--font-geist-mono),monospace] text-muted-foreground max-[760px]:mt-[18px] max-[760px]:ml-0 max-[760px]:block" : "text-sm text-muted-foreground"}>
+          <span
+            className={
+              landing
+                ? "home-final-note ml-[20px] inline-block [font:9px_var(--font-geist-mono),monospace] text-muted-foreground max-[760px]:mt-[18px] max-[760px]:ml-0 max-[760px]:block"
+                : "text-sm text-muted-foreground"
+            }
+          >
             {note}
           </span>
         )}
