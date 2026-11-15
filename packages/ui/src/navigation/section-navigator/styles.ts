@@ -1,13 +1,13 @@
-export const sectionNavigatorStyles = {
-  link: "section-navigator-link [position:relative] [display:flex] [flex:0_1_auto] [align-items:center] [justify-content:flex-end] [width:32px] [height:min(24px,_calc(60dvh_/_var(--section-count)))] [min-height:4px] [padding:2px_4px] [text-decoration:none] [background:transparent] [&[aria-current]_.section-navigator-marker]:[width:26px]",
-  marker:
-    "section-navigator-marker [display:block] [width:10px] [height:3px] [background:color-mix(in_srgb,_var(--muted-foreground)_35%,_transparent)] [border-radius:4px] [transition:width_160ms_ease,_background_160ms_ease] motion-reduce:[transition:none]",
-  preview:
-    "section-navigator-preview [position:absolute] [top:50%] [right:100%] [display:grid] [visibility:hidden] [gap:8px] [width:min(260px,_calc(100vw_-_72px))] [padding:16px] [color:var(--foreground)] [pointer-events:none] [background:var(--card)] [border:1px_solid_var(--border)] [border-radius:12px] [box-shadow:0_8px_24px_color-mix(in_srgb,_var(--foreground)_12%,_transparent)] [opacity:0] [transform:translateY(-50%)] [&_strong]:[font-size:13px] [font-weight:600] [line-height:1.4] [&_>_span]:[font-size:12px] [line-height:1.6] [color:var(--muted-foreground)]",
-  root: "section-navigator [position:fixed] [top:50%] [right:8px] [z-index:40] [display:flex] [flex-direction:column] [gap:2px] [max-height:65dvh] [transform:translateY(-50%)] max-[900px]:[right:2px]",
-} as const;
-
 import type { CSSProperties } from "react";
+
+export const sectionNavigatorStyles = {
+  link: "section-navigator-link group/section relative flex h-[min(24px,calc(60dvh/var(--section-count)))] min-h-1 w-8 items-center justify-end rounded-sm px-1 no-underline focus-visible:outline-2 focus-visible:outline-ring aria-[current=location]:[&_.section-navigator-marker]:w-6 aria-[current=location]:[&_.section-navigator-marker]:bg-primary",
+  marker:
+    "section-navigator-marker h-[3px] w-2.5 rounded-full bg-muted-foreground/45 group-hover/section:bg-foreground/70 motion-safe:transition-[width,background-color]",
+  preview:
+    "section-navigator-preview pointer-events-none invisible absolute top-1/2 right-full grid w-[min(16.25rem,calc(100vw-72px))] -translate-y-1/2 gap-1 rounded-lg border border-border/70 bg-popover p-sm text-start text-popover-foreground opacity-0 shadow-md wrap-anywhere group-focus-visible/section:visible group-focus-visible/section:opacity-100 [@media(hover:hover)]:group-hover/section:visible [@media(hover:hover)]:group-hover/section:opacity-100 [&>strong]:text-sm [&>strong]:font-semibold [&>span]:text-xs [&>span]:leading-relaxed [&>span]:text-muted-foreground",
+  root: "section-navigator fixed top-1/2 right-0.5 z-40 flex max-h-[65dvh] -translate-y-1/2 flex-col gap-0.5 min-[901px]:right-2",
+} as const;
 
 export const sectionNavigatorStyle = (count: number) =>
   ({ "--section-count": count }) as CSSProperties;
