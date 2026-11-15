@@ -16,7 +16,8 @@ export const GoBackButton = ({ className }: { className?: string } = {}) => {
       aria-label="Go back"
       className={className}
       onClick={() => router.back()}
-      startIcon={<ArrowLeft />}
+      size="lg"
+      startIcon={<ArrowLeft className="rtl:rotate-180" />}
       variant="outline"
     >
       {copy.cta.goBack}

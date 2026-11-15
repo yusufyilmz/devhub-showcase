@@ -16,7 +16,7 @@ export function SegmentedControl({
   const [internal, setInternal] = useState(selected ?? defaultSelected ?? buttons[0]?.value ?? "");
   const current = selected ?? internal;
   return (
-    <div className={segmentedControlStyles.element1}>
+    <div className={segmentedControlStyles.track}>
       {buttons.map((button) => (
         <LibraryButton
           aria-pressed={current === button.value}

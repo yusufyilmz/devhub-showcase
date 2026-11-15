@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Loader2, Mail } from "lucide-react";
 
 import { Button } from "./Button";
+import { StudioButton } from "./StudioButton";
 
 const meta: Meta<typeof Button> = {
   args: {
@@ -101,12 +102,12 @@ export const Link: Story = {
 export const Loading: Story = {
   args: {
     ...Outline.args,
+    "aria-busy": true,
     disabled: true,
   },
   render: (args) => (
-    <Button {...args}>
-      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-      Button
+    <Button {...args} startIcon={<Loader2 className="motion-safe:animate-spin" />}>
+      Loading…
     </Button>
   ),
 };
@@ -120,8 +121,8 @@ export const WithIcon: Story = {
     ...Secondary.args,
   },
   render: (args) => (
-    <Button {...args}>
-      <Mail className="mr-2 h-4 w-4" /> Login with Email Button
+    <Button {...args} startIcon={<Mail />}>
+      Login with Email Button
     </Button>
   ),
 };
@@ -165,4 +166,18 @@ export const Disabled: Story = {
   args: {
     disabled: true,
   },
+};
+
+export const Studio: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-sm">
+      <StudioButton type="button">Save changes</StudioButton>
+      <StudioButton href="#destination" tone="secondary">
+        Back to dashboard
+      </StudioButton>
+      <StudioButton disabled type="button">
+        Unavailable
+      </StudioButton>
+    </div>
+  ),
 };

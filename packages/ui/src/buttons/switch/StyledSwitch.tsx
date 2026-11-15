@@ -1,4 +1,4 @@
-import type { ChangeEvent } from "react";
+import { type ChangeEvent, useId } from "react";
 
 import { cn } from "cn";
 
@@ -24,14 +24,14 @@ export const StyledSwitch = ({
   colorScheme = "primary",
   className,
 }: StyledSwitchProps) => {
+  const labelId = useId();
+  const descriptionId = useId();
   const getContainerClasses = () => {
     switch (variant) {
       case "card":
         return cn(
           styledSwitchStyles.getContainerClasses,
-          checked
-            ? cn(colorSchemeBgClasses[colorScheme], styledSwitchStyles.getContainerClasses3)
-            : styledSwitchStyles.getContainerClasses2,
+          checked ? colorSchemeBgClasses[colorScheme] : styledSwitchStyles.getContainerClasses2,
         );
       case "minimal":
         return "py-2 px-0";
@@ -87,19 +87,26 @@ export const StyledSwitch = ({
                 styledSwitchStyles.styledSwitch3,
                 checked ? colorSchemeTextClasses[colorScheme] : styledSwitchStyles.styledSwitch4,
               )}
+              id={labelId}
               variant="subtitle2"
             >
               {label}
             </Typography>
           </FlexRow>
           {description && (
-            <Typography className={styledSwitchStyles.element2} variant="caption">
+            <Typography
+              className={styledSwitchStyles.element2}
+              id={descriptionId}
+              variant="caption"
+            >
               {description}
             </Typography>
           )}
         </FlexCol>
 
         <Switch
+          aria-describedby={description ? descriptionId : undefined}
+          aria-labelledby={labelId}
           checked={checked}
           className={colorSchemeClasses[colorScheme]}
           disabled={disabled}

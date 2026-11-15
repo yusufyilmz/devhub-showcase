@@ -16,15 +16,15 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const InHeader: Story = {
   render: () => (
-    <header className="flex items-center gap-4">
+    <header className="flex flex-wrap items-center gap-sm">
       <GoBackButton />
-      <h2>Project details</h2>
+      <h2 className="text-base font-semibold">Project details</h2>
     </header>
   ),
 };
 export const WithHomeAction: Story = {
   render: () => (
-    <div className="flex gap-3">
+    <div className="flex flex-wrap items-center gap-xs">
       <GoBackButton />
       <HomeButton />
     </div>

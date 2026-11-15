@@ -15,16 +15,16 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const InToolbar: Story = {
   render: () => (
-    <div className="flex items-center gap-4">
-      <h2>Projects</h2>
+    <div className="flex flex-wrap items-center justify-between gap-sm">
+      <h2 className="text-base font-semibold">Projects</h2>
       <AddProjectButton />
     </div>
   ),
 };
 export const EmptyProjectList: Story = {
   render: () => (
-    <div className="space-y-3 rounded-lg border p-5">
-      <p>No projects yet.</p>
+    <div className="grid justify-items-start gap-sm rounded-xl border border-border/75 bg-card p-md">
+      <p className="text-sm text-muted-foreground">No projects yet.</p>
       <AddProjectButton />
     </div>
   ),

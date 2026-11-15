@@ -3,7 +3,7 @@ import React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cn } from "cn";
 
-import { iconButtonClassName, iconButtonStyles, iconButtonVariants } from "./styles";
+import { iconButtonVariants } from "./styles";
 import type { IconButtonProps, IconButtonWithLinkProps } from "./types";
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
@@ -22,10 +22,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
     const Comp = asChild ? Slot : "button";
     return (
       <Comp
-        className={cn(
-          iconButtonStyles.iconButton,
-          iconButtonVariants({ className, size, variant }),
-        )}
+        className={cn(iconButtonVariants({ size, variant }), className)}
         data-slot="icon-button"
         data-surface={surface}
         data-variant={variant}
@@ -48,7 +45,7 @@ export const IconButtonWithLink = ({
     <IconButton
       aria-label={label}
       asChild
-      className={iconButtonClassName(className ?? "")}
+      className={cn("icon-button", className)}
       surface="portfolio"
     >
       <a href={href} rel="noopener noreferrer" target="_blank">

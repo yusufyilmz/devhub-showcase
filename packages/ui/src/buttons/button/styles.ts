@@ -62,14 +62,14 @@ export const buttonVariants = cva(
       variant: {
         default: "border-primary bg-primary text-primary-foreground hover:bg-primary/90",
         destructive:
-          "border-destructive bg-destructive text-white hover:bg-destructive/90 focus-visible:outline-destructive",
+          "border-destructive bg-destructive text-destructive-foreground hover:bg-destructive/90 focus-visible:outline-destructive",
         ghost:
           "text-muted-foreground hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
         link: "text-foreground underline-offset-4 hover:underline",
         outline:
-          "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
+          "border-border/75 bg-background hover:border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
         secondary:
-          "border-border bg-transparent text-foreground hover:bg-foreground/5 aria-expanded:bg-foreground/5",
+          "border-border/75 bg-transparent text-foreground hover:border-border hover:bg-foreground/5 aria-expanded:bg-foreground/5",
         text: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground aria-expanded:bg-foreground/5 aria-expanded:text-foreground",
         unstyled: "",
       },

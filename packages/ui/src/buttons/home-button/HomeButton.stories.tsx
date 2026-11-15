@@ -22,8 +22,8 @@ export const InNavigation: Story = {
 };
 export const AfterAnError: Story = {
   render: () => (
-    <div className="space-y-3">
-      <p>This page could not load.</p>
+    <div className="grid justify-items-start gap-sm rounded-xl border border-border/75 bg-card p-md">
+      <p className="text-sm text-muted-foreground">This page could not load.</p>
       <HomeButton />
     </div>
   ),

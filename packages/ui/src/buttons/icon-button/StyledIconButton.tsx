@@ -27,9 +27,9 @@ export const StyledIconButton = forwardRef<HTMLButtonElement, StyledIconButtonPr
     },
     ref,
   ) => {
-    // Get color classes based on variant (floating uses filled styles)
-    const effectiveVariant = variant === "floating" ? "filled" : variant;
-    const variantKey = effectiveVariant === "default" ? "default" : effectiveVariant;
+    const variantKey = variant === "floating" ? "filled" : variant;
+    const baseVariant =
+      variantKey === "filled" ? "default" : variantKey === "outlined" ? "secondary" : "ghost";
     const colorClasses =
       colorSchemeClasses[colorScheme]?.[variantKey] ?? colorSchemeClasses.default[variantKey];
 
@@ -68,6 +68,7 @@ export const StyledIconButton = forwardRef<HTMLButtonElement, StyledIconButtonPr
           ref={ref}
           size={size}
           style={style}
+          variant={baseVariant}
           {...props}
         >
           <a href={href} target={target}>
@@ -85,6 +86,7 @@ export const StyledIconButton = forwardRef<HTMLButtonElement, StyledIconButtonPr
         ref={ref}
         size={size}
         style={style}
+        variant={baseVariant}
         {...props}
       >
         {buttonContent}

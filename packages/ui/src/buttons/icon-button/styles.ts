@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const iconButtonVariants = cva(
-  "ui-icon-button [&[data-surface='portfolio']]:[--primary:var(--card)] [&[data-surface='portfolio']:hover]:[border-color:var(--primary)] [&.profile-menu-trigger[data-state='open']]:[border-color:var(--primary)] inline-flex items-center justify-center rounded-lg border border-transparent text-sm font-medium motion-safe:transition-colors motion-safe:duration-150 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:border-transparent disabled:bg-muted disabled:text-muted-foreground disabled:opacity-55 disabled:shadow-none",
+  "ui-icon-button [&.profile-menu-trigger[data-state='open']]:border-primary inline-flex items-center justify-center rounded-lg border border-transparent text-sm font-medium motion-safe:transition-colors motion-safe:duration-150 outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:border-transparent disabled:bg-muted disabled:text-muted-foreground disabled:opacity-55 disabled:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     defaultVariants: {
       size: "default",
@@ -15,33 +15,30 @@ export const iconButtonVariants = cva(
         sm: "size-9",
       },
       variant: {
-        default: "border-primary bg-primary text-primary-foreground hover:bg-primary/90",
+        default:
+          "border-primary bg-primary text-primary-foreground hover:bg-primary/90 data-[surface=portfolio]:border-border/75 data-[surface=portfolio]:bg-card data-[surface=portfolio]:text-card-foreground data-[surface=portfolio]:hover:border-border data-[surface=portfolio]:hover:bg-muted",
         destructive:
           "border-destructive bg-destructive text-destructive-foreground hover:bg-destructive/90 focus-visible:outline-destructive",
         ghost: "text-muted-foreground hover:bg-muted hover:text-foreground",
         link: "text-foreground underline-offset-4 hover:underline",
-        outline: "border-border bg-background text-foreground hover:bg-muted",
-        secondary: "border-border bg-transparent text-foreground hover:bg-foreground/5",
+        outline: "border-border/75 bg-background text-foreground hover:bg-muted",
+        secondary: "border-border/75 bg-transparent text-foreground hover:bg-foreground/5",
       },
     },
   },
 );
 
-export const iconButtonStyles = {
-  iconButton:
-    "ui-icon-button [&[data-surface='portfolio']]:[--primary:var(--card)] [&[data-surface='portfolio']:hover]:[border-color:var(--primary)] [&.profile-menu-trigger[data-state='open']]:[border-color:var(--primary)]",
-} as const;
-
 export const styledIconButtonStyles = {
-  classes: "relative transition-all duration-300",
+  classes:
+    "relative motion-safe:transition-[color,background-color,border-color,box-shadow,scale,translate] motion-safe:duration-150",
   classes2: "border",
-  classes3: "fixed bottom-8 right-8 z-50 size-14 shadow-2xl",
-  classes4: "hover:-translate-y-0.5",
-  classes5: "hover:scale-110",
+  classes3: "fixed end-8 bottom-8 z-50 size-14 shadow-2xl",
+  classes4: "motion-safe:hover:-translate-y-0.5",
+  classes5: "motion-safe:hover:scale-105",
   classes6: "hover:shadow-lg [--notification-tone:var(--primary)]",
-  classes7: "animate-pulse shadow-lg [--notification-tone:var(--primary)]",
+  classes7: "motion-safe:animate-pulse shadow-lg [--notification-tone:var(--primary)]",
   element1:
-    "absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs font-medium text-destructive-foreground",
+    "absolute -end-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs font-medium text-destructive-foreground",
 } as const;
 
 export const colorSchemeClasses = {
@@ -88,7 +85,3 @@ export const colorSchemeClasses = {
     outlined: "border-warning text-warning hover:bg-warning/10",
   },
 };
-
-export function iconButtonClassName(...values: unknown[]): string {
-  return `icon-button ${values[0]}`;
-}

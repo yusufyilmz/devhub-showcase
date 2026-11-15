@@ -13,17 +13,17 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 
 | Component family                                                                  | Public import                  | Storybook title               | Review evidence |
 | --------------------------------------------------------------------------------- | ------------------------------ | ----------------------------- | --------------- |
-| [buttons/action-button](../../../packages/ui/src/buttons/action-button)           | `@shared/ui/action-button`     | UI/Buttons/Action Button      | Pending         |
-| [buttons/add-project-button](../../../packages/ui/src/buttons/add-project-button) | See group exports              | UI/Buttons/Add Project Button | Pending         |
-| [buttons/button](../../../packages/ui/src/buttons/button)                         | `@shared/ui/button`            | UI/Buttons/Button             | Pending         |
-| [buttons/buttons](../../../packages/ui/src/buttons/buttons)                       | `@shared/ui/buttons`           | Find consuming story          | Pending         |
-| [buttons/download-cv-button](../../../packages/ui/src/buttons/download-cv-button) | See group exports              | UI/Buttons/Download CV Button | Pending         |
-| [buttons/go-back-button](../../../packages/ui/src/buttons/go-back-button)         | See group exports              | UI/Buttons/Go Back Button     | Pending         |
-| [buttons/home-button](../../../packages/ui/src/buttons/home-button)               | See group exports              | UI/Buttons/Home Button        | Pending         |
-| [buttons/icon-button](../../../packages/ui/src/buttons/icon-button)               | `@shared/ui/icon-button`       | UI/Buttons/Icon Button        | Pending         |
-| [buttons/project-button](../../../packages/ui/src/buttons/project-button)         | See group exports              | UI/Buttons/Project Button     | Pending         |
-| [buttons/segmented-control](../../../packages/ui/src/buttons/segmented-control)   | `@shared/ui/segmented-control` | UI/Buttons/Segmented Control  | Pending         |
-| [buttons/switch](../../../packages/ui/src/buttons/switch)                         | `@shared/ui/switch`            | UI/Buttons/Switch             | Pending         |
+| [buttons/action-button](../../../packages/ui/src/buttons/action-button)           | `@shared/ui/action-button`     | UI/Buttons/Action Button      | Checked         |
+| [buttons/add-project-button](../../../packages/ui/src/buttons/add-project-button) | See group exports              | UI/Buttons/Add Project Button | Checked         |
+| [buttons/button](../../../packages/ui/src/buttons/button)                         | `@shared/ui/button`            | UI/Buttons/Button             | Checked         |
+| [buttons/buttons](../../../packages/ui/src/buttons/buttons)                       | `@shared/ui/buttons`           | Find consuming story          | Checked         |
+| [buttons/download-cv-button](../../../packages/ui/src/buttons/download-cv-button) | See group exports              | UI/Buttons/Download CV Button | Checked         |
+| [buttons/go-back-button](../../../packages/ui/src/buttons/go-back-button)         | See group exports              | UI/Buttons/Go Back Button     | Checked         |
+| [buttons/home-button](../../../packages/ui/src/buttons/home-button)               | See group exports              | UI/Buttons/Home Button        | Checked         |
+| [buttons/icon-button](../../../packages/ui/src/buttons/icon-button)               | `@shared/ui/icon-button`       | UI/Buttons/Icon Button        | Checked         |
+| [buttons/project-button](../../../packages/ui/src/buttons/project-button)         | See group exports              | UI/Buttons/Project Button     | Checked         |
+| [buttons/segmented-control](../../../packages/ui/src/buttons/segmented-control)   | `@shared/ui/segmented-control` | UI/Buttons/Segmented Control  | Checked         |
+| [buttons/switch](../../../packages/ui/src/buttons/switch)                         | `@shared/ui/switch`            | UI/Buttons/Switch             | Checked         |
 | [buttons/toggle](../../../packages/ui/src/buttons/toggle)                         | `@shared/ui/toggle`            | UI/Buttons/Toggle             | Pending         |
 | [buttons/toggle-button](../../../packages/ui/src/buttons/toggle-button)           | `@shared/ui/toggle-button`     | UI/Buttons/Toggle Button      | Pending         |
 | [buttons/toggle-group](../../../packages/ui/src/buttons/toggle-group)             | `@shared/ui/toggle-group`      | UI/Buttons/Toggle Group       | Pending         |
@@ -68,11 +68,11 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 | [feedback/banner](../../../packages/ui/src/feedback/banner)                     | `@shared/ui/banner`           | UI/Feedback/Banner           | Shared spacing and narrow action layout. [Chrome checks](shared-ui-styles.md#banner-spacing-and-action).            |
 | [feedback/chip](../../../packages/ui/src/feedback/chip)                         | `@shared/ui/chip`             | UI/Feedback/Chip             | Soft selection border and separate keyboard focus for each action. [Chrome checks](shared-ui-styles.md#chip).       |
 | [feedback/empty-state](../../../packages/ui/src/feedback/empty-state)           | `@shared/ui/empty-state`      | UI/Feedback/Empty State      | Compact icon surface, readable message, and wrapping actions. [Chrome checks](shared-ui-styles.md#empty-state).     |
-| [feedback/error-boundary](../../../packages/ui/src/feedback/error-boundary)     | `@shared/ui/error-boundary`   | Find consuming story         | Pending                                                                                                             |
+| [feedback/error-boundary](../../../packages/ui/src/feedback/error-boundary)     | `@shared/ui/error-boundary`   | Empty export                 | Checked                                                                                                             |
 | [feedback/error-page](../../../packages/ui/src/feedback/error-page)             | `@shared/ui/error-page`       | UI/Feedback/Error Page       | Checked                                                                                                             |
-| [feedback/feedback](../../../packages/ui/src/feedback/feedback)                 | `@shared/ui/feedback`         | UI/Feedback/Feedback         | Pending                                                                                                             |
+| [feedback/feedback](../../../packages/ui/src/feedback/feedback)                 | `@shared/ui/feedback`         | UI/Feedback/Feedback         | Checked                                                                                                             |
 | [feedback/not-found](../../../packages/ui/src/feedback/not-found)               | `@shared/ui/not-found`        | UI/Feedback/Not Found        | Checked                                                                                                             |
-| [feedback/notification](../../../packages/ui/src/feedback/notification)         | `@shared/ui/notification`     | UI/Feedback/Notification     | Pending                                                                                                             |
+| [feedback/notification](../../../packages/ui/src/feedback/notification)         | `@shared/ui/notification`     | UI/Feedback/Notification     | Checked                                                                                                             |
 | [feedback/progress](../../../packages/ui/src/feedback/progress)                 | `@shared/ui/progress`         | UI/Feedback/Progress         | Static pattern for unknown progress. [Chrome checks](shared-ui-styles.md#progress-states).                          |
 | [feedback/skeleton](../../../packages/ui/src/feedback/skeleton)                 | `@shared/ui/skeleton`         | UI/Feedback/Skeleton         | Responsive loading styles and reduced-motion support. [Chrome checks](shared-ui-styles.md#loading-feedback).        |
 | [feedback/sonner](../../../packages/ui/src/feedback/sonner)                     | `@shared/ui/sonner`           | UI/Feedback/Sonner           | Shared toast spacing and close focus. [Chrome checks](shared-ui-styles.md#toast-and-sonner).                        |
