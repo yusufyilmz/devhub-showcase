@@ -2,6 +2,8 @@
 
 import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from "lucide-react";
 
+import { getNameInitials } from "@shared/config";
+
 import { Avatar, AvatarFallback, AvatarImage } from "../../display/avatar/Avatar";
 import {
   DropdownMenu,
@@ -27,13 +29,15 @@ export function NavUser({ user }: NavUserOptions) {
             <SidebarMenuButton className={navUserStyles.element1} size="lg">
               <Avatar className={navUserStyles.element2}>
                 <AvatarImage alt={user.name} src={user.avatar} />
-                <AvatarFallback className={navUserStyles.element3}>CN</AvatarFallback>
+                <AvatarFallback className={navUserStyles.element3}>
+                  {getNameInitials(user.name)}
+                </AvatarFallback>
               </Avatar>
               <div className={navUserStyles.element4}>
                 <span className={navUserStyles.element5}>{user.name}</span>
                 <span className={navUserStyles.element6}>{user.email}</span>
               </div>
-              <ChevronsUpDown className={navUserStyles.element7} />
+              <ChevronsUpDown aria-hidden="true" className={navUserStyles.element7} />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -46,7 +50,9 @@ export function NavUser({ user }: NavUserOptions) {
               <div className={navUserStyles.element10}>
                 <Avatar className={navUserStyles.element11}>
                   <AvatarImage alt={user.name} src={user.avatar} />
-                  <AvatarFallback className={navUserStyles.element12}>CN</AvatarFallback>
+                  <AvatarFallback className={navUserStyles.element12}>
+                    {getNameInitials(user.name)}
+                  </AvatarFallback>
                 </Avatar>
                 <div className={navUserStyles.element13}>
                   <span className={navUserStyles.element14}>{user.name}</span>

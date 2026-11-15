@@ -30,17 +30,16 @@ export function NavProjects({ projects }: NavProjectsOptions) {
       <SidebarMenu>
         {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild tooltip={item.name}>
               <a href={item.url}>
-                <item.icon />
+                <item.icon aria-hidden="true" />
                 <span>{item.name}</span>
               </a>
             </SidebarMenuButton>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuAction showOnHover>
+                <SidebarMenuAction aria-label={`More options for ${item.name}`} showOnHover>
                   <MoreHorizontal />
-                  <span className={navProjectsStyles.element2}>More</span>
                 </SidebarMenuAction>
               </DropdownMenuTrigger>
               <DropdownMenuContent
@@ -57,7 +56,7 @@ export function NavProjects({ projects }: NavProjectsOptions) {
                   <span>Share Project</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem variant="destructive">
                   <Trash2 className={navProjectsStyles.element6} />
                   <span>Delete Project</span>
                 </DropdownMenuItem>

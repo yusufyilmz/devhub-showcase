@@ -24,7 +24,7 @@ export function Field({
   return (
     <LibraryLabel
       className={cn(
-        "editor-field flex min-w-0 flex-col gap-xs text-sm font-medium text-foreground",
+        "editor-field flex min-w-0 flex-col gap-xs text-sm font-medium leading-snug text-foreground wrap-anywhere",
         multiline && "full-width col-span-full",
       )}
       htmlFor={fieldId}
@@ -35,6 +35,7 @@ export function Field({
         <Textarea
           aria-describedby={hintId}
           aria-labelledby={labelId}
+          className="min-h-24 resize-y border-border/75 font-normal leading-relaxed user-invalid:border-destructive"
           id={fieldId}
           onChange={(event) => onChange(event.target.value)}
           required={required}
@@ -45,6 +46,7 @@ export function Field({
         <Input
           aria-describedby={hintId}
           aria-labelledby={labelId}
+          className="border-border/75 font-normal user-invalid:border-destructive"
           id={fieldId}
           onChange={(event) => onChange(event.target.value)}
           required={required}
@@ -53,7 +55,7 @@ export function Field({
         />
       )}
       {hint && (
-        <small className="text-xs font-normal leading-normal text-muted-foreground" id={hintId}>
+        <small className="text-xs font-normal leading-relaxed text-muted-foreground" id={hintId}>
           {hint}
         </small>
       )}

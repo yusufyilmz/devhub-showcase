@@ -41,6 +41,7 @@ function PaginationLink({ className, isActive, size = "icon", ...props }: Pagina
           size,
           variant: isActive ? "outline" : "ghost",
         }),
+        paginationStyles.paginationLink,
         className,
       )}
       data-active={isActive}
@@ -58,7 +59,7 @@ function PaginationPrevious({ className, ...props }: React.ComponentProps<typeof
       size="default"
       {...props}
     >
-      <ChevronLeftIcon />
+      <ChevronLeftIcon aria-hidden="true" />
       <span className={paginationStyles.element1}>Previous</span>
     </PaginationLink>
   );
@@ -73,7 +74,7 @@ function PaginationNext({ className, ...props }: React.ComponentProps<typeof Pag
       {...props}
     >
       <span className={paginationStyles.element2}>Next</span>
-      <ChevronRightIcon />
+      <ChevronRightIcon aria-hidden="true" />
     </PaginationLink>
   );
 }

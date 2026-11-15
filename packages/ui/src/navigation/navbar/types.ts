@@ -1,6 +1,7 @@
 import type { Language, PortfolioProfile } from "@shared/config";
 
 export type MenuItemsOptions = {
+  closeOnSelect?: boolean;
   language?: Language;
   hiddenLinks?: string[];
 };

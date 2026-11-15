@@ -16,11 +16,16 @@ const meta = {
       <SidebarProvider style={providerStyles}>
         <Story />
         <SidebarInset>
-          <header className="flex items-center gap-xs border-sidebar-border border-b px-md py-s">
-            <SidebarTrigger />
+          <header className="flex items-center gap-xs border-b border-sidebar-border/60 px-md py-s">
+            <SidebarTrigger className="rounded-md focus-visible:outline-2 focus-visible:outline-ring" />
             <span className="text-sm font-medium">Workspace</span>
           </header>
-          <p className="p-md text-sm text-muted-foreground">Sidebar content preview area</p>
+          <section className="p-md sm:p-lg">
+            <h1 className="text-xl font-semibold tracking-tight">Projects</h1>
+            <p className="mt-xs max-w-prose text-sm text-muted-foreground">
+              Review your recent work and manage the projects in this workspace.
+            </p>
+          </section>
         </SidebarInset>
       </SidebarProvider>
     ),

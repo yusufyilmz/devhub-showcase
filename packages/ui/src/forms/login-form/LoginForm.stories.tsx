@@ -6,7 +6,7 @@ const meta = {
   component: LoginForm,
   decorators: [
     (Story) => (
-      <div className="flex min-h-screen items-center justify-center bg-background p-6">
+      <div className="flex min-h-screen items-center justify-center bg-background p-sm sm:p-lg">
         <div className="w-full max-w-md">
           <Story />
         </div>

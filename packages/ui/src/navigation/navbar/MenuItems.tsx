@@ -1,10 +1,14 @@
 import { getPortfolioCopy } from "@shared/config";
 
 import { Button } from "../../buttons/button";
-import { menuItemsStyles } from "./styles";
+import { SheetClose } from "../../overlays/sheet";
 import type { MenuItemsOptions } from "./types";
 
-export function MenuItems({ language = "en", hiddenLinks = [] }: MenuItemsOptions) {
+export function MenuItems({
+  language = "en",
+  hiddenLinks = [],
+  closeOnSelect = false,
+}: MenuItemsOptions) {
   const text = getPortfolioCopy(language);
   const items = [
     ["#about-me", text.about],
@@ -18,13 +22,20 @@ export function MenuItems({ language = "en", hiddenLinks = [] }: MenuItemsOption
     <>
       {items
         .filter(([id]) => !hiddenLinks.includes(id ?? ""))
-        .map(([id, title]) => (
-          <Button asChild className={menuItemsStyles.element1} key={id} variant="text">
-            <a aria-label={title} href={id}>
+        .map(([id, title]) => {
+          const link = (
+            <Button href={id} key={id} variant="text">
               {title}
-            </a>
-          </Button>
-        ))}
+            </Button>
+          );
+          return closeOnSelect ? (
+            <SheetClose asChild key={id}>
+              {link}
+            </SheetClose>
+          ) : (
+            link
+          );
+        })}
     </>
   );
 }
