@@ -45,7 +45,7 @@ export function RevealCardBase({
           if (!pinned.current && !event.currentTarget.contains(event.relatedTarget))
             setExpanded(false);
         }}
-        onFocusCapture={(event) => {
+        onFocusCapture={() => {
           if (pointerIntent.current === null) {
             setExpanded(true);
           }
