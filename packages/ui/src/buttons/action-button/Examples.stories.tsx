@@ -6,7 +6,10 @@ import type { ActionButtonProps } from "./types";
 function Example({
   width = 560,
   ...props
-}: Pick<ActionButtonProps, "colorScheme" | "loading" | "variant"> & { width?: number }) {
+}: Pick<
+  ActionButtonProps,
+  "colorScheme" | "disabled" | "fullWidth" | "href" | "loading" | "variant"
+> & { width?: number }) {
   return (
     <div className="w-full p-md" style={{ maxWidth: width }}>
       <ActionButton {...props}>Save changes</ActionButton>
@@ -26,3 +29,9 @@ export const Wide: Story = { args: { width: 960 } };
 export const Outlined: Story = { args: { variant: "outlined" } };
 export const Ghost: Story = { args: { variant: "ghost" } };
 export const Loading: Story = { args: { loading: true } };
+export const DangerOutline: Story = { args: { colorScheme: "danger", variant: "outlined" } };
+export const Disabled: Story = { args: { disabled: true } };
+export const Link: Story = { args: { fullWidth: true, href: "#destination", variant: "outlined" } };
+export const LoadingLink: Story = {
+  args: { disabled: false, href: "#destination", loading: true },
+};

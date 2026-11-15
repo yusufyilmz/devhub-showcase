@@ -13,7 +13,7 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 
 | Component family                                                                  | Public import                  | Storybook title               | Review evidence |
 | --------------------------------------------------------------------------------- | ------------------------------ | ----------------------------- | --------------- |
-| [buttons/action-button](../../../packages/ui/src/buttons/action-button)           | `@shared/ui/action-button`     | UI/Buttons/Action Button      | Pending         |
+| [buttons/action-button](../../../packages/ui/src/buttons/action-button)           | `@shared/ui/action-button`     | UI/Buttons/Action Button      | Checked         |
 | [buttons/add-project-button](../../../packages/ui/src/buttons/add-project-button) | See group exports              | UI/Buttons/Add Project Button | Pending         |
 | [buttons/button](../../../packages/ui/src/buttons/button)                         | `@shared/ui/button`            | UI/Buttons/Button             | Pending         |
 | [buttons/buttons](../../../packages/ui/src/buttons/buttons)                       | `@shared/ui/buttons`           | Find consuming story          | Pending         |
@@ -68,7 +68,7 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 | [feedback/banner](../../../packages/ui/src/feedback/banner)                     | `@shared/ui/banner`           | UI/Feedback/Banner           | Shared spacing and narrow action layout. [Chrome checks](shared-ui-styles.md#banner-spacing-and-action).            |
 | [feedback/chip](../../../packages/ui/src/feedback/chip)                         | `@shared/ui/chip`             | UI/Feedback/Chip             | Soft selection border and separate keyboard focus for each action. [Chrome checks](shared-ui-styles.md#chip).       |
 | [feedback/empty-state](../../../packages/ui/src/feedback/empty-state)           | `@shared/ui/empty-state`      | UI/Feedback/Empty State      | Compact icon surface, readable message, and wrapping actions. [Chrome checks](shared-ui-styles.md#empty-state).     |
-| [feedback/error-boundary](../../../packages/ui/src/feedback/error-boundary)     | `@shared/ui/error-boundary`   | Find consuming story         | Pending                                                                                                             |
+| [feedback/error-boundary](../../../packages/ui/src/feedback/error-boundary)     | `@shared/ui/error-boundary`   | Empty export                 | Checked                                                                                                             |
 | [feedback/error-page](../../../packages/ui/src/feedback/error-page)             | `@shared/ui/error-page`       | UI/Feedback/Error Page       | Checked                                                                                                             |
 | [feedback/feedback](../../../packages/ui/src/feedback/feedback)                 | `@shared/ui/feedback`         | UI/Feedback/Feedback         | Checked                                                                                                             |
 | [feedback/not-found](../../../packages/ui/src/feedback/not-found)               | `@shared/ui/not-found`        | UI/Feedback/Not Found        | Checked                                                                                                             |
