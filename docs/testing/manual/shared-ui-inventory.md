@@ -146,7 +146,7 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 | [navigation/nav](../../../packages/ui/src/navigation/nav)                             | `@shared/ui/nav`               | UI/Navigation/Nav/Nav Main      | Pending         |
 | [navigation/navbar](../../../packages/ui/src/navigation/navbar)                       | `@shared/ui/navbar`            | UI/Navigation/Navbar            | Pending         |
 | [navigation/page-header](../../../packages/ui/src/navigation/page-header)             | `@shared/ui/page-header`       | UI/Navigation/Page Header       | Pending         |
-| [navigation/pagination](../../../packages/ui/src/navigation/pagination)               | `@shared/ui/pagination`        | UI/Navigation/Pagination        | Pending         |
+| [navigation/pagination](../../../packages/ui/src/navigation/pagination)               | `@shared/ui/pagination`        | UI/Navigation/Pagination        | Checked         |
 | [navigation/section-navigator](../../../packages/ui/src/navigation/section-navigator) | `@shared/ui/section-navigator` | UI/Navigation/Section Navigator | Pending         |
 | [navigation/sidebar](../../../packages/ui/src/navigation/sidebar)                     | `@shared/ui/sidebar`           | UI/Navigation/Sidebar           | Pending         |
 | [navigation/site-header](../../../packages/ui/src/navigation/site-header)             | `@shared/ui/site-header`       | UI/Navigation/Site Header       | Pending         |
