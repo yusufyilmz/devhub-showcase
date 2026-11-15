@@ -328,20 +328,16 @@ export const cardBodyStyles = {
 
 export const revealCardCopyStyles = {
   element1: "reveal-heading [&>div]:p-0 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:tracking-tight",
-  element2:
-    "reveal-preview [display:grid] [grid-template-rows:1fr] [margin-top:14px] [opacity:1] [transition:grid-template-rows_var(--reveal-duration,_580ms)_cubic-bezier(0.22,_1,_0.36,_1),_margin-top_var(--reveal-duration,_580ms)_ease,_opacity_var(--reveal-fade-duration,_380ms)_ease] [&_>_p]:[min-height:0] motion-reduce:[transition:none]",
+  element2: "reveal-preview",
   element3: "reveal-brief line-clamp-2 text-sm leading-relaxed text-muted-foreground",
-  element4:
-    "reveal-toggle focus-visible:[&_.reveal-hint-desktop]:[display:none] focus-visible:[&_.reveal-hint-touch]:[display:none] focus-visible:[&_.reveal-hint-keyboard]:[display:inline] mt-4 min-h-9 gap-2 px-3 text-xs text-foreground",
-  element5: "reveal-hint-desktop [@media(hover:_none),_(pointer:_coarse)]:[display:none]",
-  element6:
-    "reveal-hint-touch [display:none] [@media(hover:_none),_(pointer:_coarse)]:[display:inline]",
-  element7: "reveal-hint-keyboard [display:none]",
+  element4: "reveal-toggle mt-4 min-h-9 gap-2 px-3 text-xs text-foreground",
+  element5: "reveal-hint-desktop",
+  element6: "reveal-hint-touch",
+  element7: "reveal-hint-keyboard",
   element8:
     "reveal-chevron text-base leading-none motion-safe:transition-transform group-aria-expanded/button:rotate-90",
-  element9:
-    "reveal-details [display:grid] [visibility:hidden] [grid-template-rows:0fr] [margin-top:0] [opacity:0] [transition:grid-template-rows_var(--reveal-duration,_580ms)_cubic-bezier(0.22,_1,_0.36,_1),_margin-top_var(--reveal-duration,_580ms)_ease,_opacity_var(--reveal-fade-duration,_380ms)_ease,_visibility_var(--reveal-duration,_580ms)] motion-reduce:[animation:none] motion-reduce:[transition:none]",
-  element10: "reveal-details-inner [min-height:0] [overflow:hidden]",
+  element9: "reveal-details",
+  element10: "reveal-details-inner",
 } as const;
 
 export function cardBodyClassName(...values: unknown[]): string {
@@ -349,6 +345,7 @@ export function cardBodyClassName(...values: unknown[]): string {
 }
 
 export function revealCardBaseClassName(className?: string): string {
+  //   return cn("section-card reveal-card p-md", className);
   return cn(
     "section-card reveal-card relative m-0 w-full min-w-0 border-border/75 bg-card p-md wrap-anywhere",
     "data-[expanded=true]:border-primary/35",

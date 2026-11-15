@@ -2,9 +2,40 @@ import { expect, test } from "@playwright/test";
 
 import { getThemePalette, portfolioAccentIds, portfolioAccents } from "@shared/config";
 
-test("the homepage shows portfolio setup and private tools in one reveal-card [&[data-expanded='true']::before]:[animation-play-state:paused] [&[data-expanded='true']]:[border-color:color-mix(in_srgb,_var(--primary)_60%,_transparent)] [&[data-expanded='true']_.reveal-preview]:[grid-template-rows:0fr] [&[data-expanded='true']_.reveal-details]:[visibility:visible] grid", async ({
-  page,
-}) => {
+test("landing styles retain their pre-migration desktop and mobile metrics", async ({ page }) => {
+  await page.setViewportSize({ height: 900, width: 1280 });
+  await page.goto("/");
+
+  const hero = page.locator(".home-hero");
+  const title = hero.getByRole("heading", { level: 1 });
+  const description = hero.locator(".home-hero-description");
+  const intro = page.locator("#features .home-section-intro h2").first();
+  const featureGrid = page.locator(".home-feature-grid").first();
+
+  await expect(hero).toHaveCSS("display", "grid");
+  await expect(hero).toHaveCSS("gap", "70px");
+  await expect(hero).toHaveCSS("padding-top", "90px");
+  await expect(hero).toHaveCSS("padding-bottom", "85px");
+  await expect(description).toHaveCSS("font-size", "15px");
+  await expect(intro).toHaveCSS("font-size", "51px");
+  await expect(featureGrid).toHaveCSS("gap", "20px");
+  const desktopHeadingSize = await title.evaluate((node) =>
+    Number.parseFloat(getComputedStyle(node).fontSize),
+  );
+  expect(desktopHeadingSize).toBeGreaterThan(78);
+  expect(desktopHeadingSize).toBeLessThan(81);
+
+  await page.setViewportSize({ height: 844, width: 390 });
+  await expect(hero).toHaveCSS("gap", "43px");
+  await expect(hero).toHaveCSS("padding-top", "50px");
+  await expect(hero).toHaveCSS("padding-bottom", "50px");
+  await expect(title).toHaveCSS("font-size", "62px");
+  await expect(description).toHaveCSS("font-size", "14px");
+  await expect(intro).toHaveCSS("font-size", "36px");
+  await expect(featureGrid).toHaveCSS("gap", "15px");
+});
+
+test("the homepage shows portfolio setup and private tools in one grid", async ({ page }) => {
   await page.goto("/");
   const features = page.locator("#features");
   const cards = features.locator(".home-feature-grid > .home-feature-card");

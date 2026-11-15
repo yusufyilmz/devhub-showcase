@@ -84,7 +84,7 @@ export function HomeOptionsSection() {
                 <li key={color}>
                   <span
                     aria-hidden="true"
-                    className="home-theme-swatch [display:grid] [flex:0_0_40px] [place-items:center] [height:40px] [font-size:1.125rem] [border:1px_solid_#8885]"
+                    className="home-theme-swatch"
                     style={themeSwatchStyle(color)}
                   >
                     Aa
