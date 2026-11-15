@@ -1,12 +1,19 @@
 "use client";
-import "./notifications.css";
 
 import { useState } from "react";
 
-import { BellMinus, BellPlus, BellRing, Download, type LucideIcon, Volume2 } from "lucide-react";
+import {
+  Bell,
+  BellMinus,
+  BellPlus,
+  BellRing,
+  Download,
+  type LucideIcon,
+  Volume2,
+} from "lucide-react";
 
 import { Button } from "../../buttons/button";
-import { Tooltip } from "../../overlays/tooltip";
+import { Alert, AlertDescription } from "../../feedback/alert";
 import type { NotificationPreferencesProps } from "./types";
 
 export type { NotificationPreferencesProps } from "./types";
@@ -23,20 +30,17 @@ function DeviceAction({
   onClick: () => void;
 }) {
   return (
-    <Tooltip title={label}>
-      <span className="notification-preferences-action [display:inline-flex] [&_[data-slot='button']]:[width:2.5rem]">
-        <Button
-          aria-label={label}
-          disabled={disabled}
-          onClick={onClick}
-          size="icon"
-          type="button"
-          variant="outline"
-        >
-          <Icon aria-hidden="true" />
-        </Button>
-      </span>
-    </Tooltip>
+    <Button
+      className="h-auto min-h-10 max-w-full justify-start py-2 whitespace-normal text-start"
+      disabled={disabled}
+      onClick={onClick}
+      size="sm"
+      startIcon={<Icon aria-hidden="true" />}
+      type="button"
+      variant="outline"
+    >
+      {label}
+    </Button>
   );
 }
 
@@ -65,31 +69,48 @@ export function NotificationPreferences(props: NotificationPreferencesProps) {
   return (
     <section
       aria-label="Device notifications"
-      className="notification-preferences [display:grid] [gap:0.85rem] [padding-block:1.25rem] [margin-block:1rem] [border-block-start:1px_solid_var(--border)] [&_h3]:[margin:0] [font-size:1.1rem] [font-weight:650] [line-height:1.4] [&_p]:[margin:0] [font-size:0.9rem] [line-height:1.6] [&_[role='alert']]:[color:var(--destructive,_#b42318)]"
+      className="my-md grid min-w-0 gap-md rounded-xl border border-border/70 bg-card p-md text-card-foreground"
     >
-      <h3>Notifications on this device</h3>
-      <p>
-        Live updates: {props.liveStatus}. Background reminders can reach this device when the app is
-        closed.
-      </p>
-      {props.installed && <p>The app is installed on this device.</p>}
-      {props.requiresHomeScreen && (
+      <div className="flex items-start gap-sm">
+        <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary">
+          <Bell aria-hidden="true" className="size-4" />
+        </span>
+        <div className="grid min-w-0 gap-xs">
+          <h3 className="m-0 text-base leading-snug font-semibold">Notifications on this device</h3>
+          <p className="m-0 text-sm leading-relaxed text-muted-foreground">
+            Live updates: {props.liveStatus}. Background reminders can reach this device when the
+            app is closed.
+          </p>
+        </div>
+      </div>
+      <div className="grid min-w-0 gap-xs text-sm leading-relaxed wrap-anywhere text-muted-foreground [&_p]:m-0">
+        {props.installed && <p>The app is installed on this device.</p>}
+        {props.requiresHomeScreen && (
+          <p>
+            On iPhone or iPad, open the browser’s Share menu, choose Add to Home Screen, and open
+            the installed app. Then enable notifications here.
+          </p>
+        )}
+        {!props.configured && (
+          <p>Background delivery is not set up yet. Open-app reminders remain available.</p>
+        )}
+        {!props.supported && <p>This browser does not support background notifications.</p>}
         <p>
-          On iPhone or iPad, open the browser’s Share menu, choose Add to Home Screen, and open the
-          installed app. Then enable notifications here.
+          Browser permission: {props.permission}.{" "}
+          {props.enabled ? "This device is subscribed." : "This device is not subscribed."}
         </p>
+      </div>
+      {error && (
+        <Alert variant="destructive">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
       )}
-      {!props.configured && (
-        <p>Background delivery is not set up yet. Open-app reminders remain available.</p>
+      {message && (
+        <Alert role="status">
+          <AlertDescription>{message}</AlertDescription>
+        </Alert>
       )}
-      {!props.supported && <p>This browser does not support background notifications.</p>}
-      <p>
-        Browser permission: {props.permission}.{" "}
-        {props.enabled ? "This device is subscribed." : "This device is not subscribed."}
-      </p>
-      {error && <p role="alert">{error}</p>}
-      {message && <p role="status">{message}</p>}
-      <div className="notification-preferences-actions [display:flex] [flex-wrap:wrap] [gap:0.65rem]">
+      <div className="grid grid-cols-1 gap-xs border-t border-border/70 pt-sm sm:flex sm:flex-wrap">
         {props.canInstall && (
           <DeviceAction
             disabled={busy || props.disabled}
