@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { profile } from "@shared/config";
 import { RevealCard } from "@shared/ui/cards";
@@ -9,7 +9,10 @@ import { RevealCard } from "@shared/ui/cards";
 import { SummarySection } from "./summary-section";
 
 describe("PortfolioUi", () => {
-  afterEach(cleanup);
+  afterEach(() => {
+    cleanup();
+    vi.unstubAllGlobals();
+  });
   it("renders the current professional title in the existing hero layout", () => {
     render(<SummarySection />);
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(`${profile.name}.`);
@@ -17,6 +20,7 @@ describe("PortfolioUi", () => {
   });
 
   it("previews on hover, closes on leave, and supports touch, focus and Escape", () => {
+    vi.stubGlobal("matchMedia", (query: string) => ({ matches: query === "(hover: hover)" }));
     render(
       <RevealCard brief="Brief summary" heading={<h3>Example</h3>} title="Example">
         <a href="https://example.com">Full details link</a>
