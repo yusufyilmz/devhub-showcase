@@ -16,7 +16,7 @@ export const navbarStyles = {
   element2:
     "brand-mark text-[32px] leading-none font-[750] tracking-[-0.12em] text-foreground no-underline [&_span]:text-primary",
   element3:
-    "nav-links [display:flex] [gap:4px] [&_a]:[padding:9px] [font-size:10px] [font-weight:500] [letter-spacing:0.06em] [box-shadow:none] max-[1050px]:[&_a]:[padding:6px] max-[1050px]:[&_a]:[font-size:9px] max-[767px]:[display:none]",
+    "nav-links [display:flex] [gap:4px] [&_a]:[padding:9px] [&_a]:[font-size:10px] [&_a]:[font-weight:500] [&_a]:[letter-spacing:0.06em] [&_a]:[box-shadow:none] max-[1050px]:[&_a]:[padding:6px] max-[1050px]:[&_a]:[font-size:9px] max-[767px]:[display:none]",
   element4: "nav-tools [display:flex] [gap:18px] [align-items:center]",
   element5:
     "nav-contact [font-size:12px] [color:var(--primary)] [white-space:nowrap] max-[1050px]:[display:none]",
