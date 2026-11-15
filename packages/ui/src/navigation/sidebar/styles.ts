@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const sidebarMenuButtonVariants = cva(
-  "peer/menu-button group-has-data-[sidebar=menu-action]/menu-item:pr-8 flex w-full items-center gap-2 overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)] rounded-lg border border-transparent ps-2 pe-4 text-left text-sm text-sidebar-foreground outline-hidden ring-sidebar-ring motion-safe:transition-colors hover:bg-sidebar-accent/20 focus-visible:bg-sidebar-accent/20 focus-visible:ring-2 focus-visible:ring-inset active:bg-sidebar-accent/30 disabled:pointer-events-none disabled:border-transparent disabled:bg-muted disabled:text-muted-foreground aria-disabled:pointer-events-none aria-disabled:border-transparent aria-disabled:bg-muted aria-disabled:text-muted-foreground data-[active=true]:border-sidebar-border data-[active=true]:bg-sidebar-accent/35 data-[active=true]:font-medium data-[state=open]:bg-sidebar-accent/20 data-open:bg-sidebar-accent/20 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! [&>span:last-child]:truncate [&_svg]:size-4 [&_svg]:shrink-0",
+  "peer/menu-button group-has-data-[sidebar=menu-action]/menu-item:pr-8 flex w-full items-center gap-2 overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)] rounded-lg border border-transparent ps-2 pe-4 text-left text-sm text-sidebar-foreground outline-hidden ring-sidebar-ring motion-safe:transition-colors hover:bg-sidebar-accent/20 focus-visible:bg-sidebar-accent/20 focus-visible:ring-2 focus-visible:ring-inset active:bg-sidebar-accent/30 disabled:pointer-events-none disabled:border-transparent disabled:bg-muted disabled:text-muted-foreground aria-disabled:pointer-events-none aria-disabled:border-transparent aria-disabled:bg-muted aria-disabled:text-muted-foreground data-[active=true]:border-sidebar-primary/25 data-[active=true]:bg-sidebar-primary/10 data-[active=true]:font-medium data-[state=open]:bg-sidebar-accent/20 data-open:bg-sidebar-accent/20 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! [&>span:last-child]:truncate [&_svg]:size-4 [&_svg]:shrink-0",
   {
     defaultVariants: {
       size: "default",
@@ -28,7 +28,7 @@ export const sidebarStyles = {
   element3: "flex h-full w-full flex-col pt-12",
   element4: "group peer text-sidebar-foreground hidden md:block",
   element5:
-    "bg-sidebar flex size-full flex-col group-data-[variant=floating]:rounded-xl group-data-[variant=floating]:shadow-sm group-data-[variant=floating]:ring-1 group-data-[variant=floating]:ring-sidebar-border",
+    "bg-sidebar flex size-full flex-col group-data-[variant=floating]:rounded-xl group-data-[variant=floating]:shadow-sm group-data-[variant=floating]:ring-1 group-data-[variant=floating]:ring-sidebar-border/70",
   element6: "sr-only",
   element7: "size-4 rounded-md",
   element8: "h-4 max-w-(--skeleton-width) flex-1",
@@ -49,7 +49,7 @@ export const sidebarStyles = {
     "group-data-[collapsible=icon]:w-(--sidebar-width-icon) border-sidebar-border group-data-[side=left]:border-r group-data-[side=right]:border-l",
   sidebarContent:
     "flex min-h-0 flex-1 flex-col overflow-auto group-data-[collapsible=icon]:overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)]",
-  sidebarFooter: "flex flex-col gap-xs border-sidebar-border border-t p-s",
+  sidebarFooter: "flex flex-col gap-xs border-sidebar-border/65 border-t p-s",
   sidebarGroup: "relative flex w-full min-w-0 flex-col p-s",
   sidebarGroupAction:
     "text-sidebar-foreground ring-sidebar-ring absolute top-2.5 right-3 flex aspect-square w-5 items-center justify-center rounded-md p-0 outline-hidden transition-[background-color,color] hover:bg-foreground/5 focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
@@ -64,7 +64,7 @@ export const sidebarStyles = {
   sidebarInput: "bg-background h-8 w-full shadow-none",
   sidebarInset: "bg-background relative flex w-full min-w-0 flex-1 flex-col",
   sidebarInset2:
-    "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:ring-1 md:peer-data-[variant=inset]:ring-sidebar-border md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
+    "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:ring-1 md:peer-data-[variant=inset]:ring-sidebar-border/70 md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
   sidebarMenu: "flex w-full min-w-0 flex-col gap-1",
   sidebarMenuAction:
     "text-sidebar-foreground ring-sidebar-ring peer-hover/menu-button:text-sidebar-foreground absolute top-1.5 right-1 flex aspect-square w-5 items-center justify-center rounded-md p-0 outline-hidden transition-[background-color,color] hover:bg-foreground/5 focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
@@ -74,7 +74,7 @@ export const sidebarStyles = {
   sidebarMenuAction5: "peer-data-[size=lg]/menu-button:top-3.5",
   sidebarMenuAction6: "group-data-[collapsible=icon]:hidden",
   sidebarMenuAction7:
-    "peer-data-[active=true]/menu-button:text-sidebar-foreground group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 md:opacity-0",
+    "peer-data-[active=true]/menu-button:text-sidebar-foreground group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 md:[@media(hover:hover)_and_(pointer:fine)]:opacity-0",
   sidebarMenuBadge:
     "text-sidebar-foreground pointer-events-none absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium tabular-nums select-none",
   sidebarMenuBadge2:
@@ -85,12 +85,12 @@ export const sidebarStyles = {
   sidebarMenuBadge6: "group-data-[collapsible=icon]:hidden",
   sidebarMenuItem: "group/menu-item relative",
   sidebarMenuSkeleton: "flex h-10 items-center gap-2 rounded-xl px-2",
-  sidebarMenuSub: "ms-3 flex min-w-0 flex-col gap-1 border-sidebar-border border-s ps-2",
+  sidebarMenuSub: "ms-3 flex min-w-0 flex-col gap-1 border-s border-sidebar-border/65 ps-2",
   sidebarMenuSub2: "group-data-[collapsible=icon]:hidden",
   sidebarMenuSubButton:
     "text-sidebar-foreground ring-sidebar-ring flex h-8 min-w-0 items-center gap-2 overflow-hidden [--pattern-ink:color-mix(in_srgb,currentColor_12%,transparent)] rounded-lg border border-transparent px-2 text-xs outline-hidden motion-safe:transition-colors hover:bg-sidebar-accent/20 focus-visible:bg-sidebar-accent/20 focus-visible:ring-2 focus-visible:ring-inset active:bg-sidebar-accent/30 disabled:pointer-events-none disabled:border-transparent disabled:bg-muted disabled:text-muted-foreground aria-disabled:pointer-events-none aria-disabled:border-transparent aria-disabled:bg-muted aria-disabled:text-muted-foreground [&>span:last-child]:truncate [&_svg]:size-4 [&_svg]:shrink-0",
   sidebarMenuSubButton2:
-    "data-[active=true]:border-sidebar-border data-[active=true]:bg-sidebar-accent/35 data-[active=true]:font-medium",
+    "data-[active=true]:border-sidebar-primary/25 data-[active=true]:bg-sidebar-primary/10 data-[active=true]:font-medium",
   sidebarMenuSubButton3: "text-xs",
   sidebarMenuSubButton4: "text-xs",
   sidebarMenuSubButton5: "group-data-[collapsible=icon]:hidden",
@@ -106,6 +106,6 @@ export const sidebarStyles = {
     "hover:group-data-[collapsible=offcanvas]:bg-sidebar group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full",
   sidebarRail5: "[[data-side=left][data-collapsible=offcanvas]_&]:-right-2",
   sidebarRail6: "[[data-side=right][data-collapsible=offcanvas]_&]:-left-2",
-  sidebarSeparator: "bg-sidebar-border mx-2 w-auto",
-  sidebarTrigger: "size-8 aria-expanded:bg-sidebar-accent/25",
+  sidebarSeparator: "bg-sidebar-border/65 mx-2 w-auto",
+  sidebarTrigger: "size-8 aria-expanded:bg-sidebar-primary/10",
 } as const;

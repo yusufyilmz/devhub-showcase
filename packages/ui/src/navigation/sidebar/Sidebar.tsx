@@ -472,7 +472,7 @@ function SidebarMenuButton({
     render: render ?? (asChild ? <Slot /> : undefined),
   });
 
-  if (!tooltip) {
+  if (!tooltip || isMobile || state !== "collapsed") {
     return button;
   }
 
@@ -485,12 +485,7 @@ function SidebarMenuButton({
   return (
     <Tooltip>
       <TooltipTrigger asChild>{button}</TooltipTrigger>
-      <TooltipContent
-        align="center"
-        hidden={state !== "collapsed" || isMobile}
-        side="right"
-        {...tooltip}
-      />
+      <TooltipContent align="center" side="right" {...tooltip} />
     </Tooltip>
   );
 }
