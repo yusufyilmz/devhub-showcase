@@ -11,7 +11,7 @@ function Example({ width = 560 }: { width?: number }) {
         <TeamSwitcher
           teams={[
             { logo: Square, name: "Studio North", plan: "Free" },
-            { logo: Square, name: "Studio South", plan: "Pro" },
+            { logo: Square, name: "Studio South Research and Design", plan: "Pro" },
           ]}
         />
       </SidebarProvider>

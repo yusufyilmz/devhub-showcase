@@ -150,7 +150,7 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 | [navigation/section-navigator](../../../packages/ui/src/navigation/section-navigator) | `@shared/ui/section-navigator` | UI/Navigation/Section Navigator | Pending         |
 | [navigation/sidebar](../../../packages/ui/src/navigation/sidebar)                     | `@shared/ui/sidebar`           | UI/Navigation/Sidebar           | Pending         |
 | [navigation/site-header](../../../packages/ui/src/navigation/site-header)             | `@shared/ui/site-header`       | UI/Navigation/Site Header       | Pending         |
-| [navigation/team-switcher](../../../packages/ui/src/navigation/team-switcher)         | `@shared/ui/team-switcher`     | UI/Navigation/Team Switcher     | Pending         |
+| [navigation/team-switcher](../../../packages/ui/src/navigation/team-switcher)         | `@shared/ui/team-switcher`     | UI/Navigation/Team Switcher     | Checked         |
 
 ## Content
 
