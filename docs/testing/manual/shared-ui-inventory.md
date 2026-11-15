@@ -17,7 +17,7 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 | [buttons/add-project-button](../../../packages/ui/src/buttons/add-project-button) | See group exports              | UI/Buttons/Add Project Button | Checked         |
 | [buttons/button](../../../packages/ui/src/buttons/button)                         | `@shared/ui/button`            | UI/Buttons/Button             | Checked         |
 | [buttons/buttons](../../../packages/ui/src/buttons/buttons)                       | `@shared/ui/buttons`           | Find consuming story          | Pending         |
-| [buttons/download-cv-button](../../../packages/ui/src/buttons/download-cv-button) | See group exports              | UI/Buttons/Download CV Button | Pending         |
+| [buttons/download-cv-button](../../../packages/ui/src/buttons/download-cv-button) | See group exports              | UI/Buttons/Download CV Button | Checked         |
 | [buttons/go-back-button](../../../packages/ui/src/buttons/go-back-button)         | See group exports              | UI/Buttons/Go Back Button     | Pending         |
 | [buttons/home-button](../../../packages/ui/src/buttons/home-button)               | See group exports              | UI/Buttons/Home Button        | Pending         |
 | [buttons/icon-button](../../../packages/ui/src/buttons/icon-button)               | `@shared/ui/icon-button`       | UI/Buttons/Icon Button        | Pending         |
