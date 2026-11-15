@@ -34,7 +34,7 @@ export function CvSettingsEditor({
     });
   return (
     <Card asChild layout="plain" surface="portfolio">
-      <section className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px] editor-fields grid grid-cols-2 gap-6 max-[767px]:grid-cols-1 max-[767px]:gap-[18px] cv-preferences">
+      <section className="editor-card min-w-0 rounded-xl border border-border/75 bg-card p-md cv-preferences editor-fields grid gap-md sm:grid-cols-2 [&>h2]:text-lg [&>h2]:font-semibold [&>p]:text-sm [&>p]:leading-relaxed [&>p]:text-muted-foreground">
         <h2>Your PDF preferences</h2>
         <SelectField
           label="CV layout"
@@ -73,7 +73,7 @@ export function CvSettingsEditor({
           ] as const
         ).map(([key, label]) => (
           <LibraryLabel
-            className="editor-checkbox flex items-center gap-2.5 text-xs text-muted-foreground [&_input]:size-4 [&_input]:accent-primary"
+            className="editor-checkbox flex min-w-0 items-start gap-xs rounded-lg border border-border/60 p-sm text-sm [&_input]:mt-0.5 [&_input]:size-4 [&_input]:shrink-0 [&_input]:accent-primary"
             key={key}
             unstyled
           >

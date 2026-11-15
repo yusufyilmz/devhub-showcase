@@ -125,13 +125,13 @@ export function EditorWorkspace({
           </aside>
           {editing && (
             <section aria-labelledby={headingId}>
-              <header className="editor-section-header [padding:24px_28px_0] [&_h2]:[font-size:20px] [font-weight:600] max-[767px]:[padding:20px_16px_0]">
+              <header className="editor-section-header px-md pt-md sm:px-lg [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:tracking-tight">
                 <h2 id={headingId}>Edit {active}</h2>
               </header>
-              <div className="editor-content-pane [min-width:0] [padding:28px] [&_.editor-card]:[margin-bottom:20px] [&_.editor-body_>_.editor-card]:[margin-bottom:0] [&_.editor-card]:[min-width:0] [border-radius:12px] [&_.editor-collection-item]:[min-width:0] [&_.cv-preferences_>_h2]:[grid-column:1\_/\_-1] [&_.cv-preferences_>_p]:[grid-column:1\_/\_-1] [:where(&)_.cv-preferences_>_p]:[max-width:72ch]">
+              <div className="editor-content-pane min-w-0 p-md sm:px-lg [&_.editor-card]:min-w-0 [&_.editor-card]:rounded-xl [&_.editor-collection-item]:min-w-0 [&_.cv-preferences>h2]:col-span-full [&_.cv-preferences>p]:col-span-full [&_.cv-preferences>p]:max-w-prose">
                 {children}
               </div>
-              <footer className="editor-section-actions [display:flex] [flex-wrap:wrap] [gap:10px] [align-items:center] [justify-content:flex-end] [padding:16px_28px] [border-top:1px_solid_var(--border)] [&_>_button]:[min-height:44px] max-[767px]:[padding:12px_16px] max-[767px]:[&_>_button]:[flex:1] [padding-inline:8px] [font-size:12px]">
+              <footer className="editor-section-actions flex flex-wrap items-center justify-end gap-xs border-t border-border/60 px-md py-sm sm:px-lg [&>button]:min-h-11 max-sm:[&>button]:flex-1">
                 {!locked && (
                   <Button
                     disabled={disabled}

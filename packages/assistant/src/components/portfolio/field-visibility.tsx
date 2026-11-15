@@ -38,7 +38,7 @@ export function FieldVisibilityEditor({
   return (
     <section
       aria-label="Output field visibility"
-      className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px] editor-fields grid grid-cols-2 gap-6 max-[767px]:grid-cols-1 max-[767px]:gap-[18px]"
+      className="editor-card min-w-0 rounded-xl border border-border/75 bg-card p-md editor-fields grid gap-md sm:grid-cols-2 [&>h2]:col-span-full [&>h2]:text-lg [&>h2]:font-semibold [&>p]:col-span-full [&>p]:max-w-prose [&>p]:text-sm [&>p]:leading-relaxed [&>p]:text-muted-foreground"
     >
       <h2>Choose what each output includes</h2>
       <p>
@@ -75,8 +75,11 @@ export function FieldVisibilityEditor({
         </p>
       )}
       {surfaces.map((surface) => (
-        <fieldset key={surface}>
-          <legend>
+        <fieldset
+          className="grid min-w-0 gap-xs rounded-lg border border-border/60 p-sm"
+          key={surface}
+        >
+          <legend className="px-1 text-sm font-semibold">
             {surface === "website" ? "Website contact details" : "CV contact details"}
           </legend>
           {contactFields.map((key) => (

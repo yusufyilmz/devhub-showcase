@@ -47,7 +47,7 @@ export function AiProfileEditor({ readUrl = urls.studio.profile() }: { readUrl?:
   }, [refresh, readUrl, request]);
   return (
     <Card asChild layout="plain" surface="portfolio">
-      <section className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px]">
+      <section className="editor-card min-w-0 rounded-xl border border-border/75 bg-card p-md grid justify-items-start gap-sm [&>h2]:text-lg [&>h2]:font-semibold [&>p]:max-w-prose [&>p]:text-sm [&>p]:leading-relaxed [&>p]:text-muted-foreground">
         <h2>Your AI profile</h2>
         <p>
           Private knowledge uses your saved draft. Public knowledge uses the last explicitly
@@ -89,7 +89,7 @@ export function AiProfileEditor({ readUrl = urls.studio.profile() }: { readUrl?:
             {!privateView && !data.public ? (
               <p>Your portfolio is private. No public AI knowledge is available.</p>
             ) : (
-              <pre className="ai-profile-json [max-height:34rem] [padding:1rem] [overflow:auto] [font-size:0.8rem] [overflow-wrap:anywhere] [white-space:pre-wrap]">
+              <pre className="ai-profile-json w-full min-w-0 max-h-[34rem] overflow-auto rounded-lg border border-border/60 bg-muted/50 p-sm font-mono text-xs leading-relaxed wrap-anywhere whitespace-pre-wrap">
                 {JSON.stringify(privateView ? data.owner : data.public, null, 2)}
               </pre>
             )}
