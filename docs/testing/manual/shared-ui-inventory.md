@@ -139,7 +139,7 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 | ------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------- | --------------- |
 | [navigation](../../../packages/ui/src/navigation)                                     | `@shared/ui/navigation`        | Find consuming story            | Pending         |
 | [navigation/app-sidebar](../../../packages/ui/src/navigation/app-sidebar)             | `@shared/ui/app-sidebar`       | UI/Navigation/App Sidebar       | Pending         |
-| [navigation/brand](../../../packages/ui/src/navigation/brand)                         | `@shared/ui/brand`             | UI/Navigation/Brand             | Pending         |
+| [navigation/brand](../../../packages/ui/src/navigation/brand)                         | `@shared/ui/brand`             | UI/Navigation/Brand             | Checked         |
 | [navigation/breadcrumb](../../../packages/ui/src/navigation/breadcrumb)               | `@shared/ui/breadcrumb`        | UI/Navigation/Breadcrumb        | Checked         |
 | [navigation/footer](../../../packages/ui/src/navigation/footer)                       | `@shared/ui/footer`            | UI/Navigation/Footer            | Pending         |
 | [navigation/header](../../../packages/ui/src/navigation/header)                       | `@shared/ui/header`            | UI/Navigation/Header            | Pending         |

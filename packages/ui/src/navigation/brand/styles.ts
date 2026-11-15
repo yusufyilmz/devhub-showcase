@@ -1,5 +1,8 @@
 export const brandStyles = {
   element1:
-    "home-brand [display:inline-flex] [flex-shrink:0] [gap:10px] [align-items:center] [color:var(--primary)] [text-decoration:none] [&_>_:where(span)]:[font-size:19px] [font-weight:650] [color:var(--foreground)] [letter-spacing:-0.8px] [&_:where(b)]:[color:var(--primary)] max-[760px]:[&_>_:where(span)]:[font-size:17px] max-[760px]:[&_:where(svg)]:[width:28px] [height:28px]",
-  element2: "home-brand-light [font-weight:400]",
+    "home-brand inline-flex min-w-0 shrink-0 items-center gap-2.5 rounded-md text-primary no-underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
+  element2: "home-brand-light font-normal",
+  mark: "size-8 shrink-0 max-[760px]:size-7",
+  wordmark:
+    "text-[19px] leading-none font-[650] tracking-[-0.04em] text-foreground max-[760px]:text-[17px]",
 } as const;
