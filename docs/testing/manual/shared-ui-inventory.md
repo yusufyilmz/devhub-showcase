@@ -141,7 +141,7 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 | [navigation/app-sidebar](../../../packages/ui/src/navigation/app-sidebar)             | `@shared/ui/app-sidebar`       | UI/Navigation/App Sidebar       | Pending         |
 | [navigation/brand](../../../packages/ui/src/navigation/brand)                         | `@shared/ui/brand`             | UI/Navigation/Brand             | Checked         |
 | [navigation/breadcrumb](../../../packages/ui/src/navigation/breadcrumb)               | `@shared/ui/breadcrumb`        | UI/Navigation/Breadcrumb        | Checked         |
-| [navigation/footer](../../../packages/ui/src/navigation/footer)                       | `@shared/ui/footer`            | UI/Navigation/Footer            | Pending         |
+| [navigation/footer](../../../packages/ui/src/navigation/footer)                       | `@shared/ui/footer`            | UI/Navigation/Footer            | Checked         |
 | [navigation/header](../../../packages/ui/src/navigation/header)                       | `@shared/ui/header`            | UI/Navigation/Header            | Pending         |
 | [navigation/nav](../../../packages/ui/src/navigation/nav)                             | `@shared/ui/nav`               | UI/Navigation/Nav/Nav Main      | Pending         |
 | [navigation/navbar](../../../packages/ui/src/navigation/navbar)                       | `@shared/ui/navbar`            | UI/Navigation/Navbar            | Pending         |
