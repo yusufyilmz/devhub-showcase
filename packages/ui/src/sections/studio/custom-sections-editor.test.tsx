@@ -77,6 +77,30 @@ describe("CustomSections", () => {
     expect(added.sectionSequence).toEqual([section.id, added.customSections?.at(-1)?.id]);
   });
 
+  it("adds the selected layout from the live library without copying example content", () => {
+    const onChange = vi.fn();
+    render(
+      <CustomSectionsEditor onChange={onChange} profile={{ ...profile, customSections: [] }} />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Browse section previews" }));
+    fireEvent.change(screen.getByRole("searchbox", { name: "Find a section" }), {
+      target: { value: "FAQ" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: /^FAQ$/ }));
+    fireEvent.click(screen.getByRole("button", { name: "Questions on the left" }));
+    expect(onChange).not.toHaveBeenCalled();
+
+    fireEvent.click(screen.getByRole("button", { name: "Add to portfolio" }));
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange.mock.lastCall?.[0].customSections).toEqual([
+      expect.objectContaining({
+        items: [],
+        options: { layout: "faq-reversed" },
+        sectionType: "faq",
+      }),
+    ]);
+  });
+
   it("round trips custom sections and mixed ordering while preserving existing sectionOrder", () => {
     const original = { ...profile, customSections: [section] };
     const defaultSections = getPortfolioSections(profile).map(({ id }) => id);

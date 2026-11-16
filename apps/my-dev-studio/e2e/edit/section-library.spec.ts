@@ -38,11 +38,13 @@ test("owner creates a library section, saves a template, exports content, review
   await page.goto(`/${device}-library-owner/edit`);
   await openEditor(page);
   await selectEditorSection(page, "Custom sections");
-  await page.getByLabel("Section starter").selectOption("pricing");
-  await page.getByText("Preview section starter").click();
+  await page.getByRole("button", { name: "Browse section previews" }).click();
+  await page.getByRole("searchbox", { name: "Find a section" }).fill("Pricing");
+  await page.getByRole("button", { exact: true, name: "Pricing" }).click();
   await expect(page.getByRole("region", { name: "Pricing section example" })).toBeVisible();
-  await page.getByText("Preview section starter").click();
-  await page.getByRole("button", { name: "Add custom section" }).click();
+  await page.getByRole("button", { name: "Plan comparison" }).click();
+  await page.getByRole("button", { name: "Add to portfolio" }).click();
+  await expect(page.getByLabel("Block layout")).toHaveValue("pricing-comparison");
   await page.getByRole("button", { name: "+ Add section items" }).click();
   await page.getByLabel("Item title", { exact: true }).fill("Independent plan");
   await page.getByLabel("Item details").fill("A focused engagement.");
@@ -58,6 +60,7 @@ test("owner creates a library section, saves a template, exports content, review
   const configuration = JSON.parse(readFileSync(path, "utf8"));
   expect(configuration.includesContent).toBe(false);
   expect(JSON.stringify(configuration)).not.toContain("Independent plan");
+  expect(JSON.stringify(configuration)).toContain("pricing-comparison");
   await page.getByLabel("Include authored content, media and bindings").check();
   const contentDownload = page.waitForEvent("download");
   await page.getByRole("button", { exact: true, name: "Export sections JSON" }).click();
@@ -124,7 +127,7 @@ test("owner creates a library section, saves a template, exports content, review
   await context.clearCookies();
   expect((await page.request.get(urls.studio.sectionTemplates())).status()).toBe(403);
   await page.goto(`/${device}-library-owner`);
-  await expect(page.getByRole("heading", { exact: true, name: "Independent plan" })).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: /Independent plan/ })).toBeVisible();
   await expect(page.getByRole("heading", { exact: true, name: "Imported art" })).toBeVisible();
   await page.getByRole("tab", { exact: true, name: "Create" }).click();
   await expect(page.getByText("Build with care.", { exact: true })).toBeVisible();

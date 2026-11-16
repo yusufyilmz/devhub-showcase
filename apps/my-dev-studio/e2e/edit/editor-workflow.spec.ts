@@ -64,26 +64,42 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
     .getByRole("textbox", { name: "Short introduction (optional)" })
     .fill("A thoughtful introduction.");
   await page.getByRole("button", { exact: true, name: "Continue" }).click();
-  await expect(page.getByText("Step 5 of 11")).toBeVisible();
+  await expect(page.getByRole("dialog", { name: "Work experience" })).toBeVisible();
   await page.getByRole("button", { name: "Skip for now" }).click();
   await expect(page.getByRole("heading", { exact: true, name: "Projects" }).first()).toBeVisible();
   await expect(page.getByText("Recovery saved in this tab", { exact: true })).toBeVisible();
   await page.reload();
   await openEditor(page);
   await page.getByRole("button", { exact: true, name: "Restore recovered draft" }).click();
-  await expect(page.getByText("Step 6 of 11")).toBeVisible();
-  for (const title of ["Skills", "Education", "Languages", "Custom sections"]) {
+  await expect(page.getByRole("dialog", { name: "Projects" })).toBeVisible();
+  for (const title of ["Skills", "Education", "Languages"]) {
     await page.getByRole("button", { exact: true, name: "Skip for now" }).click();
     await expect(page.getByRole("dialog", { exact: true, name: title })).toBeVisible();
   }
+  const dialog = page.getByRole("dialog", { name: "Languages" });
+  const bounds = await dialog.boundingBox();
+  if (mobile) {
+    expect(bounds?.width).toBeLessThanOrEqual(page.viewportSize()?.width ?? 0);
+  } else {
+    expect(bounds?.width).toBeGreaterThan(900);
+  }
+  await dialog.getByRole("button", { name: "Browse and add sections" }).click();
+  await expect(page.getByRole("dialog", { name: "Custom sections" })).toBeVisible();
+  await page.getByRole("searchbox", { name: "Find a section" }).fill("FAQ");
+  await page.getByRole("button", { exact: true, name: "FAQ" }).click();
+  await expect(page.getByRole("region", { name: "FAQ section example" })).toBeVisible();
+  await page.getByRole("button", { name: "Questions on the left" }).press("Enter");
+  await expect(page.locator('[data-section-layout="faq-reversed"]')).toBeVisible();
+  await page.getByRole("button", { name: "Add to portfolio" }).click();
+  await expect(page.getByLabel("Section type")).toHaveValue("faq");
+  await expect(page.getByLabel("Block layout")).toHaveValue("faq-reversed");
+  expect(saves).toBe(0);
+
   const library = page.getByLabel("Section starter");
   await library.selectOption("heading");
   await page.getByRole("button", { exact: true, name: "Add custom section" }).click();
   await page.getByRole("textbox", { name: "Section name" }).fill("Featured work");
   await expect(page.getByLabel("Section display")).toBeVisible();
-  await library.selectOption("faq");
-  await page.getByRole("button", { exact: true, name: "Add custom section" }).click();
-  await expect(page.getByLabel("Section type")).toHaveValue("faq");
   await page
     .getByRole("navigation", { name: "Custom sections in your draft" })
     .getByRole("button", { name: "Featured work" })
@@ -109,7 +125,7 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
   await expect(page.getByText("Temporary save failure", { exact: true })).toBeVisible();
   await expect(page.getByRole("dialog", { name: "Review your draft" })).toBeVisible();
   await page.getByRole("button", { name: "Save private draft" }).click();
-  await expect(page.locator(".studio-status")).toContainText("All changes saved");
+  await expect(page.getByText("All changes saved", { exact: true })).toBeVisible();
   await openEditor(page);
   await page
     .getByRole("textbox", { exact: true, name: "Professional title" })
@@ -123,7 +139,7 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
     .getByRole("textbox", { exact: true, name: "Professional title" })
     .fill("Newer saved revision");
   await other.getByRole("button", { exact: true, name: "Save changes" }).click();
-  await expect(other.locator(".studio-status")).toContainText("All changes saved");
+  await expect(other.getByText("All changes saved", { exact: true })).toBeVisible();
   await expect(page.getByText(/A newer saved revision exists/)).toBeVisible();
   await expect(page.getByRole("button", { exact: true, name: "Save changes" })).toBeDisabled();
   await page.reload();

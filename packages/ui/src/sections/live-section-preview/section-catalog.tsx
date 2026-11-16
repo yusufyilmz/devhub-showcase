@@ -22,7 +22,15 @@ import { SectionCatalogPreview } from "./section-catalog-preview";
 const groups = ["All", "Story", "Work", "Media", "Connect"] as const;
 type Group = (typeof groups)[number];
 
-export function SectionCatalog({ assetUrl }: Pick<LiveSectionPreviewProps, "assetUrl"> = {}) {
+type CatalogAddAction = {
+  disabled?: boolean;
+  onAdd: (type: AuthorableSectionType, layout?: SectionOptions["layout"]) => void;
+};
+
+export function SectionCatalog({
+  addAction,
+  assetUrl,
+}: Pick<LiveSectionPreviewProps, "assetUrl"> & { addAction?: CatalogAddAction } = {}) {
   const [query, setQuery] = useState("");
   const [group, setGroup] = useState<Group>("All");
   const [expanded, setExpanded] = useState(false);
@@ -106,7 +114,12 @@ export function SectionCatalog({ assetUrl }: Pick<LiveSectionPreviewProps, "asse
             >
               Close preview
             </Button>
-            <CatalogExamplePreview assetUrl={assetUrl} exampleId={selected} key={selected} />
+            <CatalogExamplePreview
+              addAction={addAction}
+              assetUrl={assetUrl}
+              exampleId={selected}
+              key={selected}
+            />
           </div>
         )}
         <ul
@@ -179,13 +192,15 @@ export function SectionCatalog({ assetUrl }: Pick<LiveSectionPreviewProps, "asse
 }
 
 function CatalogExamplePreview({
+  addAction,
   assetUrl,
   exampleId,
-}: Pick<LiveSectionPreviewProps, "assetUrl" | "exampleId">) {
+}: Pick<LiveSectionPreviewProps, "assetUrl" | "exampleId"> & { addAction?: CatalogAddAction }) {
   const [layout, setLayout] = useState<SectionOptions["layout"]>();
-  const layouts = Object.hasOwn(authorableSections, exampleId)
-    ? getSectionLayouts(exampleId as AuthorableSectionType)
-    : [];
+  const type = Object.hasOwn(authorableSections, exampleId)
+    ? (exampleId as AuthorableSectionType)
+    : undefined;
+  const layouts = type ? getSectionLayouts(type) : [];
   return (
     <>
       {layouts.length > 0 && (
@@ -214,6 +229,27 @@ function CatalogExamplePreview({
           ))}
         </fieldset>
       )}
+      {addAction &&
+        (type ? (
+          <div className="flex flex-wrap items-center gap-s">
+            <Button
+              disabled={addAction.disabled}
+              onClick={() => addAction.onAdd(type, layout)}
+              type="button"
+            >
+              Add to portfolio
+            </Button>
+            {addAction.disabled && (
+              <p className="text-sm text-muted-foreground">
+                Your draft has reached its custom section limit.
+              </p>
+            )}
+          </div>
+        ) : (
+          <p className="text-sm text-muted-foreground">
+            Preview only. Manage this section from its own editor.
+          </p>
+        ))}
       <LiveSectionPreview assetUrl={assetUrl} exampleId={exampleId} exampleLayout={layout} />
     </>
   );
