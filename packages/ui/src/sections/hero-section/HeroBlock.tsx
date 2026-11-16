@@ -21,27 +21,35 @@ export function HeroBlock({
     <section
       aria-labelledby={headingId}
       className={cn(
-        landing ? "home-container home-hero" : "grid items-center gap-lg",
+        landing ? "home-container home-hero" : "grid min-w-0 items-center gap-lg md:gap-xl",
         !landing && visual && "md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]",
         className,
       )}
       {...props}
     >
-      <div className={landing ? "home-hero-copy" : "grid min-w-0 gap-sm"}>
+      <div className={landing ? "home-hero-copy" : "grid min-w-0 gap-md"}>
         {eyebrow && (
           <p className={landing ? "home-eyebrow" : "text-sm font-semibold text-primary"}>
             {eyebrow}
           </p>
         )}
         <Heading
-          className={landing ? undefined : "m-0 text-4xl leading-tight tracking-tight md:text-5xl"}
+          className={
+            landing
+              ? undefined
+              : "m-0 max-w-[20ch] text-balance wrap-anywhere text-3xl font-semibold leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl"
+          }
           id={headingId}
         >
           {title}
         </Heading>
         {description && (
           <p
-            className={landing ? "home-hero-description" : "m-0 max-w-prose text-muted-foreground"}
+            className={
+              landing
+                ? "home-hero-description"
+                : "m-0 max-w-[55ch] wrap-anywhere leading-relaxed text-muted-foreground"
+            }
           >
             {description}
           </p>

@@ -16,7 +16,8 @@
 - Move the reusable section implementations and their supporting presentation code to `packages/ui/src/sections`. Keep homepage and CV flows and persistence adapters with their owners. Rewrite callers to the new owner and update the repository's ownership guidance and generated catalogs in the migration commit.
 - Preserve section IDs, renderer variants, ordering, visibility, import/export, localization, and existing public portfolio and CV behavior. Keep `@shared/ui` independent of `@shared/assistant`, runtime requests, and app-specific code.
 - Preview interactions are local. Use fictional fixtures for browse mode and render provider-backed actions with inert preview equivalents. A preview selection must never submit a form, add a section, or publish a portfolio by itself.
-- Use Sand first and cover light, dark, and mobile. Prefer shared primitives, Tailwind, and theme tokens. Keep special CSS where needed for composition or behavior.
+- Prefer Tailwind and shared theme tokens where they express the intent cleanly. Keep custom CSS where it serves a concrete purpose.
+- Review each component in Storybook. Verify representative light, dark, narrow viewport, keyboard, and applicable hover, focus, disabled, selected, open, and error states. Run focused tests where behavior could regress and record any check that could not run. Start with Sand and sample a second palette.
 - Run focused checks for each task and the full relevant gate before the implementation PR.
 
 ## Files and responsibilities
@@ -37,7 +38,9 @@
 - With narrow screens, keyboard access, or a validation error, the creation dialog must keep the form usable and re-focus its trigger on dismissal.
 - An editor can browse a starter while a different draft section is selected. Browsing must leave the draft alone, and editing the selected section must update its preview.
 
-## Task 1 — Move section ownership and preserve rendering
+## Task 1 — Verify the merged section migration
+
+The package move is present on main at `4a4eb3ff`. Use the migrated implementations in `packages/ui/src/sections` and carry the existing rendering tests forward.
 
 **Files** — Move component folders and portable helpers from `packages/assistant/src/components/sections/` to `packages/ui/src/sections/`. Add `packages/ui/src/sections/index.ts` and update the UI and assistant export maps, affected callers, ownership documentation, and both package catalogs.
 
@@ -45,7 +48,7 @@
 
 - [ ] Build a move checklist from the assistant barrel, renderer map, studio and default portfolio views, stories, and imports. Include view-only components such as About Me, Experience, Education, Summary, and CV-facing presentation where portable. Keep route, personalized home assembly, and PDF rendering with their owners.
 - [ ] Pin parity with the existing `section-library.test.tsx` and `portfolio-ui.test.tsx` suites. Add `renders a legacy section without optional fields` with a legacy object missing `sectionType` and `composition`, asserting the same title and fallback view before and after the move.
-- [ ] Move implementation, stories, and tests together. Replace upward imports with shared config or injected callbacks. Update `@shared/assistant/sections`, `@shared/assistant/sections/studio`, and `@shared/assistant/careers-section` callers where ownership changes. Leave assistant entry points only for retained compositions.
+- [x] Move implementation, stories, and tests together. Replace upward imports with shared config or injected callbacks. Update `@shared/assistant/sections`, `@shared/assistant/sections/studio`, and `@shared/assistant/careers-section` callers where ownership changes. Leave assistant entry points only for retained compositions.
 - [ ] Run `pnpm generate:catalogs`, `pnpm check:exports`, `pnpm check:architecture`, and `pnpm exec vitest run --project unit section-library portfolio-ui`. Confirm redirection to the new owner in imports and unchanged portfolio output. Commit the migration.
 
 ## Task 2 — Polish each section family
