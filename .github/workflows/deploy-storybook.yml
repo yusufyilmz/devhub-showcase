@@ -11,13 +11,15 @@ on:
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
       - ".github/workflows/deploy-storybook.yml"
+  pull_request:
+    types: [ opened, synchronize, reopened ]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: storybook-pages
+  group: ${{ github.event_name == 'pull_request' && format('storybook-preview-{0}', github.run_id) || 'storybook-pages' }}
   cancel-in-progress: false
 
 jobs:
@@ -25,8 +27,7 @@ jobs:
     name: Build Storybook
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    # Manual runs from other branches must not publish.
-    if: ${{ github.event.repository.private == false && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event.repository.private == false && (github.ref == 'refs/heads/main' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)) }}
 
     env:
       STORYBOOK_DISABLE_TELEMETRY: "1"
@@ -35,6 +36,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
 
       - name: Set up pnpm
@@ -59,10 +61,30 @@ jobs:
           test -f apps/storybook-app/storybook-static/index.html
           test -f apps/storybook-app/storybook-static/iframe.html
 
+      - name: Publish Vercel preview
+        if: github.event_name == 'pull_request'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ vars.VERCEL_STORYBOOK_PROJECT_ID }}
+        run: |
+          : "${VERCEL_TOKEN:?Set the VERCEL_TOKEN secret}"
+          : "${VERCEL_ORG_ID:?Set the VERCEL_ORG_ID secret}"
+          : "${VERCEL_PROJECT_ID:?Set the VERCEL_STORYBOOK_PROJECT_ID variable}"
+          preview=$(mktemp -d)
+          mkdir -p "$preview/.vercel/output/static"
+          cp -R apps/storybook-app/storybook-static/. "$preview/.vercel/output/static/"
+          printf '{"version":3}\n' > "$preview/.vercel/output/config.json"
+          npx --yes vercel@65.4.0 deploy --cwd "$preview" --prebuilt --environment preview --force --yes --json --token "$VERCEL_TOKEN" > "$preview/deployment.json"
+          url=$(node -e 'const { deployment } = require(process.argv[1]); if (!deployment?.url) process.exit(1); console.log(deployment.url)' "$preview/deployment.json")
+          printf '[Open Storybook preview](%s)\n' "$url" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Configure Pages
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
 
       - name: Upload site
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: apps/storybook-app/storybook-static
