@@ -36,12 +36,10 @@ export const sortableListStyles = {
   element2:
     "sortable-list m-0 grid list-none gap-xs p-0 [&>li]:flex [&>li]:min-w-0 [&>li]:items-center [&>li]:gap-xs [&>li]:rounded-lg [&>li]:border [&>li]:border-border/75 [&>li]:bg-card [&>li]:px-sm [&>li]:py-xs [&>li[data-draggable]]:touch-none [&>li[data-dragging]]:cursor-grabbing [&>li[data-dragging]]:border-ring data-[content]:gap-md data-[content]:[&>li]:relative data-[content]:[&>li[data-draggable]]:touch-auto data-[content]:[&_.sortable-handle]:touch-none data-[content]:[&>li[data-drop=before]]:border-t-primary data-[content]:[&>li[data-drop=after]]:border-b-primary",
   element3:
-    "sortable-handle [display:grid] [place-items:center] [min-width:44px] [min-height:44px] [font:inherit] [color:var(--foreground)] [background:transparent] [border:1px_solid_transparent] [border-radius:var(--radius-md)] hover:[background:color-mix(in_srgb,_var(--foreground)_6%,_transparent)] [font-size:1.4rem]",
+    "sortable-handle grid size-11 shrink-0 place-items-center rounded-md border-transparent bg-transparent text-xl text-foreground enabled:hover:bg-muted",
   element4: "sortable-number text-xs text-muted-foreground tabular-nums",
   element5: "sortable-label min-w-0 flex-1 text-sm wrap-anywhere",
-  element6:
-    "sortable-move [display:grid] [place-items:center] [min-width:44px] [min-height:44px] [font:inherit] [color:var(--foreground)] [background:transparent] [border:1px_solid_transparent] [border-radius:var(--radius-md)] [&:enabled:hover]:[background:color-mix(in_srgb,_var(--foreground)_6%,_transparent)] [cursor:pointer] disabled:[cursor:default] [opacity:0.35]",
-  element7:
-    "sortable-move [display:grid] [place-items:center] [min-width:44px] [min-height:44px] [font:inherit] [color:var(--foreground)] [background:transparent] [border:1px_solid_transparent] [border-radius:var(--radius-md)] [&:enabled:hover]:[background:color-mix(in_srgb,_var(--foreground)_6%,_transparent)] [cursor:pointer] disabled:[cursor:default] [opacity:0.35]",
   element8: "sortable-announcement sr-only",
+  moveButton:
+    "sortable-move grid size-11 shrink-0 place-items-center rounded-md border-transparent bg-transparent text-foreground enabled:hover:bg-muted disabled:opacity-40",
 } as const;

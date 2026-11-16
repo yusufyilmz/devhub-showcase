@@ -8,8 +8,8 @@ const meta = {
   args: { profile: pageProfile, username: "alex-morgan" },
   component: PortfolioLayout,
   decorators: [
-    (Story, { globals }) => (
-      <PortfolioStoryFrame fullBleed mode={globals.mode === "dark" ? "dark" : "light"}>
+    (Story) => (
+      <PortfolioStoryFrame fullBleed>
         <Story />
       </PortfolioStoryFrame>
     ),

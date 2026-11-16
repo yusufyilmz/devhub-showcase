@@ -25,7 +25,7 @@ export function CTABlock({
         className={
           landing
             ? "home-final-inner"
-            : "grid justify-items-center gap-sm rounded-xl border bg-linear-to-br from-primary/10 via-card to-card p-lg text-center sm:p-xl"
+            : "grid min-w-0 grid-cols-[minmax(0,1fr)] justify-items-center gap-md rounded-xl border border-border/75 bg-linear-to-br from-primary/10 via-card to-card p-md text-center wrap-anywhere sm:p-xl"
         }
       >
         {eyebrow && (
@@ -34,13 +34,21 @@ export function CTABlock({
           </p>
         )}
         <h2
-          className={landing ? undefined : "m-0 text-3xl tracking-tight md:text-4xl"}
+          className={
+            landing
+              ? undefined
+              : "m-0 text-balance text-2xl font-semibold leading-tight tracking-tight sm:text-3xl md:text-4xl"
+          }
           id={headingId}
         >
           {title}
         </h2>
         {description && (
-          <p className={landing ? undefined : "m-0 max-w-prose text-muted-foreground"}>
+          <p
+            className={
+              landing ? undefined : "m-0 max-w-prose leading-relaxed text-muted-foreground"
+            }
+          >
             {description}
           </p>
         )}
@@ -49,7 +57,9 @@ export function CTABlock({
           (landing ? (
             actions
           ) : (
-            <div className="flex flex-wrap justify-center gap-s">{actions}</div>
+            <div className="flex min-w-0 max-w-full flex-wrap justify-center gap-s [&_[data-slot=button]]:h-auto [&_[data-slot=button]]:min-h-10 [&_[data-slot=button]]:min-w-0 [&_[data-slot=button]]:max-w-full [&_[data-slot=button]]:whitespace-normal">
+              {actions}
+            </div>
           ))}
         {note && (
           <span className={landing ? "home-final-note" : "text-sm text-muted-foreground"}>

@@ -12,12 +12,12 @@ export function TestimonialCards({ section }: Pick<SectionProps, "section">) {
   const columns = Math.min(section.options?.columns ?? 3, section.items.length);
   return (
     <div
-      className="section-view-grid [ul&]:[display:grid] grid gap-md"
+      className="section-view-grid grid gap-md"
       style={{ "--section-columns": columns } as CSSProperties}
     >
       {section.items.map((item) => (
         <Card asChild interaction="static" key={item.id} layout="plain">
-          <figure className="m-0 flex min-w-0 flex-col gap-md p-md sm:p-lg">
+          <figure className="m-0 flex min-w-0 flex-col gap-md border-border/75 p-md sm:p-lg">
             <span
               aria-hidden="true"
               className="grid size-9 place-items-center rounded-full bg-primary/10 text-primary"
@@ -37,7 +37,7 @@ export function TestimonialCards({ section }: Pick<SectionProps, "section">) {
                 <code>{item.code}</code>
               </pre>
             )}
-            <figcaption className="mt-auto flex items-center gap-sm border-t border-border pt-sm">
+            <figcaption className="mt-auto flex items-center gap-sm border-t border-border/70 pt-sm">
               {item.imageUrl && safeLink(item.imageUrl) ? (
                 <img
                   alt=""

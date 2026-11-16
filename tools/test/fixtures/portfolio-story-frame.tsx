@@ -3,16 +3,12 @@ import "@shared/ui/sections.css";
 
 import type { CSSProperties, ReactNode } from "react";
 
-import type { ColorMode } from "@shared/config";
-
-/** Story canvas uses the same data-theme and data-brand palette as the product. */
+/** Inherit the Storybook theme so the toolbar controls the actual portfolio colors. */
 export function PortfolioStoryFrame({
   children,
-  mode = "light",
   fullBleed = false,
 }: {
   children: ReactNode;
-  mode?: ColorMode;
   fullBleed?: boolean;
 }) {
   const style = {
@@ -21,9 +17,5 @@ export function PortfolioStoryFrame({
     minWidth: 0,
     padding: fullBleed ? 0 : "24px",
   } as CSSProperties;
-  return (
-    <div data-brand="cyan" data-theme={mode} style={style}>
-      {children}
-    </div>
-  );
+  return <div style={style}>{children}</div>;
 }

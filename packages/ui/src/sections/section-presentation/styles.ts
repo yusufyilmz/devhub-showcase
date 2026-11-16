@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 
 export const presenterStyles = {
-  element1: "section-native-video [width:100%] [max-height:600px] [border-radius:12px]",
+  element1: "w-full max-h-[37.5rem] aspect-video rounded-lg bg-black object-contain",
   element2: "section-item-value [font-size:2rem] [font-weight:650]",
   element3: "section-item-period [font-size:0.85rem]",
   element5:

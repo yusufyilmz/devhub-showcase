@@ -1,10 +1,7 @@
 export const projectFormStyles = {
+  description: "grid min-w-0 gap-xs text-sm font-medium",
   element1:
-    "flex flex-col gap-4 p-6 bg-white rounded-lg shadow-lg [--notification-tone:var(--primary)]",
-  element2: "mb-4",
-  element3: "mb-4 flex flex-col gap-1 text-sm",
-  element4: "mb-4",
-  element5: "w-full",
+    "grid min-w-0 gap-md rounded-xl border border-border/75 bg-card p-md text-card-foreground sm:p-lg",
 } as const;
 
 export const projectItemStyles = {

@@ -1,4 +1,5 @@
 import "@shared/ui/foundation.css";
+import "@shared/ui/home.css";
 
 import type { Preview } from "@storybook/react-vite";
 import { useGlobals } from "storybook/preview-api";

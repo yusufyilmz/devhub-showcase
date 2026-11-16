@@ -59,11 +59,21 @@ The package move is present on main at `4a4eb3ff`. Use the migrated implementati
 
 **Interface** — Use Task 1 exports and keep all section props and renderer options compatible.
 
-- [ ] Review each checklist entry against the closest Blocks family. Use Hero and About for page intros, Features/Bento for card grids, Plans/Pricing for comparative cards, and FAQ/Newsletter/Testimonial/Contact/Blog for the matching sections. Use the closest About, Careers, Dashboard, or Social example for portfolio, work, and embed sections.
-- [ ] Apply a clear type hierarchy, restrained one-pixel token borders, consistent padding, responsive grids, and visible focus. Keep controls and headings readable at 320px and avoid clipping long titles or links. Preserve reduced-motion support and existing interactions.
-- [ ] Capture before/after Storybook views by family. Check Sand light/dark, a second palette, 320px and desktop, and keyboard states for tabs, accordions, forms, and media. Confirm distinctive layouts and variants still read clearly. Commit in reviewable family batches.
+- [x] Review each checklist entry against the closest Blocks family. Use Hero and About for page intros, Features/Bento for card grids, Plans/Pricing for comparative cards, and FAQ/Newsletter/Testimonial/Contact/Blog for the matching sections. Use the closest About, Careers, Dashboard, or Social example for portfolio, work, and embed sections.
+- [x] Apply a clear type hierarchy, restrained one-pixel token borders, consistent padding, responsive grids, and visible focus. Keep controls and headings readable at 320px and avoid clipping long titles or links. Preserve reduced-motion support and existing interactions.
+- [x] Capture before/after Storybook views by family. Check Sand light/dark, a second palette, 320px and desktop, and keyboard states for tabs, accordions, forms, and media. Confirm distinctive layouts and variants still read clearly. Commit in reviewable family batches.
 
-**Task 2 progress** — Hero, FAQ, Accordion, and Features have had an initial Storybook pass in Sand light, Sand dark at 320px, and Cyan light. The remaining section families and variant review are open.
+Review each folder in this checklist. Inspect nested components and editors in their owning story or a composition that renders them. Track each check against the corresponding section story, portfolio story, or editor story.
+
+- [x] Intro and content. `about-hero-section`, `about-me-section`, `about-section`, `heading-section`, `hero-section`, `legal-text-section`, `profile-section`, `summary-section`, `text-section`.
+- [x] Work and history. `awards-section`, `careers-section`, `cv-section`, `education-section`, `experience-section`, `project-section`, `projects-section`, `skills-section`, `stats-section`, `studies-section`, `technical-skills-section`, `timeline-section`, `work-experience-section`.
+- [x] Cards and commerce. `clients-section`, `dashboard-section`, `features-section`, `plans-section`, `pricing-section`, `property-section`, `services-section`, `shop-items-section`, `team-section`.
+- [x] Reading and navigation. `accordion-section`, `blog-page-section`, `faq-section`, `how-to-section`, `menu-section`, `posts-grid-section`, `quickstart-section`, `table-of-contents-section`, `tabs-section`.
+- [x] Contact and social proof. `calendar-link-section`, `contact-form-section`, `contact-info-section`, `cta-section`, `newsletter-section`, `referral-section`, `review-section`, `social-links-section`, `testimonials-section`.
+- [x] Media and integrations. `gallery-grid-section`, `instagram-section`, `item-media`, `map-section`, `pinterest-section`, `showcase-section`, `video-section`, `youtube-section`.
+- [x] Compositions and helpers. `collection-view`, `custom-section`, `editors`, `home-page`, `home-section`, `renderers`, `section`, `section-presentation`, `studio`.
+
+**Task 2 verification** — Covered all 66 folders through their stories, portfolio and studio compositions, or the editor selector. The initial browser sweep ran 325 story and viewport combinations. Rechecked the reported issues after fixes, then exercised all 48 registered editors at 320px and 1280px. Sand was the primary theme. Cyan was used for focused follow-up. Gallery dismissal, disclosure focus and hover, reordering, selected tabs, map opt-in, a disabled save action, and template errors were checked in local Chrome. External providers used fixtures or blocked requests. The public Once UI Blocks catalog was used when the dashboard was unavailable. Storybook built successfully with a bundle-size warning. Tasks 3–5 remain open.
 
 ## Task 3 — Build the shared Live Section Preview and wire home
 
