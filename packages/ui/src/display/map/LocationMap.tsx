@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { cn } from "cn";
 import { ArrowUpRight, MapPin } from "lucide-react";
@@ -8,6 +8,7 @@ import { ArrowUpRight, MapPin } from "lucide-react";
 import { getPortfolioCopy } from "@shared/config";
 
 import { Button } from "../../buttons/button";
+import { PassiveSectionPreview } from "../../providers/passive-section-preview";
 import { locationMapStyles } from "./styles";
 import type { LocationMapProps } from "./types";
 
@@ -26,6 +27,7 @@ export function LocationMap(props: LocationMapProps) {
 
 function MapPreview({ latitude, longitude, title, language }: LocationMapProps) {
   const text = getPortfolioCopy(language);
+  const passive = useContext(PassiveSectionPreview);
   const [status, setStatus] = useState<"idle" | "loading" | "ready">("idle");
   const url = `https://www.openstreetmap.org/export/embed.html?bbox=${Math.max(-180, longitude - 0.01)},${Math.max(-90, latitude - 0.01)},${Math.min(180, longitude + 0.01)},${Math.min(90, latitude + 0.01)}&layer=mapnik&marker=${latitude},${longitude}`;
 
@@ -52,7 +54,7 @@ function MapPreview({ latitude, longitude, title, language }: LocationMapProps) 
             <Button
               aria-busy={status === "loading"}
               className="h-auto min-h-10 min-w-0 max-w-full whitespace-normal"
-              disabled={status === "loading"}
+              disabled={passive || status === "loading"}
               onClick={() => setStatus("loading")}
               startIcon={<MapPin />}
               type="button"

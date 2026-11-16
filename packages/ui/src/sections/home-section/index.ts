@@ -1,3 +1,4 @@
+export { LibraryPicker } from "../live-section-preview/library-picker";
 export type { PageAction } from "./action";
 export { HomeCapabilitiesSection } from "./capabilities";
 export { HomeFAQSection } from "./faq";
@@ -7,7 +8,6 @@ export { HomeFooter } from "./footer";
 export { HomeHeader } from "./header";
 export { HomeHeroSection } from "./hero";
 export { HomeLibrarySection } from "./library";
-export { LibraryPicker } from "./library-picker";
 export { HomeOptionsSection } from "./options";
 export { PortfolioPreview } from "./portfolio-preview";
 export { HomePricingSection } from "./pricing";

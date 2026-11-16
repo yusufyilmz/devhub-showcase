@@ -1,14 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { type ReactNode, useId, useState } from "react";
 
 import { Button } from "../../buttons";
 import { Card } from "../../cards";
-import { libraryPickerStyles } from "./styles";
-import type { LibraryPickerOptions } from "./types";
+import { libraryPickerStyles } from "./library-picker-styles";
+
+export type LibraryPickerOptions = {
+  items: { id: string; title: string; description: string; content: ReactNode }[];
+};
 
 export function LibraryPicker({ items }: LibraryPickerOptions) {
   const [selected, setSelected] = useState(items[0]?.id);
+  const panelId = useId();
+  const active = items.find((item) => item.id === selected) ?? items[0];
   return (
     <Card
       className={libraryPickerStyles.element1}
@@ -20,9 +25,9 @@ export function LibraryPicker({ items }: LibraryPickerOptions) {
         <legend className={libraryPickerStyles.element3}>Section examples</legend>
         {items.map((item, index) => (
           <Button
-            aria-controls={`home-section-${item.id}`}
+            aria-controls={panelId}
             aria-label={item.title}
-            aria-pressed={selected === item.id}
+            aria-pressed={active?.id === item.id}
             key={item.id}
             onClick={() => setSelected(item.id)}
             type="button"
@@ -37,13 +42,11 @@ export function LibraryPicker({ items }: LibraryPickerOptions) {
           </Button>
         ))}
       </fieldset>
-      {items.map((item) => (
+      {active && (
         <section
-          aria-label={`${item.title} section example`}
+          aria-label={`${active.title} section example`}
           className={libraryPickerStyles.element5}
-          hidden={selected !== item.id}
-          id={`home-section-${item.id}`}
-          key={item.id}
+          id={panelId}
         >
           <div className={libraryPickerStyles.element6}>
             <span>
@@ -53,9 +56,9 @@ export function LibraryPicker({ items }: LibraryPickerOptions) {
             </span>
             <span>LIVE SECTION PREVIEW</span>
           </div>
-          <div className={libraryPickerStyles.element7}>{item.content}</div>
+          <div className={libraryPickerStyles.element7}>{active.content}</div>
         </section>
-      ))}
+      )}
       <p className={libraryPickerStyles.element8}>
         Fictional content. These are the same section renderers used in portfolios.
       </p>

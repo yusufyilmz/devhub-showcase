@@ -6,6 +6,7 @@ import { safeLink } from "@shared/utils";
 import { Button } from "../../buttons";
 import { WorkMedia } from "../../display";
 import { CollectionView } from "../collection-view/CollectionView";
+import { isSectionImage } from "../item-media/section-image";
 import type { SectionProps } from "../types";
 import { HeroBlock } from "./HeroBlock";
 
@@ -27,7 +28,7 @@ export function HeroSection({ section, language }: SectionProps) {
       id={section.id}
       title={section.title}
       visual={
-        mediaUrl && safeLink(mediaUrl) ? (
+        isSectionImage(mediaUrl) ? (
           <WorkMedia imageUrl={mediaUrl} title={section.title} />
         ) : undefined
       }

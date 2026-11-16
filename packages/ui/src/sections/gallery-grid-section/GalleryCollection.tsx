@@ -4,14 +4,13 @@ import { useState } from "react";
 
 import { Button } from "../../buttons";
 import { GalleryLightbox } from "../../overlays/dialog";
+import { isSectionImage } from "../item-media/section-image";
 import { galleryCollectionStyles } from "./styles";
 import type { GalleryCollectionOptions } from "./types";
 
 export function GalleryCollection({ section }: GalleryCollectionOptions) {
   const [index, setIndex] = useState<number | null>(null);
-  const items = section.items.filter(
-    (item) => item.imageUrl && /^https?:\/\//i.test(item.imageUrl),
-  );
+  const items = section.items.filter((item) => isSectionImage(item.imageUrl));
   const image = (item: (typeof items)[number]) => (
     <img alt={item.title} loading="lazy" src={item.imageUrl} />
   );

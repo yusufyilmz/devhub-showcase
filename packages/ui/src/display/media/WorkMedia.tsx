@@ -1,11 +1,12 @@
 "use client";
 import "./work-media.css";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { getSocialWork } from "@shared/config";
 
 import { Button } from "../../buttons/button";
+import { PassiveSectionPreview } from "../../providers/passive-section-preview";
 import { workMediaStyles } from "./styles";
 import type { VideoPlayerOptions, WorkMediaOptions } from "./types";
 
@@ -66,6 +67,7 @@ function VideoPlayer({
   loadLabel = "Load YouTube video",
   unloadLabel = "Unload video",
 }: VideoPlayerOptions) {
+  const passive = useContext(PassiveSectionPreview);
   const [loaded, setLoaded] = useState(false);
   const [ready, setReady] = useState(false);
   const status = ready
@@ -104,7 +106,7 @@ function VideoPlayer({
           <p className="media-notice">
             Loading this video connects to YouTube. You can open the original instead.
           </p>
-          <Button onClick={() => setLoaded(true)} type="button">
+          <Button disabled={passive} onClick={() => setLoaded(true)} type="button">
             {loadLabel}: {title}
           </Button>
         </>

@@ -89,6 +89,13 @@ export {
 export { HowToSection, HowToSectionEditor } from "./how-to-section";
 export { InstagramSection, InstagramSectionEditor } from "./instagram-section";
 export { LegalTextSection, LegalTextSectionEditor } from "./legal-text-section";
+export {
+  LiveSectionPreview,
+  type LiveSectionPreviewProps,
+} from "./live-section-preview/live-section-preview";
+export { type SectionExampleId, sectionExamples } from "./live-section-preview/preview-examples";
+export { SectionCatalog } from "./live-section-preview/section-catalog";
+export { createSectionExample } from "./live-section-preview/section-example";
 export { MapSection, MapSectionEditor } from "./map-section";
 export { MenuSection, MenuSectionEditor } from "./menu-section";
 export {

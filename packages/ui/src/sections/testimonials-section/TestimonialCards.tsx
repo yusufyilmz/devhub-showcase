@@ -5,6 +5,7 @@ import { Quote } from "lucide-react";
 import { safeLink } from "@shared/utils";
 
 import { Card } from "../../cards";
+import { isSectionImage } from "../item-media/section-image";
 import type { SectionProps } from "../types";
 
 export function TestimonialCards({ section }: Pick<SectionProps, "section">) {
@@ -38,7 +39,7 @@ export function TestimonialCards({ section }: Pick<SectionProps, "section">) {
               </pre>
             )}
             <figcaption className="mt-auto flex items-center gap-sm border-t border-border/70 pt-sm">
-              {item.imageUrl && safeLink(item.imageUrl) ? (
+              {isSectionImage(item.imageUrl) ? (
                 <img
                   alt=""
                   className="size-9 shrink-0 rounded-full object-cover"

@@ -6,7 +6,7 @@ import { SectionCatalog } from "./section-catalog";
 function Example({ width = 1120 }: { width?: number }) {
   return (
     <div style={{ maxWidth: width, width: "100%" }}>
-      <SectionCatalog />
+      <SectionCatalog assetUrl={(file) => new URL(`./examples/${file}.svg`, location.href).href} />
     </div>
   );
 }
