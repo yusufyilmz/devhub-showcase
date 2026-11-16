@@ -36,6 +36,7 @@ No public package export map or main entry is declared.
 | `@shared/lib`               | `workspace:*`    | dependencies    |
 | `@shared/notifications`     | `workspace:*`    | dependencies    |
 | `@shared/runtime`           | `workspace:*`    | dependencies    |
+| `@shared/trello`            | `workspace:*`    | dependencies    |
 | `@shared/ui`                | `workspace:*`    | dependencies    |
 | `@shared/utils`             | `workspace:*`    | dependencies    |
 | `@supabase/supabase-js`     | `catalog:`       | dependencies    |

@@ -14,6 +14,7 @@ const nextConfig = {
     "@shared/runtime",
     "@shared/utils",
     "@shared/billing",
+    "@shared/trello",
   ],
   webpack(config) {
     // Use the compiler entry without Handlebars' Node require.extensions hook.

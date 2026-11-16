@@ -28,6 +28,7 @@
     "@shared/lib": "workspace:*",
     "@shared/notifications": "workspace:*",
     "@shared/runtime": "workspace:*",
+    "@shared/trello": "workspace:*",
     "@shared/ui": "workspace:*",
     "@shared/utils": "workspace:*",
     "@supabase/supabase-js": "catalog:",

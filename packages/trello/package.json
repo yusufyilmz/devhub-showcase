@@ -1,6 +1,12 @@
 {
   "name": "@shared/trello",
   "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./board-creation": "./src/board-creation.ts",
+    "./pages": "./src/components/pages/index.ts",
+    "./service": "./src/services/TrelloService.ts"
+  },
   "main": "src/index.ts",
   "scripts": {
     "build": "tsdown",

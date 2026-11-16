@@ -1,6 +1,6 @@
 "use client";
 
-import { type CSSProperties, type FC, type ReactNode, useEffect, useState } from "react";
+import { type CSSProperties, type FC, type ReactNode, useEffect, useRef, useState } from "react";
 
 import { cn } from "cn";
 import { shallow } from "zustand/shallow";
@@ -20,6 +20,7 @@ import { TrelloErrorBoundary } from "../layout/TrelloErrorBoundary";
 interface TrelloBoardListPageProps {
   className?: string;
   initialBoardId?: string;
+  onCreateBoard?: () => void;
   style?: CSSProperties;
 }
 
@@ -43,7 +44,7 @@ function BoardPlaceholder({ primary, secondary }: { primary: string; secondary?:
   return (
     <FlexCol
       align="center"
-      className="h-full w-full justify-center bg-[#f4f5f7] p-6 text-center"
+      className="h-full w-full justify-center bg-muted/30 p-6 text-center"
       justify="center"
     >
       <Typography color="muted" variant="large">
@@ -63,11 +64,12 @@ function BoardPlaceholder({ primary, secondary }: { primary: string; secondary?:
  */
 export const TrelloBoardListPage: FC<TrelloBoardListPageProps> = ({
   initialBoardId,
+  onCreateBoard,
   className = "",
   style = {},
 }) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
+  const appliedInitialBoard = useRef<string | undefined>(undefined);
 
   const { isReady: storeReady, error: storeError } = useTrelloStoreReady();
 
@@ -130,13 +132,16 @@ export const TrelloBoardListPage: FC<TrelloBoardListPageProps> = ({
     }
 
     if (initialBoardId) {
+      if (appliedInitialBoard.current === initialBoardId) return;
       const initialBoard = boards.find((board) => board.id === initialBoardId);
       if (initialBoard) {
-        void trelloActions.setSelectedBoard(initialBoard);
+        appliedInitialBoard.current = initialBoardId;
+        trelloActions.setSelectedBoard(initialBoard);
       }
       return;
     }
 
+    appliedInitialBoard.current = undefined;
     if (boards.length === 1 && !selectedBoard) {
       trelloActions.setSelectedBoard(boards[0] ?? null);
     }
@@ -145,7 +150,7 @@ export const TrelloBoardListPage: FC<TrelloBoardListPageProps> = ({
   const pageStyle: CSSProperties = {
     display: "flex",
     flexDirection: "row",
-    height: "calc(100vh - 170px)",
+    height: "calc(100dvh - 170px)",
     overflow: "hidden",
     width: "100%",
     ...style,
@@ -197,16 +202,6 @@ export const TrelloBoardListPage: FC<TrelloBoardListPageProps> = ({
     );
   }
 
-  if (!hasBoards && !loading.boards) {
-    return (
-      <PageMessage className={className} style={style}>
-        <Typography color="muted" variant="large">
-          No boards found. Create your first board to get started.
-        </Typography>
-      </PageMessage>
-    );
-  }
-
   return (
     <TrelloErrorBoundary>
       <div className={cn("trello-board-page", className)} style={pageStyle}>
@@ -214,10 +209,8 @@ export const TrelloBoardListPage: FC<TrelloBoardListPageProps> = ({
           <TrelloBoardSidebar
             collapsed={sidebarCollapsed}
             onBoardSelect={(board: TrelloBoardType) => trelloActions.setSelectedBoard(board)}
-            onCreateBoard={() => {
-              logger("TrelloBoardListPage").info("Create board clicked");
-            }}
-            onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+            onCreateBoard={onCreateBoard}
+            onToggleCollapse={() => setSidebarCollapsed((collapsed) => !collapsed)}
           />
         </TrelloErrorBoundary>
 
@@ -227,32 +220,19 @@ export const TrelloBoardListPage: FC<TrelloBoardListPageProps> = ({
               <TrelloBoard
                 allowDragDrop
                 board={selectedBoard}
-                onBoardUpdate={(updatedBoard) => {
-                  logger("TrelloBoardListPage").info("Board updated:", updatedBoard);
-                }}
-                onCardClick={(cardId) => {
-                  setSelectedCardId(cardId);
-                  logger("TrelloBoardListPage").info("Card clicked:", { cardId });
-                }}
                 showActions
                 style={boardSurfaceStyle(selectedBoard)}
               />
             </TrelloErrorBoundary>
           ) : (
             <BoardPlaceholder
-              primary="Select a board from the sidebar to get started"
-              secondary="Choose from your available Trello boards"
+              primary={hasBoards ? "Select a board" : "No open boards"}
+              secondary={
+                hasBoards ? "Choose a board from the sidebar." : "Create a board to get started."
+              }
             />
           )}
         </div>
-
-        {selectedCardId ? (
-          <div className="fixed bottom-5 right-5 rounded-md bg-[#0079bf] px-4 py-2 text-xs text-white shadow-md">
-            <Typography as="span" className="text-white" variant="caption">
-              Selected card: {selectedCardId}
-            </Typography>
-          </div>
-        ) : null}
       </div>
     </TrelloErrorBoundary>
   );

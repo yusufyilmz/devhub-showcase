@@ -4,6 +4,7 @@ import { requirePortfolioAdmin } from "@/features/management/managed-portfolios"
 
 import { getHomeAction } from "./_home-links";
 import { ProfileMenu } from "./_profile-menu";
+import { trelloConfig } from "./admin/trello/_config";
 import { jobAlertConfig } from "./api/jobs/_config";
 
 export async function getAccountMenu({
@@ -18,6 +19,7 @@ export async function getAccountMenu({
   const admin = await requirePortfolioAdmin().catch(() => null);
   return (
     <ProfileMenu
+      canAccessTrello={Boolean(admin && trelloConfig())}
       canImportLinkedInAlerts={Boolean(jobAlertConfig())}
       canManagePortfolios={Boolean(admin)}
       initials={session.username?.slice(0, 2).toUpperCase() ?? "U"}

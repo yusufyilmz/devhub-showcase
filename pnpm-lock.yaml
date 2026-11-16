@@ -388,6 +388,9 @@ importers:
       '@shared/runtime':
         specifier: workspace:*
         version: link:../../packages/runtime
+      '@shared/trello':
+        specifier: workspace:*
+        version: link:../../packages/trello
       '@shared/ui':
         specifier: workspace:*
         version: link:../../packages/ui
