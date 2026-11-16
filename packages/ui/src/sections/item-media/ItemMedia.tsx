@@ -8,6 +8,7 @@ import type { ItemMediaOptions } from "../section-presentation/types";
 export function ItemMedia({ item, video, language }: ItemMediaOptions) {
   const text = getPortfolioCopy(language);
   const work = getSocialWork(item.url);
+  if (!item.imageUrl && !work && !video) return null;
   return video && safeLink(item.url) && /\.(mp4|webm|ogg)(\?|$)/i.test(item.url) ? (
     <video
       className={presenterStyles.element1}

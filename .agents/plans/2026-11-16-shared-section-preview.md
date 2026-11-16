@@ -51,7 +51,9 @@ The package move is present on main at `4a4eb3ff`. Use the migrated implementati
 - [x] Move implementation, stories, and tests together. Replace upward imports with shared config or injected callbacks. Update `@shared/assistant/sections`, `@shared/assistant/sections/studio`, and `@shared/assistant/careers-section` callers where ownership changes. Leave assistant entry points only for retained compositions.
 - [ ] Run `pnpm generate:catalogs`, `pnpm check:exports`, `pnpm check:architecture`, and `pnpm exec vitest run --project unit section-library portfolio-ui`. Confirm redirection to the new owner in imports and unchanged portfolio output. Commit the migration.
 
-## Task 2 — Polish each section family
+## Task 2 — Polish every section component
+
+**Primary visual reference** — [Once UI Blocks dashboard](https://once-ui.com/dashboard/blocks). Compare every component under `packages/ui/src/sections` with the closest block. If the dashboard redirects, use the [public Once UI Blocks catalog](https://docs.once-ui.com/blocks/quickStart) and record the fallback.
 
 **Files** — Individual implementations, styles, and stories in `packages/ui/src/sections/`.
 
@@ -60,6 +62,8 @@ The package move is present on main at `4a4eb3ff`. Use the migrated implementati
 - [ ] Review each checklist entry against the closest Blocks family. Use Hero and About for page intros, Features/Bento for card grids, Plans/Pricing for comparative cards, and FAQ/Newsletter/Testimonial/Contact/Blog for the matching sections. Use the closest About, Careers, Dashboard, or Social example for portfolio, work, and embed sections.
 - [ ] Apply a clear type hierarchy, restrained one-pixel token borders, consistent padding, responsive grids, and visible focus. Keep controls and headings readable at 320px and avoid clipping long titles or links. Preserve reduced-motion support and existing interactions.
 - [ ] Capture before/after Storybook views by family. Check Sand light/dark, a second palette, 320px and desktop, and keyboard states for tabs, accordions, forms, and media. Confirm distinctive layouts and variants still read clearly. Commit in reviewable family batches.
+
+**Task 2 progress** — Hero, FAQ, Accordion, and Features have had an initial Storybook pass in Sand light, Sand dark at 320px, and Cyan light. The remaining section families and variant review are open.
 
 ## Task 3 — Build the shared Live Section Preview and wire home
 

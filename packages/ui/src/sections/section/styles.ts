@@ -5,7 +5,8 @@ export const sectionStyles = {
 } as const;
 
 export const sectionElementsStyles = {
-  element1: "section-view-accordion",
+  element1:
+    "section-view-accordion grid min-w-0 gap-s [&_summary]:flex [&_summary]:cursor-pointer [&_summary]:list-none [&_summary]:items-center [&_summary]:justify-between [&_summary]:gap-s [&_summary]:rounded-lg [&_summary]:px-md [&_summary]:py-sm [&_summary]:text-start [&_summary]:text-sm [&_summary]:font-semibold [&_summary]:wrap-anywhere [&_summary:hover]:bg-primary/8 [&_summary:focus-visible]:-outline-offset-2 [&_summary:focus-visible]:outline-2 [&_summary:focus-visible]:outline-ring [&_summary_svg]:shrink-0 [&_summary_svg]:text-muted-foreground [&_details[open]_summary_svg]:rotate-180 [&_details>div]:border-t [&_details>div]:border-border/70 [&_details>div]:px-md [&_details>div]:py-sm",
   element2: "section-view-tabs",
   element3: "section-view-carousel",
   element4: "section-view-controls",
