@@ -36,6 +36,18 @@
   mask-image: radial-gradient(ellipse at 77% 42%, #000, transparent 70%);
 }
 
-[data-slot="background"][data-effect="aurora"]::before {
-  animation: background-wash-in 1.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+@media (prefers-reduced-motion: no-preference) {
+  [data-slot="background"][data-effect="aurora"]::before {
+    animation: background-wash-in 1.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+@keyframes background-wiggle {
+  25% {
+    rotate: -2deg;
+  }
+
+  75% {
+    rotate: 2deg;
+  }
 }
