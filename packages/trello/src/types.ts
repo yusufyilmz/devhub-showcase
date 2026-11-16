@@ -357,6 +357,7 @@ export interface CreateBoardOptions {
   defaultLabels?: boolean;
   defaultLists?: boolean;
   desc?: string;
+  idOrganization?: string;
   keepFromSource?: string;
   name: string;
   powerUps?: string;

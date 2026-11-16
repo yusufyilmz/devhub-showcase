@@ -28,6 +28,7 @@ import type { TrelloServiceConfig } from "../types";
 
 const MIN_REQUEST_DELAY = 500;
 const MAX_REQUEST_DELAY = 7000;
+const MAX_RATE_LIMIT_RETRIES = 2;
 
 const logger = createComponentLogger("TrelloClient");
 
@@ -60,10 +61,13 @@ export class TrelloClient {
     } = {},
   ): Promise<T> {
     return new Promise((resolve, reject) => {
+      let retriesRemaining = MAX_RATE_LIMIT_RETRIES;
       const executeRequest = () => {
         this.executeRequest<T>(method, path, options)
           .then((result) => {
-            this.handleRequestComplete(result, resolve, reject, executeRequest);
+            const retry = retriesRemaining > 0 ? executeRequest : undefined;
+            retriesRemaining -= 1;
+            this.handleRequestComplete(result, resolve, reject, retry);
           })
           .catch((error) => {
             reject(error);
@@ -89,7 +93,6 @@ export class TrelloClient {
     const query = { ...this.createQuery(), ...options.query };
     const url = new URL(`${TRELLO_CONFIG.BASE_URL}${path}`);
 
-    logger.info("url", { url: url.toString() }); // Add query parameters
     Object.entries(query).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
         url.searchParams.append(key, String(value));
@@ -97,11 +100,13 @@ export class TrelloClient {
     });
 
     const requestOptions: RequestInit = {
+      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
         ...options.headers,
       },
       method,
+      signal: AbortSignal.timeout(10_000),
     };
 
     if (options.data && (method === "POST" || method === "PUT")) {
@@ -116,7 +121,6 @@ export class TrelloClient {
       path,
       query: this.sanitizeQuery(query),
       timestamp: new Date().toISOString(),
-      url: url.toString(),
     });
 
     try {
@@ -167,17 +171,11 @@ export class TrelloClient {
     } catch (error) {
       const duration = Date.now() - startTime;
 
-      // Log error details
-      logger.error(
-        `❌ [${requestId}] Trello API Request Failed`,
-        error instanceof Error ? error : undefined,
-        {
-          duration: `${duration}ms`,
-          method,
-          path,
-          timestamp: new Date().toISOString(),
-        },
-      );
+      logger.error(`❌ [${requestId}] Trello API Request Failed`, {
+        duration: `${duration}ms`,
+        method,
+        path,
+      });
 
       if (error instanceof Error) {
         throw error;
@@ -190,12 +188,12 @@ export class TrelloClient {
     result: RequestResult<T>,
     resolve: (value: T) => void,
     reject: (reason: any) => void,
-    retryFn: () => void,
+    retryFn?: () => void,
   ): void {
     const { data, response } = result;
 
     // Handle rate limiting (HTTP 429) - retry with random delay
-    if (response.status === 429) {
+    if (response.status === 429 && retryFn) {
       const delay =
         Math.floor(Math.random() * (MAX_REQUEST_DELAY - MIN_REQUEST_DELAY)) + MIN_REQUEST_DELAY;
 
@@ -213,7 +211,7 @@ export class TrelloClient {
 
     // Handle HTTP errors (400+)
     if (response.status >= 400) {
-      const error = new Error(typeof data === "string" ? data : `HTTP ${response.status}`);
+      const error = new Error(`HTTP ${response.status}`);
       (error as any).response = response;
       reject(error);
       return;
@@ -231,10 +229,10 @@ export class TrelloClient {
 
     // Hide sensitive information
     if (sanitized.key) {
-      sanitized.key = `${sanitized.key.substring(0, 8)}...`;
+      sanitized.key = "[redacted]";
     }
     if (sanitized.token) {
-      sanitized.token = `${sanitized.token.substring(0, 12)}...`;
+      sanitized.token = "[redacted]";
     }
 
     return sanitized;
@@ -244,9 +242,8 @@ export class TrelloClient {
    * Sanitize response body for logging
    */
   private sanitizeResponseBody(data: any, status: number, contentType?: string): any {
-    // For error responses, show full error message
     if (status >= 400) {
-      return data;
+      return undefined;
     }
 
     // For large responses, show summary

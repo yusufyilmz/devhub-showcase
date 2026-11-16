@@ -1,7 +1,7 @@
 import { urls } from "@shared/config/urls";
 import { createComponentLogger } from "@shared/utils/client-logger";
 
-import { ORGANIZATION_ID, TRELLO_ERRORS, TRELLO_SUCCESS_MESSAGES } from "../constants";
+import { TRELLO_ERRORS, TRELLO_SUCCESS_MESSAGES } from "../constants";
 // Trello Board Operations
 import type {
   CreateBoardOptions,
@@ -14,32 +14,16 @@ import type { TrelloClient } from "./TrelloClient";
 
 const logger = createComponentLogger("TrelloBoardService");
 
-const MEMBER_ID = "yusufyilmaz92";
-
 export class TrelloBoardService {
   constructor(private client: TrelloClient) {}
 
   // Get all boards for the authenticated user
   async getBoards(): Promise<TrelloApiResponse<TrelloBoard[]>> {
-    logger.info("🔍 TrelloBoardService.getBoards() - Starting request", {
-      endpoint: `/members/${MEMBER_ID}/boards`,
-      memberId: MEMBER_ID,
-      timestamp: new Date().toISOString(),
-    });
-
     try {
-      const boards = await this.client.makeRequest<TrelloBoard[]>(
-        "GET",
-        urls.trello.memberBoards(MEMBER_ID),
-      );
-
-      const first = Array.isArray(boards) && boards.length > 0 ? boards[0] : undefined;
-      logger.info("✅ TrelloBoardService.getBoards() - Success", {
-        boardCount: Array.isArray(boards) ? boards.length : 0,
-        dataType: Array.isArray(boards) ? "array" : typeof boards,
-        firstBoardId: first?.id ?? null,
-        firstBoardName: first?.name ?? null,
+      const boards = await this.client.makeRequest<TrelloBoard[]>("GET", urls.trello.myBoards(), {
+        query: { filter: "open" },
       });
+      if (!Array.isArray(boards)) throw new Error("Unexpected Trello board list");
 
       return {
         data: boards,
@@ -47,13 +31,7 @@ export class TrelloBoardService {
         success: true,
       };
     } catch (error) {
-      logger.error("❌ TrelloBoardService.getBoards() - Error", {
-        endpoint: `/members/${MEMBER_ID}/boards`,
-        error: error instanceof Error ? error.message : String(error),
-        memberId: MEMBER_ID,
-        stack: error instanceof Error ? error.stack : undefined,
-      });
-
+      logger.warn("Could not list Trello boards");
       return this.handleError(error, TRELLO_ERRORS.BOARD_NOT_FOUND);
     }
   }
@@ -85,14 +63,15 @@ export class TrelloBoardService {
     try {
       const board = await this.client.makeRequest<TrelloBoard>("POST", urls.trello.boards(), {
         query: {
-          defaultLabels: options.defaultLabels || true,
-          defaultLists: options.defaultLists || true,
-          desc: options.desc || "",
-          idOrganization: ORGANIZATION_ID,
+          defaultLabels: options.defaultLabels ?? true,
+          defaultLists: options.defaultLists ?? true,
+          desc: options.desc,
+          idOrganization: options.idOrganization,
           name: options.name,
-          prefs_permissionLevel: options.prefs_permissionLevel || "private",
+          prefs_permissionLevel: options.prefs_permissionLevel ?? "private",
         },
       });
+      if (!board?.id) throw new Error("Unexpected Trello board response");
 
       return {
         data: board,

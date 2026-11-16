@@ -135,7 +135,7 @@ export function SectionCatalog({
                 <div className="section-catalog-card-copy">
                   <span className="section-catalog-card-category">{category}</span>
                   <h4>
-                    <button
+                    <Button
                       aria-controls={selected === exampleId ? `${id}-preview` : undefined}
                       aria-pressed={selected === exampleId}
                       className="section-catalog-card-button"
@@ -145,9 +145,10 @@ export function SectionCatalog({
                         if (selected === exampleId) preview.current?.focus();
                       }}
                       type="button"
+                      variant="unstyled"
                     >
                       {name}
-                    </button>
+                    </Button>
                   </h4>
                   <p>{description}</p>
                 </div>

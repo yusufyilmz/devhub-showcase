@@ -98,6 +98,12 @@ Authorized administrators can create private temporary portfolios, import valida
 
 Transfer requires a verified recipient and revision checks. An untouched private starter can be preserved before assignment; an edited/published recipient portfolio blocks transfer. Main cannot become managed, and the manager loses access after transfer. No invitation email is sent. See [managed portfolios](dev-studio/managed-portfolios.md).
 
+## Trello boards
+
+Platform administrators can open **Trello boards** from the Studio profile menu, view open boards from the connected Trello account, and create a private board with starter lists or an empty layout. Open a board in Trello to manage members, lists, and cards.
+
+Set `TRELLO_API_KEY` and a Trello token with read and write access in `TRELLO_API_TOKEN` on the server. Set `TRELLO_WORKSPACE_ID` to choose the destination workspace. When omitted, Trello chooses the default destination for the connected account.
+
 ## AI knowledge and chat
 
 The AI profile tab inspects knowledge derived from the saved revision, not unsaved drafts. Public knowledge contains published, visible content; owner knowledge contains the full saved document and stays behind authorized reads. Inspecting it makes no provider request.

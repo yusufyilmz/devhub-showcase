@@ -88,6 +88,7 @@ const server = {
   SUPABASE_SERVICE_ROLE_KEY: text,
   TRELLO_API_KEY: text,
   TRELLO_API_TOKEN: text,
+  TRELLO_WORKSPACE_ID: text,
   VERCEL_ENV: text,
   WEB_PUSH_PRIVATE_KEY: text,
   WEB_PUSH_PUBLIC_KEY: text,

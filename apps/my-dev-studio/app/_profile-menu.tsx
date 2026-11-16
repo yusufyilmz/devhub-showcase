@@ -24,6 +24,7 @@ import {
   ChatIcon,
   ClipboardListIcon,
   CreditCardIcon,
+  DashboardIcon,
   EditIcon,
   FoldersIcon,
   LinkedInIcon,
@@ -39,6 +40,7 @@ const jobLinks = [
 ];
 
 export function ProfileMenu({
+  canAccessTrello,
   canImportLinkedInAlerts,
   canManagePortfolios,
   initials,
@@ -46,6 +48,7 @@ export function ProfileMenu({
   studioHref,
   username,
 }: {
+  canAccessTrello: boolean;
   canImportLinkedInAlerts: boolean;
   canManagePortfolios: boolean;
   initials: string;
@@ -129,6 +132,14 @@ export function ProfileMenu({
                 <a href="/admin/portfolios">
                   <FoldersIcon aria-hidden="true" />
                   Manage portfolios
+                </a>
+              </DropdownMenuItem>
+            )}
+            {canAccessTrello && (
+              <DropdownMenuItem asChild>
+                <a href="/admin/trello">
+                  <DashboardIcon aria-hidden="true" />
+                  Trello boards
                 </a>
               </DropdownMenuItem>
             )}
