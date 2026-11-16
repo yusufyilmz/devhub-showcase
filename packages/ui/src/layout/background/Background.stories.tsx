@@ -31,7 +31,7 @@ const BackgroundDemo: React.FC = () => {
             <Typography variant="body2">Default background variant</Typography>
           </Background>
 
-          <Background className="p-4 rounded-lg" variant="default">
+          <Background className="p-4 rounded-lg" variant="primary">
             <Typography variant="h6">Primary</Typography>
             <Typography variant="body2">Primary background variant</Typography>
           </Background>
@@ -428,11 +428,33 @@ export const WideCanvas: StoryObj<typeof meta> = {
 
 export const Aurora: Story = {
   render: () => (
-    <Background className="grid min-h-64 place-items-center p-8" effect="aurora">
+    <Background
+      className="grid min-h-64 place-items-center border border-border/75 p-lg"
+      effect="aurora"
+    >
       <div className="text-center">
         <h2 className="font-semibold text-3xl">Your work, in focus</h2>
         <p className="mt-2 text-muted-foreground">A soft accent wash with a dotted texture.</p>
       </div>
     </Background>
+  ),
+};
+
+export const SurfaceDetails: Story = {
+  render: () => (
+    <div className="grid max-w-lg gap-md p-lg">
+      <Background
+        animation="wiggle"
+        className="border border-border/75 p-md"
+        pattern="dots"
+        shadow="sm"
+        variant="card"
+      >
+        Patterned surface
+      </Background>
+      <Background className="p-md" gradient="secondary" variant="secondary">
+        Secondary gradient
+      </Background>
+    </div>
   ),
 };

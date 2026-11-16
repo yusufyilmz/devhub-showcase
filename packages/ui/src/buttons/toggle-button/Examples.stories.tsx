@@ -8,7 +8,7 @@ function Example({ width = 560 }: { width?: number }) {
   const [selected, setSelected] = useState("Portfolio");
   return (
     <div style={{ maxWidth: width, padding: 24, width: "100%" }}>
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-xs">
         {["Portfolio", "CV"].map((label) => (
           <ToggleButton
             key={label}
