@@ -51,6 +51,15 @@ test("an administrator creates, edits, publishes, hides and transfers an importe
   await signIn(context, `99999999-9999-4999-8999-99999999999${n}`, `manager${n}@example.test`);
   await page.goto("/admin/portfolios");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Manage portfolios");
+  const launch = page.getByRole("button", { name: "Create a portfolio" });
+  await launch.click();
+  const dialog = page.getByRole("dialog", { name: "New managed portfolio" });
+  await dialog.getByRole("combobox", { exact: true, name: "Section example" }).selectOption("faq");
+  await expect(dialog.getByRole("region", { name: "FAQ section example" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await expect(launch).toBeFocused();
+  await launch.click();
   await page.getByLabel("Import portfolio JSON").setInputFiles({
     buffer: Buffer.from(
       JSON.stringify({

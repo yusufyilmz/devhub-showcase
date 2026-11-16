@@ -1,6 +1,39 @@
 import { expect, test } from "@playwright/test";
 
 import { authorableSectionTypes } from "@shared/config";
+import { storage } from "@shared/config/storage";
+
+test("homepage replaces the example without mounting the previous section", async ({
+  page,
+}, info) => {
+  const mode = info.project.name.startsWith("mobile") ? "dark" : "light";
+  await page.addInitScript(({ key, value }) => localStorage.setItem(key, value), {
+    key: storage.theme,
+    value: JSON.stringify({
+      state: { activeMode: mode, themePreferences: {} },
+      version: storage.version,
+    }),
+  });
+  await page.goto("/");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", mode);
+  const library = page.getByRole("region", { name: "Browse sections" });
+  const selector = library.getByRole("combobox", { exact: true, name: "Section example" });
+  await expect(selector.locator("option")).toHaveCount(authorableSectionTypes.length + 9);
+  await selector.focus();
+  await expect(selector).toBeFocused();
+  await selector.selectOption("gallery-grid");
+  const gallery = library.getByRole("region", { name: "Gallery Grid section example" });
+  await expect(gallery).toBeVisible();
+  await gallery.getByRole("button", { name: "View Atlas interface" }).click();
+  const lightbox = page.getByRole("dialog", { name: "Atlas interface" });
+  await expect(lightbox).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(lightbox).toBeHidden();
+  await expect(library.getByRole("region", { name: "Services section example" })).toHaveCount(0);
+  await page.getByRole("searchbox", { name: "Find a section" }).fill("youtube");
+  await expect(library.getByRole("button", { name: /load youtube video/i })).toBeDisabled();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
+});
 
 for (const type of ["engineer", "designer"]) {
   test(`${type} renders the complete section catalog and functional supporting widgets`, async ({
@@ -33,7 +66,9 @@ for (const type of ["engineer", "designer"]) {
         .getByRole("button", { name: "Open email app" }),
     ).toBeVisible();
     await expect(
-      page.locator('[data-section-type="newsletter"]').getByRole("link", { name: "Subscribe ↗" }),
+      page
+        .locator('[data-section-type="newsletter"]')
+        .getByRole("link", { exact: true, name: "Subscribe" }),
     ).toHaveAttribute("href", "https://example.test/subscribe");
     await expect(page.locator('[data-section-type="table-of-contents"] a').first()).toHaveAttribute(
       "href",

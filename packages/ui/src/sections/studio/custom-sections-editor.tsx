@@ -18,7 +18,7 @@ import {
 import { Button } from "../../buttons";
 import { Field, Input, Label, SelectField } from "../../forms";
 import { EditSection } from "../editors/editors";
-import { CustomPortfolioSection } from "./custom-portfolio-section";
+import { LiveSectionPreview } from "../live-section-preview/live-section-preview";
 import { customSectionsEditorStyles } from "./styles";
 import type { CustomSectionsEditorOptions, SectionEditorOptions } from "./types";
 
@@ -58,6 +58,7 @@ export function CustomSectionsEditor({
   focused = false,
 }: CustomSectionsEditorOptions) {
   const [starter, setStarter] = useState<AuthorableSectionType>("custom");
+  const [starterPreviewOpen, setStarterPreviewOpen] = useState(false);
   const sections = profile.customSections ?? [];
   const [selection, setSelection] = useState<string>();
   const selected = sections.find(({ id }) => id === selection) ?? sections[0];
@@ -113,6 +114,13 @@ export function CustomSectionsEditor({
       >
         Add custom section
       </Button>
+      <details
+        className="min-w-0 space-y-s"
+        onToggle={(event) => setStarterPreviewOpen(event.currentTarget.open)}
+      >
+        <summary className="cursor-pointer text-sm font-medium">Preview section starter</summary>
+        {starterPreviewOpen && <LiveSectionPreview exampleId={starter} key={starter} />}
+      </details>
       {focused && sections.length > 0 && (
         <nav aria-label="Custom sections in your draft">
           {sections.map(({ id, title }) => (
@@ -268,13 +276,13 @@ function SectionEditor({
       </div>
       <details>
         <summary>Preview {section.title}</summary>
-        <CustomPortfolioSection
+        <LiveSectionPreview
           anchors={getPortfolioEntries(profile).map((entry) => ({
             id: entry.id,
             title: entry.title,
           }))}
+          exampleId={type}
           language={profile.portfolioLanguage}
-          preview
           section={resolveSectionSource({ ...section, sectionType: type }, profile)}
         />
       </details>

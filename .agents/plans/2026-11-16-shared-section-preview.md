@@ -73,7 +73,7 @@ Review each folder in this checklist. Inspect nested components and editors in t
 - [x] Media and integrations. `gallery-grid-section`, `instagram-section`, `item-media`, `map-section`, `pinterest-section`, `showcase-section`, `video-section`, `youtube-section`.
 - [x] Compositions and helpers. `collection-view`, `custom-section`, `editors`, `home-page`, `home-section`, `renderers`, `section`, `section-presentation`, `studio`.
 
-**Task 2 verification** — Covered all 66 folders through their stories, portfolio and studio compositions, or the editor selector. The initial browser sweep ran 325 story and viewport combinations. Rechecked the reported issues after fixes, then exercised all 48 registered editors at 320px and 1280px. Sand was the primary theme. Cyan was used for focused follow-up. Gallery dismissal, disclosure focus and hover, reordering, selected tabs, map opt-in, a disabled save action, and template errors were checked in local Chrome. External providers used fixtures or blocked requests. The public Once UI Blocks catalog was used when the dashboard was unavailable. Storybook built successfully with a bundle-size warning. The Portfolio Sections and Section Editors groups also include dedicated stories for the remaining public portfolio components and profile editors. Each section component is covered by a standalone story or a story that renders its composition. Tasks 3–5 remain open.
+**Task 2 verification** — Covered all 66 folders through their stories, portfolio and studio compositions, or the editor selector. The initial browser sweep ran 325 story and viewport combinations. Rechecked the reported issues after fixes, then exercised all 48 registered editors at 320px and 1280px. Sand was the primary theme. Cyan was used for focused follow-up. Gallery dismissal, disclosure focus and hover, reordering, selected tabs, map opt-in, a disabled save action, and template errors were checked in local Chrome. External providers used fixtures or blocked requests. The public Once UI Blocks catalog was used when the dashboard was unavailable. Storybook built successfully with a bundle-size warning. The Portfolio Sections and Section Editors groups also include dedicated stories for the remaining public portfolio components and profile editors. Each section component is covered by a standalone story or a story that renders its composition.
 
 ## Task 3 — Build the shared Live Section Preview and wire home
 
@@ -81,10 +81,10 @@ Review each folder in this checklist. Inspect nested components and editors in t
 
 **Interface** — Export `LiveSectionPreview({ exampleId, section, language, anchors }: LiveSectionPreviewProps)` from `@shared/ui/sections`. `exampleId` is a registry-derived authorable ID or an explicitly listed view-only example ID. `section?: CustomSection` allows a caller to supply real draft data. `language` and `anchors` use `SectionProps` types. Export the shared example descriptors for the preview selector and catalog.
 
-- [ ] Add `provides a renderable example for each section`. Compare authorable example IDs to `authorableSectionTypes` and assert all inventoried view-only IDs render. Add `uses supplied draft content` and `does not call providers in preview mode`.
-- [ ] Give each authorable example a typed fictional fixture via `Record<AuthorableSectionType, CustomSection>` and use `RenderSection` in preview mode. Give view-only examples explicit render adapters. Keep the home library's search and categories and use one metadata source for its counts and filters.
-- [ ] Replace the homepage's limited sample list and catalog-only illustrations with the shared preview and selector. Render the selected live example on demand so browsing the list does not mount every section or embed.
-- [ ] Run `pnpm exec vitest run --project unit live-section-preview library-picker section-catalog`. Confirm every entry can be selected on home and keyboard and mobile selection work. Commit.
+- [x] Add `provides a renderable example for each section`. Compare authorable example IDs to `authorableSectionTypes` and assert all inventoried view-only IDs render. Add `uses supplied draft content` and `does not call providers in preview mode`.
+- [x] Give each authorable example a typed fictional fixture via `Record<AuthorableSectionType, CustomSection>` and use `RenderSection` in preview mode. Give view-only examples explicit render adapters. Keep the home library's search and categories and use one metadata source for its counts and filters.
+- [x] Replace the homepage's limited sample list and catalog-only illustrations with the shared preview and selector. Render the selected live example on demand so browsing the list does not mount every section or embed.
+- [x] Run `pnpm exec vitest run --project unit live-section-preview library-picker section-catalog`. Confirm every entry can be selected on home and keyboard and mobile selection work. Commit.
 
 ## Task 4 — Integrate portfolio creation
 
@@ -92,9 +92,9 @@ Review each folder in this checklist. Inspect nested components and editors in t
 
 **Interface** — Reuse `LiveSectionPreview` with local selection. Keep `CreatePortfolio({ onCreated }: { onCreated: (id: string) => void })` and the current managed-portfolio request contract.
 
-- [ ] Add a test that opens the create dialog, selects a preview, verifies zero create requests, submits valid input once, and verifies the existing success callback. Assert a failed request keeps the dialog, entered values, and error visible.
-- [ ] Compose the existing create form and live browser in the shared Dialog. Keep preview buttons out of the submit path. Use a single scroll region with visible form actions on mobile, and verify Escape and focus return after close. Preserve JSON import and the account's existing privacy and save rules.
-- [ ] Run the focused creation tests and smoke-test `/admin/portfolios` with a disposable authorized account. Commit.
+- [x] Add a test that opens the create dialog, selects a preview, verifies zero create requests, submits valid input once, and verifies the existing success callback. Assert a failed request keeps the dialog, entered values, and error visible.
+- [x] Compose the existing create form and live browser in the shared Dialog. Keep preview buttons out of the submit path. Use a single scroll region with visible form actions on mobile, and verify Escape and focus return after close. Preserve JSON import and the account's existing privacy and save rules.
+- [x] Run the focused creation tests and smoke-test `/admin/portfolios` with a disposable authorized account. Commit.
 
 ## Task 5 — Integrate portfolio editing and finish verification
 
@@ -102,10 +102,12 @@ Review each folder in this checklist. Inspect nested components and editors in t
 
 **Interface** — Browsing uses `exampleId`. The existing per-section details preview passes the current section resolved with `resolveSectionSource`, plus language and anchors. Draft mutations stay in the existing editor handlers.
 
-- [ ] Test that browsing a starter leaves the draft and sequence unchanged, adding creates exactly the chosen type, and editing or selecting an existing section updates the live preview. Keep a test for older drafts with missing optional data.
-- [ ] Integrate the shared preview in Content / Custom sections for both library browsing and resolved draft rendering. Preserve explicit Add, delete, duplicate, save, the section limit, and the existing full portfolio preview.
-- [ ] Run focused unit tests and the editor and public portfolio section-library browser specs. Check home, the create dialog, and `/[username]/edit` in light and dark on desktop and mobile. Verify create/import, add/edit/save/reload, unpublished and published viewing as applicable, and keyboard dismissal. Use disposable fixtures.
-- [ ] Update the manual guide and index with exact routes, actions, expected results, and observed evidence. Run `pnpm check`, `pnpm test`, `pnpm --filter storybook-app build-storybook`, and `pnpm --filter my-dev-studio build`. Record blocked checks by name. Commit and open the implementation PR from current main.
+- [x] Test that browsing a starter leaves the draft and sequence unchanged, adding creates exactly the chosen type, and editing or selecting an existing section updates the live preview. Keep a test for older drafts with missing optional data.
+- [x] Integrate the shared preview in Content / Custom sections for both library browsing and resolved draft rendering. Preserve explicit Add, delete, duplicate, save, the section limit, and the existing full portfolio preview.
+- [x] Run focused unit tests and the editor and public portfolio section-library browser specs. Check home, the create dialog, and `/[username]/edit` in light and dark on desktop and mobile. Verify create/import, add/edit/save/reload, unpublished and published viewing as applicable, and keyboard dismissal. Use disposable fixtures.
+- [x] Update the manual guide and index with exact routes, actions, expected results, and observed evidence. Run `pnpm check`, `pnpm test`, `pnpm --filter storybook-app build-storybook`, and `pnpm --filter my-dev-studio build`. Record blocked checks by name. Commit and open the implementation PR from current main.
+
+**Verification** — The library includes 48 authorable examples and nine view-only examples. Desktop and mobile fixture runs covered the three preview surfaces and the published Engineer and Designer portfolios. The homepage was also checked in light and dark, including opening and closing the gallery. The separate managed appearance case still reports a 60px profile menu where its assertion expects 40px.
 
 ## Acceptance criteria
 

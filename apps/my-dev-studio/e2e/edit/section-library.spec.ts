@@ -39,6 +39,9 @@ test("owner creates a library section, saves a template, exports content, review
   await openEditor(page);
   await selectEditorSection(page, "Custom sections");
   await page.getByLabel("Section starter").selectOption("pricing");
+  await page.getByText("Preview section starter").click();
+  await expect(page.getByRole("region", { name: "Pricing section example" })).toBeVisible();
+  await page.getByText("Preview section starter").click();
   await page.getByRole("button", { name: "Add custom section" }).click();
   await page.getByRole("button", { name: "+ Add section items" }).click();
   await page.getByLabel("Item title", { exact: true }).fill("Independent plan");

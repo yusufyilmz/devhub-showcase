@@ -17,7 +17,7 @@ import { profileSchema } from "@shared/lib/profiles";
 
 import { RegisteredSections } from "../../../../assistant/src/components/portfolio/index";
 import { ProfileEditor } from "../../../../assistant/src/components/studio/workspace/index";
-import { CustomPortfolioSection } from "./index";
+import { CustomPortfolioSection, CustomSectionsEditor } from "./index";
 
 const section: CustomSection = {
   id: "custom-aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
@@ -47,6 +47,36 @@ describe("CustomSections", () => {
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
   });
+  it("previews a starter and edits the draft preview without changing the saved sequence", async () => {
+    const draft = { ...profile, customSections: [section], sectionSequence: [section.id] };
+    const onChange = vi.fn();
+    const { rerender } = render(
+      <CustomSectionsEditor focused onChange={onChange} profile={draft} />,
+    );
+    fireEvent.change(screen.getByLabelText("Section starter"), { target: { value: "pricing" } });
+    fireEvent.click(screen.getByText("Preview section starter"));
+    expect(await screen.findByRole("region", { name: "Pricing section example" })).toBeTruthy();
+    expect(onChange).not.toHaveBeenCalled();
+
+    fireEvent.click(screen.getByText("Preview section starter"));
+    fireEvent.click(screen.getByText("Preview Awards"));
+    expect(
+      within(screen.getByRole("region", { name: "Awards section preview" })).getByText(
+        "Community award",
+      ),
+    ).toBeTruthy();
+    fireEvent.change(screen.getByLabelText("Section name"), { target: { value: "New awards" } });
+    const updated = onChange.mock.lastCall?.[0] as PortfolioProfile;
+    expect(updated.sectionSequence).toEqual([section.id]);
+    rerender(<CustomSectionsEditor focused onChange={onChange} profile={updated} />);
+    expect(screen.getByRole("region", { name: "New awards section preview" })).toBeTruthy();
+
+    fireEvent.click(screen.getByRole("button", { name: "Add custom section" }));
+    const added = onChange.mock.lastCall?.[0] as PortfolioProfile;
+    expect(added.customSections?.at(-1)?.sectionType).toBe("pricing");
+    expect(added.sectionSequence).toEqual([section.id, added.customSections?.at(-1)?.id]);
+  });
+
   it("round trips custom sections and mixed ordering while preserving existing sectionOrder", () => {
     const original = { ...profile, customSections: [section] };
     const defaultSections = getPortfolioSections(profile).map(({ id }) => id);
