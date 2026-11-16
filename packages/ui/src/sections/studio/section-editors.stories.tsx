@@ -14,7 +14,14 @@ import {
 
 import { SelectField } from "../../forms";
 import { StudioRequestProvider } from "../../providers";
+import {
+  EducationEditor,
+  ExperienceEditor,
+  LanguagesEditor,
+  ProjectsEditor,
+} from "../careers-section";
 import { EditSection } from "../editors/editors";
+import { HeroSettingsEditor } from "../hero-section";
 import { SkillsEditor } from "../skills-section/skills-editor";
 import { CustomSectionsEditor } from "./custom-sections-editor";
 import { SectionOrderEditor } from "./section-order-editor";
@@ -87,3 +94,9 @@ export const Templates: Story = {
   ),
 };
 export const Skills: Story = { render: () => <DraftEditor Editor={SkillsEditor} /> };
+
+export const CareerEducation: Story = { render: () => <DraftEditor Editor={EducationEditor} /> };
+export const CareerExperience: Story = { render: () => <DraftEditor Editor={ExperienceEditor} /> };
+export const CareerLanguages: Story = { render: () => <DraftEditor Editor={LanguagesEditor} /> };
+export const CareerProjects: Story = { render: () => <DraftEditor Editor={ProjectsEditor} /> };
+export const HeroSettings: Story = { render: () => <DraftEditor Editor={HeroSettingsEditor} /> };

@@ -1,4 +1,5 @@
 import { PortfolioStoryFrame } from "@fixtures/portfolio-story-frame";
+import { sectionStory } from "@fixtures/section-story";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import type {
@@ -9,14 +10,17 @@ import type {
 } from "@shared/lib/types";
 
 import { AboutMeSection } from "./about-me-section";
+import { PortfolioAboutSection } from "./about-section";
+import { JsonBlogPage, Post, Posts } from "./blog-page-section";
 import { CVSection } from "./cv-section";
 import { EducationsSection } from "./education-section";
 import { ExperienceSection } from "./experience-section";
-import { ProjectForm, ProjectsSection } from "./project-section";
+import { ProjectForm, ProjectList, ProjectsSection } from "./project-section";
 import { ReferralSection } from "./referral-section";
 import { ReviewSection } from "./review-section";
 import { SkillSection } from "./skills-section";
 import { SummarySection } from "./summary-section";
+import { TableOfContents } from "./table-of-contents-section";
 
 const timestamp = "2025-06-01T12:00:00Z";
 const company = {
@@ -142,4 +146,32 @@ export const ProjectEditor: Story = {
 };
 export const ProjectEditorSaving: Story = {
   render: () => <ProjectForm action="Saving project" isSubmitting onSubmit={() => undefined} />,
+};
+
+export const AboutProject: Story = { render: () => <PortfolioAboutSection /> };
+export const ProjectLinks: Story = { render: () => <ProjectList projects={[project]} /> };
+export const Blog: Story = { render: () => <JsonBlogPage {...sectionStory("blog-page")} /> };
+export const PostList: Story = { render: () => <Posts {...sectionStory("posts-grid")} /> };
+export const Article: Story = {
+  render: () => (
+    <Post
+      item={{
+        body: "A short note on making an archive easier to explore.",
+        id: "example-post",
+        title: "Designing for discovery",
+        url: "",
+      }}
+    />
+  ),
+};
+export const Contents: Story = {
+  render: () => (
+    <TableOfContents
+      {...sectionStory("table-of-contents")}
+      anchors={[
+        { id: "introduction", title: "Introduction" },
+        { id: "work", title: "Selected work" },
+      ]}
+    />
+  ),
 };
