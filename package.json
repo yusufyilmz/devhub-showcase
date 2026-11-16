@@ -87,7 +87,8 @@
     "test:fitness": "pnpm --filter my-fitness-app test",
     "test:studio": "vitest run --project unit",
     "test:watch": "vitest --watch",
-    "typecheck": "tsc --noEmit && turbo run typecheck"
+    "typecheck": "tsc --noEmit && turbo run typecheck",
+    "verify": "pnpm check:unused:all && pnpm check:architecture && pnpm check:dependencies && pnpm check:security && pnpm check:secrets && pnpm check:ui-catalog && pnpm check:docs && pnpm check:format && pnpm check:circular && pnpm check:ci && pnpm check:fix && pnpm check:outdated && pnpm check:skills && pnpm check:unused:namespaces"
   },
   "lint-staged": {
     "*": "biome check --write --no-errors-on-unmatched --files-ignore-unknown=true",
