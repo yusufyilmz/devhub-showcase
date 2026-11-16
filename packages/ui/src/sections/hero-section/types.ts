@@ -12,6 +12,7 @@ export type HeroBlockProps = Omit<ComponentProps<"section">, "title"> & {
   notes?: ReactNode;
   visual?: ReactNode;
   variant?: "standard" | "landing";
+  layout?: "hero-centered" | "hero-cover";
 };
 
 export type HeroSettingsEditorOptions = {

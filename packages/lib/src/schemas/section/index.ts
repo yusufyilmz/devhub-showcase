@@ -4,10 +4,12 @@ import {
   authorableSections,
   authorableSectionTypes,
   customSectionViews,
+  getSectionLayouts,
   getSectionRenderers,
   getSocialWork,
   type PortfolioSectionId,
   sectionCompositionIds,
+  sectionLayoutIds,
   sectionRegistry,
 } from "@shared/config";
 
@@ -109,6 +111,7 @@ const customSectionBase = z
         description: z.string().max(6000).optional(),
         email: z.union([z.email(), z.literal("")]).optional(),
         latitude: z.number().min(-90).max(90).optional(),
+        layout: z.enum(sectionLayoutIds).optional(),
         longitude: z.number().min(-180).max(180).optional(),
         mediaUrl: optionalSectionUrl,
         posterUrl: optionalSectionUrl,
@@ -136,6 +139,18 @@ const customSectionBase = z
 
 export const customSectionSchema = customSectionBase.superRefine((section, ctx) => {
   if (section.sectionType) validateSectionType(section, ctx);
+  const layout = section.options?.layout;
+  if (
+    layout &&
+    (!section.sectionType ||
+      !getSectionLayouts(section.sectionType).some(({ id }) => id === layout))
+  ) {
+    ctx.addIssue({
+      code: "custom",
+      message: "Choose a layout for this section type",
+      path: ["options", "layout"],
+    });
+  }
   if (!["youtube", "instagram", "pinterest"].includes(section.composition ?? "")) return;
   section.items.forEach((item, index) => {
     if (getSocialWork(item.url)?.provider !== section.composition)

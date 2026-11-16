@@ -1,6 +1,8 @@
-import { type AuthorableSectionType, authorableSections } from "@shared/config";
+import { authorableSections } from "@shared/config";
 
-/** Small illustrations, not live embedded portfolios or third-party media. */
+import type { SectionExampleId, viewOnlySectionExamples } from "./preview-examples";
+
+/** A thumbnail for the catalog card. The selected card uses the real section renderer. */
 const previewKindByView = {
   about: "text",
   accordion: "accordion",
@@ -211,8 +213,23 @@ const previews = {
   ),
 };
 
-export function SectionCatalogPreview({ type }: { type: AuthorableSectionType }) {
-  const kind = previewKindByView[authorableSections[type].view];
+const viewOnlyKinds = {
+  "about-me": "text",
+  cv: "links",
+  education: "timeline",
+  experience: "timeline",
+  languages: "links",
+  "portfolio-projects": "gallery",
+  referrals: "quote",
+  skills: "skills",
+  summary: "hero",
+} satisfies Record<keyof typeof viewOnlySectionExamples, keyof typeof previews>;
+
+export function SectionCatalogPreview({ type }: { type: SectionExampleId }) {
+  const kind =
+    type in authorableSections
+      ? previewKindByView[authorableSections[type as keyof typeof authorableSections].view]
+      : viewOnlyKinds[type as keyof typeof viewOnlyKinds];
 
   return (
     <div

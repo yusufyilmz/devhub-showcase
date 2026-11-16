@@ -1,15 +1,21 @@
+"use client";
+
+import { useContext } from "react";
+
 import { getPortfolioCopy, getSocialWork } from "@shared/config";
 import { safeLink } from "@shared/utils";
 
 import { WorkMedia } from "../../display";
+import { PassiveSectionPreview } from "../../providers/passive-section-preview";
 import { presenterStyles } from "../section-presentation/styles";
 import type { ItemMediaOptions } from "../section-presentation/types";
 
 export function ItemMedia({ item, video, language }: ItemMediaOptions) {
   const text = getPortfolioCopy(language);
+  const passive = useContext(PassiveSectionPreview);
   const work = getSocialWork(item.url);
   if (!item.imageUrl && !work && !video) return null;
-  return video && safeLink(item.url) && /\.(mp4|webm|ogg)(\?|$)/i.test(item.url) ? (
+  return !passive && video && safeLink(item.url) && /\.(mp4|webm|ogg)(\?|$)/i.test(item.url) ? (
     <video
       className={presenterStyles.element1}
       controls

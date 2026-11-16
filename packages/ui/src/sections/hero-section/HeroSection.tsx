@@ -1,17 +1,20 @@
 import "../section/sections.css";
 
+import { cn } from "cn";
+
 import { getPortfolioCopy } from "@shared/config";
 import { safeLink } from "@shared/utils";
 
 import { Button } from "../../buttons";
 import { WorkMedia } from "../../display";
 import { CollectionView } from "../collection-view/CollectionView";
+import { isSectionImage } from "../item-media/section-image";
 import type { SectionProps } from "../types";
 import { HeroBlock } from "./HeroBlock";
 
 export function HeroSection({ section, language }: SectionProps) {
   if (!section.visible) return null;
-  const { actionUrl, alignment, description, mediaUrl } = section.options ?? {};
+  const { actionUrl, alignment, description, layout, mediaUrl } = section.options ?? {};
   return (
     <HeroBlock
       actions={
@@ -19,15 +22,21 @@ export function HeroSection({ section, language }: SectionProps) {
           <Button href={actionUrl}>{getPortfolioCopy(language).exploreWork} ↗</Button>
         ) : undefined
       }
-      className="section-hero-block [&[data-alignment='center']_>_div:first-child]:[justify-items:center] [&[data-alignment='right']_>_div:first-child]:[justify-items:end] py-lg sm:py-xl"
-      data-alignment={alignment ?? "left"}
+      className={cn(
+        "section-hero-block py-lg sm:py-xl",
+        layout !== "hero-centered" &&
+          "[&[data-alignment='center']_>_div:first-child]:[justify-items:center] [&[data-alignment='right']_>_div:first-child]:[justify-items:end]",
+      )}
+      data-alignment={layout === "hero-centered" ? "center" : (alignment ?? "left")}
+      data-section-layout={layout}
       data-section-type="hero"
       description={description}
       headingId={`${section.id}-heading`}
       id={section.id}
+      layout={layout === "hero-centered" || layout === "hero-cover" ? layout : undefined}
       title={section.title}
       visual={
-        mediaUrl && safeLink(mediaUrl) ? (
+        isSectionImage(mediaUrl) ? (
           <WorkMedia imageUrl={mediaUrl} title={section.title} />
         ) : undefined
       }

@@ -1,6 +1,6 @@
 import "../editor-controls.css";
 
-import { authorableSections, type SectionOptions } from "@shared/config";
+import { authorableSections, getSectionLayouts, type SectionOptions } from "@shared/config";
 
 import { Field, SelectField } from "../../../forms";
 import { editorPanelStyles, optionsEditorStyles } from "../styles";
@@ -24,6 +24,7 @@ export function OptionsEditor({ section, type, onChange }: OptionsEditorOptions)
           onChange={(description) => change({ description })}
           value={options.description ?? ""}
         />
+        <SectionLayoutField onChange={change} section={section} type={type} />
         <SelectField
           label="Text alignment"
           onChange={(alignment) => change({ alignment: alignment as SectionOptions["alignment"] })}
@@ -33,15 +34,7 @@ export function OptionsEditor({ section, type, onChange }: OptionsEditorOptions)
             <option key={value}>{value}</option>
           ))}
         </SelectField>
-        <SelectField
-          label="Columns"
-          onChange={(value) => change({ columns: Number(value) as 1 | 2 | 3 | 4 })}
-          value={String(options.columns ?? 3)}
-        >
-          {[1, 2, 3, 4].map((value) => (
-            <option key={value}>{value}</option>
-          ))}
-        </SelectField>
+        <SectionColumnsField onChange={change} options={options} />
         {view === "hero" && (
           <Field
             label="Hero image URL"
@@ -97,5 +90,51 @@ export function OptionsEditor({ section, type, onChange }: OptionsEditorOptions)
         )}
       </div>
     </fieldset>
+  );
+}
+
+function SectionLayoutField({
+  onChange,
+  section,
+  type,
+}: Pick<OptionsEditorOptions, "section" | "type"> & {
+  onChange: (patch: Partial<SectionOptions>) => void;
+}) {
+  const layouts = getSectionLayouts(type);
+  if (!layouts.length) return null;
+  return (
+    <SelectField
+      label="Block layout"
+      onChange={(value) => onChange({ layout: layouts.find(({ id }) => id === value)?.id })}
+      value={section.options?.layout ?? ""}
+    >
+      <option value="">Default layout</option>
+      {layouts.map(({ id, label }) => (
+        <option key={id} value={id}>
+          {label}
+        </option>
+      ))}
+    </SelectField>
+  );
+}
+
+function SectionColumnsField({
+  options,
+  onChange,
+}: {
+  options: SectionOptions;
+  onChange: (patch: Partial<SectionOptions>) => void;
+}) {
+  if (options.layout) return null;
+  return (
+    <SelectField
+      label="Columns"
+      onChange={(value) => onChange({ columns: Number(value) as 1 | 2 | 3 | 4 })}
+      value={String(options.columns ?? 3)}
+    >
+      {[1, 2, 3, 4].map((value) => (
+        <option key={value}>{value}</option>
+      ))}
+    </SelectField>
   );
 }

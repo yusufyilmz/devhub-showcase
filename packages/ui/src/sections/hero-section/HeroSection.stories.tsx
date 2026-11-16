@@ -31,3 +31,29 @@ export const WithAction: Story = {
     },
   },
 };
+
+export const CenteredIntroduction: Story = {
+  args: {
+    section: {
+      ...meta.args.section,
+      options: {
+        ...meta.args.section.options,
+        actionUrl: "https://example.com/projects",
+        layout: "hero-centered",
+      },
+    },
+  },
+};
+
+export const FullWidthImage: Story = {
+  args: {
+    section: {
+      ...meta.args.section,
+      options: {
+        ...meta.args.section.options,
+        actionUrl: "https://example.com/projects",
+        layout: "hero-cover",
+      },
+    },
+  },
+};

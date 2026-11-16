@@ -2,10 +2,11 @@ import { authorableSections, authorableSectionTypes, type CustomSection } from "
 
 import { Button } from "../../buttons";
 import { Card } from "../../cards";
-import { RenderSection } from "../renderers";
+import { LibraryPicker } from "../live-section-preview/library-picker";
+import { LiveSectionPreview } from "../live-section-preview/live-section-preview";
+import { sectionExamples } from "../live-section-preview/preview-examples";
+import { SectionCatalog } from "../live-section-preview/section-catalog";
 import { Section } from "../section";
-import { LibraryPicker } from "./library-picker";
-import { SectionCatalog } from "./section-catalog";
 import { libraryStyles } from "./styles";
 import type { HomeLibrarySectionOptions } from "./types";
 
@@ -100,6 +101,29 @@ const samples: CustomSection[] = [
   },
 ];
 
+const featuredExamples = samples.map((section) => {
+  const exampleId = section.sectionType ?? "custom";
+  return {
+    content: <LiveSectionPreview embedded exampleId={exampleId} section={section} />,
+    description: section.title,
+    id: exampleId,
+    title: authorableSections[exampleId].name,
+  };
+});
+
+const featuredIds = new Set<string>(featuredExamples.map(({ id }) => id));
+const libraryExamples = [
+  ...featuredExamples,
+  ...sectionExamples
+    .filter(({ id }) => !featuredIds.has(id))
+    .map(({ id, name, description }) => ({
+      content: <LiveSectionPreview embedded exampleId={id} />,
+      description,
+      id,
+      title: name,
+    })),
+];
+
 export function HomeLibrarySection({ href }: HomeLibrarySectionOptions) {
   return (
     <Section asChild>
@@ -131,14 +155,7 @@ export function HomeLibrarySection({ href }: HomeLibrarySectionOptions) {
             <span>SELECT · ARRANGE · MAKE IT YOURS</span>
           </div>
         </div>
-        <LibraryPicker
-          items={samples.map((section) => ({
-            content: <RenderSection preview section={section} />,
-            description: section.title,
-            id: section.sectionType ?? "custom",
-            title: authorableSections[section.sectionType ?? "custom"].name,
-          }))}
-        />
+        <LibraryPicker featuredCount={samples.length} items={libraryExamples} />
         <SectionCatalog />
         <div className={libraryStyles.element6}>
           <Card asChild layout="plain" surface="portfolio">

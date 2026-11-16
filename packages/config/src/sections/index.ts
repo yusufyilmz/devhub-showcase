@@ -7,8 +7,10 @@ export type {
 export {
   authorableSections,
   authorableSectionTypes,
+  getSectionLayouts,
   getSectionRenderers,
   MAX_CUSTOM_SECTIONS,
+  sectionLayoutIds,
 } from "./authorable-sections";
 export type {
   CustomSection,

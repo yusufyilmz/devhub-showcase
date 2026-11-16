@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useRef, useState } from "react";
 
 import {
   type AuthorableSectionType,
@@ -13,12 +13,14 @@ import {
   MAX_CUSTOM_SECTIONS,
   resolveSectionSource,
   type SectionComposition,
+  type SectionOptions,
 } from "@shared/config";
 
 import { Button } from "../../buttons";
 import { Field, Input, Label, SelectField } from "../../forms";
 import { EditSection } from "../editors/editors";
-import { CustomPortfolioSection } from "./custom-portfolio-section";
+import { LiveSectionPreview } from "../live-section-preview/live-section-preview";
+import { SectionCatalog } from "../live-section-preview/section-catalog";
 import { customSectionsEditorStyles } from "./styles";
 import type { CustomSectionsEditorOptions, SectionEditorOptions } from "./types";
 
@@ -56,14 +58,22 @@ export function CustomSectionsEditor({
   profile,
   onChange,
   focused = false,
+  libraryDefaultOpen = false,
 }: CustomSectionsEditorOptions) {
   const [starter, setStarter] = useState<AuthorableSectionType>("custom");
+  const [starterPreviewOpen, setStarterPreviewOpen] = useState(false);
+  const [libraryOpen, setLibraryOpen] = useState(libraryDefaultOpen);
+  const libraryToggle = useRef<HTMLButtonElement>(null);
+  const libraryId = useId();
   const sections = profile.customSections ?? [];
   const [selection, setSelection] = useState<string>();
   const selected = sections.find(({ id }) => id === selection) ?? sections[0];
   const displayed = focused ? sections.filter(({ id }) => id === selected?.id) : sections;
-  function add() {
-    const section = createSection(starter);
+  const atLimit = sections.length >= MAX_CUSTOM_SECTIONS;
+  function add(type: AuthorableSectionType, layout?: SectionOptions["layout"]) {
+    if (atLimit) return;
+    const section = createSection(type);
+    if (layout) section.options = { layout };
     change([...sections, section]);
     setSelection(section.id);
   }
@@ -107,12 +117,19 @@ export function CustomSectionsEditor({
       </SelectField>
       <Button
         className={customSectionsEditorStyles.element1}
-        disabled={sections.length >= MAX_CUSTOM_SECTIONS}
-        onClick={add}
+        disabled={atLimit}
+        onClick={() => add(starter)}
         type="button"
       >
         Add custom section
       </Button>
+      <details
+        className="min-w-0 space-y-s"
+        onToggle={(event) => setStarterPreviewOpen(event.currentTarget.open)}
+      >
+        <summary className="cursor-pointer text-sm font-medium">Preview section starter</summary>
+        {starterPreviewOpen && <LiveSectionPreview exampleId={starter} key={starter} />}
+      </details>
       {focused && sections.length > 0 && (
         <nav aria-label="Custom sections in your draft">
           {sections.map(({ id, title }) => (
@@ -131,63 +148,90 @@ export function CustomSectionsEditor({
     </div>
   );
   return (
-    <section
-      className={
-        focused
-          ? "grid grid-cols-[minmax(0,1fr)_minmax(13rem,0.5fr)] items-start gap-4 max-[767px]:grid-cols-1"
-          : undefined
-      }
-    >
-      {library}
+    <section className="grid min-w-0 gap-4">
+      <Button
+        aria-controls={libraryOpen ? libraryId : undefined}
+        aria-expanded={libraryOpen}
+        className="justify-self-start"
+        onClick={() => setLibraryOpen(!libraryOpen)}
+        ref={libraryToggle}
+        type="button"
+        variant="outline"
+      >
+        {libraryOpen ? "Hide section previews" : "Browse section previews"}
+      </Button>
+      {libraryOpen && (
+        <div id={libraryId}>
+          <SectionCatalog
+            addAction={{
+              disabled: atLimit,
+              onAdd: (type, layout) => {
+                add(type, layout);
+                setLibraryOpen(false);
+                libraryToggle.current?.focus();
+              },
+            }}
+          />
+        </div>
+      )}
       <div
         className={
           focused
-            ? "col-start-1 row-start-1 min-w-0 rounded-md border border-border bg-background p-4 max-[767px]:col-auto max-[767px]:row-auto"
+            ? "grid grid-cols-[minmax(0,1fr)_minmax(13rem,0.5fr)] items-start gap-4 max-[767px]:grid-cols-1"
             : undefined
         }
       >
-        {focused && !selected && <p>Choose a section starter to add and configure it here.</p>}
-        {displayed.map((section) => (
-          <SectionEditor
-            key={section.id}
-            onChange={(updated) =>
-              change(sections.map((item) => (item.id === updated.id ? updated : item)))
-            }
-            onDuplicate={
-              sections.length >= MAX_CUSTOM_SECTIONS
-                ? undefined
-                : () =>
-                    change([
-                      ...sections,
-                      {
-                        ...section,
-                        id: `custom-${crypto.randomUUID()}`,
-                        items: section.items.map((item) => ({
-                          ...item,
-                          details: item.details ? [...item.details] : undefined,
-                          id: crypto.randomUUID(),
-                        })),
-                        options: section.options ? { ...section.options } : undefined,
-                        source: section.source
-                          ? {
-                              ...section.source,
-                              itemIds: section.source.itemIds
-                                ? [...section.source.itemIds]
-                                : undefined,
-                            }
-                          : undefined,
-                        title: `${section.title.slice(0, 155)} copy`,
-                      },
-                    ])
-            }
-            onRemove={() => {
-              if (window.confirm(`Remove ${section.title}? Changes take effect when you save.`))
-                change(sections.filter(({ id }) => id !== section.id));
-            }}
-            profile={profile}
-            section={section}
-          />
-        ))}
+        {library}
+        <div
+          className={
+            focused
+              ? "col-start-1 row-start-1 min-w-0 rounded-md border border-border bg-background p-4 max-[767px]:col-auto max-[767px]:row-auto"
+              : undefined
+          }
+        >
+          {focused && !selected && <p>Choose a section starter to add and configure it here.</p>}
+          {displayed.map((section) => (
+            <SectionEditor
+              key={section.id}
+              onChange={(updated) =>
+                change(sections.map((item) => (item.id === updated.id ? updated : item)))
+              }
+              onDuplicate={
+                sections.length >= MAX_CUSTOM_SECTIONS
+                  ? undefined
+                  : () =>
+                      change([
+                        ...sections,
+                        {
+                          ...section,
+                          id: `custom-${crypto.randomUUID()}`,
+                          items: section.items.map((item) => ({
+                            ...item,
+                            details: item.details ? [...item.details] : undefined,
+                            id: crypto.randomUUID(),
+                          })),
+                          options: section.options ? { ...section.options } : undefined,
+                          source: section.source
+                            ? {
+                                ...section.source,
+                                itemIds: section.source.itemIds
+                                  ? [...section.source.itemIds]
+                                  : undefined,
+                              }
+                            : undefined,
+                          title: `${section.title.slice(0, 155)} copy`,
+                        },
+                      ])
+              }
+              onRemove={() => {
+                if (window.confirm(`Remove ${section.title}? Changes take effect when you save.`))
+                  change(sections.filter(({ id }) => id !== section.id));
+              }}
+              profile={profile}
+              section={section}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -225,6 +269,7 @@ function SectionEditor({
           onChange({
             ...section,
             composition: undefined,
+            options: section.options ? { ...section.options, layout: undefined } : undefined,
             renderer: getSectionRenderers(next)[0],
             sectionType: next,
             source: undefined,
@@ -268,13 +313,13 @@ function SectionEditor({
       </div>
       <details>
         <summary>Preview {section.title}</summary>
-        <CustomPortfolioSection
+        <LiveSectionPreview
           anchors={getPortfolioEntries(profile).map((entry) => ({
             id: entry.id,
             title: entry.title,
           }))}
+          exampleId={type}
           language={profile.portfolioLanguage}
-          preview
           section={resolveSectionSource({ ...section, sectionType: type }, profile)}
         />
       </details>

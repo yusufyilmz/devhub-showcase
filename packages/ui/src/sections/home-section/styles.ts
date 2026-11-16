@@ -61,31 +61,6 @@ export const heroStyles = {
   element7: "home-example-link",
 } as const;
 
-export const libraryPickerStyles = {
-  element1: "home-library-demo",
-  element2: "home-library-buttons",
-  element3: "sr-only",
-  element4: "home-library-number",
-  element5: "home-library-preview",
-  element6: "home-library-preview-bar",
-  element7: "home-library-preview-content",
-  element8: "home-sample-note",
-} as const;
-
-export const sectionCatalogStyles = {
-  element1: "home-library-catalog section-catalog",
-  element2: "section-catalog-heading",
-  element3: "home-eyebrow",
-  element4: "section-catalog-search",
-  element5: "section-catalog-filters",
-  element6: "sr-only",
-  element7: "section-catalog-count",
-  element8: "section-catalog-grid",
-  element9: "section-catalog-icon",
-  element10: "section-catalog-reveal",
-  element11: "section-catalog-empty",
-} as const;
-
 export const libraryStyles = {
   element1: "home-container home-library",
   element2: "home-library-header",

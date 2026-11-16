@@ -62,6 +62,7 @@ export function createSectionTemplate(
         ? {
             alignment: section.options.alignment,
             columns: section.options.columns,
+            layout: section.options.layout,
           }
         : undefined,
       renderer: section.renderer,

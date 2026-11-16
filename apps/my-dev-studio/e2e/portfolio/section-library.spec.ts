@@ -1,6 +1,46 @@
 import { expect, test } from "@playwright/test";
 
 import { authorableSectionTypes } from "@shared/config";
+import { storage } from "@shared/config/storage";
+
+test("homepage replaces the example without mounting the previous section", async ({
+  page,
+}, info) => {
+  const mode = info.project.name.startsWith("mobile") ? "dark" : "light";
+  await page.addInitScript(({ key, value }) => localStorage.setItem(key, value), {
+    key: storage.theme,
+    value: JSON.stringify({
+      state: { activeMode: mode, themePreferences: {} },
+      version: storage.version,
+    }),
+  });
+  await page.goto("/");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", mode);
+  const library = page.getByRole("region", { name: /Browse all .* section examples/ });
+  const search = library.getByRole("searchbox", { name: "Find a section" });
+  const tiles = library.getByRole("list", { name: "Available section types" });
+  expect(await library.locator("[data-preview-kind]").count()).toBe(
+    authorableSectionTypes.length + 9,
+  );
+  await search.fill("Gallery Grid");
+  const galleryTile = tiles.getByRole("button", { exact: true, name: "Gallery Grid" });
+  await galleryTile.focus();
+  await galleryTile.press("Enter");
+  const gallery = library.getByRole("region", { name: "Gallery Grid section example" });
+  await expect(gallery).toBeVisible();
+  await gallery.getByRole("button", { name: "View Atlas interface" }).click();
+  const lightbox = page.getByRole("dialog", { name: "Atlas interface" });
+  await expect(lightbox).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(lightbox).toBeHidden();
+  await library.getByRole("button", { name: "Close preview" }).click();
+  await expect(galleryTile).toBeFocused();
+  await search.fill("YouTube");
+  await tiles.getByRole("button", { exact: true, name: "YouTube" }).click();
+  await expect(library.getByRole("button", { name: /load youtube video/i })).toBeDisabled();
+  await expect(gallery).toHaveCount(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
+});
 
 for (const type of ["engineer", "designer"]) {
   test(`${type} renders the complete section catalog and functional supporting widgets`, async ({
@@ -33,7 +73,9 @@ for (const type of ["engineer", "designer"]) {
         .getByRole("button", { name: "Open email app" }),
     ).toBeVisible();
     await expect(
-      page.locator('[data-section-type="newsletter"]').getByRole("link", { name: "Subscribe ↗" }),
+      page
+        .locator('[data-section-type="newsletter"]')
+        .getByRole("link", { exact: true, name: "Subscribe" }),
     ).toHaveAttribute("href", "https://example.test/subscribe");
     await expect(page.locator('[data-section-type="table-of-contents"] a').first()).toHaveAttribute(
       "href",

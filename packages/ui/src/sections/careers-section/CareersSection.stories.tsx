@@ -22,3 +22,12 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const Compact: Story = { args: sectionStory("careers", "compact") };
 export const Empty: Story = { args: sectionStory("careers", "empty") };
+
+export const OpenRoles: Story = {
+  args: {
+    section: {
+      ...meta.args.section,
+      options: { ...meta.args.section.options, layout: "careers-openings" },
+    },
+  },
+};

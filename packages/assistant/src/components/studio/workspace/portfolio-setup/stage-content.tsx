@@ -33,6 +33,7 @@ export function SetupStageContent({
   profile: PortfolioProfile;
 }) {
   const { stage, section } = position;
+  const customSectionIndex = sections.length - 1;
   const activeSection = sections[section] ?? sections[0];
   const Editor = activeSection.Editor;
 
@@ -48,9 +49,19 @@ export function SetupStageContent({
         />
       )}
       {stage === 1 && <CvImportEditor embedded onChange={onApplyCv} profile={profile} />}
+      {stage === 2 && section > 0 && section < customSectionIndex && (
+        <Button
+          className="justify-self-start"
+          onClick={() => go(2, customSectionIndex)}
+          type="button"
+          variant="outline"
+        >
+          Browse and add sections
+        </Button>
+      )}
       {stage === 2 &&
-        (section === sections.length - 1 ? (
-          <CustomSectionsEditor focused onChange={onChange} profile={profile} />
+        (section === customSectionIndex ? (
+          <CustomSectionsEditor focused libraryDefaultOpen onChange={onChange} profile={profile} />
         ) : Editor ? (
           <Editor key={activeSection.title} onChange={onChange} profile={profile} />
         ) : (

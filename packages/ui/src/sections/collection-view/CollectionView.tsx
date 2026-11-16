@@ -15,6 +15,7 @@ import {
 import { GalleryCollection } from "../gallery-grid-section/GalleryCollection";
 import { StepList } from "../how-to-section/StepList";
 import { ItemMedia } from "../item-media/ItemMedia";
+import { isSectionImage } from "../item-media/section-image";
 import { PlanCards } from "../plans-section/PlanCards";
 import {
   collectionViewClassName,
@@ -74,7 +75,7 @@ export function CollectionView({ section, type, language }: CollectionViewOption
     type === "gallery-grid" &&
     section.renderer === "gallery" &&
     section.items.length > 0 &&
-    section.items.every((item) => item.imageUrl && safeLink(item.imageUrl))
+    section.items.every((item) => isSectionImage(item.imageUrl))
   )
     return <GalleryCollection section={section} />;
   const items: SectionItem[] = section.items.map((item) => ({

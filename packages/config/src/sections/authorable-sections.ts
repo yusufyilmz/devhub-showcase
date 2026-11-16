@@ -137,8 +137,38 @@ export type SectionSource = {
   field: SectionSourceField;
   itemIds?: string[];
 };
+const sectionLayouts = {
+  about: [{ id: "about-editorial", label: "Editorial profile" }],
+  "blog-page": [{ id: "blog-featured", label: "Featured story" }],
+  careers: [{ id: "careers-openings", label: "Open roles" }],
+  "contact-form": [{ id: "contact-split", label: "Contact details and form" }],
+  faq: [
+    { id: "faq-stacked", label: "Centered questions" },
+    { id: "faq-reversed", label: "Questions on the left" },
+  ],
+  features: [{ id: "features-bento", label: "Bento grid" }],
+  hero: [
+    { id: "hero-centered", label: "Centered introduction" },
+    { id: "hero-cover", label: "Full-width image" },
+  ],
+  plans: [{ id: "pricing-comparison", label: "Plan comparison" }],
+  pricing: [{ id: "pricing-comparison", label: "Plan comparison" }],
+} as const;
+
+type SectionLayout = (typeof sectionLayouts)[keyof typeof sectionLayouts][number];
+export const sectionLayoutIds = [
+  ...new Set(Object.values(sectionLayouts).flatMap((layouts) => layouts.map(({ id }) => id))),
+];
+
+export function getSectionLayouts(type: AuthorableSectionType): readonly SectionLayout[] {
+  return Object.hasOwn(sectionLayouts, type)
+    ? sectionLayouts[type as keyof typeof sectionLayouts]
+    : [];
+}
+
 export type SectionOptions = {
   description?: string;
+  layout?: SectionLayout["id"];
   alignment?: "left" | "center" | "right";
   columns?: 1 | 2 | 3 | 4;
   email?: string;

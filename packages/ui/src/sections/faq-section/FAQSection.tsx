@@ -7,12 +7,16 @@ import { FAQBlock } from "./FAQBlock";
 
 export function FAQSection(props: SectionProps) {
   const { section, language } = props;
-  if (section.renderer !== "accordion") return <SectionPresentation {...props} type="faq" />;
+  const { layout } = section.options ?? {};
+  const faqLayout = layout === "faq-stacked" || layout === "faq-reversed" ? layout : undefined;
+  if (!faqLayout && section.renderer !== "accordion")
+    return <SectionPresentation {...props} type="faq" />;
   if (!section.visible || (!section.items.length && !section.options?.description)) return null;
   return (
     <FAQBlock
       className="scroll-mt-[100px] border-t border-border/70 py-lg wrap-anywhere sm:py-xl data-[alignment=center]:text-center data-[alignment=right]:text-right"
       data-alignment={section.options?.alignment}
+      data-section-layout={layout}
       data-section-type="faq"
       description={section.options?.description}
       headingId={`${section.id}-heading`}
@@ -22,6 +26,7 @@ export function FAQSection(props: SectionProps) {
         id: item.id,
         title: item.title,
       }))}
+      layout={faqLayout}
       title={section.title}
     />
   );

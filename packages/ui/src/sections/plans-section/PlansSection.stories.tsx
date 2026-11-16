@@ -22,3 +22,12 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const Compact: Story = { args: sectionStory("plans", "compact") };
 export const Empty: Story = { args: sectionStory("plans", "empty") };
+
+export const PlanComparison: Story = {
+  args: {
+    section: {
+      ...meta.args.section,
+      options: { ...meta.args.section.options, layout: "pricing-comparison" },
+    },
+  },
+};
