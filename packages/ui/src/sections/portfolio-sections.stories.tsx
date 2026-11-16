@@ -1,11 +1,11 @@
 import { PortfolioStoryFrame } from "@fixtures/portfolio-story-frame";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { profile } from "@shared/config";
 import type {
   Education as EducationRecord,
   ExperienceWithCompanyProjectAndSkills,
   ProjectWithCompanyAndSkills,
+  Skill,
 } from "@shared/lib/types";
 
 import { AboutMeSection } from "./about-me-section";
@@ -63,6 +63,16 @@ const experience = {
   updatedAt: timestamp,
 } satisfies ExperienceWithCompanyProjectAndSkills;
 
+const skill = {
+  createdAt: timestamp,
+  experienceYear: null,
+  id: "example-skill",
+  name: "Interaction design",
+  projects: [],
+  type: "Design",
+  updatedAt: timestamp,
+} satisfies Skill;
+
 const referral = {
   contactInfo: null,
   createdAt: timestamp,
@@ -100,7 +110,7 @@ export const Experience: Story = {
 export const Projects: Story = {
   render: () => <ProjectsSection projects={[project]} />,
 };
-export const Skills: Story = { render: () => <SkillSection skills={profile.skills} /> };
+export const Skills: Story = { render: () => <SkillSection skills={{ Design: [skill] }} /> };
 export const CurriculumVitae: Story = { render: () => <CVSection /> };
 export const Referrals: Story = { render: () => <ReferralSection referrals={[referral]} /> };
 export const ReviewQueue: Story = {
