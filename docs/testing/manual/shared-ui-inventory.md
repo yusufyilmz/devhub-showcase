@@ -24,9 +24,9 @@ Follow the [review plan](shared-ui-review-plan.md) and see the [manual review no
 | [buttons/project-button](../../../packages/ui/src/buttons/project-button)         | See group exports              | UI/Buttons/Project Button     | Checked         |
 | [buttons/segmented-control](../../../packages/ui/src/buttons/segmented-control)   | `@shared/ui/segmented-control` | UI/Buttons/Segmented Control  | Checked         |
 | [buttons/switch](../../../packages/ui/src/buttons/switch)                         | `@shared/ui/switch`            | UI/Buttons/Switch             | Checked         |
-| [buttons/toggle](../../../packages/ui/src/buttons/toggle)                         | `@shared/ui/toggle`            | UI/Buttons/Toggle             | Pending         |
-| [buttons/toggle-button](../../../packages/ui/src/buttons/toggle-button)           | `@shared/ui/toggle-button`     | UI/Buttons/Toggle Button      | Pending         |
-| [buttons/toggle-group](../../../packages/ui/src/buttons/toggle-group)             | `@shared/ui/toggle-group`      | UI/Buttons/Toggle Group       | Pending         |
+| [buttons/toggle](../../../packages/ui/src/buttons/toggle)                         | `@shared/ui/toggle`            | UI/Buttons/Toggle             | Checked         |
+| [buttons/toggle-button](../../../packages/ui/src/buttons/toggle-button)           | `@shared/ui/toggle-button`     | UI/Buttons/Toggle Button      | Checked         |
+| [buttons/toggle-group](../../../packages/ui/src/buttons/toggle-group)             | `@shared/ui/toggle-group`      | UI/Buttons/Toggle Group       | Checked         |
 
 ## Forms
 

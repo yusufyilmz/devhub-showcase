@@ -46,7 +46,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: (args) => (
-    <Toggle {...args} aria-label="Toggle italic">
+    <Toggle {...args} aria-label="Toggle bold">
       <Bold className="h-4 w-4" />
     </Toggle>
   ),
@@ -71,3 +71,5 @@ export const Outline: Story = {
     </Toggle>
   ),
 };
+
+export const Disabled: Story = { ...Default, args: { disabled: true } };
