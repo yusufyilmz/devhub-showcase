@@ -246,6 +246,20 @@ const directionClass: Record<FlexDirection, string> = {
   "row-reverse": "flex-row-reverse",
 };
 
+const tabletDirectionClass: Record<FlexDirection, string> = {
+  column: "md:flex-col",
+  "column-reverse": "md:flex-col-reverse",
+  row: "md:flex-row",
+  "row-reverse": "md:flex-row-reverse",
+};
+
+const desktopDirectionClass: Record<FlexDirection, string> = {
+  column: "lg:flex-col",
+  "column-reverse": "lg:flex-col-reverse",
+  row: "lg:flex-row",
+  "row-reverse": "lg:flex-row-reverse",
+};
+
 export function responsiveDirectionClasses(input: {
   direction?: FlexDirection;
   tabletDirection?: FlexDirection;
@@ -258,11 +272,11 @@ export function responsiveDirectionClasses(input: {
     classes.push(directionClass[mobileDirection]);
   }
   if (tabletDirection) {
-    classes.push(`md:${directionClass[tabletDirection]}`);
+    classes.push(tabletDirectionClass[tabletDirection]);
   }
   if (direction) {
     if (mobileDirection || tabletDirection) {
-      classes.push(`lg:${directionClass[direction]}`);
+      classes.push(desktopDirectionClass[direction]);
     } else {
       classes.push(directionClass[direction]);
     }
@@ -418,8 +432,5 @@ export function flexGrowClass(flex: string | number | undefined): string | undef
   if (flex === 1 || flex === "1") {
     return "flex-1";
   }
-  if (typeof flex === "number") {
-    return undefined;
-  }
-  return `flex-[${flex}]`;
+  return undefined;
 }

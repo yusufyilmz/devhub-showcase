@@ -31,10 +31,20 @@ function EmbeddedDocument({
     root.dataset.accent = appearance.accent;
     if (portfolioTheme) root.dataset.portfolioTheme = portfolioTheme;
     else delete root.dataset.portfolioTheme;
+    const previousStyles = new Map<string, { value: string; priority: string }>();
     for (const [key, value] of Object.entries(themeStyle ?? {})) {
-      if (value != null) root.style.setProperty(key, String(value));
+      if (value == null) continue;
+      previousStyles.set(key, {
+        priority: root.style.getPropertyPriority(key),
+        value: root.style.getPropertyValue(key),
+      });
+      root.style.setProperty(key, String(value));
     }
     return () => {
+      for (const [key, { value, priority }] of previousStyles) {
+        if (value) root.style.setProperty(key, value, priority);
+        else root.style.removeProperty(key);
+      }
       root.lang = previous.lang;
       if (previous.accent) root.dataset.accent = previous.accent;
       else delete root.dataset.accent;

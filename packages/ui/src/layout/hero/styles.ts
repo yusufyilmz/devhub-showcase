@@ -8,8 +8,8 @@ export const heroSurfaceStyles = {
   element5:
     "hero-surface-media pointer-events-none absolute inset-0 size-full object-cover hero-surface-video",
   element6:
-    "hero-surface-shade pointer-events-none absolute inset-0 size-full bg-black/68 [[data-overlay=strong]_&]:bg-black/80",
-  element7: "hero-surface-content relative px-[clamp(20px,4vw,56px)] text-foreground",
+    "hero-surface-shade pointer-events-none absolute inset-0 size-full bg-black/68 in-data-[overlay=strong]:bg-black/80",
+  element7: "hero-surface-content relative px-[clamp(20px,4vw,56px)] text-white",
   element8:
-    "hero-surface-toggle relative mt-0 mr-5 mb-5 ml-5 cursor-pointer rounded-lg border border-border bg-card px-4 py-2.5 text-foreground",
+    "hero-surface-toggle relative mx-md mb-md h-auto min-h-9 border-border/75 bg-card px-sm py-xs text-card-foreground",
 } as const;

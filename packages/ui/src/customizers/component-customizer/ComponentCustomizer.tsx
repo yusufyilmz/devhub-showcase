@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 
 import { cn } from "cn";
+import { CodeXml, Settings2 } from "lucide-react";
 
 import { Button } from "../../buttons/button";
 import { IconButton } from "../../buttons/icon-button";
@@ -161,20 +162,22 @@ export function ComponentCustomizer({
               </Select>
             )}
             <IconButton
+              aria-expanded={showCodePanel}
               aria-label="Toggle code panel"
               onClick={() => setShowCodePanel(!showCodePanel)}
               size="sm"
               variant="outline"
             >
-              {showCodePanel ? "👁️" : "👁️‍🗨️"}
+              <CodeXml aria-hidden="true" className="size-4" />
             </IconButton>
             <IconButton
+              aria-expanded={showPropsPanel}
               aria-label="Toggle props panel"
               onClick={() => setShowPropsPanel(!showPropsPanel)}
               size="sm"
               variant="outline"
             >
-              ⚙️
+              <Settings2 aria-hidden="true" className="size-4" />
             </IconButton>
           </FlexRow>
         </FlexBetween>

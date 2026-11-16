@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "../../buttons/button";
-import { ComponentCustomizer } from "./ComponentCustomizer";
+import { ComponentCustomizer } from "../customizers";
 
 const meta = {
   args: {

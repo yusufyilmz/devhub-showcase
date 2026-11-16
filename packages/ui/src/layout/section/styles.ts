@@ -12,11 +12,11 @@ export const sectionElementsStyles = {
 } as const;
 
 export const sectionHeaderStyles = {
-  baseClasses: "flex items-center gap-3 transition-all",
+  baseClasses: "flex min-w-0 items-center gap-sm motion-safe:transition-colors",
   baseClasses2: "cursor-pointer",
-  element1: "flex-1",
+  element1: "min-w-0 flex-1 wrap-anywhere",
   element2: "text-muted-foreground",
-  getContainerClasses: "p-4 rounded-lg border",
+  getContainerClasses: "rounded-xl border p-md",
   getContainerClasses2: "hover:bg-opacity-80",
   getContainerClasses3: "py-2 px-0",
   getContainerClasses4: "hover:opacity-80",
@@ -27,7 +27,7 @@ export const sectionHeaderStyles = {
   sectionHeader3: "uppercase",
   sectionHeader4: "transition-colors",
   sectionHeader5: "text-xs",
-  sectionHeader6: "shrink-0 transition-transform",
+  sectionHeader6: "shrink-0 motion-safe:transition-transform",
   sectionHeader7: "rotate-180",
 } as const;
 

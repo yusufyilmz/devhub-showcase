@@ -82,7 +82,7 @@ export function HeroSurface({
             else node?.pause();
           }}
           type="button"
-          variant="unstyled"
+          variant="outline"
         >
           {playing ? labels.pause : labels.play}
         </LibraryButton>

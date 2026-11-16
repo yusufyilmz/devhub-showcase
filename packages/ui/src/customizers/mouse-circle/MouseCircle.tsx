@@ -36,7 +36,7 @@ export function MouseCircle() {
   return (
     <div
       aria-hidden="true"
-      className={mouseCircleStyles.element1}
+      className={mouseCircleStyles.glow}
       data-slot="mouse-circle"
       ref={glow}
     />
