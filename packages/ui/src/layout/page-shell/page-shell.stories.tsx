@@ -1,5 +1,8 @@
+import { useState } from "react";
+
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { Button } from "../../buttons/button";
 import { Typography } from "../../display/typography";
 import { PageShell } from "./page-shell";
 
@@ -52,3 +55,31 @@ export const LightPaper: Story = {
   },
   render: Studio.render,
 };
+
+function EmbeddedPreview() {
+  const [visible, setVisible] = useState(false);
+  return (
+    <div className="grid justify-items-start gap-sm p-md">
+      <Button
+        aria-expanded={visible}
+        onClick={() => setVisible(!visible)}
+        type="button"
+        variant="outline"
+      >
+        Toggle embedded preview
+      </Button>
+      {visible && (
+        <PageShell
+          appearance={{ accent: "violet", defaultTheme: "light" }}
+          documentLanguage="en"
+          embed
+          portfolioTheme="paper"
+        >
+          <p>Paper preview</p>
+        </PageShell>
+      )}
+    </div>
+  );
+}
+
+export const EmbeddedLifecycle: Story = { ...Studio, render: () => <EmbeddedPreview /> };

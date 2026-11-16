@@ -264,3 +264,32 @@ export const WideCanvas: StoryObj<typeof meta> = {
     ),
   ],
 };
+
+export const ConstrainedToolbar: Story = {
+  render: () => (
+    <Flex
+      aria-label="Draft actions"
+      as="section"
+      background="card"
+      border="subtle"
+      direction="row"
+      gap="sm"
+      maxWidth={22}
+      mobileDirection="column"
+      padding="md"
+      radius="lg"
+      shadow="sm"
+      tabletDirection="column-reverse"
+    >
+      <Flex cursor="help" data-testid="draft-title" flex="0 1 10rem" zIndex={7}>
+        Portfolio draft
+      </Flex>
+      <Flex aria-label="Actions" gap="xs" overflowX="auto" tabIndex={0}>
+        <Button type="button">Edit draft</Button>
+        <Button type="button" variant="outline">
+          View published changes
+        </Button>
+      </Flex>
+    </Flex>
+  ),
+};

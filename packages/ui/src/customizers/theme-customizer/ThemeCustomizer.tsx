@@ -3,6 +3,7 @@
 import { type ReactNode, useEffect, useRef, useState } from "react";
 
 import { cn } from "cn";
+import { CodeXml, RotateCcw } from "lucide-react";
 
 import {
   getPortfolioThemeAppearance,
@@ -397,13 +398,18 @@ Object.entries(themeConfig).forEach(([key, value]) => {
         </div>
         <FlexRow gap="sm" wrap>
           {showCode && (
-            <Button onClick={() => setShowCodePanel(!showCodePanel)} variant="outline">
-              {showCodePanel ? "👁️ Hide Code" : "👁️‍🗨️ Show Code"}
+            <Button
+              aria-expanded={showCodePanel}
+              onClick={() => setShowCodePanel(!showCodePanel)}
+              startIcon={<CodeXml />}
+              variant="outline"
+            >
+              {showCodePanel ? "Hide Code" : "Show Code"}
             </Button>
           )}
           {showReset && (
-            <Button onClick={resetToDefaults} variant="outline">
-              🔄 Reset
+            <Button onClick={resetToDefaults} startIcon={<RotateCcw />} variant="outline">
+              Reset
             </Button>
           )}
         </FlexRow>
