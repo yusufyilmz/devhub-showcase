@@ -82,12 +82,12 @@ Compare the rendered layouts on the public Once UI category pages. Count a varia
 - [x] Hero. Keep the existing split hero and add a centered introduction and a full-width image cover. [Once UI Hero](https://docs.once-ui.com/blocks/hero)
 - [x] FAQ. Keep the current split accordion and add a centered stack and a questions-first split. [Once UI FAQ](https://docs.once-ui.com/blocks/faq)
 - [x] Features. Keep the even cards and add a bento grid with a larger lead tile. [Once UI Features](https://docs.once-ui.com/blocks/features), [Once UI Bento](https://docs.once-ui.com/blocks/bento)
-- [ ] About. Compare the current prose and cards with the reference’s recognition and metrics layouts. Add a clear narrative and proof-point composition using the section’s existing fields. [Once UI About](https://docs.once-ui.com/blocks/about)
-- [ ] Blog. Add a featured story with a supporting post index, then compare the existing grid to the reference’s journal and digest patterns. [Once UI Blog](https://docs.once-ui.com/blocks/blog)
-- [ ] Careers. Separate openings from role details and hiring steps. Design a composition with a lead role and an interview timeline. [Once UI Careers](https://docs.once-ui.com/blocks/careers)
-- [ ] Contact. Add a split layout for the existing contact choices and form. Preserve the form’s existing email-app action. [Once UI Contact](https://docs.once-ui.com/blocks/contact)
-- [ ] Pricing and Plans. Compare equal cards with side-by-side feature comparison and featured-plan layouts. Keep currency and CTA data with its plan. [Once UI Pricing](https://docs.once-ui.com/blocks/pricing), [Once UI Plans](https://docs.once-ui.com/blocks/plans)
-- [ ] Apply the same comparison to the rest of the existing section inventory. Use functional variations that fit each section’s content and preserve shared controls.
+- [x] About. Add an editorial profile that pairs the narrative with a lead story and supporting details. [Once UI About](https://docs.once-ui.com/blocks/about)
+- [x] Blog. Add a featured story with a supporting post index. [Once UI Blog](https://docs.once-ui.com/blocks/blog)
+- [x] Careers. Add a role index with expandable details and the leading opening expanded. [Once UI Careers](https://docs.once-ui.com/blocks/careers)
+- [x] Contact. Add a dedicated contact panel alongside the existing form and preserve its email-app action. [Once UI Contact](https://docs.once-ui.com/blocks/contact)
+- [x] Pricing and Plans. Add a side-by-side feature comparison with each plan’s price and link. The table scrolls within its panel at narrow widths. [Once UI Pricing](https://docs.once-ui.com/blocks/pricing), [Once UI Plans](https://docs.once-ui.com/blocks/plans)
+- [ ] Add alternatives to the remaining 39 authorable section types. Compare additional patterns within the first nine families as needed, including newsletter sign-up, testimonial showcases, interview timelines, and featured plans. Use functional variations that fit each section’s content and preserve shared controls.
 
 ## Task 3 — Build the shared Live Section Preview and wire home
 

@@ -34,15 +34,7 @@ export function OptionsEditor({ section, type, onChange }: OptionsEditorOptions)
             <option key={value}>{value}</option>
           ))}
         </SelectField>
-        <SelectField
-          label="Columns"
-          onChange={(value) => change({ columns: Number(value) as 1 | 2 | 3 | 4 })}
-          value={String(options.columns ?? 3)}
-        >
-          {[1, 2, 3, 4].map((value) => (
-            <option key={value}>{value}</option>
-          ))}
-        </SelectField>
+        <SectionColumnsField onChange={change} options={options} />
         {view === "hero" && (
           <Field
             label="Hero image URL"
@@ -108,11 +100,6 @@ function SectionLayoutField({
 }: Pick<OptionsEditorOptions, "section" | "type"> & {
   onChange: (patch: Partial<SectionOptions>) => void;
 }) {
-  if (
-    (type === "faq" && section.renderer !== "accordion") ||
-    (type === "features" && section.renderer !== "cards")
-  )
-    return null;
   const layouts = getSectionLayouts(type);
   if (!layouts.length) return null;
   return (
@@ -126,6 +113,27 @@ function SectionLayoutField({
         <option key={id} value={id}>
           {label}
         </option>
+      ))}
+    </SelectField>
+  );
+}
+
+function SectionColumnsField({
+  options,
+  onChange,
+}: {
+  options: SectionOptions;
+  onChange: (patch: Partial<SectionOptions>) => void;
+}) {
+  if (options.layout) return null;
+  return (
+    <SelectField
+      label="Columns"
+      onChange={(value) => onChange({ columns: Number(value) as 1 | 2 | 3 | 4 })}
+      value={String(options.columns ?? 3)}
+    >
+      {[1, 2, 3, 4].map((value) => (
+        <option key={value}>{value}</option>
       ))}
     </SelectField>
   );

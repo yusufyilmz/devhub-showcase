@@ -44,6 +44,12 @@ describe("LiveSectionPreview", () => {
       ["faq", "faq-stacked"],
       ["faq", "faq-reversed"],
       ["features", "features-bento"],
+      ["about", "about-editorial"],
+      ["blog-page", "blog-featured"],
+      ["careers", "careers-openings"],
+      ["contact-form", "contact-split"],
+      ["pricing", "pricing-comparison"],
+      ["plans", "pricing-comparison"],
     ] as const;
     for (const [id, layout] of cases) {
       const sample = createSectionExample(id).section;

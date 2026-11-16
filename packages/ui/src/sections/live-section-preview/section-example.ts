@@ -199,7 +199,11 @@ function sectionContent(exampleUrl: (file: string) => string) {
     features: {
       description: "Three ways to find and share research.",
       items: [
-        { body: "Narrow the archive by topic, year, and organization.", title: "Filter reports" },
+        {
+          ...atlas,
+          body: "Narrow the archive by topic, year, and organization.",
+          title: "Filter reports",
+        },
         { body: "Group related reports into reading lists.", title: "Save collections" },
         { body: "Send collaborators a link that keeps your filters.", title: "Share a view" },
       ],

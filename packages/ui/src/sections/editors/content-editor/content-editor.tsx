@@ -98,25 +98,27 @@ export function SectionContentEditor({
   return (
     <div className={contentEditorStyles.element1}>
       <OptionsEditor onChange={onChange} section={section} type={type} />
-      <fieldset className={editorPanelStyles.panel}>
-        <legend className={editorPanelStyles.legend}>Layout</legend>
-        <SelectField
-          label="Section display"
-          onChange={(renderer) =>
-            onChange({
-              ...section,
-              renderer: renderer as CustomSection["renderer"],
-            })
-          }
-          value={section.renderer}
-        >
-          {getSectionRenderers(type).map((view) => (
-            <option key={view} value={view}>
-              {view}
-            </option>
-          ))}
-        </SelectField>
-      </fieldset>
+      {!section.options?.layout && (
+        <fieldset className={editorPanelStyles.panel}>
+          <legend className={editorPanelStyles.legend}>Layout</legend>
+          <SelectField
+            label="Section display"
+            onChange={(renderer) =>
+              onChange({
+                ...section,
+                renderer: renderer as CustomSection["renderer"],
+              })
+            }
+            value={section.renderer}
+          >
+            {getSectionRenderers(type).map((view) => (
+              <option key={view} value={view}>
+                {view}
+              </option>
+            ))}
+          </SelectField>
+        </fieldset>
+      )}
       <SourceEditor onChange={onChange} section={section} sourceItems={sourceItems} type={type} />
       {!section.source &&
         !["heading", "contact", "map", "toc", "newsletter"].includes(definition.view) && (

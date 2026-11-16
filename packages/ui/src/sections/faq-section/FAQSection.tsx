@@ -8,7 +8,9 @@ import { FAQBlock } from "./FAQBlock";
 export function FAQSection(props: SectionProps) {
   const { section, language } = props;
   const { layout } = section.options ?? {};
-  if (section.renderer !== "accordion") return <SectionPresentation {...props} type="faq" />;
+  const faqLayout = layout === "faq-stacked" || layout === "faq-reversed" ? layout : undefined;
+  if (!faqLayout && section.renderer !== "accordion")
+    return <SectionPresentation {...props} type="faq" />;
   if (!section.visible || (!section.items.length && !section.options?.description)) return null;
   return (
     <FAQBlock
@@ -24,7 +26,7 @@ export function FAQSection(props: SectionProps) {
         id: item.id,
         title: item.title,
       }))}
-      layout={layout === "faq-stacked" || layout === "faq-reversed" ? layout : undefined}
+      layout={faqLayout}
       title={section.title}
     />
   );

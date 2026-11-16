@@ -7,7 +7,7 @@ import type { SectionProps } from "../types";
 
 export function FeaturesSection(props: SectionProps) {
   const { section, language } = props;
-  if (section.renderer !== "cards" || section.options?.layout !== "features-bento") {
+  if (section.options?.layout !== "features-bento") {
     return <SectionPresentation {...props} type="features" />;
   }
   if (!section.visible || (!section.items.length && !section.options.description)) return null;
