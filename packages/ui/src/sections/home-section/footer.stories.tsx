@@ -14,8 +14,8 @@ function Example({ width = 1120 }: { width?: number }) {
 const meta = {
   component: Example,
   decorators: [
-    (Story, context) => (
-      <PortfolioStoryFrame mode={context.globals.mode === "dark" ? "dark" : "light"}>
+    (Story) => (
+      <PortfolioStoryFrame>
         <Story />
       </PortfolioStoryFrame>
     ),

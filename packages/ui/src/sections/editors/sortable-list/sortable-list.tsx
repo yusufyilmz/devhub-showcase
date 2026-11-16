@@ -216,6 +216,7 @@ export function SortableList({
                   move(item.id, target);
                 }}
                 type="button"
+                variant="ghost"
               >
                 <span aria-hidden="true">⠿</span>
               </Button>
@@ -225,19 +226,21 @@ export function SortableList({
               <span className={sortableListStyles.element5}>{item.label}</span>
               <Button
                 aria-label={`Move ${item.label} up`}
-                className={sortableListStyles.element6}
+                className={sortableListStyles.moveButton}
                 disabled={disabled || index === 0}
                 onClick={() => move(item.id, index - 1)}
                 type="button"
+                variant="ghost"
               >
                 ↑
               </Button>
               <Button
                 aria-label={`Move ${item.label} down`}
-                className={sortableListStyles.element7}
+                className={sortableListStyles.moveButton}
                 disabled={disabled || index === items.length - 1}
                 onClick={() => move(item.id, index + 1)}
                 type="button"
+                variant="ghost"
               >
                 ↓
               </Button>
@@ -260,7 +263,7 @@ export function SortableList({
             >
               {renderContent ? (
                 <>
-                  <div className="sortable-item-tools [display:flex] [gap:0.375rem] [align-items:center] [padding:0.375rem] [background:color-mix(in_srgb,_var(--foreground)_6%,_transparent)] [border-radius:var(--radius-lg)_var(--radius-lg)_0_0]">
+                  <div className="sortable-item-tools flex flex-wrap items-center gap-xs rounded-t-lg bg-foreground/6 p-xs">
                     {controls}
                   </div>
                   {renderContent(item.id)}

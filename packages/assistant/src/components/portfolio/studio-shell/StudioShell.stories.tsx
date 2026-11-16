@@ -17,8 +17,8 @@ const meta = {
   args: { children: null, contentId: "admin-content", tools: <ThemeToggle /> },
   component: StudioShell,
   decorators: [
-    (Story, { globals }) => (
-      <PortfolioStoryFrame fullBleed mode={globals.mode === "dark" ? "dark" : "light"}>
+    (Story) => (
+      <PortfolioStoryFrame fullBleed>
         <Story />
       </PortfolioStoryFrame>
     ),

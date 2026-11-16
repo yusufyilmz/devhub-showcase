@@ -21,6 +21,7 @@ export function GalleryCollection({ section }: GalleryCollectionOptions) {
         {items.map((item, itemIndex) => (
           <Button
             aria-label={`View ${item.title}`}
+            className="grid h-auto min-w-0 grid-cols-[minmax(0,1fr)] gap-s rounded-lg border-border/75 bg-card p-sm text-start whitespace-normal wrap-anywhere hover:border-primary/40 [&_img]:aspect-[4/3] [&_img]:w-full [&_img]:rounded-md [&_img]:object-cover"
             key={item.id}
             onClick={() => setIndex(itemIndex)}
             variant="outline"

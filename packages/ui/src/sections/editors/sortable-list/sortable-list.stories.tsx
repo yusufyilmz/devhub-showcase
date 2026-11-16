@@ -18,12 +18,11 @@ const meta = {
   component: SortableList,
   decorators: [
     (Story) => (
-      <div className="w-[min(82vw,34rem)]">
+      <div className="mx-auto w-full min-w-0 max-w-[34rem]">
         <Story />
       </div>
     ),
   ],
-  parameters: { layout: "centered" },
   render: function Reorder(args) {
     const [items, setItems] = useState(args.items);
     return (

@@ -51,6 +51,7 @@ function MapPreview({ latitude, longitude, title, language }: LocationMapProps) 
             <p className="font-medium">{title}</p>
             <Button
               aria-busy={status === "loading"}
+              className="h-auto min-h-10 min-w-0 max-w-full whitespace-normal"
               disabled={status === "loading"}
               onClick={() => setStatus("loading")}
               startIcon={<MapPin />}
@@ -62,7 +63,7 @@ function MapPreview({ latitude, longitude, title, language }: LocationMapProps) 
         )}
       </div>
       <Button
-        className="self-start"
+        className="h-auto min-h-10 min-w-0 max-w-full self-start justify-start whitespace-normal"
         endIcon={<ArrowUpRight />}
         href={`https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=16/${latitude}/${longitude}`}
         variant="link"

@@ -48,20 +48,23 @@ export function SectionsSettings({
     <Card asChild interaction="static" layout="plain">
       <section
         aria-labelledby="portfolio-sections-title"
-        className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px] grid gap-4"
+        className="editor-card @container mb-md grid min-w-0 gap-md rounded-xl border border-border/75 bg-card p-md sm:p-lg"
       >
-        <div className="grid gap-1">
+        <div className="grid min-w-0 gap-xs">
           <h2 id="portfolio-sections-title">Portfolio sections</h2>
           <p className="text-muted-foreground">
             Manage the content and layout of your portfolio. Changes are saved with your draft.
           </p>
         </div>
-        <ul className="m-0 grid list-none divide-y divide-border p-0">
+        <ul className="m-0 grid list-none divide-y divide-border/70 p-0">
           {destinations.map(({ action, description, icon: Icon, label, tab }) => (
-            <li className="flex flex-wrap items-center justify-between gap-3 py-3" key={tab}>
-              <div className="flex min-w-0 flex-1 items-start gap-3">
-                <Icon aria-hidden="true" className="mt-1 size-4 shrink-0 text-primary" />
-                <div className="grid gap-1">
+            <li
+              className="grid min-w-0 items-center gap-sm py-sm @md:grid-cols-[minmax(0,1fr)_auto]"
+              key={tab}
+            >
+              <div className="flex min-w-0 items-start gap-s">
+                <Icon aria-hidden="true" className="mt-1 size-4 shrink-0 text-muted-foreground" />
+                <div className="grid min-w-0 gap-xs">
                   <h3 className="text-base">{label}</h3>
                   <p className="text-sm text-muted-foreground">{description}</p>
                   {tab === "Custom sections" && (
@@ -69,7 +72,12 @@ export function SectionsSettings({
                   )}
                 </div>
               </div>
-              <Button onClick={() => onNavigate(tab)} type="button" variant="outline">
+              <Button
+                className="h-auto min-h-10 min-w-0 justify-self-start whitespace-normal"
+                onClick={() => onNavigate(tab)}
+                type="button"
+                variant="outline"
+              >
                 {action}
               </Button>
             </li>

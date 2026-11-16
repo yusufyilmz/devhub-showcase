@@ -52,8 +52,10 @@
   margin-bottom: 0.75rem;
   font-size: 1.2rem;
 }
-.library-section a {
-  color: var(--primary);
+.library-section a:not([data-slot="button"]) {
+  color: var(--foreground);
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
 }
 .library-section blockquote {
   padding-inline-start: 1.25rem;
@@ -96,13 +98,13 @@
   object-fit: contain;
 }
 .section-view-statistics h3 {
-  font-size: 3rem;
-  color: var(--primary);
+  font-size: clamp(1.125rem, 2.2vw, 1.5rem);
+  color: var(--foreground);
 }
 .section-type-cta {
   text-align: center;
 }
-.section-type-cta a {
+.section-type-cta a:not([data-slot="button"]) {
   display: inline-flex;
   padding: 0.75rem 1.25rem;
   border: 1px solid var(--primary);
@@ -113,12 +115,6 @@
   .library-section .section-view-grid {
     grid-template-columns: 1fr;
   }
-}
-
-.section-native-video {
-  width: 100%;
-  max-height: 600px;
-  border-radius: 12px;
 }
 
 .library-section[data-section-type] {

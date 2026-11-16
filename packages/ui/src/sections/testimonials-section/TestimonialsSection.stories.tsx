@@ -8,8 +8,8 @@ const meta = {
   args: sectionStory("testimonials"),
   component: TestimonialsSection,
   decorators: [
-    (Story, context) => (
-      <PortfolioStoryFrame mode={context.globals.mode === "dark" ? "dark" : "light"}>
+    (Story) => (
+      <PortfolioStoryFrame>
         <Story />
       </PortfolioStoryFrame>
     ),

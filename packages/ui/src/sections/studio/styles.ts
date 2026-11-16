@@ -8,41 +8,39 @@ export const configuredSectionStyles = {
   element2: "configured-timeline list-none border-l border-border pl-6 [&>li]:py-3 [&>li]:pb-6",
 } as const;
 
+const editorPanel =
+  "editor-card mb-md min-w-0 rounded-xl border border-border/75 bg-card p-md sm:p-lg";
+const editorActions =
+  "editor-actions flex min-w-0 flex-wrap items-center gap-s [&_button]:h-auto [&_button]:min-h-9 [&_button]:max-w-full [&_button]:whitespace-normal";
+
 export const customSectionsEditorStyles = {
   element1: studioButtonClass.primary,
-  element2:
-    "editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px]",
-  element3:
-    "editor-actions flex shrink-0 items-center gap-2 [&_button]:min-h-8 [&_button]:min-w-8 [&_button]:rounded-md [&_button]:border [&_button]:border-border [&_button]:bg-card [&_button]:px-[9px] [&_button]:py-[5px] [&_button]:text-xs [&_button]:text-foreground",
+  element2: editorPanel,
+  element3: editorActions,
   element4: studioButtonClass.secondary,
   element5: "danger-button bg-transparent text-xs text-destructive shadow-none",
 } as const;
 
 export const sectionOrderEditorStyles = {
-  element1:
-    "editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px]",
+  element1: editorPanel,
   element2: studioButtonClass.secondary,
 } as const;
 
 export const sectionSettingsEditorStyles = {
-  element1:
-    "editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px] [&_h2]:mb-2 [&_h2]:text-2xl [&_h2]:font-semibold [&>p]:mb-6 [&>p]:max-w-[70ch] [&>p]:text-sm [&>p]:leading-7 [&>p]:text-muted-foreground",
+  element1: `${editorPanel} [&_h2]:mb-2 [&_h2]:text-2xl [&_h2]:font-semibold [&>p]:mb-6 [&>p]:max-w-[70ch] [&>p]:text-sm [&>p]:leading-7 [&>p]:text-muted-foreground`,
   element2:
     "grid min-w-0 gap-3 border-0 border-t border-border py-5 [&_button]:justify-self-start [&_label]:text-[13px] [&_legend]:pr-3 [&_legend]:text-base [&_legend]:font-semibold",
   element3: studioButtonClass.secondary,
 } as const;
 
 export const sectionTemplatesEditorStyles = {
-  element1:
-    "editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px] template-library [display:grid] [gap:1rem] [&_button:not([class])]:[min-height:44px]",
-  element2:
-    "editor-actions flex shrink-0 items-center gap-2 [&_button]:min-h-8 [&_button]:min-w-8 [&_button]:rounded-md [&_button]:border [&_button]:border-border [&_button]:bg-card [&_button]:px-[9px] [&_button]:py-[5px] [&_button]:text-xs [&_button]:text-foreground",
+  element1: `${editorPanel} template-library grid grid-cols-[minmax(0,1fr)] gap-md [&_input[type=file]]:max-w-full`,
+  element2: editorActions,
   element3: studioButtonClass.secondary,
   element4: studioButtonClass.secondary,
   element5:
-    "template-library-list [display:grid] [gap:1rem] [padding:0] [list-style:none] [&_>_li]:[display:flex] [flex-wrap:wrap] [gap:0.65rem] [align-items:center] [padding:1rem] [border:1px_solid_var(--border)] [border-radius:12px]",
-  element6:
-    "editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px]",
+    "template-library-list m-0 grid list-none gap-sm p-0 [&>li]:flex [&>li]:min-w-0 [&>li]:flex-wrap [&>li]:items-center [&>li]:gap-s [&>li]:rounded-lg [&>li]:border [&>li]:border-border/75 [&>li]:p-sm",
+  element6: editorPanel,
   element7: studioButtonClass.primary,
 } as const;
 

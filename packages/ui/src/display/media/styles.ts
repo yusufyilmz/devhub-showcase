@@ -1,5 +1,5 @@
 export const workMediaStyles = {
   action: "border-primary/25 bg-primary/10 text-foreground hover:bg-primary/20",
   element1:
-    "work-media [min-width:0] [&_img]:[display:block] [width:100%] [max-width:100%] [height:auto] [aspect-ratio:4_/_3] [object-fit:cover] [border-radius:8px] [&_iframe]:[display:block] [width:100%] [max-width:100%] [height:auto] [aspect-ratio:4_/_3] [object-fit:cover] [border-radius:8px] [[data-slot='masonry-grid']_&_img]:[aspect-ratio:auto_4_/_3] [&_[role='status']]:[margin:10px_0]",
+    "work-media grid min-w-0 justify-items-start gap-s [&_[data-slot=button]]:h-auto [&_[data-slot=button]]:min-h-10 [&_[data-slot=button]]:min-w-0 [&_[data-slot=button]]:max-w-full [&_[data-slot=button]]:whitespace-normal [&_img]:block [&_img]:h-auto [&_img]:w-full [&_img]:rounded-lg [&_img]:object-cover [&_iframe]:block [&_iframe]:aspect-video [&_iframe]:w-full [&_iframe]:rounded-lg [&_[role=status]]:my-s",
 } as const;

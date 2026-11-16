@@ -19,8 +19,8 @@ const meta = {
   },
   component: EngineerPage,
   decorators: [
-    (Story, { globals }) => (
-      <PortfolioStoryFrame fullBleed mode={globals.mode === "dark" ? "dark" : "light"}>
+    (Story) => (
+      <PortfolioStoryFrame fullBleed>
         <Story />
       </PortfolioStoryFrame>
     ),

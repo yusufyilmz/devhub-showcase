@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 
 import { Button } from "../../buttons";
 import { Label as LibraryLabel } from "../../forms/label";
@@ -10,17 +10,16 @@ import { Textarea } from "../../forms/textarea";
 import { projectFormStyles } from "./styles";
 import type { ProjectFormProps } from "./types";
 
+const emptyProject = { description: "", link: "", title: "" };
+
 export const ProjectForm: React.FC<ProjectFormProps> = ({
   onSubmit,
   isSubmitting,
   action,
-  initialData = { description: "", link: "", title: "" },
+  initialData = emptyProject,
 }) => {
-  const [formData, setFormData] = useState({
-    description: "",
-    link: "",
-    title: "",
-  });
+  const descriptionId = useId();
+  const [formData, setFormData] = useState(emptyProject);
 
   useEffect(() => {
     setFormData({
@@ -45,16 +44,16 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
   return (
     <form className={projectFormStyles.element1} onSubmit={handleSubmit}>
       <TextField
-        className={projectFormStyles.element2}
         label="Project Title"
         name="title"
         onChange={handleChange}
         required
         value={formData.title}
       />
-      <LibraryLabel className={projectFormStyles.element3} htmlFor="description" unstyled>
+      <LibraryLabel className={projectFormStyles.description} htmlFor={descriptionId} unstyled>
         Description
         <Textarea
+          id={descriptionId}
           name="description"
           onChange={handleChange}
           required
@@ -63,7 +62,6 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
         />
       </LibraryLabel>
       <TextField
-        className={projectFormStyles.element4}
         label="Project Link"
         name="link"
         onChange={handleChange}
@@ -72,8 +70,9 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
       />
       <Button
         aria-label={action}
-        className={projectFormStyles.element5}
+        className="w-full"
         disabled={isSubmitting}
+        type="submit"
         variant="default"
       >
         {action}
