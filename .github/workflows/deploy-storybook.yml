@@ -76,7 +76,12 @@ jobs:
           cp -R apps/storybook-app/storybook-static/. "$preview/.vercel/output/static/"
           printf '{"version":3}\n' > "$preview/.vercel/output/config.json"
           npx --yes vercel@65.4.0 deploy --cwd "$preview" --prebuilt --environment preview --force --yes --json --token "$VERCEL_TOKEN" > "$preview/deployment.json"
-          url=$(node -e 'const { deployment } = require(process.argv[1]); if (!deployment?.url) process.exit(1); console.log(deployment.url)' "$preview/deployment.json")
+          url=$(node -e '
+            const result = require(process.argv[1]);
+            const { url, readyState } = result.deployment ?? result;
+            if (!url || readyState !== "READY") throw new Error("Vercel did not return a ready preview URL");
+            console.log(url);
+          ' "$preview/deployment.json")
           printf '[Open Storybook preview](%s)\n' "$url" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Configure Pages
