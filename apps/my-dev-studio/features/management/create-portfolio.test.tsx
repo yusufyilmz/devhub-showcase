@@ -29,9 +29,10 @@ describe("CreatePortfolio dialog", () => {
     );
     fireEvent.click(screen.getByRole("button", { name: "Create a portfolio" }));
     const dialog = screen.getByRole("dialog", { name: "New managed portfolio" });
-    fireEvent.change(within(dialog).getByLabelText("Section example"), {
-      target: { value: "faq" },
+    fireEvent.change(within(dialog).getByRole("searchbox", { name: "Find a section" }), {
+      target: { value: "FAQ" },
     });
+    fireEvent.click(within(dialog).getByRole("button", { name: /^FAQ$/ }));
     expect(within(dialog).getByRole("region", { name: "FAQ section example" })).toBeTruthy();
     expect(request).not.toHaveBeenCalled();
     fireEvent.change(within(dialog).getByLabelText("Name", { exact: true }), {

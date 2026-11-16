@@ -54,7 +54,8 @@ test("an administrator creates, edits, publishes, hides and transfers an importe
   const launch = page.getByRole("button", { name: "Create a portfolio" });
   await launch.click();
   const dialog = page.getByRole("dialog", { name: "New managed portfolio" });
-  await dialog.getByRole("combobox", { exact: true, name: "Section example" }).selectOption("faq");
+  await dialog.getByRole("searchbox", { name: "Find a section" }).fill("FAQ");
+  await dialog.getByRole("button", { exact: true, name: "FAQ" }).click();
   await expect(dialog.getByRole("region", { name: "FAQ section example" })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();

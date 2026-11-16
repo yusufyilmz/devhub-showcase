@@ -83,7 +83,7 @@ Review each folder in this checklist. Inspect nested components and editors in t
 
 - [x] Add `provides a renderable example for each section`. Compare authorable example IDs to `authorableSectionTypes` and assert all inventoried view-only IDs render. Add `uses supplied draft content` and `does not call providers in preview mode`.
 - [x] Give each authorable example a typed fictional fixture via `Record<AuthorableSectionType, CustomSection>` and use `RenderSection` in preview mode. Give view-only examples explicit render adapters. Keep the home library's search and categories and use one metadata source for its counts and filters.
-- [x] Replace the homepage's limited sample list and catalog-only illustrations with the shared preview and selector. Render the selected live example on demand so browsing the list does not mount every section or embed.
+- [x] Keep the homepage’s featured picker and illustrated catalog. Render the selected featured example or catalog card through the shared preview. Opening a catalog card mounts its live renderer on demand.
 - [x] Run `pnpm exec vitest run --project unit live-section-preview library-picker section-catalog`. Confirm every entry can be selected on home and keyboard and mobile selection work. Commit.
 
 ## Task 4 — Integrate portfolio creation

@@ -16,12 +16,16 @@ test("homepage replaces the example without mounting the previous section", asyn
   });
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("data-theme", mode);
-  const library = page.getByRole("region", { name: "Browse sections" });
-  const selector = library.getByRole("combobox", { exact: true, name: "Section example" });
-  await expect(selector.locator("option")).toHaveCount(authorableSectionTypes.length + 9);
-  await selector.focus();
-  await expect(selector).toBeFocused();
-  await selector.selectOption("gallery-grid");
+  const library = page.getByRole("region", { name: /Browse all .* section examples/ });
+  const search = library.getByRole("searchbox", { name: "Find a section" });
+  const tiles = library.getByRole("list", { name: "Available section types" });
+  expect(await library.locator("[data-preview-kind]").count()).toBe(
+    authorableSectionTypes.length + 9,
+  );
+  await search.fill("Gallery Grid");
+  const galleryTile = tiles.getByRole("button", { exact: true, name: "Gallery Grid" });
+  await galleryTile.focus();
+  await galleryTile.press("Enter");
   const gallery = library.getByRole("region", { name: "Gallery Grid section example" });
   await expect(gallery).toBeVisible();
   await gallery.getByRole("button", { name: "View Atlas interface" }).click();
@@ -29,9 +33,12 @@ test("homepage replaces the example without mounting the previous section", asyn
   await expect(lightbox).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(lightbox).toBeHidden();
-  await expect(library.getByRole("region", { name: "Services section example" })).toHaveCount(0);
-  await page.getByRole("searchbox", { name: "Find a section" }).fill("youtube");
+  await library.getByRole("button", { name: "Close preview" }).click();
+  await expect(galleryTile).toBeFocused();
+  await search.fill("YouTube");
+  await tiles.getByRole("button", { exact: true, name: "YouTube" }).click();
   await expect(library.getByRole("button", { name: /load youtube video/i })).toBeDisabled();
+  await expect(gallery).toHaveCount(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
 });
 

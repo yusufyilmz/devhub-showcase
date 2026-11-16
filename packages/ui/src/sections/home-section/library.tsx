@@ -1,11 +1,104 @@
-import { authorableSectionTypes } from "@shared/config";
+import { authorableSections, authorableSectionTypes, type CustomSection } from "@shared/config";
 
 import { Button } from "../../buttons";
 import { Card } from "../../cards";
+import { LibraryPicker } from "../live-section-preview/library-picker";
+import { LiveSectionPreview } from "../live-section-preview/live-section-preview";
 import { SectionCatalog } from "../live-section-preview/section-catalog";
 import { Section } from "../section";
 import { libraryStyles } from "./styles";
 import type { HomeLibrarySectionOptions } from "./types";
+
+const samples: CustomSection[] = [
+  {
+    id: "custom-home-services",
+    items: [
+      {
+        body: "From a first idea to a clear visual story.",
+        id: "strategy",
+        title: "Creative direction",
+        url: "",
+      },
+      {
+        body: "Thoughtful websites and products built around people.",
+        id: "build",
+        title: "Digital experiences",
+        url: "",
+      },
+    ],
+    renderer: "cards",
+    sectionType: "services",
+    title: "Make room for what you do",
+    visible: true,
+  },
+  {
+    id: "custom-home-timeline",
+    items: [
+      {
+        body: "Building brands for people with a point of view.",
+        id: "now",
+        period: "2024 · Present",
+        title: "Independent designer",
+        url: "",
+      },
+      {
+        body: "A chapter of learning, making and growing.",
+        id: "before",
+        period: "2021 · 2024",
+        title: "Studio collaborator",
+        url: "",
+      },
+    ],
+    renderer: "timeline",
+    sectionType: "timeline",
+    title: "Show the journey",
+    visible: true,
+  },
+  {
+    id: "custom-home-gallery",
+    items: [
+      {
+        body: "A fictional brand exploration.",
+        id: "orbit",
+        imageUrl: "/examples/orbit-brand.svg",
+        title: "Orbit identity",
+        url: "",
+      },
+      {
+        body: "A fictional digital studio concept.",
+        id: "atelier",
+        imageUrl: "/examples/atlas-interface.svg",
+        title: "Atelier website",
+        url: "",
+      },
+    ],
+    renderer: "gallery",
+    sectionType: "gallery-grid",
+    title: "Let the work speak",
+    visible: true,
+  },
+  {
+    id: "custom-home-faq",
+    items: [
+      {
+        body: "Start with a conversation about your goals and ideas.",
+        id: "collaboration",
+        title: "How do we start working together?",
+        url: "",
+      },
+      {
+        body: "Listen, explore, build and refine together.",
+        id: "approach",
+        title: "What is your approach?",
+        url: "",
+      },
+    ],
+    renderer: "accordion",
+    sectionType: "faq",
+    title: "A little more context",
+    visible: true,
+  },
+];
 
 export function HomeLibrarySection({ href }: HomeLibrarySectionOptions) {
   return (
@@ -38,6 +131,17 @@ export function HomeLibrarySection({ href }: HomeLibrarySectionOptions) {
             <span>SELECT · ARRANGE · MAKE IT YOURS</span>
           </div>
         </div>
+        <LibraryPicker
+          items={samples.map((section) => {
+            const exampleId = section.sectionType ?? "custom";
+            return {
+              content: <LiveSectionPreview embedded exampleId={exampleId} section={section} />,
+              description: section.title,
+              id: exampleId,
+              title: authorableSections[exampleId].name,
+            };
+          })}
+        />
         <SectionCatalog />
         <div className={libraryStyles.element6}>
           <Card asChild layout="plain" surface="portfolio">

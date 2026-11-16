@@ -26,6 +26,7 @@ export type LiveSectionPreviewProps = Pick<SectionProps, "anchors" | "language">
   exampleId: SectionExampleId;
   section?: SectionProps["section"];
   assetUrl?: (file: string) => string;
+  embedded?: boolean;
 };
 
 const viewOnly: Record<keyof typeof viewOnlySectionExamples, () => ReactNode> = {
@@ -61,6 +62,7 @@ export function LiveSectionPreview({
   language,
   anchors,
   assetUrl,
+  embedded = false,
 }: LiveSectionPreviewProps) {
   const instanceId = useId();
   const descriptor = sectionExamples.find(({ id }) => id === exampleId);
@@ -84,16 +86,27 @@ export function LiveSectionPreview({
     viewOnly[exampleId]()
   ) : null;
 
+  const blockNavigation = (event: React.MouseEvent<HTMLElement>) => {
+    if (event.target instanceof Element && event.target.closest("a[href]")) event.preventDefault();
+  };
+
+  if (embedded) {
+    return (
+      <PassiveSectionPreview.Provider value>
+        <div className="min-w-0 wrap-anywhere" onClickCapture={blockNavigation}>
+          {content}
+        </div>
+      </PassiveSectionPreview.Provider>
+    );
+  }
+
   return (
     <section
       aria-label={
         section ? `${section.title} section preview` : `${descriptor?.name} section example`
       }
       className="min-w-0 rounded-xl border border-border/75 bg-card text-card-foreground"
-      onClickCapture={(event) => {
-        if (event.target instanceof Element && event.target.closest("a[href]"))
-          event.preventDefault();
-      }}
+      onClickCapture={blockNavigation}
     >
       <div className="border-b border-border/70 px-md py-s text-xs font-medium tracking-wide text-muted-foreground">
         Live section preview
