@@ -25,6 +25,20 @@ describe("Section catalog", () => {
     expect(document.activeElement).toBe(gallery);
   });
 
+  it("switches the selected example between block layouts", () => {
+    const { container } = render(<SectionCatalog />);
+    fireEvent.change(screen.getByRole("searchbox", { name: "Find a section" }), {
+      target: { value: "FAQ" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: /^FAQ$/ }));
+    const centered = screen.getByRole("button", { name: "Centered questions" });
+    fireEvent.click(centered);
+    expect(centered.getAttribute("aria-pressed")).toBe("true");
+    expect(container.querySelector('[data-section-layout="faq-stacked"]')).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Default" }));
+    expect(container.querySelector('[data-section-layout="faq-stacked"]')).toBeNull();
+  });
+
   it("keeps the original show-all control and filters by name, description and category", () => {
     render(<SectionCatalog />);
     const list = screen.getByRole("list", { name: "Available section types" });

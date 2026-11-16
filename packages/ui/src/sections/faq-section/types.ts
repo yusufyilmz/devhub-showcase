@@ -9,4 +9,5 @@ export type FAQBlockProps = Omit<ComponentProps<"section">, "title"> & {
   description?: ReactNode;
   items: SectionItem[];
   variant?: "standard" | "landing";
+  layout?: "faq-stacked" | "faq-reversed";
 };

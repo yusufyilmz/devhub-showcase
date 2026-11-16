@@ -75,6 +75,20 @@ Review each folder in this checklist. Inspect nested components and editors in t
 
 **Task 2 verification** — Covered all 66 folders through their stories, portfolio and studio compositions, or the editor selector. The initial browser sweep ran 325 story and viewport combinations. Rechecked the reported issues after fixes, then exercised all 48 registered editors at 320px and 1280px. Sand was the primary theme. Cyan was used for focused follow-up. Gallery dismissal, disclosure focus and hover, reordering, selected tabs, map opt-in, a disabled save action, and template errors were checked in local Chrome. External providers used fixtures or blocked requests. The public Once UI Blocks catalog was used when the dashboard was unavailable. Storybook built successfully with a bundle-size warning. The Portfolio Sections and Section Editors groups also include dedicated stories for the remaining public portfolio components and profile editors. Each section component is covered by a standalone story or a story that renders its composition.
 
+### Task 2 follow-up — Block layout variants
+
+Compare the rendered layouts on the public Once UI category pages. Count a variant only when its composition changes, such as media placement, information hierarchy, or interaction. Keep an existing default for documents saved before the variant was introduced. Make the layouts selectable in the editor and live catalog, preserve them in templates, and give each layout a Storybook story.
+
+- [x] Hero. Keep the existing split hero and add a centered introduction and a full-width image cover. [Once UI Hero](https://docs.once-ui.com/blocks/hero)
+- [x] FAQ. Keep the current split accordion and add a centered stack and a questions-first split. [Once UI FAQ](https://docs.once-ui.com/blocks/faq)
+- [x] Features. Keep the even cards and add a bento grid with a larger lead tile. [Once UI Features](https://docs.once-ui.com/blocks/features), [Once UI Bento](https://docs.once-ui.com/blocks/bento)
+- [ ] About. Compare the current prose and cards with the reference’s recognition and metrics layouts. Add a clear narrative and proof-point composition using the section’s existing fields. [Once UI About](https://docs.once-ui.com/blocks/about)
+- [ ] Blog. Add a featured story with a supporting post index, then compare the existing grid to the reference’s journal and digest patterns. [Once UI Blog](https://docs.once-ui.com/blocks/blog)
+- [ ] Careers. Separate openings from role details and hiring steps. Design a composition with a lead role and an interview timeline. [Once UI Careers](https://docs.once-ui.com/blocks/careers)
+- [ ] Contact. Add a split layout for the existing contact choices and form. Preserve the form’s existing email-app action. [Once UI Contact](https://docs.once-ui.com/blocks/contact)
+- [ ] Pricing and Plans. Compare equal cards with side-by-side feature comparison and featured-plan layouts. Keep currency and CTA data with its plan. [Once UI Pricing](https://docs.once-ui.com/blocks/pricing), [Once UI Plans](https://docs.once-ui.com/blocks/plans)
+- [ ] Apply the same comparison to the rest of the existing section inventory. Use functional variations that fit each section’s content and preserve shared controls.
+
 ## Task 3 — Build the shared Live Section Preview and wire home
 
 **Files** — Create `packages/ui/src/sections/live-section-preview/{live-section-preview,preview-examples,live-section-preview.test,live-section-preview.stories}` with `.tsx` for JSX and `.ts` for plain data. Move portable picker and catalog code from the home section. Modify `home-section/library.tsx` to use the shared UI.

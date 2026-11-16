@@ -4,6 +4,13 @@ import "./section-catalog.css";
 
 import { useEffect, useId, useRef, useState } from "react";
 
+import {
+  type AuthorableSectionType,
+  authorableSections,
+  getSectionLayouts,
+  type SectionOptions,
+} from "@shared/config";
+
 import { Button } from "../../buttons";
 import { Card } from "../../cards";
 import { Badge } from "../../feedback/badge";
@@ -99,7 +106,7 @@ export function SectionCatalog({ assetUrl }: Pick<LiveSectionPreviewProps, "asse
             >
               Close preview
             </Button>
-            <LiveSectionPreview assetUrl={assetUrl} exampleId={selected} key={selected} />
+            <CatalogExamplePreview assetUrl={assetUrl} exampleId={selected} key={selected} />
           </div>
         )}
         <ul
@@ -168,5 +175,46 @@ export function SectionCatalog({ assetUrl }: Pick<LiveSectionPreviewProps, "asse
         )}
       </section>
     </Card>
+  );
+}
+
+function CatalogExamplePreview({
+  assetUrl,
+  exampleId,
+}: Pick<LiveSectionPreviewProps, "assetUrl" | "exampleId">) {
+  const [layout, setLayout] = useState<SectionOptions["layout"]>();
+  const layouts = Object.hasOwn(authorableSections, exampleId)
+    ? getSectionLayouts(exampleId as AuthorableSectionType)
+    : [];
+  return (
+    <>
+      {layouts.length > 0 && (
+        <fieldset className="flex min-w-0 flex-wrap gap-xs">
+          <legend className="mb-xs text-sm font-medium">Block layout</legend>
+          <Button
+            aria-pressed={!layout}
+            onClick={() => setLayout(undefined)}
+            size="sm"
+            type="button"
+            variant={!layout ? "secondary" : "ghost"}
+          >
+            Default
+          </Button>
+          {layouts.map(({ id, label }) => (
+            <Button
+              aria-pressed={layout === id}
+              key={id}
+              onClick={() => setLayout(id)}
+              size="sm"
+              type="button"
+              variant={layout === id ? "secondary" : "ghost"}
+            >
+              {label}
+            </Button>
+          ))}
+        </fieldset>
+      )}
+      <LiveSectionPreview assetUrl={assetUrl} exampleId={exampleId} exampleLayout={layout} />
+    </>
   );
 }

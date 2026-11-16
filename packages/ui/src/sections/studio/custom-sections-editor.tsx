@@ -233,6 +233,7 @@ function SectionEditor({
           onChange({
             ...section,
             composition: undefined,
+            options: section.options ? { ...section.options, layout: undefined } : undefined,
             renderer: getSectionRenderers(next)[0],
             sectionType: next,
             source: undefined,

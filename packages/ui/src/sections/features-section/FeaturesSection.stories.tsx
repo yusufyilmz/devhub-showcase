@@ -22,3 +22,12 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const Compact: Story = { args: sectionStory("features", "compact") };
 export const Empty: Story = { args: sectionStory("features", "empty") };
+
+export const BentoGrid: Story = {
+  args: {
+    section: {
+      ...meta.args.section,
+      options: { ...meta.args.section.options, layout: "features-bento" },
+    },
+  },
+};

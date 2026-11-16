@@ -1,6 +1,6 @@
 import "../editor-controls.css";
 
-import { authorableSections, type SectionOptions } from "@shared/config";
+import { authorableSections, getSectionLayouts, type SectionOptions } from "@shared/config";
 
 import { Field, SelectField } from "../../../forms";
 import { editorPanelStyles, optionsEditorStyles } from "../styles";
@@ -24,6 +24,7 @@ export function OptionsEditor({ section, type, onChange }: OptionsEditorOptions)
           onChange={(description) => change({ description })}
           value={options.description ?? ""}
         />
+        <SectionLayoutField onChange={change} section={section} type={type} />
         <SelectField
           label="Text alignment"
           onChange={(alignment) => change({ alignment: alignment as SectionOptions["alignment"] })}
@@ -97,5 +98,35 @@ export function OptionsEditor({ section, type, onChange }: OptionsEditorOptions)
         )}
       </div>
     </fieldset>
+  );
+}
+
+function SectionLayoutField({
+  onChange,
+  section,
+  type,
+}: Pick<OptionsEditorOptions, "section" | "type"> & {
+  onChange: (patch: Partial<SectionOptions>) => void;
+}) {
+  if (
+    (type === "faq" && section.renderer !== "accordion") ||
+    (type === "features" && section.renderer !== "cards")
+  )
+    return null;
+  const layouts = getSectionLayouts(type);
+  if (!layouts.length) return null;
+  return (
+    <SelectField
+      label="Block layout"
+      onChange={(value) => onChange({ layout: layouts.find(({ id }) => id === value)?.id })}
+      value={section.options?.layout ?? ""}
+    >
+      <option value="">Default layout</option>
+      {layouts.map(({ id, label }) => (
+        <option key={id} value={id}>
+          {label}
+        </option>
+      ))}
+    </SelectField>
   );
 }

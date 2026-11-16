@@ -22,3 +22,21 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const Compact: Story = { args: sectionStory("faq", "compact") };
 export const Empty: Story = { args: sectionStory("faq", "empty") };
+
+export const CenteredQuestions: Story = {
+  args: {
+    section: {
+      ...meta.args.section,
+      options: { ...meta.args.section.options, layout: "faq-stacked" },
+    },
+  },
+};
+
+export const QuestionsOnTheLeft: Story = {
+  args: {
+    section: {
+      ...meta.args.section,
+      options: { ...meta.args.section.options, layout: "faq-reversed" },
+    },
+  },
+};

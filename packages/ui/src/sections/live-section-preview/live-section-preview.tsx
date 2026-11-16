@@ -2,6 +2,8 @@
 
 import { type ReactNode, useId } from "react";
 
+import type { SectionOptions } from "@shared/config";
+
 import { PassiveSectionPreview } from "../../providers/passive-section-preview";
 import { AboutMeSection } from "../about-me-section";
 import { CVSection } from "../cv-section";
@@ -27,6 +29,7 @@ export type LiveSectionPreviewProps = Pick<SectionProps, "anchors" | "language">
   section?: SectionProps["section"];
   assetUrl?: (file: string) => string;
   embedded?: boolean;
+  exampleLayout?: SectionOptions["layout"];
 };
 
 const viewOnly: Record<keyof typeof viewOnlySectionExamples, () => ReactNode> = {
@@ -63,6 +66,7 @@ export function LiveSectionPreview({
   anchors,
   assetUrl,
   embedded = false,
+  exampleLayout,
 }: LiveSectionPreviewProps) {
   const instanceId = useId();
   const descriptor = sectionExamples.find(({ id }) => id === exampleId);
@@ -70,7 +74,12 @@ export function LiveSectionPreview({
     !section && !isViewOnly(exampleId)
       ? createSectionExample(exampleId, "default", assetUrl)
       : undefined;
-  const renderedSection = section ?? sample?.section;
+  const renderedSection =
+    section ??
+    (sample && {
+      ...sample.section,
+      options: { ...sample.section.options, layout: exampleLayout },
+    });
   const previewAnchors = (anchors ?? sample?.anchors)?.map((anchor) => ({
     ...anchor,
     id: `${instanceId}-${anchor.id}`,
