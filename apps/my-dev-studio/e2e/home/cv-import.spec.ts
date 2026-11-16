@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+import { authorableSectionTypes } from "@shared/config";
+
 test("homepage showcases working section previews, templates and CV import", async ({
   page,
 }, info) => {
@@ -12,6 +14,17 @@ test("homepage showcases working section previews, templates and CV import", asy
   await expect(
     page.getByText("Start with a conversation about your goals and ideas.", { exact: true }),
   ).toBeVisible();
+  await expect(examples.getByRole("button")).toHaveCount(4);
+  const total = authorableSectionTypes.length + 9;
+  await page.getByRole("button", { name: `Show all ${total} examples` }).click();
+  await expect(examples.getByRole("button")).toHaveCount(total);
+  await page.getByRole("searchbox", { name: "Filter live section examples" }).fill("Languages");
+  await examples.getByRole("button", { exact: true, name: "Languages" }).click();
+  await expect(page.getByRole("region", { name: "Languages section example" })).toContainText(
+    "Spanish",
+  );
+  await page.getByRole("button", { name: "Show featured examples" }).click();
+  await expect(examples.getByRole("button")).toHaveCount(4);
   await page.getByRole("searchbox", { name: "Find a section" }).fill("YouTube");
   await expect(page.locator(".home-library-catalog")).toContainText("YouTube");
   await expect(
