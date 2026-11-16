@@ -1,0 +1,62 @@
+import { useState } from "react";
+
+import type { Meta, StoryObj } from "@storybook/react-vite";
+
+import { Field } from "../../../forms";
+
+const sampleItems = [
+  { id: "intro", title: "Introduction" },
+  { id: "work", title: "Selected work" },
+];
+
+import { CollectionEditor } from "./collection-editor";
+
+function Example({
+  collapsible,
+  items: initialItems,
+  maxItems,
+}: {
+  collapsible?: boolean;
+  items: typeof sampleItems;
+  maxItems?: number;
+}) {
+  const [items, setItems] = useState(initialItems);
+  return (
+    <div className="mx-auto w-full max-w-xl">
+      <CollectionEditor
+        collapsible={collapsible}
+        create={() => ({ id: crypto.randomUUID(), title: "Untitled" })}
+        getSummary={() => "Portfolio project"}
+        getTitle={(item) => item.title}
+        items={items}
+        maxItems={maxItems}
+        onChange={setItems}
+        render={(item, change) => (
+          <Field
+            label="Title"
+            onChange={(title) => change({ ...item, title })}
+            value={item.title}
+          />
+        )}
+        title="Projects"
+      />
+    </div>
+  );
+}
+
+const meta = {
+  args: { items: sampleItems },
+  component: Example,
+  parameters: { layout: "fullscreen" },
+  tags: ["autodocs"],
+  title: "Assistant/Editors/Collection Editor",
+} satisfies Meta<typeof Example>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
+export const Empty: Story = { args: { items: [] } };
+export const AtCapacity: Story = { args: { maxItems: 2 } };
+
+export const Collapsible: Story = { args: { collapsible: true } };

@@ -2,9 +2,9 @@ import type { ReactNode } from "react";
 
 import type { PortfolioProfile, PortfolioType } from "@shared/config";
 import { Button } from "@shared/ui/button";
+import { CustomSectionsEditor } from "@shared/ui/sections";
 
 import { PortfolioTypePicker } from "../../../portfolio/portfolio-type-picker";
-import { CustomSectionsEditor } from "../../../sections/studio/custom-sections-editor";
 import { CvImportEditor } from "../../import/cv-import-editor";
 import { SetupProfile } from "./profile";
 import { type SetupPosition, sections } from "./steps";

@@ -5,7 +5,7 @@ import {
   LanguagesEditor,
   ProjectsEditor,
   SkillsEditor,
-} from "../../../sections/index";
+} from "@shared/ui/sections";
 
 export const stages = [
   {

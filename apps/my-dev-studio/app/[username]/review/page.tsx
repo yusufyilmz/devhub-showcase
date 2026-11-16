@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
 import { StudioHeading } from "@shared/assistant/portfolio";
-import { ReviewSection } from "@shared/assistant/sections";
 import { ReviewService } from "@shared/lib/studio";
+import { ReviewSection } from "@shared/ui/sections";
 import { logger } from "@shared/utils/logger";
 
 import { requireAdmin } from "@/features/admin/admin-auth";

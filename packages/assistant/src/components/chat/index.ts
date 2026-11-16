@@ -5,7 +5,6 @@ export {
   type ChatMessage,
   type ChatProps,
 } from "./Chat";
-// Individual Chat Components
 export { ChatHeader, type ChatHeaderProps } from "./ChatHeader";
 export { ChatInput, type ChatInputProps } from "./ChatInput";
 export { ChatMessageBubble, type ChatMessageBubbleProps } from "./ChatMessageBubble";
@@ -18,6 +17,8 @@ export {
 export { ChatTypingIndicator, type ChatTypingIndicatorProps } from "./ChatTypingIndicator";
 export { ChatBubble, type ChatBubbleProps } from "./chat-bubble";
 export { ChatComposer } from "./chat-composer/ChatComposer";
+// Individual Chat Components
+export { HomeChatLauncher } from "./chat-launcher/chat-launcher";
 export { ChatSection } from "./chat-section/ChatSection";
 export { PortfolioChat, type PortfolioChatProps } from "./portfolio-chat";
 export { PremiumWidget, PremiumWidgetView } from "./premium-chat";

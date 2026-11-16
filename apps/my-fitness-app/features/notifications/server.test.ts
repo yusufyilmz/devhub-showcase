@@ -35,7 +35,7 @@ vi.mock("@shared/lib/fitness-notifications", () => ({
   saveDevice: mocks.saveDevice,
 }));
 vi.mock("@shared/lib/fitness-reminders", () => ({ dueFitnessReminders: mocks.due }));
-vi.mock("web-push", () => ({ default: { sendNotification: mocks.send } }));
+vi.mock("web-push", () => ({ sendNotification: mocks.send }));
 
 import { dispatchReminders, notificationRequest, testNotification } from "./server";
 

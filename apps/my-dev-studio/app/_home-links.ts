@@ -1,10 +1,10 @@
 import { cache } from "react";
 
-import type { PageAction } from "@shared/assistant/sections";
 import { cvPath, editCvPath } from "@shared/lib/profiles";
 import { readPublicProfile } from "@shared/lib/published-profile";
 import { readOwnedProfileUsername } from "@shared/lib/repositories/profile";
 import { createServerClient } from "@shared/lib/supabase";
+import type { PageAction } from "@shared/ui/sections";
 
 export type { PageAction };
 

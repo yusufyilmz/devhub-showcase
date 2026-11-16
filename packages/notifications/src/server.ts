@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 
-import webPush from "web-push";
+import { sendNotification } from "web-push";
 import { z } from "zod";
 
 import { type NotificationMessage, notificationSchema } from "./index";
@@ -54,7 +54,7 @@ export function createPushSender(vapid: {
   return async (subscription: StoredSubscription, message: NotificationMessage) => {
     validatePushSubscription(subscription);
     const payload = notificationSchema.parse(message);
-    await webPush.sendNotification(subscription, JSON.stringify(payload), {
+    await sendNotification(subscription, JSON.stringify(payload), {
       TTL: 300,
       timeout: 8000,
       topic: createHash("sha256")

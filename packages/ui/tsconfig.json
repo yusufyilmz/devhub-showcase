@@ -13,6 +13,7 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "../utils/src/helpers/safe-json.ts",
-    "../utils/src/helpers/safe-link.ts"
+    "../utils/src/helpers/safe-link.ts",
+    "../assistant/src/components/chat/chat-launcher/chat-launcher.tsx"
   ]
 }

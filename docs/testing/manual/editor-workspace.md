@@ -48,7 +48,7 @@ No deployment or live provider verification is claimed.
 
 - [Figma design](https://www.figma.com/design/kUZPyqUNjpMnUpwFATHp45?node-id=3-223).
 - [Workspace and CV projection tests](../../../packages/assistant/src/components/portfolio/editor-workspace/editor-workspace.test.tsx).
-- [Collection editor tests](../../../packages/assistant/src/components/editors/collection-editor/collection-editor.test.tsx).
+- [Collection editor tests](../../../packages/ui/src/sections/editors/collection-editor/collection-editor.test.tsx).
 - [Preview isolation tests](../../../packages/assistant/src/components/portfolio/portfolio-preview/ResponsivePortfolioPreview.test.tsx).
 - [Editor browser checks](../../../apps/my-dev-studio/e2e/edit/editor-workspace.spec.ts).
 - [Existing recovery guide](draft-recovery.md) and [publication guide](publication.md).

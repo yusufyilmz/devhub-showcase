@@ -1,3 +1,4 @@
+export * from "../sections/section";
 export * from "./accordion";
 export * from "./aspect-ratio";
 export * from "./background";
@@ -13,6 +14,5 @@ export * from "./resizable";
 export * from "./scroll-button";
 export * from "./scroll-to-top";
 export * from "./scrollable-container";
-export * from "./section";
 export * from "./seperator";
 export * from "./tabs";

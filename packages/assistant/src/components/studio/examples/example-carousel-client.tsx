@@ -1,5 +1,5 @@
 "use client";
-import "../../sections/home-section/examples.css";
+import "@shared/ui/examples.css";
 
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 

@@ -8,7 +8,7 @@ import {
 } from "./server";
 
 const transport = vi.hoisted(() => vi.fn());
-vi.mock("web-push", () => ({ default: { sendNotification: transport } }));
+vi.mock("web-push", () => ({ sendNotification: transport }));
 const subscription = {
   endpoint: "https://fcm.googleapis.com/test",
   keys: {

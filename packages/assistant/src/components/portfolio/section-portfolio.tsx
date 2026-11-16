@@ -13,19 +13,19 @@ import { Footer } from "@shared/ui/footer";
 import { Header } from "@shared/ui/header";
 import { HeroSurface } from "@shared/ui/layout";
 import { ScrollButton } from "@shared/ui/scroll-button";
-import { Section } from "@shared/ui/section";
-
-import { ChatSection } from "../chat/chat-section/index";
 import {
   AboutMeSection,
   EducationsSection,
   ExperienceSection,
   PortfolioProjectsSection as ProjectsSection,
   ReferralSection,
+  Section,
   SkillSection,
   SummarySection,
-} from "../sections/index";
-import { RegisteredSections } from "./index";
+} from "@shared/ui/sections";
+
+import { ChatSection } from "../chat/chat-section";
+import { RegisteredSections } from "./published-page/registered-sections";
 
 interface EngineerPortfolioProps {
   chatIdentity?: {
