@@ -5,10 +5,10 @@ import { PortfolioStoryFrame } from "@fixtures/portfolio-story-frame";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "@shared/ui/button";
+import { ReviewSection } from "@shared/ui/sections";
 import { ThemeToggle } from "@shared/ui/theme";
 import { noopAsync } from "@shared/utils";
 
-import { ReviewSection } from "../../sections/review-section";
 import { ProfileFields } from "../profile-fields";
 import { StudioHeading } from "../studio-heading/StudioHeading";
 import { StudioShell } from "./StudioShell";

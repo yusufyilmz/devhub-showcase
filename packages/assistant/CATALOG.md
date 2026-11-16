@@ -15,6 +15,14 @@ docs/features/assistant-rollout.md for the rollout and copy-ready prompts.
 
 Portfolio and editing assistants for `@shared/assistant`. Models call a provider. They do not authorize a user or write a profile.
 
+HomeChatLauncher in src/components/chat/chat-launcher.tsx composes the shared
+ChatComposer and opens the authenticated Studio assistant below the capabilities strip.
+ChatComposer also accepts optional controls and a message length limit for Fitness.
+ChatComposer and StudioChatScreen from @shared/ui/display provide the compact icon
+composer and centered assistant thread with starter prompts. Visitor mode accepts the portfolio name
+and back link, with public questions as suggestions. They receive callbacks and do not fetch
+or save data. Styles use shared semantic, spacing, elevation and radius tokens.
+
 | Export                               | Path                                       | Use                                                        |
 | ------------------------------------ | ------------------------------------------ | ---------------------------------------------------------- |
 | `@shared/assistant`                  | `src/index.ts`                             | Chat, edit, and CV import models, plus formatters          |

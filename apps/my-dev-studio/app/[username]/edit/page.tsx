@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
-import { ReviewSection } from "@shared/assistant/sections";
 import { ProfileEditor } from "@shared/assistant/studio-workspace";
+import { ReviewSection } from "@shared/ui/sections";
 
 import { requireWorkspace } from "@/features/admin/admin-auth";
 import { UserStorageSync } from "@/features/admin/user-storage-sync";

@@ -6,9 +6,9 @@ import { type PortfolioProfile, selectPortfolioContent } from "@shared/config";
 import { getPortfolioResources } from "@shared/lib/portfolio";
 import { publicChatSources } from "@shared/lib/profiles";
 import type { ChatMessage } from "@shared/lib/types";
+import type { ReferralSection } from "@shared/ui/sections";
 
 import { ChatSection } from "../chat/chat-section/index";
-import type { ReferralSection } from "../sections/index";
 import { type ArrangePortfolioSections, EngineerPage } from "./index";
 
 interface EngineerPortfolioProps {

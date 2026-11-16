@@ -1,4 +1,4 @@
-import type { PageAction } from "@shared/assistant/sections";
+import type { PageAction } from "@shared/ui/sections";
 
 import { requirePortfolioAdmin } from "@/features/management/managed-portfolios";
 

@@ -1,4 +1,4 @@
-import "@shared/assistant/examples.css";
+import "@shared/ui/examples.css";
 
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";

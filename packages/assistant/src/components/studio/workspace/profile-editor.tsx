@@ -51,6 +51,17 @@ import { Card } from "@shared/ui/cards";
 import { GoogleImportEditor } from "@shared/ui/google-import";
 import { Input } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
+import {
+  CustomSectionsEditor,
+  EducationEditor,
+  ExperienceEditor,
+  LanguagesEditor,
+  ProjectsEditor,
+  SectionOrderEditor,
+  SectionSettingsEditor,
+  SectionTemplatesEditor,
+  SkillsEditor,
+} from "@shared/ui/sections";
 import { AppearanceEditor } from "@shared/ui/theme/studio";
 
 import { AgentCompanion } from "../../chat/agent-companion/index";
@@ -71,26 +82,16 @@ import {
   usePortfolioHistory,
 } from "../../portfolio/index";
 import { ResponsivePortfolioPreview } from "../../portfolio/portfolio-preview/index";
-import {
-  EducationEditor,
-  ExperienceEditor,
-  LanguagesEditor,
-  ProjectsEditor,
-  SkillsEditor,
-} from "../../sections/index";
-import {
-  CustomSectionsEditor,
-  SectionOrderEditor,
-  SectionSettingsEditor,
-  SectionsSettings,
-  SectionTemplatesEditor,
-} from "../../sections/studio/index";
-import { AiAssistantEditor, AiProfileEditor, CvImportEditor, CvSettingsEditor } from "../index";
 
 const PreviewContent = dynamic(() =>
   import("./preview-content").then((module) => module.PreviewContent),
 );
 
+import { SectionsSettings } from "../../../../../ui/src/sections/studio";
+import { AiAssistantEditor } from "../ai-assistant-editor";
+import { AiProfileEditor } from "../ai-profile-editor";
+import { CvImportEditor } from "../import/cv-import-editor";
+import { CvSettingsEditor } from "../settings/cv-settings-editor";
 import { PrivateCvVersions } from "./cv-versions";
 import { PortfolioSetup, type SetupPosition } from "./portfolio-setup";
 import { ProfilePublication } from "./publication";

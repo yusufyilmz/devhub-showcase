@@ -9,9 +9,9 @@ import {
   resolveSectionSource,
   type SectionRendererId,
 } from "@shared/config";
+import { ConfiguredSection, CustomPortfolioSection } from "@shared/ui/sections";
 
-import { SortableList } from "../../editors/sortable-list";
-import { ConfiguredSection, CustomPortfolioSection } from "../../sections/studio/index";
+import { SortableList } from "../../../../../ui/src/sections/editors/sortable-list";
 
 export type ArrangePortfolioSections = {
   disabled?: boolean;

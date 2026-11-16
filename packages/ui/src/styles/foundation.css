@@ -5,7 +5,7 @@
 @import "./foundation/platform-rgb.css";
 @import "./foundation/product-tokens.css";
 @import "../cards/surfaces.css";
-@import "../layout/section/sections.css";
+@import "../sections/section/sections.css";
 
 @source "../../../../apps/my-dev-studio/app";
 @source "../../../../apps/my-dev-studio/features";

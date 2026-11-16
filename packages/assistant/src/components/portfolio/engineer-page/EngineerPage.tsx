@@ -11,15 +11,17 @@ import { Footer } from "@shared/ui/footer";
 import { Header } from "@shared/ui/header";
 import { HeroSurface } from "@shared/ui/layout";
 import { ScrollButton } from "@shared/ui/scroll-button";
-import { Section } from "@shared/ui/section";
+import {
+  AboutMeSection,
+  EducationsSection,
+  ExperienceSection,
+  ProjectsSection,
+  ReferralSection,
+  SkillSection,
+  SummarySection,
+} from "@shared/ui/sections";
 
-import { AboutMeSection } from "../../sections/about-me-section";
-import { EducationsSection } from "../../sections/education-section";
-import { ExperienceSection } from "../../sections/experience-section";
-import { ProjectsSection } from "../../sections/project-section";
-import { ReferralSection } from "../../sections/referral-section";
-import { SkillSection } from "../../sections/skills-section";
-import { SummarySection } from "../../sections/summary-section";
+import { Section } from "../../../../../ui/src/sections/section";
 import {
   type ArrangePortfolioSections,
   RegisteredSections,

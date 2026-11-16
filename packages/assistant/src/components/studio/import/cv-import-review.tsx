@@ -7,14 +7,13 @@ import { StudioButton } from "@shared/ui/button";
 import { Field, LinesField } from "@shared/ui/forms";
 import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
-
 import {
   EducationEditor,
   ExperienceEditor,
   LanguagesEditor,
   ProjectsEditor,
   SkillsEditor,
-} from "../../sections";
+} from "@shared/ui/sections";
 
 const labels: Record<CvImportGroup, string> = {
   about: "About",

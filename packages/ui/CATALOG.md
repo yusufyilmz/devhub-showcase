@@ -86,14 +86,6 @@ next to the components that load them. Public CSS exports continue to work.
 Use shared Tailwind utilities for layouts and controls. Card and control
 surfaces load from `src/cards/surfaces.css`.
 
-HomeChatLauncher in src/sections/home-section/chat-launcher.tsx composes the shared
-ChatComposer and opens the authenticated Studio assistant below the capabilities strip.
-ChatComposer also accepts optional controls and a message length limit for Fitness.
-ChatComposer and StudioChatScreen from @shared/ui/display provide the compact icon
-composer and centered assistant thread with starter prompts. Visitor mode accepts the portfolio name
-and back link, with public questions as suggestions. They receive callbacks and do not fetch
-or save data. Styles use shared semantic, spacing, elevation and radius tokens.
-
 `GalleryLightbox` from `@shared/ui/dialog` provides a focus-trapped gallery dialog,
 previous/next navigation, arrow keys, thumbnails, and optional full-page links.
 Gallery Grid sections use it for authored images; homepage examples use the same

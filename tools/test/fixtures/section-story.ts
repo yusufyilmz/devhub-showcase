@@ -1,10 +1,10 @@
-import type { SectionProps } from "@shared/assistant/sections";
 import {
   type AuthorableSectionType,
   authorableSections,
   type CustomSection,
   getSectionRenderers,
 } from "@shared/config";
+import type { SectionProps } from "@shared/ui/sections";
 
 type StoryItem = CustomSection["items"][number];
 type StoryContent = {
