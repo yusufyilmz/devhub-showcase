@@ -8,6 +8,7 @@ import {
   authorableSectionTypes,
   getSectionRenderers,
 } from "../../../packages/config/src/sections/authorable-sections.ts";
+import { calendarFixture } from "./support/calendar-fixture.mjs";
 import { jobsFixture } from "./support/jobs-fixture.mjs";
 
 // Test-only transport fixture, never imported by application code. Public
@@ -489,7 +490,7 @@ createServer(async (request, response) => {
   response.setHeader("Content-Type", "application/json");
   if (fixtureMaintenance(request, response, url)) return;
   const owner = fixtureOwner(request);
-  if (await jobsFixture(request, response, url, owner)) return;
+  if (await personalWorkspaceFixture(request, response, url, owner)) return;
   if (request.method === "GET" && url.pathname === "/health") {
     response.end("{}");
     return;
@@ -538,6 +539,13 @@ createServer(async (request, response) => {
     return testimonialRequest(request, response, url, owner);
   response.writeHead(405).end(JSON.stringify({ message: "Unsupported fixture request" }));
 }).listen(Number(process.argv[2] ?? 3101), "127.0.0.1");
+
+async function personalWorkspaceFixture(request, response, url, owner) {
+  return (
+    (await jobsFixture(request, response, url, owner)) ||
+    (await calendarFixture(request, response, url, owner))
+  );
+}
 
 function fixtureOwner(request) {
   let owner;

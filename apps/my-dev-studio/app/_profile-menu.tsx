@@ -127,6 +127,12 @@ export function ProfileMenu({
                 Studio assistant
               </a>
             </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <a href="/admin/calendar">
+                <ClipboardListIcon aria-hidden="true" />
+                My Calendar
+              </a>
+            </DropdownMenuItem>
             {canManagePortfolios && (
               <DropdownMenuItem asChild>
                 <a href="/admin/portfolios">

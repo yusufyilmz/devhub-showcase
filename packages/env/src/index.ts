@@ -44,6 +44,13 @@ const server = {
   CV_IMPORT_DAILY_LIMIT: positiveInteger,
   ENVIRONMENT: text,
   FITNESS_ADDITIONAL_ORIGIN: url,
+  GOOGLE_CALENDAR_CLIENT_ID: text,
+  GOOGLE_CALENDAR_CLIENT_SECRET: text,
+  GOOGLE_CALENDAR_REDIRECT_URI: url,
+  GOOGLE_CALENDAR_SESSION_KEY: z
+    .string()
+    .regex(/^[0-9a-f]{64}$/i)
+    .optional(),
   GOOGLE_PROFILE_CLIENT_ID: text,
   JOB_ALERT_DOMAIN: text,
   JOB_ALERT_RELAY_SECRET: text,

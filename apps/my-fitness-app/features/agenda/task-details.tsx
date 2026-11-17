@@ -1,10 +1,10 @@
 "use client";
 import { ArrowLeft } from "lucide-react";
 
+import { ScheduleFields } from "@shared/calendar/task-form";
 import type { Task } from "@shared/lib/types";
 import { Button as LibraryButton } from "@shared/ui/button";
-import { Input as LibraryInput } from "@shared/ui/input";
-import { Label as LibraryLabel } from "@shared/ui/label";
+import { Card } from "@shared/ui/cards";
 
 import { TaskBranch, type TaskTreeProps } from "@/features/task-tree/task-tree";
 
@@ -41,52 +41,36 @@ export function TaskDetails({
       </div>
       <TaskBranch {...treeProps} parentId={task.parentId} task={task} />
       {task.scope === "scheduled" && (
-        <form
-          className="card [padding:24px] [margin-bottom:20px] [background:var(--surface)] [border:1px_solid_var(--line)] [border-radius:12px] max-[700px]:[padding:18px] [box-shadow:0_2px_10px_var(--shadow-color)] reschedule-form [margin-top:24px] [&_.hint]:[margin:10px_0_18px]"
-          key={task.id + task.date + task.time}
-          onSubmit={(e) => {
-            e.preventDefault();
-            const f = new FormData(e.currentTarget);
-            onMove(task.id, date, String(f.get("date")), String(f.get("time")) || null);
-          }}
-        >
-          <h2>Reschedule this occurrence</h2>
-          <p className="hint [font-size:11px] [line-height:1.7] [color:var(--muted)]">
-            Only this activity moves. The recurring plan stays the same. Reopen completed or skipped
-            items before moving them.
-          </p>
-          <div className="form-grid [display:grid] [grid-template-columns:1fr_1fr] [gap:15px]">
-            <LibraryLabel unstyled>
-              Date
-              <LibraryInput
-                defaultValue={task.date ?? date}
-                disabled={treeProps.readOnly || treeProps.busy}
-                name="date"
-                required
-                type="date"
-                unstyled
-              />
-            </LibraryLabel>
-            <LibraryLabel unstyled>
-              Time
-              <LibraryInput
-                defaultValue={task.time ?? ""}
-                disabled={treeProps.readOnly || treeProps.busy}
-                name="time"
-                type="time"
-                unstyled
-              />
-            </LibraryLabel>
-          </div>
-          <LibraryButton
-            className="primary [display:inline-flex] [gap:9px] [align-items:center] [justify-content:center] [min-height:42px] [padding:12px_17px] [font-size:12px] [font-weight:600] [border-radius:8px] [color:var(--on-primary)] [background:var(--green)] [border:1px_solid_var(--green)] hover:[background:var(--accent)] [background:var(--accent)] [border-color:var(--accent)] [filter:brightness(1.1)]"
-            disabled={treeProps.readOnly || treeProps.busy}
-            type="submit"
-            variant="unstyled"
+        <Card asChild className="mt-5 grid gap-4 p-4 sm:p-5" interaction="static" layout="plain">
+          <form
+            key={task.id + task.date + task.time}
+            onSubmit={(e) => {
+              e.preventDefault();
+              const fields = new FormData(e.currentTarget);
+              onMove(task.id, date, String(fields.get("date")), String(fields.get("time")) || null);
+            }}
           >
-            Save date and time
-          </LibraryButton>
-        </form>
+            <div className="grid gap-1">
+              <h2 className="text-base font-semibold">Reschedule this occurrence</h2>
+              <p className="text-sm text-muted-foreground">
+                Only this activity moves. The recurring plan stays the same. Reopen completed or
+                skipped items before moving them.
+              </p>
+            </div>
+            <ScheduleFields
+              date={task.date ?? date}
+              disabled={treeProps.readOnly || treeProps.busy}
+              time={task.time ?? undefined}
+            />
+            <LibraryButton
+              className="justify-self-start"
+              disabled={treeProps.readOnly || treeProps.busy}
+              type="submit"
+            >
+              Save date and time
+            </LibraryButton>
+          </form>
+        </Card>
       )}
       {task.scope === "generated" && (
         <p className="hint [font-size:11px] [line-height:1.7] [color:var(--muted)] space-top [margin-top:30px]">

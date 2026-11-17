@@ -23,6 +23,7 @@
   "dependencies": {
     "@shared/assistant": "workspace:*",
     "@shared/auth": "workspace:*",
+    "@shared/calendar": "workspace:*",
     "@shared/config": "workspace:*",
     "@shared/env": "workspace:*",
     "@shared/lib": "workspace:*",

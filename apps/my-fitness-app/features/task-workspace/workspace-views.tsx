@@ -90,9 +90,9 @@ export function WorkspaceFrame({
   today: string;
 }) {
   return (
-    <div className="app [min-height:100vh]">
+    <div className="fitness-workspace min-h-screen">
       <WorkspaceSidebar name={name} readOnly={readOnly} setTab={setTab} tab={tab} />
-      <main className="main [max-width:1530px] [padding:0_46px] [margin-left:244px] min-[1600px]:[margin-right:auto] max-[1200px]:[padding:0_28px] [margin-left:205px] max-[950px]:[padding:0_23px] [margin-left:170px] max-[700px]:[padding:0_20px_70px] [margin:0]">
+      <main className="fitness-workspace-main min-w-0">
         <WorkspaceTopbar busy={busy} readOnly={readOnly} tab={tab} />
         {readOnly ? <ReadOnlyBanner /> : null}
         {tab !== "Assistant" && (
@@ -251,19 +251,25 @@ function WorkspaceSidebar({
   tab: string;
 }) {
   return (
-    <aside className="sidebar [position:fixed] [inset:0_auto_0_0] [z-index:20] [display:flex] [flex-direction:column] [width:244px] [padding:38px_25px] [background:var(--surface)] [border-right:1px_solid_var(--line)] [&_nav]:[display:grid] [gap:7px] [&_nav_button]:[display:flex] [gap:13px] [align-items:center] [justify-content:flex-start] [min-height:44px] [padding:10px_14px] [font-weight:550] [color:var(--muted)] [text-align:left] [background:transparent] [border:0] [border-radius:9px] [&_nav_button.active]:[color:var(--ink)] [background:var(--surface-soft)] max-[1200px]:[width:205px] [padding:32px_18px] max-[950px]:[width:170px] max-[700px]:[inset:auto_0_0] [width:100%] [height:calc(68px_+_env(safe-area-inset-bottom))] [padding:0_5px_env(safe-area-inset-bottom)] [border-top:1px_solid_var(--line)] [border-right:0] [backdrop-filter:blur(20px)] max-[700px]:[&_>_.brand]:[display:none] max-[700px]:[&_nav]:[display:grid] [grid-template-columns:repeat(5,_1fr)] [gap:0] max-[700px]:[&_nav_button]:[display:flex] [gap:5px] [padding:12px_3px_8px] [font-size:9px] [border-radius:0] max-[700px]:[&_nav_button.active]:[color:var(--ink)] max-[700px]:[&_nav_svg]:[width:20px] [height:20px] [&_nav_button.active]:[color:var(--accent)] [background:var(--accent-soft)] [&_nav_button:hover]:[color:var(--accent)] max-[700px]:[background:color-mix(in_srgb,_var(--surface)_94%,_transparent)] max-[700px]:[&_nav_button.active]:[color:var(--accent)] max-[700px]:[&_nav_button]:[justify-content:center] [height:100%] [min-height:56px] [border-radius:10px]">
-      <a className="brand" href={readOnly ? "/preview" : "/"}>
+    <aside className="fitness-workspace-sidebar flex flex-col border-border bg-card">
+      <a
+        className="flex items-center gap-2 text-base font-semibold max-[700px]:hidden"
+        href={readOnly ? "/preview" : "/"}
+      >
         <span aria-hidden="true">↗</span>
         <span>My Fitness Studio</span>
       </a>
-      <span className="eyebrow [font-size:10px] [font-weight:700] [color:var(--muted)] [letter-spacing:1.8px] nav-label [margin:58px_12px_18px] max-[700px]:[display:none]">
+      <span className="mt-10 mb-3 px-2 text-xs font-medium tracking-wide text-muted-foreground max-[700px]:hidden">
         YOUR DAILY PRACTICE
       </span>
-      <nav aria-label="Fitness workspace">
+      <nav
+        aria-label="Fitness workspace"
+        className="fitness-workspace-navigation grid min-w-0 gap-1.5"
+      >
         {navigation.map(({ name: label, icon: Icon }) => (
           <LibraryButton
             aria-current={tab === label ? "page" : undefined}
-            className={tab === label ? "active" : ""}
+            className="min-w-0 justify-start gap-2.5 px-2.5 aria-[current=page]:bg-primary/10 aria-[current=page]:text-foreground max-[700px]:h-13 max-[700px]:flex-col max-[700px]:justify-center max-[700px]:gap-1 max-[700px]:px-0.5 max-[700px]:text-xs"
             key={label}
             onClick={() => setTab(label)}
             type="button"
@@ -321,9 +327,7 @@ function WorkspaceTopbar({
 }) {
   return (
     <header className="topbar [display:flex] [align-items:center] [justify-content:space-between] [height:86px] [font-size:11px] [border-bottom:1px_solid_var(--line)] max-[700px]:[height:58px]">
-      <span className="breadcrumb [color:var(--muted)] [&_span]:[margin:0_13px] max-[700px]:[font-size:10px]">
-        My Fitness Studio / {tab}
-      </span>
+      <span className="text-xs text-muted-foreground">My Fitness Studio / {tab}</span>
       <div className="topbar-actions [display:flex] [gap:16px] [align-items:center] max-[700px]:[gap:10px]">
         <ThemeToggle />
         <Badge role="status" variant="secondary">
@@ -358,17 +362,14 @@ function PageHeading({
   today: string;
 }) {
   return (
-    <div className="page-heading [display:flex] [gap:20px] [align-items:center] [justify-content:space-between] [margin:37px_0_30px] [&_.eyebrow]:[margin-bottom:10px] [&_p:last-child]:[margin-top:10px] [font-size:13px] max-[950px]:[&_h1]:[font-size:29px] max-[700px]:[margin:27px_0_24px] max-[700px]:[&_h1]:[font-size:29px] [letter-spacing:-1px] max-[700px]:[&_.eyebrow]:[margin-bottom:8px] [font-size:8px] max-[700px]:[&_p:last-child]:[margin-top:8px] [font-size:11px] max-[700px]:[flex-wrap:wrap]">
+    <div className="my-6 flex min-w-0 flex-wrap items-center justify-between gap-4 sm:my-8">
       <div>
         <Eyebrow>ONE ROUTINE. SMALL STEPS.</Eyebrow>
         <h1>{headingTitle({ date, name, selectedTitle, tab, taskId, today })}</h1>
-        <p>{headingSummary(tab)}</p>
+        <p className="mt-1 text-sm text-muted-foreground">{headingSummary(tab)}</p>
       </div>
       {tab !== "Tasks" && (
-        <LibraryLabel
-          className="date-control [min-width:145px] [font-size:10px] max-[700px]:[width:100%] [max-width:190px] [margin:0] max-[700px]:[&_input]:[padding:8px] [margin-top:4px] [&_[data-slot='input']]:[color:var(--ink)]"
-          unstyled
-        >
+        <LibraryLabel className="m-0 grid min-w-36 gap-1 text-xs text-muted-foreground" unstyled>
           Active date
           <LibraryInput
             onChange={(event) => {

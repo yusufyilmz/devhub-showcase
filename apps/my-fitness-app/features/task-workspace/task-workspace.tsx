@@ -133,10 +133,10 @@ export function TaskWorkspace({ controller }: { controller: WorkspaceController 
           ) : null}
           {controller.message ? (
             <Alert
-              className="fitness-save-status [&[data-slot='alert']]:[position:fixed] [&_[data-slot='alert-description']]:[display:flex] max-[700px]:[&[data-slot='alert']]:[bottom:calc(78px_+_env(safe-area-inset-bottom))]"
+              className="fixed inset-x-4 bottom-4 z-60 mx-auto w-auto max-w-md shadow-lg max-[700px]:bottom-[calc(72px+env(safe-area-inset-bottom))]"
               role="status"
             >
-              <AlertDescription>
+              <AlertDescription className="flex items-center justify-between gap-3">
                 {controller.message}
                 {controller.undo ? (
                   <LibraryButton

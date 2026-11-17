@@ -373,6 +373,9 @@ importers:
       '@shared/billing':
         specifier: workspace:*
         version: link:../../packages/billing
+      '@shared/calendar':
+        specifier: workspace:*
+        version: link:../../packages/calendar
       '@shared/config':
         specifier: workspace:*
         version: link:../../packages/config
@@ -449,6 +452,9 @@ importers:
       '@shared/auth':
         specifier: workspace:*
         version: link:../../packages/auth
+      '@shared/calendar':
+        specifier: workspace:*
+        version: link:../../packages/calendar
       '@shared/config':
         specifier: workspace:*
         version: link:../../packages/config
@@ -760,6 +766,40 @@ importers:
       '@types/react-dom':
         specifier: 'catalog:'
         version: 19.3.0(@types/react@19.3.0)
+      typescript:
+        specifier: 'catalog:'
+        version: 7.0.2
+
+  packages/calendar:
+    dependencies:
+      '@shared/ui':
+        specifier: workspace:*
+        version: link:../ui
+      '@shared/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: 'catalog:'
+        version: 1.70.0(@types/react@19.3.0)(react@19.3.1)
+      react:
+        specifier: 'catalog:'
+        version: 19.3.1
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.7
+    devDependencies:
+      '@shared/cli':
+        specifier: workspace:*
+        version: link:../../tools/cli
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../tools/typescript-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 26.6.6
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.3.0
       typescript:
         specifier: 'catalog:'
         version: 7.0.2
