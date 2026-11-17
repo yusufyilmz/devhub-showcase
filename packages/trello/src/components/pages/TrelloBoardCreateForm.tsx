@@ -49,7 +49,14 @@ export function TrelloBoardCreateForm({ action, boardsHref }: TrelloBoardCreateF
               variant="success"
             />
             <div className="flex flex-wrap gap-3">
-              {state.href && <StudioButton href={state.href}>Open in Trello</StudioButton>}
+              {state.workspaceHref && (
+                <StudioButton href={state.workspaceHref}>Open board</StudioButton>
+              )}
+              {state.href && (
+                <StudioButton href={state.href} tone="secondary">
+                  Open in Trello
+                </StudioButton>
+              )}
               <StudioButton href={boardsHref} tone="secondary" variant="outline">
                 Back to boards
               </StudioButton>

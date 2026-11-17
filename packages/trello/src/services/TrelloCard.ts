@@ -2,8 +2,33 @@ import { urls } from "@shared/config/urls";
 
 import { TRELLO_ERRORS, TRELLO_SUCCESS_MESSAGES } from "../constants";
 // Trello Card Operations
-import type { CreateCardOptions, TrelloApiResponse, TrelloCard, UpdateCardOptions } from "../types";
+import type {
+  CreateCardOptions,
+  TrelloApiResponse,
+  TrelloCard,
+  TrelloComment,
+  UpdateCardOptions,
+} from "../types";
 import type { TrelloClient } from "./TrelloClient";
+
+type CommentAction = Omit<TrelloComment, "text" | "memberCreator"> & {
+  data: { text: string };
+  memberCreator?: TrelloComment["memberCreator"];
+};
+
+function toComment(action: CommentAction): TrelloComment {
+  const member = action.memberCreator;
+  return {
+    date: action.date,
+    id: action.id,
+    memberCreator: {
+      fullName: member?.fullName || member?.username || "Trello member",
+      id: member?.id ?? "",
+      username: member?.username ?? "",
+    },
+    text: action.data.text,
+  };
+}
 
 export class TrelloCardService {
   constructor(private client: TrelloClient) {}
@@ -205,15 +230,31 @@ export class TrelloCardService {
     }
   }
 
-  // Add comment to card
-  async addCommentToCard(cardId: string, text: string): Promise<TrelloApiResponse<any>> {
+  async getComments(cardId: string): Promise<TrelloApiResponse<TrelloComment[]>> {
     try {
-      const result = await this.client.makeRequest("POST", urls.trello.cardActions(cardId), {
-        query: { text },
-      });
+      const actions = await this.client.makeRequest<CommentAction[]>(
+        "GET",
+        `${urls.trello.card(cardId)}/actions`,
+        { query: { filter: "commentCard", limit: 100 } },
+      );
+      return { data: actions.map(toComment), success: true };
+    } catch (error) {
+      return this.handleError(error, TRELLO_ERRORS.CARD_NOT_FOUND);
+    }
+  }
+
+  async addCommentToCard(cardId: string, text: string): Promise<TrelloApiResponse<TrelloComment>> {
+    try {
+      const result = await this.client.makeRequest<CommentAction>(
+        "POST",
+        urls.trello.cardActions(cardId),
+        {
+          query: { text },
+        },
+      );
 
       return {
-        data: result,
+        data: toComment(result),
         message: "Comment added successfully",
         success: true,
       };

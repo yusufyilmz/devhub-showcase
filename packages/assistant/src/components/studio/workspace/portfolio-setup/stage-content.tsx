@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import type { PortfolioProfile, PortfolioType } from "@shared/config";
 import { Button } from "@shared/ui/button";
-import { CustomSectionsEditor } from "@shared/ui/sections";
+import { CustomSectionsEditor, SectionSettingsEditor } from "@shared/ui/sections";
 
 import { PortfolioTypePicker } from "../../../portfolio/portfolio-type-picker";
 import { CvImportEditor } from "../../import/cv-import-editor";
@@ -67,6 +67,13 @@ export function SetupStageContent({
         ) : (
           <SetupProfile assistant={assistant} onChange={onChange} profile={profile} />
         ))}
+      {stage === 2 && activeSection.kind && (
+        <SectionSettingsEditor
+          onChange={onChange}
+          onlySection={activeSection.kind}
+          profile={profile}
+        />
+      )}
       {stage === 3 && (
         <>
           <nav aria-label="Edit draft sections" className="flex flex-wrap items-center gap-2">

@@ -40,5 +40,10 @@ export async function createTrelloBoard(
   }
 
   revalidatePath("/admin/trello");
-  return { href: trelloBoardHref(data), name: parsed.options.name, status: "created" };
+  return {
+    href: trelloBoardHref(data),
+    name: parsed.options.name,
+    status: "created",
+    workspaceHref: `/admin/trello/boards/${encodeURIComponent(data.id)}`,
+  };
 }

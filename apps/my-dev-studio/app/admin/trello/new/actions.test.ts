@@ -49,7 +49,10 @@ describe("createTrelloBoard", () => {
   });
 
   it("creates a private board with normalized fields and refreshes the directory", async () => {
-    mocks.create.mockResolvedValue({ data: { shortLink: "ABC123" }, success: true });
+    mocks.create.mockResolvedValue({
+      data: { id: "a".repeat(24), shortLink: "ABC123" },
+      success: true,
+    });
     const fields = new FormData();
     fields.set("name", " Roadmap ");
     fields.set("description", " Next quarter ");
@@ -60,6 +63,7 @@ describe("createTrelloBoard", () => {
       href: "https://trello.com/b/ABC123",
       name: "Roadmap",
       status: "created",
+      workspaceHref: `/admin/trello/boards/${"a".repeat(24)}`,
     });
     expect(mocks.create).toHaveBeenCalledWith({
       defaultLists: false,

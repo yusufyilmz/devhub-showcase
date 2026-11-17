@@ -21,7 +21,13 @@ async function ConnectedBoards({
 }) {
   const boards = await new TrelloService(config).boardService.getBoards();
   if (boards.success && boards.data) {
-    return <TrelloBoardDirectory boards={boards.data} createHref="/admin/trello/new" />;
+    return (
+      <TrelloBoardDirectory
+        boardHref={(boardId) => `/admin/trello/boards/${encodeURIComponent(boardId)}`}
+        boards={boards.data}
+        createHref="/admin/trello/new"
+      />
+    );
   }
 
   return (

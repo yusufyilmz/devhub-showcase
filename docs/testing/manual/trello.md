@@ -16,6 +16,16 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace the 
 | 4    | [Board directory](http://localhost:3001/admin/trello)    | `/admin/trello`     | Select **Back to boards**, refresh, and open the board.   | The board persists and is private with no starter lists. | Not run                  |
 | 5    | [Create a board](http://localhost:3001/admin/trello/new) | `/admin/trello/new` | Open while signed out or as a non-administrator.          | The form and connected account data are hidden.          | Not run                  |
 
+## Working on a board in Studio
+
+Use a disposable board for these checks. Card and board deletion are permanent. Start in the [board directory](http://localhost:3001/admin/trello) and select **Open board**. The workspace opens at `/admin/trello/boards/<boardId>`.
+
+- Choose **Edit board**, update its name and description, then reload and verify both values.
+- Add two lists. Add a card to the first list, open it by its name, and update its description.
+- Drag the card onto the second list and reload. Add another card and drag it onto the first card to reorder them. Use **Move to list** inside the card to move it with the keyboard.
+- Open the card, post a comment, and reopen to verify that the comment persists.
+- Try **Delete card** and dismiss the confirmation. Verify the card remains, then confirm deletion. Repeat with **Delete board** and verify the directory no longer shows that board.
+
 ## Related evidence and detail
 
 - [Server action tests](../../../apps/my-dev-studio/app/admin/trello/new/actions.test.ts)
