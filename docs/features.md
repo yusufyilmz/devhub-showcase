@@ -100,7 +100,7 @@ Transfer requires a verified recipient and revision checks. An untouched private
 
 ## Trello boards
 
-Platform administrators can open **Trello boards** from the Studio profile menu, view open boards from the connected Trello account, and create a private board with starter lists or an empty layout. Open a board in Trello to manage members, lists, and cards.
+Platform administrators can open **Trello boards** from the Studio profile menu, browse the connected account's open boards, and create private boards with starter lists or an empty layout. Select **Open board** to work inside Studio. You can edit or delete a board, add lists, create and edit cards, delete cards, reorder cards by dragging, move cards between lists by dragging or using the card's list selector, and read or post comments. **Open in Trello** remains available for member management and other Trello settings.
 
 Set `TRELLO_API_KEY` and a Trello token with read and write access in `TRELLO_API_TOKEN` on the server. Set `TRELLO_WORKSPACE_ID` to choose the destination workspace. When omitted, Trello chooses the default destination for the connected account.
 

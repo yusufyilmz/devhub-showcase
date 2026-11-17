@@ -3,6 +3,7 @@
 import type { CSSProperties } from "react";
 import { type DragEvent, type FC, useState } from "react";
 
+import { Button } from "@shared/ui/button";
 import { IconButton } from "@shared/ui/icon-button";
 import { Typography } from "@shared/ui/typography";
 import { logger } from "@shared/utils/client-logger";
@@ -20,6 +21,7 @@ interface TrelloCardProps {
   onDelete?: (cardId: string) => void;
   onEdit?: (card: TrelloCardType) => void;
   onMove?: (cardId: string, targetListId: string) => void;
+  onOpen?: () => void;
   showActions?: boolean;
   style?: CSSProperties;
 }
@@ -54,6 +56,7 @@ export const TrelloCard: FC<TrelloCardProps> = ({
   onClick,
   // onEdit,
   onDelete,
+  onOpen,
   // onMove,
   draggable = false,
   showActions = true,
@@ -90,6 +93,10 @@ export const TrelloCard: FC<TrelloCardProps> = ({
   };
 
   const handleDragStart = (e: DragEvent<HTMLDivElement>) => {
+    if (onOpen) {
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("application/x-mydevstudio-trello-card", card.id);
+    }
     e.dataTransfer.setData(
       "text/plain",
       JSON.stringify({
@@ -98,6 +105,7 @@ export const TrelloCard: FC<TrelloCardProps> = ({
       }),
     );
   };
+  const cardTitle = card.name || "Untitled Card";
 
   // ============================================================================
   // ✅ PURE UI COMPONENTS USAGE - NO RAW HTML ELEMENTS!
@@ -111,7 +119,7 @@ export const TrelloCard: FC<TrelloCardProps> = ({
       <Card
         className={className}
         draggable={draggable}
-        onClick={handleCardClick}
+        onClick={onOpen ? undefined : handleCardClick}
         onDragStart={handleDragStart}
         style={{
           cursor: "pointer",
@@ -137,7 +145,18 @@ export const TrelloCard: FC<TrelloCardProps> = ({
                 margin: 0,
               }}
             >
-              {card.name || "Untitled Card"}
+              {onOpen ? (
+                <Button
+                  className="w-full wrap-anywhere text-left"
+                  onClick={onOpen}
+                  type="button"
+                  variant="unstyled"
+                >
+                  {cardTitle}
+                </Button>
+              ) : (
+                cardTitle
+              )}
             </Heading>
 
             {showActions && (
@@ -249,12 +268,14 @@ export const TrelloCard: FC<TrelloCardProps> = ({
       </Card>
 
       {/* ✅ CARD DETAIL MODAL - Full editing capabilities */}
-      <TrelloCardDetailModal
-        card={card}
-        isOpen={showCardModal}
-        onClose={() => setShowCardModal(false)}
-        onDelete={onDelete}
-      />
+      {!onOpen && (
+        <TrelloCardDetailModal
+          card={card}
+          isOpen={showCardModal}
+          onClose={() => setShowCardModal(false)}
+          onDelete={onDelete}
+        />
+      )}
     </>
   );
 };

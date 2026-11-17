@@ -17,9 +17,11 @@ const visibility = new Map([
 export function TrelloBoardDirectory({
   boards,
   createHref,
+  boardHref,
 }: {
   boards: TrelloBoard[];
   createHref: string;
+  boardHref?: (boardId: string) => string;
 }) {
   if (!boards.length) {
     return (
@@ -54,8 +56,9 @@ export function TrelloBoardDirectory({
                   {board.desc}
                 </CardContent>
               )}
-              {href && (
-                <CardFooter className="mt-auto">
+              <CardFooter className="mt-auto flex flex-wrap gap-2">
+                {boardHref && <StudioButton href={boardHref(board.id)}>Open board</StudioButton>}
+                {href && (
                   <StudioButton
                     aria-label={`Open ${board.name} in Trello`}
                     href={href}
@@ -64,8 +67,8 @@ export function TrelloBoardDirectory({
                   >
                     Open in Trello <ExternalLinkIcon aria-hidden="true" />
                   </StudioButton>
-                </CardFooter>
-              )}
+                )}
+              </CardFooter>
             </Card>
           </li>
         );

@@ -8,7 +8,7 @@ type BoardFields = Partial<Record<"name" | "description", string>>;
 export type BoardCreationState =
   | { status: "idle" }
   | { status: "error"; message: string; fields?: BoardFields }
-  | { status: "created"; name: string; href: string | null };
+  | { status: "created"; name: string; href: string | null; workspaceHref?: string };
 
 export function parseBoardCreation(
   form: FormData,

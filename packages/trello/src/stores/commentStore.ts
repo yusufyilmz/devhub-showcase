@@ -28,7 +28,7 @@ export const commentsStore = createWithEqualityFn<CommentStore>()(
   ),
 );
 
-export const useCommentStore = createWithEqualityFn<CommentStore>()(commentsStore);
+export const useCommentStore = commentsStore;
 
 export const commentsActions = {
   setComments: (comments: CommentReply[]) => commentsStore.setState({ comments }),

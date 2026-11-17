@@ -120,6 +120,15 @@ export class TrelloBoardService {
     }
   }
 
+  async permanentlyDeleteBoard(boardId: string): Promise<TrelloApiResponse<boolean>> {
+    try {
+      await this.client.makeRequest("DELETE", urls.trello.board(boardId));
+      return { data: true, success: true };
+    } catch (error) {
+      return this.handleError(error, TRELLO_ERRORS.BOARD_NOT_FOUND);
+    }
+  }
+
   // Get lists on a board
   async getListsOnBoard(boardId: string): Promise<TrelloApiResponse<TrelloList[]>> {
     try {
