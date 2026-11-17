@@ -31,6 +31,7 @@ No public package export map or main entry is declared.
 | `@shared/assistant`         | `workspace:*`    | dependencies    |
 | `@shared/auth`              | `workspace:*`    | dependencies    |
 | `@shared/billing`           | `workspace:*`    | dependencies    |
+| `@shared/calendar`          | `workspace:*`    | dependencies    |
 | `@shared/config`            | `workspace:*`    | dependencies    |
 | `@shared/env`               | `workspace:*`    | dependencies    |
 | `@shared/lib`               | `workspace:*`    | dependencies    |

@@ -6,6 +6,7 @@ const nextConfig = {
   serverExternalPackages: ["postgres"],
   transpilePackages: [
     "@shared/env",
+    "@shared/calendar",
     "@shared/auth",
     "@shared/ui",
     "@shared/runtime",

@@ -183,6 +183,39 @@ export interface Database {
         Update: Partial<CompanionFeatureRow>;
         Relationships: [];
       };
+      studio_calendar_tasks: {
+        Row: {
+          id: string;
+          user_id: string;
+          title: string;
+          description: string;
+          day: string;
+          start_time: string | null;
+          completed: boolean;
+          revision: number;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          title: string;
+          description?: string;
+          day: string;
+          start_time?: string | null;
+          completed?: boolean;
+          revision?: number;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          title?: string;
+          description?: string;
+          day?: string;
+          start_time?: string | null;
+          completed?: boolean;
+          revision?: number;
+        };
+        Relationships: [];
+      };
       studio_account_preferences: {
         Row: { user_id: string; key: string; value: Json };
         Insert: { user_id: string; key: string; value: Json };

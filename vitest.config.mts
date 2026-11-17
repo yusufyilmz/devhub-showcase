@@ -71,6 +71,7 @@ export default defineConfig({
         "assistant",
         "auth",
         "billing",
+        "calendar",
         "config",
         "env",
         "lib",

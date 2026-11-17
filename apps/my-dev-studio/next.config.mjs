@@ -6,6 +6,7 @@ const nextConfig = {
   serverExternalPackages: ["openai", "pino", "pdfmake"],
   transpilePackages: [
     "@shared/env",
+    "@shared/calendar",
     "@shared/ui",
     "@shared/auth",
     "@shared/config",

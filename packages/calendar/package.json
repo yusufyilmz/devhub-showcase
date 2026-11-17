@@ -1,0 +1,36 @@
+{
+  "name": "@shared/calendar",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/model.ts",
+    "./calendar-grid": "./src/calendar-grid.tsx",
+    "./day-agenda": "./src/day-agenda.tsx",
+    "./task-form": "./src/task-form.tsx",
+    "./google": "./src/google.ts"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "format:check": "biome format .",
+    "lint": "biome lint .",
+    "typecheck": "tsc --noEmit",
+    "types:check": "pnpm typecheck"
+  },
+  "dependencies": {
+    "@shared/ui": "workspace:*",
+    "@shared/utils": "workspace:*",
+    "lucide-react": "catalog:",
+    "react": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@shared/cli": "workspace:*",
+    "@shared/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "node": ">=24.15.0 <25"
+  }
+}
