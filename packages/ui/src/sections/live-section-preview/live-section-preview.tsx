@@ -95,6 +95,25 @@ export function LiveSectionPreview({
     viewOnly[exampleId]()
   ) : null;
 
+  return (
+    <SectionPreviewSurface
+      embedded={embedded}
+      label={section ? `${section.title} section preview` : `${descriptor?.name} section example`}
+    >
+      {content}
+    </SectionPreviewSurface>
+  );
+}
+
+export function SectionPreviewSurface({
+  children,
+  embedded = false,
+  label,
+}: {
+  children: ReactNode;
+  embedded?: boolean;
+  label: string;
+}) {
   const blockNavigation = (event: React.MouseEvent<HTMLElement>) => {
     if (event.target instanceof Element && event.target.closest("a[href]")) event.preventDefault();
   };
@@ -103,7 +122,7 @@ export function LiveSectionPreview({
     return (
       <PassiveSectionPreview.Provider value>
         <div className="min-w-0 wrap-anywhere" onClickCapture={blockNavigation}>
-          {content}
+          {children}
         </div>
       </PassiveSectionPreview.Provider>
     );
@@ -111,9 +130,7 @@ export function LiveSectionPreview({
 
   return (
     <section
-      aria-label={
-        section ? `${section.title} section preview` : `${descriptor?.name} section example`
-      }
+      aria-label={label}
       className="min-w-0 rounded-xl border border-border/75 bg-card text-card-foreground"
       onClickCapture={blockNavigation}
     >
@@ -121,7 +138,7 @@ export function LiveSectionPreview({
         Live section preview
       </div>
       <PassiveSectionPreview.Provider value>
-        <div className="min-w-0 wrap-anywhere px-md sm:px-lg">{content}</div>
+        <div className="min-w-0 wrap-anywhere px-md sm:px-lg">{children}</div>
       </PassiveSectionPreview.Provider>
     </section>
   );

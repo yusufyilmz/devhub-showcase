@@ -64,8 +64,19 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
     .getByRole("textbox", { name: "Short introduction (optional)" })
     .fill("A thoughtful introduction.");
   await page.getByRole("button", { exact: true, name: "Continue" }).click();
-  await expect(page.getByRole("dialog", { name: "Work experience" })).toBeVisible();
-  await page.getByRole("button", { name: "Skip for now" }).click();
+  const experience = page.getByRole("dialog", { name: "Work experience" });
+  await expect(experience).toBeVisible();
+  await experience.getByRole("button", { name: /Add experience/i }).click();
+  await experience.getByLabel("Company", { exact: true }).fill("Fixture Studio");
+  await experience.getByLabel("Company URL", { exact: true }).fill("https://example.com");
+  await experience.getByLabel("Role", { exact: true }).fill("Product designer");
+  await experience.getByText("Section visibility and layout").click();
+  await experience.getByRole("button", { exact: true, name: "Cards" }).click();
+  const livePreview = experience.getByRole("region", { name: "Experience live preview" });
+  await expect(livePreview.getByText("Product designer", { exact: true })).toBeVisible();
+  await experience.getByLabel("Role", { exact: true }).fill("Lead designer");
+  await expect(livePreview.getByText("Lead designer", { exact: true })).toBeVisible();
+  await experience.getByRole("button", { exact: true, name: "Continue" }).click();
   await expect(page.getByRole("heading", { exact: true, name: "Projects" }).first()).toBeVisible();
   await expect(page.getByText("Recovery saved in this tab", { exact: true })).toBeVisible();
   await page.reload();
@@ -126,6 +137,20 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
   await expect(page.getByRole("dialog", { name: "Review your draft" })).toBeVisible();
   await page.getByRole("button", { name: "Save private draft" }).click();
   await expect(page.getByText("All changes saved", { exact: true })).toBeVisible();
+  const saved = await page.request.get(urls.studio.profile());
+  expect(saved.ok()).toBe(true);
+  expect(await saved.json()).toMatchObject({
+    profile: {
+      customSections: expect.arrayContaining([
+        expect.objectContaining({
+          options: expect.objectContaining({ layout: "faq-reversed" }),
+          sectionType: "faq",
+        }),
+      ]),
+      experiences: expect.arrayContaining([expect.objectContaining({ position: "Lead designer" })]),
+      sectionSettings: { experience: { renderer: "experience-cards" } },
+    },
+  });
   await openEditor(page);
   await page
     .getByRole("textbox", { exact: true, name: "Professional title" })

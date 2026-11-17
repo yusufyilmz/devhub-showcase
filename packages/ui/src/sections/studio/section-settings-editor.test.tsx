@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
 
+import { useState } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
@@ -15,9 +16,15 @@ import { profileSchema } from "@shared/lib/profiles";
 
 import { RegisteredSections } from "../../../../assistant/src/components/portfolio/index";
 import { ProfileEditor } from "../../../../assistant/src/components/studio/workspace/index";
+import { SectionSettingsEditor } from "./section-settings-editor";
 
 const sampleProject = profile.projects[0];
 if (!sampleProject) throw new Error("Expected a sample project");
+
+function DraftSettings({ draft }: { draft: PortfolioProfile }) {
+  const [value, setValue] = useState(draft);
+  return <SectionSettingsEditor onChange={setValue} onlySection="projects" profile={value} />;
+}
 
 describe("SectionSettings", () => {
   beforeEach(() => {
@@ -30,6 +37,47 @@ describe("SectionSettings", () => {
   afterEach(() => {
     cleanup();
     vi.unstubAllGlobals();
+  });
+  it("previews the chosen layout with current draft content and excludes private projects", () => {
+    const draft: PortfolioProfile = {
+      ...profile,
+      projects: [
+        { ...sampleProject, id: "draft", name: "My draft project", public: true },
+        { ...sampleProject, id: "private", name: "My private project", public: false },
+      ],
+    };
+    render(<DraftSettings draft={draft} />);
+    fireEvent.click(screen.getByText("Section visibility and layout"));
+    const preview = screen.getByRole("region", { name: "Projects live preview" });
+    expect(within(preview).getByText("My draft project")).toBeTruthy();
+    expect(within(preview).queryByText("My private project")).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Tabs" }));
+    expect(within(preview).getByRole("tab", { name: "My draft project" })).toBeTruthy();
+    fireEvent.click(screen.getByLabelText("Show section"));
+    expect(within(preview).getByText("This section is hidden.")).toBeTruthy();
+  });
+
+  it("updates the live preview as project fields change and shows an empty state", () => {
+    const onChange = vi.fn();
+    const draft = { ...profile, projects: [] };
+    const { rerender } = render(
+      <SectionSettingsEditor onChange={onChange} onlySection="projects" profile={draft} />,
+    );
+    fireEvent.click(screen.getByText("Section visibility and layout"));
+    const preview = within(screen.getByRole("region", { name: "Projects live preview" }));
+    expect(preview.getByText("Add or include content to preview this section.")).toBeTruthy();
+    rerender(
+      <SectionSettingsEditor
+        onChange={onChange}
+        onlySection="projects"
+        profile={{
+          ...draft,
+          projects: [{ ...sampleProject, name: "Newly entered project", public: true }],
+        }}
+      />,
+    );
+    expect(preview.getByText("Newly entered project")).toBeTruthy();
+    expect(onChange).not.toHaveBeenCalled();
   });
   it("round trips compatible settings and rejects cross section renderers, duplicates and executable settings", () => {
     const sectionSettings = {
@@ -118,9 +166,7 @@ describe("SectionSettings", () => {
     const editor = render(<ProfileEditor initial={initial} />);
     fireEvent.click(screen.getByRole("button", { name: "Section display" }));
     const projects = screen.getByRole("group", { name: "Projects" });
-    fireEvent.change(within(projects).getByLabelText("Display style"), {
-      target: { value: "project-carousel" },
-    });
+    fireEvent.click(within(projects).getByRole("button", { name: "Carousel" }));
     fireEvent.click(within(projects).getByLabelText("All items, including future additions"));
     const first = sampleProject;
     fireEvent.click(
@@ -138,20 +184,11 @@ describe("SectionSettings", () => {
     editor.unmount();
     render(<ProfileEditor initial={saved} />);
     fireEvent.click(screen.getByRole("button", { name: "Section display" }));
-    expect(
-      (
-        within(screen.getByRole("group", { name: "Projects" })).getByLabelText(
-          "Display style",
-        ) as HTMLSelectElement
-      ).value,
-    ).toBe("project-carousel");
+    const reloadedProjects = within(screen.getByRole("group", { name: "Projects" }));
+    expect(reloadedProjects.getByRole("button", { name: "Carousel", pressed: true })).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Reset Projects to default" }));
     expect(
-      (
-        within(screen.getByRole("group", { name: "Projects" })).getByLabelText(
-          "Display style",
-        ) as HTMLSelectElement
-      ).value,
-    ).toBe("");
+      reloadedProjects.getByRole("button", { name: "Layout default", pressed: true }),
+    ).toBeTruthy();
   });
 });

@@ -110,10 +110,15 @@ function sectionItems(profile: PortfolioProfile, kind: PortfolioSection["kind"])
       }));
   }
 }
-export function ConfiguredSection({ profile, section }: ConfiguredSectionOptions) {
+export function ConfiguredSection({
+  profile,
+  section,
+  previewId,
+  emptyState,
+}: ConfiguredSectionOptions) {
   if (!section.settings.visible) return null;
   const items = sectionItems(selectPortfolioContent(profile), section.kind);
-  if (!items.length) return null;
+  if (!items.length) return emptyState ?? null;
   const text = getPortfolioCopy(profile.portfolioLanguage);
   const label = section.kind === "languages" ? text.spokenLanguages : text[section.kind];
   const props = { items, label };
@@ -121,7 +126,8 @@ export function ConfiguredSection({ profile, section }: ConfiguredSectionOptions
     <section
       className={configuredSectionStyles.element1}
       id={
-        profile.portfolioType === "engineer" || !profile.portfolioType
+        previewId ??
+        (profile.portfolioType === "engineer" || !profile.portfolioType
           ? ({
               about: "about-me",
               education: "educations",
@@ -132,7 +138,7 @@ export function ConfiguredSection({ profile, section }: ConfiguredSectionOptions
             }[section.kind] ?? section.kind)
           : section.kind === "projects"
             ? "work"
-            : section.kind
+            : section.kind)
       }
     >
       <h2>{label}</h2>
