@@ -706,7 +706,15 @@ function EditorBody({
     return <GoogleImportEditor managed={managed} onChange={onChange} profile={profile} />;
   if (tab === "AI profile") return <AiProfileEditor readUrl={readUrl} />;
   const Editor = editors[tab];
-  return <Editor onChange={onChange} profile={profile} />;
+  const section = contentSectionKinds[tab as keyof typeof contentSectionKinds];
+  return (
+    <>
+      <Editor onChange={onChange} profile={profile} />
+      {section && (
+        <SectionSettingsEditor onChange={onChange} onlySection={section} profile={profile} />
+      )}
+    </>
+  );
 }
 
 function SharingSettings({
@@ -775,6 +783,15 @@ function LayoutEditor({
     </Card>
   );
 }
+const contentSectionKinds = {
+  Education: "education",
+  Experience: "experience",
+  Languages: "languages",
+  Profile: "about",
+  Projects: "projects",
+  Skills: "skills",
+} as const;
+
 const editors = {
   "AI profile": AiProfileEditor,
   Appearance: AppearanceEditor,

@@ -9,6 +9,7 @@ import {
   type CustomSection,
   getPortfolioEntries,
   getSectionItems,
+  getSectionLayouts,
   getSectionRenderers,
   MAX_CUSTOM_SECTIONS,
   resolveSectionSource,
@@ -61,6 +62,8 @@ export function CustomSectionsEditor({
   libraryDefaultOpen = false,
 }: CustomSectionsEditorOptions) {
   const [starter, setStarter] = useState<AuthorableSectionType>("custom");
+  const [starterLayout, setStarterLayout] = useState<SectionOptions["layout"]>();
+  const starterLayouts = getSectionLayouts(starter);
   const [starterPreviewOpen, setStarterPreviewOpen] = useState(false);
   const [libraryOpen, setLibraryOpen] = useState(libraryDefaultOpen);
   const libraryToggle = useRef<HTMLButtonElement>(null);
@@ -100,35 +103,58 @@ export function CustomSectionsEditor({
       className={
         focused
           ? "col-start-2 row-start-1 min-w-0 rounded-md border border-border bg-background p-4 max-[767px]:col-auto max-[767px]:row-auto [&_nav]:mt-4 [&_nav]:grid [&_nav]:gap-2"
-          : undefined
+          : "grid min-w-0 gap-3"
       }
     >
-      <h2>Section library</h2>
-      <SelectField
-        label="Section starter"
-        onChange={(value) => setStarter(value as AuthorableSectionType)}
-        value={starter}
-      >
-        {authorableSectionTypes.map((type) => (
-          <option key={type} value={type}>
-            {authorableSections[type].name}
-          </option>
-        ))}
-      </SelectField>
-      <Button
-        className={customSectionsEditorStyles.element1}
-        disabled={atLimit}
-        onClick={() => add(starter)}
-        type="button"
-      >
-        Add custom section
-      </Button>
+      <h2 className="mb-3 text-base font-semibold leading-snug">Section library</h2>
+      <div className="grid gap-3">
+        <SelectField
+          label="Section starter"
+          onChange={(value) => {
+            setStarter(value as AuthorableSectionType);
+            setStarterLayout(undefined);
+          }}
+          value={starter}
+        >
+          {authorableSectionTypes.map((type) => (
+            <option key={type} value={type}>
+              {authorableSections[type].name}
+            </option>
+          ))}
+        </SelectField>
+        {starterLayouts.length > 0 && (
+          <SelectField
+            label="Section layout"
+            onChange={(value) =>
+              setStarterLayout(starterLayouts.find(({ id }) => id === value)?.id)
+            }
+            value={starterLayout ?? ""}
+          >
+            <option value="">Default layout</option>
+            {starterLayouts.map(({ id, label }) => (
+              <option key={id} value={id}>
+                {label}
+              </option>
+            ))}
+          </SelectField>
+        )}
+        <Button
+          className="justify-self-start"
+          disabled={atLimit}
+          onClick={() => add(starter, starterLayout)}
+          type="button"
+        >
+          Add custom section
+        </Button>
+      </div>
       <details
-        className="min-w-0 space-y-s"
+        className="mt-3 min-w-0 space-y-s text-muted-foreground"
         onToggle={(event) => setStarterPreviewOpen(event.currentTarget.open)}
       >
         <summary className="cursor-pointer text-sm font-medium">Preview section starter</summary>
-        {starterPreviewOpen && <LiveSectionPreview exampleId={starter} key={starter} />}
+        {starterPreviewOpen && (
+          <LiveSectionPreview exampleId={starter} exampleLayout={starterLayout} key={starter} />
+        )}
       </details>
       {focused && sections.length > 0 && (
         <nav aria-label="Custom sections in your draft">
@@ -189,7 +215,11 @@ export function CustomSectionsEditor({
               : undefined
           }
         >
-          {focused && !selected && <p>Choose a section starter to add and configure it here.</p>}
+          {focused && !selected && (
+            <p className="text-sm text-muted-foreground">
+              Choose a section starter to add and configure it here.
+            </p>
+          )}
           {displayed.map((section) => (
             <SectionEditor
               key={section.id}

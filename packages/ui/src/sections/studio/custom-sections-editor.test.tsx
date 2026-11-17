@@ -17,7 +17,7 @@ import { profileSchema } from "@shared/lib/profiles";
 
 import { RegisteredSections } from "../../../../assistant/src/components/portfolio/index";
 import { ProfileEditor } from "../../../../assistant/src/components/studio/workspace/index";
-import { CustomPortfolioSection, CustomSectionsEditor } from "./index";
+import { CustomPortfolioSection, CustomSectionsEditor, SectionSettingsEditor } from "./index";
 
 const section: CustomSection = {
   id: "custom-aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
@@ -99,6 +99,35 @@ describe("CustomSections", () => {
         sectionType: "faq",
       }),
     ]);
+  });
+
+  it.each([true, false])("adds a starter with its chosen layout (focused: %s)", (focused) => {
+    const onChange = vi.fn();
+    render(<CustomSectionsEditor focused={focused} onChange={onChange} profile={profile} />);
+    fireEvent.change(screen.getByLabelText("Section starter"), { target: { value: "faq" } });
+    fireEvent.change(screen.getByLabelText("Section layout"), {
+      target: { value: "faq-reversed" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Add custom section" }));
+    expect(onChange.mock.lastCall?.[0].customSections.at(-1)).toMatchObject({
+      items: [],
+      options: { layout: "faq-reversed" },
+      sectionType: "faq",
+    });
+  });
+
+  it("updates only the selected built-in section layout", () => {
+    const draft = { ...profile, sectionSettings: { education: { visible: false } } };
+    const onChange = vi.fn();
+    render(<SectionSettingsEditor onChange={onChange} onlySection="skills" profile={draft} />);
+    const display = screen.getByLabelText<HTMLSelectElement>("Display style");
+    const renderer = display.options[1]?.value;
+    expect(renderer).toBeTruthy();
+    fireEvent.change(display, { target: { value: renderer } });
+    expect(onChange.mock.lastCall?.[0].sectionSettings).toEqual({
+      education: { visible: false },
+      skills: { renderer },
+    });
   });
 
   it("round trips custom sections and mixed ordering while preserving existing sectionOrder", () => {

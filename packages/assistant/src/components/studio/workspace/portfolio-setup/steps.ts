@@ -31,13 +31,13 @@ export const stages = [
 ] as const;
 
 export const sections = [
-  { Editor: null, title: "Profile" },
-  { Editor: ExperienceEditor, title: "Work experience" },
-  { Editor: ProjectsEditor, title: "Projects" },
-  { Editor: SkillsEditor, title: "Skills" },
-  { Editor: EducationEditor, title: "Education" },
-  { Editor: LanguagesEditor, title: "Languages" },
-  { Editor: CustomSectionsEditor, title: "Custom sections" },
+  { Editor: null, kind: "about", title: "Profile" },
+  { Editor: ExperienceEditor, kind: "experience", title: "Work experience" },
+  { Editor: ProjectsEditor, kind: "projects", title: "Projects" },
+  { Editor: SkillsEditor, kind: "skills", title: "Skills" },
+  { Editor: EducationEditor, kind: "education", title: "Education" },
+  { Editor: LanguagesEditor, kind: "languages", title: "Languages" },
+  { Editor: CustomSectionsEditor, kind: undefined, title: "Custom sections" },
 ] as const;
 
 export const progressSteps = [

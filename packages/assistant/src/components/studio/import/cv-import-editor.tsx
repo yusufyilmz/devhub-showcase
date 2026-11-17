@@ -104,11 +104,16 @@ export function CvImportEditor({
             CV import is unavailable right now. You can still enter your details manually.
           </p>
         )}
-        <LibraryLabel className="cv-upload-label" htmlFor="cv-upload" unstyled>
+        <LibraryLabel
+          className="cv-upload-label text-sm font-semibold"
+          htmlFor="cv-upload"
+          unstyled
+        >
           Your CV file
         </LibraryLabel>
         <LibraryInput
           accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
+          className="w-full min-w-0 rounded-lg border border-border bg-background text-sm text-muted-foreground file:me-3 file:border-0 file:border-e file:border-border file:bg-muted file:px-4 file:py-3 file:text-sm file:font-semibold file:text-foreground focus-visible:outline-2 focus-visible:outline-primary"
           disabled={busy || !enabled}
           id="cv-upload"
           onChange={(event) => {
@@ -120,7 +125,7 @@ export function CvImportEditor({
           type="file"
           unstyled
         />
-        <p>
+        <p className="text-sm leading-relaxed text-muted-foreground">
           PDF, DOCX or UTF-8 text, up to 3 MB. Scanned PDFs may need a clearer copy. Original files
           are not saved to your account.
         </p>
@@ -137,7 +142,7 @@ export function CvImportEditor({
           />{" "}
           Send this CV to OpenAI to extract my portfolio details.
         </LibraryLabel>
-        <p>
+        <p className="text-sm leading-relaxed text-muted-foreground">
           The file is sent for this request. OpenAI’s API data retention policies apply. Review the
           result for mistakes before saving.
         </p>
