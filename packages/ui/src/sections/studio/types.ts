@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import type {
   CustomSection,
   Language,
@@ -9,6 +11,8 @@ import type {
 import type { SectionItem } from "../section";
 
 export type ConfiguredSectionOptions = {
+  emptyState?: ReactNode;
+  previewId?: string;
   profile: PortfolioProfile;
   section: PortfolioSection;
 };

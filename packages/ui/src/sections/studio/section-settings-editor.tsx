@@ -1,11 +1,16 @@
 "use client";
 import "../../styles/portfolio/portfolio.css";
 
+import { useId } from "react";
+
 import {
   getPortfolioSections,
   getSectionItems,
+  type PortfolioProfile,
+  type PortfolioSection,
   type PortfolioSectionId,
   type PortfolioSectionSettings,
+  type SectionRendererId,
   sectionRegistry,
   sectionRendererViews,
 } from "@shared/config";
@@ -14,7 +19,7 @@ import { Button } from "../../buttons";
 import { Card } from "../../cards";
 import { Input as LibraryInput } from "../../forms/input";
 import { Label as LibraryLabel } from "../../forms/label";
-import { NativeSelect as LibraryNativeSelect } from "../../forms/native-select";
+import { SectionPreviewSurface } from "../live-section-preview/live-section-preview";
 import { ConfiguredSection } from "./configured-section";
 import { sectionSettingsEditorInlineStyle1, sectionSettingsEditorStyles } from "./styles";
 import type { SectionSettingsEditorOptions } from "./types";
@@ -29,6 +34,70 @@ const names: Record<string, string> = {
   tabs: "Tabs",
   timeline: "Timeline",
 };
+
+function SectionLayoutPicker({
+  profile,
+  section,
+  selectedRenderer,
+  onSelect,
+}: {
+  profile: PortfolioProfile;
+  section: PortfolioSection;
+  selectedRenderer?: SectionRendererId;
+  onSelect: (renderer: SectionRendererId | undefined) => void;
+}) {
+  const previewId = useId();
+  const definition = sectionRegistry[section.kind];
+  const choices = [
+    { label: "Layout default", renderer: undefined },
+    ...definition.renderers.map((renderer) => ({
+      label:
+        renderer === "skill-groups"
+          ? "Groups"
+          : (names[sectionRendererViews[renderer]] ?? renderer),
+      renderer,
+    })),
+  ];
+  return (
+    <div className="grid min-w-0 gap-3">
+      <fieldset className="flex min-w-0 flex-wrap gap-2 border-0 p-0">
+        <legend className="mb-2 text-sm font-semibold">Display style</legend>
+        {choices.map(({ label, renderer }) => (
+          <Button
+            aria-controls={previewId}
+            aria-pressed={selectedRenderer === renderer}
+            key={renderer ?? "default"}
+            onClick={() => onSelect(renderer)}
+            size="sm"
+            type="button"
+            variant={selectedRenderer === renderer ? "default" : "outline"}
+          >
+            {label}
+          </Button>
+        ))}
+      </fieldset>
+      <div id={previewId}>
+        <SectionPreviewSurface label={`${definition.name} live preview`}>
+          {section.settings.visible ? (
+            <ConfiguredSection
+              emptyState={
+                <p className="py-4 text-sm text-muted-foreground">
+                  Add or include content to preview this section.
+                </p>
+              }
+              previewId={`${previewId}-section`}
+              profile={profile}
+              section={section}
+            />
+          ) : (
+            <p className="py-4 text-sm text-muted-foreground">This section is hidden.</p>
+          )}
+        </SectionPreviewSurface>
+      </div>
+    </div>
+  );
+}
+
 export function SectionSettingsEditor({
   profile,
   onChange,
@@ -65,7 +134,7 @@ export function SectionSettingsEditor({
             return (
               <fieldset className={sectionSettingsEditorStyles.element2} key={kind}>
                 <legend>{sectionRegistry[kind].name}</legend>
-                <LibraryLabel unstyled>
+                <LibraryLabel className="flex items-center gap-2 [&_input]:accent-primary" unstyled>
                   <LibraryInput
                     checked={settings.visible ?? true}
                     onChange={(event) =>
@@ -76,31 +145,24 @@ export function SectionSettingsEditor({
                   />{" "}
                   Show section
                 </LibraryLabel>
-                <LibraryLabel htmlFor={`section-display-${kind}`} unstyled>
-                  Display style
-                </LibraryLabel>
-                <LibraryNativeSelect
-                  id={`section-display-${kind}`}
-                  onChange={(event) =>
+                <SectionLayoutPicker
+                  onSelect={(renderer) =>
                     update(kind, {
                       ...settings,
-                      renderer: event.target.value || undefined,
+                      renderer,
                     } as PortfolioSectionSettings[typeof kind])
                   }
-                  unstyled
-                  value={settings.renderer ?? ""}
-                >
-                  <option value="">Layout default</option>
-                  {sectionRegistry[kind].renderers.map((renderer) => (
-                    <option key={renderer} value={renderer}>
-                      {names[sectionRendererViews[renderer]] ?? renderer}
-                    </option>
-                  ))}
-                </LibraryNativeSelect>
+                  profile={profile}
+                  section={section}
+                  selectedRenderer={settings.renderer}
+                />
                 {items.length > 0 && (
                   <fieldset>
                     <legend>Included content</legend>
-                    <LibraryLabel unstyled>
+                    <LibraryLabel
+                      className="flex items-center gap-2 [&_input]:accent-primary"
+                      unstyled
+                    >
                       <LibraryInput
                         checked={settings.itemIds === undefined}
                         onChange={(event) =>
@@ -116,6 +178,7 @@ export function SectionSettingsEditor({
                     </LibraryLabel>
                     {items.map((item) => (
                       <LibraryLabel
+                        className="flex items-center gap-2 [&_input]:accent-primary"
                         key={item.id}
                         style={sectionSettingsEditorInlineStyle1}
                         unstyled
@@ -134,20 +197,10 @@ export function SectionSettingsEditor({
                           type="checkbox"
                           unstyled
                         />{" "}
-                        {item.title}
+                        {item.title.trim() || "Untitled item"}
                       </LibraryLabel>
                     ))}
                   </fieldset>
-                )}
-                {settings.renderer && (
-                  <details>
-                    <summary>Preview {sectionRegistry[kind].name}</summary>
-                    <p>
-                      This preview uses your current edits. Save changes to update the public
-                      portfolio.
-                    </p>
-                    <ConfiguredSection profile={profile} section={section} />
-                  </details>
                 )}
                 <Button
                   className={sectionSettingsEditorStyles.element3}

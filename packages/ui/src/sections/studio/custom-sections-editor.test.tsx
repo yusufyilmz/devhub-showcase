@@ -114,19 +114,22 @@ describe("CustomSections", () => {
       options: { layout: "faq-reversed" },
       sectionType: "faq",
     });
+    const saved = profileSchema.parse(JSON.parse(JSON.stringify(onChange.mock.lastCall?.[0])));
+    expect(saved.customSections?.at(-1)).toMatchObject({
+      options: { layout: "faq-reversed" },
+      sectionType: "faq",
+    });
   });
 
   it("updates only the selected built-in section layout", () => {
     const draft = { ...profile, sectionSettings: { education: { visible: false } } };
     const onChange = vi.fn();
     render(<SectionSettingsEditor onChange={onChange} onlySection="skills" profile={draft} />);
-    const display = screen.getByLabelText<HTMLSelectElement>("Display style");
-    const renderer = display.options[1]?.value;
-    expect(renderer).toBeTruthy();
-    fireEvent.change(display, { target: { value: renderer } });
+    fireEvent.click(screen.getByText("Section visibility and layout"));
+    fireEvent.click(screen.getByRole("button", { name: "List" }));
     expect(onChange.mock.lastCall?.[0].sectionSettings).toEqual({
       education: { visible: false },
-      skills: { renderer },
+      skills: { renderer: "skill-list" },
     });
   });
 
