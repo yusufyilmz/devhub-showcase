@@ -21,6 +21,8 @@ export function SectionFrame({
   surface = "plain",
   width = "contained",
   className,
+  sectionType,
+  layout,
 }: SectionFrameProps) {
   const band = width === "bleed" && surface !== "card";
   return (
@@ -37,7 +39,9 @@ export function SectionFrame({
         className,
       )}
       data-section-context={context}
+      data-section-layout={layout}
       data-section-surface={surface}
+      data-section-type={sectionType}
       data-section-width={width}
       id={id}
     >

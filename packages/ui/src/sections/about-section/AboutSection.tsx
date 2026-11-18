@@ -1,4 +1,6 @@
 import { ItemContent } from "../collection-view/CollectionView";
+import { SectionFrame } from "../section/section-frame";
+import { SectionHeading } from "../section/section-heading";
 import { SectionPresentation } from "../section-presentation";
 import type { SectionProps } from "../types";
 
@@ -12,27 +14,20 @@ export function AboutSection(props: SectionProps) {
   const [lead, ...details] = section.items;
   const headingId = `${section.id}-heading`;
   return (
-    <section
-      aria-labelledby={headingId}
-      className="@container scroll-mt-24 border-y border-border/70 py-xl"
-      data-section-layout="about-editorial"
-      data-section-type="about"
+    <SectionFrame
+      className="@container scroll-mt-24 border-y border-border/70"
+      context="composed"
       id={section.id}
+      layout="about-editorial"
+      sectionType="about"
     >
       <div className="grid min-w-0 gap-xl @3xl:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
-        <header className="min-w-0">
-          <h2
-            className="text-balance text-3xl font-semibold tracking-tight @lg:text-4xl"
-            id={headingId}
-          >
-            {section.title}
-          </h2>
-          {section.options.description && (
-            <p className="mt-md max-w-prose text-pretty leading-relaxed text-muted-foreground">
-              {section.options.description}
-            </p>
-          )}
-        </header>
+        <SectionHeading
+          description={section.options.description}
+          id={headingId}
+          level={2}
+          title={section.title}
+        />
         <div className="grid min-w-0 content-start gap-lg wrap-anywhere">
           {lead && (
             <article className="grid min-w-0 gap-sm leading-relaxed text-muted-foreground">
@@ -55,6 +50,6 @@ export function AboutSection(props: SectionProps) {
           )}
         </div>
       </div>
-    </section>
+    </SectionFrame>
   );
 }

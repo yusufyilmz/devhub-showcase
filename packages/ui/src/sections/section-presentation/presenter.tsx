@@ -2,6 +2,7 @@ import "../section/sections.css";
 
 import type { ReactNode } from "react";
 
+import { cn } from "cn";
 import { ArrowUpRight, Mail } from "lucide-react";
 
 import { authorableSections, getPortfolioCopy } from "@shared/config";
@@ -14,8 +15,70 @@ import { ContactForm } from "../../forms";
 import { HeroSurface } from "../../layout";
 import { CollectionView } from "../collection-view/CollectionView";
 import { DashboardContent } from "../dashboard-section/DashboardContent";
+import { SectionFrame, sectionFrameProseClassName } from "../section/section-frame";
+import { SectionHeading } from "../section/section-heading";
 import { presenterStyles, sectionPresentationClassName } from "./styles";
 import type { SectionPresentationOptions, SpecialViewOptions } from "./types";
+
+const framedIntroTypes = new Set([
+  "about",
+  "about-hero",
+  "heading",
+  "legal-text",
+  "profile",
+  "text",
+]);
+
+function FramedIntro({ anchors, language, preview, section, type }: SectionPresentationOptions) {
+  const view = authorableSections[type].view;
+  const alignment = section.options?.alignment ?? "left";
+  const frame = (
+    <SectionFrame
+      className={cn(
+        "scroll-mt-24",
+        alignment === "center" && "text-center",
+        alignment === "right" && "text-end",
+      )}
+      context="composed"
+      heading={
+        <SectionHeading
+          description={section.options?.description}
+          id={`${section.id}-heading`}
+          level={2}
+          title={section.title}
+        />
+      }
+      id={section.id}
+      sectionType={type}
+      width={type === "text" || type === "legal-text" ? "reading" : "contained"}
+    >
+      <div className={type === "heading" ? undefined : sectionFrameProseClassName}>
+        <SpecialView
+          anchors={anchors}
+          language={language}
+          preview={preview}
+          section={section}
+          type={type}
+        />
+      </div>
+    </SectionFrame>
+  );
+  if (view === "hero" && section.options?.mediaUrl) {
+    return (
+      <HeroSurface
+        media={{
+          kind: "image",
+          overlay: "strong",
+          position: "center",
+          url: section.options.mediaUrl,
+        }}
+      >
+        {frame}
+      </HeroSurface>
+    );
+  }
+  return frame;
+}
 
 export function SpecialView({
   section,
@@ -83,6 +146,17 @@ export function SectionPresentation({
     !["hero", "heading", "contact", "map", "toc", "newsletter"].includes(view)
   )
     return null;
+  if (framedIntroTypes.has(type)) {
+    return (
+      <FramedIntro
+        anchors={anchors}
+        language={language}
+        preview={preview}
+        section={section}
+        type={type}
+      />
+    );
+  }
   const headingId = `${section.id}-heading`;
   const className = sectionPresentationClassName(section.composition ?? type, type, view);
   if (view === "newsletter") {

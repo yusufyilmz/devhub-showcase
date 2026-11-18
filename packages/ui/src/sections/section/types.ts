@@ -79,6 +79,9 @@ export type SectionFrameProps = PropsWithChildren<{
   surface?: SectionFrameSurface;
   width?: SectionFrameWidth;
   className?: string;
+  /** Preserves the existing section identity used by preview and browser tests. */
+  sectionType?: string;
+  layout?: string;
 }>;
 
 export type SectionHeadingProps = {

@@ -16,56 +16,56 @@ Review surface: Storybook `UI/Layout/Section/Spacing Contract`.
 
 Renderer lists come from `getSectionRenderers`. Layout lists come from `getSectionLayouts`. Forty-eight families.
 
-| Type              | View       | Renderers                                                                       | Layouts                   | Spacing     | Reviewed     |
-| ----------------- | ---------- | ------------------------------------------------------------------------------- | ------------------------- | ----------- | ------------ |
-| about-hero        | hero       | list                                                                            | —                         | not aligned | not reviewed |
-| about             | about      | cards, list, gallery, carousel, accordion, tabs                                 | about-editorial           | not aligned | not reviewed |
-| accordion         | accordion  | accordion, cards, list                                                          | —                         | not aligned | not reviewed |
-| awards            | awards     | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| blog-page         | posts      | cards, list, gallery, carousel, accordion, tabs                                 | blog-featured             | not aligned | not reviewed |
-| cta               | cards      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| calendar-link     | links      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| careers           | careers    | cards, list, gallery, carousel, accordion, tabs                                 | careers-openings          | not aligned | not reviewed |
-| clients           | clients    | gallery, masonry, carousel, cards                                               | —                         | not aligned | not reviewed |
-| contact-form      | contact    | list                                                                            | contact-split             | not aligned | not reviewed |
-| contact-info      | links      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| dashboard         | dashboard  | list                                                                            | —                         | not aligned | not reviewed |
-| faq               | accordion  | accordion, cards, list                                                          | faq-stacked, faq-reversed | not aligned | not reviewed |
-| features          | cards      | cards, list, gallery, carousel, accordion, tabs                                 | features-bento            | not aligned | not reviewed |
-| gallery-grid      | gallery    | gallery, masonry, carousel, cards                                               | —                         | not aligned | not reviewed |
-| heading           | heading    | list                                                                            | —                         | not aligned | not reviewed |
-| hero              | hero       | list                                                                            | hero-centered, hero-cover | not aligned | not reviewed |
-| how-to            | steps      | steps, list, cards                                                              | —                         | not aligned | not reviewed |
-| legal-text        | text       | text, list                                                                      | —                         | not aligned | not reviewed |
-| map               | map        | list                                                                            | —                         | not aligned | not reviewed |
-| menu              | menu       | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| newsletter        | newsletter | list                                                                            | —                         | not aligned | not reviewed |
-| plans             | pricing    | cards, list, gallery, carousel, accordion, tabs                                 | pricing-comparison        | not aligned | not reviewed |
-| posts-grid        | posts      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| pricing           | pricing    | cards, list, gallery, carousel, accordion, tabs                                 | pricing-comparison        | not aligned | not reviewed |
-| profile           | profile    | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| projects          | projects   | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| property          | property   | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| quickstart        | steps      | steps, list, cards                                                              | —                         | not aligned | not reviewed |
-| shop-items        | shop       | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| showcase          | gallery    | gallery, masonry, carousel, cards                                               | —                         | not aligned | not reviewed |
-| social-links      | links      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| stats             | statistics | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| studies           | timeline   | timeline, list, cards                                                           | —                         | not aligned | not reviewed |
-| table-of-contents | toc        | list                                                                            | —                         | not aligned | not reviewed |
-| tabs              | tabs       | tabs, accordion, list                                                           | —                         | not aligned | not reviewed |
-| team              | team       | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| technical-skills  | skills     | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| testimonials      | quotes     | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| text              | text       | text, list                                                                      | —                         | not aligned | not reviewed |
-| timeline          | timeline   | timeline, list, cards                                                           | —                         | not aligned | not reviewed |
-| video             | video      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| work-experience   | timeline   | timeline, list, cards                                                           | —                         | not aligned | not reviewed |
-| custom            | list       | list, cards, gallery, masonry, carousel, accordion, tabs, timeline, steps, text | —                         | not aligned | not reviewed |
-| services          | cards      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| youtube           | video      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned | not reviewed |
-| instagram         | gallery    | gallery, masonry, carousel, cards                                               | —                         | not aligned | not reviewed |
-| pinterest         | gallery    | gallery, masonry, carousel, cards                                               | —                         | not aligned | not reviewed |
+| Type              | View       | Renderers                                                                       | Layouts                   | Spacing       | Reviewed                       |
+| ----------------- | ---------- | ------------------------------------------------------------------------------- | ------------------------- | ------------- | ------------------------------ |
+| about-hero        | hero       | list                                                                            | —                         | frame applied | story not opened               |
+| about             | about      | cards, list, gallery, carousel, accordion, tabs                                 | about-editorial           | aligned       | default and editorial reviewed |
+| accordion         | accordion  | accordion, cards, list                                                          | —                         | not aligned   | not reviewed                   |
+| awards            | awards     | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| blog-page         | posts      | cards, list, gallery, carousel, accordion, tabs                                 | blog-featured             | not aligned   | not reviewed                   |
+| cta               | cards      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| calendar-link     | links      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| careers           | careers    | cards, list, gallery, carousel, accordion, tabs                                 | careers-openings          | not aligned   | not reviewed                   |
+| clients           | clients    | gallery, masonry, carousel, cards                                               | —                         | not aligned   | not reviewed                   |
+| contact-form      | contact    | list                                                                            | contact-split             | not aligned   | not reviewed                   |
+| contact-info      | links      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| dashboard         | dashboard  | list                                                                            | —                         | not aligned   | not reviewed                   |
+| faq               | accordion  | accordion, cards, list                                                          | faq-stacked, faq-reversed | not aligned   | not reviewed                   |
+| features          | cards      | cards, list, gallery, carousel, accordion, tabs                                 | features-bento            | not aligned   | not reviewed                   |
+| gallery-grid      | gallery    | gallery, masonry, carousel, cards                                               | —                         | not aligned   | not reviewed                   |
+| heading           | heading    | list                                                                            | —                         | frame applied | story not opened               |
+| hero              | hero       | list                                                                            | hero-centered, hero-cover | not aligned   | not reviewed                   |
+| how-to            | steps      | steps, list, cards                                                              | —                         | not aligned   | not reviewed                   |
+| legal-text        | text       | text, list                                                                      | —                         | frame applied | story not opened               |
+| map               | map        | list                                                                            | —                         | not aligned   | not reviewed                   |
+| menu              | menu       | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| newsletter        | newsletter | list                                                                            | —                         | not aligned   | not reviewed                   |
+| plans             | pricing    | cards, list, gallery, carousel, accordion, tabs                                 | pricing-comparison        | not aligned   | not reviewed                   |
+| posts-grid        | posts      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| pricing           | pricing    | cards, list, gallery, carousel, accordion, tabs                                 | pricing-comparison        | not aligned   | not reviewed                   |
+| profile           | profile    | cards, list, gallery, carousel, accordion, tabs                                 | —                         | frame applied | story not opened               |
+| projects          | projects   | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| property          | property   | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| quickstart        | steps      | steps, list, cards                                                              | —                         | not aligned   | not reviewed                   |
+| shop-items        | shop       | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| showcase          | gallery    | gallery, masonry, carousel, cards                                               | —                         | not aligned   | not reviewed                   |
+| social-links      | links      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| stats             | statistics | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| studies           | timeline   | timeline, list, cards                                                           | —                         | not aligned   | not reviewed                   |
+| table-of-contents | toc        | list                                                                            | —                         | not aligned   | not reviewed                   |
+| tabs              | tabs       | tabs, accordion, list                                                           | —                         | not aligned   | not reviewed                   |
+| team              | team       | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| technical-skills  | skills     | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| testimonials      | quotes     | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| text              | text       | text, list                                                                      | —                         | aligned       | default reviewed at 1440       |
+| timeline          | timeline   | timeline, list, cards                                                           | —                         | not aligned   | not reviewed                   |
+| video             | video      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| work-experience   | timeline   | timeline, list, cards                                                           | —                         | not aligned   | not reviewed                   |
+| custom            | list       | list, cards, gallery, masonry, carousel, accordion, tabs, timeline, steps, text | —                         | not aligned   | not reviewed                   |
+| services          | cards      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| youtube           | video      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| instagram         | gallery    | gallery, masonry, carousel, cards                                               | —                         | not aligned   | not reviewed                   |
+| pinterest         | gallery    | gallery, masonry, carousel, cards                                               | —                         | not aligned   | not reviewed                   |
 
 Layout IDs: `about-editorial`, `blog-featured`, `careers-openings`, `contact-split`, `faq-stacked`, `faq-reversed`, `features-bento`, `hero-centered`, `hero-cover`, `pricing-comparison`.
 
