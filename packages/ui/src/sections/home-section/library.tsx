@@ -5,7 +5,7 @@ import { Card } from "../../cards";
 import { LibraryPicker } from "../live-section-preview/library-picker";
 import { LiveSectionPreview } from "../live-section-preview/live-section-preview";
 import { sectionExamples } from "../live-section-preview/preview-examples";
-import { SectionCatalog } from "../live-section-preview/section-catalog";
+import { SectionCatalogPreview } from "../live-section-preview/section-catalog-preview";
 import { Section } from "../section";
 import { libraryStyles } from "./styles";
 import type { HomeLibrarySectionOptions } from "./types";
@@ -107,6 +107,7 @@ const featuredExamples = samples.map((section) => {
     content: <LiveSectionPreview embedded exampleId={exampleId} section={section} />,
     description: section.title,
     id: exampleId,
+    thumbnail: <SectionCatalogPreview type={exampleId} />,
     title: authorableSections[exampleId].name,
   };
 });
@@ -120,6 +121,7 @@ const libraryExamples = [
       content: <LiveSectionPreview embedded exampleId={id} />,
       description,
       id,
+      thumbnail: <SectionCatalogPreview type={id} />,
       title: name,
     })),
 ];
@@ -155,8 +157,7 @@ export function HomeLibrarySection({ href }: HomeLibrarySectionOptions) {
             <span>SELECT · ARRANGE · MAKE IT YOURS</span>
           </div>
         </div>
-        <LibraryPicker featuredCount={samples.length} items={libraryExamples} />
-        <SectionCatalog />
+        <LibraryPicker items={libraryExamples} />
         <div className={libraryStyles.element6}>
           <Card asChild layout="plain" surface="portfolio">
             <article>

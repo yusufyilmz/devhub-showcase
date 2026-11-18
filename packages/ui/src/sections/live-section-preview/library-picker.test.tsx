@@ -33,10 +33,9 @@ describe("Homepage section picker", () => {
     expect(screen.getByRole("region", { name: "Timeline section example" })).toBeTruthy();
     expect(screen.queryByRole("region", { name: "Services section example" })).toBeNull();
   });
-  it("expands to the complete list and filters it without mounting other previews", () => {
+  it("shows the complete list and filters it without mounting other previews", () => {
     render(
       <LibraryPicker
-        featuredCount={1}
         items={[
           {
             content: <p>Services preview</p>,
@@ -55,9 +54,6 @@ describe("Homepage section picker", () => {
       />,
     );
     const list = screen.getByRole("group", { name: "Section examples" });
-    const expand = screen.getByRole("button", { name: "Show all 3 examples" });
-    expect(within(list).getAllByRole("button")).toHaveLength(1);
-    fireEvent.click(expand);
     expect(within(list).getAllByRole("button")).toHaveLength(3);
     fireEvent.change(screen.getByRole("searchbox", { name: "Filter live section examples" }), {
       target: { value: "spoken" },
@@ -65,8 +61,10 @@ describe("Homepage section picker", () => {
     fireEvent.click(within(list).getByRole("button", { name: "Languages" }));
     expect(screen.getByRole("region", { name: "Languages section example" })).toBeTruthy();
     expect(screen.queryByText("Studio reel")).toBeNull();
-    fireEvent.click(screen.getByRole("button", { name: "Show featured examples" }));
-    expect(within(list).getAllByRole("button")).toHaveLength(1);
+    fireEvent.change(screen.getByRole("searchbox", { name: "Filter live section examples" }), {
+      target: { value: "" },
+    });
+    expect(within(list).getAllByRole("button")).toHaveLength(3);
     expect(screen.getByRole("region", { name: "Languages section example" })).toBeTruthy();
   });
 });

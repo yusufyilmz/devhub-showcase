@@ -16,9 +16,9 @@ test("homepage replaces the example without mounting the previous section", asyn
   });
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("data-theme", mode);
-  const library = page.getByRole("region", { name: /Browse all .* section examples/ });
-  const search = library.getByRole("searchbox", { name: "Find a section" });
-  const tiles = library.getByRole("list", { name: "Available section types" });
+  const library = page.locator("#section-library");
+  const search = library.getByRole("searchbox", { name: "Filter live section examples" });
+  const tiles = library.getByRole("group", { name: "Section examples" });
   expect(await library.locator("[data-preview-kind]").count()).toBe(
     authorableSectionTypes.length + 9,
   );
@@ -28,13 +28,11 @@ test("homepage replaces the example without mounting the previous section", asyn
   await galleryTile.press("Enter");
   const gallery = library.getByRole("region", { name: "Gallery Grid section example" });
   await expect(gallery).toBeVisible();
-  await gallery.getByRole("button", { name: "View Atlas interface" }).click();
-  const lightbox = page.getByRole("dialog", { name: "Atlas interface" });
+  await gallery.getByRole("button", { name: "View Orbit identity" }).click();
+  const lightbox = page.getByRole("dialog", { name: "Orbit identity" });
   await expect(lightbox).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(lightbox).toBeHidden();
-  await library.getByRole("button", { name: "Close preview" }).click();
-  await expect(galleryTile).toBeFocused();
   await search.fill("YouTube");
   await tiles.getByRole("button", { exact: true, name: "YouTube" }).click();
   await expect(library.getByRole("button", { name: /load youtube video/i })).toBeDisabled();
