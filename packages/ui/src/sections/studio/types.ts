@@ -12,6 +12,7 @@ import type { SectionItem } from "../section";
 
 export type ConfiguredSectionOptions = {
   emptyState?: ReactNode;
+  showEducationExample?: boolean;
   renderItemControl?: (id: string) => ReactNode;
   previewId?: string;
   profile: PortfolioProfile;

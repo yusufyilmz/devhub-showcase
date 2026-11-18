@@ -6,6 +6,7 @@ export type FieldOptions = {
   onChange: (value: string) => void;
   type?: string;
   multiline?: boolean;
+  placeholder?: string;
   hint?: string;
   required?: boolean;
 };

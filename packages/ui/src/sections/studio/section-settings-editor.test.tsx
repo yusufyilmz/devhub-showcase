@@ -16,6 +16,8 @@ import { profileSchema } from "@shared/lib/profiles";
 
 import { RegisteredSections } from "../../../../assistant/src/components/portfolio/index";
 import { ProfileEditor } from "../../../../assistant/src/components/studio/workspace/index";
+import { EducationEditor } from "../careers-section/career-editors";
+import { ConfiguredSection } from "./configured-section";
 import { SectionSettingsEditor } from "./section-settings-editor";
 
 const sampleProject = profile.projects[0];
@@ -53,7 +55,7 @@ describe("SectionSettings", () => {
     fireEvent.click(screen.getByRole("button", { name: "Tabs" }));
     expect(within(preview).getByRole("tab", { name: "My draft project" })).toBeTruthy();
     fireEvent.click(screen.getByLabelText("Show section"));
-    expect(within(preview).getByText("This section is hidden.")).toBeTruthy();
+    expect(within(preview).getByText("Section hidden.")).toBeTruthy();
   });
 
   it("arranges items and lets users exclude and restore items inside the preview", () => {
@@ -72,9 +74,9 @@ describe("SectionSettings", () => {
       preview.getByText("Project A").closest("[data-direction]")?.getAttribute("data-direction"),
     ).toBe("column");
     fireEvent.click(preview.getByRole("checkbox", { name: "Include Project A" }));
-    expect(preview.getByText("Add or include content to preview this section.")).toBeTruthy();
+    expect(preview.getByText("No items to preview.")).toBeTruthy();
     fireEvent.click(preview.getByRole("checkbox", { name: "Include Project A" }));
-    expect(preview.queryByText("Add or include content to preview this section.")).toBeNull();
+    expect(preview.queryByText("No items to preview.")).toBeNull();
   });
 
   it("updates the live preview as project fields change and shows an empty state", () => {
@@ -84,7 +86,7 @@ describe("SectionSettings", () => {
       <SectionSettingsEditor onChange={onChange} onlySection="projects" profile={draft} />,
     );
     const preview = within(screen.getByRole("region", { name: "Projects live preview" }));
-    expect(preview.getByText("Add or include content to preview this section.")).toBeTruthy();
+    expect(preview.getByText("No items to preview.")).toBeTruthy();
     rerender(
       <SectionSettingsEditor
         onChange={onChange}
@@ -96,6 +98,46 @@ describe("SectionSettings", () => {
       />,
     );
     expect(preview.getByText("Newly entered project")).toBeTruthy();
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it("shows Education examples for empty fields only in the editor", () => {
+    const draft = { ...profile, education: [] };
+    const onChange = vi.fn();
+    const { rerender } = render(
+      <SectionSettingsEditor onChange={onChange} onlySection="education" profile={draft} />,
+    );
+    const preview = within(screen.getByRole("region", { name: "Education live preview" }));
+    expect(preview.getByText(/Example University/)).toBeTruthy();
+    expect(preview.queryByRole("checkbox")).toBeNull();
+
+    const entry = {
+      degree: "M.Sc.",
+      end: "2022-06-01",
+      field: "",
+      id: "draft",
+      institution: "",
+      start: "2020-08-01",
+      url: "https://",
+    };
+    const partial = { ...draft, education: [entry] };
+    rerender(
+      <>
+        <EducationEditor onChange={onChange} profile={partial} />
+        <SectionSettingsEditor onChange={onChange} onlySection="education" profile={partial} />
+      </>,
+    );
+    expect(screen.getByPlaceholderText("Example University")).toHaveProperty("value", "");
+    expect(screen.getByPlaceholderText("https://example.edu")).toHaveProperty("value", "");
+    const partialPreview = within(screen.getByRole("region", { name: "Education live preview" }));
+    expect(partialPreview.getByRole("heading", { name: "M.Sc. · Computer Science" })).toBeTruthy();
+    const section = getPortfolioSections(partial).find(({ kind }) => kind === "education");
+    if (!section) throw new Error("Expected an Education section");
+    const publicMarkup = renderToStaticMarkup(
+      <ConfiguredSection profile={partial} section={section} />,
+    );
+    expect(publicMarkup).not.toContain("Computer Science");
+    expect(publicMarkup).not.toContain("Example University");
     expect(onChange).not.toHaveBeenCalled();
   });
 
@@ -199,7 +241,7 @@ describe("SectionSettings", () => {
     const projects = screen.getByRole("group", { name: "Projects" });
     fireEvent.click(within(projects).getByRole("button", { name: "Cards" }));
     fireEvent.click(within(projects).getByRole("button", { name: "Column" }));
-    fireEvent.click(within(projects).getByLabelText("All items, including future additions"));
+    fireEvent.click(within(projects).getByLabelText("Auto-include all items"));
     const first = sampleProject;
     fireEvent.click(within(projects).getByLabelText(`Include ${first.name}`));
     const about = screen.getByRole("group", { name: "About" });
