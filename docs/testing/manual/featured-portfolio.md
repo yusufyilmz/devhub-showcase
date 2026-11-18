@@ -14,4 +14,6 @@ the Storybook engineer preview. Use the
 | 3    | [Featured Storybook page](http://127.0.0.1:6006/?path=/story/pages-engineer-portfolio--spotlight) | `/?path=/story/pages-engineer-portfolio--spotlight` | Compare light and dark. Enable reduced motion and refresh.                          | The wash follows the palette. Reduced motion displays the full backdrop immediately.                    | Passed in the light and dark Storybook previews. The local main portfolio backdrop had no animation with reduced motion. |
 | 4    | [Standard Storybook page](http://127.0.0.1:6006/?path=/story/pages-engineer-portfolio--published) | `/?path=/story/pages-engineer-portfolio--published` | Compare the standard Engineer preview.                                              | The standard Engineer layout uses its existing hero.                                                    | Passed in Storybook. The existing orbit was present and the featured work panel was absent.                              |
 
+On the main portfolio, also check that the intro and hero buttons have readable letter spacing and that the decorative backdrop stays behind the content at both viewport widths.
+
 Return to the [manual testing index](index.md).
