@@ -70,7 +70,7 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
   await experience.getByLabel("Company", { exact: true }).fill("Fixture Studio");
   await experience.getByLabel("Company URL", { exact: true }).fill("https://example.com");
   await experience.getByLabel("Role", { exact: true }).fill("Product designer");
-  await experience.getByText("Section visibility and layout").click();
+  await expect(experience.getByRole("region", { name: "Experience live preview" })).toBeVisible();
   await experience.getByRole("button", { exact: true, name: "Cards" }).click();
   const livePreview = experience.getByRole("region", { name: "Experience live preview" });
   await expect(livePreview.getByText("Product designer", { exact: true })).toBeVisible();

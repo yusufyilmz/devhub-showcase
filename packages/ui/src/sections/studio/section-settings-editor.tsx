@@ -111,10 +111,18 @@ export function SectionSettingsEditor({
     });
   }
   return (
-    <Card asChild layout="plain" surface="portfolio">
-      <Surface className={sectionSettingsEditorStyles.element1}>
+    <Card asChild interaction="static" layout="plain" surface="portfolio">
+      <Surface
+        className={
+          onlySection
+            ? sectionSettingsEditorStyles.inlinePanel
+            : sectionSettingsEditorStyles.element1
+        }
+        key={onlySection}
+        open={onlySection ? true : undefined}
+      >
         {onlySection && (
-          <summary className="cursor-pointer text-sm font-semibold">
+          <summary className={sectionSettingsEditorStyles.inlineSummary}>
             Section visibility and layout
           </summary>
         )}
@@ -132,8 +140,17 @@ export function SectionSettingsEditor({
             const settings = profile.sectionSettings?.[kind] ?? {};
             const items = getSectionItems(profile, kind);
             return (
-              <fieldset className={sectionSettingsEditorStyles.element2} key={kind}>
-                <legend>{sectionRegistry[kind].name}</legend>
+              <fieldset
+                className={
+                  onlySection
+                    ? sectionSettingsEditorStyles.inlineFields
+                    : sectionSettingsEditorStyles.element2
+                }
+                key={kind}
+              >
+                <legend className={onlySection ? "sr-only" : undefined}>
+                  {sectionRegistry[kind].name}
+                </legend>
                 <LibraryLabel className="flex items-center gap-2 [&_input]:accent-primary" unstyled>
                   <LibraryInput
                     checked={settings.visible ?? true}
@@ -157,8 +174,8 @@ export function SectionSettingsEditor({
                   selectedRenderer={settings.renderer}
                 />
                 {items.length > 0 && (
-                  <fieldset>
-                    <legend>Included content</legend>
+                  <fieldset className={sectionSettingsEditorStyles.includedContent}>
+                    <legend className="mb-1 px-1 text-sm font-semibold">Included content</legend>
                     <LibraryLabel
                       className="flex items-center gap-2 [&_input]:accent-primary"
                       unstyled
@@ -203,12 +220,15 @@ export function SectionSettingsEditor({
                   </fieldset>
                 )}
                 <Button
-                  className={sectionSettingsEditorStyles.element3}
+                  className={
+                    onlySection ? "justify-self-start" : sectionSettingsEditorStyles.element3
+                  }
                   onClick={() => {
                     const next = { ...profile.sectionSettings };
                     delete next[kind];
                     onChange({ ...profile, sectionSettings: next });
                   }}
+                  size={onlySection ? "sm" : undefined}
                   type="button"
                   variant="outline"
                 >

@@ -125,7 +125,6 @@ describe("CustomSections", () => {
     const draft = { ...profile, sectionSettings: { education: { visible: false } } };
     const onChange = vi.fn();
     render(<SectionSettingsEditor onChange={onChange} onlySection="skills" profile={draft} />);
-    fireEvent.click(screen.getByText("Section visibility and layout"));
     fireEvent.click(screen.getByRole("button", { name: "List" }));
     expect(onChange.mock.lastCall?.[0].sectionSettings).toEqual({
       education: { visible: false },
