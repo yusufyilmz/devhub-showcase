@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { TrelloBoardWorkspace } from "@shared/trello/pages";
-import { StudioButton } from "@shared/ui/button";
+import { Button, StudioButton } from "@shared/ui/button";
 import { Feedback } from "@shared/ui/feedback";
 
 import { openBoard } from "./_access";
@@ -30,9 +30,9 @@ export default async function TrelloWorkspacePage({
       id="admin-content"
     >
       <div>
-        <StudioButton href="/admin/trello" tone="secondary">
-          Back to boards
-        </StudioButton>
+        <Button href="/admin/trello" size="sm" variant="ghost">
+          ← All boards
+        </Button>
       </div>
       {access.ok &&
       lists?.success &&

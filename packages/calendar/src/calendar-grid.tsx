@@ -23,6 +23,7 @@ export interface CalendarGridProps {
   date: string;
   dayHref?: (date: string) => string;
   getItems: (date: string) => readonly CalendarItem[];
+  onAddDay?: (date: string) => void;
   onDateChange: (date: string) => void;
   onMove?: (id: string, from: string, to: string, time: string | undefined) => void;
   onOpenDay?: (date: string) => void;
@@ -81,6 +82,7 @@ export function CalendarGrid({
   onDateChange,
   getItems,
   onOpenDay,
+  onAddDay,
   dayHref,
   renderItem,
   onMove,
@@ -205,6 +207,30 @@ export function CalendarGrid({
     );
   }
 
+  function renderMonthDay(day: string, description?: string) {
+    return (
+      <>
+        <div
+          className={onAddDay ? "[&_button]:after:absolute [&_button]:after:inset-0" : undefined}
+        >
+          {renderDay(day, description)}
+        </div>
+        {onAddDay && (
+          <Button
+            aria-label={`Add task for ${dateLabel(day)}`}
+            className="absolute end-1.5 top-1.5 z-10 hidden @min-[44rem]/calendar:inline-flex"
+            onClick={() => onAddDay(day)}
+            size="icon-xs"
+            type="button"
+            variant="ghost"
+          >
+            <span aria-hidden="true">+</span>
+          </Button>
+        )}
+      </>
+    );
+  }
+
   function page(direction: number) {
     if (mode === "week") {
       onDateChange(shiftDate(date, 7 * direction));
@@ -318,17 +344,18 @@ export function CalendarGrid({
                   : undefined;
                 return (
                   <div
-                    className="min-h-14 min-w-0 border-r border-b border-border bg-card p-0.5 text-center nth-[7n]:border-r-0 data-[outside=true]:bg-muted/65 data-[drop-active=true]:inset-ring-2 data-[drop-active=true]:inset-ring-primary @min-[44rem]/calendar:min-h-24 @min-[44rem]/calendar:p-1.5 @min-[44rem]/calendar:text-left"
+                    className="relative min-h-14 min-w-0 border-r border-b border-border bg-card p-0.5 text-center nth-[7n]:border-r-0 data-[outside=true]:bg-muted/65 data-[selected=true]:bg-primary/5 data-[drop-active=true]:inset-ring-2 data-[drop-active=true]:inset-ring-primary @min-[44rem]/calendar:min-h-24 @min-[44rem]/calendar:p-1.5 @min-[44rem]/calendar:text-left"
                     data-outside={day.slice(0, 7) !== date.slice(0, 7) || undefined}
+                    data-selected={day === date || undefined}
                     key={day}
                     {...dropZone(day)}
                   >
-                    {renderDay(day, description)}
+                    {renderMonthDay(day, description)}
                     {count > 0 && (
                       <Button
                         aria-label={`Show ${description} for ${dateLabel(day)}`}
                         aria-pressed={day === previewDay}
-                        className="mx-auto flex max-w-full px-1 text-[10px] tabular-nums @min-[44rem]/calendar:hidden"
+                        className="relative mx-auto flex max-w-full px-1 text-[10px] tabular-nums @min-[44rem]/calendar:hidden"
                         onClick={() => setPreview({ baseDate: date, day })}
                         size="xs"
                         type="button"
@@ -337,7 +364,7 @@ export function CalendarGrid({
                         {count}
                       </Button>
                     )}
-                    <div className="mt-1 hidden gap-1 @min-[44rem]/calendar:grid">
+                    <div className="pointer-events-none relative mt-1 hidden gap-1 [&>*]:pointer-events-auto @min-[44rem]/calendar:grid">
                       {items?.map(renderEntry)}
                     </div>
                   </div>

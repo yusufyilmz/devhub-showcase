@@ -2,7 +2,7 @@
 
 import { type DragEvent, type FormEvent, useCallback, useEffect, useRef, useState } from "react";
 
-import { Button, StudioButton } from "@shared/ui/button";
+import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@shared/ui/dialog";
 import { Feedback } from "@shared/ui/feedback";
@@ -240,14 +240,16 @@ export function TrelloBoardWorkspace({
 
   return (
     <>
-      <header className="grid gap-3 rounded-xl border border-border bg-card p-5">
-        <Typography as="h1" className="wrap-anywhere" variant="h2">
-          {board.name}
-        </Typography>
-        {board.desc && (
-          <p className="whitespace-pre-wrap wrap-anywhere text-muted-foreground">{board.desc}</p>
-        )}
-        <div className="flex flex-wrap gap-2">
+      <header className="flex flex-wrap items-start justify-between gap-4 rounded-xl border border-border bg-linear-to-br from-primary/10 to-card p-4 sm:p-6">
+        <div className="grid min-w-0 flex-1 basis-72 gap-2">
+          <Typography as="h1" className="wrap-anywhere font-semibold tracking-tight" variant="h3">
+            {board.name}
+          </Typography>
+          {board.desc && (
+            <p className="whitespace-pre-wrap wrap-anywhere text-muted-foreground">{board.desc}</p>
+          )}
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
           <Button disabled={pending} onClick={() => open({ type: "list" })} type="button">
             Add list
           </Button>
@@ -260,16 +262,16 @@ export function TrelloBoardWorkspace({
             Edit board
           </Button>
           {href && (
-            <StudioButton href={href} tone="secondary">
+            <Button href={href} variant="ghost">
               Open in Trello
-            </StudioButton>
+            </Button>
           )}
         </div>
       </header>
       <BoardStatus empty={!lists.length} error={editor ? "" : error} pending={pending} />
       <section
         aria-label="Board lists"
-        className="flex min-w-0 items-start gap-4 overflow-x-auto pb-4"
+        className="flex min-w-0 snap-x items-start gap-3 overflow-x-auto rounded-xl border border-border/70 bg-muted/20 p-3 sm:gap-4 sm:p-4"
       >
         {lists
           .toSorted((left, right) => left.pos - right.pos)
@@ -279,7 +281,7 @@ export function TrelloBoardWorkspace({
               .sort((left, right) => left.pos - right.pos);
             return (
               <Card
-                className="grid w-[min(18rem,82vw)] shrink-0 gap-3 bg-muted/40 p-3"
+                className="grid w-[min(16rem,78vw)] shrink-0 snap-start content-start gap-2.5 border-border/70 bg-muted/65 p-3"
                 interaction="static"
                 key={list.id}
                 onDragOver={(event) => {
@@ -291,13 +293,20 @@ export function TrelloBoardWorkspace({
                 }}
                 onDrop={(event) => drop(event, list.id)}
               >
-                <Typography as="h2" className="wrap-anywhere" variant="h5">
-                  {list.name}
-                </Typography>
+                <div className="flex items-start justify-between gap-2 px-0.5 pb-1">
+                  <h2 className="min-w-0 wrap-anywhere text-sm leading-snug font-semibold">
+                    {list.name}
+                  </h2>
+                  <span className="rounded-md bg-card px-1.5 text-xs tabular-nums text-muted-foreground">
+                    {column.length}
+                    <span className="sr-only"> cards</span>
+                  </span>
+                </div>
                 {column.map((item) => (
                   <div key={item.id} onDrop={(event) => drop(event, list.id, item.id)}>
                     <TrelloCard
                       card={item}
+                      className="gap-0 border-border/80 bg-card shadow-sm hover:border-primary/40"
                       draggable={!pending}
                       onOpen={() => open({ cardId: item.id, type: "card" })}
                       showActions={false}
@@ -305,12 +314,13 @@ export function TrelloBoardWorkspace({
                   </div>
                 ))}
                 <Button
+                  className="justify-start text-muted-foreground"
                   disabled={pending}
                   onClick={() => open({ listId: list.id, type: "newCard" })}
                   type="button"
-                  variant="outline"
+                  variant="ghost"
                 >
-                  Add card
+                  <span aria-hidden="true">+</span> Add card
                 </Button>
               </Card>
             );

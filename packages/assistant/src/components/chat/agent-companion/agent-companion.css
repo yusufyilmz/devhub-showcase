@@ -16,8 +16,11 @@
   );
   --agent-width: max(var(--agent-size), 136px);
   --agent-bottom: var(--agent-companion-bottom, max(16px, env(safe-area-inset-bottom)));
-  --agent-travel-x: max(0px, calc(100vw - 32px - var(--agent-width)));
-  --agent-left: calc(16px + var(--agent-x) * var(--agent-travel-x));
+  --agent-travel-x: max(
+    0px,
+    calc(100vw - 16px - var(--agent-inset-left, 16px) - var(--agent-width))
+  );
+  --agent-left: calc(var(--agent-inset-left, 16px) + var(--agent-x) * var(--agent-travel-x));
 
   position: fixed;
   inset-block-start: calc(

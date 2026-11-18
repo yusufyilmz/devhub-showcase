@@ -55,3 +55,5 @@ No deployment or live provider verification is claimed.
 
 The CV panel previews content and visibility. PDF layout and pagination continue to use the
 existing saved-CV download. No publication, ownership or database rules change in this feature.
+
+- At [Edit portfolio](http://localhost:3001/test-owner/edit) (`/test-owner/edit`), scroll below the editor. Expect the editor actions at the bottom without a marketing footer overlapping the sidebar. Manual verification pending.
