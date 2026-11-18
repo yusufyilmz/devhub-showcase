@@ -1,3 +1,5 @@
+import "./section-catalog.css";
+
 import { authorableSections } from "@shared/config";
 
 import type { SectionExampleId, viewOnlySectionExamples } from "./preview-examples";
