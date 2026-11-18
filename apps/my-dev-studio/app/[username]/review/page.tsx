@@ -6,7 +6,7 @@ import { ReviewService } from "@shared/lib/studio";
 import { ReviewSection } from "@shared/ui/sections";
 import { logger } from "@shared/utils/logger";
 
-import { requireAdmin } from "@/features/admin/admin-auth";
+import { requireAdmin } from "@/services/admin/get-auth";
 
 import { handleSubmitReviewAction } from "../../actions";
 

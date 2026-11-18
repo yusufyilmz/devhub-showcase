@@ -8,13 +8,13 @@ Start with the hub guides, then dig into feature or reference pages as needed. P
 
 ## Hubs
 
-| Guide                             | Read it for                                                  |
-| --------------------------------- | ------------------------------------------------------------ |
-| [Features](features.md)           | Current capabilities, user flows and limitations             |
-| [Architecture](architecture.md)   | Package boundaries, data flow and trust boundaries           |
-| [Conventions](conventions.md)     | TypeScript, React, validation and dependency rules           |
-| [Testing](testing.md)             | Verification commands, coverage and debugging                |
-| [Observability](observability.md) | Logging baseline, Sentry adoption plan and incident response |
+| Guide                             | Read it for                                                                         |
+| --------------------------------- | ----------------------------------------------------------------------------------- |
+| [Features](features.md)           | Current capabilities, user flows and limitations                                    |
+| [Architecture](architecture.md)   | Package boundaries, data flow and trust boundaries                                  |
+| [Conventions](conventions.md)     | Where MyDevStudio files go, plus TypeScript, React, validation and dependency rules |
+| [Testing](testing.md)             | Verification commands, coverage and debugging                                       |
+| [Observability](observability.md) | Logging baseline, Sentry adoption plan and incident response                        |
 
 ## Features
 

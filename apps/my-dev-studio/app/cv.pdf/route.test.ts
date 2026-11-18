@@ -10,7 +10,7 @@ const template = readFileSync(
   "utf8",
 );
 const published = vi.hoisted(() => vi.fn());
-vi.mock("./_profile", () => ({
+vi.mock("@/services/cv/get-published-profile", () => ({
   getPublishedProfile: published,
 }));
 

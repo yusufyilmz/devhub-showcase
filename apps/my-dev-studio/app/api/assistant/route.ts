@@ -17,7 +17,7 @@ import {
   serializeAiEditContext,
 } from "@shared/lib/profiles";
 
-import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
+import { requireWorkspace, sameOrigin } from "@/services/admin/get-auth";
 
 export const maxDuration = 60;
 const headers = { "Cache-Control": "private, no-store" };

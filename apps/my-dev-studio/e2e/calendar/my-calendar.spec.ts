@@ -87,6 +87,6 @@ test("Studio tasks can be created, completed, and deleted", async ({ page, conte
 });
 
 test("My Calendar redirects signed-out visitors", async ({ page }) => {
-  await page.goto("/admin/calendar");
+  await page.goto("/studio/calendar");
   await expect(page).toHaveURL(/\/login(?:\?|$)/);
 });

@@ -6,9 +6,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { themeOptions } from "@shared/config/theme";
 
 const mocks = vi.hoisted(() => ({ action: vi.fn(), example: vi.fn() }));
-vi.mock("./_home-links", () => ({ getHomeAction: mocks.action, getHomeExample: mocks.example }));
+vi.mock("@/services/home/get-home-links", () => ({
+  getHomeAction: mocks.action,
+  getHomeExample: mocks.example,
+}));
 
-vi.mock("./api/jobs/_config", () => ({ jobAlertConfig: () => null }));
+vi.mock("@/services/jobs/get-config", () => ({ jobAlertConfig: () => null }));
 
 import Page from "./page";
 
@@ -67,7 +70,7 @@ describe("HomePage", () => {
       "/alice/edit",
     );
     expect(screen.getByRole("link", { name: "Open Studio assistant" }).getAttribute("href")).toBe(
-      "/admin/chat",
+      "/studio/chat",
     );
     for (const link of screen.getAllByRole("link", { name: /Open your studio/ }))
       expect(link.getAttribute("href")).toBe("/alice/edit");

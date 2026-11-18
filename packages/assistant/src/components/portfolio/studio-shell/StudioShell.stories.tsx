@@ -72,7 +72,7 @@ export const ManagedPortfolios: Story = {
       >
         <StudioHeading
           actions={
-            <Button href="/admin" variant="outline">
+            <Button href="/studio" variant="outline">
               My portfolio
             </Button>
           }

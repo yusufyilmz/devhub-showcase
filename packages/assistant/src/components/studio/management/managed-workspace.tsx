@@ -21,7 +21,7 @@ export function ManagedWorkspace({
   return (
     <>
       <ProfileEditor
-        downloadHref={`/admin/portfolios/${id}/cv.pdf`}
+        downloadHref={`/studio/portfolios/${id}/cv.pdf`}
         initial={initial}
         managed
         onSaved={(saved) => setRevision(saved.revision)}

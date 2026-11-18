@@ -30,6 +30,7 @@ const config: StorybookConfig = {
   stories: [
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
     "../../../packages/**/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    "../../../apps/my-dev-studio/views/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
   async viteFinal(config) {
     config.resolve ??= {};

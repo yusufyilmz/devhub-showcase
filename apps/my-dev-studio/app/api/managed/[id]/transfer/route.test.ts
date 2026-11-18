@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({
   managed: vi.fn(),
 }));
-vi.mock("@/features/management/managed-portfolios", () => ({
+vi.mock("@/services/management/get-portfolios", () => ({
   managedRepository: mocks.managed,
 }));
 

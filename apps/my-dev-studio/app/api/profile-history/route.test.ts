@@ -8,7 +8,7 @@ const mocks = vi.hoisted(() => ({
   result: vi.fn(),
   workspace: vi.fn(),
 }));
-vi.mock("@/features/admin/admin-auth", () => ({ requireWorkspace: mocks.workspace }));
+vi.mock("@/services/admin/get-auth", () => ({ requireWorkspace: mocks.workspace }));
 
 import { GET } from "./route";
 

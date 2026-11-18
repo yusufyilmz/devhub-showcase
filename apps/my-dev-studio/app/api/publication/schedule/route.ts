@@ -1,4 +1,4 @@
-import { publicationSchedule } from "./_handlers";
+import { publicationSchedule } from "@/services/publication/get-schedule-handlers";
 
 async function schedule(request: Request) {
   return publicationSchedule(request);

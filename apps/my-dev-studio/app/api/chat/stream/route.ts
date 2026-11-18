@@ -2,9 +2,8 @@ import { z } from "zod";
 
 import { PortfolioChatModel } from "@shared/assistant";
 
-import { sameOrigin } from "@/features/admin/admin-auth";
-
-import { requireMainPortfolioChat } from "./_access";
+import { sameOrigin } from "@/services/admin/get-auth";
+import { requireMainPortfolioChat } from "@/services/chat/get-stream-access";
 
 export const maxDuration = 60;
 const inputSchema = z.object({

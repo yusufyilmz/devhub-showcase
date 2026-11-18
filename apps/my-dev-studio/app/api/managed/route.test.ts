@@ -7,7 +7,7 @@ const mocks = vi.hoisted(() => ({
   create: vi.fn(),
   guard: vi.fn(),
 }));
-vi.mock("@/features/management/managed-portfolios", () => ({
+vi.mock("@/services/management/get-portfolios", () => ({
   createManaged: mocks.create,
   requirePortfolioAdmin: mocks.guard,
 }));

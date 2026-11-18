@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 import { cvPath } from "@shared/lib/profiles";
 
-import { getPublicProfile } from "../../[username]/_profile";
+import { getPublicProfile } from "@/services/portfolio/get-profile";
 
 export default async function PublicCvRedirectPage({
   params,

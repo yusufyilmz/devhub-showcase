@@ -733,6 +733,9 @@ importers:
       '@supabase/supabase-js':
         specifier: 'catalog:'
         version: 2.119.0
+      lucide-react:
+        specifier: 'catalog:'
+        version: 1.73.0(@types/react@19.3.0)(react@19.3.1)
       next:
         specifier: 'catalog:'
         version: 16.4.5(@babel/core@7.29.13(supports-color@10.2.2))(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-macros@3.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.107.0)
@@ -752,6 +755,9 @@ importers:
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
+      '@storybook/react-vite':
+        specifier: 'catalog:'
+        version: 10.6.7(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(storybook@10.6.7(@types/react@19.3.0)(prettier@3.9.10)(react@19.3.1))(supports-color@10.2.2)(typescript@7.0.2)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.107.0)(tsx@4.23.15)(yaml@2.9.1))
       '@tailwindcss/postcss':
         specifier: 'catalog:'
         version: 4.3.5

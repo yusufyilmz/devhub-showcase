@@ -27,15 +27,9 @@ Workspace members are `apps/*`, `packages/*`, and `tools/*`. The Next.js app pac
 | `packages/utils`         | `@shared/utils`         | Logging and other shared utilities                                            |
 | `packages/trello`        | `@shared/trello`        | Trello board UI                                                               |
 
-App routes stay in `apps/my-dev-studio/app`. Page-specific identity, cookie, environment and transport wiring is colocated with its owner under `apps/my-dev-studio/app`. Use private sibling modules for bindings shared by a route family. Shared backend services and repositories live in `@shared/lib`; chat and assistant workflows live in `@shared/assistant`. That app has no `lib` folder.
+`apps/my-dev-studio` keeps routes, screens, and app bindings in separate folders. `app/` contains only `page`, `route`, `actions`, and other Next.js page variants. Studio-only screens live in `views/`. Calls that use or combine services, including API and server functions for this app, live in `services/<domain>`. Reusable UI belongs in `@shared/ui`, reusable services in `@shared/lib`, and generic helpers in `@shared/utils`. Placement details are in [docs/conventions.md](docs/conventions.md#where-code-goes). Package boundaries are in [docs/architecture.md](docs/architecture.md).
 
-| Feature      | Owns                                                                           |
-| ------------ | ------------------------------------------------------------------------------ |
-| `admin`      | Workspace auth, session handlers, Google profile import, owner edit link       |
-| `billing`    | Stripe gateway, billing client, pricing, premium configuration, account status |
-| `management` | Managed portfolios and their API helpers                                       |
-
-Import portable UI from `@shared/ui`. Do not add a feature file that only re-exports a shared component. Do not move auth, database access, or route handlers into `packages/ui`. Pass fetching and navigation in from the app.
+Import portable UI from `@shared/ui`. Pass fetching and navigation in from the app. Do not add a file that only re-exports a shared component. Do not move auth, database access, or route handlers into `packages/ui`.
 
 ## Services and utilities
 
@@ -58,7 +52,7 @@ Do **not** add deep export keys or tsconfig path aliases such as `@shared/lib/ty
 
 Always build interface from `packages/ui`. Check [packages/ui/CATALOG.md](packages/ui/CATALOG.md) before writing markup. Primitive controls, layout, theme tokens and global CSS live there. Assistant/chat/companion, studio and portfolio compositions live in `packages/assistant`, including sections, examples and CV rendering. Import feature surfaces from their declared `@shared/assistant/*` entry points. Import a control as `@shared/ui/{folder}`.
 
-Do not create one-off components from plain HTML elements in app routes, features, or other packages. Homepage blocks live in `packages/assistant/src/components/sections/home-section` and compose the shared controls.
+Build screens from `@shared/ui` controls. A screen used only by MyDevStudio lives in `apps/my-dev-studio/views`. Homepage blocks live in `packages/assistant/src/components/sections/home-section` and compose the shared controls.
 
 If the catalog has no component that fits, add it in `packages/ui`. All workspace `CATALOG.md` files are generated. Edit the package's `catalog.template.md` for authored guidance, or `package.json`/source exports for the generated reference, then run `pnpm generate:catalogs`. UI registry sections still use `packages/ui/src/registry/components.json`. Do not hand-edit generated catalogs; verify with `pnpm check:catalogs`. Use `--package @shared/ui` to select one package.
 
@@ -67,37 +61,13 @@ If the catalog has no component that fits, add it in `packages/ui`. All workspac
 - Use [the feature inventory](docs/features.md) to verify what the homepage and README advertise. Describe configuration requirements for AI, scheduled discovery, browser push, LinkedIn email forwarding and Stripe test checkout.
 - Homepage routing and metadata live under `apps/my-dev-studio/app`. The homepage FAQ uses `packages/config/src/copy/site-copy/faq.ts`. Keep it aligned with the visible feature cards and product documentation.
 - Portfolio setup and the companion are shared Studio compositions. Studio account preferences use `/api/account-preferences` and are separate from saved portfolio appearance.
-- Job Hunter UI lives in `packages/assistant/src/components/portfolio/jobs`. The app owns `/admin/jobs`, `/api/jobs` and the inbound email and scheduled worker routes. Shared listing and email parsing code lives in `packages/lib/src/services/jobs`. See the [Job Hunter guide](docs/testing/manual/job-hunter.md) and [LinkedIn alert guide](docs/testing/manual/linkedin-job-alerts.md).
+- Job Hunter UI lives in `packages/assistant/src/components/portfolio/jobs`. The app owns `/studio/jobs`, `/api/jobs` and the inbound email and scheduled worker routes. Shared listing and email parsing code lives in `packages/lib/src/services/jobs`. See the [Job Hunter guide](docs/testing/manual/job-hunter.md) and [LinkedIn alert guide](docs/testing/manual/linkedin-job-alerts.md).
 
 ## Where code goes
 
-Follow the first matching question. Stop at the first yes.
+Follow [docs/conventions.md](docs/conventions.md#where-code-goes). Stop at the first match: a URL or HTTP entry goes in `app/`, a MyDevStudio-only screen goes in `views/`, an app service binding goes in `services/<domain>`, and reusable code goes to the shared package named in that guide.
 
-```mermaid
-flowchart TD
-  start[What are you changing?]
-  start --> route{Does a URL, metadata, or HTTP handler need to exist?}
-  route -->|Yes| app["apps/my-dev-studio/app"]
-  route -->|No| access{Does it bind app sessions, cookies, environment, navigation or API transport?}
-  access -->|Yes| feature["Owning app page or route; private sibling helpers when shared"]
-  access -->|No| visual{Is it a reusable visual component, stylesheet, or token?}
-  visual -->|Yes| ui["packages/ui"]
-  visual -->|No| kind{What kind of shared code is it?}
-  kind -->|Page copy| contentPkg["packages/config"]
-  kind -->|Profile shape, theme, or section metadata| config["packages/config"]
-  kind -->|Validation, repository, or Supabase| servicesPkg["packages/lib"]
-  kind -->|Shared backend service or repository| servicesPkg["packages/lib"]
-  kind -->|Sign-in or session helper| auth["packages/auth"]
-  kind -->|CV PDF| cv["packages/assistant"]
-  kind -->|Assistant model or backend workflow| assistant["packages/assistant"]
-  kind -->|Trello board| trello["packages/trello"]
-  kind -->|Log or generic helper| utils["packages/utils"]
-  kind -->|Story for an existing component| story["Colocate the story with that component"]
-```
-
-Admin, billing and management integrations may keep their existing feature modules. Home, reviews, portfolio, platform and chat bindings belong beside their owning app pages/routes.
-
-A component that needs data receives that data, or a request function, from the feature. The component does not choose the API URL. Colocate app-specific bindings with their page or route; keep reusable domain logic in its shared package. Do not recreate removed home, reviews, portfolio, platform or chat feature folders.
+A view receives data or a request function from the route or from `services/`. Server-confirmed display fields are cached with `useUserStorageSync` from `@shared/runtime/user`. Do not recreate removed home, reviews, portfolio, platform, or chat feature folders.
 
 ## AI lookup guide — find relevant references
 

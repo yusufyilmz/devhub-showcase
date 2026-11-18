@@ -8,8 +8,8 @@ MyDevStudio lets each account create a portfolio website and a downloadable CV f
 | `/{username}`        | Public portfolio only when that profile is published |
 | `/{username}/edit`   | That owner's protected editor                        |
 | `/{username}/cv.pdf` | Public CV only for a published portfolio             |
-| `/admin`             | Authenticated editor entry                           |
-| `/admin/portfolios`  | Membership-restricted portfolio management           |
+| `/studio`            | Authenticated editor entry                           |
+| `/studio/portfolios` | Membership-restricted portfolio management           |
 | `/p/examples/{slug}` | Fictional examples, not real accounts                |
 
 Routes live in `apps/my-dev-studio/app`. Data access for those routes lives in `apps/my-dev-studio/features`.

@@ -51,7 +51,7 @@
           "body": "The private AI assistant proposes edits for review and draft apply. Saving remains explicit. Public AI chat requires an owner opt-in and a published portfolio. Use test cards in the Stripe sandbox. Demo allowances are limited and real AI requests consume the configured provider budget.",
           "id": "d3d3d3d3-d3d3-43d3-83d3-000000000902",
           "title": "AI and billing",
-          "url": "https://mydevstudio.vercel.app/admin/billing"
+          "url": "https://mydevstudio.vercel.app/studio/billing"
         }
       ],
       "renderer": "text",

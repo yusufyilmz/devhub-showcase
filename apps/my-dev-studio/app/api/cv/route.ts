@@ -1,8 +1,7 @@
 import { ProfileAccessError } from "@shared/lib/profile";
 
-import { requireWorkspace } from "@/features/admin/admin-auth";
-
-import { cvResponse } from "./_response";
+import { requireWorkspace } from "@/services/admin/get-auth";
+import { cvResponse } from "@/services/cv/get-response";
 
 export const runtime = "nodejs";
 

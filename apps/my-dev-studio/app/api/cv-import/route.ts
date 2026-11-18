@@ -11,7 +11,7 @@ import { ProfileAccessError } from "@shared/lib/profile";
 import { createServerClient } from "@shared/lib/supabase";
 
 import { env } from "@/env";
-import { sameOrigin } from "@/features/admin/admin-auth";
+import { sameOrigin } from "@/services/admin/get-auth";
 
 export const runtime = "nodejs";
 

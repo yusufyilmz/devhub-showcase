@@ -1,4 +1,4 @@
-import { changePublication, publicationStatus } from "../../../publication/_handlers";
+import { changePublication, publicationStatus } from "@/services/publication/get-handlers";
 
 type Context = { params: Promise<{ id: string }> };
 export async function GET(_request: Request, context: Context) {

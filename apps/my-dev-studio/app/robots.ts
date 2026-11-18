@@ -6,7 +6,17 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       allow: "/",
-      disallow: ["/admin", "/api/", "/auth/", "/*/edit", "/p/", "/*/cv.pdf"],
+      disallow: [
+        "/studio$",
+        "/studio/",
+        "/admin$",
+        "/admin/",
+        "/api/",
+        "/auth/",
+        "/*/edit",
+        "/p/",
+        "/*/cv.pdf",
+      ],
       userAgent: "*",
     },
     sitemap: `${urls.studio.siteUrl().toString()}/sitemap.xml`,

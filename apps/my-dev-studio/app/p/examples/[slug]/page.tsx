@@ -9,9 +9,9 @@ import {
   getPortfolioExample,
   portfolioExamples,
 } from "@shared/assistant/examples-data";
-import { PortfolioLayout } from "@shared/assistant/portfolio";
 
-import { EngineerPortfolio } from "../../../[username]/_engineer-portfolio";
+import { EngineerPortfolio } from "@/services/portfolio/engineer-portfolio";
+import { PortfolioLayout } from "@/views/published/PortfolioLayout";
 
 type Props = { params: Promise<{ slug: string }> };
 export function generateStaticParams() {
@@ -48,7 +48,7 @@ export default async function ExamplePage({ params }: Props) {
       >
         <a href="/#examples">← All examples</a>
         <span>Fictional portfolio · Sample work and CV</span>
-        <a href="/admin">Create your portfolio ↗</a>
+        <a href="/studio">Create your portfolio ↗</a>
       </aside>
       {profile.portfolioType === "engineer" ? (
         <EngineerPortfolio profile={profile} />

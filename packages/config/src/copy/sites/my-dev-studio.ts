@@ -12,7 +12,7 @@ export const myDevStudioLogin = {
   },
   eyebrow: "YOUR CONTENT, YOUR CONTROL",
   submitLabel: "Open studio →",
-  successPath: "/admin",
+  successPath: "/studio",
   titleEmphasis: "second" as const,
   titleLines: ["Welcome to your", "portfolio studio."] as const,
 };

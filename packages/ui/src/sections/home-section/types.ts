@@ -11,7 +11,7 @@ export type HomeHeroSectionOptions = {
   exampleHref: string | null;
 };
 
-export type HomeLibrarySectionOptions = { href: string };
+export type HomeLibrarySectionOptions = { action: PageAction };
 
 export type HomePricingSectionOptions = {
   action: PageAction;

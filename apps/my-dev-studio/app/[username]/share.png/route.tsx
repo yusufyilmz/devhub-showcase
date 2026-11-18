@@ -2,7 +2,7 @@ import { brandColor } from "@shared/assistant/portfolio-branding";
 import { getNameInitials, urls } from "@shared/config";
 import { createShareImage } from "@shared/ui/seo";
 
-import { getUsernameProfile } from "../_profile";
+import { getUsernameProfile } from "@/services/portfolio/get-profile";
 
 export const dynamic = "force-dynamic";
 

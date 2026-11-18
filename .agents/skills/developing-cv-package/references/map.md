@@ -17,16 +17,16 @@ Package `@shared/assistant/cv` in `packages/assistant`.
 
 ## App routes that call the renderer
 
-| Route                                       | Who it serves                       |
-| ------------------------------------------- | ----------------------------------- |
-| `app/[username]/cv.pdf/route.ts`            | Published profile for that username |
-| `app/cv.pdf/route.ts`                       | Original main portfolio PDF         |
-| `app/p/[id]/cv.pdf/route.ts`                | Compatibility id route              |
-| `app/p/examples/[slug]/cv.pdf/route.ts`     | Public example                      |
-| `app/admin/portfolios/[id]/cv.pdf/route.ts` | Guarded managed download            |
-| `app/api/admin/cv/route.ts`                 | Authenticated personal download     |
+| Route                                        | Who it serves                       |
+| -------------------------------------------- | ----------------------------------- |
+| `app/[username]/cv.pdf/route.ts`             | Published profile for that username |
+| `app/cv.pdf/route.ts`                        | Original main portfolio PDF         |
+| `app/p/[id]/cv.pdf/route.ts`                 | Compatibility id route              |
+| `app/p/examples/[slug]/cv.pdf/route.ts`      | Public example                      |
+| `app/studio/portfolios/[id]/cv.pdf/route.ts` | Guarded managed download            |
+| `app/api/admin/cv/route.ts`                  | Authenticated personal download     |
 
-The feature helper is `apps/my-dev-studio/app/api/cv/_response.ts`. Change authorization there, not in this package.
+The feature helper is `apps/my-dev-studio/services/cv/get-response.ts`. Change authorization in the route that calls it, not in this package.
 
 ## Renderer invariants
 

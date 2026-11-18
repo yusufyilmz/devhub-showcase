@@ -2,9 +2,9 @@ import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({ gate: vi.fn(), origin: vi.fn(), rpc: vi.fn() }));
 vi.mock("@shared/lib/published-profile", () => ({ readPortfolioAccessStatus: mocks.gate }));
-vi.mock("@/features/admin/admin-auth", () => ({ sameOrigin: mocks.origin }));
-vi.mock("../../../[username]/access/_session", async (importOriginal) => ({
-  ...(await importOriginal<typeof import("../../../[username]/access/_session")>()),
+vi.mock("@/services/admin/get-auth", () => ({ sameOrigin: mocks.origin }));
+vi.mock("@/services/portfolio/get-access-session", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@/services/portfolio/get-access-session")>()),
   portfolioAccessServer: () => ({ client: { rpc: mocks.rpc }, secret: "fictional-server-secret" }),
 }));
 

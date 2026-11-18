@@ -5,7 +5,7 @@ import { ProfileAccessError } from "@shared/lib/profile";
 import { GET, POST } from "./route";
 
 const mocks = vi.hoisted(() => ({ read: vi.fn(), workspace: vi.fn() }));
-vi.mock("@/features/admin/admin-auth", () => ({
+vi.mock("@/services/admin/get-auth", () => ({
   requireWorkspace: mocks.workspace,
   sameOrigin: (request: Request) => request.headers.get("origin") === "https://example.test",
 }));

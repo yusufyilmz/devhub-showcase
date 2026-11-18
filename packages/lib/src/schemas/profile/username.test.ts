@@ -7,6 +7,7 @@ describe("Username", () => {
     for (const value of [
       "admin",
       "api",
+      "studio",
       "reviews",
       "auth",
       "../alice",

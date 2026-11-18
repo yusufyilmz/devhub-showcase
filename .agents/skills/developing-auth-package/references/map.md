@@ -15,14 +15,14 @@ Package `@shared/auth` in `packages/auth`.
 
 ## App wiring
 
-| App file                                             | Role                                                        |
-| ---------------------------------------------------- | ----------------------------------------------------------- |
-| `apps/my-dev-studio/features/admin/auth-handlers.ts` | Builds handlers with portfolio paths and `requireWorkspace` |
-| `apps/my-dev-studio/features/admin/admin-auth.ts`    | Workspace guard used after identity exists                  |
-| `apps/my-dev-studio/app/auth/callback/route.ts`      | Callback route                                              |
-| `apps/my-dev-studio/app/api/admin/google/route.ts`   | Google start                                                |
-| `apps/my-dev-studio/app/api/admin/session/route.ts`  | Session                                                     |
-| `apps/my-dev-studio/app/login/page.tsx`              | Login page                                                  |
+| App file                                                 | Role                                                        |
+| -------------------------------------------------------- | ----------------------------------------------------------- |
+| `apps/my-dev-studio/services/admin/get-auth-handlers.ts` | Builds handlers with portfolio paths and `requireWorkspace` |
+| `apps/my-dev-studio/services/admin/get-auth.ts`          | Workspace guard used after identity exists                  |
+| `apps/my-dev-studio/app/auth/callback/route.ts`          | Callback route                                              |
+| `apps/my-dev-studio/app/api/admin/google/route.ts`       | Google start                                                |
+| `apps/my-dev-studio/app/api/admin/session/route.ts`      | Session                                                     |
+| `apps/my-dev-studio/app/login/page.tsx`                  | Login page                                                  |
 
 `LoginPanel` presentation is `@shared/ui/login`. It receives endpoints as props.
 

@@ -4,8 +4,9 @@ import { PortfolioVisitorChat } from "@shared/assistant/visitor-chat";
 import { publicChatSources } from "@shared/lib/profiles";
 import { readPublicProfileByUsername } from "@shared/lib/published-profile";
 
+import { premiumChatAvailable } from "@/services/chat/get-access";
+
 import { handlePremiumChatAction } from "../../actions";
-import { premiumChatAvailable } from "./_access";
 
 export const metadata = {
   robots: { follow: false, index: false },

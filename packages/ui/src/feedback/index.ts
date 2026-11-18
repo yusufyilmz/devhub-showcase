@@ -5,7 +5,6 @@ export * from "./banner";
 export * from "./chip";
 export * from "./empty-state";
 export * from "./error-boundary";
-export * from "./error-page";
 export * from "./feedback";
 export * from "./not-found";
 export * from "./notification";

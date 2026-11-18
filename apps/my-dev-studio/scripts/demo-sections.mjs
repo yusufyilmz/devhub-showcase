@@ -88,7 +88,7 @@ export function expandDemoSections(profile) {
           body: "The private AI assistant proposes edits for review and draft apply. Saving remains explicit. Public AI chat requires an owner opt-in and a published portfolio. Use test cards in the Stripe sandbox. Demo allowances are limited and real AI requests consume the configured provider budget.",
           id: uuid(902),
           title: "AI and billing",
-          url: `${baseUrl}/admin/billing`,
+          url: `${baseUrl}/studio/billing`,
         },
       ],
       renderer: "text",

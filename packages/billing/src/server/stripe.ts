@@ -84,12 +84,12 @@ export class StripeBilling {
     validateMonthlyTestPrice(price);
     const session = await this.stripe.checkout.sessions.create(
       {
-        cancel_url: `${this.config.origin}/admin/billing`,
+        cancel_url: `${this.config.origin}/studio/billing`,
         customer,
         line_items: [{ price: price.id, quantity: 1 }],
         mode: "subscription",
         subscription_data: { billing_mode: { type: "flexible" } },
-        success_url: `${this.config.origin}/admin/billing?checkout=returned`,
+        success_url: `${this.config.origin}/studio/billing?checkout=returned`,
       },
       { idempotencyKey: key },
     );
@@ -100,7 +100,7 @@ export class StripeBilling {
     return (
       await this.stripe.billingPortal.sessions.create({
         customer,
-        return_url: `${this.config.origin}/admin/billing`,
+        return_url: `${this.config.origin}/studio/billing`,
       })
     ).url;
   }

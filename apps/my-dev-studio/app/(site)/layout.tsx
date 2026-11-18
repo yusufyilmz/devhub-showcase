@@ -1,7 +1,7 @@
 import { StudioShell } from "@shared/assistant/portfolio";
 import { ThemeToggle } from "@shared/ui/theme";
 
-import { getAccountMenu } from "../_account-menu";
+import { getAccountMenu } from "@/services/home/get-account-menu";
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   return (

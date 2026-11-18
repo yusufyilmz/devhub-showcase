@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 
 import { getPortfolioThemeVariables, getPreviewAccent } from "@shared/config";
 
-import { PortfolioLayout } from "../../portfolio/index";
+import { PortfolioLayout } from "../../../../../../apps/my-dev-studio/views/published/PortfolioLayout";
 import { exampleViewProfile, portfolioExamples } from "./data";
 import { ExampleCarouselClient } from "./example-carousel-client";
 import { ExamplePortfolioPreview } from "./example-portfolio-preview";

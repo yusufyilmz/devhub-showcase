@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 
 export type GalleryLightboxItem = {
   id: string;
@@ -12,5 +12,6 @@ export type GalleryLightboxItem = {
 export type GalleryLightboxOptions = {
   items: GalleryLightboxItem[];
   index: number | null;
+  trigger?: ReactElement;
   onIndexChange: (index: number | null) => void;
 };

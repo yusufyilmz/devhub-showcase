@@ -34,6 +34,6 @@ Responses are private/no-store. Prompts, private drafts, provider responses and 
 
 ## Configuration and verification
 
-No new migration is required. Use the existing OpenAI, Redis, Supabase service key and premium billing configuration; OPENAI_EDITOR_MODEL is optional. Pro assignment may be set in /admin/billing without enabling public chat. The Stripe sandbox's actual checkout and a paid OpenAI proposal must still be verified independently.
+No new migration is required. Use the existing OpenAI, Redis, Supabase service key and premium billing configuration; OPENAI_EDITOR_MODEL is optional. Pro assignment may be set in /studio/billing without enabling public chat. The Stripe sandbox's actual checkout and a paid OpenAI proposal must still be verified independently.
 
 Tests cover allowlisted/combined validation, private project visibility, unsupported fields, selected changes, owner authorization, stale revisions, quotas, structured provider requests and explicit UI apply. Network/provider tests use mocks and fictional identities. No paid provider call or production record mutation is performed by tests. Browser verification requires a working Playwright Chromium installation.

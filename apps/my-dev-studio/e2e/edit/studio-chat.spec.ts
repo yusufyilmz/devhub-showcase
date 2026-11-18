@@ -41,7 +41,7 @@ test("full-screen Studio chat reviews, applies and explicitly saves a proposal",
   page.on("request", (request) => {
     if (request.url().endsWith(profileApi) && request.method() === "PUT") saves++;
   });
-  await page.goto("/admin/chat");
+  await page.goto("/studio/chat");
   await expect(page.getByRole("heading", { name: "What would you like to create?" })).toBeVisible();
   await page.screenshot({ fullPage: true, path: info.outputPath("studio-chat-empty.png") });
   await page.getByRole("textbox", { name: "Your message" }).fill("Shorten my title");

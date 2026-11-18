@@ -43,13 +43,15 @@ function DialogContent({
   children,
   showCloseButton = true,
   portalContainer,
+  size,
   ...props
 }: DialogContentOptions) {
   return (
     <DialogPortal container={portalContainer} data-slot="dialog-portal">
       <DialogOverlay />
       <DialogPrimitive.Content
-        className={cn(dialogStyles.dialogContent, className)}
+        className={cn(dialogStyles.dialogContent, size && dialogStyles.sizes[size], className)}
+        data-size={size}
         data-slot="dialog-content"
         {...props}
       >

@@ -14,7 +14,7 @@ import {
 } from "@shared/config";
 import { profileSchema } from "@shared/lib/profiles";
 
-import { RegisteredSections } from "../../../../assistant/src/components/portfolio/index";
+import { RegisteredSections } from "../../../../../apps/my-dev-studio/views/published/registered-sections";
 import { ProfileEditor } from "../../../../assistant/src/components/studio/workspace/index";
 import { EducationEditor } from "../careers-section/career-editors";
 import { ConfiguredSection } from "./configured-section";

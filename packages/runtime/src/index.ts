@@ -24,4 +24,4 @@ export { useGet } from "./http/useGet";
 export { usePatch } from "./http/usePatch";
 export { usePost } from "./http/usePost";
 export { usePut } from "./http/usePut";
-export { useThemeStore, useUserConfigStore } from "./user";
+export { useThemeStore, useUserConfigStore, useUserStorageSync } from "./user";

@@ -2,10 +2,11 @@ import { HomeChatLauncher } from "@shared/assistant/chat/launcher";
 import { ExampleCarousel } from "@shared/assistant/examples";
 import { StudioCompanion } from "@shared/assistant/studio-companion";
 import { StudioPlanDetails } from "@shared/billing/components";
-import { HomePage } from "@shared/ui/sections";
 
-import { getAccountMenu } from "./_account-menu";
-import { getHomeAction, getHomeExample } from "./_home-links";
+import { getAccountMenu } from "@/services/home/get-account-menu";
+import { getHomeAction, getHomeExample } from "@/services/home/get-home-links";
+import { HomePage } from "@/views/home/HomePage";
+
 export default async function Page() {
   const [action, exampleHref] = await Promise.all([getHomeAction(), getHomeExample()]);
   return (

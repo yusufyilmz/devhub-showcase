@@ -4,8 +4,8 @@ import { googleProfileCategories } from "@shared/auth/google-provider";
 import { boundedText, readGoogleProfile } from "@shared/lib/google-profile";
 import { ProfileAccessError } from "@shared/lib/profile";
 
-import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
-import { googleProfileClientId } from "@/features/admin/google-profile-import";
+import { requireWorkspace, sameOrigin } from "@/services/admin/get-auth";
+import { googleProfileClientId } from "@/services/admin/get-google-profile";
 
 export const maxDuration = 30;
 const headers = { "Cache-Control": "private, no-store" };

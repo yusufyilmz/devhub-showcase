@@ -1,6 +1,6 @@
 # Managed portfolios
 
-The platform administrator can open /admin/portfolios or use **Manage portfolios** in the studio header. Ordinary users cannot access this area. Administrator membership lives in a private database table and is initially granted to the existing main portfolio owner. It is independent of user editable auth metadata.
+The platform administrator can open /studio/portfolios or use **Manage portfolios** in the studio header. Ordinary users cannot access this area. Administrator membership lives in a private database table and is initially granted to the existing main portfolio owner. It is independent of user editable auth metadata.
 
 Create a temporary portfolio with a name, username and optional contact email. Alternatively, import a JSON file containing either a profile document or an object with username and profile properties. Imports are limited to 250 KB and validated with the normal profile schema. They preserve projects, image URLs, themes, language settings and CV preferences. Ownership and publication flags supplied in the file are ignored.
 

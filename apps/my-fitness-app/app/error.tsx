@@ -1,6 +1,6 @@
 "use client";
 
-import { ErrorPage } from "@shared/ui/components";
+import { ErrorPage } from "../../my-dev-studio/views/error/ErrorPage";
 
 export default function ErrorRoute(): React.JSX.Element {
   return <ErrorPage />;

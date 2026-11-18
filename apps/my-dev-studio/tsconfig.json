@@ -2,8 +2,11 @@
   "compilerOptions": {
     "incremental": true,
     "paths": {
+      "@/apps/*": ["./apps/*"],
       "@/env": ["./env.ts"],
       "@/features/*": ["./features/*"],
+      "@/services/*": ["./services/*"],
+      "@/views/*": ["./views/*"],
       "@fixtures/*": ["../../tools/test/fixtures/*"]
     },
     "plugins": [

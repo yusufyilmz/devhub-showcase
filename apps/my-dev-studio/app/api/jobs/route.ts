@@ -2,9 +2,8 @@ import { ZodError } from "zod";
 
 import { ProfileAccessError } from "@shared/lib/profile";
 
-import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
-
-import { changeJobs, JobsError, loadJobs } from "./_workspace";
+import { requireWorkspace, sameOrigin } from "@/services/admin/get-auth";
+import { changeJobs, JobsError, loadJobs } from "@/services/jobs/get-workspace";
 
 const headers = { "Cache-Control": "private, no-store" };
 function failure(error: unknown) {

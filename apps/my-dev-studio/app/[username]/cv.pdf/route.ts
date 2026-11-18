@@ -4,8 +4,8 @@ import {
   resolvePublishedUsername,
 } from "@shared/lib/published-profile";
 
-import { cvResponse } from "../../api/cv/_response";
-import { readProtectedProfile } from "../access/_session";
+import { cvResponse } from "@/services/cv/get-response";
+import { readProtectedProfile } from "@/services/portfolio/get-access-session";
 
 export const runtime = "nodejs";
 

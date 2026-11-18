@@ -45,7 +45,7 @@ import type { ProfileSnapshot } from "@shared/lib/profile";
 import { createEmptyProfile, editCvPath } from "@shared/lib/profiles";
 import { draftStorage } from "@shared/runtime/storage";
 import { type StudioRequest, useStudioRequest } from "@shared/runtime/studio";
-import { useUserConfigStore } from "@shared/runtime/user";
+import { type StoredUser, useUserConfigStore, useUserStorageSync } from "@shared/runtime/user";
 import { Button, StudioButton } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 import { GoogleImportEditor } from "@shared/ui/google-import";
@@ -211,6 +211,7 @@ export function ProfileEditor({
   initialTab = "Profile",
   initiallyArranging = false,
   reviews,
+  user,
 }: {
   initial: ProfileSnapshot;
   saveUrl?: string;
@@ -220,7 +221,9 @@ export function ProfileEditor({
   initialTab?: (typeof tabs)[number];
   initiallyArranging?: boolean;
   reviews?: ReactNode;
+  user?: StoredUser | null;
 }) {
+  useUserStorageSync(user);
   const userId = useUserConfigStore((state) => state.user?.id);
   const [profession, setProfession] = useState<PortfolioType>(defaultProfession(initial.profile));
   const [scratchBackup, setScratchBackup] = useState<ScratchBackup | null>(null);
@@ -438,7 +441,7 @@ export function ProfileEditor({
                         ? "Resume setup"
                         : "Start from scratch"}
                     </StudioButton>
-                    <StudioButton href="/admin/billing" tone="secondary" variant="outline">
+                    <StudioButton href="/studio/billing" tone="secondary" variant="outline">
                       Plan and usage
                     </StudioButton>
                   </div>
@@ -626,7 +629,7 @@ export function ProfileEditor({
             saved,
             tab,
           })}
-          href="/admin/chat"
+          href="/studio/chat"
           label="Open Studio assistant"
           notice={
             message

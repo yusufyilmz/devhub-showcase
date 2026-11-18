@@ -1,7 +1,7 @@
 import { readPublicProfile } from "@shared/lib/published-profile";
 
-import { readProtectedProfile } from "../../../[username]/access/_session";
-import { cvResponse } from "../../../api/cv/_response";
+import { cvResponse } from "@/services/cv/get-response";
+import { readProtectedProfile } from "@/services/portfolio/get-access-session";
 
 export const runtime = "nodejs";
 

@@ -195,7 +195,7 @@ export const studioChatScreenStyles = {
     "studio-chat-compose-area [display:grid] [grid-template-columns:minmax(0,_1fr)] [gap:var(--spacing-sm)] [&_.studio-chat-composer]:[padding:var(--spacing-s)] [box-shadow:var(--shadow-md)] [&_.studio-chat-composer_textarea.ui-input]:[min-height:62px]",
   element19: "studio-chat-error [font-size:var(--text-sm)] [color:var(--destructive)]",
   element20:
-    "studio-chat-suggestions [display:flex] [flex-wrap:wrap] [gap:var(--spacing-xs)] [justify-content:center] [&_button]:[height:auto] [min-height:36px] [font-size:var(--text-sm)] [white-space:normal] [border-radius:999px]",
+    "studio-chat-suggestions [display:flex] [flex-wrap:wrap] [gap:var(--spacing-xs)] [justify-content:center] [&_button]:[height:auto] [&_button]:[min-height:36px] [&_button]:[font-size:var(--text-sm)] [&_button]:[white-space:normal] [&_button]:[border-radius:999px]",
   element21:
     "studio-chat-notice [font-size:var(--text-xs)] [line-height:1.7] [color:var(--muted-foreground)] [text-align:center] [&_a]:[text-decoration:underline]",
   element22: "studio-chat-thread-title [font-size:var(--text-lg)] [letter-spacing:-0.02em]",

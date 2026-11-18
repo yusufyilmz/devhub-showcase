@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { extractLinkedInAlert } from "@shared/lib/services/jobs";
 
-import { jobAlertConfig, jobsServiceClient } from "../_config";
+import { jobAlertConfig, jobsServiceClient } from "@/services/jobs/get-config";
 
 const envelope = z.object({
   html: z.string().max(200_000).default(""),

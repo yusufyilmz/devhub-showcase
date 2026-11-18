@@ -4,7 +4,7 @@ import { profile } from "@shared/config";
 import { ProfileAccessError } from "@shared/lib/profile";
 
 const mocks = vi.hoisted(() => ({ published: vi.fn(), workspace: vi.fn() }));
-vi.mock("@/features/admin/admin-auth", () => ({
+vi.mock("@/services/admin/get-auth", () => ({
   requireWorkspace: mocks.workspace,
   sameOrigin: () => true,
 }));
