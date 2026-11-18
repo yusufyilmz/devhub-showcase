@@ -14,10 +14,15 @@ import {
   type SectionItem,
   SectionTabs,
 } from "../../layout";
+import { educationPlaceholders } from "../careers-section/education-placeholders";
 import { configuredSectionInlineStyle1, configuredSectionStyles } from "./styles";
 import type { ConfiguredSectionOptions, SectionViewOptions } from "./types";
 
-function sectionItems(profile: PortfolioProfile, kind: PortfolioSection["kind"]): SectionItem[] {
+function sectionItems(
+  profile: PortfolioProfile,
+  kind: PortfolioSection["kind"],
+  showEducationExample = false,
+): SectionItem[] {
   const text = getPortfolioCopy(profile.portfolioLanguage);
   const period = (start: string, end: string | null) =>
     formatPortfolioPeriod(start, end, profile.portfolioLanguage);
@@ -86,16 +91,30 @@ function sectionItems(profile: PortfolioProfile, kind: PortfolioSection["kind"])
         title: item.position,
       }));
     case "education":
-      return profile.education.map((item) => ({
-        content: (
-          <>
-            {item.url ? <a href={item.url}>{item.institution}</a> : item.institution}
-            <p>{period(item.start, item.end)}</p>
-          </>
-        ),
-        id: item.id,
-        title: `${item.degree} · ${item.field}`,
-      }));
+      return profile.education.map((item) => {
+        const institution = item.institution.trim();
+        const degree =
+          item.degree.trim() || (showEducationExample ? educationPlaceholders.degree : "");
+        const field =
+          item.field.trim() || (showEducationExample ? educationPlaceholders.field : "");
+        return {
+          content: (
+            <>
+              {institution && item.url && item.url !== "https://" ? (
+                <a href={item.url}>{institution}</a>
+              ) : (
+                institution ||
+                (showEducationExample && (
+                  <span className="text-muted-foreground">{educationPlaceholders.institution}</span>
+                ))
+              )}
+              <p>{period(item.start, item.end)}</p>
+            </>
+          ),
+          id: item.id,
+          title: [degree, field].filter(Boolean).join(" · "),
+        };
+      });
     case "skills":
       return Object.entries(profile.skills).map(([group, skills]) => ({
         content: <p>{skills.join(" · ")}</p>,
@@ -116,9 +135,14 @@ export function ConfiguredSection({
   previewId,
   emptyState,
   renderItemControl,
+  showEducationExample,
 }: ConfiguredSectionOptions) {
   if (!section.settings.visible) return null;
-  const items = sectionItems(selectPortfolioContent(profile), section.kind).map((item) => ({
+  const items = sectionItems(
+    selectPortfolioContent(profile),
+    section.kind,
+    showEducationExample,
+  ).map((item) => ({
     ...item,
     content: renderItemControl ? (
       <>
@@ -134,6 +158,18 @@ export function ConfiguredSection({
     view === "cards" || view === "gallery" || view === "list"
       ? profile.sectionSettings?.[section.kind]?.direction
       : undefined;
+  if (showEducationExample && section.kind === "education" && !profile.education.length) {
+    items.push({
+      content: (
+        <p>
+          {educationPlaceholders.institution}{" "}
+          <span className="text-muted-foreground">(example)</span>
+        </p>
+      ),
+      id: "education-example",
+      title: `${educationPlaceholders.degree} · ${educationPlaceholders.field}`,
+    });
+  }
   if (!items.length) return emptyState ?? null;
   const text = getPortfolioCopy(profile.portfolioLanguage);
   const label = section.kind === "languages" ? text.spokenLanguages : text[section.kind];

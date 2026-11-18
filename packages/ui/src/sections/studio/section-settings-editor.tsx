@@ -110,17 +110,16 @@ function SectionLayoutPicker({
           {section.settings.visible ? (
             <ConfiguredSection
               emptyState={
-                <p className="py-4 text-sm text-muted-foreground">
-                  Add or include content to preview this section.
-                </p>
+                <p className="py-4 text-sm text-muted-foreground">No items to preview.</p>
               }
               previewId={`${previewId}-section`}
               profile={profile}
               renderItemControl={renderItemControl}
               section={section}
+              showEducationExample
             />
           ) : (
-            <p className="py-4 text-sm text-muted-foreground">This section is hidden.</p>
+            <p className="py-4 text-sm text-muted-foreground">Section hidden.</p>
           )}
         </SectionPreviewSurface>
       </div>
@@ -199,7 +198,7 @@ export function SectionSettingsEditor({
                     type="checkbox"
                     unstyled
                   />
-                  {included(id) ? "Include in portfolio" : title}
+                  {included(id) ? "Include" : title}
                 </LibraryLabel>
               );
             };
@@ -230,8 +229,8 @@ export function SectionSettingsEditor({
                 <SectionLayoutPicker
                   inclusionToolbar={
                     items.length > 0 && (
-                      <fieldset className="my-3 grid gap-2 rounded-lg border border-border p-3 text-sm">
-                        <legend className="px-1 font-semibold">Included content</legend>
+                      <fieldset className="my-3 grid min-w-0 gap-2 border-0 p-0 text-sm">
+                        <legend className="sr-only">Included content</legend>
                         <LibraryLabel className="flex items-center gap-2" unstyled>
                           <LibraryInput
                             checked={settings.itemIds === undefined}
@@ -245,7 +244,7 @@ export function SectionSettingsEditor({
                             type="checkbox"
                             unstyled
                           />
-                          All items, including future additions
+                          Auto-include all items
                         </LibraryLabel>
                         {excluded.length > 0 && <p className="font-medium">Excluded items</p>}
                         {excluded.map(({ id }) => (

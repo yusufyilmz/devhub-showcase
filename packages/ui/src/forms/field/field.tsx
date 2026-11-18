@@ -16,6 +16,7 @@ export function Field({
   type = "text",
   multiline = false,
   hint,
+  placeholder,
   required = false,
 }: FieldOptions) {
   const fieldId = useId();
@@ -38,6 +39,7 @@ export function Field({
           className="min-h-24 resize-y border-border/75 font-normal leading-relaxed user-invalid:border-destructive"
           id={fieldId}
           onChange={(event) => onChange(event.target.value)}
+          placeholder={placeholder}
           required={required}
           rows={4}
           value={value}
@@ -49,6 +51,7 @@ export function Field({
           className="border-border/75 font-normal user-invalid:border-destructive"
           id={fieldId}
           onChange={(event) => onChange(event.target.value)}
+          placeholder={placeholder}
           required={required}
           type={type}
           value={value}

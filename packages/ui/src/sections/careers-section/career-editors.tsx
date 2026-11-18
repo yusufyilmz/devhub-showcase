@@ -4,6 +4,7 @@ import { Field, LinesField, SelectField } from "../../forms";
 import { Input as LibraryInput } from "../../forms/input";
 import { Label as LibraryLabel } from "../../forms/label";
 import { CollectionEditor } from "../editors/collection-editor";
+import { educationPlaceholders } from "./education-placeholders";
 import { careerEditorsStyles } from "./styles";
 import type { Props } from "./types";
 
@@ -181,7 +182,7 @@ export function EducationEditor({ profile, onChange }: Props) {
         start: today(),
         url: "https://",
       })}
-      getSummary={(item) => `${item.degree} · ${item.field}`}
+      getSummary={(item) => [item.degree, item.field].filter((value) => value.trim()).join(" · ")}
       getTitle={(item) => item.institution}
       items={profile.education}
       onChange={(education) => onChange({ ...profile, education })}
@@ -190,22 +191,26 @@ export function EducationEditor({ profile, onChange }: Props) {
           <Field
             label="Institution"
             onChange={(institution) => change({ ...item, institution })}
+            placeholder={educationPlaceholders.institution}
             value={item.institution}
           />
           <Field
             label="Institution URL"
             onChange={(url) => change({ ...item, url })}
+            placeholder={educationPlaceholders.url}
             type="url"
-            value={item.url}
+            value={item.url === "https://" ? "" : item.url}
           />
           <Field
             label="Degree"
             onChange={(degree) => change({ ...item, degree })}
+            placeholder={educationPlaceholders.degree}
             value={item.degree}
           />
           <Field
             label="Field of study"
             onChange={(field) => change({ ...item, field })}
+            placeholder={educationPlaceholders.field}
             value={item.field}
           />
           <Field
