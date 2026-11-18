@@ -5,6 +5,7 @@ import "./_profile-menu.css";
 import { useState } from "react";
 
 import { urls } from "@shared/config/urls";
+import { cvPath } from "@shared/lib/profiles";
 import { draftStorage } from "@shared/runtime/storage";
 import { useStudioRequest } from "@shared/runtime/studio";
 import { useUserConfigStore } from "@shared/runtime/user";
@@ -115,6 +116,14 @@ export function ProfileMenu({
             Portfolio
           </DropdownMenuLabel>
           <DropdownMenuGroup>
+            {username && (
+              <DropdownMenuItem asChild>
+                <a href={cvPath(username)}>
+                  <FoldersIcon aria-hidden="true" />
+                  My portfolio
+                </a>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem asChild>
               <a href={studioHref}>
                 <EditIcon aria-hidden="true" />

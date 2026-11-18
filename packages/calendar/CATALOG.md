@@ -1,4 +1,4 @@
-<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json, the pnpm-workspace.yaml catalog, and declared public exports. Run pnpm generate:catalogs. -->
 
 # @shared/calendar catalog
 
@@ -28,11 +28,11 @@ Symbol names are read statically from TypeScript declarations without executing 
 | --------------------------- | ---------------- | --------------- |
 | `@shared/ui`                | `workspace:*`    | dependencies    |
 | `@shared/utils`             | `workspace:*`    | dependencies    |
-| `lucide-react`              | `catalog:`       | dependencies    |
-| `react`                     | `catalog:`       | dependencies    |
-| `zod`                       | `catalog:`       | dependencies    |
+| `lucide-react`              | `^1.73.0`        | dependencies    |
+| `react`                     | `19.3.1`         | dependencies    |
+| `zod`                       | `4.6.7`          | dependencies    |
 | `@shared/cli`               | `workspace:*`    | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
-| `@types/node`               | `catalog:`       | devDependencies |
-| `@types/react`              | `catalog:`       | devDependencies |
-| `typescript`                | `catalog:`       | devDependencies |
+| `@types/node`               | `26.6.6`         | devDependencies |
+| `@types/react`              | `19.3.0`         | devDependencies |
+| `typescript`                | `7.0.2`          | devDependencies |

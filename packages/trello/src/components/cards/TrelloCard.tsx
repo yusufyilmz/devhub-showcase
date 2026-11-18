@@ -26,29 +26,40 @@ interface TrelloCardProps {
   style?: CSSProperties;
 }
 
-/**
- * ✅ RESPONSIVE TRELLO CARD - PURE UI COMPONENTS PATTERN
- *
- * Shows card title, labels, milestones (checklist progress), and due dates.
- * Responsive width that adapts to the board list container.
- * Content-based height for optimal space usage.
- *
- * Features:
- * - Full width of parent container (responsive)
- * - Content-based height (no fixed dimensions)
- * - Always visible delete button in top right
- * - Labels with overflow indicator
- * - Checklist progress indicators (milestones)
- * - Due date with status colors
- *
- * This demonstrates the pattern you requested:
- * - Uses Card, CardHeader, CardBody instead of raw divs
- * - Uses IconButton instead of raw button elements
- * - Uses Label/Heading/Text instead of raw spans/headings
- * - Uses Flex/Stack instead of raw divs with flexbox
- *
- * Tomorrow you can easily replace with any UI library!
- */
+function hasCardDetails(card: TrelloCardType) {
+  return Boolean(
+    card.labels?.length || card.checklists?.length || card.due || card.attachments?.length,
+  );
+}
+
+function ChecklistProgress({ checklists }: Pick<TrelloCardType, "checklists">) {
+  const items = checklists?.flatMap((list) => list.checkItems ?? []) ?? [];
+  if (!items.length) return null;
+  const completed = items.filter((item) => item.state === "complete").length;
+  return (
+    <Typography
+      className="text-xs tabular-nums"
+      color={completed === items.length ? "success" : "muted"}
+    >
+      {completed}/{items.length} complete
+    </Typography>
+  );
+}
+
+function DueDate({ date, complete }: { date: string; complete: boolean }) {
+  const due = new Date(date);
+  return (
+    <Typography
+      className="text-xs tabular-nums"
+      color={complete ? "success" : due < new Date() ? "destructive" : "muted"}
+    >
+      <time dateTime={date}>
+        {due.toLocaleDateString("en-US", { day: "numeric", month: "short" })}
+      </time>
+    </Typography>
+  );
+}
+
 export const TrelloCard: FC<TrelloCardProps> = ({
   card,
   className = "",
@@ -125,19 +136,20 @@ export const TrelloCard: FC<TrelloCardProps> = ({
           cursor: "pointer",
           display: "flex",
           flexDirection: "column",
-          marginBottom: "8px",
+
           minHeight: "auto", // ✅ Content-based height
+          padding: 0,
           width: "100%", // ✅ Full width of the list container
           ...style,
         }}
       >
         {/* ✅ CARD HEADER - Title and Actions */}
-        <CardHeader style={{ paddingBottom: "8px" }}>
+        <CardHeader className="p-3" style={{ marginBottom: 0 }}>
           <Flex align="start" gap="md" justify="between">
             <Heading
               level={4}
               style={{
-                color: "#172b4d",
+                color: "var(--card-foreground)",
                 flex: 1,
                 fontSize: "14px",
                 fontWeight: "500",
@@ -147,7 +159,7 @@ export const TrelloCard: FC<TrelloCardProps> = ({
             >
               {onOpen ? (
                 <Button
-                  className="w-full wrap-anywhere text-left"
+                  className="w-full rounded-sm wrap-anywhere text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                   onClick={onOpen}
                   type="button"
                   variant="unstyled"
@@ -180,91 +192,44 @@ export const TrelloCard: FC<TrelloCardProps> = ({
         </CardHeader>
 
         {/* ✅ CARD BODY - Labels, Milestones, Due Date */}
-        <CardBody style={{ paddingTop: 0 }}>
-          <Stack gap="8px">
-            {/* Labels */}
-            {card.labels && card.labels.length > 0 && (
-              <Flex gap="sm" wrap>
-                {card.labels.slice(0, 4).map((label) => (
-                  <Label color={label.color || "#ddd"} key={label.id} small>
-                    {label.name}
-                  </Label>
-                ))}
-                {card.labels.length > 4 && (
-                  <Label color="#ddd" small>
-                    +{card.labels.length - 4}
-                  </Label>
-                )}
-              </Flex>
-            )}
-
-            {/* Milestones (Checklist Progress) and Due Date */}
-            <Flex align="center" justify="between">
-              <Flex align="center" gap="lg">
-                {/* Checklist Progress (Milestones) */}
-                {card.checklists &&
-                  card.checklists.length > 0 &&
-                  (() => {
-                    const totalItems = card.checklists.reduce(
-                      (acc, list) => acc + (list.checkItems?.length || 0),
-                      0,
-                    );
-                    const completedItems = card.checklists.reduce(
-                      (acc, list) =>
-                        acc +
-                        (list.checkItems?.filter((item) => item.state === "complete")?.length || 0),
-                      0,
-                    );
-
-                    if (totalItems > 0) {
-                      return (
-                        <Flex align="center" gap="sm">
-                          <span style={{ fontSize: "12px" }}>☑️</span>
-                          <Typography
-                            color={completedItems === totalItems ? "success" : "muted"}
-                            style={{ fontSize: "12px" }}
-                          >
-                            {completedItems}/{totalItems}
-                          </Typography>
-                        </Flex>
-                      );
-                    }
-                    return null;
-                  })()}
-
-                {/* Attachments Count */}
-                {card.attachments && card.attachments.length > 0 && (
-                  <Flex align="center" gap="sm">
-                    <span style={{ fontSize: "12px" }}>📎</span>
-                    <Typography color="muted">{card.attachments.length}</Typography>
-                  </Flex>
-                )}
-              </Flex>
-
-              {/* Due Date */}
-              {card.due && (
-                <Flex align="center" gap="sm">
-                  <span style={{ fontSize: "11px" }}>📅</span>
-                  <Typography
-                    color={
-                      card.dueComplete
-                        ? "success"
-                        : new Date(card.due) < new Date()
-                          ? "destructive"
-                          : "muted"
-                    }
-                    style={{ fontWeight: card.dueComplete ? "bold" : "normal" }}
-                  >
-                    {new Date(card.due).toLocaleDateString("en-US", {
-                      day: "numeric",
-                      month: "short",
-                    })}
-                  </Typography>
+        {(showActions || hasCardDetails(card)) && (
+          <CardBody className="px-3 pt-0 pb-3">
+            <Stack gap="8px">
+              {/* Labels */}
+              {card.labels && card.labels.length > 0 && (
+                <Flex gap="sm" wrap>
+                  {card.labels.slice(0, 4).map((label) => (
+                    <Label color={label.color || "#ddd"} key={label.id} small>
+                      {label.name}
+                    </Label>
+                  ))}
+                  {card.labels.length > 4 && (
+                    <Label color="#ddd" small>
+                      +{card.labels.length - 4}
+                    </Label>
+                  )}
                 </Flex>
               )}
-            </Flex>
-          </Stack>
-        </CardBody>
+
+              {/* Milestones (Checklist Progress) and Due Date */}
+              <Flex align="center" justify="between">
+                <Flex align="center" gap="lg">
+                  <ChecklistProgress checklists={card.checklists} />
+
+                  {/* Attachments Count */}
+                  {card.attachments && card.attachments.length > 0 && (
+                    <Flex align="center" gap="sm">
+                      <span style={{ fontSize: "12px" }}>📎</span>
+                      <Typography color="muted">{card.attachments.length}</Typography>
+                    </Flex>
+                  )}
+                </Flex>
+
+                {card.due && <DueDate complete={card.dueComplete} date={card.due} />}
+              </Flex>
+            </Stack>
+          </CardBody>
+        )}
       </Card>
 
       {/* ✅ CARD DETAIL MODAL - Full editing capabilities */}

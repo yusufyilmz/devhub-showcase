@@ -28,12 +28,35 @@ test("Studio tasks can be created, completed, and deleted", async ({ page, conte
   ]);
 
   await page.goto("/");
+  const header = page.getByRole("banner").first();
+  await expect(header.locator(".site-navigation-actions :is(a, button):visible")).toHaveCount(2);
   await page.getByRole("button", { name: "Profile menu" }).click();
+  await expect(page.getByRole("menuitem", { name: "My portfolio" })).toHaveAttribute(
+    "href",
+    mobile ? "/mobile-ai-owner" : "/desktop-ai-owner",
+  );
   await page.getByRole("menuitem", { name: "My Calendar" }).click();
   await expect(page.getByRole("heading", { name: "My Calendar" })).toBeVisible();
   const title = "Review the fixture roadmap";
-  await page.getByRole("button", { exact: true, name: "Add task" }).click();
+  const month = page.getByRole("region", { name: "Month calendar" });
+  const cell = month
+    .locator("div.relative:not([data-outside]):not([data-selected])")
+    .filter({
+      has: page.getByRole("button", { name: /^Select / }),
+    })
+    .filter({ hasNot: page.getByRole("button", { name: /^Select /, pressed: true }) })
+    .first();
+  const select = cell.getByRole("button", { name: /^Select / });
+  const dayLabel = await select.getAttribute("aria-label");
+  await cell.click({ position: { x: 12, y: 40 } });
+  await expect(month.getByRole("button", { exact: true, name: dayLabel ?? "" })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  const selectedDate = await page.locator("time[datetime]").first().getAttribute("datetime");
+  await page.getByRole("button", { name: "Add task for this day" }).click();
   const add = page.getByRole("dialog", { name: "Add task" });
+  await expect(add.getByLabel("Date", { exact: true })).toHaveValue(selectedDate ?? "");
   await add.getByLabel("Title").fill(title);
   await add.getByLabel("Time (optional)").fill("09:30");
   await add.getByRole("button", { name: "Add task" }).click();
@@ -41,6 +64,7 @@ test("Studio tasks can be created, completed, and deleted", async ({ page, conte
   const editButton = page.getByRole("button", { name: `Edit ${title}` });
   await expect(editButton).toBeVisible();
   await page.reload();
+  await page.getByRole("button", { exact: true, name: dayLabel ?? "" }).click();
   await editButton.click();
   const edit = page.getByRole("dialog", { name: "Edit task" });
   await expect(edit.getByLabel("Time (optional)")).toHaveValue("09:30");

@@ -1,4 +1,4 @@
-<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json, the pnpm-workspace.yaml catalog, and declared public exports. Run pnpm generate:catalogs. -->
 
 # Notifications catalog
 
@@ -38,10 +38,10 @@ Symbol names are read statically from TypeScript declarations without executing 
 
 | Dependency                  | Declared version | Kind            |
 | --------------------------- | ---------------- | --------------- |
-| `web-push`                  | `catalog:`       | dependencies    |
-| `zod`                       | `catalog:`       | dependencies    |
+| `web-push`                  | `4.0.0`          | dependencies    |
+| `zod`                       | `4.6.7`          | dependencies    |
 | `@shared/cli`               | `workspace:*`    | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
-| `@types/node`               | `catalog:`       | devDependencies |
-| `@types/web-push`           | `catalog:`       | devDependencies |
-| `typescript`                | `catalog:`       | devDependencies |
+| `@types/node`               | `26.6.6`         | devDependencies |
+| `@types/web-push`           | `3.6.4`          | devDependencies |
+| `typescript`                | `7.0.2`          | devDependencies |

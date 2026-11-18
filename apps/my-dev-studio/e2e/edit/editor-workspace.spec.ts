@@ -44,18 +44,20 @@ test("editor workspace keeps draft editing, preview and publication separate", a
   const sidebar = page.getByRole("navigation", { name: "Editor sections" });
   if (!mobile) {
     const sidebarBounds = await sidebar.boundingBox();
-    const headingBounds = await page.locator(".studio-editor-header").boundingBox();
+    const headingBounds = await page
+      .getByRole("heading", { exact: true, name: "Edit your portfolio" })
+      .boundingBox();
     expect(sidebarBounds?.x).toBe(0);
     expect(sidebarBounds?.y ?? Number.POSITIVE_INFINITY).toBeLessThan(headingBounds?.y ?? 0);
     const column = page.locator("[data-slot='sidebar-container']");
-    await sidebar.getByRole("button", { name: "Collapse sidebar" }).click();
+    await page.getByRole("button", { name: "Collapse sidebar" }).click();
     await expect(column).toHaveCSS("width", "64px");
     await expect(page.locator("[data-slot='sidebar']")).toHaveAttribute("data-collapsible", "icon");
     const publishing = sidebar.getByRole("button", { exact: true, name: "Publishing" });
     await expect(publishing.locator("svg.lucide-send")).toHaveCount(1);
     await publishing.click();
     await expect(workspace.getByRole("region", { name: "Edit Publishing" })).toBeInViewport();
-    await sidebar.getByRole("button", { name: "Expand sidebar" }).click();
+    await page.getByRole("button", { name: "Expand sidebar" }).click();
     await expect(column).toHaveCSS("width", "232px");
     await selectEditorSection(page, "Profile");
   } else {
@@ -114,7 +116,7 @@ test("editor workspace keeps draft editing, preview and publication separate", a
   await selectEditorSection(page, "Profile");
   await expect(title).toHaveValue("Unsaved editor workspace title");
   await page.getByRole("button", { exact: true, name: "Save changes" }).click();
-  await expect(page.locator(".studio-status")).toContainText("All changes saved");
+  await expect(page.getByText("All changes saved", { exact: true })).toBeVisible();
   await page.reload();
   await openEditor(page);
   await expect(title).toHaveValue("Unsaved editor workspace title");
@@ -174,6 +176,14 @@ test("editor panels fit the viewport and keep the profile menu available", async
   await page.goto("/");
   const root = page.locator("html");
   await expect(root).toHaveAttribute("data-accent", "cyan");
+  if (mobile) {
+    await page.getByRole("button", { name: "Profile menu" }).click();
+    await page.getByRole("menuitem", { name: "Edit profile" }).click();
+  } else {
+    await page.getByRole("link", { name: "My studio" }).click();
+  }
+  await expect(page).toHaveURL(`/${mobile ? "mobile" : "desktop"}-workspace-owner/edit`);
+  await expect(page.getByRole("navigation", { name: "Footer navigation" })).toHaveCount(0);
   const initialMode = await root.getAttribute("data-theme");
   const mode = initialMode === "dark" ? "light" : "dark";
   const appearance = page.getByRole("button", { name: "Appearance controls" });
@@ -182,8 +192,7 @@ test("editor panels fit the viewport and keep the profile menu available", async
   await expect(switchTheme).toBeInViewport();
   await switchTheme.click();
   await expect(root).toHaveAttribute("data-theme", mode);
-  await page.getByRole("link", { name: "My studio" }).click();
-  await expect(page).toHaveURL(`/${mobile ? "mobile" : "desktop"}-workspace-owner/edit`);
+  await page.reload();
   await expect(root).toHaveAttribute("data-theme", mode);
   await expect(root).toHaveAttribute("data-accent", "cyan");
   const profile = page.getByRole("button", { name: "Profile menu" });

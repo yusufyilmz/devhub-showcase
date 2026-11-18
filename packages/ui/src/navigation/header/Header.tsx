@@ -46,7 +46,12 @@ export function Header({
               <div className={headerStyles.menu}>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button aria-label={menuLabel} size="icon-sm" variant="ghost">
+                    <Button
+                      aria-label={menuLabel}
+                      className="size-10"
+                      size="icon-sm"
+                      variant="ghost"
+                    >
                       <Menu aria-hidden="true" />
                     </Button>
                   </DropdownMenuTrigger>

@@ -46,7 +46,10 @@ export function EditorSidebar({
   const portfolioName = username || "Your draft";
   const initial = portfolioName.slice(0, 1).toUpperCase();
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar
+      className="md:top-[var(--studio-masthead-height,0px)] md:h-[calc(100dvh-var(--studio-masthead-height,0px))]"
+      collapsible="icon"
+    >
       <nav aria-label="Editor sections" className="flex h-full min-h-0 flex-col" id={sectionListId}>
         <SidebarHeader>
           <div className="editor-sidebar-heading [display:flex] [gap:4px] [align-items:center] [[data-collapsible='icon']_&]:[justify-content:center]">

@@ -31,3 +31,5 @@ Use a disposable board for these checks. Card and board deletion are permanent. 
 - [Server action tests](../../../apps/my-dev-studio/app/admin/trello/new/actions.test.ts)
 - [Form interaction tests](../../../packages/trello/src/components/pages/TrelloBoardCreateForm.test.tsx)
 - [Trello configuration](../../features.md#trello-boards)
+
+- At [Trello boards](http://localhost:3001/admin/trello) (`/admin/trello`), inspect the compact board tiles, then choose **Open board**. Expect a distinct visibility badge and a horizontally scrollable board with list counts and compact cards. Verify light and dark themes. Manual verification pending.

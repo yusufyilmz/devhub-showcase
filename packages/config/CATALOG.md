@@ -1,4 +1,4 @@
-<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json, the pnpm-workspace.yaml catalog, and declared public exports. Run pnpm generate:catalogs. -->
 
 # Config catalog
 
@@ -65,6 +65,6 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `@shared/env`               | `workspace:*`    | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
 | `@shared/utils`             | `workspace:*`    | devDependencies |
-| `next`                      | `catalog:`       | devDependencies |
-| `typescript`                | `catalog:`       | devDependencies |
-| `zod`                       | `catalog:`       | devDependencies |
+| `next`                      | `16.4.5`         | devDependencies |
+| `typescript`                | `7.0.2`          | devDependencies |
+| `zod`                       | `4.6.7`          | devDependencies |

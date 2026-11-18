@@ -90,3 +90,28 @@ test("portfolio icon controls use matching foreground and surface colors in both
     await expect(page.getByRole("dialog")).toBeVisible();
   }
 });
+
+test("featured hero keeps its backdrop behind readable text and selected work", async ({
+  page,
+}) => {
+  await page.goto("/yusufyilmz");
+  const hero = page.locator("#summary");
+  const copy = hero.locator(".hero-copy");
+  const spotlight = hero.getByRole("complementary", { name: "Selected work" });
+
+  await expect(hero.locator(".hero-featured-backdrop")).toHaveCSS("position", "absolute");
+  await expect(copy.locator(".hero-intro")).toHaveCSS("letter-spacing", "normal");
+  await expect(copy.getByRole("heading", { level: 1 })).toHaveCSS(
+    "color",
+    await spotlight.evaluate((element) => getComputedStyle(element).color),
+  );
+  const copyBox = await copy.boundingBox();
+  const spotlightBox = await spotlight.boundingBox();
+  if (!copyBox || !spotlightBox) throw new Error("The hero copy and selected work must be visible");
+  if ((page.viewportSize()?.width ?? 0) >= 900) {
+    expect(spotlightBox.x).toBeGreaterThanOrEqual(copyBox.x + copyBox.width);
+    expect(spotlightBox.y).toBeLessThan(copyBox.y + copyBox.height);
+  } else {
+    expect(spotlightBox.y).toBeGreaterThanOrEqual(copyBox.y + copyBox.height);
+  }
+});

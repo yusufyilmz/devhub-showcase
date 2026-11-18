@@ -1,4 +1,4 @@
-<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json, the pnpm-workspace.yaml catalog, and declared public exports. Run pnpm generate:catalogs. -->
 
 # my-fitness-app catalog
 
@@ -38,21 +38,21 @@ No public package export map or main entry is declared.
 | `@shared/notifications`     | `workspace:*`    | dependencies    |
 | `@shared/runtime`           | `workspace:*`    | dependencies    |
 | `@shared/ui`                | `workspace:*`    | dependencies    |
-| `drizzle-orm`               | `catalog:`       | dependencies    |
-| `lucide-react`              | `catalog:`       | dependencies    |
-| `next`                      | `catalog:`       | dependencies    |
-| `postgres`                  | `catalog:`       | dependencies    |
-| `react`                     | `catalog:`       | dependencies    |
-| `react-dom`                 | `catalog:`       | dependencies    |
-| `zod`                       | `catalog:`       | dependencies    |
-| `@electric-sql/pglite`      | `catalog:`       | devDependencies |
+| `drizzle-orm`               | `0.45.4`         | dependencies    |
+| `lucide-react`              | `^1.73.0`        | dependencies    |
+| `next`                      | `16.4.5`         | dependencies    |
+| `postgres`                  | `3.4.9`          | dependencies    |
+| `react`                     | `19.3.1`         | dependencies    |
+| `react-dom`                 | `19.3.1`         | dependencies    |
+| `zod`                       | `4.6.7`          | dependencies    |
+| `@electric-sql/pglite`      | `0.5.15`         | devDependencies |
 | `@shared/test`              | `workspace:*`    | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
-| `@tailwindcss/postcss`      | `catalog:`       | devDependencies |
-| `@types/node`               | `catalog:`       | devDependencies |
-| `@types/react`              | `catalog:`       | devDependencies |
-| `@types/react-dom`          | `catalog:`       | devDependencies |
-| `postcss`                   | `catalog:`       | devDependencies |
-| `tailwindcss`               | `catalog:`       | devDependencies |
-| `typescript`                | `catalog:`       | devDependencies |
-| `vitest`                    | `catalog:`       | devDependencies |
+| `@tailwindcss/postcss`      | `4.3.5`          | devDependencies |
+| `@types/node`               | `26.6.6`         | devDependencies |
+| `@types/react`              | `19.3.0`         | devDependencies |
+| `@types/react-dom`          | `19.3.0`         | devDependencies |
+| `postcss`                   | `8.5.32`         | devDependencies |
+| `tailwindcss`               | `4.3.5`          | devDependencies |
+| `typescript`                | `7.0.2`          | devDependencies |
+| `vitest`                    | `5.1.0`          | devDependencies |

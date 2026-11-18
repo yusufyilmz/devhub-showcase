@@ -16,10 +16,19 @@ export function HomeHeader({ action, accountMenu }: HomeHeaderOptions) {
     <Header
       actions={
         <>
-          <Button className="site-navigation-cta" href={action.href} variant="outline">
+          <Button
+            className={action.signedIn && accountMenu ? "@max-[760px]:hidden" : undefined}
+            href={action.href}
+            size="sm"
+            variant="outline"
+          >
             {action.signedIn ? "My studio" : "Sign in"} <span aria-hidden="true">↗</span>
           </Button>
-          <ThemeToggle />
+          {(!action.signedIn || !accountMenu) && (
+            <div className="@max-[760px]:hidden">
+              <ThemeToggle />
+            </div>
+          )}
           {accountMenu}
         </>
       }
