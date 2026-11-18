@@ -15,6 +15,8 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 | 3    | [Open](https://mydevstudio.vercel.app/test-owner/edit)   | `/test-owner/edit`   | Reorder with pointer/touch, move buttons and keyboard; save and reload.              | Order persists and focus remains usable; no automatic publication occurs.                       | Not run                  |
 | 4    | [Open](https://mydevstudio.vercel.app/test-owner/cv.pdf) | `/test-owner/cv.pdf` | After separate publication, compare the website and public CV settings.              | Website section order/selection does not silently redefine independent CV inclusion/layout.     | Not run                  |
 
+In the Projects content editor, confirm that Section visibility and layout starts open. Try Row and Column with Cards, Gallery, and List. Uncheck a project on its preview item, then restore it under Excluded items. Save, reload, and confirm the arrangement and inclusion choices persist. Check a narrow viewport and confirm that private projects stay out of the preview.
+
 ## Related evidence and detail
 
 - [e2e/portfolio/section-settings.spec.ts](../../../apps/my-dev-studio/e2e/portfolio/section-settings.spec.ts)

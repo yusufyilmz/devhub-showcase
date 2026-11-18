@@ -42,6 +42,7 @@ export const portfolioSectionSchema = z.discriminatedUnion("kind", [
 function preferences<const Renderers extends readonly [string, ...string[]]>(renderers: Renderers) {
   return z
     .object({
+      direction: z.enum(["row", "column"]).optional(),
       itemIds: z
         .array(z.string().min(1).max(200))
         .max(100)

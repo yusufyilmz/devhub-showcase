@@ -6,6 +6,14 @@ ul.section-view-grid {
   padding: 0;
   margin: 0;
 }
+[data-direction="column"] > section > ul.section-view-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+[data-direction="row"] > .section-view-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--spacing-md);
+}
 .section-view-grid > li::marker {
   content: "";
 }

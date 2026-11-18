@@ -31,7 +31,6 @@ export const sectionSettingsEditorStyles = {
   element2:
     "grid min-w-0 gap-3 border-0 border-t border-border py-5 [&_button]:justify-self-start [&_label]:text-[13px] [&_legend]:pr-3 [&_legend]:text-base [&_legend]:font-semibold",
   element3: studioButtonClass.secondary,
-  includedContent: "grid min-w-0 gap-2 rounded-lg bg-muted/40 px-3 py-3 sm:px-4",
   inlineFields: "grid min-w-0 gap-4 border-0 border-t border-border/75 px-4 py-4 sm:gap-5 sm:px-5",
   inlinePanel: "mt-4 min-w-0 rounded-xl border border-border/75 bg-card [overflow-wrap:anywhere]",
   inlineSummary:
@@ -63,5 +62,3 @@ export function customPortfolioSectionClassName(...values: unknown[]): string {
 export const configuredSectionInlineStyle1: CSSProperties = { height: "auto", maxWidth: "100%" };
 
 export const customPortfolioSectionInlineStyle1: CSSProperties = { whiteSpace: "pre-line" };
-
-export const sectionSettingsEditorInlineStyle1: CSSProperties = { display: "block" };
