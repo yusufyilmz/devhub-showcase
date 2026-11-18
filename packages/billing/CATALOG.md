@@ -1,4 +1,4 @@
-<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json, the pnpm-workspace.yaml catalog, and declared public exports. Run pnpm generate:catalogs. -->
 
 # Billing catalog
 
@@ -57,13 +57,13 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `@shared/config`            | `workspace:*`    | dependencies    |
 | `@shared/env`               | `workspace:*`    | dependencies    |
 | `@shared/ui`                | `workspace:*`    | dependencies    |
-| `@supabase/supabase-js`     | `catalog:`       | dependencies    |
-| `react`                     | `catalog:`       | dependencies    |
-| `stripe`                    | `catalog:`       | dependencies    |
-| `zod`                       | `catalog:`       | dependencies    |
+| `@supabase/supabase-js`     | `2.119.0`        | dependencies    |
+| `react`                     | `19.3.1`         | dependencies    |
+| `stripe`                    | `23.1.0`         | dependencies    |
+| `zod`                       | `4.6.7`          | dependencies    |
 | `@shared/cli`               | `workspace:*`    | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
-| `@types/node`               | `catalog:`       | devDependencies |
-| `@types/react`              | `catalog:`       | devDependencies |
-| `@types/react-dom`          | `catalog:`       | devDependencies |
-| `typescript`                | `catalog:`       | devDependencies |
+| `@types/node`               | `26.6.6`         | devDependencies |
+| `@types/react`              | `19.3.0`         | devDependencies |
+| `@types/react-dom`          | `19.3.0`         | devDependencies |
+| `typescript`                | `7.0.2`          | devDependencies |

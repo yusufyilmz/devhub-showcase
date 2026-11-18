@@ -1,4 +1,4 @@
-<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json, the pnpm-workspace.yaml catalog, and declared public exports. Run pnpm generate:catalogs. -->
 
 # Assistant catalog
 
@@ -165,23 +165,23 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `@shared/runtime`           | `workspace:*`    | dependencies    |
 | `@shared/ui`                | `workspace:*`    | dependencies    |
 | `@shared/utils`             | `workspace:*`    | dependencies    |
-| `class-variance-authority`  | `catalog:`       | dependencies    |
-| `cn`                        | `catalog:`       | dependencies    |
-| `compromise`                | `catalog:`       | dependencies    |
-| `handlebars`                | `catalog:`       | dependencies    |
-| `js-tiktoken`               | `catalog:`       | dependencies    |
-| `lucide-react`              | `catalog:`       | dependencies    |
-| `next`                      | `catalog:`       | dependencies    |
-| `openai`                    | `catalog:`       | dependencies    |
-| `pdfmake`                   | `catalog:`       | dependencies    |
-| `pino`                      | `catalog:`       | dependencies    |
-| `react`                     | `catalog:`       | dependencies    |
-| `react-dom`                 | `catalog:`       | dependencies    |
-| `zod`                       | `catalog:`       | dependencies    |
+| `class-variance-authority`  | `^0.7.1`         | dependencies    |
+| `cn`                        | `^0.5.2`         | dependencies    |
+| `compromise`                | `14.19.0`        | dependencies    |
+| `handlebars`                | `4.7.10`         | dependencies    |
+| `js-tiktoken`               | `1.0.21`         | dependencies    |
+| `lucide-react`              | `^1.73.0`        | dependencies    |
+| `next`                      | `16.4.5`         | dependencies    |
+| `openai`                    | `7.52.0`         | dependencies    |
+| `pdfmake`                   | `0.3.13`         | dependencies    |
+| `pino`                      | `10.4.0`         | dependencies    |
+| `react`                     | `19.3.1`         | dependencies    |
+| `react-dom`                 | `19.3.1`         | dependencies    |
+| `zod`                       | `4.6.7`          | dependencies    |
 | `@shared/cli`               | `workspace:*`    | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
-| `@storybook/react-vite`     | `catalog:`       | devDependencies |
-| `@types/node`               | `catalog:`       | devDependencies |
-| `@types/pdfmake`            | `catalog:`       | devDependencies |
-| `storybook`                 | `catalog:`       | devDependencies |
-| `typescript`                | `catalog:`       | devDependencies |
+| `@storybook/react-vite`     | `^10.6.7`        | devDependencies |
+| `@types/node`               | `26.6.6`         | devDependencies |
+| `@types/pdfmake`            | `0.3.3`          | devDependencies |
+| `storybook`                 | `^10.6.7`        | devDependencies |
+| `typescript`                | `7.0.2`          | devDependencies |

@@ -30,7 +30,7 @@ The bundled public content works without service credentials. Authentication, pe
 
 ## Start locally
 
-Use Node `>=24.15.0 <25` and `pnpm@11.25.0`, as declared in [package.json](package.json). Install that pnpm version using your Node tooling before continuing.
+Use Node `>=24.15.0 <25` and `pnpm@12.21.0`, as declared in [package.json](package.json). Install that pnpm version using your Node tooling before continuing.
 
 ```sh
 git clone https://github.com/yusufyilmz/devhub-showcase.git

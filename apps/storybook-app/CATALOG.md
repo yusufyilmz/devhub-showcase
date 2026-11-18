@@ -1,4 +1,4 @@
-<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json, the pnpm-workspace.yaml catalog, and declared public exports. Run pnpm generate:catalogs. -->
 
 # storybook-app catalog
 
@@ -29,20 +29,20 @@ No public package export map or main entry is declared.
 | ---------------------------- | ---------------- | --------------- |
 | `@shared/billing`            | `workspace:*`    | dependencies    |
 | `@shared/ui`                 | `workspace:*`    | dependencies    |
-| `react`                      | `catalog:`       | dependencies    |
-| `react-dom`                  | `catalog:`       | dependencies    |
-| `tailwindcss`                | `catalog:`       | dependencies    |
-| `@chromatic-com/storybook`   | `catalog:`       | devDependencies |
+| `react`                      | `19.3.1`         | dependencies    |
+| `react-dom`                  | `19.3.1`         | dependencies    |
+| `tailwindcss`                | `4.3.5`          | dependencies    |
+| `@chromatic-com/storybook`   | `^5.6.0`         | devDependencies |
 | `@shared/assistant`          | `workspace:*`    | devDependencies |
-| `@storybook/addon-a11y`      | `catalog:`       | devDependencies |
-| `@storybook/addon-vitest`    | `catalog:`       | devDependencies |
-| `@storybook/react-vite`      | `catalog:`       | devDependencies |
-| `@tailwindcss/vite`          | `catalog:`       | devDependencies |
-| `@types/node`                | `catalog:`       | devDependencies |
-| `@types/react`               | `catalog:`       | devDependencies |
-| `@types/react-dom`           | `catalog:`       | devDependencies |
-| `@vitejs/plugin-react`       | `catalog:`       | devDependencies |
-| `@vitest/browser-playwright` | `catalog:`       | devDependencies |
-| `storybook`                  | `catalog:`       | devDependencies |
-| `typescript`                 | `catalog:`       | devDependencies |
-| `vite`                       | `catalog:`       | devDependencies |
+| `@storybook/addon-a11y`      | `^10.6.7`        | devDependencies |
+| `@storybook/addon-vitest`    | `^10.6.7`        | devDependencies |
+| `@storybook/react-vite`      | `^10.6.7`        | devDependencies |
+| `@tailwindcss/vite`          | `4.3.5`          | devDependencies |
+| `@types/node`                | `26.6.6`         | devDependencies |
+| `@types/react`               | `19.3.0`         | devDependencies |
+| `@types/react-dom`           | `19.3.0`         | devDependencies |
+| `@vitejs/plugin-react`       | `^6.3.0`         | devDependencies |
+| `@vitest/browser-playwright` | `5.1.0`          | devDependencies |
+| `storybook`                  | `^10.6.7`        | devDependencies |
+| `typescript`                 | `7.0.2`          | devDependencies |
+| `vite`                       | `^8.3.8`         | devDependencies |

@@ -1,4 +1,4 @@
-<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json, the pnpm-workspace.yaml catalog, and declared public exports. Run pnpm generate:catalogs. -->
 
 # my-dev-studio catalog
 
@@ -40,18 +40,18 @@ No public package export map or main entry is declared.
 | `@shared/trello`            | `workspace:*`    | dependencies    |
 | `@shared/ui`                | `workspace:*`    | dependencies    |
 | `@shared/utils`             | `workspace:*`    | dependencies    |
-| `@supabase/supabase-js`     | `catalog:`       | dependencies    |
-| `next`                      | `catalog:`       | dependencies    |
-| `react`                     | `catalog:`       | dependencies    |
-| `react-dom`                 | `catalog:`       | dependencies    |
-| `zod`                       | `catalog:`       | dependencies    |
+| `@supabase/supabase-js`     | `2.119.0`        | dependencies    |
+| `next`                      | `16.4.5`         | dependencies    |
+| `react`                     | `19.3.1`         | dependencies    |
+| `react-dom`                 | `19.3.1`         | dependencies    |
+| `zod`                       | `4.6.7`          | dependencies    |
 | `@shared/test`              | `workspace:*`    | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
 | `@shared/ui`                | `workspace:*`    | devDependencies |
-| `@tailwindcss/postcss`      | `catalog:`       | devDependencies |
-| `@types/node`               | `catalog:`       | devDependencies |
-| `@types/react`              | `catalog:`       | devDependencies |
-| `@types/react-dom`          | `catalog:`       | devDependencies |
-| `postcss`                   | `catalog:`       | devDependencies |
-| `tailwindcss`               | `catalog:`       | devDependencies |
-| `typescript`                | `catalog:`       | devDependencies |
+| `@tailwindcss/postcss`      | `4.3.5`          | devDependencies |
+| `@types/node`               | `26.6.6`         | devDependencies |
+| `@types/react`              | `19.3.0`         | devDependencies |
+| `@types/react-dom`          | `19.3.0`         | devDependencies |
+| `postcss`                   | `8.5.32`         | devDependencies |
+| `tailwindcss`               | `4.3.5`          | devDependencies |
+| `typescript`                | `7.0.2`          | devDependencies |

@@ -185,12 +185,102 @@ catalogs:
     '@chromatic-com/storybook':
       specifier: ^5.6.0
       version: 5.6.0
+    '@dnd-kit/core':
+      specifier: ^6.3.1
+      version: 6.3.1
+    '@dnd-kit/modifiers':
+      specifier: ^9.0.0
+      version: 9.0.0
+    '@dnd-kit/sortable':
+      specifier: ^10.0.0
+      version: 10.0.0
+    '@dnd-kit/utilities':
+      specifier: ^3.2.2
+      version: 3.2.2
     '@electric-sql/pglite':
       specifier: 0.5.15
       version: 0.5.15
     '@playwright/test':
       specifier: 1.65.0
       version: 1.65.0
+    '@radix-ui/react-accordion':
+      specifier: ^1.3.1
+      version: 1.3.1
+    '@radix-ui/react-alert-dialog':
+      specifier: ^1.2.1
+      version: 1.2.1
+    '@radix-ui/react-aspect-ratio':
+      specifier: ^1.2.0
+      version: 1.2.0
+    '@radix-ui/react-avatar':
+      specifier: ^1.3.1
+      version: 1.3.1
+    '@radix-ui/react-checkbox':
+      specifier: ^1.4.1
+      version: 1.4.1
+    '@radix-ui/react-collapsible':
+      specifier: ^1.2.1
+      version: 1.2.1
+    '@radix-ui/react-context-menu':
+      specifier: ^2.4.1
+      version: 2.4.1
+    '@radix-ui/react-dialog':
+      specifier: ^1.3.1
+      version: 1.3.1
+    '@radix-ui/react-dropdown-menu':
+      specifier: ^2.2.1
+      version: 2.2.1
+    '@radix-ui/react-hover-card':
+      specifier: ^1.2.1
+      version: 1.2.1
+    '@radix-ui/react-label':
+      specifier: ^2.1.17
+      version: 2.1.17
+    '@radix-ui/react-menubar':
+      specifier: ^1.2.1
+      version: 1.2.1
+    '@radix-ui/react-navigation-menu':
+      specifier: ^1.4.1
+      version: 1.4.1
+    '@radix-ui/react-popover':
+      specifier: ^1.3.1
+      version: 1.3.1
+    '@radix-ui/react-progress':
+      specifier: ^1.2.1
+      version: 1.2.1
+    '@radix-ui/react-radio-group':
+      specifier: ^1.5.1
+      version: 1.5.1
+    '@radix-ui/react-scroll-area':
+      specifier: ^1.4.0
+      version: 1.4.0
+    '@radix-ui/react-select':
+      specifier: ^2.4.1
+      version: 2.4.1
+    '@radix-ui/react-separator':
+      specifier: ^1.2.0
+      version: 1.2.0
+    '@radix-ui/react-slider':
+      specifier: ^1.6.1
+      version: 1.6.1
+    '@radix-ui/react-slot':
+      specifier: ^1.5.0
+      version: 1.5.0
+    '@radix-ui/react-switch':
+      specifier: ^1.4.1
+      version: 1.4.1
+    '@radix-ui/react-tabs':
+      specifier: ^1.2.1
+      version: 1.2.1
+    '@radix-ui/react-toggle':
+      specifier: ^1.2.1
+      version: 1.2.1
+    '@radix-ui/react-toggle-group':
+      specifier: ^1.2.1
+      version: 1.2.1
+    '@radix-ui/react-tooltip':
+      specifier: ^1.4.1
+      version: 1.4.1
     '@storybook/addon-a11y':
       specifier: ^10.6.7
       version: 10.6.7
@@ -209,18 +299,27 @@ catalogs:
     '@t3-oss/env-nextjs':
       specifier: 0.13.11
       version: 0.13.11
+    '@tabler/icons-react':
+      specifier: ^3.52.0
+      version: 3.52.0
     '@tailwindcss/postcss':
       specifier: 4.3.5
       version: 4.3.5
     '@tailwindcss/vite':
       specifier: 4.3.5
       version: 4.3.5
+    '@tanstack/react-table':
+      specifier: ^8.21.3
+      version: 8.21.3
     '@testing-library/dom':
       specifier: 10.4.2
       version: 10.4.2
     '@testing-library/react':
       specifier: 16.3.3
       version: 16.3.3
+    '@tsdown/css':
+      specifier: ^0.23.7
+      version: 0.23.7
     '@turbo/gen':
       specifier: 2.11.10
       version: 2.11.10
@@ -263,6 +362,9 @@ catalogs:
     clsx:
       specifier: ^2.1.1
       version: 2.1.1
+    cmdk:
+      specifier: ^1.1.1
+      version: 1.1.1
     cn:
       specifier: ^0.5.2
       version: 0.5.2
@@ -272,27 +374,45 @@ catalogs:
     compromise:
       specifier: 14.19.0
       version: 14.19.0
+    depcheck:
+      specifier: ^1.4.7
+      version: 1.4.7
+    dependency-cruiser:
+      specifier: ^18.8.0
+      version: 18.8.0
     drizzle-orm:
       specifier: 0.45.4
       version: 0.45.4
+    embla-carousel-react:
+      specifier: ^8.6.0
+      version: 8.6.0
     flat:
       specifier: ^6.0.1
       version: 6.0.1
     framer-motion:
       specifier: ^14.14.0
       version: 14.14.0
+    glob:
+      specifier: ^14.0.6
+      version: 14.0.6
     handlebars:
       specifier: 4.7.10
       version: 4.7.10
     husky:
       specifier: ^9.1.7
       version: 9.1.7
+    input-otp:
+      specifier: ^1.5.0
+      version: 1.5.0
     js-tiktoken:
       specifier: 1.0.21
       version: 1.0.21
     js-yaml:
       specifier: ^5.5.0
       version: 5.5.0
+    jscpd:
+      specifier: ^5.4.3
+      version: 5.4.3
     jsdom:
       specifier: 31.0.0
       version: 31.0.0
@@ -308,9 +428,15 @@ catalogs:
     markdownlint-cli2:
       specifier: 0.24.0
       version: 0.24.0
+    markdownlint-cli2-formatter-pretty:
+      specifier: ^0.0.10
+      version: 0.0.10
     next:
       specifier: 16.4.5
       version: 16.4.5
+    next-themes:
+      specifier: ^0.4.6
+      version: 0.4.6
     openai:
       specifier: 7.52.0
       version: 7.52.0
@@ -332,21 +458,51 @@ catalogs:
     prettier:
       specifier: 3.9.10
       version: 3.9.10
+    radix-ui:
+      specifier: ^1.8.1
+      version: 1.8.1
     react:
       specifier: 19.3.1
       version: 19.3.1
+    react-day-picker:
+      specifier: ^9.14.0
+      version: 9.14.0
     react-dom:
       specifier: 19.3.1
       version: 19.3.1
+    react-hook-form:
+      specifier: ^7.92.0
+      version: 7.92.0
+    react-resizable-panels:
+      specifier: ^2.1.9
+      version: 2.1.9
+    recharts:
+      specifier: ^2.15.4
+      version: 2.15.4
+    remark:
+      specifier: ^15.0.1
+      version: 15.0.1
     remark-gfm:
       specifier: 4.0.1
       version: 4.0.1
+    remark-html:
+      specifier: ^16.0.1
+      version: 16.0.1
+    remark-math:
+      specifier: ^6.0.0
+      version: 6.0.0
     remark-parse:
       specifier: 11.0.0
       version: 11.0.0
+    shadcn:
+      specifier: ^4.23.0
+      version: 4.23.0
     short-uuid:
       specifier: ^6.0.3
       version: 6.0.3
+    sonner:
+      specifier: ^2.0.8
+      version: 2.0.8
     storybook:
       specifier: ^10.6.7
       version: 10.6.7
@@ -365,6 +521,9 @@ catalogs:
     turbo:
       specifier: 2.11.10
       version: 2.11.10
+    tw-animate-css:
+      specifier: ^1.4.0
+      version: 1.4.0
     typescript:
       specifier: 7.0.2
       version: 7.0.2
@@ -374,6 +533,9 @@ catalogs:
     uuid:
       specifier: 14.0.3
       version: 14.0.3
+    vaul:
+      specifier: ^1.1.2
+      version: 1.1.2
     vite:
       specifier: ^8.3.8
       version: 8.3.8
@@ -440,7 +602,7 @@ importers:
         specifier: 'catalog:'
         version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@tsdown/css':
-        specifier: ^0.23.7
+        specifier: 'catalog:'
         version: 0.23.7(jiti@2.7.0)(postcss@8.5.33)(sass@1.107.0)(tsdown@0.23.5)(tsx@4.23.15)(yaml@2.9.1)
       '@turbo/gen':
         specifier: 'catalog:'
@@ -461,13 +623,13 @@ importers:
         specifier: 'catalog:'
         version: 5.1.0(@vitest/browser@5.1.0)(vitest@5.1.0)
       depcheck:
-        specifier: ^1.4.7
+        specifier: 'catalog:'
         version: 1.4.7(supports-color@10.2.2)
       dependency-cruiser:
-        specifier: ^18.8.0
+        specifier: 'catalog:'
         version: 18.8.0
       glob:
-        specifier: ^14.0.6
+        specifier: 'catalog:'
         version: 14.0.6
       husky:
         specifier: 'catalog:'
@@ -491,7 +653,7 @@ importers:
         specifier: 'catalog:'
         version: 0.24.0(supports-color@10.2.2)
       markdownlint-cli2-formatter-pretty:
-        specifier: ^0.0.10
+        specifier: 'catalog:'
         version: 0.0.10(markdownlint-cli2@0.24.0(supports-color@10.2.2))
       prettier:
         specifier: 'catalog:'
@@ -503,10 +665,10 @@ importers:
         specifier: 'catalog:'
         version: 19.3.1(react@19.3.1)
       remark-gfm:
-        specifier: ^4.0.1
+        specifier: 'catalog:'
         version: 4.0.1(supports-color@10.2.2)
       remark-parse:
-        specifier: ^11.0.0
+        specifier: 'catalog:'
         version: 11.0.0(supports-color@10.2.2)
       tsdown:
         specifier: 'catalog:'
@@ -521,7 +683,7 @@ importers:
         specifier: 'catalog:'
         version: 7.0.2
       unified:
-        specifier: ^11.0.5
+        specifier: 'catalog:'
         version: 11.0.5
       vitest:
         specifier: 'catalog:'
@@ -1193,94 +1355,94 @@ importers:
         specifier: 'catalog:'
         version: 1.9.0(@date-fns/tz@1.5.0)(@types/react@19.3.0)(date-fns@4.4.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@dnd-kit/core':
-        specifier: ^6.3.1
+        specifier: 'catalog:'
         version: 6.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@dnd-kit/modifiers':
-        specifier: ^9.0.0
+        specifier: 'catalog:'
         version: 9.0.0(@dnd-kit/core@6.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)
       '@dnd-kit/sortable':
-        specifier: ^10.0.0
+        specifier: 'catalog:'
         version: 10.0.0(@dnd-kit/core@6.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)
       '@dnd-kit/utilities':
-        specifier: ^3.2.2
+        specifier: 'catalog:'
         version: 3.2.2(react@19.3.1)
       '@radix-ui/react-accordion':
-        specifier: ^1.3.1
+        specifier: 'catalog:'
         version: 1.3.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-alert-dialog':
-        specifier: ^1.2.1
+        specifier: 'catalog:'
         version: 1.2.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-aspect-ratio':
-        specifier: ^1.2.0
+        specifier: 'catalog:'
         version: 1.2.0(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-avatar':
-        specifier: ^1.3.1
+        specifier: 'catalog:'
         version: 1.3.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-checkbox':
-        specifier: ^1.4.1
+        specifier: 'catalog:'
         version: 1.4.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-collapsible':
-        specifier: ^1.2.1
+        specifier: 'catalog:'
         version: 1.2.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-context-menu':
-        specifier: ^2.4.1
+        specifier: 'catalog:'
         version: 2.4.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-dialog':
-        specifier: ^1.3.1
+        specifier: 'catalog:'
         version: 1.3.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-dropdown-menu':
-        specifier: ^2.2.1
+        specifier: 'catalog:'
         version: 2.2.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-hover-card':
-        specifier: ^1.2.1
+        specifier: 'catalog:'
         version: 1.2.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-label':
-        specifier: ^2.1.17
+        specifier: 'catalog:'
         version: 2.1.17(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-menubar':
-        specifier: ^1.2.1
+        specifier: 'catalog:'
         version: 1.2.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-navigation-menu':
-        specifier: ^1.4.1
+        specifier: 'catalog:'
         version: 1.4.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-popover':
-        specifier: ^1.3.1
+        specifier: 'catalog:'
         version: 1.3.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-progress':
-        specifier: ^1.2.1
+        specifier: 'catalog:'
         version: 1.2.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-radio-group':
-        specifier: ^1.5.1
+        specifier: 'catalog:'
         version: 1.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-scroll-area':
-        specifier: ^1.4.0
+        specifier: 'catalog:'
         version: 1.4.0(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-select':
-        specifier: ^2.4.1
+        specifier: 'catalog:'
         version: 2.4.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-separator':
-        specifier: ^1.2.0
+        specifier: 'catalog:'
         version: 1.2.0(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-slider':
-        specifier: ^1.6.1
+        specifier: 'catalog:'
         version: 1.6.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-slot':
-        specifier: ^1.5.0
+        specifier: 'catalog:'
         version: 1.5.0(@types/react@19.3.0)(react@19.3.1)
       '@radix-ui/react-switch':
-        specifier: ^1.4.1
+        specifier: 'catalog:'
         version: 1.4.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-tabs':
-        specifier: ^1.2.1
+        specifier: 'catalog:'
         version: 1.2.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-toggle':
-        specifier: ^1.2.1
+        specifier: 'catalog:'
         version: 1.2.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-toggle-group':
-        specifier: ^1.2.1
+        specifier: 'catalog:'
         version: 1.2.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-tooltip':
-        specifier: ^1.4.1
+        specifier: 'catalog:'
         version: 1.4.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@shared/auth':
         specifier: workspace:*
@@ -1298,10 +1460,10 @@ importers:
         specifier: workspace:*
         version: link:../utils
       '@tabler/icons-react':
-        specifier: ^3.52.0
+        specifier: 'catalog:'
         version: 3.52.0(react@19.3.1)
       '@tanstack/react-table':
-        specifier: ^8.21.3
+        specifier: 'catalog:'
         version: 8.21.3(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       class-variance-authority:
         specifier: 'catalog:'
@@ -1310,19 +1472,19 @@ importers:
         specifier: 'catalog:'
         version: 2.1.1
       cmdk:
-        specifier: ^1.1.1
+        specifier: 'catalog:'
         version: 1.1.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       cn:
         specifier: 'catalog:'
         version: 0.5.2
       embla-carousel-react:
-        specifier: ^8.6.0
+        specifier: 'catalog:'
         version: 8.6.0(react@19.3.1)
       framer-motion:
         specifier: 'catalog:'
         version: 14.14.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       input-otp:
-        specifier: ^1.5.0
+        specifier: 'catalog:'
         version: 1.5.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       lucide-react:
         specifier: 'catalog:'
@@ -1331,40 +1493,40 @@ importers:
         specifier: 'catalog:'
         version: 16.4.5(@babel/core@7.29.13(supports-color@10.2.2))(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-macros@3.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.107.0)
       next-themes:
-        specifier: ^0.4.6
+        specifier: 'catalog:'
         version: 0.4.6(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       radix-ui:
-        specifier: ^1.8.1
+        specifier: 'catalog:'
         version: 1.8.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react:
         specifier: 'catalog:'
         version: 19.3.1
       react-day-picker:
-        specifier: ^9.14.0
+        specifier: 'catalog:'
         version: 9.14.0(react@19.3.1)
       react-dom:
         specifier: 'catalog:'
         version: 19.3.1(react@19.3.1)
       react-hook-form:
-        specifier: ^7.92.0
+        specifier: 'catalog:'
         version: 7.92.0(@types/react@19.3.0)(react@19.3.1)
       react-resizable-panels:
-        specifier: ^2.1.9
+        specifier: 'catalog:'
         version: 2.1.9(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       recharts:
-        specifier: ^2.15.4
+        specifier: 'catalog:'
         version: 2.15.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       shadcn:
-        specifier: ^4.23.0
+        specifier: 'catalog:'
         version: 4.23.0(babel-plugin-macros@3.1.0)(supports-color@10.2.2)
       sonner:
-        specifier: ^2.0.8
+        specifier: 'catalog:'
         version: 2.0.8(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       tw-animate-css:
-        specifier: ^1.4.0
+        specifier: 'catalog:'
         version: 1.4.0
       vaul:
-        specifier: ^1.1.2
+        specifier: 'catalog:'
         version: 1.1.2(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       zod:
         specifier: 'catalog:'
@@ -1444,22 +1606,22 @@ importers:
         specifier: 'catalog:'
         version: 19.3.0
       beautify-console-log:
-        specifier: ^1.4.0
+        specifier: 'catalog:'
         version: 1.4.0
       remark:
-        specifier: ^15.0.1
+        specifier: 'catalog:'
         version: 15.0.1(supports-color@10.2.2)
       remark-gfm:
-        specifier: ^4.0.1
+        specifier: 'catalog:'
         version: 4.0.1(supports-color@10.2.2)
       remark-html:
-        specifier: ^16.0.1
+        specifier: 'catalog:'
         version: 16.0.1
       remark-math:
-        specifier: ^6.0.0
+        specifier: 'catalog:'
         version: 6.0.0(supports-color@10.2.2)
       remark-parse:
-        specifier: ^11.0.0
+        specifier: 'catalog:'
         version: 11.0.0(supports-color@10.2.2)
       typescript:
         specifier: 'catalog:'
@@ -1486,7 +1648,7 @@ importers:
         specifier: 'catalog:'
         version: 1.0.21
       jscpd:
-        specifier: ^5.4.3
+        specifier: 'catalog:'
         version: 5.4.3
       remark-gfm:
         specifier: 'catalog:'

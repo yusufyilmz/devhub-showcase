@@ -1,4 +1,4 @@
-<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json, the pnpm-workspace.yaml catalog, and declared public exports. Run pnpm generate:catalogs. -->
 
 # Utils catalog
 
@@ -73,20 +73,20 @@ Symbol names are read statically from TypeScript declarations without executing 
 | Dependency                  | Declared version | Kind            |
 | --------------------------- | ---------------- | --------------- |
 | `@shared/env`               | `workspace:*`    | dependencies    |
-| `axios`                     | `catalog:`       | dependencies    |
-| `flat`                      | `catalog:`       | dependencies    |
-| `pino`                      | `catalog:`       | dependencies    |
-| `pino-pretty`               | `catalog:`       | dependencies    |
-| `react`                     | `catalog:`       | dependencies    |
-| `short-uuid`                | `catalog:`       | dependencies    |
+| `axios`                     | `1.21.0`         | dependencies    |
+| `flat`                      | `^6.0.1`         | dependencies    |
+| `pino`                      | `10.4.0`         | dependencies    |
+| `pino-pretty`               | `13.2.0`         | dependencies    |
+| `react`                     | `19.3.1`         | dependencies    |
+| `short-uuid`                | `^6.0.3`         | dependencies    |
 | `@shared/cli`               | `workspace:*`    | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
-| `@types/node`               | `catalog:`       | devDependencies |
-| `@types/react`              | `catalog:`       | devDependencies |
+| `@types/node`               | `26.6.6`         | devDependencies |
+| `@types/react`              | `19.3.0`         | devDependencies |
 | `beautify-console-log`      | `^1.4.0`         | devDependencies |
 | `remark`                    | `^15.0.1`        | devDependencies |
-| `remark-gfm`                | `^4.0.1`         | devDependencies |
+| `remark-gfm`                | `4.0.1`          | devDependencies |
 | `remark-html`               | `^16.0.1`        | devDependencies |
 | `remark-math`               | `^6.0.0`         | devDependencies |
-| `remark-parse`              | `^11.0.0`        | devDependencies |
-| `typescript`                | `catalog:`       | devDependencies |
+| `remark-parse`              | `11.0.0`         | devDependencies |
+| `typescript`                | `7.0.2`          | devDependencies |

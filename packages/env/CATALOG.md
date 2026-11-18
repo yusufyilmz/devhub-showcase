@@ -1,4 +1,4 @@
-<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json, the pnpm-workspace.yaml catalog, and declared public exports. Run pnpm generate:catalogs. -->
 
 # @shared/env catalog
 
@@ -18,8 +18,8 @@ Symbol names are read statically from TypeScript declarations without executing 
 
 | Dependency                  | Declared version | Kind            |
 | --------------------------- | ---------------- | --------------- |
-| `@t3-oss/env-nextjs`        | `catalog:`       | dependencies    |
-| `zod`                       | `catalog:`       | dependencies    |
+| `@t3-oss/env-nextjs`        | `0.13.11`        | dependencies    |
+| `zod`                       | `4.6.7`          | dependencies    |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
-| `@types/node`               | `catalog:`       | devDependencies |
-| `typescript`                | `catalog:`       | devDependencies |
+| `@types/node`               | `26.6.6`         | devDependencies |
+| `typescript`                | `7.0.2`          | devDependencies |

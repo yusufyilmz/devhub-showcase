@@ -1,4 +1,4 @@
-<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json, the pnpm-workspace.yaml catalog, and declared public exports. Run pnpm generate:catalogs. -->
 
 # @shared/test catalog
 
@@ -21,8 +21,8 @@ No package scripts are declared.
 | --------------------------- | ---------------- | --------------- |
 | `@shared/config`            | `workspace:*`    | dependencies    |
 | `@shared/ui`                | `workspace:*`    | dependencies    |
-| `@playwright/test`          | `catalog:`       | devDependencies |
+| `@playwright/test`          | `1.65.0`         | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
-| `@types/react`              | `catalog:`       | devDependencies |
-| `typescript`                | `catalog:`       | devDependencies |
-| `vitest`                    | `catalog:`       | devDependencies |
+| `@types/react`              | `19.3.0`         | devDependencies |
+| `typescript`                | `7.0.2`          | devDependencies |
+| `vitest`                    | `5.1.0`          | devDependencies |
