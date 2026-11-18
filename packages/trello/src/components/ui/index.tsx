@@ -127,10 +127,11 @@ export const Card = ({
   <div
     className={className}
     style={{
-      background: "white",
-      border: "1px solid #e5e7eb",
-      borderRadius: 8,
+      background: "var(--card)",
+      border: "1px solid var(--border)",
+      borderRadius: 10,
       boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
+      color: "var(--card-foreground)",
       padding: 12,
       ...style,
     }}

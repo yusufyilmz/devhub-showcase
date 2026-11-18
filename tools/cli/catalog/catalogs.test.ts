@@ -25,7 +25,10 @@ function manifest(name = "@shared/example", extra: Record<string, unknown> = {})
 describe("workspace catalog generation", () => {
   beforeEach(() => {
     root = fs.mkdtempSync(path.join(os.tmpdir(), "catalog-generator-"));
-    write("pnpm-workspace.yaml", "packages:\n  - packages/*\n  - tools/*\n  - apps/*\n");
+    write(
+      "pnpm-workspace.yaml",
+      "packages:\n  - packages/*\n  - tools/*\n  - apps/*\ncatalog:\n  example: 1.2.3\n",
+    );
     write("packages/example/package.json", manifest());
     write(
       "packages/example/src/index.ts",
@@ -56,10 +59,28 @@ describe("workspace catalog generation", () => {
       "Example",
       "type ExampleOptions",
       "vitest run",
-      "catalog:",
+      "1.2.3",
     ])
       expect(catalog).toContain(expected);
     expect(catalog).not.toContain("Do not execute project code");
+    expect(catalog).not.toContain("catalog:");
+  });
+  it("reads named workspace catalogs and rejects a missing entry", () => {
+    write(
+      "pnpm-workspace.yaml",
+      `${read("pnpm-workspace.yaml")}catalogs:\n  legacy:\n    example: 0.9.0\n`,
+    );
+    write(
+      "packages/example/package.json",
+      manifest("@shared/example", { dependencies: { example: "catalog:legacy" } }),
+    );
+    generateCatalogs({ root });
+    expect(read("packages/example/CATALOG.md")).toContain("0.9.0");
+    write(
+      "packages/example/package.json",
+      manifest("@shared/example", { dependencies: { missing: "catalog:" } }),
+    );
+    expect(() => generateCatalogs({ root })).toThrow("Workspace catalog entry missing for missing");
   });
   it("discovers apps and tools from workspace patterns and respects exclusions", () => {
     write("apps/site/package.json", JSON.stringify({ name: "site", scripts: { dev: "next dev" } }));
@@ -69,7 +90,10 @@ describe("workspace catalog generation", () => {
     );
     write("tools/tool/config.json", "{}");
     write("apps/ignored/package.json", JSON.stringify({ name: "ignored" }));
-    write("pnpm-workspace.yaml", `${read("pnpm-workspace.yaml")}  - '!apps/ignored'\n`);
+    write(
+      "pnpm-workspace.yaml",
+      "packages:\n  - packages/*\n  - tools/*\n  - apps/*\n  - '!apps/ignored'\ncatalog:\n  example: 1.2.3\n",
+    );
     expect(generateCatalogs({ root }).packages).toEqual([
       "site",
       "@shared/example",

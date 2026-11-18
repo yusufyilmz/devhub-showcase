@@ -1,4 +1,4 @@
-<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json, the pnpm-workspace.yaml catalog, and declared public exports. Run pnpm generate:catalogs. -->
 
 # @shared/cli catalog
 
@@ -25,17 +25,17 @@ Symbol names are read statically from TypeScript declarations without executing 
 
 | Dependency                  | Declared version | Kind            |
 | --------------------------- | ---------------- | --------------- |
-| `@babel/parser`             | `catalog:`       | devDependencies |
-| `@biomejs/biome`            | `catalog:`       | devDependencies |
+| `@babel/parser`             | `^8.1.2`         | devDependencies |
+| `@biomejs/biome`            | `2.6.5`          | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
-| `@turbo/gen`                | `catalog:`       | devDependencies |
-| `commander`                 | `catalog:`       | devDependencies |
-| `js-tiktoken`               | `catalog:`       | devDependencies |
-| `jscpd`                     | `^5.4.2`         | devDependencies |
-| `remark-gfm`                | `catalog:`       | devDependencies |
-| `remark-parse`              | `catalog:`       | devDependencies |
-| `tsdown`                    | `catalog:`       | devDependencies |
-| `typescript`                | `catalog:`       | devDependencies |
-| `unified`                   | `catalog:`       | devDependencies |
-| `vitest`                    | `catalog:`       | devDependencies |
-| `yaml`                      | `catalog:`       | devDependencies |
+| `@turbo/gen`                | `2.11.10`        | devDependencies |
+| `commander`                 | `^15.1.0`        | devDependencies |
+| `js-tiktoken`               | `1.0.21`         | devDependencies |
+| `jscpd`                     | `^5.4.3`         | devDependencies |
+| `remark-gfm`                | `4.0.1`          | devDependencies |
+| `remark-parse`              | `11.0.0`         | devDependencies |
+| `tsdown`                    | `0.23.5`         | devDependencies |
+| `typescript`                | `7.0.2`          | devDependencies |
+| `unified`                   | `11.0.5`         | devDependencies |
+| `vitest`                    | `5.1.0`          | devDependencies |
+| `yaml`                      | `^2.9.1`         | devDependencies |

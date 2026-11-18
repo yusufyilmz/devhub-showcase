@@ -21,6 +21,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <StudioShell
       contentId="admin-content"
+      showFooter={!path.endsWith("/edit")}
       tools={
         <div className="admin-tools flex items-center gap-3">
           <ThemeToggle />

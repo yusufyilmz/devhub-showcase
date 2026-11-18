@@ -20,7 +20,7 @@ The colocated [engine tests](../../../tools/cli/lookup/engine.test.ts) and [repo
 
 See [usage and limitations](../../../tools/cli/README.md#token-bounded-repository-lookup) and the [manual testing index](index.md).
 
-Local automated validation on 2026-11-07 in the primary checkout, using Node 24.15.0 and pnpm 11.25.0:
+Local automated validation on 2026-11-07 in the primary checkout, using Node 24.15.0 and pnpm 12.21.0:
 
 - `pnpm --filter @shared/cli test:lookup`: 21 tests passed.
 - `pnpm --filter @shared/cli typecheck:lookup`: passed.

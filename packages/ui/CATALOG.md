@@ -1,4 +1,4 @@
-<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json, the pnpm-workspace.yaml catalog, and declared public exports. Run pnpm generate:catalogs. -->
 
 # UI catalog
 
@@ -634,7 +634,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 
 | Dependency                        | Declared version | Kind            |
 | --------------------------------- | ---------------- | --------------- |
-| `@base-ui/react`                  | `catalog:`       | dependencies    |
+| `@base-ui/react`                  | `1.9.0`          | dependencies    |
 | `@dnd-kit/core`                   | `^6.3.1`         | dependencies    |
 | `@dnd-kit/modifiers`              | `^9.0.0`         | dependencies    |
 | `@dnd-kit/sortable`               | `^10.0.0`        | dependencies    |
@@ -670,39 +670,39 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `@shared/lib`                     | `workspace:*`    | dependencies    |
 | `@shared/runtime`                 | `workspace:*`    | dependencies    |
 | `@shared/utils`                   | `workspace:*`    | dependencies    |
-| `@tabler/icons-react`             | `^3.50.0`        | dependencies    |
+| `@tabler/icons-react`             | `^3.52.0`        | dependencies    |
 | `@tanstack/react-table`           | `^8.21.3`        | dependencies    |
-| `class-variance-authority`        | `catalog:`       | dependencies    |
-| `clsx`                            | `catalog:`       | dependencies    |
+| `class-variance-authority`        | `^0.7.1`         | dependencies    |
+| `clsx`                            | `^2.1.1`         | dependencies    |
 | `cmdk`                            | `^1.1.1`         | dependencies    |
-| `cn`                              | `catalog:`       | dependencies    |
+| `cn`                              | `^0.5.2`         | dependencies    |
 | `embla-carousel-react`            | `^8.6.0`         | dependencies    |
-| `framer-motion`                   | `catalog:`       | dependencies    |
+| `framer-motion`                   | `^14.14.0`       | dependencies    |
 | `input-otp`                       | `^1.5.0`         | dependencies    |
-| `lucide-react`                    | `catalog:`       | dependencies    |
-| `next`                            | `catalog:`       | dependencies    |
+| `lucide-react`                    | `^1.73.0`        | dependencies    |
+| `next`                            | `16.4.5`         | dependencies    |
 | `next-themes`                     | `^0.4.6`         | dependencies    |
 | `radix-ui`                        | `^1.8.1`         | dependencies    |
-| `react`                           | `catalog:`       | dependencies    |
+| `react`                           | `19.3.1`         | dependencies    |
 | `react-day-picker`                | `^9.14.0`        | dependencies    |
-| `react-dom`                       | `catalog:`       | dependencies    |
-| `react-hook-form`                 | `^7.91.0`        | dependencies    |
+| `react-dom`                       | `19.3.1`         | dependencies    |
+| `react-hook-form`                 | `^7.92.0`        | dependencies    |
 | `react-resizable-panels`          | `^2.1.9`         | dependencies    |
 | `recharts`                        | `^2.15.4`        | dependencies    |
 | `shadcn`                          | `^4.23.0`        | dependencies    |
 | `sonner`                          | `^2.0.8`         | dependencies    |
 | `tw-animate-css`                  | `^1.4.0`         | dependencies    |
 | `vaul`                            | `^1.1.2`         | dependencies    |
-| `zod`                             | `catalog:`       | dependencies    |
-| `zustand`                         | `catalog:`       | dependencies    |
+| `zod`                             | `4.6.7`          | dependencies    |
+| `zustand`                         | `5.0.16`         | dependencies    |
 | `@shared/cli`                     | `workspace:*`    | devDependencies |
 | `@shared/typescript-config`       | `workspace:*`    | devDependencies |
-| `@storybook/react-vite`           | `catalog:`       | devDependencies |
-| `@tailwindcss/postcss`            | `catalog:`       | devDependencies |
-| `@types/node`                     | `catalog:`       | devDependencies |
-| `@types/react`                    | `catalog:`       | devDependencies |
-| `@types/react-dom`                | `catalog:`       | devDependencies |
-| `postcss`                         | `catalog:`       | devDependencies |
-| `storybook`                       | `catalog:`       | devDependencies |
-| `tailwindcss`                     | `catalog:`       | devDependencies |
-| `typescript`                      | `catalog:`       | devDependencies |
+| `@storybook/react-vite`           | `^10.6.7`        | devDependencies |
+| `@tailwindcss/postcss`            | `4.3.5`          | devDependencies |
+| `@types/node`                     | `26.6.6`         | devDependencies |
+| `@types/react`                    | `19.3.0`         | devDependencies |
+| `@types/react-dom`                | `19.3.0`         | devDependencies |
+| `postcss`                         | `8.5.32`         | devDependencies |
+| `storybook`                       | `^10.6.7`        | devDependencies |
+| `tailwindcss`                     | `4.3.5`          | devDependencies |
+| `typescript`                      | `7.0.2`          | devDependencies |

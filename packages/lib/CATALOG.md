@@ -1,4 +1,4 @@
-<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json, the pnpm-workspace.yaml catalog, and declared public exports. Run pnpm generate:catalogs. -->
 
 # Lib catalog
 
@@ -259,12 +259,12 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `@shared/env`               | `workspace:*`    | dependencies    |
 | `@shared/notifications`     | `workspace:*`    | dependencies    |
 | `@shared/utils`             | `workspace:*`    | dependencies    |
-| `@supabase/supabase-js`     | `catalog:`       | dependencies    |
-| `@upstash/redis`            | `catalog:`       | dependencies    |
-| `drizzle-orm`               | `catalog:`       | dependencies    |
-| `postgres`                  | `catalog:`       | dependencies    |
-| `zod`                       | `catalog:`       | dependencies    |
+| `@supabase/supabase-js`     | `2.119.0`        | dependencies    |
+| `@upstash/redis`            | `1.41.0`         | dependencies    |
+| `drizzle-orm`               | `0.45.4`         | dependencies    |
+| `postgres`                  | `3.4.9`          | dependencies    |
+| `zod`                       | `4.6.7`          | dependencies    |
 | `@shared/cli`               | `workspace:*`    | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
-| `@types/node`               | `catalog:`       | devDependencies |
-| `typescript`                | `catalog:`       | devDependencies |
+| `@types/node`               | `26.6.6`         | devDependencies |
+| `typescript`                | `7.0.2`          | devDependencies |

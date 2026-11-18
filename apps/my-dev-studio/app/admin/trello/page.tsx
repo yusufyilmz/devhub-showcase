@@ -1,10 +1,9 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-import { StudioHeading } from "@shared/assistant/portfolio";
 import { TrelloBoardDirectory } from "@shared/trello/pages";
 import { TrelloService } from "@shared/trello/service";
-import { StudioButton } from "@shared/ui/button";
+import { Button, StudioButton } from "@shared/ui/button";
 import { Feedback } from "@shared/ui/feedback";
 import { Skeleton } from "@shared/ui/skeleton";
 
@@ -65,12 +64,15 @@ export default async function TrelloBoardsPage() {
       className="studio mx-auto grid w-full max-w-6xl gap-6 px-4 py-8 sm:px-8"
       id="admin-content"
     >
-      <StudioHeading
-        actions={config && <StudioButton href="/admin/trello/new">Create board</StudioButton>}
-        description="Browse open boards from the connected Trello account."
-        eyebrow="Platform administration"
-        title="Trello boards"
-      />
+      <header className="flex flex-wrap items-end justify-between gap-4 border-b border-border pb-5">
+        <div className="grid gap-1.5">
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Trello boards</h1>
+          <p className="text-sm text-muted-foreground">
+            Manage boards from your connected Trello account.
+          </p>
+        </div>
+        {config && <Button href="/admin/trello/new">Create board</Button>}
+      </header>
       {config ? (
         <Suspense fallback={<LoadingBoards />}>
           <ConnectedBoards config={config} />

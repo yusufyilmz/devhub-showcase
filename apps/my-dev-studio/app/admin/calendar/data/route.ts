@@ -26,6 +26,13 @@ function sameAccount(request: Request, user: { id: string } | null) {
   return user && request.headers.get("x-calendar-account") === user.id ? user : null;
 }
 
+function taskStorageMissing(error: { code: string }) {
+  return error.code === "42P01" || error.code === "PGRST205";
+}
+
+const taskSetupMessage =
+  "Studio task storage isn’t set up yet. Ask your administrator to apply the calendar migration.";
+
 export async function GET(request: Request) {
   const { client, user } = await calendarSession();
   const account = sameAccount(request, user);
@@ -53,7 +60,12 @@ export async function GET(request: Request) {
     ...google,
     tasks: (data ?? []).map(calendarTask),
     warnings: error
-      ? [...google.warnings, "Studio tasks couldn’t load. Try refreshing the calendar."]
+      ? [
+          ...google.warnings,
+          taskStorageMissing(error)
+            ? taskSetupMessage
+            : "Studio tasks couldn’t load. Try refreshing the calendar.",
+        ]
       : google.warnings,
   };
   return calendarJson(result);
@@ -113,8 +125,14 @@ export async function POST(request: Request) {
   return mutationResponse(result);
 }
 
-function mutationResponse({ data, error }: { data: unknown; error: unknown }) {
-  if (error) return calendarJson({ error: "Couldn’t save the task. Try again." }, 503);
+function mutationResponse({ data, error }: { data: unknown; error: { code: string } | null }) {
+  if (error)
+    return calendarJson(
+      {
+        error: taskStorageMissing(error) ? taskSetupMessage : "Couldn’t save the task. Try again.",
+      },
+      503,
+    );
   if (!data)
     return calendarJson(
       { error: "This task has changed. Refresh the calendar and try again." },

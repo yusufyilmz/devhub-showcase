@@ -39,7 +39,7 @@ interface WorkspacePackage {
 }
 const repositoryRoot = fileURLToPath(new URL("../../../", import.meta.url));
 const header =
-  "<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->\n\n";
+  "<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json, the pnpm-workspace.yaml catalog, and declared public exports. Run pnpm generate:catalogs. -->\n\n";
 const reference =
   "\n\n## Generated package reference\n\n<!-- catalog:exports -->\n\n<!-- catalog:scripts -->\n\n<!-- catalog:dependencies -->\n";
 const packageTemplatePath = fileURLToPath(new URL("./templates/package.md.hbs", import.meta.url));
@@ -83,23 +83,46 @@ function safePath(root: string, target: string) {
     if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
   }
 }
-function workspacePatterns(root: string): string[] {
+function workspaceDocument(root: string): Record<string, unknown> {
   const raw: unknown = parse(fs.readFileSync(path.join(root, "pnpm-workspace.yaml"), "utf8"));
+  if (!object(raw)) throw new Error("pnpm-workspace.yaml must be a mapping");
+  return raw;
+}
+function workspacePatterns(document: Record<string, unknown>): string[] {
   if (
-    !object(raw) ||
-    !Array.isArray(raw.packages) ||
-    !raw.packages.every((pattern) => typeof pattern === "string")
+    !Array.isArray(document.packages) ||
+    !document.packages.every((pattern) => typeof pattern === "string")
   )
     throw new Error("Workspace packages must be a list of glob patterns");
-  return raw.packages as string[];
+  return document.packages;
+}
+function catalogTable(value: unknown, label: string): Record<string, string> {
+  if (!object(value)) throw new Error(`${label} must be a map of package names to versions`);
+  const table: Record<string, string> = {};
+  for (const [name, version] of Object.entries(value)) {
+    if (typeof version !== "string" || version.length === 0)
+      throw new Error(`${label}.${name} must be a version string`);
+    table[name] = version;
+  }
+  return table;
+}
+function workspaceCatalogs(
+  document: Record<string, unknown>,
+): Record<string, Record<string, string>> {
+  const catalogs: Record<string, Record<string, string>> = {};
+  if (document.catalog != null) catalogs[""] = catalogTable(document.catalog, "catalog");
+  if (document.catalogs == null) return catalogs;
+  if (!object(document.catalogs)) throw new Error("catalogs must be a map of named catalogs");
+  for (const [name, table] of Object.entries(document.catalogs))
+    catalogs[name] = catalogTable(table, `catalogs.${name}`);
+  return catalogs;
 }
 function globManifests(root: string, pattern: string): string[] {
   if (path.isAbsolute(pattern) || pattern.split(/[\\/]/).includes(".."))
     throw new Error(`Unsafe workspace pattern: ${pattern}`);
   return fs.globSync(`${pattern.replace(/\/$/, "")}/package.json`, { cwd: root }).sort(compare);
 }
-function discover(root: string): WorkspacePackage[] {
-  const patterns = workspacePatterns(root);
+function discover(root: string, patterns: string[]): WorkspacePackage[] {
   const excluded = new Set(
     patterns
       .filter((pattern) => pattern.startsWith("!"))
@@ -172,7 +195,27 @@ function renderScripts(manifest: Manifest): string {
     .map(([name, command]) => [code(name), code(command)]);
   return rows.length ? table(["Script", "Command"], rows) : "No package scripts are declared.";
 }
-function renderDependencies(manifest: Manifest): string {
+function declaredVersion(
+  name: string,
+  specifier: string,
+  catalogs: Record<string, Record<string, string>>,
+  pkg: string,
+): string {
+  if (!specifier.startsWith("catalog:")) return specifier;
+  const catalogName = specifier.slice("catalog:".length);
+  const catalog = catalogs[catalogName];
+  if (!catalog)
+    throw new Error(
+      `Unknown workspace catalog "${catalogName === "" ? "default" : catalogName}" for ${name} in ${pkg}`,
+    );
+  const version = catalog[name];
+  if (!version) throw new Error(`Workspace catalog entry missing for ${name} in ${pkg}`);
+  return version;
+}
+function renderDependencies(
+  manifest: Manifest,
+  catalogs: Record<string, Record<string, string>>,
+): string {
   const groups = [
     "dependencies",
     "devDependencies",
@@ -182,7 +225,11 @@ function renderDependencies(manifest: Manifest): string {
   const rows = groups.flatMap((group) =>
     Object.entries(manifest[group] ?? {})
       .sort(([a], [b]) => compare(a, b))
-      .map(([name, version]) => [code(name), code(version), group]),
+      .map(([name, version]) => [
+        code(name),
+        code(declaredVersion(name, version, catalogs, manifest.name)),
+        group,
+      ]),
   );
   return rows.length
     ? table(["Dependency", "Declared version", "Kind"], rows)
@@ -225,9 +272,14 @@ function sourceTemplate(root: string, pkg: WorkspacePackage) {
   }
   return { catalogPath, shared: true, source: sharedCatalogSource(pkg, undefined), templatePath };
 }
-function renderTemplate(source: string, pkg: WorkspacePackage, symbols: LookupRecord[]): string {
+function renderTemplate(
+  source: string,
+  pkg: WorkspacePackage,
+  symbols: LookupRecord[],
+  catalogs: Record<string, Record<string, string>>,
+): string {
   const replacements: Record<string, () => string> = {
-    dependencies: () => renderDependencies(pkg.manifest),
+    dependencies: () => renderDependencies(pkg.manifest, catalogs),
     exports: () => renderExports(pkg.manifest, symbols),
     package: () => code(pkg.manifest.name),
     scripts: () => renderScripts(pkg.manifest),
@@ -263,7 +315,9 @@ function catalogIsCurrent(plan: {
 /** All plans are validated before writing. Check mode never creates or changes files. */
 export function generateCatalogs(options: CatalogOptions = {}): CatalogResult {
   const root = fs.realpathSync(options.root ?? repositoryRoot);
-  const packages = discover(root).filter(
+  const document = workspaceDocument(root);
+  const catalogs = workspaceCatalogs(document);
+  const packages = discover(root, workspacePatterns(document)).filter(
     (pkg) => !options.package || pkg.manifest.name === options.package,
   );
   if (options.package && !packages.length)
@@ -283,6 +337,7 @@ export function generateCatalogs(options: CatalogOptions = {}): CatalogResult {
         template.source,
         pkg,
         symbols.filter((symbol) => symbol.package === pkg.manifest.name),
+        catalogs,
       ),
     };
   });

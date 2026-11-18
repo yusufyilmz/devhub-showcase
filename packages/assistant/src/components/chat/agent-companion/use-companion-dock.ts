@@ -10,6 +10,7 @@ type Gesture = {
   x: number;
   y: number;
   bounds: DOMRect;
+  leftInset: number;
   size: number;
   resize: boolean;
 };
@@ -48,12 +49,17 @@ export function useCompanionDock(agent: string, floating: boolean) {
 
   function start(event: PointerEvent<HTMLElement>, resize = false) {
     if (!floating || !event.isPrimary || event.button !== 0 || gesture.current) return;
-    const bounds = container.current?.getBoundingClientRect();
-    const size = container.current?.querySelector(".agent-launcher")?.getBoundingClientRect().width;
-    if (!bounds || !size) return;
+    const element = container.current;
+    if (!element) return;
+    const bounds = element.getBoundingClientRect();
+    const size = element.querySelector(".agent-launcher")?.getBoundingClientRect().width;
+    if (!size) return;
     didDrag.current = false;
     gesture.current = {
       bounds,
+      leftInset:
+        Number.parseFloat(getComputedStyle(element).getPropertyValue("--agent-inset-left")) ||
+        margin,
       pointer: event.pointerId,
       resize,
       size,
@@ -71,8 +77,8 @@ export function useCompanionDock(agent: string, floating: boolean) {
     return {
       ...layout,
       x: clamp(
-        (active.bounds.left + dx - margin) /
-          Math.max(1, viewport.clientWidth - active.bounds.width - 2 * margin),
+        (active.bounds.left + dx - active.leftInset) /
+          Math.max(1, viewport.clientWidth - active.bounds.width - active.leftInset - margin),
         0,
         1,
       ),

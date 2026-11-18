@@ -1,4 +1,4 @@
-<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json and declared public exports. Run pnpm generate:catalogs. -->
+<!-- Generated from tools/cli/catalog/templates/package.md.hbs, package.json, the pnpm-workspace.yaml catalog, and declared public exports. Run pnpm generate:catalogs. -->
 
 # @shared/typescript-config catalog
 
@@ -20,4 +20,4 @@ No package scripts are declared.
 
 | Dependency   | Declared version | Kind            |
 | ------------ | ---------------- | --------------- |
-| `typescript` | `catalog:`       | devDependencies |
+| `typescript` | `7.0.2`          | devDependencies |

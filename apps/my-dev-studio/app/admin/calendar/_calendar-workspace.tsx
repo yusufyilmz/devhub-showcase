@@ -160,11 +160,11 @@ export function CalendarWorkspace({
     return days;
   }, [data, filter]);
 
-  function openEditor(task?: StudioTask) {
+  function openEditor(task?: StudioTask, day = date) {
     setFailure("");
     editTrigger.current =
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    setEditor({ date: task?.date ?? date, task });
+    setEditor({ date: task?.date ?? day, task });
   }
 
   async function mutate(task: Mutation, success: string, targetDate?: string) {
@@ -302,6 +302,7 @@ export function CalendarWorkspace({
           canMove={(item) => item.source === "studio" && !item.completed}
           date={date}
           getItems={(day) => byDay.get(day) ?? noItems}
+          onAddDay={busy ? undefined : (day) => openEditor(undefined, day)}
           onDateChange={setSelectedDate}
           onMove={busy ? undefined : moveTask}
           today={today}
@@ -312,6 +313,7 @@ export function CalendarWorkspace({
           error={error}
           items={currentItems}
           loading={loading}
+          onAdd={() => openEditor()}
           onEdit={openEditor}
           tasks={data?.tasks}
         />
@@ -394,6 +396,7 @@ function SelectedDay({
   error,
   items,
   loading,
+  onAdd,
   onEdit,
   tasks,
 }: {
@@ -402,16 +405,22 @@ function SelectedDay({
   error?: string;
   items: readonly CalendarItem[];
   loading: boolean;
+  onAdd: () => void;
   onEdit: (task: StudioTask) => void;
   tasks?: StudioTask[];
 }) {
   return (
     <Card className="grid min-w-0 gap-4 p-3 sm:p-5" interaction="static" layout="plain">
-      <header className="grid gap-1">
-        <h2 className="text-lg font-semibold">Day agenda</h2>
-        <time className="text-sm text-muted-foreground" dateTime={date}>
-          {dateLabel(date)}
-        </time>
+      <header className="flex flex-wrap items-start justify-between gap-2">
+        <div className="grid gap-1">
+          <h2 className="text-lg font-semibold">Day agenda</h2>
+          <time className="text-sm text-muted-foreground" dateTime={date}>
+            {dateLabel(date)}
+          </time>
+        </div>
+        <Button disabled={busy} onClick={onAdd} size="sm" type="button" variant="outline">
+          Add task for this day
+        </Button>
       </header>
       <DayAgenda
         date={date}
