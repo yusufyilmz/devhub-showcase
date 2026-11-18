@@ -69,8 +69,8 @@ export function SetupStageContent({
         ))}
       {stage === 2 && activeSection.kind && (
         <SectionSettingsEditor
+          initialSection={activeSection.kind}
           onChange={onChange}
-          onlySection={activeSection.kind}
           profile={profile}
         />
       )}

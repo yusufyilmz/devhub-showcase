@@ -25,7 +25,7 @@ if (!sampleProject) throw new Error("Expected a sample project");
 
 function DraftSettings({ draft }: { draft: PortfolioProfile }) {
   const [value, setValue] = useState(draft);
-  return <SectionSettingsEditor onChange={setValue} onlySection="projects" profile={value} />;
+  return <SectionSettingsEditor initialSection="projects" onChange={setValue} profile={value} />;
 }
 
 describe("SectionSettings", () => {
@@ -83,14 +83,14 @@ describe("SectionSettings", () => {
     const onChange = vi.fn();
     const draft = { ...profile, projects: [] };
     const { rerender } = render(
-      <SectionSettingsEditor onChange={onChange} onlySection="projects" profile={draft} />,
+      <SectionSettingsEditor initialSection="projects" onChange={onChange} profile={draft} />,
     );
     const preview = within(screen.getByRole("region", { name: "Projects live preview" }));
     expect(preview.getByText("No items to preview.")).toBeTruthy();
     rerender(
       <SectionSettingsEditor
+        initialSection="projects"
         onChange={onChange}
-        onlySection="projects"
         profile={{
           ...draft,
           projects: [{ ...sampleProject, name: "Newly entered project", public: true }],
@@ -105,7 +105,7 @@ describe("SectionSettings", () => {
     const draft = { ...profile, education: [] };
     const onChange = vi.fn();
     const { rerender } = render(
-      <SectionSettingsEditor onChange={onChange} onlySection="education" profile={draft} />,
+      <SectionSettingsEditor initialSection="education" onChange={onChange} profile={draft} />,
     );
     const preview = within(screen.getByRole("region", { name: "Education live preview" }));
     expect(preview.getByText(/Example University/)).toBeTruthy();
@@ -124,7 +124,7 @@ describe("SectionSettings", () => {
     rerender(
       <>
         <EducationEditor onChange={onChange} profile={partial} />
-        <SectionSettingsEditor onChange={onChange} onlySection="education" profile={partial} />
+        <SectionSettingsEditor initialSection="education" onChange={onChange} profile={partial} />
       </>,
     );
     expect(screen.getByPlaceholderText("Example University")).toHaveProperty("value", "");
@@ -138,6 +138,19 @@ describe("SectionSettings", () => {
     );
     expect(publicMarkup).not.toContain("Computer Science");
     expect(publicMarkup).not.toContain("Example University");
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it("opens on the editor section and switches the preview without changing form data", () => {
+    const onChange = vi.fn();
+    render(
+      <SectionSettingsEditor initialSection="projects" onChange={onChange} profile={profile} />,
+    );
+    const picker = within(screen.getByRole("group", { name: "Preview sections" }));
+    expect(picker.getByRole("button", { name: "Projects", pressed: true })).toBeTruthy();
+    fireEvent.click(picker.getByRole("button", { name: "Education" }));
+    expect(screen.getByRole("region", { name: "Education live preview" })).toBeTruthy();
+    expect(screen.queryByRole("region", { name: "Projects live preview" })).toBeNull();
     expect(onChange).not.toHaveBeenCalled();
   });
 
@@ -238,12 +251,15 @@ describe("SectionSettings", () => {
     vi.stubGlobal("fetch", fetcher);
     const editor = render(<ProfileEditor initial={initial} />);
     fireEvent.click(screen.getByRole("button", { name: "Section display" }));
+    const picker = within(screen.getByRole("group", { name: "Preview sections" }));
+    fireEvent.click(picker.getByRole("button", { name: "Projects" }));
     const projects = screen.getByRole("group", { name: "Projects" });
     fireEvent.click(within(projects).getByRole("button", { name: "Cards" }));
     fireEvent.click(within(projects).getByRole("button", { name: "Column" }));
     fireEvent.click(within(projects).getByLabelText("Auto-include all items"));
     const first = sampleProject;
     fireEvent.click(within(projects).getByLabelText(`Include ${first.name}`));
+    fireEvent.click(picker.getByRole("button", { name: "About" }));
     const about = screen.getByRole("group", { name: "About" });
     fireEvent.click(within(about).getByLabelText("Show section"));
     fireEvent.click(screen.getByRole("button", { name: "Save changes" }));
@@ -257,6 +273,11 @@ describe("SectionSettings", () => {
     editor.unmount();
     render(<ProfileEditor initial={saved} />);
     fireEvent.click(screen.getByRole("button", { name: "Section display" }));
+    fireEvent.click(
+      within(screen.getByRole("group", { name: "Preview sections" })).getByRole("button", {
+        name: "Projects",
+      }),
+    );
     const reloadedProjects = within(screen.getByRole("group", { name: "Projects" }));
     expect(reloadedProjects.getByRole("button", { name: "Cards", pressed: true })).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Reset Projects to default" }));

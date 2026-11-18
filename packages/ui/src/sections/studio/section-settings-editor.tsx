@@ -16,10 +16,13 @@ import {
 } from "@shared/config";
 
 import { Button } from "../../buttons";
+import { SegmentedControl } from "../../buttons/segmented-control";
 import { Card } from "../../cards";
 import { Input as LibraryInput } from "../../forms/input";
 import { Label as LibraryLabel } from "../../forms/label";
+import { LibraryPicker } from "../live-section-preview/library-picker";
 import { SectionPreviewSurface } from "../live-section-preview/live-section-preview";
+import { SectionCatalogPreview } from "../live-section-preview/section-catalog-preview";
 import { ConfiguredSection } from "./configured-section";
 import { sectionSettingsEditorStyles } from "./styles";
 import type { SectionSettingsEditorOptions } from "./types";
@@ -72,36 +75,25 @@ function SectionLayoutPicker({
     <div className="grid min-w-0 gap-3">
       <fieldset className="flex min-w-0 flex-wrap gap-2 border-0 p-0">
         <legend className="mb-2 text-sm font-semibold">Display style</legend>
-        {choices.map(({ label, renderer }) => (
-          <Button
-            aria-controls={previewId}
-            aria-pressed={selectedRenderer === renderer}
-            key={renderer ?? "default"}
-            onClick={() => onSelect(renderer)}
-            size="sm"
-            type="button"
-            variant={selectedRenderer === renderer ? "default" : "outline"}
-          >
-            {label}
-          </Button>
-        ))}
+        <SegmentedControl
+          buttons={choices.map(({ label, renderer }) => ({ label, value: renderer ?? "default" }))}
+          onToggle={(value) =>
+            onSelect(choices.find(({ renderer }) => (renderer ?? "default") === value)?.renderer)
+          }
+          selected={selectedRenderer ?? "default"}
+        />
       </fieldset>
       {view && ["cards", "gallery", "list"].includes(view) && (
         <fieldset className="flex flex-wrap gap-2 border-0 p-0">
           <legend className="mb-2 text-sm font-semibold">Arrangement</legend>
-          {(["row", "column"] as const).map((direction) => (
-            <Button
-              aria-controls={previewId}
-              aria-pressed={selectedDirection === direction}
-              key={direction}
-              onClick={() => onDirection(direction)}
-              size="sm"
-              type="button"
-              variant={selectedDirection === direction ? "default" : "outline"}
-            >
-              {direction === "row" ? "Row" : "Column"}
-            </Button>
-          ))}
+          <SegmentedControl
+            buttons={[
+              { label: "Row", value: "row" },
+              { label: "Column", value: "column" },
+            ]}
+            onToggle={(value) => onDirection(value === "column" ? "column" : "row")}
+            selected={selectedDirection}
+          />
         </fieldset>
       )}
       <div id={previewId}>
@@ -127,168 +119,181 @@ function SectionLayoutPicker({
   );
 }
 
+function SectionSettingsPanel({
+  profile,
+  section,
+  onChange,
+}: SectionSettingsEditorOptions & { section: PortfolioSection }) {
+  function update(kind: PortfolioSectionId, value: PortfolioSectionSettings[PortfolioSectionId]) {
+    onChange({ ...profile, sectionSettings: { ...profile.sectionSettings, [kind]: value } });
+  }
+  const kind = section.kind;
+  const settings = profile.sectionSettings?.[kind] ?? {};
+  const allItems = getSectionItems(profile, kind);
+  const items =
+    kind === "projects"
+      ? getSectionItems(
+          { ...profile, projects: profile.projects.filter((project) => project.public) },
+          kind,
+        )
+      : allItems;
+  const included = (id: string) => settings.itemIds?.includes(id) ?? true;
+  const itemControl = (id: string) => {
+    const item = items.find((entry) => entry.id === id);
+    if (!item) return null;
+    const title = item.title.trim() || "Untitled item";
+    return (
+      <LibraryLabel className="flex min-w-0 items-start gap-2 text-sm" unstyled>
+        <LibraryInput
+          aria-label={`Include ${title}`}
+          checked={included(id)}
+          className="mt-1 shrink-0 accent-primary"
+          onChange={(event) => {
+            const selected = settings.itemIds ?? allItems.map((entry) => entry.id);
+            update(kind, {
+              ...settings,
+              itemIds: event.target.checked
+                ? [...selected, id]
+                : selected.filter((entry) => entry !== id),
+            });
+          }}
+          type="checkbox"
+          unstyled
+        />
+        {included(id) ? "Include" : title}
+      </LibraryLabel>
+    );
+  };
+  const excluded = items.filter(({ id }) => !included(id));
+  return (
+    <fieldset className="grid min-w-0 gap-4 border-0 p-0">
+      <legend className="sr-only">{sectionRegistry[kind].name}</legend>
+      <LibraryLabel className="flex items-center gap-2 [&_input]:accent-primary" unstyled>
+        <LibraryInput
+          checked={settings.visible ?? true}
+          onChange={(event) => update(kind, { ...settings, visible: event.target.checked })}
+          type="checkbox"
+          unstyled
+        />{" "}
+        Show section
+      </LibraryLabel>
+      <SectionLayoutPicker
+        inclusionToolbar={
+          items.length > 0 && (
+            <fieldset className="my-3 grid min-w-0 gap-2 border-0 p-0 text-sm">
+              <legend className="sr-only">Included content</legend>
+              <LibraryLabel className="flex items-center gap-2" unstyled>
+                <LibraryInput
+                  checked={settings.itemIds === undefined}
+                  className="accent-primary"
+                  onChange={(event) =>
+                    update(kind, {
+                      ...settings,
+                      itemIds: event.target.checked ? undefined : [],
+                    })
+                  }
+                  type="checkbox"
+                  unstyled
+                />
+                Auto-include all items
+              </LibraryLabel>
+              {excluded.length > 0 && <p className="font-medium">Excluded items</p>}
+              {excluded.map(({ id }) => (
+                <div key={id}>{itemControl(id)}</div>
+              ))}
+            </fieldset>
+          )
+        }
+        onDirection={(direction) => update(kind, { ...settings, direction })}
+        onSelect={(renderer) =>
+          update(kind, {
+            ...settings,
+            direction:
+              renderer && ["cards", "gallery", "list"].includes(sectionRendererViews[renderer])
+                ? settings.direction
+                : undefined,
+            renderer,
+          } as PortfolioSectionSettings[typeof kind])
+        }
+        profile={profile}
+        renderItemControl={itemControl}
+        section={section}
+        selectedRenderer={settings.renderer}
+        settings={settings}
+      />
+      <Button
+        className="justify-self-start"
+        onClick={() => {
+          const next = { ...profile.sectionSettings };
+          delete next[kind];
+          onChange({ ...profile, sectionSettings: next });
+        }}
+        size="sm"
+        type="button"
+        variant="outline"
+      >
+        Reset {sectionRegistry[kind].name} to default
+      </Button>
+    </fieldset>
+  );
+}
+
 export function SectionSettingsEditor({
   profile,
   onChange,
-  onlySection,
-}: SectionSettingsEditorOptions & { onlySection?: PortfolioSectionId }) {
-  const Surface = onlySection ? "details" : "section";
-  function update(kind: PortfolioSectionId, value: PortfolioSectionSettings[PortfolioSectionId]) {
-    onChange({
-      ...profile,
-      sectionSettings: { ...profile.sectionSettings, [kind]: value },
-    });
-  }
+  initialSection,
+}: SectionSettingsEditorOptions & { initialSection?: PortfolioSectionId }) {
+  const Surface = initialSection ? "details" : "section";
   return (
     <Card asChild interaction="static" layout="plain" surface="portfolio">
       <Surface
         className={
-          onlySection
+          initialSection
             ? sectionSettingsEditorStyles.inlinePanel
             : sectionSettingsEditorStyles.element1
         }
-        key={onlySection}
-        open={onlySection ? true : undefined}
+        key={initialSection}
+        open={initialSection ? true : undefined}
       >
-        {onlySection && (
+        {initialSection && (
           <summary className={sectionSettingsEditorStyles.inlineSummary}>
             Section visibility and layout
           </summary>
         )}
-        {!onlySection && <h2>Section display settings</h2>}
-        {!onlySection && (
-          <p>
-            Choose a display and the content for each section. Hidden sections and private projects
-            are never shown in this preview. Your PDF keeps its own layout and content.
-          </p>
+        {!initialSection && <h2>Section display settings</h2>}
+        {!initialSection && (
+          <p>Choose a section to preview its portfolio layout. Your PDF has separate settings.</p>
         )}
-        {getPortfolioSections(profile)
-          .filter(({ kind }) => !onlySection || kind === onlySection)
-          .map((section) => {
+        <LibraryPicker
+          initialSelection={initialSection}
+          items={getPortfolioSections(profile).map((section) => {
             const kind = section.kind;
-            const settings = profile.sectionSettings?.[kind] ?? {};
-            const allItems = getSectionItems(profile, kind);
-            const items =
-              kind === "projects"
-                ? getSectionItems(
-                    { ...profile, projects: profile.projects.filter((project) => project.public) },
-                    kind,
-                  )
-                : allItems;
-            const included = (id: string) => settings.itemIds?.includes(id) ?? true;
-            const itemControl = (id: string) => {
-              const item = items.find((entry) => entry.id === id);
-              if (!item) return null;
-              const title = item.title.trim() || "Untitled item";
-              return (
-                <LibraryLabel className="flex min-w-0 items-start gap-2 text-sm" unstyled>
-                  <LibraryInput
-                    aria-label={`Include ${title}`}
-                    checked={included(id)}
-                    className="mt-1 shrink-0 accent-primary"
-                    onChange={(event) => {
-                      const selected = settings.itemIds ?? allItems.map((entry) => entry.id);
-                      update(kind, {
-                        ...settings,
-                        itemIds: event.target.checked
-                          ? [...selected, id]
-                          : selected.filter((entry) => entry !== id),
-                      });
-                    }}
-                    type="checkbox"
-                    unstyled
-                  />
-                  {included(id) ? "Include" : title}
-                </LibraryLabel>
-              );
-            };
-            const excluded = items.filter(({ id }) => !included(id));
-            return (
-              <fieldset
-                className={
-                  onlySection
-                    ? sectionSettingsEditorStyles.inlineFields
-                    : sectionSettingsEditorStyles.element2
-                }
-                key={kind}
-              >
-                <legend className={onlySection ? "sr-only" : undefined}>
-                  {sectionRegistry[kind].name}
-                </legend>
-                <LibraryLabel className="flex items-center gap-2 [&_input]:accent-primary" unstyled>
-                  <LibraryInput
-                    checked={settings.visible ?? true}
-                    onChange={(event) =>
-                      update(kind, { ...settings, visible: event.target.checked })
-                    }
-                    type="checkbox"
-                    unstyled
-                  />{" "}
-                  Show section
-                </LibraryLabel>
-                <SectionLayoutPicker
-                  inclusionToolbar={
-                    items.length > 0 && (
-                      <fieldset className="my-3 grid min-w-0 gap-2 border-0 p-0 text-sm">
-                        <legend className="sr-only">Included content</legend>
-                        <LibraryLabel className="flex items-center gap-2" unstyled>
-                          <LibraryInput
-                            checked={settings.itemIds === undefined}
-                            className="accent-primary"
-                            onChange={(event) =>
-                              update(kind, {
-                                ...settings,
-                                itemIds: event.target.checked ? undefined : [],
-                              })
-                            }
-                            type="checkbox"
-                            unstyled
-                          />
-                          Auto-include all items
-                        </LibraryLabel>
-                        {excluded.length > 0 && <p className="font-medium">Excluded items</p>}
-                        {excluded.map(({ id }) => (
-                          <div key={id}>{itemControl(id)}</div>
-                        ))}
-                      </fieldset>
-                    )
-                  }
-                  onDirection={(direction) => update(kind, { ...settings, direction })}
-                  onSelect={(renderer) =>
-                    update(kind, {
-                      ...settings,
-                      direction:
-                        renderer &&
-                        ["cards", "gallery", "list"].includes(sectionRendererViews[renderer])
-                          ? settings.direction
-                          : undefined,
-                      renderer,
-                    } as PortfolioSectionSettings[typeof kind])
-                  }
+            return {
+              content: (
+                <SectionSettingsPanel
+                  key={kind}
+                  onChange={onChange}
                   profile={profile}
-                  renderItemControl={itemControl}
                   section={section}
-                  selectedRenderer={settings.renderer}
-                  settings={settings}
                 />
-                <Button
-                  className={
-                    onlySection ? "justify-self-start" : sectionSettingsEditorStyles.element3
+              ),
+              id: kind,
+              thumbnail: (
+                <SectionCatalogPreview
+                  type={
+                    kind === "about"
+                      ? "about-me"
+                      : kind === "projects"
+                        ? "portfolio-projects"
+                        : kind
                   }
-                  onClick={() => {
-                    const next = { ...profile.sectionSettings };
-                    delete next[kind];
-                    onChange({ ...profile, sectionSettings: next });
-                  }}
-                  size={onlySection ? "sm" : undefined}
-                  type="button"
-                  variant="outline"
-                >
-                  Reset {sectionRegistry[kind].name} to default
-                </Button>
-              </fieldset>
-            );
+                />
+              ),
+              title: sectionRegistry[kind].name,
+            };
           })}
+          mode="editor"
+        />
       </Surface>
     </Card>
   );

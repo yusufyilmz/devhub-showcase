@@ -76,6 +76,12 @@ test("guided setup recovers unsaved work and reconciles a newer save from anothe
   await expect(livePreview.getByText("Product designer", { exact: true })).toBeVisible();
   await experience.getByLabel("Role", { exact: true }).fill("Lead designer");
   await expect(livePreview.getByText("Lead designer", { exact: true })).toBeVisible();
+  const sectionPicker = experience.getByRole("group", { name: "Preview sections" });
+  await sectionPicker.getByRole("button", { name: "Education" }).click();
+  await expect(experience.getByRole("region", { name: "Education live preview" })).toBeVisible();
+  await expect(experience.getByLabel("Role", { exact: true })).toHaveValue("Lead designer");
+  await sectionPicker.getByRole("button", { name: "Experience" }).click();
+  await expect(livePreview.getByText("Lead designer", { exact: true })).toBeVisible();
   await experience.getByRole("button", { exact: true, name: "Continue" }).click();
   await expect(page.getByRole("heading", { exact: true, name: "Projects" }).first()).toBeVisible();
   await expect(page.getByText("Recovery saved in this tab", { exact: true })).toBeVisible();
