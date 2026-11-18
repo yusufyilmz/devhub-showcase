@@ -67,6 +67,29 @@ export type SectionSurfaceProps = PropsWithChildren<{
   asChild?: boolean;
 }>;
 
+export type SectionFrameContext = "standalone" | "composed";
+export type SectionFrameSurface = "plain" | "muted" | "card";
+export type SectionFrameWidth = "contained" | "reading" | "bleed";
+export type SectionHeadingLevel = 1 | 2 | 3;
+
+export type SectionFrameProps = PropsWithChildren<{
+  id?: string;
+  heading?: ReactNode;
+  context?: SectionFrameContext;
+  surface?: SectionFrameSurface;
+  width?: SectionFrameWidth;
+  className?: string;
+}>;
+
+export type SectionHeadingProps = {
+  id: string;
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  level: SectionHeadingLevel;
+  className?: string;
+};
+
 export type CardType = CardProps["type"];
 
 export type SectionCollectionOptions = {
