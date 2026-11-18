@@ -20,13 +20,18 @@ import { SectionHeading } from "../section/section-heading";
 import { presenterStyles, sectionPresentationClassName } from "./styles";
 import type { SectionPresentationOptions, SpecialViewOptions } from "./types";
 
-const framedIntroTypes = new Set([
+const framedSectionTypes = new Set([
   "about",
   "about-hero",
+  "awards",
+  "careers",
   "heading",
   "legal-text",
   "profile",
+  "studies",
   "text",
+  "timeline",
+  "work-experience",
 ]);
 
 function FramedIntro({ anchors, language, preview, section, type }: SectionPresentationOptions) {
@@ -146,7 +151,7 @@ export function SectionPresentation({
     !["hero", "heading", "contact", "map", "toc", "newsletter"].includes(view)
   )
     return null;
-  if (framedIntroTypes.has(type)) {
+  if (framedSectionTypes.has(type)) {
     return (
       <FramedIntro
         anchors={anchors}

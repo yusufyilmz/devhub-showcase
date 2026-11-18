@@ -4,7 +4,9 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { AboutSection } from "../about-section/AboutSection";
+import { CareersSection } from "../careers-section/CareersSection";
 import { TextSection } from "../text-section/TextSection";
+import { WorkExperienceSection } from "../work-experience-section/WorkExperienceSection";
 
 const item = {
   body: "A paragraph that stays in the section.",
@@ -77,5 +79,45 @@ describe("Intro section spacing", () => {
     expect(screen.getByRole("heading", { level: 2, name: "About" })).toBeTruthy();
     expect(screen.getByRole("heading", { level: 3, name: "Note" })).toBeTruthy();
     expect(screen.getByText("A second fact.")).toBeTruthy();
+  });
+
+  it("keeps a work timeline in the composed frame", () => {
+    render(
+      <WorkExperienceSection
+        section={{
+          id: "custom-work",
+          items: [item],
+          options: { description: "Recent roles." },
+          renderer: "timeline",
+          title: "Experience",
+          visible: true,
+        }}
+      />,
+    );
+    const frame = document.getElementById("custom-work");
+    expect(frame?.getAttribute("data-section-context")).toBe("composed");
+    expect(frame?.className.includes("py-14")).toBe(false);
+    expect(screen.getByRole("heading", { name: "Experience" })).toBeTruthy();
+    expect(screen.getByText("A paragraph that stays in the section.")).toBeTruthy();
+  });
+
+  it("keeps career openings expandable without outer section padding", () => {
+    render(
+      <CareersSection
+        section={{
+          id: "custom-roles",
+          items: [item, { ...item, id: "second", title: "Second role" }],
+          options: { description: "Open roles.", layout: "careers-openings" },
+          renderer: "list",
+          title: "Careers",
+          visible: true,
+        }}
+      />,
+    );
+    const frame = document.getElementById("custom-roles");
+    expect(frame?.getAttribute("data-section-layout")).toBe("careers-openings");
+    expect(frame?.className.includes("py-xl")).toBe(false);
+    expect(screen.getByText("Note").closest("summary")).toBeTruthy();
+    expect(screen.getByText("Second role").closest("summary")).toBeTruthy();
   });
 });
