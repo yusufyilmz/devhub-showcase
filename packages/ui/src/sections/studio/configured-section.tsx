@@ -115,9 +115,25 @@ export function ConfiguredSection({
   section,
   previewId,
   emptyState,
+  renderItemControl,
 }: ConfiguredSectionOptions) {
   if (!section.settings.visible) return null;
-  const items = sectionItems(selectPortfolioContent(profile), section.kind);
+  const items = sectionItems(selectPortfolioContent(profile), section.kind).map((item) => ({
+    ...item,
+    content: renderItemControl ? (
+      <>
+        {renderItemControl(item.id)}
+        {item.content}
+      </>
+    ) : (
+      item.content
+    ),
+  }));
+  const view = sectionRendererViews[section.renderer];
+  const direction =
+    view === "cards" || view === "gallery" || view === "list"
+      ? profile.sectionSettings?.[section.kind]?.direction
+      : undefined;
   if (!items.length) return emptyState ?? null;
   const text = getPortfolioCopy(profile.portfolioLanguage);
   const label = section.kind === "languages" ? text.spokenLanguages : text[section.kind];
@@ -125,6 +141,7 @@ export function ConfiguredSection({
   return (
     <section
       className={configuredSectionStyles.element1}
+      data-direction={direction}
       id={
         previewId ??
         (profile.portfolioType === "engineer" || !profile.portfolioType
@@ -165,7 +182,7 @@ function SectionView({ renderer, items, label }: SectionViewOptions) {
   if (view === "cards") return <SectionGrid items={items} label={label} />;
   if (view === "gallery") return <SectionGrid items={items} label={label} variant="gallery" />;
   return (
-    <div>
+    <div className={view === "list" ? "section-view-list" : undefined}>
       {items.map((item) => (
         <article key={item.id}>
           <h3>{item.title}</h3>

@@ -122,6 +122,7 @@ export type PortfolioSectionSettings = Partial<{
     renderer?: (typeof sectionRegistry)[Kind]["renderers"][number];
     visible?: boolean;
     itemIds?: string[];
+    direction?: "row" | "column";
   };
 }>;
 

@@ -56,6 +56,27 @@ describe("SectionSettings", () => {
     expect(within(preview).getByText("This section is hidden.")).toBeTruthy();
   });
 
+  it("arranges items and lets users exclude and restore items inside the preview", () => {
+    render(
+      <DraftSettings
+        draft={{
+          ...profile,
+          projects: [{ ...sampleProject, id: "draft", name: "Project A", public: true }],
+        }}
+      />,
+    );
+    const preview = within(screen.getByRole("region", { name: "Projects live preview" }));
+    fireEvent.click(screen.getByRole("button", { name: "Gallery" }));
+    fireEvent.click(screen.getByRole("button", { name: "Column" }));
+    expect(
+      preview.getByText("Project A").closest("[data-direction]")?.getAttribute("data-direction"),
+    ).toBe("column");
+    fireEvent.click(preview.getByRole("checkbox", { name: "Include Project A" }));
+    expect(preview.getByText("Add or include content to preview this section.")).toBeTruthy();
+    fireEvent.click(preview.getByRole("checkbox", { name: "Include Project A" }));
+    expect(preview.queryByText("Add or include content to preview this section.")).toBeNull();
+  });
+
   it("updates the live preview as project fields change and shows an empty state", () => {
     const onChange = vi.fn();
     const draft = { ...profile, projects: [] };
@@ -90,7 +111,7 @@ describe("SectionSettings", () => {
   });
   it("round trips compatible settings and rejects cross section renderers, duplicates and executable settings", () => {
     const sectionSettings = {
-      projects: { itemIds: [], renderer: "project-carousel", visible: false },
+      projects: { direction: "column", itemIds: [], renderer: "project-gallery", visible: false },
     };
     expect(
       profileSchema.parse(JSON.parse(JSON.stringify({ ...profile, sectionSettings })))
@@ -99,6 +120,7 @@ describe("SectionSettings", () => {
     for (const invalid of [
       { about: { renderer: "project-carousel" } },
       { projects: { itemIds: ["same", "same"] } },
+      { projects: { direction: "diagonal" } },
       { projects: { html: "<script/>" } },
       { custom: { visible: true } },
     ])
@@ -175,26 +197,26 @@ describe("SectionSettings", () => {
     const editor = render(<ProfileEditor initial={initial} />);
     fireEvent.click(screen.getByRole("button", { name: "Section display" }));
     const projects = screen.getByRole("group", { name: "Projects" });
-    fireEvent.click(within(projects).getByRole("button", { name: "Carousel" }));
+    fireEvent.click(within(projects).getByRole("button", { name: "Cards" }));
+    fireEvent.click(within(projects).getByRole("button", { name: "Column" }));
     fireEvent.click(within(projects).getByLabelText("All items, including future additions"));
     const first = sampleProject;
-    fireEvent.click(
-      within(projects).getByLabelText(`${first.name}${first.public ? "" : " (private)"}`),
-    );
+    fireEvent.click(within(projects).getByLabelText(`Include ${first.name}`));
     const about = screen.getByRole("group", { name: "About" });
     fireEvent.click(within(about).getByLabelText("Show section"));
     fireEvent.click(screen.getByRole("button", { name: "Save changes" }));
     await waitFor(() => expect(screen.getByRole("status").textContent).toContain("Saved"));
     expect(saved.profile.sectionSettings?.projects).toEqual({
+      direction: "column",
       itemIds: [first.id],
-      renderer: "project-carousel",
+      renderer: "project-cards",
     });
     expect(saved.profile.sectionSettings?.about?.visible).toBe(false);
     editor.unmount();
     render(<ProfileEditor initial={saved} />);
     fireEvent.click(screen.getByRole("button", { name: "Section display" }));
     const reloadedProjects = within(screen.getByRole("group", { name: "Projects" }));
-    expect(reloadedProjects.getByRole("button", { name: "Carousel", pressed: true })).toBeTruthy();
+    expect(reloadedProjects.getByRole("button", { name: "Cards", pressed: true })).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Reset Projects to default" }));
     expect(
       reloadedProjects.getByRole("button", { name: "Layout default", pressed: true }),
