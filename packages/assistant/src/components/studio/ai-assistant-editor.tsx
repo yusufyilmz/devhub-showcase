@@ -82,7 +82,7 @@ function AssistantNotice({ availability }: { availability: Availability | null }
           {!availability.enabled && (
             <>
               {" "}
-              Pro allowance required. <a href="/admin/billing">Manage subscription</a>.
+              Pro allowance required. <a href="/studio/billing">Manage subscription</a>.
             </>
           )}
         </p>
@@ -291,7 +291,7 @@ function AssistantWorkspace({
         {availability && !availability.enabled && (
           <p>
             An active Pro subscription assigned to this portfolio, with remaining allowance, is
-            required. <a href="/admin/billing">Manage subscription and assignment</a>.
+            required. <a href="/studio/billing">Manage subscription and assignment</a>.
           </p>
         )}
         <AssistantTools

@@ -8,7 +8,10 @@ import { isSectionImage } from "../item-media/section-image";
 import { galleryCollectionStyles } from "./styles";
 import type { GalleryCollectionOptions } from "./types";
 
-export function GalleryCollection({ section }: GalleryCollectionOptions) {
+export function GalleryCollection({
+  section,
+  size,
+}: GalleryCollectionOptions & { size?: "sm" | "md" | "lg" }) {
   const [index, setIndex] = useState<number | null>(null);
   const items = section.items.filter((item) => isSectionImage(item.imageUrl));
   const image = (item: (typeof items)[number]) => (
@@ -22,7 +25,10 @@ export function GalleryCollection({ section }: GalleryCollectionOptions) {
             aria-label={`View ${item.title}`}
             className="grid h-auto min-w-0 grid-cols-[minmax(0,1fr)] gap-s rounded-lg border-border/75 bg-card p-sm text-start whitespace-normal wrap-anywhere hover:border-primary/40 [&_img]:aspect-[4/3] [&_img]:w-full [&_img]:rounded-md [&_img]:object-cover"
             key={item.id}
-            onClick={() => setIndex(itemIndex)}
+            onClick={() => {
+              const selected = itemIndex;
+              window.setTimeout(() => setIndex(selected), 0);
+            }}
             variant="outline"
           >
             {image(item)}
@@ -40,6 +46,7 @@ export function GalleryCollection({ section }: GalleryCollectionOptions) {
           title: item.title,
         }))}
         onIndexChange={setIndex}
+        size={size}
       />
     </>
   );

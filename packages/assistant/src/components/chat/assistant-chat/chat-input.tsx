@@ -143,8 +143,7 @@ export const ChatInput = React.forwardRef<HTMLInputElement, ChatInputProps>(
               </span>
             )}
           </div>
-
-          {/* Send Button */}
+          s{/* Send Button */}
           {showSendButton && (
             <ActionButton
               className="shrink-0 gap-2 px-6"

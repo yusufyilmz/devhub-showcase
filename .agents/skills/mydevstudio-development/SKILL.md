@@ -35,6 +35,6 @@ Read [shared services and validation](references/services.md) when changing shar
 
 ## Colocated routes and generated catalogs
 
-Do not recreate `features/home`, `features/reviews`, `features/portfolio`, `features/platform` or `features/chat`. Their single-use bindings live in page/route entry points; shared route-family bindings and tests are private siblings under `app`. Existing admin, billing and management integrations remain separate.
+Do not recreate `features/home`, `features/reviews`, `features/portfolio`, `features/platform` or `features/chat`. Their bindings live in `apps/my-dev-studio/services/<domain>`. Existing admin, billing and management integrations remain separate.
 
 Workspace catalogs are generated with `pnpm generate:catalogs` and checked with `pnpm check:catalogs`. Edit `catalog.template.md` for authored guidance and package metadata/source for the generated reference. UI registry markers still work; the UI-specific commands are compatibility aliases. Never hand-edit a generated `CATALOG.md`.

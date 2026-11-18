@@ -24,6 +24,7 @@ The caller passes the URL. A studio screen in `@shared/ui` receives that URL, or
 | `@shared/runtime/clipboard`     | `useCopyClipboard`                                                              | Copy text the caller passes                                      |
 | `@shared/runtime/browser`       | `useOutsideClick`, `useWindowSize`, `useIsMobile`                               | Layout signals only                                              |
 | `@shared/runtime/notifications` | Notification context and `useNotification`                                      | Transient UI messages                                            |
+| `@shared/runtime/user`          | `useUserStorageSync`                                                            | Cache server-confirmed display fields. Do not authorize from it  |
 
 `useFetch` logs through `@shared/utils/client-logger`. Do not log request or response bodies, tokens, CV text, or prompts. The hook has loose response typing in places. New code should type the payload the caller expects. Do not introduce another `any` to silence a check, and do not weaken the TypeScript config.
 

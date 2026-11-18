@@ -4,9 +4,8 @@ import { issuePortfolioGrant, portfolioGrantCookie } from "@shared/lib/portfolio
 import { createPortfolioUnlock } from "@shared/lib/portfolio-unlock";
 
 import { env } from "@/env";
-import { sameOrigin } from "@/features/admin/admin-auth";
-
-import { portfolioAccessServer } from "../../../[username]/access/_session";
+import { sameOrigin } from "@/services/admin/get-auth";
+import { portfolioAccessServer } from "@/services/portfolio/get-access-session";
 
 const unlockPortfolio = createPortfolioUnlock({
   portfolioAccessServer,

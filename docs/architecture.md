@@ -2,25 +2,27 @@
 
 ## When to read
 
-Read this before placing new code, moving a feature between packages, or tracing how MyDevStudio and My Fitness Studio share auth, data, and assistants. Use it for package boundaries, trust boundaries, and which app owns a route. It does not certify production provider or database configuration.
+Read this before placing new code, moving a feature between packages, or tracing how MyDevStudio and My Fitness Studio share auth, data, and assistants. Use it for package boundaries, trust boundaries, and which app owns a route. Folder-by-folder placement for `apps/my-dev-studio` is in [conventions](conventions.md#where-code-goes). This guide does not certify production provider or database configuration.
 
 MyDevStudio is a Next.js App Router application in a pnpm/Turborepo monorepo. The repository retains the name `devhub-showcase`. This guide describes current source boundaries.
 
 ## Workspace ownership
 
-| Package or directory                 | Owns                                                                                 | Keep out                                    |
-| ------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------- |
-| `apps/my-dev-studio`                 | Routes, API handlers, feature data access, metadata                                  | Duplicated portable UI                      |
-| `apps/storybook-app`                 | Storybook for `@shared/ui`                                                           | Production routes                           |
-| `packages/config`                    | Profile types, themes, section metadata, page copy                                   | Credentials and private database access     |
-| `packages/lib`                       | Shared database access, repositories, services, domain models and validation schemas | Route-specific presentation                 |
-| `packages/auth`                      | Shared browser/server authentication integration                                     | Portfolio content ownership decisions in UI |
-| `packages/ui`                        | Shared controls, layouts, theme tokens and global CSS                                | Auth, routes and private repositories       |
-| `packages/assistant`                 | Studio, portfolio and homepage compositions, PDF rendering, assistants and chat      | Ownership or publication authority          |
-| `packages/utils`, `packages/runtime` | Logging and shared browser stores                                                    | Secrets or private payloads in telemetry    |
-| `supabase/migrations`                | Schema and RLS change history                                                        | Implicit execution during app builds        |
+| Package or directory                 | Owns                                                                                   | Keep out                                        |
+| ------------------------------------ | -------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| `apps/my-dev-studio`                 | Routes in `app/`, Studio-only screens in `views/`, app service bindings in `services/` | Reusable UI, reusable services, generic helpers |
+| `apps/storybook-app`                 | Storybook for `@shared/ui`                                                             | Production routes                               |
+| `packages/config`                    | Profile types, themes, section metadata, page copy                                     | Credentials and private database access         |
+| `packages/lib`                       | Shared database access, repositories, services, domain models and validation schemas   | Route-specific presentation                     |
+| `packages/auth`                      | Shared browser/server authentication integration                                       | Portfolio content ownership decisions in UI     |
+| `packages/ui`                        | Shared controls, layouts, theme tokens and global CSS                                  | Auth, routes and private repositories           |
+| `packages/assistant`                 | Studio, portfolio and homepage compositions, PDF rendering, assistants and chat        | Ownership or publication authority              |
+| `packages/utils`, `packages/runtime` | Logging and shared browser stores                                                      | Secrets or private payloads in telemetry        |
+| `supabase/migrations`                | Schema and RLS change history                                                          | Implicit execution during app builds            |
 
-`packages/lib/src` is organized into `db/`, `repositories/`, `services/`, `types/`, and `schemas/`. Within `services/` and `repositories/`, implementations and colocated tests are grouped into domain folders. Database connections and table definitions are shared across domains. App feature adapters bind verified identities, cookies and configuration. Publication/history/access, managed portfolios, resource/review access, Google IO and Fitness notification workflows/persistence live in this package. Chat entitlement/usage orchestration and Fitness assistant context/drafts live in `packages/assistant/src/services`. Existing domain exports remain available, while new direct imports can use `@shared/lib/repositories/profile` or `@shared/lib/services/task`. See the [services catalog](../packages/lib/CATALOG.md).
+Inside `apps/my-dev-studio`, `app/` holds `page`, `route`, `actions`, and other Next.js page variants. `views/` holds screens used only by MyDevStudio. `services/<domain>` holds this app's service calls, combined service use, and server or API functions, including session, cookie, and environment binding. Reusable UI lives in `packages/ui`, reusable services in `packages/lib`, and generic helpers in `packages/utils`. The decision list and examples are in [conventions](conventions.md#where-code-goes).
+
+`packages/lib/src` is organized into `db/`, `repositories/`, `services/`, `types/`, and `schemas/`. Within `services/` and `repositories/`, implementations and colocated tests are grouped into domain folders. Database connections and table definitions are shared across domains. App service modules bind verified identities, cookies and configuration. Publication/history/access, managed portfolios, resource/review access, Google IO and Fitness notification workflows/persistence live in this package. Chat entitlement/usage orchestration and Fitness assistant context/drafts live in `packages/assistant/src/services`. Existing domain exports remain available, while new direct imports can use `@shared/lib/repositories/profile` or `@shared/lib/services/task`. See the [services catalog](../packages/lib/CATALOG.md).
 
 Shared compiler and Tailwind configuration live in their own packages. Packages expose explicit entry points; external versions are centralized in the workspace catalog.
 
@@ -154,17 +156,17 @@ Browser reports are uploaded for diagnosis. Database migrations and provider set
 
 ## Routes and trust boundaries
 
-| Route family                              | Responsibility                                |
-| ----------------------------------------- | --------------------------------------------- |
-| `/`                                       | Platform homepage                             |
-| `/{username}`, `/{username}/cv.pdf`       | Published profile and PDF                     |
-| `/{username}/edit`, `/admin`              | Authenticated personal studio and entry point |
-| `/api/admin/profile`, `/api/admin/cv`     | Authenticated personal save/download          |
-| `/admin/portfolios`, `/api/admin/managed` | Restricted managed-portfolio operations       |
-| `/api/admin/cv-import`                    | Authenticated, limited CV extraction          |
-| `/auth/callback`                          | Authentication callback                       |
-| `/p/{id}`, `/p/examples/{slug}`           | Compatibility routes and public examples      |
-| `/cv.pdf`                                 | Original main portfolio PDF                   |
+| Route family                               | Responsibility                                |
+| ------------------------------------------ | --------------------------------------------- |
+| `/`                                        | Platform homepage                             |
+| `/{username}`, `/{username}/cv.pdf`        | Published profile and PDF                     |
+| `/{username}/edit`, `/studio`              | Authenticated personal studio and entry point |
+| `/api/admin/profile`, `/api/admin/cv`      | Authenticated personal save/download          |
+| `/studio/portfolios`, `/api/admin/managed` | Restricted managed-portfolio operations       |
+| `/api/admin/cv-import`                     | Authenticated, limited CV extraction          |
+| `/auth/callback`                           | Authentication callback                       |
+| `/p/{id}`, `/p/examples/{slug}`            | Compatibility routes and public examples      |
+| `/cv.pdf`                                  | Original main portfolio PDF                   |
 
 Consult the actual route files for individual methods and response contracts. Database ownership and publication checks remain necessary even if the UI hides an action.
 

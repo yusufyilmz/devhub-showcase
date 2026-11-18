@@ -1,11 +1,13 @@
 import { cookies } from "next/headers";
+import { cache } from "react";
 
 import { createServerClient } from "@supabase/ssr";
 import { createClient as createSupabaseJsClient } from "@supabase/supabase-js";
 
 import { supabaseConfig } from "../config";
 
-export async function createClient<Database = unknown>() {
+/** One cookie-bound client for the current request. */
+export const createClient = cache(async <Database = unknown>() => {
   const cookieStore = await cookies();
   const { url, key } = supabaseConfig();
 
@@ -27,7 +29,7 @@ export async function createClient<Database = unknown>() {
       },
     },
   });
-}
+});
 
 /** Stateless server client for bearer-token verification. Never persists sessions. */
 export function createRequestClient<Database = unknown>(token?: string) {

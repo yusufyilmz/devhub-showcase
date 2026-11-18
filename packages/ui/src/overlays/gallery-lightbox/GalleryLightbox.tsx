@@ -3,17 +3,27 @@
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 
 import { Button } from "../../buttons/button";
+import { Flex } from "../../layout/flex";
 import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,
   DialogTitle,
+  DialogTrigger,
 } from "../dialog/Dialog";
 import { galleryLightboxStyles } from "./styles";
 import type { GalleryLightboxOptions } from "./types";
 
-export function GalleryLightbox({ items, index, onIndexChange }: GalleryLightboxOptions) {
+export function GalleryLightbox({
+  items,
+  index,
+  onIndexChange,
+  trigger,
+  size,
+}: Pick<GalleryLightboxOptions, "items" | "index" | "onIndexChange" | "trigger"> & {
+  size?: "sm" | "md" | "lg";
+}) {
   const active = index === null ? undefined : items[index];
   const move = (direction: number) => {
     if (index !== null) onIndexChange(Math.max(0, Math.min(items.length - 1, index + direction)));
@@ -22,16 +32,21 @@ export function GalleryLightbox({ items, index, onIndexChange }: GalleryLightbox
     <Dialog
       onOpenChange={(open) => {
         if (!open) onIndexChange(null);
+        else if (items.length > 0) onIndexChange(index ?? 0);
       }}
       open={Boolean(active)}
     >
+      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       {active && (
         <DialogContent
           className={galleryLightboxStyles.dialog}
           onKeyDown={(event) => {
             if (
-              event.target instanceof HTMLElement &&
-              event.target.closest("input, textarea, select")
+              event.defaultPrevented ||
+              (event.target instanceof HTMLElement &&
+                event.target.closest(
+                  "input, textarea, select, [role='tablist'], [contenteditable]",
+                ))
             )
               return;
             if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
@@ -40,69 +55,72 @@ export function GalleryLightbox({ items, index, onIndexChange }: GalleryLightbox
             }
           }}
           showCloseButton={false}
+          size={size}
         >
-          <header className={galleryLightboxStyles.header}>
-            <DialogTitle>{active.title}</DialogTitle>
-            <DialogDescription>{active.description || "Gallery preview"}</DialogDescription>
-            <DialogClose asChild>
+          <Flex direction="column" gap="lg" style={{ minWidth: "400px" }}>
+            <header className={galleryLightboxStyles.header}>
+              <DialogTitle>{active.title}</DialogTitle>
+              <DialogDescription>{active.description || "Gallery preview"}</DialogDescription>
+              <DialogClose asChild>
+                <Button
+                  aria-label="Close"
+                  className={galleryLightboxStyles.close}
+                  size="icon"
+                  variant="ghost"
+                >
+                  <X aria-hidden="true" />
+                </Button>
+              </DialogClose>
+            </header>
+            <div className={galleryLightboxStyles.stage} key={active.id}>
+              {active.content}
+            </div>
+            <nav aria-label="Gallery navigation" className={galleryLightboxStyles.controls}>
               <Button
-                aria-label="Close"
-                className={galleryLightboxStyles.close}
+                aria-label="Previous item"
+                disabled={index === 0}
+                onClick={() => move(-1)}
                 size="icon"
-                variant="ghost"
-              >
-                <X aria-hidden="true" />
-              </Button>
-            </DialogClose>
-          </header>
-          <div className={galleryLightboxStyles.stage} key={active.id}>
-            {active.content}
-          </div>
-          <nav aria-label="Gallery navigation" className={galleryLightboxStyles.controls}>
-            <Button
-              aria-label="Previous item"
-              disabled={index === 0}
-              onClick={() => move(-1)}
-              size="icon"
-              variant="outline"
-            >
-              <ArrowLeft aria-hidden="true" />
-            </Button>
-            <span aria-live="polite" className="px-xs text-sm text-muted-foreground tabular-nums">
-              {(index ?? 0) + 1} / {items.length}
-            </span>
-            <Button
-              aria-label="Next item"
-              disabled={index === items.length - 1}
-              onClick={() => move(1)}
-              size="icon"
-              variant="outline"
-            >
-              <ArrowRight aria-hidden="true" />
-            </Button>
-            {active.href && (
-              <Button href={active.href} variant="outline">
-                Open full page ↗
-              </Button>
-            )}
-          </nav>
-          <nav aria-label="Gallery thumbnails" className={galleryLightboxStyles.thumbnails}>
-            {items.map((item, itemIndex) => (
-              <Button
-                aria-label={`Show ${item.title}`}
-                aria-pressed={itemIndex === index}
-                className={galleryLightboxStyles.thumbnail}
-                key={item.id}
-                onClick={() => onIndexChange(itemIndex)}
                 variant="outline"
               >
-                <span aria-hidden="true" className={galleryLightboxStyles.thumbnailArt}>
-                  {item.thumbnail}
-                </span>
-                <span className={galleryLightboxStyles.thumbnailTitle}>{item.title}</span>
+                <ArrowLeft aria-hidden="true" />
               </Button>
-            ))}
-          </nav>
+              <span aria-live="polite" className="px-xs text-sm text-muted-foreground tabular-nums">
+                {(index ?? 0) + 1} / {items.length}
+              </span>
+              <Button
+                aria-label="Next item"
+                disabled={index === items.length - 1}
+                onClick={() => move(1)}
+                size="icon"
+                variant="outline"
+              >
+                <ArrowRight aria-hidden="true" />
+              </Button>
+              {active.href && (
+                <Button href={active.href} variant="outline">
+                  Open full page ↗
+                </Button>
+              )}
+            </nav>
+            <nav aria-label="Gallery thumbnails" className={galleryLightboxStyles.thumbnails}>
+              {items.map((item, itemIndex) => (
+                <Button
+                  aria-label={`Show ${item.title}`}
+                  aria-pressed={itemIndex === index}
+                  className={galleryLightboxStyles.thumbnail}
+                  key={item.id}
+                  onClick={() => onIndexChange(itemIndex)}
+                  variant="outline"
+                >
+                  <span aria-hidden="true" className={galleryLightboxStyles.thumbnailArt}>
+                    {item.thumbnail}
+                  </span>
+                  <span className={galleryLightboxStyles.thumbnailTitle}>{item.title}</span>
+                </Button>
+              ))}
+            </nav>
+          </Flex>
         </DialogContent>
       )}
     </Dialog>

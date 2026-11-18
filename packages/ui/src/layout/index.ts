@@ -8,7 +8,7 @@ export * from "./flex";
 export * from "./hero";
 export { MasonryGrid, type MasonryGridProps } from "./masonry-grid";
 export * from "./page-shell";
-export * from "./page-variants";
+export * from "./page-variants/styles";
 export * from "./paper";
 export * from "./resizable";
 export * from "./scroll-button";

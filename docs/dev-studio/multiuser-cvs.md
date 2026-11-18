@@ -1,6 +1,6 @@
 # Personal CV workspaces
 
-Every confirmed Google (or existing email/password) user can open `/admin`, which redirects to their own `/{username}/edit` page. The server verifies the Supabase identity, finds that UUID's unique profile, and creates a private starter CV if none exists. Display name/email can prefill from that identity; no experiences, projects, skills, or other facts are copied from Yusuf's profile. Google profile metadata never grants ownership or moderation privileges.
+Every confirmed Google (or existing email/password) user can open `/studio`, which redirects to their own `/{username}/edit` page. The server verifies the Supabase identity, finds that UUID's unique profile, and creates a private starter CV if none exists. Display name/email can prefill from that identity; no experiences, projects, skills, or other facts are copied from Yusuf's profile. Google profile metadata never grants ownership or moderation privileges.
 
 Each account owns its contact/career content, theme, PDF page size and text size, contact visibility and optional sections. The PDF uses that account's accent. Save writes one validated document and revision. Stale saves return a conflict. The server chooses the profile from the session; clients cannot select another user's workspace by supplying an ID or owner in their payload.
 

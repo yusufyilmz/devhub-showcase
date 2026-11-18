@@ -1,0 +1,214 @@
+import { type BrowserContext, expect, test } from "@playwright/test";
+
+import { urls } from "@shared/config/urls";
+
+import { openEditor, selectEditorSection, showEditorPreview } from "../../support/editor";
+import { confirmPublication } from "../../support/publication";
+
+async function signIn(context: BrowserContext, id: string, email: string) {
+  const exp = Math.floor(Date.now() / 1000) + 3600;
+  const token = [
+    Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString("base64url"),
+    Buffer.from(JSON.stringify({ aud: "authenticated", exp, sub: id })).toString("base64url"),
+    Buffer.from("fixture-only-signature").toString("base64url"),
+  ].join(".");
+  const session = {
+    access_token: token,
+    expires_at: exp,
+    expires_in: 3600,
+    refresh_token: "fixture-refresh",
+    token_type: "bearer",
+    user: { email, id },
+  };
+  await context.addCookies([
+    {
+      name: "sb-127-auth-token",
+      sameSite: "Lax",
+      url: "http://localhost:3100",
+      value: `base64-${Buffer.from(JSON.stringify(session)).toString("base64url")}`,
+    },
+  ]);
+}
+test("signed out visitors cannot open management pages or create temporary profiles", async ({
+  page,
+}) => {
+  expect((await page.goto("/studio/portfolios"))?.status()).toBe(404);
+  const result = await page.request.post(urls.studio.managed(), {
+    data: {},
+    headers: { Origin: "http://localhost:3100" },
+  });
+  expect(result.status()).toBe(403);
+  const pdf = await page.request.get(
+    "/studio/portfolios/99999999-9999-4999-8999-999999999999/cv.pdf",
+  );
+  expect(pdf.status()).toBe(403);
+});
+test("an administrator creates, edits, publishes, hides and transfers an imported portfolio", async ({
+  page,
+  context,
+}, info) => {
+  const n = info.project.name.startsWith("mobile") ? 1 : 0;
+  await signIn(context, `99999999-9999-4999-8999-99999999999${n}`, `manager${n}@example.test`);
+  await page.goto("/studio/portfolios");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Manage portfolios");
+  const launch = page.getByRole("button", { name: "Create a portfolio" });
+  await launch.click();
+  const dialog = page.getByRole("dialog", { name: "New managed portfolio" });
+  await dialog.getByRole("searchbox", { name: "Find a section" }).fill("FAQ");
+  await dialog.getByRole("button", { exact: true, name: "FAQ" }).click();
+  await expect(dialog.getByRole("region", { name: "FAQ section example" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await expect(launch).toBeFocused();
+  await launch.click();
+  await page.getByLabel("Import portfolio JSON").setInputFiles({
+    buffer: Buffer.from(
+      JSON.stringify({
+        profile: {
+          about: ["Work and visual stories."],
+          appearance: {
+            accent: "violet",
+            defaultTheme: "dark",
+            theme: "bloom",
+          },
+          cvUrl: "/cv.pdf",
+          education: [],
+          email: "pending@example.com",
+          experiences: [],
+          github: "",
+          languages: [],
+          linkedin: "",
+          location: "Not specified",
+          name: "Creative Import",
+          phone: "",
+          portfolioType: "designer",
+          projects: [],
+          skills: { Creative: ["Illustration"] },
+          summary: "An imported creative portfolio.",
+          templateChosen: true,
+          title: "Visual designer",
+          website: "",
+        },
+        username: `managed-import-${n}`,
+      }),
+    ),
+    mimeType: "application/json",
+    name: "portfolio.json",
+  });
+  await expect(page.getByLabel("Name", { exact: true })).toHaveValue("Creative Import");
+  await page.getByRole("button", { name: "Create private portfolio" }).click();
+  await expect(page).toHaveURL(/\/studio\/portfolios\/[a-f0-9-]+$/);
+  const editorUrl = page.url();
+  await openEditor(page);
+  await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
+    "Creative Import",
+  );
+  await selectEditorSection(page, "Publishing");
+  await expect(page.getByText("Your saved draft is private until you publish it.")).toBeVisible();
+  const privatePdf = await page.request.get(`${editorUrl}/cv.pdf`);
+  expect(privatePdf.status()).toBe(200);
+  expect((await privatePdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
+  await selectEditorSection(page, "Profile");
+  await page.getByRole("textbox", { exact: true, name: "Full name" }).fill("Creative Managed");
+  await selectEditorSection(page, "Publishing");
+  await page.getByLabel("Username", { exact: true }).fill(`managed-portfolio-${n}`);
+  await page.getByRole("button", { name: "Save changes" }).click();
+  await confirmPublication(page);
+  await expect(page.locator(".editor-success")).toContainText("Saved");
+  await expect(page).toHaveURL(editorUrl);
+  await page.reload();
+  await openEditor(page);
+  await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
+    "Creative Managed",
+  );
+  await selectEditorSection(page, "AI profile");
+  await expect(page.locator(".ai-profile-json")).toContainText("Creative Managed");
+  await selectEditorSection(page, "Profile");
+  await page.screenshot({
+    fullPage: true,
+    path: info.outputPath("managed-editor.png"),
+  });
+  const visitor = await context.browser()?.newContext();
+  if (!visitor) throw new Error("Missing browser");
+  const publicPage = await visitor.newPage();
+  await publicPage.goto(`http://localhost:3100/managed-portfolio-${n}`);
+  await expect(publicPage.getByRole("heading", { level: 1 })).toContainText("Creative Managed");
+  await selectEditorSection(page, "Publishing");
+  await page.getByRole("button", { exact: true, name: "Withdraw public website and CV" }).click();
+  await expect(page.getByText("Your saved draft is private until you publish it.")).toBeVisible();
+  expect((await publicPage.reload())?.status()).toBe(404);
+  await showEditorPreview(page);
+  await page.getByLabel("Owner account email").fill("missing@example.test");
+  page.once("dialog", (dialog) => dialog.accept());
+  await page.getByRole("button", { name: "Transfer portfolio" }).click();
+  await expect(page.locator(".editor-alert")).toContainText("sign in with Google");
+  await page.getByLabel("Owner account email").fill(`recipient${n}@example.test`);
+  page.once("dialog", (dialog) => dialog.accept());
+  await page.getByRole("button", { name: "Transfer portfolio" }).click();
+  await expect(page).toHaveURL("/studio/portfolios");
+  await expect(page.getByRole("link", { name: "Edit portfolio" })).toHaveCount(0);
+  expect((await page.request.get(`${editorUrl}/cv.pdf`)).status()).toBe(403);
+  expect(
+    (
+      await page.request.get(editorUrl.replace("/studio/portfolios/", `${urls.studio.managed()}/`))
+    ).status(),
+  ).toBe(403);
+  await context.clearCookies();
+  await signIn(context, `88888888-8888-4888-8888-88888888888${n}`, `recipient${n}@example.test`);
+  await page.goto(`/managed-portfolio-${n}/edit`);
+  await openEditor(page);
+  await expect(page.getByRole("textbox", { exact: true, name: "Full name" })).toHaveValue(
+    "Creative Managed",
+  );
+  expect((await page.goto("/studio/portfolios"))?.status()).toBe(404);
+  await visitor.close();
+});
+
+test("admin appearance controls stay separate and compact", async ({ page, context }, info) => {
+  const n = info.project.name.startsWith("mobile") ? 1 : 0;
+  await signIn(context, `99999999-9999-4999-8999-99999999999${n}`, `manager${n}@example.test`);
+  await page.goto("/studio/portfolios");
+  const launcher = page.getByRole("button", { name: "Appearance controls" });
+  const profileMenu = page.getByRole("button", { exact: true, name: "Profile menu" });
+  const settings = page.getByRole("button", { exact: true, name: "Theme settings" });
+  await launcher.click();
+  await expect(settings).toBeVisible();
+  const a = await profileMenu.boundingBox();
+  const b = await settings.boundingBox();
+  expect(a).not.toBeNull();
+  expect(b).not.toBeNull();
+  if (a && b) {
+    const separateHorizontally = a.x + a.width <= b.x || b.x + b.width <= a.x;
+    const separateVertically = a.y + a.height <= b.y || b.y + b.height <= a.y;
+    expect(separateHorizontally || separateVertically).toBe(true);
+  }
+  await settings.click();
+  await page.getByRole("button", { exact: true, name: "Font size: 6xl" }).click();
+  await page.getByRole("button", { exact: true, name: "Spacing: spacious" }).click();
+  await page.getByRole("button", { exact: true, name: "Palette: violet" }).click();
+  await expect(page.getByRole("dialog")).toBeInViewport();
+  await page.keyboard.press("Escape");
+  await page.reload();
+  await openEditor(page);
+  await expect(page.locator("html")).toHaveAttribute("data-font-size", "6xl");
+  await expect(launcher).toHaveCSS("width", "40px");
+  await expect(profileMenu).toHaveCSS("width", "40px");
+  await profileMenu.click();
+  await expect(page.getByRole("menuitem", { name: "Manage portfolios" })).toHaveAttribute(
+    "href",
+    "/studio/portfolios",
+  );
+  await page.keyboard.press("Escape");
+  await launcher.click();
+  await expect(settings).toHaveCSS("width", "32px");
+  const header = await page.locator(".admin-brand").boundingBox();
+  expect(header).not.toBeNull();
+  if (header) expect(header.height).toBeLessThan(220);
+  await expect(
+    page.getByRole("heading", { exact: true, name: "Manage portfolios" }),
+  ).toBeInViewport();
+  await page.screenshot({ path: `/tmp/admin-controls-${info.project.name}.png` });
+  await settings.click();
+  await page.getByRole("button", { name: "Reset appearance" }).click();
+  await page.keyboard.press("Escape");
+});

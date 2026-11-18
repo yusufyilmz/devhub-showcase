@@ -1,0 +1,36 @@
+import { pageProfile } from "@fixtures/page-profile";
+import { PortfolioStoryFrame } from "@fixtures/portfolio-story-frame";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+
+import { EngineerPage } from "@/views/engineer/EngineerPage";
+
+const meta = {
+  args: {
+    profile: {
+      ...pageProfile,
+      portfolioType: "engineer",
+      sectionSettings: {
+        projects: { renderer: "project-cards" },
+        skills: { renderer: "skill-list" },
+      },
+      title: "Storybook App Assistant/Portfolio/Engineer Page/Engineerpage",
+    },
+    resources: { educations: [], experiences: [], projects: [], referrals: [], skills: {} },
+  },
+  component: EngineerPage,
+  decorators: [
+    (Story) => (
+      <PortfolioStoryFrame fullBleed>
+        <Story />
+      </PortfolioStoryFrame>
+    ),
+  ],
+  parameters: { layout: "fullscreen", pageCanvas: true },
+  title: "Assistant/Portfolio/Engineer Page",
+} satisfies Meta<typeof EngineerPage>;
+
+export default meta;
+export const Published: StoryObj<typeof meta> = {};
+export const Spotlight: StoryObj<typeof meta> = {
+  args: { featured: true, profile: { ...meta.args.profile, cvUrl: "/alex-morgan/cv.pdf" } },
+};

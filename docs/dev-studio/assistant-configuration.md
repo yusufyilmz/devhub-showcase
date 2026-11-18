@@ -45,8 +45,8 @@ agent must extract stated facts only into the supplied extraction schema.
 
 ## Interfaces
 
-The homepage composer opens /admin/chat and transfers its draft through sessionStorage,
-not URL parameters. /admin/chat requires the owner's confirmed session and opens a
+The homepage composer opens /studio/chat and transfers its draft through sessionStorage,
+not URL parameters. /studio/chat requires the owner's confirmed session and opens a
 dedicated conversation screen with a workspace sidebar, centered empty state and
 compact composer. It reuses the assistant's validated proposal/review/apply flow.
 Explicit save uses the profile endpoint and saved revision. Saving a published

@@ -34,7 +34,7 @@ export function StudioShell({
               aria-label="Studio navigation"
               className="flex items-center gap-1 max-[767px]:col-span-full max-[767px]:row-start-2 [&_a]:h-auto [&_a]:min-h-[2.125rem] [&_a]:px-2.5 [&_a]:text-muted-foreground [&_a:hover]:bg-secondary [&_a:hover]:text-foreground"
             >
-              <Button href="/admin" variant="ghost">
+              <Button href="/studio" variant="ghost">
                 Workspace
               </Button>
               <Button href="/#examples" variant="ghost">
@@ -54,7 +54,7 @@ export function StudioShell({
       </Header>
       {children}
       {showFooter && (
-        <HomeFooter action={{ href: "/admin", label: "Open studio", signedIn: true }} />
+        <HomeFooter action={{ href: "/studio", label: "Open studio", signedIn: true }} />
       )}
     </div>
   );

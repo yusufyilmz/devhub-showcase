@@ -24,8 +24,8 @@ import {
   SummarySection,
 } from "@shared/ui/sections";
 
+import { RegisteredSections } from "../../../../../apps/my-dev-studio/views/published/registered-sections";
 import { ChatSection } from "../chat/chat-section";
-import { RegisteredSections } from "./published-page/registered-sections";
 
 interface EngineerPortfolioProps {
   chatIdentity?: {

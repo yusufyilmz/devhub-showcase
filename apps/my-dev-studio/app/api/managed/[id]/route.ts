@@ -1,12 +1,12 @@
 import { readPublicProfile } from "@shared/lib/published-profile";
 
-import { sameOrigin } from "@/features/admin/admin-auth";
-import { managedFailure, privateHeaders, readManagedBody } from "@/features/management/managed-api";
+import { sameOrigin } from "@/services/admin/get-auth";
+import { managedFailure, privateHeaders, readManagedBody } from "@/services/management/get-api";
 import {
   managedRepository,
   requirePortfolioAdmin,
   saveManaged,
-} from "@/features/management/managed-portfolios";
+} from "@/services/management/get-portfolios";
 
 export async function PUT(request: Request, context: { params: Promise<{ id: string }> }) {
   if (!sameOrigin(request)) return Response.json({ error: "Invalid origin." }, { status: 403 });

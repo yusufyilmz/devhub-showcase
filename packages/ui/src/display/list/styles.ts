@@ -3,7 +3,9 @@ export const listItemStyles = {
 } as const;
 
 export function listClassName(...values: unknown[]): string {
-  return `overflow-y-auto overflow-x-hidden pl-2 rounded-lg shadow-md ${values[0]} ${values[1]}`;
+  return values
+    .filter((value): value is string => typeof value === "string" && value.length > 0)
+    .join(" ");
 }
 
 export function listItemClassName(...values: unknown[]): string {

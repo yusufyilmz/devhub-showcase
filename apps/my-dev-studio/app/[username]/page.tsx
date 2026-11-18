@@ -2,16 +2,15 @@ import type { Metadata } from "next";
 
 import { AgentCompanion } from "@shared/assistant/agent-companion";
 import { portfolioGuide } from "@shared/assistant/companion-guides";
-import { PortfolioLayout } from "@shared/assistant/portfolio";
 import { createPortfolioMetadata } from "@shared/assistant/portfolio-metadata";
 
-import { OwnerEditLink } from "@/features/admin/owner-edit-link";
-
-import { platformSeo } from "../_site";
-import { EngineerPortfolio } from "./_engineer-portfolio";
-import { getUsernameProfile } from "./_profile";
-import { loadPageResources } from "./_resources";
-import { premiumChatAvailable } from "./chat/_access";
+import { premiumChatAvailable } from "@/services/chat/get-access";
+import { EngineerPortfolio } from "@/services/portfolio/engineer-portfolio";
+import { getUsernameProfile } from "@/services/portfolio/get-profile";
+import { loadPageResources } from "@/services/portfolio/get-resources";
+import { platformSeo } from "@/services/site/get-site";
+import { PortfolioLayout } from "@/views/published/PortfolioLayout";
+import { OwnerEditLink } from "@/views/user/OwnerEditLink";
 
 export const maxDuration = 60;
 

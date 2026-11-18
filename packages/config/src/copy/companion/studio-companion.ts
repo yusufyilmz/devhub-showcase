@@ -7,7 +7,7 @@ export const studioCompanionFeatures = [
       "Your private workspace",
       "Want to work on your portfolio? Open your workspace to edit your profile and CV in one place.",
       "Home",
-      "/admin",
+      "/studio",
       "Open workspace",
     ],
     [
@@ -174,7 +174,7 @@ export const studioCompanionFeatures = [
       "Private AI editing",
       "If your plan includes AI editing, I can suggest wording or draft changes for you to review.",
       "AI assistant",
-      "/admin/chat",
+      "/studio/chat",
       "Open Studio assistant",
     ],
     [
@@ -182,7 +182,7 @@ export const studioCompanionFeatures = [
       "Writing, feedback and interview prep",
       "Studio chat can help you review your portfolio, rewrite a passage or prepare for a job interview when the tools are enabled.",
       "AI assistant",
-      "/admin/chat",
+      "/studio/chat",
       "Open Studio assistant",
     ],
     [
@@ -190,7 +190,7 @@ export const studioCompanionFeatures = [
       "Public portfolio assistant",
       "Eligible accounts can enable visitor questions about their published work in Plan and usage.",
       undefined,
-      "/admin/billing",
+      "/studio/billing",
       "Open Plan and usage",
     ],
     [
@@ -198,7 +198,7 @@ export const studioCompanionFeatures = [
       "Plans and AI usage",
       "Check your plan, assistant allowances and feature readiness in Plan and usage.",
       "Home",
-      "/admin/billing",
+      "/studio/billing",
       "Open Plan and usage",
     ],
     [

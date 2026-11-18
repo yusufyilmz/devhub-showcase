@@ -11,3 +11,4 @@ export {
   DialogTitle,
   DialogTrigger,
 } from "./Dialog";
+export type { DialogContentOptions, DialogSize } from "./types";

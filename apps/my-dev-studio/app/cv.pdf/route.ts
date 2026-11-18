@@ -3,7 +3,7 @@ import { unstable_rethrow } from "next/navigation";
 import { renderCv } from "@shared/assistant/cv";
 import template from "@shared/assistant/cv.hbs";
 
-import { getPublishedProfile } from "./_profile";
+import { getPublishedProfile } from "@/services/cv/get-published-profile";
 
 export const runtime = "nodejs";
 

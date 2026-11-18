@@ -10,7 +10,7 @@ vi.mock("@shared/lib/published-profile", () => ({
   readPublicProfileByUsername: mocks.publicRead,
   resolvePublishedUsername: mocks.resolve,
 }));
-vi.mock("../../api/cv/_response", () => ({ cvResponse: mocks.render }));
+vi.mock("@/services/cv/get-response", () => ({ cvResponse: mocks.render }));
 
 import { GET } from "./route";
 

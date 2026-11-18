@@ -6,10 +6,10 @@ const mocks = vi.hoisted(() => ({
   render: vi.fn(),
   workspace: vi.fn(),
 }));
-vi.mock("@/features/admin/admin-auth", () => ({
+vi.mock("@/services/admin/get-auth", () => ({
   requireWorkspace: mocks.workspace,
 }));
-vi.mock("./_response", () => ({ cvResponse: mocks.render }));
+vi.mock("@/services/cv/get-response", () => ({ cvResponse: mocks.render }));
 
 import { GET } from "./route";
 

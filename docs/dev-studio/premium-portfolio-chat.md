@@ -1,10 +1,10 @@
 # Premium portfolio chat
 
-The reusable PortfolioChat UI lives in `@shared/assistant/chat/portfolio` (`packages/assistant/src/components/chat/portfolio-chat`), with a small app transport adapter in `apps/my-dev-studio/app/api/chat/stream/_access.ts` and `app/[username]/chat/_access.ts`. Published named portfolios across all four layouts can display it when their current owner has an active assigned Pro entitlement and explicitly enabled chat. Free, private, transferred, unassigned or disabled portfolios cannot invoke it. The existing main portfolio assistant retains its original configuration and limits; it is not charged twice.
+The reusable PortfolioChat UI lives in `@shared/assistant/chat/portfolio` (`packages/assistant/src/components/chat/portfolio-chat`), with a small app transport adapter in `apps/my-dev-studio/services/chat/get-stream-access.ts` and `services/chat/get-access.ts`. Published named portfolios across all four layouts can display it when their current owner has an active assigned Pro entitlement and explicitly enabled chat. Free, private, transferred, unassigned or disabled portfolios cannot invoke it. The existing main portfolio assistant retains its original configuration and limits; it is not charged twice.
 
 ## Owner setup
 
-Apply premium_chat_widget after the billing migrations. Existing assignments default to disabled. In /admin/billing, an active Pro owner can enable chat for their own portfolio. This assigns that portfolio and sets chat_enabled. Disabling removes the assignment, including when a subscription is no longer active. Usage is account scoped and is not reset by enabling/disabling or reassigning. Managed temporary records have no owner and are ineligible. Enabling does not publish a private portfolio.
+Apply premium_chat_widget after the billing migrations. Existing assignments default to disabled. In /studio/billing, an active Pro owner can enable chat for their own portfolio. This assigns that portfolio and sets chat_enabled. Disabling removes the assignment, including when a subscription is no longer active. Usage is account scoped and is not reset by enabling/disabling or reassigning. Managed temporary records have no owner and are ineligible. Enabling does not publish a private portfolio.
 
 The billing page shows reserved chat attempts and the period allowance. Stripe sandbox checkout remains independently configured and still needs actual end-to-end verification. This change neither applies production SQL nor grants subscriptions.
 

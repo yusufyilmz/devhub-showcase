@@ -32,13 +32,13 @@ The signed-in [profile menu](testing/manual/profile-menu.md) provides account na
 
 ## Job Hunter and LinkedIn alerts
 
-Confirmed owners can use `/admin/jobs` to keep private saved searches, matches, alerts and application status. Configured provider discovery and CV matching can suggest jobs. Owners can prepare and edit a tailored CV summary and cover letter before applying on the original job site. Scheduled scans, AI matching and browser alerts require their documented configuration. See [Job Hunter](testing/manual/job-hunter.md).
+Confirmed owners can use `/studio/jobs` to keep private saved searches, matches, alerts and application status. Configured provider discovery and CV matching can suggest jobs. Owners can prepare and edit a tailored CV summary and cover letter before applying on the original job site. Scheduled scans, AI matching and browser alerts require their documented configuration. See [Job Hunter](testing/manual/job-hunter.md).
 
 LinkedIn email alerts can be forwarded to a private inbox when the inbound relay is configured. Owners review imported links and choose what to keep. A reviewed job can be saved without a score. See [LinkedIn alert setup and verification](testing/manual/linkedin-job-alerts.md).
 
 ## Personal workspaces and sharing
 
-Confirmed users enter through `/admin` and reach their own `/{username}/edit` workspace. A new account starts with a private profile and guided setup. Signing in never grants access to another person's editor or site moderation.
+Confirmed users enter through `/studio` and reach their own `/{username}/edit` workspace. A new account starts with a private profile and guided setup. Signing in never grants access to another person's editor or site moderation.
 
 The studio edits profile/contact details, About, experience and achievements, projects, education, skills and spoken languages. Collections support editing and reordering. Changes remain a draft until **Save changes** succeeds. Discard restores the saved state; stale revisions produce a conflict instead of overwriting newer work.
 
@@ -138,9 +138,9 @@ Automated coverage includes layout/theme/language combinations, profile saves an
 
 Premium entitlements, bounded usage, sandbox billing, visitor chat and private editing proposals are implemented. Real checkout/webhook and paid model verification remain independent operational checks before launch. External commerce, automatic social feeds and media upload/transcoding need separate integrations. Hosted monitoring remains a setup plan in [observability](observability.md), not an active service.
 
-Stripe sandbox billing is available at `/admin/billing` once its server configuration and migrations are installed. Checkout, customer portal and signed subscription webhooks are implemented; live keys remain disabled and actual sandbox checkout verification is required. See [setup and limitations](/docs/dev-studio/stripe-billing.md).
+Stripe sandbox billing is available at `/studio/billing` once its server configuration and migrations are installed. Checkout, customer portal and signed subscription webhooks are implemented; live keys remain disabled and actual sandbox checkout verification is required. See [setup and limitations](/docs/dev-studio/stripe-billing.md).
 
-Pro owners can opt into a public portfolio assistant at `/admin/billing`. The reusable chat widget supports all portfolio layouts, with public-only context, isolated session history and reserved usage accounting. Existing main portfolio chat keeps its original behavior. See [premium portfolio chat](/docs/dev-studio/premium-portfolio-chat.md) for migration and verification requirements.
+Pro owners can opt into a public portfolio assistant at `/studio/billing`. The reusable chat widget supports all portfolio layouts, with public-only context, isolated session history and reserved usage accounting. Existing main portfolio chat keeps its original behavior. See [premium portfolio chat](/docs/dev-studio/premium-portfolio-chat.md) for migration and verification requirements.
 
 ## Private AI editing assistant
 

@@ -6,7 +6,7 @@ const mocks = vi.hoisted(() => ({ available: vi.fn(), read: vi.fn() }));
 vi.mock("@shared/lib/published-profile", () => ({
   readPublicProfileByUsername: mocks.read,
 }));
-vi.mock("./_access", () => ({ premiumChatAvailable: mocks.available }));
+vi.mock("@/services/chat/get-access", () => ({ premiumChatAvailable: mocks.available }));
 vi.mock("@shared/assistant/visitor-chat", () => ({ PortfolioVisitorChat: () => null }));
 
 import PortfolioChatPage from "./page";

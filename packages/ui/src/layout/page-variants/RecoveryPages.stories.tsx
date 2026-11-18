@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { ErrorPage } from "../../feedback/error-page";
-import { NotFoundPage } from "../not-found-page/NotFoundPage";
+import { ErrorPage } from "../../../../../apps/my-dev-studio/views/error/ErrorPage";
+import { NotFoundPage } from "../../../../../apps/my-dev-studio/views/not-found/NotFoundPage";
 
 const meta = {
   component: NotFoundPage,

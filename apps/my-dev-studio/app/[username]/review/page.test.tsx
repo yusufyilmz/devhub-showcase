@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({ pending: vi.fn(), requireAdmin: vi.fn() }));
 
-vi.mock("@/features/admin/admin-auth", () => ({ requireAdmin: mocks.requireAdmin }));
+vi.mock("@/services/admin/get-auth", () => ({ requireAdmin: mocks.requireAdmin }));
 vi.mock("@shared/lib/studio", () => ({
   ReviewService: class {
     getPendingReviews = mocks.pending;

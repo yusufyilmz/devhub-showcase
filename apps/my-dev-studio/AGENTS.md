@@ -14,11 +14,12 @@ This file applies to `apps/my-dev-studio` only. Package name `my-dev-studio`. Th
 
 ### Where code goes
 
-Stop at the first yes.
+Stop at the first yes. The full decision list is [docs/conventions.md](../../docs/conventions.md#where-code-goes).
 
-1. A URL, metadata file, or HTTP handler belongs under `app/`. Keep the route thin.
-2. Session, cookie, environment, or navigation binding stays beside that route. Admin, billing, and management may keep their existing feature modules.
-3. Shared database and domain workflows belong in `@shared/lib`. Chat and assistant workflows belong in `@shared/assistant`. Controls belong in `@shared/ui`.
+1. A URL, metadata file, or HTTP handler belongs under `app/`: `page`, `route`, `actions`, and other Next.js page variants only.
+2. A screen used only by this app belongs under `views/<domain>`.
+3. Calling or combining services, including API and server functions for this app, belongs in `services/<domain>`.
+4. Reusable UI belongs in `@shared/ui`. Reusable services belong in `@shared/lib`. Generic helpers belong in `@shared/utils`.
 
 Do not add a file that only re-exports a shared component. Do not recreate removed `features/home`, `features/reviews`, `features/portfolio`, `features/platform`, or `features/chat` folders. There is no `lib` folder here and no `apps/web` package.
 

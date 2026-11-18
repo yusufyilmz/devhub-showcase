@@ -22,7 +22,7 @@ describe("Trello board creation form", () => {
         status: "created",
       });
 
-    render(<TrelloBoardCreateForm action={create} boardsHref="/admin/trello" />);
+    render(<TrelloBoardCreateForm action={create} boardsHref="/studio/trello" />);
     const name = screen.getByRole("textbox", { name: "Board name" });
     fireEvent.change(name, { target: { value: "Roadmap" } });
     fireEvent.change(screen.getByRole("combobox", { name: "Starting layout" }), {
@@ -39,7 +39,7 @@ describe("Trello board creation form", () => {
       "https://trello.com/b/abc",
     );
     expect(screen.getByRole("link", { name: "Back to boards" }).getAttribute("href")).toBe(
-      "/admin/trello",
+      "/studio/trello",
     );
   });
 });

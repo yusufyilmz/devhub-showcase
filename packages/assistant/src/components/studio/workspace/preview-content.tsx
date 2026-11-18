@@ -1,8 +1,11 @@
 "use client";
 import { type PortfolioProfile, projectPublicProfile } from "@shared/config";
 
+import {
+  type ArrangePortfolioSections,
+  PortfolioLayout,
+} from "../../../../../../apps/my-dev-studio/views/published/PortfolioLayout";
 import { EngineerPortfolioView } from "../../portfolio/engineer-portfolio";
-import { type ArrangePortfolioSections, PortfolioLayout } from "../../portfolio/index";
 
 export function PreviewContent({
   arrange,

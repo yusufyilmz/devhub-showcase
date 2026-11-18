@@ -1,6 +1,6 @@
 import { getPortfolioExample } from "@shared/assistant/examples-data";
 
-import { cvResponse } from "../../../../api/cv/_response";
+import { cvResponse } from "@/services/cv/get-response";
 
 export const runtime = "nodejs";
 

@@ -10,4 +10,9 @@ export const dialogStyles = {
   element1:
     "absolute end-sm top-sm grid size-8 place-items-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:size-4",
   element2: "sr-only",
+  sizes: {
+    lg: "sm:max-w-4xl",
+    md: "sm:max-w-lg",
+    sm: "sm:max-w-sm",
+  },
 } as const;

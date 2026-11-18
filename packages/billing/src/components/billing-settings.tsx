@@ -39,7 +39,7 @@ export function BillingSettings({
           )}
           <BillingControls />
           <ChatSettings />
-          <a className="text-[var(--primary)] underline-offset-4" href="/admin">
+          <a className="text-[var(--primary)] underline-offset-4" href="/studio">
             Back to your portfolio
           </a>
         </section>

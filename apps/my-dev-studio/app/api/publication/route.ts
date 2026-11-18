@@ -1,4 +1,4 @@
-import { changePublication, publicationStatus } from "./_handlers";
+import { changePublication, publicationStatus } from "@/services/publication/get-handlers";
 export async function GET() {
   return publicationStatus();
 }

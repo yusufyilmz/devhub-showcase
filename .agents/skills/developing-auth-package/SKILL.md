@@ -10,7 +10,7 @@ description: Change Supabase session helpers and Google sign-in in @shared/auth.
 
 `packages/auth` is `@shared/auth`. It proves a confirmed identity and refreshes a Supabase session. It does not decide who owns a portfolio, who may publish, or who may transfer a managed profile. Those checks stay in the app feature and in `@shared/lib`, with RLS behind them.
 
-Read [the file map](references/map.md) and [packages/auth/CATALOG.md](../../../packages/auth/CATALOG.md). The app wires handlers in `apps/my-dev-studio/features/admin/auth-handlers.ts`. Read [mydevstudio-business](../mydevstudio-business/SKILL.md) before changing what happens after sign-in.
+Read [the file map](references/map.md) and [packages/auth/CATALOG.md](../../../packages/auth/CATALOG.md). The app wires handlers in `apps/my-dev-studio/services/admin/get-auth-handlers.ts`. Read [mydevstudio-business](../mydevstudio-business/SKILL.md) before changing what happens after sign-in.
 
 A client-supplied id is not authority. Do not read a return path from a query parameter or a forwarded host. Do not add a service-role key.
 
@@ -29,14 +29,14 @@ Google proves identity through Supabase. It does not grant portfolio ownership. 
 | Option         | MyDevStudio value  | Rule                               |
 | -------------- | ------------------ | ---------------------------------- |
 | `loginPath`    | `/login`           | Local path only                    |
-| `successPath`  | `/admin`           | Local path only                    |
+| `successPath`  | `/studio`          | Local path only                    |
 | `callbackPath` | `/auth/callback`   | Local path only                    |
 | `createClient` | app server client  | Supplied by the app                |
 | `afterSignIn`  | `requireWorkspace` | App provisioning, not generic auth |
 
 `appPath` rejects a path that does not start with `/`, starts with `//`, or contains a backslash. Keep that check. Register the callback in Supabase and the origin in Google when an environment changes. Sharing this package does not share cookies across domains.
 
-Route files in the app export the handler methods. The package does not contain Next.js route files. Browser code imports `@shared/auth/client`. Server code imports `@shared/auth/server`. Middleware imports `@shared/auth/middleware` for `updateSession`. Keep those entry points split so a client component does not import Next.js server APIs.
+Route files in the app export the handler methods. The package does not contain Next.js route files. Browser code imports `@shared/auth/client`. Server code imports `@shared/auth/server`. Middleware imports `@shared/auth/middleware` for `updateSession`. Keep those entry points split so a client component does not import Next.js server APIs. `createClient` in `src/server/index.ts` is cached for the current request, so every caller in that request shares one cookie-bound client.
 
 Public Supabase URL and key are read in `src/config.ts`. Names of public configuration live in `.env.example`. Do not print values in logs or tests.
 

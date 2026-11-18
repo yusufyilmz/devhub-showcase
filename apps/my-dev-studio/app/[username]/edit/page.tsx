@@ -4,11 +4,10 @@ import { notFound, redirect } from "next/navigation";
 import { ProfileEditor } from "@shared/assistant/studio-workspace";
 import { ReviewSection } from "@shared/ui/sections";
 
-import { requireWorkspace } from "@/features/admin/admin-auth";
-import { UserStorageSync } from "@/features/admin/user-storage-sync";
+import { requireWorkspace } from "@/services/admin/get-auth";
+import { loadPendingPortfolioReviews } from "@/services/review/get-service";
 
-import { loadPendingPortfolioReviews } from "../review/_service";
-import { submitPortfolioReviewAction } from "./review-actions";
+import { submitPortfolioReviewAction } from "./actions";
 
 export const metadata: Metadata = {
   robots: { follow: false, index: false },
@@ -35,27 +34,23 @@ export default async function EditCvPage({
   const canModerate = snapshot.id === "main";
   const openReviews = canModerate && query?.tab === "reviews";
   return (
-    <>
-      <UserStorageSync
-        user={{
-          id: workspace.user.id,
-          name: snapshot.profile.name,
-          ...(workspace.user.email ? { email: workspace.user.email } : {}),
-        }}
-      />
-      <ProfileEditor
-        initial={snapshot}
-        initiallyArranging={initiallyArranging}
-        initialTab={openReviews ? "Reviews" : query?.tab === "sections" ? "Sections" : "Profile"}
-        reviews={
-          canModerate ? (
-            <ReviewSection
-              handleReview={submitPortfolioReviewAction}
-              reviews={await loadPendingPortfolioReviews(workspace.client)}
-            />
-          ) : undefined
-        }
-      />
-    </>
+    <ProfileEditor
+      initial={snapshot}
+      initiallyArranging={initiallyArranging}
+      initialTab={openReviews ? "Reviews" : query?.tab === "sections" ? "Sections" : "Profile"}
+      reviews={
+        canModerate ? (
+          <ReviewSection
+            handleReview={submitPortfolioReviewAction}
+            reviews={await loadPendingPortfolioReviews(workspace.client)}
+          />
+        ) : undefined
+      }
+      user={{
+        id: workspace.user.id,
+        name: snapshot.profile.name,
+        ...(workspace.user.email ? { email: workspace.user.email } : {}),
+      }}
+    />
   );
 }

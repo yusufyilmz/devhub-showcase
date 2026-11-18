@@ -18,7 +18,7 @@ vi.mock("@shared/auth", async (original) => ({
   requireConfirmedUser: mocks.user,
 }));
 vi.mock("@shared/lib/supabase", () => ({ createServerClient: mocks.client }));
-vi.mock("@/features/admin/admin-auth", () => ({
+vi.mock("@/services/admin/get-auth", () => ({
   sameOrigin: (request: Request) => request.headers.get("origin") === "https://example.test",
 }));
 

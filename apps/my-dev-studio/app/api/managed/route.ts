@@ -2,9 +2,9 @@ import { z } from "zod";
 
 import { profileSchema, usernameSchema } from "@shared/lib/profiles";
 
-import { sameOrigin } from "@/features/admin/admin-auth";
-import { managedFailure, privateHeaders, readManagedBody } from "@/features/management/managed-api";
-import { createManaged, requirePortfolioAdmin } from "@/features/management/managed-portfolios";
+import { sameOrigin } from "@/services/admin/get-auth";
+import { managedFailure, privateHeaders, readManagedBody } from "@/services/management/get-api";
+import { createManaged, requirePortfolioAdmin } from "@/services/management/get-portfolios";
 
 const inputSchema = z.object({
   profile: profileSchema,

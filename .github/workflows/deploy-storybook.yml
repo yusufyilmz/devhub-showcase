@@ -18,9 +18,11 @@ on:
 permissions:
   contents: read
 
+# Preview and manual runs replace the previous run for the same ref.
+# Main Pages publishes one deployment at a time and is not cancelled mid-publish.
 concurrency:
-  group: ${{ github.event_name == 'pull_request' && format('storybook-preview-{0}', github.run_id) || 'storybook-pages' }}
-  cancel-in-progress: false
+  group: ${{ github.event_name == 'push' && 'storybook-pages' || format('storybook-{0}', github.ref) }}
+  cancel-in-progress: ${{ github.event_name != 'push' }}
 
 jobs:
   build:

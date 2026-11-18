@@ -1,14 +1,31 @@
 import { authorableSections, authorableSectionTypes, type CustomSection } from "@shared/config";
 
-import { Button } from "../../buttons";
+import { Button } from "../../buttons/button";
 import { Card } from "../../cards";
 import { LibraryPicker } from "../live-section-preview/library-picker";
 import { LiveSectionPreview } from "../live-section-preview/live-section-preview";
 import { sectionExamples } from "../live-section-preview/preview-examples";
 import { SectionCatalogPreview } from "../live-section-preview/section-catalog-preview";
+import { SectionGallery } from "../live-section-preview/section-gallery";
 import { Section } from "../section";
-import { libraryStyles } from "./styles";
+import { type CardButton, cardButton } from "./card-buttons";
+import { libraryStyles, pricingStyles } from "./styles";
 import type { HomeLibrarySectionOptions } from "./types";
+
+type LibraryCard = {
+  articleClass?: string;
+  button: CardButton;
+  buttonClass: string;
+  description?: string;
+  eyebrow: string;
+  eyebrowAs?: "span";
+  eyebrowClass: string;
+  id: string;
+  note?: string;
+  title: string;
+  points?: readonly string[];
+  variant?: "link" | "outline";
+};
 
 const samples: CustomSection[] = [
   {
@@ -101,6 +118,40 @@ const samples: CustomSection[] = [
   },
 ];
 
+const libraryCards: LibraryCard[] = [
+  {
+    articleClass: pricingStyles.element5,
+    button: "cv",
+    buttonClass: libraryStyles.element8,
+    description:
+      "Upload a PDF, DOCX or text CV. OpenAI extracts the details for you to review and edit. Apply only what you want, then save when you are ready.",
+    eyebrow: "START WITH WHAT YOU HAVE",
+    eyebrowAs: "span",
+    eyebrowClass: libraryStyles.element7,
+    id: "cv-import",
+    note: "Sign in first. Import availability depends on the service configuration. Nothing is published automatically.",
+    title: "Your CV, a new beginning.",
+  },
+  {
+    articleClass: pricingStyles.element5,
+    button: "templates",
+    buttonClass: libraryStyles.element11,
+    description:
+      "Save section configurations as private templates, export them as JSON, or review a compatible PageForge import. Include authored content only when you choose to.",
+    eyebrow: "KEEP YOUR FAVORITES",
+    eyebrowAs: "span",
+    eyebrowClass: libraryStyles.element10,
+    id: "templates",
+    points: [
+      "Private template library",
+      "Review before replacing or adding sections",
+      "Keep your identity and sharing settings",
+    ],
+    title: "A starting point you can reuse.",
+    variant: "link",
+  },
+];
+
 const featuredExamples = samples.map((section) => {
   const exampleId = section.sectionType ?? "custom";
   return {
@@ -126,7 +177,7 @@ const libraryExamples = [
     })),
 ];
 
-export function HomeLibrarySection({ href }: HomeLibrarySectionOptions) {
+export function HomeLibrarySection({ action }: HomeLibrarySectionOptions) {
   return (
     <Section asChild>
       <section
@@ -158,42 +209,30 @@ export function HomeLibrarySection({ href }: HomeLibrarySectionOptions) {
           </div>
         </div>
         <LibraryPicker items={libraryExamples} />
+        <div className="mt-md flex justify-center">
+          <SectionGallery />
+        </div>
         <div className={libraryStyles.element6}>
-          <Card asChild layout="plain" surface="portfolio">
-            <article>
-              <span className={libraryStyles.element7}>START WITH WHAT YOU HAVE</span>
-              <h3>Your CV, a new beginning.</h3>
-              <p>
-                Upload a PDF, DOCX or text CV. OpenAI extracts the details for you to review and
-                edit. Apply only what you want, then save when you are ready.
-              </p>
-              <Button className={libraryStyles.element8} href={href}>
-                Start with your CV <span aria-hidden="true">↗</span>
-              </Button>
-              <p className={libraryStyles.element9}>
-                Sign in first. Import availability depends on the service configuration. Nothing is
-                published automatically.
-              </p>
-            </article>
-          </Card>
-          <Card asChild layout="plain" surface="portfolio">
-            <article>
-              <span className={libraryStyles.element10}>KEEP YOUR FAVORITES</span>
-              <h3>A starting point you can reuse.</h3>
-              <p>
-                Save section configurations as private templates, export them as JSON, or review a
-                compatible PageForge import. Include authored content only when you choose to.
-              </p>
-              <ul>
-                <li>Private template library</li>
-                <li>Review before replacing or adding sections</li>
-                <li>Keep your identity and sharing settings</li>
-              </ul>
-              <Button className={libraryStyles.element11} href={href} variant="link">
-                Explore your studio →
-              </Button>
-            </article>
-          </Card>
+          {libraryCards.map((card) => {
+            const button = cardButton(card.button, action);
+            return (
+              <Card asChild key={card.id} layout="plain" surface="portfolio">
+                <article className={card.articleClass}>
+                  {card.eyebrowAs === "span" ? (
+                    <span className={card.eyebrowClass}>{card.eyebrow}</span>
+                  ) : (
+                    <p className={card.eyebrowClass}>{card.eyebrow}</p>
+                  )}
+                  <h3>{card.title}</h3>
+                  {card.description ? <p>{card.description}</p> : null}
+                  <Button className={card.buttonClass} href={button.href} variant={card.variant}>
+                    {button.label}
+                  </Button>
+                  {card.note ? <p className={libraryStyles.element9}>{card.note}</p> : null}
+                </article>
+              </Card>
+            );
+          })}
         </div>
       </section>
     </Section>

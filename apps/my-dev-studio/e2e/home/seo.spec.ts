@@ -8,7 +8,8 @@ test("public discovery lists published profiles and excludes private workspaces"
   const xml = await sitemap.text();
   expect(xml).toContain("http://localhost:3100/yusufyilmz");
   expect(xml).toContain("http://localhost:3100/designer-example");
-  expect(xml).not.toContain("/admin");
+  expect(xml).not.toMatch(/\/studio(?:\/|<)/);
+  expect(xml).not.toMatch(/\/admin(?:\/|<)/);
   expect(xml).not.toContain("private-seo-portfolio");
   expect(xml).not.toContain("/p/examples");
   const robots = await request.get("/robots.txt");

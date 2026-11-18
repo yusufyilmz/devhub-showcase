@@ -4,7 +4,7 @@ import { AuthAccessError, requireConfirmedUser } from "@shared/auth";
 import { type BillingClient, BillingRepository, premiumAiConfigured } from "@shared/billing/server";
 import { createServerClient } from "@shared/lib/supabase";
 
-import { sameOrigin } from "@/features/admin/admin-auth";
+import { sameOrigin } from "@/services/admin/get-auth";
 
 const headers = { "Cache-Control": "private, no-store" };
 const assignment = z

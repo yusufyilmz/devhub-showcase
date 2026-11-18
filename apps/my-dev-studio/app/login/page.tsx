@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { ThemeToggle } from "@shared/ui/components";
 import { SiteLoginScreen } from "@shared/ui/site-login";
 
-import { localTestLoginEnabled } from "@/features/admin/local-test-login";
+import { localTestLoginEnabled } from "@/services/admin/get-local-test-login";
 
 export const metadata: Metadata = {
   robots: { follow: false, index: false },

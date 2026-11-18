@@ -7,8 +7,8 @@ const mocks = vi.hoisted(() => ({
   secret: "fictional-cron-secret-for-test-only",
 }));
 vi.mock("../../../../env", () => ({ env: { CRON_SECRET: mocks.secret } }));
-vi.mock("../../jobs/_config", () => ({ jobsServiceClient: mocks.client }));
-vi.mock("../../jobs/_discovery-worker", () => ({
+vi.mock("@/services/jobs/get-config", () => ({ jobsServiceClient: mocks.client }));
+vi.mock("@/services/jobs/get-discovery-worker", () => ({
   runJobDiscovery: mocks.scan,
   sendJobAlerts: mocks.push,
 }));

@@ -12,7 +12,7 @@ export function StudioCompanion({
     <AgentCompanion
       agent="studio"
       guide={signedIn ? studioHomeGuide : studioPublicGuide}
-      href={signedIn ? "/admin/chat" : onLoginPage ? "/#features" : "/login"}
+      href={signedIn ? "/studio/chat" : onLoginPage ? "/#features" : "/login"}
       label={
         signedIn
           ? "Open Studio assistant"

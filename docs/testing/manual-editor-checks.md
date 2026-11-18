@@ -12,11 +12,11 @@ Replace `test-owner` with the disposable account's actual username. These links 
 | --------------------- | ------------------------------------------------------------------------ | -------------------- |
 | Home                  | [Open home](https://mydevstudio.vercel.app/)                             | `/`                  |
 | Sign in               | [Open sign in](https://mydevstudio.vercel.app/login)                     | `/login`             |
-| Editor entry          | [Open your editor](https://mydevstudio.vercel.app/admin)                 | `/admin`             |
+| Editor entry          | [Open your editor](https://mydevstudio.vercel.app/studio)                | `/studio`            |
 | Test portfolio editor | [Open test-owner editor](https://mydevstudio.vercel.app/test-owner/edit) | `/test-owner/edit`   |
 | Test public portfolio | [Open test-owner portfolio](https://mydevstudio.vercel.app/test-owner)   | `/test-owner`        |
 | Test public CV        | [Open test-owner CV](https://mydevstudio.vercel.app/test-owner/cv.pdf)   | `/test-owner/cv.pdf` |
-| Plan and allowance    | [Open billing](https://mydevstudio.vercel.app/admin/billing)             | `/admin/billing`     |
+| Plan and allowance    | [Open billing](https://mydevstudio.vercel.app/studio/billing)            | `/studio/billing`    |
 
 Editor tabs such as PDF, AI assistant, Section display, Custom sections and Section order share `/test-owner/edit`; they are controls within that screen, not separate routes.
 

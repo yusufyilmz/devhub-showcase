@@ -10,7 +10,7 @@ vi.mock("@shared/lib/supabase", () => ({
     auth: { signInWithPassword: mocks.signIn, signOut: mocks.signOut },
   }),
 }));
-vi.mock("@/features/admin/admin-auth", () => ({ requireWorkspace: mocks.requireWorkspace }));
+vi.mock("@/services/admin/get-auth", () => ({ requireWorkspace: mocks.requireWorkspace }));
 
 import { POST } from "./route";
 

@@ -8,8 +8,11 @@ import { publicChatSources } from "@shared/lib/profiles";
 import type { ChatMessage } from "@shared/lib/types";
 import type { ReferralSection } from "@shared/ui/sections";
 
+import {
+  type ArrangePortfolioSections,
+  EngineerPage,
+} from "../../../../../apps/my-dev-studio/views/engineer/EngineerPage";
 import { ChatSection } from "../chat/chat-section/index";
-import { type ArrangePortfolioSections, EngineerPage } from "./index";
 
 interface EngineerPortfolioProps {
   arrange?: ArrangePortfolioSections;

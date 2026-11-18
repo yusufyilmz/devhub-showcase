@@ -3,6 +3,7 @@ import { z } from "zod";
 export const reservedUsernames = [
   "admin",
   "api",
+  "studio",
   "auth",
   "p",
   "reviews",

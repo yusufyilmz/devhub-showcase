@@ -12,11 +12,13 @@ import { ReviewService } from "@shared/lib/studio";
 import { type ChatMessage, ChatRole, type ReviewState } from "@shared/lib/types";
 import { logger } from "@shared/utils/logger";
 
-import { requireAdmin } from "@/features/admin/admin-auth";
-
-import { answerPremiumChat } from "./[username]/chat/_access";
-import { savePortfolioReferral } from "./[username]/review/_service";
-import { assertCurrentPublication, requireMainPortfolioChat } from "./api/chat/stream/_access";
+import { requireAdmin } from "@/services/admin/get-auth";
+import { answerPremiumChat } from "@/services/chat/get-access";
+import {
+  assertCurrentPublication,
+  requireMainPortfolioChat,
+} from "@/services/chat/get-stream-access";
+import { savePortfolioReferral } from "@/services/review/get-service";
 
 export async function handlePremiumChatAction(
   username: string,

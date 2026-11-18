@@ -4,7 +4,6 @@ export { CvVersionsEditor } from "./cv-versions/editor";
 export { EditorGuidance } from "./editor-guidance";
 export { DraftPreviewPane } from "./editor-workspace/draft-preview-pane";
 export { EditorWorkspace } from "./editor-workspace/editor-workspace";
-export { EngineerPage } from "./engineer-page/EngineerPage";
 export { FieldVisibilityEditor } from "./field-visibility";
 export { GuidedOnboarding, SetupNavigation } from "./guided-onboarding";
 export { JobsDashboard } from "./jobs/dashboard";
@@ -13,11 +12,6 @@ export { PortfolioTypePicker } from "./portfolio-type-picker";
 export { ProfileFields } from "./profile-fields";
 export { ProposalComparison } from "./proposal-comparison";
 export { PublicationControls } from "./publication/editor";
-export { PortfolioLayout } from "./published-page/PortfolioLayout";
-export {
-  type ArrangePortfolioSections,
-  RegisteredSections,
-} from "./published-page/registered-sections";
 export { DraftRecovery } from "./recovery/DraftRecovery";
 export type { SetupStep } from "./recovery/types";
 export { useDraftRecovery } from "./recovery/use-draft-recovery";

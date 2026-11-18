@@ -34,6 +34,7 @@ Package `@shared/runtime` in `packages/runtime`.
 | `src/browser/useOutsideClick.ts`            | `useOutsideClick`                 |
 | `src/browser/useWindowSize.ts`              | `useWindowSize`                   |
 | `src/browser/use-mobile.ts`                 | `useIsMobile`                     |
+| `src/user/useUserStorageSync.ts`            | `useUserStorageSync`              |
 | `src/notifications/NotificationContext.tsx` | Notification context              |
 | `src/notifications/useNotification.ts`      | `useNotification`                 |
 | `src/stores/chatStore.ts`                   | Chat client state                 |

@@ -18,11 +18,12 @@ on:
 permissions:
   contents: read
 
-# PR updates replace obsolete verification.
-# Main pushes are never cancelled to avoid missing deployments.
+# Pull requests and manual runs replace an older run of the same ref.
+# Pushes to main keep a unique group so a later push cannot cancel a release
+# that may only affect the other app.
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  group: ci-${{ github.workflow }}-${{ github.event_name == 'push' && github.run_id || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'push' }}
 
 jobs:
   # ----------------------------------------

@@ -8,7 +8,7 @@ import {
 } from "@shared/lib/profile";
 import { readPublicProfile } from "@shared/lib/published-profile";
 
-import { requireWorkspace, sameOrigin } from "@/features/admin/admin-auth";
+import { requireWorkspace, sameOrigin } from "@/services/admin/get-auth";
 
 export async function GET(request: Request) {
   try {

@@ -8,7 +8,7 @@ const mocks = vi.hoisted(() => ({
   managed: vi.fn(),
   save: vi.fn(),
 }));
-vi.mock("@/features/management/managed-portfolios", () => ({
+vi.mock("@/services/management/get-portfolios", () => ({
   managedRepository: mocks.managed,
   requirePortfolioAdmin: mocks.guard,
   saveManaged: mocks.save,

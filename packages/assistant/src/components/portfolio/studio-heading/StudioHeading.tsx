@@ -16,7 +16,7 @@ export function StudioHeading({
   children?: ReactNode;
 }) {
   return (
-    <Card asChild layout="plain" withAccent withHover={false}>
+    <Card asChild layout="plain" withAccent withBackdrop withHover={false}>
       <header className="mb-[var(--studio-heading-gap,clamp(1.25rem,4vw,2rem))] rounded-2xl border border-border bg-[radial-gradient(ellipse_at_top_right,color-mix(in_srgb,var(--primary)_11%,transparent),transparent_62%),var(--card)] shadow-[0_4px_20px_color-mix(in_srgb,var(--foreground)_6%,transparent)] [&_h1_span]:text-primary">
         <div className="flex flex-col items-stretch gap-5 p-[clamp(1.125rem,4vw,2.25rem)]">
           <div>

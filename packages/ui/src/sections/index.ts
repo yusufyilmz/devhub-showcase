@@ -44,6 +44,7 @@ export {
 export { CustomSection, CustomSectionEditor } from "./custom-section";
 export { CVSection } from "./cv-section";
 export { DashboardSection, DashboardSectionEditor } from "./dashboard-section";
+export { SortableList } from "./editors/sortable-list";
 export { EducationsSection } from "./education-section";
 export { EducationItem } from "./education-section/EducationItem";
 export { ExperienceSection } from "./experience-section";
@@ -69,7 +70,6 @@ export {
   HeroSectionEditor,
   HeroSettingsEditor,
 } from "./hero-section";
-export { HomePage } from "./home-page/HomePage";
 export {
   HomeCapabilitiesSection,
   HomeCTASection,
@@ -96,6 +96,7 @@ export {
 export { type SectionExampleId, sectionExamples } from "./live-section-preview/preview-examples";
 export { SectionCatalog } from "./live-section-preview/section-catalog";
 export { createSectionExample } from "./live-section-preview/section-example";
+export { SectionGallery } from "./live-section-preview/section-gallery";
 export { MapSection, MapSectionEditor } from "./map-section";
 export { MenuSection, MenuSectionEditor } from "./menu-section";
 export {

@@ -12,7 +12,7 @@ vi.mock("@shared/billing/server", () => ({
     assign = mocks.assign;
   },
 }));
-vi.mock("@/features/admin/admin-auth", () => ({
+vi.mock("@/services/admin/get-auth", () => ({
   sameOrigin: (request: Request) => request.headers.get("origin") === "https://example.test",
 }));
 

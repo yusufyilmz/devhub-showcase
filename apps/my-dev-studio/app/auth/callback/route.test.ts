@@ -18,8 +18,8 @@ const client = {
 vi.mock("@shared/lib/supabase", () => ({
   createServerClient: async () => client,
 }));
-vi.mock("@/features/admin/admin-auth", async (original) => ({
-  ...(await original<typeof import("@/features/admin/admin-auth")>()),
+vi.mock("@/services/admin/get-auth", async (original) => ({
+  ...(await original<typeof import("@/services/admin/get-auth")>()),
   requireWorkspace: mocks.owner,
 }));
 
@@ -46,7 +46,7 @@ describe("Callback", () => {
     );
     expect(mocks.exchange).toHaveBeenCalledWith("valid-code");
     expect(mocks.owner).toHaveBeenCalledWith(client);
-    expect(response.headers.get("location")).toBe(`${origin}/admin`);
+    expect(response.headers.get("location")).toBe(`${origin}/studio`);
     expect(response.headers.get("cache-control")).toBe("no-store");
     expect(response.headers.get("referrer-policy")).toBe("no-referrer");
   });

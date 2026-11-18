@@ -69,7 +69,7 @@ export function StudioChat({
             {saving ? "Saving…" : "Save draft"}
           </Button>
         ),
-        editorHref: saved.username ? editCvPath(saved.username) : "/admin",
+        editorHref: saved.username ? editCvPath(saved.username) : "/studio",
         error,
         status,
       }}

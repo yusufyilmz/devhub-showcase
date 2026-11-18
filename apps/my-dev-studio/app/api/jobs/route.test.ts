@@ -4,11 +4,11 @@ const mocks = vi.hoisted(() => ({
   change: vi.fn(async () => ({ ok: true })),
   workspace: vi.fn(async () => ({ user: { id: "confirmed-user" } })),
 }));
-vi.mock("@/features/admin/admin-auth", () => ({
+vi.mock("@/services/admin/get-auth", () => ({
   requireWorkspace: mocks.workspace,
   sameOrigin: (request: Request) => request.headers.get("origin") === "https://studio.test",
 }));
-vi.mock("./_workspace", () => ({
+vi.mock("@/services/jobs/get-workspace", () => ({
   changeJobs: mocks.change,
   JobsError: class extends Error {},
   loadJobs: vi.fn(),

@@ -49,7 +49,7 @@ describe("StripeBilling", () => {
     list.mockResolvedValue({ data: [], has_more: false });
     await billing.checkout("cus_test", "stable-key");
     expect(create.mock.calls[0]?.[0].success_url).toBe(
-      "https://example.test/admin/billing?checkout=returned",
+      "https://example.test/studio/billing?checkout=returned",
     );
     expect(create.mock.calls[0]?.[1]).toEqual({ idempotencyKey: "stable-key" });
   });

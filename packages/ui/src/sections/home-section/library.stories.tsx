@@ -6,7 +6,7 @@ import { HomeLibrarySection } from "./library";
 function Example({ width = 1120 }: { width?: number }) {
   return (
     <div style={{ maxWidth: width, width: "100%" }}>
-      <HomeLibrarySection href="/login" />
+      <HomeLibrarySection action={{ href: "/login", label: "Login", signedIn: false }} />
     </div>
   );
 }

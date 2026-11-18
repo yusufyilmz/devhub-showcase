@@ -72,7 +72,7 @@ for (const [slug, name, type, theme, language] of demos) {
     expect(schema).not.toContain('"@type":"Person"');
     expect(schema).not.toContain("Yusuf");
     await expect(page.getByText("Fictional portfolio · Sample work and CV")).toBeVisible();
-    await expect(page.locator('a[href="/admin"]')).toHaveText("Create your portfolio ↗");
+    await expect(page.locator('a[href="/studio"]')).toHaveText("Create your portfolio ↗");
     await expect(page.locator(`a[href="/p/examples/${slug}/cv.pdf"]`).first()).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
       false,

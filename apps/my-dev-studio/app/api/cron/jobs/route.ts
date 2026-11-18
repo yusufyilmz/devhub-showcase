@@ -1,9 +1,8 @@
 import { timingSafeEqual } from "node:crypto";
 
 import { env } from "@/env";
-
-import { jobsServiceClient } from "../../jobs/_config";
-import { runJobDiscovery, sendJobAlerts } from "../../jobs/_discovery-worker";
+import { jobsServiceClient } from "@/services/jobs/get-config";
+import { runJobDiscovery, sendJobAlerts } from "@/services/jobs/get-discovery-worker";
 
 export const maxDuration = 60;
 const headers = { "Cache-Control": "private, no-store" };

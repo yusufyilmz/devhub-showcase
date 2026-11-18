@@ -1,8 +1,8 @@
 import { createServerClient } from "@shared/lib/supabase";
 
 import { env } from "@/env";
-import { requireWorkspace } from "@/features/admin/admin-auth";
-import { localTestLoginRequestAllowed } from "@/features/admin/local-test-login";
+import { requireWorkspace } from "@/services/admin/get-auth";
+import { localTestLoginRequestAllowed } from "@/services/admin/get-local-test-login";
 
 /** This shortcut uses a real Supabase Auth session, never forged cookies. */
 export async function POST(request: Request) {

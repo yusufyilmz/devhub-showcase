@@ -4,7 +4,7 @@ const mocks = vi.hoisted(() => ({
   rpc: vi.fn(async () => ({ error: null })),
   secret: "fictional-relay-secret-at-least-32-characters",
 }));
-vi.mock("../_config", () => ({
+vi.mock("@/services/jobs/get-config", () => ({
   jobAlertConfig: () => ({ domain: "jobs.example.test", secret: mocks.secret }),
   jobsServiceClient: () => ({ rpc: mocks.rpc }),
 }));

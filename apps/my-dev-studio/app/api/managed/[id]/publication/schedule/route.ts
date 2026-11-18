@@ -1,4 +1,4 @@
-import { publicationSchedule } from "../../../../publication/schedule/_handlers";
+import { publicationSchedule } from "@/services/publication/get-schedule-handlers";
 
 async function schedule(request: Request, context: { params: Promise<{ id: string }> }) {
   return publicationSchedule(request, (await context.params).id);

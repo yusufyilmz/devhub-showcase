@@ -4,11 +4,11 @@ const mocks = vi.hoisted(() => ({
   loadPending: vi.fn(),
   workspace: vi.fn(),
 }));
-vi.mock("@/features/admin/admin-auth", () => ({
+vi.mock("@/services/admin/get-auth", () => ({
   requireWorkspace: mocks.workspace,
 }));
 
-vi.mock("../review/_service", () => ({
+vi.mock("@/services/review/get-service", () => ({
   loadPendingPortfolioReviews: mocks.loadPending,
 }));
 
@@ -50,11 +50,11 @@ describe("Edit", () => {
       params: Promise.resolve({ username: "alice" }),
       searchParams: Promise.resolve({ tab: "sections" }),
     });
-    expect(result.props.children[1].props.initial).toBe(snapshot);
-    expect(result.props.children[1].props.initialTab).toBe("Sections");
-    expect(result.props.children[1].props.reviews).toBeUndefined();
+    expect(result.props.initial).toBe(snapshot);
+    expect(result.props.initialTab).toBe("Sections");
+    expect(result.props.reviews).toBeUndefined();
     expect(mocks.loadPending).not.toHaveBeenCalled();
-    expect(result.props.children[0].props.user).toEqual({
+    expect(result.props.user).toEqual({
       email: "alice@example.test",
       id: "owner-id",
       name: "Alice",
@@ -74,8 +74,8 @@ describe("Edit", () => {
       params: Promise.resolve({ username: "alice" }),
       searchParams: Promise.resolve({ tab: "reviews" }),
     });
-    expect(result.props.children[1].props.initialTab).toBe("Reviews");
-    expect(result.props.children[1].props.reviews.props.reviews).toEqual([]);
+    expect(result.props.initialTab).toBe("Reviews");
+    expect(result.props.reviews.props.reviews).toEqual([]);
     expect(mocks.loadPending).toHaveBeenCalledWith(client);
   });
 });

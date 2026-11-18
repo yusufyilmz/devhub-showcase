@@ -289,11 +289,6 @@
           "use": "Shared sign-in panels and screens"
         },
         {
-          "export": "`@shared/ui/error-page`",
-          "path": "`src/feedback/error-page/index.ts`",
-          "use": "Error page presentation"
-        },
-        {
           "export": "`@shared/ui/not-found`",
           "path": "`src/feedback/not-found/index.ts`",
           "use": "Missing page presentation"
@@ -372,11 +367,6 @@
           "component": "`EmptyState`",
           "folder": "`empty-state`",
           "use": "No-data state"
-        },
-        {
-          "component": "`ErrorPage`",
-          "folder": "`error-page`",
-          "use": "Full-page error"
         },
         {
           "component": "`Feedback`",
@@ -582,6 +572,11 @@
           "component": "`TeamSwitcher`",
           "folder": "`team-switcher`",
           "use": "Workspace switcher"
+        },
+        {
+          "component": "`ProfileMenu`",
+          "folder": "`profile-menu`",
+          "use": "Account menu of links and sign out"
         }
       ]
     },

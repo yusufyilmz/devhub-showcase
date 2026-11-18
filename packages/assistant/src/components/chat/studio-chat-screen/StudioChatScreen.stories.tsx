@@ -16,7 +16,7 @@ function Preview({ visitor }: Pick<StudioChatScreenOptions, "visitor">) {
     <StudioChatScreen
       busy={false}
       disabled={false}
-      editorHref="/admin"
+      editorHref="/studio"
       message={message}
       messages={messages}
       notice={

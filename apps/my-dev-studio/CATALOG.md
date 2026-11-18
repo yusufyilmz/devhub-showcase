@@ -41,6 +41,7 @@ No public package export map or main entry is declared.
 | `@shared/ui`                | `workspace:*`    | dependencies    |
 | `@shared/utils`             | `workspace:*`    | dependencies    |
 | `@supabase/supabase-js`     | `2.119.0`        | dependencies    |
+| `lucide-react`              | `^1.73.0`        | dependencies    |
 | `next`                      | `16.4.5`         | dependencies    |
 | `react`                     | `19.3.1`         | dependencies    |
 | `react-dom`                 | `19.3.1`         | dependencies    |
@@ -48,6 +49,7 @@ No public package export map or main entry is declared.
 | `@shared/test`              | `workspace:*`    | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
 | `@shared/ui`                | `workspace:*`    | devDependencies |
+| `@storybook/react-vite`     | `^10.6.7`        | devDependencies |
 | `@tailwindcss/postcss`      | `4.3.5`          | devDependencies |
 | `@types/node`               | `26.6.6`         | devDependencies |
 | `@types/react`              | `19.3.0`         | devDependencies |

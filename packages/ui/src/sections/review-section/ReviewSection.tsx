@@ -5,6 +5,7 @@ import { useTransition } from "react";
 
 import { Button } from "../../buttons";
 import { Card } from "../../cards";
+import { List, ListItem } from "../../display";
 import { Badge } from "../../feedback/badge";
 import { EmptyState } from "../../forms";
 import { ReviewButton } from "./ReviewButton";
@@ -59,11 +60,11 @@ export function ReviewSection({ reviews, handleReview }: ReviewSectionProps) {
           title="You’re all caught up"
         />
       ) : (
-        <ul className="grid list-none gap-4 p-0 lg:grid-cols-2">
+        <List className="grid list-none gap-4 p-0 lg:grid-cols-2">
           {reviews.map(({ id, createdAt, updatedAt, referral }) => {
             const name = referral?.name || "Anonymous reviewer";
             return (
-              <li className="min-w-0" key={id}>
+              <ListItem className="min-w-0" key={id}>
                 <Card className={styles.card} interaction="static" layout="plain">
                   <div className="grid flex-1 content-start gap-4 p-5 sm:p-6">
                     <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-1">
@@ -101,10 +102,10 @@ export function ReviewSection({ reviews, handleReview }: ReviewSectionProps) {
                     updatedAt={updatedAt}
                   />
                 </Card>
-              </li>
+              </ListItem>
             );
           })}
-        </ul>
+        </List>
       )}
     </section>
   );

@@ -4,14 +4,14 @@
 
 **Prerequisites:** Use a local or preview deployment, a confirmed owner account, and a separate portfolio administrator account. Configure the LinkedIn email relay only if testing that menu link.
 
-| Step | Clickable URL                                        | Route path    | Action                                                                                               | Expected result                                                                                        | Actual result / evidence |
-| ---- | ---------------------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------ |
-| 1    | [Home](http://localhost:3100/)                       | `/`           | Open as a guest, then sign in and return to Home.                                                    | **Profile menu** appears beside **Appearance controls** after sign-in.                                 | Not run                  |
-| 2    | [Home](http://localhost:3100/)                       | `/`           | Open **Profile menu** with Enter and choose **Job settings**. Reopen it and choose **Applications**. | Each destination opens the matching Job Hunter tab.                                                    | Not run                  |
-| 3    | [Job Hunter](http://localhost:3100/admin/jobs)       | `/admin/jobs` | Open the menu as an owner, then repeat as a portfolio administrator.                                 | Both accounts see profile, jobs, and billing links. The administrator also sees **Manage portfolios**. | Not run                  |
-| 4    | [Studio assistant](http://localhost:3100/admin/chat) | `/admin/chat` | Open **Profile menu**, choose **Sign out**, and confirm.                                             | The session ends and the login page opens.                                                             | Not run                  |
+| Step | Clickable URL                                         | Route path     | Action                                                                                               | Expected result                                                                                        | Actual result / evidence |
+| ---- | ----------------------------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------ |
+| 1    | [Home](http://localhost:3100/)                        | `/`            | Open as a guest, then sign in and return to Home.                                                    | **Profile menu** appears beside **Appearance controls** after sign-in.                                 | Not run                  |
+| 2    | [Home](http://localhost:3100/)                        | `/`            | Open **Profile menu** with Enter and choose **Job settings**. Reopen it and choose **Applications**. | Each destination opens the matching Job Hunter tab.                                                    | Not run                  |
+| 3    | [Job Hunter](http://localhost:3100/studio/jobs)       | `/studio/jobs` | Open the menu as an owner, then repeat as a portfolio administrator.                                 | Both accounts see profile, jobs, and billing links. The administrator also sees **Manage portfolios**. | Not run                  |
+| 4    | [Studio assistant](http://localhost:3100/studio/chat) | `/studio/chat` | Open **Profile menu**, choose **Sign out**, and confirm.                                             | The session ends and the login page opens.                                                             | Not run                  |
 
-[Browser test coverage](../../../apps/my-dev-studio/e2e/admin/jobs/job-hunter.spec.ts)
+[Browser test coverage](../../../apps/my-dev-studio/e2e/studio/jobs/job-hunter.spec.ts)
 
 ## Editor layout checks
 

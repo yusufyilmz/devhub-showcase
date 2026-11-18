@@ -8,7 +8,7 @@ import {
 import { createServerClient } from "@shared/lib/supabase";
 import type { Json } from "@shared/lib/types";
 
-import { sameOrigin } from "@/features/admin/admin-auth";
+import { sameOrigin } from "@/services/admin/get-auth";
 
 const headers = { "Cache-Control": "private, no-store" };
 async function session() {

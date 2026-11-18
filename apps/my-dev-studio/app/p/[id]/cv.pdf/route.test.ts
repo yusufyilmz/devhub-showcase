@@ -7,9 +7,9 @@ const mocks = vi.hoisted(() => ({
 vi.mock("@shared/lib/published-profile", () => ({
   readPublicProfile: mocks.published,
 }));
-vi.mock("../../../api/cv/_response", () => ({ cvResponse: mocks.render }));
+vi.mock("@/services/cv/get-response", () => ({ cvResponse: mocks.render }));
 
-vi.mock("../../../[username]/access/_session", () => ({
+vi.mock("@/services/portfolio/get-access-session", () => ({
   readProtectedProfile: vi.fn().mockResolvedValue(null),
 }));
 
