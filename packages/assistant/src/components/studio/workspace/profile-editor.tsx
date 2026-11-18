@@ -711,7 +711,7 @@ function EditorBody({
     <>
       <Editor onChange={onChange} profile={profile} />
       {section && (
-        <SectionSettingsEditor onChange={onChange} onlySection={section} profile={profile} />
+        <SectionSettingsEditor initialSection={section} onChange={onChange} profile={profile} />
       )}
     </>
   );

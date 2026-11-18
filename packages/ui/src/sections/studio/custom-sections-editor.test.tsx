@@ -124,7 +124,7 @@ describe("CustomSections", () => {
   it("updates only the selected built-in section layout", () => {
     const draft = { ...profile, sectionSettings: { education: { visible: false } } };
     const onChange = vi.fn();
-    render(<SectionSettingsEditor onChange={onChange} onlySection="skills" profile={draft} />);
+    render(<SectionSettingsEditor initialSection="skills" onChange={onChange} profile={draft} />);
     fireEvent.click(screen.getByRole("button", { name: "List" }));
     expect(onChange.mock.lastCall?.[0].sectionSettings).toEqual({
       education: { visible: false },
