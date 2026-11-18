@@ -1,4 +1,4 @@
-import { notFound, useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 
 import { ManagedWorkspace } from "@shared/assistant/management-ui";
 
@@ -6,7 +6,6 @@ import { managedRepository } from "@/services/management/get-portfolios";
 
 export default async function ManagedEditor({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const router = useRouter();
   const admin = await managedRepository(id).catch(() => null);
   if (!admin) notFound();
   const snapshot = await admin.repository.read();
@@ -22,14 +21,7 @@ export default async function ManagedEditor({ params }: { params: Promise<{ id: 
           before sharing it.
         </p>
       </div>
-      <ManagedWorkspace
-        id={id}
-        initial={snapshot}
-        onTransferred={() => {
-          router.push("/studio/portfolios");
-          router.refresh();
-        }}
-      />
+      <ManagedWorkspace id={id} initial={snapshot} />
     </>
   );
 }
