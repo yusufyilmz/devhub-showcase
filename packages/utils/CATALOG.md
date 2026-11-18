@@ -83,7 +83,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
 | `@types/node`               | `catalog:`       | devDependencies |
 | `@types/react`              | `catalog:`       | devDependencies |
-| `beautify-console-log`      | `^1.3.17`        | devDependencies |
+| `beautify-console-log`      | `^1.4.0`         | devDependencies |
 | `remark`                    | `^15.0.1`        | devDependencies |
 | `remark-gfm`                | `^4.0.1`         | devDependencies |
 | `remark-html`               | `^16.0.1`        | devDependencies |

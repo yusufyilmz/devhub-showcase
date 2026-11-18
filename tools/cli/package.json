@@ -23,7 +23,7 @@
     "@turbo/gen": "catalog:",
     "commander": "catalog:",
     "js-tiktoken": "catalog:",
-    "jscpd": "^5.4.2",
+    "jscpd": "^5.4.3",
     "remark-gfm": "catalog:",
     "remark-parse": "catalog:",
     "tsdown": "catalog:",

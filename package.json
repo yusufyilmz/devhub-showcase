@@ -88,6 +88,7 @@
     "test:studio": "vitest run --project unit",
     "test:watch": "vitest --watch",
     "typecheck": "tsc --noEmit && turbo run typecheck",
+    "update:dependencies": "pnpm up --recursive",
     "verify": "pnpm check:unused:all && pnpm check:architecture && pnpm check:dependencies && pnpm check:security && pnpm check:secrets && pnpm check:ui-catalog && pnpm check:docs && pnpm check:format && pnpm check:circular && pnpm check:ci && pnpm check:fix && pnpm check:outdated && pnpm check:skills && pnpm check:unused:namespaces"
   },
   "lint-staged": {
@@ -107,7 +108,7 @@
     "@storybook/addon-vitest": "catalog:",
     "@testing-library/dom": "catalog:",
     "@testing-library/react": "catalog:",
-    "@tsdown/css": "^0.23.5",
+    "@tsdown/css": "^0.23.7",
     "@turbo/gen": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
@@ -115,7 +116,7 @@
     "@vitest/browser-playwright": "catalog:",
     "@vitest/coverage-v8": "catalog:",
     "depcheck": "^1.4.7",
-    "dependency-cruiser": "^18.7.2",
+    "dependency-cruiser": "^18.8.0",
     "glob": "^14.0.6",
     "husky": "catalog:",
     "js-tiktoken": "catalog:",
@@ -138,9 +139,8 @@
     "vitest": "catalog:",
     "yaml": "catalog:"
   },
-  "packageManager": "pnpm@11.25.0",
+  "packageManager": "pnpm@12.21.0",
   "engines": {
-    "node": ">=24.15.0 <25",
-    "pnpm": ">=11 <12"
+    "node": ">=24.15.0 <25"
   }
 }

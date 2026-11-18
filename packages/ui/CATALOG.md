@@ -670,7 +670,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `@shared/lib`                     | `workspace:*`    | dependencies    |
 | `@shared/runtime`                 | `workspace:*`    | dependencies    |
 | `@shared/utils`                   | `workspace:*`    | dependencies    |
-| `@tabler/icons-react`             | `^3.50.0`        | dependencies    |
+| `@tabler/icons-react`             | `^3.52.0`        | dependencies    |
 | `@tanstack/react-table`           | `^8.21.3`        | dependencies    |
 | `class-variance-authority`        | `catalog:`       | dependencies    |
 | `clsx`                            | `catalog:`       | dependencies    |
@@ -686,7 +686,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `react`                           | `catalog:`       | dependencies    |
 | `react-day-picker`                | `^9.14.0`        | dependencies    |
 | `react-dom`                       | `catalog:`       | dependencies    |
-| `react-hook-form`                 | `^7.91.0`        | dependencies    |
+| `react-hook-form`                 | `^7.92.0`        | dependencies    |
 | `react-resizable-panels`          | `^2.1.9`         | dependencies    |
 | `recharts`                        | `^2.15.4`        | dependencies    |
 | `shadcn`                          | `^4.23.0`        | dependencies    |
