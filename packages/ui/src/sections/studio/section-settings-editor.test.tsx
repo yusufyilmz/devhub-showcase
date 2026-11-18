@@ -47,7 +47,6 @@ describe("SectionSettings", () => {
       ],
     };
     render(<DraftSettings draft={draft} />);
-    fireEvent.click(screen.getByText("Section visibility and layout"));
     const preview = screen.getByRole("region", { name: "Projects live preview" });
     expect(within(preview).getByText("My draft project")).toBeTruthy();
     expect(within(preview).queryByText("My private project")).toBeNull();
@@ -63,7 +62,6 @@ describe("SectionSettings", () => {
     const { rerender } = render(
       <SectionSettingsEditor onChange={onChange} onlySection="projects" profile={draft} />,
     );
-    fireEvent.click(screen.getByText("Section visibility and layout"));
     const preview = within(screen.getByRole("region", { name: "Projects live preview" }));
     expect(preview.getByText("Add or include content to preview this section.")).toBeTruthy();
     rerender(
@@ -78,6 +76,17 @@ describe("SectionSettings", () => {
     );
     expect(preview.getByText("Newly entered project")).toBeTruthy();
     expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it("starts expanded and lets the user collapse and reopen the panel", () => {
+    render(<DraftSettings draft={profile} />);
+    const summary = screen.getByText("Section visibility and layout");
+    const panel = summary.closest("details");
+    expect(panel?.open).toBe(true);
+    fireEvent.click(summary);
+    expect(panel?.open).toBe(false);
+    fireEvent.click(summary);
+    expect(panel?.open).toBe(true);
   });
   it("round trips compatible settings and rejects cross section renderers, duplicates and executable settings", () => {
     const sectionSettings = {
