@@ -12,6 +12,13 @@ export async function importChatgptResearch(workspace: Workspace, input: unknown
   if (jobs.length === 0) return { imported: 0, duplicates: 0, summary: report.summary };
 
   const database = jobsServiceClient();
+  const existing = await database
+    .from("job_matches")
+    .select("listing_id")
+    .eq("user_id", userId)
+    .in("listing_id", jobs.map((job) => job.key));
+  if (existing.error) throw new Error("Could not check existing imports.");
+  const existingIds = new Set(existing.data.map((row) => row.listing_id));
   let imported = 0;
   let duplicates = 0;
   for (const job of jobs) {
@@ -70,10 +77,8 @@ export async function importChatgptResearch(workspace: Workspace, input: unknown
       );
     if (match.error) throw new Error("Could not create the imported match.");
 
-    // Match duplicates are checked after the idempotent writes to tolerate
-    // retries and recover if a previous attempt saved the listing only.
-    // This value counts processed candidates; the UI refreshes from storage.
-    imported += 1;
+    if (existingIds.has(job.key)) duplicates += 1;
+    else imported += 1;
   }
   return { imported, duplicates, summary: report.summary };
 }
