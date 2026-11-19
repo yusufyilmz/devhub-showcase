@@ -18,7 +18,11 @@ export async function POST(request: Request) {
     if (body.length > 20_000)
       return Response.json({ error: "Report is too large." }, { headers, status: 413 });
 
-    const result = await importChatgptResearch(workspace, JSON.parse(body));
+    const result = await importChatgptResearch(
+      workspace,
+      JSON.parse(body),
+      new URL(request.url).searchParams.get("preview") === "1",
+    );
     return Response.json(result, { headers });
   } catch (error) {
     if (error instanceof ProfileAccessError)
