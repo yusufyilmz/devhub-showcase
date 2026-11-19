@@ -46,13 +46,13 @@ Identify existing tests, APIs, tables, configuration and permissions that were r
 
 ## Verification matrix
 
-| Check | Command or procedure | Required result | Actual evidence |
-| --- | --- | --- | --- |
-| Targeted unit tests | `pnpm exec vitest run --project unit <test-file>` | Pass | Not run |
-| Repository checks | `pnpm check` | Pass | Not run |
-| Unit suite | `pnpm test` | Pass | Not run |
-| Browser (when applicable) | `pnpm test:e2e:studio` | Pass | Not run |
-| Manual guide (when applicable) | `docs/testing/manual/<feature>.md` | Reviewed | Not run |
+| Check                          | Command or procedure                              | Required result | Actual evidence |
+| ------------------------------ | ------------------------------------------------- | --------------- | --------------- |
+| Targeted unit tests            | `pnpm exec vitest run --project unit <test-file>` | Pass            | Not run         |
+| Repository checks              | `pnpm check`                                      | Pass            | Not run         |
+| Unit suite                     | `pnpm test`                                       | Pass            | Not run         |
+| Browser (when applicable)      | `pnpm test:e2e:studio`                            | Pass            | Not run         |
+| Manual guide (when applicable) | `docs/testing/manual/<feature>.md`                | Reviewed        | Not run         |
 
 Do not mark verification as passed from source inspection. Distinguish CI, local, fixture, staging and production evidence.
 
@@ -72,6 +72,6 @@ Describe user/data risk, rollout prerequisites, feature flag or rollback mechani
 ## Completion evidence
 
 | Task | Verified evidence |
-| --- | --- |
+| ---- | ----------------- |
 
 The implementation agent appends a row only after completion is demonstrated. Keep incomplete tasks unchecked, even when code has been written.
