@@ -8,9 +8,12 @@ import { fileURLToPath } from "node:url";
 
 const script = fileURLToPath(new URL("./scaffold-agent.mjs", import.meta.url));
 const options = [
-  "--description", "Review server authorization flows. Use on auth PR changes.",
-  "--mission", "Find concrete tenant isolation regressions and return evidence.",
-  "--scope", "apps/my-dev-studio/services/admin",
+  "--description",
+  "Review server authorization flows. Use on auth PR changes.",
+  "--mission",
+  "Find concrete tenant isolation regressions and return evidence.",
+  "--scope",
+  "apps/my-dev-studio/services/admin",
 ];
 
 function run(root, ...args) {
@@ -40,7 +43,10 @@ describe("scaffold-agent", () => {
   it("requires explicit implementation mode for write tools", () => {
     const root = mkdtempSync(path.join(os.tmpdir(), "create-subagent-"));
     try {
-      assert.equal(run(root, "focused-implementer", ...options, "--mode", "implementation").status, 0);
+      assert.equal(
+        run(root, "focused-implementer", ...options, "--mode", "implementation").status,
+        0,
+      );
       const file = readFileSync(path.join(root, ".claude/agents/focused-implementer.md"), "utf8");
       assert.match(file, /tools: Read, Grep, Glob, Edit, Write, Bash/);
     } finally {
@@ -56,13 +62,19 @@ describe("scaffold-agent", () => {
         run(
           root,
           "unsafe-scope",
-          "--description", "Review server authorization flows.",
-          "--mission", "Find concrete authorization regressions.",
-          "--scope", "../private",
+          "--description",
+          "Review server authorization flows.",
+          "--mission",
+          "Find concrete authorization regressions.",
+          "--scope",
+          "../private",
         ).status,
         0,
       );
-      assert.notEqual(run(root, "empty-mission", "--description", "Review server authorization flows.").status, 0);
+      assert.notEqual(
+        run(root, "empty-mission", "--description", "Review server authorization flows.").status,
+        0,
+      );
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
