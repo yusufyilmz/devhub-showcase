@@ -1,10 +1,10 @@
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { spawnSync } from "node:child_process";
-import { fileURLToPath } from "node:url";
 import { describe, it } from "node:test";
+import { fileURLToPath } from "node:url";
 
 const script = fileURLToPath(new URL("./mark-task.mjs", import.meta.url));
 function fixture() {
@@ -42,7 +42,7 @@ describe("mark-task helper", () => {
       assert.match(result, /- \[ \] \*\*P1\.2\*\*/);
       assert.equal(result.split("| P1.1 |").length - 1, 1);
     } finally {
-      rmSync(root, { recursive: true, force: true });
+      rmSync(root, { force: true, recursive: true });
     }
   });
 
@@ -57,7 +57,7 @@ describe("mark-task helper", () => {
       );
       assert.equal(readFileSync(file, "utf8"), original);
     } finally {
-      rmSync(root, { recursive: true, force: true });
+      rmSync(root, { force: true, recursive: true });
     }
   });
 
@@ -70,7 +70,7 @@ describe("mark-task helper", () => {
         0,
       );
     } finally {
-      rmSync(root, { recursive: true, force: true });
+      rmSync(root, { force: true, recursive: true });
     }
   });
 });
