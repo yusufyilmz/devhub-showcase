@@ -30,8 +30,10 @@ describe("mark-task helper", () => {
     try {
       const arguments_ = [
         ".agents/plans/sample.md",
-        "--id", "P1.1",
-        "--evidence", "vitest passed on commit abc123",
+        "--id",
+        "P1.1",
+        "--evidence",
+        "vitest passed on commit abc123",
       ];
       assert.equal(run(root, ...arguments_).status, 0);
       assert.equal(run(root, ...arguments_).status, 0);
