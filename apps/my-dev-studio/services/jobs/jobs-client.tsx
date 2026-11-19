@@ -37,6 +37,11 @@ export function JobsClient({
   const [busy, setBusy] = useState(false);
   const [feedback, setFeedback] = useState("");
   const [importJson, setImportJson] = useState("");
+  const [importPreview, setImportPreview] = useState<{
+    duplicates: number;
+    jobs: { company: string; duplicate: boolean; title: string; url: string }[];
+    summary: string;
+  } | null>(null);
   const lock = useRef(false);
   const worker = useRef(
     new NotificationClient({
@@ -82,7 +87,10 @@ export function JobsClient({
             className="min-h-36 w-full rounded-md border bg-background p-3 font-mono text-sm"
             id="chatgpt-job-import"
             maxLength={20_000}
-            onChange={(event) => setImportJson(event.target.value)}
+            onChange={(event) => {
+              setImportJson(event.target.value);
+              setImportPreview(null);
+            }}
             placeholder='{"schemaVersion":1,"report":{...},"jobs":[]}'
             value={importJson}
           />
@@ -97,20 +105,47 @@ export function JobsClient({
                 } catch {
                   throw new Error("Please enter valid JSON.");
                 }
-                const response = await fetch("/api/jobs/import-chatgpt", {
+                const response = await fetch(
+                  `/api/jobs/import-chatgpt${importPreview ? "" : "?preview=1"}`,
+                  {
                   body: JSON.stringify(payload),
                   headers: { "Content-Type": "application/json" },
                   method: "POST",
-                });
+                  },
+                );
                 const result = await read(response);
+                if (!importPreview) {
+                  setImportPreview(result);
+                  return `Preview ready: ${result.jobs.length} jobs, ${result.duplicates} duplicates.`;
+                }
                 setImportJson("");
-                return `Processed ${result.imported} research job(s). Review them in Discover.`;
+                setImportPreview(null);
+                return `Imported ${result.imported} jobs, skipped ${result.duplicates} duplicates. Review in Discover.`;
               });
             }}
             type="button"
           >
-            {busy ? "Importing..." : "Import report"}
+            {busy ? "Processing..." : importPreview ? "Confirm import" : "Preview report"}
           </button>
+          {importPreview && (
+            <div className="space-y-2" aria-live="polite">
+              <p className="text-sm">{importPreview.summary}</p>
+              <p className="text-sm">
+                Review these unverified candidates before confirming:
+              </p>
+              <ul className="list-inside list-disc text-sm">
+                {importPreview.jobs.map((job) => (
+                  <li key={job.url}>
+                    {job.company}: {job.title}
+                    {job.duplicate ? " (already imported)" : ""}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-xs text-muted-foreground">
+                Confirm imports without sending applications or notifications.
+              </p>
+            </div>
+          )}
         </div>
       </details>
       <JobsDashboard
