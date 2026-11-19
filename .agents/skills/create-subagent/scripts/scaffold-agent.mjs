@@ -82,7 +82,8 @@ const content = [
 try {
   fs.writeFileSync(target, content, { encoding: "utf8", flag: "wx" });
 } catch (error) {
-  if (error && error.code === "EEXIST") fail(`Subagent already exists: ${path.relative(root, target)}`);
+  if (error && error.code === "EEXIST")
+    fail(`Subagent already exists: ${path.relative(root, target)}`);
   throw error;
 }
 console.log(`Created ${path.relative(root, target)} (${mode}).`);
