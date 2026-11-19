@@ -36,10 +36,12 @@ function toListing(job: ParsedJob) {
 
 async function saveCandidate(userId: string, job: ParsedJob) {
   const database = jobsServiceClient();
-  const inserted = await database.from("job_listings").upsert(
-    { id: job.key, listing: toListing(job), user_id: userId },
-    { ignoreDuplicates: true, onConflict: "user_id,id" },
-  );
+  const inserted = await database
+    .from("job_listings")
+    .upsert(
+      { id: job.key, listing: toListing(job), user_id: userId },
+      { ignoreDuplicates: true, onConflict: "user_id,id" },
+    );
   if (inserted.error) throw new Error("Could not store the imported job.");
 
   const match = await database.from("job_matches").upsert(
@@ -62,15 +64,10 @@ async function saveCandidate(userId: string, job: ParsedJob) {
   if (match.error) throw new Error("Could not create the imported match.");
 }
 
-export async function importChatgptResearch(
-  workspace: Workspace,
-  input: unknown,
-  preview = false,
-) {
+export async function importChatgptResearch(workspace: Workspace, input: unknown, preview = false) {
   const { jobs, report } = parseChatgptJobImport(input);
   const userId = workspace.user.id;
-  if (jobs.length === 0)
-    return { duplicates: 0, imported: 0, jobs: [], summary: report.summary };
+  if (jobs.length === 0) return { duplicates: 0, imported: 0, jobs: [], summary: report.summary };
 
   const existing = await jobsServiceClient()
     .from("job_matches")
