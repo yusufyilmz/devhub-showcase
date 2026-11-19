@@ -121,10 +121,10 @@ test("the profile menu opens job settings and other account pages", async ({
   );
 });
 
-test("ChatGPT research can be previewed before committing an import", async (
-  { context, page },
-  info,
-) => {
+test("ChatGPT research can be previewed before committing an import", async ({
+  context,
+  page,
+}, info) => {
   await signIn(context, info);
   const calls: string[] = [];
   await page.route("**/api/jobs/import-chatgpt*", async (route) => {
