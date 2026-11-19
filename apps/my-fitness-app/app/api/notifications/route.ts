@@ -1,4 +1,4 @@
-import { notificationRequest } from "@/features/notifications/server";
+import { notificationRequest } from "@/services/notifications/server";
 
 export const GET = notificationRequest;
 export const POST = notificationRequest;

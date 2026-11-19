@@ -1,7 +1,7 @@
 import { createPageMetadata } from "@shared/ui/seo";
 
-import { FitnessApp } from "@/features/fitness/fitness-app";
-import { fitnessSeo } from "@/features/seo";
+import { fitnessSeo } from "@/services/site/seo";
+import { FitnessApp } from "@/views/fitness/fitness-app";
 
 const title = "My Fitness Studio demo";
 export const metadata = createPageMetadata({

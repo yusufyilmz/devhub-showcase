@@ -17,8 +17,10 @@ This file applies to `apps/my-fitness-app` only. Package name `my-fitness-app`. 
 Stop at the first yes.
 
 1. A URL, metadata file, or HTTP handler belongs under `app/`. Keep the route thin. `/api/state` loads and saves the signed-in account's workspace. `/preview` stays read-only and uses fictional data.
-2. Fitness screens and app-only coordination stay in `features/`: task workspace, task tree, task editor, agenda, calendar, weekly planner, and notifications.
-3. Task rules, scheduling, and repository contracts stay in this app's `lib/`. Shared sign-in is `@shared/auth`. Controls and theme are `@shared/ui`. Push delivery is `@shared/notifications`. Fitness assistant workflows that are shared belong in `@shared/assistant`.
+2. A screen used only by this app belongs under `views/<domain>`: task workspace, task tree, task editor, agenda, calendar, weekly planner, and notification settings.
+3. Calling or combining services for this app belongs in `services/<domain>`: auth and session wiring, the workspace gateway, and notification delivery. Shared sign-in is `@shared/auth`. Controls and theme are `@shared/ui`. Push delivery is `@shared/notifications`. Task rules and repositories live in `@shared/lib`. Fitness assistant workflows that are shared belong in `@shared/assistant`.
+
+Do not add a `features/` or `lib/` folder in this app.
 
 Do not import this app from a shared package. Do not serve one account's tasks to another. A save must keep the owner filter and the revision check.
 

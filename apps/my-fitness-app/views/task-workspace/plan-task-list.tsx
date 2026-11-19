@@ -17,7 +17,7 @@ import {
 } from "@shared/ui/breadcrumb";
 import { Button } from "@shared/ui/button";
 
-import { TaskFacts, type TaskTreeProps } from "@/features/task-tree/task-tree";
+import { TaskFacts, type TaskTreeProps } from "@/views/task-tree/task-tree";
 
 const tasks = new TaskService();
 

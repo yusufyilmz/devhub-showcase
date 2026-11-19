@@ -14,7 +14,7 @@ vi.mock("@shared/auth/server", () => ({
   createRequestClient: () => ({ auth: bearer }),
 }));
 
-import { requestIdentity } from "../../../lib/auth";
+import { requestIdentity } from "../../../services/auth/auth";
 import { POST } from "../../api/auth/session/route";
 import { GET } from "./route";
 

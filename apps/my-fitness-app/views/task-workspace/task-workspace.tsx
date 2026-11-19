@@ -13,11 +13,11 @@ import { dateKey } from "@shared/lib/types";
 import { Alert, AlertDescription } from "@shared/ui/alert";
 import { Button as LibraryButton } from "@shared/ui/button";
 
-import { useAgendaNavigation } from "@/features/agenda/use-agenda-navigation";
-import { TaskEditor, type TaskEditorTarget } from "@/features/task-editor/task-editor";
+import { fitnessNotifications } from "@/services/notifications/browser";
+import { assistantRequest } from "@/services/task-workspace/gateway";
+import { useAgendaNavigation } from "@/views/agenda/use-agenda-navigation";
+import { TaskEditor, type TaskEditorTarget } from "@/views/task-editor/task-editor";
 
-import { fitnessNotifications } from "../notifications/browser";
-import { assistantRequest } from "./gateway";
 import { useTaskReminders } from "./use-reminders";
 import type { WorkspaceController } from "./use-task-workspace";
 import { WorkspaceFrame, WorkspacePanels } from "./workspace-views";

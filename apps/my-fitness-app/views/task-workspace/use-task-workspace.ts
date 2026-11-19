@@ -3,9 +3,8 @@ import { useEffect, useRef, useState } from "react";
 
 import { validateWorkspace, type Workspace, workspaceSchema } from "@shared/lib/types";
 
-import { watchSession } from "@/lib/browser-session";
-
-import type { WorkspaceGateway } from "./gateway";
+import { watchSession } from "@/services/auth/browser-session";
+import type { WorkspaceGateway } from "@/services/task-workspace/gateway";
 export function useTaskWorkspace(gateway: WorkspaceGateway, initial: Workspace, demo: boolean) {
   const [state, setState] = useState(initial);
   const [revision, setRevision] = useState(0);

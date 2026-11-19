@@ -19,7 +19,7 @@ describe("ExampleCarousel", () => {
       },
     );
     HTMLElement.prototype.scrollTo = vi.fn();
-    render(<ExampleCarousel />);
+    render(<ExampleCarousel renderPortfolio={() => null} />);
     expect(screen.getAllByRole("link")).toHaveLength(16);
     for (const name of [
       "Engineer",

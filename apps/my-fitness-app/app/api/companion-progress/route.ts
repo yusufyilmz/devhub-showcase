@@ -3,7 +3,7 @@ import {
   type FeatureProgressDatabase,
 } from "@shared/lib/companion-progress";
 
-import { fitnessUser, requestIdentity, sameOrigin } from "@/lib/auth";
+import { fitnessUser, requestIdentity, sameOrigin } from "@/services/auth/auth";
 
 export const { GET, POST } = companionProgressHandlers({
   app: "fitness",

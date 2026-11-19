@@ -77,11 +77,14 @@
   border-radius: 12px;
 }
 .section-timeline {
-  padding-left: 1.5rem;
+  padding-left: var(--spacing-lg);
   list-style: none;
   border-left: 1px solid var(--border);
 }
-.section-timeline > li,
+.section-timeline > li {
+  padding: var(--spacing-md);
+  margin-block: var(--spacing-md);
+}
 .section-steps > li {
   padding: 1rem;
   margin-block: 1rem;

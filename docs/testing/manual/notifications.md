@@ -55,7 +55,7 @@ fixture evidence is listed separately below; it does not complete these steps.
 - Shared transport/worker/browser/sender tests:
   `packages/notifications/src/*.test.ts`.
 - Database/route/timing/realtime adapter tests:
-  `apps/my-fitness-app/features/notifications/*.test.ts`.
+  `apps/my-fitness-app/services/notifications/*.test.ts`.
 - Reusable settings UI and stories:
   `packages/ui/src/forms/notification-preferences/`.
 - Optional operator-run scheduler:

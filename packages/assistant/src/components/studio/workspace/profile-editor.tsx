@@ -94,6 +94,7 @@ import { CvImportEditor } from "../import/cv-import-editor";
 import { CvSettingsEditor } from "../settings/cv-settings-editor";
 import { PrivateCvVersions } from "./cv-versions";
 import { PortfolioSetup, type SetupPosition } from "./portfolio-setup";
+import type { PublishedPortfolioLayoutProps } from "./preview-content";
 import { ProfilePublication } from "./publication";
 import { OwnerRevisionHistory } from "./revision-history";
 
@@ -210,6 +211,7 @@ export function ProfileEditor({
   onSaved,
   initialTab = "Profile",
   initiallyArranging = false,
+  renderPortfolio,
   reviews,
   user,
 }: {
@@ -220,6 +222,7 @@ export function ProfileEditor({
   onSaved?: (snapshot: ProfileSnapshot) => void;
   initialTab?: (typeof tabs)[number];
   initiallyArranging?: boolean;
+  renderPortfolio?: (props: PublishedPortfolioLayoutProps) => ReactNode;
   reviews?: ReactNode;
   user?: StoredUser | null;
 }) {
@@ -381,7 +384,11 @@ export function ProfileEditor({
             showSavedDownload={false}
           >
             <ResponsivePortfolioPreview appearance={setupDraft.appearance} initiallyOpen>
-              <PreviewContent profile={setupDraft} username={username} />
+              <PreviewContent
+                profile={setupDraft}
+                renderPortfolio={renderPortfolio}
+                username={username}
+              />
             </ResponsivePortfolioPreview>
           </DraftPreviewPane>
         }
@@ -487,6 +494,7 @@ export function ProfileEditor({
                 initiallyArranging={initiallyArranging}
                 onChange={setDraft}
                 profile={previewDraft}
+                renderPortfolio={renderPortfolio}
                 saveAction={
                   <Button disabled={!canSave} type="submit">
                     Save layout draft
@@ -822,6 +830,7 @@ function DraftPreview({
   initiallyArranging,
   onChange,
   profile,
+  renderPortfolio,
   saveAction,
   username,
 }: {
@@ -831,6 +840,7 @@ function DraftPreview({
   initiallyArranging: boolean;
   onChange: (profile: PortfolioProfile) => void;
   profile: PortfolioProfile;
+  renderPortfolio?: (props: PublishedPortfolioLayoutProps) => ReactNode;
   saveAction: ReactNode;
   username: string;
 }) {
@@ -863,6 +873,7 @@ function DraftPreview({
         arrange={arranging ? { disabled, onChange: arrangeVisibleSections } : undefined}
         featured={featured}
         profile={profile}
+        renderPortfolio={renderPortfolio}
         username={username}
       />
     </ResponsivePortfolioPreview>

@@ -16,7 +16,7 @@ import {
   registerFitnessDevice,
   watchFitnessInstall,
   watchFitnessLive,
-} from "./browser";
+} from "@/services/notifications/browser";
 
 export function FitnessNotificationSettings({ disabled }: { disabled: boolean }) {
   const [capabilities, setCapabilities] = useState<ReturnType<

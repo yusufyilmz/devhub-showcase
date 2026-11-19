@@ -8,8 +8,8 @@ import { MealPlanningService, WeeklyPlanningService } from "@shared/lib/meal";
 import { AgendaService, ScheduleService, TaskService } from "@shared/lib/schedule";
 import { validateWorkspace, workspaceSchema } from "@shared/lib/types";
 
-import { DayAgenda } from "../features/agenda/day-agenda";
-import { CalendarGrid } from "../features/calendar/calendar-grid";
+import { DayAgenda } from "../views/agenda/day-agenda";
+import { CalendarGrid } from "../views/calendar/calendar-grid";
 
 const agenda = new AgendaService();
 const schedule = new ScheduleService();

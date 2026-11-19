@@ -16,7 +16,7 @@ import { NativeSelect as LibraryNativeSelect } from "@shared/ui/native-select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@shared/ui/tabs";
 import { Eyebrow } from "@shared/ui/typography";
 
-import { TaskTree } from "@/features/task-tree/task-tree";
+import { TaskTree } from "@/views/task-tree/task-tree";
 
 const meals = new MealPlanningService();
 const weekly = new WeeklyPlanningService();

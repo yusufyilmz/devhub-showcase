@@ -5,6 +5,8 @@
       "@/app/*": ["./apps/my-dev-studio/app/*"],
       "@/env": ["./apps/my-dev-studio/env.ts"],
       "@/features/*": ["./apps/my-dev-studio/features/*"],
+      "@/services/*": ["./apps/my-dev-studio/services/*"],
+      "@/views/*": ["./apps/my-dev-studio/views/*"],
       "@fixtures/*": ["./tools/test/fixtures/*"],
       "@shared/auth": ["./packages/auth/src/index.ts"],
       "@shared/auth/*": ["./packages/auth/src/*"],

@@ -6,6 +6,7 @@ import { ReviewSection } from "@shared/ui/sections";
 
 import { requireWorkspace } from "@/services/admin/get-auth";
 import { loadPendingPortfolioReviews } from "@/services/review/get-service";
+import { PortfolioLayout } from "@/views/published/PortfolioLayout";
 
 import { submitPortfolioReviewAction } from "./actions";
 
@@ -38,6 +39,7 @@ export default async function EditCvPage({
       initial={snapshot}
       initiallyArranging={initiallyArranging}
       initialTab={openReviews ? "Reviews" : query?.tab === "sections" ? "Sections" : "Profile"}
+      renderPortfolio={(props) => <PortfolioLayout {...props} />}
       reviews={
         canModerate ? (
           <ReviewSection

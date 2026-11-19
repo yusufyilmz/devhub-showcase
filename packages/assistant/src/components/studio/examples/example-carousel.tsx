@@ -1,13 +1,20 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
-import { getPortfolioThemeVariables, getPreviewAccent } from "@shared/config";
+import {
+  getPortfolioThemeVariables,
+  getPreviewAccent,
+  type PortfolioProfile,
+} from "@shared/config";
 
-import { PortfolioLayout } from "../../../../../../apps/my-dev-studio/views/published/PortfolioLayout";
 import { exampleViewProfile, portfolioExamples } from "./data";
 import { ExampleCarouselClient } from "./example-carousel-client";
 import { ExamplePortfolioPreview } from "./example-portfolio-preview";
 
-export function ExampleCarousel() {
+export function ExampleCarousel({
+  renderPortfolio,
+}: {
+  renderPortfolio: (props: { profile: PortfolioProfile; username: string }) => ReactNode;
+}) {
   return (
     <ExampleCarouselClient
       items={portfolioExamples.map((item) => {
@@ -31,7 +38,7 @@ export function ExampleCarousel() {
                 {profile.portfolioType === "engineer" ? (
                   <ExamplePortfolioPreview profile={profile} />
                 ) : (
-                  <PortfolioLayout profile={profile} username={`p/examples/${item.slug}`} />
+                  renderPortfolio({ profile, username: `p/examples/${item.slug}` })
                 )}
               </div>
             </div>
