@@ -120,3 +120,61 @@ test("the profile menu opens job settings and other account pages", async ({
     "true",
   );
 });
+
+test("ChatGPT research can be previewed before committing an import", async (
+  { context, page },
+  info,
+) => {
+  await signIn(context, info);
+  const calls: string[] = [];
+  await page.route("**/api/jobs/import-chatgpt*", async (route) => {
+    const url = new URL(route.request().url());
+    calls.push(url.searchParams.get("preview") === "1" ? "preview" : "commit");
+    await route.fulfill({
+      contentType: "application/json",
+      json: {
+        duplicates: 0,
+        imported: url.searchParams.get("preview") === "1" ? 0 : 1,
+        jobs: [
+          {
+            company: "Fictional Studio",
+            duplicate: false,
+            title: "Senior Frontend Engineer",
+            url: "https://example.test/jobs/123",
+          },
+        ],
+        summary: "One fictional result.",
+      },
+    });
+  });
+
+  await page.goto("/studio/jobs");
+  await page.getByText("Import ChatGPT research report").click();
+  await page.getByLabel("ChatGPT report JSON").fill(
+    JSON.stringify({
+      jobs: [
+        {
+          company: "Fictional Studio",
+          originalUrl: "https://example.test/jobs/123",
+          title: "Senior Frontend Engineer",
+        },
+      ],
+      report: {
+        automationTitle: "Job research",
+        generatedAt: "2026-11-19T19:00:00Z",
+        source: "chatgpt_automation",
+        summary: "One fictional result.",
+      },
+      schemaVersion: 1,
+    }),
+  );
+
+  await page.getByRole("button", { name: "Preview report" }).click();
+  await expect(page.getByText("One fictional result.")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Confirm import" })).toBeVisible();
+  expect(calls).toEqual(["preview"]);
+
+  await page.getByRole("button", { name: "Confirm import" }).click();
+  await expect(page.getByRole("status")).toContainText("Imported 1 jobs");
+  expect(calls).toEqual(["preview", "commit"]);
+});
