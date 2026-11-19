@@ -26,13 +26,13 @@ Renderer lists come from `getSectionRenderers`. Layout lists come from `getSecti
 | cta               | cards      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
 | calendar-link     | links      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
 | careers           | careers    | cards, list, gallery, carousel, accordion, tabs                                 | careers-openings          | aligned       | openings reviewed at 1440      |
-| clients           | clients    | gallery, masonry, carousel, cards                                               | —                         | not aligned   | not reviewed                   |
+| clients           | clients    | gallery, masonry, carousel, cards                                               | —                         | frame applied | story not opened               |
 | contact-form      | contact    | list                                                                            | contact-split             | not aligned   | not reviewed                   |
 | contact-info      | links      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
 | dashboard         | dashboard  | list                                                                            | —                         | not aligned   | not reviewed                   |
 | faq               | accordion  | accordion, cards, list                                                          | faq-stacked, faq-reversed | not aligned   | not reviewed                   |
 | features          | cards      | cards, list, gallery, carousel, accordion, tabs                                 | features-bento            | not aligned   | not reviewed                   |
-| gallery-grid      | gallery    | gallery, masonry, carousel, cards                                               | —                         | not aligned   | not reviewed                   |
+| gallery-grid      | gallery    | gallery, masonry, carousel, cards                                               | —                         | frame applied | unit test only                 |
 | heading           | heading    | list                                                                            | —                         | frame applied | story not opened               |
 | hero              | hero       | list                                                                            | hero-centered, hero-cover | not aligned   | not reviewed                   |
 | how-to            | steps      | steps, list, cards                                                              | —                         | not aligned   | not reviewed                   |
@@ -48,7 +48,7 @@ Renderer lists come from `getSectionRenderers`. Layout lists come from `getSecti
 | property          | property   | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
 | quickstart        | steps      | steps, list, cards                                                              | —                         | not aligned   | not reviewed                   |
 | shop-items        | shop       | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
-| showcase          | gallery    | gallery, masonry, carousel, cards                                               | —                         | not aligned   | not reviewed                   |
+| showcase          | gallery    | gallery, masonry, carousel, cards                                               | —                         | frame applied | story not opened               |
 | social-links      | links      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
 | stats             | statistics | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
 | studies           | timeline   | timeline, list, cards                                                           | —                         | aligned       | same timeline frame            |
@@ -59,13 +59,13 @@ Renderer lists come from `getSectionRenderers`. Layout lists come from `getSecti
 | testimonials      | quotes     | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
 | text              | text       | text, list                                                                      | —                         | aligned       | default reviewed at 1440       |
 | timeline          | timeline   | timeline, list, cards                                                           | —                         | aligned       | same timeline frame            |
-| video             | video      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
+| video             | video      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | frame applied | story not opened               |
 | work-experience   | timeline   | timeline, list, cards                                                           | —                         | aligned       | default reviewed               |
 | custom            | list       | list, cards, gallery, masonry, carousel, accordion, tabs, timeline, steps, text | —                         | not aligned   | not reviewed                   |
 | services          | cards      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
-| youtube           | video      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | not aligned   | not reviewed                   |
-| instagram         | gallery    | gallery, masonry, carousel, cards                                               | —                         | not aligned   | not reviewed                   |
-| pinterest         | gallery    | gallery, masonry, carousel, cards                                               | —                         | not aligned   | not reviewed                   |
+| youtube           | video      | cards, list, gallery, carousel, accordion, tabs                                 | —                         | frame applied | story not opened               |
+| instagram         | gallery    | gallery, masonry, carousel, cards                                               | —                         | frame applied | story not opened               |
+| pinterest         | gallery    | gallery, masonry, carousel, cards                                               | —                         | frame applied | story not opened               |
 
 Layout IDs: `about-editorial`, `blog-featured`, `careers-openings`, `contact-split`, `faq-stacked`, `faq-reversed`, `features-bento`, `hero-centered`, `hero-cover`, `pricing-comparison`.
 

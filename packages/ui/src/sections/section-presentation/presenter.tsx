@@ -25,13 +25,20 @@ const framedSectionTypes = new Set([
   "about-hero",
   "awards",
   "careers",
+  "clients",
+  "gallery-grid",
   "heading",
+  "instagram",
+  "pinterest",
   "legal-text",
   "profile",
+  "showcase",
   "studies",
   "text",
   "timeline",
+  "video",
   "work-experience",
+  "youtube",
 ]);
 
 function FramedIntro({ anchors, language, preview, section, type }: SectionPresentationOptions) {

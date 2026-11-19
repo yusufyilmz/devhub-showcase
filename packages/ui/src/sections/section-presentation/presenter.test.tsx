@@ -5,6 +5,7 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { AboutSection } from "../about-section/AboutSection";
 import { CareersSection } from "../careers-section/CareersSection";
+import { GalleryGridSection } from "../gallery-grid-section/GalleryGridSection";
 import { TextSection } from "../text-section/TextSection";
 import { WorkExperienceSection } from "../work-experience-section/WorkExperienceSection";
 
@@ -125,5 +126,26 @@ describe("Intro section spacing", () => {
     expect(frame?.className.includes("py-xl")).toBe(false);
     expect(screen.getByText("Note").closest("summary")).toBeTruthy();
     expect(screen.getByText("Second role").closest("summary")).toBeTruthy();
+  });
+
+  it("keeps a gallery in the composed frame without outer padding", () => {
+    render(
+      <GalleryGridSection
+        section={{
+          id: "custom-gallery",
+          items: [{ ...item, imageUrl: "https://example.com/atlas.jpg", title: "Atlas" }],
+          options: { description: "Selected images." },
+          renderer: "gallery",
+          title: "Gallery",
+          visible: true,
+        }}
+      />,
+    );
+    const frame = document.getElementById("custom-gallery");
+    expect(frame?.getAttribute("data-section-context")).toBe("composed");
+    expect(frame?.getAttribute("aria-labelledby")).toBe("custom-gallery-heading");
+    expect(frame?.className.includes("py-14")).toBe(false);
+    expect(screen.getByRole("heading", { name: "Gallery" })).toBeTruthy();
+    expect(screen.getByText("Atlas")).toBeTruthy();
   });
 });

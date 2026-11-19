@@ -76,7 +76,7 @@ Task 1 result: commit `d346b4ce`. `pnpm exec vitest run --project unit packages/
 
 **Interface:** Existing section/editor exports remain compatible; internally use Task 1 framing. `SectionProps` gains only optional composition context/heading/render-ID fields where required, with legacy defaults.
 
-- [ ] Migrate in reviewable groups: intros/prose frame applied, with About and Text reviewed; work/history frame applied, with careers, work experience, and awards reviewed; galleries/media; editorial/navigation; business/pricing; contact/social; studio editors and helpers.
+- [ ] Migrate in reviewable groups: intros/prose frame applied, with About and Text reviewed; work/history frame applied, with careers, work experience, and awards reviewed; galleries/media frame applied, gallery unit-tested, stories not opened; editorial/navigation; business/pricing; contact/social; studio editors and helpers.
 - [ ] Remove fixed section margins/paddings and duplicate heading gaps. Use token gaps for cards and grids. Replace broad descendant selectors with local Tailwind composition. Keep justified custom CSS and note its purpose beside the rule.
 - [ ] Make empty and populated sections obey the same frame contract. Ensure hidden sections leave no gap or separator. Parent compositions and children must not each supply page gutters.
 - [ ] Review every registered type and every selectable variant in its story. Mark each inventory row `checked` only after inspecting it; list blocked checks separately. Use focused existing section/rendering tests after each family.
