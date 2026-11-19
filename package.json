@@ -5,6 +5,7 @@
   "scripts": {
     "assist": "biome check --write --formatter-enabled=false --linter-enabled=false .",
     "build": "turbo run build",
+    "postbuild": "pnpm generate:catalogs",
     "build:fitness": "turbo run build --filter=my-fitness-app",
     "build:packages": "turbo run build --filter='./packages/*'",
     "build:studio": "turbo run build --filter=my-dev-studio",

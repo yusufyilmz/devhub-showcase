@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+
 import { z } from "zod";
 
 const httpsUrl = z
@@ -24,37 +25,40 @@ const money = z.number().int().min(0).max(100_000_000).nullable().optional();
 const isoDate = z.iso.datetime({ offset: true });
 
 export const chatgptJobImportSchema = z.strictObject({
-  schemaVersion: z.literal(1),
-  report: z.strictObject({
-    generatedAt: isoDate,
-    source: z.literal("chatgpt_automation"),
-    automationTitle: z.string().trim().min(1).max(150),
-    summary: z.string().trim().max(3000),
-  }),
   jobs: z
     .array(
-      z.strictObject({
-        title: z.string().trim().min(1).max(180),
-        company: z.string().trim().min(1).max(180),
-        originalUrl: httpsUrl,
-        location: optional(180),
-        workModel: z.enum(["remote", "hybrid", "onsite", "unknown"]).optional(),
-        spainEligible: z.boolean().nullable().optional(),
-        postedAt: isoDate.nullable().optional(),
-        salaryMin: money,
-        salaryMax: money,
-        salaryCurrency: z.string().regex(/^[A-Z]{3}$/).nullable().optional(),
-        matchReason: optional(1200),
-        evidenceUrl: httpsUrl.optional(),
-      }).refine(
-        (job) =>
-          job.salaryMin == null ||
-          job.salaryMax == null ||
-          job.salaryMax >= job.salaryMin,
-        { message: "Maximum salary cannot be below minimum salary." },
-      ),
+      z
+        .strictObject({
+          company: z.string().trim().min(1).max(180),
+          evidenceUrl: httpsUrl.optional(),
+          location: optional(180),
+          matchReason: optional(1200),
+          originalUrl: httpsUrl,
+          postedAt: isoDate.nullable().optional(),
+          salaryCurrency: z
+            .string()
+            .regex(/^[A-Z]{3}$/)
+            .nullable()
+            .optional(),
+          salaryMax: money,
+          salaryMin: money,
+          spainEligible: z.boolean().nullable().optional(),
+          title: z.string().trim().min(1).max(180),
+          workModel: z.enum(["remote", "hybrid", "onsite", "unknown"]).optional(),
+        })
+        .refine(
+          (job) => job.salaryMin == null || job.salaryMax == null || job.salaryMax >= job.salaryMin,
+          { message: "Maximum salary cannot be below minimum salary." },
+        ),
     )
     .max(5),
+  report: z.strictObject({
+    automationTitle: z.string().trim().min(1).max(150),
+    generatedAt: isoDate,
+    source: z.literal("chatgpt_automation"),
+    summary: z.string().trim().max(3000),
+  }),
+  schemaVersion: z.literal(1),
 });
 
 export type ChatgptJobImport = z.infer<typeof chatgptJobImportSchema>;
@@ -85,7 +89,7 @@ export function parseChatgptJobImport(input: unknown) {
       const key = chatgptJobKey(originalUrl);
       if (seen.has(key)) throw new Error("Duplicate job URL in one report.");
       seen.add(key);
-      return { ...job, originalUrl, key };
+      return { ...job, key, originalUrl };
     }),
   };
 }
