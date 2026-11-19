@@ -28,14 +28,11 @@ const example = JSON.stringify({
 });
 
 function request(body = example, origin = "https://studio.test", preview = false) {
-  return new Request(
-    `https://studio.test/api/jobs/import-chatgpt${preview ? "?preview=1" : ""}`,
-    {
-      body,
-      headers: { origin },
-      method: "POST",
-    },
-  );
+  return new Request(`https://studio.test/api/jobs/import-chatgpt${preview ? "?preview=1" : ""}`, {
+    body,
+    headers: { origin },
+    method: "POST",
+  });
 }
 
 describe("ChatGPT job import API", () => {
