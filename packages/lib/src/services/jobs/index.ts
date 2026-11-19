@@ -13,3 +13,4 @@ export {
   listingSchema,
   savedJobSearch,
 } from "./schema";
+\nexport { chatgptJobImportSchema, chatgptJobKey, normalizeChatgptJobUrl, parseChatgptJobImport } from "./chatgpt-import";\n
