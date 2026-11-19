@@ -14,7 +14,7 @@ function fail(message) {
 }
 function oneLine(value, title, max) {
   if (!value || value.trim().length < 8 || value.length > max || /[\r\n]/.test(value)) {
-    fail(title + " must be a single nonempty sentence, 8-" + max + " characters.");
+    fail(`${title} must be a single nonempty sentence, 8-${max} characters.`);
   }
   return value.trim();
 }
@@ -44,22 +44,22 @@ if (
 const root = fs.realpathSync(process.cwd());
 const directory = path.join(root, ".claude", "agents");
 fs.mkdirSync(directory, { recursive: true });
-const target = path.join(directory, name + ".md");
+const target = path.join(directory, `${name}.md`);
 const tools = mode === "review" ? "Read, Grep, Glob" : "Read, Grep, Glob, Edit, Write, Bash";
 
 const content = [
   "---",
-  "name: " + name,
-  "description: " + JSON.stringify(description),
-  "tools: " + tools,
+  `name: ${name}`,
+  `description: ${JSON.stringify(description)}`,
+  `tools: ${tools}`,
   "model: inherit",
   "---",
   "",
-  "# " + name,
+  `# ${name}`,
   "",
-  "**Mission:** " + mission,
+  `**Mission:** ${mission}`,
   "",
-  "**Scope:** " + scope,
+  `**Scope:** ${scope}`,
   "",
   "## Working agreement",
   "",
@@ -82,7 +82,7 @@ const content = [
 try {
   fs.writeFileSync(target, content, { encoding: "utf8", flag: "wx" });
 } catch (error) {
-  if (error && error.code === "EEXIST") fail("Subagent already exists: " + path.relative(root, target));
+  if (error && error.code === "EEXIST") fail(`Subagent already exists: ${path.relative(root, target)}`);
   throw error;
 }
-console.log("Created " + path.relative(root, target) + " (" + mode + ").");
+console.log(`Created ${path.relative(root, target)} (${mode}).`);
