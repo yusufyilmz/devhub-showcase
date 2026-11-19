@@ -7,8 +7,9 @@
 1. Sign into MyDevStudio and visit `/studio/jobs`.
 2. Open **Import ChatGPT research report**.
 3. Paste a JSON report with the exact format below. It must contain no more than five jobs. An empty `jobs` array is allowed.
-4. Select **Import report**. After the page refreshes, review the items in Discover before saving or applying.
-5. The app marks these items as **unverified ChatGPT research**. Always independently check whether the position is active, location eligibility and salary.
+4. Select **Preview report** to validate the JSON without changing saved data. Review the reported candidates, duplicate indicators and unknown fields.
+5. Select **Confirm import**. The page refreshes; review imported items in Discover before saving or applying.
+6. The app marks these items as **unverified ChatGPT research**. Always independently check whether the position is active, location eligibility and salary.
 
 ```json
 {
