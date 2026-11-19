@@ -40,7 +40,7 @@ export function ExampleThumbnail({ item }: { item: PortfolioExample }) {
         {profile.projects.map((project, index) => (
           <div key={project.id}>
             {item.covers[project.id] ? (
-              {/* biome-ignore lint/performance/noImgElement: Local decorative example thumbnails. */}
+              // biome-ignore lint/performance/noImgElement: Local decorative example thumbnails.
               <img
                 alt=""
                 height="400"
