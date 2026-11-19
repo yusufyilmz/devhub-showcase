@@ -65,13 +65,21 @@ type JobResearchImportV1 = {
 
 Keep `jobs` at most 5 per report in V1. Recruiter-message summaries remain in the human-readable report, **not** in structured job records until a separate privacy/design review. Reject `javascript:`, `file:`, localhost/private-network URLs, non-http protocols, oversized fields and invalid timestamps. Treat external links as outbound links only, never server-side fetch arbitrary user-supplied URLs.
 
+## Progress update (PR #174, 2026-11-19)
+
+**Completed checklist items are marked [x] only when the full wording is supported by code or documentation.** This is a progress record, not a release sign-off.
+
+**Implemented but not yet fully validated:** versioned JSON validation and URL normalization; user-scoped idempotent upserts; same-origin, authenticated import endpoint; preview-and-confirm UI; parser/API/service tests and a Playwright preview scenario. These span several checklist entries, but the original items also require negative cases, full preview error handling, complete E2E flows, red/green TDD verification, RLS/SQL checks, or passing CI, so those entries remain unchecked.
+
+**Outstanding:** verify automated output/export capabilities; complete field-specific validation feedback, deduplication and transaction behavior review, CV matching, source labelling, report history and notification policy; run successful Vitest, TypeScript, mobile/desktop Playwright, and SQL RLS checks. CI/PR Quality have reported failures, so do not merge or deploy yet.
+
 ## Task 1: Validate feasibility and lock the import spec
 
 **Files:** `docs/testing/manual/job-hunter.md`, `docs/testing/manual/linkedin-job-alerts.md`, current `packages/lib/src/services/jobs` models, and this plan.
 
-- [ ] Read current job domain types, DB tables, RLS policies, API operations and UI state enums; note exact names before implementation.
+- [x] Read current job domain types, DB tables, RLS policies, API operations and UI state enums; note exact names before implementation.
 - [ ] Verify whether scheduled ChatGPT task output has a supported machine-readable export or push connector. Record the evidence and supported auth model; do not assume a webhook exists.
-- [ ] Specify user flow: open Job Hunter → import ChatGPT report → preview validation errors and candidate jobs → confirm import → review and save.
+- [x] Specify user flow: open Job Hunter → import ChatGPT report → preview validation errors and candidate jobs → confirm import → review and save.
 - [ ] Choose either existing raw/discovered listing representation or a separate pending-import staging table based on the current schema; document why, and preserve per-user ownership.
 - [ ] Establish canonical deduplication: normalized original-provider job ID where available, otherwise validated canonical URL + owner; do not collapse distinct roles at the same company.
 - [ ] Record the final request/response schema, rate/size limits, duplicate policy, PII policy, and failure UX in a brief design note alongside the code.
@@ -112,9 +120,9 @@ Keep `jobs` at most 5 per report in V1. Recruiter-message summaries remain in th
 
 **Files:** `docs/testing/manual/job-hunter.md`, new `docs/testing/manual/chatgpt-job-import.md`, existing notification tests/services only if behavior changes.
 
-- [ ] Document a copyable, human-reviewed JSON instruction to append to the ChatGPT job-search automation: valid `schemaVersion: 1` object, ≤5 roles, no fabricated values, no private recruiter message bodies, zero results allowed.
-- [ ] Do not silently alter the live ChatGPT automation until the app import schema is implemented, tested and the user approves the change.
-- [ ] Keep a simple manual copy/paste MVP. Describe optional future assisted transfer only with documented, supported APIs or mail relay; never store ChatGPT tokens or scrape task UI.
+- [x] Document a copyable, human-reviewed JSON instruction to append to the ChatGPT job-search automation: valid `schemaVersion: 1` object, ≤5 roles, no fabricated values, no private recruiter message bodies, zero results allowed.
+- [x] Do not silently alter the live ChatGPT automation until the app import schema is implemented, tested and the user approves the change.
+- [x] Keep a simple manual copy/paste MVP. Describe optional future assisted transfer only with documented, supported APIs or mail relay; never store ChatGPT tokens or scrape task UI.
 - [ ] Deduplicate notifications per user and canonical job key; notify only on genuinely new matching results above existing thresholds. No notification for report with zero new jobs; always retain import/report history for visibility.
 - [ ] Add tests for notification retry and duplicate suppression **if** modifying notifications.
 - [ ] Run existing job checks and document setup plus rollback; commit: `docs(jobs): document ChatGPT job report import and rollout`.
