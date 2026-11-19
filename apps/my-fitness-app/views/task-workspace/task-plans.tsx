@@ -20,7 +20,7 @@ import {
 import { NativeSelect } from "@shared/ui/native-select";
 import { Tooltip } from "@shared/ui/tooltip";
 
-import type { TaskTreeProps } from "@/features/task-tree/task-tree";
+import type { TaskTreeProps } from "@/views/task-tree/task-tree";
 
 import {
   canAddPlanSubtask,

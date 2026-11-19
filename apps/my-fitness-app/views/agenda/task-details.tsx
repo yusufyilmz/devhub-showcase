@@ -6,7 +6,7 @@ import type { Task } from "@shared/lib/types";
 import { Button as LibraryButton } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 
-import { TaskBranch, type TaskTreeProps } from "@/features/task-tree/task-tree";
+import { TaskBranch, type TaskTreeProps } from "@/views/task-tree/task-tree";
 
 import { dayHref } from "./use-agenda-navigation";
 export function TaskDetails({

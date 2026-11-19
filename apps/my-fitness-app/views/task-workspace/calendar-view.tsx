@@ -7,7 +7,7 @@ import { Card } from "@shared/ui/cards";
 import { Label as LibraryLabel } from "@shared/ui/label";
 import { NativeSelect as LibraryNativeSelect } from "@shared/ui/native-select";
 
-import { CalendarGrid, type CalendarGridProps } from "@/features/calendar/calendar-grid";
+import { CalendarGrid, type CalendarGridProps } from "@/views/calendar/calendar-grid";
 
 const schedule = new ScheduleService();
 interface Props {

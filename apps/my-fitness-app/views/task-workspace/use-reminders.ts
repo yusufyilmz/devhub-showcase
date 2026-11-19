@@ -5,7 +5,7 @@ import { dueFitnessReminders } from "@shared/lib/fitness-reminders";
 import type { Workspace } from "@shared/lib/types";
 import { notificationCapabilities, stableNotificationId } from "@shared/notifications";
 
-import { fitnessNotifications } from "@/features/notifications/browser";
+import { fitnessNotifications } from "@/services/notifications/browser";
 
 export function useTaskReminders(state: Workspace, readOnly: boolean) {
   const [notice, setNotice] = useState<ReturnType<typeof dueFitnessReminders>[number]>();

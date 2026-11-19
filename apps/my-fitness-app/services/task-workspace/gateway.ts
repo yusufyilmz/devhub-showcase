@@ -4,8 +4,8 @@ import type { WorkspaceSnapshot } from "@shared/lib/workspace";
 import { demoWorkspace } from "@shared/lib/workspace-defaults";
 import type { NotificationMessage } from "@shared/notifications";
 
-import { subscribeFitnessNotifications } from "@/features/notifications/browser";
-import { authorizationHeaders } from "@/lib/browser-session";
+import { authorizationHeaders } from "@/services/auth/browser-session";
+import { subscribeFitnessNotifications } from "@/services/notifications/browser";
 export interface WorkspaceGateway {
   load(signal?: AbortSignal): Promise<WorkspaceSnapshot>;
   readonly readOnly: boolean;

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { fitnessSeo } from "../features/seo";
+import { fitnessSeo } from "../services/site/seo";
 
 export const dynamic = "force-dynamic";
 

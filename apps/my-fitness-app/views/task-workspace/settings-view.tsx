@@ -11,10 +11,9 @@ import { Input as LibraryInput } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
 import { NativeSelect as LibraryNativeSelect } from "@shared/ui/native-select";
 
-import { FitnessNotificationSettings } from "@/features/notifications/settings";
-import { signOut } from "@/lib/browser-session";
-
-import { disableFitnessDevice } from "../notifications/browser";
+import { signOut } from "@/services/auth/browser-session";
+import { disableFitnessDevice } from "@/services/notifications/browser";
+import { FitnessNotificationSettings } from "@/views/notifications/settings";
 
 interface Props {
   busy: boolean;

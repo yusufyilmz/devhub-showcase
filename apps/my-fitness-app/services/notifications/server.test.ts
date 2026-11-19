@@ -15,8 +15,8 @@ const mocks = vi.hoisted(() => ({
   saveDevice: vi.fn(),
   send: vi.fn(),
 }));
-vi.mock("@/lib/auth", async (original) => ({
-  ...(await original<typeof import("@/lib/auth")>()),
+vi.mock("@/services/auth/auth", async (original) => ({
+  ...(await original<typeof import("@/services/auth/auth")>()),
   requestIdentity: mocks.identity,
   sameOrigin: mocks.origin,
 }));

@@ -10,18 +10,18 @@ const mocks = vi.hoisted(() => ({
   load: vi.fn(),
   save: vi.fn(),
 }));
-vi.mock("@/features/task-workspace/server", () => ({
+vi.mock("@/services/task-workspace/server", () => ({
   SetupRequired: class extends Error {},
   SignInRequired: class extends Error {},
   workspaceContext: mocks.context,
 }));
-vi.mock("@/lib/auth", () => ({
+vi.mock("@/services/auth/auth", () => ({
   sameOrigin: (req: Request) => req.headers.get("origin") === origin,
 }));
 vi.mock("@shared/assistant/fitness", () => ({ proposeFitnessChange: mocks.generate }));
 vi.mock("@shared/lib/cache", () => ({ allowFitnessAssistant: mocks.limit }));
 
-import { SignInRequired } from "@/features/task-workspace/server";
+import { SignInRequired } from "@/services/task-workspace/server";
 
 import { POST } from "./route";
 

@@ -7,10 +7,10 @@ import { Button } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
 import { Skeleton } from "@shared/ui/skeleton";
 
-import { initializeFitnessNotifications } from "@/features/notifications/browser";
-import { DemoWorkspaceGateway, HttpWorkspaceGateway } from "@/features/task-workspace/gateway";
-import { TaskWorkspace } from "@/features/task-workspace/task-workspace";
-import { useTaskWorkspace } from "@/features/task-workspace/use-task-workspace";
+import { initializeFitnessNotifications } from "@/services/notifications/browser";
+import { DemoWorkspaceGateway, HttpWorkspaceGateway } from "@/services/task-workspace/gateway";
+import { TaskWorkspace } from "@/views/task-workspace/task-workspace";
+import { useTaskWorkspace } from "@/views/task-workspace/use-task-workspace";
 
 export function FitnessApp({ demo = false }: { demo?: boolean }) {
   useEffect(initializeFitnessNotifications, []);

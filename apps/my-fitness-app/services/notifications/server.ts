@@ -1,7 +1,7 @@
 import { createFitnessNotificationHandlers } from "@shared/lib/fitness-notification-handlers";
 
 import { env } from "@/env";
-import { fitnessUser, requestIdentity, sameOrigin } from "@/lib/auth";
+import { fitnessUser, requestIdentity, sameOrigin } from "@/services/auth/auth";
 
 export const { pushConfiguration, notificationRequest, testNotification, dispatchReminders } =
   createFitnessNotificationHandlers({

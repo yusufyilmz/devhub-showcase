@@ -4,7 +4,7 @@ import { WorkspaceRepository, WorkspaceService } from "@shared/lib/workspace";
 import { starterWorkspace } from "@shared/lib/workspace-defaults";
 
 import { env } from "@/env";
-import { configured, fitnessUser, requestIdentity } from "@/lib/auth";
+import { configured, fitnessUser, requestIdentity } from "@/services/auth/auth";
 
 export class SignInRequired extends Error {}
 export class SetupRequired extends Error {}

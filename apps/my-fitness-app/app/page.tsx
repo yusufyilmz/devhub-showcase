@@ -2,9 +2,9 @@ import { Alert, AlertDescription, AlertTitle } from "@shared/ui/alert";
 import { Button } from "@shared/ui/button";
 
 import { env } from "@/env";
-import { configured } from "@/lib/auth";
+import { configured } from "@/services/auth/auth";
 
-import { FitnessApp } from "../features/fitness/fitness-app";
+import { FitnessApp } from "../views/fitness/fitness-app";
 
 export const dynamic = "force-dynamic";
 

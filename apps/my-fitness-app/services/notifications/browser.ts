@@ -12,7 +12,7 @@ import {
   type PushRecord,
 } from "@shared/notifications/client";
 
-import { authorizationHeaders, browserAuth } from "@/lib/browser-session";
+import { authorizationHeaders, browserAuth } from "@/services/auth/browser-session";
 
 export const fitnessNotifications = new NotificationClient({
   icon: "/icon-192.png",

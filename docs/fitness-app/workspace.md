@@ -47,20 +47,18 @@ If `fitness_workspaces` contains that user's validated v1 JSON, the first authen
 
 Paths are relative to `apps/my-fitness-app`.
 
-| Path                      | Responsibility                                                                          |
-| ------------------------- | --------------------------------------------------------------------------------------- |
-| `features/fitness`        | App shell, login, and composition of the gateway and workspace UI                       |
-| `features/task-workspace` | Navigation, calendar, settings, persistence coordination, and reminders                 |
-| `features/task-tree`      | Recursive task presentation and completion controls                                     |
-| `features/task-editor`    | Task and structured ingredient forms                                                    |
-| `features/weekly-planner` | Weekly cooking and shopping workflow                                                    |
-| `features/agenda`         | Day agenda, event rows, and date navigation                                             |
-| `lib/domain`              | Typed models, schema validation, dates, and seed composition                            |
-| `lib/services`            | Task operations, scheduling, meal planning, shopping aggregation, and weekly generation |
-| `lib/repositories`        | Persistence contracts and Drizzle implementations                                       |
-| `lib/db`                  | ORM models. The SQL is `supabase/migrations/20261101120000_fitness_task_workspaces.sql` |
-| `lib/migrations`          | Version-one conversion and original trainer source data                                 |
-| `tests`                   | Domain, migration, persistence, and read-only rendering tests                           |
+| Path                      | Responsibility                                                     |
+| ------------------------- | ------------------------------------------------------------------ |
+| `views/fitness`           | App shell, login, and composition of the gateway and workspace UI  |
+| `views/task-workspace`    | Navigation, calendar, settings, and reminders                      |
+| `views/task-tree`         | Recursive task presentation and completion controls                |
+| `views/task-editor`       | Task and structured ingredient forms                               |
+| `views/weekly-planner`    | Weekly cooking and shopping workflow                               |
+| `views/agenda`            | Day agenda, event rows, and date navigation                        |
+| `services/auth`           | Session identity, origin checks, and browser sign-out for this app |
+| `services/task-workspace` | Signed-in workspace load and the HTTP gateway                      |
+| `services/notifications`  | Reminder dispatch and browser push for this app                    |
+| `tests`                   | Domain, migration, persistence, and read-only rendering tests      |
 
 Domain rules do not import React, Drizzle, or Supabase. Storage is reached through repository interfaces. The UI uses an HTTP gateway that stays read-only until the server confirms the owner. Persistence boundaries are in [architecture](architecture.md).
 

@@ -6,7 +6,7 @@ import localFont from "next/font/local";
 import { PageShell } from "@shared/ui/page-shell";
 import { createPageMetadata, createStructuredData } from "@shared/ui/seo";
 
-import { fitnessSeo } from "@/features/seo";
+import { fitnessSeo } from "@/services/site/seo";
 
 /** Same platform theme record as MyDevStudio (`getPagePresentation` on platform routes). */
 const platformAppearance = {

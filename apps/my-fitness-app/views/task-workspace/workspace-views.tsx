@@ -28,10 +28,10 @@ import { Progress } from "@shared/ui/progress";
 import { ThemeToggle } from "@shared/ui/theme";
 import { Eyebrow } from "@shared/ui/typography";
 
-import { DayAgenda } from "@/features/agenda/day-agenda";
-import { TaskDetails } from "@/features/agenda/task-details";
-import type { TaskEditorTarget } from "@/features/task-editor/task-editor";
-import { WeeklyPlanner } from "@/features/weekly-planner/weekly-planner";
+import { DayAgenda } from "@/views/agenda/day-agenda";
+import { TaskDetails } from "@/views/agenda/task-details";
+import type { TaskEditorTarget } from "@/views/task-editor/task-editor";
+import { WeeklyPlanner } from "@/views/weekly-planner/weekly-planner";
 
 import { CalendarView } from "./calendar-view";
 import { SettingsView } from "./settings-view";
