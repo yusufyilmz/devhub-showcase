@@ -104,6 +104,10 @@ pnpm cli:check secrets
 
 `validate` checks skill frontmatter, duplicate names, local links, and advisory file size. A skill file over 800 lines or 65536 bytes is reported and does not fail the check. Placeholders such as TODO, FIXME, and TBD are reported the same way. `scaffold` writes `SKILL.md`, `workflows/overview.md`, and `references/overview.md` and does not replace an existing skill. `cli:check` runs the checks this repository already owns. `secrets` looks for private keys and live tokens in the tree. It does not install Gitleaks or a duplicate-code scanner. `pnpm check:skills` uses the same validator.
 
+### Repository authoring skills
+
+Use these repo-native skills when creating AI artifacts: [create-plan](.agents/skills/create-plan/SKILL.md) for plans under `.agents/plans` with verifiable task checkoffs; [create-skill](.agents/skills/create-skill/SKILL.md) for skills in `.agents/skills`; and [create-subagent](.agents/skills/create-subagent/SKILL.md) for scoped Claude Code subagents in `.claude/agents`. Subagents are **not** stored under `.agents/plans`. The create-plan helper records completion evidence but cannot independently prove a test passed. Do not check off a task without actual verification.
+
 ## Dev environment
 
 Use the Node and pnpm versions in the root `package.json` (currently Node 24.15+ below 25, and pnpm 11). Check the active versions before installing or running checks. Install with `pnpm install --frozen-lockfile`. External dependencies use `catalog:`. Internal dependencies use `workspace:*`. Change the catalog, the package manifest, and the lockfile together.
