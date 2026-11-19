@@ -29,24 +29,24 @@ if (!file.startsWith(root + path.sep) || !file.endsWith(".md")) {
 }
 
 const original = fs.readFileSync(file, "utf8");
-const unchecked = "- [ ] **" + taskId + "**";
-const checked = "- [x] **" + taskId + "**";
+const unchecked = `- [ ] **${taskId}**`;
+const checked = `- [x] **${taskId}**`;
 const lines = original.split("\n");
 const matches = lines.flatMap((line, index) =>
   line.startsWith(unchecked) || line.startsWith(checked) ? [index] : [],
 );
 if (matches.length !== 1) {
-  fail("Expected exactly one task with identifier " + taskId + "; found " + matches.length + ".");
+  fail(`Expected exactly one task with identifier ${taskId}; found ${matches.length}.`);
 }
 const index = matches[0];
 const wasChecked = lines[index].startsWith(checked);
-if (!wasChecked) lines[index] = checked + lines[index].slice(unchecked.length);
+if (!wasChecked) lines[index] = `${checked}${lines[index].slice(unchecked.length)}`;
 
 const evidenceHeader = "## Completion evidence";
-const rowPrefix = "| " + taskId + " |";
+const rowPrefix = `| ${taskId} |`;
 const existingEvidence = lines.some((line) => line.startsWith(rowPrefix));
 if (wasChecked && existingEvidence) {
-  console.log(taskId + " is already checked and has evidence; no changes.");
+  console.log(`${taskId} is already checked and has evidence; no changes.`);
   process.exit(0);
 }
 if (!lines.includes(evidenceHeader)) {
@@ -56,8 +56,8 @@ if (!lines.includes(evidenceHeader)) {
 if (!existingEvidence) {
   // Completion evidence is the final section of create-plan documents.
   while (lines.at(-1) === "") lines.pop();
-  lines.push("| " + taskId + " | " + evidence + " |");
+  lines.push(`| ${taskId} | ${evidence} |`);
 }
 const next = lines.join("\n").replace(/\n*$/, "\n");
 if (next !== original) fs.writeFileSync(file, next, "utf8");
-console.log("Marked " + taskId + " completed and recorded evidence.");
+console.log(`Marked ${taskId} completed and recorded evidence.`);
