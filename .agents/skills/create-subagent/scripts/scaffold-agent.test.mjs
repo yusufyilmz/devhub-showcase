@@ -36,7 +36,7 @@ describe("scaffold-agent", () => {
       assert.notEqual(run(root, "access-reviewer", ...options).status, 0);
       assert.equal(readFileSync(file, "utf8"), original);
     } finally {
-      rmSync(root, { recursive: true, force: true });
+      rmSync(root, { force: true, recursive: true });
     }
   });
 
@@ -50,7 +50,7 @@ describe("scaffold-agent", () => {
       const file = readFileSync(path.join(root, ".claude/agents/focused-implementer.md"), "utf8");
       assert.match(file, /tools: Read, Grep, Glob, Edit, Write, Bash/);
     } finally {
-      rmSync(root, { recursive: true, force: true });
+      rmSync(root, { force: true, recursive: true });
     }
   });
 
@@ -76,7 +76,7 @@ describe("scaffold-agent", () => {
         0,
       );
     } finally {
-      rmSync(root, { recursive: true, force: true });
+      rmSync(root, { force: true, recursive: true });
     }
   });
 });
