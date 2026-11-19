@@ -118,7 +118,7 @@ The platform homepage has separate branding, metadata and theme storage. Its sig
 
 The layout gallery offers fictional examples for each supported layout. Filters, previous/next controls and swipe have no autoplay and respect reduced motion. Illustrative portfolio/CV tabs are keyboard accessible and never save changes.
 
-Examples live at `/p/examples/{slug}`, with matching `/cv.pdf` downloads. They work without database records, identify themselves as fictional and use noindex/nofollow. Keep their identities fictional and contact addresses under example.com. Edit gallery data in `packages/assistant/src/components/studio/examples/data.ts` and assets in `apps/my-dev-studio/public/examples`.
+Examples live at `/p/examples/{slug}`, with matching `/cv.pdf` downloads. They work without database records, identify themselves as fictional and use noindex/nofollow. Keep their identities fictional and contact addresses under example.com. Edit gallery data in `apps/my-dev-studio/services/examples/data.ts` and assets in `apps/my-dev-studio/public/examples`.
 
 ## Search and public branding
 

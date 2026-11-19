@@ -5,7 +5,7 @@ import {
   ExistingSubscriptionError,
   StripeBilling,
   stripeConfiguration,
-} from "./stripe";
+} from "../schemas/stripe";
 
 export function billingGateway() {
   try {

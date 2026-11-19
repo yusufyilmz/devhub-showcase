@@ -1,7 +1,7 @@
-import { getExampleForPath } from "@shared/assistant/examples-data";
 import { storage } from "@shared/config";
 import type { ProfileSnapshot } from "@shared/lib/profile";
 
+import { getExampleForPath } from "@/services/examples/data";
 import { isStudioPath } from "@/services/site/get-site";
 
 function profileStorageKey(id: string | undefined) {

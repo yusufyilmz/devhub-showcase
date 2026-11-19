@@ -74,7 +74,7 @@ Fetching and navigation stay in the app feature. The screen accepts the snapshot
 | Google import review      | `src/google-import` | `@shared/ui/google-import`                |
 | Appearance editor         | `src/theme/studio`  | `@shared/ui/theme/studio`                 |
 
-Chat presentation lives in `packages/assistant/src/components/chat`, including assistant chat, portfolio dialogs, chat sections, composers and agent companions. Both the package export and root TypeScript alias resolve `@shared/assistant/chat-ui` to `src/chat/index.ts`. Assistant models stay in the assistant package; portfolio chat access validation stays in the app’s chat feature.
+Chat presentation lives in `packages/assistant/src/chat/components`, including assistant chat, portfolio dialogs, chat sections, composers and agent companions. Both the package export and root TypeScript alias resolve `@shared/assistant/chat-ui` to `src/chat/components/index.ts`. Assistant workflows stay in the assistant package; portfolio chat access validation stays in the app’s chat feature.
 
 Chat placed inside a portfolio section stays in that section folder. Visitor authorization and rate limits stay in the app, `@shared/lib`, and `@shared/lib/cache`. This package renders the conversation it is given.
 

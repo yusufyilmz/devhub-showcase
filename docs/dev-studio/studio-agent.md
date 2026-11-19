@@ -2,7 +2,7 @@
 
 The private portfolio model is `PortfolioEditModel` in `@shared/assistant`.
 Its version-controlled instructions live in
-`packages/assistant/src/models/studio-agent-prompt.ts` and are imported directly
+`packages/assistant/src/studio/services/studio-agent-prompt.ts` and are imported directly
 into the provider request. Changing this module changes the live editor prompt;
 there is no separate dashboard prompt to synchronize or model to train.
 

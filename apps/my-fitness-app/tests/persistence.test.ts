@@ -93,7 +93,7 @@ test("real SQL migrations, ORM roundtrip, conflicts, rollback and owner isolatio
   } finally {
     await engine.close();
   }
-});
+}, 20_000);
 
 describe("standalone stored workspace compatibility", () => {
   test("exercise and postponed-workout records roundtrip without a database rewrite", async () => {

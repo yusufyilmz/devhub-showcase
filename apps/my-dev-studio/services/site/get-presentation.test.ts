@@ -3,16 +3,16 @@ import { resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
+import { portfolioTypes } from "@shared/config";
+import type { ProfileSnapshot } from "@shared/lib/profile";
+import { profileSchema } from "@shared/lib/profiles";
+
 import {
   examplePath,
   exampleViewProfile,
   getExampleForPath,
   portfolioExamples,
-} from "@shared/assistant/examples-data";
-import { portfolioTypes } from "@shared/config";
-import type { ProfileSnapshot } from "@shared/lib/profile";
-import { profileSchema } from "@shared/lib/profiles";
-
+} from "@/services/examples/data";
 import { getPagePresentation } from "@/services/site/get-presentation";
 
 describe("Examples", () => {

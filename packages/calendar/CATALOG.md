@@ -6,13 +6,15 @@
 
 ## Generated package reference
 
-| Import                           | Source / condition        | Declared symbols                                                                                                                                               |
-| -------------------------------- | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@shared/calendar`               | `./src/model.ts`          | `calendarRange`, `calendarRangeSchema`, `taskDraftSchema`, `type CalendarItem`, `type TaskDraft`                                                               |
-| `@shared/calendar/calendar-grid` | `./src/calendar-grid.tsx` | `CalendarGrid`, `type CalendarGridProps`                                                                                                                       |
-| `@shared/calendar/day-agenda`    | `./src/day-agenda.tsx`    | `AgendaItem`, `DayAgenda`, `type DayAgendaProps`                                                                                                               |
-| `@shared/calendar/google`        | `./src/google.ts`         | `GoogleAuthorizationError`, `exchangeGoogleCode`, `fetchGoogleItems`, `googleAuthorizationUrl`, `refreshGoogleToken`, `revokeGoogleToken`, `type GoogleConfig` |
-| `@shared/calendar/task-form`     | `./src/task-form.tsx`     | `ScheduleFields`, `TaskForm`, `type TaskFormProps`                                                                                                             |
+| Import                            | Source / condition                    | Declared symbols                                                                                                                                               |
+| --------------------------------- | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@shared/calendar`                | `./src/index.ts`                      | `calendarRange`, `calendarRangeSchema`, `taskDraftSchema`, `type CalendarItem`, `type TaskDraft`                                                               |
+| `@shared/calendar/agenda-details` | `./src/components/agenda-details.tsx` | `AgendaDetails`, `type AgendaDetailsProps`                                                                                                                     |
+| `@shared/calendar/calendar-grid`  | `./src/components/calendar-grid.tsx`  | `CalendarGrid`, `type CalendarGridProps`                                                                                                                       |
+| `@shared/calendar/day-agenda`     | `./src/components/day-agenda.tsx`     | `AgendaItem`, `DayAgenda`, `type DayAgendaProps`                                                                                                               |
+| `@shared/calendar/event-row`      | `./src/components/event-row.tsx`      | `EventRow`, `type EventRowProps`                                                                                                                               |
+| `@shared/calendar/google`         | `./src/services/google.ts`            | `GoogleAuthorizationError`, `exchangeGoogleCode`, `fetchGoogleItems`, `googleAuthorizationUrl`, `refreshGoogleToken`, `revokeGoogleToken`, `type GoogleConfig` |
+| `@shared/calendar/task-form`      | `./src/components/task-form.tsx`      | `ScheduleFields`, `TaskForm`, `type TaskFormProps`                                                                                                             |
 
 Symbol names are read statically from TypeScript declarations without executing their implementation modules. Wildcard package paths, external star re-exports and non-code assets are not expanded into symbol claims. Verify source contracts before importing.
 

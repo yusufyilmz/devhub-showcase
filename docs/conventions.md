@@ -71,11 +71,33 @@ A workflow that another app or a shared package would call belongs in `packages/
 
 Workspace auth and managed-portfolio access live in `services/admin` and `services/management`. Billing, jobs, calendar, publication, profile history, CV, chat, review, account, site, and home bindings live in the matching `services/<domain>` folder.
 
+### Package source layout
+
+Choose the `src` layout from how many product areas the package owns.
+
+A package for one area, such as `@shared/calendar`, uses role folders directly under `src`:
+
+| Folder         | What belongs there                 |
+| -------------- | ---------------------------------- |
+| `components/`  | Screens and controls               |
+| `services/`    | Provider calls and workflows       |
+| `middlewares/` | Custom Middlewares                 |
+| `providers/`   | Custom Providers                   |
+| `hooks/`       | Browser state for that area        |
+| `utils/`       | Helpers with no screen or provider |
+| `schemas/`     | Types and validators               |
+
+`@shared/calendar` is that shape: the grid, agenda, event row, task form, and activity details are in `components/`; Google Calendar loading is in `services/`; `calendarRange` is in `utils/`; item and draft validation is in `schemas/`. The apps still own authentication, persistence, and domain-specific behavior.
+
+A package for many areas, such as `@shared/ui`, `@shared/lib`, and `@shared/assistant`, uses a folder per feature under `src` (`buttons/`, `jobs/`, `studio/`). Put `components/`, `services/`, `hooks/`, `utils/`, and `schemas/` inside the feature when that feature needs more than one role. Do not add a new top-level role folder to hold every feature.
+
+Keep a test next to the file it covers. Export through the package entry points. Do not import an app from a shared package.
+
 ### `packages/lib` — reusable services
 
 Reusable services, repositories, validation, typed database clients, and the Redis cache live in `packages/lib` (`@shared/lib`).
 
-`packages/lib/src` is organized as `db/`, `repositories/`, `services/`, `types/`, and `schemas/`. Inside `services/` and `repositories/`, group implementations and tests by domain. Keep shared database code under `db/`. Export through the shallow entry points in [architecture](architecture.md). Import `Database`, `Json`, and row types from `@shared/lib/types`.
+`packages/lib/src` currently groups shared database code under `db/`, with `repositories/`, `services/`, `types/`, and `schemas/` beside it. New work follows the package source layout above: a feature folder first, then role folders inside that feature. Export through the shallow entry points in [architecture](architecture.md). Import `Database`, `Json`, and row types from `@shared/lib/types`.
 
 ### `packages/utils` — reusable helpers
 

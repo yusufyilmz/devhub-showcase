@@ -10,8 +10,8 @@ import { GoogleImportEditor } from "./google-import-editor";
 
 const mocks = vi.hoisted(() => ({ load: vi.fn(), request: vi.fn() }));
 
-vi.mock("@shared/auth/google-provider", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("@shared/auth/google-provider")>();
+vi.mock("@shared/auth/providers", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@shared/auth/providers")>();
   return {
     ...actual,
     loadGoogleConsent: mocks.load,

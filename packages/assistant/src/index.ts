@@ -10,16 +10,16 @@ export {
   referralWelcomeMessage,
   simpleResponseMessage,
   unknownMessage,
-} from "./messages";
-export { CvImportModel } from "./models/cv-import-model";
-export { createCVModel } from "./models/cv-model";
+} from "./chat/services/messages";
+export { PortfolioChatModel } from "./chat/services/portfolio-chat-model";
+export { MessageProcessor } from "./chat/services/processor";
+export { CvImportModel } from "./cv/services/cv-import-model";
+export { createCVModel } from "./cv/services/cv-model";
+export { formatAllCV, formatters } from "./cv/services/formatter";
 export {
   applicationDraft,
   assessJobMatches,
   prepareJobApplication,
   proposeInterviewPrep,
-} from "./models/job-assistant";
-export { PortfolioChatModel } from "./models/portfolio-chat-model";
-export { PortfolioEditModel } from "./models/portfolio-edit-model";
-export { formatAllCV, formatters } from "./services/formatter";
-export { MessageProcessor } from "./services/processor";
+} from "./jobs/services/job-assistant";
+export { PortfolioEditModel } from "./studio/services/portfolio-edit-model";

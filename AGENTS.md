@@ -61,7 +61,7 @@ If the catalog has no component that fits, add it in `packages/ui`. All workspac
 - Use [the feature inventory](docs/features.md) to verify what the homepage and README advertise. Describe configuration requirements for AI, scheduled discovery, browser push, LinkedIn email forwarding and Stripe test checkout.
 - Homepage routing and metadata live under `apps/my-dev-studio/app`. The homepage FAQ uses `packages/config/src/copy/site-copy/faq.ts`. Keep it aligned with the visible feature cards and product documentation.
 - Portfolio setup and the companion are shared Studio compositions. Studio account preferences use `/api/account-preferences` and are separate from saved portfolio appearance.
-- Job Hunter UI lives in `packages/assistant/src/components/portfolio/jobs`. The app owns `/studio/jobs`, `/api/jobs` and the inbound email and scheduled worker routes. Shared listing and email parsing code lives in `packages/lib/src/services/jobs`. See the [Job Hunter guide](docs/testing/manual/job-hunter.md) and [LinkedIn alert guide](docs/testing/manual/linkedin-job-alerts.md).
+- Job Hunter UI lives in `packages/assistant/src/portfolio/components/jobs`. The app owns `/studio/jobs`, `/api/jobs` and the inbound email and scheduled worker routes. Shared listing and email parsing code lives in `packages/lib/src/services/jobs`. See the [Job Hunter guide](docs/testing/manual/job-hunter.md) and [LinkedIn alert guide](docs/testing/manual/linkedin-job-alerts.md).
 
 ## Where code goes
 
@@ -212,3 +212,14 @@ Keep the change focused. Review the diff for unrelated files and secrets. Update
 Run `pnpm check` and `pnpm test` before opening the PR. For app UI or route changes, also run `pnpm --filter my-dev-studio build` when the change can affect the production build. Say which checks actually ran.
 
 Shared backend modules must not import an app or its environment schema. App adapters bind shared factories to validated configuration, verified identity callbacks and cookie/response handling. Preserve owner filters, publication checks, origin checks, attempt limits and revision guards when extracting backend code. Do not add pure re-export shims in app features.
+
+<!-- BEGIN:turborepo-agent-rules -->
+
+### This is NOT the Turborepo you know
+
+Turborepo configuration, task behavior, and CLI commands can vary between installed versions and may differ from your training data. Resolve the `turbo` package from this file's directory or relevant workspace; in monorepos, it may not be visible from the repository root. For example, run `node -p "require.resolve('turbo/package.json')"` from a workspace that depends on `turbo`.
+
+Read `docs/README.md` inside that installed package first, then read the relevant pages from its `docs/` directory before changing Turborepo configuration or commands. Heed deprecation notices. These bundled docs match the installed package version and are available without network access.
+
+This block is written and re-added by `turbo` before repository-scoped commands when an AI agent is detected. In the Turborepo source repository, its template is defined in `crates/turborepo-cli/src/cli/agent_guidance.rs`. Removing the managed block while updates are enabled means a later qualifying invocation will add it again. Set `"agentGuidance": true` in the root `turbo.json` or `turbo.jsonc` to opt in; this does not remove an existing block. Keep the block committed with your work to avoid an uncommitted change on the next agent invocation.
+<!-- END:turborepo-agent-rules -->

@@ -1,106 +1,221 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["CRON_SECRET"],
-  "globalPassThroughEnv": [
-    "GITHUB_EVENT_NAME",
-    "GITHUB_EVENT_PATH",
-    "GITHUB_OUTPUT",
-    "GITHUB_SHA",
-    "GITHUB_STEP_SUMMARY"
-  ],
+  "agentGuidance": true,
+  "futureFlags": {
+    "affectedUsingTaskInputs": true,
+    "errorsOnlyShowHash": true,
+    "filterUsingTasks": true,
+    "githubActionsRemoteBaseRefFallback": true,
+    "globalConfiguration": true,
+    "longerSignatureKey": true,
+    "pruneIncludesGlobalFiles": true,
+    "strictTaskEntrypointSelection": true,
+    "watchUsingTaskInputs": true
+  },
+  "global": {
+    "cacheMaxAge": "7d",
+    "cacheMaxSize": "10GB",
+    "env": ["CRON_SECRET"],
+    "envMode": "strict",
+    "inputs": ["pnpm-workspace.yaml", "tools/typescript-config/**"],
+    "passThroughEnv": [
+      "GITHUB_EVENT_NAME",
+      "GITHUB_EVENT_PATH",
+      "GITHUB_OUTPUT",
+      "GITHUB_SHA",
+      "GITHUB_STEP_SUMMARY",
+      "NODE_OPTIONS"
+    ],
+    "ui": "tui"
+  },
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "description": "Compile a package or app for production.",
       "env": [
-        "NEXT_PUBLIC_SUPABASE_URL",
+        "CI",
+        "GOOGLE_PROFILE_CLIENT_ID",
+        "NEXT_PUBLIC_SITE_URL",
         "NEXT_PUBLIC_SUPABASE_ANON_KEY",
         "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
-        "NEXT_PUBLIC_SITE_URL",
-        "GOOGLE_PROFILE_CLIENT_ID"
+        "NEXT_PUBLIC_SUPABASE_URL",
+        "NODE_ENV"
       ],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/*.md",
+        "!**/*.mdx",
+        "!**/*.test.ts",
+        "!**/*.test.tsx",
+        "!**/e2e/**",
+        "!**/playwright.config.ts"
+      ],
+      "outputLogs": "new-only",
       "outputs": ["dist/**"],
       "passThroughEnv": [
-        "OPENAI_API_KEY",
-        "OPENAI_MODEL",
-        "REDIS_URL",
-        "REDIS_TOKEN",
         "APPLICATION_NAME",
-        "LOG_LEVEL",
-        "OPENAI_CV_MODEL",
         "CV_IMPORT_DAILY_LIMIT",
+        "LOG_LEVEL",
+        "OPENAI_API_KEY",
         "OPENAI_CHAT_MODEL",
-        "STRIPE_SECRET_KEY",
-        "STRIPE_WEBHOOK_SECRET",
-        "STRIPE_PRO_PRICE_ID",
+        "OPENAI_CV_MODEL",
+        "OPENAI_EDITOR_MODEL",
+        "OPENAI_MODEL",
+        "REDIS_TOKEN",
+        "REDIS_URL",
         "STRIPE_PRO_CHAT_LIMIT",
         "STRIPE_PRO_EDITOR_LIMIT",
-        "SUPABASE_SERVICE_ROLE_KEY",
-        "OPENAI_EDITOR_MODEL"
+        "STRIPE_PRO_PRICE_ID",
+        "STRIPE_SECRET_KEY",
+        "STRIPE_WEBHOOK_SECRET",
+        "SUPABASE_SERVICE_ROLE_KEY"
       ]
     },
+    "build-storybook": {
+      "dependsOn": ["^build"],
+      "description": "Build the static Storybook site.",
+      "inputs": ["$TURBO_DEFAULT$", "!**/*.md", "!**/*.mdx"],
+      "outputLogs": "new-only",
+      "outputs": ["storybook-static/**"]
+    },
     "clean": {
-      "cache": false
+      "cache": false,
+      "description": "Remove build output for one package."
     },
     "dev": {
       "cache": false,
+      "description": "Run a package or app in development.",
+      "interruptible": true,
       "persistent": true
+    },
+    "format": {
+      "cache": false,
+      "description": "Format a package and write the result."
+    },
+    "format:check": {
+      "description": "Check formatting without writing files.",
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/biome.json"],
+      "outputLogs": "errors-only",
+      "outputs": []
+    },
+    "lint": {
+      "description": "Lint a package.",
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/biome.json"],
+      "outputLogs": "errors-only",
+      "outputs": []
+    },
+    "lint:check": {
+      "description": "Lint a package without applying fixes.",
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/biome.json"],
+      "outputLogs": "errors-only",
+      "outputs": []
+    },
+    "lint:fix": {
+      "cache": false,
+      "description": "Lint a package and write safe fixes."
     },
     "my-dev-studio#build": {
       "dependsOn": ["^build"],
+      "description": "Build the MyDevStudio Next.js app.",
       "env": [
-        "NEXT_PUBLIC_SUPABASE_URL",
+        "CI",
+        "GOOGLE_PROFILE_CLIENT_ID",
+        "NEXT_PUBLIC_SITE_URL",
         "NEXT_PUBLIC_SUPABASE_ANON_KEY",
         "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
-        "NEXT_PUBLIC_SITE_URL",
-        "GOOGLE_PROFILE_CLIENT_ID",
-        "REDIS_URL",
+        "NEXT_PUBLIC_SUPABASE_URL",
+        "NODE_ENV",
         "REDIS_TOKEN",
+        "REDIS_URL",
         "VERCEL_ENV"
       ],
-      "outputs": [".next/**", "!.next/cache/**"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/*.md",
+        "!**/*.mdx",
+        "!**/*.test.ts",
+        "!**/*.test.tsx",
+        "!**/e2e/**",
+        "!**/playwright.config.ts"
+      ],
+      "outputLogs": "new-only",
+      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"],
       "passThroughEnv": [
-        "OPENAI_API_KEY",
-        "OPENAI_MODEL",
         "APPLICATION_NAME",
-        "LOG_LEVEL",
-        "OPENAI_CV_MODEL",
         "CV_IMPORT_DAILY_LIMIT",
+        "LOG_LEVEL",
+        "OPENAI_API_KEY",
         "OPENAI_CHAT_MODEL",
-        "STRIPE_SECRET_KEY",
-        "STRIPE_WEBHOOK_SECRET",
-        "STRIPE_PRO_PRICE_ID",
+        "OPENAI_CV_MODEL",
+        "OPENAI_EDITOR_MODEL",
+        "OPENAI_MODEL",
         "STRIPE_PRO_CHAT_LIMIT",
         "STRIPE_PRO_EDITOR_LIMIT",
-        "SUPABASE_SERVICE_ROLE_KEY",
-        "OPENAI_EDITOR_MODEL"
+        "STRIPE_PRO_PRICE_ID",
+        "STRIPE_SECRET_KEY",
+        "STRIPE_WEBHOOK_SECRET",
+        "SUPABASE_SERVICE_ROLE_KEY"
       ]
     },
     "my-fitness-app#build": {
       "dependsOn": ["^build"],
+      "description": "Build the fitness Next.js app.",
       "env": [
-        "NEXT_PUBLIC_SUPABASE_URL",
-        "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
         "APP_URL",
-        "FITNESS_ADDITIONAL_ORIGIN"
+        "CI",
+        "FITNESS_ADDITIONAL_ORIGIN",
+        "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+        "NEXT_PUBLIC_SUPABASE_URL",
+        "NODE_ENV"
       ],
-      "outputs": [".next/**", "!.next/cache/**"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/*.md",
+        "!**/*.mdx",
+        "!**/*.test.ts",
+        "!**/*.test.tsx",
+        "!**/e2e/**",
+        "!**/playwright.config.ts"
+      ],
+      "outputLogs": "new-only",
+      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"],
       "passThroughEnv": [
         "SUPABASE_DB_URL",
-        "WEB_PUSH_PUBLIC_KEY",
         "WEB_PUSH_PRIVATE_KEY",
+        "WEB_PUSH_PUBLIC_KEY",
         "WEB_PUSH_SUBJECT"
       ]
     },
     "start": {
       "cache": false,
+      "description": "Serve a production build.",
+      "interruptible": true,
+      "persistent": true
+    },
+    "storybook": {
+      "cache": false,
+      "description": "Run Storybook in development.",
+      "interruptible": true,
       "persistent": true
     },
     "storybook-app#build": {
       "dependsOn": ["^build"],
+      "description": "Build the Storybook Vite app.",
+      "inputs": ["$TURBO_DEFAULT$", "!**/*.md", "!**/*.mdx"],
+      "outputLogs": "new-only",
       "outputs": ["dist/**"]
+    },
+    "test": {
+      "description": "Run a package test script.",
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/tools/test/**", "$TURBO_ROOT$/vitest.config.mts"],
+      "outputLogs": "errors-only",
+      "outputs": ["coverage/**"]
     },
     "typecheck": {
       "dependsOn": ["^typecheck"],
+      "description": "Typecheck a package without emitting files.",
+      "inputs": ["$TURBO_DEFAULT$", "!**/*.md", "!**/*.mdx"],
+      "outputLogs": "errors-only",
       "outputs": []
     }
   }

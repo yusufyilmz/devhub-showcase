@@ -27,4 +27,4 @@ Use the [shared setup and result rules](index.md#before-you-start). Replace `tes
 
 Return to the [manual testing index](index.md).
 
-Backend organization: main/Pro chat checks run in `packages/assistant/src/services/main-portfolio-chat.ts` and `premium-portfolio-chat.ts`. Their colocated tests cover publication changes, configuration, rate limits and reservations. App streaming-route tests cover transport, origin and cancellation. This structural change does not constitute deployed/provider verification.
+Backend organization: main/Pro chat checks run in `packages/assistant/src/chat/services/main-portfolio-chat.ts` and `premium-portfolio-chat.ts`. Their colocated tests cover publication changes, configuration, rate limits and reservations. App streaming-route tests cover transport, origin and cancellation. This structural change does not constitute deployed/provider verification.

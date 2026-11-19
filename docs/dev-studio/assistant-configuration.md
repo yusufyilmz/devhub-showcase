@@ -1,6 +1,6 @@
 # Assistant configuration and streaming
 
-The provider service in packages/assistant/src/services/provider.ts owns OpenAI
+The provider service in packages/assistant/src/chat/services/provider.ts owns OpenAI
 configuration and Responses transport. Existing model classes are task adapters:
 public portfolio context, validated owner proposals, and CV extraction. They do
 not authorize requests or persist changes. ChatGPTService also uses this provider.

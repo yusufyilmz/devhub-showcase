@@ -1,4 +1,4 @@
-import { type GoogleProfileCategory, googleProfilePermissions } from "@shared/auth/google-provider";
+import { type GoogleProfileCategory, googleProfilePermissions } from "@shared/auth/providers";
 import { urls } from "@shared/config/urls";
 
 import { reviewGooglePerson } from "../../schemas/profile/index";

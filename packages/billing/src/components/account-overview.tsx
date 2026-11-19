@@ -1,6 +1,6 @@
 import { Card } from "@shared/ui/cards";
 
-import { type BillingSummary, premiumFeatureStatus } from "../features/premium-status";
+import { type BillingSummary, premiumFeatureStatus } from "../schemas/premium-status";
 
 const planLabels: Record<BillingSummary["access"], string> = {
   active: "Pro is active",

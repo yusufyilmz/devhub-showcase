@@ -1,9 +1,7 @@
 import { notFound } from "next/navigation";
 
-import { ManagedWorkspace } from "@shared/assistant/management-ui";
-
 import { managedRepository } from "@/services/management/get-portfolios";
-import { PortfolioLayout } from "@/views/published/PortfolioLayout";
+import { ManagedStudioWorkspace } from "@/views/studio/ManagedStudioWorkspace";
 
 export default async function ManagedEditor({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -22,11 +20,7 @@ export default async function ManagedEditor({ params }: { params: Promise<{ id: 
           before sharing it.
         </p>
       </div>
-      <ManagedWorkspace
-        id={id}
-        initial={snapshot}
-        renderPortfolio={(props) => <PortfolioLayout {...props} />}
-      />
+      <ManagedStudioWorkspace id={id} initial={snapshot} />
     </>
   );
 }

@@ -8,7 +8,7 @@ import {
   type GoogleProfileCategory,
   googleProfileCategories,
   googleProfilePermissions,
-} from "@shared/auth/google-provider";
+} from "@shared/auth/providers";
 import { applyGoogleProfile, type GoogleImportField } from "@shared/lib/profiles";
 
 import { Button } from "../buttons";

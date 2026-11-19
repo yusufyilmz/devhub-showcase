@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { StripeBilling } from "./stripe";
+import { StripeBilling } from "../schemas/stripe";
 
 const config = {
   chat: 100,

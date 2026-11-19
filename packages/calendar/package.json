@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    ".": "./src/model.ts",
-    "./calendar-grid": "./src/calendar-grid.tsx",
-    "./day-agenda": "./src/day-agenda.tsx",
-    "./task-form": "./src/task-form.tsx",
-    "./google": "./src/google.ts"
+    ".": "./src/index.ts",
+    "./agenda-details": "./src/components/agenda-details.tsx",
+    "./calendar-grid": "./src/components/calendar-grid.tsx",
+    "./day-agenda": "./src/components/day-agenda.tsx",
+    "./event-row": "./src/components/event-row.tsx",
+    "./task-form": "./src/components/task-form.tsx",
+    "./google": "./src/services/google.ts"
   },
   "scripts": {
     "build": "tsdown",

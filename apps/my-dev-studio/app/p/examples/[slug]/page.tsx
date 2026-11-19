@@ -8,8 +8,7 @@ import {
   exampleViewProfile,
   getPortfolioExample,
   portfolioExamples,
-} from "@shared/assistant/examples-data";
-
+} from "@/services/examples/data";
 import { EngineerPortfolio } from "@/services/portfolio/engineer-portfolio";
 import { PortfolioLayout } from "@/views/published/PortfolioLayout";
 

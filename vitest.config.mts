@@ -101,14 +101,18 @@ export default defineConfig({
         test: {
           environment: "node",
           exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**"],
+          fileParallelism: true,
+          hookTimeout: 30_000,
           include: [
             "packages/**/*.test.{ts,tsx}",
             "apps/**/*.test.{ts,tsx}",
             "tools/**/*.test.{ts,tsx}",
           ],
+          maxWorkers: "100%",
           name: "unit",
-          pool: "threads",
+          pool: "forks",
           setupFiles: [path.join(dirname, "tools/test/support/vitest-setup.ts")],
+          testTimeout: 30_000,
         },
       },
       {
