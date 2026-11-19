@@ -64,7 +64,7 @@ describe("mark-task helper", () => {
   it("refuses ambiguous duplicate task identifiers", () => {
     const { file, root } = fixture();
     try {
-      writeFileSync(file, readFileSync(file, "utf8") + "- [ ] **P1.1** Duplicated.\n");
+      writeFileSync(file, `${readFileSync(file, "utf8")}- [ ] **P1.1** Duplicated.\n`);
       assert.notEqual(
         run(root, ".agents/plans/sample.md", "--id", "P1.1", "--evidence", "pass").status,
         0,
