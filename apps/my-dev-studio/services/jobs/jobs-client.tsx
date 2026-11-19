@@ -128,7 +128,7 @@ export function JobsClient({
             {busy ? "Processing..." : importPreview ? "Confirm import" : "Preview report"}
           </button>
           {importPreview && (
-            <div className="space-y-2" aria-live="polite">
+            <div aria-live="polite" className="space-y-2">
               <p className="text-sm">{importPreview.summary}</p>
               <p className="text-sm">Review these unverified candidates before confirming:</p>
               <ul className="list-inside list-disc text-sm">
