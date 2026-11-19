@@ -1,4 +1,3 @@
-// biome-ignore-all lint/suspicious/noExplicitAny: Legacy dynamic logger adapters use untyped optional modules; typing cleanup is tracked separately.
 import { env } from "@shared/env";
 
 /**
