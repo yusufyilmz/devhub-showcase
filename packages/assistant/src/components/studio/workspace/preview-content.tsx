@@ -1,21 +1,31 @@
 "use client";
-import { type PortfolioProfile, projectPublicProfile } from "@shared/config";
 
-import {
-  type ArrangePortfolioSections,
-  PortfolioLayout,
-} from "../../../../../../apps/my-dev-studio/views/published/PortfolioLayout";
+import type { ReactNode } from "react";
+
+import { type PortfolioEntryId, type PortfolioProfile, projectPublicProfile } from "@shared/config";
+
 import { EngineerPortfolioView } from "../../portfolio/engineer-portfolio";
+
+export type PublishedPortfolioLayoutProps = {
+  arrange?: {
+    disabled?: boolean;
+    onChange: (visibleOrder: PortfolioEntryId[]) => void;
+  };
+  profile: PortfolioProfile;
+  username: string;
+};
 
 export function PreviewContent({
   arrange,
   featured,
   profile,
+  renderPortfolio,
   username,
 }: {
-  arrange?: ArrangePortfolioSections;
+  arrange?: PublishedPortfolioLayoutProps["arrange"];
   featured?: boolean;
   profile: PortfolioProfile;
+  renderPortfolio?: (props: PublishedPortfolioLayoutProps) => ReactNode;
   username: string;
 }) {
   profile = projectPublicProfile(profile, "website");
@@ -30,5 +40,9 @@ export function PreviewContent({
         profile={profile}
       />
     );
-  return <PortfolioLayout arrange={arrange} profile={profile} username={username || "preview"} />;
+  return renderPortfolio?.({
+    arrange,
+    profile,
+    username: username || "preview",
+  });
 }
