@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
-  importer: vi.fn(async () => ({ imported: 1, duplicates: 0, summary: "Found a role." })),
+  importer: vi.fn(async () => ({ duplicates: 0, imported: 1, summary: "Found a role." })),
   workspace: vi.fn(async () => ({ user: { id: "signed-in" } })),
 }));
 
@@ -17,22 +17,25 @@ import { ProfileAccessError } from "@shared/lib/profile";
 import { POST } from "./route";
 
 const example = JSON.stringify({
-  schemaVersion: 1,
+  jobs: [{ company: "Example", originalUrl: "https://example.com/jobs/1", title: "Engineer" }],
   report: {
+    automationTitle: "Job research",
     generatedAt: "2026-11-19T19:00:00Z",
     source: "chatgpt_automation",
-    automationTitle: "Job research",
     summary: "One result.",
   },
-  jobs: [{ title: "Engineer", company: "Example", originalUrl: "https://example.com/jobs/1" }],
+  schemaVersion: 1,
 });
 
-function request(body = example, origin = "https://studio.test") {
-  return new Request("https://studio.test/api/jobs/import-chatgpt", {
-    body,
-    headers: { origin, "content-type": "application/json" },
-    method: "POST",
-  });
+function request(body = example, origin = "https://studio.test", preview = false) {
+  return new Request(
+    `https://studio.test/api/jobs/import-chatgpt${preview ? "?preview=1" : ""}`,
+    {
+      body,
+      headers: { origin },
+      method: "POST",
+    },
+  );
 }
 
 describe("ChatGPT job import API", () => {
@@ -59,15 +62,7 @@ describe("ChatGPT job import API", () => {
   });
 
   it("previews without saving when requested", async () => {
-    const previewRequest = new Request(
-      "https://studio.test/api/jobs/import-chatgpt?preview=1",
-      {
-        body: example,
-        headers: { origin: "https://studio.test" },
-        method: "POST",
-      },
-    );
-    expect((await POST(previewRequest)).status).toBe(200);
+    expect((await POST(request(example, "https://studio.test", true))).status).toBe(200);
     expect(mocks.importer).toHaveBeenCalledWith(
       { user: { id: "signed-in" } },
       JSON.parse(example),
@@ -75,7 +70,7 @@ describe("ChatGPT job import API", () => {
     );
   });
 
-  it("delegates report persistence with the confirmed workspace", async () => {
+  it("delegates persistence with the confirmed workspace", async () => {
     const response = await POST(request());
     expect(response.status).toBe(200);
     expect(response.headers.get("cache-control")).toBe("private, no-store");
