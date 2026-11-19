@@ -21,6 +21,7 @@ Mission: Identify concrete authorization and tenant-isolation risks in the reque
 Read AGENTS.md, the relevant domain skill, and only the source necessary to evaluate this mission. Do not change files.
 
 Return:
+
 - Paths and lines inspected.
 - Findings with severity, reproducible evidence and suggested tests.
 - Checks run (or explicitly Not run) and unresolved questions.
