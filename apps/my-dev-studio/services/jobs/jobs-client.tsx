@@ -90,7 +90,7 @@ export function JobsClient({
             className="rounded-md border px-4 py-2 text-sm font-medium disabled:opacity-50"
             disabled={busy || !importJson.trim()}
             onClick={() => {
-              void action(async () => {
+              action(async () => {
                 let payload: unknown;
                 try {
                   payload = JSON.parse(importJson);
