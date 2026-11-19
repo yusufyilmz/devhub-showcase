@@ -76,9 +76,9 @@ export function JobsClient({
         <summary className="cursor-pointer font-medium">Import ChatGPT research report</summary>
         <div className="mt-3 space-y-3">
           <p className="text-sm text-muted-foreground">
-            Paste a structured JSON report from your ChatGPT job search. Listings are
-            unverified research and will appear for review in Discover; no applications
-            are submitted. Do not paste private recruiter emails or personal data.
+            Paste a structured JSON report from your ChatGPT job search. Listings are unverified
+            research and will appear for review in Discover; no applications are submitted. Do not
+            paste private recruiter emails or personal data.
           </p>
           <label className="block text-sm font-medium" htmlFor="chatgpt-job-import">
             ChatGPT report JSON
@@ -108,9 +108,9 @@ export function JobsClient({
                 const response = await fetch(
                   `/api/jobs/import-chatgpt${importPreview ? "" : "?preview=1"}`,
                   {
-                  body: JSON.stringify(payload),
-                  headers: { "Content-Type": "application/json" },
-                  method: "POST",
+                    body: JSON.stringify(payload),
+                    headers: { "Content-Type": "application/json" },
+                    method: "POST",
                   },
                 );
                 const result = await read(response);
@@ -130,9 +130,7 @@ export function JobsClient({
           {importPreview && (
             <div className="space-y-2" aria-live="polite">
               <p className="text-sm">{importPreview.summary}</p>
-              <p className="text-sm">
-                Review these unverified candidates before confirming:
-              </p>
+              <p className="text-sm">Review these unverified candidates before confirming:</p>
               <ul className="list-inside list-disc text-sm">
                 {importPreview.jobs.map((job) => (
                   <li key={job.url}>
@@ -149,41 +147,42 @@ export function JobsClient({
         </div>
       </details>
       <JobsDashboard
-      baseCvUrl={`${endpoint}/cv`}
-      busy={busy}
-      cvUrl={(id) => `${endpoint}/cv?job=${encodeURIComponent(id)}`}
-      data={data}
-      feedback={feedback}
-      initialTab={initialTab}
-      push={
-        data.pushPublicKey
-          ? (enabled) => {
-              action(async () => {
-                if (enabled) {
-                  const subscription = await worker.current.enablePush();
-                  await change({ action: "subscribe", subscription });
-                  return "Browser alerts enabled on this device.";
-                }
-                const subscription = await worker.current.subscription();
-                if (subscription)
-                  await change({ action: "unsubscribe", endpoint: subscription.endpoint });
-                await worker.current.disablePush();
-                return "Browser alerts disabled on this device.";
-              });
-            }
-          : null
-      }
-      run={(command) =>
-        action(async () => {
-          if ("action" in command && command.action === "refresh") return "Checked for new alerts.";
-          const result = await change(command);
-          if (typeof result.url === "string") window.location.assign(result.url);
-          return "action" in command && command.action === "draft"
-            ? "Draft prepared. Review it in Applications."
-            : "Saved.";
-        })
-      }
-      statuses={statuses}
+        baseCvUrl={`${endpoint}/cv`}
+        busy={busy}
+        cvUrl={(id) => `${endpoint}/cv?job=${encodeURIComponent(id)}`}
+        data={data}
+        feedback={feedback}
+        initialTab={initialTab}
+        push={
+          data.pushPublicKey
+            ? (enabled) => {
+                action(async () => {
+                  if (enabled) {
+                    const subscription = await worker.current.enablePush();
+                    await change({ action: "subscribe", subscription });
+                    return "Browser alerts enabled on this device.";
+                  }
+                  const subscription = await worker.current.subscription();
+                  if (subscription)
+                    await change({ action: "unsubscribe", endpoint: subscription.endpoint });
+                  await worker.current.disablePush();
+                  return "Browser alerts disabled on this device.";
+                });
+              }
+            : null
+        }
+        run={(command) =>
+          action(async () => {
+            if ("action" in command && command.action === "refresh")
+              return "Checked for new alerts.";
+            const result = await change(command);
+            if (typeof result.url === "string") window.location.assign(result.url);
+            return "action" in command && command.action === "draft"
+              ? "Draft prepared. Review it in Applications."
+              : "Saved.";
+          })
+        }
+        statuses={statuses}
       />
     </>
   );
