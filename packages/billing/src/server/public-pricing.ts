@@ -1,4 +1,4 @@
-import { createStripe, StripeBilling, stripeConfiguration } from "./stripe";
+import { createStripe, StripeBilling, stripeConfiguration } from "../schemas/stripe";
 
 export async function publicPricing() {
   const config = stripeConfiguration();

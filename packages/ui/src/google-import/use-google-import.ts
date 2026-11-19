@@ -4,12 +4,12 @@ import { useEffect, useRef, useState } from "react";
 
 import { z } from "zod";
 
-import type { GoogleProfileCategory } from "@shared/auth/google-provider";
+import type { GoogleProfileCategory } from "@shared/auth/providers";
 import {
   type GoogleConsent,
   loadGoogleConsent,
   requestGoogleProfileConsent,
-} from "@shared/auth/google-provider";
+} from "@shared/auth/providers";
 import { urls } from "@shared/config/urls";
 import { type GoogleProfileReview, googleProfileReviewSchema } from "@shared/lib/profiles";
 import { type StudioRequest, useStudioRequest } from "@shared/runtime/studio";

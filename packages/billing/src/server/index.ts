@@ -1,8 +1,4 @@
 export { billingServiceClient } from "../client";
-export { billingGateway, checkout, portal, synchronize, withBillingLease } from "./gateway";
-export { premiumAiConfigured } from "./premium-configuration";
-export { publicPricing } from "./public-pricing";
-export { type BillingClient, BillingRepository, PremiumUsageRepository } from "./repository";
 export {
   createStripe,
   ExistingSubscriptionError,
@@ -10,4 +6,8 @@ export {
   type StripeEvent,
   type SubscriptionState,
   stripeConfiguration,
-} from "./stripe";
+} from "../schemas/stripe";
+export { billingGateway, checkout, portal, synchronize, withBillingLease } from "./gateway";
+export { premiumAiConfigured } from "./premium-configuration";
+export { publicPricing } from "./public-pricing";
+export { type BillingClient, BillingRepository, PremiumUsageRepository } from "./repository";

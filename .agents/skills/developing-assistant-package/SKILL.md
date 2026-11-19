@@ -21,7 +21,7 @@ Read [the file map](references/map.md) and [packages/assistant/CATALOG.md](../..
 | `CvImportModel`                              | Extract fields from an uploaded CV for review | Write the profile or store the file in a log      |
 | `createCVModel`, `formatAllCV`, `formatters` | Prepare CV text for a model                   | Decide download permission                        |
 
-`MessageProcessor` classifies a chat reply. Fixed strings live in `src/messages`: greeting, failure, goodbye, out of topic, referral, and the related helpers. Change a fixed string there instead of duplicating it in the app.
+`MessageProcessor` classifies a chat reply. Fixed strings live in `src/chat/services/messages.ts`: greeting, failure, goodbye, out of topic, referral, and the related helpers. Change a fixed string there instead of duplicating it in the app.
 
 Public chat context comes from `@shared/lib/profiles`. The public projection and the owner projection are different. Do not put private owner knowledge into the visitor model. The app reads the published snapshot for a public request. Do not cache another user's document into the prompt.
 
@@ -43,21 +43,23 @@ A missing provider key, a limit refusal, or a provider error becomes the support
 
 ## Prompts and logs
 
-Prompts live under `src/models`, including `classification-prompt.ts`, `gpt-prompt.ts`, `casual-questions.ts`, and `question-categories.ts`. Services under `src/services` cover classifier, formatter, processor, referral, summarizer, and the GPT wrapper.
+Prompts live with the workflow that uses them. Chat prompts are `classification-prompt.ts`, `gpt-prompt.ts`, `casual-questions.ts`, and `question-categories.ts` under `src/chat/services`. The studio agent prompt is `src/studio/services/studio-agent-prompt.ts`. Classifier, processor, referral, summarizer, and the GPT wrapper live under `src/chat/services`. CV formatting lives under `src/cv/services/formatter`.
 
-Do not log prompts, CV text, tokens, raw provider bodies, or profile documents. Tests use a fictional profile and a stubbed provider. `src/models/portfolio-edit-model.test.ts` is the colocated pattern. Do not call a paid provider from the unit suite.
+Do not log prompts, CV text, tokens, raw provider bodies, or profile documents. Tests use a fictional profile and a stubbed provider. `src/studio/services/portfolio-edit-model.test.ts` is the colocated pattern. Do not call a paid provider from the unit suite.
 
 Do not widen tool access inside a prompt. The model proposes text. The schema decides what can be saved.
 
 ## Exports
 
-| Export                         | Path             |
-| ------------------------------ | ---------------- |
-| `@shared/assistant`            | `src/index.ts`   |
-| `@shared/assistant/models/*`   | `src/models/*`   |
-| `@shared/assistant/services/*` | `src/services/*` |
+| Export                               | Path                                                |
+| ------------------------------------ | --------------------------------------------------- |
+| `@shared/assistant`                  | `src/index.ts`                                      |
+| `@shared/assistant/chat`             | `src/chat/services/main-portfolio-chat.ts`          |
+| `@shared/assistant/cv`               | `src/cv/components/index.ts`                        |
+| `@shared/assistant/fitness`          | `src/fitness/services/fitness-assistant.ts`         |
+| `@shared/assistant/fitness-contract` | `src/fitness/schemas/fitness-assistant-contract.ts` |
 
-Add a public model to `src/index.ts` when app code should import it from the package root. Add a catalog row. Wildcard exports already cover a single model or service file. Run `pnpm check:exports` after changing `package.json`.
+Add a public workflow to `src/index.ts` when app code should import it from the package root. Add a shallow package export for a feature entry point. Run `pnpm check:exports` after changing `package.json`.
 
 Dependencies are `@shared/config`, `@shared/lib`, `compromise`, `openai`, and `pino`. New external packages use `catalog:`. Do not import the Next.js app.
 
@@ -78,10 +80,10 @@ Run the route test that matches the model you changed. Visitor chat behavior is 
 - [Developing the lib package](../developing-lib-package/SKILL.md)
 - [Developing the MyDevStudio app](../developing-my-dev-studio-app/SKILL.md)
 
-Backend entry points: `@shared/assistant/chat`, `@shared/assistant/premium-chat`, `@shared/assistant/fitness-context`, and `@shared/assistant/workout-draft`. Implementations/tests live under `src/services`. Shared workflows receive configuration callbacks; never import app env modules.
+Backend entry points: `@shared/assistant/chat`, `@shared/assistant/premium-chat`, `@shared/assistant/fitness-context`, and `@shared/assistant/workout-draft`. Chat implementations live under `src/chat/services`. Fitness context and drafts live under `src/fitness/services`. Shared workflows receive configuration callbacks; never import app env modules.
 
 ## Shared feature surfaces
 
-This package also owns chat/companion UI, Fitness proposal UI, portfolio and studio workspaces, sections, examples, management UI and CV rendering. Read [the catalog](../../../packages/assistant/CATALOG.md) for current exact entry points. `@shared/assistant/chat` is the server workflow; use `@shared/assistant/chat-ui` for UI. CV modules are under `src/components/cv`, imported as `@shared/assistant/cv`; the removed templates package must not be restored.
+This package also owns chat/companion UI, Fitness proposal UI, portfolio and studio workspaces, sections, examples, management UI and CV rendering. Read [the catalog](../../../packages/assistant/CATALOG.md) for current exact entry points. `@shared/assistant/chat` is the server workflow; use `@shared/assistant/chat-ui` for UI. CV modules are under `src/cv/components`, imported as `@shared/assistant/cv`; the removed templates package must not be restored.
 
 App studio/home/reviews/portfolio/platform/chat feature folders are removed. Session, cookie, environment and transport adapters are colocated with the owning pages/routes under `app`. Do not add forwarding modules or import app sources into shared components. Fitness components take authenticated request and notification callbacks; visitor UI takes the premium server action. Keep primitive controls and styles in `@shared/ui`.

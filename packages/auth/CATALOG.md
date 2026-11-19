@@ -19,15 +19,15 @@ Session helpers and Google sign-in for `@shared/auth`. Import a specific entry p
 
 ## Generated package reference
 
-| Import                         | Source / condition               | Declared symbols                                                                                                                                                                         |
-| ------------------------------ | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@shared/auth`                 | `./src/index.ts`                 | `AuthAccessError`, `requireConfirmedUser`, `sameOrigin`, `type AuthClient`                                                                                                               |
-| `@shared/auth/client`          | `./src/client/index.ts`          | `createClient`                                                                                                                                                                           |
-| `@shared/auth/config`          | `./src/config/index.ts`          | `supabaseConfig`, `supabaseConfigured`                                                                                                                                                   |
-| `@shared/auth/google-provider` | `./src/google-provider/index.ts` | `googleProfileCategories`, `googleProfilePermissions`, `grantedGoogleCategories`, `loadGoogleConsent`, `requestGoogleProfileConsent`, `type GoogleConsent`, `type GoogleProfileCategory` |
-| `@shared/auth/handlers`        | `./src/handlers/index.ts`        | `createAuthHandlers`, `type AuthHandlerOptions`                                                                                                                                          |
-| `@shared/auth/middleware`      | `./src/middleware.ts`            | `updateSession`                                                                                                                                                                          |
-| `@shared/auth/server`          | `./src/server/index.ts`          | `createClient`, `createRequestClient`                                                                                                                                                    |
+| Import                    | Source / condition         | Declared symbols                                                                                                                                                                         |
+| ------------------------- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@shared/auth`            | `./src/index.ts`           | `AuthAccessError`, `requireConfirmedUser`, `sameOrigin`, `type AuthClient`                                                                                                               |
+| `@shared/auth/client`     | `./src/client.ts`          | `createClient`                                                                                                                                                                           |
+| `@shared/auth/config`     | `./src/config/index.ts`    | `supabaseConfig`, `supabaseConfigured`                                                                                                                                                   |
+| `@shared/auth/handlers`   | `./src/handlers/index.ts`  | `createAuthHandlers`, `type AuthHandlerOptions`                                                                                                                                          |
+| `@shared/auth/middleware` | `./src/middleware.ts`      | `updateSession`                                                                                                                                                                          |
+| `@shared/auth/providers`  | `./src/providers/index.ts` | `googleProfileCategories`, `googleProfilePermissions`, `grantedGoogleCategories`, `loadGoogleConsent`, `requestGoogleProfileConsent`, `type GoogleConsent`, `type GoogleProfileCategory` |
+| `@shared/auth/server`     | `./src/server.ts`          | `createClient`, `createRequestClient`                                                                                                                                                    |
 
 Symbol names are read statically from TypeScript declarations without executing their implementation modules. Wildcard package paths, external star re-exports and non-code assets are not expanded into symbol claims. Verify source contracts before importing.
 

@@ -13,4 +13,4 @@
 | 3    | [Public portfolio](https://mydevstudio.vercel.app/test-owner)  | `/test-owner`      | Ask the portfolio assistant a question about a published project, then ask about a private project.      | The answer uses published context and omits private facts.                                                                   | Local model fixtures cover the public context boundary. Hosted check not run. |
 | 4    | [Owner editor](https://mydevstudio.vercel.app/test-owner/edit) | `/test-owner/edit` | Import a fictional CV through the editor.                                                                | The existing review screen shows extracted fields. The tokenizer estimates prompt text while the upload follows file limits. | Provider fixture covers the attachment boundary. Hosted check not run.        |
 
-See the [provider tests](../../../packages/assistant/src/services/provider.test.ts) and [manual testing index](index.md).
+See the [provider tests](../../../packages/assistant/src/chat/services/provider.test.ts) and [manual testing index](index.md).

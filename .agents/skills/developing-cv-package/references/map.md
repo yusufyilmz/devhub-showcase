@@ -41,7 +41,7 @@ The feature helper is `apps/my-dev-studio/services/cv/get-response.ts`. Change a
 
 ```sh
 pnpm --filter @shared/assistant typecheck
-pnpm exec vitest run --project unit packages/assistant/src/components/cv/render.test.ts
+pnpm exec vitest run --project unit packages/assistant/src/cv/components/render.test.ts
 ```
 
 ## Source folders

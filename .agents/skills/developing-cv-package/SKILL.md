@@ -45,7 +45,7 @@ Periods use `formatPortfolioPeriod` from `@shared/config` with `cvLanguage`.
 
 ```sh
 pnpm --filter @shared/assistant typecheck
-pnpm exec vitest run --project unit packages/assistant/src/components/cv/render.test.ts
+pnpm exec vitest run --project unit packages/assistant/src/cv/components/render.test.ts
 ```
 
 The root script `pnpm cv:generate` is a generator. Read `turbo/generators` before running it. Do not commit a generated PDF unless the task's deliverable is that file.

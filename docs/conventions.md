@@ -77,13 +77,15 @@ Choose the `src` layout from how many product areas the package owns.
 
 A package for one area, such as `@shared/calendar`, uses role folders directly under `src`:
 
-| Folder        | What belongs there                 |
-| ------------- | ---------------------------------- |
-| `components/` | Screens and controls               |
-| `services/`   | Provider calls and workflows       |
-| `hooks/`      | Browser state for that area        |
-| `utils/`      | Helpers with no screen or provider |
-| `schemas/`    | Types and validators               |
+| Folder         | What belongs there                 |
+| -------------- | ---------------------------------- |
+| `components/`  | Screens and controls               |
+| `services/`    | Provider calls and workflows       |
+| `middlewares/` | Custom Middlewares                 |
+| `providers/`   | Custom Providers                   |
+| `hooks/`       | Browser state for that area        |
+| `utils/`       | Helpers with no screen or provider |
+| `schemas/`     | Types and validators               |
 
 `@shared/calendar` is that shape: the grid, agenda, event row, task form, and activity details are in `components/`; Google Calendar loading is in `services/`; `calendarRange` is in `utils/`; item and draft validation is in `schemas/`. The apps still own authentication, persistence, and domain-specific behavior.
 

@@ -15,7 +15,7 @@ import { z } from "zod";
 import { urls } from "@shared/config/urls";
 
 import type { AccountStatus } from "../components/account-overview";
-import { billingSummarySchema } from "../features/premium-status";
+import { billingSummarySchema } from "../schemas/premium-status";
 import type { BillingRequest } from "../types";
 
 export const defaultBillingRequest: BillingRequest = (input, init) => fetch(input, init);

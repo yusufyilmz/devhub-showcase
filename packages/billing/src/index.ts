@@ -6,7 +6,7 @@ export {
   type BillingSummary,
   billingSummarySchema,
   premiumFeatureStatus,
-} from "./features/premium-status";
+} from "./schemas/premium-status";
 
 export const featureSchema = z.enum(["portfolio_chat", "studio_assistant"]);
 export type PremiumFeature = z.infer<typeof featureSchema>;

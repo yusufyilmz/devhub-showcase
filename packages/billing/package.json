@@ -9,7 +9,6 @@
     "./server": "./src/server/index.ts",
     "./middleware": "./src/middleware.ts",
     "./components": "./src/components/index.ts",
-    "./config": "./src/config/index.ts",
     "./provider": "./src/provider/index.ts",
     "./types": "./src/types.ts"
   },

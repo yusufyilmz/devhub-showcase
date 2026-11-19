@@ -1,1 +1,1 @@
-export { stripeConfiguration } from "../server/stripe";
+export { stripeConfiguration } from "../schemas/stripe";

@@ -31,7 +31,7 @@ Lua results become booleans (`1` allowed, `0` refused). The Lua constants in the
 
 ## Call sites
 
-- Visitor limits: `packages/assistant/src/services/main-portfolio-chat.ts` and `packages/assistant/src/services/premium-portfolio-chat.ts`.
+- Visitor limits: `packages/assistant/src/chat/services/main-portfolio-chat.ts` and `packages/assistant/src/chat/services/premium-portfolio-chat.ts`.
 - CV imports: `apps/my-dev-studio/app/api/cv-import/route.ts`.
 - Studio/job assistant: `apps/my-dev-studio/app/api/assistant/route.ts` and `apps/my-dev-studio/app/api/assistant/job/route.ts`.
 - Fitness assistant: `apps/my-fitness-app/app/api/assistant/route.ts`.

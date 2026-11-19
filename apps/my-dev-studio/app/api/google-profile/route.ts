@@ -1,6 +1,6 @@
 import { ZodError, z } from "zod";
 
-import { googleProfileCategories } from "@shared/auth/google-provider";
+import { googleProfileCategories } from "@shared/auth/providers";
 import { boundedText, readGoogleProfile } from "@shared/lib/google-profile";
 import { ProfileAccessError } from "@shared/lib/profile";
 
