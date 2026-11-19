@@ -36,11 +36,11 @@ The folder name and `name` should match, using lowercase kebab-case. Write the d
 
 Test each skill with at least three hypothetical requests:
 
-| Case | What to inspect | Passing result |
-| --- | --- | --- |
-| Positive | Explicit task matching the description | Skill activates, reads the required repo files and produces the expected artifact |
-| Negative | Similar words, different intent | Skill does not hijack unrelated work |
-| Edge | Existing file, conflict, missing tool or incomplete evidence | Skill preserves data, reports uncertainty and follows safe fallback |
+| Case     | What to inspect                                              | Passing result                                                                    |
+| -------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| Positive | Explicit task matching the description                       | Skill activates, reads the required repo files and produces the expected artifact |
+| Negative | Similar words, different intent                              | Skill does not hijack unrelated work                                              |
+| Edge     | Existing file, conflict, missing tool or incomplete evidence | Skill preserves data, reports uncertainty and follows safe fallback               |
 
 If an actual agent runtime is available, compare baseline (without instruction) and skill-assisted behavior. If not, review the prompts manually and label that evaluation as not executed.
 
