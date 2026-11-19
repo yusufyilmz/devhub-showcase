@@ -18,7 +18,7 @@
 
 ## C. Execute and keep the plan current
 
-1. Select the first unblocked `- [ ]` entry. Confirm relevant repository state before implementation and avoid overwriting unrelated changes.
+1. If the plan predates stable task IDs, add distinct IDs to its existing checklist items in place. Preserve each item’s checked state and any evidence; never assume an earlier `[x]` was verified. Then select the first unblocked `- [ ]` entry. Confirm relevant repository state before implementation and avoid overwriting unrelated changes.
 2. For behavior changes, write the failing test first and run it. Implement the smallest change; run the targeted test green. Continue with required checks from the plan.
 3. Confirm the acceptance criterion with actual output. If a check cannot run, record “Not run” or “Blocked” with the reason and keep the task unchecked. A test file existing is not equivalent to a test passing.
 4. Update the task directly after completing it:
