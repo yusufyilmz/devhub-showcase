@@ -17,10 +17,7 @@ import { Header, SkipLink } from "@shared/ui/header";
 import { HeroSurface } from "@shared/ui/layout";
 import { ThemeToggle } from "@shared/ui/theme";
 
-import {
-  type ArrangePortfolioSections,
-  RegisteredSections,
-} from "@/views/published/registered-sections";
+import { type ArrangePortfolioSections, RegisteredSections } from "./RegisteredSections";
 
 export type { ArrangePortfolioSections };
 

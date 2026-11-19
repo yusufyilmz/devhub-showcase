@@ -9,7 +9,7 @@ vi.mock("@shared/auth/client", () => ({ createClient: mocks.createClient }));
 
 import { urls } from "@shared/config/urls";
 
-import { authorizationHeaders, signOut } from "../lib/browser-session";
+import { authorizationHeaders, signOut } from "../services/auth/browser-session";
 
 describe("Fitness browser session", () => {
   afterEach(() => {

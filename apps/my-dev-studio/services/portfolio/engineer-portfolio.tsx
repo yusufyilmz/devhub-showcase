@@ -1,8 +1,9 @@
 "use client";
 import type { ComponentProps } from "react";
 
-import { EngineerPortfolioView } from "@shared/assistant/engineer-portfolio";
 import type { ChatMessage } from "@shared/lib/types";
+
+import { EngineerPortfolioView } from "@/views/engineer/EngineerPortfolioView";
 
 import { handleSendMessageAction } from "../../app/actions";
 

@@ -13,7 +13,7 @@ import {
   WorkspaceService,
 } from "@shared/lib/workspace";
 
-import { DemoWorkspaceGateway, HttpWorkspaceGateway } from "../features/task-workspace/gateway";
+import { DemoWorkspaceGateway, HttpWorkspaceGateway } from "../services/task-workspace/gateway";
 
 afterEach(() => vi.unstubAllGlobals());
 test("demo uses fictional data without calling the workspace API", async () => {

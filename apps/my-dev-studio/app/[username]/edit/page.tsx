@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
-import { ProfileEditor } from "@shared/assistant/studio-workspace";
 import { ReviewSection } from "@shared/ui/sections";
 
 import { requireWorkspace } from "@/services/admin/get-auth";
 import { loadPendingPortfolioReviews } from "@/services/review/get-service";
+import { StudioProfileEditor } from "@/views/studio/StudioProfileEditor";
 
 import { submitPortfolioReviewAction } from "./actions";
 
@@ -34,7 +34,7 @@ export default async function EditCvPage({
   const canModerate = snapshot.id === "main";
   const openReviews = canModerate && query?.tab === "reviews";
   return (
-    <ProfileEditor
+    <StudioProfileEditor
       initial={snapshot}
       initiallyArranging={initiallyArranging}
       initialTab={openReviews ? "Reviews" : query?.tab === "sections" ? "Sections" : "Profile"}

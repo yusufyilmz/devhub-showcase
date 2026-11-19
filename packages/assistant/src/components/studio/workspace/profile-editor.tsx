@@ -2,8 +2,7 @@
 
 import "@shared/ui/components.css";
 
-import dynamic from "next/dynamic";
-import { type ReactNode, useDeferredValue, useEffect, useState } from "react";
+import { type ComponentType, type ReactNode, useDeferredValue, useEffect, useState } from "react";
 
 import {
   BookOpen,
@@ -64,6 +63,7 @@ import {
 } from "@shared/ui/sections";
 import { AppearanceEditor } from "@shared/ui/theme/studio";
 
+import { SectionsSettings } from "../../../../../ui/src/sections/studio";
 import { AgentCompanion } from "../../chat/agent-companion/index";
 import { studioEditorGuide } from "../../companion/guides";
 import {
@@ -82,12 +82,6 @@ import {
   usePortfolioHistory,
 } from "../../portfolio/index";
 import { ResponsivePortfolioPreview } from "../../portfolio/portfolio-preview/index";
-
-const PreviewContent = dynamic(() =>
-  import("./preview-content").then((module) => module.PreviewContent),
-);
-
-import { SectionsSettings } from "../../../../../ui/src/sections/studio";
 import { AiAssistantEditor } from "../ai-assistant-editor";
 import { AiProfileEditor } from "../ai-profile-editor";
 import { CvImportEditor } from "../import/cv-import-editor";
@@ -194,6 +188,16 @@ function clean(profile: PortfolioProfile): PortfolioProfile {
     ),
   };
 }
+export type StudioPreviewProps = {
+  arrange?: {
+    disabled?: boolean;
+    onChange: (visibleOrder: PortfolioEntryId[]) => void;
+  };
+  featured?: boolean;
+  profile: PortfolioProfile;
+  username: string;
+};
+
 type ScratchBackup = {
   profile: PortfolioProfile;
   profession: PortfolioType;
@@ -210,6 +214,7 @@ export function ProfileEditor({
   onSaved,
   initialTab = "Profile",
   initiallyArranging = false,
+  preview: Preview,
   reviews,
   user,
 }: {
@@ -220,6 +225,7 @@ export function ProfileEditor({
   onSaved?: (snapshot: ProfileSnapshot) => void;
   initialTab?: (typeof tabs)[number];
   initiallyArranging?: boolean;
+  preview: ComponentType<StudioPreviewProps>;
   reviews?: ReactNode;
   user?: StoredUser | null;
 }) {
@@ -381,7 +387,7 @@ export function ProfileEditor({
             showSavedDownload={false}
           >
             <ResponsivePortfolioPreview appearance={setupDraft.appearance} initiallyOpen>
-              <PreviewContent profile={setupDraft} username={username} />
+              <Preview profile={setupDraft} username={username} />
             </ResponsivePortfolioPreview>
           </DraftPreviewPane>
         }
@@ -486,6 +492,7 @@ export function ProfileEditor({
                 featured={initial.id === "main"}
                 initiallyArranging={initiallyArranging}
                 onChange={setDraft}
+                preview={Preview}
                 profile={previewDraft}
                 saveAction={
                   <Button disabled={!canSave} type="submit">
@@ -821,6 +828,7 @@ function DraftPreview({
   featured,
   initiallyArranging,
   onChange,
+  preview: Preview,
   profile,
   saveAction,
   username,
@@ -830,6 +838,7 @@ function DraftPreview({
   featured: boolean;
   initiallyArranging: boolean;
   onChange: (profile: PortfolioProfile) => void;
+  preview: ComponentType<StudioPreviewProps>;
   profile: PortfolioProfile;
   saveAction: ReactNode;
   username: string;
@@ -859,7 +868,7 @@ function DraftPreview({
       initiallyOpen
       openRequest={arrangeRequest}
     >
-      <PreviewContent
+      <Preview
         arrange={arranging ? { disabled, onChange: arrangeVisibleSections } : undefined}
         featured={featured}
         profile={profile}

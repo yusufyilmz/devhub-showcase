@@ -1,6 +1,6 @@
 # My Fitness Studio app
 
-Next.js app for the fitness workspace, package name `my-fitness-app`. Routes live in `app/`. Task screens live in `features/`. Task rules and repositories live in `lib/`. Shared sign-in is `@shared/auth`. Controls are `@shared/ui`. Push delivery is `@shared/notifications`.
+Next.js app for the fitness workspace, package name `my-fitness-app`. Routes live in `app/`. Task screens live in `views/`. App session, workspace, and notification bindings live in `services/`. Task rules and repositories live in `@shared/lib`. Shared sign-in is `@shared/auth`. Controls are `@shared/ui`. Push delivery is `@shared/notifications`.
 
 ## Run
 

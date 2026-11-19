@@ -5,8 +5,8 @@
     "paths": {
       "@/*": ["./*"],
       "@/env": ["./env.ts"],
-      "@/features/*": ["./features/*"],
-      "@/lib/*": ["./lib/*"],
+      "@/services/*": ["./services/*"],
+      "@/views/*": ["./views/*"],
       "@fixtures/*": ["../../tools/test/fixtures/*"]
     },
     "plugins": [

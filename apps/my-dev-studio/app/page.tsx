@@ -1,10 +1,10 @@
 import { HomeChatLauncher } from "@shared/assistant/chat/launcher";
-import { ExampleCarousel } from "@shared/assistant/examples";
 import { StudioCompanion } from "@shared/assistant/studio-companion";
 import { StudioPlanDetails } from "@shared/billing/components";
 
 import { getAccountMenu } from "@/services/home/get-account-menu";
 import { getHomeAction, getHomeExample } from "@/services/home/get-home-links";
+import { ExampleCarousel } from "@/views/examples/ExampleCarousel";
 import { HomePage } from "@/views/home/HomePage";
 
 export default async function Page() {

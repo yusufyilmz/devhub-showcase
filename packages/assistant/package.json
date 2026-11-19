@@ -35,16 +35,12 @@
     "./visitor-chat": "./src/components/chat/portfolio-visitor-chat.tsx",
     "./stream-client": "./src/client/portfolio-stream.ts",
     "./fitness-ui": "./src/components/fitness/index.ts",
-    "./engineer-portfolio": "./src/components/portfolio/engineer-portfolio.tsx",
-    "./examples": "./src/components/studio/examples/index.ts",
-    "./examples-data": "./src/components/studio/examples/data.ts",
     "./management-ui": "./src/components/studio/management/index.ts",
     "./portfolio-branding": "./src/server/portfolio-branding.ts",
     "./password-gate": "./src/components/portfolio/access/portfolio-password-gate.tsx",
     "./cv-response": "./src/server/cv-response.ts",
     "./portfolio-metadata": "./src/server/portfolio-metadata.ts",
-    "./structured-data": "./src/server/profile-structured-data.ts",
-    "./section-portfolio": "./src/components/portfolio/section-portfolio.tsx"
+    "./structured-data": "./src/server/profile-structured-data.ts"
   },
   "main": "src/index.ts",
   "scripts": {

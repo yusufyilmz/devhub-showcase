@@ -6,8 +6,8 @@ import { fitnessAssistantRequest } from "@shared/assistant/fitness-contract";
 import { allowFitnessAssistant } from "@shared/lib/cache";
 
 import { env } from "@/env";
-import { SetupRequired, SignInRequired, workspaceContext } from "@/features/task-workspace/server";
-import { sameOrigin } from "@/lib/auth";
+import { sameOrigin } from "@/services/auth/auth";
+import { SetupRequired, SignInRequired, workspaceContext } from "@/services/task-workspace/server";
 
 export const maxDuration = 60;
 const headers = { "Cache-Control": "private, no-store" };

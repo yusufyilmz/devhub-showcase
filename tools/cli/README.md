@@ -68,7 +68,7 @@ pnpm cli:storybook rewrite-titles --cwd /absolute/project/root --verbose
 
 `--dry-run` prints changes and does not write files. `--cwd` selects the project; the default is the current directory. The command walks up to the Storybook app and, when this monorepo is found, rewrites stories under `packages/` and `apps/`.
 
-Titles come from the path. `packages/<pkg>/src/.../<file>` and `apps/<app>/src/.../<file>` become `<Package>/<folders>/<Leaf>`. `src`, `components`, `stories`, and `__stories__` are left out. A leaf that repeats its folder is left out, so `button/Button.stories.tsx` is `UI/Buttons/Button` and `chat-bubble/ChatBubble.stories.tsx` is `Assistant/Chat/Chat Bubble`. `index` and `examples` are left out too, so `icon-button/Examples.stories.tsx` is `UI/Buttons/Icon Button`.
+Titles come from the path. `packages/<pkg>/src/.../<file>` and `apps/<app>/src/.../<file>` become `<Package>/<folders>/<Leaf>`. `src`, `components`, `stories`, and `__stories__` are left out. A leaf that repeats its folder is left out, so `button/Button.stories.tsx` is `UI/Buttons/Button`, `icon-button/IconButton.stories.tsx` is `UI/Buttons/Icon Button`, and `chat-bubble/ChatBubble.stories.tsx` is `Assistant/Chat/Chat Bubble`. `index` and `examples` are left out too.
 
 Package roots are `UI`, `Assistant`, `Trello`, `Storybook`, `Studio`, and `Fitness`. Other package directories are humanized from their folder name.
 

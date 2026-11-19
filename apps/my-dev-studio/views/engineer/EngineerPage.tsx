@@ -25,7 +25,7 @@ import {
 import {
   type ArrangePortfolioSections,
   RegisteredSections,
-} from "@/views/published/registered-sections";
+} from "@/views/published/RegisteredSections";
 
 export type { ArrangePortfolioSections };
 

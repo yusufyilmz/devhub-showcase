@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 
 import { InvalidWorkspaceError, RevisionConflictError } from "@shared/lib/workspace";
 
-import { SetupRequired, SignInRequired, workspaceContext } from "@/features/task-workspace/server";
-import { sameOrigin } from "@/lib/auth";
+import { sameOrigin } from "@/services/auth/auth";
+import { SetupRequired, SignInRequired, workspaceContext } from "@/services/task-workspace/server";
 
 export const dynamic = "force-dynamic";
 const headers = { "Cache-Control": "private, no-store", Vary: "Authorization, Cookie" };

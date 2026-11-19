@@ -2,10 +2,12 @@ import { defineLibraryConfig } from "@shared/cli/tsdown";
 
 export default defineLibraryConfig({
   entry: [
-    "src/model.ts",
-    "src/calendar-grid.tsx",
-    "src/day-agenda.tsx",
-    "src/task-form.tsx",
-    "src/google.ts",
+    "src/index.ts",
+    "src/components/agenda-details.tsx",
+    "src/components/calendar-grid.tsx",
+    "src/components/day-agenda.tsx",
+    "src/components/event-row.tsx",
+    "src/components/task-form.tsx",
+    "src/services/google.ts",
   ],
 });

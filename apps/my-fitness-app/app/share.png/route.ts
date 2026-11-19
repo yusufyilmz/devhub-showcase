@@ -1,6 +1,6 @@
 import { createShareImage } from "@shared/ui/seo/image";
 
-import { fitnessSeo } from "../../features/seo";
+import { fitnessSeo } from "../../services/site/seo";
 
 export function GET() {
   return createShareImage({

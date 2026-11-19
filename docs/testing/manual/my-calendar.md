@@ -34,4 +34,4 @@ See [Google’s web server OAuth guide](https://developers.google.com/identity/p
 - [Studio calendar browser workflow](../../../apps/my-dev-studio/e2e/calendar/my-calendar.spec.ts)
 - [Fitness calendar browser workflow](../../../apps/my-fitness-app/e2e/calendar/calendar.spec.ts)
 - [Studio task ownership](../../../packages/lib/src/db/rls/studio-calendar-tasks.test.ts)
-- [Google provider fixtures](../../../packages/calendar/src/google.test.ts)
+- [Google provider fixtures](../../../packages/calendar/src/services/google.test.ts)
