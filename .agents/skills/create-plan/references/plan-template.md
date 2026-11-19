@@ -1,8 +1,6 @@
-# Repository implementation plan template
-
-Use this structure in a new file under `.agents/plans/YYYY-MM-DD-feature-slug.md`. Adapt sections to the feature, but retain the **final execution checklist** and stable task identifiers. Replace example content with verified repository details.
-
 # Feature implementation plan
+
+This file is the canonical **template** for new plans under `.agents/plans/YYYY-MM-DD-feature-slug.md`. Adapt sections to the feature, but retain the **final execution checklist** and stable task identifiers. Replace example content with verified repository details.
 
 **Goal:** A one-sentence user-observable result.
 
