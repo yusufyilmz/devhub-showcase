@@ -168,7 +168,6 @@ function Work({ profile, visual = false }: { profile: PortfolioProfile; visual?:
                     {project.coverImage ? (
                       // Public user supplied images are loaded directly by the visitor;
                       // the app server never fetches arbitrary remote image URLs.
-                      // biome-ignore lint/performance/noImgElement: Public portfolio image can use a caller-supplied source.
                       <img
                         alt={project.name}
                         height={600}
