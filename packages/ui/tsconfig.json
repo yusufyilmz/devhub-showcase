@@ -2,6 +2,9 @@
   "compilerOptions": {
     "moduleResolution": "bundler",
     "paths": {
+      "@/env": ["../../apps/my-dev-studio/env.ts"],
+      "@/services/*": ["../../apps/my-dev-studio/services/*"],
+      "@/views/*": ["../../apps/my-dev-studio/views/*"],
       "@fixtures/*": ["../../tools/test/fixtures/*"]
     },
     "resolvePackageJsonImports": true,

@@ -126,7 +126,7 @@ export { ReferralSection } from "./referral-section";
 export { ReferralItem } from "./referral-section/ReferralItem";
 export { ReviewSection } from "./review-section";
 export { ReviewButton } from "./review-section/ReviewButton";
-export { Section, SectionItemCard } from "./section";
+export { Section, SectionFrame, SectionHeading, SectionItemCard } from "./section";
 export { SectionAccordion } from "./section/SectionAccordion";
 export { SectionCarousel } from "./section/SectionCarousel";
 export { SectionGrid } from "./section/SectionGrid";
@@ -136,8 +136,14 @@ export type {
   SectionAccordionOptions,
   SectionCarouselOptions,
   SectionCollectionOptions,
+  SectionFrameContext,
+  SectionFrameProps,
+  SectionFrameSurface,
+  SectionFrameWidth,
   SectionGridOptions,
   SectionHeaderProps,
+  SectionHeadingLevel,
+  SectionHeadingProps,
   SectionItem,
   SectionItemCardOptions,
   SectionSurfaceProps,

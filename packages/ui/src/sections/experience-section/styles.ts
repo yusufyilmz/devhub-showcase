@@ -1,8 +1,8 @@
 export const experienceItemStyles = {
   element1: "w-full",
   element2: "h-4",
-  element3: "text-xs font-light pb-0 text-main-light-slate mt-2",
-  element4: "ml-0 mr-0 my-8 md:mx-8",
+  element3: "mt-sm pb-0 text-xs font-light text-main-light-slate",
+  element4: "mx-0 my-xl md:mx-xl",
   element5: "experience-card group",
   element6: "pb-0 flex flex-col gap-2",
   element7:
@@ -25,5 +25,5 @@ export const experienceListStyles = {
 } as const;
 
 export const experienceSectionStyles = {
-  element1: "mt-8",
+  element1: "min-w-0",
 } as const;

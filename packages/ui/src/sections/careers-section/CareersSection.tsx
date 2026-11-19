@@ -1,6 +1,8 @@
 import { ChevronDown } from "lucide-react";
 
 import { ItemContent } from "../collection-view/CollectionView";
+import { SectionFrame } from "../section/section-frame";
+import { SectionHeading } from "../section/section-heading";
 import { SectionPresentation } from "../section-presentation";
 import type { SectionProps } from "../types";
 
@@ -13,27 +15,21 @@ export function CareersSection(props: SectionProps) {
 
   const headingId = `${section.id}-heading`;
   return (
-    <section
-      aria-labelledby={headingId}
-      className="@container scroll-mt-24 grid min-w-0 gap-lg py-xl"
-      data-section-layout="careers-openings"
-      data-section-type="careers"
+    <SectionFrame
+      className="@container scroll-mt-24"
+      context="composed"
       id={section.id}
+      labelledBy={headingId}
+      layout="careers-openings"
+      sectionType="careers"
     >
       <div className="grid min-w-0 gap-lg @3xl:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
-        <header className="min-w-0">
-          <h2
-            className="text-balance text-3xl font-semibold tracking-tight @lg:text-4xl"
-            id={headingId}
-          >
-            {section.title}
-          </h2>
-          {section.options.description && (
-            <p className="mt-sm max-w-prose leading-relaxed text-muted-foreground">
-              {section.options.description}
-            </p>
-          )}
-        </header>
+        <SectionHeading
+          description={section.options.description}
+          id={headingId}
+          level={2}
+          title={section.title}
+        />
         {section.items.length > 0 && (
           <ul className="m-0 grid min-w-0 list-none divide-y divide-border/70 border-y border-border/70 p-0">
             {section.items.map((item, index) => (
@@ -55,6 +51,6 @@ export function CareersSection(props: SectionProps) {
           </ul>
         )}
       </div>
-    </section>
+    </SectionFrame>
   );
 }
