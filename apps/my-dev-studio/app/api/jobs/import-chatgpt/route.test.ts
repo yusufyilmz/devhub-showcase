@@ -58,6 +58,23 @@ describe("ChatGPT job import API", () => {
     expect((await POST(request("{broken"))).status).toBe(400);
   });
 
+  it("previews without saving when requested", async () => {
+    const previewRequest = new Request(
+      "https://studio.test/api/jobs/import-chatgpt?preview=1",
+      {
+        body: example,
+        headers: { origin: "https://studio.test" },
+        method: "POST",
+      },
+    );
+    expect((await POST(previewRequest)).status).toBe(200);
+    expect(mocks.importer).toHaveBeenCalledWith(
+      { user: { id: "signed-in" } },
+      JSON.parse(example),
+      true,
+    );
+  });
+
   it("delegates report persistence with the confirmed workspace", async () => {
     const response = await POST(request());
     expect(response.status).toBe(200);
@@ -65,6 +82,7 @@ describe("ChatGPT job import API", () => {
     expect(mocks.importer).toHaveBeenCalledWith(
       { user: { id: "signed-in" } },
       JSON.parse(example),
+      false,
     );
   });
 });
