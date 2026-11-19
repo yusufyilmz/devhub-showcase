@@ -36,6 +36,7 @@ export function JobsClient({
   const [data, setData] = useState(initial);
   const [busy, setBusy] = useState(false);
   const [feedback, setFeedback] = useState("");
+  const [importJson, setImportJson] = useState("");
   const lock = useRef(false);
   const worker = useRef(
     new NotificationClient({
@@ -65,7 +66,54 @@ export function JobsClient({
   }
 
   return (
-    <JobsDashboard
+    <>
+      <details className="mb-4 rounded-lg border p-4">
+        <summary className="cursor-pointer font-medium">Import ChatGPT research report</summary>
+        <div className="mt-3 space-y-3">
+          <p className="text-sm text-muted-foreground">
+            Paste a structured JSON report from your ChatGPT job search. Listings are
+            unverified research and will appear for review in Discover; no applications
+            are submitted. Do not paste private recruiter emails or personal data.
+          </p>
+          <label className="block text-sm font-medium" htmlFor="chatgpt-job-import">
+            ChatGPT report JSON
+          </label>
+          <textarea
+            className="min-h-36 w-full rounded-md border bg-background p-3 font-mono text-sm"
+            id="chatgpt-job-import"
+            maxLength={20_000}
+            onChange={(event) => setImportJson(event.target.value)}
+            placeholder='{"schemaVersion":1,"report":{...},"jobs":[]}'
+            value={importJson}
+          />
+          <button
+            className="rounded-md border px-4 py-2 text-sm font-medium disabled:opacity-50"
+            disabled={busy || !importJson.trim()}
+            onClick={() => {
+              void action(async () => {
+                let payload: unknown;
+                try {
+                  payload = JSON.parse(importJson);
+                } catch {
+                  throw new Error("Please enter valid JSON.");
+                }
+                const response = await fetch("/api/jobs/import-chatgpt", {
+                  body: JSON.stringify(payload),
+                  headers: { "Content-Type": "application/json" },
+                  method: "POST",
+                });
+                const result = await read(response);
+                setImportJson("");
+                return `Processed ${result.imported} research job(s). Review them in Discover.`;
+              });
+            }}
+            type="button"
+          >
+            {busy ? "Importing..." : "Import report"}
+          </button>
+        </div>
+      </details>
+      <JobsDashboard
       baseCvUrl={`${endpoint}/cv`}
       busy={busy}
       cvUrl={(id) => `${endpoint}/cv?job=${encodeURIComponent(id)}`}
@@ -101,6 +149,7 @@ export function JobsClient({
         })
       }
       statuses={statuses}
-    />
+      />
+    </>
   );
 }
