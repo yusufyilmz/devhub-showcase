@@ -16,7 +16,9 @@ function option(key) {
 const taskId = option("--id");
 const evidence = option("--evidence").trim();
 if (!fileArg || !/^P\d+\.\d+$/.test(taskId) || !evidence) {
-  fail("Usage: mark-task.mjs .agents/plans/<plan>.md --id P1.1 --evidence \"actual passing check or artifact\"");
+  fail(
+    'Usage: mark-task.mjs .agents/plans/<plan>.md --id P1.1 --evidence "actual passing check or artifact"',
+  );
 }
 if (evidence.length > 500 || /[\r\n|]/.test(evidence)) {
   fail("Evidence must be a single line of at most 500 characters without table separators.");
