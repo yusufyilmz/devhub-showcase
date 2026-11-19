@@ -110,10 +110,7 @@ jobs:
 
       # Tests
       - name: Unit tests
-        # Node 24 on GitHub runners can abort the threads pool with
-        # "Check failed: jit_page.has_value()" (exit 133). Fewer workers
-        # keep concurrent V8 isolates inside the runner memory limit.
-        run: pnpm exec vitest run --project unit --maxWorkers=2
+        run: pnpm exec vitest run --project unit
 
       # Builds
       - name: Build Storybook

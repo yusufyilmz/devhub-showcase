@@ -62,12 +62,7 @@ jobs:
         run: pnpm check:architecture
 
       - name: Unit tests
-        # Node 24.15 on GitHub runners aborts with
-        # "Check failed: jit_page.has_value()" (exit 133) when several
-        # Vitest threads allocate JIT pages. One worker and no JIT avoids it.
-        env:
-          NODE_OPTIONS: --jitless
-        run: pnpm exec vitest run --project unit --maxWorkers=1
+        run: pnpm exec vitest run --project unit
 
       - name: Vulnerability audit
         run: pnpm check:security
