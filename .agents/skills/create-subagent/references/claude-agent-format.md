@@ -29,10 +29,10 @@ Return:
 
 ## Permission guidance
 
-| Agent kind | Typical tools | Intended behavior |
-| --- | --- | --- |
-| Reviewer, docs researcher | `Read, Grep, Glob` | Inspect and report, no writes |
-| Targeted implementer | `Read, Grep, Glob, Edit, Write, Bash` | Make authorized scoped changes, run checks and report |
+| Agent kind                | Typical tools                         | Intended behavior                                     |
+| ------------------------- | ------------------------------------- | ----------------------------------------------------- |
+| Reviewer, docs researcher | `Read, Grep, Glob`                    | Inspect and report, no writes                         |
+| Targeted implementer      | `Read, Grep, Glob, Edit, Write, Bash` | Make authorized scoped changes, run checks and report |
 
 Avoid granting `Bash`, `Edit` or `Write` to inspection-only agents. Use `model: inherit` unless a verified cost/capability requirement justifies another supported model. Do not invent tool names, unsupported frontmatter or privileges.
 
