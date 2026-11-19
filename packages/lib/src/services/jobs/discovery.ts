@@ -66,7 +66,7 @@ function joobleSalary(value: unknown) {
 }
 
 function normalize(
-  source: Exclude<JobListing["source"], "linkedin">,
+  source: Exclude<JobListing["source"], "linkedin" | "chatgpt_research">,
   row: Record<string, unknown>,
   country: string,
 ) {
@@ -103,7 +103,7 @@ export type JobProviders = {
 };
 
 export function isProviderConfigured(
-  source: Exclude<JobListing["source"], "linkedin">,
+  source: Exclude<JobListing["source"], "linkedin" | "chatgpt_research">,
   country: string,
   providers: JobProviders,
 ) {
@@ -132,7 +132,7 @@ export function adzunaSearchKey(filters: JobFilters, appId: string) {
 }
 
 export async function discoverJobs(
-  source: Exclude<JobListing["source"], "linkedin">,
+  source: Exclude<JobListing["source"], "linkedin" | "chatgpt_research">,
   filters: JobFilters,
   providers: JobProviders,
   signal: AbortSignal,

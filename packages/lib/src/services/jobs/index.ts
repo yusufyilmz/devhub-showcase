@@ -1,4 +1,10 @@
 export {
+  chatgptJobImportSchema,
+  chatgptJobKey,
+  normalizeChatgptJobUrl,
+  parseChatgptJobImport,
+} from "./chatgpt-import";
+export {
   adzunaSearchKey,
   discoverJobs,
   discoveryCandidates,
