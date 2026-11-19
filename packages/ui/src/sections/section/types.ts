@@ -79,6 +79,8 @@ export type SectionFrameProps = PropsWithChildren<{
   surface?: SectionFrameSurface;
   width?: SectionFrameWidth;
   className?: string;
+  /** Associates the section when its heading is rendered inside the children. */
+  labelledBy?: string;
   /** Preserves the existing section identity used by preview and browser tests. */
   sectionType?: string;
   layout?: string;

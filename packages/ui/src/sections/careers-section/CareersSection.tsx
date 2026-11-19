@@ -19,6 +19,7 @@ export function CareersSection(props: SectionProps) {
       className="@container scroll-mt-24"
       context="composed"
       id={section.id}
+      labelledBy={headingId}
       layout="careers-openings"
       sectionType="careers"
     >

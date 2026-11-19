@@ -75,6 +75,9 @@ describe("Intro section spacing", () => {
 
     const frame = document.getElementById("custom-about");
     expect(frame?.getAttribute("data-section-layout")).toBe("about-editorial");
+    expect(frame?.getAttribute("aria-labelledby")).toBe("custom-about-heading");
+    expect(document.getElementById("custom-about-heading")?.tagName).toBe("H2");
+    expect(frame?.querySelector("[class*='@3xl:grid-cols-']")).toBeTruthy();
     expect(frame?.className.includes("py-xl")).toBe(false);
     expect(screen.getByRole("heading", { level: 2, name: "About" })).toBeTruthy();
     expect(screen.getByRole("heading", { level: 3, name: "Note" })).toBeTruthy();
@@ -116,6 +119,9 @@ describe("Intro section spacing", () => {
     );
     const frame = document.getElementById("custom-roles");
     expect(frame?.getAttribute("data-section-layout")).toBe("careers-openings");
+    expect(frame?.getAttribute("aria-labelledby")).toBe("custom-roles-heading");
+    expect(document.getElementById("custom-roles-heading")?.tagName).toBe("H2");
+    expect(frame?.querySelector("[class*='@3xl:grid-cols-']")).toBeTruthy();
     expect(frame?.className.includes("py-xl")).toBe(false);
     expect(screen.getByText("Note").closest("summary")).toBeTruthy();
     expect(screen.getByText("Second role").closest("summary")).toBeTruthy();

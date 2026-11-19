@@ -21,13 +21,14 @@ export function SectionFrame({
   surface = "plain",
   width = "contained",
   className,
+  labelledBy: labelledById,
   sectionType,
   layout,
 }: SectionFrameProps) {
   const band = width === "bleed" && surface !== "card";
   return (
     <section
-      aria-labelledby={labelledBy(heading)}
+      aria-labelledby={labelledById ?? labelledBy(heading)}
       className={cn(
         "section-frame my-0 grid min-w-0",
         heading ? "gap-lg @min-[64rem]:gap-xl" : undefined,

@@ -18,6 +18,7 @@ export function AboutSection(props: SectionProps) {
       className="@container scroll-mt-24 border-y border-border/70"
       context="composed"
       id={section.id}
+      labelledBy={headingId}
       layout="about-editorial"
       sectionType="about"
     >
