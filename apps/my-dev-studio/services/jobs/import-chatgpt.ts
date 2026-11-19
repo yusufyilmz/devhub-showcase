@@ -1,4 +1,4 @@
-import { parseChatgptJobImport } from "@shared/lib/services/jobs/chatgpt-import";
+import { parseChatgptJobImport } from "@shared/lib/services/jobs";
 
 import type { requireWorkspace } from "@/services/admin/get-auth";
 import { jobsServiceClient } from "@/services/jobs/get-config";
