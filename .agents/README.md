@@ -44,3 +44,23 @@ Read [AGENTS.md](../AGENTS.md) for repository instructions, [full CLI usage](../
 ## Keep catalogs current
 
 Run `pnpm generate:catalogs` for every workspace package, or add `--package @shared/assistant` for one package. Edit a package's `catalog.template.md` for guidance; export/script/dependency tables are generated from current metadata and source declarations. `pnpm check:catalogs` validates all outputs without writing. App-specific bindings are colocated with pages/routes; the old home/reviews/portfolio/platform/chat feature folders are removed.
+
+## Create plans, skills and delegated agents
+
+This repository ships three **self-contained** authoring skills, all in the canonical `.agents/skills` directory:
+
+- [create-plan](skills/create-plan/SKILL.md) writes implementation plans in `.agents/plans`, ends with uniquely identified checklist tasks, and records evidence when verified tasks are checked off.
+- [create-skill](skills/create-skill/SKILL.md) uses the existing `pnpm cli:skills scaffold` command to author skills with `SKILL.md`, `references/`, `workflows/` and optional scripts.
+- [create-subagent](skills/create-subagent/SKILL.md) generates scoped Claude Code subagents under `.claude/agents` with read-only tools by default; this is a separate runtime format from skills.
+
+Example commands:
+
+```sh
+pnpm cli:skills scaffold my-skill --description "Use when ..."
+node .agents/skills/create-plan/scripts/mark-task.mjs .agents/plans/example.md --id P1.1 --evidence "Verified with named passing check"
+node --test .agents/skills/create-plan/scripts/mark-task.test.mjs
+node --test .agents/skills/create-subagent/scripts/scaffold-agent.test.mjs
+pnpm cli:skills validate
+```
+
+Read each SKILL.md for the full contract before invoking helpers. A script recording evidence is not equivalent to running tests. A skill being visible through `.claude/skills` does not guarantee a generated subagent works in a different agent runtime.
