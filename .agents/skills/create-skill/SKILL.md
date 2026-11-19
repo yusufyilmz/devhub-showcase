@@ -26,9 +26,11 @@ Canonical source is `.agents/skills`. The repository links `.cursor/skills` and 
 2. Identify a **single reusable capability** and when it should be invoked. Write a positive trigger and a negative example; do not create a skill for a one-off action better served by an ordinary plan or comment.
 3. Before drafting, define two or more sample requests: one that should activate the skill, one that should not, and one tricky case. Note what an unassisted agent would miss.
 4. Scaffold through the existing CLI:
+
    ```sh
    pnpm cli:skills scaffold <skill-name> --description "Use when ...; ..."
    ```
+
    If a folder exists, inspect and update it without overwriting. Do not hand-roll a second scaffolder.
 5. Write a precise `SKILL.md`: purpose, trigger, inputs, steps, output, constraints, how to verify. Put dense contracts in `references/` and lengthy procedures in `workflows/`. Add `scripts/` only when a repeatable mechanical operation benefits from deterministic code, tests, and no hidden network dependency.
 6. Audit repo paths, ownership, CLI commands, security, licensing and compatibility. Never claim a command or tool exists merely because another framework offers it.
