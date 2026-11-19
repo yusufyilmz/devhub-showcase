@@ -26,6 +26,7 @@ This is intentionally **not** claimed to be a universal Codex or Cursor subagent
 1. Read `AGENTS.md` and relevant repository skills. Inspect existing `.claude/agents` before choosing a name or specialization.
 2. Define a single mission, source paths, allowed tools, expected output, and how failure/uncertainty is reported.
 3. Use the safe scaffolder; it refuses path traversal and existing file replacement:
+
    ```sh
    node .agents/skills/create-subagent/scripts/scaffold-agent.mjs code-reviewer \
      --description "Review MyDevStudio code changes for regressions and access boundaries. Use when the user requests a focused code review." \
