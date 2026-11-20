@@ -34,6 +34,7 @@ This is intentionally **not** claimed to be a universal Codex or Cursor subagent
      --scope "apps/my-dev-studio" \
      --mode review
    ```
+
 4. Refine `.claude/agents/code-reviewer.md` for the actual role. A generated agent is a starting point, not automatically a suitable expert.
 5. Check YAML frontmatter, instructions, capabilities and scope. Test a small representative task if the target runtime is available. Never claim verification in an untested runtime.
 

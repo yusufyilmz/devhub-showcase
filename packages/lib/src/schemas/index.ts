@@ -1,4 +1,5 @@
 export { choiceSchema, ingredientSchema } from "./nutrition";
+export { validateSite, validateSitePublication } from "./page/document";
 export {
   dateSchema,
   taskDetailsSchema,

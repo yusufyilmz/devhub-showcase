@@ -4,7 +4,12 @@ import { describe, expect, it } from "vitest";
 
 import { PGlite } from "@electric-sql/pglite";
 
-import { type PortfolioProfile, profile, projectPublicProfile } from "@shared/config";
+import {
+  createSiteFromLegacy,
+  type PortfolioProfile,
+  profile,
+  projectPublicProfile,
+} from "@shared/config";
 
 describe("explicit publication snapshots", () => {
   it("keeps draft writes private, publishes both outputs atomically, and rejects stale or unauthorized changes", async () => {
@@ -60,6 +65,12 @@ describe("explicit publication snapshots", () => {
       );
       await db.exec(
         readFileSync("supabase/migrations/20261103130000_publication_snapshots.sql", "utf8"),
+      );
+      await db.exec(
+        readFileSync("supabase/migrations/20261121020000_project_site_documents.sql", "utf8"),
+      );
+      await db.exec(
+        `update public.portfolio_publications publication set document = private.project_portfolio_document(profile.document, 'website') from public.portfolio_profiles profile where profile.id = publication.id; update public.portfolio_public_cvs cv set document = private.project_portfolio_document(profile.document, 'cv') from public.portfolio_profiles profile where profile.id = cv.id;`,
       );
       await db.query(
         "insert into public.portfolio_profiles(id,username,document,revision,is_public,managed_by) values ('managed','managed-owner',$1,1,false,$2)",
@@ -149,6 +160,83 @@ describe("explicit publication snapshots", () => {
         db.query("select public.set_portfolio_publication('managed',1,false)"),
       ).rejects.toThrow();
       await expect(db.query("select * from public.portfolio_profiles")).rejects.toThrow();
+    } finally {
+      await db.close();
+    }
+  }, 20000);
+
+  it("projects a builder site like the application and removes it from the CV", async () => {
+    const db = new PGlite();
+    const secret = "unpublished-article-secret-token";
+    let index = 1;
+    const source: PortfolioProfile = {
+      ...profile,
+      customSections: [
+        {
+          id: "custom-notes",
+          items: [
+            {
+              body: secret,
+              id: "00000000-0000-4000-8000-0000000000aa",
+              title: "Private note",
+              url: "",
+            },
+          ],
+          renderer: "text",
+          sectionType: "legal-text",
+          title: "Notes",
+          visible: true,
+        },
+      ],
+      site: createSiteFromLegacy(profile, () => {
+        const id = `00000000-0000-4000-8000-${String(index).padStart(12, "0")}`;
+        index += 1;
+        return id;
+      }),
+    };
+    source.site?.pages.push({
+      id: "00000000-0000-4000-8000-000000000099",
+      kind: "article",
+      layout: "editorial",
+      placements: [
+        {
+          id: "00000000-0000-4000-8000-000000000098",
+          presentation: { renderer: "text", surface: "plain", width: "reading" },
+          reference: { id: "custom-notes", type: "custom-section" },
+          region: "main",
+          visible: true,
+        },
+      ],
+      published: false,
+      slug: "private-note",
+      title: "Private note",
+    });
+    const home = source.site?.pages[0];
+    if (home) home.published = true;
+    try {
+      await db.exec(
+        `create schema auth;create schema private;create role anon;create role authenticated;grant usage on schema public,auth,private to authenticated,anon;create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;create function private.is_portfolio_admin() returns boolean language sql stable as $$select current_setting('request.jwt.claim.admin',true)='true'$$;create table public.portfolio_profiles(id text primary key,username text unique not null,document jsonb not null,revision integer not null,is_public boolean not null,owner_id uuid,managed_by uuid,updated_at timestamptz default now());alter table public.portfolio_profiles enable row level security;grant select on public.portfolio_profiles to authenticated,anon;grant update(document,revision,updated_at,is_public) on public.portfolio_profiles to authenticated;create policy "Read published CV" on public.portfolio_profiles for select to anon,authenticated using(is_public);create policy own_read on public.portfolio_profiles for select to authenticated using(owner_id=auth.uid());create policy own_update on public.portfolio_profiles for update to authenticated using(owner_id=auth.uid()) with check(owner_id=auth.uid());`,
+      );
+      await db.exec(
+        readFileSync("supabase/migrations/20261103130000_publication_snapshots.sql", "utf8"),
+      );
+      await db.exec(
+        readFileSync("supabase/migrations/20261121020000_project_site_documents.sql", "utf8"),
+      );
+      const projected = async (surface: "website" | "cv") =>
+        (
+          await db.query<{ document: unknown }>(
+            "select private.project_portfolio_document($1::jsonb,$2) as document",
+            [JSON.stringify(source), surface],
+          )
+        ).rows[0]!.document;
+      expect(await projected("website")).toEqual(
+        JSON.parse(JSON.stringify(projectPublicProfile(source, "website"))),
+      );
+      expect(JSON.stringify(await projected("website"))).not.toContain(secret);
+      expect(await projected("cv")).toEqual(
+        JSON.parse(JSON.stringify(projectPublicProfile(source, "cv"))),
+      );
     } finally {
       await db.close();
     }

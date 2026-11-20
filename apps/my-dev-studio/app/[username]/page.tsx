@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { AgentCompanion } from "@shared/assistant/agent-companion";
 import { portfolioGuide } from "@shared/assistant/companion-guides";
 import { createPortfolioMetadata } from "@shared/assistant/portfolio-metadata";
+import { builderSnapshotIsPublic } from "@shared/config";
 
 import { premiumChatAvailable } from "@/services/chat/get-access";
 import { EngineerPortfolio } from "@/services/portfolio/engineer-portfolio";
@@ -17,11 +19,13 @@ export const maxDuration = 60;
 type Props = { params: Promise<{ username: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { profile } = await getUsernameProfile((await params).username);
+  if (!builderSnapshotIsPublic(profile)) notFound();
   return createPortfolioMetadata(profile, (await params).username, platformSeo);
 }
 export default async function PublicCvPage({ params }: Props) {
   const { username } = await params;
   const { profile: saved, id, revision } = await getUsernameProfile(username);
+  if (!builderSnapshotIsPublic(saved)) notFound();
   const original = id === "main";
   const engineer = !saved.portfolioType || saved.portfolioType === "engineer";
   const mainPortfolioChat = original && engineer && saved.publicationVisibility !== "password";

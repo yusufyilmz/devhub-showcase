@@ -1,3 +1,4 @@
+import type { PortfolioSiteDocument } from "../pages/types";
 import type { Language } from "../portfolio/languages";
 import type { PortfolioSectionId } from "../portfolio/portfolio-sections";
 import type { CvLayout, PortfolioType } from "../portfolio/portfolio-types";
@@ -82,6 +83,7 @@ export interface PortfolioProfile {
   sectionOrder?: PortfolioSectionId[];
   sectionSequence?: PortfolioEntryId[];
   sectionSettings?: PortfolioSectionSettings;
+  site?: PortfolioSiteDocument;
   skills: Record<string, string[]>;
   summary: string;
   templateChosen?: boolean;
