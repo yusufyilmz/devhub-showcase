@@ -15,7 +15,7 @@ import {
   HomeOptionsSection,
   HomePricingSection,
   type PageAction,
-} from "@shared/ui/sections";
+} from "@shared/ui/home-section";
 
 export function HomePage({
   accountMenu,

@@ -208,6 +208,8 @@ git commit -m "fix: reuse the homepage session for the account menu"
 
 ### Task 3: Import the homepage without the section barrel
 
+**Implementation update (2026-11-20):** Current code keeps `HomePage` in `apps/my-dev-studio/views/home/HomePage.tsx` rather than the older UI path in this plan. The `perf/home-section-export-20261120` branch instead exports the existing `@shared/ui/home-section` module, switches home-only callers (including `PageAction` type imports and the Studio shell footer), and preserves `@shared/ui/sections` for portfolio renderers. Includes a focused entrypoint regression test. Verification is pending CI; the obsolete `@shared/ui/home-page` path is intentionally not introduced.
+
 **Files:**
 
 - Modify: `packages/ui/package.json`

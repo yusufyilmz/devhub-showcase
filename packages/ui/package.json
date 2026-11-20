@@ -16,6 +16,7 @@
     "./display": "./src/display/index.ts",
     "./layout": "./src/layout/index.ts",
     "./sections": "./src/sections/index.ts",
+    "./home-section": "./src/sections/home-section/index.ts",
     "./theme": "./src/theme/index.ts",
     "./providers": "./src/providers/index.ts",
     "./sidebar": "./src/navigation/sidebar/index.ts",

@@ -1,4 +1,4 @@
-import type { PageAction } from "@shared/ui/sections";
+import type { PageAction } from "@shared/ui/home-section";
 
 import { getHomeSession } from "@/services/home/get-home-links";
 import { ProfileMenu } from "@/services/home/profile-menu";
