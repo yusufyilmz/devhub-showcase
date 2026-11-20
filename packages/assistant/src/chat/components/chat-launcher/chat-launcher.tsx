@@ -43,6 +43,7 @@ export function HomeChatLauncher() {
             <legend className="sr-only">Starter prompts</legend>
             {studioChatSuggestions.map((suggestion) => (
               <Button
+                aria-pressed={message === suggestion}
                 className={chatLauncherStyles.suggestion}
                 key={suggestion}
                 onClick={() => setMessage(suggestion)}
