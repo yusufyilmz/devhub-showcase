@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation";
 
 import { ReviewSection } from "@shared/ui/sections";
 
-import { requireWorkspace } from "@/services/admin/get-auth";
+import { readWorkspaceSnapshot, requireWorkspace } from "@/services/admin/get-auth";
 import { loadPendingPortfolioReviews } from "@/services/review/get-service";
 import { StudioProfileEditor } from "@/views/studio/StudioProfileEditor";
 
@@ -29,7 +29,7 @@ export default async function EditCvPage({
   } catch {
     redirect("/login");
   }
-  const snapshot = await workspace.repository.read();
+  const snapshot = await readWorkspaceSnapshot();
   if (!snapshot || snapshot.username !== username) notFound();
   const canModerate = snapshot.id === "main";
   const openReviews = canModerate && query?.tab === "reviews";

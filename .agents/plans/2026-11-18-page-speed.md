@@ -66,6 +66,8 @@ A missing `.next/dev/server/vendor-chunks/lib/worker.js` module crashed the dev 
 
 ### Task 1: One workspace read per request
 
+**Implementation status (2026-11-20):** The `fix/studio-workspace-request-cache-20261120` branch adds request-local caching for the workspace and its snapshot, skips unnecessary published-profile reads on Studio and reviews routes, and adds regression tests for owner-only editing, redirects, and route classification. Verification remains pending CI. The existing `/[username]/chat` and `/[username]/access` platform-path behavior is intentionally preserved instead of changing it as suggested in Step 5; changing that behavior requires a separate public-profile route review.
+
 **Files:**
 
 - Modify: `apps/my-dev-studio/services/admin/get-auth.ts`

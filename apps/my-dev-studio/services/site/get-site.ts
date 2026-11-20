@@ -41,10 +41,9 @@ export const isStudioPath = (path: string) => path === "/studio" || path.startsW
 export const isPlatformPath = (path: string) =>
   path === "/" ||
   path === "/login" ||
+  isStudioPath(path) ||
+  path === "/reviews" ||
   /^\/[a-z0-9-]+\/(?:access|chat)$/.test(path) ||
-  path === "/studio/chat" ||
-  path === "/studio/portfolios" ||
-  path.startsWith("/studio/portfolios/") ||
   path === "/p/examples" ||
   path.startsWith("/p/examples/");
 export const isPlatformPage = cache(async () => {

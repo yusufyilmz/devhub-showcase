@@ -10,7 +10,7 @@ import { urls } from "@shared/config";
 import { PageShell } from "@shared/ui/page-shell";
 
 import { AccountPreferences } from "@/services/account/account-preferences";
-import { requireWorkspace } from "@/services/admin/get-auth";
+import { readWorkspaceSnapshot } from "@/services/admin/get-auth";
 import { getPublishedProfile } from "@/services/cv/get-published-profile";
 import { getPublicProfile, getUsernameProfile } from "@/services/portfolio/get-profile";
 import { getPagePresentation } from "@/services/site/get-presentation";
@@ -40,15 +40,13 @@ const getActiveProfile = cache(async () => {
   const path = (await headers()).get("x-profile-path") ?? "/";
   const match = path.match(/^\/p\/([^/]+)(?:\/|$)/);
   if (match?.[1]) return getPublicProfile(match[1]);
-  if (path === "/studio" || /^\/[^/]+\/edit$/.test(path)) {
+  if (/^\/[^/]+\/edit$/.test(path)) {
     try {
-      const { repository } = await requireWorkspace();
-      const snapshot = await repository.read();
-      if (snapshot) return snapshot;
+      return await readWorkspaceSnapshot();
     } catch {
       /* The editor page handles authentication/setup failures. */
+      return null;
     }
-    return null;
   }
   const username = path.match(/^\/([a-z0-9-]+)\/?$/)?.[1];
   if (username && !["admin", "reviews", "studio"].includes(username))
