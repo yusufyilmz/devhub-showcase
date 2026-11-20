@@ -2,7 +2,6 @@ import "@shared/ui/home.css";
 
 import type { ReactNode } from "react";
 
-import { SkipLink } from "@shared/ui/navigation";
 import {
   HomeCapabilitiesSection,
   HomeCTASection,
@@ -16,6 +15,7 @@ import {
   HomePricingSection,
   type PageAction,
 } from "@shared/ui/home-section";
+import { SkipLink } from "@shared/ui/navigation";
 
 export function HomePage({
   accountMenu,

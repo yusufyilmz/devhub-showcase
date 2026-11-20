@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 
 import { describe, expect, it } from "vitest";
 
-import type { PageAction } from "@shared/ui/home-section";
+import type { PageAction } from "./action";
 
 describe("home-section entrypoint", () => {
   it("exposes the existing homepage sections without requiring the portfolio barrel", () => {
@@ -19,7 +19,7 @@ describe("home-section entrypoint", () => {
     expect(homepage).not.toContain('from "@shared/ui/sections"');
   });
 
-  it("keeps PageAction available as a shallow public type", () => {
+  it("keeps the home PageAction contract typed", () => {
     const action: PageAction = {
       href: "/login",
       label: "Create your portfolio",
