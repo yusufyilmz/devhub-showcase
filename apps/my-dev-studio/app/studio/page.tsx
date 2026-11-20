@@ -1,15 +1,13 @@
 import { redirect } from "next/navigation";
 
-import type { ProfileSnapshot } from "@shared/lib/profile";
 import { editCvPath } from "@shared/lib/profiles";
 
-import { requireWorkspace } from "@/services/admin/get-auth";
+import { readWorkspaceSnapshot } from "@/services/admin/get-auth";
 
 export default async function AdminPage() {
-  let snapshot: ProfileSnapshot | null;
+  let snapshot;
   try {
-    const { repository } = await requireWorkspace();
-    snapshot = await repository.read();
+    snapshot = await readWorkspaceSnapshot();
   } catch {
     redirect("/login");
   }

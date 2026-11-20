@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import { requireConfirmedUser } from "@shared/auth";
 import { ProfileAccessError, ProfileService, SupabaseProfileRepository } from "@shared/lib/profile";
 import { createServerClient } from "@shared/lib/supabase";
@@ -15,11 +17,17 @@ export async function requireAdmin(providedClient?: SupabaseDbClient) {
 export { sameOrigin } from "@shared/auth";
 
 /** Every confirmed user gets a separate CV workspace. Site moderation still uses requireAdmin. */
-export async function requireWorkspace(providedClient?: SupabaseDbClient) {
+export const requireWorkspace = cache(async (providedClient?: SupabaseDbClient) => {
   const client = providedClient ?? (await createServerClient());
   const user = await requireConfirmedUser(client, () => new ProfileAccessError());
   const repository = await ensureUserProfile(client, user);
   const service = new ProfileService(repository);
   await service.requireOwner(user.id);
   return { client, repository, service, user };
-}
+});
+
+/** Share the owner's profile snapshot between the root layout and the edit route. */
+export const readWorkspaceSnapshot = cache(async () => {
+  const { repository } = await requireWorkspace();
+  return repository.read();
+});

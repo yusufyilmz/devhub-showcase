@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
-  workspace: vi.fn(),
+  snapshot: vi.fn(),
 }));
 vi.mock("@/services/admin/get-auth", () => ({
-  requireWorkspace: mocks.workspace,
+  readWorkspaceSnapshot: mocks.snapshot,
 }));
 
 import AdminPage from "./page";
@@ -13,13 +13,24 @@ describe("Admin", () => {
   beforeEach(() => vi.resetAllMocks());
 
   it("sends the studio entry to the owner's editor", async () => {
-    mocks.workspace.mockResolvedValue({
-      repository: {
-        read: async () => ({ isPublic: false, revision: 1, username: "alice" }),
-      },
-    });
+    mocks.snapshot.mockResolvedValue({ isPublic: false, revision: 1, username: "alice" });
     await expect(AdminPage()).rejects.toMatchObject({
       digest: expect.stringContaining(";/alice/edit;"),
+    });
+    expect(mocks.snapshot).toHaveBeenCalledOnce();
+  });
+
+  it("redirects unauthenticated visitors to login", async () => {
+    mocks.snapshot.mockRejectedValue(new Error("signed out"));
+    await expect(AdminPage()).rejects.toMatchObject({
+      digest: expect.stringContaining(";/login;"),
+    });
+  });
+
+  it("reports setup errors when the workspace has no profile", async () => {
+    mocks.snapshot.mockResolvedValue(null);
+    await expect(AdminPage()).rejects.toMatchObject({
+      digest: expect.stringContaining(";/login?error=setup;"),
     });
   });
 });

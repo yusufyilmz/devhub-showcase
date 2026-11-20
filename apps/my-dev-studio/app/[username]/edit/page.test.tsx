@@ -2,9 +2,11 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
   loadPending: vi.fn(),
+  snapshot: vi.fn(),
   workspace: vi.fn(),
 }));
 vi.mock("@/services/admin/get-auth", () => ({
+  readWorkspaceSnapshot: mocks.snapshot,
   requireWorkspace: mocks.workspace,
 }));
 
@@ -27,12 +29,12 @@ describe("Edit", () => {
   });
 
   it("denies another account even when its CV is public", async () => {
-    mocks.workspace.mockResolvedValue({
-      repository: { read: async () => ({ isPublic: true, username: "bob" }) },
-    });
+    mocks.workspace.mockResolvedValue({ user: { id: "owner-id" } });
+    mocks.snapshot.mockResolvedValue({ isPublic: true, username: "bob" });
     await expect(EditPage({ params: Promise.resolve({ username: "alice" }) })).rejects.toThrow(
       "NEXT_HTTP_ERROR_FALLBACK;404",
     );
+    expect(mocks.snapshot).toHaveBeenCalledOnce();
   });
 
   it("lets the owner edit a private CV", async () => {
@@ -43,14 +45,15 @@ describe("Edit", () => {
       username: "alice",
     };
     mocks.workspace.mockResolvedValue({
-      repository: { read: async () => snapshot },
       user: { app_metadata: { role: "owner" }, email: "alice@example.test", id: "owner-id" },
     });
+    mocks.snapshot.mockResolvedValue(snapshot);
     const result = await EditPage({
       params: Promise.resolve({ username: "alice" }),
       searchParams: Promise.resolve({ tab: "sections" }),
     });
     expect(result.props.initial).toBe(snapshot);
+    expect(mocks.snapshot).toHaveBeenCalledOnce();
     expect(result.props.initialTab).toBe("Sections");
     expect(result.props.reviews).toBeUndefined();
     expect(mocks.loadPending).not.toHaveBeenCalled();
@@ -66,9 +69,9 @@ describe("Edit", () => {
     const client = {};
     mocks.workspace.mockResolvedValue({
       client,
-      repository: { read: async () => snapshot },
       user: { id: "owner-id" },
     });
+    mocks.snapshot.mockResolvedValue(snapshot);
     mocks.loadPending.mockResolvedValue([]);
     const result = await EditPage({
       params: Promise.resolve({ username: "alice" }),
