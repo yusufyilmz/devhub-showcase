@@ -31,7 +31,8 @@ Do not create plans under `docs/superpowers/` or store plans inside the skill fo
 4. Write small ordered tasks with specific paths, a red/green/refactor sequence where code is involved, commands to run, and a checkable outcome. Include tests for errors, permissions, browser behaviors and migrations as relevant.
 5. **End the plan with one `## Execution checklist` section.** Give each entry a stable unique identifier such as `P1.1`; use `- [ ] **P1.1** Description`. Include validation, docs, review and rollout as separate checklist items. The script relies on these identifiers.
 6. During implementation, complete a task only after its acceptance criteria and required verification are satisfied. Record an actual command/result, file, test, or reviewed artifact as evidence. Mark it using the helper, then commit the plan update alongside or immediately after implementation.
-7. Keep unfinished, blocked, and unrun checks unchecked. Never equate a commit, drafted test, CI start, or code existence with a passing test or a deployed feature.
+7. When resuming a legacy plan with unnumbered checkboxes, assign stable IDs to the existing tasks without resetting their status before using the completion helper.
+8. Keep unfinished, blocked, and unrun checks unchecked. Never equate a commit, drafted test, CI start, or code existence with a passing test or a deployed feature.
 
 ## Completion command
 
