@@ -54,7 +54,9 @@ export const getHomeSession = cache(async (): Promise<HomeSession> => {
 });
 
 /** Read the public-safe action without exposing the authenticated client. */
-export const getHomeAction = cache(async (): Promise<HomeAction> => (await getHomeSession()).action);
+export const getHomeAction = cache(
+  async (): Promise<HomeAction> => (await getHomeSession()).action,
+);
 
 export const getHomeExample = cache(async () => {
   try {
