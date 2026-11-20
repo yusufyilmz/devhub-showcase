@@ -18,7 +18,7 @@ vi.mock("@shared/lib/published-profile", () => ({
   readPublicProfile: mocks.publicProfile,
 }));
 
-import { getHomeAction, getHomeExample } from "@/services/home/get-home-links";
+import { getHomeAction, getHomeExample, getHomeSession } from "@/services/home/get-home-links";
 
 describe("HomeLinks", () => {
   beforeEach(() => {
@@ -40,6 +40,32 @@ describe("HomeLinks", () => {
     });
     expect(mocks.from).not.toHaveBeenCalled();
   });
+  it("exposes the verified session client only to server callers", async () => {
+    mocks.getUser.mockResolvedValue({
+      data: { user: { email_confirmed_at: "today", id: "alice-id" } },
+      error: null,
+    });
+    const { action, client } = await getHomeSession();
+    expect(action).toEqual({
+      href: "/alice/edit",
+      label: "Open your studio",
+      signedIn: true,
+      username: "alice",
+    });
+    expect(client?.auth.getUser).toBe(mocks.getUser);
+    expect(mocks.getUser).toHaveBeenCalledTimes(1);
+    expect(mocks.eq).toHaveBeenCalledWith("owner_id", "alice-id");
+    expect(action).not.toHaveProperty("client");
+  });
+
+  it("does not return a reusable client for a guest", async () => {
+    expect(await getHomeSession()).toEqual({
+      action: { href: "/login", label: "Create your portfolio", signedIn: false },
+      client: null,
+    });
+    expect(mocks.from).not.toHaveBeenCalled();
+  });
+
   it("uses only the verified UUID to find the current account editor", async () => {
     mocks.getUser.mockResolvedValue({
       data: { user: { email_confirmed_at: "today", id: "alice-id" } },

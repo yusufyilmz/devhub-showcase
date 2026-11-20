@@ -150,6 +150,8 @@ git commit -m "fix: load the studio workspace once per request"
 
 ### Task 2: One session read on the homepage
 
+**Implementation progress (2026-11-20):** [`fix/home-session-menu-20261120`](https://github.com/yusufyilmz/devhub-showcase/tree/fix/home-session-menu-20261120) extracts a request-cached `getHomeSession`, reuses its verified Supabase client for the menu's administrator check, and adds focused regression tests. The public `PageAction` does not contain the client. Tests and typechecks must still be executed in a workspace checkout or PR CI before the verification steps are checked off. No live account was used.
+
 **Files:**
 
 - Modify: `apps/my-dev-studio/services/home/get-home-links.ts`

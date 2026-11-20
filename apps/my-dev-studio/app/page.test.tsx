@@ -5,10 +5,11 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { themeOptions } from "@shared/config/theme";
 
-const mocks = vi.hoisted(() => ({ action: vi.fn(), example: vi.fn() }));
+const mocks = vi.hoisted(() => ({ action: vi.fn(), example: vi.fn(), session: vi.fn() }));
 vi.mock("@/services/home/get-home-links", () => ({
   getHomeAction: mocks.action,
   getHomeExample: mocks.example,
+  getHomeSession: mocks.session,
 }));
 
 vi.mock("@/services/jobs/get-config", () => ({ jobAlertConfig: () => null }));
@@ -19,6 +20,7 @@ describe("HomePage", () => {
   beforeEach(() => {
     mocks.action.mockResolvedValue(guest);
     mocks.example.mockResolvedValue("/yusufyilmz");
+    mocks.session.mockResolvedValue({ action: guest, client: null });
     vi.stubGlobal(
       "ResizeObserver",
       class {
