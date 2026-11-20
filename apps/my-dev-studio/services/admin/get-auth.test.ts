@@ -45,7 +45,7 @@ import { readWorkspaceSnapshot, requireAdmin, requireWorkspace } from "./get-aut
 
 describe("workspace request cache", () => {
   const client = { auth: {} };
-  const user = { id: "owner-id", email_confirmed_at: "2026-11-20" };
+  const user = { email_confirmed_at: "2026-11-20", id: "owner-id" };
 
   beforeEach(() => {
     vi.resetAllMocks();
