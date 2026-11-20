@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import { Brand } from "@shared/ui/brand";
 import { Button } from "@shared/ui/button";
 import { Header, SkipLink } from "@shared/ui/header";
-import { HomeFooter } from "@shared/ui/sections";
+import { HomeFooter } from "@shared/ui/home-section";
 
 export function StudioShell({
   children,

@@ -5,7 +5,7 @@ import { readPublicProfile } from "@shared/lib/published-profile";
 import { readOwnedProfileUsername } from "@shared/lib/repositories/profile";
 import { createServerClient } from "@shared/lib/supabase";
 import type { SupabaseDbClient } from "@shared/lib/types";
-import type { PageAction } from "@shared/ui/sections";
+import type { PageAction } from "@shared/ui/home-section";
 
 export type { PageAction };
 
