@@ -33,6 +33,7 @@ export type Listing = {
   location: string;
   description: string;
   source: string;
+  url?: string;
   minimum: number | null;
   maximum: number | null;
   currency: string;
@@ -45,7 +46,17 @@ export type Match = {
   score: number | null;
   state: string;
   notified_at: string | null;
+  importedAt?: string;
   explanation: { reason: string; matchedSkills: string[]; missingRequirements: string[] };
+};
+export type ImportReport = {
+  id: string;
+  automation_title: string;
+  summary: string;
+  job_count: number;
+  new_count: number;
+  duplicate_count: number;
+  created_at: string;
 };
 export type Draft = {
   summary: string;
@@ -69,6 +80,7 @@ export type JobsData = {
     issues: string[];
   }[];
   applications: { id: string; listing: Listing; status: string; draft: Draft | null }[];
+  importReports?: ImportReport[];
   pushPublicKey: string | null;
 };
 export type RunJobAction = (command: object) => Promise<boolean>;

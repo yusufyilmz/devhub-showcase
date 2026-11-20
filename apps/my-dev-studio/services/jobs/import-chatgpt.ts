@@ -34,6 +34,16 @@ function toListing(job: ParsedJob) {
   };
 }
 
+function candidate(job: ParsedJob, duplicate: boolean) {
+  return {
+    company: job.company,
+    duplicate,
+    salaryKnown: job.salaryMin != null || job.salaryMax != null,
+    title: job.title,
+    url: job.originalUrl,
+  };
+}
+
 async function saveCandidate(userId: string, job: ParsedJob) {
   const database = jobsServiceClient();
   const inserted = await database
@@ -55,6 +65,7 @@ async function saveCandidate(userId: string, job: ParsedJob) {
           : "Imported ChatGPT research (unverified).",
       },
       listing_id: job.key,
+      notified_at: null,
       score: null,
       state: "new",
       user_id: userId,
@@ -64,10 +75,31 @@ async function saveCandidate(userId: string, job: ParsedJob) {
   if (match.error) throw new Error("Could not create the imported match.");
 }
 
+async function recordReport(
+  userId: string,
+  report: { automationTitle: string; generatedAt: string; summary: string },
+  counts: { duplicates: number; imported: number; jobs: number },
+) {
+  const inserted = await jobsServiceClient().from("job_import_reports").insert({
+    automation_title: report.automationTitle,
+    duplicate_count: counts.duplicates,
+    generated_at: report.generatedAt,
+    job_count: counts.jobs,
+    new_count: counts.imported,
+    source: "chatgpt_research",
+    summary: report.summary,
+    user_id: userId,
+  });
+  if (inserted.error) throw new Error("Could not store the import report.");
+}
+
 export async function importChatgptResearch(workspace: Workspace, input: unknown, preview = false) {
   const { jobs, report } = parseChatgptJobImport(input);
   const userId = workspace.user.id;
-  if (jobs.length === 0) return { duplicates: 0, imported: 0, jobs: [], summary: report.summary };
+  if (jobs.length === 0) {
+    if (!preview) await recordReport(userId, report, { duplicates: 0, imported: 0, jobs: 0 });
+    return { duplicates: 0, imported: 0, jobs: [], summary: report.summary };
+  }
 
   const existing = await jobsServiceClient()
     .from("job_matches")
@@ -79,18 +111,16 @@ export async function importChatgptResearch(workspace: Workspace, input: unknown
     );
   if (existing.error) throw new Error("Could not check existing imports.");
   const existingIds = new Set(existing.data.map((row) => row.listing_id));
+  const duplicates = jobs.filter((job) => existingIds.has(job.key)).length;
+  const imported = jobs.filter((job) => !existingIds.has(job.key)).length;
   if (!preview) {
     for (const job of jobs) await saveCandidate(userId, job);
+    await recordReport(userId, report, { duplicates, imported, jobs: jobs.length });
   }
   return {
-    duplicates: jobs.filter((job) => existingIds.has(job.key)).length,
-    imported: preview ? 0 : jobs.filter((job) => !existingIds.has(job.key)).length,
-    jobs: jobs.map((job) => ({
-      company: job.company,
-      duplicate: existingIds.has(job.key),
-      title: job.title,
-      url: job.originalUrl,
-    })),
+    duplicates,
+    imported: preview ? 0 : imported,
+    jobs: jobs.map((job) => candidate(job, existingIds.has(job.key))),
     summary: report.summary,
   };
 }

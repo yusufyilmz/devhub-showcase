@@ -26,7 +26,32 @@ type Props = {
   statuses: readonly string[];
 };
 const date = (value: string) => new Date(value).toLocaleString();
+function ResearchDetails({
+  importedAt,
+  listing,
+}: {
+  importedAt?: string;
+  listing: Match["listing"];
+}) {
+  const unknownSalary = listing.minimum == null && listing.maximum == null;
+  const salary = unknownSalary
+    ? "Salary unknown"
+    : `${listing.minimum?.toLocaleString() ?? "—"} to ${listing.maximum?.toLocaleString() ?? "—"} ${listing.currency} (unverified)`;
+  return (
+    <>
+      <p>{salary}</p>
+      {importedAt ? <p>Imported {date(importedAt)}</p> : null}
+      {listing.url ? (
+        <a href={listing.url} rel="noopener noreferrer" target="_blank">
+          Original listing
+        </a>
+      ) : null}
+    </>
+  );
+}
+
 function ListingSource({ source }: { source: string }) {
+  if (source === "chatgpt_research") return <span>ChatGPT research · unverified</span>;
   if (source === "linkedin") return <span>LinkedIn email alert</span>;
   if (source === "adzuna") {
     return (
@@ -49,7 +74,7 @@ function ListingSource({ source }: { source: string }) {
 }
 
 function MatchCard({ job, busy, run }: { job: Match; busy: boolean; run: RunJobAction }) {
-  const { id, listing, explanation, score, state } = job;
+  const { id, importedAt, listing, explanation, score, state } = job;
   return (
     <Card>
       <CardHeader>
@@ -62,7 +87,11 @@ function MatchCard({ job, busy, run }: { job: Match; busy: boolean; run: RunJobA
       </CardHeader>
       <CardContent className="grid min-w-0 gap-4">
         <ListingSource source={listing.source} />
-        {listing.minimum !== null || listing.maximum !== null ? (
+        {listing.source === "chatgpt_research" ? (
+          <ResearchDetails importedAt={importedAt} listing={listing} />
+        ) : null}
+        {listing.source !== "chatgpt_research" &&
+        (listing.minimum !== null || listing.maximum !== null) ? (
           <p>
             {listing.minimum?.toLocaleString() ?? "—"} to {listing.maximum?.toLocaleString() ?? "—"}{" "}
             {listing.currency}
@@ -70,7 +99,9 @@ function MatchCard({ job, busy, run }: { job: Match; busy: boolean; run: RunJobA
         ) : null}
         {listing.date && (
           <p>
-            {listing.dateKind === "posted" ? "Posted" : "Updated"} {date(listing.date)}
+            {listing.source === "chatgpt_research"
+              ? `Reported date ${date(listing.date)} (unverified)`
+              : `${listing.dateKind === "posted" ? "Posted" : "Updated"} ${date(listing.date)}`}
           </p>
         )}
         <p>{explanation.reason}</p>

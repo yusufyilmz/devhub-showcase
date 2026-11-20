@@ -144,6 +144,29 @@ async function approveLinkedInAlert(
   if (!result.data) throw new JobsError("This import is no longer pending.", 409);
 }
 
+function reportsUnavailable(error: { code: string; message: string }) {
+  return (
+    error.code === "PGRST205" ||
+    error.code === "42P01" ||
+    (/job_import_reports/i.test(error.message) &&
+      /schema cache|does not exist/i.test(error.message))
+  );
+}
+
+async function loadImportReports(client: Workspace["client"], owner: string) {
+  const result = await client
+    .from("job_import_reports")
+    .select("id,automation_title,summary,job_count,new_count,duplicate_count,created_at")
+    .eq("user_id", owner)
+    .order("created_at", { ascending: false })
+    .limit(10);
+  if (result.error) {
+    if (reportsUnavailable(result.error)) return [];
+    throw new JobsError("Job storage is unavailable.", 503);
+  }
+  return result.data;
+}
+
 export async function loadJobs(workspace: Workspace) {
   const { client, user } = workspace;
   const owner = user.id;
@@ -178,6 +201,7 @@ export async function loadJobs(workspace: Workspace) {
       .order("updated_at", { ascending: false }),
     loadLinkedInAlerts(workspace),
   ]);
+  const importReports = await loadImportReports(client, owner);
   const matchesData = [
     ...new Map(
       [...dataOrThrow(matches), ...dataOrThrow(saved)].map((row) => [row.listing_id, row]),
@@ -209,10 +233,19 @@ export async function loadJobs(workspace: Workspace) {
         ? [{ draft: storedDraft.safeParse(draft).data ?? null, id, listing, ...application }]
         : [];
     }),
+    importReports,
     jobs: matchesData.flatMap(({ listing_id: id, explanation, ...match }) => {
       const listing = listingById.get(id);
       return listing
-        ? [{ explanation: matchExplanation.parse(explanation), id, listing, ...match }]
+        ? [
+            {
+              explanation: matchExplanation.parse(explanation),
+              id,
+              importedAt: match.created_at,
+              listing,
+              ...match,
+            },
+          ]
         : [];
     }),
     linkedInAlerts,

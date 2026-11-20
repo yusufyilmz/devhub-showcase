@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 
+import { env as sharedEnv } from "@shared/env";
 import { RedisCacheClient } from "@shared/lib/cache";
 import type { Database } from "@shared/lib/types";
 
@@ -56,6 +57,10 @@ export function jobAlertConfig() {
 
 export function adzunaCacheTtl() {
   return Math.min(86_400, Number(env.ADZUNA_CACHE_TTL_SECONDS ?? 14_400));
+}
+
+export function chatgptImportEnabled() {
+  return sharedEnv.JOBS_CHATGPT_IMPORT !== "false";
 }
 
 export function adzunaCache() {

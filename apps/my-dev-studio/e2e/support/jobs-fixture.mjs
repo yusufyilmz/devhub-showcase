@@ -6,6 +6,7 @@ const tables = new Set([
   "job_listings",
   "job_scan_runs",
   "job_applications",
+  "job_import_reports",
 ]);
 const listingId = "a".repeat(64);
 const timestamp = "2026-11-11T12:00:00.000Z";
@@ -93,6 +94,7 @@ export async function jobsFixture(request, response, url, owner) {
   if (!accounts.has(owner.owner_id)) {
     accounts.set(owner.owner_id, {
       job_applications: new Map(),
+      job_import_reports: new Map(),
       job_listings: new Map([[listingId, listing]]),
       job_matches: new Map([[listingId, match]]),
       job_scan_runs: new Map(),

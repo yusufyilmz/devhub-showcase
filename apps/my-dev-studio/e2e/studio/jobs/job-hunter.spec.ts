@@ -178,3 +178,69 @@ test("ChatGPT research can be previewed before committing an import", async ({
   await expect(page.getByRole("status")).toContainText("Imported 1 jobs");
   expect(calls).toEqual(["preview", "commit"]);
 });
+
+test("ChatGPT import shows validation errors and duplicate research", async ({
+  context,
+  page,
+}, info) => {
+  await signIn(context, info);
+  await page.setViewportSize({ height: 844, width: 390 });
+  await page.goto("/studio/jobs");
+  await page.getByText("Import ChatGPT research report").click();
+  await page.getByLabel("ChatGPT report JSON").fill("{");
+  await page.getByRole("button", { name: "Preview report" }).click();
+  await expect(page.getByRole("status")).toContainText("Please enter valid JSON.");
+
+  await page.route("**/api/jobs/import-chatgpt*", async (route) => {
+    const preview = new URL(route.request().url()).searchParams.get("preview") === "1";
+    await route.fulfill({
+      contentType: "application/json",
+      json: preview
+        ? {
+            duplicates: 1,
+            imported: 0,
+            jobs: [
+              {
+                company: "Fictional Studio",
+                duplicate: true,
+                salaryKnown: false,
+                title: "Senior Frontend Engineer",
+                url: "https://example.test/jobs/123",
+              },
+            ],
+            summary: "Already seen.",
+          }
+        : {
+            error: "Invalid ChatGPT report format.",
+            fields: [{ message: "Enter a public HTTPS link.", path: "jobs.0.originalUrl" }],
+          },
+      status: preview ? 200 : 400,
+    });
+  });
+  await page.getByLabel("ChatGPT report JSON").fill(
+    JSON.stringify({
+      jobs: [
+        {
+          company: "Fictional Studio",
+          originalUrl: "https://example.test/jobs/123",
+          title: "Senior Frontend Engineer",
+        },
+      ],
+      report: {
+        automationTitle: "Job research",
+        generatedAt: "2026-11-19T19:00:00Z",
+        source: "chatgpt_automation",
+        summary: "Already seen.",
+      },
+      schemaVersion: 1,
+    }),
+  );
+  await page.getByRole("button", { name: "Preview report" }).click();
+  await expect(page.getByText("ChatGPT research · unverified.")).toBeVisible();
+  await expect(page.getByText("(already imported)")).toBeVisible();
+  await expect(page.getByText("Salary unknown.")).toBeVisible();
+  await page.getByRole("button", { name: "Confirm import" }).click();
+  await expect(page.getByRole("status")).toContainText(
+    "jobs.0.originalUrl: Enter a public HTTPS link.",
+  );
+});

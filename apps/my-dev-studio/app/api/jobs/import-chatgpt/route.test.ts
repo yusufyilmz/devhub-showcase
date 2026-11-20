@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
+  allow: vi.fn(async () => true),
   importer: vi.fn(async () => ({ duplicates: 0, imported: 1, summary: "Found a role." })),
   workspace: vi.fn(async () => ({ user: { id: "signed-in" } })),
 }));
@@ -11,6 +12,7 @@ vi.mock("@/services/admin/get-auth", () => ({
 }));
 
 vi.mock("@/services/jobs/import-chatgpt", () => ({ importChatgptResearch: mocks.importer }));
+vi.mock("@shared/lib/cache", () => ({ allowJobResearchImport: mocks.allow }));
 
 import { ProfileAccessError } from "@shared/lib/profile";
 
@@ -65,6 +67,46 @@ describe("ChatGPT job import API", () => {
       JSON.parse(example),
       true,
     );
+  });
+
+  it("returns field errors without echoing the rejected value", async () => {
+    const secret = "recruiter@private.example";
+    const response = await POST(
+      request(
+        JSON.stringify({
+          ...JSON.parse(example),
+          jobs: [{ company: "Example", originalUrl: `javascript:${secret}`, title: "Engineer" }],
+          owner_id: secret,
+        }),
+      ),
+    );
+    const body = await response.json();
+    expect(response.status).toBe(400);
+    expect(body.fields?.length).toBeGreaterThan(0);
+    expect(JSON.stringify(body)).not.toContain(secret);
+    expect(mocks.importer).not.toHaveBeenCalled();
+  });
+
+  it("limits repeated attempts for the signed-in account", async () => {
+    mocks.allow.mockResolvedValueOnce(false);
+    expect((await POST(request())).status).toBe(429);
+    expect(mocks.importer).not.toHaveBeenCalled();
+    expect(mocks.allow).toHaveBeenCalledWith("signed-in");
+  });
+
+  it("does not import when the attempt limit cannot be checked", async () => {
+    mocks.allow.mockRejectedValueOnce(new Error("redis down"));
+    const response = await POST(request());
+    expect(response.status).toBe(503);
+    expect(JSON.stringify(await response.json())).not.toContain("redis");
+    expect(mocks.importer).not.toHaveBeenCalled();
+  });
+
+  it("keeps existing jobs available when import is switched off", async () => {
+    vi.stubEnv("JOBS_CHATGPT_IMPORT", "false");
+    expect((await POST(request())).status).toBe(404);
+    expect(mocks.workspace).not.toHaveBeenCalled();
+    vi.stubEnv("JOBS_CHATGPT_IMPORT", undefined);
   });
 
   it("delegates persistence with the confirmed workspace", async () => {
