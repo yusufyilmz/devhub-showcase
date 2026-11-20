@@ -56,13 +56,13 @@ import { studioEditorGuide } from "../../../companion/components/guides";
 import { EditorGuidance } from "../../../portfolio/components/editor-guidance";
 import { DraftPreviewPane } from "../../../portfolio/components/editor-workspace/draft-preview-pane";
 import { EditorWorkspace } from "../../../portfolio/components/editor-workspace/editor-workspace";
+import { ResponsivePortfolioPreview } from "../../../portfolio/components/portfolio-preview/index";
 import { ProfileFields } from "../../../portfolio/components/profile-fields";
 import { DraftRecovery } from "../../../portfolio/components/recovery/DraftRecovery";
 import type { SetupStep } from "../../../portfolio/components/recovery/types";
 import { useDraftRecovery } from "../../../portfolio/components/recovery/use-draft-recovery";
 import { StudioHeading } from "../../../portfolio/components/studio-heading/StudioHeading";
 import { usePortfolioHistory } from "../../../portfolio/components/use-portfolio-history";
-import { ResponsivePortfolioPreview } from "../../../portfolio/components/portfolio-preview/index";
 import type { SetupPosition } from "./portfolio-setup";
 
 // Keep the initial Profile editor lightweight; inactive tab bodies are separate chunks.
@@ -147,11 +147,17 @@ const PortfolioSetup = dynamic(
   { loading: () => null },
 );
 const FieldVisibilityEditor = dynamic(
-  () => import("../../../portfolio/components/field-visibility").then((module) => module.FieldVisibilityEditor),
+  () =>
+    import("../../../portfolio/components/field-visibility").then(
+      (module) => module.FieldVisibilityEditor,
+    ),
   { loading: () => null },
 );
 const LanguageSettingsEditor = dynamic(
-  () => import("../../../portfolio/components/language-settings-editor").then((module) => module.LanguageSettingsEditor),
+  () =>
+    import("../../../portfolio/components/language-settings-editor").then(
+      (module) => module.LanguageSettingsEditor,
+    ),
   { loading: () => null },
 );
 const LayoutEditor = dynamic(
