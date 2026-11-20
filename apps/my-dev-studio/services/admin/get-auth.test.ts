@@ -81,8 +81,9 @@ describe("workspace request cache", () => {
   });
 
   it("separates workspace cache entries by provided client", async () => {
-    const first = { id: "first" } as unknown as NonNullable<Parameters<typeof requireWorkspace>[0]>;
-    const second = { id: "second" } as unknown as NonNullable<Parameters<typeof requireWorkspace>[0]>;
+    type Client = NonNullable<Parameters<typeof requireWorkspace>[0]>;
+    const first = { id: "first" } as unknown as Client;
+    const second = { id: "second" } as unknown as Client;
 
     await requireWorkspace(first);
     await requireWorkspace(first);
