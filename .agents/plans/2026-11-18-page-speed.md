@@ -258,6 +258,8 @@ git commit -m "fix: load the homepage without the section barrel"
 
 ### Task 4: Load editor tabs on demand
 
+**Implementation (2026-11-20):** The current editor lives under `packages/assistant/src/studio/components/workspace/profile-editor.tsx`. Branch `perf/studio-editor-lazy-tabs-20261120` uses Next.js dynamic loading for inactive editor tabs, replaces cross-package and broad barrel imports with a focused `@shared/ui/section-editors` entrypoint, and moves the Layout editor to its own module. The initial Profile form remains a direct import; Reviews is passed by the route. CI and dev-server timing validation are still required before considering this task verified.
+
 **Files:**
 
 - Modify: `packages/assistant/package.json`
