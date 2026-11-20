@@ -4,36 +4,60 @@ import { cvPath, editCvPath } from "@shared/lib/profiles";
 import { readPublicProfile } from "@shared/lib/published-profile";
 import { readOwnedProfileUsername } from "@shared/lib/repositories/profile";
 import { createServerClient } from "@shared/lib/supabase";
+import type { SupabaseDbClient } from "@shared/lib/types";
 import type { PageAction } from "@shared/ui/sections";
 
 export type { PageAction };
 
-const guest: PageAction = {
+type HomeAction = PageAction & { username?: string };
+type HomeSession = { action: HomeAction; client: SupabaseDbClient | null };
+
+const guest: HomeAction = {
   href: "/login",
   label: "Create your portfolio",
   signedIn: false,
 };
-/** Read session identity without provisioning a workspace on a public page visit. */
-export const getHomeAction = cache(async (): Promise<PageAction & { username?: string }> => {
+
+/**
+ * Keep the verified server client in request-local cache so the account menu
+ * can check administrator status without requesting the identity a second time.
+ * Only the action is passed to client components.
+ */
+export const getHomeSession = cache(async (): Promise<HomeSession> => {
   try {
     const client = await createServerClient();
     const {
       data: { user },
       error,
     } = await client.auth.getUser();
-    if (error || !user?.email_confirmed_at) return guest;
+    if (error || !user?.email_confirmed_at) return { action: guest, client: null };
+
     const { data, error: profileError } = await readOwnedProfileUsername(client, user.id);
-    if (profileError) return { href: "/studio", label: "Open your studio", signedIn: true };
+    if (profileError)
+      return {
+        action: { href: "/studio", label: "Open your studio", signedIn: true },
+        client,
+      };
+
     return {
-      href: data?.username ? editCvPath(data.username) : "/studio",
-      label: "Open your studio",
-      signedIn: true,
-      username: data?.username ?? undefined,
+      action: {
+        href: data?.username ? editCvPath(data.username) : "/studio",
+        label: "Open your studio",
+        signedIn: true,
+        username: data?.username ?? undefined,
+      },
+      client,
     };
   } catch {
-    return guest;
+    return { action: guest, client: null };
   }
 });
+
+/** Read the public-safe action without exposing the authenticated client. */
+export const getHomeAction = cache(
+  async (): Promise<HomeAction> => (await getHomeSession()).action,
+);
+
 export const getHomeExample = cache(async () => {
   try {
     const snapshot = await readPublicProfile("main");
