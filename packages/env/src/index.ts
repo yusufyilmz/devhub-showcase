@@ -57,6 +57,7 @@ const server = {
   JOB_PUSH_PRIVATE_KEY: text,
   JOB_PUSH_PUBLIC_KEY: text,
   JOB_PUSH_SUBJECT: text,
+  JOBS_CHATGPT_IMPORT: flag,
   JOOBLE_COUNTRY_KEYS: text,
   JOOBLE_DAILY_LIMIT: positiveInteger,
   LOCAL_TEST_EMAIL: z.email().optional(),

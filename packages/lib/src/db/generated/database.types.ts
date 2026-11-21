@@ -305,6 +305,34 @@ export interface Database {
         };
         Relationships: [];
       };
+      job_import_reports: {
+        Row: {
+          id: string;
+          user_id: string;
+          source: string;
+          automation_title: string;
+          summary: string;
+          generated_at: string | null;
+          job_count: number;
+          new_count: number;
+          duplicate_count: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          source: string;
+          automation_title: string;
+          summary: string;
+          generated_at?: string | null;
+          job_count: number;
+          new_count: number;
+          duplicate_count: number;
+          created_at?: string;
+        };
+        Update: Record<PropertyKey, never>;
+        Relationships: [];
+      };
       job_listings: {
         Row: { user_id: string; id: string; listing: Json };
         Insert: { user_id: string; id: string; listing: Json };

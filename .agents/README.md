@@ -64,3 +64,11 @@ pnpm cli:skills validate
 ```
 
 Read each SKILL.md for the full contract before invoking helpers. A script recording evidence is not equivalent to running tests. A skill being visible through `.claude/skills` does not guarantee a generated subagent works in a different agent runtime.
+
+Process skills for day-to-day work live beside those authoring skills:
+
+- [using-superpowers](skills/using-superpowers/SKILL.md) selects the repository skill to follow.
+- [brainstorming](skills/brainstorming/SKILL.md) writes an approved design note under `.agents/plans` before a non-trivial change.
+- [test-driven-development](skills/test-driven-development/SKILL.md) requires a failing colocated test before production behavior changes.
+- [verification-before-completion](skills/verification-before-completion/SKILL.md) requires fresh command output before a success claim.
+- [repository-lookup](skills/repository-lookup/SKILL.md) searches with `pnpm lookup` under a small limit and budget, then reads only the source path in the result.

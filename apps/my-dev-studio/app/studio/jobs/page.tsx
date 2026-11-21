@@ -6,6 +6,7 @@ import { applicationStatuses } from "@shared/lib/services/jobs";
 import { Card, CardContent, CardHeader, CardTitle } from "@shared/ui/cards";
 
 import { requireWorkspace } from "@/services/admin/get-auth";
+import { chatgptImportEnabled } from "@/services/jobs/get-config";
 import { loadJobs } from "@/services/jobs/get-workspace";
 import { JobsClient } from "@/services/jobs/jobs-client";
 
@@ -25,7 +26,14 @@ export default async function JobsPage({
       (tab === "linkedin" && data.linkedInAlerts)
         ? tab
         : "discover";
-    return <JobsClient initial={data} initialTab={initialTab} statuses={applicationStatuses} />;
+    return (
+      <JobsClient
+        importEnabled={chatgptImportEnabled()}
+        initial={data}
+        initialTab={initialTab}
+        statuses={applicationStatuses}
+      />
+    );
   } catch (error) {
     if (error instanceof ProfileAccessError) redirect("/login");
     return (

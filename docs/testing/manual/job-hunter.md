@@ -22,6 +22,7 @@ Use [shared setup and result rules](index.md#before-you-start). Replace the samp
 ## Automated verification
 
 - [Desktop and mobile saved-search browser flow](../../../apps/my-dev-studio/e2e/studio/jobs/job-hunter.spec.ts)
+- [ChatGPT research paste, preview and review](chatgpt-job-import.md)
 - [Migration test in the unit suite](../../../packages/lib/src/db/rls/job-hunter.test.ts)
 
 - [Provider normalization, filtering, and deduplication](../../../packages/lib/src/services/jobs/discovery.test.ts)

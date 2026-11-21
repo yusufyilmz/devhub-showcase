@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { chatgptJobKey, parseChatgptJobImport } from "./chatgpt-import";
+import { chatgptImportIssues, chatgptJobKey, parseChatgptJobImport } from "./chatgpt-import";
 
 const sample = {
   jobs: [
@@ -76,6 +76,52 @@ describe("ChatGPT job report imports", () => {
     ["unsupported version", { ...sample, schemaVersion: 2 }],
   ])("rejects %s", (_name, value) => {
     expect(() => parseChatgptJobImport(value)).toThrow();
+  });
+
+  it("keeps distinct roles at one company and stable identity parameters", () => {
+    const parsed = parseChatgptJobImport({
+      ...sample,
+      jobs: [
+        {
+          ...sample.jobs[0],
+          originalUrl: "https://EXAMPLE.com/jobs/a?utm_source=chatgpt&jobId=alpha",
+        },
+        {
+          ...sample.jobs[0],
+          originalUrl: "https://example.com/jobs/b?jobId=beta&utm_medium=email",
+        },
+      ],
+    });
+    expect(parsed.jobs.map((job) => job.originalUrl)).toEqual([
+      "https://example.com/jobs/a?jobId=alpha",
+      "https://example.com/jobs/b?jobId=beta",
+    ]);
+    expect(new Set(parsed.jobs.map((job) => job.key)).size).toBe(2);
+    expect(chatgptJobKey("https://example.com/jobs/a?jobId=alpha")).toBe(
+      chatgptJobKey("https://example.com/jobs/a?utm_campaign=1&jobId=alpha"),
+    );
+    expect(chatgptJobKey("https://example.com/jobs/a?jobId=alpha&ref=board")).toBe(
+      chatgptJobKey("https://example.com/jobs/a?ref=board&jobId=alpha"),
+    );
+  });
+
+  it("names the field that failed without repeating the supplied value", () => {
+    const secret = "recruiter@private.example";
+    let caught: unknown;
+    try {
+      parseChatgptJobImport({
+        ...sample,
+        jobs: [{ ...sample.jobs[0], originalUrl: `file:///tmp/${secret}`, title: "x".repeat(181) }],
+        report: { ...sample.report, generatedAt: "yesterday" },
+      });
+    } catch (error) {
+      caught = error;
+    }
+    const issues = chatgptImportIssues(caught);
+    expect(issues.map((issue) => issue.path)).toEqual(
+      expect.arrayContaining(["report.generatedAt", "jobs.0.title", "jobs.0.originalUrl"]),
+    );
+    expect(JSON.stringify(issues)).not.toContain(secret);
   });
 
   it("permits unknown salary and eligibility", () => {

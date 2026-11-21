@@ -10,7 +10,18 @@ const endpoint = "/api/jobs";
 
 async function read(response: Response) {
   const body = await response.json();
-  if (!response.ok) throw new Error(body.error || "Job Hunter is unavailable.");
+  if (!response.ok) {
+    const fields = Array.isArray(body.fields)
+      ? body.fields
+          .flatMap((field: { message?: unknown; path?: unknown }) =>
+            typeof field?.path === "string" && typeof field.message === "string"
+              ? [`${field.path}: ${field.message}`]
+              : [],
+          )
+          .join(" ")
+      : "";
+    throw new Error(fields || body.error || "Job Hunter is unavailable.");
+  }
   return body;
 }
 
@@ -25,10 +36,12 @@ async function change(command: object) {
 }
 
 export function JobsClient({
+  importEnabled = true,
   initial,
   initialTab,
   statuses,
 }: {
+  importEnabled?: boolean;
   initial: Data;
   initialTab: React.ComponentProps<typeof JobsDashboard>["initialTab"];
   statuses: readonly string[];
@@ -39,7 +52,13 @@ export function JobsClient({
   const [importJson, setImportJson] = useState("");
   const [importPreview, setImportPreview] = useState<{
     duplicates: number;
-    jobs: { company: string; duplicate: boolean; title: string; url: string }[];
+    jobs: {
+      company: string;
+      duplicate: boolean;
+      salaryKnown: boolean;
+      title: string;
+      url: string;
+    }[];
     summary: string;
   } | null>(null);
   const lock = useRef(false);
@@ -70,82 +89,102 @@ export function JobsClient({
     }
   }
 
+  const history = data.importReports ?? [];
   return (
     <>
-      <details className="mb-4 rounded-lg border p-4">
-        <summary className="cursor-pointer font-medium">Import ChatGPT research report</summary>
-        <div className="mt-3 space-y-3">
-          <p className="text-sm text-muted-foreground">
-            Paste a structured JSON report from your ChatGPT job search. Listings are unverified
-            research and will appear for review in Discover; no applications are submitted. Do not
-            paste private recruiter emails or personal data.
-          </p>
-          <label className="block text-sm font-medium" htmlFor="chatgpt-job-import">
-            ChatGPT report JSON
-          </label>
-          <textarea
-            className="min-h-36 w-full rounded-md border bg-background p-3 font-mono text-sm"
-            id="chatgpt-job-import"
-            maxLength={20_000}
-            onChange={(event) => {
-              setImportJson(event.target.value);
-              setImportPreview(null);
-            }}
-            placeholder='{"schemaVersion":1,"report":{...},"jobs":[]}'
-            value={importJson}
-          />
-          <button
-            className="rounded-md border px-4 py-2 text-sm font-medium disabled:opacity-50"
-            disabled={busy || !importJson.trim()}
-            onClick={() => {
-              action(async () => {
-                let payload: unknown;
-                try {
-                  payload = JSON.parse(importJson);
-                } catch {
-                  throw new Error("Please enter valid JSON.");
-                }
-                const response = await fetch(
-                  `/api/jobs/import-chatgpt${importPreview ? "" : "?preview=1"}`,
-                  {
-                    body: JSON.stringify(payload),
-                    headers: { "Content-Type": "application/json" },
-                    method: "POST",
-                  },
-                );
-                const result = await read(response);
-                if (!importPreview) {
-                  setImportPreview(result);
-                  return `Preview ready: ${result.jobs.length} jobs, ${result.duplicates} duplicates.`;
-                }
-                setImportJson("");
+      {importEnabled ? (
+        <details className="mb-4 rounded-lg border p-4">
+          <summary className="cursor-pointer font-medium">Import ChatGPT research report</summary>
+          <div className="mt-3 space-y-3">
+            <p className="text-sm text-muted-foreground">
+              Paste a structured JSON report from your ChatGPT job search. Listings are unverified
+              research and will appear for review in Discover; no applications are submitted. Do not
+              paste private recruiter emails or personal data.
+            </p>
+            <label className="block text-sm font-medium" htmlFor="chatgpt-job-import">
+              ChatGPT report JSON
+            </label>
+            <textarea
+              className="min-h-36 w-full rounded-md border bg-background p-3 font-mono text-sm"
+              id="chatgpt-job-import"
+              maxLength={20_000}
+              onChange={(event) => {
+                setImportJson(event.target.value);
                 setImportPreview(null);
-                return `Imported ${result.imported} jobs, skipped ${result.duplicates} duplicates. Review in Discover.`;
-              });
-            }}
-            type="button"
-          >
-            {busy ? "Processing..." : importPreview ? "Confirm import" : "Preview report"}
-          </button>
-          {importPreview && (
-            <div aria-live="polite" className="space-y-2">
-              <p className="text-sm">{importPreview.summary}</p>
-              <p className="text-sm">Review these unverified candidates before confirming:</p>
-              <ul className="list-inside list-disc text-sm">
-                {importPreview.jobs.map((job) => (
-                  <li key={job.url}>
-                    {job.company}: {job.title}
-                    {job.duplicate ? " (already imported)" : ""}
-                  </li>
-                ))}
-              </ul>
-              <p className="text-xs text-muted-foreground">
-                Confirm imports without sending applications or notifications.
-              </p>
-            </div>
-          )}
-        </div>
-      </details>
+              }}
+              placeholder='{"schemaVersion":1,"report":{...},"jobs":[]}'
+              value={importJson}
+            />
+            <button
+              className="rounded-md border px-4 py-2 text-sm font-medium disabled:opacity-50"
+              disabled={busy || !importJson.trim()}
+              onClick={() => {
+                action(async () => {
+                  let payload: unknown;
+                  try {
+                    payload = JSON.parse(importJson);
+                  } catch {
+                    throw new Error("Please enter valid JSON.");
+                  }
+                  const response = await fetch(
+                    `/api/jobs/import-chatgpt${importPreview ? "" : "?preview=1"}`,
+                    {
+                      body: JSON.stringify(payload),
+                      headers: { "Content-Type": "application/json" },
+                      method: "POST",
+                    },
+                  );
+                  const result = await read(response);
+                  if (!importPreview) {
+                    setImportPreview(result);
+                    return `Preview ready: ${result.jobs.length} jobs, ${result.duplicates} duplicates.`;
+                  }
+                  setImportJson("");
+                  setImportPreview(null);
+                  return `Imported ${result.imported} jobs, skipped ${result.duplicates} duplicates. Review in Discover.`;
+                });
+              }}
+              type="button"
+            >
+              {busy ? "Processing..." : importPreview ? "Confirm import" : "Preview report"}
+            </button>
+            {importPreview && (
+              <div aria-live="polite" className="space-y-2">
+                <p className="text-sm">{importPreview.summary}</p>
+                <p className="text-sm">Review these unverified candidates before confirming:</p>
+                <ul className="list-inside list-disc text-sm">
+                  {importPreview.jobs.map((job) => (
+                    <li key={job.url}>
+                      ChatGPT research · unverified. {job.company}: {job.title}
+                      {job.duplicate ? " (already imported)" : " (new)"}
+                      {job.salaryKnown ? " Salary reported, unverified." : " Salary unknown."}{" "}
+                      <a href={job.url} rel="noopener noreferrer" target="_blank">
+                        Original listing
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-muted-foreground">
+                  Confirm imports without sending applications or notifications.
+                </p>
+              </div>
+            )}
+            {history.length > 0 ? (
+              <div>
+                <p className="text-sm font-medium">Import history</p>
+                <ul className="list-inside list-disc text-sm">
+                  {history.map((report) => (
+                    <li key={report.id}>
+                      {report.automation_title} · {new Date(report.created_at).toLocaleString()} ·{" "}
+                      {report.new_count} new, {report.duplicate_count} already imported
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </div>
+        </details>
+      ) : null}
       <JobsDashboard
         baseCvUrl={`${endpoint}/cv`}
         busy={busy}

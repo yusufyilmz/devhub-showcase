@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 
-import { z } from "zod";
+import { ZodError, type ZodIssue, z } from "zod";
 
 const httpsUrl = z
   .url({ protocol: /^https$/ })
@@ -67,12 +67,36 @@ export function normalizeChatgptJobUrl(value: string) {
   const url = new URL(value);
   url.hash = "";
   for (const key of [...url.searchParams.keys()]) {
-    if (/^(utm_|fbclid$|gclid$|mc_cid$|mc_eid$)/i.test(key)) {
-      url.searchParams.delete(key);
-    }
+    if (/^(utm_|fbclid$|gclid$|mc_cid$|mc_eid$)/i.test(key)) url.searchParams.delete(key);
   }
+  const entries = [...url.searchParams.entries()].sort(([left], [right]) =>
+    left.localeCompare(right),
+  );
+  url.search = "";
+  for (const [key, entry] of entries) url.searchParams.append(key, entry);
   url.hostname = url.hostname.toLowerCase();
   return url.toString();
+}
+
+function publicImportMessage(issue: ZodIssue) {
+  const path = issue.path.join(".");
+  if (path.includes("Url")) return "Enter a public HTTPS link.";
+  if (path.endsWith("At")) return "Enter a valid timestamp.";
+  if (issue.code === "unrecognized_keys") return "Remove unsupported fields.";
+  if (issue.code === "too_big") return "Shorten this value.";
+  if (issue.code === "too_small") return "Enter a value.";
+  return issue.message.length > 180 ? "This value is invalid." : issue.message;
+}
+
+export function chatgptImportIssues(error: unknown) {
+  if (error instanceof Error && error.message === "Duplicate job URL in one report.") {
+    return [{ message: error.message, path: "jobs" }];
+  }
+  if (!(error instanceof ZodError)) return [];
+  return error.issues.map((issue) => ({
+    message: publicImportMessage(issue),
+    path: issue.path.join(".") || "report",
+  }));
 }
 
 export function chatgptJobKey(url: string) {

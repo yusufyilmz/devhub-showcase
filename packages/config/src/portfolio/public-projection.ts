@@ -1,3 +1,4 @@
+import { projectBuilderProfile } from "../pages/public-projection";
 import type { PortfolioProfile } from "../profile/profile";
 import { selectPortfolioContent } from "../sections/section-content";
 
@@ -24,7 +25,10 @@ export function projectPublicProfile(
   for (const key of contactFields) if (fields?.[key] === false) profile[key] = "";
   profile.projects = profile.projects.filter((item) => item.public);
   if (surface === "cv") projectCv(profile);
-  else projectWebsite(profile);
+  else {
+    projectWebsite(profile);
+    projectBuilderProfile(profile);
+  }
   const experiences = new Set(profile.experiences.map((item) => item.id));
   profile.projects = profile.projects.map((item) =>
     item.experienceId && !experiences.has(item.experienceId)
@@ -40,6 +44,7 @@ function projectCv(profile: PortfolioProfile) {
   if (profile.cvSettings?.includeLanguages === false) profile.languages = [];
   profile.customSections = undefined;
   profile.hero = undefined;
+  profile.site = undefined;
   profile.sectionSequence = undefined;
   profile.sectionOrder = undefined;
   profile.sectionSettings = undefined;

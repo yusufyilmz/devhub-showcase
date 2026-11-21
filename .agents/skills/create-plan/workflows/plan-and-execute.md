@@ -29,6 +29,7 @@
      --id P1.2 \
      --evidence "Targeted unit test passed locally at commit abc123"
    ```
+
 5. Record the evidence in the plan. Keep the checklist committed with the code in the same PR. When task scope changes, edit the text without renumbering completed IDs.
 6. After each task, report what is now done, what is blocked, and the next task. If another agent works on a task, require the same verified evidence before the orchestrator marks it complete.
 

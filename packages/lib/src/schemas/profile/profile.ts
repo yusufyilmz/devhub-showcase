@@ -3,10 +3,12 @@ import { z } from "zod";
 import {
   MAX_CUSTOM_SECTIONS,
   type PortfolioProfile,
+  type PortfolioSiteDocument,
   portfolioSectionIds,
   portfolioThemes,
 } from "@shared/config";
 
+import { refineSite } from "../page/document";
 import {
   customSectionSchema,
   portfolioEntryIdSchema,
@@ -168,6 +170,7 @@ export const profileSchema = z
       .max(MAX_CUSTOM_SECTIONS + 6)
       .optional(),
     sectionSettings: sectionSettingsSchema.optional(),
+    site: z.custom<PortfolioSiteDocument>().optional(),
     skills: z
       .record(
         text(80).refine((key) => !["__proto__", "constructor", "prototype"].includes(key)),
@@ -211,6 +214,7 @@ export const profileSchema = z
         message: "Include each existing section once",
         path: ["sectionSequence"],
       });
+    refineSite(value, ctx);
     const employers = new Set(value.experiences.map((item) => item.id));
     value.projects.forEach((project, index) => {
       if (project.experienceId && !employers.has(project.experienceId))

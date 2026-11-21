@@ -1,4 +1,5 @@
 export {
+  chatgptImportIssues,
   chatgptJobImportSchema,
   chatgptJobKey,
   normalizeChatgptJobUrl,

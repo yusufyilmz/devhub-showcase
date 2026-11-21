@@ -108,6 +108,16 @@ pnpm cli:check secrets
 
 Use these repo-native skills when creating AI artifacts: [create-plan](.agents/skills/create-plan/SKILL.md) for plans under `.agents/plans` with verifiable task checkoffs; [create-skill](.agents/skills/create-skill/SKILL.md) for skills in `.agents/skills`; and [create-subagent](.agents/skills/create-subagent/SKILL.md) for scoped Claude Code subagents in `.claude/agents`. Subagents are **not** stored under `.agents/plans`. The create-plan helper records completion evidence but cannot independently prove a test passed. Do not check off a task without actual verification.
 
+### Process skills
+
+Read the matching process skill before the work it names. These are repository procedures adapted from the MIT-licensed Superpowers workflows. They use this repository's commands and do not call that project at runtime.
+
+- [Using repository skills](.agents/skills/using-superpowers/SKILL.md) at the start of repository work, before choosing another skill.
+- [Brainstorming](.agents/skills/brainstorming/SKILL.md) when a feature or behavior change is still open.
+- [Test-driven development](.agents/skills/test-driven-development/SKILL.md) before production code for a behavior change.
+- [Verification before completion](.agents/skills/verification-before-completion/SKILL.md) before claiming that work is complete, fixed, or passing.
+- [Repository lookup](.agents/skills/repository-lookup/SKILL.md) before opening a large catalog, doc, skill reference, or design note.
+
 ## Dev environment
 
 Use the Node and pnpm versions in the root `package.json` (currently Node 24.15+ below 25, and pnpm 11). Check the active versions before installing or running checks. Install with `pnpm install --frozen-lockfile`. External dependencies use `catalog:`. Internal dependencies use `workspace:*`. Change the catalog, the package manifest, and the lockfile together.
