@@ -25,7 +25,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 
 | Dependency                  | Declared version | Kind            |
 | --------------------------- | ---------------- | --------------- |
-| `@babel/parser`             | `^8.1.2`         | devDependencies |
+| `@babel/parser`             | `^8.1.3`         | devDependencies |
 | `@biomejs/biome`            | `2.6.5`          | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
 | `@turbo/gen`                | `2.11.10`        | devDependencies |

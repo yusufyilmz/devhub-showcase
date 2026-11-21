@@ -156,7 +156,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `compromise`                | `14.19.0`        | dependencies    |
 | `handlebars`                | `4.7.10`         | dependencies    |
 | `js-tiktoken`               | `1.0.21`         | dependencies    |
-| `lucide-react`              | `^1.73.0`        | dependencies    |
+| `lucide-react`              | `^1.77.0`        | dependencies    |
 | `next`                      | `16.4.5`         | dependencies    |
 | `openai`                    | `7.52.0`         | dependencies    |
 | `pdfmake`                   | `0.3.13`         | dependencies    |
@@ -166,8 +166,8 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `zod`                       | `4.6.7`          | dependencies    |
 | `@shared/cli`               | `workspace:*`    | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
-| `@storybook/react-vite`     | `^10.6.7`        | devDependencies |
+| `@storybook/react-vite`     | `^10.6.8`        | devDependencies |
 | `@types/node`               | `26.6.6`         | devDependencies |
 | `@types/pdfmake`            | `0.3.3`          | devDependencies |
-| `storybook`                 | `^10.6.7`        | devDependencies |
+| `storybook`                 | `^10.6.8`        | devDependencies |
 | `typescript`                | `7.0.2`          | devDependencies |

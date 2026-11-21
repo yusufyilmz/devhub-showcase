@@ -39,7 +39,7 @@ No public package export map or main entry is declared.
 | `@shared/runtime`           | `workspace:*`    | dependencies    |
 | `@shared/ui`                | `workspace:*`    | dependencies    |
 | `drizzle-orm`               | `0.45.4`         | dependencies    |
-| `lucide-react`              | `^1.73.0`        | dependencies    |
+| `lucide-react`              | `^1.77.0`        | dependencies    |
 | `next`                      | `16.4.5`         | dependencies    |
 | `postgres`                  | `3.4.9`          | dependencies    |
 | `react`                     | `19.3.1`         | dependencies    |

@@ -679,7 +679,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `embla-carousel-react`            | `^8.6.0`         | dependencies    |
 | `framer-motion`                   | `^14.14.0`       | dependencies    |
 | `input-otp`                       | `^1.5.0`         | dependencies    |
-| `lucide-react`                    | `^1.73.0`        | dependencies    |
+| `lucide-react`                    | `^1.77.0`        | dependencies    |
 | `next`                            | `16.4.5`         | dependencies    |
 | `next-themes`                     | `^0.4.6`         | dependencies    |
 | `radix-ui`                        | `^1.8.1`         | dependencies    |
@@ -697,12 +697,12 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `zustand`                         | `5.0.16`         | dependencies    |
 | `@shared/cli`                     | `workspace:*`    | devDependencies |
 | `@shared/typescript-config`       | `workspace:*`    | devDependencies |
-| `@storybook/react-vite`           | `^10.6.7`        | devDependencies |
+| `@storybook/react-vite`           | `^10.6.8`        | devDependencies |
 | `@tailwindcss/postcss`            | `4.3.5`          | devDependencies |
 | `@types/node`                     | `26.6.6`         | devDependencies |
 | `@types/react`                    | `19.3.0`         | devDependencies |
 | `@types/react-dom`                | `19.3.0`         | devDependencies |
 | `postcss`                         | `8.5.32`         | devDependencies |
-| `storybook`                       | `^10.6.7`        | devDependencies |
+| `storybook`                       | `^10.6.8`        | devDependencies |
 | `tailwindcss`                     | `4.3.5`          | devDependencies |
 | `typescript`                      | `7.0.2`          | devDependencies |

@@ -30,7 +30,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | --------------------------- | ---------------- | --------------- |
 | `@shared/ui`                | `workspace:*`    | dependencies    |
 | `@shared/utils`             | `workspace:*`    | dependencies    |
-| `lucide-react`              | `^1.73.0`        | dependencies    |
+| `lucide-react`              | `^1.77.0`        | dependencies    |
 | `react`                     | `19.3.1`         | dependencies    |
 | `zod`                       | `4.6.7`          | dependencies    |
 | `@shared/cli`               | `workspace:*`    | devDependencies |
