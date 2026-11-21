@@ -266,7 +266,7 @@ describe("SectionSettings", () => {
     vi.stubGlobal("fetch", fetcher);
     const editor = render(<ProfileEditor initial={initial} />);
     fireEvent.click(screen.getByRole("button", { name: "Section display" }));
-    const picker = within(screen.getByRole("group", { name: "Preview sections" }));
+    const picker = within(await screen.findByRole("group", { name: "Preview sections" }));
     fireEvent.click(picker.getByRole("button", { name: "Projects" }));
     const projects = screen.getByRole("group", { name: "Projects" });
     fireEvent.click(within(projects).getByRole("button", { name: "Cards" }));
@@ -289,7 +289,7 @@ describe("SectionSettings", () => {
     render(<ProfileEditor initial={saved} />);
     fireEvent.click(screen.getByRole("button", { name: "Section display" }));
     fireEvent.click(
-      within(screen.getByRole("group", { name: "Preview sections" })).getByRole("button", {
+      within(await screen.findByRole("group", { name: "Preview sections" })).getByRole("button", {
         name: "Projects",
       }),
     );

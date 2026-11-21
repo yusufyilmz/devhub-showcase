@@ -242,7 +242,7 @@ describe("CustomSections", () => {
     );
     const editor = render(<ProfileEditor initial={initial} />);
     fireEvent.click(screen.getByRole("button", { name: "Custom sections" }));
-    fireEvent.click(screen.getByRole("button", { name: "Add custom section" }));
+    fireEvent.click(await screen.findByRole("button", { name: "Add custom section" }));
     fireEvent.change(screen.getByLabelText("Section name"), {
       target: { value: "Awards" },
     });
@@ -257,12 +257,14 @@ describe("CustomSections", () => {
     fireEvent.change(screen.getByRole("combobox", { name: "Editor section" }), {
       target: { value: "Section order" },
     });
-    fireEvent.keyDown(screen.getByRole("button", { name: "Reorder Awards copy" }), { key: "Home" });
+    fireEvent.keyDown(await screen.findByRole("button", { name: "Reorder Awards copy" }), {
+      key: "Home",
+    });
     fireEvent.change(screen.getByRole("combobox", { name: "Editor section" }), {
       target: { value: "Custom sections" },
     });
     fireEvent.click(
-      within(screen.getByRole("group", { name: "Awards" })).getByRole("button", {
+      within(await screen.findByRole("group", { name: "Awards" })).getByRole("button", {
         name: "Remove section",
       }),
     );
@@ -275,6 +277,8 @@ describe("CustomSections", () => {
     editor.unmount();
     render(<ProfileEditor initial={saved} />);
     fireEvent.click(screen.getByRole("button", { name: "Custom sections" }));
-    expect((screen.getByLabelText("Section name") as HTMLInputElement).value).toBe("Awards copy");
+    expect(((await screen.findByLabelText("Section name")) as HTMLInputElement).value).toBe(
+      "Awards copy",
+    );
   });
 });

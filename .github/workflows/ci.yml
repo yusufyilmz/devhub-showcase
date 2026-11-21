@@ -110,7 +110,7 @@ jobs:
 
       # Tests
       - name: Unit tests
-        run: pnpm exec vitest run --project unit
+        run: pnpm exec vitest run --project unit --project pglite
 
       # Builds
       - name: Build Storybook
