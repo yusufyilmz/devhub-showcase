@@ -2,6 +2,7 @@
 
 import "@shared/ui/components.css";
 
+import dynamic from "next/dynamic";
 import { type ComponentType, type ReactNode, useDeferredValue, useEffect, useState } from "react";
 
 import {
@@ -47,49 +48,122 @@ import { type StudioRequest, useStudioRequest } from "@shared/runtime/studio";
 import { type StoredUser, useUserConfigStore, useUserStorageSync } from "@shared/runtime/user";
 import { Button, StudioButton } from "@shared/ui/button";
 import { Card } from "@shared/ui/cards";
-import { GoogleImportEditor } from "@shared/ui/google-import";
 import { Input } from "@shared/ui/input";
 import { Label as LibraryLabel } from "@shared/ui/label";
-import {
-  CustomSectionsEditor,
-  EducationEditor,
-  ExperienceEditor,
-  LanguagesEditor,
-  ProjectsEditor,
-  SectionOrderEditor,
-  SectionSettingsEditor,
-  SectionTemplatesEditor,
-  SkillsEditor,
-} from "@shared/ui/sections";
-import { AppearanceEditor } from "@shared/ui/theme/studio";
 
-import { SectionsSettings } from "../../../../../ui/src/sections/studio";
 import { AgentCompanion } from "../../../chat/components/agent-companion/index";
 import { studioEditorGuide } from "../../../companion/components/guides";
-import {
-  DraftPreviewPane,
-  DraftRecovery,
-  EditorGuidance,
-  EditorWorkspace,
-  FieldVisibilityEditor,
-  LanguageSettingsEditor,
-  PortfolioTypePicker,
-  ProfileFields,
-  type SetupStep,
-  StudioHeading,
-  TemplatePicker,
-  useDraftRecovery,
-  usePortfolioHistory,
-} from "../../../portfolio/components/index";
+import { EditorGuidance } from "../../../portfolio/components/editor-guidance";
+import { DraftPreviewPane } from "../../../portfolio/components/editor-workspace/draft-preview-pane";
+import { EditorWorkspace } from "../../../portfolio/components/editor-workspace/editor-workspace";
 import { ResponsivePortfolioPreview } from "../../../portfolio/components/portfolio-preview/index";
-import { AiAssistantEditor } from "../ai-assistant-editor";
-import { AiProfileEditor } from "../ai-profile-editor";
-import { CvImportEditor } from "../import/cv-import-editor";
-import { CvSettingsEditor } from "../settings/cv-settings-editor";
-import { PrivateCvVersions } from "./cv-versions";
-import { PortfolioSetup, type SetupPosition } from "./portfolio-setup";
-import { ProfilePublication } from "./publication";
-import { OwnerRevisionHistory } from "./revision-history";
+import { ProfileFields } from "../../../portfolio/components/profile-fields";
+import { DraftRecovery } from "../../../portfolio/components/recovery/DraftRecovery";
+import type { SetupStep } from "../../../portfolio/components/recovery/types";
+import { useDraftRecovery } from "../../../portfolio/components/recovery/use-draft-recovery";
+import { StudioHeading } from "../../../portfolio/components/studio-heading/StudioHeading";
+import { usePortfolioHistory } from "../../../portfolio/components/use-portfolio-history";
+import type { SetupPosition } from "./portfolio-setup";
+
+// Keep the initial Profile editor lightweight; inactive tab bodies are separate chunks.
+const CustomSectionsEditor = dynamic(
+  () => import("@shared/ui/section-editors").then((module) => module.CustomSectionsEditor),
+  { loading: () => null },
+);
+const EducationEditor = dynamic(
+  () => import("@shared/ui/section-editors").then((module) => module.EducationEditor),
+  { loading: () => null },
+);
+const ExperienceEditor = dynamic(
+  () => import("@shared/ui/section-editors").then((module) => module.ExperienceEditor),
+  { loading: () => null },
+);
+const LanguagesEditor = dynamic(
+  () => import("@shared/ui/section-editors").then((module) => module.LanguagesEditor),
+  { loading: () => null },
+);
+const ProjectsEditor = dynamic(
+  () => import("@shared/ui/section-editors").then((module) => module.ProjectsEditor),
+  { loading: () => null },
+);
+const SectionOrderEditor = dynamic(
+  () => import("@shared/ui/section-editors").then((module) => module.SectionOrderEditor),
+  { loading: () => null },
+);
+const SectionSettingsEditor = dynamic(
+  () => import("@shared/ui/section-editors").then((module) => module.SectionSettingsEditor),
+  { loading: () => null },
+);
+const SectionTemplatesEditor = dynamic(
+  () => import("@shared/ui/section-editors").then((module) => module.SectionTemplatesEditor),
+  { loading: () => null },
+);
+const SkillsEditor = dynamic(
+  () => import("@shared/ui/section-editors").then((module) => module.SkillsEditor),
+  { loading: () => null },
+);
+const SectionsSettings = dynamic(
+  () => import("@shared/ui/section-editors").then((module) => module.SectionsSettings),
+  { loading: () => null },
+);
+const GoogleImportEditor = dynamic(
+  () => import("@shared/ui/google-import").then((module) => module.GoogleImportEditor),
+  { loading: () => null },
+);
+const AppearanceEditor = dynamic(
+  () => import("@shared/ui/theme/studio").then((module) => module.AppearanceEditor),
+  { loading: () => null },
+);
+const AiAssistantEditor = dynamic(
+  () => import("../ai-assistant-editor").then((module) => module.AiAssistantEditor),
+  { loading: () => null },
+);
+const AiProfileEditor = dynamic(
+  () => import("../ai-profile-editor").then((module) => module.AiProfileEditor),
+  { loading: () => null },
+);
+const CvImportEditor = dynamic(
+  () => import("../import/cv-import-editor").then((module) => module.CvImportEditor),
+  { loading: () => null },
+);
+const CvSettingsEditor = dynamic(
+  () => import("../settings/cv-settings-editor").then((module) => module.CvSettingsEditor),
+  { loading: () => null },
+);
+const PrivateCvVersions = dynamic(
+  () => import("./cv-versions").then((module) => module.PrivateCvVersions),
+  { loading: () => null },
+);
+const OwnerRevisionHistory = dynamic(
+  () => import("./revision-history").then((module) => module.OwnerRevisionHistory),
+  { loading: () => null },
+);
+const ProfilePublication = dynamic(
+  () => import("./publication").then((module) => module.ProfilePublication),
+  { loading: () => null },
+);
+const PortfolioSetup = dynamic(
+  () => import("./portfolio-setup").then((module) => module.PortfolioSetup),
+  { loading: () => null },
+);
+const FieldVisibilityEditor = dynamic(
+  () =>
+    import("../../../portfolio/components/field-visibility").then(
+      (module) => module.FieldVisibilityEditor,
+    ),
+  { loading: () => null },
+);
+const LanguageSettingsEditor = dynamic(
+  () =>
+    import("../../../portfolio/components/language-settings-editor").then(
+      (module) => module.LanguageSettingsEditor,
+    ),
+  { loading: () => null },
+);
+const LayoutEditor = dynamic(
+  () => import("./layout-editor").then((module) => module.LayoutEditor),
+  { loading: () => null },
+);
 
 const tabs = [
   "Profile",
@@ -770,26 +844,6 @@ function SharingSettings({
           Download my saved CV
         </StudioButton>
       </div>
-    </Card>
-  );
-}
-function LayoutEditor({
-  profile,
-  onChange,
-}: {
-  profile: PortfolioProfile;
-  onChange: (profile: PortfolioProfile) => void;
-}) {
-  return (
-    <Card asChild layout="plain" surface="portfolio">
-      <section className="editor-card mb-[18px] rounded-[14px] border border-border bg-card p-7 max-[767px]:p-[18px]">
-        <PortfolioTypePicker
-          onChange={(portfolioType) => onChange({ ...profile, portfolioType })}
-          value={profile.portfolioType ?? "engineer"}
-        />
-        <TemplatePicker onChange={onChange} profile={profile} />
-        <p>Your CV layout is chosen separately in the PDF section.</p>
-      </section>
     </Card>
   );
 }
