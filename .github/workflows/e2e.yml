@@ -43,7 +43,6 @@ jobs:
       - name: Run Studio journeys
         run: pnpm test:e2e:studio
 
-
   fitness:
     if: ${{ github.event.repository.private == false }}
     name: Fitness Playwright
