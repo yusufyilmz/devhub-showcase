@@ -4,7 +4,7 @@ Use lookup to select relevant context from catalogs, skills, documentation and d
 
 ## Quick start
 
-Use Node 24.15+ (below 25), pnpm 11 and installed workspace dependencies. Run from the repository root:
+Use Node from `.nvmrc` (currently v24.15.0), pnpm from `package.json` (currently 12.21.0), and installed workspace dependencies. Run from the repository root:
 
 ```sh
 pnpm --silent lookup catalog "button" --package @shared/ui --limit 2
@@ -52,6 +52,7 @@ This repository ships three **self-contained** authoring skills, all in the cano
 - [create-plan](skills/create-plan/SKILL.md) writes implementation plans in `.agents/plans`, ends with uniquely identified checklist tasks, and records evidence when verified tasks are checked off.
 - [create-skill](skills/create-skill/SKILL.md) uses the existing `pnpm cli:skills scaffold` command to author skills with `SKILL.md`, `references/`, `workflows/` and optional scripts.
 - [create-subagent](skills/create-subagent/SKILL.md) generates scoped Claude Code subagents under `.claude/agents` with read-only tools by default; this is a separate runtime format from skills.
+- [claude-md-improver](skills/claude-md-improver/SKILL.md) audits `AGENTS.md`, `CLAUDE.md`, and scoped agent instructions against its [quality rubric](skills/claude-md-improver/references/quality-criteria.md).
 
 Example commands:
 

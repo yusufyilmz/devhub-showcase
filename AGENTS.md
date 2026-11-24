@@ -1,10 +1,10 @@
 # Working on MyDevStudio
 
-MyDevStudio is a multiuser portfolio and CV platform in the `devhub-showcase` repository. These instructions apply throughout the repository. Read the files you are changing before editing them, and preserve unrelated work.
+`devhub-showcase` is a pnpm/Turborepo monorepo for MyDevStudio (portfolio and CV), Fitness OS, Storybook, and shared packages. These instructions apply repository-wide; app-specific `AGENTS.md` files add scoped rules. The root `CLAUDE.md` imports this file with `@AGENTS.md`, so keep one shared source of instructions. Read files before editing and preserve unrelated work.
 
 ## Confirm the checkout
 
-The user's primary local checkout is `/Users/yusufyilmaz/code/freelance/projects/devhub-showcase-1`. Before editing, verify `pwd`, `git rev-parse --show-toplevel`, and `git status --short`. Use this checkout unless the user explicitly selects another checkout or worktree. A ChatGPT project mirror or another folder named `devhub-showcase` is not interchangeable with it.
+When shell access exists, run `pwd`, `git rev-parse --show-toplevel`, and `git status --short` before changing files. Use the checkout or worktree explicitly selected by the user; never assume that similarly named folders (including `devhub-showcase` and `devhub-showcase-1`) are interchangeable. If only a remote GitHub checkout is accessible, say so and do not claim local edits or verification.
 
 Preserve existing staged and unstaged work. Apply only the requested changes; do not copy whole files from another checkout without comparing them. Do not stage, commit, or publish changes unless requested. Report verification from the checkout where it actually ran.
 
@@ -19,6 +19,9 @@ Workspace members are `apps/*`, `packages/*`, and `tools/*`. The Next.js app pac
 | `apps/storybook-app`     | `storybook-app`         | Storybook for `packages/ui`                                                   |
 | `packages/ui`            | `@shared/ui`            | Controls, sections, studio and portfolio surfaces, theme, and global CSS      |
 | `packages/config`        | `@shared/config`        | Profile types, themes, section metadata, and page copy including the home FAQ |
+| `packages/billing`       | `@shared/billing`       | Stripe billing adapters, entitlements and premium access                      |
+| `packages/calendar`      | `@shared/calendar`      | Shared agenda/calendar controls and Google integration                        |
+| `packages/env`           | `@shared/env`           | Shared T3/Zod environment schema and validation                               |
 | `packages/lib`           | `@shared/lib`           | Shared services, repositories, schemas, database clients and Redis cache      |
 | `packages/auth`          | `@shared/auth`          | Session helpers and Google sign-in                                            |
 | `packages/notifications` | `@shared/notifications` | Web push delivery and notification helpers                                    |
@@ -26,6 +29,8 @@ Workspace members are `apps/*`, `packages/*`, and `tools/*`. The Next.js app pac
 | `packages/runtime`       | `@shared/runtime`       | Shared runtime helpers, including notifications                               |
 | `packages/utils`         | `@shared/utils`         | Logging and other shared utilities                                            |
 | `packages/trello`        | `@shared/trello`        | Trello board UI                                                               |
+
+Read [Studio app instructions](apps/my-dev-studio/AGENTS.md) or [Fitness app instructions](apps/my-fitness-app/AGENTS.md) when editing that app; both extend this root file.
 
 `apps/my-dev-studio` keeps routes, screens, and app bindings in separate folders. `app/` contains only `page`, `route`, `actions`, and other Next.js page variants. Studio-only screens live in `views/`. Calls that use or combine services, including API and server functions for this app, live in `services/<domain>`. Reusable UI belongs in `@shared/ui`, reusable services in `@shared/lib`, and generic helpers in `@shared/utils`. Placement details are in [docs/conventions.md](docs/conventions.md#where-code-goes). Package boundaries are in [docs/architecture.md](docs/architecture.md).
 
@@ -63,15 +68,13 @@ If the catalog has no component that fits, add it in `packages/ui`. All workspac
 - Portfolio setup and the companion are shared Studio compositions. Studio account preferences use `/api/account-preferences` and are separate from saved portfolio appearance.
 - Job Hunter UI lives in `packages/assistant/src/portfolio/components/jobs`. The app owns `/studio/jobs`, `/api/jobs` and the inbound email and scheduled worker routes. Shared listing and email parsing code lives in `packages/lib/src/services/jobs`. See the [Job Hunter guide](docs/testing/manual/job-hunter.md) and [LinkedIn alert guide](docs/testing/manual/linkedin-job-alerts.md).
 
-## Where code goes
+## State and removed directories
 
-Follow [docs/conventions.md](docs/conventions.md#where-code-goes). Stop at the first match: a URL or HTTP entry goes in `app/`, a MyDevStudio-only screen goes in `views/`, an app service binding goes in `services/<domain>`, and reusable code goes to the shared package named in that guide.
-
-A view receives data or a request function from the route or from `services/`. Server-confirmed display fields are cached with `useUserStorageSync` from `@shared/runtime/user`. Do not recreate removed home, reviews, portfolio, platform, or chat feature folders.
+For placement, follow [docs/conventions.md](docs/conventions.md#where-code-goes) and the app-specific instructions above. Views receive data or request functions from routes or `services/`. Cache server-confirmed display fields with `useUserStorageSync` from `@shared/runtime/user`. Do not recreate removed home, reviews, portfolio, platform, or chat feature folders.
 
 ## AI lookup guide — find relevant references
 
-Use the read-only lookup CLI to find relevant context before opening large catalogs, skills, documentation or design references. Run from the repository root with Node 24.15+ (below 25) and pnpm 11:
+Use the read-only lookup CLI before opening large catalogs, skills, docs or design references. Run from the repository root with Node from `.nvmrc` and pnpm from `package.json`:
 
 ```sh
 pnpm --silent lookup catalog "button" --package @shared/ui --limit 2
@@ -85,24 +88,7 @@ Queries use lexical AND matching: use a few specific keywords. Follow `hasMore` 
 
 ## Skills and repository checks
 
-Canonical skills live in `.agents/skills`. `.cursor/skills` and `.claude/skills` are links to that directory, not a second copy.
-
-```sh
-pnpm cli:skills symlink --dry-run
-pnpm cli:skills validate
-pnpm cli:skills scaffold my-skill --description "When to use this skill"
-pnpm cli:check links
-pnpm cli:check catalogs
-pnpm cli:check exports
-pnpm cli:check lint
-pnpm cli:check docs
-pnpm cli:check skills
-pnpm cli:check types
-pnpm cli:check unused
-pnpm cli:check secrets
-```
-
-`validate` checks skill frontmatter, duplicate names, local links, and advisory file size. A skill file over 800 lines or 65536 bytes is reported and does not fail the check. Placeholders such as TODO, FIXME, and TBD are reported the same way. `scaffold` writes `SKILL.md`, `workflows/overview.md`, and `references/overview.md` and does not replace an existing skill. `cli:check` runs the checks this repository already owns. `secrets` looks for private keys and live tokens in the tree. It does not install Gitleaks or a duplicate-code scanner. `pnpm check:skills` uses the same validator.
+Canonical skills live in `.agents/skills`; `.claude/skills` and `.cursor/skills` link there. Use [the repository skills guide](.agents/README.md) for full CLI commands, `pnpm cli:skills validate` or `pnpm check:skills` for validation, and `pnpm cli:skills symlink --dry-run` to inspect editor links. An evidence marker is not proof that a test passed.
 
 ### Repository authoring skills
 
@@ -110,7 +96,7 @@ Use these repo-native skills when creating AI artifacts: [create-plan](.agents/s
 
 ### Process skills
 
-Read the matching process skill before the work it names. These are repository procedures adapted from the MIT-licensed Superpowers workflows. They use this repository's commands and do not call that project at runtime.
+Read the matching process skill before its work. For audits and maintenance of `AGENTS.md` / `CLAUDE.md`, use [claude-md-improver](.agents/skills/claude-md-improver/SKILL.md). These repository procedures do not invoke upstream Superpowers.
 
 - [Using repository skills](.agents/skills/using-superpowers/SKILL.md) at the start of repository work, before choosing another skill.
 - [Brainstorming](.agents/skills/brainstorming/SKILL.md) when a feature or behavior change is still open.
@@ -120,7 +106,7 @@ Read the matching process skill before the work it names. These are repository p
 
 ## Dev environment
 
-Use the Node and pnpm versions in the root `package.json` (currently Node 24.15+ below 25, and pnpm 11). Check the active versions before installing or running checks. Install with `pnpm install --frozen-lockfile`. External dependencies use `catalog:`. Internal dependencies use `workspace:*`. Change the catalog, the package manifest, and the lockfile together.
+Use `.nvmrc` for Node (currently `v24.15.0`) and the root `package.json` for pnpm (currently `12.21.0`; Node engine `>=24.15.0 <25`). Check active versions before running commands. Install with `pnpm install --frozen-lockfile`. External dependencies use `catalog:`; internal packages use `workspace:*`. Change catalog versions, package manifests and the lockfile together.
 
 - Studio dev server: `pnpm --filter my-dev-studio dev` (port 3001)
 - Fitness dev server: `pnpm --filter my-fitness-app dev` (port 3002)
@@ -139,34 +125,9 @@ Read the matching skill before a large change:
 - [Business rules](.agents/skills/mydevstudio-business/SKILL.md)
 - [Sections](.agents/skills/mydevstudio-sections/SKILL.md)
 
-When the change is inside one package or app, also read that package skill:
+For package or app work, read its [matching domain skill](.agents/skills/using-superpowers/references/skill-map.md#package-and-app-skills) alongside the root and app-specific instructions.
 
-| Area                 | Skill                                                                                    |
-| -------------------- | ---------------------------------------------------------------------------------------- |
-| `packages/ui`        | [Developing the UI package](.agents/skills/developing-ui-package/SKILL.md)               |
-| `packages/config`    | [Developing the config package](.agents/skills/developing-config-package/SKILL.md)       |
-| `packages/lib`       | [Developing the lib package](.agents/skills/developing-lib-package/SKILL.md)             |
-| `packages/auth`      | [Developing the auth package](.agents/skills/developing-auth-package/SKILL.md)           |
-| `packages/assistant` | [Developing the assistant package](.agents/skills/developing-assistant-package/SKILL.md) |
-| `packages/runtime`   | [Developing the runtime package](.agents/skills/developing-runtime-package/SKILL.md)     |
-| `packages/utils`     | [Developing the utils package](.agents/skills/developing-utils-package/SKILL.md)         |
-| `packages/trello`    | [Developing the Trello package](.agents/skills/developing-trello-package/SKILL.md)       |
-| `apps/my-dev-studio` | [Developing the MyDevStudio app](.agents/skills/developing-my-dev-studio-app/SKILL.md)   |
-| `apps/storybook-app` | [Developing the Storybook app](.agents/skills/developing-storybook-app/SKILL.md)         |
-
-Use [features](docs/features.md), [architecture](docs/architecture.md), [conventions](docs/conventions.md), [testing](docs/testing.md), and [DESIGN.md](DESIGN.md). Check the matching catalog before adding a public export:
-
-| Package     | Catalog                                                        | Check it before adding                      |
-| ----------- | -------------------------------------------------------------- | ------------------------------------------- |
-| `ui`        | [packages/ui/CATALOG.md](packages/ui/CATALOG.md)               | A control, section, surface, or stylesheet  |
-| `config`    | [packages/config/CATALOG.md](packages/config/CATALOG.md)       | A profile field, theme, or section metadata |
-| `lib`       | [packages/lib/CATALOG.md](packages/lib/CATALOG.md)             | A domain service or repository              |
-| `auth`      | [packages/auth/CATALOG.md](packages/auth/CATALOG.md)           | A sign-in or session helper                 |
-| `cv`        | [packages/assistant/CATALOG.md](packages/assistant/CATALOG.md) | CV PDF rendering                            |
-| `assistant` | [packages/assistant/CATALOG.md](packages/assistant/CATALOG.md) | An assistant model or message               |
-| `runtime`   | [packages/runtime/CATALOG.md](packages/runtime/CATALOG.md)     | A shared browser or fetch helper            |
-| `utils`     | [packages/utils/CATALOG.md](packages/utils/CATALOG.md)         | A logger or generic helper                  |
-| `trello`    | [packages/trello/CATALOG.md](packages/trello/CATALOG.md)       | Trello board UI or a Trello client          |
+Use [features](docs/features.md), [architecture](docs/architecture.md), [conventions](docs/conventions.md), [testing](docs/testing.md), and [DESIGN.md](DESIGN.md). Before changing a public export, read the owning `packages/<package>/CATALOG.md`; CV rendering and assistant work both use [the assistant catalog](packages/assistant/CATALOG.md). Catalogs are generated, not hand-edited.
 
 ## Environment configuration
 
@@ -194,7 +155,7 @@ Do not publish profiles, transfer ownership, assign roles, run production migrat
 
 ## Testing
 
-CI is [`.github/workflows/ci.yml`](.github/workflows/ci.yml). It verifies code checks, unit tests, Storybook and production builds. The separate [browser workflow](.github/workflows/e2e.yml) runs only on pushes to `main` and does not block deployment.
+CI is [`.github/workflows/ci.yml`](.github/workflows/ci.yml): required code, unit/PGlite, Storybook and production build checks feed the named `Verify` gate before affected Studio/Fitness deployments. Inspect the workflow for the current job split and browser blocking policy; the standalone [browser workflow](.github/workflows/e2e.yml) is configured separately. See [testing](docs/testing.md) and [deployment policy](docs/deployments.md). PGlite tests and fixture-backed browser journeys do not prove hosted Supabase or provider behavior.
 
 Put each unit test next to the file it covers, with the same base name: `admin-login.tsx` and `admin-login.test.tsx` live in the same folder. A Storybook story for that component is `admin-login.stories.tsx` in that folder too. The same naming applies to modules (`user-profile.ts` and `user-profile.test.ts`) and route handlers (`route.ts` and `route.test.ts`).
 
@@ -211,13 +172,7 @@ Browser tests use local fixtures, not production accounts. If a required check c
 
 ### Required manual feature documentation
 
-For every new or changed feature, add or update a dedicated guide under [`docs/testing/manual/`](docs/testing/manual/index.md) and its entry in the [manual testing index](docs/testing/manual/index.md), in the same PR as the feature. This applies to UI, API, permission, integration and workflow behavior. Do not consider a feature ready for review without this documentation.
-
-Use the [guide template](docs/testing/manual/template.md). Each feature guide must identify scope/status, account/fixture/configuration prerequisites and numbered steps. **Every step must contain a clickable full URL, the matching route path, the exact action/control, expected result and actual result/evidence.** Tabs use the real parent page route; never invent routes for tabs. Include persistence, failure/retry/conflict and owner/other-user/signed-out or public/private checks where applicable.
-
-When a roadmap task has a reviewable implementation, add or update its Notion **How to test** section using the dedicated guide: clickable URLs, route paths, prerequisites, actions, expected results, actual evidence and PR/guide links. Preserve task requirements and do not mark deployed verification complete from local tests. If Notion access or workspace limits block the update, record the pending task links and do not repeatedly retry an entitlement failure.
-
-Use disposable accounts and fictional content. Distinguish preview/local/manual/provider/deployed verification; leave unexecuted steps **Not run** and mark blocked prerequisites explicitly. Partial features must state what is unfinished. Never claim live integration or production migration verification from fixtures or a green CI run. Link each feature guide in the PR's per-feature testing section and maintain older instructions when behavior changes.
+Every new or changed feature **must** update a dedicated manual guide and the [manual testing index](docs/testing/manual/index.md) in its PR. For Notion roadmap tasks, also update the task's **How to test** section. Follow [the manual review contract](.agents/skills/mydevstudio-development/references/manual-feature-review.md), using disposable accounts and explicit prerequisites, links, routes, expected results and actual evidence. Unexecuted steps stay **Not run**.
 
 ## Pull requests
 

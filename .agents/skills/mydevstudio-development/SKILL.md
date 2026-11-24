@@ -9,7 +9,7 @@ description: Develop, test and review MyDevStudio changes. Use for workspace
 
 Read [the workspace map](references/workspace.md) before choosing a package. Follow [the verification workflow](references/workflow.md) for implementation and PR validation. Run scripts/check-workspace.mjs from the repository root to confirm documented command and workspace assumptions without changing files.
 
-Inspect current package.json files, pnpm-workspace.yaml, and .github/workflows/ci.yml rather than relying on remembered versions. The Next.js app is `apps/my-dev-studio` (`my-dev-studio`). Its routes are in `app/` and its data access is in `features/`. Storybook is `apps/storybook-app` (`storybook-app`). `apps/my-fitness-app` (`my-fitness-app`) is a separate Next.js app. Its tables are in `supabase/migrations` and use the same `auth.users` records as the studio. Use existing components and validated domain adapters. Keep changes focused and run checks appropriate to their behavior. Report failed or skipped verification accurately.
+Inspect current package.json files, pnpm-workspace.yaml, and .github/workflows/ci.yml rather than relying on remembered versions. The Next.js app is `apps/my-dev-studio` (`my-dev-studio`). Its routes are in `app/`, app-only screens in `views/`, and server/service bindings in `services/<domain>/`. Storybook is `apps/storybook-app` (`storybook-app`). `apps/my-fitness-app` (`my-fitness-app`) is a separate Next.js app. Its tables are in `supabase/migrations` and use the same `auth.users` records as the studio. Use existing components and validated domain adapters. Keep changes focused and run checks appropriate to their behavior. Report failed or skipped verification accurately.
 
 ## Packages
 
@@ -27,9 +27,9 @@ Shared libraries live in `packages/` and use `@shared/*`. Depend on them with `w
 | `packages/utils`     | `@shared/utils`        | Logging and other utilities                                                     |
 | `packages/trello`    | `@shared/trello`       | Trello board UI                                                                 |
 
-Do not move auth, database access, or route handlers into `@shared/ui`. Do not add an app feature file that only re-exports one of these packages. Pass fetching and navigation in from `apps/my-dev-studio/features`.
+Do not move auth, database access, or route handlers into `@shared/ui`. Do not add an app feature file that only re-exports one of these packages. Pass fetching and navigation through app routes and `apps/my-dev-studio/services/<domain>/`.
 
-When the change is inside one package or app, read that skill too. Each one is a `developing-*-package` or `developing-*-app` directory next to this skill: `developing-ui-package`, `developing-config-package`, `developing-content-package`, `mydevstudio-development`, `developing-auth-package`, `developing-cv-package`, `developing-assistant-package`, `developing-lib-package`, `developing-runtime-package`, `developing-utils-package`, `developing-trello-package`, `developing-my-dev-studio-app`, and `developing-storybook-app`.
+When the change is inside one package or app, read that skill too. Use [the package/app skill map](../using-superpowers/references/skill-map.md#package-and-app-skills) rather than assuming a package-specific skill exists.
 
 Read [shared services and validation](references/services.md) when changing shared backends, schemas or typed database access.
 
