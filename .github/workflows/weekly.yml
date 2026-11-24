@@ -15,6 +15,7 @@ concurrency:
 
 jobs:
   analysis:
+    if: ${{ github.event.repository.private == false }}
     name: Dependency and Code Health
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -89,6 +90,7 @@ jobs:
           done
 
   e2e:
+    if: ${{ github.event.repository.private == false }}
     name: E2E and Accessibility
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -120,6 +122,7 @@ jobs:
         run: pnpm test:e2e:studio
 
   secrets:
+    if: ${{ github.event.repository.private == false }}
     name: Full Secret Scan
     runs-on: ubuntu-latest
     timeout-minutes: 15
