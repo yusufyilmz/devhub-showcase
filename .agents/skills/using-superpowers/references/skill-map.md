@@ -13,10 +13,30 @@ There is no `superpowers:` tool namespace in this repository. When an instructio
 | `verification-before-completion`, completion claim | `.agents/skills/verification-before-completion/SKILL.md` |
 | Creating a skill                                   | `.agents/skills/create-skill/SKILL.md`                   |
 | Creating a subagent                                | `.agents/skills/create-subagent/SKILL.md`                |
-| Workspace, package, or domain edit                 | The matching skill linked from `AGENTS.md`               |
+| Workspace, package, or domain edit                 | The [domain skill map](#package-and-app-skills) below    |
 | Finding a catalog, doc, skill, or design rule      | `.agents/skills/repository-lookup/SKILL.md`              |
 
 Plan execution uses the create-plan workflow. Do not treat an unadapted copy of an upstream executing-plans document as the repository procedure.
+
+## Package and app skills
+
+Read the corresponding skill for each affected owner. Fitness OS uses [its app AGENTS.md](../../../../apps/my-fitness-app/AGENTS.md) and the common development skill; there is no separate Fitness SKILL.md.
+
+| Area             | Skill                                                                       |
+| ---------------- | --------------------------------------------------------------------------- |
+| Workspace and CI | [mydevstudio-development](../../mydevstudio-development/SKILL.md)           |
+| Product rules    | [mydevstudio-business](../../mydevstudio-business/SKILL.md)                 |
+| Section UI       | [mydevstudio-sections](../../mydevstudio-sections/SKILL.md)                 |
+| Shared UI        | [developing-ui-package](../../developing-ui-package/SKILL.md)               |
+| Config           | [developing-config-package](../../developing-config-package/SKILL.md)       |
+| Services and DB  | [developing-lib-package](../../developing-lib-package/SKILL.md)             |
+| Auth             | [developing-auth-package](../../developing-auth-package/SKILL.md)           |
+| Assistant and CV | [developing-assistant-package](../../developing-assistant-package/SKILL.md) |
+| Runtime          | [developing-runtime-package](../../developing-runtime-package/SKILL.md)     |
+| Utilities        | [developing-utils-package](../../developing-utils-package/SKILL.md)         |
+| Trello           | [developing-trello-package](../../developing-trello-package/SKILL.md)       |
+| Studio app       | [developing-my-dev-studio-app](../../developing-my-dev-studio-app/SKILL.md) |
+| Storybook        | [developing-storybook-app](../../developing-storybook-app/SKILL.md)         |
 
 ## Order when several match
 
