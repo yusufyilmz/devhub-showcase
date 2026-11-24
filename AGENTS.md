@@ -157,19 +157,7 @@ When the change is inside one package or app, also read that package skill:
 | `apps/my-dev-studio` | [Developing the MyDevStudio app](.agents/skills/developing-my-dev-studio-app/SKILL.md)   |
 | `apps/storybook-app` | [Developing the Storybook app](.agents/skills/developing-storybook-app/SKILL.md)         |
 
-Use [features](docs/features.md), [architecture](docs/architecture.md), [conventions](docs/conventions.md), [testing](docs/testing.md), and [DESIGN.md](DESIGN.md). Check the matching catalog before adding a public export:
-
-| Package     | Catalog                                                        | Check it before adding                      |
-| ----------- | -------------------------------------------------------------- | ------------------------------------------- |
-| `ui`        | [packages/ui/CATALOG.md](packages/ui/CATALOG.md)               | A control, section, surface, or stylesheet  |
-| `config`    | [packages/config/CATALOG.md](packages/config/CATALOG.md)       | A profile field, theme, or section metadata |
-| `lib`       | [packages/lib/CATALOG.md](packages/lib/CATALOG.md)             | A domain service or repository              |
-| `auth`      | [packages/auth/CATALOG.md](packages/auth/CATALOG.md)           | A sign-in or session helper                 |
-| `cv`        | [packages/assistant/CATALOG.md](packages/assistant/CATALOG.md) | CV PDF rendering                            |
-| `assistant` | [packages/assistant/CATALOG.md](packages/assistant/CATALOG.md) | An assistant model or message               |
-| `runtime`   | [packages/runtime/CATALOG.md](packages/runtime/CATALOG.md)     | A shared browser or fetch helper            |
-| `utils`     | [packages/utils/CATALOG.md](packages/utils/CATALOG.md)         | A logger or generic helper                  |
-| `trello`    | [packages/trello/CATALOG.md](packages/trello/CATALOG.md)       | Trello board UI or a Trello client          |
+Use [features](docs/features.md), [architecture](docs/architecture.md), [conventions](docs/conventions.md), [testing](docs/testing.md), and [DESIGN.md](DESIGN.md). Before changing a public export, read the owning `packages/<package>/CATALOG.md`; CV rendering and assistant work both use [the assistant catalog](packages/assistant/CATALOG.md). Catalogs are generated, not hand-edited.
 
 ## Environment configuration
 
