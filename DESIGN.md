@@ -502,3 +502,120 @@ Use `Card asChild layout="plain"` around an existing section or article to keep
 its semantics and page layout. Existing published palettes use the explicit
 `surface="portfolio"` adapter, which maps local card tokens without overwriting
 root shadcn tokens. New semantic screens use the default surface.
+
+
+## Cross-app design contract (November 2026)
+
+This section **extends** the token and component recipes above. It does not reset their colors, typography, or established dimensions. It defines how to apply them consistently to the **MyDevStudio public site, published CV/portfolio, authenticated Studio, Fitness OS and Storybook**. [Once UI](https://docs.once-ui.com/components/overview) is a reference for layout composition, blocks and polished interactions, not a runtime dependency. Product-specific component behavior and data contracts remain with their owning apps.
+
+### Experience hierarchy and page compositions
+
+| Surface | Composition | Primary action and visual restraint |
+| --- | --- | --- |
+| MyDevStudio marketing home | Shared header → concise introduction/hero → capabilities/feature blocks → portfolio examples → assistant composer when available → FAQ/footer | One primary CTA per region; do not claim unavailable AI or billing capabilities |
+| Published `/{username}` portfolio and CV | Sticky 78px chrome → hero/introduction → configured section blocks in user-defined order → contact/links/footer | Honor publication visibility and the selected portfolio theme, never expose owner-only controls or private data |
+| Studio owner/editor | Navigation/workspace context → page title/status → action toolbar → editor/preview in balanced panels → inline success/error feedback | Save/publish clearly distinct; preserve unsaved state, revision conflict and owner access controls |
+| Studio assistants, Job Hunter and billing | Compact workspace navigation → task/conversation/results area → persistent contextual controls; tables where data dense | Label loading, source, entitlement and irreversible actions; do not imply AI success until confirmed |
+| Fitness OS | Responsive day/week calendar or agenda → chronological task rows → drill-down details, meal/gym task flows and reminders | Touch-first completion/drag affordances; time order matters more than decorative categories; preserve task ownership and skip logic |
+| Storybook | Isolated components with theme/brand/spacing controls and meaningful state fixtures | Story states demonstrate controls, not personal credentials or production records |
+
+**Illustrative Studio screen:**
+
+```text
+DESKTOP 1280px content maximum
+┌─────────────────────────────────────────────────────────────┐
+│ Navigation  │ Workspace title      Status      Preview Save │
+├─────────────┼──────────────────────────────┬───────────────┤
+│ Sections    │ Selected section editor      │ Live preview  │
+│ Theme       │ Labels, validation, controls │               │
+│ Settings    │                              │               │
+└─────────────┴──────────────────────────────┴───────────────┘
+MOBILE: app bar → section picker → editor → preview toggle;
+actions remain reachable above the safe-area inset
+```
+
+**Illustrative Fitness screen:**
+
+```text
+MOBILE 375px
+┌──────────────────────────┐
+│ Today · date picker      │
+│ Day / Week / Calendar    │
+│ 08:00 Breakfast      ○   │
+│ 11:30 Water          ✓   │
+│ 13:00 Lunch          ○   │
+│ 18:00 Gym            ○   │
+│ Add task                 │
+└──────────────────────────┘
+Desktop: calendar/agenda alongside task detail; retain chronological order
+```
+
+These are **targets for future UI changes**, not claims that every illustrated screen exists today.
+
+### Responsive layout and density
+
+Use existing breakpoints and available CSS variables as the source of truth. For new compositions, target:
+
+| Width | Gutters | Layout |
+| --- | --- | --- |
+| 320–639px | 16px | One-column content; horizontal tabs scroll with visible affordance; drawers for long navigation |
+| 640–1023px | 24px | Flexible two-column cards where readable; editors switch between stacked/toggleable preview |
+| 1024–1279px | 32px | Side navigation + workspace, bounded content |
+| >=1280px | 40px | Limit reading/content width to ~1200–1280px; avoid infinitely stretched text |
+
+Maintain the existing **4px base scale and Compact / Comfortable / Spacious presets**; do not replace them with an incompatible 8px-only spacing model. Composition gaps should generally use multiples of 8px, with 4px for small icon/label alignment. Desktop marketing sections may use the existing 82px published-page rhythm. Prefer 44px usable touch targets for primary mobile interactions; the 24–36px compact controls documented above remain appropriate in dense desktop toolbars when their tap targets are enlarged on touch layouts. Use tabular numerals for hours, workout reps, prices and analytics.
+
+Image handling: avatar 1:1, portfolio/feature preview 16:9 or contained original ratio, card preview 4:3 or 16:9 consistently within its grid; never stretch or crop screenshots to the point that their UI becomes misleading. Reserve media height before loading. Do not show blurred private screenshots in public gallery cards.
+
+### Motion and interaction language
+
+The established quiet 160ms hover wash and 200ms dialog animation remain the default. **Framer Motion is already a workspace dependency**, but is optional per screen. Use motion sparingly:
+
+- Card hover: background/border accent and, when warranted, an additional subtle 2px visual lift over 160–220ms. Keep nested buttons independently reachable; avoid combined hover effects that obscure labels.
+- Section entrance: opacity + 8–12px translation over 220–320ms, once when relevant; no page-wide cascade of dozens of animated controls.
+- Dialogs/drawers: focus trapped and restored; no animation that delays interaction. Keyboard Escape closes dismissible overlays.
+- Theme switching: no flash of incorrect appearance across route changes; changing palette must not silently reset density or radius settings.
+- Calendar/task interactions: direct and predictable drag/drop indicators; completion status is readable without relying on bounce, confetti or color alone.
+- Under `prefers-reduced-motion: reduce`: remove decorative transforms, parallax, scroll reveals and autoplay; preserve clear instantaneous state changes. On touch devices, never hide a mandatory action behind hover.
+
+Use the existing component and palette semantics from the sections above, not new one-off CSS colors. WCAG AA contrast targets: 4.5:1 for normal text, 3:1 for large text and relevant non-text UI boundaries. Keyboard focus must be visible on both dark studio and light component canvas, ideally using the established outline/ring tokens. Preserve zoom usability at 200%, including dialogs and mobile navigation.
+
+### Theme and state matrix
+
+Test these as *independent* dimensions: foundation appearance (light/dark/system), brand palette (`data-brand`), density, radius/text scales, and published portfolio RGB theme (`data-portfolio-theme`). Do not overwrite publication-specific palettes via the editor's component theme. Read [Tailwind and theme reference](docs/reference/tailwind.md) and [style architecture](packages/ui/src/styles/STYLES.md) before editing the token pipeline.
+
+Every major block must define:
+
+| State | Expected treatment |
+| --- | --- |
+| Loading | Skeleton matches final text/media geometry and reserves space |
+| Empty | Useful explanation, clear action if allowed, no fabricated sample records |
+| Error | Error message + safe retry while preserving user edits |
+| Permission denied | Explicit sign-in/access state, without private data fallback |
+| Saving/processing | Non-duplicating action, disabled only as needed, status announced |
+| Success | Confirmed result and clear next action, not an optimistic promise |
+| Offline/notification unavailable | Honest fallback and recovery instructions |
+
+For authentication, billing, AI and saved tasks, **visual polish must not change behavior**: keep the server as authority for access, published snapshots, subscriptions, revisions, and ownership. Do not make disabled integrations look available.
+
+### Component ownership and reuse
+
+1. Look up [`packages/ui/CATALOG.md`](packages/ui/CATALOG.md), then inspect the matching exports in `packages/ui/package.json`. Prefer existing controls such as `@shared/ui/button`, `@shared/ui/card`, `@shared/ui/page-shell`, `@shared/ui/site-header`, `@shared/ui/carousel`, `@shared/ui/empty-state`, `@shared/ui/skeleton`, `@shared/ui/dialog` and `@shared/ui/theme`.
+2. Build new shared primitives under `packages/ui/src/{buttons,cards,forms,feedback,layout,navigation,display,overlays}` as appropriate. Put token definitions under `packages/ui/src/styles`; do not duplicate global styles in apps.
+3. Put MyDevStudio-only screen composition in `apps/my-dev-studio/views/<domain>`, Studio assistant/published section composition in `packages/assistant` when shared, and Fitness-only screens in `apps/my-fitness-app/views/<domain>`. Follow [conventions](docs/conventions.md) and each app's AGENTS.md.
+4. Storybook must cover default, hover/focus, disabled, loading, error and dark states for new shared controls. Keep examples fictional, accessible and independent of live provider credentials.
+5. For reusable compositional inspiration, use [Once UI blocks](https://docs.once-ui.com/basics/structure) conceptually, adapting to the current shared UI system rather than introducing a competing component library.
+
+### Visual acceptance checklist
+
+For changes to prominent screens, capture and review **375×812 mobile, 768×1024 tablet and 1440×900 desktop**. Include light/dark foundation states; for published portfolios, test light/dark user-selected portfolio themes; include one alternate brand, text scaling and Compact/Spacious density. Check 320px widths and 200% text zoom.
+
+- No horizontal page overflow, clipped headings or scroll-locked dialogs.
+- Header, primary CTA, information hierarchy and forms readable without hover.
+- Screenshot/preview media displays at stable aspect ratios without layout shift.
+- Contrast, keyboard order, focus, screen-reader labels and reduced motion are verified.
+- Calendar chronological ordering and task controls remain usable on touch.
+- Loading, empty, failure, disabled and permission states have coherent visual output.
+- Authentication, private-profile visibility, persisted preferences, billing and state revisions remain unchanged by visual-only work.
+- Run and report relevant `pnpm check:docs`, `pnpm check:links`, `pnpm check`, `pnpm test`, Storybook build, targeted app builds, and Playwright/visual tests from an actual checkout. A GitHub file change alone does **not** verify these checks.
+
