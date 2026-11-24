@@ -23,10 +23,25 @@ const nextConfig = {
     "@shared/billing",
     "@shared/trello",
   ],
-  webpack(config) {
+  webpack(config, { isServer }) {
     // Use the compiler entry without Handlebars' Node require.extensions hook.
     config.resolve.alias.handlebars$ = "handlebars/dist/cjs/handlebars.js";
     config.module.rules.push({ test: /\.hbs$/, type: "asset/source" });
+    if (isServer) {
+      // pnpm installs pdfmake under packages/assistant/node_modules. Next treats that
+      // path as part of the transpiled @shared/assistant package and bundles it,
+      // rewriting unicode-properties' file URL into a URL object fs.readFileSync rejects.
+      const externalizePdfmake = ({ request }, callback) => {
+        if (typeof request === "string" && /^pdfmake(?:\/|$)/.test(request)) {
+          return callback(null, `commonjs ${request}`);
+        }
+        callback();
+      };
+      config.externals = [
+        externalizePdfmake,
+        ...(Array.isArray(config.externals) ? config.externals : []),
+      ];
+    }
     return config;
   },
 };
