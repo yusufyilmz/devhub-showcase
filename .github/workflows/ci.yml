@@ -31,6 +31,7 @@ jobs:
   # ----------------------------------------
   changes:
     name: Select affected apps
+    if: ${{ github.event.repository.private == false }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -59,6 +60,7 @@ jobs:
   # Code quality, security and build
   # ----------------------------------------
   quality:
+    if: ${{ github.event.repository.private == false }}
     name: Code quality
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -95,6 +97,7 @@ jobs:
         run: pnpm check:security
 
   unit:
+    if: ${{ github.event.repository.private == false }}
     name: Unit tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -122,6 +125,7 @@ jobs:
         run: pnpm exec vitest run --project unit
 
   database:
+    if: ${{ github.event.repository.private == false }}
     name: PGlite database tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -149,6 +153,7 @@ jobs:
         run: pnpm exec vitest run --project pglite
 
   build:
+    if: ${{ github.event.repository.private == false }}
     name: Production monorepo build
     runs-on: ubuntu-latest
     timeout-minutes: 40
@@ -185,6 +190,7 @@ jobs:
         run: pnpm build
 
   storybook:
+    if: ${{ github.event.repository.private == false }}
     name: Build Storybook
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -212,6 +218,7 @@ jobs:
         run: pnpm --filter storybook-app build-storybook
 
   browser-studio:
+    if: ${{ github.event.repository.private == false }}
     name: Studio Playwright (non-blocking)
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -237,7 +244,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Cache Next.js incremental build
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5
+        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5
         with:
           path: |
             apps/my-dev-studio/.next/cache
@@ -251,17 +258,9 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
       - name: Studio browser tests
         run: pnpm test:e2e:studio
-      - name: Upload Playwright artifacts
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.0
-        with:
-          name: playwright-studio-results
-          path: |
-            apps/my-dev-studio/test-results/
-            apps/my-dev-studio/playwright-report/
-          if-no-files-found: ignore
 
   browser-fitness:
+    if: ${{ github.event.repository.private == false }}
     name: Fitness Playwright (non-blocking)
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -287,7 +286,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Cache Next.js incremental build
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5
+        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5
         with:
           path: |
             apps/my-dev-studio/.next/cache
@@ -300,20 +299,11 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
       - name: Fitness browser tests
         run: pnpm test:e2e:fitness
-      - name: Upload Playwright artifacts
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.0
-        with:
-          name: playwright-fitness-results
-          path: |
-            apps/my-fitness-app/test-results/
-            apps/my-fitness-app/playwright-report/
-          if-no-files-found: ignore
 
   verify:
     name: Verify
     needs: [ quality, unit, database, build, storybook ]
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() && github.event.repository.private == false }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -335,7 +325,7 @@ jobs:
     name: Deploy Studio
     needs: [ changes, verify ]
 
-    if: ${{ github.repository == 'yusufyilmz/devhub-showcase' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && needs.changes.outputs.studio == 'true' }}
+    if: ${{ github.event.repository.private == false && github.repository == 'yusufyilmz/devhub-showcase' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && needs.changes.outputs.studio == 'true' }}
     uses: ./.github/workflows/deploy-app.yml
 
     with:
@@ -353,7 +343,7 @@ jobs:
     name: Deploy Fitness OS
     needs: [ changes, verify ]
 
-    if: ${{ github.repository == 'yusufyilmz/devhub-showcase' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && needs.changes.outputs.fitness == 'true' }}
+    if: ${{ github.event.repository.private == false && github.repository == 'yusufyilmz/devhub-showcase' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && needs.changes.outputs.fitness == 'true' }}
     uses: ./.github/workflows/deploy-app.yml
 
     with:
