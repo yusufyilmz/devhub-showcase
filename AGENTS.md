@@ -1,10 +1,10 @@
 # Working on MyDevStudio
 
-MyDevStudio is a multiuser portfolio and CV platform in the `devhub-showcase` repository. These instructions apply throughout the repository. Read the files you are changing before editing them, and preserve unrelated work.
+`devhub-showcase` is a pnpm/Turborepo monorepo for MyDevStudio (portfolio and CV), Fitness OS, Storybook, and shared packages. These instructions apply repository-wide; app-specific `AGENTS.md` files add scoped rules. The root `CLAUDE.md` imports this file with `@AGENTS.md`, so keep one shared source of instructions. Read files before editing and preserve unrelated work.
 
 ## Confirm the checkout
 
-The user's primary local checkout is `/Users/yusufyilmaz/code/freelance/projects/devhub-showcase-1`. Before editing, verify `pwd`, `git rev-parse --show-toplevel`, and `git status --short`. Use this checkout unless the user explicitly selects another checkout or worktree. A ChatGPT project mirror or another folder named `devhub-showcase` is not interchangeable with it.
+When shell access exists, run `pwd`, `git rev-parse --show-toplevel`, and `git status --short` before changing files. Use the checkout or worktree explicitly selected by the user; never assume that similarly named folders (including `devhub-showcase` and `devhub-showcase-1`) are interchangeable. If only a remote GitHub checkout is accessible, say so and do not claim local edits or verification.
 
 Preserve existing staged and unstaged work. Apply only the requested changes; do not copy whole files from another checkout without comparing them. Do not stage, commit, or publish changes unless requested. Report verification from the checkout where it actually ran.
 
@@ -19,6 +19,9 @@ Workspace members are `apps/*`, `packages/*`, and `tools/*`. The Next.js app pac
 | `apps/storybook-app`     | `storybook-app`         | Storybook for `packages/ui`                                                   |
 | `packages/ui`            | `@shared/ui`            | Controls, sections, studio and portfolio surfaces, theme, and global CSS      |
 | `packages/config`        | `@shared/config`        | Profile types, themes, section metadata, and page copy including the home FAQ |
+| `packages/billing`       | `@shared/billing`       | Stripe billing adapters, entitlements and premium access                      |
+| `packages/calendar`      | `@shared/calendar`      | Shared agenda/calendar controls and Google integration                        |
+| `packages/env`           | `@shared/env`           | Shared T3/Zod environment schema and validation                               |
 | `packages/lib`           | `@shared/lib`           | Shared services, repositories, schemas, database clients and Redis cache      |
 | `packages/auth`          | `@shared/auth`          | Session helpers and Google sign-in                                            |
 | `packages/notifications` | `@shared/notifications` | Web push delivery and notification helpers                                    |
@@ -26,6 +29,8 @@ Workspace members are `apps/*`, `packages/*`, and `tools/*`. The Next.js app pac
 | `packages/runtime`       | `@shared/runtime`       | Shared runtime helpers, including notifications                               |
 | `packages/utils`         | `@shared/utils`         | Logging and other shared utilities                                            |
 | `packages/trello`        | `@shared/trello`        | Trello board UI                                                               |
+
+Read [Studio app instructions](apps/my-dev-studio/AGENTS.md) or [Fitness app instructions](apps/my-fitness-app/AGENTS.md) when editing that app; both extend this root file.
 
 `apps/my-dev-studio` keeps routes, screens, and app bindings in separate folders. `app/` contains only `page`, `route`, `actions`, and other Next.js page variants. Studio-only screens live in `views/`. Calls that use or combine services, including API and server functions for this app, live in `services/<domain>`. Reusable UI belongs in `@shared/ui`, reusable services in `@shared/lib`, and generic helpers in `@shared/utils`. Placement details are in [docs/conventions.md](docs/conventions.md#where-code-goes). Package boundaries are in [docs/architecture.md](docs/architecture.md).
 
@@ -63,15 +68,13 @@ If the catalog has no component that fits, add it in `packages/ui`. All workspac
 - Portfolio setup and the companion are shared Studio compositions. Studio account preferences use `/api/account-preferences` and are separate from saved portfolio appearance.
 - Job Hunter UI lives in `packages/assistant/src/portfolio/components/jobs`. The app owns `/studio/jobs`, `/api/jobs` and the inbound email and scheduled worker routes. Shared listing and email parsing code lives in `packages/lib/src/services/jobs`. See the [Job Hunter guide](docs/testing/manual/job-hunter.md) and [LinkedIn alert guide](docs/testing/manual/linkedin-job-alerts.md).
 
-## Where code goes
+## State and removed directories
 
-Follow [docs/conventions.md](docs/conventions.md#where-code-goes). Stop at the first match: a URL or HTTP entry goes in `app/`, a MyDevStudio-only screen goes in `views/`, an app service binding goes in `services/<domain>`, and reusable code goes to the shared package named in that guide.
-
-A view receives data or a request function from the route or from `services/`. Server-confirmed display fields are cached with `useUserStorageSync` from `@shared/runtime/user`. Do not recreate removed home, reviews, portfolio, platform, or chat feature folders.
+For placement, follow [docs/conventions.md](docs/conventions.md#where-code-goes) and the app-specific instructions above. Views receive data or request functions from routes or `services/`. Cache server-confirmed display fields with `useUserStorageSync` from `@shared/runtime/user`. Do not recreate removed home, reviews, portfolio, platform, or chat feature folders.
 
 ## AI lookup guide — find relevant references
 
-Use the read-only lookup CLI to find relevant context before opening large catalogs, skills, documentation or design references. Run from the repository root with Node 24.15+ (below 25) and pnpm 11:
+Use the read-only lookup CLI before opening large catalogs, skills, docs or design references. Run from the repository root with Node from `.nvmrc` and pnpm from `package.json`:
 
 ```sh
 pnpm --silent lookup catalog "button" --package @shared/ui --limit 2
@@ -120,7 +123,7 @@ Read the matching process skill before the work it names. These are repository p
 
 ## Dev environment
 
-Use the Node and pnpm versions in the root `package.json` (currently Node 24.15+ below 25, and pnpm 11). Check the active versions before installing or running checks. Install with `pnpm install --frozen-lockfile`. External dependencies use `catalog:`. Internal dependencies use `workspace:*`. Change the catalog, the package manifest, and the lockfile together.
+Use `.nvmrc` for Node (currently `v24.15.0`) and the root `package.json` for pnpm (currently `12.21.0`; Node engine `>=24.15.0 <25`). Check active versions before running commands. Install with `pnpm install --frozen-lockfile`. External dependencies use `catalog:`; internal packages use `workspace:*`. Change catalog versions, package manifests and the lockfile together.
 
 - Studio dev server: `pnpm --filter my-dev-studio dev` (port 3001)
 - Fitness dev server: `pnpm --filter my-fitness-app dev` (port 3002)
@@ -194,7 +197,7 @@ Do not publish profiles, transfer ownership, assign roles, run production migrat
 
 ## Testing
 
-CI is [`.github/workflows/ci.yml`](.github/workflows/ci.yml). It verifies code checks, unit tests, Storybook and production builds. The separate [browser workflow](.github/workflows/e2e.yml) runs only on pushes to `main` and does not block deployment.
+CI is [`.github/workflows/ci.yml`](.github/workflows/ci.yml): required code, unit/PGlite, Storybook and production build checks feed the named `Verify` gate before affected Studio/Fitness deployments. Inspect the workflow for the current job split and browser blocking policy; the standalone [browser workflow](.github/workflows/e2e.yml) is configured separately. See [testing](docs/testing.md) and [deployment policy](docs/deployments.md). PGlite tests and fixture-backed browser journeys do not prove hosted Supabase or provider behavior.
 
 Put each unit test next to the file it covers, with the same base name: `admin-login.tsx` and `admin-login.test.tsx` live in the same folder. A Storybook story for that component is `admin-login.stories.tsx` in that folder too. The same naming applies to modules (`user-profile.ts` and `user-profile.test.ts`) and route handlers (`route.ts` and `route.test.ts`).
 
