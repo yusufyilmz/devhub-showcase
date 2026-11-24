@@ -23,7 +23,9 @@ pnpm exec playwright install chromium
 pnpm test:e2e
 ```
 
-CI installs Chromium with `--with-deps` on Linux. For an app-only production build, use `NODE_ENV=production pnpm --filter my-dev-studio build`; the CI build job checks the full workspace independently from tests.
+CI installs Chromium with `--with-deps` on Linux. For an app-only production
+build, use `NODE_ENV=production pnpm --filter my-dev-studio build`; the CI build
+job checks the full workspace independently from tests.
 
 | Check                | What it establishes                                                               |
 | -------------------- | --------------------------------------------------------------------------------- |
@@ -33,7 +35,9 @@ CI installs Chromium with `--with-deps` on Linux. For an app-only production bui
 | `pnpm build`         | Workspace type/build tasks and production Next.js compilation                     |
 | `pnpm test:e2e`      | Desktop Chromium and Pixel 7 emulation against production output                  |
 
-Coverage is a selected source subset, not a whole-repository percentage. A green suite does not certify live Google OAuth, real provider requests, production database policies or real iPhone/Safari behavior.
+Coverage is a selected source subset, not a whole-repository percentage. A green
+suite does not certify live Google OAuth, real provider requests, production
+database policies or real iPhone/Safari behavior.
 
 ## Parallel CI jobs
 
@@ -41,14 +45,27 @@ Coverage is a selected source subset, not a whole-repository percentage. A green
 
 - **Code quality:** `pnpm check`, architecture, cycles and dependency audit.
 - **Unit tests:** Vitest `unit` project only, without database setup.
-- **PGlite database tests:** Vitest `pglite` project only, with isolated in-process fixtures. These checks do not need Supabase Docker; they are not hosted Supabase/RLS verification.
+- **PGlite database tests:** Vitest `pglite` project with isolated in-process
+  fixtures. No Supabase Docker setup is needed; these are not hosted Supabase/RLS
+  verification.
 - **Production monorepo build:** `pnpm build` with a bounded Next.js incremental build cache.
 - **Storybook build:** `pnpm --filter storybook-app build-storybook`.
-- **Studio and Fitness Playwright:** separate runners with fixture servers and Chromium, marked non-blocking while preserving the existing browser-test policy. Studio builds before Playwright; Fitness's Playwright web server builds its app.
+- **Studio and Fitness Playwright:** separate runners with fixture servers and
+  Chromium, non-blocking per the existing browser-test policy. Studio builds
+  before Playwright; Fitness's Playwright web server builds its app.
 
-The final **Verify** check requires the five code, unit, PGlite, production build, and Storybook jobs to pass. Only verified, affected apps deploy from `main`. The [standalone browser workflow](../.github/workflows/e2e.yml) is manual-only, avoiding another automatic run of the same browser suites on every main push. The [PR Secret Scan](../.github/workflows/quality-pr.yml) remains separate and avoids rerunning checks already in CI.
+The final **Verify** check requires code quality, unit, PGlite, production build,
+and Storybook jobs to pass. Only verified, affected apps deploy from `main`.
+The [standalone browser workflow](../.github/workflows/e2e.yml) is manual-only,
+avoiding duplicate browser runs on main. The
+[PR Secret Scan](../.github/workflows/quality-pr.yml) stays separate without
+rerunning the static and unit checks already in CI.
 
-The repository retains its public-only, zero-spend GitHub Actions policy: workflows skip on private repositories, jobs use standard Ubuntu runners, and no Actions artifacts are uploaded. Cache reads are permitted; browser jobs restore incremental caches but do not save additional copies. Browser failure detail stays in Actions logs; local Playwright reports remain available when run manually.
+The repository retains its public-only, zero-spend GitHub Actions policy:
+workflows skip on private repositories, jobs use standard Ubuntu runners, and
+no Actions artifacts are uploaded. Browser jobs restore incremental caches but
+do not save more copies. Browser failure details stay in Actions logs; local
+Playwright reports remain available when run manually.
 
 ## Colocated unit tests
 
