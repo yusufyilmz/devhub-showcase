@@ -88,24 +88,7 @@ Queries use lexical AND matching: use a few specific keywords. Follow `hasMore` 
 
 ## Skills and repository checks
 
-Canonical skills live in `.agents/skills`. `.cursor/skills` and `.claude/skills` are links to that directory, not a second copy.
-
-```sh
-pnpm cli:skills symlink --dry-run
-pnpm cli:skills validate
-pnpm cli:skills scaffold my-skill --description "When to use this skill"
-pnpm cli:check links
-pnpm cli:check catalogs
-pnpm cli:check exports
-pnpm cli:check lint
-pnpm cli:check docs
-pnpm cli:check skills
-pnpm cli:check types
-pnpm cli:check unused
-pnpm cli:check secrets
-```
-
-`validate` checks skill frontmatter, duplicate names, local links, and advisory file size. A skill file over 800 lines or 65536 bytes is reported and does not fail the check. Placeholders such as TODO, FIXME, and TBD are reported the same way. `scaffold` writes `SKILL.md`, `workflows/overview.md`, and `references/overview.md` and does not replace an existing skill. `cli:check` runs the checks this repository already owns. `secrets` looks for private keys and live tokens in the tree. It does not install Gitleaks or a duplicate-code scanner. `pnpm check:skills` uses the same validator.
+Canonical skills live in `.agents/skills`; `.claude/skills` and `.cursor/skills` link there. Use [the repository skills guide](.agents/README.md) for full CLI commands, `pnpm cli:skills validate` or `pnpm check:skills` for validation, and `pnpm cli:skills symlink --dry-run` to inspect editor links. An evidence marker is not proof that a test passed.
 
 ### Repository authoring skills
 
@@ -113,7 +96,7 @@ Use these repo-native skills when creating AI artifacts: [create-plan](.agents/s
 
 ### Process skills
 
-Read the matching process skill before the work it names. These are repository procedures adapted from the MIT-licensed Superpowers workflows. They use this repository's commands and do not call that project at runtime.
+Read the matching process skill before its work. For audits and maintenance of `AGENTS.md` / `CLAUDE.md`, use [claude-md-improver](.agents/skills/claude-md-improver/SKILL.md). These repository procedures do not invoke upstream Superpowers.
 
 - [Using repository skills](.agents/skills/using-superpowers/SKILL.md) at the start of repository work, before choosing another skill.
 - [Brainstorming](.agents/skills/brainstorming/SKILL.md) when a feature or behavior change is still open.
@@ -142,20 +125,7 @@ Read the matching skill before a large change:
 - [Business rules](.agents/skills/mydevstudio-business/SKILL.md)
 - [Sections](.agents/skills/mydevstudio-sections/SKILL.md)
 
-When the change is inside one package or app, also read that package skill:
-
-| Area                 | Skill                                                                                    |
-| -------------------- | ---------------------------------------------------------------------------------------- |
-| `packages/ui`        | [Developing the UI package](.agents/skills/developing-ui-package/SKILL.md)               |
-| `packages/config`    | [Developing the config package](.agents/skills/developing-config-package/SKILL.md)       |
-| `packages/lib`       | [Developing the lib package](.agents/skills/developing-lib-package/SKILL.md)             |
-| `packages/auth`      | [Developing the auth package](.agents/skills/developing-auth-package/SKILL.md)           |
-| `packages/assistant` | [Developing the assistant package](.agents/skills/developing-assistant-package/SKILL.md) |
-| `packages/runtime`   | [Developing the runtime package](.agents/skills/developing-runtime-package/SKILL.md)     |
-| `packages/utils`     | [Developing the utils package](.agents/skills/developing-utils-package/SKILL.md)         |
-| `packages/trello`    | [Developing the Trello package](.agents/skills/developing-trello-package/SKILL.md)       |
-| `apps/my-dev-studio` | [Developing the MyDevStudio app](.agents/skills/developing-my-dev-studio-app/SKILL.md)   |
-| `apps/storybook-app` | [Developing the Storybook app](.agents/skills/developing-storybook-app/SKILL.md)         |
+For package or app work, read its [matching domain skill](.agents/skills/using-superpowers/references/skill-map.md#package-and-app-skills) alongside the root and app-specific instructions.
 
 Use [features](docs/features.md), [architecture](docs/architecture.md), [conventions](docs/conventions.md), [testing](docs/testing.md), and [DESIGN.md](DESIGN.md). Before changing a public export, read the owning `packages/<package>/CATALOG.md`; CV rendering and assistant work both use [the assistant catalog](packages/assistant/CATALOG.md). Catalogs are generated, not hand-edited.
 
@@ -202,13 +172,8 @@ Browser tests use local fixtures, not production accounts. If a required check c
 
 ### Required manual feature documentation
 
-For every new or changed feature, add or update a dedicated guide under [`docs/testing/manual/`](docs/testing/manual/index.md) and its entry in the [manual testing index](docs/testing/manual/index.md), in the same PR as the feature. This applies to UI, API, permission, integration and workflow behavior. Do not consider a feature ready for review without this documentation.
+Every new or changed feature **must** update a dedicated manual guide and the [manual testing index](docs/testing/manual/index.md) in its PR. For Notion roadmap tasks, also update the task's **How to test** section. Follow [the manual review contract](.agents/skills/mydevstudio-development/references/manual-feature-review.md), using disposable accounts and explicit prerequisites, links, routes, expected results and actual evidence. Unexecuted steps stay **Not run**.
 
-Use the [guide template](docs/testing/manual/template.md). Each feature guide must identify scope/status, account/fixture/configuration prerequisites and numbered steps. **Every step must contain a clickable full URL, the matching route path, the exact action/control, expected result and actual result/evidence.** Tabs use the real parent page route; never invent routes for tabs. Include persistence, failure/retry/conflict and owner/other-user/signed-out or public/private checks where applicable.
-
-When a roadmap task has a reviewable implementation, add or update its Notion **How to test** section using the dedicated guide: clickable URLs, route paths, prerequisites, actions, expected results, actual evidence and PR/guide links. Preserve task requirements and do not mark deployed verification complete from local tests. If Notion access or workspace limits block the update, record the pending task links and do not repeatedly retry an entitlement failure.
-
-Use disposable accounts and fictional content. Distinguish preview/local/manual/provider/deployed verification; leave unexecuted steps **Not run** and mark blocked prerequisites explicitly. Partial features must state what is unfinished. Never claim live integration or production migration verification from fixtures or a green CI run. Link each feature guide in the PR's per-feature testing section and maintain older instructions when behavior changes.
 
 ## Pull requests
 
