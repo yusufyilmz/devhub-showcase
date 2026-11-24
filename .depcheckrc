@@ -1,4 +1,44 @@
-ignores: []
+ignores:
+  - "@babel/parser"
+  - "@chromatic-com/storybook"
+  - "@electric-sql/pglite"
+  - "@fixtures/*"
+  - "@playwright/test"
+  - "@shared/assistant"
+  - "@shared/cli"
+  - "@shared/config"
+  - "@shared/lib"
+  - "@shared/test"
+  - "@storybook/addon-a11y"
+  - "@storybook/addon-vitest"
+  - "@tailwindcss/postcss"
+  - "@testing-library/dom"
+  - "@testing-library/react"
+  - "@tsdown/css"
+  - "@types/node"
+  - "@types/react"
+  - "@types/react-dom"
+  - dependency-cruiser
+  - glob
+  - js-tiktoken
+  - js-yaml
+  - markdownlint-cli2-formatter-pretty
+  - pino-pretty
+  - postcss
+  - prettier
+  - react
+  - react-dom
+  - remark-gfm
+  - remark-math
+  - remark-parse
+  - shadcn
+  - tailwindcss
+  - tsdown
+  - tsx
+  - tw-animate-css
+  - typescript
+  - unified
+  - vitest
 skip-missing: false
 ignore-patterns:
   - node_modules

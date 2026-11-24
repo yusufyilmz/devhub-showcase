@@ -17,6 +17,10 @@
 import fs from "node:fs";
 import path from "node:path";
 
+import { createConsoleUI } from "../shared/logger/console-ui.ts";
+
+const log = createConsoleUI("kebab-folders");
+
 const SKIP_DIRS = new Set([
   ".git",
   ".next",
@@ -48,7 +52,7 @@ function toKebab(name) {
 }
 
 function printHelp() {
-  console.log(`Usage: node tools/cli/scripts/kebab-folders.mjs <directory> [--dry-run] [--search <dir>]
+  log.info(`Usage: node tools/cli/scripts/kebab-folders.mjs <directory> [--dry-run] [--search <dir>]
        node tools/cli/scripts/kebab-folders.mjs --root <directory> [--dry-run] [--search <dir>]
 
 <directory>  Folder whose child directories are renamed to kebab-case.
@@ -297,11 +301,11 @@ function main() {
     if (next != null) edits.push({ file, next });
   }
 
-  console.log(`${options.dryRun ? "Would rename" : "Renaming"} ${plans.length} directories`);
+  log.info(`${options.dryRun ? "Would rename" : "Renaming"} ${plans.length} directories`);
   for (const plan of plans) {
-    console.log(`  ${path.relative(options.root, plan.directory)} -> ${plan.nextName}`);
+    log.info(`  ${path.relative(options.root, plan.directory)} -> ${plan.nextName}`);
   }
-  console.log(`${options.dryRun ? "Would update" : "Updating"} ${edits.length} files`);
+  log.info(`${options.dryRun ? "Would update" : "Updating"} ${edits.length} files`);
 
   if (options.dryRun) return;
 

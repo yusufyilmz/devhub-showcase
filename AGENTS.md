@@ -16,7 +16,7 @@ Workspace members are `apps/*`, `packages/*`, and `tools/*`. The Next.js app pac
 | ------------------------ | ----------------------- | ----------------------------------------------------------------------------- |
 | `apps/my-dev-studio`     | `my-dev-studio`         | Next.js routes, API handlers, and feature data access                         |
 | `apps/my-fitness-app`    | `my-fitness-app`        | Fitness OS app. Task rows share the Supabase project and Auth users           |
-| `apps/storybook-app`     | `storybook-app`         | Storybook for `packages/ui`                                                   |
+| `apps/storybook-app`     | `storybook-app`         | Storybook. Stories load from `packages/**/src` and `apps/my-dev-studio/views` |
 | `packages/ui`            | `@shared/ui`            | Controls, sections, studio and portfolio surfaces, theme, and global CSS      |
 | `packages/config`        | `@shared/config`        | Profile types, themes, section metadata, and page copy including the home FAQ |
 | `packages/billing`       | `@shared/billing`       | Stripe billing adapters, entitlements and premium access                      |
@@ -42,7 +42,7 @@ Import portable UI from `@shared/ui`. Pass fetching and navigation in from the a
 
 `@shared/lib` also owns profile/section validation, typed database clients and database/chat models. Generic helpers belong in `@shared/utils`; localized portfolio copy and formatting remain in `@shared/config`.
 
-Do not add a file in one package that only re-exports another package’s implementation, especially through relative paths into a sibling folder (for example a feature module that only forwards another package’s implementation). That creates a hidden dependency, breaks package boundaries, and invites cyclic workspace deps. Import the owning package export instead (`@shared/lib/profile`, `@shared/lib/profile-repository`, and so on). When code changes ownership, update package exports, dependencies and callers together; do not leave forwarding packages or compatibility shims.
+Do not add a file in one package that only re-exports another package’s implementation, especially through relative paths into a sibling folder (for example a feature module that only forwards another package’s implementation). That creates a hidden dependency, breaks package boundaries, and invites cyclic workspace deps. Import the owning package export instead (`@shared/lib/profile`, `@shared/lib/repositories/profile`, and so on). When code changes ownership, update package exports, dependencies and callers together; do not leave forwarding packages or compatibility shims.
 
 ### Package export paths
 
@@ -57,7 +57,7 @@ Do **not** add deep export keys or tsconfig path aliases such as `@shared/lib/ty
 
 Always build interface from `packages/ui`. Check [packages/ui/CATALOG.md](packages/ui/CATALOG.md) before writing markup. Primitive controls, layout, theme tokens and global CSS live there. Assistant/chat/companion, studio and portfolio compositions live in `packages/assistant`, including sections, examples and CV rendering. Import feature surfaces from their declared `@shared/assistant/*` entry points. Import a control as `@shared/ui/{folder}`.
 
-Build screens from `@shared/ui` controls. A screen used only by MyDevStudio lives in `apps/my-dev-studio/views`. Homepage blocks live in `packages/assistant/src/components/sections/home-section` and compose the shared controls.
+Build screens from `@shared/ui` controls. A screen used only by MyDevStudio lives in `apps/my-dev-studio/views`. Homepage blocks live in `packages/ui/src/sections/home-section`, import as `@shared/ui/home-section`, and compose the shared controls. The Studio homepage screen is `apps/my-dev-studio/views/home/HomePage.tsx`.
 
 If the catalog has no component that fits, add it in `packages/ui`. All workspace `CATALOG.md` files are generated. Edit the package's `catalog.template.md` for authored guidance, or `package.json`/source exports for the generated reference, then run `pnpm generate:catalogs`. UI registry sections still use `packages/ui/src/registry/components.json`. Do not hand-edit generated catalogs; verify with `pnpm check:catalogs`. Use `--package @shared/ui` to select one package.
 
@@ -106,7 +106,7 @@ Read the matching process skill before its work. For audits and maintenance of `
 
 ## Dev environment
 
-Use `.nvmrc` for Node (currently `v24.15.0`) and the root `package.json` for pnpm (currently `12.21.0`; Node engine `>=24.15.0 <25`). Check active versions before running commands. Install with `pnpm install --frozen-lockfile`. External dependencies use `catalog:`; internal packages use `workspace:*`. Change catalog versions, package manifests and the lockfile together.
+Use `.nvmrc` for Node (currently `v24.15.0`) and the root `package.json` `packageManager` for pnpm (currently `12.21.0`; Node engine `>=24.15.0 <25`). Workflow files under `.github/workflows` still pin pnpm `12.21.0`. Check active versions before running commands. Install with `pnpm install --frozen-lockfile`. External dependencies use `catalog:`; internal packages use `workspace:*`. Change catalog versions, package manifests and the lockfile together.
 
 - Studio dev server: `pnpm --filter my-dev-studio dev` (port 3001)
 - Fitness dev server: `pnpm --filter my-fitness-app dev` (port 3002)
@@ -155,7 +155,7 @@ Do not publish profiles, transfer ownership, assign roles, run production migrat
 
 ## Testing
 
-CI is [`.github/workflows/ci.yml`](.github/workflows/ci.yml): required code, unit/PGlite, Storybook and production build checks feed the named `Verify` gate before affected Studio/Fitness deployments. Inspect the workflow for the current job split and browser blocking policy; the standalone [browser workflow](.github/workflows/e2e.yml) is configured separately. See [testing](docs/testing.md) and [deployment policy](docs/deployments.md). PGlite tests and fixture-backed browser journeys do not prove hosted Supabase or provider behavior.
+CI is [`.github/workflows/ci.yml`](.github/workflows/ci.yml): required code, unit/PGlite, Storybook and production build checks feed the named `Verify` gate before affected Studio/Fitness deployments. Pull requests also run [`.github/workflows/quality-pr.yml`](.github/workflows/quality-pr.yml) (lint, format, catalogs, exports, docs, skills, architecture, unit tests, and audit). Inspect the workflow for the current job split and browser blocking policy; the standalone [browser workflow](.github/workflows/e2e.yml) is configured separately. See [testing](docs/testing.md) and [deployment policy](docs/deployments.md). PGlite tests and fixture-backed browser journeys do not prove hosted Supabase or provider behavior.
 
 Put each unit test next to the file it covers, with the same base name: `admin-login.tsx` and `admin-login.test.tsx` live in the same folder. A Storybook story for that component is `admin-login.stories.tsx` in that folder too. The same naming applies to modules (`user-profile.ts` and `user-profile.test.ts`) and route handlers (`route.ts` and `route.test.ts`).
 
@@ -191,4 +191,5 @@ Turborepo configuration, task behavior, and CLI commands can vary between instal
 Read `docs/README.md` inside that installed package first, then read the relevant pages from its `docs/` directory before changing Turborepo configuration or commands. Heed deprecation notices. These bundled docs match the installed package version and are available without network access.
 
 This block is written and re-added by `turbo` before repository-scoped commands when an AI agent is detected. In the Turborepo source repository, its template is defined in `crates/turborepo-cli/src/cli/agent_guidance.rs`. Removing the managed block while updates are enabled means a later qualifying invocation will add it again. Set `"agentGuidance": true` in the root `turbo.json` or `turbo.jsonc` to opt in; this does not remove an existing block. Keep the block committed with your work to avoid an uncommitted change on the next agent invocation.
+
 <!-- END:turborepo-agent-rules -->

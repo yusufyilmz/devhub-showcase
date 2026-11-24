@@ -63,50 +63,52 @@ export function SummarySection({ profile = fallback, featured = false }: Summary
       ) : (
         <div aria-hidden="true" className={summarySectionStyles.element2} />
       )}
-      <div className={summarySectionStyles.element3}>
-        <p className={summarySectionStyles.element4}>
-          <span className={summarySectionStyles.element5} />
-          {profile.location}
-        </p>
-        <h1>
-          {profile.name}
-          <span className={summarySectionStyles.element6}>.</span>
-        </h1>
-        <h2>{profile.title}</h2>
-        <p className={summarySectionStyles.element7}>{profile.summary}</p>
-        <div className={summarySectionStyles.element8}>
-          {(!featured || projects.length > 0) && (
-            <a className={summarySectionStyles.element9} href="#projects">
-              {text.exploreWork} <span aria-hidden="true">↗</span>
-            </a>
-          )}
-          {featured && profile.cvUrl && (
-            <a className={summarySectionStyles.element10} href={profile.cvUrl}>
-              <Download aria-hidden="true" size={15} /> {text.downloadCv}
-            </a>
-          )}
-          {(!featured || profile.email) && (
-            <a className={summarySectionStyles.element10} href={`mailto:${profile.email}`}>
-              {text.letsTalk}
-            </a>
-          )}
-        </div>
-        <div className={summarySectionStyles.element11}>
-          <span>
-            {firstYear ? (
-              <>
-                {text.since} <strong>{firstYear}</strong>
-              </>
-            ) : (
-              text.yourStory
+      <div className={summarySectionStyles.element13}>
+        <div className={summarySectionStyles.element3}>
+          <p className={summarySectionStyles.element4}>
+            <span className={summarySectionStyles.element5} />
+            {profile.location}
+          </p>
+          <h1>
+            {profile.name}
+            <span className={summarySectionStyles.element6}>.</span>
+          </h1>
+          <h2>{profile.title}</h2>
+          <p className={summarySectionStyles.element7}>{profile.summary}</p>
+          <div className={summarySectionStyles.element8}>
+            {(!featured || projects.length > 0) && (
+              <a className={summarySectionStyles.element9} href="#projects">
+                {text.exploreWork} <span aria-hidden="true">↗</span>
+              </a>
             )}
-          </span>
-          <span>
-            <strong>{profile.experiences.length}</strong> {text.roles}
-          </span>
+            {featured && profile.cvUrl && (
+              <a className={summarySectionStyles.element10} href={profile.cvUrl}>
+                <Download aria-hidden="true" size={15} /> {text.downloadCv}
+              </a>
+            )}
+            {(!featured || profile.email) && (
+              <a className={summarySectionStyles.element10} href={`mailto:${profile.email}`}>
+                {text.letsTalk}
+              </a>
+            )}
+          </div>
+          <div className={summarySectionStyles.element11}>
+            <span>
+              {firstYear ? (
+                <>
+                  {text.since} <strong>{firstYear}</strong>
+                </>
+              ) : (
+                text.yourStory
+              )}
+            </span>
+            <span>
+              <strong>{profile.experiences.length}</strong> {text.roles}
+            </span>
+          </div>
         </div>
+        {projects.length > 0 && <FeaturedWork label={text.selectedWork} projects={projects} />}
       </div>
-      {projects.length > 0 && <FeaturedWork label={text.selectedWork} projects={projects} />}
       {!featured && (
         <a className={summarySectionStyles.element12} href="#about-me">
           {text.scroll} <span aria-hidden="true">↓</span>

@@ -4,6 +4,8 @@ import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { createConsoleUI } from "../shared/logger/console-ui.ts";
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
 const uiSrc = path.join(root, "packages/ui/src");
 const coreDir = path.join(uiSrc, "core");
@@ -238,4 +240,4 @@ await updatePackageExports();
 await replaceImportsInTree(uiSrc);
 await removeCoreIndex();
 
-console.log("Regrouped ui core into catalog folders.");
+createConsoleUI("ui").success("Regrouped ui core into catalog folders.");

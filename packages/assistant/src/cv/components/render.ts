@@ -10,9 +10,9 @@ import { orderCvContent } from "./section-order";
 // The server and Plop share an in-memory font filesystem; no host font paths.
 const virtualfs = (
   pdfmake as typeof pdfmake & {
-    virtualfs: { writeFileSync: (path: string, data: Buffer) => void };
+    sharedVirtualfs: { writeFileSync: (path: string, data: Buffer) => void };
   }
-).virtualfs;
+).sharedVirtualfs;
 for (const [name, data] of Object.entries(fonts)) {
   virtualfs.writeFileSync(name, Buffer.from(data, "base64"));
 }

@@ -29,8 +29,6 @@
   },
   "dependencies": {
     "@shared/config": "workspace:*",
-    "@shared/env": "workspace:*",
-    "@shared/lib": "workspace:*",
     "@shared/utils": "workspace:*",
     "react": "catalog:",
     "zustand": "catalog:"
@@ -40,7 +38,6 @@
     "@shared/typescript-config": "workspace:*",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
     "typescript": "catalog:"
   },
   "engines": {

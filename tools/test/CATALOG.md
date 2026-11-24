@@ -17,12 +17,10 @@ Symbol names are read statically from TypeScript declarations without executing 
 
 No package scripts are declared.
 
-| Dependency                  | Declared version | Kind            |
-| --------------------------- | ---------------- | --------------- |
-| `@shared/config`            | `workspace:*`    | dependencies    |
-| `@shared/ui`                | `workspace:*`    | dependencies    |
-| `@playwright/test`          | `1.65.0`         | devDependencies |
-| `@shared/typescript-config` | `workspace:*`    | devDependencies |
-| `@types/react`              | `19.3.0`         | devDependencies |
-| `typescript`                | `7.0.2`          | devDependencies |
-| `vitest`                    | `5.1.0`          | devDependencies |
+| Dependency         | Declared version | Kind            |
+| ------------------ | ---------------- | --------------- |
+| `@shared/config`   | `workspace:*`    | dependencies    |
+| `@shared/ui`       | `workspace:*`    | dependencies    |
+| `@playwright/test` | `1.65.1`         | devDependencies |
+| `@types/react`     | `19.3.0`         | devDependencies |
+| `typescript`       | `7.0.2`          | devDependencies |

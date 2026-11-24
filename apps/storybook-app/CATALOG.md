@@ -42,7 +42,7 @@ No public package export map or main entry is declared.
 | `@types/react`               | `19.3.0`         | devDependencies |
 | `@types/react-dom`           | `19.3.0`         | devDependencies |
 | `@vitejs/plugin-react`       | `^6.3.0`         | devDependencies |
-| `@vitest/browser-playwright` | `5.1.0`          | devDependencies |
+| `@vitest/browser-playwright` | `5.1.1`          | devDependencies |
 | `storybook`                  | `^10.6.8`        | devDependencies |
 | `typescript`                 | `7.0.2`          | devDependencies |
 | `vite`                       | `^8.3.8`         | devDependencies |

@@ -29,6 +29,7 @@ export const projectListStyles = {
 export const projectsSectionStyles = {
   element1: "mt-8",
   element2: "flex h-full no-scrollbar [scrollbar-width:thin]",
-  element3: "overflow-y-auto mt-2 md:mt-8 no-scrollbar [scrollbar-width:thin] w-full",
-  element4: "pl-0 md:pl-4 py-8",
+  element3:
+    "mt-2 grid w-full list-none grid-cols-1 gap-6 overflow-y-auto no-scrollbar [scrollbar-width:thin] md:mt-8 md:grid-cols-2 md:gap-8",
+  element4: "min-w-0 p-0",
 } as const;

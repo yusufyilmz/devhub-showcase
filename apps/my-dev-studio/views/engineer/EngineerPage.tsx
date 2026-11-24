@@ -88,13 +88,13 @@ export function EngineerPage({
         data-featured={featured || undefined}
         id="main-content"
       >
+        <HeroSurface
+          labels={{ pause: text.pauseBackground, play: text.playBackground }}
+          media={profile.hero}
+        >
+          <SummarySection featured={featured} profile={profile} />
+        </HeroSurface>
         <div className="portfolio-inner [width:100%] [max-width:1200px] [padding:0_40px] [margin:auto] max-[767px]:[padding:0_22px]">
-          <HeroSurface
-            labels={{ pause: text.pauseBackground, play: text.playBackground }}
-            media={profile.hero}
-          >
-            <SummarySection featured={featured} profile={profile} />
-          </HeroSurface>
           <RegisteredSections arrange={arrange} profile={sourceProfile} renderers={renderers} />
           {extras && <ReferralSection language={profile.portfolioLanguage} referrals={referrals} />}
         </div>

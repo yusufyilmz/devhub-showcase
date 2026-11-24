@@ -1,5 +1,13 @@
-# Historical findings in an earlier PR commit. Current .env.example entries are empty.
-# These entries suppress ONLY the two specific historical fingerprints, not future leaks.
-# Rotate any real exposed credentials and clean Git history separately.
+# Historical findings only. Each line suppresses one commit fingerprint, not future leaks.
+# Current .env.example entries are empty. Rotate any real exposed credentials and
+# clean Git history separately.
 f952e1466f65951176f0bcb3cd87d02bc286b0f0:apps/my-dev-studio/.env.example:generic-api-key:50
 f952e1466f65951176f0bcb3cd87d02bc286b0f0:apps/my-dev-studio/.env.example:generic-api-key:52
+a11fa8125badb436ba8cd61f86a7d9d6b0ada697:apps/my-dev-studio/.env.example:generic-api-key:50
+a11fa8125badb436ba8cd61f86a7d9d6b0ada697:apps/my-dev-studio/.env.example:generic-api-key:52
+ed52d78c5d8ce1904772f1441a6eb10f6f747cc7:apps/my-dev-studio/app/api/jobs/linkedin/route.test.ts:generic-api-key:5
+ed52d78c5d8ce1904772f1441a6eb10f6f747cc7:apps/my-dev-studio/app/api/jobs/linkedin/route.test.ts:generic-api-key:39
+ed52d78c5d8ce1904772f1441a6eb10f6f747cc7:packages/assistant/src/components/portfolio/jobs/types.ts:linkedin-client-id:60
+ed52d78c5d8ce1904772f1441a6eb10f6f747cc7:packages/lib/src/db/rls/linkedin-alert-import.test.ts:generic-api-key:9
+d322cd716f99cacd69ea36e3bfe3b9d6d9da9d35:apps/my-fitness-app/features/notifications/server.test.ts:generic-api-key:41
+f4bf5103a4be84e921527d5fbbacead5771921f0:docs/testing/manual/password-access.md:generic-api-key:13

@@ -260,7 +260,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `@shared/env`               | `workspace:*`    | dependencies    |
 | `@shared/notifications`     | `workspace:*`    | dependencies    |
 | `@shared/utils`             | `workspace:*`    | dependencies    |
-| `@supabase/supabase-js`     | `2.119.0`        | dependencies    |
+| `@supabase/supabase-js`     | `2.119.2`        | dependencies    |
 | `@upstash/redis`            | `1.41.0`         | dependencies    |
 | `drizzle-orm`               | `0.45.4`         | dependencies    |
 | `postgres`                  | `3.4.9`          | dependencies    |

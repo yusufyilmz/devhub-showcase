@@ -673,16 +673,14 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `@tabler/icons-react`             | `^3.52.0`        | dependencies    |
 | `@tanstack/react-table`           | `^8.21.3`        | dependencies    |
 | `class-variance-authority`        | `^0.7.1`         | dependencies    |
-| `clsx`                            | `^2.1.1`         | dependencies    |
 | `cmdk`                            | `^1.1.1`         | dependencies    |
 | `cn`                              | `^0.5.2`         | dependencies    |
 | `embla-carousel-react`            | `^8.6.0`         | dependencies    |
 | `framer-motion`                   | `^14.14.0`       | dependencies    |
 | `input-otp`                       | `^1.5.0`         | dependencies    |
-| `lucide-react`                    | `^1.77.0`        | dependencies    |
-| `next`                            | `16.4.5`         | dependencies    |
+| `lucide-react`                    | `^1.78.0`        | dependencies    |
+| `next`                            | `16.4.6`         | dependencies    |
 | `next-themes`                     | `^0.4.6`         | dependencies    |
-| `radix-ui`                        | `^1.8.1`         | dependencies    |
 | `react`                           | `19.3.1`         | dependencies    |
 | `react-day-picker`                | `^9.14.0`        | dependencies    |
 | `react-dom`                       | `19.3.1`         | dependencies    |
@@ -694,7 +692,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `tw-animate-css`                  | `^1.4.0`         | dependencies    |
 | `vaul`                            | `^1.1.2`         | dependencies    |
 | `zod`                             | `4.6.7`          | dependencies    |
-| `zustand`                         | `5.0.16`         | dependencies    |
+| `zustand`                         | `5.1.0`          | dependencies    |
 | `@shared/cli`                     | `workspace:*`    | devDependencies |
 | `@shared/typescript-config`       | `workspace:*`    | devDependencies |
 | `@storybook/react-vite`           | `^10.6.8`        | devDependencies |
@@ -702,7 +700,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `@types/node`                     | `26.6.6`         | devDependencies |
 | `@types/react`                    | `19.3.0`         | devDependencies |
 | `@types/react-dom`                | `19.3.0`         | devDependencies |
-| `postcss`                         | `8.5.32`         | devDependencies |
+| `postcss`                         | `8.5.33`         | devDependencies |
 | `storybook`                       | `^10.6.8`        | devDependencies |
 | `tailwindcss`                     | `4.3.5`          | devDependencies |
 | `typescript`                      | `7.0.2`          | devDependencies |

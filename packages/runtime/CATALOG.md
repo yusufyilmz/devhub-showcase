@@ -64,14 +64,11 @@ Symbol names are read statically from TypeScript declarations without executing 
 | Dependency                  | Declared version | Kind            |
 | --------------------------- | ---------------- | --------------- |
 | `@shared/config`            | `workspace:*`    | dependencies    |
-| `@shared/env`               | `workspace:*`    | dependencies    |
-| `@shared/lib`               | `workspace:*`    | dependencies    |
 | `@shared/utils`             | `workspace:*`    | dependencies    |
 | `react`                     | `19.3.1`         | dependencies    |
-| `zustand`                   | `5.0.16`         | dependencies    |
+| `zustand`                   | `5.1.0`          | dependencies    |
 | `@shared/cli`               | `workspace:*`    | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
 | `@types/node`               | `26.6.6`         | devDependencies |
 | `@types/react`              | `19.3.0`         | devDependencies |
-| `@types/react-dom`          | `19.3.0`         | devDependencies |
 | `typescript`                | `7.0.2`          | devDependencies |

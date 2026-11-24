@@ -35,6 +35,11 @@ Every main push retains its selection instead of being cancelled by an unrelated
 push. Per-app queued runs can be replaced by a newer queued run of the same app,
 whose source includes those changes.
 
+The Verify job aggregates independent code-quality, unit, PGlite, full monorepo
+build and Storybook build gates. Studio and Fitness browser journeys run as
+parallel, non-blocking jobs using synthetic fixtures. A manual browser workflow
+remains available without duplicating every main push.
+
 Both apps disable Vercel-native **main** Git deployments in their `vercel.json` so
 production cannot bypass Verify. Studio's existing native PR previews remain
 available. The ignored-build command compares against Vercel's previous deployed
@@ -113,11 +118,15 @@ releases can be rolled back separately without changing the database.
   Jobs skip if the repository becomes private. Tests check this policy across all
   workflow files, including new jobs.
 - No workflow uploads Actions artifacts. Browser diagnostics remain in logs, and
-  local Playwright reports remain available when tests run locally. Existing
-  historical artifacts are not deleted by this change.
+  local Playwright reports remain available when tests run locally. The standalone
+  browser workflow is manual-only; normal PR and main CI run Studio and Fitness
+  browser suites in parallel, with non-blocking outcomes. Existing historical
+  artifacts are not deleted by this change.
 - The repository cache ceiling is **10 GB**, GitHub's included per-repository
-  allowance. Only verification/browser jobs cache dependencies; deployment jobs do
-  not create more caches. Do not raise the ceiling for this zero-spend policy.
+  allowance. Verification jobs cache pnpm dependencies, the build job saves a
+  Next.js incremental cache, and browser jobs only restore that cache; deployment
+  jobs do not create additional caches. Do not raise the ceiling for this
+  zero-spend policy.
 - Actions are pinned to full commit IDs, Vercel CLI to a reviewed exact version,
   jobs have timeouts and PR verification cancels obsolete PR runs.
 - A repository workflow cannot promise future pricing or enforce account-wide

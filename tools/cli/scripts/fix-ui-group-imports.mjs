@@ -2,6 +2,8 @@ import { readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { createConsoleUI } from "../shared/logger/console-ui.ts";
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
 const uiSrc = path.join(root, "packages/ui/src");
 
@@ -166,4 +168,4 @@ async function walk(dir) {
 }
 
 await walk(uiSrc);
-console.log("Fixed cross-group relative imports in packages/ui/src.");
+createConsoleUI("ui").success("Fixed cross-group relative imports in packages/ui/src.");

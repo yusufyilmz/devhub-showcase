@@ -26,16 +26,14 @@ Symbol names are read statically from TypeScript declarations without executing 
 | Dependency                  | Declared version | Kind            |
 | --------------------------- | ---------------- | --------------- |
 | `@babel/parser`             | `^8.1.3`         | devDependencies |
-| `@biomejs/biome`            | `2.6.5`          | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
-| `@turbo/gen`                | `2.11.10`        | devDependencies |
+| `@turbo/gen`                | `2.11.13`        | devDependencies |
 | `commander`                 | `^15.1.0`        | devDependencies |
 | `js-tiktoken`               | `1.0.21`         | devDependencies |
-| `jscpd`                     | `^5.4.3`         | devDependencies |
 | `remark-gfm`                | `4.0.1`          | devDependencies |
 | `remark-parse`              | `11.0.0`         | devDependencies |
-| `tsdown`                    | `0.23.5`         | devDependencies |
+| `tsdown`                    | `0.23.7`         | devDependencies |
 | `typescript`                | `7.0.2`          | devDependencies |
 | `unified`                   | `11.0.5`         | devDependencies |
-| `vitest`                    | `5.1.0`          | devDependencies |
+| `vitest`                    | `5.1.1`          | devDependencies |
 | `yaml`                      | `^2.9.1`         | devDependencies |
