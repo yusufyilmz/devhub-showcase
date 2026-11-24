@@ -17,7 +17,7 @@ const packageScripts = Object.keys(
 ) as string[];
 
 describe("check:all resume", () => {
-  it("runs every repository check except the umbrella script and the fixer", () => {
+  it("runs the repository checks except the umbrellas, check:ci, the fixer, and the knip export checks", () => {
     expect(CHECK_ALL_STEPS).toEqual([
       "check:lint",
       "check:format",
@@ -34,13 +34,15 @@ describe("check:all resume", () => {
       "check:complexity",
       "check:duplicates",
       "check:depcheck",
-      "check:dependencies",
-      "check:unused:files",
+      "check:depcheck:workspaces",
       "check:unused:deps",
+      "check:unused:files",
       "check:secrets",
+      "check:security",
       "check:security:prod",
       "check:outdated",
       "check:types",
+      "check:unit",
       "check:coverage",
       "check:build",
     ]);
@@ -48,7 +50,16 @@ describe("check:all resume", () => {
     expect(CHECK_ALL_STEPS).not.toContain("check:fix");
     expect([...CHECK_ALL_STEPS].sort()).toEqual(
       packageScripts
-        .filter((name) => name.startsWith("check:") && name !== "check:all" && name !== "check:fix")
+        .filter(
+          (name) =>
+            name.startsWith("check:") &&
+            name !== "check:all" &&
+            name !== "check:ci" &&
+            name !== "check:fix" &&
+            name !== "check:unused:all" &&
+            name !== "check:unused:code" &&
+            name !== "check:unused:namespaces",
+        )
         .sort(),
     );
   });

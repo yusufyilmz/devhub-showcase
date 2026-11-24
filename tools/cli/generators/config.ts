@@ -7,6 +7,8 @@ import type { PlopTypes } from "@turbo/gen";
 import { cvHelpers, renderCv } from "@shared/assistant/cv";
 import { readPublicProfile, readPublishedProfile } from "@shared/lib/published-profile";
 
+import { logWarn } from "../shared/logger/log.ts";
+
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   for (const [name, helper] of Object.entries(cvHelpers)) plop.setHelper(name, helper);
   plop.setGenerator("cv", {
@@ -18,7 +20,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         const snapshot = await cvSnapshot(answers?.profileId);
         const { profile, revision } = snapshot;
         if (revision === 0)
-          console.warn("No database configured; generating from the bundled development profile.");
+          logWarn("No database configured; generating from the bundled development profile.");
         const template = await readFile(
           resolve("packages/assistant/templates/cv.json.hbs"),
           "utf8",

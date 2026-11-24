@@ -67,8 +67,8 @@ jobs:
         run: pnpm check:duplicates
       - name: Depcheck
         run: pnpm check:depcheck
-      - name: Dependency usage
-        run: pnpm check:dependencies
+      - name: Depcheck workspaces
+        run: pnpm check:depcheck:workspaces
       - name: Unused files
         run: pnpm check:unused:files
       - name: Unused dependencies

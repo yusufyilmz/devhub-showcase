@@ -3,6 +3,9 @@ import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { createConsoleUI } from "../shared/logger/console-ui.ts";
+
+const log = createConsoleUI("exports");
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
 const workspaceRoots = ["apps", "packages", "tools"];
 
@@ -10,7 +13,7 @@ const errors = [];
 
 function fail(message) {
   errors.push(message);
-  console.error(message);
+  log.error(message);
 }
 
 function isConditionMap(value) {
@@ -143,7 +146,7 @@ async function checkPackage(packageJsonPath) {
   }
 
   if (!errors.some((error) => error.startsWith(`${name} `) || error.includes(`${name}:`))) {
-    console.log(`✓ ${name}`);
+    log.success(name);
   }
 }
 
@@ -175,6 +178,6 @@ for (const packageJsonPath of await packageJsonFiles()) {
 }
 
 if (errors.length > 0) {
-  console.error(`\n${errors.length} package export ${errors.length === 1 ? "error" : "errors"}`);
+  log.error(`${errors.length} package export ${errors.length === 1 ? "error" : "errors"}`);
   process.exitCode = 1;
 }

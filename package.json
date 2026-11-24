@@ -21,7 +21,7 @@
     "check:complexity": "pnpm exec biome check --only=complexity/noExcessiveCognitiveComplexity --error-on-warnings",
     "check:coverage": "vitest run --project unit --project pglite --coverage",
     "check:depcheck": "depcheck . --config .depcheckrc",
-    "check:dependencies": "pnpm exec depcheck",
+    "check:depcheck:workspaces": "node tools/cli/checks/depcheck-workspaces.ts",
     "check:docs": "biome format **/*.md && markdownlint-cli2 **/*.md",
     "check:duplicates": "jscpd",
     "check:exports": "node tools/cli/scripts/check-exports.mjs",
@@ -106,7 +106,7 @@
     "typecheck": "tsc --noEmit && turbo run typecheck",
     "ui:add": "pnpm dlx shadcn@4.23.0 add --cwd packages/ui",
     "update:dependencies": "pnpm up --recursive",
-    "verify": "pnpm check:unused:all && pnpm check:architecture && pnpm check:dependencies && pnpm check:security && pnpm check:secrets && pnpm check:ui-catalog && pnpm check:docs && pnpm check:format && pnpm check:circular && pnpm check:ci && pnpm check:fix && pnpm check:outdated && pnpm check:skills && pnpm check:unused:namespaces"
+    "verify": "pnpm check:unused:all && pnpm check:architecture && pnpm check:depcheck:workspaces && pnpm check:security && pnpm check:secrets && pnpm check:ui-catalog && pnpm check:docs && pnpm check:format && pnpm check:circular && pnpm check:ci && pnpm check:fix && pnpm check:outdated && pnpm check:skills && pnpm check:unused:namespaces"
   },
   "lint-staged": {
     "*": "biome check --write --no-errors-on-unmatched --files-ignore-unknown=true",

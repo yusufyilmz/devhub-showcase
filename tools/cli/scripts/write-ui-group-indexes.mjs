@@ -2,6 +2,8 @@ import { readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { createConsoleUI } from "../shared/logger/console-ui.ts";
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
 const uiSrc = path.join(root, "packages/ui/src");
 
@@ -79,4 +81,4 @@ export * from "./textarea";
 
 await writeFile(path.join(uiSrc, "forms/index.ts"), formsEntry);
 
-console.log("Wrote group index.ts files and updated components/forms barrels.");
+createConsoleUI("ui").success("Wrote group index.ts files and updated components/forms barrels.");

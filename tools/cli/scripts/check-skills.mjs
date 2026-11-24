@@ -2,6 +2,10 @@ import { glob, readFile, writeFile } from "node:fs/promises";
 
 import YAML from "yaml";
 
+import { createConsoleUI } from "../shared/logger/console-ui.ts";
+
+const log = createConsoleUI("skills");
+
 const fix = process.argv.includes("--fix");
 let errors = 0;
 
@@ -12,7 +16,7 @@ for await (const file of skillFiles) {
   const content = await readFile(file, "utf8");
 
   if (!content.startsWith("---\n")) {
-    console.error(`Missing YAML frontmatter: ${file}`);
+    log.error(`Missing YAML frontmatter: ${file}`);
     errors++;
     continue;
   }
@@ -20,7 +24,7 @@ for await (const file of skillFiles) {
   const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/);
 
   if (!match) {
-    console.error(`Invalid frontmatter: ${file}`);
+    log.error(`Invalid frontmatter: ${file}`);
     errors++;
     continue;
   }
@@ -28,7 +32,9 @@ for await (const file of skillFiles) {
   const document = YAML.parseDocument(match[1]);
 
   if (document.errors.length) {
-    console.error(`${file}:`, document.errors);
+    log.error(
+      `${file}: ${document.errors.map((error) => error.message ?? String(error)).join("; ")}`,
+    );
     errors++;
     continue;
   }
@@ -36,7 +42,7 @@ for await (const file of skillFiles) {
   const metadata = document.toJS();
 
   if (!metadata?.name || !metadata?.description) {
-    console.error(`Missing name or description: ${file}`);
+    log.error(`Missing name or description: ${file}`);
     errors++;
     continue;
   }
@@ -50,7 +56,7 @@ for await (const file of skillFiles) {
     }
   }
 
-  console.log(`✓ ${file}`);
+  log.success(file);
 }
 
 process.exitCode = errors ? 1 : 0;

@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 
+import { createConsoleUI } from "../shared/logger/console-ui.ts";
+
 const skipped = new Set([
   "node_modules",
   ".git",
@@ -25,6 +27,7 @@ function walk(dir: string, files: string[]): void {
   }
 }
 
+const log = createConsoleUI("secrets");
 const root = path.resolve(process.argv[2] ?? process.cwd());
 const files: string[] = [];
 walk(root, files);
@@ -38,7 +41,7 @@ for (const file of files) {
   }
   if (!patterns.some((pattern) => pattern.test(text))) continue;
   found += 1;
-  console.error(`Possible secret: ${path.relative(root, file)}`);
+  log.error(`Possible secret: ${path.relative(root, file)}`);
 }
 if (found > 0) process.exitCode = 1;
-else console.log("No obvious secrets found.");
+else log.success("No obvious secrets found.");

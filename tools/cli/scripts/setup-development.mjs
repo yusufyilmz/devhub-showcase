@@ -2,6 +2,10 @@ import { spawnSync } from "node:child_process";
 import { lstat, readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
+import { createConsoleUI } from "../shared/logger/console-ui.ts";
+
+const log = createConsoleUI("dev-setup");
+
 const root = fileURLToPath(new URL("../../../", import.meta.url));
 const target = new URL("../../../apps/my-dev-studio/.env.development.local", import.meta.url);
 const args = process.argv.slice(2);
@@ -39,7 +43,7 @@ async function setup() {
   }
   try {
     await lstat(target);
-    console.log("Existing app .env.development.local preserved; no changes made.");
+    log.info("Existing app .env.development.local preserved; no changes made.");
     return;
   } catch (error) {
     if (error.code !== "ENOENT") throw error;
@@ -55,16 +59,16 @@ async function setup() {
       );
   }
   await writeFile(target, defaults, { flag: "wx", mode: 0o600 });
-  console.log(
+  log.success(
     "Created apps/my-dev-studio/.env.development.local. Shell variables take precedence; this file overrides .env.local during development.",
   );
-  console.log(
+  log.info(
     "For local login, create a confirmed disposable user in local Studio, set LOCAL_TEST_LOGIN=true and its email/password in this ignored file, then run pnpm --filter my-dev-studio dev.",
   );
 }
 
 setup().catch((error) => {
-  console.error(
+  log.error(
     error instanceof SyntaxError ? "Could not parse local Supabase status JSON." : error.message,
   );
   process.exitCode = 1;
