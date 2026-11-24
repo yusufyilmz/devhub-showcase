@@ -12,6 +12,7 @@ concurrency:
 
 jobs:
   studio:
+    if: ${{ github.event.repository.private == false }}
     name: Studio Playwright
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -41,18 +42,10 @@ jobs:
         run: pnpm build:studio
       - name: Run Studio journeys
         run: pnpm test:e2e:studio
-      - name: Upload traces and reports
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.0
-        with:
-          name: manual-studio-results
-          path: |
-            apps/my-dev-studio/test-results/
-            apps/my-dev-studio/playwright-report/
-          if-no-files-found: ignore
 
 
   fitness:
+    if: ${{ github.event.repository.private == false }}
     name: Fitness Playwright
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -81,13 +74,4 @@ jobs:
       # Fitness Playwright webServer builds the app with its fixture environment.
       - name: Run Fitness journeys
         run: pnpm test:e2e:fitness
-      - name: Upload traces and reports
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.0
-        with:
-          name: manual-fitness-results
-          path: |
-            apps/my-fitness-app/test-results/
-            apps/my-fitness-app/playwright-report/
-          if-no-files-found: ignore
 
