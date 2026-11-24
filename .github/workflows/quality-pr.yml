@@ -15,6 +15,7 @@ concurrency:
 jobs:
   secrets:
     name: Secret Scan
+    if: ${{ github.event.repository.private == false }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
