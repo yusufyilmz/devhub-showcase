@@ -4,12 +4,15 @@ The Next.js app is `apps/my-dev-studio` (`my-dev-studio`). Shared libraries use 
 
 | Location                  | Responsibility                                                                          |
 | ------------------------- | --------------------------------------------------------------------------------------- |
-| `apps/my-dev-studio`      | Next.js routes in `app/` and feature data access in `features/`                         |
+| `apps/my-dev-studio`      | Next.js routes in `app/` and app screens in `views/` and bindings in `services/`        |
 | `apps/my-fitness-app`     | Fitness OS app. Its tables are in `supabase/migrations` and belong to `auth.users`      |
 | `apps/storybook-app`      | Storybook for `packages/ui`                                                             |
 | `packages/ui`             | Controls, sections, studio and portfolio surfaces, theme, notifications, and global CSS |
-| `packages/config`         | Profile types, themes, section registry, and custom-section metadata                    |
-| `packages/content`        | Page copy, including the home FAQ                                                       |
+| `packages/config`         | Profile types, themes, section registry and homepage copy                               |
+| `packages/billing`        | Stripe billing and entitlement flows                                                    |
+| `packages/calendar`       | Calendar controls and Google integration                                                |
+| `packages/env`            | Typed environment schema and validation                                                 |
+| `packages/notifications`  | Web push delivery and notifications                                                     |
 | `packages/auth`           | Supabase session helpers and Google sign-in                                             |
 | `packages/assistant`      | CV PDF rendering                                                                        |
 | `packages/assistant`      | Portfolio and editing assistants                                                        |
@@ -19,7 +22,7 @@ The Next.js app is `apps/my-dev-studio` (`my-dev-studio`). Shared libraries use 
 | `packages/trello`         | Trello board UI                                                                         |
 | `tools/typescript-config` | Shared TypeScript configs                                                               |
 | `tests`                   | Vitest unit, API, and UI coverage                                                       |
-| `e2e`                     | Playwright scenarios grouped by page, and the local fake Supabase transport             |
+| `apps/*/e2e`              | App-specific Playwright tests and fixture transports                                    |
 | `supabase/migrations`     | Reviewed schema and RLS history                                                         |
 | `docs`                    | Architecture and product references                                                     |
 
@@ -37,4 +40,4 @@ App features, and what stays out of shared packages:
 
 Root scripts coordinate packages with Turborepo. `pnpm-workspace.yaml` is the external dependency catalog. Add external versions there and reference `catalog:` in manifests. Use `workspace:*` for internal dependencies. Keep package export maps explicit. Do not add another package manager or lockfile.
 
-Section renderers and editors live in `packages/ui/src/sections`. Import them through `@shared/ui/sections`. `RenderSection` and `EditSection` live in `src/sections/renderers` and `src/sections/editors`. Keep auth and database access in app routes and `features/`. Do not add a feature file that only re-exports a shared component. See `docs/reference/pageforge-section-migration.md` for source families.
+Section renderers and editors live in `packages/ui/src/sections`. Import them through `@shared/ui/sections`. `RenderSection` and `EditSection` live in `src/sections/renderers` and `src/sections/editors`. Keep auth and database access in app routes and `services/<domain>/`. Do not add a feature file that only re-exports a shared component. See `docs/reference/pageforge-section-migration.md` for source families.
