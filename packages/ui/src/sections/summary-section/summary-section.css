@@ -82,6 +82,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
   min-height: min(800px, calc(100svh - 78px));
   padding: 100px 0 80px;
 }
@@ -106,21 +107,30 @@
 }
 
 .portfolio-hero[data-featured] {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: clamp(1.75rem, 5vw, 4rem);
-  align-content: center;
+  display: block;
+  width: 100%;
   min-height: min(42rem, calc(100svh - 5rem));
   padding-block: clamp(3rem, 8vw, 7rem);
   isolation: isolate;
 }
 
+.portfolio-hero[data-featured] .hero-frame {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.75rem, 5vw, 4rem);
+  align-content: center;
+  min-height: inherit;
+}
+
 .hero-featured-backdrop {
   position: absolute;
-  inset: 0 -2.5rem;
+  inset-block: 0;
+  left: 50%;
   z-index: -1;
+  width: 100vw;
   pointer-events: none;
   mask-image: linear-gradient(to bottom, #000 62%, transparent);
+  transform: translateX(-50%);
 }
 
 .portfolio-hero[data-featured] .hero-copy .eyebrow {
@@ -161,7 +171,7 @@
 }
 
 @media (min-width: 900px) {
-  .portfolio-hero[data-featured][data-spotlight] {
+  .portfolio-hero[data-featured][data-spotlight] .hero-frame {
     grid-template-columns: minmax(0, 1.8fr) minmax(16rem, 1fr);
   }
 }
@@ -179,10 +189,6 @@
 
   .portfolio-hero:not([data-featured]) .hero-copy h2 {
     font-size: 22px;
-  }
-
-  .hero-featured-backdrop {
-    inset-inline: -1.375rem;
   }
 }
 

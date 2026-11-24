@@ -1,4 +1,4 @@
-name: PR Secret Scan
+name: PR Quality
 
 on:
   pull_request:
@@ -13,6 +13,77 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  quality:
+    name: Code Quality
+    if: ${{ github.event.repository.private == false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Setup pnpm
+        uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        with:
+          version: 12.21.0
+          cache: false
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Biome
+        run: pnpm check:lint
+      - name: Biome format
+        run: pnpm check:format
+      - name: Biome assist
+        run: pnpm check:assist
+      - name: Biome CI
+        run: pnpm check:ci
+      - name: Catalogs
+        run: pnpm check:catalogs
+      - name: UI catalog
+        run: pnpm check:ui-catalog
+      - name: Package exports
+        run: pnpm check:exports
+      - name: Package lint
+        run: pnpm check:packages
+      - name: Docs
+        run: pnpm check:docs
+      - name: Links
+        run: pnpm check:links --no-external
+      - name: Skills
+        run: pnpm check:skills
+      - name: Architecture boundaries
+        run: pnpm check:architecture
+      - name: Circular dependencies
+        run: pnpm check:circular
+      - name: Cognitive complexity
+        run: pnpm check:complexity
+      - name: Duplicate code
+        run: pnpm check:duplicates
+      - name: Depcheck
+        run: pnpm check:depcheck
+      - name: Dependency usage
+        run: pnpm check:dependencies
+      - name: Unused files
+        run: pnpm check:unused:files
+      - name: Unused dependencies
+        run: pnpm check:unused:deps
+      - name: Unused exports
+        run: pnpm check:unused:code
+      - name: Unused namespaces
+        run: pnpm check:unused:namespaces
+      - name: TypeScript
+        run: pnpm check:types
+      - name: Unit tests
+        run: pnpm check:unit
+      - name: Vulnerability audit
+        run: pnpm check:security
+
   secrets:
     name: Secret Scan
     if: ${{ github.event.repository.private == false }}
@@ -21,14 +92,12 @@ jobs:
     permissions:
       contents: read
       pull-requests: read
-
     steps:
       - name: Checkout with history
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
-
       - name: Scan secrets
         uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3
         env:

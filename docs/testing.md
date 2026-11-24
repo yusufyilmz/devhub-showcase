@@ -58,8 +58,12 @@ The final **Verify** check requires code quality, unit, PGlite, production build
 and Storybook jobs to pass. Only verified, affected apps deploy from `main`.
 The [standalone browser workflow](../.github/workflows/e2e.yml) is manual-only,
 avoiding duplicate browser runs on main. The
-[PR Secret Scan](../.github/workflows/quality-pr.yml) stays separate without
-rerunning the static and unit checks already in CI.
+[PR quality workflow](../.github/workflows/quality-pr.yml) runs the extra checks
+that CI does not: format, catalogs, docs, duplicates, depcheck, unused code,
+and a secret scan. The
+[weekly health workflow](../.github/workflows/weekly.yml) repeats those health
+checks with coverage and the Studio browser suite. Both skip private
+repositories.
 
 The repository retains its public-only, zero-spend GitHub Actions policy:
 workflows skip on private repositories, jobs use standard Ubuntu runners, and

@@ -73,7 +73,7 @@ Symbol names are read statically from TypeScript declarations without executing 
 | Dependency                  | Declared version | Kind            |
 | --------------------------- | ---------------- | --------------- |
 | `@shared/env`               | `workspace:*`    | dependencies    |
-| `axios`                     | `1.21.0`         | dependencies    |
+| `axios`                     | `1.21.1`         | dependencies    |
 | `flat`                      | `^6.0.1`         | dependencies    |
 | `pino`                      | `10.4.0`         | dependencies    |
 | `pino-pretty`               | `13.2.0`         | dependencies    |

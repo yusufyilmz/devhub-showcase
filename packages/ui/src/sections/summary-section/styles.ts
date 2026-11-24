@@ -19,4 +19,6 @@ export const summarySectionStyles = {
     "hero-details [display:flex] [flex-wrap:wrap] [gap:32px] [font-size:11px] [color:var(--muted-foreground)] [&_strong]:[font-weight:600] [&_strong]:[color:var(--foreground)] max-[767px]:[gap:12px_22px] [line-height:1.8]",
   element12:
     "hero-scroll [position:absolute] [bottom:18px] [display:flex] [gap:18px] [align-items:center] [font:10px_var(--font-geist-mono),_monospace] [color:var(--muted-foreground)] [letter-spacing:0.13em] [&_span]:[font-size:20px] [color:var(--primary)]",
+  element13:
+    "hero-frame [position:relative] [z-index:1] [width:100%] [max-width:1200px] [margin-inline:auto] [padding-inline:40px] max-[767px]:[padding-inline:22px]",
 } as const;

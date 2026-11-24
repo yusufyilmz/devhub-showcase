@@ -57,14 +57,9 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `cn`                        | `^0.5.2`         | dependencies    |
 | `react`                     | `19.3.1`         | dependencies    |
 | `uuid`                      | `14.0.3`         | dependencies    |
-| `zustand`                   | `5.0.16`         | dependencies    |
+| `zustand`                   | `5.1.0`          | dependencies    |
 | `@shared/cli`               | `workspace:*`    | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
-| `@tailwindcss/postcss`      | `4.3.5`          | devDependencies |
 | `@types/node`               | `26.6.6`         | devDependencies |
 | `@types/react`              | `19.3.0`         | devDependencies |
-| `@types/react-dom`          | `19.3.0`         | devDependencies |
-| `beautify-console-log`      | `^1.4.0`         | devDependencies |
-| `postcss`                   | `8.5.32`         | devDependencies |
-| `tailwindcss`               | `4.3.5`          | devDependencies |
 | `typescript`                | `7.0.2`          | devDependencies |

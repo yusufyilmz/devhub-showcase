@@ -45,11 +45,10 @@ Symbol names are read statically from TypeScript declarations without executing 
 
 | Dependency                  | Declared version | Kind            |
 | --------------------------- | ---------------- | --------------- |
-| `@shared/config`            | `workspace:*`    | dependencies    |
 | `@shared/env`               | `workspace:*`    | dependencies    |
 | `@supabase/ssr`             | `0.12.7`         | dependencies    |
-| `@supabase/supabase-js`     | `2.119.0`        | dependencies    |
-| `next`                      | `16.4.5`         | dependencies    |
+| `@supabase/supabase-js`     | `2.119.2`        | dependencies    |
+| `next`                      | `16.4.6`         | dependencies    |
 | `react`                     | `19.3.1`         | dependencies    |
 | `react-dom`                 | `19.3.1`         | dependencies    |
 | `zod`                       | `4.6.7`          | dependencies    |

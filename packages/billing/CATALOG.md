@@ -56,13 +56,12 @@ Symbol names are read statically from TypeScript declarations without executing 
 | `@shared/config`            | `workspace:*`    | dependencies    |
 | `@shared/env`               | `workspace:*`    | dependencies    |
 | `@shared/ui`                | `workspace:*`    | dependencies    |
-| `@supabase/supabase-js`     | `2.119.0`        | dependencies    |
+| `@supabase/supabase-js`     | `2.119.2`        | dependencies    |
 | `react`                     | `19.3.1`         | dependencies    |
-| `stripe`                    | `23.1.0`         | dependencies    |
+| `stripe`                    | `23.2.0`         | dependencies    |
 | `zod`                       | `4.6.7`          | dependencies    |
 | `@shared/cli`               | `workspace:*`    | devDependencies |
 | `@shared/typescript-config` | `workspace:*`    | devDependencies |
 | `@types/node`               | `26.6.6`         | devDependencies |
 | `@types/react`              | `19.3.0`         | devDependencies |
-| `@types/react-dom`          | `19.3.0`         | devDependencies |
 | `typescript`                | `7.0.2`          | devDependencies |

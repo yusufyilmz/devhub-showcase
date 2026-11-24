@@ -22,7 +22,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       title={text.projects}
     >
       <div className={projectsSectionStyles.element2}>
-        <List className={projectsSectionStyles.element3} divider>
+        <List className={projectsSectionStyles.element3} listStyle="none">
           {projects.map((project) => (
             <ListItem className={projectsSectionStyles.element4} key={project.id}>
               <ProjectItem language={language} project={project} />

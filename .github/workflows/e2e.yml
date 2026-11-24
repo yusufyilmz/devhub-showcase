@@ -73,4 +73,3 @@ jobs:
       # Fitness Playwright webServer builds the app with its fixture environment.
       - name: Run Fitness journeys
         run: pnpm test:e2e:fitness
-

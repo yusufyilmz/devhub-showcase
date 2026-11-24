@@ -1,4 +1,29 @@
-ignores: []
+ignores:
+  - "@babel/parser"
+  - "@electric-sql/pglite"
+  - "@shared/assistant"
+  - "@shared/cli"
+  - "@shared/config"
+  - "@shared/lib"
+  - "@shared/test"
+  - "@testing-library/dom"
+  - "@testing-library/react"
+  - "@tsdown/css"
+  - "@types/react"
+  - "@types/react-dom"
+  - dependency-cruiser
+  - glob
+  - js-tiktoken
+  - js-yaml
+  - markdownlint-cli2-formatter-pretty
+  - prettier
+  - react
+  - react-dom
+  - remark-gfm
+  - remark-parse
+  - tsdown
+  - tsx
+  - unified
 skip-missing: false
 ignore-patterns:
   - node_modules

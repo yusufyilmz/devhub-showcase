@@ -1,0 +1,12 @@
+{
+  "name": "@shared/biome-config",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "exports": {
+    "./node.json": "./biome.node.json",
+    "./ui.json": "./biome.ui.json",
+    "./nextjs.json": "./biome.nextjs.json",
+    "./no-self-import.template.json": "./no-self-import.template.json"
+  }
+}

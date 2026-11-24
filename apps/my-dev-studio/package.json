@@ -42,14 +42,12 @@
   "devDependencies": {
     "@shared/test": "workspace:*",
     "@shared/typescript-config": "workspace:*",
-    "@shared/ui": "workspace:*",
     "@storybook/react-vite": "catalog:",
     "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "postcss": "catalog:",
-    "tailwindcss": "catalog:",
     "typescript": "catalog:"
   },
   "engines": {

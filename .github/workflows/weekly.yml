@@ -18,7 +18,7 @@ jobs:
     if: ${{ github.event.repository.private == false }}
     name: Dependency and Code Health
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -37,52 +37,88 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Knip - full analysis
-        id: knip
+      - name: Unused files
+        id: unused_files
         continue-on-error: true
-        run: pnpm exec knip
+        run: pnpm check:unused:files
+
+      - name: Unused dependencies
+        id: unused_deps
+        continue-on-error: true
+        run: pnpm check:unused:deps
+
+      - name: Unused exports
+        id: unused_code
+        continue-on-error: true
+        run: pnpm check:unused:code
+
+      - name: Unused namespaces
+        id: unused_namespaces
+        continue-on-error: true
+        run: pnpm check:unused:namespaces
 
       - name: Duplicate code
         id: duplicates
         continue-on-error: true
-        run: pnpm exec jscpd
+        run: pnpm check:duplicates
 
-      - name: Depcheck - root and workspaces
+      - name: Depcheck
         id: depcheck
+        continue-on-error: true
+        run: pnpm check:depcheck
+
+      - name: Depcheck workspaces
+        id: depcheck_workspaces
         continue-on-error: true
         shell: bash
         run: |
           status=0
-
-          pnpm exec depcheck . --config .depcheckrc \
-            || status=1
-
           for manifest in apps/*/package.json packages/*/package.json tools/*/package.json; do
             [ -f "$manifest" ] || continue
-            pnpm exec depcheck "$(dirname "$manifest")" \
-              --config .depcheckrc || status=1
+            pnpm exec depcheck "$(dirname "$manifest")" --config .depcheckrc || status=1
           done
-
           exit "$status"
+
+      - name: Dependency usage
+        id: dependencies
+        continue-on-error: true
+        run: pnpm check:dependencies
+
+      - name: UI catalog
+        id: ui_catalog
+        continue-on-error: true
+        run: pnpm check:ui-catalog
+
+      - name: Production vulnerability audit
+        id: security_prod
+        continue-on-error: true
+        run: pnpm check:security:prod
 
       - name: Outdated dependencies
         continue-on-error: true
-        run: pnpm outdated -r
+        run: pnpm check:outdated
 
       - name: Unit test coverage
         id: coverage
         continue-on-error: true
-        run: pnpm test:coverage
+        run: pnpm check:coverage
 
       - name: Fail on actionable findings
         if: always()
         env:
-          KNIP: ${{ steps.knip.outcome }}
+          UNUSED_FILES: ${{ steps.unused_files.outcome }}
+          UNUSED_DEPS: ${{ steps.unused_deps.outcome }}
+          UNUSED_CODE: ${{ steps.unused_code.outcome }}
+          UNUSED_NAMESPACES: ${{ steps.unused_namespaces.outcome }}
           DUPLICATES: ${{ steps.duplicates.outcome }}
           DEPCHECK: ${{ steps.depcheck.outcome }}
+          DEPCHECK_WORKSPACES: ${{ steps.depcheck_workspaces.outcome }}
+          DEPENDENCIES: ${{ steps.dependencies.outcome }}
+          UI_CATALOG: ${{ steps.ui_catalog.outcome }}
+          SECURITY_PROD: ${{ steps.security_prod.outcome }}
           COVERAGE: ${{ steps.coverage.outcome }}
         run: |
-          for result in "$KNIP" "$DUPLICATES" "$DEPCHECK" "$COVERAGE"; do
+          for result in "$UNUSED_FILES" "$UNUSED_DEPS" "$UNUSED_CODE" "$UNUSED_NAMESPACES" "$DUPLICATES" "$DEPCHECK" "$DEPCHECK_WORKSPACES" "$DEPENDENCIES" "$UI_CATALOG" "$SECURITY_PROD" "$COVERAGE"; do
             if [ "$result" != "success" ]; then
               echo "One or more health checks failed"
               exit 1

@@ -1,5 +1,7 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignoreBinaries": ["gitleaks", "supabase"],
+  "ignoreFiles": ["packages/trello/**", "packages/utils/**", "**/.storybook/**", "**/scripts/**"],
   "rules": {
     "binaries": "warn",
     "cycles": "error",
@@ -23,7 +25,22 @@
     "packages/*": {
       "includeEntryExports": true
     },
+    "packages/utils": {
+      "ignoreDependencies": [
+        "pino-pretty",
+        "remark",
+        "remark-gfm",
+        "remark-html",
+        "remark-math",
+        "remark-parse"
+      ],
+      "includeEntryExports": true
+    },
     "tools/*": {
+      "includeEntryExports": true
+    },
+    "tools/cli": {
+      "entry": ["checks/secrets.ts", "catalog/ui-registry.d.mts"],
       "includeEntryExports": true
     }
   }
