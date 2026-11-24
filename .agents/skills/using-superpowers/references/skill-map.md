@@ -13,7 +13,7 @@ There is no `superpowers:` tool namespace in this repository. When an instructio
 | `verification-before-completion`, completion claim | `.agents/skills/verification-before-completion/SKILL.md` |
 | Creating a skill                                   | `.agents/skills/create-skill/SKILL.md`                   |
 | Creating a subagent                                | `.agents/skills/create-subagent/SKILL.md`                |
-| Workspace, package, or domain edit                 | The [domain skill map](#package-and-app-skills) below               |
+| Workspace, package, or domain edit                 | The [domain skill map](#package-and-app-skills) below    |
 | Finding a catalog, doc, skill, or design rule      | `.agents/skills/repository-lookup/SKILL.md`              |
 
 Plan execution uses the create-plan workflow. Do not treat an unadapted copy of an upstream executing-plans document as the repository procedure.

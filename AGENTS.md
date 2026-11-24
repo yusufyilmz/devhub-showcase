@@ -174,7 +174,6 @@ Browser tests use local fixtures, not production accounts. If a required check c
 
 Every new or changed feature **must** update a dedicated manual guide and the [manual testing index](docs/testing/manual/index.md) in its PR. For Notion roadmap tasks, also update the task's **How to test** section. Follow [the manual review contract](.agents/skills/mydevstudio-development/references/manual-feature-review.md), using disposable accounts and explicit prerequisites, links, routes, expected results and actual evidence. Unexecuted steps stay **Not run**.
 
-
 ## Pull requests
 
 Keep the change focused. Review the diff for unrelated files and secrets. Update docs when a command, package boundary, or user-facing behavior changes.
