@@ -16,20 +16,22 @@ concurrency:
 jobs:
   analysis:
     name: Dependency and Code Health
-    if: ${{ github.event.repository.private == false }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
         with:
           version: 12.21.0
+          cache: false
 
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: "24.15.0"
+          node-version-file: .nvmrc
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
@@ -88,20 +90,22 @@ jobs:
 
   e2e:
     name: E2E and Accessibility
-    if: ${{ github.event.repository.private == false }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
         with:
           version: 12.21.0
+          cache: false
 
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: "24.15.0"
+          node-version-file: .nvmrc
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
@@ -109,12 +113,14 @@ jobs:
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps chromium
 
+      - name: Build Studio for browser tests
+        run: pnpm build:studio
+
       - name: Run E2E tests
-        run: pnpm test:e2e
+        run: pnpm test:e2e:studio
 
   secrets:
     name: Full Secret Scan
-    if: ${{ github.event.repository.private == false }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
