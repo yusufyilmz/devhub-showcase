@@ -7,7 +7,7 @@ description: Develop, test and review MyDevStudio changes. Use for workspace
 
 # MyDevStudio development
 
-Read [the workspace map](references/workspace.md) before choosing a package. Follow [the verification workflow](references/workflow.md) for implementation and PR validation. Run scripts/check-workspace.mjs from the repository root to confirm documented command and workspace assumptions without changing files.
+Read the root [DESIGN.md](/DESIGN.md) for the canonical visual system and cross-app design review criteria before any UI work. Read [the workspace map](references/workspace.md) before choosing a package. Follow [the verification workflow](references/workflow.md) for implementation and PR validation. Run scripts/check-workspace.mjs from the repository root to confirm documented command and workspace assumptions without changing files.
 
 Inspect current package.json files, pnpm-workspace.yaml, and .github/workflows/ci.yml rather than relying on remembered versions. The Next.js app is `apps/my-dev-studio` (`my-dev-studio`). Its routes are in `app/`, app-only screens in `views/`, and server/service bindings in `services/<domain>/`. Storybook is `apps/storybook-app` (`storybook-app`). `apps/my-fitness-app` (`my-fitness-app`) is a separate Next.js app. Its tables are in `supabase/migrations` and use the same `auth.users` records as the studio. Use existing components and validated domain adapters. Keep changes focused and run checks appropriate to their behavior. Report failed or skipped verification accurately.
 
